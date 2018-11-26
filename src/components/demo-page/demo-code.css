@@ -1,0 +1,35 @@
+/* import the css from prism node module, this will be inlined by postcss */
+@import './../../../node_modules/prismjs/themes/prism.css';
+
+:host {
+    display: block;
+    overflow: auto;
+    background-color: var(--demo-code-bg-color, #eee);
+    margin-bottom: 16px;
+}
+#container {
+    display: flex;
+    flex-direction: column;
+}
+#caption {
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px;
+    padding-left: 16px;
+    display: flex;
+    cursor: pointer;
+}
+#caption-icon {
+    margin-left: auto;
+}
+:host([hide-code]) #caption {
+    border-bottom: 0;
+}
+pre {
+    margin: 16px;
+}
+:host([hide-code]) pre {
+    display: none;
+}

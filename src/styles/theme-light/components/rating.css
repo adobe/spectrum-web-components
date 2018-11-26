@@ -1,0 +1,6 @@
+:root {
+  --spectrum-rating-icon-color: rgb(142, 142, 142);
+  --spectrum-rating-icon-color-hover: rgb(44, 44, 44);
+  --spectrum-rating-icon-color-down: rgb(75, 75, 75);
+  --spectrum-rating-icon-color-disabled: rgb(225, 225, 225);
+}

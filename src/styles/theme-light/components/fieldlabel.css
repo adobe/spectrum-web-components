@@ -1,0 +1,10 @@
+:root {
+  --spectrum-fieldlabel-asterisk-color: rgb(142, 142, 142);
+  --spectrum-fieldlabel-text-color: rgb(110, 110, 110);
+  --spectrum-fieldlabel-asterisk-color-disabled: rgb(179, 179, 179);
+  --spectrum-fieldlabel-text-color-disabled: rgb(179, 179, 179);
+  --spectrum-fieldlabel-side-asterisk-color: rgb(142, 142, 142);
+  --spectrum-fieldlabel-side-text-color: rgb(110, 110, 110);
+  --spectrum-fieldlabel-side-asterisk-color-disabled: rgb(179, 179, 179);
+  --spectrum-fieldlabel-side-text-color-disabled: rgb(179, 179, 179);
+}

@@ -1,0 +1,14 @@
+:root {
+  --spectrum-logicbutton-and-border-size: 2px;
+  --spectrum-logicbutton-and-border-radius: 4px;
+  --spectrum-logicbutton-and-text-size: 14px;
+  --spectrum-logicbutton-and-text-font-weight: 700;
+  --spectrum-logicbutton-and-height: 24px;
+  --spectrum-logicbutton-and-padding-x: 8px;
+  --spectrum-logicbutton-or-border-size: 2px;
+  --spectrum-logicbutton-or-border-radius: 4px;
+  --spectrum-logicbutton-or-text-size: 14px;
+  --spectrum-logicbutton-or-text-font-weight: 700;
+  --spectrum-logicbutton-or-height: 24px;
+  --spectrum-logicbutton-or-padding-x: 8px;
+}

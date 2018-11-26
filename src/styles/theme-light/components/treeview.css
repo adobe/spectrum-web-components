@@ -1,0 +1,10 @@
+:root {
+  --spectrum-treeview-item-text-color: rgb(75, 75, 75);
+  --spectrum-treeview-item-group-background-color-hover: rgb(250, 250, 250);
+  --spectrum-treeview-item-group-border-color-hover: rgb(179, 179, 179);
+  --spectrum-treeview-row-border-color-hover: rgb(44, 44, 44);
+  --spectrum-treeview-item-text-color-hover: rgb(44, 44, 44);
+  --spectrum-treeview-item-background-color-hover: rgba(44,44,44,0.04);
+  --spectrum-treeview-item-border-color-key-focus: rgb(38, 128, 235);
+  --spectrum-treeview-item-background-color-key-focus: rgba(44,44,44,0.04);
+}

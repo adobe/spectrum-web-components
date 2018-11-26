@@ -1,0 +1,32 @@
+:root {
+  --spectrum-circleloader-large-height: 64px;
+  --spectrum-circleloader-large-width: 64px;
+  --spectrum-circleloader-large-border-size: 4px;
+  --spectrum-circleloader-large-spin-animation-duration: 1000ms;
+  --spectrum-circleloader-large-spin-animation-ease: (.45, 0, .40, 1);
+  --spectrum-circleloader-large-over-background-height: 64px;
+  --spectrum-circleloader-large-over-background-width: 64px;
+  --spectrum-circleloader-large-over-background-border-size: 4px;
+  --spectrum-circleloader-large-over-background-spin-animation-duration: 1000ms;
+  --spectrum-circleloader-large-over-background-spin-animation-ease: (.45, 0, .40, 1);
+  --spectrum-circleloader-medium-height: 32px;
+  --spectrum-circleloader-medium-width: 32px;
+  --spectrum-circleloader-medium-border-size: 3px;
+  --spectrum-circleloader-medium-spin-animation-duration: 1000ms;
+  --spectrum-circleloader-medium-spin-animation-ease: (.45, 0, .40, 1);
+  --spectrum-circleloader-medium-over-background-height: 32px;
+  --spectrum-circleloader-medium-over-background-width: 32px;
+  --spectrum-circleloader-medium-over-background-border-size: 3px;
+  --spectrum-circleloader-medium-over-background-spin-animation-duration: 1000ms;
+  --spectrum-circleloader-medium-over-background-spin-animation-ease: (.45, 0, .40, 1);
+  --spectrum-circleloader-small-height: 16px;
+  --spectrum-circleloader-small-width: 16px;
+  --spectrum-circleloader-small-border-size: 2px;
+  --spectrum-circleloader-small-spin-animation-duration: 1000ms;
+  --spectrum-circleloader-small-spin-animation-ease: (.45, 0, .40, 1);
+  --spectrum-circleloader-small-over-background-height: 16px;
+  --spectrum-circleloader-small-over-background-width: 16px;
+  --spectrum-circleloader-small-over-background-border-size: 2px;
+  --spectrum-circleloader-small-over-background-spin-animation-duration: 1000ms;
+  --spectrum-circleloader-small-over-background-spin-animation-ease: (.45, 0, .40, 1);
+}

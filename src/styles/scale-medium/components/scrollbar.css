@@ -1,0 +1,10 @@
+:root {
+  --spectrum-scrollbar-bar-width: 4px;
+  --spectrum-scrollbar-bar-border-radius: 2px;
+  --spectrum-scrollbar-track-width: 4px;
+  --spectrum-scrollbar-track-border-radius: 2px;
+  --spectrum-scrollbar-quiet-bar-width: 4px;
+  --spectrum-scrollbar-quiet-bar-border-radius: 2px;
+  --spectrum-scrollbar-quiet-track-width: 4px;
+  --spectrum-scrollbar-quiet-track-border-radius: 2px;
+}

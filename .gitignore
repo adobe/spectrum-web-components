@@ -1,0 +1,5 @@
+src/components/**/*.js
+src/components/**/*.js.map
+dist
+node_modules
+npm-debug.log

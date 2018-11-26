@@ -1,0 +1,10 @@
+:root {
+  --spectrum-dialog-background-color: rgb(245, 245, 245);
+  --spectrum-dialog-underlay-background-color: rgba(0,0,0,0.4);
+  --spectrum-dialog-icon-color: rgb(44, 44, 44);
+  --spectrum-dialog-rule-color: rgb(234, 234, 234);
+  --spectrum-dialog-title-text-color: rgb(44, 44, 44);
+  --spectrum-dialog-content-text-color: rgb(75, 75, 75);
+  --spectrum-dialog-error-icon-color: rgb(201, 37, 45);
+  --spectrum-dialog-error-title-text-color: rgb(201, 37, 45);
+}

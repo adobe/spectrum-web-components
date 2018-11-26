@@ -1,0 +1,15 @@
+:root {
+  --spectrum-accordion-item-height: 40px;
+  --spectrum-accordion-item-padding: 16px;
+  --spectrum-accordion-item-padding-x: 18px;
+  --spectrum-accordion-item-border-size: 1px;
+  --spectrum-accordion-icon-spacing: 16px;
+  --spectrum-accordion-icon-gap: 8px;
+  --spectrum-accordion-icon-width: 6px;
+  --spectrum-accordion-icon-height: 10px;
+  --spectrum-accordion-item-title-text-size: 11px;
+  --spectrum-accordion-item-title-tracking: 0.06em;
+  --spectrum-accordion-item-content-padding: 16px;
+  --spectrum-accordion-item-border-size-key-focus: 2px;
+  --spectrum-accordion-item-border-left-size-key-focus: 2px;
+}

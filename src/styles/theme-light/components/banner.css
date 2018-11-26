@@ -1,0 +1,6 @@
+:root {
+  --spectrum-banner-text-color: rgb(255, 255, 255);
+  --spectrum-banner-error-background-color: rgb(215, 55, 63);
+  --spectrum-banner-info-background-color: rgb(20, 115, 230);
+  --spectrum-banner-warning-background-color: rgb(218, 123, 17);
+}

@@ -1,0 +1,8 @@
+:root {
+  --spectrum-actionbuttongroup-button-gap-y: 8px;
+  --spectrum-actionbuttongroup-button-gap-x: 8px;
+  --spectrum-actionbuttongroup-icon-button-gap-y: 8px;
+  --spectrum-actionbuttongroup-icon-button-gap-x: 8px;
+  --spectrum-actionbuttongroup-text-button-gap-y: 8px;
+  --spectrum-actionbuttongroup-text-button-gap-x: 8px;
+}

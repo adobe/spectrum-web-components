@@ -1,0 +1,18 @@
+:root {
+  --spectrum-tooltip-text-color: rgb(255, 255, 255);
+  --spectrum-tooltip-icon-color: rgb(255, 255, 255);
+  --spectrum-tooltip-background-color: rgb(116, 116, 116);
+  --spectrum-tooltip-tip-color: rgb(116, 116, 116);
+  --spectrum-tooltip-info-text-color: rgb(255, 255, 255);
+  --spectrum-tooltip-info-icon-color: rgb(255, 255, 255);
+  --spectrum-tooltip-info-background-color: rgb(13, 102, 208);
+  --spectrum-tooltip-info-tip-color: rgb(13, 102, 208);
+  --spectrum-tooltip-negative-text-color: rgb(255, 255, 255);
+  --spectrum-tooltip-negative-icon-color: rgb(255, 255, 255);
+  --spectrum-tooltip-negative-background-color: rgb(201, 37, 45);
+  --spectrum-tooltip-negative-tip-color: rgb(201, 37, 45);
+  --spectrum-tooltip-positive-text-color: rgb(255, 255, 255);
+  --spectrum-tooltip-positive-icon-color: rgb(255, 255, 255);
+  --spectrum-tooltip-positive-background-color: rgb(18, 128, 92);
+  --spectrum-tooltip-positive-tip-color: rgb(18, 128, 92);
+}

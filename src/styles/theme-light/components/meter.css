@@ -1,0 +1,18 @@
+:root {
+  --spectrum-meter-large-text-color: rgb(75, 75, 75);
+  --spectrum-meter-large-track-color: rgb(225, 225, 225);
+  --spectrum-meter-large-track-fill-color: rgb(20, 115, 230);
+  --spectrum-meter-large-track-color-positive: rgb(45, 157, 120);
+  --spectrum-meter-large-track-color-warning: rgb(230, 134, 25);
+  --spectrum-meter-large-track-color-critical: rgb(227, 72, 80);
+  --spectrum-meter-large-track-color-disabled: rgb(225, 225, 225);
+  --spectrum-meter-large-track-fill-color-disabled: rgb(225, 225, 225);
+  --spectrum-meter-small-text-color: rgb(75, 75, 75);
+  --spectrum-meter-small-track-color: rgb(225, 225, 225);
+  --spectrum-meter-small-track-fill-color: rgb(20, 115, 230);
+  --spectrum-meter-small-track-color-positive: rgb(45, 157, 120);
+  --spectrum-meter-small-track-color-warning: rgb(230, 134, 25);
+  --spectrum-meter-small-track-color-critical: rgb(227, 72, 80);
+  --spectrum-meter-small-track-color-disabled: rgb(225, 225, 225);
+  --spectrum-meter-small-track-fill-color-disabled: rgb(225, 225, 225);
+}

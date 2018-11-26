@@ -1,0 +1,9 @@
+:root {
+  --spectrum-rail-content-width: 304px;
+  --spectrum-rail-handle-width: 2px;
+  --spectrum-rail-gripper-width: 4px;
+  --spectrum-rail-gripper-height: 16px;
+  --spectrum-rail-gripper-border-width-vertical: 4px;
+  --spectrum-rail-gripper-border-width-horizontal: 3px;
+  --spectrum-rail-gripper-border-radius: 2px;
+}

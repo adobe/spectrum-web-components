@@ -1,0 +1,7 @@
+:root {
+  --spectrum-breadcrumb-text-color: rgb(110, 110, 110);
+  --spectrum-breadcrumb-ui-icon-color: rgb(179, 179, 179);
+  --spectrum-breadcrumb-text-color-hover: rgb(44, 44, 44);
+  --spectrum-breadcrumb-text-color-down: rgb(44, 44, 44);
+  --spectrum-breadcrumb-text-color-key-focus: rgb(13, 102, 208);
+}

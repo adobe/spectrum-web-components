@@ -1,0 +1,38 @@
+:root {
+  --spectrum-clearbutton-medium-background-color: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-icon-color: rgb(142, 142, 142);
+  --spectrum-clearbutton-medium-background-color-hover: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-icon-color-hover: rgb(44, 44, 44);
+  --spectrum-clearbutton-medium-background-color-down: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-icon-color-down: rgb(44, 44, 44);
+  --spectrum-clearbutton-medium-background-color-key-focus: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-icon-color-key-focus: rgb(44, 44, 44);
+  --spectrum-clearbutton-medium-background-color-mouse-focus: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-icon-color-mouse-focus: rgb(44, 44, 44);
+  --spectrum-clearbutton-medium-background-color-disabled: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-icon-color-disabled: rgb(179, 179, 179);
+  --spectrum-clearbutton-medium-over-background-background-color: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-over-background-icon-color: rgb(255, 255, 255);
+  --spectrum-clearbutton-medium-over-background-background-color-hover: rgba(255,255,255,0.1);
+  --spectrum-clearbutton-medium-over-background-icon-color-hover: rgb(255, 255, 255);
+  --spectrum-clearbutton-medium-over-background-background-color-down: rgba(255,255,255,0.15);
+  --spectrum-clearbutton-medium-over-background-icon-color-down: rgb(255, 255, 255);
+  --spectrum-clearbutton-medium-over-background-background-color-key-focus: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-over-background-icon-color-key-focus: rgb(44, 44, 44);
+  --spectrum-clearbutton-medium-over-background-background-color-mouse-focus: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-over-background-icon-color-mouse-focus: rgb(44, 44, 44);
+  --spectrum-clearbutton-medium-over-background-background-color-disabled: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-medium-over-background-icon-color-disabled: rgb(179, 179, 179);
+  --spectrum-clearbutton-small-background-color: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-small-icon-color: rgb(142, 142, 142);
+  --spectrum-clearbutton-small-background-color-hover: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-small-icon-color-hover: rgb(44, 44, 44);
+  --spectrum-clearbutton-small-background-color-down: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-small-icon-color-down: rgb(44, 44, 44);
+  --spectrum-clearbutton-small-background-color-key-focus: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-small-icon-color-key-focus: rgb(44, 44, 44);
+  --spectrum-clearbutton-small-background-color-mouse-focus: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-small-icon-color-mouse-focus: rgb(44, 44, 44);
+  --spectrum-clearbutton-small-background-color-disabled: rgba(0, 0, 0, 0);
+  --spectrum-clearbutton-small-icon-color-disabled: rgb(179, 179, 179);
+}

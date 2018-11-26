@@ -1,0 +1,27 @@
+:host {
+    display: block;
+    width: 100%;
+}
+#heading {
+    display: block;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),
+        0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    margin: 32px;
+    margin-bottom: 0;
+    max-width: 600px;
+    width: 100%;
+}
+#heading-container {
+    margin: 32px;
+}
+h1 {
+    font-size: 45px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.54);
+}
+#container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,28 @@
+:root {
+  --spectrum-cyclebutton-text-color: rgb(75, 75, 75);
+  --spectrum-cyclebutton-icon-color: rgb(110, 110, 110);
+  --spectrum-cyclebutton-background-color: rgba(0, 0, 0, 0);
+  --spectrum-cyclebutton-border-color: rgba(0, 0, 0, 0);
+  --spectrum-cyclebutton-hold-icon-color: rgb(110, 110, 110);
+  --spectrum-cyclebutton-text-color-hover: rgb(44, 44, 44);
+  --spectrum-cyclebutton-icon-color-hover: rgb(44, 44, 44);
+  --spectrum-cyclebutton-background-color-hover: rgba(0, 0, 0, 0);
+  --spectrum-cyclebutton-border-color-hover: rgba(0, 0, 0, 0);
+  --spectrum-cyclebutton-hold-icon-color-hover: rgb(44, 44, 44);
+  --spectrum-cyclebutton-text-color-down: rgb(44, 44, 44);
+  --spectrum-cyclebutton-icon-color-down: rgb(44, 44, 44);
+  --spectrum-cyclebutton-background-color-down: rgb(225, 225, 225);
+  --spectrum-cyclebutton-border-color-down: rgb(225, 225, 225);
+  --spectrum-cyclebutton-hold-icon-color-down: rgb(44, 44, 44);
+  --spectrum-cyclebutton-text-color-key-focus: rgb(44, 44, 44);
+  --spectrum-cyclebutton-icon-color-key-focus: rgb(44, 44, 44);
+  --spectrum-cyclebutton-border-color-key-focus: rgb(38, 128, 235);
+  --spectrum-cyclebutton-background-color-key-focus: rgba(0, 0, 0, 0);
+  --spectrum-cyclebutton-hold-icon-color-key-focus: rgb(44, 44, 44);
+  --spectrum-cyclebutton-text-color-mouse-focus: rgb(44, 44, 44);
+  --spectrum-cyclebutton-text-color-disabled: rgb(179, 179, 179);
+  --spectrum-cyclebutton-icon-color-disabled: rgb(202, 202, 202);
+  --spectrum-cyclebutton-background-color-disabled: rgba(0, 0, 0, 0);
+  --spectrum-cyclebutton-border-color-disabled: rgba(0, 0, 0, 0);
+  --spectrum-cyclebutton-hold-icon-color-disabled: rgb(202, 202, 202);
+}

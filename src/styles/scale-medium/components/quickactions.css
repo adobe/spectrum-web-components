@@ -1,0 +1,12 @@
+:root {
+  --spectrum-quickactions-button-gap-y: 8px;
+  --spectrum-quickactions-button-gap-x: 8px;
+  --spectrum-quickactions-icon-button-gap-y: 8px;
+  --spectrum-quickactions-icon-button-gap-x: 8px;
+  --spectrum-quickactions-text-button-gap-y: 4px;
+  --spectrum-quickactions-text-button-gap-x: 4px;
+  --spectrum-quickactions-padding-x: 4px;
+  --spectrum-quickactions-padding-y: 4px;
+  --spectrum-quickactions-border-radius: 4px;
+  --spectrum-quickactions-height: 40px;
+}

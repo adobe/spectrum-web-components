@@ -1,0 +1,12 @@
+:root {
+  --spectrum-pagination-textfield-width: 48px;
+  --spectrum-pagination-counter-height: 32px;
+  --spectrum-pagination-counter-margin-left: 5px;
+  --spectrum-pagination-direction-button-text-size: 15px;
+  --spectrum-pagination-page-button-width: 32px;
+  --spectrum-pagination-page-button-line-height: 26px;
+  --spectrum-pagination-page-button-margin-horizontal: 5px;
+  --spectrum-pagination-page-button-border-size: 2px;
+  --spectrum-pagination-icon-width: 6px;
+  --spectrum-pagination-icon-height: 10px;
+}

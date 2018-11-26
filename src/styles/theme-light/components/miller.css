@@ -1,0 +1,17 @@
+:root {
+  --spectrum-miller-column-ui-icon-color: rgb(142, 142, 142);
+  --spectrum-miller-column-text-color: rgb(75, 75, 75);
+  --spectrum-miller-column-thumbnail-background-color: rgb(225, 225, 225);
+  --spectrum-miller-column-item-background-color-hover: rgb(234, 234, 234);
+  --spectrum-miller-column-ui-icon-color-hover: rgb(110, 110, 110);
+  --spectrum-miller-column-item-background-color-down: rgb(225, 225, 225);
+  --spectrum-miller-column-ui-icon-color-down: rgb(110, 110, 110);
+  --spectrum-miller-column-item-text-color-down: rgb(255, 255, 255);
+  --spectrum-miller-column-item-text-color-key-focus: rgb(38, 128, 235);
+  --spectrum-miller-column-item-background-color-selected: rgba(20,115,230,0.1);
+  --spectrum-miller-column-item-text-color-selected: rgb(255, 255, 255);
+  --spectrum-miller-column-thumbnail-background-color-selected: rgb(255, 255, 255);
+  --spectrum-miller-column-ui-icon-color-selected: rgb(110, 110, 110);
+  --spectrum-miller-column-item-background-color-selected-hover: rgba(20,115,230,0.2);
+  --spectrum-miller-column-ui-icon-color-selected-hover: rgb(44, 44, 44);
+}

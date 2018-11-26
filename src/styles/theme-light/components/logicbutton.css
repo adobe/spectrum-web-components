@@ -1,0 +1,22 @@
+:root {
+  --spectrum-logicbutton-and-text-color: rgb(255, 255, 255);
+  --spectrum-logicbutton-and-background-color: rgb(20, 115, 230);
+  --spectrum-logicbutton-and-border-color: rgb(20, 115, 230);
+  --spectrum-logicbutton-and-text-color-disabled: rgb(179, 179, 179);
+  --spectrum-logicbutton-and-background-color-disabled: rgb(234, 234, 234);
+  --spectrum-logicbutton-and-border-color-disabled: rgb(234, 234, 234);
+  --spectrum-logicbutton-and-background-color-hover: rgb(9, 90, 186);
+  --spectrum-logicbutton-and-border-color-hover: rgb(9, 90, 186);
+  --spectrum-logicbutton-and-background-color-key-focus: rgb(9, 90, 186);
+  --spectrum-logicbutton-and-border-color-key-focus: rgb(38, 128, 235);
+  --spectrum-logicbutton-or-text-color: rgb(255, 255, 255);
+  --spectrum-logicbutton-or-background-color: rgb(206, 39, 131);
+  --spectrum-logicbutton-or-border-color: rgb(206, 39, 131);
+  --spectrum-logicbutton-or-text-color-disabled: rgb(179, 179, 179);
+  --spectrum-logicbutton-or-background-color-disabled: rgb(234, 234, 234);
+  --spectrum-logicbutton-or-border-color-disabled: rgb(234, 234, 234);
+  --spectrum-logicbutton-or-background-color-hover: rgb(174, 14, 102);
+  --spectrum-logicbutton-or-border-color-hover: rgb(174, 14, 102);
+  --spectrum-logicbutton-or-background-color-key-focus: rgb(174, 14, 102);
+  --spectrum-logicbutton-or-border-color-key-focus: rgb(38, 128, 235);
+}

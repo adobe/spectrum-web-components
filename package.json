@@ -1,0 +1,51 @@
+{
+    "name": "spectrum-web-components",
+    "version": "0.0.1",
+    "description": "",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "split-spectrum": "./scripts/split-spectrum.js",
+        "prebuild": "rimraf dist",
+        "build:css": "./scripts/modularize-css.js",
+        "build:compile": "tsc",
+        "build:copy-files": "./scripts/copy-files.js",
+        "build": "npm run build:css && npm run build:compile && npm run build:copy-files",
+        "watch:css": "chokidar \"src/**/*.css\" -c \"npm run build:css\"",
+        "watch:compile": "chokidar \"src/**/*.ts\" -c \"npm run build:compile\"",
+        "watch:copy-files": "chokidar \"src/**/!(*.ts)\" -c \"npm run build:copy-files\"",
+        "watch": "npm run watch:css & npm run watch:compile & npm run watch:copy-files",
+        "serve": "npm run build && (./scripts/serve.js & npm run watch)"
+    },
+    "author": "",
+    "devDependencies": {
+        "@adobe/spectrum-css": "^2.6.0",
+        "@polymer/lit-element": "^0.6.3",
+        "@types/common-tags": "^1.4.0",
+        "@types/prismjs": "^1.9.0",
+        "@webcomponents/webcomponentsjs": "^2.2.0",
+        "browser-sync": "^2.26.3",
+        "chokidar-cli": "^1.2.1",
+        "common-tags": "^1.8.0",
+        "connect-browser-sync": "^2.1.0",
+        "cssnano": "^4.1.7",
+        "es-module-devserver": "^0.1.2",
+        "express": "^4.16.4",
+        "fs-extra": "^7.0.1",
+        "gulp": "^4.0.0",
+        "gulp-postcss": "^8.0.0",
+        "gulp-rename": "^1.4.0",
+        "gulp-wrap": "^0.14.0",
+        "linebyline": "^1.3.0",
+        "lit-html": "^0.13.0",
+        "postcss": "^7.0.6",
+        "postcss-import": "^12.0.1",
+        "prettier": "^1.15.2",
+        "prismjs": "^1.15.0",
+        "resolve": "^1.8.1",
+        "rimraf": "^2.6.2",
+        "serve-index": "^1.9.1",
+        "typescript": "^3.1.6"
+    }
+}

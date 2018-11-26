@@ -1,0 +1,28 @@
+:root {
+  --spectrum-tool-text-font-family: adobe-clean, "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Trebuchet MS", "Lucida Grande", sans-serif;
+  --spectrum-tool-text-font-style: normal;
+  --spectrum-tool-text-font-weight: 400;
+  --spectrum-tool-text-line-height: 1.5;
+  --spectrum-tool-text-letter-spacing: 0;
+  --spectrum-tool-text-transform: none;
+  --spectrum-tool-text-size: 14px;
+  --spectrum-tool-icon-size: 18px;
+  --spectrum-tool-text-baseline: 12px;
+  --spectrum-tool-height: 32px;
+  --spectrum-tool-min-width: 32px;
+  --spectrum-tool-border-radius: 4px;
+  --spectrum-tool-text-padding-x: 12px;
+  --spectrum-tool-icon-padding-x: 7px;
+  --spectrum-tool-icon-padding-y: 7px;
+  --spectrum-tool-hold-icon-padding-bottom: 3px;
+  --spectrum-tool-hold-icon-padding-right: 3px;
+  --spectrum-tool-hold-icon-size: 5px;
+  --spectrum-tool-touch-hit-x: 8px;
+  --spectrum-tool-touch-hit-y: 8px;
+  --spectrum-tool-border-size: 1px;
+  --spectrum-tool-border-size-hover: 1px;
+  --spectrum-tool-border-size-down: 1px;
+  --spectrum-tool-border-size-key-focus: 2px;
+  --spectrum-tool-border-size-disabled: 1px;
+  --spectrum-tool-border-size-selected-key-focus: 2px;
+}

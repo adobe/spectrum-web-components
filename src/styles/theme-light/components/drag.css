@@ -1,0 +1,6 @@
+:root {
+  --spectrum-drag-handle-background-color: rgb(225, 225, 225);
+  --spectrum-drag-handle-icon-color: rgb(255, 255, 255);
+  --spectrum-drag-handle-background-color-hover: rgb(179, 179, 179);
+  --spectrum-drag-handle-background-color-key-focus: rgb(38, 128, 235);
+}

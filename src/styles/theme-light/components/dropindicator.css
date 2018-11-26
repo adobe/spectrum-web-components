@@ -1,0 +1,5 @@
+:root {
+  --spectrum-dropindicator-border-color: rgb(38, 128, 235);
+  --spectrum-dropindicator-circle-border-color: rgb(38, 128, 235);
+  --spectrum-dropindicator-circle-border-fill: rgba(0, 0, 0, 0);
+}

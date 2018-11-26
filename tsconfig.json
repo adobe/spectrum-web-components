@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "experimentalDecorators": true,
+        "module": "esNext",
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "rootDir": "src",
+        "sourceMap": true,
+        "strict": true,
+        "target": "es2017"
+    },
+    "exclude": ["scripts", "dist"]
+}

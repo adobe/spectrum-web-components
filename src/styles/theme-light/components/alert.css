@@ -1,0 +1,26 @@
+:root {
+  --spectrum-alert-background-color: rgb(255, 255, 255);
+  --spectrum-alert-title-text-color: rgb(44, 44, 44);
+  --spectrum-alert-text-color: rgb(110, 110, 110);
+  --spectrum-alert-border-color: rgb(142, 142, 142);
+  --spectrum-alert-error-background-color: rgb(255, 255, 255);
+  --spectrum-alert-error-title-text-color: rgb(44, 44, 44);
+  --spectrum-alert-error-text-color: rgb(110, 110, 110);
+  --spectrum-alert-error-border-color: rgb(227, 72, 80);
+  --spectrum-alert-error-icon-color: rgb(201, 37, 45);
+  --spectrum-alert-info-background-color: rgb(255, 255, 255);
+  --spectrum-alert-info-title-text-color: rgb(44, 44, 44);
+  --spectrum-alert-info-text-color: rgb(110, 110, 110);
+  --spectrum-alert-info-border-color: rgb(38, 128, 235);
+  --spectrum-alert-info-icon-color: rgb(13, 102, 208);
+  --spectrum-alert-success-background-color: rgb(255, 255, 255);
+  --spectrum-alert-success-title-text-color: rgb(44, 44, 44);
+  --spectrum-alert-success-text-color: rgb(110, 110, 110);
+  --spectrum-alert-success-border-color: rgb(45, 157, 120);
+  --spectrum-alert-success-icon-color: rgb(18, 128, 92);
+  --spectrum-alert-warning-background-color: rgb(255, 255, 255);
+  --spectrum-alert-warning-title-text-color: rgb(44, 44, 44);
+  --spectrum-alert-warning-text-color: rgb(110, 110, 110);
+  --spectrum-alert-warning-border-color: rgb(230, 134, 25);
+  --spectrum-alert-warning-icon-color: rgb(203, 111, 16);
+}
