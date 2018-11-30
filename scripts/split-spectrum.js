@@ -6,6 +6,7 @@ const readline = require('linebyline');
 const splitCSS = (
     srcPath,
     dstPath,
+    components = [],
     topLevelModules = ['alias', 'global', 'semantic']
 ) => {
     const regex = new RegExp(/\s+--spectrum-([a-z]+)-.*/i);
@@ -36,6 +37,9 @@ const splitCSS = (
             if (isTopLevel) {
                 filePath = path.join(dstPath, fileName);
             } else {
+                if (!components.includes(moduleName)) {
+                    return;
+                }
                 filePath = path.join(dstPath, 'components', fileName);
                 fs.mkdirpSync(path.join(dstPath, 'components'));
             }
@@ -94,6 +98,9 @@ const themes = [
 const scales = ['medium' /* 'large' */];
 const cores = ['global'];
 
+// the components we should copy over
+const components = ['banner'];
+
 const processes = [];
 
 themes.forEach(async (theme) => {
@@ -102,7 +109,7 @@ themes.forEach(async (theme) => {
         path.join(__dirname, '..', 'src', 'styles', `theme-${theme}`)
     );
     console.log(`processing theme ${srcPath}`);
-    processes.push(splitCSS(srcPath, dstPath));
+    processes.push(splitCSS(srcPath, dstPath, components));
 });
 
 scales.forEach(async (scale) => {
@@ -111,7 +118,7 @@ scales.forEach(async (scale) => {
         path.join(__dirname, '..', 'src', 'styles', `scale-${scale}`)
     );
     console.log(`processing scale  ${srcPath}`);
-    processes.push(splitCSS(srcPath, dstPath));
+    processes.push(splitCSS(srcPath, dstPath, components));
 });
 
 cores.forEach(async (core) => {
@@ -120,7 +127,7 @@ cores.forEach(async (core) => {
         path.join(__dirname, '..', 'src', 'styles', `core-${core}`)
     );
     console.log(`processing core ${srcPath}`);
-    processes.push(splitCSS(srcPath, dstPath));
+    processes.push(splitCSS(srcPath, dstPath, components));
 });
 
 Promise.all(processes).then(() => {

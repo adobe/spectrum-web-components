@@ -1,9 +1,0 @@
-:root {
-  --spectrum-tray-padding-x: 8px;
-  --spectrum-tray-padding-y: 0;
-  --spectrum-tray-width: 100%;
-  --spectrum-tray-max-width: 375px;
-  --spectrum-tray-min-height: 64px;
-  --spectrum-tray-border-radius: 0px;
-  --spectrum-tray-full-width-border-radius: 4px;
-}

@@ -6,17 +6,17 @@
         "dist"
     ],
     "scripts": {
-        "split-spectrum": "./scripts/split-spectrum.js",
+        "split-spectrum": "node ./scripts/split-spectrum.js",
         "prebuild": "rimraf dist",
-        "build:css": "./scripts/modularize-css.js",
+        "build:css": "node ./scripts/modularize-css.js",
         "build:compile": "tsc",
-        "build:copy-files": "./scripts/copy-files.js",
+        "build:copy-files": "node ./scripts/copy-files.js",
         "build": "npm run build:css && npm run build:compile && npm run build:copy-files",
         "watch:css": "chokidar \"src/**/*.css\" -c \"npm run build:css\"",
         "watch:compile": "chokidar \"src/**/*.ts\" -c \"npm run build:compile\"",
         "watch:copy-files": "chokidar \"src/**/!(*.ts)\" -c \"npm run build:copy-files\"",
         "watch": "npm run watch:css & npm run watch:compile & npm run watch:copy-files",
-        "serve": "npm run build && (./scripts/serve.js & npm run watch)"
+        "serve": "npm run build && (node ./scripts/serve.js & npm run watch)"
     },
     "author": "",
     "devDependencies": {
