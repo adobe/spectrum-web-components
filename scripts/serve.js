@@ -16,9 +16,7 @@ const port = 3000;
 
 // setup browser sync to watch for change and trigger live reload
 const bs = browserSync.create();
-bs.watch(path.join(rootPath, '**/*.html')).on('change', bs.reload);
-bs.watch(path.join(rootPath, '**/*.css')).on('change', bs.reload);
-bs.watch(path.join(rootPath, '**/*.js')).on('change', bs.reload);
+bs.watch(path.join(rootPath, '**/(*.html|*.css|*.js)')).on('change', bs.reload);
 bs.init({ logSnippet: false });
 
 // setup express to use the browsersync middleware and inject the script tag
@@ -39,7 +37,9 @@ app.use(serveIndex(rootPath, { icons: true }));
 app.use(esModuleDevserver.middleware(rootPath));
 
 app.listen(port, () =>
-    console.log(
-        `Dev server listening at http://localhost:${port}/${DIST_FOLDER}/`
-    )
+    console.log(`
+=====================================================================
+Dev server listening at http://localhost:${port}/${DIST_FOLDER}/
+=====================================================================
+`)
 );
