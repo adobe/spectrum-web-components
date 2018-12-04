@@ -1,7 +1,8 @@
 {
+    "rulesDirectory": "./ts-rules",
     "extends": ["tslint:latest", "tslint-config-prettier"],
     "rules": {
-        "no-console": false,
-        "no-debugger": false
+        "no-submodule-imports": [true, "@polymer", "lit-html"],
+        "file-should-contain-header": [true, "./config/license.js"]
     }
 }

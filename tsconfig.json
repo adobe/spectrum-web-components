@@ -10,5 +10,5 @@
         "strict": true,
         "target": "es2017"
     },
-    "exclude": ["scripts", "dist"]
+    "exclude": ["scripts", "dist", "tasks", "ts-rules"]
 }

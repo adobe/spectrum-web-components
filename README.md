@@ -2,11 +2,13 @@
 
 Spectrum Web Components is a future-looking project to develop Adobe Spectrum design language based around web components, ES-Modules, and modern browser standards.
 
-It will not support older browsers and will only target modern ever-green browsers that fully implement the Custom Elements V1 specification, e.g. Chrome, Firefox, Safari, future versions of Edge. Polyfills will be avoided as much as possible.
+It will not support older browsers and will only target modern ever-green browsers that fully implement the Custom Elements V1 specification, e.g. Chrome, Firefox, Safari. Polyfills will be avoided as much as possible.
 
 # Requirements
 
-TODO
+-   NodeJS >= 8.10.0
+-   Typescript
+-   Browsers with Custom Elements V1 and Shadow DOM support, e.g. Chrome, Firefox, Safari.
 
 # Installation
 
