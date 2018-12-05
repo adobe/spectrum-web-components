@@ -112,7 +112,7 @@ const scales = ['medium' /* 'large' */];
 const cores = ['global'];
 
 // the components we should copy over
-const components = ['banner'];
+const components = ['banner', 'button'];
 
 const processes = [];
 

@@ -1,0 +1,61 @@
+:host {
+    /* default */
+    --spectrum-button-background-color: var(
+        --spectrum-button-primary-background-color
+    );
+    --spectrum-button-border-color: var(--spectrum-button-primary-border-color);
+    --spectrum-button-text-color: var(--spectrum-button-primary-text-color);
+    --spectrum-button-icon-color: var(--spectrum-button-primary-icon-color);
+    /* hover */
+    --spectrum-button-background-color-hover: var(
+        --spectrum-button-primary-background-color-hover
+    );
+    --spectrum-button-border-color-hover: var(
+        --spectrum-button-primary-border-color-hover
+    );
+    --spectrum-button-text-color-hover: var(
+        --spectrum-button-primary-text-color-hover
+    );
+    --spectrum-button-icon-color-hover: var(
+        --spectrum-button-primary-icon-color-hover
+    );
+    /* down */
+    --spectrum-button-background-color-down: var(
+        --spectrum-button-primary-background-color-down
+    );
+    --spectrum-button-border-color-down: var(
+        --spectrum-button-primary-border-color-down
+    );
+    --spectrum-button-text-color-down: var(
+        --spectrum-button-primary-text-color-down
+    );
+    --spectrum-button-icon-color-down: var(
+        --spectrum-button-primary-icon-color-down
+    );
+    /* disabled */
+    --spectrum-button-background-color-disabled: var(
+        --spectrum-button-primary-background-color-disabled
+    );
+    --spectrum-button-border-color-disabled: var(
+        --spectrum-button-primary-border-color-disabled
+    );
+    --spectrum-button-text-color-disabled: var(
+        --spectrum-button-primary-text-color-disabled
+    );
+    --spectrum-button-icon-color-disabled: var(
+        --spectrum-button-primary-icon-color-disabled
+    );
+    /* focus */
+    --spectrum-button-background-color-focus: var(
+        --spectrum-button-primary-background-color-key-focus
+    );
+    --spectrum-button-border-color-focus: var(
+        --spectrum-button-primary-border-color-key-focus
+    );
+    --spectrum-button-text-color-focus: var(
+        --spectrum-button-primary-text-color-key-focus
+    );
+    --spectrum-button-icon-color-focus: var(
+        --spectrum-button-primary-icon-color-key-focus
+    );
+}

@@ -37,12 +37,27 @@ const buildCSS = () => {
                 postcss([
                     // inline imports since we can't resolve paths from within web components
                     require('postcss-import'),
-                    // minify the css with cssnano presets
-                    require('cssnano')({ preset: 'default' }),
+                    require('postcss-inherit'),
+                    require('postcss-preset-env')({
+                        stage: 0,
+                        browsers: [
+                            'last 2 Chrome versions',
+                            'Firefox >= 63',
+                            'Safari >= 10.1',
+                        ],
+                    }),
                 ])
             )
             // output processed css files to destination folder
             .pipe(gulp.dest(dstPath))
+            // run postcss again, this time with minificatation, since we're going to pack css into js strings
+            // the users build process will not be able to update our js files easily, so lets do it in advance
+            .pipe(
+                postcss([
+                    // minify the css with cssnano presets
+                    require('cssnano')({ preset: 'default' }),
+                ])
+            )
             // now wrap the css files in ES-modules for easy import in javascript
             .pipe(
                 wrap(

@@ -20,7 +20,7 @@ const browserSync = require('browser-sync');
 const serveIndex = require('serve-index');
 
 const DIST_FOLDER = 'dist';
-const rootPath = path.resolve(path.join(__dirname, '..', DIST_FOLDER, '..'));
+const rootPath = path.resolve(path.join(__dirname, '..'));
 
 const app = express();
 const port = 3000;
@@ -29,7 +29,10 @@ const port = 3000;
 
 // setup browser sync to watch for change and trigger live reload
 const bs = browserSync.create();
-bs.watch(path.join(rootPath, '**/(*.html|*.css|*.js)')).on('change', bs.reload);
+bs.watch(path.join(rootPath, 'dist/**/(*.html|*.css|*.js)')).on(
+    'change',
+    bs.reload
+);
 bs.init({ logSnippet: false });
 
 // setup express to use the browsersync middleware and inject the script tag

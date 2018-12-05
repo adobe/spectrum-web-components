@@ -9,17 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const gulp = require('gulp');
 
-// import the tasks
-const { buildCSS, watchBuildCSS } = require('./tasks/build-css');
-const { compile, watchCompile } = require('./tasks/compile');
-const { copyFiles, watchCopyFiles } = require('./tasks/copy-files');
+// import the global stylesheets
+import '../../dist/styles/core-global/all.css';
+import '../../dist/styles/typography/font.css';
 
-// default is to compile, build and copy
-const defaultTasks = gulp.parallel(compile, buildCSS, copyFiles);
-// watch variations of default task
-const watchTasks = gulp.parallel(watchCompile, watchBuildCSS, watchCopyFiles);
+// import skin and scale stylesheets for our used components
+import '../../dist/styles/theme-light/components/button.css';
+import '../../dist/styles/scale-medium/components/button.css';
 
-exports.default = defaultTasks;
-exports.watch = watchTasks;
+// import the components we'll use in this page
+import '../../dist/components/button/button-primary';

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+
+        <title>Example App</title>
+        <link
+            rel="stylesheet"
+            href="<%=htmlWebpackPlugin.files.chunks.main.css %>"
+        />
+    </head>
+
+    <body>
+        <spectrum-button-primary>Launch App</spectrum-button-primary>
+        <script
+            async
+            src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"
+        ></script>
+    </body>
+</html>
