@@ -23,6 +23,7 @@ const splitCSS = (
         selector = '',
         components = [],
         topLevelModules = ['alias', 'global', 'semantic'],
+        license = '',
     }
 ) => {
     const regex = new RegExp(/\s+--spectrum-([a-z]+)-.*/i);
@@ -37,6 +38,7 @@ const splitCSS = (
         let fd;
 
         let indexFd = fs.openSync(path.join(dstPath, 'all.css'), 'w');
+        fs.writeSync(indexFd, `${license}\n`);
 
         rl.on('line', (line) => {
             const match = line.match(regex);
@@ -76,7 +78,7 @@ const splitCSS = (
                 // open the new file
                 fd = fs.openSync(filePath, 'w'); // overwrite existing files
                 // write the root selector with optional selector
-                fs.writeSync(fd, `:root ${selector} {\n`);
+                fs.writeSync(fd, `${license}\n:root ${selector} {\n`);
             }
             // write the line to the file with appended newline
             fs.writeSync(fd, `${match[0]}\n`);
@@ -101,6 +103,10 @@ const splitCSS = (
     });
 };
 
+// load our license file
+const license = fs.readFileSync(
+    path.join(__dirname, '..', 'config', 'license.js')
+);
 // where is spectrum-css?
 // TODO: use resolve package to find node_modules
 const spectrumPath = path.resolve(
@@ -130,6 +136,7 @@ themes.forEach(async (theme) => {
         splitCSS(srcPath, dstPath, {
             selector: `.spectrum-${theme}`,
             components,
+            license,
         })
     );
 });
@@ -144,6 +151,7 @@ scales.forEach(async (scale) => {
         splitCSS(srcPath, dstPath, {
             selector: `.spectrum-${scale}`,
             components,
+            license,
         })
     );
 });
@@ -157,6 +165,7 @@ cores.forEach(async (core) => {
     processes.push(
         splitCSS(srcPath, dstPath, {
             components,
+            license,
         })
     );
 });
