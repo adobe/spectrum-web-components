@@ -8,7 +8,8 @@
         "rootDir": "src",
         "sourceMap": true,
         "strict": true,
+        "noUnusedLocals": true,
         "target": "es2017"
     },
-    "exclude": ["scripts", "dist", "tasks", "ts-rules"]
+    "exclude": ["scripts", "dist", "tasks", "linters", "example-project"]
 }
