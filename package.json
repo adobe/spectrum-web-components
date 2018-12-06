@@ -15,7 +15,7 @@
         "watch": "gulp watch",
         "serve": "npm run build && (node ./scripts/serve.js & npm run watch)",
         "license-check": "gulp licenses",
-        "lint": "eslint --ignore-path .gitignore scripts/**/*.js && tslint src/**/*.ts && npm run license-check"
+        "lint": "eslint --ignore-path .gitignore scripts/**/*.js && tslint src/**/*.ts"
     },
     "husky": {
         "hooks": {
@@ -51,7 +51,6 @@
         "gulp-cli": "^2.0.1",
         "gulp-debug": "^4.0.0",
         "gulp-header": "^2.0.5",
-        "gulp-license-check": "^1.2.1",
         "gulp-postcss": "^8.0.0",
         "gulp-rename": "^1.4.0",
         "gulp-typescript": "^5.0.0-alpha.3",
