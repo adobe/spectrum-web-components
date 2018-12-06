@@ -26,6 +26,8 @@ const pkg = require('./package.json');
 const ENV = process.argv.find((arg) => arg.includes('NODE_ENV=production'))
     ? 'production'
     : 'development';
+const IS_DEV = ENV === 'development';
+
 const IS_DEV_SERVER = process.argv.find((arg) =>
     arg.includes('webpack-dev-server')
 );
@@ -69,6 +71,12 @@ const plugins = [
         template: './src/index.html',
         filename: 'index.html',
     }),
+    new HtmlWebpackPlugin({
+        inject: false,
+        hash: true,
+        template: './src/index.html',
+        filename: 'index.html',
+    }),
     new WebpackMd5Hash(),
 ];
 
@@ -94,6 +102,22 @@ const shared = (env) => {
         );
     }
 
+    let cssLoaders = ['css-loader'];
+    if (!IS_DEV) {
+        cssLoaders = [
+            {
+                loader: 'css-loader',
+                options: { importLoaders: 1 },
+            },
+            {
+                loader: 'postcss-loader',
+                options: {
+                    plugins: (loader) => [require('cssnano')],
+                },
+            },
+        ];
+    }
+
     return {
         entry: {
             main: './src/index.js',
@@ -110,7 +134,7 @@ const shared = (env) => {
                     test: /\.css$/,
                     use: ExtractTextPlugin.extract({
                         fallback: 'style-loader',
-                        use: 'css-loader',
+                        use: cssLoaders,
                     }),
                 },
             ],

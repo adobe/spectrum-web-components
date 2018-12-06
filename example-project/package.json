@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build:deps": "cd .. && npm run build",
-        "build": "npm run build:deps && webpack",
+        "build": "webpack",
         "build:prod": "npm run build:deps && webpack --env.NODE_ENV=production --optimize-minimize"
     },
     "author": "",
@@ -14,8 +14,10 @@
         "clean-webpack-plugin": "^1.0.0",
         "copy-webpack-plugin": "^4.6.0",
         "css-loader": "^1.0.1",
+        "cssnano": "^4.1.7",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
         "html-webpack-plugin": "^3.2.0",
+        "postcss-loader": "^3.0.0",
         "style-loader": "^0.23.1",
         "webpack": "^4.27.0",
         "webpack-bundle-analyzer": "^3.0.3",

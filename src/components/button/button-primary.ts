@@ -16,24 +16,6 @@ import primaryButtonStyles from './button-primary.css.js';
 import { SpectrumButton } from './button';
 
 export class SpectrumPrimaryButton extends SpectrumButton {
-    /**
-     * Getter for variant attribute
-     */
-    public get variant(): string | null {
-        return this.getAttribute('variant');
-    }
-
-    /**
-     * Setter for variant attribute
-     */
-    public set variant(value: string | null) {
-        if (value) {
-            this.setAttribute('variant', value);
-        } else {
-            this.removeAttribute('variant');
-        }
-    }
-
     protected render() {
         const renderedHTML = super.render();
         return /* html */ `

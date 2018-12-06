@@ -11,29 +11,22 @@ governing permissions and limitations under the License.
 */
 
 // @ts-ignore - css generated at build time
-import buttonStyles from './button.css.js';
+import secondaryButtonStyles from './button-secondary.css.js';
 
-export class SpectrumButton extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        if (!this.shadowRoot) {
-            throw new Error('Failed to attach ShadowRoot!');
-        }
-        this.shadowRoot.innerHTML = this.render();
-    }
+import { SpectrumButton } from './button';
 
+export class SpectrumSecondaryButton extends SpectrumButton {
     protected render() {
+        const renderedHTML = super.render();
         return /* html */ `
+            ${renderedHTML}
             <style>
-                ${buttonStyles}
+                ${secondaryButtonStyles}
             </style>
-            <div id="icon"><slot name="icon"></slot></div>
-            <div id="label"><slot></slot></div>
         `;
     }
 }
 
-if (!customElements.get('spectrum-button')) {
-    customElements.define('spectrum-button', SpectrumButton);
+if (!customElements.get('spectrum-button-secondary')) {
+    customElements.define('spectrum-button-secondary', SpectrumSecondaryButton);
 }

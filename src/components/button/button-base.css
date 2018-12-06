@@ -49,3 +49,8 @@
 #label:empty {
     display: none;
 }
+
+slot[name='icon']::slotted(svg) {
+    width: var(--spectrum-alias-workflow-icon-size, 18px);
+    height: var(--spectrum-alias-workflow-icon-size, 18px);
+}

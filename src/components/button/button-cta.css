@@ -1,4 +1,4 @@
-:host([variant='cta']) {
+:host {
     /* default */
     --spectrum-button-background-color: var(
         --spectrum-button-cta-background-color

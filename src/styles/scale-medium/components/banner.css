@@ -1,7 +1,7 @@
-:root {
-  --spectrum-banner-border-radius: 8px;
-  --spectrum-banner-padding-y: 4px;
-  --spectrum-banner-padding-x: 8px;
-  --spectrum-banner-text-size: 12px;
-  --spectrum-banner-text-line-height: 1.3;
+:root .spectrum-medium {
+    --spectrum-banner-border-radius: 8px;
+    --spectrum-banner-padding-y: 4px;
+    --spectrum-banner-padding-x: 8px;
+    --spectrum-banner-text-size: 12px;
+    --spectrum-banner-text-line-height: 1.3;
 }

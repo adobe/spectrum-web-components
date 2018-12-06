@@ -19,8 +19,11 @@ const readline = require('linebyline');
 const splitCSS = (
     srcPath,
     dstPath,
-    components = [],
-    topLevelModules = ['alias', 'global', 'semantic']
+    {
+        selector = '',
+        components = [],
+        topLevelModules = ['alias', 'global', 'semantic'],
+    }
 ) => {
     const regex = new RegExp(/\s+--spectrum-([a-z]+)-.*/i);
 
@@ -72,8 +75,8 @@ const splitCSS = (
                 fs.writeSync(indexFd, `@import "${relativePath}";\n`);
                 // open the new file
                 fd = fs.openSync(filePath, 'w'); // overwrite existing files
-                // write the root selector
-                fs.writeSync(fd, ':root {\n');
+                // write the root selector with optional selector
+                fs.writeSync(fd, `:root ${selector} {\n`);
             }
             // write the line to the file with appended newline
             fs.writeSync(fd, `${match[0]}\n`);
@@ -106,7 +109,8 @@ const spectrumPath = path.resolve(
 
 // sources to use from spectrum-css
 const themes = [
-    'light' /*'dark', 'darkest', 'lightest', 'middark', 'midlight'*/,
+    'light',
+    'dark' /*'darkest', 'lightest', 'middark', 'midlight'*/,
 ];
 const scales = ['medium' /* 'large' */];
 const cores = ['global'];
@@ -122,7 +126,12 @@ themes.forEach(async (theme) => {
         path.join(__dirname, '..', 'src', 'styles', `theme-${theme}`)
     );
     console.log(`processing theme ${srcPath}`);
-    processes.push(splitCSS(srcPath, dstPath, components));
+    processes.push(
+        splitCSS(srcPath, dstPath, {
+            selector: `.spectrum-${theme}`,
+            components,
+        })
+    );
 });
 
 scales.forEach(async (scale) => {
@@ -131,7 +140,12 @@ scales.forEach(async (scale) => {
         path.join(__dirname, '..', 'src', 'styles', `scale-${scale}`)
     );
     console.log(`processing scale  ${srcPath}`);
-    processes.push(splitCSS(srcPath, dstPath, components));
+    processes.push(
+        splitCSS(srcPath, dstPath, {
+            selector: `.spectrum-${scale}`,
+            components,
+        })
+    );
 });
 
 cores.forEach(async (core) => {
@@ -140,7 +154,11 @@ cores.forEach(async (core) => {
         path.join(__dirname, '..', 'src', 'styles', `core-${core}`)
     );
     console.log(`processing core ${srcPath}`);
-    processes.push(splitCSS(srcPath, dstPath, components));
+    processes.push(
+        splitCSS(srcPath, dstPath, {
+            components,
+        })
+    );
 });
 
 Promise.all(processes).then(() => {

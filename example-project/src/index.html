@@ -6,12 +6,23 @@
         <title>Example App</title>
         <link
             rel="stylesheet"
-            href="<%=htmlWebpackPlugin.files.chunks.main.css %>"
+            href="<%= htmlWebpackPlugin.files.chunks.main.css %>"
         />
+        <style>
+            html,
+            body {
+                background-color: var(
+                    --spectrum-alias-background-color-default
+                );
+                color: var(--spectrum-alias-text-color);
+            }
+        </style>
     </head>
 
-    <body>
-        <spectrum-button-primary>Launch App</spectrum-button-primary>
+    <body class="spectrum-light spectrum-medium">
+        Switch themes:
+        <spectrum-button-primary id="light">Light</spectrum-button-primary>
+        <spectrum-button-secondary id="dark">Dark</spectrum-button-secondary>
         <script
             async
             src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"
