@@ -1,0 +1,7 @@
+{
+    "plugins": ["./linters/stylelint-header"],
+    "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+    "rules": {
+        "header/header": "config/license.js"
+    }
+}

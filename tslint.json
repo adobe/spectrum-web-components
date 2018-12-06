@@ -1,5 +1,5 @@
 {
-    "rulesDirectory": "./ts-rules",
+    "rulesDirectory": "./linters/ts-rules",
     "extends": ["tslint:latest", "tslint-config-prettier"],
     "rules": {
         "no-submodule-imports": [true, "@polymer", "lit-html"],

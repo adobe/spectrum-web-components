@@ -15,13 +15,11 @@ const gulp = require('gulp');
 const { buildCSS, watchBuildCSS } = require('./tasks/build-css');
 const { compile, watchCompile } = require('./tasks/compile');
 const { copyFiles, watchCopyFiles } = require('./tasks/copy-files');
-const { checkLicenseNotices } = require('./tasks/check-license-notices');
 
 // default is to compile, build and copy
 const defaultTasks = gulp.parallel(compile, buildCSS, copyFiles);
 // watch variations of default task
 const watchTasks = gulp.parallel(watchCompile, watchBuildCSS, watchCopyFiles);
 
-exports.licenses = checkLicenseNotices;
 exports.default = defaultTasks;
 exports.watch = watchTasks;

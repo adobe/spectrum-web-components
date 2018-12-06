@@ -18,6 +18,7 @@ governing permissions and limitations under the License.
     --spectrum-button-border-color: var(--spectrum-button-cta-border-color);
     --spectrum-button-text-color: var(--spectrum-button-cta-text-color);
     --spectrum-button-icon-color: var(--spectrum-button-cta-icon-color);
+
     /* hover */
     --spectrum-button-background-color-hover: var(
         --spectrum-button-cta-background-color-hover
@@ -31,6 +32,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color-hover: var(
         --spectrum-button-cta-icon-color-hover
     );
+
     /* down */
     --spectrum-button-background-color-down: var(
         --spectrum-button-cta-background-color-down
@@ -44,6 +46,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color-down: var(
         --spectrum-button-cta-icon-color-down
     );
+
     /* disabled */
     --spectrum-button-background-color-disabled: var(
         --spectrum-button-cta-background-color-disabled
@@ -57,6 +60,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color-disabled: var(
         --spectrum-button-cta-icon-color-disabled
     );
+
     /* focus */
     --spectrum-button-background-color-focus: var(
         --spectrum-button-cta-background-color-key-focus

@@ -14,8 +14,7 @@
         "build": "gulp",
         "watch": "gulp watch",
         "serve": "npm run build && (node ./scripts/serve.js & npm run watch)",
-        "license-check": "gulp licenses",
-        "lint": "eslint --ignore-path .gitignore scripts/**/*.js && tslint src/**/*.ts"
+        "lint": "eslint --ignore-path .gitignore scripts/**/*.js && tslint src/**/*.ts && stylelint src/**/*.css"
     },
     "husky": {
         "hooks": {
@@ -68,6 +67,9 @@
         "resolve": "^1.8.1",
         "rimraf": "^2.6.2",
         "serve-index": "^1.9.1",
+        "stylelint": "^9.9.0",
+        "stylelint-config-prettier": "^4.0.0",
+        "stylelint-config-standard": "^18.2.0",
         "tslint": "^5.11.0",
         "tslint-config-prettier": "^1.17.0",
         "typescript": "^3.1.6"

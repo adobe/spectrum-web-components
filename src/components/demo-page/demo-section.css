@@ -35,7 +35,7 @@ h2 {
     font-weight: 400;
 }
 #demo-container {
-    background: var(--demo-section-demo-bg-color, #eeeeee);
+    background: var(--demo-section-demo-bg-color, #eee);
     padding: 16px;
     display: flex;
     flex-direction: column;
@@ -46,15 +46,17 @@ h2 {
     justify-content: center;
     align-items: center;
 }
+
 /* handle visibility toggling of demo code */
 #demo-code {
     display: none;
-    background-color: var(--demo-section-code-bg-color, #ffffff);
-    border: 1px solid var(--demo-section-code-border-color, #dddddd);
+    background-color: var(--demo-section-code-bg-color, #fff);
+    border: 1px solid var(--demo-section-code-border-color, #ddd);
 }
 :host([show-demo-code]) #demo-code {
     display: block;
 }
+
 /* add padding on elements slotted into demo slot */
 slot[name='demo']::slotted(*) {
     margin: 8px;

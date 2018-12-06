@@ -18,6 +18,7 @@ governing permissions and limitations under the License.
     --spectrum-button-border-color: var(--spectrum-button-primary-border-color);
     --spectrum-button-text-color: var(--spectrum-button-primary-text-color);
     --spectrum-button-icon-color: var(--spectrum-button-primary-icon-color);
+
     /* hover */
     --spectrum-button-background-color-hover: var(
         --spectrum-button-primary-background-color-hover
@@ -31,6 +32,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color-hover: var(
         --spectrum-button-primary-icon-color-hover
     );
+
     /* down */
     --spectrum-button-background-color-down: var(
         --spectrum-button-primary-background-color-down
@@ -44,6 +46,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color-down: var(
         --spectrum-button-primary-icon-color-down
     );
+
     /* disabled */
     --spectrum-button-background-color-disabled: var(
         --spectrum-button-primary-background-color-disabled
@@ -57,6 +60,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color-disabled: var(
         --spectrum-button-primary-icon-color-disabled
     );
+
     /* focus */
     --spectrum-button-background-color-focus: var(
         --spectrum-button-primary-background-color-key-focus
@@ -85,6 +89,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color: var(
         --spectrum-button-quiet-primary-icon-color
     );
+
     /* hover */
     --spectrum-button-background-color-hover: var(
         --spectrum-button-quiet-primary-background-color-hover
@@ -98,6 +103,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color-hover: var(
         --spectrum-button-quiet-primary-icon-color-hover
     );
+
     /* down */
     --spectrum-button-background-color-down: var(
         --spectrum-button-quiet-primary-background-color-down
@@ -111,6 +117,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color-down: var(
         --spectrum-button-quiet-primary-icon-color-down
     );
+
     /* disabled */
     --spectrum-button-background-color-disabled: var(
         --spectrum-button-quiet-primary-background-color-disabled
@@ -124,6 +131,7 @@ governing permissions and limitations under the License.
     --spectrum-button-icon-color-disabled: var(
         --spectrum-button-quiet-primary-icon-color-disabled
     );
+
     /* focus */
     --spectrum-button-background-color-focus: var(
         --spectrum-button-quiet-primary-background-color-key-focus
