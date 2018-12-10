@@ -6,7 +6,8 @@
         "dist"
     ],
     "engines": {
-        "node": ">=8.10.0"
+        "node": ">=8.10.0",
+        "yarn": ">=1.12.3"
     },
     "scripts": {
         "split-spectrum": "node ./scripts/split-spectrum.js",
