@@ -16,6 +16,8 @@ const gulp = require('gulp');
 const cached = require('gulp-cached');
 const debug = require('gulp-debug');
 const ts = require('gulp-typescript');
+const sourcemaps = require('gulp-sourcemaps');
+const merge = require('merge2');
 
 const tsProject = ts.createProject('tsconfig.json');
 
@@ -27,9 +29,20 @@ const compile = () => {
         .src(path.join(srcPath, '**/*.ts'))
         .pipe(cached('typescript'))
         .pipe(debug({ title: 'typescript' }))
+        .pipe(sourcemaps.init())
         .pipe(tsProject());
 
-    return tsResult.js.pipe(gulp.dest(dstPath));
+    return merge([
+        tsResult.js
+            .pipe(
+                sourcemaps.write('.', {
+                    includeContent: false,
+                    sourceRoot: './',
+                })
+            )
+            .pipe(gulp.dest(dstPath)),
+        tsResult.dts.pipe(gulp.dest(path.join(dstPath, 'types'))),
+    ]);
 };
 
 const watchCompile = () => {
