@@ -34,6 +34,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-text-color-disabled: rgb(92, 92, 92);
     --spectrum-alias-text-color-invalid: rgb(236, 91, 98);
     --spectrum-alias-text-color-selected: rgb(75, 156, 245);
+    --spectrum-alias-text-color-selected-neutral: rgb(255, 255, 255);
     --spectrum-alias-title-text-color: rgb(255, 255, 255);
     --spectrum-alias-heading-text-color: rgb(255, 255, 255);
     --spectrum-alias-border-color: rgb(62, 62, 62);
@@ -57,6 +58,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-icon-color-down: rgb(255, 255, 255);
     --spectrum-alias-icon-color-focus: rgb(255, 255, 255);
     --spectrum-alias-icon-color-disabled: rgb(77, 77, 77);
+    --spectrum-alias-icon-color-selected-neutral: rgb(255, 255, 255);
     --spectrum-alias-icon-color-selected: rgb(55, 142, 240);
     --spectrum-alias-icon-color-selected-hover: rgb(75, 156, 245);
     --spectrum-alias-icon-color-selected-down: rgb(90, 169, 250);

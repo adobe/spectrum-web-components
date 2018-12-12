@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 :root .spectrum-medium {
     --spectrum-global-dimension-scale-factor: 1;
+    --spectrum-global-dimension-size-0: 0;
     --spectrum-global-dimension-size-10: 1px;
     --spectrum-global-dimension-size-25: 2px;
     --spectrum-global-dimension-size-40: 3px;
@@ -34,6 +35,7 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-size-400: 32px;
     --spectrum-global-dimension-size-450: 36px;
     --spectrum-global-dimension-size-500: 40px;
+    --spectrum-global-dimension-size-550: 44px;
     --spectrum-global-dimension-size-600: 48px;
     --spectrum-global-dimension-size-700: 56px;
     --spectrum-global-dimension-size-800: 64px;

@@ -1,0 +1,307 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+:host {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-width: var(--spectrum-card-min-width);
+    border: var(--spectrum-card-border-size) solid transparent;
+    border-radius: var(--spectrum-card-border-radius);
+    border-color: var(--spectrum-card-border-color);
+    background-color: var(--spectrum-card-background-color);
+}
+
+:host(:focus) {
+    outline: none;
+}
+
+:host(:hover) {
+    border-color: var(--spectrum-card-border-color-hover);
+}
+
+:host(:focus) .quick-actions,
+:host(:focus) .actions,
+:host(:hover) .quick-actions,
+:host(:hover) .actions,
+:host([selected]) .quick-actions,
+:host([selected]) .actions {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+}
+
+:host(:focus),
+:host([selected]) {
+    border-color: var(--spectrum-card-border-color-key-focus);
+    box-shadow: 0 0 0 1px var(--spectrum-card-border-color-key-focus);
+}
+
+:host([drop-target]) {
+    border-color: var(--spectrum-card-border-color-key-focus);
+    box-shadow: 0 0 0 1px var(--spectrum-card-border-color-key-focus);
+    background-color: var(--spectrum-alias-highlight-selected);
+}
+
+:host([type='small']) {
+    min-width: var(--spectrum-card-quiet-small-min-size);
+}
+
+:host([type='quiet']),
+:host([type='gallery']) {
+    width: 100%;
+    height: 100%;
+    min-width: var(--spectrum-card-quiet-min-size);
+    border-width: 0;
+    border-radius: 0;
+    overflow: visible;
+    border-color: transparent;
+    background-color: transparent;
+}
+
+:host([type='quiet']:hover),
+:host([type='gallery']:hover) {
+    border-color: transparent;
+}
+
+:host([type='gallery']) {
+    min-width: 0;
+}
+
+:host([type='quiet']:focus),
+:host([type='gallery']:focus),
+:host([type='quiet'][selected]),
+:host([type='gallery'][selected]) {
+    border-color: transparent;
+    box-shadow: none;
+}
+
+:host([type='quiet'][drop-target]),
+:host([type='gallery'][drop-target]) {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+slot[name='cover-photo']::slotted(*) {
+    height: var(--spectrum-card-coverphoto-height);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: var(--spectrum-card-coverphoto-border-bottom-size) solid
+        transparent;
+    border-radius: calc(var(--spectrum-card-border-radius) - 1px)
+        calc(var(--spectrum-card-border-radius) - 1px) 0 0;
+    background-size: cover;
+    background-position: center center;
+    background-color: var(--spectrum-card-coverphoto-background-color);
+    border-bottom-color: var(--spectrum-card-coverphoto-border-color);
+}
+
+slot[name='title']::slotted(*) {
+    font-size: var(--spectrum-card-title-text-size);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: var(--spectrum-card-title-padding-right);
+    color: var(--spectrum-card-quiet-title-text-color);
+}
+
+#header {
+    display: flex;
+    align-items: baseline;
+    height: var(--spectrum-card-body-header-height);
+}
+
+#body {
+    padding-top: var(--spectrum-card-body-padding-top);
+    padding-right: var(--spectrum-card-body-padding-right);
+    padding-bottom: var(--spectrum-card-body-padding-bottom);
+    padding-left: var(--spectrum-card-body-padding-left);
+}
+
+#body:last-child {
+    border-radius: 0 0 var(--spectrum-card-border-radius)
+        var(--spectrum-card-border-radius);
+}
+
+#content {
+    display: flex;
+    height: var(--spectrum-card-body-content-height);
+    margin-top: var(--spectrum-card-body-content-margin-top);
+}
+
+#subtitle {
+    font-size: var(--spectrum-card-subtitle-text-size);
+    letter-spacing: var(--spectrum-card-subtitle-letter-spacing);
+    text-transform: uppercase;
+    padding-right: var(--spectrum-card-subtitle-padding-right);
+    color: var(--spectrum-card-quiet-subtitle-text-color);
+}
+
+#description {
+    font-size: var(--spectrum-card-subtitle-text-size);
+    color: var(--spectrum-card-description-text-color);
+}
+
+#subtitle + #description::before {
+    content: '•';
+    padding-right: var(--spectrum-card-subtitle-padding-right);
+}
+
+#footer {
+    padding-top: var(--spectrum-card-footer-padding-top);
+    margin-right: var(--spectrum-card-body-padding-right);
+    padding-bottom: var(--spectrum-card-body-padding-bottom);
+    margin-left: var(--spectrum-card-body-padding-left);
+    border-top: var(--spectrum-card-footer-border-top-size) solid;
+    border-color: var(--spectrum-card-border-color);
+}
+
+#actions {
+    position: absolute;
+    right: var(--spectrum-card-actions-margin);
+    top: var(--spectrum-card-actions-margin);
+    height: var(--spectrum-quickactions-height);
+    visibility: hidden;
+}
+
+#quick-actions {
+    position: absolute;
+    left: var(--spectrum-card-checkbox-margin);
+    top: var(--spectrum-card-checkbox-margin);
+    width: var(--spectrum-quickactions-height);
+    height: var(--spectrum-quickactions-height);
+    visibility: hidden;
+}
+
+#quick-actions .spectrum-Checkbox {
+    margin: 0;
+}
+
+#preview {
+    overflow: hidden;
+    border-radius: calc(var(--spectrum-card-border-radius) - 1px)
+        calc(var(--spectrum-card-border-radius) - 1px) 0 0;
+}
+
+#action-button {
+    flex: 1;
+    align-self: center;
+    display: flex;
+    justify-content: flex-end;
+}
+
+:host([type='quiet']) #preview,
+:host([type='gallery']) #preview {
+    width: 100%;
+    flex: 1;
+    min-height: var(--spectrum-card-quiet-min-size);
+    padding: var(--spectrum-card-quiet-preview-padding);
+    margin: 0 auto;
+    box-sizing: border-box;
+    border-radius: var(--spectrum-card-quiet-border-radius);
+    position: relative;
+    transition: background-color var(--spectrum-transition-time);
+    background-color: var(--spectrum-card-quiet-preview-background-color);
+}
+
+:host([type='quiet']) #preview::before,
+:host([type='gallery']) #preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: inherit;
+    border: var(--spectrum-card-quiet-border-size) solid transparent;
+}
+
+:host([type='quiet']:hover) #preview,
+:host([type='gallery']:hover) #preview {
+    background-color: var(--spectrum-card-quiet-preview-background-color-hover);
+}
+
+:host([type='quiet']) #header {
+    height: var(--spectrum-card-quiet-body-header-height);
+    margin-top: var(--spectrum-card-quiet-body-header-margin-top);
+}
+
+:host([type='quiet']) #body {
+    padding: 0;
+}
+
+:host([type='small']) #quick-actions {
+    left: var(--spectrum-card-quiet-small-checkbox-margin);
+    top: var(--spectrum-card-quiet-small-checkbox-margin);
+}
+
+:host([type='small']) #preview {
+    padding: var(--spectrum-card-quiet-small-preview-padding);
+    min-height: var(--spectrum-card-quiet-small-min-size);
+}
+
+:host([type='small']) #header {
+    margin-top: var(--spectrum-card-quiet-small-body-margin-top);
+    height: var(--spectrum-card-quiet-small-body-header-height);
+}
+
+:host([type='small']) #title {
+    font-size: var(--spectrum-card-quiet-small-title-text-size);
+}
+
+:host([type='small']) #content,
+:host([type='small']) #subtitle,
+:host([type='small']) #description {
+    display: none;
+}
+
+:host([type='gallery']) #preview {
+    padding: 0;
+    border-radius: 0;
+}
+
+:host([type='gallery']:focus) #preview,
+:host([type='quiet']:focus) #preview,
+:host([type='gallery'][selected]) #preview,
+:host([type='quiet'][selected]) #preview {
+    background-color: var(--spectrum-card-quiet-preview-background-color);
+}
+
+:host([type='quiet'][drop-target]) #preview,
+:host([type='gallery'][drop-target]) #preview {
+    transition: none;
+    background-color: var(--spectrum-alias-highlight-selected);
+}
+
+:host([type='quiet'][drop-target]) #preview::before,
+:host([type='gallery'][drop-target]) #preview::before {
+    border-color: var(--spectrum-card-quiet-border-color-selected);
+    box-shadow: 0 0 0 1px var(--spectrum-card-quiet-border-color-selected);
+}
+
+:host([type='quiet'][drop-target]) #folder-background,
+:host([type='gallery'][drop-target]) #folder-background,
+:host([type='quiet'][drop-target]) #file-background,
+:host([type='gallery'][drop-target]) #file-background {
+    fill: var(--spectrum-alias-highlight-selected);
+}
+
+:host([type='quiet'][drop-target]) #folder-outline,
+:host([type='gallery'][drop-target]) #folder-outline,
+:host([type='quiet'][drop-target]) #file-outline,
+:host([type='gallery'][drop-target]) #file-outline {
+    fill: var(--spectrum-card-quiet-border-color-selected);
+}
