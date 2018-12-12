@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root .spectrum-medium {
+:root {
     --spectrum-alias-font-size-default: 14px;
     --spectrum-alias-line-height-small: 16px;
     --spectrum-alias-line-height-medium: 20px;

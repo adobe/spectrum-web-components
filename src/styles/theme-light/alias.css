@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root .spectrum-light {
+:root {
     --spectrum-alias-background-color-default: rgb(245, 245, 245);
     --spectrum-alias-background-color-transparent: rgba(0, 0, 0, 0);
     --spectrum-alias-background-color-label-gray: rgb(110, 110, 110);

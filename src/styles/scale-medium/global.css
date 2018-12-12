@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root .spectrum-medium {
+:root {
     --spectrum-global-dimension-scale-factor: 1;
     --spectrum-global-dimension-size-0: 0;
     --spectrum-global-dimension-size-10: 1px;
