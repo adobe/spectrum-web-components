@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Card - Spectrum Web Components</title>
+        <script src="../card.js" type="module"></script>
+        <script src="../../demo-page/index.js" type="module"></script>
+        <link rel="stylesheet" href="../../../styles/core-global/all.css" />
+        <link rel="stylesheet" href="../../../styles/typography/font.css" />
+        <link
+            rel="stylesheet"
+            href="../../../styles/theme-light/components/card.css"
+        />
+        <link
+            rel="stylesheet"
+            href="../../../styles/scale-medium/components/card.css"
+        />
+        <link rel="stylesheet" href="../../../styles/scale-medium/alias.css" />
+    </head>
+
+    <body class="spectrum-light spectrum-medium">
+        <demo-page title="Card">
+            <demo-section title="Card Types" show-demo-code>
+                <div slot="description">
+                    The spectrum card comes in several types, info, warning and
+                    error.
+                </div>
+                <div slot="demo">
+                    <spectrum-card type="info">
+                        <img
+                            slot="cover-photo"
+                            src="https://picsum.photos/200/300"
+                        />
+                        <div slot="title">Card Title</div>
+                        <div slot="subtitle">JPG</div>
+                        <div slot="footer">Footer</div>
+                    </spectrum-card>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>
