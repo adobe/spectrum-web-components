@@ -134,7 +134,6 @@ themes.forEach(async (theme) => {
     console.log(`processing theme ${srcPath}`);
     processes.push(
         splitCSS(srcPath, dstPath, {
-            selector: `.spectrum-${theme}`,
             components,
             license,
         })
@@ -149,7 +148,6 @@ scales.forEach(async (scale) => {
     console.log(`processing scale  ${srcPath}`);
     processes.push(
         splitCSS(srcPath, dstPath, {
-            selector: `.spectrum-${scale}`,
             components,
             license,
         })

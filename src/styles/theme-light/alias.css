@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root .spectrum-light {
+:root {
     --spectrum-alias-background-color-default: rgb(245, 245, 245);
     --spectrum-alias-background-color-transparent: rgba(0, 0, 0, 0);
     --spectrum-alias-background-color-label-gray: rgb(110, 110, 110);
@@ -34,6 +34,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-text-color-disabled: rgb(179, 179, 179);
     --spectrum-alias-text-color-invalid: rgb(215, 55, 63);
     --spectrum-alias-text-color-selected: rgb(13, 102, 208);
+    --spectrum-alias-text-color-selected-neutral: rgb(44, 44, 44);
     --spectrum-alias-title-text-color: rgb(44, 44, 44);
     --spectrum-alias-heading-text-color: rgb(44, 44, 44);
     --spectrum-alias-border-color: rgb(225, 225, 225);
@@ -57,6 +58,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-icon-color-down: rgb(44, 44, 44);
     --spectrum-alias-icon-color-focus: rgb(44, 44, 44);
     --spectrum-alias-icon-color-disabled: rgb(202, 202, 202);
+    --spectrum-alias-icon-color-selected-neutral: rgb(44, 44, 44);
     --spectrum-alias-icon-color-selected: rgb(20, 115, 230);
     --spectrum-alias-icon-color-selected-hover: rgb(13, 102, 208);
     --spectrum-alias-icon-color-selected-down: rgb(9, 90, 186);

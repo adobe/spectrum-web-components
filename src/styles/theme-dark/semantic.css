@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root .spectrum-dark {
+:root {
     --spectrum-semantic-negative-color-background: rgb(201, 37, 45);
     --spectrum-semantic-negative-color-default: rgb(236, 91, 98);
     --spectrum-semantic-negative-color-dark: rgb(247, 109, 116);

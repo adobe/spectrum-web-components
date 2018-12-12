@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root .spectrum-light {
+:root {
     --spectrum-button-cta-icon-color: rgb(110, 110, 110);
     --spectrum-button-cta-background-color: rgb(20, 115, 230);
     --spectrum-button-cta-border-color: rgb(20, 115, 230);

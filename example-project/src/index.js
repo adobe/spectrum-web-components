@@ -16,21 +16,11 @@ import '../../dist/styles/typography/font.css';
 
 // import theme specific aliases
 import '../../dist/styles/theme-light/alias.css';
-import '../../dist/styles/theme-dark/alias.css';
 
 // import skin and scale stylesheets for our used components
 import '../../dist/styles/scale-medium/components/button.css';
+import '../../dist/styles/theme-light/components/button.css';
 
 // import the components we'll use in this page
 import '../../dist/components/button/button-primary';
 import '../../dist/components/button/button-secondary';
-
-const body = document.body;
-const light = document.querySelector('#light');
-light.addEventListener('click', () => {
-    body.classList.replace('spectrum-dark', 'spectrum-light');
-});
-const dark = document.querySelector('#dark');
-dark.addEventListener('click', () => {
-    body.classList.replace('spectrum-light', 'spectrum-dark');
-});

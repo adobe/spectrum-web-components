@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root .spectrum-medium {
+:root {
     --spectrum-button-cta-height: 32px;
     --spectrum-button-cta-padding-x: 16px;
     --spectrum-button-cta-border-radius: 16px;

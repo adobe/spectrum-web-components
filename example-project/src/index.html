@@ -19,10 +19,9 @@
         </style>
     </head>
 
-    <body class="spectrum-light spectrum-medium">
-        Switch themes:
-        <spectrum-button-primary id="light">Light</spectrum-button-primary>
-        <spectrum-button-secondary id="dark">Dark</spectrum-button-secondary>
+    <body>
+        <spectrum-button-primary>Primary</spectrum-button-primary>
+        <spectrum-button-secondary quiet>secondary</spectrum-button-secondary>
         <script
             async
             src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"
