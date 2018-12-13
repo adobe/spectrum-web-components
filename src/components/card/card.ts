@@ -11,7 +11,58 @@ governing permissions and limitations under the License.
 */
 
 // @ts-ignore - css generated at build time
+import cardQuietStyles from './card-quiet.css.js';
 import cardStyles from './card.css.js';
+
+const defaultTemplate = document.createElement('template');
+const galleryTemplate = document.createElement('template');
+const quietTemplate = document.createElement('template');
+const baseTemplate = document.createElement('template');
+
+baseTemplate.innerHTML = `
+    <slot name="cover-photo"></slot>
+    <slot name="preview"></slot>
+    <div id="body">
+        <div id="header">
+            <slot name="title"></slot>
+        </div>
+        <div id="content">
+            <div id="subtitle"><slot name="subtitle"></slot></div>
+        </div>
+    </div>
+`;
+
+defaultTemplate.innerHTML = `
+    <style>
+        ${cardStyles}
+    </style>
+    ${baseTemplate.innerHTML}
+    <div id="footer"><slot name="footer"></slot></div>
+`;
+
+galleryTemplate.innerHTML = `
+    <style>
+        ${cardStyles}
+        ${cardQuietStyles}
+    </style>
+    <slot name="cover-photo"></slot>
+    <slot name="preview"></slot>
+    <div id="body">
+        <div id="header">
+            <slot name="title"></slot>
+            <slot name="subtitle"></slot>
+            <slot name="description"></slot>
+        </div>
+    </div>
+`;
+
+quietTemplate.innerHTML = `
+    <style>
+        ${cardStyles}
+        ${cardQuietStyles}
+    </style>
+    ${baseTemplate.innerHTML}
+`;
 
 export class SpectrumCard extends HTMLElement {
     constructor() {
@@ -42,22 +93,20 @@ export class SpectrumCard extends HTMLElement {
     }
 
     private render() {
-        return /* html */ `
-            <style>
-                ${cardStyles}
-            </style>
-            <slot name="cover-photo"></slot>
-            <div id="body">
-                <div id="header">
-                    <slot name="title"></slot>
-                </div>
-                <div id="content">
-                    <div id="subtitle"><slot name="subtitle"></slot></div>
-                </div>
-            </div>
-            <div id="footer"><slot name="footer"></slot></div>
-            <slot></slot>
-        `;
+        let template;
+
+        switch (this.type) {
+            case 'gallery':
+                template = galleryTemplate;
+                break;
+            case 'quiet':
+                template = quietTemplate;
+                break;
+            default:
+                template = defaultTemplate;
+        }
+
+        return template.innerHTML;
     }
 }
 

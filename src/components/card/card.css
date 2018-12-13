@@ -17,7 +17,6 @@ governing permissions and limitations under the License.
     min-width: var(--spectrum-card-min-width);
     border: var(--spectrum-card-border-size) solid transparent;
     border-radius: var(--spectrum-card-border-radius);
-    border-color: var(--spectrum-card-border-color);
     background-color: var(--spectrum-card-background-color);
 }
 
@@ -52,46 +51,6 @@ governing permissions and limitations under the License.
     background-color: var(--spectrum-alias-highlight-selected);
 }
 
-:host([type='small']) {
-    min-width: var(--spectrum-card-quiet-small-min-size);
-}
-
-:host([type='quiet']),
-:host([type='gallery']) {
-    width: 100%;
-    height: 100%;
-    min-width: var(--spectrum-card-quiet-min-size);
-    border-width: 0;
-    border-radius: 0;
-    overflow: visible;
-    border-color: transparent;
-    background-color: transparent;
-}
-
-:host([type='quiet']:hover),
-:host([type='gallery']:hover) {
-    border-color: transparent;
-}
-
-:host([type='gallery']) {
-    min-width: 0;
-}
-
-:host([type='quiet']:focus),
-:host([type='gallery']:focus),
-:host([type='quiet'][selected]),
-:host([type='gallery'][selected]) {
-    border-color: transparent;
-    box-shadow: none;
-}
-
-:host([type='quiet'][drop-target]),
-:host([type='gallery'][drop-target]) {
-    border-color: transparent;
-    background-color: transparent;
-    box-shadow: none;
-}
-
 slot[name='cover-photo']::slotted(*) {
     height: var(--spectrum-card-coverphoto-height);
     box-sizing: border-box;
@@ -117,6 +76,14 @@ slot[name='title']::slotted(*) {
     color: var(--spectrum-card-quiet-title-text-color);
 }
 
+slot[name='subtitle']::slotted(*) {
+    font-size: var(--spectrum-card-subtitle-text-size);
+    letter-spacing: var(--spectrum-card-subtitle-letter-spacing);
+    text-transform: uppercase;
+    padding-right: var(--spectrum-card-subtitle-padding-right);
+    color: var(--spectrum-card-quiet-subtitle-text-color);
+}
+
 #header {
     display: flex;
     align-items: baseline;
@@ -139,24 +106,6 @@ slot[name='title']::slotted(*) {
     display: flex;
     height: var(--spectrum-card-body-content-height);
     margin-top: var(--spectrum-card-body-content-margin-top);
-}
-
-#subtitle {
-    font-size: var(--spectrum-card-subtitle-text-size);
-    letter-spacing: var(--spectrum-card-subtitle-letter-spacing);
-    text-transform: uppercase;
-    padding-right: var(--spectrum-card-subtitle-padding-right);
-    color: var(--spectrum-card-quiet-subtitle-text-color);
-}
-
-#description {
-    font-size: var(--spectrum-card-subtitle-text-size);
-    color: var(--spectrum-card-description-text-color);
-}
-
-#subtitle + #description::before {
-    content: '•';
-    padding-right: var(--spectrum-card-subtitle-padding-right);
 }
 
 #footer {
@@ -189,119 +138,9 @@ slot[name='title']::slotted(*) {
     margin: 0;
 }
 
-#preview {
-    overflow: hidden;
-    border-radius: calc(var(--spectrum-card-border-radius) - 1px)
-        calc(var(--spectrum-card-border-radius) - 1px) 0 0;
-}
-
 #action-button {
     flex: 1;
     align-self: center;
     display: flex;
     justify-content: flex-end;
-}
-
-:host([type='quiet']) #preview,
-:host([type='gallery']) #preview {
-    width: 100%;
-    flex: 1;
-    min-height: var(--spectrum-card-quiet-min-size);
-    padding: var(--spectrum-card-quiet-preview-padding);
-    margin: 0 auto;
-    box-sizing: border-box;
-    border-radius: var(--spectrum-card-quiet-border-radius);
-    position: relative;
-    transition: background-color var(--spectrum-transition-time);
-    background-color: var(--spectrum-card-quiet-preview-background-color);
-}
-
-:host([type='quiet']) #preview::before,
-:host([type='gallery']) #preview::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    border-radius: inherit;
-    border: var(--spectrum-card-quiet-border-size) solid transparent;
-}
-
-:host([type='quiet']:hover) #preview,
-:host([type='gallery']:hover) #preview {
-    background-color: var(--spectrum-card-quiet-preview-background-color-hover);
-}
-
-:host([type='quiet']) #header {
-    height: var(--spectrum-card-quiet-body-header-height);
-    margin-top: var(--spectrum-card-quiet-body-header-margin-top);
-}
-
-:host([type='quiet']) #body {
-    padding: 0;
-}
-
-:host([type='small']) #quick-actions {
-    left: var(--spectrum-card-quiet-small-checkbox-margin);
-    top: var(--spectrum-card-quiet-small-checkbox-margin);
-}
-
-:host([type='small']) #preview {
-    padding: var(--spectrum-card-quiet-small-preview-padding);
-    min-height: var(--spectrum-card-quiet-small-min-size);
-}
-
-:host([type='small']) #header {
-    margin-top: var(--spectrum-card-quiet-small-body-margin-top);
-    height: var(--spectrum-card-quiet-small-body-header-height);
-}
-
-:host([type='small']) #title {
-    font-size: var(--spectrum-card-quiet-small-title-text-size);
-}
-
-:host([type='small']) #content,
-:host([type='small']) #subtitle,
-:host([type='small']) #description {
-    display: none;
-}
-
-:host([type='gallery']) #preview {
-    padding: 0;
-    border-radius: 0;
-}
-
-:host([type='gallery']:focus) #preview,
-:host([type='quiet']:focus) #preview,
-:host([type='gallery'][selected]) #preview,
-:host([type='quiet'][selected]) #preview {
-    background-color: var(--spectrum-card-quiet-preview-background-color);
-}
-
-:host([type='quiet'][drop-target]) #preview,
-:host([type='gallery'][drop-target]) #preview {
-    transition: none;
-    background-color: var(--spectrum-alias-highlight-selected);
-}
-
-:host([type='quiet'][drop-target]) #preview::before,
-:host([type='gallery'][drop-target]) #preview::before {
-    border-color: var(--spectrum-card-quiet-border-color-selected);
-    box-shadow: 0 0 0 1px var(--spectrum-card-quiet-border-color-selected);
-}
-
-:host([type='quiet'][drop-target]) #folder-background,
-:host([type='gallery'][drop-target]) #folder-background,
-:host([type='quiet'][drop-target]) #file-background,
-:host([type='gallery'][drop-target]) #file-background {
-    fill: var(--spectrum-alias-highlight-selected);
-}
-
-:host([type='quiet'][drop-target]) #folder-outline,
-:host([type='gallery'][drop-target]) #folder-outline,
-:host([type='quiet'][drop-target]) #file-outline,
-:host([type='gallery'][drop-target]) #file-outline {
-    fill: var(--spectrum-card-quiet-border-color-selected);
 }

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root .spectrum-medium {
+:root {
     --spectrum-card-min-width: 240px;
     --spectrum-card-border-radius: 4px;
     --spectrum-card-coverphoto-height: 136px;
