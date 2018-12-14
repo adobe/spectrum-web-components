@@ -13,9 +13,11 @@ governing permissions and limitations under the License.
 // @ts-ignore - css generated at build time
 import cardBaseStyles from './card-base.css.js';
 // @ts-ignore - css generated at build time
-import cardStyles from './card.css.js';
+import cardGalleryStyles from './card-gallery.css.js';
+// @ts-ignore - css generated at build time
+import cardQuietStyles from './card-quiet.css.js';
 
-export class SpectrumCard extends HTMLElement {
+export class SpectrumGalleryCard extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -47,22 +49,22 @@ export class SpectrumCard extends HTMLElement {
         return `
             <style>
                 ${cardBaseStyles}
-                ${cardStyles}
+                ${cardQuietStyles}
+                ${cardGalleryStyles}
             </style>
             <slot name="cover-photo"></slot>
+            <slot name="preview"></slot>
             <div id="body">
                 <div id="header">
                     <div id="title">${this.title}</div>
-                </div>
-                <div id="content">
-                    <div id="subtitle"><slot name="subtitle"></slot></div>
+                    <slot name="subtitle"></slot>
+                    <slot name="description"></slot>
                 </div>
             </div>
-            <div id="footer"><slot name="footer"></slot></div>
         `;
     }
 }
 
-if (!customElements.get('spectrum-card')) {
-    customElements.define('spectrum-card', SpectrumCard);
+if (!customElements.get('spectrum-card-gallery')) {
+    customElements.define('spectrum-card-gallery', SpectrumGalleryCard);
 }

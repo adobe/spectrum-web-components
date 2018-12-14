@@ -4,6 +4,8 @@
         <meta charset="utf-8" />
         <title>Card - Spectrum Web Components</title>
         <script src="../card.js" type="module"></script>
+        <script src="../card-gallery.js" type="module"></script>
+        <script src="../card-quiet.js" type="module"></script>
         <script src="../../demo-page/index.js" type="module"></script>
         <link rel="stylesheet" href="../../../styles/core-global/all.css" />
         <link rel="stylesheet" href="../../../styles/typography/font.css" />
@@ -20,58 +22,50 @@
 
     <body class="spectrum-light spectrum-medium">
         <demo-page title="Card">
-            <demo-section title="Card Types" show-demo-code>
+            <demo-section title="Card" show-demo-code>
                 <div slot="description">
                     The standard Card component with cover photo and footer.
                 </div>
                 <div slot="demo">
-                    <spectrum-card>
+                    <spectrum-card title="Card Title">
                         <img
                             slot="cover-photo"
                             src="https://picsum.photos/200/300"
                         />
                         <div slot="title">Card Title</div>
-                        <div slot="subtitle">
-                            <div>JPG</div>
-                            <img
-                                width="10"
-                                src="https://s3.amazonaws.com/iconbros/icons/icon_pngs/000/000/113/original/star.png?1509989809"
-                            />
-                        </div>
+                        <div slot="subtitle">JPG</div>
                         <div slot="footer">Footer</div>
                     </spectrum-card>
                 </div>
             </demo-section>
-            <demo-section title="Card Types" show-demo-code>
+            <demo-section title="Card - Gallery" show-demo-code>
                 <div slot="description">
                     A spectrum gallery card for an image
                 </div>
                 <div slot="demo">
-                    <spectrum-card type="gallery">
+                    <spectrum-card-gallery title="Name">
                         <img
                             slot="preview"
                             src="https://picsum.photos/300/200"
                         />
-                        <div slot="title">Name</div>
                         <div slot="subtitle">JPG</div>
                         <div slot="description">10/15/18</div>
-                    </spectrum-card>
+                    </spectrum-card-gallery>
                 </div>
             </demo-section>
-            <demo-section title="Card Types" show-demo-code>
+            <demo-section title="Card - Quiet" show-demo-code>
                 <div slot="description">
                     A spectrum Quiet Card for a file asset
                 </div>
                 <div slot="demo">
-                    <spectrum-card type="quiet">
+                    <spectrum-card-quiet title="Card Title">
                         <img
                             slot="preview"
                             src="https://picsum.photos/200/200"
                         />
-                        <div slot="title">Card Title</div>
                         <div slot="subtitle">JPG</div>
                         <div slot="footer">Footer</div>
-                    </spectrum-card>
+                    </spectrum-card-quiet>
                 </div>
             </demo-section>
         </demo-page>
