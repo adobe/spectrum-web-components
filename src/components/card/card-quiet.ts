@@ -13,9 +13,9 @@ governing permissions and limitations under the License.
 // @ts-ignore - css generated at build time
 import cardBaseStyles from './card-base.css.js';
 // @ts-ignore - css generated at build time
-import cardStyles from './card.css.js';
+import cardQuietStyles from './card-quiet.css.js';
 
-export class SpectrumCard extends HTMLElement {
+export class SpectrumQuietCard extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -47,9 +47,9 @@ export class SpectrumCard extends HTMLElement {
         return `
             <style>
                 ${cardBaseStyles}
-                ${cardStyles}
+                ${cardQuietStyles}
             </style>
-            <slot name="cover-photo"></slot>
+            <slot name="preview"></slot>
             <div id="body">
                 <div id="header">
                     <div id="title">${this.title}</div>
@@ -58,11 +58,10 @@ export class SpectrumCard extends HTMLElement {
                     <div id="subtitle"><slot name="subtitle"></slot></div>
                 </div>
             </div>
-            <div id="footer"><slot name="footer"></slot></div>
         `;
     }
 }
 
-if (!customElements.get('spectrum-card')) {
-    customElements.define('spectrum-card', SpectrumCard);
+if (!customElements.get('spectrum-card-quiet')) {
+    customElements.define('spectrum-card-quiet', SpectrumQuietCard);
 }

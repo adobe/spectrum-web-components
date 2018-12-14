@@ -10,8 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host([type='quiet']),
-:host([type='gallery']) {
+:host {
     width: 100%;
     height: 100%;
     min-width: var(--spectrum-card-quiet-min-size);
@@ -22,34 +21,20 @@ governing permissions and limitations under the License.
     background-color: transparent;
 }
 
-:host([type='quiet']:hover),
-:host([type='gallery']:hover) {
+:host(:hover) {
     border-color: transparent;
 }
 
-:host([type='gallery']) {
-    min-width: 0;
-}
-
-:host([type='quiet']:focus),
-:host([type='gallery']:focus),
-:host([type='quiet'][selected]),
-:host([type='gallery'][selected]) {
+:host(:focus),
+:host([selected]) {
     border-color: transparent;
     box-shadow: none;
 }
 
-:host([type='quiet'][drop-target]),
-:host([type='gallery'][drop-target]) {
+:host([drop-target]) {
     border-color: transparent;
     background-color: transparent;
     box-shadow: none;
-}
-
-slot[name='preview']::slotted(*) {
-    overflow: hidden;
-    border-radius: calc(var(--spectrum-card-border-radius) - 1px)
-        calc(var(--spectrum-card-border-radius) - 1px) 0 0;
 }
 
 slot[name='subtitle']::slotted(*) {
@@ -70,8 +55,7 @@ slot[name='subtitle'] + slot[name='description']::before {
     padding-right: var(--spectrum-card-subtitle-padding-right);
 }
 
-:host([type='quiet']) slot[name='preview']::slotted(*),
-:host([type='gallery']) slot[name='preview']::slotted(*) {
+slot[name='preview']::slotted(*) {
     width: 100%;
     flex: 1;
     min-height: var(--spectrum-card-quiet-min-size);
@@ -82,10 +66,10 @@ slot[name='subtitle'] + slot[name='description']::before {
     position: relative;
     transition: background-color var(--spectrum-transition-time);
     background-color: var(--spectrum-card-quiet-preview-background-color);
+    overflow: hidden;
 }
 
-:host([type='quiet']) slot[name='preview']::slotted(*)::before,
-:host([type='gallery']) slot[name='preview']::slotted(*)::before {
+slot[name='preview']::slotted(*)::before {
     content: '';
     position: absolute;
     top: 0;
@@ -97,56 +81,40 @@ slot[name='subtitle'] + slot[name='description']::before {
     border: var(--spectrum-card-quiet-border-size) solid transparent;
 }
 
-:host([type='quiet']:hover) slot[name='preview']::slotted(*),
-:host([type='gallery']:hover) slot[name='preview']::slotted(*) {
-    background-color: var(--spectrum-card-quiet-preview-background-color-hover);
-}
-
-:host([type='quiet']) #header,
-:host([type='gallery']) #header {
+#header {
     height: var(--spectrum-card-quiet-body-header-height);
     margin-top: var(--spectrum-card-quiet-body-header-margin-top);
 }
 
-:host([type='quiet']) #body,
-:host([type='gallery']) #body {
+#body {
     padding: 0;
 }
 
-:host([type='gallery']) slot[name='preview']::slotted(*) {
-    padding: 0;
-    border-radius: 0;
+:host(:hover) slot[name='preview']::slotted(*) {
+    background-color: var(--spectrum-card-quiet-preview-background-color-hover);
 }
 
-:host([type='gallery']:focus) slot[name='preview']::slotted(*),
-:host([type='quiet']:focus) slot[name='preview']::slotted(*),
-:host([type='gallery'][selected]) slot[name='preview']::slotted(*),
-:host([type='quiet'][selected]) slot[name='preview']::slotted(*) {
+:host(:focus) slot[name='preview']::slotted(*),
+:host([selected]) slot[name='preview']::slotted(*) {
     background-color: var(--spectrum-card-quiet-preview-background-color);
 }
 
-:host([type='quiet'][drop-target]) slot[name='preview']::slotted(*),
-:host([type='gallery'][drop-target]) slot[name='preview']::slotted(*) {
+:host([drop-target]) slot[name='preview']::slotted(*) {
     transition: none;
     background-color: var(--spectrum-alias-highlight-selected);
 }
 
-:host([type='quiet'][drop-target]) slot[name='preview']::slotted(*)::before,
-:host([type='gallery'][drop-target]) slot[name='preview']::slotted(*)::before {
+:host([drop-target]) slot[name='preview']::slotted(*)::before {
     border-color: var(--spectrum-card-quiet-border-color-selected);
     box-shadow: 0 0 0 1px var(--spectrum-card-quiet-border-color-selected);
 }
 
-:host([type='quiet'][drop-target]) #folder-background,
-:host([type='gallery'][drop-target]) #folder-background,
-:host([type='quiet'][drop-target]) #file-background,
-:host([type='gallery'][drop-target]) #file-background {
+:host([drop-target]) #folder-background,
+:host([drop-target]) #file-background {
     fill: var(--spectrum-alias-highlight-selected);
 }
 
-:host([type='quiet'][drop-target]) #folder-outline,
-:host([type='gallery'][drop-target]) #folder-outline,
-:host([type='quiet'][drop-target]) #file-outline,
-:host([type='gallery'][drop-target]) #file-outline {
+:host([drop-target]) #folder-outline,
+:host([drop-target]) #file-outline {
     fill: var(--spectrum-card-quiet-border-color-selected);
 }
