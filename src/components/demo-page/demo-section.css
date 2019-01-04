@@ -35,7 +35,7 @@ h2 {
     font-weight: 400;
 }
 #demo-container {
-    background: var(--demo-section-demo-bg-color, #eee);
+    background: var(--demo-section-demo-bg-color, rgb(245, 245, 245));
     padding: 16px;
     display: flex;
     flex-direction: column;

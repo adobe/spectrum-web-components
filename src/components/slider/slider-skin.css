@@ -1,0 +1,333 @@
+/* topdoc
+{{ slider/slider.yml }}
+*/
+/* topdoc
+{{ slider/slider-label.yml }}
+*/
+/* topdoc
+{{ slider/slider-filled.yml }}
+*/
+/* topdoc
+{{ slider/slider-player.yml }}
+*/
+/* topdoc
+{{ slider/slider-tick.yml }}
+*/
+/* topdoc
+{{ slider/slider-tick-label.yml }}
+*/
+/* topdoc
+{{ slider/slider-ramp.yml }}
+*/
+
+.track {
+    &::before {
+        background: var(--spectrum-slider-track-color);
+    }
+}
+
+#labelContainer {
+    color: var(--spectrum-label-text-color);
+}
+
+:host[type='filled'] {
+    .track:first-child {
+        &::before {
+            background: var(--spectrum-slider-fill-track-color);
+        }
+    }
+}
+
+#buffer {
+    &::before,
+    &::after {
+        background: var(--spectrum-slider-player-track-buffer-color);
+    }
+}
+
+#ramp {
+    path {
+        fill: var(--spectrum-slider-track-color);
+    }
+}
+
+#handle {
+    border-color: var(--spectrum-slider-handle-border-color);
+    background: var(--spectrum-alias-background-color-default);
+
+    &:hover {
+        border-color: var(--spectrum-slider-handle-border-color-hover);
+    }
+
+    &.is-focused {
+        border-color: var(--spectrum-slider-handle-border-color-key-focus);
+    }
+
+    &:active,
+    &.is-dragged {
+        border-color: var(--spectrum-slider-handle-border-color-down);
+    }
+}
+
+:host[type='ramp'] {
+    #handle {
+        /* We can't draw this one correctly without this hack : ( */
+        box-shadow: 0 0 0 4px var(--spectrum-alias-background-color-default);
+    }
+}
+
+#input {
+    background: transparent;
+}
+
+#tick {
+    &:after {
+        background-color: var(--spectrum-slider-tick-mark-color);
+    }
+}
+
+#handle {
+    &.is-focused {
+        border-color: var(--spectrum-slider-handle-border-color-key-focus);
+        background: var(--spectrum-slider-handle-background-color-key-focus);
+    }
+
+    &.is-dragged {
+        border-color: var(--spectrum-slider-handle-border-color-down);
+        background: var(--spectrum-slider-handle-background-color-down);
+    }
+}
+
+/* topdoc
+{{ slider/slider-range.yml }}
+*/
+:host[type='range'] {
+    .track {
+        &:not(:first-of-type):not(:last-of-type) {
+            &:before {
+                background: var(--spectrum-slider-fill-track-color);
+            }
+        }
+    }
+}
+
+/* topdoc
+{{ slider/slider-colored.yml }}
+*/
+:host[type='color'] {
+    #controls::before {
+        background-color: var(--spectrum-global-color-static-white);
+        /* Add a half-percent to fix diagonal line issue in Chrome on non-retina displays */
+        background-image: linear-gradient(
+                -45deg,
+                transparent 75.5%,
+                var(--spectrum-global-color-static-gray-500) 75.5%
+            ),
+            linear-gradient(
+                45deg,
+                transparent 75.5%,
+                var(--spectrum-global-color-static-gray-500) 75.5%
+            ),
+            linear-gradient(
+                -45deg,
+                var(--spectrum-global-color-static-gray-500) 25.5%,
+                transparent 25.5%
+            ),
+            linear-gradient(
+                45deg,
+                var(--spectrum-global-color-static-gray-500) 25.5%,
+                transparent 25.5%
+            );
+        background-size: var(--spectrum-global-dimension-static-size-200)
+            var(--spectrum-global-dimension-static-size-200);
+        background-position: 0 0,
+            0 var(--spectrum-global-dimension-static-size-100),
+            var(--spectrum-global-dimension-static-size-100)
+                calc(-1 * var(--spectrum-global-dimension-static-size-100)),
+            calc(-1 * var(--spectrum-global-dimension-static-size-100)) 0;
+        z-index: 0;
+    }
+    .track {
+        background-color: transparent;
+        background-image: linear-gradient(
+            to right,
+            var(--spectrum-slider-color-track-background-color-gradient-start),
+            var(--spectrum-slider-color-track-background-color-gradient-end)
+        );
+        box-shadow: inset 0 0 0 1px
+            var(--spectrum-slider-color-track-border-color);
+        &::before {
+            display: none;
+        }
+    }
+    #handle {
+        box-shadow: inset 0 0 0 1px
+                var(--spectrum-slider-color-handle-inset-border-color),
+            0 0 0 1px var(--spectrum-slider-color-handle-outset-border-color);
+        border-color: var(--spectrum-slider-color-handle-border-color);
+        background: var(--spectrum-slider-color-handle-color);
+
+        &.is-focused {
+            box-shadow: 0 0 0 1px
+                var(
+                    --spectrum-slider-color-handle-outset-border-color-key-focus
+                );
+        }
+    }
+}
+
+:host([is-disabled]) {
+    & #labelContainer {
+        color: var(--spectrum-label-text-color-disabled);
+    }
+
+    & #handle {
+        border-color: var(--spectrum-slider-handle-border-color-disabled);
+        background: var(--spectrum-alias-background-color-default);
+
+        &:hover,
+        &:active {
+            border-color: var(--spectrum-slider-handle-border-color-disabled);
+            background: var(--spectrum-slider-handle-background-color);
+        }
+    }
+    & .track {
+        &::before {
+            background: var(--spectrum-slider-track-color-disabled);
+        }
+    }
+    &:host[type='filled'] {
+        .track:first-child {
+            &::before {
+                background: var(--spectrum-slider-fill-track-color-disabled);
+            }
+        }
+    }
+    & #buffer {
+        &::before {
+            background: var(
+                --spectrum-slider-player-track-buffer-color-disabled
+            );
+        }
+    }
+    & #ramp {
+        path {
+            fill: var(--spectrum-slider-ramp-track-color-disabled);
+        }
+    }
+
+    &:host[type='color'] {
+        .track {
+            background: var(
+                --spectrum-slider-color-track-color-disabled
+            ) !important;
+            box-shadow: none;
+        }
+        & #handle {
+            background: var(--spectrum-slider-color-handle-color-disabled);
+            box-shadow: none;
+            border-color: var(
+                --spectrum-slider-color-handle-border-color-disabled
+            );
+
+            &:hover,
+            &:active {
+                background: var(--spectrum-slider-color-handle-color-disabled);
+                box-shadow: none;
+                border-color: var(
+                    --spectrum-slider-color-handle-border-color-disabled
+                );
+            }
+        }
+    }
+
+    &:host[type='range'] {
+        .track {
+            &:not(:first-of-type):not(:last-of-type) {
+                &:before {
+                    background: var(
+                        --spectrum-slider-fill-track-color-disabled
+                    );
+                }
+            }
+        }
+    }
+}
+
+:host([is-disabled]) {
+    #labelContainer {
+        color: var(--spectrum-label-text-color-disabled);
+    }
+
+    & #handle {
+        border-color: var(--spectrum-slider-handle-border-color-disabled);
+        background: var(--spectrum-alias-background-color-default);
+
+        &:hover,
+        &:active {
+            border-color: var(--spectrum-slider-handle-border-color-disabled);
+            background: var(--spectrum-slider-handle-background-color);
+        }
+    }
+    & .track {
+        &::before {
+            background: var(--spectrum-slider-track-color-disabled);
+        }
+    }
+    &:host[type='filled'] {
+        .track:first-child {
+            &::before {
+                background: var(--spectrum-slider-fill-track-color-disabled);
+            }
+        }
+    }
+    & #buffer {
+        &::before {
+            background: var(
+                --spectrum-slider-player-track-buffer-color-disabled
+            );
+        }
+    }
+    & #ramp {
+        path {
+            fill: var(--spectrum-slider-ramp-track-color-disabled);
+        }
+    }
+
+    &:host[type='color'] {
+        .track {
+            background: var(
+                --spectrum-slider-color-track-color-disabled
+            ) !important;
+            box-shadow: none;
+        }
+        & #handle {
+            background: var(--spectrum-slider-color-handle-color-disabled);
+            box-shadow: none;
+            border-color: var(
+                --spectrum-slider-color-handle-border-color-disabled
+            );
+
+            &:hover,
+            &:active {
+                background: var(--spectrum-slider-color-handle-color-disabled);
+                box-shadow: none;
+                border-color: var(
+                    --spectrum-slider-color-handle-border-color-disabled
+                );
+            }
+        }
+    }
+
+    &:host[type='range'] {
+        .track {
+            &:not(:first-of-type):not(:last-of-type) {
+                &:before {
+                    background: var(
+                        --spectrum-slider-fill-track-color-disabled
+                    );
+                }
+            }
+        }
+    }
+}

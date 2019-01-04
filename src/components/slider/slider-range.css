@@ -1,0 +1,25 @@
+#value {
+    user-select: text;
+}
+
+#track {
+    &:first-of-type {
+        padding: 0 var(--spectrum-slider-track-handleoffset) 0 0;
+        left: var(--spectrum-slider-range-track-reset);
+        right: auto;
+        margin-left: var(--spectrum-slider-track-margin-offset);
+    }
+    & {
+        padding: 0 var(--spectrum-slider-track-middle-handleoffset) 0
+            var(--spectrum-slider-track-middle-handleoffset);
+        left: auto;
+        right: auto;
+        margin: var(--spectrum-slider-range-track-reset);
+    }
+    &:last-of-type {
+        padding: 0 0 0 var(--spectrum-slider-track-handleoffset);
+        left: auto;
+        right: var(--spectrum-slider-range-track-reset);
+        margin-right: var(--spectrum-slider-track-margin-offset);
+    }
+}
