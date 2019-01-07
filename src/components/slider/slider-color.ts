@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 
 // @ts-ignore - css generated at build time
-import sliderStyles from './slider.css.js';
-// @ts-ignore - css generated at build time
 import sliderColorStyles from './slider-color.css.js';
 // @ts-ignore - css generated at build time
 import sliderSkinStyles from './slider-skin.css.js';
+// @ts-ignore - css generated at build time
+import sliderStyles from './slider.css.js';
 
 export class SpectrumSliderColor extends HTMLElement {
     constructor() {
@@ -29,9 +29,9 @@ export class SpectrumSliderColor extends HTMLElement {
         this.updateView();
 
         this.shadowRoot!.getElementById('input')!.oninput = (event) => {
-            const inputValue = (<HTMLInputElement>(
-                this.shadowRoot!.getElementById('input')
-            )).value;
+            const inputValue = (this.shadowRoot!.getElementById(
+                'input'
+            ) as HTMLInputElement).value;
 
             this.value = parseFloat(inputValue);
             this.updateView();

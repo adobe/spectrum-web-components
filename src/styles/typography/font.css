@@ -49,7 +49,6 @@ governing permissions and limitations under the License.
         var(--spectrum-font-family-base);
     --spectrum-text-size: var(--spectrum-alias-font-size-default);
     --spectrum-text-body-line-height: var(--spectrum-alias-line-height-medium);
-
     --spectrum-text-size-text-label: var(--spectrum-label-text-size);
     --spectrum-line-height-text-label: var(--spectrum-label-text-line-height);
 }
