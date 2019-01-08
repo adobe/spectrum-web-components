@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root .spectrum-dark {
+:root {
     --spectrum-card-border-color: rgb(57, 57, 57);
     --spectrum-card-border-color-key-focus: rgb(38, 128, 235);
     --spectrum-card-border-color-hover: rgb(77, 77, 77);

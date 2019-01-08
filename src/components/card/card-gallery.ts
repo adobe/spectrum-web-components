@@ -45,6 +45,24 @@ export class SpectrumGalleryCard extends HTMLElement {
         }
     }
 
+    /**
+     * Getter for type attribute
+     */
+    public get subtitle(): string {
+        return this.getAttribute('subtitle') || '';
+    }
+
+    /**
+     * Setter for type attribute
+     */
+    public set subtitle(value: string) {
+        if (value) {
+            this.setAttribute('subtitle', value);
+        } else {
+            this.removeAttribute('subtitle');
+        }
+    }
+
     private render() {
         return `
             <style>
@@ -57,7 +75,7 @@ export class SpectrumGalleryCard extends HTMLElement {
             <div id="body">
                 <div id="header">
                     <div id="title">${this.title}</div>
-                    <slot name="subtitle"></slot>
+                    <div id="subtitle">${this.subtitle}</div>
                     <slot name="description"></slot>
                 </div>
             </div>

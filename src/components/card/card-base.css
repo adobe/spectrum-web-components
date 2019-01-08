@@ -60,7 +60,7 @@ governing permissions and limitations under the License.
     color: var(--spectrum-card-quiet-title-text-color);
 }
 
-slot[name='subtitle']::slotted(*) {
+#subtitle {
     font-size: var(--spectrum-card-subtitle-text-size);
     letter-spacing: var(--spectrum-card-subtitle-letter-spacing);
     text-transform: uppercase;

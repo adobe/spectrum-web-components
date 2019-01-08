@@ -37,7 +37,7 @@ governing permissions and limitations under the License.
     box-shadow: none;
 }
 
-slot[name='subtitle']::slotted(*) {
+#subtitle {
     font-size: var(--spectrum-card-subtitle-text-size);
     letter-spacing: var(--spectrum-card-subtitle-letter-spacing);
     text-transform: uppercase;
@@ -50,7 +50,7 @@ slot[name='description']::slotted(*) {
     color: var(--spectrum-card-description-text-color);
 }
 
-slot[name='subtitle'] + slot[name='description']::before {
+#subtitle + slot[name='description']::before {
     content: '•';
     padding-right: var(--spectrum-card-subtitle-padding-right);
 }
