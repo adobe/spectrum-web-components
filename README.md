@@ -13,13 +13,13 @@ It will not support older browsers and will only target modern ever-green browse
 # Installation
 
 ```bash
-yarn install
+npm install
 ```
 
 # Usage
 
 ```bash
-yarn run serve
+npm run serve
 ```
 
 Browse to http://localhost:3000/dist/ to explore the distributed components, for example http://localhost:3000/dist/components/banner/demo/index.html contains the demo for the banner component.
