@@ -10,39 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { html, LitElement, property } from '@polymer/lit-element';
+
 // @ts-ignore - css generated at build time
 import bannerStyles from './banner.css.js';
 
-export class SpectrumBanner extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        if (!this.shadowRoot) {
-            throw new Error('Failed to attach ShadowRoot!');
-        }
-        this.shadowRoot.innerHTML = this.render();
-    }
+export class SpectrumBanner extends LitElement {
+    @property({ type: String, reflect: true })
+    public type = 'info';
 
-    /**
-     * Getter for type attribute
-     */
-    public get type(): string | null {
-        return this.getAttribute('type');
-    }
-
-    /**
-     * Setter for type attribute
-     */
-    public set type(value: string | null) {
-        if (value) {
-            this.setAttribute('type', value);
-        } else {
-            this.removeAttribute('type');
-        }
-    }
-
-    private render() {
-        return /* html */ `
+    protected render() {
+        return html`
             <style>
                 ${bannerStyles}
             </style>

@@ -10,6 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { html } from '@polymer/lit-element';
+
 // @ts-ignore - css generated at build time
 import secondaryButtonStyles from './button-secondary.css.js';
 
@@ -18,7 +20,7 @@ import { SpectrumButton } from './button';
 export class SpectrumSecondaryButton extends SpectrumButton {
     protected render() {
         const renderedHTML = super.render();
-        return /* html */ `
+        return html`
             ${renderedHTML}
             <style>
                 ${secondaryButtonStyles}

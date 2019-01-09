@@ -10,21 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { html, LitElement } from '@polymer/lit-element';
+
 // @ts-ignore - css generated at build time
 import buttonStyles from './button.css.js';
 
-export class SpectrumButton extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        if (!this.shadowRoot) {
-            throw new Error('Failed to attach ShadowRoot!');
-        }
-        this.shadowRoot.innerHTML = this.render();
-    }
-
+export class SpectrumButton extends LitElement {
     protected render() {
-        return /* html */ `
+        return html`
             <style>
                 ${buttonStyles}
             </style>

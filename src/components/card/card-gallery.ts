@@ -10,6 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { html, LitElement, property } from '@polymer/lit-element';
+
 // @ts-ignore - css generated at build time
 import cardBaseStyles from './card-base.css.js';
 // @ts-ignore - css generated at build time
@@ -17,54 +19,15 @@ import cardGalleryStyles from './card-gallery.css.js';
 // @ts-ignore - css generated at build time
 import cardQuietStyles from './card-quiet.css.js';
 
-export class SpectrumGalleryCard extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        if (!this.shadowRoot) {
-            throw new Error('Failed to attach ShadowRoot!');
-        }
-        this.shadowRoot.innerHTML = this.render();
-    }
+export class SpectrumGalleryCard extends LitElement {
+    @property({ type: String })
+    public title = '';
 
-    /**
-     * Getter for type attribute
-     */
-    public get title(): string {
-        return this.getAttribute('title') || '';
-    }
+    @property({ type: String })
+    public subtitle = '';
 
-    /**
-     * Setter for type attribute
-     */
-    public set title(value: string) {
-        if (value) {
-            this.setAttribute('title', value);
-        } else {
-            this.removeAttribute('title');
-        }
-    }
-
-    /**
-     * Getter for type attribute
-     */
-    public get subtitle(): string {
-        return this.getAttribute('subtitle') || '';
-    }
-
-    /**
-     * Setter for type attribute
-     */
-    public set subtitle(value: string) {
-        if (value) {
-            this.setAttribute('subtitle', value);
-        } else {
-            this.removeAttribute('subtitle');
-        }
-    }
-
-    private render() {
-        return `
+    protected render() {
+        return html`
             <style>
                 ${cardBaseStyles}
                 ${cardQuietStyles}
