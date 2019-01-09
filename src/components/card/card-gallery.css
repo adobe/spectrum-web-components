@@ -10,8 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import 'global.css';
-@import 'alias.css';
-@import 'components/banner.css';
-@import 'components/button.css';
-@import 'components/card.css';
+:host {
+    min-width: 0;
+}
+
+slot[name='preview']::slotted(*) {
+    padding: 0;
+    border-radius: 0;
+}

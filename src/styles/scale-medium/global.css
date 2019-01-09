@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 :root {
     --spectrum-global-dimension-scale-factor: 1;
-    --spectrum-global-dimension-size-0: 0px;
+    --spectrum-global-dimension-size-0: 0;
     --spectrum-global-dimension-size-10: 1px;
     --spectrum-global-dimension-size-25: 2px;
     --spectrum-global-dimension-size-40: 3px;
