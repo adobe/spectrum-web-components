@@ -19,7 +19,7 @@ const express = require('express');
 const browserSync = require('browser-sync');
 const serveIndex = require('serve-index');
 
-const DIST_FOLDER = 'dist';
+const DIST_FOLDER = 'src';
 const rootPath = path.resolve(path.join(__dirname, '..'));
 
 const app = express();
@@ -29,7 +29,7 @@ const port = 3000;
 
 // setup browser sync to watch for change and trigger live reload
 const bs = browserSync.create();
-bs.watch(path.join(rootPath, 'dist/**/(*.html|*.css|*.js)')).on(
+bs.watch(path.join(rootPath, 'src/**/(*.html|*.css|*.js)')).on(
     'change',
     bs.reload
 );

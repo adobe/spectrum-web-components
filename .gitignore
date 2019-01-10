@@ -1,7 +1,13 @@
-src/components/**/*.js
-src/components/**/*.js.map
+src/**/*.js
+src/**/*.d.ts
+src/**/*.js.map
+src/**/*.d.ts.map
+src/**/*.css.js
 dist
 node_modules
 npm-debug.log
 .nvmrc
 .DS_STORE
+.chrome
+.firefox
+.vscode
