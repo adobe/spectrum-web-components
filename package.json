@@ -14,7 +14,8 @@
         "build": "gulp",
         "watch": "gulp watch",
         "serve": "npm run build && (node ./scripts/serve.js & npm run watch)",
-        "lint": "eslint --ignore-path .gitignore scripts/**/*.js && tslint src/**/*.ts && stylelint src/**/*.css"
+        "lint": "eslint --ignore-path .gitignore scripts/**/*.js && tslint src/**/*.ts && stylelint src/**/*.css",
+        "test": "./node_modules/karma/bin/karma start karma.conf.js"
     },
     "husky": {
         "hooks": {
@@ -35,6 +36,7 @@
         "@types/prismjs": "^1.9.0",
         "@webcomponents/webcomponentsjs": "^2.2.0",
         "browser-sync": "^2.26.3",
+        "chai": "^4.2.0",
         "common-tags": "^1.8.0",
         "connect-browser-sync": "^2.1.0",
         "cssnano": "^4.1.7",
@@ -56,9 +58,16 @@
         "gulp-typescript": "^5.0.0-alpha.3",
         "gulp-wrap": "^0.14.0",
         "husky": "^1.2.0",
+        "karma": "^3.1.4",
+        "karma-chai": "^0.1.0",
+        "karma-chrome-launcher": "^2.2.0",
+        "karma-firefox-launcher": "^1.1.0",
+        "karma-mocha": "^1.3.0",
+        "karma-typescript-preprocessor": "^0.4.0",
         "linebyline": "^1.3.0",
         "lit-html": "^1.0.0-rc.1",
         "merge2": "^1.2.3",
+        "mocha": "^5.2.0",
         "postcss": "^7.0.6",
         "postcss-import": "^12.0.1",
         "postcss-inherit": "^4.1.0",

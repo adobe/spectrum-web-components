@@ -23,7 +23,7 @@ const copyFiles = () => {
     return (
         gulp
             // copy files that are not typescript or css files since they're handled by other tasks
-            .src(path.join(srcPath, '**/!(*.ts|*.css)'))
+            .src(path.join(srcPath, '**/!(*.ts|*.css|*-test.js)'))
             // keep a cache of copied files so we don't recopy unnecessarily
             .pipe(cached('copy'))
             .pipe(debug({ title: 'copy' }))
