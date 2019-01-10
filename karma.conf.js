@@ -59,6 +59,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+        // Note: Not including safari yet because its not x-platform, plus there are now permission issues with Mojave and karma-safari-launcher
         browsers: ['ChromeHeadless', 'FirefoxHeadless'],
 
         // Continuous Integration mode
