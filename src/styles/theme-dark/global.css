@@ -62,12 +62,12 @@ governing permissions and limitations under the License.
     --spectrum-global-color-gray-50: rgb(37, 37, 37);
     --spectrum-global-color-gray-75: rgb(47, 47, 47);
     --spectrum-global-color-gray-100: rgb(50, 50, 50);
-    --spectrum-global-color-gray-200: rgb(57, 57, 57);
-    --spectrum-global-color-gray-300: rgb(62, 62, 62);
-    --spectrum-global-color-gray-400: rgb(77, 77, 77);
-    --spectrum-global-color-gray-500: rgb(92, 92, 92);
-    --spectrum-global-color-gray-600: rgb(123, 123, 123);
-    --spectrum-global-color-gray-700: rgb(157, 157, 157);
-    --spectrum-global-color-gray-800: rgb(205, 205, 205);
+    --spectrum-global-color-gray-200: rgb(62, 62, 62);
+    --spectrum-global-color-gray-300: rgb(74, 74, 74);
+    --spectrum-global-color-gray-400: rgb(90, 90, 90);
+    --spectrum-global-color-gray-500: rgb(110, 110, 110);
+    --spectrum-global-color-gray-600: rgb(144, 144, 144);
+    --spectrum-global-color-gray-700: rgb(185, 185, 185);
+    --spectrum-global-color-gray-800: rgb(227, 227, 227);
     --spectrum-global-color-gray-900: rgb(255, 255, 255);
 }

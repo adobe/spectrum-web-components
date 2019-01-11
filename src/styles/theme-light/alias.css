@@ -13,8 +13,9 @@ governing permissions and limitations under the License.
 :root {
     --spectrum-alias-background-color-default: rgb(245, 245, 245);
     --spectrum-alias-background-color-transparent: rgba(0, 0, 0, 0);
-    --spectrum-alias-background-color-label-gray: rgb(110, 110, 110);
+    --spectrum-alias-background-color-label-gray: rgb(112, 112, 112);
     --spectrum-alias-background-color-modal-overlay: rgba(0, 0, 0, 0.4);
+    --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.15);
     --spectrum-alias-background-color-hover-overlay: rgba(44, 44, 44, 0.04);
     --spectrum-alias-highlight-hover: rgba(44, 44, 44, 0.06);
     --spectrum-alias-highlight-active: rgba(44, 44, 44, 0.1);
@@ -48,7 +49,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-border-color-transparent: rgba(0, 0, 0, 0);
     --spectrum-alias-border-color-translucent-dark: rgba(0, 0, 0, 0.05);
     --spectrum-alias-border-color-translucent-darker: rgba(0, 0, 0, 0.1);
-    --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.15);
     --spectrum-alias-focus-color: rgb(38, 128, 235);
     --spectrum-alias-track-color-default: rgb(225, 225, 225);
     --spectrum-alias-track-color-disabled: rgb(225, 225, 225);

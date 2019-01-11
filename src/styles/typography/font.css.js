@@ -9,10 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-@import 'global.css';
-@import 'alias.css';
-@import 'components/banner.css';
-@import 'components/button.css';
-@import 'components/card.css';
-@import 'components/dropzone.css';
+export default /* css */ `
+:root{font-family:var(--spectrum-global-font-family-base);font-size:var(--spectrum-alias-font-size-default)}
+`;

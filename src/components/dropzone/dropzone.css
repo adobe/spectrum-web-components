@@ -11,38 +11,27 @@ governing permissions and limitations under the License.
 */
 
 :host {
-  border-color: var(--spectrum-dropzone-border-color);
-  text-align: center;
-  border-width: var(--spectrum-dropzone-border-width);
-  border-radius: var(--spectrum-dropzone-border-radius);
-  padding: var(--spectrum-dropzone-padding);
-  border-style: dashed; 
+    display: block;
+    border-color: var(--spectrum-dropzone-border-color);
+    text-align: center;
+    border-width: var(--spectrum-dropzone-border-width);
+    border-radius: var(--spectrum-dropzone-border-radius);
+    padding: var(--spectrum-dropzone-padding);
+    border-style: dashed;
+}
+::slotted(svg) {
+    color: var(--spectrum-global-color-blue-400);
+    stroke: currentColor;
+}
 
-  &.is-dragged {
+:host(:focus) {
+    border-color: var(--spectrum-dropzone-border-color);
+    outline: 0;
+    border-style: dashed;
+}
+
+:host([is-dragged]) {
     border-color: var(--spectrum-dropzone-border-color-selected-hover);
     background-color: var(--spectrum-dropzone-background-color-selected-hover);
     border-style: solid;
-
-    .spectrum-IllustratedMessage-illustration {
-      color: var(--spectrum-global-color-blue-400);
-    }
-  }
-
-  &:focus {
-    border-color: var(--spectrum-dropzone-border-color);
-    outline: 0;
-    border-style: dashed;    
-    .spectrum-IllustratedMessage-illustration {
-      color: var(--spectrum-global-color-static-gray-500);
-    }
-    &.focus-ring {
-      border-color: var(--spectrum-dropzone-border-color-selected-hover);
-      border-style: solid;
-    }
-    &.is-dragged.focus-ring {
-      .spectrum-IllustratedMessage-illustration {
-        color: var(--spectrum-global-color-blue-400);
-      }
-    }
-  }
 }

@@ -10,9 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import 'global.css';
-@import 'alias.css';
-@import 'components/banner.css';
-@import 'components/button.css';
-@import 'components/card.css';
-@import 'components/dropzone.css';
+:root {
+    --spectrum-dropzone-padding: 72px;
+    --spectrum-dropzone-border-width: 2px;
+    --spectrum-dropzone-border-radius: 4px;
+    --spectrum-dropzone-content-text-size: 14px;
+    --spectrum-dropzone-icon-margin-y: 14px;
+}

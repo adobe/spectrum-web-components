@@ -16,20 +16,126 @@ import { html, LitElement, property } from '@polymer/lit-element';
 
 import dropzoneStyles from './dropzone.css.js';
 
+type DropZoneEventDetail = DragEvent;
+
 export class SpectrumDropzone extends LitElement {
+    public get dropEffect() {
+        return this._dropEffect;
+    }
+    public set dropEffect(value: string) {
+        if (['copy', 'move', 'link', 'none'].includes(value)) {
+            this._dropEffect = value;
+        }
+    }
 
-    @property({ type: String, reflect: true })
+    @property({ type: Boolean, reflect: true, attribute: 'is-dragged' })
+    public isDragged = false;
 
-    public type = 'info';
+    private _dropEffect = 'copy';
+
+    private debouncedDragLeave: number | null = null;
+
+    constructor() {
+        super();
+    }
+
+    public onDragOver(ev: DragEvent) {
+        const shouldAcceptEvent = new CustomEvent<DropZoneEventDetail>(
+            'dropzone-should-accept',
+            {
+                bubbles: true,
+                cancelable: true,
+                composed: true,
+                detail: ev,
+            }
+        );
+        // dispatch event returns true if preventDefault() is not called
+        const shouldAccept = this.dispatchEvent(shouldAcceptEvent);
+        if (!ev.dataTransfer) {
+            return;
+        }
+        if (!shouldAccept) {
+            ev.dataTransfer.dropEffect = 'none';
+            return;
+        }
+
+        ev.preventDefault();
+
+        this.clearDebouncedDragLeave();
+
+        this.isDragged = true;
+
+        ev.dataTransfer.dropEffect = this.dropEffect;
+        const dragOverEvent = new CustomEvent<DropZoneEventDetail>(
+            'dropzone-dragover',
+            {
+                bubbles: true,
+                composed: true,
+                detail: ev,
+            }
+        );
+        this.dispatchEvent(dragOverEvent);
+    }
+
+    public onDragLeave(ev: DragEvent) {
+        this.clearDebouncedDragLeave();
+
+        this.debouncedDragLeave = setTimeout(() => {
+            if (this.isDragged) {
+                this.isDragged = false;
+            }
+
+            const dragLeave = new CustomEvent<DropZoneEventDetail>(
+                'dropzone-dragleave',
+                {
+                    bubbles: true,
+                    composed: true,
+                    detail: ev,
+                }
+            );
+            this.dispatchEvent(dragLeave);
+        }, 100);
+    }
+
+    public onDrop(ev: DragEvent) {
+        ev.preventDefault();
+
+        this.clearDebouncedDragLeave();
+
+        if (this.isDragged) {
+            this.isDragged = false;
+        }
+        const dropEvent = new CustomEvent<DropZoneEventDetail>(
+            'dropzone-drop',
+            {
+                bubbles: true,
+                composed: true,
+                detail: ev,
+            }
+        );
+        this.dispatchEvent(dropEvent);
+    }
 
     protected render() {
         return html`
             <style>
-                ${dropzonetyles}
+                ${dropzoneStyles}
             </style>
-            <div id="header"><slot name="header"></slot></div>
-            <div id="content"><slot name="content"></slot></div>
+            <div
+                id="container"
+                @drop="${this.onDrop}"
+                @dragover="${this.onDragOver}"
+                @dragleave="${this.onDragLeave}"
+            >
+                <slot></slot>
+            </div>
         `;
+    }
+    protected clearDebouncedDragLeave() {
+        if (this.debouncedDragLeave) {
+            clearTimeout(this.debouncedDragLeave);
+            this.debouncedDragLeave = null;
+        }
     }
 }
 

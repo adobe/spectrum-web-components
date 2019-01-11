@@ -9,10 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-@import 'global.css';
-@import 'alias.css';
-@import 'components/banner.css';
-@import 'components/button.css';
-@import 'components/card.css';
-@import 'components/dropzone.css';
+export default /* css */ `
+:root{--spectrum-banner-border-radius:8px;--spectrum-banner-padding-y:4px;--spectrum-banner-padding-x:8px;--spectrum-banner-text-size:12px;--spectrum-banner-text-line-height:1.3}
+`;
