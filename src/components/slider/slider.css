@@ -202,14 +202,7 @@ governing permissions and limitations under the License.
 }
 
 input[type='range']::-webkit-slider-thumb {
-    cursor: pointer;
-    cursor: grab;
-
-    &:active {
-        outline: none;
-        cursor: ns-resize;
-        cursor: grabbing;
-    }
+    //transform: scale(2);
 }
 
 #labelContainer {
