@@ -131,6 +131,7 @@ export class SpectrumDropzone extends LitElement {
             </div>
         `;
     }
+
     protected clearDebouncedDragLeave() {
         if (this.debouncedDragLeave) {
             clearTimeout(this.debouncedDragLeave);
