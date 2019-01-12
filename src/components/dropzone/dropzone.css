@@ -20,7 +20,6 @@ governing permissions and limitations under the License.
     border-style: dashed;
 }
 ::slotted(svg) {
-    /*color: var(--spectrum-global-color-blue-400);*/
     stroke: currentColor;
 }
 
