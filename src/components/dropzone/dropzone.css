@@ -24,11 +24,6 @@ governing permissions and limitations under the License.
     color: var(--spectrum-global-color-static-gray-500);
 }
 
-::slotted(h2) {
-    stroke: currentColor;
-    color: var(--spectrum-global-color-static-gray-700);
-}
-
 :host(:focus) {
     border-color: var(--spectrum-dropzone-border-color);
     outline: 0;
@@ -43,4 +38,9 @@ governing permissions and limitations under the License.
     & ::slotted(svg) {
         color: var(--spectrum-global-color-static-blue-400);
     }
+}
+
+::slotted(h2) {
+    stroke: currentColor;
+    color: var(--spectrum-global-color-static-gray-700);
 }
