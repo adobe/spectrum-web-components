@@ -12,7 +12,15 @@ governing permissions and limitations under the License.
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
-const resolve = require('resolve');
+
+/*
+
+Based on the excellent work of myfreeweb at https://github.com/myfreeweb/es-module-devserver
+
+This middleware resolves the path of the import and export statements in javascript files with node_module style
+path resolution using the `require.resolve` method provided by NodeJS.
+
+*/
 
 function resolvePath(root, filepath, url) {
     try {
@@ -47,7 +55,7 @@ function transformJs(root, filepath, src) {
         );
 }
 
-const EsModulesMiddlewareFactory = function(basePath, config) {
+const EsModulesMiddlewareFactory = function(basePath) {
     const root = __dirname;
     return function(req, res, next) {
         // we want to ignore anything thats karma specific, all user content is under /base
@@ -91,7 +99,7 @@ const EsModulesMiddlewareFactory = function(basePath, config) {
     };
 };
 
-EsModulesMiddlewareFactory.$inject = ['config.basePath', 'config.esModules'];
+EsModulesMiddlewareFactory.$inject = ['config.basePath'];
 module.exports = {
     'middleware:es-modules': ['factory', EsModulesMiddlewareFactory],
 };
