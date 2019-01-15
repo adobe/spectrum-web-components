@@ -15,9 +15,9 @@
         "watch": "gulp watch",
         "serve": "npm run build && (node ./scripts/serve.js & npm run watch)",
         "lint": "eslint --ignore-path .gitignore scripts/**/*.js && tslint src/**/*[!d].ts && stylelint src/**/*.css",
-        "test": "npm run build && karma start --single-run && rimraf .chrome",
+        "test": "npm run build && karma start --single-run",
         "test:nobuild": "karma start --single-run",
-        "test:watch": "npm run build && (npm run watch & karma start) && rimraf .chrome"
+        "test:watch": "npm run build && (npm run watch & karma start)"
     },
     "husky": {
         "hooks": {

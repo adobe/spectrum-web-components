@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 const gulp = require('gulp');
-const Server = require('karma').Server;
 
 // import the tasks
 const { buildCSS, watchBuildCSS } = require('./tasks/build-css');
@@ -23,21 +22,7 @@ const defaultTasks = gulp.parallel(compile, buildCSS);
 const watchTasks = gulp.parallel(watchCompile, watchBuildCSS);
 // compile then copy into dist folder
 const distTasks = gulp.series(defaultTasks, copyFiles);
-// test tasks
-const testTasks = gulp.series(
-    //defaultTasks,
-    //gulp.parallel(watchTasks,
-    function(done) {
-        new Server(
-            {
-                configFile: __dirname + '/karma.conf.js',
-                singleRun: false,
-            },
-            done
-        ).start();
-    }
-);
+
 exports.default = defaultTasks;
 exports.watch = watchTasks;
-exports.test = testTasks;
 exports.dist = distTasks;
