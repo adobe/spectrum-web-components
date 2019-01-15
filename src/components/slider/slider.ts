@@ -55,10 +55,12 @@ export class SpectrumSlider extends LitElement {
         this.value = parseFloat(inputValue);
 
         interface ISliderInputEventDetail {
+            bubbles: boolean;
+            composed: boolean;
             detail: number;
         }
 
-        const inputEventInit = <ISliderInputEventDetail>{
+        const inputEventInit: ISliderInputEventDetail = {
             bubbles: true,
             composed: true,
             detail: this.value,
@@ -71,10 +73,12 @@ export class SpectrumSlider extends LitElement {
 
     public onChange(ev: Event) {
         interface ISliderChangeEventDetail {
+            bubbles: boolean;
+            composed: boolean;
             detail: number;
         }
 
-        const changeEventInit = <ISliderChangeEventDetail>{
+        const changeEventInit: ISliderChangeEventDetail = {
             bubbles: true,
             composed: true,
             detail: this.value,
