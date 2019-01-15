@@ -19,11 +19,11 @@ governing permissions and limitations under the License.
     text-align: center;
 }
 
-#illustration {
+slot[name='illustration']::slotted(*) {
     margin-bottom: var(
         --spectrum-illustrated-message-illustration-margin-bottom
     );
-    color: var(--spectrum-global-color-gray-500);
+    color: var(--spectrum-global-color-static-gray-500);
     fill: currentColor;
     stroke: currentColor;
 }

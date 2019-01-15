@@ -19,10 +19,6 @@ governing permissions and limitations under the License.
     padding: var(--spectrum-dropzone-padding);
     border-style: dashed;
 }
-::slotted(svg) {
-    stroke: currentColor;
-    color: var(--spectrum-global-color-static-gray-500);
-}
 
 :host(:focus) {
     border-color: var(--spectrum-dropzone-border-color);
@@ -35,12 +31,7 @@ governing permissions and limitations under the License.
     background-color: var(--spectrum-dropzone-background-color-selected-hover);
     border-style: solid;
 
-    & ::slotted(svg) {
+    & slot[name='illustration']::slotted(*) {
         color: var(--spectrum-global-color-static-blue-400);
     }
-}
-
-::slotted(h2) {
-    stroke: currentColor;
-    color: var(--spectrum-global-color-static-gray-700);
 }
