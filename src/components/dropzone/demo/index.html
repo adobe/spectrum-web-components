@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Dropzone - Spectrum Web Components</title>
+        <title>dropzone - Spectrum Web Components</title>
         <script src="../dropzone.js" type="module"></script>
         <script
             src="../../illustrated-message/illustrated-message.js"
@@ -31,8 +31,8 @@
     </head>
 
     <body>
-        <demo-page title="Dropzone">
-            <demo-section title="Dropzone" show-demo-code>
+        <demo-page title="dropzone">
+            <demo-section title="dropzone" show-demo-code>
                 <div slot="description">The dropzone message component</div>
                 <div slot="demo">
                     <spectrum-dropzone id="dropzone">
@@ -99,15 +99,30 @@
                                 </svg>
                             </div>
                         </illustrated-message>
-                    </spectrum-dropzone>
 
-                    <label for="file-input">
-                        <spectrum-link
-                            description="Select a File"
-                        ></spectrum-link>
-                        from your computer
-                    </label>
-                    <input type="file" id="file-input" style="display: none" />
+                        <div slot="upload">
+                            <div>
+                                <label for="file-input">
+                                    <spectrum-link
+                                        description="Select a File"
+                                    ></spectrum-link>
+                                    from your computer
+                                </label>
+                                <input
+                                    type="file"
+                                    id="file-input"
+                                    style="display: none"
+                                />
+                            </div>
+
+                            <div>
+                                or
+                                <spectrum-link
+                                    description="Search Adobe Stock"
+                                ></spectrum-link>
+                            </div>
+                        </div>
+                    </spectrum-dropzone>
 
                     <script>
                         const dropzone = document.getElementById('dropzone');

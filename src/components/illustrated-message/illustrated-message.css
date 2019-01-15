@@ -17,13 +17,13 @@ governing permissions and limitations under the License.
     align-items: center;
     justify-content: center;
     text-align: center;
+    color: var(--spectrum-global-color-static-gray-500);
 }
 
 slot[name='illustration']::slotted(*) {
     margin-bottom: var(
         --spectrum-illustrated-message-illustration-margin-bottom
     );
-    color: var(--spectrum-global-color-static-gray-500);
     fill: currentColor;
     stroke: currentColor;
 }
@@ -31,10 +31,12 @@ slot[name='illustration']::slotted(*) {
 #heading {
     max-width: var(--spectrum-illustrated-message-heading-max-width);
     margin: var(--spectrum-illustrated-message-heading-margin);
+    color: var(--spectrum-global-color-static-gray-700);
 }
 
 #description {
     max-width: var(--spectrum-illustrated-message-description-max-width);
     margin: var(--spectrum-illustrated-message-description-margin);
+    color: var(--spectrum-global-color-static-gray-700);
     font-style: italic;
 }

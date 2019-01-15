@@ -18,6 +18,7 @@ governing permissions and limitations under the License.
     border-radius: var(--spectrum-dropzone-border-radius);
     padding: var(--spectrum-dropzone-padding);
     border-style: dashed;
+    color: var(--spectrum-global-color-static-gray-700);
 }
 
 :host(:focus) {
@@ -31,7 +32,7 @@ governing permissions and limitations under the License.
     background-color: var(--spectrum-dropzone-background-color-selected-hover);
     border-style: solid;
 
-    & slot[name='illustrated-message'] {
+    & slot[name='illustrated-message']::slotted(*) {
         color: var(--spectrum-global-color-static-blue-400);
     }
 }

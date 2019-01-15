@@ -24,7 +24,7 @@ export class Link extends LitElement {
             <style>
                 ${linkStyles}
             </style>
-            <div id="description">${this.description}</div>
+            <a id="description">${this.description}</a>
         `;
     }
 }
