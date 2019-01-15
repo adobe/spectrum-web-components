@@ -3,7 +3,6 @@
     "extends": ["tslint:latest", "tslint-config-prettier"],
     "rules": {
         "no-submodule-imports": [true, "@polymer", "lit-html"],
-        "file-should-contain-header": [true, "./config/license.js"],
-        "no-implicit-dependencies": [true, "dev"]
+        "file-should-contain-header": [true, "./config/license.js"]
     }
 }
