@@ -46,8 +46,76 @@ export class SpectrumSlider extends LitElement {
     @property({ type: Boolean })
     public isDragging = false;
 
-    private onInput(value: string) {
-        this.value = parseFloat(value);
+    public onInput(ev: Event) {
+        if (!this.inputElement) {
+            return;
+        }
+        const inputValue = this.inputElement.value;
+
+        this.value = parseFloat(inputValue);
+
+        const inputEvent = new CustomEvent('slider-input', {
+            bubbles: true,
+            composed: true,
+            detail: ev,
+        });
+
+        inputEvent.value = this.value;
+        this.dispatchEvent(inputEvent);
+    }
+
+    public onChange(ev: Event) {
+        const changeEvent = new CustomEvent('slider-change', {
+            bubbles: true,
+            composed: true,
+            detail: ev,
+        });
+
+        changeEvent.value = this.value;
+        this.dispatchEvent(changeEvent);
+    }
+
+    protected render() {
+        return html`
+            <style>
+                ${sliderStyles}
+                ${sliderSkinStyles}
+            </style>
+            <div id="labelContainer">
+                <label id="label" for="input">${this.label}</label>
+                <div id="value" role="textbox" aria-readonly="true" aria-labelledby="label">
+                    ${this.value}
+                </div>
+            </div>
+            <div id="controls">
+                <input type="range"
+                      id="input"
+                      value="${this.value}"
+                      step="${this.step}"
+                      min="${this.min}"
+                      max="${this.max}"
+                      @change="${this.onChange}"
+                      @input=${this.onInput}
+                      @mousedown=${this.onMouseDown}
+                      @mouseup=${this.onMouseUp}
+                  />
+                <div class="track" id="track-left" style="${
+                    this.trackLeftStyle
+                }">
+                </div>
+                <div id="handle"
+                    class="${this.handleClass}"
+                    style="${this.handleStyle}"
+                >
+                </div>
+                <div class="track"
+                    id="track-right"
+                    style="${this.trackRightStyle}"
+                >
+                </div>
+                </div>
+            </div>
+        `;
     }
 
     private onMouseDown() {
@@ -70,12 +138,10 @@ export class SpectrumSlider extends LitElement {
     }
 
     private get trackLeftStyle(): string {
-        return 'display: none';
         return `width: ${this.trackProgress * 100}%`;
     }
 
     private get trackRightStyle(): string {
-        return 'display: none';
         const width = `width: ${(1 - this.trackProgress) * 100}%; `;
         const offset = `left: calc(${this.trackProgress * 100}% + 8px)`;
 
@@ -88,49 +154,6 @@ export class SpectrumSlider extends LitElement {
 
     private get handleClass(): string {
         return this.isDragging ? 'is-dragged' : '';
-    }
-
-    protected render() {
-        return html`
-            <style>
-                ${sliderStyles}
-                ${sliderSkinStyles}
-            </style>
-            <div id="labelContainer">
-                <label id="label" for="input">${this.label}</label>
-                <div id="value" role="textbox" aria-readonly="true" aria-labelledby="label">
-                    ${this.value}
-                </div>
-            </div>
-            <div id="controls">
-                <input type="range"
-                      id="input"
-                      value="${this.value}"
-                      step="${this.step}"
-                      min="${this.min}"
-                      max="${this.max}"
-                      @input=${(event: object) =>
-                          this.onInput(this.inputElement!.value)}
-                      @mousedown=${(event: object) => this.onMouseDown()}
-                      @mouseup=${(event: object) => this.onMouseUp()}
-                  />
-                <div class="track" id="track-left" style="${
-                    this.trackLeftStyle
-                }">
-                </div>
-                <div id="handle"
-                    class="${this.handleClass}"
-                    style="${this.handleStyle}"
-                >
-                </div>
-                <div class="track"
-                    id="track-right"
-                    style="${this.trackRightStyle}"
-                >
-                </div>
-                </div>
-            </div>
-        `;
     }
 }
 

@@ -160,12 +160,16 @@ governing permissions and limitations under the License.
 #input {
     /*  Remove the margin for input in Firefox and Safari. */
     margin: 0;
-    width: calc(100% + 16px);
+
+    /*  Input width is sum of track width and handle width  */
+    width: calc(100% + var(--spectrum-slider-handle-width));
     height: var(--spectrum-slider-handle-height);
     padding: 0;
     position: absolute;
-    top: 8px;
-    left: -8px;
+
+    /*  Aligns the input with the custom track  */
+    top: calc(var(--spectrum-slider-handle-width) / 2);
+    left: calc(var(--spectrum-slider-handle-width) / -2);
     overflow: hidden;
     opacity: 0.000001;
     cursor: default;
@@ -199,10 +203,6 @@ governing permissions and limitations under the License.
     &::after {
         display: none;
     }
-}
-
-input[type='range']::-webkit-slider-thumb {
-    //transform: scale(2);
 }
 
 #labelContainer {
