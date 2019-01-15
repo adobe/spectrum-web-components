@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Card - Spectrum Web Components</title>
+        <title>Sliders - Spectrum Web Components</title>
         <script src="../slider.js" type="module"></script>
         <script src="../slider-color.js" type="module"></script>
         <script src="../../demo-page/index.js" type="module"></script>
@@ -34,7 +34,16 @@
                         min="0"
                         max="20"
                         label="Opacity"
+                        id="opacity-slider"
                     />
+                    <script>
+                        const opacitySlider = document.getElementById(
+                            'opacity-slider'
+                        );
+                        opacitySlider.addEventListener('slider-input', (ev) => {
+                            console.log(ev.value);
+                        });
+                    </script>
                 </div>
                 <div class="slider-demo" slot="demo">
                     <spectrum-slider
@@ -59,7 +68,16 @@
                         min="0"
                         max="20"
                         label="Color"
+                        id="color-slider"
                     />
+                    <script>
+                        const colorSlider = document.getElementById(
+                            'color-slider'
+                        );
+                        colorSlider.addEventListener('slider-change', (ev) => {
+                            console.log(ev.value);
+                        });
+                    </script>
                 </div>
                 <div class="slider-demo" slot="demo">
                     <spectrum-slider-color

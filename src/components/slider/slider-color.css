@@ -137,3 +137,13 @@ governing permissions and limitations under the License.
         );
     }
 }
+
+#input {
+    /*  Input has same dimensions as the colored track  */
+    width: 100%;
+    height: var(--spectrum-slider-color-track-height);
+
+    /*  Align the input with the colored track  */
+    top: 0;
+    left: 0;
+}
