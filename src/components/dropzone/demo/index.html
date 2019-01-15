@@ -8,6 +8,7 @@
             src="../../illustrated-message/illustrated-message.js"
             type="module"
         ></script>
+        <script src="../../link/link.js" type="module"></script>
         <script src="../../demo-page/index.js" type="module"></script>
         <link rel="stylesheet" href="../../../styles/core-global/all.css" />
         <link rel="stylesheet" href="../../../styles/typography/font.css" />
@@ -21,11 +22,11 @@
         />
         <link
             rel="stylesheet"
-            href="../../../styles/scale-medium/components/dropzone.css"
+            href="../../../styles/theme-light/components/link.css"
         />
         <link
             rel="stylesheet"
-            href="../../../styles/scale-medium/illustrated-message.css"
+            href="../../../styles/scale-medium/components/dropzone.css"
         />
     </head>
 
@@ -38,7 +39,7 @@
                         <illustrated-message
                             slot="illustrated-message"
                             heading="Drag and Drop Your File"
-                            description="Drop your files here"
+                            description=""
                         >
                             <div slot="illustration">
                                 <svg viewBox="0 0 199 97.7" height="110">
@@ -99,6 +100,14 @@
                             </div>
                         </illustrated-message>
                     </spectrum-dropzone>
+
+                    <label for="file-input">
+                        <spectrum-link
+                            description="Select a File"
+                        ></spectrum-link>
+                        from your computer
+                    </label>
+                    <input type="file" id="file-input" style="display: none" />
 
                     <script>
                         const dropzone = document.getElementById('dropzone');

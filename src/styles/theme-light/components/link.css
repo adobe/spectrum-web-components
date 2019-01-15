@@ -11,6 +11,9 @@ governing permissions and limitations under the License.
 */
 
 :root {
+    --spectrum-link-text-color: rgb(13, 102, 208);
+    --spectrum-link-underline-color: rgba(0, 0, 0, 0);
     --spectrum-link-text-color-hover: rgb(13, 102, 208);
-    --spectrum-link-text-color: rgb(55, 142, 240);
+    --spectrum-link-underline-color-hover: rgb(13, 102, 208);
+    --spectrum-link-text-color-down: rgb(9, 90, 186);
 }

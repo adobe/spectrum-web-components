@@ -10,15 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
 #description {
     background-color: transparent;
     text-decoration: none;
@@ -35,7 +26,6 @@ governing permissions and limitations under the License.
     &.is-disabled {
         cursor: default;
         pointer-events: none;
-
         &:hover,
         &:focus {
             text-decoration: none;
