@@ -52,24 +52,34 @@ export class SpectrumSliderColor extends LitElement {
 
         this.value = parseFloat(inputValue);
 
-        const inputEvent = new CustomEvent('slider-input', {
+        interface ISliderInputEventDetail {
+            detail: number;
+        }
+
+        const inputEventInit = <ISliderInputEventDetail>{
             bubbles: true,
             composed: true,
-            detail: ev,
-        });
+            detail: this.value,
+        };
 
-        inputEvent.value = this.value;
+        const inputEvent = new CustomEvent('slider-input', inputEventInit);
+
         this.dispatchEvent(inputEvent);
     }
 
     public onChange(ev: Event) {
-        const changeEvent = new CustomEvent('slider-change', {
+        interface ISliderChangeEventDetail {
+            detail: number;
+        }
+
+        const changeEventInit = <ISliderChangeEventDetail>{
             bubbles: true,
             composed: true,
-            detail: ev,
-        });
+            detail: this.value,
+        };
 
-        changeEvent.value = this.value;
+        const changeEvent = new CustomEvent('slider-change', changeEventInit);
+
         this.dispatchEvent(changeEvent);
     }
     protected render() {
