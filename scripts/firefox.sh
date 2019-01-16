@@ -34,10 +34,13 @@ user_pref('extensions.enabledScopes', 15);
 EOL
 
 PROFILE_PATH=$FIREFOX_HOME
-# are we in WSL?
-if grep -q Microsoft /proc/version; then
-    # generate wsl path if in WSL
-    PROFILE_PATH=$(wslpath -m $FIREFOX_HOME)
+# are we in a linux with /proc/version?
+if [ -f /proc/version ]; then
+    # are we in WSL?
+    if grep -q Microsoft /proc/version; then
+        # generate wsl path if in WSL
+        PROFILE_PATH=$(wslpath -m $FIREFOX_HOME)
+    fi
 fi
 
 # launch firefox and grab the PID

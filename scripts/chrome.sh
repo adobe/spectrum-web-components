@@ -19,10 +19,13 @@ cleanup
 mkdir -p $CHROME_HOME
 
 PROFILE_PATH=$CHROME_HOME
-# are we in WSL?
-if grep -q Microsoft /proc/version; then
-    # generate wsl path if in WSL
-    PROFILE_PATH=$(wslpath -m $CHROME_HOME)
+# are we in a linux with /proc/version?
+if [ -f /proc/version ]; then
+    # are we in WSL?
+    if grep -q Microsoft /proc/version; then
+        # generate wsl path if in WSL
+        PROFILE_PATH=$(wslpath -m $CHROME_HOME)
+    fi
 fi
 
 # launch firefox and grab the PID
