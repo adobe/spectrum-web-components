@@ -2,6 +2,8 @@
 
 set -e
 
+[ -z "$FIREFOX_BIN" ] && echo "Need to specify FIREFOX_BIN environment variable to point to your firefox binary" && exit 1
+
 TARGET_URL=$1
 FIREFOX_HOME=$PWD/.firefox
 PREFS_FILE=$FIREFOX_HOME/prefs.js

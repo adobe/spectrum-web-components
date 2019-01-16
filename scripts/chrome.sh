@@ -2,6 +2,8 @@
 
 set -e
 
+[ -z "$CHROME_BIN" ] && echo "Need to specify CHROME_BIN environment variable to point to your chrome binary" && exit 1
+
 TARGET_URL=$1
 CHROME_HOME=$PWD/.chrome
 
@@ -28,7 +30,7 @@ if [ -f /proc/version ]; then
     fi
 fi
 
-# launch firefox and grab the PID
+# launch chrome and grab the PID
 "$CHROME_BIN" --user-data-dir="$PROFILE_PATH" $1 &
 PID=$!
 
