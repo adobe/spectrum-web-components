@@ -31,7 +31,7 @@ if [ -f /proc/version ]; then
 fi
 
 # launch chrome and grab the PID
-"$CHROME_BIN" --user-data-dir="$PROFILE_PATH" $1 &
+"$CHROME_BIN" --user-data-dir="$PROFILE_PATH" --no-first-run $1 &
 PID=$!
 
 # wait on the process to exit
