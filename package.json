@@ -13,6 +13,7 @@
         "prebuild": "rimraf dist",
         "build": "gulp",
         "watch": "gulp watch",
+        "serve-only": "node ./scripts/serve.js",
         "serve": "npm run build && (node ./scripts/serve.js & npm run watch)",
         "lint": "eslint --ignore-path .gitignore scripts/**/*.js tasks/**/*.js && tslint src/**/*[!d].ts && stylelint src/**/*.css",
         "test": "npm run build && karma start --single-run",
@@ -32,6 +33,7 @@
         "prismjs": "^1.15.0"
     },
     "devDependencies": {
+        "@adobe/es-modules-middleware": "0.0.3",
         "@adobe/spectrum-css": "^2.6.0",
         "@polymer/lit-element": "^0.6.5",
         "@types/chai": "^4.1.7",
@@ -47,13 +49,13 @@
         "common-tags": "^1.8.0",
         "connect-browser-sync": "^2.1.0",
         "cssnano": "^4.1.7",
-        "es-module-devserver": "^0.1.2",
         "eslint": "^5.9.0",
         "eslint-config-prettier": "^3.3.0",
         "eslint-plugin-notice": "^0.7.7",
         "eslint-plugin-prettier": "^3.0.0",
         "express": "^4.16.4",
         "fs-extra": "^7.0.1",
+        "get-port": "^4.1.0",
         "gulp": "^4.0.0",
         "gulp-cached": "^1.1.1",
         "gulp-cli": "^2.0.1",
@@ -94,5 +96,6 @@
         "tslint": "^5.11.0",
         "tslint-config-prettier": "^1.17.0",
         "typescript": "^3.1.6"
-    }
+    },
+    "dependencies": {}
 }

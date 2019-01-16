@@ -14,7 +14,7 @@ const path = require('path');
 module.exports = function(config) {
     config.set({
         basePath: './src',
-        plugins: ['karma-*', require('./es-modules-middleware')],
+        plugins: ['karma-*', require('@adobe/es-modules-middleware')],
         frameworks: ['mocha', 'chai', 'sinon', 'web-components'],
         beforeMiddleware: ['es-modules'],
         files: [
