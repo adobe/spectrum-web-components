@@ -2,6 +2,19 @@
 
 set -e
 
+if [ -z "$FIREFOX_BIN"]; then
+    # no specified FIREFOX_BIN...try and guess
+    if [ -f "/c/Program Files/Mozilla Firefox/firefox.exe" ]; then
+        # WSL with remapped /mnt folder to /c
+        FIREFOX_BIN="/c/Program Files/Mozilla Firefox/firefox.exe"
+    elif [ -f "/mnt/c/Program Files/Mozilla Firefox/firefox.exe" ]; then
+        # WSL default
+        FIREFOX_BIN="/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
+    elif [ -f "/Applications/Firefox.app/Contents/MacOS/firefox" ]; then
+        # OSX default
+        FIREFOX_BIN="/Applications/Firefox.app/Contents/MacOS/firefox"
+    fi
+fi
 [ -z "$FIREFOX_BIN" ] && echo "Need to specify FIREFOX_BIN environment variable to point to your firefox binary" && exit 1
 
 TARGET_URL=$1
