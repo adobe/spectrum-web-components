@@ -22,7 +22,6 @@ const rename = require('gulp-rename');
 const wrap = require('gulp-wrap');
 
 const srcPath = path.resolve(path.join(__dirname, '..', 'src'));
-const dstPath = path.resolve(path.join(__dirname, '..', 'dist'));
 const configPath = path.resolve(path.join(__dirname, '..', 'config'));
 
 const buildCSS = () => {
@@ -46,14 +45,6 @@ const buildCSS = () => {
                             'Safari >= 10.1',
                         ],
                     }),
-                ])
-            )
-            // output processed css files to destination folder
-            .pipe(gulp.dest(dstPath))
-            // run postcss again, this time with minificatation, since we're going to pack css into js strings
-            // the users build process will not be able to update our js files easily, so lets do it in advance
-            .pipe(
-                postcss([
                     // minify the css with cssnano presets
                     require('cssnano')({ preset: 'default' }),
                 ])
@@ -83,8 +74,8 @@ const buildCSS = () => {
                     path.extname = '.css.js';
                 })
             )
-            // and write them to the destination folder
-            .pipe(gulp.dest(dstPath))
+            // and write them back out
+            .pipe(gulp.dest(srcPath))
     );
 };
 const watchBuildCSS = () => {

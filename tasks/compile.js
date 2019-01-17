@@ -22,7 +22,6 @@ const merge = require('merge2');
 const tsProject = ts.createProject('tsconfig.json');
 
 const srcPath = path.resolve(path.join(__dirname, '..', 'src'));
-const dstPath = path.resolve(path.join(__dirname, '..', 'dist'));
 
 const compile = () => {
     const tsResult = gulp
@@ -40,8 +39,8 @@ const compile = () => {
                     sourceRoot: './',
                 })
             )
-            .pipe(gulp.dest(dstPath)),
-        tsResult.dts.pipe(gulp.dest(path.join(dstPath, 'types'))),
+            .pipe(gulp.dest(srcPath)),
+        tsResult.dts.pipe(gulp.dest(srcPath)),
     ]);
 };
 

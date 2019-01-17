@@ -14,22 +14,22 @@ governing permissions and limitations under the License.
 
 const path = require('path');
 
-const esModuleDevserver = require('es-module-devserver');
+const esModuleMiddleware = require('@adobe/es-modules-middleware');
 const express = require('express');
 const browserSync = require('browser-sync');
 const serveIndex = require('serve-index');
 
-const DIST_FOLDER = 'dist';
+const DIST_FOLDER = 'src';
 const rootPath = path.resolve(path.join(__dirname, '..'));
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
-// TODO: Make browsersync optional
+// @TODO: Make browsersync optional
 
 // setup browser sync to watch for change and trigger live reload
 const bs = browserSync.create();
-bs.watch(path.join(rootPath, 'dist/**/(*.html|*.css|*.js)')).on(
+bs.watch(path.join(rootPath, 'src/**/(*.html|*.css|*.js)')).on(
     'change',
     bs.reload
 );
@@ -48,9 +48,9 @@ app.use(serveIndex(rootPath, { icons: true }));
 // The browser does not like these paths since they are bare module specifiers and
 // not valid urls to modules as the browser expects.
 
-// So we use the esModuleDevserver middleware to rewrite our import and export
+// So we use the es-modules-middleware middleware to rewrite our import and export
 // statements in our modules to point to the node_modules folder.
-app.use(esModuleDevserver.middleware(rootPath));
+app.use(esModuleMiddleware.middleware(rootPath));
 
 app.listen(port, () =>
     console.log(`

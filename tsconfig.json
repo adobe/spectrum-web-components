@@ -4,12 +4,13 @@
         "experimentalDecorators": true,
         "module": "esNext",
         "moduleResolution": "node",
-        "outDir": "dist",
         "rootDir": "src",
         "sourceMap": true,
         "strict": true,
         "noUnusedLocals": true,
-        "target": "es2017"
+        "target": "es2017",
+        "types": ["mocha", "chai", "sinon", "karma-chai"],
+        "typeRoots": ["./node_modules/@types", "./types"]
     },
     "exclude": ["scripts", "dist", "tasks", "linters", "example-project"]
 }
