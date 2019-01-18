@@ -3,14 +3,26 @@
     "version": "0.0.1",
     "description": "",
     "files": [
-        "dist"
+        "src/*.js",
+        "src/*.js.map",
+        "src/*.d.ts",
+        "src/*.d.ts.map",
+        "src/**/*.js",
+        "src/**/*.js.map",
+        "src/**/*.d.ts",
+        "src/**/*.d.ts.map",
+        "!src/demo/",
+        "!src/test/"
     ],
+    "sideEffects": false,
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "browser": "src/index.js",
     "engines": {
         "node": ">=8.10.0"
     },
     "scripts": {
         "split-spectrum": "node ./scripts/split-spectrum.js",
-        "prebuild": "rimraf dist",
         "build": "gulp",
         "watch": "gulp watch",
         "serve-only": "node ./scripts/serve.js",

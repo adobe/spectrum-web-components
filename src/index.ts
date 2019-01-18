@@ -9,25 +9,5 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-import { html, LitElement, property } from '@polymer/lit-element';
-
-// @ts-ignore - css generated at build time
-import bannerStyles from './banner.css.js';
-
-export class SpectrumBanner extends LitElement {
-    public static is = 'spectrum-banner';
-
-    @property({ type: String, reflect: true })
-    public type = 'info';
-
-    protected render() {
-        return html`
-            <style>
-                ${bannerStyles}
-            </style>
-            <div id="header"><slot name="header"></slot></div>
-            <div id="content"><slot name="content"></slot></div>
-        `;
-    }
-}
+export * from './components';
+export * from './define';

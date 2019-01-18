@@ -3,7 +3,13 @@
     <head>
         <meta charset="utf-8" />
         <title>Demo Page - Spectrum Web Components</title>
-        <script src="../index.js" type="module"></script>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../../define.js';
+            // import the components we're going to use on this page
+            import { DemoPage, DemoSection, DemoCode } from '../index.js';
+            defineCustomElements(DemoPage, DemoSection, DemoCode);
+        </script>
     </head>
 
     <body>

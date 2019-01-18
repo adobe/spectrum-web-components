@@ -3,8 +3,16 @@
     <head>
         <meta charset="utf-8" />
         <title>Banner - Spectrum Web Components</title>
-        <script src="../banner.js" type="module"></script>
-        <script src="../../demo-page/index.js" type="module"></script>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../../define.js';
+            // import and define the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            defineCustomElements(...Object.values(DemoElements));
+            // import the elements we're going to demo
+            import * as Elements from '../index.js';
+            defineCustomElements(...Object.values(Elements));
+        </script>
         <link rel="stylesheet" href="../../../styles/core-global/all.css" />
         <link rel="stylesheet" href="../../../styles/typography/font.css" />
         <link

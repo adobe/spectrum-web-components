@@ -18,6 +18,8 @@ import secondaryButtonStyles from './button-secondary.css.js';
 import { SpectrumButton } from './button';
 
 export class SpectrumSecondaryButton extends SpectrumButton {
+    public static is = 'spectrum-button-secondary';
+
     protected render() {
         const renderedHTML = super.render();
         return html`
@@ -27,8 +29,4 @@ export class SpectrumSecondaryButton extends SpectrumButton {
             </style>
         `;
     }
-}
-
-if (!customElements.get('spectrum-button-secondary')) {
-    customElements.define('spectrum-button-secondary', SpectrumSecondaryButton);
 }

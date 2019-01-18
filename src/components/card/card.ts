@@ -18,6 +18,8 @@ import cardBaseStyles from './card-base.css.js';
 import cardStyles from './card.css.js';
 
 export class SpectrumCard extends LitElement {
+    public static is = 'spectrum-card';
+
     @property({ type: String })
     public title = '';
 
@@ -40,8 +42,4 @@ export class SpectrumCard extends LitElement {
             <div id="footer"><slot name="footer"></slot></div>
         `;
     }
-}
-
-if (!customElements.get('spectrum-card')) {
-    customElements.define('spectrum-card', SpectrumCard);
 }

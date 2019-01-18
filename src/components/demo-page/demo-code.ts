@@ -22,6 +22,8 @@ declare var Prism: typeof import('prismjs'); // tell typescript about the types
 import styles from './demo-code.css.js';
 
 export class DemoCode extends LitElement {
+    public static is = 'demo-code';
+
     @property({ type: String })
     public language = 'html';
 
@@ -87,5 +89,3 @@ export class DemoCode extends LitElement {
         }
     }
 }
-
-customElements.define('demo-code', DemoCode);

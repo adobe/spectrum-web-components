@@ -18,6 +18,8 @@ import buttonStyles from './button-over-bg.css.js';
 import { SpectrumButton } from './button';
 
 export class SpectrumButtonOverBackground extends SpectrumButton {
+    public static is = 'spectrum-button-over-bg';
+
     protected render() {
         const renderedHTML = super.render();
         return html`
@@ -27,11 +29,4 @@ export class SpectrumButtonOverBackground extends SpectrumButton {
             </style>
         `;
     }
-}
-
-if (!customElements.get('spectrum-button-over-bg')) {
-    customElements.define(
-        'spectrum-button-over-bg',
-        SpectrumButtonOverBackground
-    );
 }

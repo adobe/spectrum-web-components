@@ -20,6 +20,8 @@ import cardGalleryStyles from './card-gallery.css.js';
 import cardQuietStyles from './card-quiet.css.js';
 
 export class SpectrumGalleryCard extends LitElement {
+    public static is = 'spectrum-card-gallery';
+
     @property({ type: String })
     public title = '';
 
@@ -44,8 +46,4 @@ export class SpectrumGalleryCard extends LitElement {
             </div>
         `;
     }
-}
-
-if (!customElements.get('spectrum-card-gallery')) {
-    customElements.define('spectrum-card-gallery', SpectrumGalleryCard);
 }
