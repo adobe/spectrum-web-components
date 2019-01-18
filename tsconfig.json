@@ -4,7 +4,7 @@
         "experimentalDecorators": true,
         "module": "esNext",
         "moduleResolution": "node",
-        "rootDir": "src",
+        "rootDir": ".",
         "sourceMap": true,
         "strict": true,
         "noUnusedLocals": true,

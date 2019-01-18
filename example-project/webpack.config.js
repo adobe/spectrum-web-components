@@ -13,15 +13,10 @@ governing permissions and limitations under the License.
 
 const { resolve, join } = require('path');
 
-const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackMd5Hash = require('webpack-md5-hash');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-
-const pkg = require('./package.json');
 
 const ENV = process.argv.find((arg) => arg.includes('NODE_ENV=production'))
     ? 'production'
@@ -33,21 +28,11 @@ const IS_DEV_SERVER = process.argv.find((arg) =>
 );
 const OUTPUT_PATH = IS_DEV_SERVER ? resolve('src') : resolve('dist');
 
-const processEnv = {
-    NODE_ENV: JSON.stringify(ENV),
-    appVersion: JSON.stringify(pkg.version),
-};
-
 /**
  * === Copy static files configuration
  */
 const copyStatics = {
     copyOthers: [
-        {
-            from: 'assets/**',
-            context: resolve('./src'),
-            to: OUTPUT_PATH,
-        },
         {
             from: 'index.html',
             context: resolve('./src'),
@@ -62,22 +47,7 @@ const copyStatics = {
 const plugins = [
     new CleanWebpackPlugin('dist', {}),
     new CopyWebpackPlugin([].concat(copyStatics.copyOthers)),
-    new ExtractTextPlugin({
-        filename: 'styles.[hash].css',
-    }),
-    new HtmlWebpackPlugin({
-        inject: false,
-        hash: true,
-        template: './src/index.html',
-        filename: 'index.html',
-    }),
-    new HtmlWebpackPlugin({
-        inject: false,
-        hash: true,
-        template: './src/index.html',
-        filename: 'index.html',
-    }),
-    new WebpackMd5Hash(),
+    new ExtractTextPlugin('[name].bundle.css'),
 ];
 
 function srcPath(subdir) {
@@ -102,21 +72,24 @@ const shared = (env) => {
         );
     }
 
-    let cssLoaders = ['css-loader'];
-    if (!IS_DEV) {
-        cssLoaders = [
-            {
-                loader: 'css-loader',
-                options: { importLoaders: 1 },
+    let cssLoaders = [
+        {
+            loader: 'css-loader',
+            options: { importLoaders: 1 },
+        },
+        {
+            loader: 'postcss-loader',
+            options: {
+                plugins: (loader) => [
+                    require('postcss-import')({ root: loader.resourcePath }),
+                    require('postcss-preset-env')({
+                        browsers: 'last 2 versions',
+                    }),
+                    ...(IS_DEV ? [] : [require('cssnano')()]),
+                ],
             },
-            {
-                loader: 'postcss-loader',
-                options: {
-                    plugins: (loader) => [require('cssnano')],
-                },
-            },
-        ];
-    }
+        },
+    ];
 
     return {
         entry: {
@@ -126,7 +99,7 @@ const shared = (env) => {
         mode: ENV,
         output: {
             path: OUTPUT_PATH,
-            filename: '[name].[hash].js',
+            filename: '[name].bundle.js',
         },
         module: {
             rules: [

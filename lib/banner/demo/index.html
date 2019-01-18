@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Banner - Spectrum Web Components</title>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../index.js';
+            // import the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            // import the elements we're going to demo
+            import * as Elements from '../index.js';
+            // define our elements using the helper
+            defineCustomElements(
+                ...Object.values(Elements),
+                ...Object.values(DemoElements)
+            );
+        </script>
+        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
+    </head>
+
+    <body>
+        <demo-page title="Banner">
+            <demo-section title="Banner Types" show-demo-code>
+                <div slot="description">
+                    The spectrum banner comes in several types, info, warning
+                    and error.
+                </div>
+                <div slot="demo">
+                    <sp-banner type="info">
+                        <div slot="header">Most Popular</div>
+                        <div slot="content">Includes Illustrator CC</div>
+                    </sp-banner>
+                    <sp-banner type="warning">
+                        <div slot="header">Most Popular</div>
+                        <div slot="content">Includes Illustrator CC</div>
+                    </sp-banner>
+                    <sp-banner type="error">
+                        <div slot="header">Most Popular</div>
+                        <div slot="content">Includes Illustrator CC</div>
+                    </sp-banner>
+                </div>
+            </demo-section>
+            <demo-section title="Corner placement" show-demo-code>
+                <div slot="description">
+                    The spectrum banner 'corner placement'.
+                </div>
+                <div slot="demo">
+                    <div
+                        style="width: 255px; height: 325px; background-color: #ccc; position: relative;"
+                    >
+                        <sp-banner corner type="info">
+                            <div slot="header">Most Popular</div>
+                            <div slot="content">Includes Illustrator CC</div>
+                        </sp-banner>
+                    </div>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>

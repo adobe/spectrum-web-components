@@ -13,19 +13,19 @@ const path = require('path');
 
 module.exports = function(config) {
     config.set({
-        basePath: './src',
+        basePath: './',
         plugins: ['karma-*', require('@adobe/es-modules-middleware')],
         frameworks: ['mocha', 'chai', 'sinon', 'web-components'],
         beforeMiddleware: ['es-modules'],
         files: [
             {
-                pattern: '**/*.test.html',
+                pattern: 'lib/**/*.test.html',
                 watched: false,
                 included: false,
                 served: true,
             },
             {
-                pattern: '**/test/*.js',
+                pattern: 'lib/**/test/*.js',
                 watched: true,
                 included: false,
                 served: false,
