@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
     color: var(--spectrum-global-color-static-gray-500);
 }
 
-slot[name='illustration']::slotted(*) {
+::slotted(*) {
     margin-bottom: var(
         --spectrum-illustrated-message-illustration-margin-bottom
     );

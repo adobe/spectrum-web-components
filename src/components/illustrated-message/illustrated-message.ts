@@ -27,7 +27,7 @@ export class IllustratedMessage extends LitElement {
             <style>
                 ${messageStyles}
             </style>
-            <slot name="illustration"></slot>
+            <slot></slot>
             <div id="heading">${this.heading}</div>
             <div id="description">${this.description}</div>
         `;
