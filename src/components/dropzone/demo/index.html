@@ -38,15 +38,17 @@
                 <div slot="demo">
                     <spectrum-dropzone id="dropzone">
                         <illustrated-message heading="Drag and Drop Your File">
-                            <svg><use xlink:href="geometry.svg#alert" /></svg>
+                            <svg>
+                                <use
+                                    xlink:href="geometry.svg#upload_geometry"
+                                />
+                            </svg>
                         </illustrated-message>
 
                         <div style="color: grey">
                             <div>
                                 <label for="file-input">
-                                    <spectrum-link
-                                        description="Select a File"
-                                    ></spectrum-link>
+                                    <spectrum-link>Select a File</spectrum-link>
                                     from your computer
                                 </label>
                                 <input
@@ -57,9 +59,9 @@
                             </div>
                             <div>
                                 or
-                                <spectrum-link
-                                    description="Search Adobe Stock"
-                                ></spectrum-link>
+                                <spectrum-link>
+                                    Search Adobe Stock
+                                </spectrum-link>
                             </div>
                         </div>
                     </spectrum-dropzone>

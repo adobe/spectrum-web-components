@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 97.7" height="110"> 
-    <symbol id="alert" viewBox="0 0 199 97.7">   
+    <symbol id="upload_geometry" viewBox="0 0 199 97.7">   
         <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3px" stroke="currentColor">     <path d="M110.53,85.66,100.26,95.89a1.09,1.09,0,0,1-1.52,0L88.47,85.66"></path>        
              <line x1="99.5" y1="95.5" x2="99.5" y2="58.5"></line>        
              <path d="M105.5,73.5h19a2,2,0,0,0,2-2v-43"></path>        

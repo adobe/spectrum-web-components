@@ -10,18 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-#description {
+:host {
     background-color: transparent;
     text-decoration: none;
     transition: color var(--spectrum-global-animation-duration-100) ease-in-out;
     outline: none;
     color: var(--spectrum-link-text-color);
-
-    &:hover {
-        text-decoration: underline;
-        color: var(--spectrum-link-text-color-hover);
-        cursor: pointer;
-    }
 
     &.is-disabled {
         cursor: default;
@@ -31,4 +25,10 @@ governing permissions and limitations under the License.
             text-decoration: none;
         }
     }
+}
+
+:host(:hover) {
+    text-decoration: underline;
+    color: var(--spectrum-link-text-color-hover);
+    cursor: pointer;
 }

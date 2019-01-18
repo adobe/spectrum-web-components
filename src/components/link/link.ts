@@ -16,15 +16,12 @@ import { html, LitElement, property } from '@polymer/lit-element';
 import linkStyles from './link.css.js';
 
 export class Link extends LitElement {
-    @property({ type: String })
-    public description = '';
-
     protected render() {
         return html`
             <style>
                 ${linkStyles}
             </style>
-            <a id="description">${this.description}</a>
+            <slot></slot>
         `;
     }
 }
