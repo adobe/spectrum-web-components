@@ -16,12 +16,17 @@ import { html, LitElement, property } from '@polymer/lit-element';
 import linkStyles from './link.css.js';
 
 export class Link extends LitElement {
+    public static is = 'spectrum-link';
+
+    @property({ type: String })
+    public href = '';
+
     protected render() {
         return html`
             <style>
                 ${linkStyles}
             </style>
-            <slot></slot>
+            <a href="${this.href}"><slot></slot></a>
         `;
     }
 }
