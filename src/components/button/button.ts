@@ -16,6 +16,8 @@ import { html, LitElement } from '@polymer/lit-element';
 import buttonStyles from './button.css.js';
 
 export class SpectrumButton extends LitElement {
+    public static is = 'spectrum-button';
+
     protected render() {
         return html`
             <style>
@@ -25,8 +27,4 @@ export class SpectrumButton extends LitElement {
             <div id="label"><slot></slot></div>
         `;
     }
-}
-
-if (!customElements.get('spectrum-button')) {
-    customElements.define('spectrum-button', SpectrumButton);
 }

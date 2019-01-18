@@ -18,6 +18,8 @@ import cardBaseStyles from './card-base.css.js';
 import cardQuietStyles from './card-quiet.css.js';
 
 export class SpectrumQuietCard extends LitElement {
+    public static is = 'spectrum-card-quiet';
+
     @property({ type: String })
     public title = '';
 
@@ -39,8 +41,4 @@ export class SpectrumQuietCard extends LitElement {
             </div>
         `;
     }
-}
-
-if (!customElements.get('spectrum-card-quiet')) {
-    customElements.define('spectrum-card-quiet', SpectrumQuietCard);
 }

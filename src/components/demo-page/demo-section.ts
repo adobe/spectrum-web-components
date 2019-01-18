@@ -16,6 +16,8 @@ import { html, LitElement, property } from '@polymer/lit-element/lit-element';
 import styles from './demo-section.css.js';
 
 export class DemoSection extends LitElement {
+    public static is = 'demo-section';
+
     @property({ type: String })
     public title = '';
 
@@ -72,5 +74,3 @@ export class DemoSection extends LitElement {
         }
     }
 }
-
-customElements.define('demo-section', DemoSection);
