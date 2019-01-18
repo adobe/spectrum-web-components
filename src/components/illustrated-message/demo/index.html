@@ -35,13 +35,11 @@
                         heading="No Results"
                         description="Try another search"
                     >
-                        <object
-                            data="error_message_geometry.svg"
-                            type="image/svg+xml"
-                        ></object>
-
-                        <!-- <img class="svg" src="error_message_geometry.svg" /> -->
-                        <!-- <script src="error_message_geometry.js"></script> -->
+                        <svg>
+                            <use
+                                xlink:href="error_message_geometry.svg#alert"
+                            />
+                        </svg>
                     </illustrated-message>
                 </div>
             </demo-section>
