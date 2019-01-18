@@ -3,8 +3,13 @@
     <head>
         <meta charset="utf-8" />
         <title>Illustrated message - Spectrum Web Components</title>
+        <!--         <script type="module">
+            import { defineCustomElements } from '../../../define.js';
+        </script> -->
+
         <script src="../illustrated-message.js" type="module"></script>
         <script src="../../demo-page/index.js" type="module"></script>
+
         <link rel="stylesheet" href="../../../styles/core-global/all.css" />
         <link rel="stylesheet" href="../../../styles/typography/font.css" />
         <link
@@ -30,7 +35,13 @@
                         heading="No Results"
                         description="Try another search"
                     >
-                        <script src="error_message_geometry.js"></script>
+                        <object
+                            data="error_message_geometry.svg"
+                            type="image/svg+xml"
+                        ></object>
+
+                        <!-- <img class="svg" src="error_message_geometry.svg" /> -->
+                        <!-- <script src="error_message_geometry.js"></script> -->
                     </illustrated-message>
                 </div>
             </demo-section>
