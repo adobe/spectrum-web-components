@@ -32,7 +32,7 @@ governing permissions and limitations under the License.
     background-color: var(--spectrum-dropzone-background-color-selected-hover);
     border-style: solid;
 
-    & slot[name='illustrated-message']::slotted(*) {
+    & ::slotted(*) {
         color: var(--spectrum-global-color-static-blue-400);
     }
 }
