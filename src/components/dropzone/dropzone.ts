@@ -128,7 +128,6 @@ export class SpectrumDropzone extends LitElement {
                 @dragleave="${this.onDragLeave}"
             >
                 <slot></slot>
-                <slot name="upload"></slot>
             </div>
         `;
     }
