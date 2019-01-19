@@ -16,6 +16,8 @@ import { html, LitElement, property } from '@polymer/lit-element';
 import messageStyles from './illustrated-message.css.js';
 
 export class IllustratedMessage extends LitElement {
+    public static readonly is = 'spectrum-illustrated-message';
+
     @property({ type: String })
     public heading = '';
 
@@ -32,8 +34,4 @@ export class IllustratedMessage extends LitElement {
             <div id="description">${this.description}</div>
         `;
     }
-}
-
-if (!customElements.get('illustrated-message')) {
-    customElements.define('illustrated-message', IllustratedMessage);
 }

@@ -4,13 +4,19 @@
     <head>
         <meta charset="utf-8" />
         <title>dropzone - Spectrum Web Components</title>
-        <script src="../dropzone.js" type="module"></script>
-        <script
-            src="../../illustrated-message/illustrated-message.js"
-            type="module"
-        ></script>
-        <script src="../../link/link.js" type="module"></script>
-        <script src="../../demo-page/index.js" type="module"></script>
+        <script type="module">
+            // import the illustratedmessage element too
+            import {
+                defineCustomElements,
+                IllustratedMessage,
+                Link,
+                DropZone,
+            } from '../../../index.js';
+            defineCustomElements(IllustratedMessage, Link, DropZone);
+            // import and define the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            defineCustomElements(...Object.values(DemoElements));
+        </script>
         <link rel="stylesheet" href="../../../styles/core-global/all.css" />
         <link rel="stylesheet" href="../../../styles/typography/font.css" />
         <link
@@ -32,18 +38,28 @@
     </head>
 
     <body>
-        <demo-page title="dropzone">
-            <demo-section title="dropzone" show-demo-code>
-                <div slot="description">The dropzone message component</div>
+        <demo-page title="DropZone">
+            <demo-section title="DropZone" show-demo-code>
+                <div slot="description">
+                    The DropZone component lets you drop items onto it using the
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API"
+                    >
+                        Drag and Drop API
+                    </a>
+                    . This example only accepts image files.
+                </div>
                 <div slot="demo">
                     <spectrum-dropzone id="dropzone">
-                        <illustrated-message heading="Drag and Drop Your File">
+                        <spectrum-illustrated-message
+                            heading="Drag and Drop Your File"
+                        >
                             <svg>
                                 <use
                                     xlink:href="geometry.svg#upload_geometry"
                                 />
                             </svg>
-                        </illustrated-message>
+                        </spectrum-illustrated-message>
 
                         <div style="color: grey">
                             <div>
@@ -59,7 +75,10 @@
                             </div>
                             <div>
                                 or
-                                <spectrum-link>
+                                <spectrum-link
+                                    href="http://stock.adobe.com"
+                                    target="blank"
+                                >
                                     Search Adobe Stock
                                 </spectrum-link>
                             </div>

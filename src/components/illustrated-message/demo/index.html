@@ -2,14 +2,17 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Illustrated message - Spectrum Web Components</title>
-        <!--         <script type="module">
+        <title>IllustratedMessage - Spectrum Web Components</title>
+        <script type="module">
+            // import the define helper
             import { defineCustomElements } from '../../../define.js';
-        </script> -->
-
-        <script src="../illustrated-message.js" type="module"></script>
-        <script src="../../demo-page/index.js" type="module"></script>
-
+            // import and define the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            defineCustomElements(...Object.values(DemoElements));
+            // import the elements we're going to demo
+            import * as Elements from '../index.js';
+            defineCustomElements(...Object.values(Elements));
+        </script>
         <link rel="stylesheet" href="../../../styles/core-global/all.css" />
         <link rel="stylesheet" href="../../../styles/typography/font.css" />
         <link
@@ -27,20 +30,23 @@
     </head>
 
     <body>
-        <demo-page title="illustrated-message">
-            <demo-section title="illustrated-message" show-demo-code>
-                <div slot="description">The illustrated-message component</div>
+        <demo-page title="Illustrated-Message">
+            <demo-section title="Illustrated-Message" show-demo-code>
+                <div slot="description">
+                    The illustrated-message component renders slotted content,
+                    preferably an SVG with a heading and description below it.
+                </div>
                 <div slot="demo">
-                    <illustrated-message
+                    <spectrum-illustrated-message
                         heading="No Results"
                         description="Try another search"
                     >
                         <svg>
                             <use
-                                xlink:href="error_message_geometry.svg#alert"
+                                xlink:href="error_message_geometry.svg#error-notice"
                             />
                         </svg>
-                    </illustrated-message>
+                    </spectrum-illustrated-message>
                 </div>
             </demo-section>
         </demo-page>

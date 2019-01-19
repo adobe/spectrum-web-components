@@ -16,9 +16,11 @@ import { html, LitElement, property } from '@polymer/lit-element';
 
 import dropzoneStyles from './dropzone.css.js';
 
-type DropZoneEventDetail = DragEvent;
+export type DropZoneEventDetail = DragEvent;
 
-export class SpectrumDropzone extends LitElement {
+export class DropZone extends LitElement {
+    public static readonly is = 'spectrum-dropzone';
+
     public get dropEffect() {
         return this._dropEffect;
     }
@@ -138,8 +140,4 @@ export class SpectrumDropzone extends LitElement {
             this.debouncedDragLeave = null;
         }
     }
-}
-
-if (!customElements.get('spectrum-dropzone')) {
-    customElements.define('spectrum-dropzone', SpectrumDropzone);
 }

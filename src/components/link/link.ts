@@ -16,7 +16,7 @@ import { html, LitElement, property } from '@polymer/lit-element';
 import linkStyles from './link.css.js';
 
 export class Link extends LitElement {
-    public static is = 'spectrum-link';
+    public static readonly is = 'spectrum-link';
 
     @property({ type: String })
     public href = '';
@@ -26,11 +26,7 @@ export class Link extends LitElement {
             <style>
                 ${linkStyles}
             </style>
-            <a href="${this.href}"><slot></slot></a>
+            <a ?href="${this.href}"><slot></slot></a>
         `;
     }
-}
-
-if (!customElements.get('spectrum-link')) {
-    customElements.define('spectrum-link', Link);
 }

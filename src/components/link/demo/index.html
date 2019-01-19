@@ -26,12 +26,22 @@
     </head>
 
     <body>
-        <demo-page title="link">
-            <demo-section title="link" show-demo-code>
-                <div slot="description">The link component</div>
+        <demo-page title="Link">
+            <demo-section title="Link" show-demo-code>
+                <div slot="description">
+                    The link component adds basic link styling to its content.
+                </div>
                 <div slot="demo">
-                    <spectrum-link>link to the webpage</spectrum-link>
-                    <spectrum-link disabled>link to the webpage</spectrum-link>
+                    <spectrum-link
+                        href="https://www.adobe.com"
+                        title="Go to Adobe.com"
+                    >
+                        link to adobe.com
+                    </spectrum-link>
+                    and this is a
+                    <spectrum-link href="https://www.adobe.com" disabled>
+                        disabled link
+                    </spectrum-link>
                 </div>
             </demo-section>
         </demo-page>
