@@ -19,7 +19,11 @@ import sliderSkinStyles from './slider-skin.css.js';
 // @ts-ignore - css generated at build time
 import sliderStyles from './slider.css.js';
 
+export type ISliderInputEventDetail = number;
+
 export class SpectrumSliderColor extends LitElement {
+    public static is = 'spectrum-slider-color';
+
     @property({ type: String })
     public type = '';
 
@@ -52,19 +56,28 @@ export class SpectrumSliderColor extends LitElement {
 
         this.value = parseFloat(inputValue);
 
-        interface ISliderInputEventDetail {
-            bubbles: boolean;
-            composed: boolean;
-            detail: number;
-        }
+        // interface ISliderInputEventDetail {
+        //     bubbles: boolean;
+        //     composed: boolean;
+        //     detail: number;
+        // }
+        //
+        // const inputEventInit: ISliderInputEventDetail = {
+        //     bubbles: true,
+        //     composed: true,
+        //     detail: this.value,
+        // };
 
-        const inputEventInit: ISliderInputEventDetail = {
-            bubbles: true,
-            composed: true,
-            detail: this.value,
-        };
+        const inputEvent = new CustomEvent<ISliderInputEventDetail>(
+            'slider-input',
+            {
+                bubbles: true,
+                composed: true,
+                detail: this.value,
+            }
+        );
 
-        const inputEvent = new CustomEvent('slider-input', inputEventInit);
+        //const inputEvent = new CustomEvent('slider-input', inputEventInit);
 
         this.dispatchEvent(inputEvent);
     }
@@ -147,8 +160,4 @@ export class SpectrumSliderColor extends LitElement {
     private get handleClass(): string {
         return this.isDragging ? 'is-dragged' : '';
     }
-}
-
-if (!customElements.get('spectrum-slider-color')) {
-    customElements.define('spectrum-slider-color', SpectrumSliderColor);
 }

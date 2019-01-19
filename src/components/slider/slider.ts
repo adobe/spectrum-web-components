@@ -22,6 +22,8 @@ import sliderSkinStyles from './slider-skin.css.js';
 import sliderStyles from './slider.css.js';
 
 export class SpectrumSlider extends LitElement {
+    public static is = 'spectrum-slider';
+
     @property({ type: String })
     public type = '';
 
@@ -168,8 +170,4 @@ export class SpectrumSlider extends LitElement {
     private get handleClass(): string {
         return this.isDragging ? 'is-dragged' : '';
     }
-}
-
-if (!customElements.get('spectrum-slider')) {
-    customElements.define('spectrum-slider', SpectrumSlider);
 }

@@ -54,10 +54,6 @@ governing permissions and limitations under the License.
     width: 100%;
 }
 
-/* .track::before {
-    background: linear-gradient(to right, rgb(38, 128, 235), rgb(9, 90, 186));
-} */
-
 #controls::before,
 .track {
     top: var(--spectrum-slider-color-track-top);
