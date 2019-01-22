@@ -3,6 +3,14 @@
     "extends": ["tslint:latest", "tslint-config-prettier"],
     "rules": {
         "no-submodule-imports": [true, "@polymer", "lit-html"],
-        "file-should-contain-header": [true, "./config/license.js"]
+        "file-should-contain-header": [true, "./config/license.js"],
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-snake-case",
+            "allow-pascal-case",
+            "allow-leading-underscore"
+        ]
     }
 }

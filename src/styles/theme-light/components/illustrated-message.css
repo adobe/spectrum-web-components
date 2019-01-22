@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './banner';
-export * from './button';
-export * from './card';
-export * from './dropzone';
-export * from './illustrated-message';
-export * from './link';
 
-export * from './demo-page';
+:root {
+    --spectrum-illustrated-message-description-max-width: 500px;
+    --spectrum-illustrated-message-heading-max-width: 500px;
+    --spectrum-illustrated-message-illustration-margin-bottom: 24px;
+    --spectrum-illustrated-message-heading-margin: 0;
+    --spectrum-illustrated-message-description-margin: 4px 0 0 0;
+}

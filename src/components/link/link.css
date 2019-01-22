@@ -9,11 +9,29 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './banner';
-export * from './button';
-export * from './card';
-export * from './dropzone';
-export * from './illustrated-message';
-export * from './link';
 
-export * from './demo-page';
+:host,
+a:-webkit-any-link,
+a:any-link {
+    background-color: transparent;
+    text-decoration: none;
+    transition: color var(--spectrum-global-animation-duration-100) ease-in-out;
+    outline: none;
+    color: var(--spectrum-link-text-color);
+}
+
+:host(:hover) a {
+    text-decoration: underline;
+    color: var(--spectrum-link-text-color-hover);
+    cursor: pointer;
+}
+
+:host([disabled]) {
+    cursor: default;
+    pointer-events: none;
+}
+
+:host([disabled]:hover) a,
+:host([disabled]:focus) a {
+    text-decoration: none;
+}
