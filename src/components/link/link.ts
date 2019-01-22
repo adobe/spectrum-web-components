@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, LitElement, property } from '@polymer/lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 // @ts-ignore - css generated at build time
 import linkStyles from './link.css.js';
@@ -26,7 +27,7 @@ export class Link extends LitElement {
             <style>
                 ${linkStyles}
             </style>
-            <a ?href="${this.href}"><slot></slot></a>
+            <a href=${ifDefined(this.href)}><slot></slot></a>
         `;
     }
 }
