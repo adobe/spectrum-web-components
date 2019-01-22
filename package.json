@@ -6,6 +6,7 @@
         "lib",
         "styles",
         "!lib/*[!d].ts",
+        "!lib/**/*[!d].ts",
         "!lib/**/demo",
         "!lib/**/test"
     ],
