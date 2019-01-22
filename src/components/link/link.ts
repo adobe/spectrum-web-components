@@ -20,10 +20,10 @@ export class Link extends LitElement {
     public static readonly is = 'spectrum-link';
 
     @property({ type: String })
-    public href = '';
+    public href: string | undefined = undefined;
 
     @property({ type: String })
-    public target = '';
+    public target: string | undefined = undefined;
 
     protected render() {
         return html`
