@@ -38,6 +38,9 @@ bs.init({ logSnippet: false });
 // setup express to use the browsersync middleware and inject the script tag
 app.use(require('connect-browser-sync')(bs));
 
+// generate browsable index pages
+app.use(serveIndex(rootPath, { icons: true }));
+
 // NOTE: Because we are using ES-module imports and are not bundling our code
 // with a bundler like webpack or rollup, we have to handle the imports that
 // are to be resolved from the node_modules folder.
@@ -49,10 +52,7 @@ app.use(require('connect-browser-sync')(bs));
 // statements in our modules to point to the node_modules folder.
 app.use(esModuleMiddleware.middleware(rootPath));
 
-// generate browsable index pages
-app.use(serveIndex(rootPath, { icons: true }));
-
-app.listen(port, () =>
+app.listen(port, '0.0.0.0', () =>
     console.log(`
 =====================================================================
 Dev server listening at http://localhost:${port}/${ROOT_FOLDER}/
