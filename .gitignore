@@ -1,9 +1,10 @@
-src/**/*.js
-src/**/*.d.ts
-src/**/*.js.map
-src/**/*.d.ts.map
-src/**/*.css.js
-dist
+lib/**/*.js
+styles/**/*.js
+lib/**/*.d.ts
+lib/**/*.js.map
+lib/**/*.d.ts.map
+lib/**/*.css.js
+styles/**/*.css.js
 node_modules
 npm-debug.log
 .nvmrc
@@ -11,3 +12,4 @@ npm-debug.log
 .chrome
 .firefox
 .vscode
+.npmrc

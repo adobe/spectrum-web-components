@@ -122,14 +122,14 @@ const scales = ['medium' /* 'large' */];
 const cores = ['global'];
 
 // the components we should copy over
-const components = ['banner', 'button', 'card', 'dropzone'];
+const components = ['banner', 'button', 'card', 'dropzone', 'link'];
 
 const processes = [];
 
 themes.forEach(async (theme) => {
     const srcPath = path.join(spectrumPath, `spectrum-${theme}.css`);
     const dstPath = path.resolve(
-        path.join(__dirname, '..', 'src', 'styles', `theme-${theme}`)
+        path.join(__dirname, '..', 'styles', `theme-${theme}`)
     );
     console.log(`processing theme ${srcPath}`);
     processes.push(
@@ -143,7 +143,7 @@ themes.forEach(async (theme) => {
 scales.forEach(async (scale) => {
     const srcPath = path.join(spectrumPath, `spectrum-${scale}.css`);
     const dstPath = path.resolve(
-        path.join(__dirname, '..', 'src', 'styles', `scale-${scale}`)
+        path.join(__dirname, '..', 'styles', `scale-${scale}`)
     );
     console.log(`processing scale  ${srcPath}`);
     processes.push(
@@ -157,7 +157,7 @@ scales.forEach(async (scale) => {
 cores.forEach(async (core) => {
     const srcPath = path.join(spectrumPath, `spectrum-${core}.css`);
     const dstPath = path.resolve(
-        path.join(__dirname, '..', 'src', 'styles', `core-${core}`)
+        path.join(__dirname, '..', 'styles', `core-${core}`)
     );
     console.log(`processing core ${srcPath}`);
     processes.push(

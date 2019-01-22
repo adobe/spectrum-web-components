@@ -21,7 +21,7 @@ const merge = require('merge2');
 
 const tsProject = ts.createProject('tsconfig.json');
 
-const srcPath = path.resolve(path.join(__dirname, '..', 'src'));
+const srcPath = path.resolve(path.join(__dirname, '..', 'lib'));
 
 const compile = () => {
     const tsResult = gulp
