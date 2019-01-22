@@ -22,12 +22,17 @@ export class Link extends LitElement {
     @property({ type: String })
     public href = '';
 
+    @property({ type: String })
+    public target = '';
+
     protected render() {
         return html`
             <style>
                 ${linkStyles}
             </style>
-            <a href=${ifDefined(this.href)}><slot></slot></a>
+            <a href=${ifDefined(this.href)} target=${ifDefined(this.target)}>
+                <slot></slot>
+            </a>
         `;
     }
 }
