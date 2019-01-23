@@ -18,6 +18,6 @@ import { Button } from './button';
 export class ButtonPrimary extends Button {
     public static is = 'sp-button-primary';
     public static get styles() {
-        return [super.styles, primaryButtonStyles];
+        return [...super.styles, primaryButtonStyles];
     }
 }

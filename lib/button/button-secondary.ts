@@ -19,6 +19,6 @@ export class ButtonSecondary extends Button {
     public static is = 'sp-button-secondary';
 
     public static get styles() {
-        return [super.styles, secondaryButtonStyles];
+        return [...super.styles, secondaryButtonStyles];
     }
 }

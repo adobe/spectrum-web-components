@@ -77,7 +77,7 @@ const buildCSS = () => {
             // rename the wrapped css to javascript files
             .pipe(
                 rename((path) => {
-                    path.extname = '.css.js';
+                    path.extname = '.css.ts';
                 })
             )
             // and write them back out
