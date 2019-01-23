@@ -46,11 +46,11 @@ export class SpectrumSliderColor extends LitElement {
     @property({ type: Number })
     public step = 1;
 
-    @property({ type: Boolean })
+    @property({ type: Boolean, reflect: true })
     public disabled = false;
 
-    @property({ type: Boolean })
-    public isDragging = false;
+    @property({ type: Boolean, reflect: true })
+    public dragging = false;
 
     public onInput(ev: Event) {
         if (!this.inputElement) {
@@ -110,21 +110,18 @@ export class SpectrumSliderColor extends LitElement {
                       @mouseup=${this.onMouseUp}
                   />
                 <div class="track"></div>
-                <div id="handle"
-                    class="${this.handleClass}"
-                    style="${this.handleStyle}"
-                ></div>
+                <div id="handle" style="${this.handleStyle}"></div>
                 </div>
             </div>
         `;
     }
 
     private onMouseDown() {
-        this.isDragging = true;
+        this.dragging = true;
     }
 
     private onMouseUp() {
-        this.isDragging = false;
+        this.dragging = false;
     }
 
     private get inputElement() {
@@ -140,9 +137,5 @@ export class SpectrumSliderColor extends LitElement {
 
     private get handleStyle(): string {
         return `left: ${this.trackProgress * 100}%`;
-    }
-
-    private get handleClass(): string {
-        return this.isDragging ? 'is-dragged' : '';
     }
 }

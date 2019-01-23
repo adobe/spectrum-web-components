@@ -5,20 +5,29 @@
         <title>Sliders - Spectrum Web Components</title>
         <script type="module">
             // import the define helper
-            import { defineCustomElements } from '../../index.js';
-            // import the demo page components
+            import { defineCustomElements } from '../../../define.js';
+            // import and define the demo page components
             import * as DemoElements from '../../demo-page/index.js';
-            // import the elements we're going to demo
+            defineCustomElements(...Object.values(DemoElements));
+            // import our elements we're going to demo
             import * as Elements from '../index.js';
-            // define our elements using the helper
-            defineCustomElements(
-                ...Object.values(Elements),
-                ...Object.values(DemoElements)
-            );
+            defineCustomElements(...Object.values(Elements));
         </script>
-        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
-        <link rel="stylesheet" href="../../../styles/typography/all.css" />
+        <script src="../slider.js" type="module"></script>
+        <script src="../slider-color.js" type="module"></script>
+        <script src="../../demo-page/index.js" type="module"></script>
+        <link rel="stylesheet" href="../../../styles/core-global/all.css" />
+        <link rel="stylesheet" href="../../../styles/typography/font.css" />
         <link rel="stylesheet" href="./demo-page.css" />
+        <link
+            rel="stylesheet"
+            href="../../../styles/theme-light/components/slider.css"
+        />
+        <link
+            rel="stylesheet"
+            href="../../../styles/scale-medium/components/slider.css"
+        />
+        <link rel="stylesheet" href="../../../styles/scale-medium/alias.css" />
     </head>
 
     <body class="spectrum-light spectrum-medium">

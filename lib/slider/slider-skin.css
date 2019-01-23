@@ -41,18 +41,8 @@ governing permissions and limitations under the License.
         border-color: var(--spectrum-slider-handle-border-color-hover);
     }
 
-    &.is-focused {
-        border-color: var(--spectrum-slider-handle-border-color-key-focus);
-        background: var(--spectrum-slider-handle-background-color-key-focus);
-    }
-
-    &:active,
-    &.is-dragged {
+    &:active {
         border-color: var(--spectrum-slider-handle-border-color-down);
-    }
-
-    &.is-dragged {
-        background: var(--spectrum-slider-handle-background-color-down);
     }
 }
 
@@ -60,13 +50,14 @@ governing permissions and limitations under the License.
     background: transparent;
 }
 
-#tick {
-    &::after {
-        background-color: var(--spectrum-slider-tick-mark-color);
+:host([dragging]) {
+    & #handle {
+        border-color: var(--spectrum-slider-handle-border-color-down);
+        background: var(--spectrum-slider-handle-background-color-down);
     }
 }
 
-:host([is-disabled]) {
+:host([disabled]) {
     & #labelContainer {
         color: var(--spectrum-label-text-color-disabled);
     }

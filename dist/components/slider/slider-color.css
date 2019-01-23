@@ -18,9 +18,10 @@ governing permissions and limitations under the License.
         var(--spectrum-slider-color-track-background-color-gradient-end)
     );
     box-shadow: inset 0 0 0 1px var(--spectrum-slider-color-track-border-color);
-    &::before {
-        display: none;
-    }
+}
+
+.track::before {
+    display: none;
 }
 
 #handle {
@@ -30,15 +31,22 @@ governing permissions and limitations under the License.
     border-color: var(--spectrum-slider-color-handle-border-color);
     background: var(--spectrum-slider-color-handle-color);
     top: var(--spectrum-slider-color-handle-top);
+}
 
-    &:active {
-        border-color: var(--spectrum-slider-color-handle-border-color);
-    }
+#handle.is-focused {
+    box-shadow: 0 0 0 1px
+        var(--spectrum-slider-color-handle-outset-border-color-key-focus);
+}
+
+#handle:active,
+#handle.is-dragged {
+    border-color: var(--spectrum-slider-color-handle-border-color);
 }
 
 #labelContainer {
     padding-bottom: var(--spectrum-fieldlabel-padding-bottom);
 }
+
 #controls,
 #controls::before,
 .track {
@@ -92,46 +100,31 @@ governing permissions and limitations under the License.
     z-index: 0;
 }
 
-:host([dragging]) {
-    & #handle {
-        border-color: var(--spectrum-slider-color-handle-border-color);
-    }
+:host([disabled]) .track {
+    background: var(--spectrum-slider-color-track-color-disabled) !important;
+    box-shadow: none;
 }
 
-:host([disabled]) {
-    & .track {
-        background: var(
-            --spectrum-slider-color-track-color-disabled
-        ) !important;
-        box-shadow: none;
-    }
-    & #handle {
-        background: var(--spectrum-slider-color-handle-color-disabled);
-        box-shadow: none;
-        border-color: var(--spectrum-slider-color-handle-border-color-disabled);
-
-        &:hover,
-        &:active {
-            background: var(--spectrum-slider-color-handle-color-disabled);
-            box-shadow: none;
-            border-color: var(
-                --spectrum-slider-color-handle-border-color-disabled
-            );
-            border-width: var(
-                --spectrum-slider-color-handle-outset-border-size
-            );
-        }
-    }
+:host([disabled]) #handle {
+    background: var(--spectrum-slider-color-handle-color-disabled);
+    box-shadow: none;
+    border-color: var(--spectrum-slider-color-handle-border-color-disabled);
 }
 
-:host([has-alpha]) {
-    & .track {
-        background: linear-gradient(
-            to right,
-            rgba(38, 128, 235, 0.5),
-            rgb(9, 90, 186)
-        );
-    }
+:host([disabled]) #handle:hover,
+:host([disabled]) #handle:active {
+    background: var(--spectrum-slider-color-handle-color-disabled);
+    box-shadow: none;
+    border-color: var(--spectrum-slider-color-handle-border-color-disabled);
+    border-width: var(--spectrum-slider-color-handle-outset-border-size);
+}
+
+:host([has-alpha]) .track {
+    background: linear-gradient(
+        to right,
+        rgba(38, 128, 235, 0.5),
+        rgb(9, 90, 186)
+    );
 }
 
 #input {

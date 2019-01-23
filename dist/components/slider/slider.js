@@ -9,93 +9,79 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-import { html, LitElement, property } from 'lit-element';
-
-// @ts-ignore - css generated at build time
-import sliderColorStyles from './slider-color.css.js';
-// @ts-ignore - css generated at build time
-import sliderRangeStyles from './slider-range.css.js';
+var __decorate =
+    (this && this.__decorate) ||
+    function(decorators, target, key, desc) {
+        var c = arguments.length,
+            r =
+                c < 3
+                    ? target
+                    : desc === null
+                    ? (desc = Object.getOwnPropertyDescriptor(target, key))
+                    : desc,
+            d;
+        if (
+            typeof Reflect === 'object' &&
+            typeof Reflect.decorate === 'function'
+        )
+            r = Reflect.decorate(decorators, target, key, desc);
+        else
+            for (var i = decorators.length - 1; i >= 0; i--)
+                if ((d = decorators[i]))
+                    r =
+                        (c < 3
+                            ? d(r)
+                            : c > 3
+                            ? d(target, key, r)
+                            : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+import { html, LitElement, property } from '@polymer/lit-element';
 // @ts-ignore - css generated at build time
 import sliderSkinStyles from './slider-skin.css.js';
 // @ts-ignore - css generated at build time
 import sliderStyles from './slider.css.js';
-
 export class SpectrumSlider extends LitElement {
-    public static is = 'spectrum-slider';
-
-    public static get styles() {
-        return [sliderStyles, sliderSkinStyles];
+    constructor() {
+        super(...arguments);
+        this.type = '';
+        this.value = 10;
+        this.label = '';
+        this.max = 20;
+        this.min = 0;
+        this.step = 1;
+        this.disabled = false;
+        this.isDragging = false;
     }
-
-    @property()
-    public type = '';
-
-    @property({ type: Number })
-    public value = 10;
-
-    @property()
-    public label = '';
-
-    @property({ type: Number })
-    public max = 20;
-
-    @property({ type: Number })
-    public min = 0;
-
-    @property({ type: Number })
-    public step = 1;
-
-    @property({ type: Boolean, reflect: true })
-    public disabled = false;
-
-    @property({ type: Boolean, reflect: true })
-    public dragging = false;
-
-    public onInput(ev: Event) {
+    onInput(ev) {
         if (!this.inputElement) {
             return;
         }
         const inputValue = this.inputElement.value;
-
         this.value = parseFloat(inputValue);
-
-        interface ISliderInputEventDetail {
-            bubbles: boolean;
-            composed: boolean;
-            detail: number;
-        }
-
-        const inputEventInit: ISliderInputEventDetail = {
+        const inputEventInit = {
             bubbles: true,
             composed: true,
             detail: this.value,
         };
-
         const inputEvent = new CustomEvent('slider-input', inputEventInit);
-
         this.dispatchEvent(inputEvent);
     }
-
-    public onChange(ev: Event) {
-        interface ISliderChangeEventDetail {
-            bubbles: boolean;
-            composed: boolean;
-            detail: number;
-        }
-
-        const changeEventInit: ISliderChangeEventDetail = {
+    onChange(ev) {
+        const changeEventInit = {
             bubbles: true,
             composed: true,
             detail: this.value,
         };
-
         const changeEvent = new CustomEvent('slider-change', changeEventInit);
         this.dispatchEvent(changeEvent);
     }
-
-    protected render() {
+    render() {
         return html`
+            <style>
+                ${sliderStyles}
+                ${sliderSkinStyles}
+            </style>
             <div id="labelContainer">
                 <label id="label" for="input">${this.label}</label>
                 <div id="value" role="textbox" aria-readonly="true" aria-labelledby="label">
@@ -118,7 +104,10 @@ export class SpectrumSlider extends LitElement {
                     this.trackLeftStyle
                 }">
                 </div>
-                <div id="handle" style="${this.handleStyle}">
+                <div id="handle"
+                    class="${this.handleClass}"
+                    style="${this.handleStyle}"
+                >
                 </div>
                 <div class="track"
                     id="track-right"
@@ -129,38 +118,84 @@ export class SpectrumSlider extends LitElement {
             </div>
         `;
     }
-
-    private onMouseDown() {
-        this.dragging = true;
+    onMouseDown() {
+        this.isDragging = true;
     }
-
-    private onMouseUp() {
-        this.dragging = false;
+    onMouseUp() {
+        this.isDragging = false;
     }
-
-    private get inputElement() {
-        return this.shadowRoot!.getElementById('input') as HTMLInputElement;
+    get inputElement() {
+        return this.shadowRoot.getElementById('input');
     }
-
     /**
      * Ratio representing the slider's position on the track
      */
-    private get trackProgress(): number {
+    get trackProgress() {
         return this.value / this.max;
     }
-
-    private get trackLeftStyle(): string {
+    get trackLeftStyle() {
         return `width: ${this.trackProgress * 100}%`;
     }
-
-    private get trackRightStyle(): string {
+    get trackRightStyle() {
         const width = `width: ${(1 - this.trackProgress) * 100}%; `;
         const offset = `left: calc(${this.trackProgress * 100}% + 8px)`;
-
         return width + offset;
     }
-
-    private get handleStyle(): string {
+    get handleStyle() {
         return `left: ${this.trackProgress * 100}%`;
     }
+    get handleClass() {
+        return this.isDragging ? 'is-dragged' : '';
+    }
 }
+SpectrumSlider.is = 'spectrum-slider';
+__decorate(
+    [property({ type: String })],
+    SpectrumSlider.prototype,
+    'type',
+    void 0
+);
+__decorate(
+    [property({ type: Number })],
+    SpectrumSlider.prototype,
+    'value',
+    void 0
+);
+__decorate(
+    [property({ type: String })],
+    SpectrumSlider.prototype,
+    'label',
+    void 0
+);
+__decorate(
+    [property({ type: Number })],
+    SpectrumSlider.prototype,
+    'max',
+    void 0
+);
+__decorate(
+    [property({ type: Number })],
+    SpectrumSlider.prototype,
+    'min',
+    void 0
+);
+__decorate(
+    [property({ type: Number })],
+    SpectrumSlider.prototype,
+    'step',
+    void 0
+);
+__decorate(
+    [property({ type: Boolean })],
+    SpectrumSlider.prototype,
+    'disabled',
+    void 0
+);
+__decorate(
+    [property({ type: Boolean })],
+    SpectrumSlider.prototype,
+    'isDragging',
+    void 0
+);
+
+//# sourceMappingURL=slider.js.map
