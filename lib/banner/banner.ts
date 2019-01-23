@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, LitElement, property } from 'lit-element';
-// @ts-ignore - css generated at build time
+
 import bannerStyles from './banner.css.js';
 
 export class Banner extends LitElement {

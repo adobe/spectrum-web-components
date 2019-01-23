@@ -52,7 +52,7 @@ const buildCSS = () => {
                     require('cssnano')({ preset: 'default' }),
                 ])
             )
-            // now wrap the css files in ES-modules for easy import in javascript
+            // now wrap the css files in ES-modules for easy import in typescript
             .pipe(
                 wrap(
                     // this is lodash template syntax to output an ES-module export of our CSS as a string
@@ -64,7 +64,7 @@ const buildCSS = () => {
                     { parse: false }
                 )
             )
-            // add license header to top of JS file
+            // add license header to top of typescript file
             .pipe(
                 header(
                     fs.readFileSync(
@@ -74,7 +74,7 @@ const buildCSS = () => {
                     false
                 )
             )
-            // rename the wrapped css to javascript files
+            // rename the wrapped css to typescript files
             .pipe(
                 rename((path) => {
                     path.extname = '.css.ts';
