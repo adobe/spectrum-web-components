@@ -21,6 +21,8 @@ import sliderSkinStyles from './slider-skin.css.js';
 // @ts-ignore - css generated at build time
 import sliderStyles from './slider.css.js';
 
+export type ISliderInputEventDetail = number;
+
 export class SpectrumSlider extends LitElement {
     public static is = 'spectrum-slider';
 
@@ -60,19 +62,14 @@ export class SpectrumSlider extends LitElement {
 
         this.value = parseFloat(inputValue);
 
-        interface ISliderInputEventDetail {
-            bubbles: boolean;
-            composed: boolean;
-            detail: number;
-        }
-
-        const inputEventInit: ISliderInputEventDetail = {
-            bubbles: true,
-            composed: true,
-            detail: this.value,
-        };
-
-        const inputEvent = new CustomEvent('slider-input', inputEventInit);
+        const inputEvent = new CustomEvent<ISliderInputEventDetail>(
+            'slider-input',
+            {
+                bubbles: true,
+                composed: true,
+                detail: this.value,
+            }
+        );
 
         this.dispatchEvent(inputEvent);
     }
@@ -91,6 +88,7 @@ export class SpectrumSlider extends LitElement {
         };
 
         const changeEvent = new CustomEvent('slider-change', changeEventInit);
+
         this.dispatchEvent(changeEvent);
     }
 
