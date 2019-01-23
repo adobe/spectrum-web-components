@@ -10,27 +10,31 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from '@polymer/lit-element';
+import { html, LitElement, property } from 'lit-element';
 
 // @ts-ignore - css generated at build time
 import sliderColorStyles from './slider-color.css.js';
+// @ts-ignore - css generated at build time
+import sliderRangeStyles from './slider-range.css.js';
 // @ts-ignore - css generated at build time
 import sliderSkinStyles from './slider-skin.css.js';
 // @ts-ignore - css generated at build time
 import sliderStyles from './slider.css.js';
 
-export type ISliderInputEventDetail = number;
+export class SpectrumSlider extends LitElement {
+    public static is = 'spectrum-slider';
 
-export class SpectrumSliderColor extends LitElement {
-    public static is = 'spectrum-slider-color';
+    public static get styles() {
+        return [sliderStyles, sliderSkinStyles];
+    }
 
-    @property({ type: String })
+    @property()
     public type = '';
 
     @property({ type: Number })
     public value = 10;
 
-    @property({ type: String })
+    @property()
     public label = '';
 
     @property({ type: Number })
@@ -56,28 +60,19 @@ export class SpectrumSliderColor extends LitElement {
 
         this.value = parseFloat(inputValue);
 
-        // interface ISliderInputEventDetail {
-        //     bubbles: boolean;
-        //     composed: boolean;
-        //     detail: number;
-        // }
-        //
-        // const inputEventInit: ISliderInputEventDetail = {
-        //     bubbles: true,
-        //     composed: true,
-        //     detail: this.value,
-        // };
+        interface ISliderInputEventDetail {
+            bubbles: boolean;
+            composed: boolean;
+            detail: number;
+        }
 
-        const inputEvent = new CustomEvent<ISliderInputEventDetail>(
-            'slider-input',
-            {
-                bubbles: true,
-                composed: true,
-                detail: this.value,
-            }
-        );
+        const inputEventInit: ISliderInputEventDetail = {
+            bubbles: true,
+            composed: true,
+            detail: this.value,
+        };
 
-        //const inputEvent = new CustomEvent('slider-input', inputEventInit);
+        const inputEvent = new CustomEvent('slider-input', inputEventInit);
 
         this.dispatchEvent(inputEvent);
     }
@@ -96,16 +91,11 @@ export class SpectrumSliderColor extends LitElement {
         };
 
         const changeEvent = new CustomEvent('slider-change', changeEventInit);
-
         this.dispatchEvent(changeEvent);
     }
+
     protected render() {
         return html`
-            <style>
-                ${sliderStyles}
-                ${sliderSkinStyles}
-                ${sliderColorStyles}
-            </style>
             <div id="labelContainer">
                 <label id="label" for="input">${this.label}</label>
                 <div id="value" role="textbox" aria-readonly="true" aria-labelledby="label">
@@ -124,11 +114,20 @@ export class SpectrumSliderColor extends LitElement {
                       @mousedown=${this.onMouseDown}
                       @mouseup=${this.onMouseUp}
                   />
-                <div class="track"></div>
+                <div class="track" id="track-left" style="${
+                    this.trackLeftStyle
+                }">
+                </div>
                 <div id="handle"
                     class="${this.handleClass}"
                     style="${this.handleStyle}"
-                ></div>
+                >
+                </div>
+                <div class="track"
+                    id="track-right"
+                    style="${this.trackRightStyle}"
+                >
+                </div>
                 </div>
             </div>
         `;
@@ -151,6 +150,17 @@ export class SpectrumSliderColor extends LitElement {
      */
     private get trackProgress(): number {
         return this.value / this.max;
+    }
+
+    private get trackLeftStyle(): string {
+        return `width: ${this.trackProgress * 100}%`;
+    }
+
+    private get trackRightStyle(): string {
+        const width = `width: ${(1 - this.trackProgress) * 100}%; `;
+        const offset = `left: calc(${this.trackProgress * 100}% + 8px)`;
+
+        return width + offset;
     }
 
     private get handleStyle(): string {

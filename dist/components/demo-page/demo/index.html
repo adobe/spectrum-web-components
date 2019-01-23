@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Demo Page - Spectrum Web Components</title>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../../define.js';
+            // import the components we're going to use on this page
+            import { DemoPage, DemoSection, DemoCode } from '../index.js';
+            defineCustomElements(DemoPage, DemoSection, DemoCode);
+        </script>
+    </head>
+
+    <body>
+        <demo-page title="Demo Page....demo!">
+            <demo-section title="A demo section">
+                <div slot="description">
+                    <p>
+                        You can add any content you like to the description slot
+                        on a demo section
+                    </p>
+                    <demo-code language="html" caption="code embed example">
+                        <template slot="code">
+                            <button>Default</button>
+                            <button disabled>Disabled</button>
+                            <button pressed>Pressed</button>
+                            <script type="text/javascript">
+                                const f = 'foo';
+                                function p() {
+                                    return f.replace('f', 'b');
+                                }
+                            </script>
+                        </template>
+                    </demo-code>
+                    <p>We can pre-collapse long example code...</p>
+                    <demo-code
+                        language="javascript"
+                        hide-code
+                        caption="A cool example"
+                    >
+                        <template slot="code">
+                            <script>
+                                const f = 'foo';
+                                function p() {
+                                    return f.replace('f', 'b');
+                                }
+                            </script>
+                        </template>
+                    </demo-code>
+                    <p>We can also do embeds without captions...</p>
+                    <demo-code language="javascript">
+                        <template slot="code">
+                            <script>
+                                const f = 'foo';
+                                function p() {
+                                    return f.replace('f', 'b');
+                                }
+                            </script>
+                        </template>
+                    </demo-code>
+                    <p>Now lets show some actual demo content...</p>
+                </div>
+                <div slot="demo">
+                    <button>Default</button>
+                    <button disabled>Disabled</button>
+                    <button pressed>Pressed</button>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>

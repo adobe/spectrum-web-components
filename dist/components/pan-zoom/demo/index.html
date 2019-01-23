@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Pan & Zoom - Spectrum Web Components</title>
+        <script src="../pan-zoom.js" type="module"></script>
+        <script src="../pan-zoom-dom.js" type="module"></script>
+        <script src="../../demo-page/index.js" type="module"></script>
+        <script src="./demo-mixed.js" type="module"></script>
+        <link rel="stylesheet" href="../../../styles/core-global/all.css" />
+        <link rel="stylesheet" href="../../../styles/typography/font.css" />
+        <link rel="stylesheet" href="./demo-page.css" />
+        <link rel="stylesheet" href="../../../styles/scale-medium/alias.css" />
+        <link rel="stylesheet" href="../../../styles/theme-light/all.css" />
+    </head>
+
+    <body class="spectrum-light spectrum-medium">
+        <demo-page title="Pan & Zoom" wide>
+            <demo-section title="Pan & Zoom" show-demo-code wide>
+                <div slot="description">The Crisp pan and zoom component</div>
+                <div class="demo demo-single" slot="demo">
+                    <pan-zoom-dom>
+                        <img src="https://i.imgur.com/JOAc6el.jpg" />
+                    </pan-zoom-dom>
+                </div>
+            </demo-section>
+
+            <demo-section title="Pan & Zoom Pair" show-demo-code wide>
+                <div slot="description">The Crisp pan and zoom component</div>
+                <div class="demo demo-pair" slot="demo">
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=1" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=2" />
+                    </pan-zoom-dom>
+                </div>
+            </demo-section>
+            <demo-section title="Pan & Zoom Mirrored" show-demo-code wide>
+                <div slot="description">The Crisp pan and zoom component</div>
+                <div class="demo demo-pair" slot="demo">
+                    <pan-zoom-dom id="demo-left">
+                        <img src="fox-precutout.png" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom id="demo-right">
+                        <img src="fox-cutout.png" />
+                    </pan-zoom-dom>
+                    <script>
+                        const demoLeft = document.getElementById('demo-left');
+                        const demoRight = document.getElementById('demo-right');
+
+                        demoLeft.addEventListener('pan', (ev) => {
+                            demoRight.translateX = demoLeft.translateX;
+                            demoRight.translateY = demoLeft.translateY;
+                        });
+
+                        demoRight.addEventListener('pan', (ev) => {
+                            demoLeft.translateX = demoRight.translateX;
+                            demoLeft.translateY = demoRight.translateY;
+                        });
+
+                        demoLeft.addEventListener('zoom', (ev) => {
+                            demoRight.scale = demoLeft.scale;
+                        });
+
+                        demoRight.addEventListener('zoom', (ev) => {
+                            demoLeft.scale = demoRight.scale;
+                        });
+                    </script>
+                </div>
+            </demo-section>
+            <demo-section title="Pan & Zoom Grid" show-demo-code wide>
+                <div slot="description">The Crisp pan and zoom component</div>
+                <div class="demo demo-grid" slot="demo">
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=3" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=4" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=5" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=6" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=7" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=8" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=9" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=10" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=11" />
+                    </pan-zoom-dom>
+                </div>
+            </demo-section>
+            <demo-section title="Pan & Zoom Flex" show-demo-code wide>
+                <div slot="description">The Crisp pan and zoom component</div>
+                <div class="demo demo-flex" slot="demo">
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=3" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=4" />
+                    </pan-zoom-dom>
+                    <pan-zoom-dom>
+                        <img src="https://picsum.photos/555?clearcache=5" />
+                    </pan-zoom-dom>
+                </div>
+            </demo-section>
+            <demo-section title="Pan & Zoom Mixed Content" show-demo-code wide>
+                <div slot="description">The Crisp pan and zoom component</div>
+                <div class="demo demo-deep" slot="demo">
+                    <pan-zoom-dom><demo-mixed></demo-mixed></pan-zoom-dom>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>
