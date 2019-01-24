@@ -32,7 +32,7 @@
         "test:nobuild": "karma start",
         "test:nobuildsingle": "karma start --single-run",
         "test:watch": "npm run build && (npm run watch & karma start)",
-        "publish": "npm run build && npm publish"
+        "prepublish": "npm run build"
     },
     "husky": {
         "hooks": {
