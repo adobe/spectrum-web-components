@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import { html, LitElement } from 'lit-element';
 
-// @ts-ignore - css generated at build time
 import buttonStyles from './button.css.js';
 
 export class Button extends LitElement {

@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-// @ts-ignore - css generated at build time
 import styles from './demo-section.css.js';
 
 export class DemoSection extends LitElement {

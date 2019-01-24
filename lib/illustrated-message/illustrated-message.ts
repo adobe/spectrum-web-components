@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-// @ts-ignore - css generated at build time
 import messageStyles from './illustrated-message.css.js';
 
 export class IllustratedMessage extends LitElement {

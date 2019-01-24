@@ -78,7 +78,7 @@ const splitCSS = (
                 // open the new file
                 fd = fs.openSync(filePath, 'w'); // overwrite existing files
                 // write the root selector with optional selector
-                fs.writeSync(fd, `${license}\n:root ${selector} {\n`);
+                fs.writeSync(fd, `${license}\n:root, :host ${selector} {\n`);
             }
             // write the line to the file with appended newline
             fs.writeSync(fd, `${match[0]}\n`);

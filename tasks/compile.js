@@ -21,11 +21,13 @@ const merge = require('merge2');
 
 const tsProject = ts.createProject('tsconfig.json');
 
-const srcPath = path.resolve(path.join(__dirname, '..', 'lib'));
+const srcPath = path.resolve(path.join(__dirname, '..'));
 
 const compile = () => {
     const tsResult = gulp
-        .src(path.join(srcPath, '**/*.ts'))
+        .src(['./lib/**/*.ts', './styles/**/*.ts'], {
+            base: srcPath,
+        })
         .pipe(cached('typescript'))
         .pipe(debug({ title: 'typescript' }))
         .pipe(sourcemaps.init())

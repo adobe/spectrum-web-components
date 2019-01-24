@@ -12,18 +12,15 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-// @ts-ignore - css generated at build time
 import cardBaseStyles from './card-base.css.js';
-// @ts-ignore - css generated at build time
 import cardGalleryStyles from './card-gallery.css.js';
-// @ts-ignore - css generated at build time
 import cardQuietStyles from './card-quiet.css.js';
 
 export class CardGallery extends LitElement {
     public static is = 'sp-card-gallery';
 
     public static get styles() {
-        return [cardBaseStyles, cardQuietStyles];
+        return [cardBaseStyles, cardQuietStyles, cardGalleryStyles];
     }
 
     @property()

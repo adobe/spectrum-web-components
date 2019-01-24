@@ -16,7 +16,7 @@ const { buildCSS, watchBuildCSS } = require('./tasks/build-css');
 const { compile, watchCompile } = require('./tasks/compile');
 
 // default is to compile, build and copy
-const defaultTasks = gulp.parallel(compile, buildCSS);
+const defaultTasks = gulp.series(buildCSS, compile);
 // watch variations of default task
 const watchTasks = gulp.parallel(watchCompile, watchBuildCSS);
 

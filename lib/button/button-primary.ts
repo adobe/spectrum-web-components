@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-// @ts-ignore - css generated at build time
 import primaryButtonStyles from './button-primary.css.js';
 
 import { Button } from './button';
@@ -18,6 +17,6 @@ import { Button } from './button';
 export class ButtonPrimary extends Button {
     public static is = 'sp-button-primary';
     public static get styles() {
-        return [super.styles, primaryButtonStyles];
+        return [...super.styles, primaryButtonStyles];
     }
 }

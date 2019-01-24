@@ -12,8 +12,6 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-// @ts-ignore - css generated at build time
-
 import dropzoneStyles from './dropzone.css.js';
 
 export type DropzoneEventDetail = DragEvent;

@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root {
+:root,
+:host {
     --spectrum-link-text-color: rgb(75, 156, 245);
     --spectrum-link-underline-color: rgba(0, 0, 0, 0);
     --spectrum-link-text-color-hover: rgb(75, 156, 245);
