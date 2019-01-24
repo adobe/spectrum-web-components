@@ -34,8 +34,8 @@
                     files.
                 </div>
                 <div slot="demo">
-                    <spectrum-dropzone id="dropzone">
-                        <spectrum-illustrated-message
+                    <sp-dropzone id="dropzone">
+                        <sp-illustrated-message
                             heading="Drag and Drop Your File"
                         >
                             <svg>
@@ -43,12 +43,12 @@
                                     xlink:href="geometry.svg#upload_geometry"
                                 />
                             </svg>
-                        </spectrum-illustrated-message>
+                        </sp-illustrated-message>
 
                         <div style="color: grey">
                             <div>
                                 <label for="file-input">
-                                    <spectrum-link>Select a File</spectrum-link>
+                                    <sp-link>Select a File</sp-link>
                                     from your computer
                                 </label>
                                 <input
@@ -59,15 +59,15 @@
                             </div>
                             <div>
                                 or
-                                <spectrum-link
+                                <sp-link
                                     href="http://stock.adobe.com"
                                     target="blank"
                                 >
                                     Search Adobe Stock
-                                </spectrum-link>
+                                </sp-link>
                             </div>
                         </div>
-                    </spectrum-dropzone>
+                    </sp-dropzone>
 
                     <script>
                         const dropzone = document.getElementById('dropzone');

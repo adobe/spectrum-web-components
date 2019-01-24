@@ -16,7 +16,7 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 import linkStyles from './link.css.js';
 
 export class Link extends LitElement {
-    public static readonly is = 'spectrum-link';
+    public static readonly is = 'sp-link';
 
     public static get styles() {
         return [linkStyles];

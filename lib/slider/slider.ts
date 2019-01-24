@@ -17,8 +17,8 @@ import sliderStyles from './slider.css.js';
 
 export type ISliderEventDetail = number;
 
-export class SpectrumSlider extends LitElement {
-    public static is = 'spectrum-slider';
+export class Slider extends LitElement {
+    public static is = 'sp-slider';
 
     public static get styles() {
         return [sliderStyles, sliderSkinStyles];

@@ -17,7 +17,7 @@ import dropzoneStyles from './dropzone.css.js';
 export type DropzoneEventDetail = DragEvent;
 
 export class Dropzone extends LitElement {
-    public static readonly is = 'spectrum-dropzone';
+    public static readonly is = 'sp-dropzone';
 
     public static get styles() {
         return [dropzoneStyles];
