@@ -15,7 +15,7 @@ import { html, LitElement, property } from 'lit-element';
 import messageStyles from './illustrated-message.css.js';
 
 export class IllustratedMessage extends LitElement {
-    public static readonly is = 'spectrum-illustrated-message';
+    public static readonly is = 'sp-illustrated-message';
 
     public static get styles() {
         return [messageStyles];

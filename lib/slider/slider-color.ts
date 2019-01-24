@@ -18,8 +18,8 @@ import sliderStyles from './slider.css.js';
 
 export type ISliderColorEventDetail = number;
 
-export class SpectrumSliderColor extends LitElement {
-    public static is = 'spectrum-slider-color';
+export class SliderColor extends LitElement {
+    public static is = 'sp-slider-color';
 
     public static get styles() {
         return [sliderStyles, sliderSkinStyles, sliderColorStyles];
