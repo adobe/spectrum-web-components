@@ -1,5 +1,8 @@
 {
-    "name": "spectrum-web-components",
+    "name": "@crisp/spectrum-web-components",
+    "publishConfig": {
+        "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-crisp-release-local/"
+    },
     "version": "0.0.1",
     "description": "",
     "files": [
@@ -28,7 +31,8 @@
         "test": "npm run build && karma start --single-run",
         "test:nobuild": "karma start",
         "test:nobuildsingle": "karma start --single-run",
-        "test:watch": "npm run build && (npm run watch & karma start)"
+        "test:watch": "npm run build && (npm run watch & karma start)",
+        "publish": "npm run build && npm publish"
     },
     "husky": {
         "hooks": {
