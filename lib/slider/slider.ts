@@ -12,13 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-// @ts-ignore - css generated at build time
-import sliderColorStyles from './slider-color.css.js';
-// @ts-ignore - css generated at build time
-import sliderRangeStyles from './slider-range.css.js';
-// @ts-ignore - css generated at build time
 import sliderSkinStyles from './slider-skin.css.js';
-// @ts-ignore - css generated at build time
 import sliderStyles from './slider.css.js';
 
 export type ISliderEventDetail = number;
@@ -104,15 +98,13 @@ export class SpectrumSlider extends LitElement {
                       @mousedown=${this.onMouseDown}
                       @mouseup=${this.onMouseUp}
                   />
-                <div class="track" id="track-left" style="${
-                    this.trackLeftStyle
-                }">
+                <div class="track" id="track-left" style=${this.trackLeftStyle}>
                 </div>
-                <div id="handle" style="${this.handleStyle}">
+                <div id="handle" style=${this.handleStyle}>
                 </div>
                 <div class="track"
                     id="track-right"
-                    style="${this.trackRightStyle}"
+                    style=${this.trackRightStyle}
                 >
                 </div>
                 </div>

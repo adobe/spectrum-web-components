@@ -12,11 +12,8 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-// @ts-ignore - css generated at build time
 import sliderColorStyles from './slider-color.css.js';
-// @ts-ignore - css generated at build time
 import sliderSkinStyles from './slider-skin.css.js';
-// @ts-ignore - css generated at build time
 import sliderStyles from './slider.css.js';
 
 export type ISliderColorEventDetail = number;
