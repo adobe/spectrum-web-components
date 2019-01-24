@@ -1,0 +1,68 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:root {
+    --spectrum-alias-background-color-default: rgb(50, 50, 50);
+    --spectrum-alias-background-color-transparent: rgba(0, 0, 0, 0);
+    --spectrum-alias-background-color-label-gray: rgb(110, 110, 110);
+    --spectrum-alias-background-color-modal-overlay: rgba(0, 0, 0, 0.4);
+    --spectrum-alias-background-color-hover-overlay: rgba(255, 255, 255, 0.04);
+    --spectrum-alias-highlight-hover: rgba(255, 255, 255, 0.06);
+    --spectrum-alias-highlight-active: rgba(255, 255, 255, 0.1);
+    --spectrum-alias-highlight-selected: rgba(55, 142, 240, 0.1);
+    --spectrum-alias-highlight-selected-hover: rgba(55, 142, 240, 0.2);
+    --spectrum-alias-background-color-quickactions: rgba(50, 50, 50, 0.9);
+    --spectrum-alias-background-color-quickactions-overlay: rgba(0, 0, 0, 0.2);
+    --spectrum-alias-placeholder-text-color: rgb(123, 123, 123);
+    --spectrum-alias-placeholder-text-color-hover: rgb(255, 255, 255);
+    --spectrum-alias-placeholder-text-color-down: rgb(255, 255, 255);
+    --spectrum-alias-placeholder-text-color-selected: rgb(205, 205, 205);
+    --spectrum-alias-label-text-color: rgb(157, 157, 157);
+    --spectrum-alias-text-color: rgb(205, 205, 205);
+    --spectrum-alias-text-color-hover: rgb(255, 255, 255);
+    --spectrum-alias-text-color-down: rgb(255, 255, 255);
+    --spectrum-alias-text-color-key-focus: rgb(75, 156, 245);
+    --spectrum-alias-text-color-disabled: rgb(92, 92, 92);
+    --spectrum-alias-text-color-invalid: rgb(236, 91, 98);
+    --spectrum-alias-text-color-selected: rgb(75, 156, 245);
+    --spectrum-alias-text-color-selected-neutral: rgb(255, 255, 255);
+    --spectrum-alias-title-text-color: rgb(255, 255, 255);
+    --spectrum-alias-heading-text-color: rgb(255, 255, 255);
+    --spectrum-alias-border-color: rgb(62, 62, 62);
+    --spectrum-alias-border-color-hover: rgb(77, 77, 77);
+    --spectrum-alias-border-color-focus: rgb(38, 128, 235);
+    --spectrum-alias-border-color-down: rgb(55, 142, 240);
+    --spectrum-alias-border-color-extralight: rgb(50, 50, 50);
+    --spectrum-alias-border-color-light: rgb(57, 57, 57);
+    --spectrum-alias-border-color-mid: rgb(62, 62, 62);
+    --spectrum-alias-border-color-dark: rgb(77, 77, 77);
+    --spectrum-alias-border-color-transparent: rgba(0, 0, 0, 0);
+    --spectrum-alias-border-color-translucent-dark: rgba(0, 0, 0, 0.05);
+    --spectrum-alias-border-color-translucent-darker: rgba(0, 0, 0, 0.1);
+    --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.15);
+    --spectrum-alias-focus-color: rgb(38, 128, 235);
+    --spectrum-alias-track-color-default: rgb(62, 62, 62);
+    --spectrum-alias-track-color-disabled: rgb(62, 62, 62);
+    --spectrum-alias-track-color-over-background: rgba(255, 255, 255, 0.2);
+    --spectrum-alias-icon-color: rgb(157, 157, 157);
+    --spectrum-alias-icon-color-hover: rgb(255, 255, 255);
+    --spectrum-alias-icon-color-down: rgb(255, 255, 255);
+    --spectrum-alias-icon-color-focus: rgb(255, 255, 255);
+    --spectrum-alias-icon-color-disabled: rgb(77, 77, 77);
+    --spectrum-alias-icon-color-selected-neutral: rgb(255, 255, 255);
+    --spectrum-alias-icon-color-selected: rgb(55, 142, 240);
+    --spectrum-alias-icon-color-selected-hover: rgb(75, 156, 245);
+    --spectrum-alias-icon-color-selected-down: rgb(90, 169, 250);
+    --spectrum-alias-icon-color-selected-focus: rgb(75, 156, 245);
+    --spectrum-alias-icon-color-error: rgb(227, 72, 80);
+    --spectrum-alias-radial-reaction-color-default: rgba(205, 205, 205, 0.6);
+}

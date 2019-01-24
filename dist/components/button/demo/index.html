@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Button - Spectrum Web Components</title>
+        <script src="../button.js" type="module"></script>
+        <script src="../button-primary.js" type="module"></script>
+        <script src="../button-secondary.js" type="module"></script>
+        <script src="../button-over-bg.js" type="module"></script>
+        <script src="../../demo-page/index.js" type="module"></script>
+        <link rel="stylesheet" href="../../../styles/core-global/all.css" />
+        <link rel="stylesheet" href="../../../styles/typography/font.css" />
+        <link
+            rel="stylesheet"
+            href="../../../styles/theme-light/components/button.css"
+        />
+        <link
+            rel="stylesheet"
+            href="../../../styles/scale-medium/components/button.css"
+        />
+    </head>
+
+    <body>
+        <demo-page title="Button">
+            <p slot="heading">
+                A button represents an action a user can take. Buttons can be
+                clicked or tapped to perform an action or to navigate to another
+                page. Buttons in Spectrum have several variations for different
+                uses and multiple levels of loudness for various
+                attention-getting needs.
+            </p>
+            <demo-section title="Button Variants" show-demo-code>
+                <div slot="description">
+                    There are many button variants to choose from in Spectrum.
+                    The variant property controls the main variant of the
+                    button, and a few other boolean properties can be combined
+                    to apply sub-variants, e.g. quiet and logic.
+                </div>
+                <div slot="demo">
+                    <spectrum-button>CTA</spectrum-button>
+                    <spectrum-button-primary>Primary</spectrum-button-primary>
+                    <spectrum-button-secondary>
+                        Secondary
+                    </spectrum-button-secondary>
+                </div>
+            </demo-section>
+            <demo-section title="Button Content" show-demo-code>
+                <div slot="description">
+                    Buttons can have a label, and icon, or both. An icon is
+                    provided by passing an icon component to the icon slot. A
+                    label can be provided as a child to the button.
+                </div>
+                <div slot="demo">
+                    <spectrum-button-primary>
+                        Label Only
+                    </spectrum-button-primary>
+                    <spectrum-button-primary>
+                        <svg
+                            slot="icon"
+                            viewBox="0 0 36 36"
+                            focusable="false"
+                            aria-hidden="true"
+                            role="img"
+                        >
+                            <path
+                                d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+                            ></path>
+                        </svg>
+                        Icon + Label
+                    </spectrum-button-primary>
+                    <spectrum-button-primary>
+                        <svg
+                            slot="icon"
+                            viewBox="0 0 36 36"
+                            focusable="false"
+                            aria-hidden="true"
+                            role="img"
+                        >
+                            <path
+                                d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+                            ></path>
+                        </svg>
+                    </spectrum-button-primary>
+                </div>
+            </demo-section>
+
+            <demo-section title="Button Over Background" show-demo-code>
+                <div slot="description">
+                    <p>For any button used on top of a background</p>
+                    <p>
+                        A Spectrum button that's meant to be placed over a
+                        non-standard color. In order to implement this button,
+                        you must set the CSS color property of a parent element
+                        to the same value as the background the button is placed
+                        against.
+                    </p>
+                </div>
+                <div slot="demo">
+                    <div
+                        style="background-color: rgb(15, 121, 125); color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block;"
+                    >
+                        <spectrum-button-over-bg>
+                            Button
+                        </spectrum-button-over-bg>
+                        <spectrum-button-over-bg disabled>
+                            Button
+                        </spectrum-button-over-bg>
+                    </div>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+export default /* css */ `
+:host{position:relative;display:inline-flex;flex-direction:column;box-sizing:border-box;min-width:var(--spectrum-card-min-width);border:var(--spectrum-card-border-size) solid transparent;border-radius:var(--spectrum-card-border-radius);background-color:var(--spectrum-card-background-color)}:host(:focus){outline:none}:host(:hover){border-color:var(--spectrum-card-border-color-hover)}:host(:focus) .actions,:host(:focus) .quick-actions,:host(:hover) .actions,:host(:hover) .quick-actions,:host([selected]) .actions,:host([selected]) .quick-actions{visibility:visible;opacity:1;pointer-events:all}:host(:focus),:host([drop-target]),:host([selected]){border-color:var(--spectrum-card-border-color-key-focus);box-shadow:0 0 0 1px var(--spectrum-card-border-color-key-focus)}:host([drop-target]){background-color:var(--spectrum-alias-highlight-selected)}#title{font-size:var(--spectrum-card-title-text-size);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:var(--spectrum-card-title-padding-right);color:var(--spectrum-card-quiet-title-text-color)}#subtitle{font-size:var(--spectrum-card-subtitle-text-size);letter-spacing:var(--spectrum-card-subtitle-letter-spacing);text-transform:uppercase;padding-right:var(--spectrum-card-subtitle-padding-right);color:var(--spectrum-card-quiet-subtitle-text-color)}#header{display:flex;align-items:baseline;height:var(--spectrum-card-body-header-height)}#body{padding:var(--spectrum-card-body-padding-top) var(--spectrum-card-body-padding-right) var(--spectrum-card-body-padding-bottom) var(--spectrum-card-body-padding-left)}#body:last-child{border-radius:0 0 var(--spectrum-card-border-radius) var(--spectrum-card-border-radius)}#content{display:flex;height:var(--spectrum-card-body-content-height);margin-top:var(--spectrum-card-body-content-margin-top)}#actions{right:var(--spectrum-card-actions-margin);top:var(--spectrum-card-actions-margin)}#actions,#quick-actions{position:absolute;height:var(--spectrum-quickactions-height);visibility:hidden}#quick-actions{left:var(--spectrum-card-checkbox-margin);top:var(--spectrum-card-checkbox-margin);width:var(--spectrum-quickactions-height)}#quick-actions .spectrum-Checkbox{margin:0}#action-button{flex:1;align-self:center;display:flex;justify-content:flex-end}
+`;
