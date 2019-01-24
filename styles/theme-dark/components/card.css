@@ -10,17 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root  {
-  --spectrum-card-border-color: rgb(62, 62, 62);
-  --spectrum-card-border-color-key-focus: rgb(38, 128, 235);
-  --spectrum-card-border-color-hover: rgb(90, 90, 90);
-  --spectrum-card-coverphoto-background-color: rgb(62, 62, 62);
-  --spectrum-card-coverphoto-border-color: rgb(62, 62, 62);
-  --spectrum-card-description-text-color: rgb(185, 185, 185);
-  --spectrum-card-background-color: rgb(37, 37, 37);
-  --spectrum-card-quiet-preview-background-color: rgb(62, 62, 62);
-  --spectrum-card-quiet-preview-background-color-hover: rgb(74, 74, 74);
-  --spectrum-card-quiet-border-color-selected: rgb(55, 142, 240);
-  --spectrum-card-quiet-title-text-color: rgb(227, 227, 227);
-  --spectrum-card-quiet-subtitle-text-color: rgb(185, 185, 185);
+:root,
+:host {
+    --spectrum-card-border-color: rgb(62, 62, 62);
+    --spectrum-card-border-color-key-focus: rgb(38, 128, 235);
+    --spectrum-card-border-color-hover: rgb(90, 90, 90);
+    --spectrum-card-coverphoto-background-color: rgb(62, 62, 62);
+    --spectrum-card-coverphoto-border-color: rgb(62, 62, 62);
+    --spectrum-card-description-text-color: rgb(185, 185, 185);
+    --spectrum-card-background-color: rgb(37, 37, 37);
+    --spectrum-card-quiet-preview-background-color: rgb(62, 62, 62);
+    --spectrum-card-quiet-preview-background-color-hover: rgb(74, 74, 74);
+    --spectrum-card-quiet-border-color-selected: rgb(55, 142, 240);
+    --spectrum-card-quiet-title-text-color: rgb(227, 227, 227);
+    --spectrum-card-quiet-subtitle-text-color: rgb(185, 185, 185);
 }

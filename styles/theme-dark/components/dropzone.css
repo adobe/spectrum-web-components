@@ -10,11 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root  {
-  --spectrum-dropzone-border-color: rgb(74, 74, 74);
-  --spectrum-dropzone-background-color: rgb(50, 50, 50);
-  --spectrum-dropzone-icon-color: rgb(110, 110, 110);
-  --spectrum-dropzone-border-color-selected-hover: rgb(38, 128, 235);
-  --spectrum-dropzone-background-color-selected-hover: rgba(55,142,240,0.15);
-  --spectrum-dropzone-icon-color-selected-hover: rgb(55, 142, 240);
+:root,
+:host {
+    --spectrum-dropzone-border-color: rgb(74, 74, 74);
+    --spectrum-dropzone-background-color: rgb(50, 50, 50);
+    --spectrum-dropzone-icon-color: rgb(110, 110, 110);
+    --spectrum-dropzone-border-color-selected-hover: rgb(38, 128, 235);
+    --spectrum-dropzone-background-color-selected-hover: rgba(
+        55,
+        142,
+        240,
+        0.15
+    );
+    --spectrum-dropzone-icon-color-selected-hover: rgb(55, 142, 240);
 }

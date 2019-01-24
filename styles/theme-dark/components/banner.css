@@ -10,9 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root  {
-  --spectrum-banner-text-color: rgb(255, 255, 255);
-  --spectrum-banner-error-background-color: rgb(236, 91, 98);
-  --spectrum-banner-info-background-color: rgb(55, 142, 240);
-  --spectrum-banner-warning-background-color: rgb(242, 148, 35);
+:root,
+:host {
+    --spectrum-banner-text-color: rgb(255, 255, 255);
+    --spectrum-banner-error-background-color: rgb(236, 91, 98);
+    --spectrum-banner-info-background-color: rgb(55, 142, 240);
+    --spectrum-banner-warning-background-color: rgb(242, 148, 35);
 }

@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root {
+:root,
+:host {
     font-family: var(--spectrum-global-font-family-base);
     font-size: var(--spectrum-alias-font-size-default);
 
