@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import 'global.css';
-@import 'alias.css';
-@import 'components/banner.css';
-@import 'components/button.css';
-@import 'components/card.css';
-@import 'components/dropzone.css';
-@import 'components/fieldlabel.css';
-@import 'components/label.css';
-@import 'components/link.css';
-@import 'components/slider.css';
+:root {
+    --spectrum-fieldlabel-asterisk-color: rgb(142, 142, 142);
+    --spectrum-fieldlabel-text-color: rgb(110, 110, 110);
+    --spectrum-fieldlabel-asterisk-color-disabled: rgb(179, 179, 179);
+    --spectrum-fieldlabel-text-color-disabled: rgb(179, 179, 179);
+    --spectrum-fieldlabel-side-asterisk-color: rgb(142, 142, 142);
+    --spectrum-fieldlabel-side-text-color: rgb(110, 110, 110);
+    --spectrum-fieldlabel-side-asterisk-color-disabled: rgb(179, 179, 179);
+    --spectrum-fieldlabel-side-text-color-disabled: rgb(179, 179, 179);
+}

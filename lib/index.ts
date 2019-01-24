@@ -15,6 +15,7 @@ export * from './card';
 export * from './dropzone';
 export * from './illustrated-message';
 export * from './link';
+export * from './slider';
 
 export * from './define';
 
