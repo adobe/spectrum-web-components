@@ -19,7 +19,6 @@ const express = require('express');
 const browserSync = require('browser-sync');
 const serveIndex = require('serve-index');
 
-const ROOT_FOLDER = 'lib';
 const rootPath = path.resolve(path.join(__dirname, '..'));
 
 const app = express();
@@ -30,16 +29,17 @@ const port = 4000;
 // setup browser sync to watch for change and trigger live reload
 const bs = browserSync.create();
 bs.watch([
-    path.join(rootPath, 'lib/**/(*.html|*.css|*.js)'),
-    path.join(rootPath, 'styles/**/(*.css|*.js)'),
+    path.join(rootPath, 'lib/**/*.js'), // compiled js files
 ]).on('change', bs.reload);
 bs.init({ logSnippet: false });
 
 // setup express to use the browsersync middleware and inject the script tag
 app.use(require('connect-browser-sync')(bs));
 
-// generate browsable index pages
-app.use(serveIndex(rootPath, { icons: true }));
+// statically serve the assets in src folder (for demo pages etc)
+app.use(express.static('src'));
+// generate browsable index pages from src folder
+app.use(serveIndex(rootPath + '/src', { icons: true }));
 
 // NOTE: Because we are using ES-module imports and are not bundling our code
 // with a bundler like webpack or rollup, we have to handle the imports that
@@ -50,12 +50,22 @@ app.use(serveIndex(rootPath, { icons: true }));
 
 // So we use the es-modules-middleware middleware to rewrite our import and export
 // statements in our modules to point to the node_modules folder.
-app.use(esModuleMiddleware.middleware(rootPath));
+
+// serve the compiled modules from lib folder
+app.use(
+    esModuleMiddleware.middleware({
+        paths: {
+            '/': path.resolve(path.join(rootPath, 'lib')),
+            '/styles': path.resolve(path.join(rootPath, 'styles')),
+            '/node_modules': path.resolve(path.join(rootPath, 'node_modules')),
+        },
+    })
+);
 
 app.listen(port, '0.0.0.0', () =>
     console.log(`
 =====================================================================
-Dev server listening at http://localhost:${port}/${ROOT_FOLDER}/
+Dev server listening at http://localhost:${port}/
 =====================================================================
 `)
 );

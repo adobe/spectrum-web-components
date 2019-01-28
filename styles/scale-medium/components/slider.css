@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root {
+:root,
+:host {
     --spectrum-slider-color-handle-outset-border-size: 1px;
     --spectrum-slider-color-handle-inset-border-size: 1px;
     --spectrum-slider-color-track-height: 24px;

@@ -10,14 +10,24 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root,
-:host {
-    --spectrum-fieldlabel-asterisk-color: rgb(142, 142, 142);
-    --spectrum-fieldlabel-text-color: rgb(110, 110, 110);
-    --spectrum-fieldlabel-asterisk-color-disabled: rgb(179, 179, 179);
-    --spectrum-fieldlabel-text-color-disabled: rgb(179, 179, 179);
-    --spectrum-fieldlabel-side-asterisk-color: rgb(142, 142, 142);
-    --spectrum-fieldlabel-side-text-color: rgb(110, 110, 110);
-    --spectrum-fieldlabel-side-asterisk-color-disabled: rgb(179, 179, 179);
-    --spectrum-fieldlabel-side-text-color-disabled: rgb(179, 179, 179);
+import { html, LitElement, property } from 'lit-element';
+
+import bannerStyles from './banner.css';
+
+export class Banner extends LitElement {
+    public static readonly is = 'sp-banner';
+
+    @property({ reflect: true })
+    public type = 'info';
+
+    public static get styles() {
+        return [bannerStyles];
+    }
+
+    protected render() {
+        return html`
+            <div id="header"><slot name="header"></slot></div>
+            <div id="content"><slot name="content"></slot></div>
+        `;
+    }
 }

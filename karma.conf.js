@@ -13,24 +13,39 @@ const path = require('path');
 
 module.exports = function(config) {
     config.set({
-        basePath: './',
+        basePath: './src/',
+        esModulesMiddleware: {
+            paths: {
+                '/': path.resolve(path.join(__dirname, 'lib')),
+                '/styles': path.resolve(path.join(__dirname, 'styles')),
+                '/node_modules': path.resolve(
+                    path.join(__dirname, 'node_modules')
+                ),
+            },
+        },
         plugins: ['karma-*', require('@adobe/es-modules-middleware')],
         frameworks: ['mocha', 'chai', 'sinon', 'web-components'],
-        beforeMiddleware: ['es-modules'],
+        middleware: ['es-modules'],
         files: [
             {
-                pattern: 'lib/**/*.test.html',
-                watched: false,
+                pattern: './**/*.test.html',
+                watched: true,
                 included: false,
                 served: true,
             },
             {
-                pattern: 'lib/**/test/*.js',
+                pattern: './**/*.ts',
                 watched: true,
                 included: false,
                 served: false,
             },
         ],
+        // proxy styles and node_modules paths to base so they get picked up by
+        // the middleware
+        proxies: {
+            '/styles/': '/base/styles/',
+            '/node_modules/': '/base/node_modules/',
+        },
         reporters: ['mocha'],
         browsers: [
             path.resolve(path.join(__dirname, 'scripts/firefox.sh')),

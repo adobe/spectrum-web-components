@@ -9,15 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-:root,
-:host {
-    --spectrum-fieldlabel-asterisk-color: rgb(142, 142, 142);
-    --spectrum-fieldlabel-text-color: rgb(110, 110, 110);
-    --spectrum-fieldlabel-asterisk-color-disabled: rgb(179, 179, 179);
-    --spectrum-fieldlabel-text-color-disabled: rgb(179, 179, 179);
-    --spectrum-fieldlabel-side-asterisk-color: rgb(142, 142, 142);
-    --spectrum-fieldlabel-side-text-color: rgb(110, 110, 110);
-    --spectrum-fieldlabel-side-asterisk-color-disabled: rgb(179, 179, 179);
-    --spectrum-fieldlabel-side-text-color-disabled: rgb(179, 179, 179);
-}
+export * from './all-medium-dark.css';

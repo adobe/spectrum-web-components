@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root {
+:root,
+:host {
     --spectrum-label-text-font-family: adobe-clean, 'Source Sans Pro',
         -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;

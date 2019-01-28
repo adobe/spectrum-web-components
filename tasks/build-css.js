@@ -20,6 +20,8 @@ const header = require('gulp-header');
 const postcss = require('gulp-postcss');
 const rename = require('gulp-rename');
 const wrap = require('gulp-wrap');
+const merge = require('merge2');
+
 const stripIndent = require('common-tags').stripIndents;
 
 const srcPath = path.resolve(path.join(__dirname, '..'));
@@ -27,10 +29,12 @@ const configPath = path.resolve(path.join(__dirname, '..', 'config'));
 
 const buildCSS = () => {
     return (
-        gulp
-            .src(['./lib/**/*.css', './styles/*.css', './styles/**/*.css'], {
-                base: srcPath,
-            })
+        merge([
+            gulp.src(['./src/**/*.css'], { base: '.' }),
+            gulp.src(['./styles/*.css', './styles/**/*.css'], {
+                base: '.',
+            }),
+        ])
             // create in-memory cache of css files so we don't reprocess everything all the time
             .pipe(cached('css'))
             .pipe(debug({ title: 'css' }))
@@ -57,9 +61,10 @@ const buildCSS = () => {
                 wrap(
                     // this is lodash template syntax to output an ES-module export of our CSS as a string
                     stripIndent`import { css } from 'lit-element';
-                    export default css\`
+                    const styles = css\`
                         <%= contents %>
-                    \`;`,
+                    \`;
+                    export default styles;`,
                     {},
                     { parse: false }
                 )

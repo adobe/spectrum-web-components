@@ -22,18 +22,19 @@ const merge = require('merge2');
 const tsProject = ts.createProject('tsconfig.json');
 
 const srcPath = path.resolve(path.join(__dirname, '..'));
+const dstPath = path.resolve(path.join(__dirname, '..', 'lib'));
 
 const compile = () => {
-    const tsResult = gulp
-        .src(['./lib/**/*.ts', './styles/**/*.ts'], {
-            base: srcPath,
-        })
+    const tsResult = merge([
+        gulp.src(['./src/**/*.ts'], { base: path.join(srcPath, 'src') }),
+        gulp.src(['./styles/**/*.ts'], { base: srcPath }),
+    ])
         .pipe(cached('typescript'))
         .pipe(debug({ title: 'typescript' }))
         .pipe(sourcemaps.init())
         .pipe(tsProject());
 
-    return merge([
+    return merge(
         tsResult.js
             .pipe(
                 sourcemaps.write('.', {
@@ -41,9 +42,9 @@ const compile = () => {
                     sourceRoot: './',
                 })
             )
-            .pipe(gulp.dest(srcPath)),
-        tsResult.dts.pipe(gulp.dest(srcPath)),
-    ]);
+            .pipe(gulp.dest(dstPath)),
+        tsResult.dts.pipe(gulp.dest(dstPath))
+    );
 };
 
 const watchCompile = () => {

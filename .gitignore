@@ -1,15 +1,5 @@
-lib/**/*.js
-lib/**/*.d.ts
-lib/**/*.js.map
-lib/**/*.d.ts.map
-lib/**/*.css.js
-lib/**/*.css.ts
-
-styles/**/*.js
-styles/**/*.d.ts
-styles/**/*.js.map
-styles/**/*.d.ts.map
-styles/**/*.css.js
+lib
+src/**/*.css.ts
 styles/**/*.css.ts
 
 node_modules
