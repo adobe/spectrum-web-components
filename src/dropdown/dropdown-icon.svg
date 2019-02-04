@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6">
+  <symbol id="icon" viewBox="0 0 10 6">
+      <rect id="Frame" width="10" height="6" fill="#f0f" opacity="0"/>
+      <path id="Shape" d="M9.99,1.01A1,1,0,0,0,8.283.3L5,3.586,1.717.3A1,1,0,1,0,.3,1.717L4.293,5.7a1,1,0,0,0,1.414,0L9.7,1.717A1,1,0,0,0,9.99,1.01Z" fill="#767676"/>
+  </symbol>
+</svg>

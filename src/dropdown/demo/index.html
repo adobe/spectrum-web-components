@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Dropdown - Spectrum Web Components</title>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../index.js';
+            // import the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            // import the elements we're going to demo
+            import * as Elements from '../index.js';
+            // define our elements using the helper
+            import { MenuItem } from '../../index.js';
+            defineCustomElements(
+                MenuItem,
+                ...Object.values(Elements),
+                ...Object.values(DemoElements)
+            );
+        </script>
+        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
+        <link rel="stylesheet" href="demo-page.css" />
+    </head>
+
+    <body>
+        <demo-page title="Dropdown">
+            <demo-section title="Dropdown" show-demo-code>
+                <div slot="description">The default Dropdown</div>
+                <div class="dropdown-demo" slot="demo">
+                    <sp-dropdown>
+                        <sp-menu-item>
+                            Apple sauce
+                            <img
+                                slot="icon-right"
+                                src="https://picsum.photos/20/20?id=0"
+                            />
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Barbeque
+                            <img
+                                slot="icon-right"
+                                src="https://picsum.photos/20/20?id=1"
+                            />
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Cherry Coke
+                            <img
+                                slot="icon-right"
+                                src="https://picsum.photos/20/20?id=2"
+                            />
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Dragon Fruit
+                            <img
+                                slot="icon-right"
+                                src="https://picsum.photos/20/20?id=3"
+                            />
+                        </sp-menu-item>
+                    </sp-dropdown>
+                </div>
+            </demo-section>
+            <demo-section title="Dropdown" show-demo-code>
+                <div slot="description">The Quiet Dropdown</div>
+                <div id="dropdown-demo-quiet" slot="demo">
+                    <sp-dropdown quiet>
+                        <sp-menu-item>
+                            Apple sauce
+                            <img
+                                slot="icon-left"
+                                src="https://picsum.photos/20/20?id=4"
+                            />
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Barbeque
+                            <img
+                                slot="icon-left"
+                                src="https://picsum.photos/20/20?id=5"
+                            />
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Cherry Coke
+                            <img
+                                slot="icon-left"
+                                src="https://picsum.photos/20/20?id=6"
+                            />
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Dragon Fruit
+                            <img
+                                slot="icon-left"
+                                src="https://picsum.photos/20/20?id=7"
+                            />
+                        </sp-menu-item>
+                    </sp-dropdown>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>

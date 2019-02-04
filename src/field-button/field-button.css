@@ -1,0 +1,91 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+@import './field-button-skin.css';
+
+:host {
+    width: 100%;
+    height: var(--spectrum-dropdown-height);
+
+    position: relative;
+    padding: 0 var(--spectrum-dropdown-padding-x);
+
+    font-family: inherit;
+    font-weight: normal;
+    font-size: var(--spectrum-dropdown-text-size);
+    line-height: normal;
+    -webkit-font-smoothing: initial;
+
+    cursor: pointer;
+    outline: none;
+
+    margin: 0;
+    padding: 0 var(--spectrum-dropdown-padding-x);
+
+    border-width: var(--spectrum-dropdown-border-size);
+    border-style: solid;
+    border-radius: var(--spectrum-border-radius);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-sizing: border-box;
+    overflow: visible;
+    white-space: nowrap;
+    text-transform: none;
+    vertical-align: top;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: background-color var(--spectrum-global-animation-duration-100),
+        box-shadow var(--spectrum-global-animation-duration-100),
+        border-color var(--spectrum-global-animation-duration-100);
+
+    &:disabled,
+    &.is-disabled {
+        border-width: var(--spectrum-fieldbutton-disabled-border-size);
+        cursor: default;
+    }
+
+    &.is-open {
+        border-width: var(--spectrum-dropdown-border-size);
+    }
+}
+
+:host([quiet]) {
+    margin: var(--spectrum-fieldbutton-quiet-margin);
+    padding: var(--spectrum-fieldbutton-quiet-padding);
+
+    border-width: var(--spectrum-fieldbutton-quiet-border-size);
+    border-radius: var(--spectrum-fieldbutton-quiet-border-radius);
+}
+
+/* Only apply margin if there's a label */
+#label ~ slot[name='icon']::slotted(*) {
+    margin-left: var(--spectrum-dropdown-icon-margin-left);
+}
+
+slot[name='icon']::slotted(*) {
+    max-height: 100%;
+    flex-shrink: 0;
+
+    height: 18px;
+    width: 18px;
+
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    transition: color 130ms ease-out;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    opacity: 1;
+}

@@ -1,0 +1,140 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+@import './menu-skin.css';
+
+:host {
+    --spectrum-menu-margin-x: var(--spectrum-global-dimension-size-40);
+    --spectrum-selectlist-heading-text-size: var(
+        --spectrum-global-dimension-font-size-50
+    );
+    --spectrum-selectlist-heading-text-font-weight: 400;
+    --spectrum-selectlist-heading-text-transform: uppercase;
+    --spectrum-selectlist-heading-letter-spacing: 0.06em;
+    --spectrum-selectlist-heading-margin: var(
+            --spectrum-global-dimension-size-75
+        )
+        0 0 0;
+    --spectrum-selectlist-heading-padding: 0
+        var(--spectrum-global-dimension-size-450) 0
+        var(--spectrum-global-dimension-size-150);
+
+    --spectrum-selectlist-option-padding-y: var(
+        --spectrum-global-dimension-size-85
+    );
+
+    --spectrum-selectlist-option-selectable-padding-right: calc(
+        var(--spectrum-global-dimension-size-100) +
+            var(--spectrum-icon-checkmark-medium-width) +
+            var(--spectrum-selectlist-option-icon-padding-x)
+    );
+
+    --spectrum-selectlist-option-icon-margin-top: var(
+        --spectrum-global-dimension-size-50
+    );
+}
+
+:host([selectable]) {
+    #container {
+        &([selectable]) {
+            & sp-menu-item {
+                padding-right: var(
+                    --spectrum-selectlist-option-selectable-padding-right
+                );
+
+                &.([selected]) {
+                    padding-right: calc(
+                        var(--spectrum-selectlist-option-padding) -
+                            var(--spectrum-popover-border-size)
+                    );
+                }
+            }
+        }
+    }
+}
+
+#container {
+    width: 100%;
+    display: inline-block;
+
+    box-sizing: border-box;
+
+    margin: var(--spectrum-popover-padding-y) 0;
+    padding: 0;
+
+    list-style-type: none;
+
+    overflow: auto;
+
+    > .section-heading {
+        /* Support headings as LI */
+        margin-top: var(--spectrum-menu-margin-x);
+        margin-bottom: var(--spectrum-menu-margin-x);
+    }
+}
+
+.checkmark {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.item-label {
+    flex: 1 1 0;
+
+    &[wrapping] {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+.checkmark {
+    display: none;
+    align-self: flex-start;
+    margin-top: var(--spectrum-selectlist-option-icon-margin-top);
+}
+
+.checkmark,
+.chevron {
+    flex-grow: 0;
+    margin-left: var(--spectrum-selectlist-option-icon-padding-x);
+}
+
+#divider {
+    /* Add the correct box sizing for hr in Firefox. */
+    box-sizing: content-box;
+
+    /* Show the overflow for hr in Edge and IE. */
+    overflow: visible;
+
+    height: var(--spectrum-selectlist-divider-size);
+    margin: calc(var(--spectrum-selectlist-divider-padding) / 2)
+        var(--spectrum-selectlist-option-padding);
+    padding: 0 0;
+    border: none;
+}
+
+.section-heading {
+    display: block;
+    margin: var(--spectrum-selectlist-heading-margin);
+    padding: var(--spectrum-selectlist-heading-padding);
+
+    font-size: var(--spectrum-selectlist-heading-text-size);
+    font-weight: var(--spectrum-selectlist-heading-text-font-weight);
+    line-height: var(--spectrum-text-body-line-height);
+    text-transform: var(--spectrum-selectlist-heading-text-transform);
+    letter-spacing: var(--spectrum-selectlist-heading-letter-spacing);
+}
+
+sp-menu {
+    /* Fill parent menu when nested */
+    display: block;
+}

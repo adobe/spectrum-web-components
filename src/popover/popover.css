@@ -1,0 +1,81 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+@import './popover-skin.css';
+
+:host {
+    --spectrum-popover-target-offset: 13px;
+    --spectrum-popover-dialog-padding: 30px 29px;
+    --spectrum-popover-dialog-min-width: 270px;
+
+    --spectrum-popover-min-width: var(--spectrum-global-dimension-size-400);
+    --spectrum-popover-min-height: var(--spectrum-global-dimension-size-400);
+}
+
+:host {
+    visibility: hidden;
+
+    opacity: 0;
+
+    transition: transform var(--spectrum-global-animation-duration-100)
+            ease-in-out,
+        opacity var(--spectrum-global-animation-duration-100) ease-in-out,
+        visibility 0ms linear var(--spectrum-global-animation-duration-100);
+
+    pointer-events: none;
+
+    /* Be a flexbox to allow a full sized content area that scrolls */
+    display: inline-flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    min-width: var(--spectrum-popover-min-width);
+    min-height: var(--spectrum-popover-min-height);
+
+    position: absolute;
+
+    border-style: solid;
+    border-width: var(--spectrum-popover-border-size);
+    border-radius: var(--spectrum-popover-border-radius);
+
+    outline: none; /* Hide focus outline */
+}
+
+#tip {
+    position: absolute;
+    /* This hides half of the tooltip, but it also crops the shadow slightly, which is undesireable */
+    overflow: hidden;
+    width: calc(var(--spectrum-popover-tip-width) + 1px);
+    height: calc(
+        (var(--spectrum-popover-tip-width) / 2) +
+            (var(--spectrum-popover-border-size))
+    );
+
+    &::after {
+        content: '';
+        width: var(--spectrum-popover-tip-width);
+        height: var(--spectrum-popover-tip-width);
+        border-width: var(--spectrum-popover-border-size);
+        border-style: solid;
+        position: absolute;
+        transform: rotate(45deg);
+        top: -18px;
+        left: -1px;
+    }
+}
+
+:host([open]) {
+    transform: translateY(6px);
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0ms;
+    pointer-events: auto;
+}

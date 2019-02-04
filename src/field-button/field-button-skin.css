@@ -1,0 +1,94 @@
+:host {
+    color: var(--spectrum-fieldbutton-text-color);
+    background-color: var(--spectrum-fieldbutton-background-color);
+    border-color: var(--spectrum-fieldbutton-border-color);
+
+    &(:hover) {
+        color: var(--spectrum-fieldbutton-text-color-hover);
+        background-color: var(--spectrum-fieldbutton-background-color-hover);
+        border-color: var(--spectrum-fieldbutton-border-color-hover);
+    }
+
+    &(:focus-ring),
+    &([focus]) {
+        background-color: var(
+            --spectrum-fieldbutton-background-color-key-focus
+        );
+        border-color: var(--spectrum-fieldbutton-border-color-key-focus);
+        box-shadow: 0 0 0
+            var(--spectrum-button-primary-border-size-increase-key-focus)
+            var(--spectrum-fieldbutton-border-color-key-focus);
+        color: var(--spectrum-fieldbutton-text-color-key-focus);
+    }
+
+    &(:active),
+    &([select]) {
+        background-color: var(--spectrum-fieldbutton-background-color-down);
+        border-color: var(--spectrum-fieldbutton-border-color-down);
+
+        &(:focus-ring) {
+            box-shadow: none;
+        }
+    }
+}
+
+:host([invalid]) {
+    border-color: var(--spectrum-fieldbutton-border-color-error);
+}
+
+:host([invalid]:hover) {
+    border-color: var(--spectrum-fieldbutton-border-color-error-hover);
+}
+
+:host([invalid]:active),
+:host([invalid][select]) {
+    border-color: var(--spectrum-fieldbutton-border-color-error-down);
+}
+
+:host([invalid]:focus-ring),
+:host([invalid][focus]) {
+    border-color: var(--spectrum-fieldbutton-border-color-error-key-focus);
+    box-shadow: 0 0 0
+        var(--spectrum-button-primary-border-size-increase-key-focus)
+        var(--spectrum-fieldbutton-border-color-error-key-focus);
+}
+
+:host([disabled]) {
+    background-color: var(--spectrum-fieldbutton-background-color-disabled);
+    color: var(--spectrum-fieldbutton-text-color-disabled);
+}
+
+:host([disabled]:focus-ring) {
+    box-shadow: none;
+}
+
+:host([quiet]) {
+    color: var(--spectrum-fieldbutton-text-color);
+    border-color: var(--spectrum-fieldbutton-quiet-border-color);
+    background-color: var(--spectrum-fieldbutton-quiet-background-color);
+}
+
+:host([quiet]:hover) {
+    background-color: var(--spectrum-fieldbutton-quiet-background-color-hover);
+    color: var(--spectrum-fieldbutton-text-color-hover);
+}
+
+:host([quiet]:focus-ring),
+:host([quiet][focus]) {
+    background-color: var(--spectrum-fieldbutton-quiet-background-color-hover);
+    color: var(--spectrum-fieldbutton-text-color-hover);
+}
+
+:host([quiet]:active),
+:host([quiet][select]) {
+    background-color: var(--spectrum-fieldbutton-quiet-background-color-down);
+    border-color: var(--spectrum-fieldbutton-quiet-border-color-down);
+}
+
+:host([quiet]:disabled),
+:host([quiet][disable]) {
+    background-color: var(
+        --spectrum-fieldbutton-quiet-background-color-disabled
+    );
+    color: var(--spectrum-fieldbutton-text-color-disabled);
+}

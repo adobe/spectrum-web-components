@@ -126,11 +126,16 @@ const components = [
     'banner',
     'button',
     'card',
+    'dropdown',
     'dropzone',
-    'link',
-    'slider',
-    'label',
     'fieldlabel',
+    'fieldbutton',
+    'label',
+    'link',
+    'popover',
+    'slider',
+    'menu',
+    'selectlist',
 ];
 
 const processes = [];

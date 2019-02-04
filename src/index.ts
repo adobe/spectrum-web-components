@@ -12,10 +12,15 @@ governing permissions and limitations under the License.
 export * from './banner';
 export * from './button';
 export * from './card';
+export * from './dropdown';
 export * from './dropzone';
+export * from './field-button';
 export * from './illustrated-message';
 export * from './link';
+export * from './popover';
 export * from './slider';
+export * from './menu';
+export * from './menu-item';
 
 export * from './define';
 
