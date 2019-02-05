@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import messageStyles from './illustrated-message.css.js';
+import messageStyles from './illustrated-message.css';
 
 export class IllustratedMessage extends LitElement {
     public static readonly is = 'sp-illustrated-message';

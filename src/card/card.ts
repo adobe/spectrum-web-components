@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import cardBaseStyles from './card-base.css.js';
-import cardStyles from './card.css.js';
+import cardBaseStyles from './card-base.css';
+import cardStyles from './card.css';
 
 export class Card extends LitElement {
     public static is = 'sp-card';

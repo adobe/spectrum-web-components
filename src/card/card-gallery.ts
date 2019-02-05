@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import cardBaseStyles from './card-base.css.js';
-import cardGalleryStyles from './card-gallery.css.js';
-import cardQuietStyles from './card-quiet.css.js';
+import cardBaseStyles from './card-base.css';
+import cardGalleryStyles from './card-gallery.css';
+import cardQuietStyles from './card-quiet.css';
 
 export class CardGallery extends LitElement {
     public static is = 'sp-card-gallery';

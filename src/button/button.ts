@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, LitElement } from 'lit-element';
 
-import buttonStyles from './button.css.js';
+import buttonStyles from './button.css';
 
 export class Button extends LitElement {
     public static is = 'sp-button';

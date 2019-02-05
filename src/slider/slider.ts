@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import sliderSkinStyles from './slider-skin.css.js';
-import sliderStyles from './slider.css.js';
+import sliderSkinStyles from './slider-skin.css';
+import sliderStyles from './slider.css';
 
 export type ISliderEventDetail = number;
 

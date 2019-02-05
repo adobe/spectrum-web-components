@@ -19,7 +19,7 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import 'prismjs'; // import the dependency, it'll be added to window.Prism
 declare var Prism: typeof import('prismjs'); // tell typescript about the types
 
-import styles from './demo-code.css.js';
+import styles from './demo-code.css';
 
 export class DemoCode extends LitElement {
     public static is = 'demo-code';

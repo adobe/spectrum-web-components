@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import buttonBgStyles from './button-over-bg.css.js';
+import buttonBgStyles from './button-over-bg.css';
 
 import { Button } from './button';
 

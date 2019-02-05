@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { html, LitElement, property } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
-import linkStyles from './link.css.js';
+import linkStyles from './link.css';
 
 export class Link extends LitElement {
     public static readonly is = 'sp-link';
