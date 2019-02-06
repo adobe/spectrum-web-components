@@ -39,8 +39,6 @@ const splitCSS = (
 
         let allFd = fs.openSync(path.join(dstPath, 'all.css'), 'w');
         fs.writeSync(allFd, `${license}\n`);
-        let indexFd = fs.openSync(path.join(dstPath, 'index.ts'), 'w');
-        fs.writeSync(indexFd, `${license}\n`);
 
         rl.on('line', (line) => {
             const match = line.match(regex);
@@ -77,7 +75,6 @@ const splitCSS = (
                 const relativePath = path.relative(dstPath, filePath);
                 // write the import to the all.css file
                 fs.writeSync(allFd, `@import "${relativePath}";\n`);
-                fs.writeSync(indexFd, `export * from './${relativePath}';\n`);
                 // open the new file
                 fd = fs.openSync(filePath, 'w'); // overwrite existing files
                 // write the root selector with optional selector
@@ -95,7 +92,6 @@ const splitCSS = (
                 fs.close(fd);
             }
             fs.close(allFd);
-            fs.close(indexFd);
             resolve(true);
         });
 
