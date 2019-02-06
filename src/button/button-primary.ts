@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import buttonBgStyles from './button-over-bg.css.js';
+import primaryButtonStyles from './button-primary.css';
 
 import { Button } from './button';
 
-export class ButtonOverBg extends Button {
-    public static is = 'sp-button-over-bg';
+export class ButtonPrimary extends Button {
+    public static is = 'sp-button-primary';
     public static get styles() {
-        return [...super.styles, buttonBgStyles];
+        return [...super.styles, primaryButtonStyles];
     }
 }

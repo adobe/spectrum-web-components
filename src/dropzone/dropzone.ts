@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import dropzoneStyles from './dropzone.css.js';
+import dropzoneStyles from './dropzone.css';
 
 export type DropzoneEventDetail = DragEvent;
 

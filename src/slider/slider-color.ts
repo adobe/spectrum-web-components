@@ -12,16 +12,17 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import sliderSkinStyles from './slider-skin.css.js';
-import sliderStyles from './slider.css.js';
+import sliderColorStyles from './slider-color.css';
+import sliderSkinStyles from './slider-skin.css';
+import sliderStyles from './slider.css';
 
-export type ISliderEventDetail = number;
+export type ISliderColorEventDetail = number;
 
-export class Slider extends LitElement {
-    public static is = 'sp-slider';
+export class SliderColor extends LitElement {
+    public static is = 'sp-slider-color';
 
     public static get styles() {
-        return [sliderStyles, sliderSkinStyles];
+        return [sliderStyles, sliderSkinStyles, sliderColorStyles];
     }
 
     @property()
@@ -56,17 +57,20 @@ export class Slider extends LitElement {
 
         this.value = parseFloat(inputValue);
 
-        const inputEvent = new CustomEvent<ISliderEventDetail>('slider-input', {
-            bubbles: true,
-            composed: true,
-            detail: this.value,
-        });
+        const inputEvent = new CustomEvent<ISliderColorEventDetail>(
+            'slider-input',
+            {
+                bubbles: true,
+                composed: true,
+                detail: this.value,
+            }
+        );
 
         this.dispatchEvent(inputEvent);
     }
 
     public onChange(ev: Event) {
-        const changeEvent = new CustomEvent<ISliderEventDetail>(
+        const changeEvent = new CustomEvent<ISliderColorEventDetail>(
             'slider-change',
             {
                 bubbles: true,
@@ -77,7 +81,6 @@ export class Slider extends LitElement {
 
         this.dispatchEvent(changeEvent);
     }
-
     protected render() {
         return html`
             <div id="labelContainer">
@@ -98,15 +101,8 @@ export class Slider extends LitElement {
                       @mousedown=${this.onMouseDown}
                       @mouseup=${this.onMouseUp}
                   />
-                <div class="track" id="track-left" style=${this.trackLeftStyle}>
-                </div>
-                <div id="handle" style=${this.handleStyle}>
-                </div>
-                <div class="track"
-                    id="track-right"
-                    style=${this.trackRightStyle}
-                >
-                </div>
+                <div class="track"></div>
+                <div id="handle" style="${this.handleStyle}"></div>
                 </div>
             </div>
         `;
@@ -132,17 +128,6 @@ export class Slider extends LitElement {
      */
     private get trackProgress(): number {
         return this.value / this.max;
-    }
-
-    private get trackLeftStyle(): string {
-        return `width: ${this.trackProgress * 100}%`;
-    }
-
-    private get trackRightStyle(): string {
-        const width = `width: ${(1 - this.trackProgress) * 100}%; `;
-        const offset = `left: calc(${this.trackProgress * 100}% + 8px)`;
-
-        return width + offset;
     }
 
     private get handleStyle(): string {

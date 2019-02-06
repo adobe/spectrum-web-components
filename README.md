@@ -59,7 +59,7 @@ This will ensure that when installing dependencies you do not accidentally pull 
 
 ## IDE Notes
 
-Due to the in-place compilation of typescript and sourcemaps your IDE may show many untracked files for the compiled output in the form of `.js` and `.d.ts`. You may wish to hide these files from your IDE to reduce noise since they should never require manual editing and should remain untracked in this project (they are excluded by `.gitignore`).
+The build process compiles `.css` files and wraps them in the `lit-html` `css` template tag and writes out a `.css.ts` file for easy import into TypeScript files. This file should not be edited, and is ignored by `.gitignore`, but you may also wish to hide the files in your IDE.
 
 ### Visual Studio Code
 
@@ -68,13 +68,8 @@ In Visual Studio Code you can hide the untracked files by adding the following t
 ```json
 {
     "files.exclude": {
-        "lib/**/*.js": true,
-        "styles/**/*.js": true,
-        "lib/**/*.d.ts": true,
-        "lib/**/*.js.map": true,
-        "lib/**/*.d.ts.map": true,
-        "lib/**/*.css.js": true,
-        "styles/**/*.css.js": true,
+        "styles/**/*.css.ts": true,
+        "src/**/*.css.ts": true,
         ".chrome": true,
         ".firefox": true
     }

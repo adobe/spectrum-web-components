@@ -11,35 +11,28 @@ governing permissions and limitations under the License.
 */
 
 import { html, LitElement, property } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
-import cardBaseStyles from './card-base.css.js';
-import cardGalleryStyles from './card-gallery.css.js';
-import cardQuietStyles from './card-quiet.css.js';
+import linkStyles from './link.css';
 
-export class CardGallery extends LitElement {
-    public static is = 'sp-card-gallery';
+export class Link extends LitElement {
+    public static readonly is = 'sp-link';
 
     public static get styles() {
-        return [cardBaseStyles, cardQuietStyles, cardGalleryStyles];
+        return [linkStyles];
     }
 
     @property()
-    public title = '';
+    public href: string | undefined = undefined;
 
     @property()
-    public subtitle = '';
+    public target: string | undefined = undefined;
 
     protected render() {
         return html`
-            <slot name="cover-photo"></slot>
-            <slot name="preview"></slot>
-            <div id="body">
-                <div id="header">
-                    <div id="title">${this.title}</div>
-                    <div id="subtitle">${this.subtitle}</div>
-                    <slot name="description"></slot>
-                </div>
-            </div>
+            <a href=${ifDefined(this.href)} target=${ifDefined(this.target)}>
+                <slot></slot>
+            </a>
         `;
     }
 }

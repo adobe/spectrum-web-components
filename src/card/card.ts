@@ -12,31 +12,32 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import cardBaseStyles from './card-base.css.js';
-import cardQuietStyles from './card-quiet.css.js';
+import cardBaseStyles from './card-base.css';
+import cardStyles from './card.css';
 
-export class CardQuiet extends LitElement {
-    public static is = 'sp-card-quiet';
+export class Card extends LitElement {
+    public static is = 'sp-card';
 
     public static get styles() {
-        return [cardBaseStyles, cardQuietStyles];
+        return [cardBaseStyles, cardStyles];
     }
 
-    @property({ type: String })
+    @property()
     public title = '';
 
-    @property({ type: String })
+    @property()
     public subtitle = '';
 
     protected render() {
         return html`
-            <slot name="preview"></slot>
+            <slot name="cover-photo"></slot>
             <div id="body">
                 <div id="header"><div id="title">${this.title}</div></div>
                 <div id="content">
                     <div id="subtitle">${this.subtitle}</div>
                 </div>
             </div>
+            <div id="footer"><slot name="footer"></slot></div>
         `;
     }
 }

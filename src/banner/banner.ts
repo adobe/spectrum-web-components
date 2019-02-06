@@ -10,13 +10,24 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import primaryButtonStyles from './button-primary.css.js';
+import { html, LitElement, property } from 'lit-element';
 
-import { Button } from './button';
+import bannerStyles from './banner.css';
 
-export class ButtonPrimary extends Button {
-    public static is = 'sp-button-primary';
+export class Banner extends LitElement {
+    public static readonly is = 'sp-banner';
+
+    @property({ reflect: true })
+    public type = 'info';
+
     public static get styles() {
-        return [...super.styles, primaryButtonStyles];
+        return [bannerStyles];
+    }
+
+    protected render() {
+        return html`
+            <div id="header"><slot name="header"></slot></div>
+            <div id="content"><slot name="content"></slot></div>
+        `;
     }
 }

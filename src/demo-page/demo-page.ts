@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import styles from './demo-page.css.js';
+import styles from './demo-page.css';
 
 export class DemoPage extends LitElement {
     public static is = 'demo-page';

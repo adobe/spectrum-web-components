@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root {
+:root,
+:host {
     --spectrum-fieldlabel-asterisk-color: rgb(142, 142, 142);
     --spectrum-fieldlabel-text-color: rgb(110, 110, 110);
     --spectrum-fieldlabel-asterisk-color-disabled: rgb(179, 179, 179);

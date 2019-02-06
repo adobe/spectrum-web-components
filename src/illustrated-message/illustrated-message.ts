@@ -12,22 +12,26 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import bannerStyles from './banner.css.js';
+import messageStyles from './illustrated-message.css';
 
-export class Banner extends LitElement {
-    public static readonly is = 'sp-banner';
-
-    @property({ reflect: true })
-    public type = 'info';
+export class IllustratedMessage extends LitElement {
+    public static readonly is = 'sp-illustrated-message';
 
     public static get styles() {
-        return [bannerStyles];
+        return [messageStyles];
     }
+
+    @property()
+    public heading = '';
+
+    @property()
+    public description = '';
 
     protected render() {
         return html`
-            <div id="header"><slot name="header"></slot></div>
-            <div id="content"><slot name="content"></slot></div>
+            <slot></slot>
+            <div id="heading">${this.heading}</div>
+            <div id="description">${this.description}</div>
         `;
     }
 }

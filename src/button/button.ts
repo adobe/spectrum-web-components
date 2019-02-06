@@ -10,29 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { html, LitElement } from 'lit-element';
 
-import linkStyles from './link.css.js';
+import buttonStyles from './button.css';
 
-export class Link extends LitElement {
-    public static readonly is = 'sp-link';
+export class Button extends LitElement {
+    public static is = 'sp-button';
 
     public static get styles() {
-        return [linkStyles];
+        return [buttonStyles];
     }
-
-    @property()
-    public href: string | undefined = undefined;
-
-    @property()
-    public target: string | undefined = undefined;
 
     protected render() {
         return html`
-            <a href=${ifDefined(this.href)} target=${ifDefined(this.target)}>
-                <slot></slot>
-            </a>
+            <div id="icon"><slot name="icon"></slot></div>
+            <div id="label"><slot></slot></div>
         `;
     }
 }
