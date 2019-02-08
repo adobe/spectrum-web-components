@@ -57,7 +57,7 @@ governing permissions and limitations under the License.
         }
     }
 
-    &([selected]) {
+    &([select]) {
         & #container {
             /* Redundant, but included for backwards compatibility */
             padding-right: calc(
@@ -123,15 +123,22 @@ governing permissions and limitations under the License.
 }
 
 #label {
-    flex-grow: 1;
+    flex: 1 1 0;
+
+    &[wrapping] {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 }
 
-slot[name='icon-left'] + #label {
-    margin-left: var(--spectrum-selectlist-thumbnail-image-padding-x);
+:host([icon]) {
+    & #label {
+        margin-left: var(--spectrum-selectlist-thumbnail-image-padding-x);
+    }
 }
 
-slot[name='icon-left']::slotted(*),
-slot[name='icon-right']::slotted(*) {
+slot[name='icon']::slotted(*) {
     /* Don't get smaller, you're an icon! */
     flex-shrink: 0;
     max-width: 100%;

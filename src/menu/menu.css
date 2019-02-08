@@ -86,16 +86,6 @@ governing permissions and limitations under the License.
     opacity: 1;
 }
 
-.item-label {
-    flex: 1 1 0;
-
-    &[wrapping] {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-}
-
 .checkmark {
     display: none;
     align-self: flex-start;

@@ -30,14 +30,14 @@ export class Dropdown extends LitElement {
         defineCustomElements(FieldButton, Popover, Menu);
     }
 
-    @property()
-    public type = '';
+    @property({ reflect: true })
+    public selected = '';
 
-    @property()
-    public options = '';
+    @property({ reflect: true })
+    public selectedLabel = '';
 
-    @property()
-    public value = '';
+    @property({ reflect: true, attribute: 'id-attribute' })
+    public idAttribute = 'data-id';
 
     @property({ type: Boolean, reflect: true })
     public active = false;
@@ -48,13 +48,31 @@ export class Dropdown extends LitElement {
     @property()
     public placeholder = 'Select an option';
 
+    private selectedElement?: Element;
+
     public onClick(ev: Event) {
         this.active = !this.active;
     }
 
+    public onMouseDown(ev: Event) {
+        ev.preventDefault();
+        ev.stopPropagation();
+    }
+
     public onSelect(ev: CustomEvent) {
-        this.value = ev.detail;
+        this.selected = ev.detail.dataId;
+        this.selectedLabel = ev.detail.label;
         this.active = false;
+
+        const dropdownEvent = new CustomEvent('dropdown-select', {
+            bubbles: true,
+            composed: true,
+            detail: ev.detail,
+        });
+
+        this.setMenuItemAttribute();
+
+        this.dispatchEvent(dropdownEvent);
     }
 
     public onBlur(ev: Event) {
@@ -67,8 +85,9 @@ export class Dropdown extends LitElement {
                 ?select=${this.active}
                 ?quiet=${this.quiet}
                 @click=${this.onClick}
+                @mousedown=${this.onMouseDown}
             >
-                <div id="label" ?is-placeholder=${!this.value.length}>
+                <div id="label" ?is-placeholder=${!this.selectedLabel.length}>
                     ${this.label}
                 </div>
                 <svg slot="icon" id="chevron">
@@ -81,10 +100,29 @@ export class Dropdown extends LitElement {
         `;
     }
 
+    private setMenuItemAttribute() {
+        if (this.selectedElement) {
+            this.selectedElement.removeAttribute('select');
+        }
+
+        const newSelectedElement = document.querySelector(
+            `sp-menu-item[${this.idAttribute} = "${this.selected}"]`
+        );
+
+        console.log(newSelectedElement);
+        console.log(this.idAttribute);
+        console.log(this.selected);
+
+        if (newSelectedElement) {
+            this.selectedElement = newSelectedElement;
+            this.selectedElement.setAttribute('select', 'true');
+        }
+    }
+
     private get label(): string {
-        if (!this.value.length) {
+        if (!this.selectedLabel.length) {
             return this.placeholder;
         }
-        return this.value;
+        return this.selectedLabel;
     }
 }

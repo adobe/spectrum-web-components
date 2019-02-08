@@ -46,7 +46,7 @@ export class Popover extends LitElement {
         super();
 
         this.addEventListener('blur', (event) => {
-            this.open = false;
+            //this.open = false;
         });
     }
 

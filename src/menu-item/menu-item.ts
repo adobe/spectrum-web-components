@@ -14,7 +14,10 @@ import { html, LitElement, property } from 'lit-element';
 
 import menuItemStyles from './menu-item.css.js';
 
-export type IMenuItemEventDetail = string;
+export interface IMenuItemEventDetail {
+    label: string;
+    dataId: string;
+}
 
 export class MenuItem extends LitElement {
     public static is = 'sp-menu-item';
@@ -27,22 +30,28 @@ export class MenuItem extends LitElement {
     public type = '';
 
     @property()
-    public value = '';
+    public label = '';
+
+    @property({ reflect: true, attribute: 'data-id' })
+    public dataId = '';
 
     @property({ type: Boolean, reflect: true })
-    public open = false;
-
-    @property({ type: Boolean, reflect: true })
-    public select = false;
+    public icon = false;
 
     public onClick(ev: Event) {
         ev.stopPropagation();
         ev.preventDefault();
 
+        //If user does not provide a dataId, use the label instead
+        const dataId = this.dataId.length ? this.dataId : this.label;
+
         const clickEvent = new CustomEvent<IMenuItemEventDetail>('click', {
             bubbles: true,
             composed: true,
-            detail: this.value,
+            detail: {
+                label: this.label,
+                dataId: dataId,
+            },
         });
 
         this.dispatchEvent(clickEvent);
@@ -63,15 +72,29 @@ export class MenuItem extends LitElement {
                 @click=${this.onClick}
                 @mousedown=${this.onMouseDown}
             >
-                <slot name="icon-left"></slot>
+                <slot
+                    name="icon"
+                    @slotchange="${(ev: Event) => this.checkIcon(ev)}"
+                ></slot>
                 <span id="label">
                     <slot
-                        @slotchange="${(ev: Event) => this.getValue(ev)}"
+                        @slotchange="${(ev: Event) => this.getLabel(ev)}"
                     ></slot>
                 </span>
-                <slot name="icon-right"></slot>
             </li>
         `;
+    }
+
+    private checkIcon(ev: Event) {
+        const slot = ev.target as HTMLSlotElement;
+        const nodes = slot.assignedNodes();
+
+        //Check to see if the icon slot is filled
+        if (nodes.length) {
+            this.icon = true;
+        } else {
+            this.icon = false;
+        }
     }
 
     private getNodeText(nodes: Array<Node>) {
@@ -87,13 +110,13 @@ export class MenuItem extends LitElement {
         return nodeContent.join('').trim();
     }
 
-    private getValue(ev: Event) {
+    private getLabel(ev: Event) {
         const slot = ev.target as HTMLSlotElement;
         const nodes = slot.assignedNodes();
         const nodeText = this.getNodeText(nodes);
 
         if (nodeText) {
-            this.value = nodeText;
+            this.label = nodeText;
         }
     }
 }

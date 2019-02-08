@@ -10,13 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
-
-import {
-    defineCustomElements,
-    MenuItem,
-    IMenuItemEventDetail,
-} from '../index.js';
+import { html, LitElement } from 'lit-element';
 
 import menuStyles from './menu.css.js';
 
@@ -27,29 +21,10 @@ export class Menu extends LitElement {
         return [menuStyles];
     }
 
-    constructor() {
-        super();
-
-        defineCustomElements(MenuItem);
-    }
-
-    @property()
-    public type = '';
-
-    @property({ type: Boolean, reflect: true })
-    public open = '';
-
-    @property()
-    public value = '';
-
-    public onClick(ev: CustomEvent<IMenuItemEventDetail>) {
-        this.value = ev.detail;
-    }
-
     protected render() {
         return html`
             <ul id="container">
-                <slot @click=${this.onClick}></slot>
+                <slot></slot>
             </ul>
         `;
     }

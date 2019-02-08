@@ -10,6 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+// TODO: Field button should extend base button
+
 import { html, LitElement, property } from 'lit-element';
 
 import fieldButtonStyles from './field-button.css.js';
