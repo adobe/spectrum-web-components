@@ -14,11 +14,6 @@ import { html, LitElement, property } from 'lit-element';
 
 import menuItemStyles from './menu-item.css.js';
 
-export interface IMenuItemEventDetail {
-    label: string;
-    dataId: string;
-}
-
 export class MenuItem extends LitElement {
     public static is = 'sp-menu-item';
 
@@ -26,36 +21,8 @@ export class MenuItem extends LitElement {
         return [menuItemStyles];
     }
 
-    @property()
-    public type = '';
-
-    @property()
-    public label = '';
-
-    @property({ reflect: true, attribute: 'data-id' })
-    public dataId = '';
-
     @property({ type: Boolean, reflect: true })
     public icon = false;
-
-    public onClick(ev: Event) {
-        ev.stopPropagation();
-        ev.preventDefault();
-
-        //If user does not provide a dataId, use the label instead
-        const dataId = this.dataId.length ? this.dataId : this.label;
-
-        const clickEvent = new CustomEvent<IMenuItemEventDetail>('click', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                label: this.label,
-                dataId: dataId,
-            },
-        });
-
-        this.dispatchEvent(clickEvent);
-    }
 
     public onMouseDown(ev: Event) {
         //Prevent the blurring of the parent popover element
@@ -69,18 +36,13 @@ export class MenuItem extends LitElement {
                 id="container"
                 role="menuitem"
                 tabindex="0"
-                @click=${this.onClick}
                 @mousedown=${this.onMouseDown}
             >
                 <slot
                     name="icon"
                     @slotchange="${(ev: Event) => this.checkIcon(ev)}"
                 ></slot>
-                <span id="label">
-                    <slot
-                        @slotchange="${(ev: Event) => this.getLabel(ev)}"
-                    ></slot>
-                </span>
+                <span id="label"><slot></slot></span>
             </li>
         `;
     }
@@ -94,29 +56,6 @@ export class MenuItem extends LitElement {
             this.icon = true;
         } else {
             this.icon = false;
-        }
-    }
-
-    private getNodeText(nodes: Array<Node>) {
-        /* Parse text from default slot. Ignore new lines and trailing white spaces */
-        const nodeContent = nodes.map((node) => {
-            const content = node.textContent;
-
-            if (content && content.length) {
-                return content;
-            }
-        });
-
-        return nodeContent.join('').trim();
-    }
-
-    private getLabel(ev: Event) {
-        const slot = ev.target as HTMLSlotElement;
-        const nodes = slot.assignedNodes();
-        const nodeText = this.getNodeText(nodes);
-
-        if (nodeText) {
-            this.label = nodeText;
         }
     }
 }

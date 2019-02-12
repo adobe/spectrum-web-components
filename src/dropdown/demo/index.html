@@ -28,95 +28,16 @@
             <demo-section title="Dropdown" show-demo-code>
                 <div slot="description">The default Dropdown</div>
                 <div class="dropdown-demo" slot="demo">
-                    <sp-dropdown-demo></sp-dropdown-demo>
-                </div>
-            </demo-section>
-            <demo-section title="Dropdown Layout" show-demo-code>
-                <div slot="description">The default Dropdown</div>
-                <div class="dropdown-demo" slot="demo">
-                    <sp-dropdown id="simple-dropdown">
-                        <sp-menu-item data-id="apple-sauce">
-                            Apple sauce
-                        </sp-menu-item>
-                        <sp-menu-item data-id="barbeque">Barbeque</sp-menu-item>
-                        <sp-menu-item data-id="cherry-coke">
-                            Cherry Coke
-                        </sp-menu-item>
-                        <sp-menu-item data-id="dragon-fruit">
-                            Dragon Fruit
-                        </sp-menu-item>
-                    </sp-dropdown>
-                    <sp-dropdown id-attribute="data-id">
-                        <sp-menu-item>
-                            Apple sauce
-                            <img
-                                slot="icon-right"
-                                src="https://picsum.photos/20/20?id=0"
-                            />
-                        </sp-menu-item>
-                        <sp-menu-item data-id="banana">
-                            Barbeque
-                            <img
-                                slot="icon-right"
-                                src="https://picsum.photos/20/20?id=1"
-                            />
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Cherry Coke
-                            <img
-                                slot="icon-right"
-                                src="https://picsum.photos/20/20?id=2"
-                            />
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Dragon Fruit
-                            <img
-                                slot="icon-right"
-                                src="https://picsum.photos/20/20?id=3"
-                            />
-                        </sp-menu-item>
-                    </sp-dropdown>
+                    <sp-dropdown-demo count="5"></sp-dropdown-demo>
+                    <sp-dropdown-demo icon count="5"></sp-dropdown-demo>
                 </div>
             </demo-section>
             <demo-section title="Quiet Dropdown" show-demo-code>
-                <div slot="description">The Quiet Dropdown</div>
-                <div id="dropdown-demo-quiet" slot="demo">
-                    <sp-dropdown quiet>
-                        <sp-menu-item>
-                            Apple sauce
-                            <img
-                                slot="icon"
-                                src="https://picsum.photos/20/20?id=4"
-                            />
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Barbeque
-                            <img
-                                slot="icon"
-                                src="https://picsum.photos/20/20?id=5"
-                            />
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Cherry Coke
-                            <img
-                                slot="icon"
-                                src="https://picsum.photos/20/20?id=6"
-                            />
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Dragon Fruit
-                            <img
-                                slot="icon"
-                                src="https://picsum.photos/20/20?id=7"
-                            />
-                        </sp-menu-item>
-                    </sp-dropdown>
+                <div slot="description">The default Dropdown</div>
+                <div class="dropdown-demo" id="dropdown-demo-quiet" slot="demo">
+                    <sp-dropdown-demo quiet icon count="5"></sp-dropdown-demo>
                 </div>
             </demo-section>
         </demo-page>
     </body>
 </html>
-
-<!-- <sp-dropdown id-attribute="data-id" selected-attribute="select" selected="banana">
-    <div data-id="banana" selects>Banana</div>
-</sp-dropdown> -->

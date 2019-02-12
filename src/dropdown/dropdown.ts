@@ -31,24 +31,16 @@ export class Dropdown extends LitElement {
     }
 
     @property({ reflect: true })
-    public selected = '';
+    public label = '';
 
-    @property({ reflect: true })
-    public selectedLabel = '';
-
-    @property({ reflect: true, attribute: 'id-attribute' })
-    public idAttribute = 'data-id';
+    @property()
+    public placeholder = 'Select an option';
 
     @property({ type: Boolean, reflect: true })
     public active = false;
 
     @property({ type: Boolean, reflect: true })
     public quiet = false;
-
-    @property()
-    public placeholder = 'Select an option';
-
-    private selectedElement?: Element;
 
     public onClick(ev: Event) {
         this.active = !this.active;
@@ -59,23 +51,11 @@ export class Dropdown extends LitElement {
         ev.stopPropagation();
     }
 
-    public onSelect(ev: CustomEvent) {
-        this.selected = ev.detail.dataId;
-        this.selectedLabel = ev.detail.label;
+    public onBlur(ev: Event) {
         this.active = false;
-
-        const dropdownEvent = new CustomEvent('dropdown-select', {
-            bubbles: true,
-            composed: true,
-            detail: ev.detail,
-        });
-
-        this.setMenuItemAttribute();
-
-        this.dispatchEvent(dropdownEvent);
     }
 
-    public onBlur(ev: Event) {
+    public onSelect(ev: Event) {
         this.active = false;
     }
 
@@ -87,42 +67,23 @@ export class Dropdown extends LitElement {
                 @click=${this.onClick}
                 @mousedown=${this.onMouseDown}
             >
-                <div id="label" ?is-placeholder=${!this.selectedLabel.length}>
-                    ${this.label}
+                <div id="label" ?is-placeholder=${!this.label.length}>
+                    ${this.buttonLabel}
                 </div>
                 <svg slot="icon" id="chevron">
                     <use xlink:href="dropdown-icon.svg#icon" />
                 </svg>
             </sp-field-button>
             <sp-popover ?open=${this.active} @blur=${this.onBlur}>
-                <sp-menu @click=${this.onSelect}><slot></slot></sp-menu>
+                <slot @click=${this.onSelect}></slot>
             </sp-popover>
         `;
     }
 
-    private setMenuItemAttribute() {
-        if (this.selectedElement) {
-            this.selectedElement.removeAttribute('select');
-        }
-
-        const newSelectedElement = document.querySelector(
-            `sp-menu-item[${this.idAttribute} = "${this.selected}"]`
-        );
-
-        console.log(newSelectedElement);
-        console.log(this.idAttribute);
-        console.log(this.selected);
-
-        if (newSelectedElement) {
-            this.selectedElement = newSelectedElement;
-            this.selectedElement.setAttribute('select', 'true');
-        }
-    }
-
-    private get label(): string {
-        if (!this.selectedLabel.length) {
+    private get buttonLabel(): string {
+        if (!this.label.length) {
             return this.placeholder;
         }
-        return this.selectedLabel;
+        return this.label;
     }
 }

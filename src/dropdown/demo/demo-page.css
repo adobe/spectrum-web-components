@@ -14,3 +14,14 @@ governing permissions and limitations under the License.
     padding-left: 40%;
     box-sizing: border-box;
 }
+
+.funky-menu-item {
+    cursor: pointer;
+    padding: var(--spectrum-selectlist-option-padding-y)
+        var(--spectrum-selectlist-option-padding)
+        var(--spectrum-selectlist-option-padding-y)
+        calc(
+            var(--spectrum-selectlist-option-padding) -
+                var(--spectrum-selectlist-border-size-key-focus)
+        );
+}

@@ -21,6 +21,18 @@ export class Menu extends LitElement {
         return [menuStyles];
     }
 
+    public onMouseDown(ev: Event) {
+        //Prevent the blurring of the parent popover element
+        ev.stopPropagation();
+        ev.preventDefault();
+    }
+
+    constructor() {
+        super();
+
+        this.addEventListener('mousedown', (ev: Event) => this.onMouseDown(ev));
+    }
+
     protected render() {
         return html`
             <ul id="container">

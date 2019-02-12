@@ -190,6 +190,7 @@ governing permissions and limitations under the License.
     }
 }
 
-sp-menu {
+/* If a menu is slotted, match the width */
+::slotted(sp-menu) {
     width: var(--spectrum-dropdown-width);
 }
