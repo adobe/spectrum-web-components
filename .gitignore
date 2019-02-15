@@ -1,6 +1,9 @@
 lib
 src/**/*.css.ts
 styles/**/*.css.ts
+styles/**/*.css.js
+styles/**/*.css.js.map
+styles/**/*.css.d.ts
 
 node_modules
 npm-debug.log

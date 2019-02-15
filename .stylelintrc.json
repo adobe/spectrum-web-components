@@ -3,6 +3,7 @@
     "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
     "rules": {
         "header/header": "config/license.js",
-        "length-zero-no-unit": [true, { "ignore": "custom-properties" }]
+        "length-zero-no-unit": [true, { "ignore": "custom-properties" }],
+        "selector-type-no-unknown": [true, { "ignore": "custom-elements" }]
     }
 }

@@ -26,20 +26,71 @@ governing permissions and limitations under the License.
     --spectrum-selectlist-heading-padding: 0
         var(--spectrum-global-dimension-size-450) 0
         var(--spectrum-global-dimension-size-150);
-
     --spectrum-selectlist-option-padding-y: var(
         --spectrum-global-dimension-size-85
     );
-
     --spectrum-selectlist-option-selectable-padding-right: calc(
         var(--spectrum-global-dimension-size-100) +
             var(--spectrum-icon-checkmark-medium-width) +
             var(--spectrum-selectlist-option-icon-padding-x)
     );
-
     --spectrum-selectlist-option-icon-margin-top: var(
         --spectrum-global-dimension-size-50
     );
+}
+
+#container {
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    margin: var(--spectrum-popover-padding-y) 0;
+    padding: 0;
+    list-style-type: none;
+    overflow: auto;
+}
+
+.checkmark {
+    transform: scale(1);
+    opacity: 1;
+    display: none;
+    align-self: flex-start;
+    margin-top: var(--spectrum-selectlist-option-icon-margin-top);
+}
+
+.checkmark,
+.chevron {
+    flex-grow: 0;
+    margin-left: var(--spectrum-selectlist-option-icon-padding-x);
+}
+
+#divider {
+    /* Add the correct box sizing for hr in Firefox. */
+    box-sizing: content-box;
+
+    /* Show the overflow for hr in Edge and IE. */
+    overflow: visible;
+    height: var(--spectrum-selectlist-divider-size);
+    margin: calc(var(--spectrum-selectlist-divider-padding) / 2)
+        var(--spectrum-selectlist-option-padding);
+    padding: 0 0;
+    border: none;
+}
+
+.section-heading {
+    display: block;
+    margin: var(--spectrum-selectlist-heading-margin);
+    padding: var(--spectrum-selectlist-heading-padding);
+    font-size: var(--spectrum-selectlist-heading-text-size);
+    font-weight: var(--spectrum-selectlist-heading-text-font-weight);
+    line-height: var(--spectrum-text-body-line-height);
+    text-transform: var(--spectrum-selectlist-heading-text-transform);
+    letter-spacing: var(--spectrum-selectlist-heading-letter-spacing);
+}
+
+#container > .section-heading {
+    /* Support headings as LI */
+    margin-top: var(--spectrum-menu-margin-x);
+    margin-bottom: var(--spectrum-menu-margin-x);
 }
 
 :host([selectable]) {
@@ -59,69 +110,6 @@ governing permissions and limitations under the License.
             }
         }
     }
-}
-
-#container {
-    width: 100%;
-    display: inline-block;
-
-    box-sizing: border-box;
-
-    margin: var(--spectrum-popover-padding-y) 0;
-    padding: 0;
-
-    list-style-type: none;
-
-    overflow: auto;
-
-    > .section-heading {
-        /* Support headings as LI */
-        margin-top: var(--spectrum-menu-margin-x);
-        margin-bottom: var(--spectrum-menu-margin-x);
-    }
-}
-
-.checkmark {
-    transform: scale(1);
-    opacity: 1;
-}
-
-.checkmark {
-    display: none;
-    align-self: flex-start;
-    margin-top: var(--spectrum-selectlist-option-icon-margin-top);
-}
-
-.checkmark,
-.chevron {
-    flex-grow: 0;
-    margin-left: var(--spectrum-selectlist-option-icon-padding-x);
-}
-
-#divider {
-    /* Add the correct box sizing for hr in Firefox. */
-    box-sizing: content-box;
-
-    /* Show the overflow for hr in Edge and IE. */
-    overflow: visible;
-
-    height: var(--spectrum-selectlist-divider-size);
-    margin: calc(var(--spectrum-selectlist-divider-padding) / 2)
-        var(--spectrum-selectlist-option-padding);
-    padding: 0 0;
-    border: none;
-}
-
-.section-heading {
-    display: block;
-    margin: var(--spectrum-selectlist-heading-margin);
-    padding: var(--spectrum-selectlist-heading-padding);
-
-    font-size: var(--spectrum-selectlist-heading-text-size);
-    font-weight: var(--spectrum-selectlist-heading-text-font-weight);
-    line-height: var(--spectrum-text-body-line-height);
-    text-transform: var(--spectrum-selectlist-heading-text-transform);
-    letter-spacing: var(--spectrum-selectlist-heading-letter-spacing);
 }
 
 sp-menu {

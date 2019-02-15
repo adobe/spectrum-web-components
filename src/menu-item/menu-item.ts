@@ -25,7 +25,7 @@ export class MenuItem extends LitElement {
     public icon = false;
 
     public onMouseDown(ev: Event) {
-        //Prevent the blurring of the parent popover element
+        // Prevent the blurring of the parent popover element
         ev.stopPropagation();
         ev.preventDefault();
     }
@@ -51,11 +51,7 @@ export class MenuItem extends LitElement {
         const slot = ev.target as HTMLSlotElement;
         const nodes = slot.assignedNodes();
 
-        //Check to see if the icon slot is filled
-        if (nodes.length) {
-            this.icon = true;
-        } else {
-            this.icon = false;
-        }
+        // Check to see if the icon slot is filled
+        this.icon = nodes.length > 0;
     }
 }

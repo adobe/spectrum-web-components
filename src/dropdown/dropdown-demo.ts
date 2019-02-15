@@ -43,12 +43,6 @@ const options = [
 export class DropdownDemo extends LitElement {
     public static is = 'sp-dropdown-demo';
 
-    constructor() {
-        super();
-
-        defineCustomElements(Dropdown, MenuItem);
-    }
-
     @property({ type: Boolean, reflect: true })
     public quiet = '';
 
@@ -63,6 +57,12 @@ export class DropdownDemo extends LitElement {
 
     @property()
     public label = '';
+
+    constructor() {
+        super();
+
+        defineCustomElements(Dropdown, MenuItem);
+    }
 
     public onSelect(ev: CustomEvent) {
         const target = ev.target as Element;
@@ -82,7 +82,7 @@ export class DropdownDemo extends LitElement {
     }
 
     protected render() {
-        const itemTemplates: Array<TemplateResult> = [];
+        const itemTemplates: TemplateResult[] = [];
 
         options.slice(0, this.count).forEach((option) => {
             const iconId = Math.floor(Math.random() * 100);
@@ -91,6 +91,7 @@ export class DropdownDemo extends LitElement {
                     data-id=${option.id}
                     label=${option.label}
                     ?select=${this.value === option.id}
+                    tabIndex=${options.indexOf(option)}
                 >
                     ${option.label}
                     ${

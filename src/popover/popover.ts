@@ -24,6 +24,9 @@ export class Popover extends LitElement {
     @property()
     public type = '';
 
+    @property({ type: Number, reflect: true })
+    public tabindex = 0;
+
     @property({ type: Boolean, reflect: true })
     public get open() {
         return this._open;
@@ -46,16 +49,8 @@ export class Popover extends LitElement {
         super();
 
         this.addEventListener('blur', (event) => {
-            //this.open = false;
+            this.open = false;
         });
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
-        //Make popover focusavle
-        if (!this.hasAttribute('tabindex')) {
-            this.tabIndex = 0;
-        }
     }
 
     protected render() {

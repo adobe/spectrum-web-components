@@ -14,30 +14,21 @@ governing permissions and limitations under the License.
 :host {
     width: 100%;
     height: var(--spectrum-dropdown-height);
-
     position: relative;
-    padding: 0 var(--spectrum-dropdown-padding-x);
-
     font-family: inherit;
     font-weight: normal;
     font-size: var(--spectrum-dropdown-text-size);
     line-height: normal;
     -webkit-font-smoothing: initial;
-
-    cursor: pointer;
     outline: none;
-
     margin: 0;
     padding: 0 var(--spectrum-dropdown-padding-x);
-
     border-width: var(--spectrum-dropdown-border-size);
     border-style: solid;
     border-radius: var(--spectrum-border-radius);
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     box-sizing: border-box;
     overflow: visible;
     white-space: nowrap;
@@ -45,11 +36,9 @@ governing permissions and limitations under the License.
     vertical-align: top;
     text-decoration: none;
     cursor: pointer;
-
     transition: background-color var(--spectrum-global-animation-duration-100),
         box-shadow var(--spectrum-global-animation-duration-100),
         border-color var(--spectrum-global-animation-duration-100);
-
     &:disabled,
     &.is-disabled {
         border-width: var(--spectrum-fieldbutton-disabled-border-size);
@@ -64,23 +53,15 @@ governing permissions and limitations under the License.
 :host([quiet]) {
     margin: var(--spectrum-fieldbutton-quiet-margin);
     padding: var(--spectrum-fieldbutton-quiet-padding);
-
     border-width: var(--spectrum-fieldbutton-quiet-border-size);
     border-radius: var(--spectrum-fieldbutton-quiet-border-radius);
-}
-
-/* Only apply margin if there's a label */
-#label ~ slot[name='icon']::slotted(*) {
-    margin-left: var(--spectrum-dropdown-icon-margin-left);
 }
 
 slot[name='icon']::slotted(*) {
     max-height: 100%;
     flex-shrink: 0;
-
     height: 18px;
     width: 18px;
-
     display: inline-block;
     position: relative;
     vertical-align: top;
@@ -88,4 +69,9 @@ slot[name='icon']::slotted(*) {
     margin-top: 12px;
     margin-bottom: 12px;
     opacity: 1;
+}
+
+/* Only apply margin if there's a label */
+#label ~ slot[name='icon']::slotted(*) {
+    margin-left: var(--spectrum-dropdown-icon-margin-left);
 }

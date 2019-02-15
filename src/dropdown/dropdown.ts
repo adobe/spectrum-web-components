@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property } from 'lit-element';
 
-import { defineCustomElements, FieldButton, Popover, Menu } from '../index.js';
+import { defineCustomElements, FieldButton, Menu, Popover } from '../index.js';
 
 import dropdownSkinStyles from './dropdown-skin.css.js';
 import dropdownStyles from './dropdown.css.js';
@@ -22,12 +22,6 @@ export class Dropdown extends LitElement {
 
     public static get styles() {
         return [dropdownStyles, dropdownSkinStyles];
-    }
-
-    constructor() {
-        super();
-
-        defineCustomElements(FieldButton, Popover, Menu);
     }
 
     @property({ reflect: true })
@@ -41,6 +35,12 @@ export class Dropdown extends LitElement {
 
     @property({ type: Boolean, reflect: true })
     public quiet = false;
+
+    constructor() {
+        super();
+
+        defineCustomElements(FieldButton, Popover, Menu);
+    }
 
     public onClick(ev: Event) {
         this.active = !this.active;
@@ -74,7 +74,7 @@ export class Dropdown extends LitElement {
                     <use xlink:href="dropdown-icon.svg#icon" />
                 </svg>
             </sp-field-button>
-            <sp-popover ?open=${this.active} @blur=${this.onBlur}>
+            <sp-popover id="popover" ?open=${this.active} @blur=${this.onBlur}>
                 <slot @click=${this.onSelect}></slot>
             </sp-popover>
         `;
