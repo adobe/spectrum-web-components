@@ -131,6 +131,7 @@ const components = [
     'slider',
     'label',
     'fieldlabel',
+    'radio',
 ];
 
 const processes = [];

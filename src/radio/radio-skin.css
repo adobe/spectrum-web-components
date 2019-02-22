@@ -1,0 +1,90 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+#label {
+    color: var(--spectrum-radio-text-color);
+}
+
+#button {
+    background-color: var(--spectrum-radio-circle-background-color);
+    border-color: var(--spectrum-radio-circle-border-color);
+}
+
+:host {
+    &(:hover) {
+        & #button {
+            border-color: var(--spectrum-radio-circle-border-color-hover);
+            box-shadow: none;
+        }
+
+        & input {
+            &:checked + #button {
+                border-color: var(
+                    --spectrum-radio-circle-border-color-selected-hover
+                );
+            }
+        }
+
+        & #label {
+            color: var(--spectrum-radio-text-color-hover);
+        }
+    }
+
+    &(:active) {
+        & #button {
+            border-color: var(--spectrum-radio-circle-border-color-down);
+        }
+
+        & input:checked + #button {
+            opacity: 0.5;
+            border-color: var(
+                --spectrum-radio-circle-border-color-selected-down
+            );
+        }
+
+        #label {
+            color: var(--spectrum-radio-text-color-down);
+        }
+    }
+
+    &([quiet]) {
+        & input:checked + #button {
+            border-color: var(
+                --spectrum-radio-quiet-circle-border-color-selected
+            );
+        }
+    }
+
+    &([quiet]:hover) {
+        & input:checked + #button {
+            border-color: var(
+                --spectrum-radio-quiet-circle-border-color-selected-hover
+            );
+        }
+    }
+
+    &([quiet]:active) {
+        & input:checked + #button {
+            border-color: var(
+                --spectrum-radio-quiet-circle-border-color-selected-down
+            );
+        }
+    }
+}
+
+input {
+    &:checked + #button {
+        border-color: var(--spectrum-radio-circle-border-color-selected);
+    }
+}
+
+/* TODO: Implement disabled and error states */
