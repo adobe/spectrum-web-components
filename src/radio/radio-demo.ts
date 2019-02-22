@@ -22,6 +22,12 @@ export class RadioDemo extends LitElement {
     @property()
     public value = '';
 
+    @property()
+    public pet = '';
+
+    @property()
+    public gender = '';
+
     constructor() {
         super();
 
@@ -33,27 +39,46 @@ export class RadioDemo extends LitElement {
 
         if (target) {
             const value = target.getAttribute('value');
+            const name = target.getAttribute('name');
 
-            if (value) {
-                this.value = value;
+            if (value && name) {
+                if (name === 'pet') {
+                    this.pet = value;
+                } else if (name === 'gender') {
+                    this.gender = value;
+                }
             }
         }
     }
 
     protected render() {
         return html`
-            <form on-click=${this.onSelect}>
+            <form @click=${this.onSelect}>
                 <sp-radio
                     value="kittens"
                     label="Kittens"
                     name="pet"
-                    ?checked=${this.value === 'kittens'}
+                    ?checked=${this.pet === 'kittens'}
                 ></sp-radio>
                 <sp-radio
                     value="puppies"
                     label="Puppies"
                     name="pet"
-                    ?checked=${this.value === 'puppies'}
+                    ?checked=${this.pet === 'puppies'}
+                ></sp-radio>
+            </form>
+            <form @click=${this.onSelect}>
+                <sp-radio
+                    value="male"
+                    label="Male"
+                    name="gender"
+                    ?checked=${this.gender === 'male'}
+                ></sp-radio>
+                <sp-radio
+                    value="female"
+                    label="Female"
+                    name="gender"
+                    ?checked=${this.gender === 'female'}
                 ></sp-radio>
             </form>
         `;

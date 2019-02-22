@@ -35,12 +35,7 @@ export class Radio extends LitElement {
 
     protected render() {
         return html`
-            <input
-                type="radio"
-                name=${this.name}
-                .checked=${this.checked}
-                value=${this.value}
-            />
+            <input type="radio" name=${this.name} value=${this.value} />
             <span id="button"></span>
             <span id="label">${this.label}</span>
         `;

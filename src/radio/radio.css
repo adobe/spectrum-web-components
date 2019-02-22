@@ -86,8 +86,10 @@ input {
     &:disabled {
         cursor: default;
     }
+}
 
-    &:checked + #button {
+:host([checked]) {
+    & input + #button {
         border-width: var(--spectrum-radio-border-width-checked);
     }
 }

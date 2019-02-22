@@ -26,14 +26,6 @@ governing permissions and limitations under the License.
             box-shadow: none;
         }
 
-        & input {
-            &:checked + #button {
-                border-color: var(
-                    --spectrum-radio-circle-border-color-selected-hover
-                );
-            }
-        }
-
         & #label {
             color: var(--spectrum-radio-text-color-hover);
         }
@@ -44,46 +36,55 @@ governing permissions and limitations under the License.
             border-color: var(--spectrum-radio-circle-border-color-down);
         }
 
-        & input:checked + #button {
-            opacity: 0.5;
-            border-color: var(
-                --spectrum-radio-circle-border-color-selected-down
-            );
-        }
-
         #label {
             color: var(--spectrum-radio-text-color-down);
         }
     }
 
-    &([quiet]) {
-        & input:checked + #button {
+    &([checked]) {
+        & input + #button {
+            border-color: var(--spectrum-radio-circle-border-color-selected);
+        }
+    }
+
+    &([checked]:hover) {
+        & input + #button {
+            border-color: var(
+                --spectrum-radio-circle-border-color-selected-hover
+            );
+        }
+    }
+
+    &([checked]:active) {
+        & input + #button {
+            border-color: var(
+                --spectrum-radio-circle-border-color-selected-down
+            );
+        }
+    }
+
+    &([checked][quiet]) {
+        & input + #button {
             border-color: var(
                 --spectrum-radio-quiet-circle-border-color-selected
             );
         }
     }
 
-    &([quiet]:hover) {
-        & input:checked + #button {
+    &([checked][quiet]:hover) {
+        & input + #button {
             border-color: var(
                 --spectrum-radio-quiet-circle-border-color-selected-hover
             );
         }
     }
 
-    &([quiet]:active) {
-        & input:checked + #button {
+    &([checked][quiet]:active) {
+        & input + #button {
             border-color: var(
                 --spectrum-radio-quiet-circle-border-color-selected-down
             );
         }
-    }
-}
-
-input {
-    &:checked + #button {
-        border-color: var(--spectrum-radio-circle-border-color-selected);
     }
 }
 
