@@ -58,6 +58,7 @@ app.use(
             '/': path.resolve(path.join(rootPath, 'lib')),
             '/styles': path.resolve(path.join(rootPath, 'styles')),
             '/node_modules': path.resolve(path.join(rootPath, 'node_modules')),
+            '/src': path.resolve(path.join(rootPath, 'src')), // serve source files for sourcemaps
         },
     })
 );
