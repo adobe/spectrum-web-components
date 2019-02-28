@@ -9,16 +9,5 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './banner';
-export * from './button';
-export * from './card';
-export * from './dropzone';
-export * from './illustrated-message';
-export * from './link';
-export * from './radio';
 export * from './radio-group';
-export * from './slider';
-
-export * from './define';
-
-// NOTE: we do not export demo-page because it has dependencies on other modules we don't want to force on users
+export * from './radio-group-demo';
