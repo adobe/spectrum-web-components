@@ -42,27 +42,9 @@ export class RadioGroup extends LitElement {
 
     private _selected = '';
 
-    constructor() {
-        super();
-
-        this.addEventListener('click', (ev: Event) => this.onClick(ev));
-    }
-
-    public onClick(ev: Event) {
-        const target = ev.target as Element;
-
-        if (target) {
-            const value = target.getAttribute('value');
-
-            if (value) {
-                this.selected = value;
-            }
-        }
-    }
-
     protected render() {
         return html`
-            <slot @click=${this.onClick}></slot>
+            <slot></slot>
         `;
     }
 

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement } from 'lit-element';
+import { html, LitElement, property } from 'lit-element';
 
 import { defineCustomElements, Radio } from '../index.js';
 
@@ -53,15 +53,49 @@ const genders = [
 export class RadioGroupDemo extends LitElement {
     public static readonly is = 'sp-radio-group-demo';
 
+    @property()
+    public pet = '';
+
+    @property()
+    public gender = '';
+
     constructor() {
         super();
 
         defineCustomElements(Radio, RadioGroup);
     }
 
+    public onPetClick(ev: Event) {
+        const target = ev.target as Element;
+
+        if (target) {
+            const value = target.getAttribute('value');
+
+            if (value) {
+                this.pet = value;
+            }
+        }
+    }
+
+    public onGenderClick(ev: Event) {
+        const target = ev.target as Element;
+
+        if (target) {
+            const value = target.getAttribute('value');
+
+            if (value) {
+                this.gender = value;
+            }
+        }
+    }
+
     protected render() {
         return html`
-            <sp-radio-group name="pet">
+            <sp-radio-group
+                name="pet"
+                @click=${this.onPetClick}
+                .selected=${this.pet}
+            >
                 ${
                     pets.map(
                         (option) => html`
@@ -73,7 +107,11 @@ export class RadioGroupDemo extends LitElement {
                     )
                 }
             </sp-radio-group>
-            <sp-radio-group name="gender">
+            <sp-radio-group
+                name="gender"
+                @click=${this.onGenderClick}
+                .selected=${this.gender}
+            >
                 ${
                     genders.map(
                         (option) => html`
