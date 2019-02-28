@@ -11,7 +11,7 @@
         "target": "es2017",
         "types": ["mocha", "chai", "sinon", "karma-chai"],
         "typeRoots": ["./node_modules/@types", "./types"],
-        "lib": ["es2017", "dom"],
+        "lib": ["es2017", "dom", "dom.iterable"],
         "outDir": "lib"
     },
     "include": ["./**/*.ts"]

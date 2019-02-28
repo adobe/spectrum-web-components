@@ -20,6 +20,7 @@
     },
     "scripts": {
         "split-spectrum": "node ./scripts/split-spectrum.js",
+        "process-icons": "node ./scripts/process-icons.js",
         "prebuild": "rimraf lib",
         "build": "gulp",
         "watch": "gulp watch",
@@ -44,7 +45,7 @@
     },
     "devDependencies": {
         "@adobe/es-modules-middleware": "^1.0.0",
-        "@adobe/spectrum-css": "^2.7.2",
+        "@adobe/spectrum-css": "^2.7.4",
         "@types/chai": "^4.1.7",
         "@types/common-tags": "^1.4.0",
         "@types/karma-chai": "^0.1.1",
