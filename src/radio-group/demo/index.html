@@ -11,9 +11,11 @@
             // import the elements we're going to demo
             import * as Elements from '../index.js';
             // define our elements using the helper
+            import { RadioGroupDemo } from '../radio-group-demo.js';
             defineCustomElements(
                 ...Object.values(Elements),
-                ...Object.values(DemoElements)
+                ...Object.values(DemoElements),
+                RadioGroupDemo
             );
         </script>
         <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
