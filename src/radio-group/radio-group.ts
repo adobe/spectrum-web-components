@@ -67,12 +67,12 @@ export class RadioGroup extends LitElement {
     }
 
     private updateCheckedState(value: string) {
-        const previousChecked = this.querySelector('[checked]');
+        const previousChecked = this.querySelectorAll('[checked]');
         const currentChecked = this.querySelector(`[value=${value}]`);
 
-        if (previousChecked) {
-            previousChecked.removeAttribute('checked');
-        }
+        previousChecked.forEach((element) => {
+            element.removeAttribute('checked');
+        });
         if (currentChecked) {
             currentChecked.setAttribute('checked', 'true');
         }
