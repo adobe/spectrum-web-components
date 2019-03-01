@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import { stripIndent } from 'common-tags';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
@@ -24,7 +30,7 @@ import styles from './demo-code.css';
 export class DemoCode extends LitElement {
     public static is = 'demo-code';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -39,20 +45,18 @@ export class DemoCode extends LitElement {
 
     private highlightedCode = '';
 
-    protected render() {
+    protected render(): TemplateResult {
         const caption = html`
-            <div id="caption" @click="${(e: Event) => this.toggleCode()}">
+            <div id="caption" @click=${this.toggleCode}>
                 ${this.caption}
                 <div id="caption-icon">
-                    ${
-                        this.hideCode
-                            ? html`
-                                  &#x25BE;
-                              `
-                            : html`
-                                  &#x25B4;
-                              `
-                    }
+                    ${this.hideCode
+                        ? html`
+                              &#x25BE;
+                          `
+                        : html`
+                              &#x25B4;
+                          `}
                 </div>
             </div>
         `;
@@ -64,17 +68,14 @@ export class DemoCode extends LitElement {
         return html`
             <div id="container">
                 ${this.caption && caption} ${codeBlock}
-                <slot
-                    name="code"
-                    @slotchange="${(e: Event) => this.codeHandler(e)}"
-                ></slot>
+                <slot name="code" @slotchange=${this.codeHandler}></slot>
             </div>
         `;
     }
-    private toggleCode() {
+    private toggleCode(): void {
         this.hideCode = !this.hideCode;
     }
-    private codeHandler(evt: Event) {
+    private codeHandler(evt: Event): void {
         const slot = evt.target as HTMLSlotElement;
         const nodes = slot.assignedNodes();
         if (nodes.length > 0) {

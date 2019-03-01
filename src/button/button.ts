@@ -10,18 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement } from 'lit-element';
+import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
 
 import buttonStyles from './button.css';
 
 export class Button extends LitElement {
     public static is = 'sp-button';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [buttonStyles];
     }
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <div id="icon"><slot name="icon"></slot></div>
             <div id="label"><slot></slot></div>

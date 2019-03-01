@@ -10,31 +10,35 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import styles from './demo-page.css';
 
 export class DemoPage extends LitElement {
     public static is = 'demo-page';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [styles];
     }
 
     @property()
     public title = '';
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <div id="container">
                 <div id="heading">
                     <div id="heading-container">
-                        ${
-                            this.title &&
-                                html`
-                                    <h1>${this.title}</h1>
-                                `
-                        }
+                        ${this.title &&
+                            html`
+                                <h1>${this.title}</h1>
+                            `}
                         <slot name="heading"></slot>
                     </div>
                 </div>

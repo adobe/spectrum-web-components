@@ -13,10 +13,11 @@ governing permissions and limitations under the License.
 import buttonBgStyles from './button-over-bg.css';
 
 import { Button } from './button';
+import { CSSResultArray } from 'lit-element';
 
 export class ButtonOverBg extends Button {
     public static is = 'sp-button-over-bg';
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [...super.styles, buttonBgStyles];
     }
 }

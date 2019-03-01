@@ -16,6 +16,7 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
+    query,
 } from 'lit-element';
 
 import sliderSkinStyles from './slider-skin.css';
@@ -54,10 +55,10 @@ export class Slider extends LitElement {
     @property({ type: Boolean, reflect: true })
     public dragging = false;
 
-    public onInput(ev: Event): void {
-        if (!this.inputElement) {
-            return;
-        }
+    @query('#input')
+    private inputElement!: HTMLInputElement;
+
+    public onInput(): void {
         const inputValue = this.inputElement.value;
 
         this.value = parseFloat(inputValue);
@@ -71,7 +72,7 @@ export class Slider extends LitElement {
         this.dispatchEvent(inputEvent);
     }
 
-    public onChange(ev: Event): void {
+    public onChange(): void {
         const changeEvent = new CustomEvent<ISliderEventDetail>(
             'slider-change',
             {
@@ -99,7 +100,7 @@ export class Slider extends LitElement {
                       step="${this.step}"
                       min="${this.min}"
                       max="${this.max}"
-                      @change="${this.onChange}"
+                      @change=${this.onChange}
                       @input=${this.onInput}
                       @mousedown=${this.onMouseDown}
                       @mouseup=${this.onMouseUp}
@@ -124,13 +125,6 @@ export class Slider extends LitElement {
 
     private onMouseUp(): void {
         this.dragging = false;
-    }
-
-    private get inputElement(): HTMLInputElement | null {
-        if (!this.shadowRoot) {
-            return null;
-        }
-        return this.shadowRoot.getElementById('input') as HTMLInputElement;
     }
 
     /**

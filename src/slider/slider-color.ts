@@ -10,7 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+    query,
+} from 'lit-element';
 
 import sliderColorStyles from './slider-color.css';
 import sliderSkinStyles from './slider-skin.css';
@@ -21,7 +28,7 @@ export type ISliderColorEventDetail = number;
 export class SliderColor extends LitElement {
     public static is = 'sp-slider-color';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [sliderStyles, sliderSkinStyles, sliderColorStyles];
     }
 
@@ -49,10 +56,10 @@ export class SliderColor extends LitElement {
     @property({ type: Boolean, reflect: true })
     public dragging = false;
 
-    public onInput(ev: Event) {
-        if (!this.inputElement) {
-            return;
-        }
+    @query('#input')
+    private inputElement!: HTMLInputElement;
+
+    public onInput(): void {
         const inputValue = this.inputElement.value;
 
         this.value = parseFloat(inputValue);
@@ -69,7 +76,7 @@ export class SliderColor extends LitElement {
         this.dispatchEvent(inputEvent);
     }
 
-    public onChange(ev: Event) {
+    public onChange(): void {
         const changeEvent = new CustomEvent<ISliderColorEventDetail>(
             'slider-change',
             {
@@ -81,7 +88,7 @@ export class SliderColor extends LitElement {
 
         this.dispatchEvent(changeEvent);
     }
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <div id="labelContainer">
                 <label id="label" for="input">${this.label}</label>
@@ -108,19 +115,12 @@ export class SliderColor extends LitElement {
         `;
     }
 
-    private onMouseDown() {
+    private onMouseDown(): void {
         this.dragging = true;
     }
 
-    private onMouseUp() {
+    private onMouseUp(): void {
         this.dragging = false;
-    }
-
-    private get inputElement() {
-        if (!this.shadowRoot) {
-            return null;
-        }
-        return this.shadowRoot.getElementById('input') as HTMLInputElement;
     }
 
     /**

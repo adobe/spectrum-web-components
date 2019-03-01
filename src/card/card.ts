@@ -10,15 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import cardBaseStyles from './card-base.css';
 import cardStyles from './card.css';
 
 export class Card extends LitElement {
-    public static is = 'sp-card';
+    public static readonly is = 'sp-card';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [cardBaseStyles, cardStyles];
     }
 
@@ -28,7 +34,7 @@ export class Card extends LitElement {
     @property()
     public subtitle = '';
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <slot name="cover-photo"></slot>
             <div id="body">
