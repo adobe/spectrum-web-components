@@ -1,0 +1,19 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "node": false,
+        "es6": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "tsconfig.json",
+        "tsconfigRootDir": "./src"
+    },
+    "plugins": ["@typescript-eslint"],
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "prettier/@typescript-eslint"
+    ]
+}

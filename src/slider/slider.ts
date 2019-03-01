@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import sliderSkinStyles from './slider-skin.css';
 import sliderStyles from './slider.css';
@@ -20,7 +26,7 @@ export type ISliderEventDetail = number;
 export class Slider extends LitElement {
     public static is = 'sp-slider';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [sliderStyles, sliderSkinStyles];
     }
 
@@ -48,7 +54,7 @@ export class Slider extends LitElement {
     @property({ type: Boolean, reflect: true })
     public dragging = false;
 
-    public onInput(ev: Event) {
+    public onInput(ev: Event): void {
         if (!this.inputElement) {
             return;
         }
@@ -65,7 +71,7 @@ export class Slider extends LitElement {
         this.dispatchEvent(inputEvent);
     }
 
-    public onChange(ev: Event) {
+    public onChange(ev: Event): void {
         const changeEvent = new CustomEvent<ISliderEventDetail>(
             'slider-change',
             {
@@ -78,7 +84,7 @@ export class Slider extends LitElement {
         this.dispatchEvent(changeEvent);
     }
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <div id="labelContainer">
                 <label id="label" for="input">${this.label}</label>
@@ -112,15 +118,15 @@ export class Slider extends LitElement {
         `;
     }
 
-    private onMouseDown() {
+    private onMouseDown(): void {
         this.dragging = true;
     }
 
-    private onMouseUp() {
+    private onMouseUp(): void {
         this.dragging = false;
     }
 
-    private get inputElement() {
+    private get inputElement(): HTMLInputElement | null {
         if (!this.shadowRoot) {
             return null;
         }
