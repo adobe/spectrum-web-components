@@ -89,7 +89,7 @@ export class IconsetTable extends LitElement {
                                             return html`
                                                 <td>
                                                     <sp-icon
-                                                        icon="${this.iconset}:${
+                                                        name="${this.iconset}:${
                                                             iconName
                                                         }"
                                                         size="${size}"

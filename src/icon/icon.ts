@@ -23,7 +23,7 @@ export class Icon extends LitElement {
     public src?: string;
 
     @property()
-    public icon?: string;
+    public name?: string;
 
     @property()
     public size: string = 'm';
@@ -42,11 +42,11 @@ export class Icon extends LitElement {
 
         // start listening for iconset-added and do updateIcon if we get one later
         this.iconsetListener = ((ev: CustomEvent) => {
-            if (!this.icon) {
+            if (!this.name) {
                 return;
             }
             // parse the icon name to get iconset name
-            const icon = this.parseIcon(this.icon);
+            const icon = this.parseIcon(this.name);
             if (!icon) {
                 return;
             }
@@ -82,11 +82,11 @@ export class Icon extends LitElement {
     }
 
     private updateIcon() {
-        if (!this.icon) {
+        if (!this.name) {
             return;
         }
         // parse the icon name to get iconset name
-        const icon = this.parseIcon(this.icon);
+        const icon = this.parseIcon(this.name);
         if (!icon) {
             return;
         }
