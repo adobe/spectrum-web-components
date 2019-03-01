@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 
 :root,
 :host {
+    --spectrum-alias-dropshadow-blur: 4px;
+    --spectrum-alias-dropshadow-offset-y: 1px;
     --spectrum-alias-font-size-default: 14px;
     --spectrum-alias-line-height-small: 16px;
     --spectrum-alias-line-height-medium: 20px;

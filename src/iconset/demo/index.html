@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Iconset - Spectrum Web Components</title>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../index.js';
+            // import the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            // import the elements we're going to demo
+            import { IconsetSVG } from '../index.js';
+            import { Icon } from '../../icon/index.js';
+            import { IconsMedium } from '../../icons/icons-medium.js';
+            // define our elements using the helper
+            defineCustomElements(
+                ...Object.values(DemoElements),
+                IconsetSVG,
+                IconsMedium,
+                Icon
+            );
+        </script>
+        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
+    </head>
+
+    <body>
+        <style></style>
+        <demo-page title="Iconset">
+            <demo-section title="Using an Iconset" show-demo-code>
+                <div slot="description">
+                    <p>
+                        An iconset defines a collection of icons, the iconset is
+                        given a name by which it can be referenced.
+                        <code>sp-icon</code>
+                        elements can then reference the iconset to use icons
+                        from it. This allows different iconsets to be used
+                        without having to change icons used throughout component
+                        implementations.
+                    </p>
+                </div>
+                <div slot="demo">
+                    <sp-icons-medium></sp-icons-medium>
+                    <!-- or we can create custom icon sets -->
+                    <sp-iconset-svg name="fun">
+                        <svg>
+                            <symbol id="smiley" viewbox="0 0 496 512">
+                                <path
+                                    d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 448c-110.3 0-200-89.7-200-200S137.7 56 248 56s200 89.7 200 200-89.7 200-200 200zm105.6-151.4c-25.9 8.3-64.4 13.1-105.6 13.1s-79.6-4.8-105.6-13.1c-9.9-3.1-19.4 5.4-17.7 15.3 7.9 47.1 71.3 80 123.3 80s115.3-32.9 123.3-80c1.6-9.8-7.7-18.4-17.7-15.3zM168 240c17.7 0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32 14.3 32 32 32zm160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32 14.3 32 32 32z"
+                                ></path>
+                            </symbol>
+                        </svg>
+                    </sp-iconset-svg>
+                    <sp-icon name="ui:AlertMedium"></sp-icon>
+                    <sp-icon name="ui:Magnifier"></sp-icon>
+                    <sp-icon name="fun:smiley"></sp-icon>
+                </div>
+            </demo-section>
+            <demo-section title="Switching Iconsets" show-demo-code>
+                <div slot="description">
+                    <p>
+                        You can swap icon sets in and out and the icons will
+                        change accordingly. This can be useful for changing
+                        iconsets at different UI scale breakpoints.
+                    </p>
+                    <p>
+                        The following demo is rather contrived, but we
+                        demonstrate iconset switching. First we create a button
+                        which uses a specific icon
+                        <code>face:expression</code>
+                        and then provide an iconset which satisfies that icon.
+                        We then dynamically create another iconset with the same
+                        icon defined, and then switch between them by adding and
+                        removing the respective iconsets from the DOM. Try
+                        tapping the button below.
+                    </p>
+                </div>
+                <div slot="demo">
+                    <button id="smile">
+                        <sp-icon name="face:expression"></sp-icon>
+                    </button>
+                    <sp-iconset-svg name="face" id="frown">
+                        <svg>
+                            <symbol id="expression" viewbox="0 0 496 512">
+                                <path
+                                    d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 448c-110.3 0-200-89.7-200-200S137.7 56 248 56s200 89.7 200 200-89.7 200-200 200zm-48-248c0-17.7-14.3-32-32-32s-32 14.3-32 32 14.3 32 32 32 32-14.3 32-32zm128-32c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32zm-80 112c-35.6 0-88.8 21.3-95.8 61.2-2 11.8 9 21.5 20.5 18.1 31.2-9.6 59.4-15.3 75.3-15.3s44.1 5.7 75.3 15.3c11.4 3.5 22.5-6.3 20.5-18.1-7-39.9-60.2-61.2-95.8-61.2z"
+                                />
+                            </symbol>
+                        </svg>
+                    </sp-iconset-svg>
+                    <script>
+                        const smile = document.querySelector('#smile');
+                        const frownIconset = document.querySelector('#frown');
+                        // construct a different icon set with a different icon definition for expression icon
+                        const smileIconset = document.createElement(
+                            'sp-iconset-svg'
+                        );
+                        smileIconset.name = 'face';
+                        smileIconset.innerHTML = `
+                            <svg>
+                                <symbol id="expression" viewbox="0 0 496 512">
+                                    <path xmlns="http://www.w3.org/2000/svg" d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 448c-110.3 0-200-89.7-200-200S137.7 56 248 56s200 89.7 200 200-89.7 200-200 200zm105.6-151.4c-25.9 8.3-64.4 13.1-105.6 13.1s-79.6-4.8-105.6-13.1c-9.9-3.1-19.4 5.4-17.7 15.3 7.9 47.1 71.3 80 123.3 80s115.3-32.9 123.3-80c1.6-9.8-7.7-18.4-17.7-15.3zM168 240c17.7 0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32 14.3 32 32 32zm160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32 14.3 32 32 32z"/>
+                                </symbol>
+                            </svg>
+                        `;
+                        const container = frownIconset.parentNode;
+                        // toggle the icon set on click
+                        smile.addEventListener('click', () => {
+                            if (frownIconset.parentNode) {
+                                container.removeChild(frownIconset);
+                                container.appendChild(smileIconset);
+                            } else {
+                                container.removeChild(smileIconset);
+                                container.appendChild(frownIconset);
+                            }
+                        });
+                    </script>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>

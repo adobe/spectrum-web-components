@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Icons - Spectrum Web Components</title>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../index.js';
+            // import the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            // import the elements we're going to demo
+            import * as Icons from '../index.js';
+            import { IconsetTable } from './iconset-table.js';
+            // define our elements using the helper
+            defineCustomElements(
+                ...Object.values(DemoElements),
+                ...Object.values(Icons),
+                IconsetTable
+            );
+        </script>
+        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
+    </head>
+
+    <body>
+        <style></style>
+        <demo-page title="Icons">
+            <demo-section title="Medium Icons" show-demo-code>
+                <div slot="description">
+                    <p>Medium icons provided by Spectrum.</p>
+                </div>
+                <div slot="demo">
+                    <sp-icons-medium name="medium-ui"></sp-icons-medium>
+                    <demo-iconset-table
+                        iconset="medium-ui"
+                    ></demo-iconset-table>
+                </div>
+            </demo-section>
+            <demo-section title="Large Icons" show-demo-code>
+                <div slot="description">
+                    <p>Large icons provided by Spectrum.</p>
+                </div>
+                <div slot="demo">
+                    <sp-icons-large name="large-ui"></sp-icons-large>
+                    <demo-iconset-table iconset="large-ui"></demo-iconset-table>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>

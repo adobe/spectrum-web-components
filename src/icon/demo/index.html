@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Iconset - Spectrum Web Components</title>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../define.js';
+            // import and define the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            // import the elements we're going to demo
+            import * as Elements from '../index.js';
+            import * as MediumIcons from '../../icons/icons-medium.js';
+            defineCustomElements(
+                ...Object.values(DemoElements),
+                ...Object.values(Elements),
+                ...Object.values(MediumIcons)
+            );
+        </script>
+        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
+    </head>
+
+    <body>
+        <demo-page title="Icon">
+            <demo-section title="Icon Sizes" show-demo-code>
+                <div slot="description">
+                    You can specify icon size through the use of the
+                    <code>size</code>
+                    attribute, specifying sizes from
+                    <code>xxs</code>
+                    through to
+                    <code>xxl</code>
+                    .
+                </div>
+                <div slot="demo">
+                    <sp-icons-medium></sp-icons-medium>
+                    <sp-icon size="xxs" name="ui:Magnifier"></sp-icon>
+                    <sp-icon size="xs" name="ui:Magnifier"></sp-icon>
+                    <sp-icon size="s" name="ui:Magnifier"></sp-icon>
+                    <sp-icon size="m" name="ui:Magnifier"></sp-icon>
+                    <sp-icon size="l" name="ui:Magnifier"></sp-icon>
+                    <sp-icon size="xl" name="ui:Magnifier"></sp-icon>
+                    <sp-icon size="xxl" name="ui:Magnifier"></sp-icon>
+                </div>
+            </demo-section>
+            <demo-section title="Icon Color" show-demo-code>
+                <div slot="description">
+                    When using SVG icons you can specify icon color through
+                    styling css as expected.
+                </div>
+                <div slot="demo">
+                    <sp-icons-medium></sp-icons-medium>
+                    <sp-icon
+                        size="l"
+                        name="ui:Magnifier"
+                        style="color: violet"
+                    ></sp-icon>
+                </div>
+            </demo-section>
+            <demo-section title="Image Icons" show-demo-code>
+                <div slot="description">
+                    Icons can use images specified as a src url.
+                </div>
+                <div slot="demo">
+                    <sp-icon size="s" src="./PS_icon.png"></sp-icon>
+                    <sp-icon size="m" src="./PS_icon.png"></sp-icon>
+                    <sp-icon size="l" src="./PS_icon.png"></sp-icon>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>
