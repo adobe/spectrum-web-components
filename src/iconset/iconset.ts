@@ -13,7 +13,7 @@ import { IconsetRegistry } from './iconset-registry';
 
 import { LitElement, property } from 'lit-element';
 
-export class Iconset extends LitElement {
+export abstract class Iconset extends LitElement {
     public static is = 'sp-iconset';
 
     protected registered: boolean = false;
@@ -47,22 +47,18 @@ export class Iconset extends LitElement {
         }
         this._name = value;
     }
-    public get name() {
+    public get name(): string {
         return this._name;
     }
 
     /**
      * Applies an icon to the given element
      */
-    public applyIconToElement(
+    public abstract applyIconToElement(
         el: HTMLElement,
         icon: string,
-        size: string = ''
-    ) {
-        // inject the requested icon from the iconset into the element
-        // add into the elements shadow dom if it has one
-        throw new Error('Not implemented!');
-    }
+        size: string
+    ): void;
 
     /**
      * Returns a list of all icons in this iconset.
@@ -74,9 +70,7 @@ export class Iconset extends LitElement {
     /**
      * On updated we register the iconset if we're not already registered
      */
-    public updated(
-        _changedProperties: Map<string | number | symbol, unknown>
-    ): void {
+    public updated(): void {
         if (!this.name || this.registered) {
             return;
         }
@@ -86,7 +80,7 @@ export class Iconset extends LitElement {
     /**
      * On disconnected we remove the iconset
      */
-    public disconnectedCallback() {
+    public disconnectedCallback(): void {
         super.disconnectedCallback();
 
         if (!this.name) {

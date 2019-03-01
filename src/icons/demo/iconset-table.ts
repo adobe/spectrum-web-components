@@ -10,7 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property, TemplateResult, css } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    TemplateResult,
+    css,
+    CSSResultArray,
+} from 'lit-element';
 
 import { IconsetRegistry } from '../../iconset/iconset-registry';
 import { Icon } from '../../icon';
@@ -19,7 +26,7 @@ import { defineCustomElement } from '../../define';
 export class IconsetTable extends LitElement {
     public static is = 'demo-iconset-table';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [
             css`
                 thead {
@@ -46,7 +53,7 @@ export class IconsetTable extends LitElement {
         defineCustomElement(Icon);
     }
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             ${this.renderMatrix()}
         `;
@@ -70,38 +77,31 @@ export class IconsetTable extends LitElement {
             <table>
                 <thead>
                     <td>Icon Name</td>
-                    ${
-                        sizes.map((size: string) => {
-                            return html`
-                                <td>${size}</td>
-                            `;
-                        })
-                    }
+                    ${sizes.map((size: string) => {
+                        return html`
+                            <td>${size}</td>
+                        `;
+                    })}
                 </thead>
                 <tbody>
-                    ${
-                        iconNames.map((iconName: string) => {
-                            return html`
-                                <tr>
-                                    <td>${iconName}</td>
-                                    ${
-                                        sizes.map((size: string) => {
-                                            return html`
-                                                <td>
-                                                    <sp-icon
-                                                        name="${this.iconset}:${
-                                                            iconName
-                                                        }"
-                                                        size="${size}"
-                                                    ></sp-icon>
-                                                </td>
-                                            `;
-                                        })
-                                    }
-                                </tr>
-                            `;
-                        })
-                    }
+                    ${iconNames.map((iconName: string) => {
+                        return html`
+                            <tr>
+                                <td>${iconName}</td>
+                                ${sizes.map((size: string) => {
+                                    return html`
+                                        <td>
+                                            <sp-icon
+                                                name="${this
+                                                    .iconset}:${iconName}"
+                                                size="${size}"
+                                            ></sp-icon>
+                                        </td>
+                                    `;
+                                })}
+                            </tr>
+                        `;
+                    })}
                 </tbody>
             </table>
         `;

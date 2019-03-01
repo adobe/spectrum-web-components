@@ -24,13 +24,13 @@ export class IconsetSVG extends Iconset {
     /**
      * First updated handler just ensures we've processed any slotted symbols
      */
-    public updated(changedProperties: Map<string | number | symbol, unknown>) {
+    public updated(): void {
         if (!this.slotContainer) {
             return;
         }
         const currentSVGNodes = this.getSVGNodes(this.slotContainer);
         this.updateSVG(currentSVGNodes);
-        super.updated(changedProperties);
+        super.updated();
     }
     /**
      * Applies the requested icon from this iconset instance to the given element.
@@ -38,7 +38,7 @@ export class IconsetSVG extends Iconset {
      * @param el - the element to apply the icon to
      * @param icon - the name of the icon within this set to apply.
      */
-    public applyIconToElement(el: HTMLElement, icon: string, size: string) {
+    public applyIconToElement(el: HTMLElement, icon: string): void {
         const iconSymbol = this.iconMap.get(icon);
         if (!iconSymbol) {
             throw new Error(`Unable to find icon ${icon}`);
@@ -61,7 +61,7 @@ export class IconsetSVG extends Iconset {
         return [...this.iconMap.keys()];
     }
 
-    protected prepareSvgClone(sourceSvg: SVGSymbolElement) {
+    protected prepareSvgClone(sourceSvg: SVGSymbolElement): SVGSVGElement {
         const content = sourceSvg.cloneNode(true) as SVGSymbolElement;
         // we're going to create a new svg element that will have our symbol geometry inside
         const svg = document.createElementNS(
@@ -84,10 +84,10 @@ export class IconsetSVG extends Iconset {
         }
         return svg;
     }
-    protected getSVGIconName(icon: string, size: string) {
+    protected getSVGIconName(icon: string): string {
         return icon;
     }
-    protected getSanitizedIconName(icon: string) {
+    protected getSanitizedIconName(icon: string): string {
         return icon;
     }
     protected renderDefaultContent(): TemplateResult {
@@ -102,7 +102,7 @@ export class IconsetSVG extends Iconset {
         `;
     }
 
-    protected updateSVG(nodes: SVGElement[]) {
+    protected updateSVG(nodes: SVGElement[]): void {
         // iterate over the nodes that were passed in, and find all the top level symbols
         const symbols = nodes.reduce(
             (prev, svgNode) => {
@@ -117,7 +117,7 @@ export class IconsetSVG extends Iconset {
         });
     }
 
-    protected getSVGNodes(slotTarget: HTMLSlotElement) {
+    protected getSVGNodes(slotTarget: HTMLSlotElement): SVGElement[] {
         const nodes = slotTarget.assignedNodes({ flatten: true });
         // find all the svg nodes
         const svgNodes = nodes.filter((node) => {
@@ -126,7 +126,7 @@ export class IconsetSVG extends Iconset {
         return svgNodes;
     }
 
-    private onSlotChange(evt: Event) {
+    private onSlotChange(evt: Event): void {
         const slotTarget = evt.target as HTMLSlotElement;
         const svgNodes = this.getSVGNodes(slotTarget);
         this.updateSVG(svgNodes);

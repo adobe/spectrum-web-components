@@ -10,7 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property, query } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    query,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import { IconsetRegistry } from '../iconset/iconset-registry';
 
@@ -33,11 +40,11 @@ export class Icon extends LitElement {
 
     private iconsetListener?: EventListener;
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [styles];
     }
 
-    public connectedCallback() {
+    public connectedCallback(): void {
         super.connectedCallback();
 
         // start listening for iconset-added and do updateIcon if we get one later
@@ -56,7 +63,7 @@ export class Icon extends LitElement {
         }) as EventListener;
         window.addEventListener('sp-iconset-added', this.iconsetListener);
     }
-    public disconnectedCallback() {
+    public disconnectedCallback(): void {
         super.disconnectedCallback();
         if (this.iconsetListener) {
             window.removeEventListener(
@@ -66,22 +73,26 @@ export class Icon extends LitElement {
         }
     }
 
-    public firstUpdated() {
+    public firstUpdated(): void {
         this.updateIcon();
     }
 
-    public attributeChangedCallback(name: string, old: string, value: string) {
+    public attributeChangedCallback(
+        name: string,
+        old: string,
+        value: string
+    ): void {
         super.attributeChangedCallback(name, old, value);
         this.updateIcon(); // any of our attributes change, update our icon
     }
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <div id="container">${this.renderIcon()}</div>
         `;
     }
 
-    private updateIcon() {
+    private updateIcon(): void {
         if (!this.name) {
             return;
         }
@@ -107,7 +118,7 @@ export class Icon extends LitElement {
         );
     }
 
-    private parseIcon(icon: string) {
+    private parseIcon(icon: string): { iconset: string; icon: string } | null {
         if (!icon) {
             return null;
         }
@@ -121,7 +132,7 @@ export class Icon extends LitElement {
         return { iconset: iconsetName, icon: iconName };
     }
 
-    private renderIcon() {
+    private renderIcon(): TemplateResult {
         // handle src image case
         if (this.src) {
             return html`

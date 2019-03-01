@@ -19,7 +19,7 @@ import iconsSVG from './icons-large.svg.js';
 export class IconsLarge extends IconsetSVG {
     public static is = 'sp-icons-large';
 
-    constructor() {
+    public constructor() {
         super();
         this.name = 'ui'; // default iconset name for these icons
     }
@@ -32,10 +32,10 @@ export class IconsLarge extends IconsetSVG {
      * @param icon
      * @param size
      */
-    protected getSVGIconName(icon: string) {
+    protected getSVGIconName(icon: string): string {
         return `spectrum-icon-${icon}`;
     }
-    protected getSanitizedIconName(icon: string) {
+    protected getSanitizedIconName(icon: string): string {
         return icon.replace('spectrum-icon-', '');
     }
 }

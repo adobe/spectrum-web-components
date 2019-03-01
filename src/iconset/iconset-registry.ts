@@ -13,7 +13,7 @@ import { Iconset } from './iconset';
 
 export class IconsetRegistry {
     // singleton getter
-    public static getInstance() {
+    public static getInstance(): IconsetRegistry {
         if (!IconsetRegistry.instance) {
             IconsetRegistry.instance = new IconsetRegistry();
         }
@@ -23,7 +23,7 @@ export class IconsetRegistry {
 
     private iconsetMap = new Map<string, Iconset>();
 
-    public addIconset(name: string, iconset: Iconset) {
+    public addIconset(name: string, iconset: Iconset): void {
         this.iconsetMap.set(name, iconset);
 
         // dispatch a sp-iconset-added event on window to let everyone know we have a new iconset
@@ -37,7 +37,7 @@ export class IconsetRegistry {
         // this iconset will be able to access the completed iconset
         setTimeout(() => window.dispatchEvent(event), 0);
     }
-    public removeIconset(name: string) {
+    public removeIconset(name: string): void {
         this.iconsetMap.delete(name);
         // dispatch a sp-iconset-removed event on window to let everyone know we have a new iconset
         // note we're using window here for efficiency since we don't need to bubble through the dom since everyone
@@ -48,7 +48,7 @@ export class IconsetRegistry {
         // we're dispatching this event in the next tick To keep the event model consistent with the added event
         setTimeout(() => window.dispatchEvent(event), 0);
     }
-    public getIconset(name: string) {
+    public getIconset(name: string): Iconset | undefined {
         return this.iconsetMap.get(name);
     }
 }
