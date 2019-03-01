@@ -32,6 +32,8 @@ export class RadioGroup extends LitElement {
     public set selected(value: string) {
         const oldValue = this.selected;
 
+        console.log(value);
+
         this.updateCheckedState(value);
 
         this._selected = value;
@@ -48,13 +50,17 @@ export class RadioGroup extends LitElement {
 
     private updateCheckedState(value: string) {
         const previousChecked = this.querySelectorAll('[checked]');
-        const currentChecked = this.querySelector(`[value=${value}]`);
 
         previousChecked.forEach((element) => {
             element.removeAttribute('checked');
         });
-        if (currentChecked) {
-            currentChecked.setAttribute('checked', 'true');
+
+        if (value.length) {
+            const currentChecked = this.querySelector(`[value=${value}]`);
+
+            if (currentChecked) {
+                currentChecked.setAttribute('checked', 'true');
+            }
         }
     }
 }
