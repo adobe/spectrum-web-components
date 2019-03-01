@@ -32,6 +32,9 @@ export class IconsetRegistry {
         const event = new CustomEvent('sp-iconset-added', {
             detail: { name, iconset },
         });
+        // we're dispatching this event in the next tick to allow the iconset to finish any slotchange or other event
+        // listeners caused by connection to the dom and first render to complete, this way any icons listening for
+        // this iconset will be able to access the completed iconset
         setTimeout(() => window.dispatchEvent(event), 0);
     }
     public removeIconset(name: string) {
@@ -42,6 +45,7 @@ export class IconsetRegistry {
         const event = new CustomEvent('sp-iconset-removed', {
             detail: { name },
         });
+        // we're dispatching this event in the next tick To keep the event model consistent with the added event
         setTimeout(() => window.dispatchEvent(event), 0);
     }
     public getIconset(name: string) {
