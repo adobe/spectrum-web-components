@@ -10,14 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import radioGroupStyles from './radio-group.css';
 
 export class RadioGroup extends LitElement {
     public static readonly is = 'sp-radio-group';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [radioGroupStyles];
     }
 
@@ -25,7 +31,7 @@ export class RadioGroup extends LitElement {
     public name = '';
 
     @property({ reflect: true })
-    public get selected() {
+    public get selected(): string {
         return this._selected;
     }
 
@@ -42,13 +48,13 @@ export class RadioGroup extends LitElement {
 
     private _selected = '';
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <slot></slot>
         `;
     }
 
-    private updateCheckedState(value: string) {
+    private updateCheckedState(value: string): void {
         const previousChecked = this.querySelectorAll('[checked]');
 
         previousChecked.forEach((element) => {

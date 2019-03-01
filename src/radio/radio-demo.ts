@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import { html, LitElement, property, TemplateResult } from 'lit-element';
 
 import { defineCustomElements } from '../index.js';
 
@@ -28,13 +28,13 @@ export class RadioDemo extends LitElement {
     @property()
     public gender = '';
 
-    constructor() {
+    public constructor() {
         super();
 
         defineCustomElements(Radio);
     }
 
-    public onSelect(ev: Event) {
+    public onSelect(ev: Event): void {
         const target = ev.target as Element;
 
         if (target) {
@@ -51,7 +51,7 @@ export class RadioDemo extends LitElement {
         }
     }
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <form @click=${this.onSelect}>
                 <sp-radio

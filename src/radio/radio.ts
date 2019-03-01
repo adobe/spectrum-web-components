@@ -10,14 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import radioStyles from './radio.css';
 
 export class Radio extends LitElement {
     public static readonly is = 'sp-radio';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [radioStyles];
     }
 
@@ -33,7 +39,7 @@ export class Radio extends LitElement {
     @property({ reflect: true })
     public name = '';
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <input type="radio" name=${this.name} value=${this.value} />
             <span id="button"></span>

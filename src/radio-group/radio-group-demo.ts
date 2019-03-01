@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import { html, LitElement, property, TemplateResult } from 'lit-element';
 
 import { defineCustomElements, Radio } from '../index.js';
 
@@ -59,13 +59,13 @@ export class RadioGroupDemo extends LitElement {
     @property()
     public gender = 'invalid';
 
-    constructor() {
+    public constructor() {
         super();
 
         defineCustomElements(Radio, RadioGroup);
     }
 
-    public onPetClick(ev: Event) {
+    public onPetClick(ev: Event): void {
         const target = ev.target as Element;
 
         if (target) {
@@ -77,7 +77,7 @@ export class RadioGroupDemo extends LitElement {
         }
     }
 
-    public onGenderClick(ev: Event) {
+    public onGenderClick(ev: Event): void {
         const target = ev.target as Element;
 
         if (target) {
@@ -89,39 +89,35 @@ export class RadioGroupDemo extends LitElement {
         }
     }
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <sp-radio-group
                 name="pet"
                 @click=${this.onPetClick}
                 .selected=${this.pet}
             >
-                ${
-                    pets.map(
-                        (option) => html`
-                            <sp-radio
-                                value=${option.value}
-                                label=${option.label}
-                            ></sp-radio>
-                        `
-                    )
-                }
+                ${pets.map(
+                    (option) => html`
+                        <sp-radio
+                            value=${option.value}
+                            label=${option.label}
+                        ></sp-radio>
+                    `
+                )}
             </sp-radio-group>
             <sp-radio-group
                 name="gender"
                 @click=${this.onGenderClick}
                 .selected=${this.gender}
             >
-                ${
-                    genders.map(
-                        (option) => html`
-                            <sp-radio
-                                value=${option.value}
-                                label=${option.label}
-                            ></sp-radio>
-                        `
-                    )
-                }
+                ${genders.map(
+                    (option) => html`
+                        <sp-radio
+                            value=${option.value}
+                            label=${option.label}
+                        ></sp-radio>
+                    `
+                )}
             </sp-radio-group>
         `;
     }
