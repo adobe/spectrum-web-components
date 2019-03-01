@@ -14,5 +14,5 @@
         "lib": ["es2017", "dom"],
         "outDir": "lib"
     },
-    "exclude": ["scripts", "dist", "tasks", "linters", "example-project"]
+    "include": ["./**/*.ts"]
 }

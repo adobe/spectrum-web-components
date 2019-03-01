@@ -10,14 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import messageStyles from './illustrated-message.css';
 
 export class IllustratedMessage extends LitElement {
     public static readonly is = 'sp-illustrated-message';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [messageStyles];
     }
 
@@ -27,7 +33,7 @@ export class IllustratedMessage extends LitElement {
     @property()
     public description = '';
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <slot></slot>
             <div id="heading">${this.heading}</div>

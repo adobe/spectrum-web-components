@@ -13,10 +13,11 @@ governing permissions and limitations under the License.
 import primaryButtonStyles from './button-primary.css';
 
 import { Button } from './button';
+import { CSSResultArray } from 'lit-element';
 
 export class ButtonPrimary extends Button {
     public static is = 'sp-button-primary';
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [...super.styles, primaryButtonStyles];
     }
 }

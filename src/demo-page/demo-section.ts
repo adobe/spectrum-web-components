@@ -10,14 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import styles from './demo-section.css';
 
 export class DemoSection extends LitElement {
     public static is = 'demo-section';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -27,7 +33,7 @@ export class DemoSection extends LitElement {
     @property({ type: Boolean, reflect: true, attribute: 'show-demo-code' })
     public showDemoCode = false;
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <div id="container">
                 <h2>${this.title}</h2>
@@ -36,13 +42,10 @@ export class DemoSection extends LitElement {
                     <div id="demo">
                         <slot
                             name="demo"
-                            @slotchange="${(e: Event) => this.codeHandler(e)}"
+                            @slotchange=${this.codeHandler}
                         ></slot>
                     </div>
-                    <a
-                        id="code-toggle"
-                        @click="${(e: Event) => this.toggleDemoCode(e)}"
-                    >
+                    <a id="code-toggle" @click=${this.toggleDemoCode}>
                         ${this.showDemoCode ? 'hide code' : 'show code'}
                     </a>
                     <demo-code id="demo-code" language="html">
@@ -52,10 +55,10 @@ export class DemoSection extends LitElement {
             </div>
         `;
     }
-    private toggleDemoCode(evt: Event) {
+    private toggleDemoCode(): void {
         this.showDemoCode = !this.showDemoCode;
     }
-    private codeHandler(evt: Event) {
+    private codeHandler(evt: Event): void {
         const slot = evt.target as HTMLSlotElement;
         const nodes = slot.assignedNodes();
         let demoCode = '';

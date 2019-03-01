@@ -1,15 +1,21 @@
 {
     "root": true,
-    "plugins": ["notice"],
     "env": {
         "browser": true,
-        "node": true,
+        "node": false,
         "es6": true
     },
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 8,
-        "sourceType": "module"
+        "project": "../tsconfig.json",
+        "tsconfigRootDir": "./src"
     },
+    "plugins": ["@typescript-eslint", "notice"],
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "prettier/@typescript-eslint"
+    ],
     "rules": {
         "notice/notice": [
             "error",
@@ -18,6 +24,5 @@
                 "templateFile": "config/license.js"
             }
         ]
-    },
-    "extends": ["plugin:prettier/recommended"]
+    }
 }

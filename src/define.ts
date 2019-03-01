@@ -18,7 +18,7 @@ export type IRegisterableElement = IElementConstructor & { is: string };
  *
  * @param classCtor A HTMLElement constructor that has a static 'is' property defining the desired tag name.
  */
-export function defineCustomElement(classCtor: IRegisterableElement) {
+export function defineCustomElement(classCtor: IRegisterableElement): void {
     if (!customElements.get(classCtor.is)) {
         customElements.define(classCtor.is, classCtor);
     }
@@ -29,7 +29,9 @@ export function defineCustomElement(classCtor: IRegisterableElement) {
  *
  * @param classCtors - Any number of arguments each defining a custom element with an 'is' static property.
  */
-export function defineCustomElements(...classCtors: IRegisterableElement[]) {
+export function defineCustomElements(
+    ...classCtors: IRegisterableElement[]
+): void {
     for (const ctor of classCtors) {
         defineCustomElement(ctor);
     }

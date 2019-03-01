@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import cardBaseStyles from './card-base.css';
 import cardGalleryStyles from './card-gallery.css';
@@ -19,7 +25,7 @@ import cardQuietStyles from './card-quiet.css';
 export class CardGallery extends LitElement {
     public static is = 'sp-card-gallery';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [cardBaseStyles, cardQuietStyles, cardGalleryStyles];
     }
 
@@ -29,7 +35,7 @@ export class CardGallery extends LitElement {
     @property()
     public subtitle = '';
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <slot name="cover-photo"></slot>
             <slot name="preview"></slot>

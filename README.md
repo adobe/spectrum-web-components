@@ -34,7 +34,7 @@ npm run serve:watch
 
 ## Linting
 
-The project will be linted on a pre-commit hook, but you can also run the lint suite with `npm run lint`. It uses ESLint to lint the JS files in the `tasks` and `scripts` folder, TSLint to lint the Typescript, and StyleLint to lint the CSS files.
+The project will be linted on a pre-commit hook, but you can also run the lint suite with `npm run lint`. It uses ESLint to lint the JS / TS files, and StyleLint to lint the CSS files.
 
 ## Testing
 
@@ -59,7 +59,7 @@ This will ensure that when installing dependencies you do not accidentally pull 
 
 ## IDE Notes
 
-The build process compiles `.css` files and wraps them in the `lit-html` `css` template tag and writes out a `.css.ts` file for easy import into TypeScript files. This file should not be edited, and is ignored by `.gitignore`, but you may also wish to hide the files in your IDE.
+The build process compiles `.css` files using PostCSS and wraps them in the `lit-html` `css` template tag and writes out a `.css.ts` file for easy import into TypeScript files. This file should not be edited, and is ignored by `.gitignore`, but you may also wish to hide the files in your IDE.
 
 ### Visual Studio Code
 
@@ -72,9 +72,12 @@ In Visual Studio Code you can hide the untracked files by adding the following t
         "src/**/*.css.ts": true,
         ".chrome": true,
         ".firefox": true
-    }
+    },
+    "eslint.validate": ["javascript", "javascriptreact", "typescript"]
 }
 ```
+
+Note this also enables typescript linting in the eslint plugin in VSCode, highly recommended.
 
 # Contributing
 

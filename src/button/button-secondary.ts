@@ -13,11 +13,12 @@ governing permissions and limitations under the License.
 import secondaryButtonStyles from './button-secondary.css';
 
 import { Button } from './button';
+import { CSSResultArray } from 'lit-element';
 
 export class ButtonSecondary extends Button {
     public static is = 'sp-button-secondary';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [...super.styles, secondaryButtonStyles];
     }
 }

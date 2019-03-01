@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 import linkStyles from './link.css';
@@ -18,7 +24,7 @@ import linkStyles from './link.css';
 export class Link extends LitElement {
     public static readonly is = 'sp-link';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [linkStyles];
     }
 
@@ -28,7 +34,7 @@ export class Link extends LitElement {
     @property()
     public target: string | undefined = undefined;
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <a href=${ifDefined(this.href)} target=${ifDefined(this.target)}>
                 <slot></slot>

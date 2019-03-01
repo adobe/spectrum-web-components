@@ -10,23 +10,32 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import dropzoneStyles from './dropzone.css';
 
 export type DropzoneEventDetail = DragEvent;
 
+export type DropEffects = 'copy' | 'move' | 'link' | 'none';
+
 export class Dropzone extends LitElement {
     public static readonly is = 'sp-dropzone';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [dropzoneStyles];
     }
 
-    public get dropEffect() {
+    private _dropEffect: DropEffects = 'copy';
+    public get dropEffect(): DropEffects {
         return this._dropEffect;
     }
-    public set dropEffect(value: string) {
+    public set dropEffect(value: DropEffects) {
         if (['copy', 'move', 'link', 'none'].includes(value)) {
             this._dropEffect = value;
         }
@@ -35,11 +44,9 @@ export class Dropzone extends LitElement {
     @property({ type: Boolean, reflect: true, attribute: 'is-dragged' })
     public isDragged = false;
 
-    private _dropEffect = 'copy';
-
     private debouncedDragLeave: number | null = null;
 
-    public onDragOver(ev: DragEvent) {
+    public onDragOver(ev: DragEvent): void {
         const shouldAcceptEvent = new CustomEvent<DropzoneEventDetail>(
             'dropzone-should-accept',
             {
@@ -77,7 +84,7 @@ export class Dropzone extends LitElement {
         this.dispatchEvent(dragOverEvent);
     }
 
-    public onDragLeave(ev: DragEvent) {
+    public onDragLeave(ev: DragEvent): void {
         this.clearDebouncedDragLeave();
 
         this.debouncedDragLeave = setTimeout(() => {
@@ -97,7 +104,7 @@ export class Dropzone extends LitElement {
         }, 100);
     }
 
-    public onDrop(ev: DragEvent) {
+    public onDrop(ev: DragEvent): void {
         ev.preventDefault();
 
         this.clearDebouncedDragLeave();
@@ -116,7 +123,7 @@ export class Dropzone extends LitElement {
         this.dispatchEvent(dropEvent);
     }
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <div
                 id="container"
@@ -129,7 +136,7 @@ export class Dropzone extends LitElement {
         `;
     }
 
-    protected clearDebouncedDragLeave() {
+    protected clearDebouncedDragLeave(): void {
         if (this.debouncedDragLeave) {
             clearTimeout(this.debouncedDragLeave);
             this.debouncedDragLeave = null;
