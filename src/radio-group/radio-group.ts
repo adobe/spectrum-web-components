@@ -32,9 +32,7 @@ export class RadioGroup extends LitElement {
     public set selected(value: string) {
         const oldValue = this.selected;
 
-        if (value) {
-            this.updateCheckedState(value);
-        }
+        this.updateCheckedState(value);
 
         this._selected = value;
         this.requestUpdate('selected', oldValue);

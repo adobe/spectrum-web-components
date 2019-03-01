@@ -54,10 +54,10 @@ export class RadioGroupDemo extends LitElement {
     public static readonly is = 'sp-radio-group-demo';
 
     @property()
-    public pet = '';
+    public pet = 'puppies';
 
     @property()
-    public gender = '';
+    public gender = 'invalid';
 
     constructor() {
         super();

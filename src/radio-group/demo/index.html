@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Radio - Spectrum Web Components</title>
+        <title>Radio Group - Spectrum Web Components</title>
         <script type="module">
             // import the define helper
             import { defineCustomElements, Radio } from '../../index.js';
@@ -22,11 +22,86 @@
     </head>
 
     <body>
-        <demo-page title="Radio">
-            <demo-section title="Radio" show-demo-code>
-                <div slot="description">The radio input components</div>
+        <demo-page title="Radio Group">
+            <demo-section title="Live Demo" show-demo-code>
+                <div slot="description">The radio group component.</div>
                 <div slot="demo">
                     <sp-radio-group-demo></sp-radio-group-demo>
+                </div>
+            </demo-section>
+
+            <demo-section title="Markup" show-demo-code>
+                <div slot="description">The radio group component.</div>
+                <div slot="demo">
+                    <sp-radio-group name="gender" id="markup-group">
+                        <sp-radio value="male" label="Male"></sp-radio>
+                        <sp-radio value="female" label="Female"></sp-radio>
+                    </sp-radio-group>
+                    <script>
+                        const markupGroup = document.querySelector(
+                            '#markup-group'
+                        );
+
+                        markupGroup.addEventListener('click', (ev) => {
+                            const value = ev.target.getAttribute('value');
+                            markupGroup.setAttribute('selected', value);
+                        });
+                    </script>
+                </div>
+            </demo-section>
+
+            <demo-section title="Driving Selection" show-demo-code>
+                <div slot="description">
+                    Setting the
+                    <b>selected</b>
+                    attribute will drive selection.
+                </div>
+                <div slot="demo">
+                    <sp-radio-group
+                        name="gender"
+                        selected="male"
+                        id="attribute-group"
+                    >
+                        <sp-radio value="male" label="Male"></sp-radio>
+                        <sp-radio value="female" label="Female"></sp-radio>
+                    </sp-radio-group>
+                    <script>
+                        const attributeGroup = document.querySelector(
+                            '#attribute-group'
+                        );
+
+                        attributeGroup.addEventListener('click', (ev) => {
+                            const value = ev.target.getAttribute('value');
+                            attributeGroup.setAttribute('selected', value);
+                        });
+                    </script>
+                </div>
+            </demo-section>
+            <demo-section title="Invalid Selection" show-demo-code>
+                <div slot="description">
+                    If the
+                    <b>selected</b>
+                    attribute is invalid, nothing will be selected
+                </div>
+                <div slot="demo">
+                    <sp-radio-group
+                        name="gender"
+                        selected="invalid"
+                        id="invalid-group"
+                    >
+                        <sp-radio value="male" label="Male"></sp-radio>
+                        <sp-radio value="female" label="Female"></sp-radio>
+                    </sp-radio-group>
+                    <script>
+                        const invalidGroup = document.querySelector(
+                            '#invalid-group'
+                        );
+
+                        invalidGroup.addEventListener('click', (ev) => {
+                            const value = ev.target.getAttribute('value');
+                            invalidGroup.setAttribute('selected', value);
+                        });
+                    </script>
                 </div>
             </demo-section>
         </demo-page>
