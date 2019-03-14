@@ -29,9 +29,9 @@ interface Options {
 }
 
 export default class Positioner {
-    target: HTMLElement;
-    relativeElement: HTMLElement;
-    container: HTMLElement;
+    private target: HTMLElement;
+    private relativeElement: HTMLElement;
+    private container: HTMLElement;
 
     public constructor(
         target: HTMLElement,

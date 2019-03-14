@@ -14,7 +14,6 @@ governing permissions and limitations under the License.
     position: relative;
     height: 200px;
     width: 100%;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,7 +23,6 @@ governing permissions and limitations under the License.
 .root-content {
     width: 100%;
     height: 100%;
-
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -32,7 +30,7 @@ governing permissions and limitations under the License.
 }
 
 .root {
-    top: 0px;
+    top: 0;
 }
 
 .nested-root {
@@ -40,7 +38,7 @@ governing permissions and limitations under the License.
 }
 
 overlay-trigger {
-    margin: 0px 10px;
+    margin: 0 10px;
 }
 
 sp-slider {
@@ -61,12 +59,10 @@ sp-slider {
     flex: 1;
     padding: 4px 10px;
     background-color: rgb(116, 116, 116);
-
     color: white;
     font-size: 12px;
     pointer-events: none;
     white-space: nowrap;
-
     transition: transform var(--spectrum-global-animation-duration-100)
             ease-in-out,
         opacity var(--spectrum-global-animation-duration-100) ease-in-out,

@@ -124,7 +124,9 @@ const AXIS_SIZE: OrientationMap = {
 
 const PARSED_PLACEMENT_CACHE: ParsedPlacementCache = {};
 
-function getContainerDimensions(containerDOMNode: Element) {
+function getContainerDimensions(
+    containerDOMNode: Element
+): ContainerDimensions {
     let width;
     let height;
     let top = 0;
@@ -164,7 +166,7 @@ function getDelta(
     size: number,
     containerDimensions: ContainerDimensions,
     padding: number
-) {
+): number {
     const containerScroll = containerDimensions.scroll[axis];
     const containerHeight: number = containerDimensions[
         AXIS_SIZE[axis]
@@ -190,7 +192,7 @@ function shouldFlip(
     placement: string,
     flipContainerDimensions: ContainerDimensions,
     containerOffsetWithBoundary: Offset
-) {
+): boolean {
     const containerScroll = flipContainerDimensions.scroll[axis];
     const containerHeight = flipContainerDimensions[AXIS_SIZE[axis]];
 
@@ -225,7 +227,7 @@ function getMargins(node: Element): Margins {
     };
 }
 
-function parsePlacement(input: string) {
+function parsePlacement(input: string): ParsedPlacementCache {
     if (PARSED_PLACEMENT_CACHE[input]) {
         return PARSED_PLACEMENT_CACHE[input];
     }
@@ -258,7 +260,7 @@ function computePosition(
     placementInfo: PlacementInfo,
     offset: number,
     crossOffset: number
-) {
+): Position {
     const {
         axis,
         crossAxis,
@@ -446,7 +448,10 @@ export function calculatePositionInternal(
     };
 }
 
-function getShadowPosition(target: HTMLElement, container: HTMLElement) {
+function getShadowPosition(
+    target: HTMLElement,
+    container: HTMLElement
+): Offset {
     const targetPosition = target.getBoundingClientRect() as Offset;
     const containerPosition = container.getBoundingClientRect() as Offset;
     return {
@@ -489,7 +494,7 @@ export default function calculatePosition(
     overlaySize.height += margins.top + margins.bottom;
 
     const containerDimensions = getContainerDimensions(container);
-    const boundaryContainer = container; //boundariesElement();
+    const boundaryContainer = container;
     const boundaryDimensions = getContainerDimensions(boundaryContainer);
     const containerOffsetWithBoundary =
         boundaryContainer.tagName === 'BODY'

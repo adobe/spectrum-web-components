@@ -24,5 +24,6 @@ governing permissions and limitations under the License.
     --spectrum-popover-source-gap: 6px;
     --spectrum-popover-min-width: 32px;
     --spectrum-popover-min-height: 32px;
+    /* stylelint-disable */
     --spectrum-popover-elevation: 2dp;
 }

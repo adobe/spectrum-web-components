@@ -28,7 +28,7 @@ export type PopoverCloseDetail = HTMLElement;
 export class OverlayTrigger extends LitElement {
     public static is = 'overlay-trigger';
 
-    public static get styles() {
+    public static get styles(): CSSResultArray {
         return [overlayTriggerStyles];
     }
 
@@ -103,7 +103,7 @@ export class OverlayTrigger extends LitElement {
         }
     }
 
-    protected render() {
+    protected render(): void {
         return html`
             <div
                 id="trigger"

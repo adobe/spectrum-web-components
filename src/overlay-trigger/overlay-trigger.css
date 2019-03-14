@@ -16,7 +16,6 @@ governing permissions and limitations under the License.
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     width: fit-content;
     height: fit-content;
 }
@@ -27,14 +26,4 @@ governing permissions and limitations under the License.
 
 #click-content {
     display: none;
-}
-
-slot[name='click-content']::slotted(*),
-slot[name='hover-content']::slotted(*) {
-    /* display: none; */
-}
-
-slot[name='click-content'],
-slot[name='hover-content'] {
-    /* display: none; */
 }
