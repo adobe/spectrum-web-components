@@ -1,3 +1,17 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+//TODO: Closing overlay should also have transition
+
 import {
     html,
     LitElement,
@@ -9,9 +23,10 @@ import {
 
 import overlayStyles from './overlay-root.css.js';
 
-import { IPopoverCloseDetail, IPopoverOpenDetail } from '../overlay-trigger';
+import { PopoverCloseDetail, PopoverOpenDetail } from '../overlay-trigger';
 
 import Positioner from './positioner';
+import { PositionResult } from './calculate-position';
 
 export class OverlayRoot extends LitElement {
     public static is = 'overlay-root';
@@ -24,27 +39,58 @@ export class OverlayRoot extends LitElement {
     public visible = false;
 
     @property({ reflect: true })
-    public placement = 'bottom';
+    public placement: 'top' | 'right' | 'bottom' | 'left' = 'bottom';
 
     @property({ type: Number, reflect: true })
     public offset = 6;
 
-    @property({ type: Boolean })
+    @property()
+    private interaction: 'hover' | 'click' = 'hover';
+
+    @property({ type: Boolean, reflect: true })
     private active = false;
+
+    @property()
+    private position?: PositionResult;
+
+    @property()
+    private positioner?: Positioner;
+
+    @property()
+    private trigger?: HTMLElement;
 
     @property()
     private overlayContent?: HTMLElement;
 
-    private _overlayId: string = '';
-
-    @query('#overlay')
-    private overlay: HTMLElement;
-
     @query('#content')
-    private content: HTMLElement;
+    private content?: HTMLElement;
 
     public onMaskClick(ev: Event): void {
+        // Detect if the current trigger has been clicked again
+        // const triggerEl = ev.path.find((el: Element) => el.id === 'trigger');
+        //
+        // const secondClick = triggerEl ? triggerEl === this.trigger : false;
+
+        const target = ev.target as HTMLElement;
+        let secondClick = false;
+
+        if (
+            this.trigger &&
+            this.trigger.childNodes &&
+            this.trigger.childNodes.length
+        ) {
+            const children = Array.from(this.trigger.childNodes);
+            secondClick = children.includes(target);
+        }
+
         if (this.active) {
+            if (this.interaction === 'click' && secondClick) {
+                //Prevent second clicks from reopening the overlay
+                ev.stopPropagation();
+            }
+
+            this.removeOverlay();
+
             const clickOutEvent = new CustomEvent('overlay-click-out', {
                 bubbles: true,
                 composed: true,
@@ -56,11 +102,16 @@ export class OverlayRoot extends LitElement {
         }
     }
 
-    public onPopoverOpen(ev: CustomEvent<IPopoverOpenDetail>): void {
+    public onPopoverOpen(ev: CustomEvent<PopoverOpenDetail>): void {
         if (!this.active) {
             this.active = true;
+            this.removeOverlay();
             this.extractEventDetail(ev);
-            this.overlayContent.setAttribute('open', true);
+            if (this.overlayContent) {
+                this.overlayContent.setAttribute('open', 'true');
+                this.overlayContent.setAttribute('slot', 'overlay');
+                this.appendChild(this.overlayContent);
+            }
 
             window.setTimeout(() => {
                 this.visible = true;
@@ -69,8 +120,9 @@ export class OverlayRoot extends LitElement {
         }
     }
 
-    public onPopoverClose(ev: CustomEvent<IPopoverCloseDetail>): void {
-        if (ev.detail === this.overlayId) {
+    public onPopoverClose(ev: CustomEvent<PopoverCloseDetail>): void {
+        if (ev.detail === this.overlayContent) {
+            this.removeOverlay();
             this.active = false;
             this.visible = false;
         }
@@ -89,46 +141,51 @@ export class OverlayRoot extends LitElement {
                 ?visible=${this.visible}
                 style=${this.overlayStyles}
             >
-                <div>${this.overlayContent}</div>
-                <div
-                    id="mask"
-                    ?visiblez=${this.maskVisible}
-                    @clickz=${this.onMaskClick}
-                ></div>
+                <slot name="overlay"></slot>
             </div>
         `;
     }
 
-    private firstUpdated(): void {
-        this.content.addEventListener(
-            'click',
-            (ev: Event) => this.onMaskClick(ev),
-            true
-        );
+    protected firstUpdated(): void {
+        if (this.content) {
+            this.content.addEventListener(
+                'click',
+                (ev: Event) => this.onMaskClick(ev),
+                true
+            );
+        }
     }
 
-    private extractEventDetail(ev: CustomEvent<IPopoverOpenDetail>): void {
+    private removeOverlay(): void {
+        if (this.overlayContent && this.overlayContent.parentNode) {
+            this.overlayContent.parentNode.removeChild(this.overlayContent);
+        }
+    }
+
+    private extractEventDetail(ev: CustomEvent<PopoverOpenDetail>): void {
         this.overlayContent = ev.detail.content;
-        this.trigger = ev.detail.trigger;
-        this.maskVisible = ev.detail.mask;
-        this.overlayId = ev.detail.id;
+        this.trigger = ev.target as HTMLElement;
         this.placement = ev.detail.placement;
         this.offset = ev.detail.offset;
+        this.interaction = ev.detail.interaction;
     }
 
     private updateOverlayPosition(): void {
-        this.positioner = new Positioner(
-            this.trigger,
-            this.overlayContent,
-            this
-        );
+        if (this.trigger && this.overlayContent) {
+            this.positioner = new Positioner(
+                this.trigger,
+                this.overlayContent,
+                this
+            );
 
-        this.position = this.positioner.updatePosition({
-            crossOffset: 0,
-            flip: false,
-            offset: this.offset,
-            placement: this.placement,
-        });
+            this.position = this.positioner.updatePosition({
+                containerPadding: 0,
+                crossOffset: 0,
+                flip: false,
+                offset: this.offset,
+                placement: this.placement,
+            }) as PositionResult;
+        }
     }
 
     private get overlayStyles(): string {

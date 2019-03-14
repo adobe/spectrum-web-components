@@ -1,52 +1,33 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
 // Borrowed from react-spectrum project
 
-import { ownerDocument } from 'dom-helpers';
-import getOffset from 'dom-helpers/query/offset';
-import getPosition from 'dom-helpers/query/position';
-import getScrollLeft from 'dom-helpers/query/scrollLeft';
-import getScrollTop from 'dom-helpers/query/scrollTop';
-import getCss from 'dom-helpers/style';
-
-import getContains from 'dom-helpers/query/contains';
-
-const AXIS = {
-    bottom: 'top',
-    left: 'left',
-    right: 'left',
-    top: 'top',
-};
-
-const FLIPPED_DIRECTION = {
-    bottom: 'top',
-    left: 'left',
-    right: 'left',
-    top: 'top',
-};
-
-const CROSS_AXIS = {
-    left: 'top',
-    top: 'left',
-};
-
-const AXIS_SIZE = {
-    left: 'width',
-    top: 'height',
-};
-
-interface IScroll {
-    top?: number;
-    left?: number;
-}
-
-interface IContainerDimensions {
-    width: number;
-    height: number;
-    scroll: IScroll;
+interface Scroll {
     top: number;
     left: number;
+    [index: string]: number;
 }
 
-interface IOffset {
+interface ContainerDimensions {
+    width: number;
+    height: number;
+    scroll: Scroll;
+    top: number;
+    left: number;
+    [index: string]: number | Scroll;
+}
+
+interface Offset {
     bottom: number;
     height: number;
     left: number;
@@ -55,47 +36,123 @@ interface IOffset {
     width: number;
     x: number;
     y: number;
+    [index: string]: number;
 }
 
-interface IPlacementInfo {
+interface PlacementInfo {
     axis: string;
     crossAxis: string;
     crossPlacement: string;
-    crossSize: number;
-    size: number;
+    crossSize: string;
+    size: string;
     placement: string;
 }
 
-interface IMargins {
+interface Margins {
     top: number;
     bottom: number;
     left: number;
     right: number;
 }
 
-const PARSED_PLACEMENT_CACHE = {};
+interface Position {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+    [index: string]: number;
+}
 
-function getContainerDimensions(containerDOMNode: Node) {
+interface PossiblePosition {
+    top: number | null;
+    bottom: number | null;
+    left: number | null;
+    right: number | null;
+    [index: string]: number | null;
+}
+
+interface ParsedPlacementCache {
+    [propName: string]: PlacementInfo;
+}
+
+interface DirectionMap {
+    left: string;
+    top: string;
+    right: string;
+    bottom: string;
+    [index: string]: string;
+}
+
+interface OrientationMap {
+    top: string;
+    left: string;
+    [index: string]: string;
+}
+
+export interface PositionResult {
+    arrowOffsetLeft: number;
+    arrowOffsetTop: number;
+    maxHeight: number;
+    placement: string;
+    positionLeft: number;
+    positionTop: number;
+}
+
+const AXIS: DirectionMap = {
+    bottom: 'top',
+    left: 'left',
+    right: 'left',
+    top: 'top',
+};
+
+const FLIPPED_DIRECTION: DirectionMap = {
+    bottom: 'top',
+    left: 'right',
+    right: 'left',
+    top: 'bottom',
+};
+
+const CROSS_AXIS: OrientationMap = {
+    left: 'top',
+    top: 'left',
+};
+
+const AXIS_SIZE: OrientationMap = {
+    left: 'width',
+    top: 'height',
+};
+
+const PARSED_PLACEMENT_CACHE: ParsedPlacementCache = {};
+
+function getContainerDimensions(containerDOMNode: Element) {
     let width;
     let height;
     let top = 0;
     let left = 0;
-    const scroll: IScroll = {};
+    const scroll: Scroll = { top: 0, left: 0 };
 
     if (containerDOMNode.tagName === 'BODY') {
         width = window.innerWidth;
         height = window.innerHeight;
 
-        scroll.top =
-            getScrollTop(ownerDocument(containerDOMNode).documentElement) ||
-            getScrollTop(containerDOMNode);
-        scroll.left =
-            getScrollLeft(ownerDocument(containerDOMNode).documentElement) ||
-            getScrollLeft(containerDOMNode);
+        if (containerDOMNode.ownerDocument) {
+            scroll.top =
+                containerDOMNode.ownerDocument.documentElement.scrollTop;
+            scroll.left =
+                containerDOMNode.ownerDocument.documentElement.scrollLeft;
+        } else {
+            scroll.top = containerDOMNode.scrollTop;
+            scroll.left = containerDOMNode.scrollLeft;
+        }
     } else {
-        ({ width, height, top, left } = getOffset(containerDOMNode));
-        scroll.top = getScrollTop(containerDOMNode);
-        scroll.left = getScrollLeft(containerDOMNode);
+        ({
+            width,
+            height,
+            top,
+            left,
+        } = containerDOMNode.getBoundingClientRect() as DOMRect);
+        scroll.top = containerDOMNode.scrollTop;
+        scroll.left = containerDOMNode.scrollLeft;
     }
 
     return { width, height, scroll, top, left };
@@ -105,14 +162,16 @@ function getDelta(
     axis: string,
     offset: number,
     size: number,
-    containerDimensions: IContainerDimensions,
+    containerDimensions: ContainerDimensions,
     padding: number
 ) {
     const containerScroll = containerDimensions.scroll[axis];
-    const containerHeight = containerDimensions[AXIS_SIZE[axis]];
+    const containerHeight: number = containerDimensions[
+        AXIS_SIZE[axis]
+    ] as number;
 
     const startEdgeOffset = offset - padding - containerScroll;
-    const endEdgeOffset = offset + padding - containerScroll + size;
+    const endEdgeOffset: number = offset + padding - containerScroll + size;
 
     if (startEdgeOffset < 0) {
         return -startEdgeOffset;
@@ -129,8 +188,8 @@ function shouldFlip(
     size: number,
     padding: number,
     placement: string,
-    flipContainerDimensions: IContainerDimensions,
-    containerOffsetWithBoundary: number
+    flipContainerDimensions: ContainerDimensions,
+    containerOffsetWithBoundary: Offset
 ) {
     const containerScroll = flipContainerDimensions.scroll[axis];
     const containerHeight = flipContainerDimensions[AXIS_SIZE[axis]];
@@ -156,17 +215,17 @@ function shouldFlip(
     }
 }
 
-function getMargins(node: Node): IMargins {
+function getMargins(node: Element): Margins {
     const style = window.getComputedStyle(node);
     return {
-        bottom: parseInt(style.marginBottom, 10) || 0,
-        left: parseInt(style.marginLeft, 10) || 0,
-        right: parseInt(style.marginRight, 10) || 0,
-        top: parseInt(style.marginTop, 10) || 0,
+        bottom: parseInt(style.marginBottom as string, 10) || 0,
+        left: parseInt(style.marginLeft as string, 10) || 0,
+        right: parseInt(style.marginRight as string, 10) || 0,
+        top: parseInt(style.marginTop as string, 10) || 0,
     };
 }
 
-function parsePlacement(input) {
+function parsePlacement(input: string) {
     if (PARSED_PLACEMENT_CACHE[input]) {
         return PARSED_PLACEMENT_CACHE[input];
     }
@@ -193,10 +252,10 @@ function parsePlacement(input) {
 }
 
 function computePosition(
-    childOffset: IOffset,
-    containerDimensions: IContainerDimensions,
-    overlaySize: IOffset,
-    placementInfo: IPlacementInfo,
+    childOffset: Offset,
+    containerDimensions: ContainerDimensions,
+    overlaySize: Offset,
+    placementInfo: PlacementInfo,
     offset: number,
     crossOffset: number
 ) {
@@ -208,7 +267,13 @@ function computePosition(
         size,
         placement,
     } = placementInfo;
-    const position = {};
+
+    const position: Position = {
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+    };
 
     position[crossAxis] = childOffset[crossAxis] + crossOffset;
     if (crossPlacement === 'center') {
@@ -234,25 +299,25 @@ function computePosition(
 
     position[axis] =
         placement === axis
-            ? (position[axis] = childOffset[axis] - overlaySize[size] + offset)
-            : (position[axis] = childOffset[axis] + childOffset[size] + offset);
+            ? childOffset[axis] - overlaySize[size] - offset
+            : childOffset[axis] + childOffset[size] + offset;
 
     return position;
 }
 
 export function calculatePositionInternal(
     placementInput: string,
-    containerDimensions: IContainerDimensions,
-    childOffset: IOffset,
-    overlaySize: number,
-    margins: IMargins,
+    containerDimensions: ContainerDimensions,
+    childOffset: Offset,
+    overlaySize: Offset,
+    margins: Margins,
     padding: number,
     flip: boolean,
-    boundaryDimensions: IContainerDimensions,
-    containerOffsetWithBoundary: IOffset,
+    boundaryDimensions: ContainerDimensions,
+    containerOffsetWithBoundary: Offset,
     offset: number,
     crossOffset: number
-) {
+): PositionResult {
     let placementInfo = parsePlacement(placementInput);
     const {
         axis,
@@ -288,7 +353,9 @@ export function calculatePositionInternal(
         const flippedPlacementInfo = parsePlacement(
             `${FLIPPED_DIRECTION[placement]} ${crossPlacement}`
         );
-        const { flippedAxis, flippedSize } = flippedPlacementInfo;
+        const flippedAxis = flippedPlacementInfo.axis;
+        const flippedSize = flippedPlacementInfo.size;
+
         const flippedPosition = computePosition(
             childOffset,
             containerDimensions,
@@ -356,7 +423,12 @@ export function calculatePositionInternal(
 
     position[crossAxis] += delta;
 
-    const arrowPosition = {};
+    const arrowPosition: PossiblePosition = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    };
     arrowPosition[crossAxis] =
         childOffset[crossSize] > overlaySize[crossSize]
             ? null
@@ -365,18 +437,18 @@ export function calculatePositionInternal(
               childOffset[crossSize] / 2;
 
     return {
-        arrowOffsetLeft: arrowPosition.left,
-        arrowOffsetTop: arrowPosition.top,
+        arrowOffsetLeft: arrowPosition.left || 0,
+        arrowOffsetTop: arrowPosition.top || 0,
         maxHeight,
         placement: placementInfo.placement,
-        positionLeft: position.left,
-        positionTop: position.top,
+        positionLeft: position.left || 0,
+        positionTop: position.top || 0,
     };
 }
 
 function getShadowPosition(target: HTMLElement, container: HTMLElement) {
-    const targetPosition = target.getBoundingClientRect();
-    const containerPosition = container.getBoundingClientRect();
+    const targetPosition = target.getBoundingClientRect() as Offset;
+    const containerPosition = container.getBoundingClientRect() as Offset;
     return {
         bottom: targetPosition.bottom - containerPosition.bottom,
         height: targetPosition.height,
@@ -391,38 +463,38 @@ function getShadowPosition(target: HTMLElement, container: HTMLElement) {
 
 export default function calculatePosition(
     placementInput: string,
-    overlayNode: Node,
-    target: Node,
-    container: Node,
+    overlayNode: HTMLElement,
+    target: HTMLElement,
+    container: HTMLElement,
     padding: number,
     flip: boolean,
     boundariesElement: HTMLElement,
     offset: number,
     crossOffset: number
-) {
+): PositionResult {
     const isBodyContainer = container.tagName === 'BODY';
     const childOffset = isBodyContainer
-        ? target.getBoundingClientRect().toJSON()
+        ? (target.getBoundingClientRect() as DOMRect)
         : getShadowPosition(target, container);
 
     if (!isBodyContainer) {
-        childOffset.top += parseInt(getCss(target, 'marginTop'), 10) || 0;
-        childOffset.left += parseInt(getCss(target, 'marginLeft'), 10) || 0;
+        childOffset.top += parseInt(target.style.marginTop as string, 10) || 0;
+        childOffset.left +=
+            parseInt(target.style.marginLeft as string, 10) || 0;
     }
 
-    const overlaySize = overlayNode.getBoundingClientRect().toJSON(); // getOffset(overlayNode);
+    const overlaySize = overlayNode.getBoundingClientRect() as Offset;
     const margins = getMargins(overlayNode);
     overlaySize.width += margins.left + margins.right;
     overlaySize.height += margins.top + margins.bottom;
 
     const containerDimensions = getContainerDimensions(container);
-    const boundaryContainer =
-        boundariesElement === 'container' ? container : boundariesElement();
+    const boundaryContainer = container; //boundariesElement();
     const boundaryDimensions = getContainerDimensions(boundaryContainer);
     const containerOffsetWithBoundary =
         boundaryContainer.tagName === 'BODY'
-            ? getOffset(container)
-            : getPosition(container, boundaryContainer);
+            ? (container.getBoundingClientRect() as DOMRect)
+            : getShadowPosition(container, boundaryContainer);
     return calculatePositionInternal(
         placementInput,
         containerDimensions,

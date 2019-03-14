@@ -1,12 +1,18 @@
-import { getCss, ownerDocument, query } from 'dom-helpers';
-import getOffset from 'dom-helpers/query/offset';
-import getPosition from 'dom-helpers/query/position';
-import getScrollLeft from 'dom-helpers/query/scrollLeft';
-import getScrollTop from 'dom-helpers/query/scrollTop';
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-import calculatePosition from './calculate-position';
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
 
-const defaultOptions: IOptions = {
+import calculatePosition, { PositionResult } from './calculate-position';
+
+const defaultOptions: Options = {
     containerPadding: 10,
     crossOffset: 0,
     flip: true,
@@ -14,7 +20,7 @@ const defaultOptions: IOptions = {
     placement: 'left',
 };
 
-interface IOptions {
+interface Options {
     containerPadding: number;
     crossOffset: number;
     flip: boolean;
@@ -23,13 +29,21 @@ interface IOptions {
 }
 
 export default class Positioner {
-    constructor(target: Node, relativeElement: Node, container: Node) {
+    target: HTMLElement;
+    relativeElement: HTMLElement;
+    container: HTMLElement;
+
+    public constructor(
+        target: HTMLElement,
+        relativeElement: HTMLElement,
+        container: HTMLElement
+    ) {
         this.target = target;
         this.relativeElement = relativeElement;
         this.container = container;
     }
 
-    public calculatePosition(options: IOptions) {
+    public calculatePosition(options: Options): PositionResult {
         const positionOptions = { ...defaultOptions, ...options };
         return calculatePosition(
             positionOptions.placement,
@@ -38,24 +52,14 @@ export default class Positioner {
             this.container,
             positionOptions.containerPadding,
             positionOptions.flip,
-            () => this.boundariesElement,
+            this.container,
             positionOptions.offset,
             positionOptions.crossOffset
         );
     }
 
-    public updatePosition(options: IOptions) {
-        if (this.relativeElement == null) {
-            return;
-        }
+    public updatePosition(options: Options): PositionResult {
         const position = this.calculatePosition(options);
         return position;
-    }
-
-    public get boundariesElement() {
-        if (this.target != null) {
-            return ownerDocument(this.target).body;
-        }
-        return document.body;
     }
 }

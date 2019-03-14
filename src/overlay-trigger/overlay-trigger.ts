@@ -1,42 +1,29 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
 import { html, LitElement, property, query } from 'lit-element';
-
-import uuid from 'uuid';
-
-import { defineCustomElements } from '@crisp/spectrum-web-components';
 
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
-import Positioner from './positioner';
-
-export interface IPopoverOpenDetail {
+export interface PopoverOpenDetail {
     content: HTMLElement;
     delay: number;
-    id: string;
-    mask: boolean;
     offset: number;
-    placement: string;
+    placement: 'top' | 'right' | 'bottom' | 'left';
     trigger: HTMLElement;
+    interaction: 'click' | 'hover';
 }
 
-interface IPopoverConfig {
-    elementProp: string;
-    idProp: string;
-    mask: boolean;
-}
-
-const clickConfig = {
-    elementProp: 'clickContent',
-    idProp: 'clickId',
-    mask: true,
-};
-
-const hoverConfig = {
-    elementProp: 'hoverContent',
-    idProp: 'hoverId',
-    mask: false,
-};
-
-export type IPopoverCloseDetail = string;
+export type PopoverCloseDetail = HTMLElement;
 
 export class OverlayTrigger extends LitElement {
     public static is = 'overlay-trigger';
@@ -52,7 +39,7 @@ export class OverlayTrigger extends LitElement {
     public offset = 6;
 
     @query('#trigger')
-    private trigger: HTMLElement;
+    private trigger?: HTMLElement;
 
     @property()
     private clickContent?: HTMLElement;
@@ -60,29 +47,19 @@ export class OverlayTrigger extends LitElement {
     @property()
     private hoverContent?: HTMLElement;
 
-    private _delay = 0;
-
-    public constructor() {
-        super();
-
-        this.clickId = uuid.v4();
-        this.hoverId = uuid.v4();
-    }
-
     public onPopoverOpen(ev: Event, interaction: string): void {
+        console.log(ev.target);
         const isClick = interaction === 'click';
-        const config = (isClick ? clickConfig : hoverConfig) as IPopoverConfig;
-        const popoverElement = this[config.elementProp];
+        const popoverElement = isClick ? this.clickContent : this.hoverContent;
 
         if (popoverElement) {
             const popoverOpenDetail = {
                 content: popoverElement,
                 delay: popoverElement.getAttribute('delay') || 0,
-                id: this[config.idProp],
-                mask: config.mask,
                 offset: this.offset,
                 placement: this.placement,
                 trigger: this.trigger,
+                interaction: interaction,
             };
 
             const popoverOpenEvent = new CustomEvent('popover-open', {
@@ -95,13 +72,14 @@ export class OverlayTrigger extends LitElement {
         }
     }
 
-    public onPopoverClose(ev: Event): void {
-        const popoverCloseDetail = this.hoverId;
+    public onPopoverClose(ev: Event, interaction: string): void {
+        const isClick = interaction === 'click';
+        const popoverElement = isClick ? this.clickContent : this.hoverContent;
 
         const popoverCloseEvent = new CustomEvent('popover-close', {
             bubbles: true,
             composed: true,
-            detail: popoverCloseDetail,
+            detail: popoverElement,
         });
 
         this.dispatchEvent(popoverCloseEvent);
@@ -121,7 +99,7 @@ export class OverlayTrigger extends LitElement {
 
     public onTriggerMouseLeave(ev: Event): void {
         if (this.hoverContent) {
-            this.onPopoverClose(ev);
+            this.onPopoverClose(ev, 'hover');
         }
     }
 
@@ -133,7 +111,7 @@ export class OverlayTrigger extends LitElement {
                 @mouseenter=${this.onTriggerMouseOver}
                 @mouseleave=${this.onTriggerMouseLeave}
             >
-                <slot name="button"></slot>
+                <slot name="trigger"></slot>
             </div>
             <slot
                 @slotchange=${this.onClickSlotChange}
@@ -149,18 +127,24 @@ export class OverlayTrigger extends LitElement {
     }
 
     private onClickSlotChange(ev: Event): void {
-        const content = this.extractSlotContent(ev.target);
+        if (ev.target) {
+            const slot = ev.target as HTMLSlotElement;
+            const content = this.extractSlotContent(slot);
 
-        if (content) {
-            this.clickContent = content;
+            if (content) {
+                this.clickContent = content;
+            }
         }
     }
 
     private onHoverSlotChange(ev: Event): void {
-        const content = this.extractSlotContent(ev.target);
+        if (ev.target) {
+            const slot = ev.target as HTMLSlotElement;
+            const content = this.extractSlotContent(slot);
 
-        if (content) {
-            this.hoverContent = content;
+            if (content) {
+                this.hoverContent = content;
+            }
         }
     }
 
@@ -168,7 +152,7 @@ export class OverlayTrigger extends LitElement {
         const nodes = slot.assignedNodes();
 
         if (nodes.length) {
-            return nodes[0];
+            return nodes[0] as HTMLElement;
         }
 
         return null;
