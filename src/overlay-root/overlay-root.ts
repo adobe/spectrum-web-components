@@ -66,22 +66,7 @@ export class OverlayRoot extends LitElement {
     private content?: HTMLElement;
 
     public onMaskClick(ev: Event): void {
-        // Detect if the current trigger has been clicked again
-        // const triggerEl = ev.path.find((el: Element) => el.id === 'trigger');
-        //
-        // const secondClick = triggerEl ? triggerEl === this.trigger : false;
-
-        const target = ev.target as HTMLElement;
-        let secondClick = false;
-
-        if (
-            this.trigger &&
-            this.trigger.childNodes &&
-            this.trigger.childNodes.length
-        ) {
-            const children = Array.from(this.trigger.childNodes);
-            secondClick = children.includes(target);
-        }
+        const secondClick = this.detectSecondClick(ev);
 
         if (this.active) {
             if (this.interaction === 'click' && secondClick) {
@@ -108,7 +93,6 @@ export class OverlayRoot extends LitElement {
             this.removeOverlay();
             this.extractEventDetail(ev);
             if (this.overlayContent) {
-                this.overlayContent.setAttribute('open', 'true');
                 this.overlayContent.setAttribute('slot', 'overlay');
                 this.appendChild(this.overlayContent);
             }
@@ -154,6 +138,17 @@ export class OverlayRoot extends LitElement {
                 true
             );
         }
+    }
+
+    private detectSecondClick(ev: Event): boolean {
+        const target = ev.target as HTMLElement;
+
+        if (this.trigger && this.trigger.childNodes) {
+            //Check if event target is a child of the current trigger
+            const triggerChildren = Array.from(this.trigger.childNodes);
+            return triggerChildren.includes(target);
+        }
+        return false;
     }
 
     private removeOverlay(): void {
