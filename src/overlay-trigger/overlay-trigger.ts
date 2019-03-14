@@ -10,7 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property, query } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    query,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
@@ -103,7 +110,7 @@ export class OverlayTrigger extends LitElement {
         }
     }
 
-    protected render(): void {
+    protected render(): TemplateResult {
         return html`
             <div
                 id="trigger"

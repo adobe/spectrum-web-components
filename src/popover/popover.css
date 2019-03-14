@@ -17,15 +17,10 @@ governing permissions and limitations under the License.
     --spectrum-popover-dialog-min-width: 270px;
     --spectrum-popover-min-width: var(--spectrum-global-dimension-size-400);
     --spectrum-popover-min-height: var(--spectrum-global-dimension-size-400);
-
-    visibility: hidden;
-    opacity: 0;
     transition: transform var(--spectrum-global-animation-duration-100)
             ease-in-out,
         opacity var(--spectrum-global-animation-duration-100) ease-in-out,
         visibility 0ms linear var(--spectrum-global-animation-duration-100);
-    pointer-events: none;
-
     /* Be a flexbox to allow a full sized content area that scrolls */
     display: inline-flex;
     flex-direction: column;
@@ -37,7 +32,6 @@ governing permissions and limitations under the License.
     border-width: var(--spectrum-popover-border-size);
     border-radius: var(--spectrum-popover-border-radius);
     outline: none; /* Hide focus outline */
-    transform: translateY(-6px);
 }
 
 #tip {

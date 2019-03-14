@@ -227,7 +227,7 @@ function getMargins(node: Element): Margins {
     };
 }
 
-function parsePlacement(input: string): ParsedPlacementCache {
+function parsePlacement(input: string): PlacementInfo {
     if (PARSED_PLACEMENT_CACHE[input]) {
         return PARSED_PLACEMENT_CACHE[input];
     }
@@ -479,8 +479,8 @@ export default function calculatePosition(
 ): PositionResult {
     const isBodyContainer = container.tagName === 'BODY';
     const childOffset = isBodyContainer
-        ? (target.getBoundingClientRect() as DOMRect)
-        : getShadowPosition(target, container);
+        ? (target.getBoundingClientRect() as Offset)
+        : (getShadowPosition(target, container) as Offset);
 
     if (!isBodyContainer) {
         childOffset.top += parseInt(target.style.marginTop as string, 10) || 0;
@@ -498,8 +498,8 @@ export default function calculatePosition(
     const boundaryDimensions = getContainerDimensions(boundaryContainer);
     const containerOffsetWithBoundary =
         boundaryContainer.tagName === 'BODY'
-            ? (container.getBoundingClientRect() as DOMRect)
-            : getShadowPosition(container, boundaryContainer);
+            ? (container.getBoundingClientRect() as Offset)
+            : (getShadowPosition(container, boundaryContainer) as Offset);
     return calculatePositionInternal(
         placementInput,
         containerDimensions,
