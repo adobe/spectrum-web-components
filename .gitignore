@@ -10,3 +10,6 @@ npm-debug.log
 .firefox
 .vscode
 .npmrc
+
+package-deps.json
+spectrum-web-components.build.log
