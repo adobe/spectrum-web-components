@@ -22,6 +22,8 @@ import {
 
 import overlayStyles from './overlay-root.css.js';
 
+import calculatePosition, { PositionResult } from './calculate-position';
+
 export type TriggerInteractions = 'click' | 'hover';
 
 export type Placement = 'top' | 'right' | 'bottom' | 'left';
@@ -39,8 +41,21 @@ export interface PopoverCloseDetail {
     content: HTMLElement;
 }
 
-import Positioner from './positioner';
-import { PositionResult } from './calculate-position';
+interface CalculatePositionOptions {
+    containerPadding: number;
+    crossOffset: number;
+    flip: boolean;
+    offset: number;
+    placement: string;
+}
+
+const defaultOptions: CalculatePositionOptions = {
+    containerPadding: 10,
+    crossOffset: 0,
+    flip: true,
+    offset: 0,
+    placement: 'left',
+};
 
 export class OverlayRoot extends LitElement {
     public static is = 'overlay-root';
@@ -53,13 +68,13 @@ export class OverlayRoot extends LitElement {
     public visible = false;
 
     @property({ reflect: true })
-    public placement: 'top' | 'right' | 'bottom' | 'left' = 'bottom';
+    public placement: Placement = 'bottom';
 
     @property({ type: Number, reflect: true })
     public offset = 6;
 
     @property()
-    private interaction: 'hover' | 'click' = 'hover';
+    private interaction: TriggerInteractions = 'hover';
 
     @property({ type: Boolean, reflect: true })
     private active = false;
@@ -68,13 +83,12 @@ export class OverlayRoot extends LitElement {
     private position?: PositionResult;
 
     @property()
-    private positioner?: Positioner;
-
-    @property()
     private trigger?: HTMLElement;
 
     @property()
     private overlayContent?: HTMLElement;
+
+    private timeout?: number;
 
     public onMaskClick(ev: Event): void {
         const secondClick = this.detectSecondClick(ev);
@@ -112,13 +126,16 @@ export class OverlayRoot extends LitElement {
             this.appendChild(this.overlayContent);
         }
 
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             this.visible = true;
             this.updateOverlayPosition();
         }, ev.detail.delay);
     }
 
     public onPopoverClose(ev: CustomEvent<PopoverCloseDetail>): void {
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+        }
         if (ev.detail.content === this.overlayContent) {
             this.removeOverlay();
             this.active = false;
@@ -187,19 +204,28 @@ export class OverlayRoot extends LitElement {
         if (!this.trigger || !this.overlayContent) {
             return;
         }
-        this.positioner = new Positioner(
-            this.trigger,
-            this.overlayContent,
-            this
-        );
 
-        this.position = this.positioner.updatePosition({
+        const options: CalculatePositionOptions = {
             containerPadding: 0,
             crossOffset: 0,
             flip: false,
             offset: this.offset,
             placement: this.placement,
-        });
+        };
+
+        const positionOptions = { ...defaultOptions, ...options };
+
+        this.position = calculatePosition(
+            positionOptions.placement,
+            this.overlayContent,
+            this.trigger,
+            this,
+            positionOptions.containerPadding,
+            positionOptions.flip,
+            this,
+            positionOptions.offset,
+            positionOptions.crossOffset
+        );
     }
 
     private get overlayStyles(): string {

@@ -87,7 +87,7 @@ export class Dropzone extends LitElement {
     public onDragLeave(ev: DragEvent): void {
         this.clearDebouncedDragLeave();
 
-        this.debouncedDragLeave = window.setTimeout(() => {
+        this.debouncedDragLeave = setTimeout(() => {
             if (this.isDragged) {
                 this.isDragged = false;
             }

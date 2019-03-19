@@ -52,27 +52,28 @@ export class OverlayTrigger extends LitElement {
             : null;
         const delay = delayAttribute ? parseFloat(delayAttribute) : 0;
 
-        if (popoverElement) {
-            const popoverOpenDetail: PopoverOpenDetail = {
-                content: popoverElement,
-                delay: delay,
-                offset: this.offset,
-                placement: this.placement,
-                trigger: this,
-                interaction: interaction,
-            };
-
-            const popoverOpenEvent = new CustomEvent<PopoverOpenDetail>(
-                'popover-open',
-                {
-                    bubbles: true,
-                    composed: true,
-                    detail: popoverOpenDetail,
-                }
-            );
-
-            this.dispatchEvent(popoverOpenEvent);
+        if (!popoverElement) {
+            return;
         }
+        const popoverOpenDetail: PopoverOpenDetail = {
+            content: popoverElement,
+            delay: delay,
+            offset: this.offset,
+            placement: this.placement,
+            trigger: this,
+            interaction: interaction,
+        };
+
+        const popoverOpenEvent = new CustomEvent<PopoverOpenDetail>(
+            'popover-open',
+            {
+                bubbles: true,
+                composed: true,
+                detail: popoverOpenDetail,
+            }
+        );
+
+        this.dispatchEvent(popoverOpenEvent);
     }
 
     public onPopoverClose(ev: Event, interaction: TriggerInteractions): void {
