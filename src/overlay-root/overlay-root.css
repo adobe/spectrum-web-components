@@ -40,26 +40,18 @@ governing permissions and limitations under the License.
         visibility 0ms linear var(--spectrum-global-animation-duration-100);
 }
 
-:host([placement='top']) {
-    & #overlay {
-        transform: translate(0, 6px);
-    }
+:host([placement='top']) #overlay {
+    transform: translate(0, 6px);
 }
 
-:host([placement='right']) {
-    & #overlay {
-        transform: translate(-6px, 0);
-    }
+:host([placement='right']) #overlay {
+    transform: translate(-6px, 0);
 }
 
-:host([placement='bottom']) {
-    & #overlay {
-        transform: translate(0, -6px);
-    }
+:host([placement='bottom']) #overlay {
+    transform: translate(0, -6px);
 }
 
-:host([placement='left']) {
-    & #overlay {
-        transform: translate(6px, 0);
-    }
+:host([placement='left']) #overlay {
+    transform: translate(6px, 0);
 }

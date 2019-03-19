@@ -14,23 +14,18 @@ import {
     html,
     LitElement,
     property,
-    query,
     CSSResultArray,
     TemplateResult,
 } from 'lit-element';
 
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
-export interface PopoverOpenDetail {
-    content: HTMLElement;
-    delay: number;
-    offset: number;
-    placement: 'top' | 'right' | 'bottom' | 'left';
-    trigger: HTMLElement;
-    interaction: 'click' | 'hover';
-}
-
-export type PopoverCloseDetail = HTMLElement;
+import {
+    PopoverCloseDetail,
+    PopoverOpenDetail,
+    TriggerInteractions,
+    Placement,
+} from '../overlay-root';
 
 export class OverlayTrigger extends LitElement {
     public static is = 'overlay-trigger';
@@ -40,54 +35,66 @@ export class OverlayTrigger extends LitElement {
     }
 
     @property({ reflect: true })
-    public placement = 'bottom';
+    public placement: Placement = 'bottom';
 
     @property({ type: Number, reflect: true })
     public offset = 6;
 
-    @query('#trigger')
-    private trigger?: HTMLElement;
-
-    @property()
     private clickContent?: HTMLElement;
 
-    @property()
     private hoverContent?: HTMLElement;
 
-    public onPopoverOpen(ev: Event, interaction: string): void {
-        console.log(ev.target);
+    public onPopoverOpen(ev: Event, interaction: TriggerInteractions): void {
         const isClick = interaction === 'click';
         const popoverElement = isClick ? this.clickContent : this.hoverContent;
+        const delayAttribute = popoverElement
+            ? popoverElement.getAttribute('delay')
+            : null;
+        const delay = delayAttribute ? parseFloat(delayAttribute) : 0;
 
         if (popoverElement) {
-            const popoverOpenDetail = {
+            const popoverOpenDetail: PopoverOpenDetail = {
                 content: popoverElement,
-                delay: popoverElement.getAttribute('delay') || 0,
+                delay: delay,
                 offset: this.offset,
                 placement: this.placement,
-                trigger: this.trigger,
+                trigger: this,
                 interaction: interaction,
             };
 
-            const popoverOpenEvent = new CustomEvent('popover-open', {
-                bubbles: true,
-                composed: true,
-                detail: popoverOpenDetail,
-            });
+            const popoverOpenEvent = new CustomEvent<PopoverOpenDetail>(
+                'popover-open',
+                {
+                    bubbles: true,
+                    composed: true,
+                    detail: popoverOpenDetail,
+                }
+            );
 
             this.dispatchEvent(popoverOpenEvent);
         }
     }
 
-    public onPopoverClose(ev: Event, interaction: string): void {
+    public onPopoverClose(ev: Event, interaction: TriggerInteractions): void {
         const isClick = interaction === 'click';
         const popoverElement = isClick ? this.clickContent : this.hoverContent;
 
-        const popoverCloseEvent = new CustomEvent('popover-close', {
-            bubbles: true,
-            composed: true,
-            detail: popoverElement,
-        });
+        if (!popoverElement) {
+            return;
+        }
+
+        const popoverCloseDetail: PopoverCloseDetail = {
+            content: popoverElement,
+        };
+
+        const popoverCloseEvent = new CustomEvent<PopoverCloseDetail>(
+            'popover-close',
+            {
+                bubbles: true,
+                composed: true,
+                detail: popoverCloseDetail,
+            }
+        );
 
         this.dispatchEvent(popoverCloseEvent);
     }

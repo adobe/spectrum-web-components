@@ -16,14 +16,28 @@ import {
     html,
     LitElement,
     property,
-    query,
     TemplateResult,
     CSSResultArray,
 } from 'lit-element';
 
 import overlayStyles from './overlay-root.css.js';
 
-import { PopoverCloseDetail, PopoverOpenDetail } from '../overlay-trigger';
+export type TriggerInteractions = 'click' | 'hover';
+
+export type Placement = 'top' | 'right' | 'bottom' | 'left';
+
+export interface PopoverOpenDetail {
+    content: HTMLElement;
+    delay: number;
+    offset: number;
+    placement: Placement;
+    trigger: HTMLElement;
+    interaction: TriggerInteractions;
+}
+
+export interface PopoverCloseDetail {
+    content: HTMLElement;
+}
 
 import Positioner from './positioner';
 import { PositionResult } from './calculate-position';
@@ -62,50 +76,50 @@ export class OverlayRoot extends LitElement {
     @property()
     private overlayContent?: HTMLElement;
 
-    @query('#content')
-    private content?: HTMLElement;
-
     public onMaskClick(ev: Event): void {
         const secondClick = this.detectSecondClick(ev);
 
-        if (this.active) {
-            if (this.interaction === 'click' && secondClick) {
-                //Prevent second clicks from reopening the overlay
-                ev.stopPropagation();
-            }
-
-            this.removeOverlay();
-
-            const clickOutEvent = new CustomEvent('overlay-click-out', {
-                bubbles: true,
-                composed: true,
-                detail: ev,
-            });
-            this.dispatchEvent(clickOutEvent);
-            this.active = false;
-            this.visible = false;
+        if (!this.active) {
+            return;
         }
+
+        if (this.interaction === 'click' && secondClick) {
+            //Prevent second clicks from reopening the overlay
+            ev.stopPropagation();
+        }
+
+        this.removeOverlay();
+
+        const clickOutEvent = new CustomEvent('overlay-click-out', {
+            bubbles: true,
+            composed: true,
+            detail: ev,
+        });
+        this.dispatchEvent(clickOutEvent);
+        this.active = false;
+        this.visible = false;
     }
 
     public onPopoverOpen(ev: CustomEvent<PopoverOpenDetail>): void {
-        if (!this.active) {
-            this.active = true;
-            this.removeOverlay();
-            this.extractEventDetail(ev);
-            if (this.overlayContent) {
-                this.overlayContent.setAttribute('slot', 'overlay');
-                this.appendChild(this.overlayContent);
-            }
-
-            window.setTimeout(() => {
-                this.visible = true;
-                this.updateOverlayPosition();
-            }, ev.detail.delay);
+        if (this.active) {
+            return;
         }
+        this.active = true;
+        this.removeOverlay();
+        this.extractEventDetail(ev);
+        if (this.overlayContent) {
+            this.overlayContent.setAttribute('slot', 'overlay');
+            this.appendChild(this.overlayContent);
+        }
+
+        setTimeout(() => {
+            this.visible = true;
+            this.updateOverlayPosition();
+        }, ev.detail.delay);
     }
 
     public onPopoverClose(ev: CustomEvent<PopoverCloseDetail>): void {
-        if (ev.detail === this.overlayContent) {
+        if (ev.detail.content === this.overlayContent) {
             this.removeOverlay();
             this.active = false;
             this.visible = false;
@@ -113,11 +127,18 @@ export class OverlayRoot extends LitElement {
     }
 
     protected render(): TemplateResult {
+        const maskClickListener = {
+            handleEvent: (ev: Event) => {
+                this.onMaskClick(ev);
+            },
+            capture: true,
+        };
+
         return html`
             <slot
                 @popover-open=${this.onPopoverOpen}
                 @popover-close=${this.onPopoverClose}
-                id="content"
+                @click=${maskClickListener}
             ></slot>
             <div
                 id="overlay"
@@ -130,23 +151,20 @@ export class OverlayRoot extends LitElement {
         `;
     }
 
-    protected firstUpdated(): void {
-        if (this.content) {
-            this.content.addEventListener(
-                'click',
-                (ev: Event) => this.onMaskClick(ev),
-                true
-            );
-        }
-    }
-
     private detectSecondClick(ev: Event): boolean {
-        const target = ev.target as HTMLElement;
+        //TODO: event.composedPath is not supported in internet explorer or edge.
+        // Consider using another implementation for the future
 
-        if (this.trigger && this.trigger.childNodes) {
-            //Check if event target is a child of the current trigger
-            const triggerChildren = Array.from(this.trigger.childNodes);
-            return triggerChildren.includes(target);
+        const path = Array.from(ev.composedPath());
+
+        if (path && path.length) {
+            //Check if current active trigger is in the event path
+            for (const eventTarget of path) {
+                const element = eventTarget as HTMLElement;
+                if (element === this.trigger) {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -159,28 +177,29 @@ export class OverlayRoot extends LitElement {
 
     private extractEventDetail(ev: CustomEvent<PopoverOpenDetail>): void {
         this.overlayContent = ev.detail.content;
-        this.trigger = ev.target as HTMLElement;
+        this.trigger = ev.detail.trigger;
         this.placement = ev.detail.placement;
         this.offset = ev.detail.offset;
         this.interaction = ev.detail.interaction;
     }
 
     private updateOverlayPosition(): void {
-        if (this.trigger && this.overlayContent) {
-            this.positioner = new Positioner(
-                this.trigger,
-                this.overlayContent,
-                this
-            );
-
-            this.position = this.positioner.updatePosition({
-                containerPadding: 0,
-                crossOffset: 0,
-                flip: false,
-                offset: this.offset,
-                placement: this.placement,
-            }) as PositionResult;
+        if (!this.trigger || !this.overlayContent) {
+            return;
         }
+        this.positioner = new Positioner(
+            this.trigger,
+            this.overlayContent,
+            this
+        );
+
+        this.position = this.positioner.updatePosition({
+            containerPadding: 0,
+            crossOffset: 0,
+            flip: false,
+            offset: this.offset,
+            placement: this.placement,
+        });
     }
 
     private get overlayStyles(): string {

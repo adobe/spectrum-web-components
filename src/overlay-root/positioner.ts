@@ -45,6 +45,7 @@ export default class Positioner {
 
     public calculatePosition(options: Options): PositionResult {
         const positionOptions = { ...defaultOptions, ...options };
+
         return calculatePosition(
             positionOptions.placement,
             this.relativeElement,
