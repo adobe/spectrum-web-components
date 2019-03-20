@@ -24,6 +24,8 @@ export * from './tab-list';
 export * from './overlay-root';
 export * from './overlay-trigger';
 export * from './popover';
+export * from './iconset';
+export * from './icon';
 
 export * from './define';
 
