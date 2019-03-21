@@ -10,14 +10,26 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property, TemplateResult } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import { defineCustomElements } from '../index.js';
 
 import { Tab } from './tab';
 
+import tabDemoStyles from './tab-demo.css';
+
 export class TabDemo extends LitElement {
     public static readonly is = 'sp-tab-demo';
+
+    public static get styles(): CSSResultArray {
+        return [tabDemoStyles];
+    }
 
     @property()
     public checkedValue = '';
@@ -55,3 +67,5 @@ export class TabDemo extends LitElement {
         `;
     }
 }
+
+// <sp-icon size="s" src="./PS_icon.png"></sp-icon>
