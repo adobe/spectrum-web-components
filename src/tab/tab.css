@@ -13,8 +13,6 @@ governing permissions and limitations under the License.
 @import './tab-skin.css';
 
 :host {
-    /*border-left: var(--spectrum-tabs-vertical-rule-width) solid;*/
-
     display: flex;
     position: relative;
     z-index: 0;

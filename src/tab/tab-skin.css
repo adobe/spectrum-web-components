@@ -20,8 +20,6 @@ governing permissions and limitations under the License.
     &([selected]) {
         color: var(--spectrum-tabs-text-color-selected);
 
-        /*border-left: var(--spectrum-tabs-vertical-rule-width) solid;*/
-
         & #spectrum-Icon {
             color: var(--spectrum-tabs-icon-color-selected);
         }
