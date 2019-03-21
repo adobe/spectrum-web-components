@@ -18,6 +18,7 @@ export * from './link';
 export * from './radio';
 export * from './radio-group';
 export * from './slider';
+export * from './tab';
 
 export * from './define';
 
