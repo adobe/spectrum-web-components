@@ -14,5 +14,4 @@ governing permissions and limitations under the License.
     height: 50px;
     display: flex;
     flex-direction: column;
-    border-left: var(--spectrum-global-color-gray-400) solid;
 }
