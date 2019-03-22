@@ -20,7 +20,7 @@ import {
 
 import tabListStyles from './tab-list.css';
 
-export class Tab extends LitElement {
+export class TabList extends LitElement {
     public static readonly is = 'sp-tab-list';
 
     public static get styles(): CSSResultArray {

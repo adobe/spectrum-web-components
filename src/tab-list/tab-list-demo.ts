@@ -18,25 +18,19 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import { defineCustomElements, Tab } from '../index.js';
+import { defineCustomElements } from '../index.js';
 
-import { Tab } from './tab';
+import { TabList } from './tab-list';
 
-import tabDemoStyles from './tab-demo.css';
-
-export class TabDemo extends LitElement {
-    public static readonly is = 'sp-tab-demo';
-
-    public static get styles(): CSSResultArray {
-        return [tabDemoStyles];
-    }
+export class TabListDemo extends LitElement {
+    public static readonly is = 'sp-tab-list-demo';
 
     @property()
     public checkedValue = '';
 
     public constructor() {
         super();
-        defineCustomElements(Tab);
+        defineCustomElements(TabList);
     }
 
     public onSelect(ev: Event): void {
