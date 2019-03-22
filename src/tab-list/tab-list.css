@@ -10,9 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-#tabList-vertical {
-    height: 120px;
+:host {
+    height: 100%;
     display: flex;
+}
+
+:host([column]) {
     flex-direction: column;
     border-left: var(--spectrum-global-color-gray-400) solid;
+}
+
+:host([row]) {
+    flex-direction: row;
+    border-top: var(--spectrum-global-color-gray-400) solid;
 }

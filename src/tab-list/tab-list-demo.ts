@@ -30,7 +30,7 @@ export class TabListDemo extends LitElement {
 
     public constructor() {
         super();
-        defineCustomElements(TabList);
+        defineCustomElements(TabList, Tab);
     }
 
     public onSelect(ev: Event): void {
@@ -45,7 +45,7 @@ export class TabListDemo extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <sp-tab-list @click=${this.onSelect}>
+            <sp-tab-list @click=${this.onSelect} column>
                 <sp-tab value="1" ?selected=${this.checkedValue === '1'}>
                     Tab 1
                 </sp-tab>
@@ -56,6 +56,20 @@ export class TabListDemo extends LitElement {
 
                 <sp-tab value="3" ?selected=${this.checkedValue === '3'}>
                     Tab 3
+                </sp-tab>
+            </sp-tab-list>
+            <br />
+            <sp-tab-list @click=${this.onSelect} row>
+                <sp-tab value="4" ?selected=${this.checkedValue === '4'}>
+                    Tab 4
+                </sp-tab>
+
+                <sp-tab value="5" ?selected=${this.checkedValue === '5'}>
+                    Tab 5
+                </sp-tab>
+
+                <sp-tab value="6" ?selected=${this.checkedValue === '6'}>
+                    Tab 6
                 </sp-tab>
             </sp-tab-list>
         `;
