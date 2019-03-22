@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 #tabList-vertical {
-    height: 200px;
+    height: 50px;
     display: flex;
     flex-direction: column;
     border-left: var(--spectrum-global-color-gray-400) solid;
