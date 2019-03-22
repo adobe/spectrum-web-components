@@ -27,12 +27,6 @@ export class TabList extends LitElement {
         return [tabListStyles];
     }
 
-    @property({ type: Boolean, reflect: true })
-    public selected = false;
-
-    @property({ type: Number, reflect: true })
-    public value = '';
-
     @property()
     protected render(): TemplateResult {
         return html`

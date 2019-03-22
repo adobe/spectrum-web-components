@@ -18,7 +18,7 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import { defineCustomElements } from '../index.js';
+import { defineCustomElements, Tab } from '../index.js';
 
 import { TabList } from './tab-list';
 
@@ -45,7 +45,7 @@ export class TabListDemo extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <div @click=${this.onSelect} id="tabList-vertical">
+            <sp-tab-list @click=${this.onSelect}>
                 <sp-tab value="1" ?selected=${this.checkedValue === '1'}>
                     Tab 1
                 </sp-tab>
@@ -57,7 +57,7 @@ export class TabListDemo extends LitElement {
                 <sp-tab value="3" ?selected=${this.checkedValue === '3'}>
                     Tab 3
                 </sp-tab>
-            </div>
+            </sp-tab-list>
         `;
     }
 }
