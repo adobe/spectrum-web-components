@@ -18,7 +18,7 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import { defineCustomElements } from '../index.js';
+import { defineCustomElements, Tab } from '../index.js';
 
 import { Tab } from './tab';
 

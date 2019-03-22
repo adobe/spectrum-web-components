@@ -18,13 +18,13 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import tabStyles from './tab.css';
+import tabListStyles from './tab-list.css';
 
 export class Tab extends LitElement {
-    public static readonly is = 'sp-tab';
+    public static readonly is = 'sp-tab-list';
 
     public static get styles(): CSSResultArray {
-        return [tabStyles];
+        return [tabListStyles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -36,9 +36,7 @@ export class Tab extends LitElement {
     @property()
     protected render(): TemplateResult {
         return html`
-            <div value=${this.value}>
-                <slot></slot>
-            </div>
+            <slot></slot>
         `;
     }
 }
