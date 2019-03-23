@@ -54,16 +54,16 @@ export class TabListDemo extends LitElement {
             </sp-tab-list>
             <br />
             <sp-tab-list @click=${this.onSelect} row>
-                <sp-tab value="4" ?selected=${this.checkedValue === '4'}>
-                    Tab 4
+                <sp-tab value="a" ?selected=${this.checkedValue === 'a'}>
+                    Tab a
                 </sp-tab>
 
-                <sp-tab value="5" ?selected=${this.checkedValue === '5'}>
-                    Tab 5
+                <sp-tab value="b" ?selected=${this.checkedValue === 'b'}>
+                    Tab b
                 </sp-tab>
 
-                <sp-tab value="6" ?selected=${this.checkedValue === '6'}>
-                    Tab 6
+                <sp-tab value="c" ?selected=${this.checkedValue === 'c'}>
+                    Tab c
                 </sp-tab>
             </sp-tab-list>
         `;

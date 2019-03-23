@@ -30,7 +30,7 @@ export class Tab extends LitElement {
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
-    @property({ type: Number, reflect: true })
+    @property({ type: String, reflect: true })
     public value = '';
 
     @property()

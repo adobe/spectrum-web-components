@@ -11,16 +11,17 @@ governing permissions and limitations under the License.
 */
 
 :host {
-    height: 100%;
     display: flex;
 }
 
 :host([column]) {
+    height: 100%;
     flex-direction: column;
     border-left: var(--spectrum-global-color-gray-400) solid;
 }
 
 :host([row]) {
+    width: 100%;
     flex-direction: row;
     border-top: var(--spectrum-global-color-gray-400) solid;
 }
