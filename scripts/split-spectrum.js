@@ -132,6 +132,7 @@ const components = [
     'label',
     'fieldlabel',
     'radio',
+    'popover',
     'tabs',
 ];
 
