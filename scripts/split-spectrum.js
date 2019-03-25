@@ -133,7 +133,6 @@ const components = [
     'fieldlabel',
     'radio',
     'popover',
-    'tabs',
 ];
 
 const processes = [];
