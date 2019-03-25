@@ -52,30 +52,38 @@ export class TabListDemo extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <sp-tab-list @click=${this.onColSelect} column>
-                <sp-tab value="1" ?selected=${this.checkedColValue === '1'}>
+            <sp-tab-list
+                @click=${this.onColSelect}
+                .selected=${this.checkedColValue}
+                column
+            >
+                <sp-tab value="1">
                     Tab 1
                 </sp-tab>
 
-                <sp-tab value="2" ?selected=${this.checkedColValue === '2'}>
+                <sp-tab value="2">
                     Tab 2
                 </sp-tab>
 
-                <sp-tab value="3" ?selected=${this.checkedColValue === '3'}>
+                <sp-tab value="3">
                     Tab 3
                 </sp-tab>
             </sp-tab-list>
             <br />
-            <sp-tab-list @click=${this.onRowSelect} row>
-                <sp-tab value="a" ?selected=${this.checkedRowValue === 'a'}>
+            <sp-tab-list
+                @click=${this.onRowSelect}
+                .selected=${this.checkedRowValue}
+                row
+            >
+                <sp-tab value="a">
                     Tab a
                 </sp-tab>
 
-                <sp-tab value="b" ?selected=${this.checkedRowValue === 'b'}>
+                <sp-tab value="b">
                     Tab b
                 </sp-tab>
 
-                <sp-tab value="c" ?selected=${this.checkedRowValue === 'c'}>
+                <sp-tab value="c">
                     Tab c
                 </sp-tab>
             </sp-tab-list>

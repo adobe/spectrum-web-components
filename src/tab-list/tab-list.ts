@@ -27,6 +27,38 @@ export class TabList extends LitElement {
         return [tabListStyles];
     }
 
+    @property({ reflect: true })
+    public get selected(): string {
+        return this._selected;
+    }
+
+    public set selected(value: string) {
+        const oldValue = this.selected;
+
+        this.updateCheckedState(value);
+
+        this._selected = value;
+        this.requestUpdate('selected', oldValue);
+    }
+
+    private _selected = '';
+
+    private updateCheckedState(value: string): void {
+        const previousChecked = this.querySelectorAll('[selected]');
+
+        previousChecked.forEach((element) => {
+            element.removeAttribute('selected');
+        });
+
+        if (value.length) {
+            const currentChecked = this.querySelector(`[value="${value}"]`);
+
+            if (currentChecked) {
+                currentChecked.setAttribute('selected', '');
+            }
+        }
+    }
+
     @property()
     protected render(): TemplateResult {
         return html`

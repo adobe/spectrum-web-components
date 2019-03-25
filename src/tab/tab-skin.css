@@ -19,16 +19,9 @@ governing permissions and limitations under the License.
 
     &([selected]) {
         color: var(--spectrum-tabs-text-color-selected);
-
-        & #spectrum-Icon {
-            color: var(--spectrum-tabs-icon-color-selected);
-        }
     }
 
     &([disabled]) {
         color: var(--spectrum-tabs-text-color-disabled);
-        & #spectrum-Icon {
-            color: var(--spectrum-tabs-icon-color-disabled);
-        }
     }
 }
