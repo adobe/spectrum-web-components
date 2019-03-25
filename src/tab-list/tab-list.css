@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 :host {
     display: flex;
+    z-index: 0;
 }
 
 :host([column]) {

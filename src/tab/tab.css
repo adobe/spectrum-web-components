@@ -15,10 +15,8 @@ governing permissions and limitations under the License.
 :host {
     display: flex;
     position: relative;
-    z-index: 0;
     margin: 0;
     padding: 0 var(--spectrum-tabs-focus-ring-padding-x);
-    padding-bottom: 8px;
     line-height: 46px;
     vertical-align: top;
     cursor: pointer;
