@@ -18,8 +18,8 @@ export * from './link';
 export * from './radio';
 export * from './radio-group';
 export * from './slider';
-export * from './tab';
 export * from './icon';
+export * from './tab';
 export * from './tab-list';
 
 export * from './define';
