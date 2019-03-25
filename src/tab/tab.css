@@ -19,6 +19,7 @@ governing permissions and limitations under the License.
     margin: 0;
     padding: 0 var(--spectrum-tabs-focus-ring-padding-x);
     padding-bottom: 8px;
+    line-height: 46px;
     vertical-align: top;
     cursor: pointer;
     font-size: var(--spectrum-tabs-text-size);

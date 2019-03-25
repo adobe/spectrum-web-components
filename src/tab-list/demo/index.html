@@ -11,7 +11,7 @@
             // import the elements we're going to demo
             import * as Elements from '../index.js';
             // define our elements using the helper
-            import { TabListDemo } from '../tab-list-demo.js';
+            import { TabListDemo } from './tab-list-demo.js';
             defineCustomElements(
                 ...Object.values(Elements),
                 ...Object.values(DemoElements),
@@ -26,7 +26,8 @@
             <demo-section title="Tab List" show-demo-code>
                 <div slot="description">
                     The tab list component which wraps up individual tabs
-                    vertically and horizontally
+                    vertically and horizontally (The current styles apply to the
+                    vertical tab list)
                 </div>
                 <div slot="demo"><sp-tab-list-demo></sp-tab-list-demo></div>
             </demo-section>

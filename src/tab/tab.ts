@@ -36,9 +36,7 @@ export class Tab extends LitElement {
     @property()
     protected render(): TemplateResult {
         return html`
-            <div value=${this.value}>
-                <slot></slot>
-            </div>
+            <slot></slot>
         `;
     }
 }

@@ -23,5 +23,4 @@ governing permissions and limitations under the License.
 :host([row]) {
     width: 100%;
     flex-direction: row;
-    border-top: var(--spectrum-global-color-gray-400) solid;
 }
