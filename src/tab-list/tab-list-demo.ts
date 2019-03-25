@@ -20,49 +20,62 @@ export class TabListDemo extends LitElement {
     public static readonly is = 'sp-tab-list-demo';
 
     @property()
-    public checkedValue = '';
+    public checkedColValue = '';
+
+    @property()
+    public checkedRowValue = '';
 
     public constructor() {
         super();
         defineCustomElements(TabList, Tab);
     }
 
-    public onSelect(ev: Event): void {
+    public onColSelect(ev: Event): void {
         const target = ev.target as Element;
         if (target) {
             const value = target.getAttribute('value');
             if (value) {
-                this.checkedValue = value;
+                this.checkedColValue = value;
+            }
+        }
+    }
+
+    public onRowSelect(ev: Event): void {
+        const target = ev.target as Element;
+        if (target) {
+            const value = target.getAttribute('value');
+            if (value) {
+                this.checkedRowValue = value;
             }
         }
     }
 
     protected render(): TemplateResult {
         return html`
-            <sp-tab-list @click=${this.onSelect} column>
-                <sp-tab value="1" ?selected=${this.checkedValue === '1'}>
+            <sp-tab-list @click=${this.onColSelect} column>
+                <sp-tab value="1" ?selected=${this.checkedColValue === '1'}>
                     Tab 1
                 </sp-tab>
 
-                <sp-tab value="2" ?selected=${this.checkedValue === '2'}>
+                <sp-tab value="2" ?selected=${this.checkedColValue === '2'}>
                     Tab 2
                 </sp-tab>
 
-                <sp-tab value="3" ?selected=${this.checkedValue === '3'}>
+                <sp-tab value="3" ?selected=${this.checkedColValue === '3'}>
                     Tab 3
                 </sp-tab>
             </sp-tab-list>
             <br />
-            <sp-tab-list @click=${this.onSelect} row>
-                <sp-tab value="a" ?selected=${this.checkedValue === 'a'}>
+            <sp-tab-list @click=${this.onRowSelect} row>
+                <sp-tab value="a" ?selected=${this.checkedRowValue === 'a'}>
                     Tab a
                 </sp-tab>
 
-                <sp-tab value="b" ?selected=${this.checkedValue === 'b'}>
+                <sp-tab value="b" ?selected=${this.checkedRowValue === 'b'}>
                     Tab b
                 </sp-tab>
 
-                <sp-tab value="c" ?selected=${this.checkedValue === 'c'}>
+                <sp-tab value="c" ?selected=${this.checkedRowValue === 'c'}>
                     Tab c
                 </sp-tab>
             </sp-tab-list>
