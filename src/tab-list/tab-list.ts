@@ -28,6 +28,9 @@ export class TabList extends LitElement {
     }
 
     @property({ reflect: true })
+    public direction: 'column' | 'row' = 'column';
+
+    @property({ reflect: true })
     public get selected(): string {
         return this._selected;
     }

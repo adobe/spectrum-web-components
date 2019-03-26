@@ -15,13 +15,13 @@ governing permissions and limitations under the License.
     z-index: 0;
 }
 
-:host([column]) {
+:host([direction='column']) {
     height: 100%;
     flex-direction: column;
     border-left: var(--spectrum-global-color-gray-400) solid;
 }
 
-:host([row]) {
+:host([direction='row']) {
     width: 100%;
     flex-direction: row;
 }

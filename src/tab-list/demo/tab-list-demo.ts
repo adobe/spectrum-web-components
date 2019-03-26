@@ -55,7 +55,6 @@ export class TabListDemo extends LitElement {
             <sp-tab-list
                 @click=${this.onColSelect}
                 .selected=${this.checkedColValue}
-                column
             >
                 <sp-tab value="1">
                     Tab 1
@@ -73,7 +72,7 @@ export class TabListDemo extends LitElement {
             <sp-tab-list
                 @click=${this.onRowSelect}
                 .selected=${this.checkedRowValue}
-                row
+                direction="row"
             >
                 <sp-tab value="a">
                     Tab a
