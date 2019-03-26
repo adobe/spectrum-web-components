@@ -62,10 +62,31 @@ export class TabList extends LitElement {
         }
     }
 
+    public onClick(ev: Event): void {
+        const target = ev.target as Element;
+        if (target) {
+            const value = target.getAttribute('value');
+            if (value) {
+                const applyDefault = this.dispatchEvent(
+                    new CustomEvent<{ selected: string }>('change', {
+                        bubbles: true,
+                        composed: true,
+                        detail: {
+                            selected: value,
+                        },
+                    })
+                );
+                if (applyDefault) {
+                    this.selected = value;
+                }
+            }
+        }
+    }
+
     @property()
     protected render(): TemplateResult {
         return html`
-            <slot></slot>
+            <slot @click="${this.onClick}"></slot>
         `;
     }
 }
