@@ -19,6 +19,7 @@ governing permissions and limitations under the License.
 @import 'components/fieldlabel.css';
 @import 'components/label.css';
 @import 'components/link.css';
+@import 'components/popover.css';
 @import 'components/radio.css';
 @import 'components/slider.css';
 @import 'components/tabs.css';

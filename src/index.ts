@@ -21,6 +21,9 @@ export * from './slider';
 export * from './icon';
 export * from './tab';
 export * from './tab-list';
+export * from './overlay-root';
+export * from './overlay-trigger';
+export * from './popover';
 
 export * from './define';
 

@@ -6,10 +6,6 @@
         "es6": true
     },
     "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "project": "../tsconfig.json",
-        "tsconfigRootDir": "./src"
-    },
     "plugins": ["@typescript-eslint", "notice"],
     "extends": [
         "plugin:@typescript-eslint/recommended",
