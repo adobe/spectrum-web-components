@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            Overlay Root and Overlay Trigger - Spectrum Web Components
+        </title>
+        <script type="module">
+            // import the define helper
+            import {
+                defineCustomElements,
+                OverlayTrigger,
+                ButtonPrimary,
+                Popover,
+                Slider,
+            } from '../../index.js';
+            // import the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            // import the elements we're going to demo
+            import * as Elements from '../index.js';
+            // define our elements using the helper
+            defineCustomElements(
+                ...Object.values(Elements),
+                ...Object.values(DemoElements),
+                ButtonPrimary,
+                OverlayTrigger,
+                Popover,
+                Slider
+            );
+        </script>
+        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
+        <link rel="stylesheet" href="./demo-page.css" />
+    </head>
+
+    <body>
+        <demo-page title="Overlays and Popovers">
+            <demo-section title="Live Demo" show-demo-code>
+                <div slot="description">
+                    The overlay root is responsible for listening to overlay
+                    trigger events from its content and displaying the corrent
+                    overlay in the correct position.
+                    <br />
+                    Overlays include popovers, modules, and tooltips.
+                </div>
+                <div class="root-demo" slot="demo">
+                    <overlay-root class="root">
+                        <div class="root-content">
+                            <overlay-trigger>
+                                <sp-button-primary slot="trigger">
+                                    Bottom Popover
+                                </sp-button-primary>
+                                <sp-popover slot="click-content" bottom>
+                                    <div class="options-popover-content">
+                                        <sp-slider
+                                            step="0.5"
+                                            min="0"
+                                            max="100"
+                                            label="Marker Size"
+                                            class="marker-size-slider"
+                                        ></sp-slider>
+                                        <sp-slider
+                                            step="0.5"
+                                            min="0"
+                                            max="100"
+                                            label="Edge Softness"
+                                            class="edge-softness-slider"
+                                        ></sp-slider>
+                                    </div>
+                                </sp-popover>
+                                <div
+                                    slot="hover-content"
+                                    class="tooltip"
+                                    delay="100"
+                                >
+                                    Tooltip
+                                </div>
+                            </overlay-trigger>
+                        </div>
+                    </overlay-root>
+                </div>
+            </demo-section>
+            <demo-section title="Multiple Directions" show-demo-code>
+                <div slot="description">
+                    The placement attribute of the overlay root drives the
+                    position of the overlays relative to the trigger
+                </div>
+                <div class="root-demo" slot="demo">
+                    <overlay-root class="root">
+                        <div class="root-content">
+                            <overlay-trigger placement="left">
+                                <sp-button-primary slot="trigger">
+                                    Left Popover
+                                </sp-button-primary>
+                                <sp-popover slot="click-content" left>
+                                    <div class="options-popover-content">
+                                        <sp-slider
+                                            step="0.5"
+                                            min="0"
+                                            max="100"
+                                            label="Marker Size"
+                                            class="marker-size-slider"
+                                        ></sp-slider>
+                                        <sp-slider
+                                            step="0.5"
+                                            min="0"
+                                            max="100"
+                                            label="Edge Softness"
+                                            class="edge-softness-slider"
+                                        ></sp-slider>
+                                    </div>
+                                </sp-popover>
+                                <div
+                                    slot="hover-content"
+                                    class="tooltip"
+                                    delay="100"
+                                >
+                                    Tooltip
+                                </div>
+                            </overlay-trigger>
+                            <overlay-trigger placement="top">
+                                <sp-button-primary slot="trigger">
+                                    Top Popover
+                                </sp-button-primary>
+                                <sp-popover slot="click-content" top>
+                                    <div class="options-popover-content">
+                                        <sp-slider
+                                            step="0.5"
+                                            min="0"
+                                            max="100"
+                                            label="Marker Size"
+                                            class="marker-size-slider"
+                                        ></sp-slider>
+                                        <sp-slider
+                                            step="0.5"
+                                            min="0"
+                                            max="100"
+                                            label="Edge Softness"
+                                            class="edge-softness-slider"
+                                        ></sp-slider>
+                                    </div>
+                                </sp-popover>
+                                <div
+                                    slot="hover-content"
+                                    class="tooltip"
+                                    delay="100"
+                                >
+                                    Tooltip
+                                </div>
+                            </overlay-trigger>
+                            <overlay-trigger placement="right">
+                                <sp-button-primary slot="trigger">
+                                    Right Popover
+                                </sp-button-primary>
+                                <sp-popover slot="click-content" right>
+                                    <div class="options-popover-content">
+                                        <sp-slider
+                                            step="0.5"
+                                            min="0"
+                                            max="100"
+                                            label="Marker Size"
+                                            class="marker-size-slider"
+                                        ></sp-slider>
+                                        <sp-slider
+                                            step="0.5"
+                                            min="0"
+                                            max="100"
+                                            label="Edge Softness"
+                                            class="edge-softness-slider"
+                                        ></sp-slider>
+                                    </div>
+                                </sp-popover>
+                                <div
+                                    slot="hover-content"
+                                    class="tooltip"
+                                    delay="100"
+                                >
+                                    Tooltip
+                                </div>
+                            </overlay-trigger>
+                        </div>
+                    </overlay-root>
+                </div>
+            </demo-section>
+            <demo-section title="Nested Overlay Roots" show-demo-code>
+                <div slot="description">
+                    Overlay roots can exist inside of other overlay roots
+                </div>
+                <div class="root-demo" slot="demo">
+                    <overlay-root class="root">
+                        <div class="root-content">
+                            <overlay-trigger>
+                                <sp-button-primary slot="trigger">
+                                    Bottom Popover
+                                </sp-button-primary>
+                                <sp-popover slot="click-content" bottom>
+                                    <div class="options-popover-content">
+                                        <overlay-root class="nested-root">
+                                            <sp-slider
+                                                step="0.5"
+                                                min="0"
+                                                max="100"
+                                                label="Marker Size"
+                                                class="marker-size-slider"
+                                            ></sp-slider>
+                                            <overlay-trigger placement="left">
+                                                <sp-button-primary
+                                                    slot="trigger"
+                                                >
+                                                    Nest is Best
+                                                </sp-button-primary>
+                                                <sp-popover
+                                                    slot="click-content"
+                                                    left
+                                                >
+                                                    <div
+                                                        class="options-popover-content"
+                                                    >
+                                                        <overlay-root
+                                                            class="nested-root"
+                                                        >
+                                                            <sp-slider
+                                                                step="0.5"
+                                                                min="0"
+                                                                max="100"
+                                                                label="Marker Size"
+                                                                class="marker-size-slider"
+                                                            ></sp-slider>
+                                                            <overlay-trigger
+                                                                placement="bottom"
+                                                            >
+                                                                <sp-button-primary
+                                                                    slot="trigger"
+                                                                >
+                                                                    Nest is Best
+                                                                </sp-button-primary>
+                                                                <sp-popover
+                                                                    slot="click-content"
+                                                                    bottom
+                                                                >
+                                                                    <div
+                                                                        class="options-popover-content"
+                                                                    >
+                                                                        <sp-slider
+                                                                            step="0.5"
+                                                                            min="0"
+                                                                            max="100"
+                                                                            label="Marker Size"
+                                                                            class="marker-size-slider"
+                                                                        ></sp-slider>
+                                                                    </div>
+                                                                </sp-popover>
+                                                            </overlay-trigger>
+                                                        </overlay-root>
+                                                    </div>
+                                                </sp-popover>
+                                            </overlay-trigger>
+                                        </overlay-root>
+                                    </div>
+                                </sp-popover>
+                                <div
+                                    slot="hover-content"
+                                    class="tooltip"
+                                    delay="100"
+                                >
+                                    Tooltip
+                                </div>
+                            </overlay-trigger>
+                        </div>
+                    </overlay-root>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>

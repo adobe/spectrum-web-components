@@ -38,8 +38,7 @@ const compile = () => {
         tsResult.js
             .pipe(
                 sourcemaps.write('.', {
-                    includeContent: false,
-                    sourceRoot: './',
+                    includeContent: true,
                 })
             )
             .pipe(gulp.dest(dstPath)),
