@@ -22,7 +22,7 @@ npm install
 npm run serve:watch
 ```
 
-Browse to http://localhost:4000/lib/ to explore components, for example http://localhost:4000/lib/banner/demo/index.html contains the demo for the banner component.
+Browse to http://localhost:4000/ to explore components, for example http://localhost:4000/banner/ contains the demo for the banner component.
 
 # Development
 
