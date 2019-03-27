@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Tab-List Spectrum Web Components</title>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../define.js';
+            // import the Tab component
+            import { Tab } from '../../tab/index.js';
+            // import the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            // import the elements we're going to demo
+            import * as Elements from '../index.js';
+            // define our elements using the helper
+            // import { TabListDemo } from './tab-list-demo.js';
+            defineCustomElements(
+                ...Object.values(Elements),
+                ...Object.values(DemoElements),
+                Tab
+            );
+        </script>
+        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
+    </head>
+
+    <body>
+        <demo-page title="Tab List">
+            <demo-section title="Tab List" show-demo-code>
+                <div slot="description">
+                    The tab list component which wraps up individual tabs
+                    vertically and horizontally (The current styles apply to the
+                    vertical tab list)
+                </div>
+                <div slot="demo">
+                    <sp-tab-list>
+                        <sp-tab value="1">
+                            Tab 1
+                        </sp-tab>
+                        <sp-tab value="2">
+                            Tab 2
+                        </sp-tab>
+                        <sp-tab value="3">
+                            Tab 3
+                        </sp-tab>
+                    </sp-tab-list>
+                    <br />
+                    <sp-tab-list direction="row">
+                        <sp-tab value="a">
+                            Tab a
+                        </sp-tab>
+                        <sp-tab value="b">
+                            Tab b
+                        </sp-tab>
+                        <sp-tab value="c">
+                            Tab c
+                        </sp-tab>
+                    </sp-tab-list>
+                </div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>

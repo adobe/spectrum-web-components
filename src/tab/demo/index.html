@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Tab Spectrum Web Components</title>
+        <script type="module">
+            // import the define helper
+            import { defineCustomElements } from '../../define.js';
+            // import the demo page components
+            import * as DemoElements from '../../demo-page/index.js';
+            // import the elements we're going to demo
+            import * as Elements from '../index.js';
+            // define our elements using the helper
+            import { TabDemo } from './tab-demo.js';
+            defineCustomElements(
+                ...Object.values(Elements),
+                ...Object.values(DemoElements),
+                TabDemo
+            );
+        </script>
+        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
+    </head>
+
+    <body>
+        <demo-page title="Tabs">
+            <demo-section title="Tabs" show-demo-code>
+                <div slot="description">The tab component</div>
+                <div slot="demo"><sp-tab-demo></sp-tab-demo></div>
+            </demo-section>
+        </demo-page>
+    </body>
+</html>

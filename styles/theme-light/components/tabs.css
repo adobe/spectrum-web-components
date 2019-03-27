@@ -1,0 +1,231 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:root,
+:host {
+    --spectrum-tabs-compact-text-color: rgb(110, 110, 110);
+    --spectrum-tabs-compact-icon-color: rgb(110, 110, 110);
+    --spectrum-tabs-compact-selection-indicator-color: rgb(44, 44, 44);
+    --spectrum-tabs-compact-focus-ring-color: rgb(38, 128, 235);
+    --spectrum-tabs-compact-rule-color: rgba(0, 0, 0, 0);
+    --spectrum-tabs-compact-text-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-compact-icon-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-compact-text-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-compact-icon-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-compact-text-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-compact-icon-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-compact-text-color-mouse-focus: rgb(44, 44, 44);
+    --spectrum-tabs-compact-text-color-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-compact-icon-color-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-compact-text-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-compact-icon-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-compact-text-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-compact-icon-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-compact-text-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-compact-icon-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-compact-text-color-selected-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-compact-icon-color-selected-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-compact-text-color-selected-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-compact-icon-color-selected-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-compact-vertical-text-color: rgb(110, 110, 110);
+    --spectrum-tabs-compact-vertical-icon-color: rgb(110, 110, 110);
+    --spectrum-tabs-compact-vertical-selection-indicator-color: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-focus-ring-color: rgb(38, 128, 235);
+    --spectrum-tabs-compact-vertical-rule-color: rgba(0, 0, 0, 0);
+    --spectrum-tabs-compact-vertical-text-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-icon-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-text-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-icon-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-text-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-icon-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-text-color-mouse-focus: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-text-color-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-compact-vertical-icon-color-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-compact-vertical-text-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-icon-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-text-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-icon-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-text-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-icon-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-compact-vertical-text-color-selected-key-focus: rgb(
+        44,
+        44,
+        44
+    );
+    --spectrum-tabs-compact-vertical-icon-color-selected-key-focus: rgb(
+        44,
+        44,
+        44
+    );
+    --spectrum-tabs-compact-vertical-text-color-selected-disabled: rgb(
+        179,
+        179,
+        179
+    );
+    --spectrum-tabs-compact-vertical-icon-color-selected-disabled: rgb(
+        202,
+        202,
+        202
+    );
+    --spectrum-tabs-text-color: rgb(110, 110, 110);
+    --spectrum-tabs-icon-color: rgb(110, 110, 110);
+    --spectrum-tabs-selection-indicator-color: rgb(44, 44, 44);
+    --spectrum-tabs-focus-ring-color: rgb(38, 128, 235);
+    --spectrum-tabs-rule-color: rgb(234, 234, 234);
+    --spectrum-tabs-text-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-icon-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-text-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-icon-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-text-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-icon-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-text-color-mouse-focus: rgb(44, 44, 44);
+    --spectrum-tabs-text-color-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-icon-color-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-text-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-icon-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-text-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-icon-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-text-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-icon-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-text-color-selected-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-icon-color-selected-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-text-color-selected-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-icon-color-selected-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-quiet-text-color: rgb(110, 110, 110);
+    --spectrum-tabs-quiet-icon-color: rgb(110, 110, 110);
+    --spectrum-tabs-quiet-selection-indicator-color: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-focus-ring-color: rgb(38, 128, 235);
+    --spectrum-tabs-quiet-rule-color: rgba(0, 0, 0, 0);
+    --spectrum-tabs-quiet-text-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-icon-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-text-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-icon-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-text-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-icon-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-text-color-mouse-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-text-color-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-quiet-icon-color-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-quiet-text-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-icon-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-text-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-icon-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-text-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-icon-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-text-color-selected-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-icon-color-selected-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-text-color-selected-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-quiet-icon-color-selected-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-quiet-compact-text-color: rgb(110, 110, 110);
+    --spectrum-tabs-quiet-compact-icon-color: rgb(110, 110, 110);
+    --spectrum-tabs-quiet-compact-selection-indicator-color: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-focus-ring-color: rgb(38, 128, 235);
+    --spectrum-tabs-quiet-compact-rule-color: rgba(0, 0, 0, 0);
+    --spectrum-tabs-quiet-compact-text-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-icon-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-text-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-icon-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-text-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-icon-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-text-color-mouse-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-text-color-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-quiet-compact-icon-color-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-quiet-compact-text-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-icon-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-text-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-icon-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-text-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-icon-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-compact-text-color-selected-key-focus: rgb(
+        44,
+        44,
+        44
+    );
+    --spectrum-tabs-quiet-compact-icon-color-selected-key-focus: rgb(
+        44,
+        44,
+        44
+    );
+    --spectrum-tabs-quiet-compact-text-color-selected-disabled: rgb(
+        179,
+        179,
+        179
+    );
+    --spectrum-tabs-quiet-compact-icon-color-selected-disabled: rgb(
+        202,
+        202,
+        202
+    );
+    --spectrum-tabs-quiet-vertical-text-color: rgb(110, 110, 110);
+    --spectrum-tabs-quiet-vertical-icon-color: rgb(110, 110, 110);
+    --spectrum-tabs-quiet-vertical-selection-indicator-color: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-focus-ring-color: rgb(38, 128, 235);
+    --spectrum-tabs-quiet-vertical-rule-color: rgba(0, 0, 0, 0);
+    --spectrum-tabs-quiet-vertical-text-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-icon-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-text-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-icon-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-text-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-icon-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-text-color-mouse-focus: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-text-color-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-quiet-vertical-icon-color-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-quiet-vertical-text-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-icon-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-text-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-icon-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-text-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-icon-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-quiet-vertical-text-color-selected-key-focus: rgb(
+        44,
+        44,
+        44
+    );
+    --spectrum-tabs-quiet-vertical-icon-color-selected-key-focus: rgb(
+        44,
+        44,
+        44
+    );
+    --spectrum-tabs-quiet-vertical-text-color-selected-disabled: rgb(
+        179,
+        179,
+        179
+    );
+    --spectrum-tabs-quiet-vertical-icon-color-selected-disabled: rgb(
+        202,
+        202,
+        202
+    );
+    --spectrum-tabs-vertical-text-color: rgb(110, 110, 110);
+    --spectrum-tabs-vertical-icon-color: rgb(110, 110, 110);
+    --spectrum-tabs-vertical-selection-indicator-color: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-focus-ring-color: rgb(38, 128, 235);
+    --spectrum-tabs-vertical-rule-color: rgb(234, 234, 234);
+    --spectrum-tabs-vertical-text-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-icon-color-hover: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-text-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-icon-color-down: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-text-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-icon-color-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-text-color-mouse-focus: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-text-color-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-vertical-icon-color-disabled: rgb(202, 202, 202);
+    --spectrum-tabs-vertical-text-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-icon-color-selected: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-text-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-icon-color-selected-hover: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-text-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-icon-color-selected-down: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-text-color-selected-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-icon-color-selected-key-focus: rgb(44, 44, 44);
+    --spectrum-tabs-vertical-text-color-selected-disabled: rgb(179, 179, 179);
+    --spectrum-tabs-vertical-icon-color-selected-disabled: rgb(202, 202, 202);
+}

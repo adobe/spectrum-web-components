@@ -10,17 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import 'global.css';
-@import 'alias.css';
-@import 'semantic.css';
-@import 'components/banner.css';
-@import 'components/button.css';
-@import 'components/card.css';
-@import 'components/dropzone.css';
-@import 'components/fieldlabel.css';
-@import 'components/label.css';
-@import 'components/link.css';
-@import 'components/popover.css';
-@import 'components/radio.css';
-@import 'components/slider.css';
-@import 'components/tabs.css';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
+
+import tabStyles from './tab.css';
+
+export class Tab extends LitElement {
+    public static readonly is = 'sp-tab';
+
+    public static get styles(): CSSResultArray {
+        return [tabStyles];
+    }
+
+    @property({ type: Boolean, reflect: true })
+    public selected = false;
+
+    @property({ type: String, reflect: true })
+    public value = '';
+
+    @property()
+    protected render(): TemplateResult {
+        return html`
+            <slot></slot>
+        `;
+    }
+}
