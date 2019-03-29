@@ -83,7 +83,11 @@ export class DemoCode extends LitElement {
             let codeString = stripIndent`${codeTemplate.innerHTML}`;
             // fix boolean attributes, innerHTML adds empty string assignment
             codeString = codeString.replace('=""', '');
-            const code = Prism.highlight(codeString, Prism.languages.html);
+            const code = Prism.highlight(
+                codeString,
+                Prism.languages.html,
+                'html'
+            );
 
             const oldCode = this.highlightedCode;
             this.highlightedCode = code;
