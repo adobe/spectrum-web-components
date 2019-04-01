@@ -19,6 +19,7 @@ export * from './radio';
 export * from './radio-group';
 export * from './slider';
 export * from './icon';
+export * from './icons';
 export * from './iconset';
 export * from './tab';
 export * from './tab-list';
