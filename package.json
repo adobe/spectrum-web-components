@@ -3,7 +3,7 @@
     "publishConfig": {
         "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-crisp-release-local/"
     },
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "",
     "files": [
         "lib",
@@ -38,14 +38,14 @@
         }
     },
     "peerDependencies": {
-        "lit-element": "^2.0.0-rc.3",
+        "lit-element": "^2.1.0",
         "common-tags": "^1.8.0",
-        "lit-html": "^1.0.0-rc.2",
+        "lit-html": "^1.0.0",
         "prismjs": "^1.15.0"
     },
     "devDependencies": {
         "@adobe/es-modules-middleware": "^1.0.0",
-        "@adobe/spectrum-css": "^2.8.0",
+        "@adobe/spectrum-css": "^2.9.0",
         "@types/chai": "^4.1.7",
         "@types/common-tags": "^1.4.0",
         "@types/karma-chai": "^0.1.1",
@@ -67,7 +67,6 @@
         "eslint-plugin-notice": "^0.7.7",
         "eslint-plugin-prettier": "^3.0.1",
         "express": "^4.16.4",
-        "fs-extra": "^7.0.1",
         "gulp": "^4.0.0",
         "gulp-cached": "^1.1.1",
         "gulp-cli": "^2.0.1",
