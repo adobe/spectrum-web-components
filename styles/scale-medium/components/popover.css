@@ -24,6 +24,9 @@ governing permissions and limitations under the License.
     --spectrum-popover-source-gap: 6px;
     --spectrum-popover-min-width: 32px;
     --spectrum-popover-min-height: 32px;
-    /* stylelint-disable */
+
+    /*
+    NOTE: commented out as this is an Android specific property and it breaks linting
     --spectrum-popover-elevation: 2dp;
+    */
 }

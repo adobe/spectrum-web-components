@@ -11,7 +11,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 const path = require('path');
-const fs = require('fs-extra');
+const fs = require('fs');
 
 const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
     // get icon name from filename
@@ -95,7 +95,7 @@ Object.keys(scales).forEach((scaleKey) => {
     });
 
     fs.writeSync(outputFd, '</svg>`;');
-    fs.close(outputFd);
+    fs.closeSync(outputFd);
 });
 
 console.log('complete.');
