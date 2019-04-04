@@ -20,9 +20,6 @@ import {
 
 import tabListStyles from './tab-list.css';
 
-import { Tab } from '../tab';
-import { defineCustomElement } from '../define';
-
 export class TabList extends LitElement {
     public static readonly is = 'sp-tab-list';
 
@@ -51,12 +48,6 @@ export class TabList extends LitElement {
     }
 
     private _selected = '';
-
-    public constructor() {
-        super();
-
-        defineCustomElement(Tab);
-    }
 
     public onClick(ev: Event): void {
         const target = ev.target as Element;
