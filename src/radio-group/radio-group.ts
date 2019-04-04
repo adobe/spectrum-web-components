@@ -38,8 +38,9 @@ export class RadioGroup extends LitElement {
     public set selected(value: string) {
         const oldValue = this.selected;
 
-        console.log(value);
-
+        if (value === oldValue) {
+            return;
+        }
         this.updateCheckedState(value);
 
         this._selected = value;
@@ -50,8 +51,12 @@ export class RadioGroup extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <slot></slot>
+            <slot @slotchange=${this.onSlotChange}></slot>
         `;
+    }
+
+    private onSlotChange(): void {
+        this.updateCheckedState(this.selected);
     }
 
     private updateCheckedState(value: string): void {

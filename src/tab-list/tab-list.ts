@@ -38,6 +38,9 @@ export class TabList extends LitElement {
     public set selected(value: string) {
         const oldValue = this.selected;
 
+        if (value === oldValue) {
+            return;
+        }
         this.updateCheckedState(value);
 
         this._selected = value;
@@ -45,22 +48,6 @@ export class TabList extends LitElement {
     }
 
     private _selected = '';
-
-    private updateCheckedState(value: string): void {
-        const previousChecked = this.querySelectorAll('[selected]');
-
-        previousChecked.forEach((element) => {
-            element.removeAttribute('selected');
-        });
-
-        if (value.length) {
-            const currentChecked = this.querySelector(`[value="${value}"]`);
-
-            if (currentChecked) {
-                currentChecked.setAttribute('selected', '');
-            }
-        }
-    }
 
     public onClick(ev: Event): void {
         const target = ev.target as Element;
@@ -86,7 +73,30 @@ export class TabList extends LitElement {
     @property()
     protected render(): TemplateResult {
         return html`
-            <slot @click="${this.onClick}"></slot>
+            <slot
+                @click="${this.onClick}"
+                @slotchange=${this.onSlotChange}
+            ></slot>
         `;
+    }
+
+    private onSlotChange(): void {
+        this.updateCheckedState(this.selected);
+    }
+
+    private updateCheckedState(value: string): void {
+        const previousChecked = this.querySelectorAll('[selected]');
+
+        previousChecked.forEach((element) => {
+            element.removeAttribute('selected');
+        });
+
+        if (value.length) {
+            const currentChecked = this.querySelector(`[value="${value}"]`);
+
+            if (currentChecked) {
+                currentChecked.setAttribute('selected', '');
+            }
+        }
     }
 }
