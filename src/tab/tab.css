@@ -28,3 +28,7 @@ governing permissions and limitations under the License.
 :host(:hover) {
     color: var(--spectrum-tabs-text-color-hover);
 }
+
+:host * {
+    pointer-events: none;
+}
