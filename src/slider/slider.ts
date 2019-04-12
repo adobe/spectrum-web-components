@@ -131,7 +131,10 @@ export class Slider extends LitElement {
      * Ratio representing the slider's position on the track
      */
     private get trackProgress(): number {
-        return this.value / this.max;
+        const range = this.max - this.min;
+        const progress = this.value - this.min;
+
+        return progress / range;
     }
 
     private get trackLeftStyle(): string {
