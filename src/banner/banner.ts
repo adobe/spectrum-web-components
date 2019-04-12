@@ -26,6 +26,9 @@ export class Banner extends LitElement {
     @property({ reflect: true })
     public type: 'info' | 'warning' | 'error' = 'info';
 
+    @property({ reflect: true, type: Boolean })
+    public corner = false;
+
     public static get styles(): CSSResultArray {
         return [bannerStyles];
     }

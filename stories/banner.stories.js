@@ -18,37 +18,49 @@ defineCustomElements(Banner);
 
 storiesOf('Banner', module)
     .addDecorator(withKnobs)
-    .add('Content', () => {
+    .add('Default', () => {
         const header = text('Header', 'Header Text');
         const content = text('Content', 'Content of the banner!');
-        return html`
-            <sp-banner>
-                <div slot="header">${header}</div>
-                <div slot="content">${content}</div>
-            </sp-banner>
-        `;
-    })
-    .add('Banner Types', () => {
         const typeOptions = {
             info: 'info',
             warning: 'warning',
             error: 'error',
         };
         const type = radios('Type', typeOptions, typeOptions.info);
+        const inCorner = boolean('In Corner', false);
         return html`
-            <sp-banner type="${type}">
+            <div
+                style="width: 300px; height: 200px; background-color: #ccc; position: relative; margin: 20px;"
+            >
+                <sp-banner type="${type}" ?corner=${inCorner}>
+                    <div slot="header">${header}</div>
+                    <div slot="content">${content}</div>
+                </sp-banner>
+            </div>
+        `;
+    })
+    .add('Banner Types', () => {
+        return html`
+            <sp-banner type="info">
+                <div slot="header">Header Text</div>
+                <div slot="content">Content of the banner!</div>
+            </sp-banner>
+            <sp-banner type="warning">
+                <div slot="header">Header Text</div>
+                <div slot="content">Content of the banner!</div>
+            </sp-banner>
+            <sp-banner type="error">
                 <div slot="header">Header Text</div>
                 <div slot="content">Content of the banner!</div>
             </sp-banner>
         `;
     })
     .add('Corner Placement', () => {
-        const inCorner = boolean('In Corner', true);
         return html`
             <div
-                style="width: 300px; height: 200px; background-color: #ccc; position: relative"
+                style="width: 300px; height: 200px; background-color: #ccc; position: relative; margin: 20px;"
             >
-                <sp-banner corner=${inCorner}>
+                <sp-banner corner>
                     <div slot="header">A corner banner!</div>
                     <div slot="content">Content of the banner!</div>
                 </sp-banner>
