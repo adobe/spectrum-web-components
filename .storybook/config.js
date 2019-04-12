@@ -9,7 +9,6 @@ if (module.hot) {
     });
 }
 
-console.log('after hot test');
 function loadStories() {
     const req = require.context('../stories', true, /\.stories\.js$/);
     req.keys().forEach((filename) => req(filename));
