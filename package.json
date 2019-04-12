@@ -96,7 +96,7 @@
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",
         "merge2": "^1.2.3",
-        "mocha": "^6.0.2",
+        "mocha": "^6.1.3",
         "polymer-webpack-loader": "^2.0.3",
         "postcss": "^7.0.6",
         "postcss-import": "^12.0.1",
