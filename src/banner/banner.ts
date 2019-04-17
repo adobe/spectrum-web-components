@@ -24,7 +24,10 @@ export class Banner extends LitElement {
     public static readonly is = 'sp-banner';
 
     @property({ reflect: true })
-    public type = 'info';
+    public type: 'info' | 'warning' | 'error' = 'info';
+
+    @property({ reflect: true, type: Boolean })
+    public corner = false;
 
     public static get styles(): CSSResultArray {
         return [bannerStyles];
