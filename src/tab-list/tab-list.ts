@@ -19,6 +19,7 @@ import {
 } from 'lit-element';
 
 import tabListStyles from './tab-list.css';
+import { strictCustomEvent } from '../events';
 
 export class TabList extends LitElement {
     public static readonly is = 'sp-tab-list';
@@ -55,7 +56,7 @@ export class TabList extends LitElement {
             const value = target.getAttribute('value');
             if (value) {
                 const applyDefault = this.dispatchEvent(
-                    new CustomEvent<{ selected: string }>('change', {
+                    strictCustomEvent('sp-tab-list:change', {
                         bubbles: true,
                         composed: true,
                         detail: {
@@ -98,5 +99,11 @@ export class TabList extends LitElement {
                 currentChecked.setAttribute('selected', '');
             }
         }
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-tab-list:change': CustomEvent<{ selected: string }>;
     }
 }

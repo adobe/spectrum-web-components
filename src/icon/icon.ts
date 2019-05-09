@@ -61,13 +61,13 @@ export class Icon extends LitElement {
                 this.updateIcon();
             }
         }) as EventListener;
-        window.addEventListener('sp-iconset-added', this.iconsetListener);
+        window.addEventListener('sp-iconset:added', this.iconsetListener);
     }
     public disconnectedCallback(): void {
         super.disconnectedCallback();
         if (this.iconsetListener) {
             window.removeEventListener(
-                'sp-iconset-added',
+                'sp-iconset:added',
                 this.iconsetListener
             );
         }

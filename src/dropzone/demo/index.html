@@ -72,7 +72,7 @@
                     <script>
                         const dropzone = document.getElementById('dropzone');
                         dropzone.addEventListener(
-                            'dropzone-should-accept',
+                            'sp-dropzone:should-accept',
                             (ev) => {
                                 var fileType = ev.detail.dataTransfer.items[0].type.split(
                                     '/'
@@ -82,7 +82,7 @@
                                 }
                             }
                         );
-                        dropzone.addEventListener('dropzone-drop', (ev) => {
+                        dropzone.addEventListener('sp-dropzone:drop', (ev) => {
                             // do something with ev.detail.dataTransfer
                             alert(
                                 'Uploading : ' +

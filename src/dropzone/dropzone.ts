@@ -19,6 +19,7 @@ import {
 } from 'lit-element';
 
 import dropzoneStyles from './dropzone.css';
+import { strictCustomEvent } from '../events';
 
 export type DropzoneEventDetail = DragEvent;
 
@@ -47,8 +48,8 @@ export class Dropzone extends LitElement {
     private debouncedDragLeave: number | null = null;
 
     public onDragOver(ev: DragEvent): void {
-        const shouldAcceptEvent = new CustomEvent<DropzoneEventDetail>(
-            'dropzone-should-accept',
+        const shouldAcceptEvent = strictCustomEvent(
+            'sp-dropzone:should-accept',
             {
                 bubbles: true,
                 cancelable: true,
@@ -73,14 +74,11 @@ export class Dropzone extends LitElement {
         this.isDragged = true;
 
         ev.dataTransfer.dropEffect = this.dropEffect;
-        const dragOverEvent = new CustomEvent<DropzoneEventDetail>(
-            'dropzone-dragover',
-            {
-                bubbles: true,
-                composed: true,
-                detail: ev,
-            }
-        );
+        const dragOverEvent = strictCustomEvent('sp-dropzone:dragover', {
+            bubbles: true,
+            composed: true,
+            detail: ev,
+        });
         this.dispatchEvent(dragOverEvent);
     }
 
@@ -92,14 +90,11 @@ export class Dropzone extends LitElement {
                 this.isDragged = false;
             }
 
-            const dragLeave = new CustomEvent<DropzoneEventDetail>(
-                'dropzone-dragleave',
-                {
-                    bubbles: true,
-                    composed: true,
-                    detail: ev,
-                }
-            );
+            const dragLeave = strictCustomEvent('sp-dropzone:dragleave', {
+                bubbles: true,
+                composed: true,
+                detail: ev,
+            });
             this.dispatchEvent(dragLeave);
         }, 100);
     }
@@ -112,14 +107,11 @@ export class Dropzone extends LitElement {
         if (this.isDragged) {
             this.isDragged = false;
         }
-        const dropEvent = new CustomEvent<DropzoneEventDetail>(
-            'dropzone-drop',
-            {
-                bubbles: true,
-                composed: true,
-                detail: ev,
-            }
-        );
+        const dropEvent = strictCustomEvent('sp-dropzone:drop', {
+            bubbles: true,
+            composed: true,
+            detail: ev,
+        });
         this.dispatchEvent(dropEvent);
     }
 
@@ -141,5 +133,14 @@ export class Dropzone extends LitElement {
             clearTimeout(this.debouncedDragLeave);
             this.debouncedDragLeave = null;
         }
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-dropzone:should-accept': CustomEvent<DragEvent>;
+        'sp-dropzone:dragover': CustomEvent<DragEvent>;
+        'sp-dropzone:dragleave': CustomEvent<DragEvent>;
+        'sp-dropzone:drop': CustomEvent<DragEvent>;
     }
 }

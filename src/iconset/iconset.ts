@@ -70,7 +70,9 @@ export abstract class Iconset extends LitElement {
     /**
      * On updated we register the iconset if we're not already registered
      */
-    public updated(): void {
+    public connectedCallback(): void {
+        super.connectedCallback();
+
         if (!this.name || this.registered) {
             return;
         }

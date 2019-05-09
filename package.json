@@ -45,7 +45,7 @@
         "prismjs": "^1.15.0"
     },
     "devDependencies": {
-        "@adobe/es-modules-middleware": "^1.0.0",
+        "@adobe/es-modules-middleware": "~1.1.0",
         "@adobe/spectrum-css": "^2.9.0",
         "@babel/core": "^7.4.0",
         "@storybook/addon-knobs": "^5.0.5",
