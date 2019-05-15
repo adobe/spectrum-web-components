@@ -21,8 +21,9 @@ import {
 
 import sliderSkinStyles from './slider-skin.css';
 import sliderStyles from './slider.css';
+import { strictCustomEvent } from '../events';
 
-export type ISliderEventDetail = number;
+export type SliderEventDetail = number;
 
 export class Slider extends LitElement {
     public static is = 'sp-slider';
@@ -63,7 +64,7 @@ export class Slider extends LitElement {
 
         this.value = parseFloat(inputValue);
 
-        const inputEvent = new CustomEvent<ISliderEventDetail>('slider-input', {
+        const inputEvent = strictCustomEvent('sp-slider:input', {
             bubbles: true,
             composed: true,
             detail: this.value,
@@ -73,14 +74,11 @@ export class Slider extends LitElement {
     }
 
     public onChange(): void {
-        const changeEvent = new CustomEvent<ISliderEventDetail>(
-            'slider-change',
-            {
-                bubbles: true,
-                composed: true,
-                detail: this.value,
-            }
-        );
+        const changeEvent = strictCustomEvent('sp-slider:change', {
+            bubbles: true,
+            composed: true,
+            detail: this.value,
+        });
 
         this.dispatchEvent(changeEvent);
     }
@@ -150,5 +148,12 @@ export class Slider extends LitElement {
 
     private get handleStyle(): string {
         return `left: ${this.trackProgress * 100}%`;
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-slider:input': CustomEvent<SliderEventDetail>;
+        'sp-slider:change': CustomEvent<SliderEventDetail>;
     }
 }

@@ -21,11 +21,12 @@ import {
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
 import {
-    PopoverCloseDetail,
-    PopoverOpenDetail,
+    OverlayCloseDetail,
+    OverlayOpenDetail,
     TriggerInteractions,
     Placement,
 } from '../overlay-root';
+import { strictCustomEvent } from '../events.js';
 
 export class OverlayTrigger extends LitElement {
     public static is = 'overlay-trigger';
@@ -44,19 +45,19 @@ export class OverlayTrigger extends LitElement {
 
     private hoverContent?: HTMLElement;
 
-    public onPopoverOpen(ev: Event, interaction: TriggerInteractions): void {
+    public onOverlayOpen(ev: Event, interaction: TriggerInteractions): void {
         const isClick = interaction === 'click';
-        const popoverElement = isClick ? this.clickContent : this.hoverContent;
-        const delayAttribute = popoverElement
-            ? popoverElement.getAttribute('delay')
+        const overlayElement = isClick ? this.clickContent : this.hoverContent;
+        const delayAttribute = overlayElement
+            ? overlayElement.getAttribute('delay')
             : null;
         const delay = delayAttribute ? parseFloat(delayAttribute) : 0;
 
-        if (!popoverElement) {
+        if (!overlayElement) {
             return;
         }
-        const popoverOpenDetail: PopoverOpenDetail = {
-            content: popoverElement,
+        const overlayOpenDetail: OverlayOpenDetail = {
+            content: overlayElement,
             delay: delay,
             offset: this.offset,
             placement: this.placement,
@@ -64,57 +65,51 @@ export class OverlayTrigger extends LitElement {
             interaction: interaction,
         };
 
-        const popoverOpenEvent = new CustomEvent<PopoverOpenDetail>(
-            'popover-open',
-            {
-                bubbles: true,
-                composed: true,
-                detail: popoverOpenDetail,
-            }
-        );
+        const overlayOpenEvent = strictCustomEvent('sp-overlay:open', {
+            bubbles: true,
+            composed: true,
+            detail: overlayOpenDetail,
+        });
 
-        this.dispatchEvent(popoverOpenEvent);
+        this.dispatchEvent(overlayOpenEvent);
     }
 
-    public onPopoverClose(ev: Event, interaction: TriggerInteractions): void {
+    public onOverlayClose(ev: Event, interaction: TriggerInteractions): void {
         const isClick = interaction === 'click';
-        const popoverElement = isClick ? this.clickContent : this.hoverContent;
+        const overlayElement = isClick ? this.clickContent : this.hoverContent;
 
-        if (!popoverElement) {
+        if (!overlayElement) {
             return;
         }
 
-        const popoverCloseDetail: PopoverCloseDetail = {
-            content: popoverElement,
+        const overlayCloseDetail: OverlayCloseDetail = {
+            content: overlayElement,
         };
 
-        const popoverCloseEvent = new CustomEvent<PopoverCloseDetail>(
-            'popover-close',
-            {
-                bubbles: true,
-                composed: true,
-                detail: popoverCloseDetail,
-            }
-        );
+        const overlayCloseEvent = strictCustomEvent('sp-overlay:close', {
+            bubbles: true,
+            composed: true,
+            detail: overlayCloseDetail,
+        });
 
-        this.dispatchEvent(popoverCloseEvent);
+        this.dispatchEvent(overlayCloseEvent);
     }
 
     public onTriggerClick(ev: Event): void {
         if (this.clickContent) {
-            this.onPopoverOpen(ev, 'click');
+            this.onOverlayOpen(ev, 'click');
         }
     }
 
     public onTriggerMouseOver(ev: Event): void {
         if (this.hoverContent) {
-            this.onPopoverOpen(ev, 'hover');
+            this.onOverlayOpen(ev, 'hover');
         }
     }
 
     public onTriggerMouseLeave(ev: Event): void {
         if (this.hoverContent) {
-            this.onPopoverClose(ev, 'hover');
+            this.onOverlayClose(ev, 'hover');
         }
     }
 

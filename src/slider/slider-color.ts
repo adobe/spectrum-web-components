@@ -22,8 +22,9 @@ import {
 import sliderColorStyles from './slider-color.css';
 import sliderSkinStyles from './slider-skin.css';
 import sliderStyles from './slider.css';
+import { strictCustomEvent } from '../events';
 
-export type ISliderColorEventDetail = number;
+export type SliderColorEventDetail = number;
 
 export class SliderColor extends LitElement {
     public static is = 'sp-slider-color';
@@ -64,27 +65,21 @@ export class SliderColor extends LitElement {
 
         this.value = parseFloat(inputValue);
 
-        const inputEvent = new CustomEvent<ISliderColorEventDetail>(
-            'slider-input',
-            {
-                bubbles: true,
-                composed: true,
-                detail: this.value,
-            }
-        );
+        const inputEvent = strictCustomEvent('sp-slider-color:input', {
+            bubbles: true,
+            composed: true,
+            detail: this.value,
+        });
 
         this.dispatchEvent(inputEvent);
     }
 
     public onChange(): void {
-        const changeEvent = new CustomEvent<ISliderColorEventDetail>(
-            'slider-change',
-            {
-                bubbles: true,
-                composed: true,
-                detail: this.value,
-            }
-        );
+        const changeEvent = strictCustomEvent('sp-slider-color:change', {
+            bubbles: true,
+            composed: true,
+            detail: this.value,
+        });
 
         this.dispatchEvent(changeEvent);
     }
@@ -132,5 +127,12 @@ export class SliderColor extends LitElement {
 
     private get handleStyle(): string {
         return `left: ${this.trackProgress * 100}%`;
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-slider-color:input': CustomEvent<SliderColorEventDetail>;
+        'sp-slider-color:change': CustomEvent<SliderColorEventDetail>;
     }
 }
