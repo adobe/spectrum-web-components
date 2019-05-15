@@ -10,23 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, property } from 'lit-element';
-import ButtonBase from './button-base';
-import buttonStyles from './button.css';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
-export class Button extends ButtonBase {
-    public static is = 'sp-button';
+import sidenavItemStyles from './sidenav-item.css';
+import sidenavHeadingStyles from './sidenav-heading.css';
+
+export class SideNavHeading extends LitElement {
+    public static readonly is = 'sp-sidenav-heading';
 
     @property({ reflect: true })
-    protected variant: string = 'cta';
-
-    @property({ type: Boolean, reflect: true })
-    protected warning: boolean = false;
-
-    @property({ type: Boolean, reflect: true })
-    protected quiet: boolean = false;
+    public label = '';
 
     public static get styles(): CSSResultArray {
-        return [buttonStyles];
+        return [sidenavItemStyles, sidenavHeadingStyles];
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            <h2 id="heading">${this.label}</h2>
+            <ul id="list" aria-labelledby="heading">
+                <slot></slot>
+            </ul>
+        `;
     }
 }

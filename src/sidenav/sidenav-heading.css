@@ -10,15 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import secondaryButtonStyles from './button-secondary.css';
+@import './spectrum-sidenav-heading.css';
 
-import { Button } from './button';
-import { CSSResultArray } from 'lit-element';
-
-export class ButtonSecondary extends Button {
-    public static is = 'sp-button-secondary';
-
-    public static get styles(): CSSResultArray {
-        return [...super.styles, secondaryButtonStyles];
-    }
+:host {
+    display: block;
 }

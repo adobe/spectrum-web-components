@@ -10,23 +10,25 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, property } from 'lit-element';
-import ButtonBase from './button-base';
-import buttonStyles from './button.css';
+:host {
+    display: block;
+    width: 240px;
 
-export class Button extends ButtonBase {
-    public static is = 'sp-button';
+    --spectrum-web-component-sidenav-font-weight: var(
+        --spectrum-sidenav-item-font-weight,
+        400
+    );
+}
 
-    @property({ reflect: true })
-    protected variant: string = 'cta';
+:host([variant='multilevel']) {
+    --spectrum-web-component-sidenav-font-weight: var(
+        --spectrum-sidenav-multilevel-main-item-font-weight,
+        700
+    );
+}
 
-    @property({ type: Boolean, reflect: true })
-    protected warning: boolean = false;
-
-    @property({ type: Boolean, reflect: true })
-    protected quiet: boolean = false;
-
-    public static get styles(): CSSResultArray {
-        return [buttonStyles];
-    }
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
