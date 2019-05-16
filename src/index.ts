@@ -29,5 +29,6 @@ export * from './overlay-trigger';
 export * from './popover';
 
 export * from './define';
+export * from './events';
 
 // NOTE: we do not export demo-page because it has dependencies on other modules we don't want to force on users

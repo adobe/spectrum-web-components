@@ -40,9 +40,12 @@
                         const opacitySlider = document.getElementById(
                             'opacity-slider'
                         );
-                        opacitySlider.addEventListener('slider-input', (ev) => {
-                            console.log(ev.detail);
-                        });
+                        opacitySlider.addEventListener(
+                            'sp-slider:input',
+                            (ev) => {
+                                console.log(ev.detail);
+                            }
+                        );
                     </script>
                 </div>
                 <div class="slider-demo" slot="demo">
@@ -74,9 +77,12 @@
                         const colorSlider = document.getElementById(
                             'color-slider'
                         );
-                        colorSlider.addEventListener('slider-change', (ev) => {
-                            console.log(ev.detail);
-                        });
+                        colorSlider.addEventListener(
+                            'sp-slider-color:change',
+                            (ev) => {
+                                console.log(ev.detail);
+                            }
+                        );
                     </script>
                 </div>
                 <div class="slider-demo" slot="demo">

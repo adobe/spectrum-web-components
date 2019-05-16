@@ -23,12 +23,13 @@ import {
 import overlayStyles from './overlay-root.css.js';
 
 import calculatePosition, { PositionResult } from './calculate-position';
+import { strictCustomEvent, StrictCustomEvent } from '../events.js';
 
 export type TriggerInteractions = 'click' | 'hover';
 
 export type Placement = 'top' | 'right' | 'bottom' | 'left';
 
-export interface PopoverOpenDetail {
+export interface OverlayOpenDetail {
     content: HTMLElement;
     delay: number;
     offset: number;
@@ -37,7 +38,7 @@ export interface PopoverOpenDetail {
     interaction: TriggerInteractions;
 }
 
-export interface PopoverCloseDetail {
+export interface OverlayCloseDetail {
     content: HTMLElement;
 }
 
@@ -104,7 +105,7 @@ export class OverlayRoot extends LitElement {
 
         this.removeOverlay();
 
-        const clickOutEvent = new CustomEvent('overlay-click-out', {
+        const clickOutEvent = strictCustomEvent('sp-overlay:click-out', {
             bubbles: true,
             composed: true,
             detail: ev,
@@ -114,7 +115,7 @@ export class OverlayRoot extends LitElement {
         this.visible = false;
     }
 
-    public onPopoverOpen(ev: CustomEvent<PopoverOpenDetail>): void {
+    public onOverlayOpen(ev: StrictCustomEvent<'sp-overlay:open'>): void {
         if (this.active) {
             return;
         }
@@ -132,7 +133,7 @@ export class OverlayRoot extends LitElement {
         }, ev.detail.delay);
     }
 
-    public onPopoverClose(ev: CustomEvent<PopoverCloseDetail>): void {
+    public onOverlayClose(ev: StrictCustomEvent<'sp-overlay:close'>): void {
         if (this.timeout) {
             clearTimeout(this.timeout);
         }
@@ -153,8 +154,8 @@ export class OverlayRoot extends LitElement {
 
         return html`
             <slot
-                @popover-open=${this.onPopoverOpen}
-                @popover-close=${this.onPopoverClose}
+                @sp-overlay:open=${this.onOverlayOpen}
+                @sp-overlay:close=${this.onOverlayClose}
                 @click=${maskClickListener}
             ></slot>
             <div
@@ -192,7 +193,7 @@ export class OverlayRoot extends LitElement {
         }
     }
 
-    private extractEventDetail(ev: CustomEvent<PopoverOpenDetail>): void {
+    private extractEventDetail(ev: CustomEvent<OverlayOpenDetail>): void {
         this.overlayContent = ev.detail.content;
         this.trigger = ev.detail.trigger;
         this.placement = ev.detail.placement;
@@ -236,5 +237,13 @@ export class OverlayRoot extends LitElement {
         }
 
         return '';
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-overlay:click-out': CustomEvent<Event>;
+        'sp-overlay:open': CustomEvent<OverlayOpenDetail>;
+        'sp-overlay:close': CustomEvent<OverlayCloseDetail>;
     }
 }
