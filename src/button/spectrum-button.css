@@ -145,7 +145,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tool:disabled */
     cursor: default;
 }
-.spectrum-Icon {
+::slotted([slot='icon']) {
     /* .spectrum-Button .spectrum-Icon,
    * .spectrum-ActionButton .spectrum-Icon,
    * .spectrum-LogicButton .spectrum-Icon,
@@ -162,14 +162,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Button:active */
     box-shadow: none;
 }
-.spectrum-Icon + #label {
+slot[name='icon'] + #label {
     /* .spectrum-Button .spectrum-Icon + .spectrum-Button-label */
     margin-left: var(
         --spectrum-button-primary-text-gap,
         var(--spectrum-global-dimension-size-100)
     );
 }
-#label + .spectrum-Icon {
+#label + slot[name='icon'] {
     /* .spectrum-Button .spectrum-Button-label + .spectrum-Icon */
     margin-left: calc(
         var(

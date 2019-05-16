@@ -12,10 +12,11 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { action } from '@storybook/addon-actions';
+import * as MediumIcons from '../lib/icons/icons-medium.js';
 
-import { defineCustomElements, Button } from '../lib';
+import { defineCustomElements, Button, Icon } from '../lib';
 
-defineCustomElements(Button);
+defineCustomElements(Button, Icon, ...Object.values(MediumIcons));
 
 storiesOf('Button', module)
     .add('Default', () => {
@@ -53,6 +54,54 @@ storiesOf('Button', module)
             warning: 'true',
         });
     })
+    .add('with icon', () => {
+        return html`
+            <sp-icons-medium></sp-icons-medium>
+            <style>
+                .row {
+                    padding: 10px;
+                }
+            </style>
+            <div class="row">
+                ${renderButtonPair({
+                    variant: 'primary',
+                    content: html`
+                        <sp-icon
+                            slot="icon"
+                            size="m"
+                            name="ui:HelpMedium"
+                        ></sp-icon>
+                        Help
+                    `,
+                })}
+            </div>
+            <div class="row">
+                ${renderButtonPair({
+                    variant: 'primary',
+                    content: html`
+                        <svg
+                            slot="icon"
+                            viewBox="0 0 36 36"
+                            focusable="false"
+                            aria-hidden="true"
+                            role="img"
+                        >
+                            <path
+                                d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+                            ></path>
+                        </svg>
+                        Custom SVG
+                    `,
+                })}
+            </div>
+        `;
+        return renderButtonPair({
+            variant: 'primary',
+            content: html`
+                <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
+            `,
+        });
+    })
     .add('min-width button', () => {
         return html`
             <div>
@@ -78,7 +127,7 @@ function renderButton(properties) {
                 .warning=${!!properties.warning}
                 @click=${action(`Click ${properties.variant}`)}
             >
-                Click Me
+                ${properties.content || 'Click Me'}
             </sp-button>
         `;
     } else {
@@ -89,7 +138,7 @@ function renderButton(properties) {
                 .warning=${!!properties.warning}
                 @click=${action(`Click ${properties.variant}`)}
             >
-                Click Me
+                ${properties.content || 'Click Me'}
             </sp-button>
         `;
     }

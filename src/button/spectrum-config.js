@@ -60,6 +60,12 @@ module.exports = {
                 },
             ],
             ids: ['.spectrum-Button-label'],
+            slots: [
+                {
+                    name: 'icon',
+                    selector: '.spectrum-Icon',
+                },
+            ],
             selectorTransforms: customSelectorTransforms,
         },
         {

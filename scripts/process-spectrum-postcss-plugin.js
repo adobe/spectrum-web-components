@@ -82,6 +82,34 @@ class SpectrumProcessor {
             }
         }
 
+        // Map classes to slotted content
+        // e.g. ".spectrum-Icon" -> "::slotted([slot='icon'])"
+        if (this.component.slots) {
+            for (const slot of this.component.slots) {
+                const slotName = slot.name || this.stripHostFromSelector(slot);
+                if (slotName) {
+                    const selectorRegex = this.regexForClassSelector(slot);
+                    const slotSelector = `slot[name="${slotName}"]`;
+                    const slottedSelector = `::slotted([slot="${slotName}"])`;
+                    transformations.push((selector) => {
+                        if (this.selectorHasCombinator(selector)) {
+                            // Compound selectors will need to refer to the
+                            // slot itself
+                            return selector.replace(
+                                selectorRegex,
+                                slotSelector
+                            );
+                        } else {
+                            return selector.replace(
+                                selectorRegex,
+                                slottedSelector
+                            );
+                        }
+                    });
+                }
+            }
+        }
+
         // Map classes to attributes
         if (this.component.attributes) {
             for (const attribute of this.component.attributes) {
@@ -286,6 +314,13 @@ class SpectrumProcessor {
             return;
         }
         return match[1];
+    }
+
+    selectorHasCombinator(selector) {
+        // Check if this selector has a combinator (e.g. a > b). Because
+        // postcss splits the selectors on ',' we know we won't hit one.
+        // therefore we can just look for a space or an operator
+        return /[\s\>~+]/.test(selector);
     }
 
     addHostToSelector(selector) {

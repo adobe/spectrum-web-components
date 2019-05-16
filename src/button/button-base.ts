@@ -41,11 +41,19 @@ export default class ButtonBase extends LitElement {
         return 0;
     }
 
+    private get hasIcon(): boolean {
+        return !!this.querySelector('[slot="icon"]');
+    }
+
     protected render(): TemplateResult {
         return html`
             <button tabindex="${this.shadowButtonTabIndex}" id="button">
-                <div id="icon"><slot name="icon"></slot></div>
-                <span id="label"><slot></slot></span>
+                ${this.hasIcon
+                    ? html`
+                          <slot name="icon"></slot>
+                      `
+                    : undefined}
+                <div id="label"><slot></slot></div>
             </button>
         `;
     }

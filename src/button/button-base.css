@@ -34,3 +34,10 @@ governing permissions and limitations under the License.
 :host([disabled]) {
     pointer-events: none;
 }
+
+slot[name='icon']::slotted(svg) {
+    fill: currentColor;
+    stroke: currentColor;
+    width: var(--spectrum-alias-workflow-icon-size, 18px);
+    height: var(--spectrum-alias-workflow-icon-size, 18px);
+}
