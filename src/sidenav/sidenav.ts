@@ -18,6 +18,7 @@ import {
     property,
 } from 'lit-element';
 
+import { StrictCustomEvent } from '../events';
 import sidenavStyles from './sidenav.css';
 
 export interface SidenavSelectDetail {
@@ -34,7 +35,7 @@ export class SideNav extends LitElement {
     @property({ reflect: true })
     public value: string | undefined = undefined;
 
-    private handleSelect(ev: CustomEvent<SidenavSelectDetail>): void {
+    private handleSelect(ev: StrictCustomEvent<'sp-sidenav:select'>): void {
         this.value = ev.detail.value;
     }
 
@@ -46,5 +47,11 @@ export class SideNav extends LitElement {
                 </ul>
             </nav>
         `;
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-sidenav:select': CustomEvent<SidenavSelectDetail>;
     }
 }

@@ -131,8 +131,10 @@ class SpectrumProcessor {
                         return result;
                     });
                 } else if (attribute.type === 'enum') {
-                    for (const selector of attribute.selectors) {
-                        const attrName = this.stripHostFromSelector(selector);
+                    for (const value of attribute.values) {
+                        const selector = value.selector || value;
+                        const attrName =
+                            value.name || this.stripHostFromSelector(selector);
                         const selectorExpr = this.regexForHostSelector(
                             selector
                         );

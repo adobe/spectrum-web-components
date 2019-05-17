@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, query, TemplateResult } from 'lit-element';
+import { html, query, TemplateResult, PropertyValues } from 'lit-element';
 
 import { Iconset } from './iconset';
 
@@ -24,13 +24,13 @@ export class IconsetSVG extends Iconset {
     /**
      * First updated handler just ensures we've processed any slotted symbols
      */
-    public updated(): void {
+    public updated(changedProperties: PropertyValues): void {
         if (!this.slotContainer) {
             return;
         }
         const currentSVGNodes = this.getSVGNodes(this.slotContainer);
         this.updateSVG(currentSVGNodes);
-        super.updated();
+        super.updated(changedProperties);
     }
     /**
      * Applies the requested icon from this iconset instance to the given element.

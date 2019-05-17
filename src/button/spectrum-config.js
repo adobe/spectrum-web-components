@@ -40,20 +40,19 @@ module.exports = {
                 },
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Button--warning',
-                },
-                {
-                    type: 'boolean',
                     selector: ':disabled',
                 },
                 {
                     type: 'enum',
                     name: 'variant',
-                    selectors: [
+                    values: [
                         '.spectrum-Button--cta',
                         '.spectrum-Button--primary',
                         '.spectrum-Button--secondary',
-                        '.spectrum-Button--warning',
+                        {
+                            name: 'negative',
+                            selector: '.spectrum-Button--warning',
+                        },
                         '.spectrum-Button--overBackground',
                         '.spectrum-Button--secondary',
                     ],
@@ -66,6 +65,7 @@ module.exports = {
                     selector: '.spectrum-Icon',
                 },
             ],
+            exclude: [/^\.is-disabled/],
             selectorTransforms: customSelectorTransforms,
         },
         {

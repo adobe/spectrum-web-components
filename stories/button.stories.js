@@ -37,6 +37,11 @@ storiesOf('Button', module)
             variant: 'secondary',
         });
     })
+    .add('variant: negative', () => {
+        return renderButtonPair({
+            variant: 'negative',
+        });
+    })
     .add('variant: overBackground', () => {
         return html`
             <div
@@ -48,11 +53,35 @@ storiesOf('Button', module)
             </div>
         `;
     })
-    .add('attribute: warning', () => {
+    .add('attribute: quiet, variant: primary', () => {
         return renderButtonPair({
-            variant: 'cta',
-            warning: 'true',
+            variant: 'primary',
+            quiet: true,
         });
+    })
+    .add('attribute: quiet, variant: secondary', () => {
+        return renderButtonPair({
+            variant: 'secondary',
+            quiet: true,
+        });
+    })
+    .add('attribute: quiet, variant: negative', () => {
+        return renderButtonPair({
+            variant: 'negative',
+            quiet: true,
+        });
+    })
+    .add('attribute: quiet, variant: overBackground', () => {
+        return html`
+            <div
+                style='background-color: rgb(15, 121, 125); color: rgb(15, 121, 125); padding: 15px 20px; display: "inline-block"'
+            >
+                ${renderButtonPair({
+                    variant: 'overBackground',
+                    quiet: true,
+                })}
+            </div>
+        `;
     })
     .add('with icon', () => {
         return html`
@@ -122,9 +151,8 @@ function renderButton(properties) {
         return html`
             <sp-button
                 variant="${properties.variant}"
-                .quiet="${!!properties.quiet}"
-                .disabled=${!!properties.disabled}
-                .warning=${!!properties.warning}
+                ?quiet="${!!properties.quiet}"
+                ?disabled=${!!properties.disabled}
                 @click=${action(`Click ${properties.variant}`)}
             >
                 ${properties.content || 'Click Me'}
@@ -133,9 +161,8 @@ function renderButton(properties) {
     } else {
         return html`
             <sp-button
-                .quiet="${!!properties.quiet}"
-                .disabled=${!!properties.disabled}
-                .warning=${!!properties.warning}
+                ?quiet="${!!properties.quiet}"
+                ?disabled=${!!properties.disabled}
                 @click=${action(`Click ${properties.variant}`)}
             >
                 ${properties.content || 'Click Me'}

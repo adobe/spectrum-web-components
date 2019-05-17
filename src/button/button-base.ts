@@ -23,7 +23,7 @@ export default class ButtonBase extends LitElement {
         super();
         this.addEventListener('focus', () => {
             if (this.shadowRoot) {
-                let button: HTMLElement | null = this.shadowRoot.querySelector(
+                let button = this.shadowRoot.querySelector<HTMLButtonElement>(
                     '#button'
                 );
                 if (button) button.focus();

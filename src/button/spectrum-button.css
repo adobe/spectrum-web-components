@@ -417,7 +417,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-500)
     );
 }
-:host([warning]) #button {
+:host([variant='negative']) #button {
     /* .spectrum-Button--warning */
     background-color: var(
         --spectrum-button-warning-background-color,
@@ -432,7 +432,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-red-600)
     );
 }
-:host([warning]:hover) #button {
+:host([variant='negative']:hover) #button {
     /* .spectrum-Button--warning:hover */
     background-color: var(
         --spectrum-button-warning-background-color-hover,
@@ -447,7 +447,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-50)
     );
 }
-:host([warning]) #button:focus {
+:host([variant='negative']) #button:focus {
     /* .spectrum-Button--warning.focus-ring */
     background-color: var(
         --spectrum-button-warning-background-color-key-focus,
@@ -462,7 +462,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([warning]:active) #button {
+:host([variant='negative']:active) #button {
     /* .spectrum-Button--warning:active */
     background-color: var(
         --spectrum-button-warning-background-color-down,
@@ -477,8 +477,8 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-50)
     );
 }
-:host([warning][disabled]) #button,
-:host([warning].is-disabled) #button {
+:host([variant='negative'][disabled]) #button,
+:host([variant='negative'].is-disabled) #button {
     /* .spectrum-Button--warning:disabled,
    * .spectrum-Button--warning.is-disabled */
     background-color: var(
@@ -810,7 +810,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-500)
     );
 }
-:host([warning][quiet]) #button {
+:host([variant='negative'][quiet]) #button {
     /* .spectrum-Button--warning.spectrum-Button--quiet */
     background-color: var(
         --spectrum-button-quiet-warning-background-color,
@@ -825,7 +825,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-red-500)
     );
 }
-:host([warning][quiet]:hover) #button {
+:host([variant='negative'][quiet]:hover) #button {
     /* .spectrum-Button--warning.spectrum-Button--quiet:hover */
     background-color: var(
         --spectrum-button-quiet-warning-background-color-hover,
@@ -840,7 +840,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-red-600)
     );
 }
-:host([warning][quiet]) #button:focus {
+:host([variant='negative'][quiet]) #button:focus {
     /* .spectrum-Button--warning.spectrum-Button--quiet.focus-ring */
     background-color: var(
         --spectrum-button-quiet-warning-background-color-key-focus,
@@ -855,7 +855,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([warning][quiet]:active) #button {
+:host([variant='negative'][quiet]:active) #button {
     /* .spectrum-Button--warning.spectrum-Button--quiet:active */
     background-color: var(
         --spectrum-button-quiet-warning-background-color-down,
@@ -870,8 +870,8 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-red-600)
     );
 }
-:host([warning][quiet][disabled]) #button,
-:host([warning][quiet].is-disabled) #button {
+:host([variant='negative'][quiet][disabled]) #button,
+:host([variant='negative'][quiet].is-disabled) #button {
     /* .spectrum-Button--warning.spectrum-Button--quiet:disabled,
    * .spectrum-Button--warning.spectrum-Button--quiet.is-disabled */
     background-color: var(
