@@ -12,24 +12,19 @@ governing permissions and limitations under the License.
 
 import { CSSResultArray, property } from 'lit-element';
 import ButtonBase from './button-base';
-import buttonStyles from './button.css';
+import buttonStyles from './action-button.css';
 
-export class Button extends ButtonBase {
-    public static is = 'sp-button';
-
-    @property({ reflect: true })
-    protected variant:
-        | 'cta'
-        | 'overBackground'
-        | 'primary'
-        | 'secondary'
-        | 'negative' = 'cta';
-
-    @property({ type: Boolean, reflect: true })
-    protected warning: boolean = false;
+export class ActionButton extends ButtonBase {
+    public static is = 'sp-action-button';
 
     @property({ type: Boolean, reflect: true })
     protected quiet: boolean = false;
+
+    @property({ type: Boolean, reflect: true })
+    protected selected: boolean = false;
+
+    @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
+    protected holdAffordance: boolean = false;
 
     public static get styles(): CSSResultArray {
         return [buttonStyles];

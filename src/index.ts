@@ -21,6 +21,7 @@ export * from './slider';
 export * from './icon';
 export * from './icons';
 export * from './iconset';
+export * from './sidenav';
 export * from './tab';
 export * from './tab-list';
 export * from './overlay-root';
