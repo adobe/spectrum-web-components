@@ -13,7 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { action } from '@storybook/addon-actions';
 
-import { defineCustomElements, ActionButton } from '../lib';
+import { defineCustomElements, ActionButton } from 'spectrum-web-components';
 
 defineCustomElements(ActionButton);
 

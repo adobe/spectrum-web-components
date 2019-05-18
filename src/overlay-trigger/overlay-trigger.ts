@@ -18,7 +18,7 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import overlayTriggerStyles from './overlay-trigger.css.js';
+import overlayTriggerStyles from './overlay-trigger.css';
 
 import {
     OverlayCloseDetail,
@@ -26,7 +26,7 @@ import {
     TriggerInteractions,
     Placement,
 } from '../overlay-root';
-import { strictCustomEvent } from '../events.js';
+import { strictCustomEvent } from '../events';
 
 export class OverlayTrigger extends LitElement {
     public static is = 'overlay-trigger';

@@ -20,10 +20,10 @@ import {
     CSSResultArray,
 } from 'lit-element';
 
-import overlayStyles from './overlay-root.css.js';
+import overlayStyles from './overlay-root.css';
 
 import calculatePosition, { PositionResult } from './calculate-position';
-import { strictCustomEvent, StrictCustomEvent } from '../events.js';
+import { strictCustomEvent, StrictCustomEvent } from '../events';
 
 export type TriggerInteractions = 'click' | 'hover';
 

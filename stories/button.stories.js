@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { action } from '@storybook/addon-actions';
-import * as MediumIcons from '../lib/icons/icons-medium.js';
+import * as MediumIcons from 'spectrum-web-components/icons/icons-medium';
 
-import { defineCustomElements, Button, Icon } from '../lib';
+import { defineCustomElements, Button, Icon } from 'spectrum-web-components';
 
 defineCustomElements(Button, Icon, ...Object.values(MediumIcons));
 

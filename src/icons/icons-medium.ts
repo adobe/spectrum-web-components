@@ -14,7 +14,7 @@ import { TemplateResult } from 'lit-element';
 
 import { IconsetSVG } from '../iconset/iconset-svg';
 
-import iconsSVG from './icons-medium.svg.js';
+import iconsSVG from './icons-medium.svg';
 
 export class IconsMedium extends IconsetSVG {
     public static is = 'sp-icons-medium';
