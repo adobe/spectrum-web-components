@@ -121,9 +121,8 @@
         "ts-loader": "^6.0.0",
         "typedoc": "^0.14.2",
         "typescript": "^3.4.1",
+        "walker": "^1.0.7",
         "webpack-merge": "^4.2.1"
     },
-    "dependencies": {
-        "walker": "^1.0.7"
-    }
+    "dependencies": {}
 }
