@@ -40,8 +40,6 @@ Alternatively you can run [Storybook](https://storybook.js.org) through the comm
 npm run storybook
 ```
 
-It is suggested that you run `npm run watch` alongside this command to provide a live-reloading environment for development.
-
 ## Linting
 
 The project will be linted on a pre-commit hook, but you can also run the lint suite with `npm run lint`. It uses ESLint to lint the JS / TS files, and StyleLint to lint the CSS files.
