@@ -14,9 +14,5 @@ governing permissions and limitations under the License.
 import './styles.css';
 
 // import the components we'll use in this page
-import {
-    defineCustomElements,
-    ButtonPrimary,
-    ButtonSecondary,
-} from '../../lib';
-defineCustomElements(ButtonPrimary, ButtonSecondary);
+import { defineCustomElements, Button } from '../../lib';
+defineCustomElements(Button);
