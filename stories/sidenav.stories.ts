@@ -18,7 +18,7 @@ import {
     SideNav,
     SideNavItem,
     SideNavHeading,
-} from '../lib';
+} from '../src';
 
 defineCustomElements(SideNav, SideNavItem, SideNavHeading);
 

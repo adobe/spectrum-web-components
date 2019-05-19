@@ -10,7 +10,7 @@ if (module.hot) {
 }
 
 function loadStories() {
-    const req = require.context('../stories', true, /\.stories\.js$/);
+    const req = require.context('../stories', true, /\.stories\.ts$/);
     req.keys().forEach((filename) => req(filename));
 }
 

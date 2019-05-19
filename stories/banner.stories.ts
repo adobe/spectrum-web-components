@@ -13,7 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { withKnobs, boolean, radios, text } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
-import { defineCustomElements, Banner } from '../lib';
+import { defineCustomElements, Banner } from '../src';
 defineCustomElements(Banner);
 
 storiesOf('Banner', module)

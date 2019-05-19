@@ -14,5 +14,5 @@
         "lib": ["es2017", "dom", "dom.iterable"],
         "outDir": "lib"
     },
-    "include": ["./**/*.ts"]
+    "include": ["./src/**/*.ts"]
 }

@@ -13,7 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { action } from '@storybook/addon-actions';
 
-import { defineCustomElements, ActionButton } from '../lib';
+import { defineCustomElements, ActionButton } from '../src';
 
 defineCustomElements(ActionButton);
 
@@ -30,7 +30,7 @@ function renderButton(properties) {
             @click=${action(`Action`)}
         >
             Action
-        </sp-button>
+        </sp-action-button>
     `;
 }
 

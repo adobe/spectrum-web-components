@@ -14,7 +14,7 @@ import { TemplateResult } from 'lit-element';
 
 import { IconsetSVG } from '../iconset/iconset-svg';
 
-import iconsSVG from './icons-large.svg.js';
+import iconsSVG from './icons-large.svg';
 
 export class IconsLarge extends IconsetSVG {
     public static is = 'sp-icons-large';

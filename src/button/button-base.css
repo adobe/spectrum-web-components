@@ -14,7 +14,7 @@ governing permissions and limitations under the License.
     display: inline-flex;
     flex-direction: row;
 
-    /* spectrum-css uses `-webkit-appearance: button` to workaround an
+    /* spectrum-css uses "-webkit-appearance: button" to workaround an
      * iOS and Safari issue. However, it results in incorrect styling 
      * when applied in :host
      */
