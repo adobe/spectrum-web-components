@@ -30,7 +30,7 @@ function renderButton(properties) {
             @click=${action(`Action`)}
         >
             Action
-        </sp-button>
+        </sp-action-button>
     `;
 }
 
