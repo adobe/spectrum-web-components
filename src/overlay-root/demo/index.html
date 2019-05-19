@@ -10,7 +10,7 @@
             import {
                 defineCustomElements,
                 OverlayTrigger,
-                ButtonPrimary,
+                Button,
                 Popover,
                 Slider,
             } from '../../index.js';
@@ -22,7 +22,7 @@
             defineCustomElements(
                 ...Object.values(Elements),
                 ...Object.values(DemoElements),
-                ButtonPrimary,
+                Button,
                 OverlayTrigger,
                 Popover,
                 Slider
@@ -46,9 +46,9 @@
                     <overlay-root class="root">
                         <div class="root-content">
                             <overlay-trigger>
-                                <sp-button-primary slot="trigger">
+                                <sp-button variant="primary" slot="trigger">
                                     Bottom Popover
-                                </sp-button-primary>
+                                </sp-button>
                                 <sp-popover slot="click-content" bottom>
                                     <div class="options-popover-content">
                                         <sp-slider
@@ -88,9 +88,9 @@
                     <overlay-root class="root">
                         <div class="root-content">
                             <overlay-trigger placement="left">
-                                <sp-button-primary slot="trigger">
+                                <sp-button variant="primary" slot="trigger">
                                     Left Popover
-                                </sp-button-primary>
+                                </sp-button>
                                 <sp-popover slot="click-content" left>
                                     <div class="options-popover-content">
                                         <sp-slider
@@ -118,9 +118,9 @@
                                 </div>
                             </overlay-trigger>
                             <overlay-trigger placement="top">
-                                <sp-button-primary slot="trigger">
+                                <sp-button variant="primary" slot="trigger">
                                     Top Popover
-                                </sp-button-primary>
+                                </sp-button>
                                 <sp-popover slot="click-content" top>
                                     <div class="options-popover-content">
                                         <sp-slider
@@ -148,9 +148,9 @@
                                 </div>
                             </overlay-trigger>
                             <overlay-trigger placement="right">
-                                <sp-button-primary slot="trigger">
+                                <sp-button variant="primary" slot="trigger">
                                     Right Popover
-                                </sp-button-primary>
+                                </sp-button>
                                 <sp-popover slot="click-content" right>
                                     <div class="options-popover-content">
                                         <sp-slider
@@ -189,9 +189,9 @@
                     <overlay-root class="root">
                         <div class="root-content">
                             <overlay-trigger>
-                                <sp-button-primary slot="trigger">
+                                <sp-button variant="primary" slot="trigger">
                                     Bottom Popover
-                                </sp-button-primary>
+                                </sp-button>
                                 <sp-popover slot="click-content" bottom>
                                     <div class="options-popover-content">
                                         <overlay-root class="nested-root">
@@ -203,11 +203,12 @@
                                                 class="marker-size-slider"
                                             ></sp-slider>
                                             <overlay-trigger placement="left">
-                                                <sp-button-primary
+                                                <sp-button
+                                                    variant="primary"
                                                     slot="trigger"
                                                 >
                                                     Nest is Best
-                                                </sp-button-primary>
+                                                </sp-button>
                                                 <sp-popover
                                                     slot="click-content"
                                                     left
@@ -228,11 +229,12 @@
                                                             <overlay-trigger
                                                                 placement="bottom"
                                                             >
-                                                                <sp-button-primary
+                                                                <sp-button
+                                                                    variant="primary"
                                                                     slot="trigger"
                                                                 >
                                                                     Nest is Best
-                                                                </sp-button-primary>
+                                                                </sp-button>
                                                                 <sp-popover
                                                                     slot="click-content"
                                                                     bottom
