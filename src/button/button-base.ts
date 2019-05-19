@@ -19,7 +19,7 @@ export default class ButtonBase extends LitElement {
     @property()
     protected href: string | undefined = undefined;
 
-    protected constructor() {
+    public constructor() {
         super();
         this.addEventListener('focus', () => {
             if (this.shadowRoot) {

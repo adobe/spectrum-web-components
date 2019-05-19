@@ -18,7 +18,7 @@ import {
     SideNav,
     SideNavItem,
     SideNavHeading,
-} from 'spectrum-web-components';
+} from '../src';
 
 defineCustomElements(SideNav, SideNavItem, SideNavHeading);
 

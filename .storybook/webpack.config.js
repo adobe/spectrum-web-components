@@ -13,9 +13,6 @@ module.exports = ({ config }) => {
 
     const result = merge(config, {
         resolve: {
-            alias: {
-                'spectrum-web-components': srcPath,
-            },
             extensions: ['.js', '.ts'],
         },
         module: {
