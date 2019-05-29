@@ -82,6 +82,24 @@ class SpectrumProcessor {
             }
         }
 
+        // Map shadow DOM classes to new classes
+        // e.g. ".spectrum-Slider-track" -> ".track"
+        if (this.component.classes) {
+            for (const classItem of this.component.classes) {
+                const className =
+                    classItem.name || this.stripHostFromSelector(classItem);
+                if (className) {
+                    const classSelector = `.${className}`;
+                    transformations.push((selector) =>
+                        selector.replace(
+                            this.regexForClassSelector(classItem),
+                            classSelector
+                        )
+                    );
+                }
+            }
+        }
+
         // Map classes to slotted content
         // e.g. ".spectrum-Icon" -> "::slotted([slot='icon'])"
         if (this.component.slots) {
