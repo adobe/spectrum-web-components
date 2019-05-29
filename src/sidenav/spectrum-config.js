@@ -57,7 +57,10 @@ module.exports = {
         },
         {
             name: 'sidenav-heading',
-            host: '.spectrum-SideNav-heading',
+            host: {
+                selector: '.spectrum-SideNav-heading',
+                shadowSelector: '#heading',
+            },
             ids: [
                 {
                     // Headings also inherit from .spectrum-SideNav
@@ -69,10 +72,6 @@ module.exports = {
                     selector: '.spectrum-SideNav',
                     name: 'list',
                 },
-            ],
-            selectorTransforms: [
-                // Shift the rules from :host to #heading
-                (selector) => (selector === ':host' ? '#heading' : selector),
             ],
         },
     ],
