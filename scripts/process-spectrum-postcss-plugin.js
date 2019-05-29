@@ -14,7 +14,6 @@ const postcss = require('postcss');
 const { re } = require('re-template-tag');
 const path = require('path');
 const fs = require('fs');
-const _ = require('lodash');
 const parser = require('postcss-selector-parser');
 
 const astProcessor = parser();
@@ -161,6 +160,9 @@ class SpectrumProcessor {
             return result;
         });
 
+        // Convert instances of the .focus-ring selector to a :focus
+        // pseudo selector.
+        // e.g. ".spectrum-Button.focus-ring" => ".spectrum-Button:focus"
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
             result.walkClasses((selector) => {
@@ -406,7 +408,7 @@ class SpectrumProcessor {
     }
 
     /**
-     * Return true if the selector as a combinator operator in it
+     * Return true if the selector has a combinator operator in it
      *
      * @param {string} selector - Selector to check
      * @return {string} True if there is a combinator
@@ -467,7 +469,7 @@ module.exports = postcss.plugin('postcss-process-spectrum', (opts) => {
 
 class ComponentConfig {
     constructor(config) {
-        _.assign(this, _.cloneDeep(config));
+        Object.assign(this, config);
         this.processor = parser();
         this._normalize();
     }
