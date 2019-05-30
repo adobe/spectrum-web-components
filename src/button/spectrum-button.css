@@ -156,8 +156,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -ms-flex-negative: 0;
     flex-shrink: 0;
 }
-:host(:hover) #button,
-:host(:active) #button {
+#button:hover,
+#button:active {
     /* .spectrum-Button:hover,
    * .spectrum-Button:active */
     box-shadow: none;
@@ -196,7 +196,7 @@ slot[name='icon'] + #label {
    * .spectrum-Button-label:empty */
     display: none;
 }
-:host(:active) #button {
+#button:active {
     /* .spectrum-Button:active */
     /* Override focus -- clicking with spacebar should not show outline */
     box-shadow: none;
@@ -210,7 +210,7 @@ slot[name='icon'] + #label {
     border-color: var(--spectrum-button-cta-border-color, rgb(20, 115, 230));
     color: var(--spectrum-button-cta-text-color, rgb(255, 255, 255));
 }
-:host([variant='cta']:hover) #button {
+:host([variant='cta']) #button:hover {
     /* .spectrum-Button--cta:hover */
     background-color: var(
         --spectrum-button-cta-background-color-hover,
@@ -234,7 +234,7 @@ slot[name='icon'] + #label {
     );
     color: var(--spectrum-button-cta-text-color-key-focus, rgb(255, 255, 255));
 }
-:host([variant='cta']:active) #button {
+:host([variant='cta']) #button:active {
     /* .spectrum-Button--cta:active */
     background-color: var(
         --spectrum-button-cta-background-color-down,
@@ -246,8 +246,7 @@ slot[name='icon'] + #label {
     );
     color: var(--spectrum-button-cta-text-color-down, rgb(255, 255, 255));
 }
-:host([variant='cta'][disabled]) #button,
-:host([variant='cta'].is-disabled) #button {
+:host([variant='cta'][disabled]) #button {
     /* .spectrum-Button--cta:disabled,
    * .spectrum-Button--cta.is-disabled */
     background-color: var(
@@ -278,7 +277,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([variant='primary']:hover) #button {
+:host([variant='primary']) #button:hover {
     /* .spectrum-Button--primary:hover */
     background-color: var(
         --spectrum-button-primary-background-color-hover,
@@ -308,7 +307,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([variant='primary']:active) #button {
+:host([variant='primary']) #button:active {
     /* .spectrum-Button--primary:active */
     background-color: var(
         --spectrum-button-primary-background-color-down,
@@ -323,8 +322,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-50)
     );
 }
-:host([variant='primary'][disabled]) #button,
-:host([variant='primary'].is-disabled) #button {
+:host([variant='primary'][disabled]) #button {
     /* .spectrum-Button--primary:disabled,
    * .spectrum-Button--primary.is-disabled */
     background-color: var(
@@ -355,7 +353,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-700)
     );
 }
-:host([variant='secondary']:hover) #button {
+:host([variant='secondary']) #button:hover {
     /* .spectrum-Button--secondary:hover */
     background-color: var(
         --spectrum-button-secondary-background-color-hover,
@@ -385,7 +383,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([variant='secondary']:active) #button {
+:host([variant='secondary']) #button:active {
     /* .spectrum-Button--secondary:active */
     background-color: var(
         --spectrum-button-secondary-background-color-down,
@@ -400,8 +398,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-50)
     );
 }
-:host([variant='secondary'][disabled]) #button,
-:host([variant='secondary'].is-disabled) #button {
+:host([variant='secondary'][disabled]) #button {
     /* .spectrum-Button--secondary:disabled,
    * .spectrum-Button--secondary.is-disabled */
     background-color: var(
@@ -432,7 +429,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-red-600)
     );
 }
-:host([variant='negative']:hover) #button {
+:host([variant='negative']) #button:hover {
     /* .spectrum-Button--warning:hover */
     background-color: var(
         --spectrum-button-warning-background-color-hover,
@@ -462,7 +459,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([variant='negative']:active) #button {
+:host([variant='negative']) #button:active {
     /* .spectrum-Button--warning:active */
     background-color: var(
         --spectrum-button-warning-background-color-down,
@@ -477,8 +474,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-50)
     );
 }
-:host([variant='negative'][disabled]) #button,
-:host([variant='negative'].is-disabled) #button {
+:host([variant='negative'][disabled]) #button {
     /* .spectrum-Button--warning:disabled,
    * .spectrum-Button--warning.is-disabled */
     background-color: var(
@@ -509,7 +505,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([variant='overBackground']:hover) #button {
+:host([variant='overBackground']) #button:hover {
     /* .spectrum-Button--overBackground:hover */
     background-color: var(
         --spectrum-button-over-background-background-color-hover,
@@ -539,7 +535,7 @@ slot[name='icon'] + #label {
             rgb(255, 255, 255)
         );
 }
-:host([variant='overBackground']:active) #button {
+:host([variant='overBackground']) #button:active {
     /* .spectrum-Button--overBackground:active */
     background-color: var(
         --spectrum-button-over-background-background-color-down,
@@ -552,8 +548,7 @@ slot[name='icon'] + #label {
     color: inherit;
     box-shadow: none;
 }
-:host([variant='overBackground'][disabled]) #button,
-:host([variant='overBackground'].is-disabled) #button {
+:host([variant='overBackground'][disabled]) #button {
     /* .spectrum-Button--overBackground:disabled,
    * .spectrum-Button--overBackground.is-disabled */
     background-color: var(
@@ -585,7 +580,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([variant='overBackground'][quiet]:hover) #button {
+:host([variant='overBackground'][quiet]) #button:hover {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
    * .spectrum-ClearButton--overBackground:hover */
     background-color: var(
@@ -620,7 +615,7 @@ slot[name='icon'] + #label {
             rgb(255, 255, 255)
         );
 }
-:host([variant='overBackground'][quiet]:active) #button {
+:host([variant='overBackground'][quiet]) #button:active {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:active,
    * .spectrum-ClearButton--overBackground:active */
     background-color: var(
@@ -637,8 +632,7 @@ slot[name='icon'] + #label {
     );
     box-shadow: none;
 }
-:host([variant='overBackground'][quiet][disabled]) #button,
-:host([variant='overBackground'][quiet].is-disabled) #button {
+:host([variant='overBackground'][quiet][disabled]) #button {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:disabled,
    * .spectrum-Button--overBackground.spectrum-Button--quiet.is-disabled,
    * .spectrum-ClearButton--overBackground:disabled,
@@ -671,7 +665,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([variant='primary'][quiet]:hover) #button {
+:host([variant='primary'][quiet]) #button:hover {
     /* .spectrum-Button--primary.spectrum-Button--quiet:hover */
     background-color: var(
         --spectrum-button-quiet-primary-background-color-hover,
@@ -701,7 +695,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([variant='primary'][quiet]:active) #button {
+:host([variant='primary'][quiet]) #button:active {
     /* .spectrum-Button--primary.spectrum-Button--quiet:active */
     background-color: var(
         --spectrum-button-quiet-primary-background-color-down,
@@ -716,8 +710,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([variant='primary'][quiet][disabled]) #button,
-:host([variant='primary'][quiet].is-disabled) #button {
+:host([variant='primary'][quiet][disabled]) #button {
     /* .spectrum-Button--primary.spectrum-Button--quiet:disabled,
    * .spectrum-Button--primary.spectrum-Button--quiet.is-disabled */
     background-color: var(
@@ -748,7 +741,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-700)
     );
 }
-:host([variant='secondary'][quiet]:hover) #button {
+:host([variant='secondary'][quiet]) #button:hover {
     /* .spectrum-Button--secondary.spectrum-Button--quiet:hover */
     background-color: var(
         --spectrum-button-quiet-secondary-background-color-hover,
@@ -778,7 +771,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([variant='secondary'][quiet]:active) #button {
+:host([variant='secondary'][quiet]) #button:active {
     /* .spectrum-Button--secondary.spectrum-Button--quiet:active */
     background-color: var(
         --spectrum-button-quiet-secondary-background-color-down,
@@ -793,8 +786,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([variant='secondary'][quiet][disabled]) #button,
-:host([variant='secondary'][quiet].is-disabled) #button {
+:host([variant='secondary'][quiet][disabled]) #button {
     /* .spectrum-Button--secondary.spectrum-Button--quiet:disabled,
    * .spectrum-Button--secondary.spectrum-Button--quiet.is-disabled */
     background-color: var(
@@ -825,7 +817,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-red-500)
     );
 }
-:host([variant='negative'][quiet]:hover) #button {
+:host([variant='negative'][quiet]) #button:hover {
     /* .spectrum-Button--warning.spectrum-Button--quiet:hover */
     background-color: var(
         --spectrum-button-quiet-warning-background-color-hover,
@@ -855,7 +847,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([variant='negative'][quiet]:active) #button {
+:host([variant='negative'][quiet]) #button:active {
     /* .spectrum-Button--warning.spectrum-Button--quiet:active */
     background-color: var(
         --spectrum-button-quiet-warning-background-color-down,
@@ -870,8 +862,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-red-600)
     );
 }
-:host([variant='negative'][quiet][disabled]) #button,
-:host([variant='negative'][quiet].is-disabled) #button {
+:host([variant='negative'][quiet][disabled]) #button {
     /* .spectrum-Button--warning.spectrum-Button--quiet:disabled,
    * .spectrum-Button--warning.spectrum-Button--quiet.is-disabled */
     background-color: var(

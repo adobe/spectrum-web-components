@@ -20,7 +20,7 @@
     },
     "scripts": {
         "split-spectrum": "node ./scripts/split-spectrum.js",
-        "process-spectrum": "node ./scripts/process-spectrum-css.js",
+        "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'src/**/*.css'",
         "process-icons": "node ./scripts/process-icons.js",
         "prebuild": "rimraf lib",
         "build": "gulp",
@@ -108,6 +108,7 @@
         "postcss-inherit": "^4.1.0",
         "postcss-preset-env": "^6.5.0",
         "postcss-reporter": "^6.0.1",
+        "postcss-selector-parser": "^6.0.2",
         "prettier": "^1.16.4",
         "pretty-quick": "^1.10.0",
         "prismjs": "^1.15.0",
