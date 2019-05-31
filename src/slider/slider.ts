@@ -59,8 +59,12 @@ export class Slider extends LitElement {
     @property({ type: Boolean, reflect: true })
     public dragging = false;
 
+    /**
+     * This property turns the handle element blue.
+     * Should only be true when the slider is given focus through key inputs
+     */
     @property({ type: Boolean, reflect: true })
-    public focused = false;
+    public handleFocus = false;
 
     @query('#handle')
     private handle!: HTMLDivElement;
@@ -115,7 +119,6 @@ export class Slider extends LitElement {
                         aria-valuemax=${this.max}
                         aria-valuetext=${this.value}
                         @change=${this.onInputElementChange}
-                        @focus=${this.onInputFocus}
                         @blur=${this.onInputElementBlur}
                     />
                 </div>
@@ -130,20 +133,9 @@ export class Slider extends LitElement {
         `;
     }
 
-    private get handleClasses(): string {
-        let classes = '';
-        if (this.dragging) {
-            classes += 'is-dragged';
-        }
-        if (this.focused) {
-            classes += ' is-focused';
-        }
-        return classes;
-    }
-
     private focusListener(): void {
         if (this.input) {
-            this.focused = true;
+            this.handleFocus = true;
             this.input.focus();
         }
     }
@@ -155,8 +147,9 @@ export class Slider extends LitElement {
     }
 
     private onPointerUp(ev: PointerEvent): void {
-        // Retain focus after mouse up to enable keyboard interactions
+        // Retain focus on input element after mouse up to enable keyboard interactions
         this.input.focus();
+        this.handleFocus = false;
         this.dragging = false;
         this.handle.releasePointerCapture(ev.pointerId);
         this.dispatchChangeEvent();
@@ -200,13 +193,8 @@ export class Slider extends LitElement {
     }
 
     private onInputElementBlur(): void {
-        this.focused = false;
+        this.handleFocus = false;
         this.input.blur();
-        console.log('blur');
-    }
-
-    private onInputFocus() {
-        console.log('focus');
     }
 
     /**
@@ -277,6 +265,17 @@ export class Slider extends LitElement {
 
     private get handleStyle(): string {
         return `left: ${this.trackProgress * 100}%`;
+    }
+
+    private get handleClasses(): string {
+        let classes = '';
+        if (this.dragging) {
+            classes += 'is-dragged';
+        }
+        if (this.handleFocus) {
+            classes += ' is-focused';
+        }
+        return classes;
     }
 }
 
