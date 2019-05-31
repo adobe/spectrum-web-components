@@ -1,15 +1,25 @@
 // A loader to convert css into a Typescript module that
 // exports a default CSSResult containing the compiled CSS
 
-const { stripIndent } = require('common-tags');
+const path = require('path');
+const { wrapCSSResult } = require('../scripts/css-processing');
 
-module.exports = function loader(source) {
-    const code = stripIndent`
-        import { css } from 'lit-element';
-        const styles = css\`
-            ${source}
-        \`;
-        export default styles;
-    `;
+const filenameToOutputFilename = (filename) => {
+    const dirName = path.dirname(filename);
+    const baseName = path.basename(filename);
+    return path.join(dirName, `${baseName}.ts`);
+};
+
+const loaderUtils = require('loader-utils');
+
+module.exports = function loader(content, ...rest) {
+    const filename = this.resourcePath;
+    const outputFilename = filenameToOutputFilename(filename);
+    // wrap the file in css literal
+    const code = wrapCSSResult(content);
+    const url = loaderUtils.interpolateName(this, outputFilename, {
+        content: code,
+    });
+    this.emitFile(url, code);
     return code;
 };
