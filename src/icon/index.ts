@@ -12,4 +12,6 @@ governing permissions and limitations under the License.
 export * from './icon';
 import { Icon } from './icon';
 
-Icon.register();
+if (!customElements.get('sp-icon')) {
+    customElements.define('sp-icon', Icon);
+}

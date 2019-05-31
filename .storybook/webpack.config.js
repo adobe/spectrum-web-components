@@ -47,6 +47,7 @@ module.exports = ({ config }) => {
                 {
                     test: /\.ts$/,
                     include: srcPath,
+                    exclude: /test\/.*/,
                     loader: 'ts-loader',
                 },
                 {

@@ -13,9 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { action } from '@storybook/addon-actions';
 
-import { defineCustomElements, ActionButton } from '../src';
-
-defineCustomElements(ActionButton);
+import '../src/button';
 
 storiesOf('ActionButton', module).add('Default', () => {
     return renderButtonsSelected({});

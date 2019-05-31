@@ -11,15 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import { CSSResultArray, TemplateResult, html, property } from 'lit-element';
-import CheckboxBase from './checkbox-base';
+import { CheckboxBase } from './checkbox-base';
 import checkboxStyles from './checkbox.css';
 import '../icon';
 
 export class Checkbox extends CheckboxBase {
-    public static is = 'sp-checkbox';
+    @property({ type: Boolean, reflect: true })
+    public indeterminate: boolean = false;
 
     @property({ type: Boolean, reflect: true })
-    protected indeterminate: boolean = false;
+    public invalid: boolean = false;
 
     public static get styles(): CSSResultArray {
         return [checkboxStyles];
@@ -28,34 +29,23 @@ export class Checkbox extends CheckboxBase {
     protected render(): TemplateResult {
         return html`
             <label id="root">
-                <input
-                    tabindex="${this.shadowTabIndex}"
-                    type="checkbox"
-                    id="input"
-                    .indeterminate="${this.indeterminate}"
-                />
+                ${super.render()}
                 <span id="box">
                     <sp-icon
                         id="checkmark"
                         size="s"
                         name="ui:CheckmarkSmall"
-                        focusable="false"
                         aria-hidden="true"
                     ></sp-icon>
                     <sp-icon
                         id="partialCheckmark"
                         size="s"
                         name="ui:DashSmall"
-                        focusable="false"
                         aria-hidden="true"
                     ></sp-icon>
                 </span>
                 <span id="label"><slot></slot></span>
             </label>
         `;
-    }
-
-    public static register(): void {
-        customElements.define('sp-checkbox', Checkbox);
     }
 }

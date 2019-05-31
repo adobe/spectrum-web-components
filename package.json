@@ -61,6 +61,7 @@
         "@types/node": "^11.11.0",
         "@types/prismjs": "^1.16.0",
         "@types/sinon": "^7.0.11",
+        "@types/storybook__addon-actions": "^3.4.2",
         "@typescript-eslint/eslint-plugin": "^1.5.0",
         "@typescript-eslint/parser": "^1.5.0",
         "@webcomponents/webcomponentsjs": "^2.2.0",

@@ -11,7 +11,13 @@ governing permissions and limitations under the License.
 */
 import { LitElement, property } from 'lit-element';
 
-export default class Focusable extends LitElement {
+/**
+ * Focusable base class handles tabindex setting into shadowed elements automatically.
+ *
+ * This implementation is based heavily on the aybolit delegate-focus-mixin at
+ * https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
+ */
+export class Focusable extends LitElement {
     @property({ type: Boolean, reflect: true })
     public disabled: boolean = false;
 
@@ -22,15 +28,11 @@ export default class Focusable extends LitElement {
     public tabIndex: number = 0;
 
     private isShiftTabbing: boolean = false;
-    private newTabindex: number | undefined;
-    private oldTabindex: number | undefined;
-
-    public constructor() {
-        super();
-    }
+    private newTabindex?: number;
+    private oldTabindex?: number;
 
     public get focusElement(): HTMLElement {
-        return this;
+        throw new Error('Must implement focusElement getter!');
     }
 
     public focus(): void {
@@ -53,8 +55,6 @@ export default class Focusable extends LitElement {
         if (this.autofocus) {
             this.focus();
         }
-
-        this.focusElement.addEventListener('change', () => this.handleChange());
 
         this.addEventListener('focusin', (event) => {
             if (event.composedPath()[0] === this) {
@@ -123,13 +123,6 @@ export default class Focusable extends LitElement {
         this.focusElement.focus();
     }
 
-    public get shadowTabIndex(): number {
-        if (this.disabled) {
-            return -1;
-        }
-        return this.tabIndex;
-    }
-
     private handleDisabledChanged(
         disabled: boolean,
         oldDisabled: boolean
@@ -146,7 +139,7 @@ export default class Focusable extends LitElement {
         }
     }
 
-    private handleTabIndexChanged(tabindex: number | undefined): void {
+    private handleTabIndexChanged(tabindex: number): void {
         if (this.disabled && tabindex) {
             if (this.tabIndex !== -1) {
                 this.oldTabindex = this.tabIndex;
@@ -154,6 +147,4 @@ export default class Focusable extends LitElement {
             this.tabIndex = -1;
         }
     }
-
-    public handleChange(): void {}
 }

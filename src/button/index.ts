@@ -15,5 +15,10 @@ export * from './action-button';
 import { Button } from './button';
 import { ActionButton } from './action-button';
 
-Button.register();
-ActionButton.register();
+if (!customElements.get('sp-action-button')) {
+    customElements.define('sp-action-button', ActionButton);
+}
+
+if (!customElements.get('sp-button')) {
+    customElements.define('sp-button', Button);
+}

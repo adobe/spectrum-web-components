@@ -13,4 +13,6 @@ export * from './checkbox';
 
 import { Checkbox } from './checkbox';
 
-Checkbox.register();
+if (!customElements.get('sp-checkbox')) {
+    customElements.define('sp-checkbox', Checkbox);
+}

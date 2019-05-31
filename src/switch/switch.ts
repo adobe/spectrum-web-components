@@ -11,19 +11,17 @@ governing permissions and limitations under the License.
 */
 
 import { CSSResultArray, TemplateResult, html } from 'lit-element';
-import CheckboxBase from '../checkbox/checkbox-base';
+import { CheckboxBase } from '../checkbox/checkbox-base';
 import switchStyles from './switch.css';
 
 export class Switch extends CheckboxBase {
-    public static is = 'sp-switch';
-
     public static get styles(): CSSResultArray {
         return [switchStyles];
     }
 
     protected render(): TemplateResult {
         return html`
-            <input id="input" type="checkbox" />
+            ${super.render()}
             <span id="switch"></span>
             <label id="label" for="input"><slot></slot></label>
         `;

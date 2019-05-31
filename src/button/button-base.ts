@@ -11,15 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import { property, html, TemplateResult } from 'lit-element';
-import Focusable from '../shared/focusable';
+import { nothing } from 'lit-html';
+import { Focusable } from '../shared/focusable';
 
-export default class ButtonBase extends Focusable {
+export class ButtonBase extends Focusable {
     @property()
-    protected href: string | undefined = undefined;
-
-    public constructor() {
-        super();
-    }
+    protected href?: string;
 
     private get hasIcon(): boolean {
         return !!this.querySelector('[slot="icon"]');
@@ -34,12 +31,12 @@ export default class ButtonBase extends Focusable {
 
     protected render(): TemplateResult {
         return html`
-            <button tabindex="${this.shadowTabIndex}" id="button">
+            <button id="button">
                 ${this.hasIcon
                     ? html`
                           <slot name="icon"></slot>
                       `
-                    : undefined}
+                    : nothing}
                 <div id="label"><slot></slot></div>
             </button>
         `;

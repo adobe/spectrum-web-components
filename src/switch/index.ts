@@ -13,4 +13,6 @@ export * from './switch';
 
 import { Switch } from './switch';
 
-customElements.define('sp-switch', Switch);
+if (!customElements.get('sp-switch')) {
+    customElements.define('sp-switch', Switch);
+}

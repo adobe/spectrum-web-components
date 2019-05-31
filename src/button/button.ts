@@ -11,12 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import { CSSResultArray, property } from 'lit-element';
-import ButtonBase from './button-base';
+import { ButtonBase } from './button-base';
 import buttonStyles from './button.css';
 
 export class Button extends ButtonBase {
-    public static is = 'sp-button';
-
     @property({ reflect: true })
     protected variant:
         | 'cta'
@@ -33,9 +31,5 @@ export class Button extends ButtonBase {
 
     public static get styles(): CSSResultArray {
         return [buttonStyles];
-    }
-
-    public static register(): void {
-        customElements.define('sp-button', Button);
     }
 }

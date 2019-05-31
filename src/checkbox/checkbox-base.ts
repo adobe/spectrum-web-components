@@ -10,28 +10,35 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { property } from 'lit-element';
-import Input from '../shared/input';
+import { property, html, TemplateResult, query } from 'lit-element';
+import { Focusable } from '../shared/focusable';
 
-export default class CheckboxBase extends Input {
+export class CheckboxBase extends Focusable {
     @property({ type: Boolean, reflect: true })
     public checked: boolean = false;
 
     @property({ type: Boolean, reflect: true })
     public quiet: boolean = false;
 
-    public handleChange(): void {
-        if (this.focusElement) {
-            this.checked = this.focusElement.checked;
-        }
+    @query('#input')
+    private inputElement!: HTMLInputElement;
+
+    public get focusElement(): HTMLElement {
+        return this.inputElement;
     }
 
-    public firstUpdated(): void {
-        super.firstUpdated();
-        if (this.hasAttribute('checked')) {
-            if (this.focusElement) {
-                this.focusElement.checked = true;
-            }
-        }
+    public handleChange(): void {
+        this.checked = this.inputElement.checked;
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            <input
+                id="input"
+                type="checkbox"
+                ?checked=${this.checked}
+                @change=${this.handleChange}
+            />
+        `;
     }
 }

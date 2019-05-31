@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { defineCustomElements } from '../../define';
-import { Checkbox } from '../../checkbox';
+import { Checkbox } from '../..';
 import * as MediumIcons from '../../icons/icons-medium';
 
-defineCustomElements(Checkbox, ...Object.values(MediumIcons));
+defineCustomElements(...Object.values(MediumIcons));
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
