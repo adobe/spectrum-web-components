@@ -25,68 +25,58 @@ const merge = require('merge2');
 const stripIndent = require('common-tags').stripIndents;
 
 const srcPath = path.resolve(path.join(__dirname, '..'));
+const dstPath = path.resolve(path.join(__dirname, '..', 'lib'));
 const configPath = path.resolve(path.join(__dirname, '..', 'config'));
 
+const { postCSSPlugins, wrapCSSResult } = require('../scripts/css-processing');
+
+const ts = require('gulp-typescript');
+const sourcemaps = require('gulp-sourcemaps');
+const tsProject = ts.createProject('tsconfig.json');
+
 const buildCSS = () => {
-    return (
-        merge([
-            gulp.src(['./src/**/*.css'], { base: '.' }),
-            gulp.src(['./styles/*.css', './styles/**/*.css'], {
-                base: '.',
-            }),
-        ])
-            // create in-memory cache of css files so we don't reprocess everything all the time
-            .pipe(cached('css'))
-            .pipe(debug({ title: 'css' }))
-            // process with postcss
-            .pipe(
-                postcss([
-                    // inline imports since we can't resolve paths from within web components
-                    require('postcss-import'),
-                    require('postcss-inherit'),
-                    require('postcss-preset-env')({
-                        stage: 0,
-                        browsers: [
-                            'last 2 Chrome versions',
-                            'Firefox >= 63',
-                            'Safari >= 10.1',
-                        ],
-                    }),
-                    // minify the css with cssnano presets
-                    require('cssnano')({ preset: 'default' }),
-                ])
+    const tsResult = merge([
+        gulp.src(['./src/**/*.css'], { base: './src' }),
+        gulp.src(['./styles/*.css', './styles/**/*.css'], {
+            base: '.',
+        }),
+    ])
+        // create in-memory cache of css files so we don't reprocess everything all the time
+        .pipe(cached('css'))
+        .pipe(debug({ title: 'css' }))
+        // process with postcss
+        .pipe(postcss(postCSSPlugins()))
+        // now wrap the css files in ES-modules for easy import in typescript
+        .pipe(
+            wrap((data) => wrapCSSResult(data.contents), {}, { parse: false })
+        )
+        // add license header to top of typescript file
+        .pipe(
+            header(
+                fs.readFileSync(path.join(configPath, 'license.js'), 'utf8'),
+                false
             )
-            // now wrap the css files in ES-modules for easy import in typescript
+        )
+        // rename the wrapped css to typescript files
+        .pipe(
+            rename((path) => {
+                path.extname = '.css.ts';
+            })
+        )
+        // feed to the typescript project
+        .pipe(sourcemaps.init())
+        .pipe(tsProject());
+
+    // compile the ts to js
+    return merge(
+        tsResult.js
             .pipe(
-                wrap(
-                    // this is lodash template syntax to output an ES-module export of our CSS as a string
-                    stripIndent`import { css } from 'lit-element';
-                    const styles = css\`
-                        <%= contents %>
-                    \`;
-                    export default styles;`,
-                    {},
-                    { parse: false }
-                )
-            )
-            // add license header to top of typescript file
-            .pipe(
-                header(
-                    fs.readFileSync(
-                        path.join(configPath, 'license.js'),
-                        'utf8'
-                    ),
-                    false
-                )
-            )
-            // rename the wrapped css to typescript files
-            .pipe(
-                rename((path) => {
-                    path.extname = '.css.ts';
+                sourcemaps.write('.', {
+                    includeContent: true,
                 })
             )
-            // and write them back out
-            .pipe(gulp.dest(srcPath))
+            .pipe(gulp.dest(dstPath)),
+        tsResult.dts.pipe(gulp.dest(dstPath))
     );
 };
 const watchBuildCSS = () => {
