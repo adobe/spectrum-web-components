@@ -10,18 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import 'global.css';
-@import 'alias.css';
-@import 'semantic.css';
-@import 'components/banner.css';
-@import 'components/button.css';
-@import 'components/card.css';
-@import 'components/dropzone.css';
-@import 'components/fieldlabel.css';
-@import 'components/label.css';
-@import 'components/link.css';
-@import 'components/popover.css';
-@import 'components/radio.css';
-@import 'components/slider.css';
-@import 'components/switch.css';
-@import 'components/tabs.css';
+import { CSSResultArray, TemplateResult, html } from 'lit-element';
+import { CheckboxBase } from '../checkbox/checkbox-base';
+import switchStyles from './switch.css';
+
+export class Switch extends CheckboxBase {
+    public static get styles(): CSSResultArray {
+        return [switchStyles];
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            ${super.render()}
+            <span id="switch"></span>
+            <label id="label" for="input"><slot></slot></label>
+        `;
+    }
+}

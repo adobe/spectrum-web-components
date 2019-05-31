@@ -11,3 +11,14 @@ governing permissions and limitations under the License.
 */
 export * from './button';
 export * from './action-button';
+
+import { Button } from './button';
+import { ActionButton } from './action-button';
+
+if (!customElements.get('sp-action-button')) {
+    customElements.define('sp-action-button', ActionButton);
+}
+
+if (!customElements.get('sp-button')) {
+    customElements.define('sp-button', Button);
+}

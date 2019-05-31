@@ -22,6 +22,7 @@ import {
 import { IconsetRegistry } from '../iconset/iconset-registry';
 
 import styles from './icon.css';
+import { nothing } from 'lit-html';
 
 export class Icon extends LitElement {
     public static is = 'sp-icon';
@@ -134,11 +135,12 @@ export class Icon extends LitElement {
 
     private renderIcon(): TemplateResult {
         // handle src image case
-        if (this.src) {
-            return html`
-                <img src="${this.src}" />
-            `;
-        }
-        return html``;
+        return html`
+            ${this.src
+                ? html`
+                      <img src="${this.src}" />
+                  `
+                : nothing}
+        `;
     }
 }

@@ -1,0 +1,325 @@
+/*
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:root,
+:host {
+    --spectrum-switch-text-color: rgb(227, 227, 227);
+    --spectrum-switch-handle-border-color: rgb(144, 144, 144);
+    --spectrum-switch-handle-background-color: rgb(47, 47, 47);
+    --spectrum-switch-track-color: rgb(74, 74, 74);
+    --spectrum-switch-text-color-hover: rgb(255, 255, 255);
+    --spectrum-switch-handle-border-color-hover: rgb(185, 185, 185);
+    --spectrum-switch-handle-background-color-hover: rgb(47, 47, 47);
+    --spectrum-switch-track-color-hover: rgb(74, 74, 74);
+    --spectrum-switch-text-color-down: rgb(255, 255, 255);
+    --spectrum-switch-handle-border-color-down: rgb(227, 227, 227);
+    --spectrum-switch-handle-background-color-down: rgb(47, 47, 47);
+    --spectrum-switch-track-color-down: rgb(74, 74, 74);
+    --spectrum-switch-text-color-key-focus: rgb(75, 156, 245);
+    --spectrum-switch-handle-border-color-key-focus: rgb(38, 128, 235);
+    --spectrum-switch-handle-background-color-key-focus: rgb(47, 47, 47);
+    --spectrum-switch-track-color-key-focus: rgb(74, 74, 74);
+    --spectrum-switch-text-color-disabled: rgb(110, 110, 110);
+    --spectrum-switch-handle-border-color-disabled: rgb(90, 90, 90);
+    --spectrum-switch-handle-background-color-disabled: rgb(47, 47, 47);
+    --spectrum-switch-track-color-disabled: rgb(74, 74, 74);
+    --spectrum-switch-text-color-selected: rgb(227, 227, 227);
+    --spectrum-switch-handle-border-color-selected: rgb(55, 142, 240);
+    --spectrum-switch-handle-background-color-selected: rgb(47, 47, 47);
+    --spectrum-switch-track-color-selected: rgb(55, 142, 240);
+    --spectrum-switch-text-color-selected-hover: rgb(255, 255, 255);
+    --spectrum-switch-handle-border-color-selected-hover: rgb(75, 156, 245);
+    --spectrum-switch-handle-background-color-selected-hover: rgb(47, 47, 47);
+    --spectrum-switch-track-color-selected-hover: rgb(75, 156, 245);
+    --spectrum-switch-text-color-selected-down: rgb(255, 255, 255);
+    --spectrum-switch-handle-border-color-selected-down: rgb(90, 169, 250);
+    --spectrum-switch-handle-background-color-selected-down: rgb(47, 47, 47);
+    --spectrum-switch-track-color-selected-down: rgb(90, 169, 250);
+    --spectrum-switch-text-color-selected-key-focus: rgb(75, 156, 245);
+    --spectrum-switch-track-color-selected-key-focus: rgb(38, 128, 235);
+    --spectrum-switch-handle-background-color-selected-key-focus: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-handle-border-color-selected-key-focus: rgb(38, 128, 235);
+    --spectrum-switch-text-color-selected-disabled: rgb(110, 110, 110);
+    --spectrum-switch-track-color-selected-disabled: rgb(90, 90, 90);
+    --spectrum-switch-handle-border-color-selected-disabled: rgb(90, 90, 90);
+    --spectrum-switch-handle-background-color-selected-disabled: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-text-color-error: rgb(247, 109, 116);
+    --spectrum-switch-track-color-error: rgb(236, 91, 98);
+    --spectrum-switch-handle-border-color-error: rgb(236, 91, 98);
+    --spectrum-switch-handle-background-color-error: rgb(47, 47, 47);
+    --spectrum-switch-text-color-error-hover: rgb(255, 123, 130);
+    --spectrum-switch-track-color-error-hover: rgb(247, 109, 116);
+    --spectrum-switch-handle-border-color-error-hover: rgb(247, 109, 116);
+    --spectrum-switch-handle-background-color-error-hover: rgb(47, 47, 47);
+    --spectrum-switch-text-color-error-down: rgb(255, 123, 130);
+    --spectrum-switch-track-color-error-down: rgb(255, 123, 130);
+    --spectrum-switch-handle-border-color-error-down: rgb(255, 123, 130);
+    --spectrum-switch-handle-background-color-error-down: rgb(47, 47, 47);
+    --spectrum-switch-text-color-error-key-focus: rgb(75, 156, 245);
+    --spectrum-switch-handle-border-color-error-key-focus: rgb(38, 128, 235);
+    --spectrum-switch-handle-background-color-error-key-focus: rgb(47, 47, 47);
+    --spectrum-switch-track-color-error-key-focus: rgb(74, 74, 74);
+    --spectrum-switch-text-color-error-disabled: rgb(110, 110, 110);
+    --spectrum-switch-handle-border-color-error-disabled: rgb(90, 90, 90);
+    --spectrum-switch-handle-background-color-error-disabled: rgb(47, 47, 47);
+    --spectrum-switch-track-color-error-disabled: rgb(74, 74, 74);
+    --spectrum-switch-text-color-error-selected: rgb(247, 109, 116);
+    --spectrum-switch-track-color-error-selected: rgb(236, 91, 98);
+    --spectrum-switch-handle-border-color-error-selected: rgb(236, 91, 98);
+    --spectrum-switch-handle-background-color-error-selected: rgb(47, 47, 47);
+    --spectrum-switch-text-color-error-selected-hover: rgb(255, 123, 130);
+    --spectrum-switch-track-color-error-selected-hover: rgb(247, 109, 116);
+    --spectrum-switch-handle-border-color-error-selected-hover: rgb(
+        247,
+        109,
+        116
+    );
+    --spectrum-switch-handle-background-color-error-selected-hover: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-text-color-error-selected-down: rgb(255, 123, 130);
+    --spectrum-switch-track-color-error-selected-down: rgb(255, 123, 130);
+    --spectrum-switch-handle-border-color-error-selected-down: rgb(
+        255,
+        123,
+        130
+    );
+    --spectrum-switch-handle-background-color-error-selected-down: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-text-color-error-selected-key-focus: rgb(75, 156, 245);
+    --spectrum-switch-handle-border-color-error-selected-key-focus: rgb(
+        38,
+        128,
+        235
+    );
+    --spectrum-switch-handle-background-color-error-selected-key-focus: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-track-color-error-selected-key-focus: rgb(74, 74, 74);
+    --spectrum-switch-text-color-error-selected-disabled: rgb(110, 110, 110);
+    --spectrum-switch-track-color-error-selected-disabled: rgb(90, 90, 90);
+    --spectrum-switch-handle-border-color-error-selected-disabled: rgb(
+        90,
+        90,
+        90
+    );
+    --spectrum-switch-handle-background-color-error-selected-disabled: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-track-color-disabled-selected: rgb(90, 90, 90);
+    --spectrum-switch-quiet-text-color: rgb(227, 227, 227);
+    --spectrum-switch-quiet-handle-border-color: rgb(144, 144, 144);
+    --spectrum-switch-quiet-handle-background-color: rgb(47, 47, 47);
+    --spectrum-switch-quiet-track-color: rgb(74, 74, 74);
+    --spectrum-switch-quiet-text-color-hover: rgb(255, 255, 255);
+    --spectrum-switch-quiet-handle-border-color-hover: rgb(185, 185, 185);
+    --spectrum-switch-quiet-handle-background-color-hover: rgb(47, 47, 47);
+    --spectrum-switch-quiet-track-color-hover: rgb(74, 74, 74);
+    --spectrum-switch-quiet-text-color-down: rgb(255, 255, 255);
+    --spectrum-switch-quiet-handle-border-color-down: rgb(227, 227, 227);
+    --spectrum-switch-quiet-handle-background-color-down: rgb(47, 47, 47);
+    --spectrum-switch-quiet-track-color-down: rgb(74, 74, 74);
+    --spectrum-switch-quiet-text-color-key-focus: rgb(75, 156, 245);
+    --spectrum-switch-quiet-handle-border-color-key-focus: rgb(38, 128, 235);
+    --spectrum-switch-quiet-handle-background-color-key-focus: rgb(47, 47, 47);
+    --spectrum-switch-quiet-track-color-key-focus: rgb(74, 74, 74);
+    --spectrum-switch-quiet-text-color-disabled: rgb(110, 110, 110);
+    --spectrum-switch-quiet-handle-border-color-disabled: rgb(90, 90, 90);
+    --spectrum-switch-quiet-handle-background-color-disabled: rgb(47, 47, 47);
+    --spectrum-switch-quiet-track-color-disabled: rgb(74, 74, 74);
+    --spectrum-switch-quiet-text-color-selected: rgb(227, 227, 227);
+    --spectrum-switch-quiet-handle-border-color-selected: rgb(185, 185, 185);
+    --spectrum-switch-quiet-handle-background-color-selected: rgb(47, 47, 47);
+    --spectrum-switch-quiet-track-color-selected: rgb(185, 185, 185);
+    --spectrum-switch-quiet-text-color-selected-hover: rgb(255, 255, 255);
+    --spectrum-switch-quiet-handle-border-color-selected-hover: rgb(
+        227,
+        227,
+        227
+    );
+    --spectrum-switch-quiet-handle-background-color-selected-hover: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-track-color-selected-hover: rgb(227, 227, 227);
+    --spectrum-switch-quiet-text-color-selected-down: rgb(255, 255, 255);
+    --spectrum-switch-quiet-handle-border-color-selected-down: rgb(
+        255,
+        255,
+        255
+    );
+    --spectrum-switch-quiet-handle-background-color-selected-down: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-track-color-selected-down: rgb(255, 255, 255);
+    --spectrum-switch-quiet-text-color-selected-key-focus: rgb(75, 156, 245);
+    --spectrum-switch-quiet-track-color-selected-key-focus: rgb(38, 128, 235);
+    --spectrum-switch-quiet-handle-background-color-selected-key-focus: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-handle-border-color-selected-key-focus: rgb(
+        38,
+        128,
+        235
+    );
+    --spectrum-switch-quiet-text-color-selected-disabled: rgb(110, 110, 110);
+    --spectrum-switch-quiet-track-color-selected-disabled: rgb(90, 90, 90);
+    --spectrum-switch-quiet-handle-border-color-selected-disabled: rgb(
+        90,
+        90,
+        90
+    );
+    --spectrum-switch-quiet-handle-background-color-selected-disabled: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-text-color-error: rgb(247, 109, 116);
+    --spectrum-switch-quiet-track-color-error: rgb(236, 91, 98);
+    --spectrum-switch-quiet-handle-border-color-error: rgb(236, 91, 98);
+    --spectrum-switch-quiet-handle-background-color-error: rgb(47, 47, 47);
+    --spectrum-switch-quiet-text-color-error-hover: rgb(255, 123, 130);
+    --spectrum-switch-quiet-track-color-error-hover: rgb(247, 109, 116);
+    --spectrum-switch-quiet-handle-border-color-error-hover: rgb(247, 109, 116);
+    --spectrum-switch-quiet-handle-background-color-error-hover: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-text-color-error-down: rgb(255, 123, 130);
+    --spectrum-switch-quiet-track-color-error-down: rgb(255, 123, 130);
+    --spectrum-switch-quiet-handle-border-color-error-down: rgb(255, 123, 130);
+    --spectrum-switch-quiet-handle-background-color-error-down: rgb(47, 47, 47);
+    --spectrum-switch-quiet-text-color-error-key-focus: rgb(75, 156, 245);
+    --spectrum-switch-quiet-handle-border-color-error-key-focus: rgb(
+        38,
+        128,
+        235
+    );
+    --spectrum-switch-quiet-handle-background-color-error-key-focus: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-track-color-error-key-focus: rgb(74, 74, 74);
+    --spectrum-switch-quiet-text-color-error-disabled: rgb(110, 110, 110);
+    --spectrum-switch-quiet-handle-border-color-error-disabled: rgb(90, 90, 90);
+    --spectrum-switch-quiet-handle-background-color-error-disabled: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-track-color-error-disabled: rgb(74, 74, 74);
+    --spectrum-switch-quiet-text-color-error-selected: rgb(247, 109, 116);
+    --spectrum-switch-quiet-track-color-error-selected: rgb(236, 91, 98);
+    --spectrum-switch-quiet-handle-border-color-error-selected: rgb(
+        236,
+        91,
+        98
+    );
+    --spectrum-switch-quiet-handle-background-color-error-selected: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-text-color-error-selected-hover: rgb(255, 123, 130);
+    --spectrum-switch-quiet-track-color-error-selected-hover: rgb(
+        247,
+        109,
+        116
+    );
+    --spectrum-switch-quiet-handle-border-color-error-selected-hover: rgb(
+        247,
+        109,
+        116
+    );
+    --spectrum-switch-quiet-handle-background-color-error-selected-hover: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-text-color-error-selected-down: rgb(255, 123, 130);
+    --spectrum-switch-quiet-track-color-error-selected-down: rgb(255, 123, 130);
+    --spectrum-switch-quiet-handle-border-color-error-selected-down: rgb(
+        255,
+        123,
+        130
+    );
+    --spectrum-switch-quiet-handle-background-color-error-selected-down: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-text-color-error-selected-key-focus: rgb(
+        75,
+        156,
+        245
+    );
+    --spectrum-switch-quiet-handle-border-color-error-selected-key-focus: rgb(
+        38,
+        128,
+        235
+    );
+    --spectrum-switch-quiet-handle-background-color-error-selected-key-focus: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-track-color-error-selected-key-focus: rgb(
+        74,
+        74,
+        74
+    );
+    --spectrum-switch-quiet-text-color-error-selected-disabled: rgb(
+        110,
+        110,
+        110
+    );
+    --spectrum-switch-quiet-track-color-error-selected-disabled: rgb(
+        90,
+        90,
+        90
+    );
+    --spectrum-switch-quiet-handle-border-color-error-selected-disabled: rgb(
+        90,
+        90,
+        90
+    );
+    --spectrum-switch-quiet-handle-background-color-error-selected-disabled: rgb(
+        47,
+        47,
+        47
+    );
+    --spectrum-switch-quiet-track-color-disabled-selected: rgb(90, 90, 90);
+}

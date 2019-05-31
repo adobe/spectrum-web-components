@@ -133,6 +133,7 @@ const components = [
     'fieldlabel',
     'radio',
     'popover',
+    'switch',
     'tabs',
 ];
 

@@ -9,19 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+export * from './checkbox';
 
-@import 'global.css';
-@import 'alias.css';
-@import 'semantic.css';
-@import 'components/banner.css';
-@import 'components/button.css';
-@import 'components/card.css';
-@import 'components/dropzone.css';
-@import 'components/fieldlabel.css';
-@import 'components/label.css';
-@import 'components/link.css';
-@import 'components/popover.css';
-@import 'components/radio.css';
-@import 'components/slider.css';
-@import 'components/switch.css';
-@import 'components/tabs.css';
+import { Checkbox } from './checkbox';
+
+if (!customElements.get('sp-checkbox')) {
+    customElements.define('sp-checkbox', Checkbox);
+}

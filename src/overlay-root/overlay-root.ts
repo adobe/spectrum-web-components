@@ -127,7 +127,7 @@ export class OverlayRoot extends LitElement {
             this.appendChild(this.overlayContent);
         }
 
-        this.timeout = setTimeout(() => {
+        this.timeout = window.setTimeout(() => {
             this.visible = true;
             this.updateOverlayPosition();
         }, ev.detail.delay);

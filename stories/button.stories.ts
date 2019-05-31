@@ -14,9 +14,11 @@ import { html } from 'lit-html';
 import { action } from '@storybook/addon-actions';
 import * as MediumIcons from '../src/icons/icons-medium';
 
-import { defineCustomElements, Button, Icon } from '../src';
+import { defineCustomElements, Icon } from '../src';
 
-defineCustomElements(Button, Icon, ...Object.values(MediumIcons));
+import '../src/button';
+
+defineCustomElements(Icon, ...Object.values(MediumIcons));
 
 storiesOf('Button', module)
     .add('Default', () => {

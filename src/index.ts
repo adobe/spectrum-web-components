@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 export * from './banner';
 export * from './button';
 export * from './card';
+export * from './checkbox';
 export * from './dropzone';
 export * from './illustrated-message';
 export * from './link';
@@ -22,6 +23,7 @@ export * from './icon';
 export * from './icons';
 export * from './iconset';
 export * from './sidenav';
+export * from './switch';
 export * from './tab';
 export * from './tab-list';
 export * from './overlay-root';

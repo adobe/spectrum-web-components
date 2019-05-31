@@ -11,12 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import { CSSResultArray, property } from 'lit-element';
-import ButtonBase from './button-base';
+import { ButtonBase } from './button-base';
 import buttonStyles from './action-button.css';
 
 export class ActionButton extends ButtonBase {
-    public static is = 'sp-action-button';
-
     @property({ type: Boolean, reflect: true })
     protected quiet: boolean = false;
 
