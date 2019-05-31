@@ -13,7 +13,7 @@ module.exports = ({ config }) => {
 
     const result = merge(config, {
         resolve: {
-            extensions: ['.js', '.ts'],
+            extensions: ['.js', '.ts', '.css'],
         },
         module: {
             rules: [
