@@ -19,8 +19,8 @@ import {
     query,
 } from 'lit-element';
 
-import sliderSkinStyles from './slider-skin.css';
-import sliderStyles from './slider.css';
+// import sliderSkinStyles from './slider-skin.css';
+import sliderStyles from './spectrum-slider.css';
 import { strictCustomEvent } from '../events';
 
 export type SliderEventDetail = number;
@@ -29,17 +29,20 @@ export class Slider extends LitElement {
     public static is = 'sp-slider';
 
     public static get styles(): CSSResultArray {
-        return [sliderStyles, sliderSkinStyles];
+        return [sliderStyles];
     }
 
     @property()
     public type = '';
 
-    @property({ type: Number })
+    @property({ type: Number, reflect: true })
     public value = 10;
 
     @property()
     public label = '';
+
+    @property({ reflect: true, attribute: 'aria-label' })
+    public ariaLabel = this.label;
 
     @property({ type: Number })
     public max = 20;
@@ -56,31 +59,24 @@ export class Slider extends LitElement {
     @property({ type: Boolean, reflect: true })
     public dragging = false;
 
+    @property({ type: Boolean, reflect: true })
+    public focused = false;
+
+    @query('#handle')
+    private handle!: HTMLDivElement;
+
     @query('#input')
-    private inputElement!: HTMLInputElement;
+    private input!: HTMLInputElement;
 
-    public onInput(): void {
-        const inputValue = this.inputElement.value;
-
-        this.value = parseFloat(inputValue);
-
-        const inputEvent = strictCustomEvent('sp-slider:input', {
-            bubbles: true,
-            composed: true,
-            detail: this.value,
-        });
-
-        this.dispatchEvent(inputEvent);
+    // TODO: Remove once focus mixin is implemented
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.addEventListener('focus', this.focusListener);
     }
 
-    public onChange(): void {
-        const changeEvent = strictCustomEvent('sp-slider:change', {
-            bubbles: true,
-            composed: true,
-            detail: this.value,
-        });
-
-        this.dispatchEvent(changeEvent);
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.removeEventListener('focus', this.focusListener);
     }
 
     protected render(): TemplateResult {
@@ -91,25 +87,42 @@ export class Slider extends LitElement {
                     ${this.value}
                 </div>
             </div>
-            <div id="controls">
-                <input type="range"
-                      id="input"
-                      value="${this.value}"
-                      step="${this.step}"
-                      min="${this.min}"
-                      max="${this.max}"
-                      @change=${this.onChange}
-                      @input=${this.onInput}
-                      @mousedown=${this.onMouseDown}
-                      @mouseup=${this.onMouseUp}
-                  />
-                <div class="track" id="track-left" style=${this.trackLeftStyle}>
+            <div id="controls" @pointerdown=${this.onTrackPointerDown}>
+                <div class="track" 
+                    id="track-left"
+                    style=${this.trackLeftStyle} 
+                    role="presentation"
+                >
                 </div>
-                <div id="handle" style=${this.handleStyle}>
+                <div id="handle" 
+                    class=${this.handleClasses}
+                    style=${this.handleStyle} 
+                    @pointermove=${this.onPointerMove}
+                    @pointerdown=${this.onPointerDown}
+                    @pointerup=${this.onPointerUp}
+                    @pointercancel=${this.onPointerCancel}
+                    role="presentation"
+                >
+                    <input type="range"
+                        id="input"
+                        value="${this.value}"
+                        step="${this.step}"
+                        min="${this.min}"
+                        max="${this.max}"
+                        aria-disabled=${this.disabled}
+                        aria-label=${this.ariaLabel || null}
+                        aria-valuemin=${this.min}
+                        aria-valuemax=${this.max}
+                        aria-valuetext=${this.value}
+                        @change=${this.onInputElementChange}
+                        @focus=${this.onInputFocus}
+                        @blur=${this.onInputElementBlur}
+                    />
                 </div>
                 <div class="track"
                     id="track-right"
                     style=${this.trackRightStyle}
+                    role="presentation"
                 >
                 </div>
                 </div>
@@ -117,12 +130,128 @@ export class Slider extends LitElement {
         `;
     }
 
-    private onMouseDown(): void {
-        this.dragging = true;
+    private get handleClasses(): string {
+        let classes = '';
+        if (this.dragging) {
+            classes += 'is-dragged';
+        }
+        if (this.focused) {
+            classes += ' is-focused';
+        }
+        return classes;
     }
 
-    private onMouseUp(): void {
+    private focusListener(): void {
+        if (this.input) {
+            this.focused = true;
+            this.input.focus();
+        }
+    }
+
+    private onPointerDown(ev: PointerEvent): void {
+        this.input.focus();
+        this.dragging = true;
+        this.handle.setPointerCapture(ev.pointerId);
+    }
+
+    private onPointerUp(ev: PointerEvent): void {
+        // Retain focus after mouse up to enable keyboard interactions
+        this.input.focus();
         this.dragging = false;
+        this.handle.releasePointerCapture(ev.pointerId);
+        this.dispatchChangeEvent();
+    }
+
+    private onPointerMove(ev: PointerEvent): void {
+        if (!this.dragging) {
+            return;
+        }
+        this.value = this.calculateHandlePosition(ev);
+        this.dispatchInputEvent();
+    }
+
+    private onPointerCancel(ev: PointerEvent): void {
+        this.dragging = false;
+        this.handle.releasePointerCapture(ev.pointerId);
+    }
+
+    /**
+     * Move the handle under the cursor and begin start a pointer capture when the track
+     * is moused down
+     */
+    private onTrackPointerDown(ev: PointerEvent): void {
+        if (ev.target === this.handle) {
+            return;
+        }
+        this.dragging = true;
+        this.handle.setPointerCapture(ev.pointerId);
+
+        this.value = this.calculateHandlePosition(ev);
+        this.dispatchInputEvent();
+    }
+
+    /**
+     * Keep the slider value property in sync with the input element's value
+     */
+    private onInputElementChange(ev: Event): void {
+        this.value = parseFloat(this.input.value);
+        this.dispatchInputEvent();
+        this.dispatchChangeEvent();
+    }
+
+    private onInputElementBlur(): void {
+        this.focused = false;
+        this.input.blur();
+        console.log('blur');
+    }
+
+    private onInputFocus() {
+        console.log('focus');
+    }
+
+    /**
+     * param: PointerEvent on slider
+     * returns: Slider value that correlates to the position under the pointer
+     */
+    private calculateHandlePosition(ev: PointerEvent): number {
+        const rect = this.getBoundingClientRect();
+        const minOffset = rect.left;
+        const offset = ev.clientX;
+        const size = rect.width;
+
+        const percent = (offset - minOffset) / size;
+        let value = this.min + (this.max - this.min) * percent;
+
+        value = Math.min(value, this.max);
+        value = Math.max(value, this.min);
+
+        if (this.step) {
+            value = Math.round(value / this.step) * this.step;
+        }
+
+        return value;
+    }
+
+    private dispatchInputEvent(): void {
+        const inputEvent = strictCustomEvent('sp-slider:input', {
+            bubbles: true,
+            composed: true,
+            detail: this.value,
+        });
+
+        this.dispatchEvent(inputEvent);
+    }
+
+    private dispatchChangeEvent(): void {
+        this.input.value = this.value.toString();
+
+        const changeEvent = strictCustomEvent('sp-slider:change', {
+            bubbles: true,
+            composed: true,
+            detail: this.value,
+        });
+
+        this.dispatchEvent(changeEvent);
     }
 
     /**

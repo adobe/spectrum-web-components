@@ -23,6 +23,7 @@ module.exports = {
                     values: [
                         '.spectrum-Slider--color',
                         '.spectrum-Slider--range',
+                        '.spectrum-Slider--filled',
                     ],
                 },
             ],
@@ -53,7 +54,7 @@ module.exports = {
                 },
                 {
                     selector: '.spectrum-Slider-labelContainer',
-                    name: 'labelContaineer',
+                    name: 'labelContainer',
                 },
                 {
                     selector: '.spectrum-Slider-value',
@@ -62,6 +63,10 @@ module.exports = {
                 {
                     selector: '.spectrum-Slider-fill',
                     name: 'fill',
+                },
+                {
+                    selector: '.spectrum-Slider-tick',
+                    name: 'tick',
                 },
             ],
             classes: [
