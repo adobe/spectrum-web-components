@@ -2,7 +2,6 @@
 // exports a default CSSResult containing the compiled CSS
 
 const path = require('path');
-const { stripIndent } = require('common-tags');
 const { wrapCSSResult } = require('../scripts/css-processing');
 
 const filenameToOutputFilename = (filename) => {
