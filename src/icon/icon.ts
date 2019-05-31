@@ -141,4 +141,8 @@ export class Icon extends LitElement {
         }
         return html``;
     }
+
+    public static register(): void {
+        customElements.define('sp-icon', Icon);
+    }
 }

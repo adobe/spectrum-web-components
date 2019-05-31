@@ -201,12 +201,13 @@ class SpectrumProcessor {
                         this.component.hostShadowSelectorNode.clone()
                     );
                 } else if (
+                    !prev &&
                     next &&
-                    next.type === 'pseudo' &&
+                    (next.type === 'pseudo' || next.type === 'class') &&
                     !this.component.spectrumClassIsHost
                 ) {
-                    // Don't leave a pseudo selector hanging.
-                    selector.insertBefore(
+                    // Don't leave a pseudo selector or class hanging.
+                    result.insertBefore(
                         next,
                         this.component.hostShadowSelectorNode.clone()
                     );

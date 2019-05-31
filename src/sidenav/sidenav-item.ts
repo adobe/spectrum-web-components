@@ -18,6 +18,7 @@ import {
     property,
 } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { strictCustomEvent } from '../events';
 
 import { SidenavSelectDetail, SideNav } from './sidenav';
 
@@ -46,6 +47,9 @@ export class SideNavItem extends LitElement {
     public href: string | undefined = undefined;
 
     @property()
+    public target: string | undefined = undefined;
+
+    @property()
     public label: string = '';
 
     protected get parentSideNav(): SideNav | undefined {
@@ -69,7 +73,7 @@ export class SideNavItem extends LitElement {
     protected firstUpdated(): void {
         const parentSideNav = this.parentSideNav;
         if (parentSideNav) {
-            parentSideNav.addEventListener('select', (ev) =>
+            parentSideNav.addEventListener('sp-sidenav:select', (ev) =>
                 this.handleSideNavSelect(ev)
             );
             this.selected =
@@ -90,14 +94,11 @@ export class SideNavItem extends LitElement {
                     value: this.value,
                 };
 
-                const selectionEvent = new CustomEvent<SidenavSelectDetail>(
-                    'select',
-                    {
-                        bubbles: true,
-                        composed: true,
-                        detail: selectDetail,
-                    }
-                );
+                const selectionEvent = strictCustomEvent('sp-sidenav:select', {
+                    bubbles: true,
+                    composed: true,
+                    detail: selectDetail,
+                });
 
                 this.dispatchEvent(selectionEvent);
             }
@@ -108,6 +109,7 @@ export class SideNavItem extends LitElement {
         return html`
             <a
                 .href=${ifDefined(this.href)}
+                .target=${ifDefined(this.target)}
                 data-level="${this.depth}"
                 @click="${this.handleClick}"
                 id="itemLink"

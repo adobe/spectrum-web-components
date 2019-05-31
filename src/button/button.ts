@@ -34,4 +34,8 @@ export class Button extends ButtonBase {
     public static get styles(): CSSResultArray {
         return [buttonStyles];
     }
+
+    public static register(): void {
+        customElements.define('sp-button', Button);
+    }
 }

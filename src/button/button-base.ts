@@ -10,44 +10,31 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, property, html, TemplateResult } from 'lit-element';
+import { property, html, TemplateResult } from 'lit-element';
+import Focusable from '../shared/focusable';
 
-export default class ButtonBase extends LitElement {
-    @property({ type: Boolean, reflect: true })
-    protected disabled: boolean = false;
-
+export default class ButtonBase extends Focusable {
     @property()
     protected href: string | undefined = undefined;
 
     public constructor() {
         super();
-        this.addEventListener('focus', () => {
-            if (this.shadowRoot) {
-                let button = this.shadowRoot.querySelector<HTMLButtonElement>(
-                    '#button'
-                );
-                if (button) button.focus();
-            }
-        });
-    }
-
-    private get shadowButtonTabIndex(): number {
-        if (this.disabled) {
-            return -1;
-        }
-        if (this.hasAttribute('tabindex')) {
-            return this.tabIndex;
-        }
-        return 0;
     }
 
     private get hasIcon(): boolean {
         return !!this.querySelector('[slot="icon"]');
     }
 
+    public get focusElement(): HTMLElement {
+        if (this.shadowRoot) {
+            return this.shadowRoot.querySelector('button') as HTMLElement;
+        }
+        return this;
+    }
+
     protected render(): TemplateResult {
         return html`
-            <button tabindex="${this.shadowButtonTabIndex}" id="button">
+            <button tabindex="${this.shadowTabIndex}" id="button">
                 ${this.hasIcon
                     ? html`
                           <slot name="icon"></slot>

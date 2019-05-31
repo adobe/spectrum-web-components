@@ -9,11 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './button';
-export * from './action-button';
+export * from './checkbox';
 
-import { Button } from './button';
-import { ActionButton } from './action-button';
+import { Checkbox } from './checkbox';
 
-Button.register();
-ActionButton.register();
+Checkbox.register();

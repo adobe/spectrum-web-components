@@ -9,11 +9,23 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './button';
-export * from './action-button';
 
-import { Button } from './button';
-import { ActionButton } from './action-button';
+import { CSSResultArray, TemplateResult, html } from 'lit-element';
+import CheckboxBase from '../checkbox/checkbox-base';
+import switchStyles from './switch.css';
 
-Button.register();
-ActionButton.register();
+export class Switch extends CheckboxBase {
+    public static is = 'sp-switch';
+
+    public static get styles(): CSSResultArray {
+        return [switchStyles];
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            <input id="input" type="checkbox" />
+            <span id="switch"></span>
+            <label id="label" for="input"><slot></slot></label>
+        `;
+    }
+}

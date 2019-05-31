@@ -10,27 +10,28 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, property } from 'lit-element';
-import ButtonBase from './button-base';
-import buttonStyles from './action-button.css';
+import { property } from 'lit-element';
+import Input from '../shared/input';
 
-export class ActionButton extends ButtonBase {
-    public static is = 'sp-action-button';
+export default class CheckboxBase extends Input {
+    @property({ type: Boolean, reflect: true })
+    public checked: boolean = false;
 
     @property({ type: Boolean, reflect: true })
-    protected quiet: boolean = false;
+    public quiet: boolean = false;
 
-    @property({ type: Boolean, reflect: true })
-    protected selected: boolean = false;
-
-    @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
-    protected holdAffordance: boolean = false;
-
-    public static get styles(): CSSResultArray {
-        return [buttonStyles];
+    public handleChange(): void {
+        if (this.focusElement) {
+            this.checked = this.focusElement.checked;
+        }
     }
 
-    public static register(): void {
-        customElements.define('sp-action-button', ActionButton);
+    public firstUpdated(): void {
+        super.firstUpdated();
+        if (this.hasAttribute('checked')) {
+            if (this.focusElement) {
+                this.focusElement.checked = true;
+            }
+        }
     }
 }
