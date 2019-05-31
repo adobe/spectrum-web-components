@@ -19,8 +19,8 @@ import {
     query,
 } from 'lit-element';
 
-// import sliderSkinStyles from './slider-skin.css';
 import sliderStyles from './spectrum-slider.css';
+import sliderColorStyles from './slider-color.css';
 import { strictCustomEvent } from '../events';
 
 export type SliderEventDetail = number;
@@ -29,7 +29,7 @@ export class Slider extends LitElement {
     public static is = 'sp-slider';
 
     public static get styles(): CSSResultArray {
-        return [sliderStyles];
+        return [sliderStyles, sliderColorStyles];
     }
 
     @property()
@@ -37,6 +37,9 @@ export class Slider extends LitElement {
 
     @property({ type: Number, reflect: true })
     public value = 10;
+
+    @property({ reflect: true })
+    public variant = '';
 
     @property()
     public label = '';
@@ -83,7 +86,7 @@ export class Slider extends LitElement {
         this.removeEventListener('focus', this.focusListener);
     }
 
-    protected render(): TemplateResult {
+    protected renderBase(): TemplateResult {
         return html`
             <div id="labelContainer">
                 <label id="label" for="input">${this.label}</label>
@@ -92,8 +95,7 @@ export class Slider extends LitElement {
                 </div>
             </div>
             <div id="controls" @pointerdown=${this.onTrackPointerDown}>
-                <div class="track" 
-                    id="track-left"
+                <div class="track" id="track-left"
                     style=${this.trackLeftStyle} 
                     role="presentation"
                 >
@@ -133,6 +135,51 @@ export class Slider extends LitElement {
         `;
     }
 
+    protected renderColor(): TemplateResult {
+        return html`
+            <div id="labelContainer">
+                <label id="label" for="input">${this.label}</label>
+                <div id="value" role="textbox" aria-readonly="true" aria-labelledby="label">
+                    ${this.value}
+                </div>
+            </div>
+            <div id="controls"  @pointerdown=${this.onTrackPointerDown}>
+                <div class="track"></div>
+                <div id="handle"
+                    class=${this.handleClasses}
+                    style=${this.handleStyle} 
+                    @pointermove=${this.onPointerMove}
+                    @pointerdown=${this.onPointerDown}
+                    @pointerup=${this.onPointerUp}
+                    @pointercancel=${this.onPointerCancel}
+                    role="presentation"
+                >
+                    <input type="range"
+                        id="input"
+                        value="${this.value}"
+                        step="${this.step}"
+                        min="${this.min}"
+                        max="${this.max}"
+                        aria-disabled=${this.disabled}
+                        aria-label=${this.ariaLabel || null}
+                        aria-valuemin=${this.min}
+                        aria-valuemax=${this.max}
+                        aria-valuetext=${this.value}
+                        @change=${this.onInputElementChange}
+                        @blur=${this.onInputElementBlur}
+                    />
+                </div>
+                </div>
+            </div>
+        `;
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            ${this.variant === 'color' ? this.renderColor() : this.renderBase()}
+        `;
+    }
+
     private focusListener(): void {
         if (this.input) {
             this.handleFocus = true;
@@ -141,6 +188,9 @@ export class Slider extends LitElement {
     }
 
     private onPointerDown(ev: PointerEvent): void {
+        if (this.disabled) {
+            return;
+        }
         this.input.focus();
         this.dragging = true;
         this.handle.setPointerCapture(ev.pointerId);
@@ -173,7 +223,7 @@ export class Slider extends LitElement {
      * is moused down
      */
     private onTrackPointerDown(ev: PointerEvent): void {
-        if (ev.target === this.handle) {
+        if (ev.target === this.handle || this.disabled) {
             return;
         }
         this.dragging = true;
@@ -193,13 +243,17 @@ export class Slider extends LitElement {
     }
 
     private onInputElementBlur(): void {
+        if (this.disabled) {
+            return;
+        }
         this.handleFocus = false;
         this.input.blur();
     }
 
     /**
-     * param: PointerEvent on slider
-     * returns: Slider value that correlates to the position under the pointer
+     * Returns the value under the cursor
+     * @param: PointerEvent on slider
+     * @return: Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(ev: PointerEvent): number {
         const rect = this.getBoundingClientRect();

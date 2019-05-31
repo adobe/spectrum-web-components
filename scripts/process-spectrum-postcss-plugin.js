@@ -664,6 +664,7 @@ class ComponentConfig {
         });
 
         this.classes = this.classes || [];
+<<<<<<< HEAD
         this.classes = new Map(
             this.classes.map((obj) => {
                 const name = obj.name;
@@ -676,6 +677,8 @@ class ComponentConfig {
                 return [selector.slice(1), name];
             })
         );
+=======
+>>>>>>> 95650f7... Converts slider color
     }
 }
 

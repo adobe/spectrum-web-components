@@ -144,8 +144,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* Appear above track */
     z-index: 2;
 }
-.track ~ .spectrum-Slider-track,
-#buffer ~ .spectrum-Slider-buffer {
+.track ~ .track,
+#buffer ~ #buffer {
     /* .spectrum-Slider-track ~ .spectrum-Slider-track,
    * .spectrum-Slider-buffer ~ .spectrum-Slider-buffer */
     left: auto;
@@ -159,7 +159,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2 * -1
     );
 }
-#buffer ~ .spectrum-Slider-buffer {
+#buffer ~ #buffer {
     /* .spectrum-Slider-buffer ~ .spectrum-Slider-buffer */
     margin-right: 0;
     padding: 0 0 0
@@ -171,7 +171,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 ) / 2
         );
 }
-#buffer ~ .spectrum-Slider-buffer:after {
+#buffer ~ #buffer:after {
     /* .spectrum-Slider-buffer ~ .spectrum-Slider-buffer:after */
     display: none;
 }
@@ -469,7 +469,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-300)
     );
 }
-#tick .spectrum-Slider-tickLabel {
+#tick #tickLabel {
     /* .spectrum-Slider-tick .spectrum-Slider-tickLabel */
     display: -ms-flexbox;
     display: flex;
@@ -502,8 +502,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     line-height: var(--spectrum-label-text-line-height, 1.3);
 }
-#tick:first-of-type .spectrum-Slider-tickLabel,
-#tick:last-of-type .spectrum-Slider-tickLabel {
+#tick:first-of-type #tickLabel,
+#tick:last-of-type #tickLabel {
     /* .spectrum-Slider-tick:first-of-type .spectrum-Slider-tickLabel,
    * .spectrum-Slider-tick:last-of-type .spectrum-Slider-tickLabel */
     display: block;
@@ -514,11 +514,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
         0 0 0;
 }
-#tick:first-of-type .spectrum-Slider-tickLabel {
+#tick:first-of-type #tickLabel {
     /* .spectrum-Slider-tick:first-of-type .spectrum-Slider-tickLabel */
     left: 0;
 }
-#tick:last-of-type .spectrum-Slider-tickLabel {
+#tick:last-of-type #tickLabel {
     /* .spectrum-Slider-tick:last-of-type .spectrum-Slider-tickLabel */
     right: 0;
 }
@@ -574,13 +574,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Slider--color .spectrum-Dial-handle */
     top: 50%;
 }
-:host(.is-disabled) {
+:host([disabled]) {
     /* .spectrum-Slider.is-disabled,
    * .spectrum-Dial.is-disabled */
     cursor: default;
 }
-:host(.is-disabled) #handle,
-:host(.is-disabled) .spectrum-Dial-handle {
+:host([disabled]) #handle,
+:host([disabled]) .spectrum-Dial-handle {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-handle,
    * .spectrum-Dial.is-disabled .spectrum-Slider-handle,
    * .spectrum-Slider.is-disabled .spectrum-Dial-handle,
@@ -588,10 +588,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: default;
     pointer-events: none;
 }
-:host(.is-disabled[variant='color']) #handle:hover,
-:host(.is-disabled[variant='color']) #handle:active,
-:host(.is-disabled[variant='color']) .spectrum-Dial-handle:hover,
-:host(.is-disabled[variant='color']) .spectrum-Dial-handle:active {
+:host([disabled][variant='color']) #handle:hover,
+:host([disabled][variant='color']) #handle:active,
+:host([disabled][variant='color']) .spectrum-Dial-handle:hover,
+:host([disabled][variant='color']) .spectrum-Dial-handle:active {
     /* .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:hover,
    * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:active,
    * .spectrum-Dial.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:hover,
@@ -793,8 +793,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             rgba(0, 0, 0, 0.05)
         );
 }
-:host(.is-disabled) #labelContainer,
-:host(.is-disabled) .spectrum-Dial-labelContainer {
+:host([disabled]) #labelContainer,
+:host([disabled]) .spectrum-Dial-labelContainer {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-labelContainer,
    * .spectrum-Slider.is-disabled .spectrum-Dial-labelContainer */
     color: var(
@@ -802,8 +802,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-:host(.is-disabled) #handle,
-:host(.is-disabled) .spectrum-Dial-handle {
+:host([disabled]) #handle,
+:host([disabled]) .spectrum-Dial-handle {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-handle,
    * .spectrum-Slider.is-disabled .spectrum-Dial-handle */
     border-color: var(
@@ -815,10 +815,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-100)
     );
 }
-:host(.is-disabled) #handle:hover,
-:host(.is-disabled) #handle:active,
-:host(.is-disabled) .spectrum-Dial-handle:hover,
-:host(.is-disabled) .spectrum-Dial-handle:active {
+:host([disabled]) #handle:hover,
+:host([disabled]) #handle:active,
+:host([disabled]) .spectrum-Dial-handle:hover,
+:host([disabled]) .spectrum-Dial-handle:active {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-handle:hover,
    * .spectrum-Slider.is-disabled .spectrum-Slider-handle:active,
    * .spectrum-Slider.is-disabled .spectrum-Dial-handle:hover,
@@ -832,42 +832,42 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         rgba(0, 0, 0, 0)
     );
 }
-:host(.is-disabled) .track::before {
+:host([disabled]) .track::before {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-track::before */
     background: var(
         --spectrum-slider-track-color-disabled,
         var(--spectrum-global-color-gray-300)
     );
 }
-:host(.is-disabled[variant='filled']) .track:first-child::before {
+:host([disabled][variant='filled']) .track:first-child::before {
     /* .spectrum-Slider.is-disabled.spectrum-Slider--filled .spectrum-Slider-track:first-child::before */
     background: var(
         --spectrum-slider-fill-track-color-disabled,
         var(--spectrum-global-color-gray-300)
     );
 }
-:host(.is-disabled) #fill::before {
+:host([disabled]) #fill::before {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-fill::before */
     background: var(
         --spectrum-slider-fill-track-color-disabled,
         var(--spectrum-global-color-gray-300)
     );
 }
-:host(.is-disabled) #buffer::before {
+:host([disabled]) #buffer::before {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-buffer::before */
     background: var(
         --spectrum-slider-player-track-buffer-color-disabled,
         var(--spectrum-global-color-gray-300)
     );
 }
-:host(.is-disabled) #ramp path {
+:host([disabled]) #ramp path {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-ramp path */
     fill: var(
         --spectrum-slider-ramp-track-color-disabled,
         var(--spectrum-global-color-gray-200)
     );
 }
-:host(.is-disabled[variant='color']) .track {
+:host([disabled][variant='color']) .track {
     /* .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-track */
     background: var(
         --spectrum-slider-color-track-color-disabled,
@@ -875,8 +875,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ) !important;
     box-shadow: none;
 }
-:host(.is-disabled[variant='color']) #handle,
-:host(.is-disabled[variant='color']) .spectrum-Dial-handle {
+:host([disabled][variant='color']) #handle,
+:host([disabled][variant='color']) .spectrum-Dial-handle {
     /* .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle,
    * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Dial-handle */
     background: var(
@@ -889,10 +889,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-400)
     );
 }
-:host(.is-disabled[variant='color']) #handle:hover,
-:host(.is-disabled[variant='color']) #handle:active,
-:host(.is-disabled[variant='color']) .spectrum-Dial-handle:hover,
-:host(.is-disabled[variant='color']) .spectrum-Dial-handle:active {
+:host([disabled][variant='color']) #handle:hover,
+:host([disabled][variant='color']) #handle:active,
+:host([disabled][variant='color']) .spectrum-Dial-handle:hover,
+:host([disabled][variant='color']) .spectrum-Dial-handle:active {
     /* .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:hover,
    * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:active,
    * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Dial-handle:hover,
@@ -907,7 +907,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-400)
     );
 }
-:host(.is-disabled[variant='range'])
+:host([disabled][variant='range'])
     .track:not(:first-of-type):not(:last-of-type):before {
     /* .spectrum-Slider.is-disabled.spectrum-Slider--range .spectrum-Slider-track:not(:first-of-type):not(:last-of-type):before */
     background: var(

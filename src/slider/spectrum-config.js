@@ -18,6 +18,11 @@ module.exports = {
             host: '.spectrum-Slider',
             attributes: [
                 {
+                    type: 'boolean',
+                    name: 'disabled',
+                    selector: '.is-disabled',
+                },
+                {
                     type: 'enum',
                     name: 'variant',
                     values: [
@@ -51,6 +56,10 @@ module.exports = {
                 {
                     selector: '.spectrum-Slider-label',
                     name: 'label',
+                },
+                {
+                    selector: '.spectrum-Slider-tickLabel',
+                    name: 'tickLabel',
                 },
                 {
                     selector: '.spectrum-Slider-labelContainer',
