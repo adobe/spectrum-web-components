@@ -105,4 +105,42 @@ storiesOf('Slider', module)
                 />
             </div>
         `;
+    })
+    .add('Focus tab demo', () => {
+        const value = number('Value', 50);
+        const min = number('Min', 0);
+        const max = number('Min', 100);
+        const step = number('Step', 1);
+        return html`
+            <div style="width: 500px; margin: 20px;">
+                <sp-slider
+                    value="${value}"
+                    step="${step}"
+                    min="${min}"
+                    max="${max}"
+                    label="Opacity"
+                    id="opacity-slider"
+                />
+            </div>
+            <div style="width: 500px; margin: 20px;">
+                <sp-slider
+                    value="${value}"
+                    step="${step}"
+                    min="${min}"
+                    max="${max}"
+                    label="Lightness"
+                    id="opacity-slider"
+                />
+            </div>
+            <div style="width: 500px; margin: 20px;">
+                <sp-slider
+                    value="${value}"
+                    step="${step}"
+                    min="${min}"
+                    max="${max}"
+                    label="Saturation"
+                    id="opacity-slider"
+                />
+            </div>
+        `;
     });

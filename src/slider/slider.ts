@@ -12,24 +12,24 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
     property,
     CSSResultArray,
     TemplateResult,
     query,
 } from 'lit-element';
 
-import sliderStyles from './spectrum-slider.css';
-import sliderColorStyles from './slider-color.css';
+import spectrumSliderStyles from './spectrum-slider.css';
+import sliderStyles from './slider.css';
 import { strictCustomEvent } from '../events';
+import { Focusable } from '../shared/focusable';
 
 export type SliderEventDetail = number;
 
-export class Slider extends LitElement {
+export class Slider extends Focusable {
     public static is = 'sp-slider';
 
     public static get styles(): CSSResultArray {
-        return [sliderStyles, sliderColorStyles];
+        return [sliderStyles, spectrumSliderStyles];
     }
 
     @property()
@@ -77,12 +77,8 @@ export class Slider extends LitElement {
     @property({ type: Boolean, reflect: true })
     public dragging = false;
 
-    /**
-     * This property turns the handle element blue.
-     * Should only be true when the slider is given focus through key inputs
-     */
     @property({ type: Boolean, reflect: true })
-    public handleFocus = false;
+    public handleHighlight = false;
 
     @query('#handle')
     private handle!: HTMLDivElement;
@@ -90,15 +86,8 @@ export class Slider extends LitElement {
     @query('#input')
     private input!: HTMLInputElement;
 
-    // TODO: Remove once focus mixin is implemented
-    public connectedCallback(): void {
-        super.connectedCallback();
-        this.addEventListener('focus', this.focusListener);
-    }
-
-    public disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.removeEventListener('focus', this.focusListener);
+    public get focusElement(): HTMLElement {
+        return this.input ? this.input : this;
     }
 
     protected render(): TemplateResult {
@@ -107,7 +96,6 @@ export class Slider extends LitElement {
             ${this.variant === 'color'
                 ? this.renderColorTrack()
                 : this.renderTrack()}
-            ${this.value}
         `;
     }
 
@@ -151,8 +139,9 @@ export class Slider extends LitElement {
                     aria-valuemin=${this.min}
                     aria-valuemax=${this.max}
                     aria-valuetext=${this.value}
-                    @change=${this.onInputElementChange}
-                    @blur=${this.onInputElementBlur}
+                    @change=${this.onInputChange}
+                    @focus=${this.onInputFocus}
+                    @blur=${this.onInputBlur}
                 />
             </div>
         `;
@@ -187,13 +176,6 @@ export class Slider extends LitElement {
         `;
     }
 
-    private focusListener(): void {
-        if (this.input) {
-            this.handleFocus = true;
-            this.input.focus();
-        }
-    }
-
     private onPointerDown(ev: PointerEvent): void {
         if (this.disabled) {
             return;
@@ -206,7 +188,7 @@ export class Slider extends LitElement {
     private onPointerUp(ev: PointerEvent): void {
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.input.focus();
-        this.handleFocus = false;
+        this.handleHighlight = false;
         this.dragging = false;
         this.handle.releasePointerCapture(ev.pointerId);
         this.dispatchChangeEvent();
@@ -243,21 +225,21 @@ export class Slider extends LitElement {
     /**
      * Keep the slider value property in sync with the input element's value
      */
-    private onInputElementChange(ev: Event): void {
+    private onInputChange(ev: Event): void {
         const inputValue = parseFloat(this.input.value);
         this.value = this.clampValue(inputValue);
         this.input.value = this.value.toString();
-        console.log(this.value);
+
         this.dispatchInputEvent();
         this.dispatchChangeEvent();
     }
 
-    private onInputElementBlur(): void {
-        if (this.disabled) {
-            return;
-        }
-        this.handleFocus = false;
-        this.input.blur();
+    private onInputFocus(): void {
+        this.handleHighlight = true;
+    }
+
+    private onInputBlur(): void {
+        this.handleHighlight = false;
     }
 
     /**
@@ -344,7 +326,7 @@ export class Slider extends LitElement {
         if (this.dragging) {
             classes += 'is-dragged';
         }
-        if (this.handleFocus) {
+        if (this.handleHighlight) {
             classes += ' is-focused';
         }
         return classes;
