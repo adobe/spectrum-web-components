@@ -142,6 +142,23 @@ class SpectrumProcessor {
             return result;
         });
 
+        // Map shadow DOM classes to classes
+        // e.g. ".spectrum-Slider-track" -> ".track"
+        astTransforms.push((selector, rule) => {
+            const result = selector.clone();
+            result.walkClasses((selector) => {
+                const matchingClass = this.component.classes.find(
+                    (classItem) => {
+                        return selector.value === classItem.selector.slice(1);
+                    }
+                );
+                if (matchingClass) {
+                    selector.value = matchingClass.name;
+                }
+            });
+            return result;
+        });
+
         // Map classes to slotted content
         // e.g. ".spectrum-Icon" -> "::slotted([slot='icon'])"
         astTransforms.push((selector, rule) => {
@@ -645,6 +662,8 @@ class ComponentConfig {
                 shadowSlottedNode: nodeFromSelector(shadowSlottedSelector),
             };
         });
+
+        this.classes = this.classes || [];
     }
 }
 
