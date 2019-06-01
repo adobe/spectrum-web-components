@@ -35,8 +35,23 @@ export class Slider extends LitElement {
     @property()
     public type = '';
 
-    @property({ type: Number, reflect: true })
-    public value = 10;
+    @property({ reflect: true })
+    public get value(): number {
+        return this._value;
+    }
+
+    public set value(value: number) {
+        const oldValue = this.value;
+
+        if (value === oldValue) {
+            return;
+        }
+
+        this._value = this.clampValue(value);
+        this.requestUpdate('value', oldValue);
+    }
+
+    private _value = 10;
 
     @property({ reflect: true })
     public variant = '';
@@ -86,44 +101,72 @@ export class Slider extends LitElement {
         this.removeEventListener('focus', this.focusListener);
     }
 
-    protected renderBase(): TemplateResult {
+    protected render(): TemplateResult {
+        return html`
+            ${this.renderLabel()}
+            ${this.variant === 'color'
+                ? this.renderColorTrack()
+                : this.renderTrack()}
+            ${this.value}
+        `;
+    }
+
+    private renderLabel(): TemplateResult {
         return html`
             <div id="labelContainer">
                 <label id="label" for="input">${this.label}</label>
-                <div id="value" role="textbox" aria-readonly="true" aria-labelledby="label">
+                <div
+                    id="value"
+                    role="textbox"
+                    aria-readonly="true"
+                    aria-labelledby="label"
+                >
                     ${this.value}
                 </div>
             </div>
+        `;
+    }
+
+    private renderHandle(): TemplateResult {
+        return html`
+            <div
+                id="handle"
+                class=${this.handleClasses}
+                style=${this.handleStyle}
+                @pointermove=${this.onPointerMove}
+                @pointerdown=${this.onPointerDown}
+                @pointerup=${this.onPointerUp}
+                @pointercancel=${this.onPointerCancel}
+                role="presentation"
+            >
+                <input
+                    type="range"
+                    id="input"
+                    value="${this.value}"
+                    step="${this.step}"
+                    min="${this.min}"
+                    max="${this.max}"
+                    aria-disabled=${this.disabled}
+                    aria-label=${this.ariaLabel || null}
+                    aria-valuemin=${this.min}
+                    aria-valuemax=${this.max}
+                    aria-valuetext=${this.value}
+                    @change=${this.onInputElementChange}
+                    @blur=${this.onInputElementBlur}
+                />
+            </div>
+        `;
+    }
+
+    private renderTrack(): TemplateResult {
+        return html`
             <div id="controls" @pointerdown=${this.onTrackPointerDown}>
                 <div class="track" id="track-left"
                     style=${this.trackLeftStyle} 
                     role="presentation"
                 >
                 </div>
-                <div id="handle" 
-                    class=${this.handleClasses}
-                    style=${this.handleStyle} 
-                    @pointermove=${this.onPointerMove}
-                    @pointerdown=${this.onPointerDown}
-                    @pointerup=${this.onPointerUp}
-                    @pointercancel=${this.onPointerCancel}
-                    role="presentation"
-                >
-                    <input type="range"
-                        id="input"
-                        value="${this.value}"
-                        step="${this.step}"
-                        min="${this.min}"
-                        max="${this.max}"
-                        aria-disabled=${this.disabled}
-                        aria-label=${this.ariaLabel || null}
-                        aria-valuemin=${this.min}
-                        aria-valuemax=${this.max}
-                        aria-valuetext=${this.value}
-                        @change=${this.onInputElementChange}
-                        @blur=${this.onInputElementBlur}
-                    />
-                </div>
+                ${this.renderHandle()}
                 <div class="track"
                     id="track-right"
                     style=${this.trackRightStyle}
@@ -135,48 +178,12 @@ export class Slider extends LitElement {
         `;
     }
 
-    protected renderColor(): TemplateResult {
+    private renderColorTrack(): TemplateResult {
         return html`
-            <div id="labelContainer">
-                <label id="label" for="input">${this.label}</label>
-                <div id="value" role="textbox" aria-readonly="true" aria-labelledby="label">
-                    ${this.value}
-                </div>
-            </div>
-            <div id="controls"  @pointerdown=${this.onTrackPointerDown}>
+            <div id="controls" @pointerdown=${this.onTrackPointerDown}>
                 <div class="track"></div>
-                <div id="handle"
-                    class=${this.handleClasses}
-                    style=${this.handleStyle} 
-                    @pointermove=${this.onPointerMove}
-                    @pointerdown=${this.onPointerDown}
-                    @pointerup=${this.onPointerUp}
-                    @pointercancel=${this.onPointerCancel}
-                    role="presentation"
-                >
-                    <input type="range"
-                        id="input"
-                        value="${this.value}"
-                        step="${this.step}"
-                        min="${this.min}"
-                        max="${this.max}"
-                        aria-disabled=${this.disabled}
-                        aria-label=${this.ariaLabel || null}
-                        aria-valuemin=${this.min}
-                        aria-valuemax=${this.max}
-                        aria-valuetext=${this.value}
-                        @change=${this.onInputElementChange}
-                        @blur=${this.onInputElementBlur}
-                    />
-                </div>
-                </div>
+                ${this.renderHandle()}
             </div>
-        `;
-    }
-
-    protected render(): TemplateResult {
-        return html`
-            ${this.variant === 'color' ? this.renderColor() : this.renderBase()}
         `;
     }
 
@@ -237,7 +244,10 @@ export class Slider extends LitElement {
      * Keep the slider value property in sync with the input element's value
      */
     private onInputElementChange(ev: Event): void {
-        this.value = parseFloat(this.input.value);
+        const inputValue = parseFloat(this.input.value);
+        this.value = this.clampValue(inputValue);
+        this.input.value = this.value.toString();
+        console.log(this.value);
         this.dispatchInputEvent();
         this.dispatchChangeEvent();
     }
@@ -264,14 +274,22 @@ export class Slider extends LitElement {
         const percent = (offset - minOffset) / size;
         let value = this.min + (this.max - this.min) * percent;
 
-        value = Math.min(value, this.max);
-        value = Math.max(value, this.min);
+        value = this.clampValue(value);
 
         if (this.step) {
             value = Math.round(value / this.step) * this.step;
         }
 
         return value;
+    }
+
+    /**
+     * @param: value to be clamped
+     * @return: the original value if in range, this.max if over, and this.min if under
+     */
+    private clampValue(value: number): number {
+        const reducedValue = Math.min(value, this.max);
+        return Math.max(reducedValue, this.min);
     }
 
     private dispatchInputEvent(): void {
