@@ -142,6 +142,23 @@ class SpectrumProcessor {
             return result;
         });
 
+        // Map shadow DOM classes to classes
+        // e.g. ".spectrum-Slider-track" -> ".track"
+        astTransforms.push((selector, rule) => {
+            const result = selector.clone();
+            result.walkClasses((selector) => {
+                if (selector.value) {
+                    const matchingClass = this.component.classes.get(
+                        selector.value
+                    );
+                    if (matchingClass) {
+                        selector.value = matchingClass;
+                    }
+                }
+            });
+            return result;
+        });
+
         // Map classes to slotted content
         // e.g. ".spectrum-Icon" -> "::slotted([slot='icon'])"
         astTransforms.push((selector, rule) => {
@@ -645,6 +662,20 @@ class ComponentConfig {
                 shadowSlottedNode: nodeFromSelector(shadowSlottedSelector),
             };
         });
+
+        this.classes = this.classes || [];
+        this.classes = new Map(
+            this.classes.map((obj) => {
+                const name = obj.name;
+                const selector = obj.selector;
+                if (!selector || !name) {
+                    const componentName = this.spectrumClass;
+                    const message = `Class mapping for ${componentName} is invalid. Usage: { selector: string, name: string }`;
+                    throw new Error(message);
+                }
+                return [selector.slice(1), name];
+            })
+        );
     }
 }
 
