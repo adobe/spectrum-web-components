@@ -147,13 +147,13 @@ class SpectrumProcessor {
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
             result.walkClasses((selector) => {
-                const matchingClass = this.component.classes.find(
-                    (classItem) => {
-                        return selector.value === classItem.selector.slice(1);
+                if (selector.value) {
+                    const matchingClass = this.component.classes.get(
+                        selector.value
+                    );
+                    if (matchingClass) {
+                        selector.value = matchingClass;
                     }
-                );
-                if (matchingClass) {
-                    selector.value = matchingClass.name;
                 }
             });
             return result;
@@ -664,6 +664,18 @@ class ComponentConfig {
         });
 
         this.classes = this.classes || [];
+        this.classes = new Map(
+            this.classes.map((obj) => {
+                const name = obj.name;
+                const selector = obj.selector;
+                if (!selector || !name) {
+                    const componentName = this.spectrumClass;
+                    const message = `Class mapping for ${componentName} is invalid. Usage: { selector: string, name: string }`;
+                    throw new Error(message);
+                }
+                return [selector.slice(1), name];
+            })
+        );
     }
 }
 
