@@ -14,32 +14,10 @@ governing permissions and limitations under the License.
     outline-width: 0;
 }
 
-:host([disabled][variant='color']) {
-    & .track {
-        background: var(
-            --spectrum-slider-color-track-color-disabled
-        ) !important;
-        box-shadow: none;
-    }
-    & #handle {
-        background: var(--spectrum-slider-color-handle-color-disabled);
-        box-shadow: none;
-        border-color: var(--spectrum-slider-color-handle-border-color-disabled);
-
-        &:hover,
-        &:active {
-            background: var(--spectrum-slider-color-handle-color-disabled);
-            box-shadow: none;
-            border-color: var(
-                --spectrum-slider-color-handle-border-color-disabled
-            );
-            border-width: var(
-                --spectrum-slider-color-handle-outset-border-size
-            );
-        }
-    }
-}
-
+/* 
+ * Placeholder gradient for color variant with alpha on. In the long run, the gradient
+ * should be produced programatically 
+*/
 :host([has-alpha][variant='color']) {
     & .track {
         background: linear-gradient(

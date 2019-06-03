@@ -23,6 +23,16 @@ module.exports = {
                     selector: '.is-disabled',
                 },
                 {
+                    type: 'boolean',
+                    selector: '.is-focused',
+                    name: 'handle-highlight',
+                },
+                {
+                    type: 'boolean',
+                    selector: '.is-dragged',
+                    name: 'dragging',
+                },
+                {
                     type: 'enum',
                     name: 'variant',
                     values: [

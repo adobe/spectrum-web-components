@@ -60,7 +60,7 @@ export class Slider extends Focusable {
     public label = '';
 
     @property({ reflect: true, attribute: 'aria-label' })
-    public ariaLabel = this.label;
+    public ariaLabel? = null;
 
     @property({ type: Number })
     public max = 20;
@@ -77,7 +77,7 @@ export class Slider extends Focusable {
     @property({ type: Boolean, reflect: true })
     public dragging = false;
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean, reflect: true, attribute: 'handle-highlight' })
     public handleHighlight = false;
 
     @query('#handle')
@@ -119,7 +119,7 @@ export class Slider extends Focusable {
         return html`
             <div
                 id="handle"
-                class=${this.handleClasses}
+                classz=${this.handleClasses}
                 style=${this.handleStyle}
                 @pointermove=${this.onPointerMove}
                 @pointerdown=${this.onPointerDown}
@@ -135,7 +135,7 @@ export class Slider extends Focusable {
                     min="${this.min}"
                     max="${this.max}"
                     aria-disabled=${this.disabled}
-                    aria-label=${this.ariaLabel || null}
+                    aria-label=${this.ariaLabel || this.label}
                     aria-valuemin=${this.min}
                     aria-valuemax=${this.max}
                     aria-valuetext=${this.value}

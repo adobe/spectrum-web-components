@@ -316,8 +316,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 #handle:active,
-#handle.is-focused,
-#handle.is-dragged {
+:host([handle-highlight]) #handle,
+:host([dragging]) #handle {
     /* .spectrum-Slider-handle:active,
    * .spectrum-Slider-handle.is-focused,
    * .spectrum-Slider-handle.is-dragged,
@@ -330,8 +330,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: grabbing;
 }
 #handle:active,
-#handle.is-focused,
-#handle.is-dragged,
+:host([handle-highlight]) #handle,
+:host([dragging]) #handle,
 #handle.is-tophandle {
     /* .spectrum-Slider-handle:active,
    * .spectrum-Slider-handle.is-focused,
@@ -647,7 +647,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
-#handle.is-focused {
+:host([handle-highlight]) #handle {
     /* .spectrum-Slider-handle.is-focused */
     border-color: var(
         --spectrum-slider-handle-border-color-key-focus,
@@ -664,7 +664,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 #handle:active,
-#handle.is-dragged {
+:host([dragging]) #handle {
     /* .spectrum-Slider-handle:active,
    * .spectrum-Slider-handle.is-dragged,
    * .spectrum-Dial-handle:active */
@@ -684,7 +684,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-gray-100)
         );
 }
-#handle.is-dragged {
+:host([dragging]) #handle {
     /* .spectrum-Slider-handle.is-dragged */
     border-color: var(
         --spectrum-slider-handle-border-color-down,
@@ -785,7 +785,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     background: var(--spectrum-slider-color-handle-color, rgba(0, 0, 0, 0));
 }
-:host([variant='color']) #handle.is-focused {
+:host([variant='color'][handle-highlight]) #handle {
     /* .spectrum-Slider--color .spectrum-Slider-handle.is-focused */
     box-shadow: 0 0 0 1px
         var(
