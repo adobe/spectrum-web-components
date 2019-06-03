@@ -10,6 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/* 
+ * Removes blue outline from :host when it is being focused.
+ * This situation is not addressed in spectrum-css because the slider element itself
+ * is not intended to receive focus. 
+ * This is not the case with web-components. The :host will receive focus when
+ * the page is tabbed through. 
+*/
 :host(:focus) {
     outline-width: 0;
 }

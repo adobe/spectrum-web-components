@@ -119,7 +119,6 @@ export class Slider extends Focusable {
         return html`
             <div
                 id="handle"
-                classz=${this.handleClasses}
                 style=${this.handleStyle}
                 @pointermove=${this.onPointerMove}
                 @pointerdown=${this.onPointerDown}
@@ -225,7 +224,7 @@ export class Slider extends Focusable {
     /**
      * Keep the slider value property in sync with the input element's value
      */
-    private onInputChange(ev: Event): void {
+    private onInputChange(): void {
         const inputValue = parseFloat(this.input.value);
         this.value = this.clampValue(inputValue);
         this.input.value = this.value.toString();
@@ -319,17 +318,6 @@ export class Slider extends Focusable {
 
     private get handleStyle(): string {
         return `left: ${this.trackProgress * 100}%`;
-    }
-
-    private get handleClasses(): string {
-        let classes = '';
-        if (this.dragging) {
-            classes += 'is-dragged';
-        }
-        if (this.handleHighlight) {
-            classes += ' is-focused';
-        }
-        return classes;
     }
 }
 
