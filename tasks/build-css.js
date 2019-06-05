@@ -31,7 +31,6 @@ const configPath = path.resolve(path.join(__dirname, '..', 'config'));
 const { postCSSPlugins, wrapCSSResult } = require('../scripts/css-processing');
 
 const ts = require('gulp-typescript');
-const sourcemaps = require('gulp-sourcemaps');
 const tsProject = ts.createProject('tsconfig.json');
 
 const buildCSS = () => {
@@ -64,18 +63,11 @@ const buildCSS = () => {
             })
         )
         // feed to the typescript project
-        .pipe(sourcemaps.init())
         .pipe(tsProject());
 
     // compile the ts to js
     return merge(
-        tsResult.js
-            .pipe(
-                sourcemaps.write('.', {
-                    includeContent: true,
-                })
-            )
-            .pipe(gulp.dest(dstPath)),
+        tsResult.js.pipe(gulp.dest(dstPath)),
         tsResult.dts.pipe(gulp.dest(dstPath))
     );
 };
