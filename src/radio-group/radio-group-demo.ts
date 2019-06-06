@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, property, TemplateResult } from 'lit-element';
 
-import { defineCustomElements, Radio } from '../index.js';
+import { defineCustomElements } from '../index.js';
 
 import { RadioGroup } from './radio-group';
 
@@ -62,7 +62,7 @@ export class RadioGroupDemo extends LitElement {
     public constructor() {
         super();
 
-        defineCustomElements(Radio, RadioGroup);
+        defineCustomElements(RadioGroup);
     }
 
     public onPetClick(ev: Event): void {

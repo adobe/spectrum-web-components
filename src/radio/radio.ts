@@ -10,19 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    html,
-    LitElement,
-    property,
-    CSSResultArray,
-    TemplateResult,
-} from 'lit-element';
+import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
 
 import radioStyles from './radio.css';
+import { Focusable } from '../shared/focusable';
 
-export class Radio extends LitElement {
-    public static readonly is = 'sp-radio';
-
+export class Radio extends Focusable {
     public static get styles(): CSSResultArray {
         return [radioStyles];
     }
@@ -41,7 +34,13 @@ export class Radio extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <input type="radio" name=${this.name} value=${this.value} />
+            <input
+                id="input"
+                type="radio"
+                name=${this.name}
+                value=${this.value}
+                ?checked=${this.checked}
+            />
             <span id="button"></span>
             <span id="label">${this.label}</span>
         `;
