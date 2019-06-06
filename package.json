@@ -7,10 +7,12 @@
     "description": "",
     "files": [
         "lib",
-        "styles",
-        "!styles/**/*.ts"
+        "styles"
     ],
-    "sideEffects": false,
+    "sideEffects": [
+        "./lib/*/index.js",
+        "./styles/*.css"
+    ],
     "main": "lib/index.js",
     "module": "lib/index.js",
     "browser": "lib/index.js",
