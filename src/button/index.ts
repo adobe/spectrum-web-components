@@ -22,3 +22,10 @@ if (!customElements.get('sp-action-button')) {
 if (!customElements.get('sp-button')) {
     customElements.define('sp-button', Button);
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-button': Button;
+        'sp-action-button': ActionButton;
+    }
+}

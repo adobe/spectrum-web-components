@@ -16,3 +16,9 @@ import { Checkbox } from './checkbox';
 if (!customElements.get('sp-checkbox')) {
     customElements.define('sp-checkbox', Checkbox);
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-checkbox': Checkbox;
+    }
+}

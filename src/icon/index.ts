@@ -15,3 +15,9 @@ import { Icon } from './icon';
 if (!customElements.get('sp-icon')) {
     customElements.define('sp-icon', Icon);
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-icon': Icon;
+    }
+}

@@ -16,7 +16,7 @@ import buttonStyles from './button.css';
 
 export class Button extends ButtonBase {
     @property({ reflect: true })
-    protected variant:
+    public variant:
         | 'cta'
         | 'overBackground'
         | 'primary'
@@ -24,10 +24,10 @@ export class Button extends ButtonBase {
         | 'negative' = 'cta';
 
     @property({ type: Boolean, reflect: true })
-    protected warning: boolean = false;
+    public warning: boolean = false;
 
     @property({ type: Boolean, reflect: true })
-    protected quiet: boolean = false;
+    public quiet: boolean = false;
 
     public static get styles(): CSSResultArray {
         return [buttonStyles];
