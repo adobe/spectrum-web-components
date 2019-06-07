@@ -161,7 +161,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-600)
     );
 }
-.spectrum-Radio--labelBelow {
+:host([label-below]) #root {
     /* .spectrum-Radio--labelBelow */
     display: -ms-inline-flexbox;
     display: inline-flex;
@@ -171,12 +171,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     align-items: center;
     height: auto;
 }
-.spectrum-Radio--labelBelow #button {
+:host([label-below]) #button {
     /* .spectrum-Radio--labelBelow .spectrum-Radio-button */
     -ms-flex-negative: 0;
     flex-shrink: 0;
 }
-.spectrum-Radio--labelBelow #label {
+:host([label-below]) #label {
     /* .spectrum-Radio--labelBelow .spectrum-Radio-label */
     margin: var(--spectrum-global-dimension-size-40) 0 0 0;
 }

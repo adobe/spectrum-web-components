@@ -27,6 +27,11 @@ module.exports = {
                 },
                 {
                     type: 'boolean',
+                    name: 'label-below',
+                    selector: '.spectrum-Radio--labelBelow',
+                },
+                {
+                    type: 'boolean',
                     selector: ':disabled',
                 },
                 {

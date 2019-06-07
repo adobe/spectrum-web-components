@@ -11,85 +11,80 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
-import * as MediumIcons from '../src/icons/icons-medium';
 import '../src/radio';
-
-import { defineCustomElements } from '../src';
-
-defineCustomElements(...Object.values(MediumIcons));
 
 storiesOf('Radio', module)
     .add('Default', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-radio>Radio</sp-radio>
         `;
     })
     .add('Checked', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-radio checked>Radio</sp-radio>
         `;
     })
     .add('Quiet', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-radio quiet>Radio</sp-radio>
         `;
     })
     .add('Quiet checked', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-radio quiet checked>Radio</sp-radio>
         `;
     })
     .add('Autofocus', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-radio autofocus>Radio</sp-radio>
         `;
     })
     .add('Invalid', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-radio invalid>Radio</sp-radio>
         `;
     })
     .add('Invalid checked', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-radio invalid checked>Radio</sp-radio>
         `;
     })
     .add('Disabled', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-radio disabled>Radio</sp-radio>
         `;
     })
     .add('Disabled checked', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-radio disabled checked>Radio</sp-radio>
+        `;
+    })
+
+    .add('Label below', () => {
+        return html`
+            <sp-radio label-below>Radio</sp-radio>
+        `;
+    })
+    .add('Label below checked', () => {
+        return html`
+            <sp-radio label-below checked>Radio</sp-radio>
         `;
     })
     .add('Tab index example', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <div>
-                <sp-radio tabindex="0">Radio 0</sp-radio>
+                <sp-radio name="tab-example" tabindex="0">Radio 0</sp-radio>
             </div>
             <div>
-                <sp-radio disabled tabindex="3">Radio 3</sp-radio>
+                <sp-radio name="tab-example" disabled tabindex="2">
+                    Radio 2
+                </sp-radio>
             </div>
             <div>
-                <sp-radio tabindex="4">Radio 4</sp-radio>
+                <sp-radio name="tab-example" tabindex="3">Radio 3</sp-radio>
             </div>
             <div>
-                <sp-radio tabindex="2" autofocus>Radio 2</sp-radio>
-            </div>
-            <div>
-                <sp-radio tabindex="1">Radio 1</sp-radio>
+                <sp-radio name="tab-example" tabindex="1">Radio 1</sp-radio>
             </div>
         `;
     });

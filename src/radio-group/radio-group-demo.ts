@@ -14,6 +14,8 @@ import { html, LitElement, property, TemplateResult } from 'lit-element';
 
 import { defineCustomElements } from '../index.js';
 
+import '../radio';
+
 import { RadioGroup } from './radio-group';
 
 const pets = [

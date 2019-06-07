@@ -13,36 +13,23 @@ governing permissions and limitations under the License.
 import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
 
 import radioStyles from './radio.css';
-import { Focusable } from '../shared/focusable';
+import { RadioBase } from './radio-base';
 
-export class Radio extends Focusable {
+export class Radio extends RadioBase {
     public static get styles(): CSSResultArray {
         return [radioStyles];
     }
 
     @property({ reflect: true })
-    public value = '';
-
-    @property({ type: Boolean, reflect: true })
-    public checked = false;
-
-    @property({ reflect: true })
     public label = 'Option';
-
-    @property({ reflect: true })
-    public name = '';
 
     protected render(): TemplateResult {
         return html`
-            <input
-                id="input"
-                type="radio"
-                name=${this.name}
-                value=${this.value}
-                ?checked=${this.checked}
-            />
+        <label id="root">
+            ${super.render()}
             <span id="button"></span>
             <span id="label">${this.label}</span>
+        </div>
         `;
     }
 }
