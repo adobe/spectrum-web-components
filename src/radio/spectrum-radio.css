@@ -14,12 +14,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Radio */
     display: -ms-inline-flexbox;
     display: inline-flex;
-    -ms-flex-align: center;
-    align-items: center;
+    -ms-flex-align: start;
+    align-items: flex-start;
 
     position: relative;
 
-    height: var(
+    min-height: var(
         --spectrum-radio-height,
         var(--spectrum-global-dimension-size-400)
     );
@@ -36,24 +36,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #input {
     /* .spectrum-Radio-input */
-    /* Change the font styles in all browsers for input. */
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
-
-    /* Remove the margin for input in Firefox and Safari. */
     margin: 0;
-
-    /* Show the overflow for input in Edge. */
     overflow: visible;
-
-    /* Add the correct box sizing for [type="radio"] in IE 10-. */
     box-sizing: border-box;
-
-    /* Remove the padding for [type="radio"] in IE 10-. */
     padding: 0;
-
-    /* Hit area */
     position: absolute;
     top: 0;
     left: calc(
@@ -107,11 +96,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
     transition: color var(--spectrum-global-animation-duration-100, 130ms)
         ease-in-out;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin-top: var(--spectrum-global-dimension-size-75);
     /* .spectrum-Radio-label */
     color: var(
         --spectrum-radio-text-color,
@@ -130,6 +115,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-radio-circle-diameter,
         var(--spectrum-global-dimension-size-175)
     );
+    margin: calc(
+            (
+                    var(
+                            --spectrum-radio-height,
+                            var(--spectrum-global-dimension-size-400)
+                        ) -
+                        var(
+                            --spectrum-radio-circle-diameter,
+                            var(--spectrum-global-dimension-size-175)
+                        )
+                ) / 2
+        )
+        0;
 
     -ms-flex-positive: 0;
 

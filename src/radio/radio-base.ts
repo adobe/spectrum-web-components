@@ -14,10 +14,10 @@ import { property, html, TemplateResult, query } from 'lit-element';
 import { Focusable } from '../shared/focusable';
 
 export class RadioBase extends Focusable {
-    @property({ type: String })
+    @property({ type: String, reflect: true })
     public name = '';
 
-    @property({ type: String })
+    @property({ type: String, reflect: true })
     public value = '';
 
     @property({ type: Boolean, reflect: true })
@@ -30,14 +30,16 @@ export class RadioBase extends Focusable {
         return this.inputElement;
     }
 
-    public handleChange(): void {
+    public handleChange(ev: PointerEvent): void {
         this.checked = this.inputElement.checked;
     }
+
     protected render(): TemplateResult {
         return html`
             <input
                 id="input"
                 type="radio"
+                ?checked=${this.checked}
                 name=${this.name}
                 value=${this.value}
                 @change=${this.handleChange}

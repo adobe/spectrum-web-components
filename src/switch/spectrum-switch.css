@@ -12,35 +12,32 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-ToggleSwitch */
-    display: inline-block;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-align: start;
+    align-items: flex-start;
+
     position: relative;
-    font-size: 0;
-    height: var(
+
+    min-height: var(
         --spectrum-switch-height,
         var(--spectrum-global-dimension-size-400)
     );
-    line-height: var(
-        --spectrum-switch-height,
-        var(--spectrum-global-dimension-size-400)
+    max-width: 100%;
+
+    margin-right: calc(
+        var(
+                --spectrum-switch-cursor-hit-x,
+                var(--spectrum-global-dimension-size-100)
+            ) * 2
     );
+
+    vertical-align: top;
 }
 #input {
     /* .spectrum-ToggleSwitch-input */
-    /* Change the font styles in all browsers for input. */
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.15;
-
-    /* Remove the margin for input in Firefox and Safari. */
     margin: 0;
-
-    /* Show the overflow for input in Edge. */
-    overflow: visible;
-
-    /* Add the correct box sizing for [type="checkbox"] in IE 10-. */
     box-sizing: border-box;
-
-    /* Remove the padding for [type="checkbox"] in IE 10-. */
     padding: 0;
 
     position: absolute;
@@ -87,14 +84,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-switch-text-size,
         var(--spectrum-global-dimension-font-size-100)
     );
-    vertical-align: middle;
     transition: color var(--spectrum-global-animation-duration-200, 160ms)
         ease-in-out;
+
+    margin-top: var(--spectrum-global-dimension-size-75);
 }
 #switch {
     /* .spectrum-ToggleSwitch-switch */
     display: inline-block;
-    /* positions the pseudo elements relative to this one */
     position: relative;
 
     height: var(
@@ -102,6 +99,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-175)
     );
     width: var(--spectrum-switch-track-width);
+    margin: calc(
+            (
+                    var(
+                            --spectrum-switch-height,
+                            var(--spectrum-global-dimension-size-400)
+                        ) -
+                        var(
+                            --spectrum-switch-track-height,
+                            var(--spectrum-global-dimension-size-175)
+                        )
+                ) / 2
+        )
+        0;
+
+    -ms-flex-positive: 0;
+
+    flex-grow: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
 
     vertical-align: middle;
 }

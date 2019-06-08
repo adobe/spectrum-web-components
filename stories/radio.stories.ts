@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import '../src/radio';
+import '../src/radio-group';
 
 storiesOf('Radio', module)
     .add('Default', () => {
@@ -70,18 +71,40 @@ storiesOf('Radio', module)
             <sp-radio label-below checked>Radio</sp-radio>
         `;
     })
+    .add('Group example', () => {
+        return html`
+            <sp-radio-group name="group-example" .selected="first">
+                <sp-radio
+                    @sp-radio:change=${console.log('plssss')}
+                    value="first"
+                >
+                    Option 1
+                </sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+                <sp-radio value="third">Option 3</sp-radio>
+                <sp-radio value="fourth">Option 4</sp-radio>
+            </sp-radio-group>
+        `;
+    })
     .add('Tab index example', () => {
         return html`
             <div>
                 <sp-radio name="tab-example" tabindex="0">Radio 0</sp-radio>
             </div>
             <div>
-                <sp-radio name="tab-example" disabled tabindex="2">
-                    Radio 2
+                <sp-radio name="tab-example" disabled tabindex="3">
+                    Radio 3
                 </sp-radio>
             </div>
             <div>
-                <sp-radio name="tab-example" tabindex="3">Radio 3</sp-radio>
+                <sp-radio name="tab-example" tabindex="4">
+                    Radio 4
+                </sp-radio>
+            </div>
+            <div>
+                <sp-radio autofocus name="tab-example" tabindex="2">
+                    Radio 2
+                </sp-radio>
             </div>
             <div>
                 <sp-radio name="tab-example" tabindex="1">Radio 1</sp-radio>

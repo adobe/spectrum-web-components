@@ -49,7 +49,7 @@
     },
     "devDependencies": {
         "@adobe/es-modules-middleware": "~1.1.0",
-        "@adobe/spectrum-css": "^2.10.0",
+        "@adobe/spectrum-css": "^2.13.0",
         "@babel/core": "^7.4.0",
         "@storybook/addon-actions": "^5.0.11",
         "@storybook/addon-knobs": "^5.0.5",

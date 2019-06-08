@@ -30,6 +30,8 @@ export class RadioGroup extends LitElement {
     @property({ reflect: true })
     public name = '';
 
+    private _selected = '';
+
     @property({ reflect: true })
     public get selected(): string {
         return this._selected;
@@ -47,8 +49,6 @@ export class RadioGroup extends LitElement {
         this.requestUpdate('selected', oldValue);
     }
 
-    private _selected = '';
-
     protected render(): TemplateResult {
         return html`
             <slot @slotchange=${this.onSlotChange}></slot>
@@ -56,11 +56,13 @@ export class RadioGroup extends LitElement {
     }
 
     private onSlotChange(): void {
+        console.log('pls');
         this.updateCheckedState(this.selected);
     }
 
     private updateCheckedState(value: string): void {
         const previousChecked = this.querySelectorAll('[checked]');
+        console.log(previousChecked);
 
         previousChecked.forEach((element) => {
             element.removeAttribute('checked');

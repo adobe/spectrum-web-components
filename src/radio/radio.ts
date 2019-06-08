@@ -20,7 +20,7 @@ export class Radio extends RadioBase {
         return [radioStyles];
     }
 
-    @property({ reflect: true })
+    @property({ type: String, reflect: true })
     public label = 'Option';
 
     protected render(): TemplateResult {
