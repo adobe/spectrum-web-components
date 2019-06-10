@@ -12,34 +12,53 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
     property,
     CSSResultArray,
     TemplateResult,
     query,
 } from 'lit-element';
 
-import sliderSkinStyles from './slider-skin.css';
+import spectrumSliderStyles from './spectrum-slider.css';
 import sliderStyles from './slider.css';
 import { strictCustomEvent } from '../events';
+import { Focusable } from '../shared/focusable';
 
 export type SliderEventDetail = number;
 
-export class Slider extends LitElement {
-    public static is = 'sp-slider';
-
+export class Slider extends Focusable {
     public static get styles(): CSSResultArray {
-        return [sliderStyles, sliderSkinStyles];
+        return [sliderStyles, spectrumSliderStyles];
     }
 
     @property()
     public type = '';
 
-    @property({ type: Number })
-    public value = 10;
+    @property({ reflect: true })
+    public get value(): number {
+        return this._value;
+    }
+
+    public set value(value: number) {
+        const oldValue = this.value;
+
+        if (value === oldValue) {
+            return;
+        }
+
+        this._value = this.clampValue(value);
+        this.requestUpdate('value', oldValue);
+    }
+
+    private _value = 10;
+
+    @property({ reflect: true })
+    public variant = '';
 
     @property()
     public label = '';
+
+    @property({ reflect: true, attribute: 'aria-label' })
+    public ariaLabel? = null;
 
     @property({ type: Number })
     public max = 20;
@@ -56,14 +75,203 @@ export class Slider extends LitElement {
     @property({ type: Boolean, reflect: true })
     public dragging = false;
 
+    @property({ type: Boolean, reflect: true, attribute: 'handle-highlight' })
+    public handleHighlight = false;
+
+    @query('#handle')
+    private handle!: HTMLDivElement;
+
     @query('#input')
-    private inputElement!: HTMLInputElement;
+    private input!: HTMLInputElement;
 
-    public onInput(): void {
-        const inputValue = this.inputElement.value;
+    public get focusElement(): HTMLElement {
+        return this.input ? this.input : this;
+    }
 
-        this.value = parseFloat(inputValue);
+    protected render(): TemplateResult {
+        return html`
+            ${this.renderLabel()}
+            ${this.variant === 'color'
+                ? this.renderColorTrack()
+                : this.renderTrack()}
+        `;
+    }
 
+    private renderLabel(): TemplateResult {
+        return html`
+            <div id="labelContainer">
+                <label id="label" for="input">${this.label}</label>
+                <div
+                    id="value"
+                    role="textbox"
+                    aria-readonly="true"
+                    aria-labelledby="label"
+                >
+                    ${this.value}
+                </div>
+            </div>
+        `;
+    }
+
+    private renderHandle(): TemplateResult {
+        return html`
+            <div
+                id="handle"
+                style=${this.handleStyle}
+                @pointermove=${this.onPointerMove}
+                @pointerdown=${this.onPointerDown}
+                @pointerup=${this.onPointerUp}
+                @pointercancel=${this.onPointerCancel}
+                role="presentation"
+            >
+                <input
+                    type="range"
+                    id="input"
+                    value="${this.value}"
+                    step="${this.step}"
+                    min="${this.min}"
+                    max="${this.max}"
+                    aria-disabled=${this.disabled}
+                    aria-label=${this.ariaLabel || this.label}
+                    aria-valuemin=${this.min}
+                    aria-valuemax=${this.max}
+                    aria-valuetext=${this.value}
+                    @change=${this.onInputChange}
+                    @focus=${this.onInputFocus}
+                    @blur=${this.onInputBlur}
+                />
+            </div>
+        `;
+    }
+
+    private renderTrack(): TemplateResult {
+        return html`
+            <div id="controls" @pointerdown=${this.onTrackPointerDown}>
+                <div class="track" id="track-left"
+                    style=${this.trackLeftStyle} 
+                    role="presentation"
+                >
+                </div>
+                ${this.renderHandle()}
+                <div class="track"
+                    id="track-right"
+                    style=${this.trackRightStyle}
+                    role="presentation"
+                >
+                </div>
+                </div>
+            </div>
+        `;
+    }
+
+    private renderColorTrack(): TemplateResult {
+        return html`
+            <div id="controls" @pointerdown=${this.onTrackPointerDown}>
+                <div class="track"></div>
+                ${this.renderHandle()}
+            </div>
+        `;
+    }
+
+    private onPointerDown(ev: PointerEvent): void {
+        if (this.disabled) {
+            return;
+        }
+        this.input.focus();
+        this.dragging = true;
+        this.handle.setPointerCapture(ev.pointerId);
+    }
+
+    private onPointerUp(ev: PointerEvent): void {
+        // Retain focus on input element after mouse up to enable keyboard interactions
+        this.input.focus();
+        this.handleHighlight = false;
+        this.dragging = false;
+        this.handle.releasePointerCapture(ev.pointerId);
+        this.dispatchChangeEvent();
+    }
+
+    private onPointerMove(ev: PointerEvent): void {
+        if (!this.dragging) {
+            return;
+        }
+        this.value = this.calculateHandlePosition(ev);
+        this.dispatchInputEvent();
+    }
+
+    private onPointerCancel(ev: PointerEvent): void {
+        this.dragging = false;
+        this.handle.releasePointerCapture(ev.pointerId);
+    }
+
+    /**
+     * Move the handle under the cursor and begin start a pointer capture when the track
+     * is moused down
+     */
+    private onTrackPointerDown(ev: PointerEvent): void {
+        if (ev.target === this.handle || this.disabled) {
+            return;
+        }
+        this.dragging = true;
+        this.handle.setPointerCapture(ev.pointerId);
+
+        this.value = this.calculateHandlePosition(ev);
+        this.dispatchInputEvent();
+    }
+
+    /**
+     * Keep the slider value property in sync with the input element's value
+     */
+    private onInputChange(): void {
+        const inputValue = parseFloat(this.input.value);
+        this.value = this.clampValue(inputValue);
+        this.input.value = this.value.toString();
+
+        this.dispatchInputEvent();
+        this.dispatchChangeEvent();
+    }
+
+    private onInputFocus(): void {
+        this.handleHighlight = true;
+    }
+
+    private onInputBlur(): void {
+        this.handleHighlight = false;
+    }
+
+    /**
+     * Returns the value under the cursor
+     * @param: PointerEvent on slider
+     * @return: Slider value that correlates to the position under the pointer
+     */
+    private calculateHandlePosition(ev: PointerEvent): number {
+        const rect = this.getBoundingClientRect();
+        const minOffset = rect.left;
+        const offset = ev.clientX;
+        const size = rect.width;
+
+        const percent = (offset - minOffset) / size;
+        let value = this.min + (this.max - this.min) * percent;
+
+        value = this.clampValue(value);
+
+        if (this.step) {
+            value = Math.round(value / this.step) * this.step;
+        }
+
+        return value;
+    }
+
+    /**
+     * @param: value to be clamped
+     * @return: the original value if in range, this.max if over, and this.min if under
+     */
+    private clampValue(value: number): number {
+        const reducedValue = Math.min(value, this.max);
+        return Math.max(reducedValue, this.min);
+    }
+
+    private dispatchInputEvent(): void {
         const inputEvent = strictCustomEvent('sp-slider:input', {
             bubbles: true,
             composed: true,
@@ -73,7 +281,9 @@ export class Slider extends LitElement {
         this.dispatchEvent(inputEvent);
     }
 
-    public onChange(): void {
+    private dispatchChangeEvent(): void {
+        this.input.value = this.value.toString();
+
         const changeEvent = strictCustomEvent('sp-slider:change', {
             bubbles: true,
             composed: true,
@@ -81,48 +291,6 @@ export class Slider extends LitElement {
         });
 
         this.dispatchEvent(changeEvent);
-    }
-
-    protected render(): TemplateResult {
-        return html`
-            <div id="labelContainer">
-                <label id="label" for="input">${this.label}</label>
-                <div id="value" role="textbox" aria-readonly="true" aria-labelledby="label">
-                    ${this.value}
-                </div>
-            </div>
-            <div id="controls">
-                <input type="range"
-                      id="input"
-                      value="${this.value}"
-                      step="${this.step}"
-                      min="${this.min}"
-                      max="${this.max}"
-                      @change=${this.onChange}
-                      @input=${this.onInput}
-                      @mousedown=${this.onMouseDown}
-                      @mouseup=${this.onMouseUp}
-                  />
-                <div class="track" id="track-left" style=${this.trackLeftStyle}>
-                </div>
-                <div id="handle" style=${this.handleStyle}>
-                </div>
-                <div class="track"
-                    id="track-right"
-                    style=${this.trackRightStyle}
-                >
-                </div>
-                </div>
-            </div>
-        `;
-    }
-
-    private onMouseDown(): void {
-        this.dragging = true;
-    }
-
-    private onMouseUp(): void {
-        this.dragging = false;
     }
 
     /**
