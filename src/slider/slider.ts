@@ -26,8 +26,6 @@ import { Focusable } from '../shared/focusable';
 export type SliderEventDetail = number;
 
 export class Slider extends Focusable {
-    public static is = 'sp-slider';
-
     public static get styles(): CSSResultArray {
         return [sliderStyles, spectrumSliderStyles];
     }

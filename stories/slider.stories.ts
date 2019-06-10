@@ -19,8 +19,7 @@ import {
 } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
-import { defineCustomElements, Slider } from '../src';
-defineCustomElements(Slider);
+import '../src/slider';
 
 storiesOf('Slider', module)
     .addDecorator(withKnobs)

@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './slider';
+
+import { Slider } from './slider';
+
+if (!customElements.get('sp-slider')) {
+    customElements.define('sp-slider', Slider);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-slider': Slider;
+    }
+}
