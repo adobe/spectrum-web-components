@@ -12,6 +12,11 @@ governing permissions and limitations under the License.
 
 import { property, html, TemplateResult, query } from 'lit-element';
 import { Focusable } from '../shared/focusable';
+import { strictCustomEvent } from '../events';
+
+export interface RadioChangeDetail {
+    value: string;
+}
 
 export class RadioBase extends Focusable {
     @property({ type: String, reflect: true })
@@ -30,8 +35,17 @@ export class RadioBase extends Focusable {
         return this.inputElement;
     }
 
-    public handleChange(ev: PointerEvent): void {
+    public handleChange(ev: Event): void {
         this.checked = this.inputElement.checked;
+        this.dispatchEvent(
+            strictCustomEvent('sp-radio:change', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    value: this.value,
+                },
+            })
+        );
     }
 
     protected render(): TemplateResult {
@@ -45,5 +59,11 @@ export class RadioBase extends Focusable {
                 @change=${this.handleChange}
             />
         `;
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-radio:change': CustomEvent<RadioChangeDetail>;
     }
 }

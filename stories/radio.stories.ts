@@ -13,6 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import '../src/radio';
 import '../src/radio-group';
+import { RadioGroup } from '../src/radio-group';
 
 storiesOf('Radio', module)
     .add('Default', () => {
@@ -73,16 +74,11 @@ storiesOf('Radio', module)
     })
     .add('Group example', () => {
         return html`
-            <sp-radio-group name="group-example" .selected="first">
-                <sp-radio
-                    @sp-radio:change=${console.log('plssss')}
-                    value="first"
-                >
-                    Option 1
-                </sp-radio>
-                <sp-radio value="second">Option 2</sp-radio>
-                <sp-radio value="third">Option 3</sp-radio>
-                <sp-radio value="fourth">Option 4</sp-radio>
+            <sp-radio-group column name="group-example">
+                <sp-radio value="first" label="Option 1" checked></sp-radio>
+                <sp-radio value="second" label="Option 2"></sp-radio>
+                <sp-radio value="third" label="Option 3"></sp-radio>
+                <sp-radio value="fourth" label="Option 4"></sp-radio>
             </sp-radio-group>
         `;
     })

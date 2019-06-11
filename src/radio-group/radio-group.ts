@@ -19,6 +19,7 @@ import {
 } from 'lit-element';
 
 import radioGroupStyles from './radio-group.css';
+import { RadioChangeDetail } from '../radio/radio-base';
 
 export class RadioGroup extends LitElement {
     public static readonly is = 'sp-radio-group';
@@ -43,7 +44,6 @@ export class RadioGroup extends LitElement {
         if (value === oldValue) {
             return;
         }
-        this.updateCheckedState(value);
 
         this._selected = value;
         this.requestUpdate('selected', oldValue);
@@ -56,24 +56,32 @@ export class RadioGroup extends LitElement {
     }
 
     private onSlotChange(): void {
-        console.log('pls');
-        this.updateCheckedState(this.selected);
+        this.addEventListener(
+            'sp-radio:change',
+            (ev: CustomEvent<RadioChangeDetail>) => {
+                this.onRadioChange(ev.detail.value);
+            }
+        );
     }
 
-    private updateCheckedState(value: string): void {
-        const previousChecked = this.querySelectorAll('[checked]');
-        console.log(previousChecked);
+    private onRadioChange(value: string): void {
+        const previousChecked = this.querySelectorAll('sp-radio[checked]');
+        console.log('test');
 
         previousChecked.forEach((element) => {
             element.removeAttribute('checked');
         });
 
         if (value.length) {
-            const currentChecked = this.querySelector(`[value=${value}]`);
+            const currentChecked = this.querySelector(
+                `sp-radio[value=${value}]`
+            );
 
             if (currentChecked) {
-                currentChecked.setAttribute('checked', 'true');
+                currentChecked.setAttribute('checked', 'checked');
             }
+
+            this.selected = value;
         }
     }
 }
