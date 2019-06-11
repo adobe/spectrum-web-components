@@ -84,26 +84,35 @@ storiesOf('Radio', module)
     })
     .add('Tab index example', () => {
         return html`
-            <div>
-                <sp-radio name="tab-example" tabindex="0">Radio 0</sp-radio>
-            </div>
-            <div>
-                <sp-radio name="tab-example" disabled tabindex="3">
-                    Radio 3
-                </sp-radio>
-            </div>
-            <div>
-                <sp-radio name="tab-example" tabindex="4">
-                    Radio 4
-                </sp-radio>
-            </div>
-            <div>
-                <sp-radio autofocus name="tab-example" tabindex="2">
-                    Radio 2
-                </sp-radio>
-            </div>
-            <div>
-                <sp-radio name="tab-example" tabindex="1">Radio 1</sp-radio>
-            </div>
+            <sp-radio-group column name="group-example">
+                <sp-radio
+                    quiet
+                    value="zero"
+                    tabindex="0"
+                    label="Tab Index 0"
+                ></sp-radio>
+                <sp-radio
+                    disabled
+                    value="three"
+                    tabindex="3"
+                    label="Tab Index 3"
+                ></sp-radio>
+                <sp-radio
+                    value="four"
+                    tabindex="4"
+                    label="Tab Index 4"
+                ></sp-radio>
+                <sp-radio
+                    invalid
+                    value="two"
+                    tabindex="2"
+                    label="Tab Index 2"
+                ></sp-radio>
+                <sp-radio
+                    value="one"
+                    tabindex="1"
+                    label="Tab Index 1"
+                ></sp-radio>
+            </sp-radio-group>
         `;
     });
