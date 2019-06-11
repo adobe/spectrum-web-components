@@ -19,7 +19,7 @@ import {
 } from 'lit-element';
 
 import radioGroupStyles from './radio-group.css';
-import { RadioChangeDetail } from '../radio/radio-base';
+import { RadioChangeDetail } from '../radio/radio';
 import { Radio } from '../radio/radio';
 
 export class RadioGroup extends LitElement {
@@ -41,7 +41,7 @@ export class RadioGroup extends LitElement {
         `;
     }
 
-    firstUpdated() {
+    protected firstUpdated(): void {
         const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
         this.selected = checkedRadio ? checkedRadio.value : '';
 

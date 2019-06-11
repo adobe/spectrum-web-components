@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, property, query, CSSResultArray, TemplateResult } from 'lit-element';
+import {
+    html,
+    property,
+    query,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import radioStyles from './radio.css';
 import { Focusable } from '../shared/focusable';
@@ -19,6 +25,7 @@ import { strictCustomEvent } from '../events';
 export interface RadioChangeDetail {
     value: string;
 }
+
 export class Radio extends Focusable {
     public static get styles(): CSSResultArray {
         return [radioStyles];
@@ -42,7 +49,7 @@ export class Radio extends Focusable {
         return this.inputElement;
     }
 
-    public handleChange(ev: Event): void {
+    public handleChange(): void {
         this.checked = this.inputElement.checked;
         this.dispatchEvent(
             strictCustomEvent('sp-radio:change', {
