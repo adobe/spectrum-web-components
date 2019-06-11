@@ -20,6 +20,7 @@ import {
 
 import radioGroupStyles from './radio-group.css';
 import { RadioChangeDetail } from '../radio/radio-base';
+import { Radio } from '../radio/radio';
 
 export class RadioGroup extends LitElement {
     public static readonly is = 'sp-radio-group';
@@ -31,31 +32,19 @@ export class RadioGroup extends LitElement {
     @property({ reflect: true })
     public name = '';
 
-    private _selected = '';
-
     @property({ reflect: true })
-    public get selected(): string {
-        return this._selected;
-    }
-
-    public set selected(value: string) {
-        const oldValue = this.selected;
-
-        if (value === oldValue) {
-            return;
-        }
-
-        this._selected = value;
-        this.requestUpdate('selected', oldValue);
-    }
+    public selected = '';
 
     protected render(): TemplateResult {
         return html`
-            <slot @slotchange=${this.onSlotChange}></slot>
+            <slot></slot>
         `;
     }
 
-    private onSlotChange(): void {
+    firstUpdated() {
+        const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
+        this.selected = checkedRadio ? checkedRadio.value : '';
+
         this.addEventListener(
             'sp-radio:change',
             (ev: CustomEvent<RadioChangeDetail>) => {
@@ -66,7 +55,6 @@ export class RadioGroup extends LitElement {
 
     private onRadioChange(value: string): void {
         const previousChecked = this.querySelectorAll('sp-radio[checked]');
-        console.log('test');
 
         previousChecked.forEach((element) => {
             element.removeAttribute('checked');

@@ -10,26 +10,71 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
+import { html, property, query, CSSResultArray, TemplateResult } from 'lit-element';
 
 import radioStyles from './radio.css';
-import { RadioBase } from './radio-base';
+import { Focusable } from '../shared/focusable';
+import { strictCustomEvent } from '../events';
 
-export class Radio extends RadioBase {
+export interface RadioChangeDetail {
+    value: string;
+}
+export class Radio extends Focusable {
     public static get styles(): CSSResultArray {
         return [radioStyles];
     }
+    @property({ type: String, reflect: true })
+    public name = '';
+
+    @property({ type: String, reflect: true })
+    public value = '';
+
+    @property({ type: Boolean, reflect: true })
+    public checked: boolean = false;
 
     @property({ type: String, reflect: true })
     public label = 'Option';
 
+    @query('#input')
+    private inputElement!: HTMLInputElement;
+
+    public get focusElement(): HTMLElement {
+        return this.inputElement;
+    }
+
+    public handleChange(ev: Event): void {
+        this.checked = this.inputElement.checked;
+        this.dispatchEvent(
+            strictCustomEvent('sp-radio:change', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    value: this.value,
+                },
+            })
+        );
+    }
+
     protected render(): TemplateResult {
         return html`
         <label id="root">
-            ${super.render()}
+            <input
+                id="input"
+                type="radio"
+                name=${this.name}
+                value=${this.value}
+                .checked=${this.checked}
+                @change=${this.handleChange}
+            />
             <span id="button"></span>
             <span id="label">${this.label}</span>
         </div>
         `;
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-radio:change': CustomEvent<RadioChangeDetail>;
     }
 }
