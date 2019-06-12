@@ -9,27 +9,22 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+@import './spectrum-card.css';
+
+/* Since we're using <img> tags instead of background-image for the cover photo,
+we need an additional object-fit property to preserve the aspect ratio of the image
+In spectrum-css, background-size is used */
 slot[name='cover-photo']::slotted(*) {
-    height: var(--spectrum-card-coverphoto-height);
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: var(--spectrum-card-coverphoto-border-bottom-size) solid
-        transparent;
-    border-radius: calc(var(--spectrum-card-border-radius) - 1px)
-        calc(var(--spectrum-card-border-radius) - 1px) 0 0;
-    background-size: cover;
-    background-position: center center;
-    background-color: var(--spectrum-card-coverphoto-background-color);
-    border-bottom-color: var(--spectrum-card-coverphoto-border-color);
+    object-fit: cover;
 }
 
-#footer {
-    padding-top: var(--spectrum-card-footer-padding-top);
-    margin-right: var(--spectrum-card-body-padding-right);
-    padding-bottom: var(--spectrum-card-body-padding-bottom);
-    margin-left: var(--spectrum-card-body-padding-left);
-    border-top: var(--spectrum-card-footer-border-top-size) solid;
-    border-color: var(--spectrum-card-border-color);
+slot[name='preview']::slotted(*) {
+    padding: 20px;
+    border-radius: 4px;
+    background-color: rgb(234, 234, 234);
+}
+
+slot[name='description'] {
+    font-size: 11px;
 }
