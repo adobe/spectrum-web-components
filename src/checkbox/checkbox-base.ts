@@ -36,7 +36,7 @@ export class CheckboxBase extends Focusable {
             <input
                 id="input"
                 type="checkbox"
-                ?checked=${this.checked}
+                .checked=${this.checked}
                 @change=${this.handleChange}
             />
         `;

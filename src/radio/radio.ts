@@ -39,9 +39,6 @@ export class Radio extends Focusable {
     @property({ type: Boolean, reflect: true })
     public checked: boolean = false;
 
-    @property({ type: String, reflect: true })
-    public label = 'Option';
-
     @query('#input')
     private inputElement!: HTMLInputElement;
 
@@ -74,7 +71,7 @@ export class Radio extends Focusable {
                 @change=${this.handleChange}
             />
             <span id="button"></span>
-            <span id="label">${this.label}</span>
+            <span id="label"><slot></slot></span>
         </div>
         `;
     }

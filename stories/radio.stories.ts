@@ -75,44 +75,27 @@ storiesOf('Radio', module)
     .add('Group example', () => {
         return html`
             <sp-radio-group column name="group-example">
-                <sp-radio value="first" label="Option 1" checked></sp-radio>
-                <sp-radio value="second" label="Option 2"></sp-radio>
-                <sp-radio value="third" label="Option 3"></sp-radio>
-                <sp-radio value="fourth" label="Option 4"></sp-radio>
+                <sp-radio value="first" checked>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+                <sp-radio value="third">Option 3</sp-radio>
+                <sp-radio value="fourth">Option 4</sp-radio>
             </sp-radio-group>
         `;
     })
     .add('Tab index example', () => {
         return html`
             <sp-radio-group column name="group-example">
-                <sp-radio
-                    quiet
-                    value="zero"
-                    tabindex="0"
-                    label="Tab Index 0"
-                ></sp-radio>
-                <sp-radio
-                    disabled
-                    value="three"
-                    tabindex="3"
-                    label="Tab Index 3"
-                ></sp-radio>
-                <sp-radio
-                    value="four"
-                    tabindex="4"
-                    label="Tab Index 4"
-                ></sp-radio>
-                <sp-radio
-                    invalid
-                    value="two"
-                    tabindex="2"
-                    label="Tab Index 2"
-                ></sp-radio>
-                <sp-radio
-                    value="one"
-                    tabindex="1"
-                    label="Tab Index 1"
-                ></sp-radio>
+                <sp-radio quiet value="zero" tabindex="0">Tab Index 0</sp-radio>
+                <sp-radio disabled value="three" tabindex="3">
+                    Tab Index 3
+                </sp-radio>
+                <sp-radio value="one" tabindex="1" autofocus>
+                    Tab Index 1
+                </sp-radio>
+                <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
+                <sp-radio invalid value="two" tabindex="2">
+                    Tab Index 2
+                </sp-radio>
             </sp-radio-group>
         `;
     });
