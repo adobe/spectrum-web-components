@@ -163,12 +163,14 @@ class SpectrumProcessor {
         // e.g. ".spectrum-Icon" -> "::slotted([slot='icon'])"
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
-            result.each((node) => {
+            result.each((node, index) => {
                 const slot = this.component.slotForNode(node);
                 if (!slot) return;
-                if (hasCombinator(selector)) {
-                    // Compound selectors will need to refer to the
-                    // slot itself
+
+                const isLastNode = result.length - 1 === index;
+                if (getCombinator(selector) === '+' && !isLastNode) {
+                    // If a sibling selector is used, and the slot is not the last
+                    // element in the combinator, we will need to refer to the slot itself
                     replaceNode(node, slot.shadowSlotNode);
                 } else {
                     replaceNode(node, slot.shadowSlottedNode);
@@ -426,7 +428,7 @@ class SpectrumProcessor {
     }
 
     /**
-     * Return true if the selector has a combinator operator in it
+     * If the selector has a combiner,
      *
      * @param {string} selector - Selector to check
      * @return {string} True if there is a combinator
@@ -717,6 +719,20 @@ function hasCombinator(selectorAST) {
         }
     }
     return false;
+}
+
+/**
+ * Return the combinator node in the given AST
+ * @param {Container} selectorAST A selector AST or other Container
+ * @return {Node} The combinator node if one exists, or null
+ */
+function getCombinator(selectorAST) {
+    for (const node of selectorAST.nodes) {
+        if (node.type === 'combinator') {
+            return node.value;
+        }
+    }
+    return null;
 }
 
 /**
