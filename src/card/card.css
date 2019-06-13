@@ -19,6 +19,10 @@ slot[name='cover-photo']::slotted(*) {
     object-fit: cover;
 }
 
+slot[name='preview']::slotted(*) {
+    object-fit: cover;
+}
+
 /* The description slot has a psuedo-element that also needs to receive the font styling. 
 We need to add the declaration to the slot as well */
 slot[name='description'] {
