@@ -85,11 +85,6 @@ module.exports = merge(openWcConfig, {
                                 require('postcss-inherit')(),
                                 require('postcss-preset-env')({
                                     stage: 0,
-                                    browsers: [
-                                        'last 2 Chrome versions',
-                                        'Firefox >= 63',
-                                        'Safari >= 10.1',
-                                    ],
                                 }),
                                 // minify the css with cssnano presets
                                 require('cssnano')({ preset: 'default' }),
