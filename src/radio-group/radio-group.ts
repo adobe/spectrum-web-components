@@ -29,10 +29,10 @@ export class RadioGroup extends LitElement {
         return [radioGroupStyles];
     }
 
-    @property({ reflect: true })
+    @property({ type: String, reflect: true })
     public name = '';
 
-    @property({ reflect: true })
+    @property({ type: String, reflect: true })
     public selected = '';
 
     protected render(): TemplateResult {
