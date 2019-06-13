@@ -10,13 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import {
-    withKnobs,
-    boolean,
-    radios,
-    text,
-    number,
-} from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
 import '../src/card';
@@ -25,19 +19,30 @@ storiesOf('Card', module)
     .addDecorator(withKnobs)
     .add('Default', () => {
         return html`
-            <sp-card title="Card Title" subtitle="JPG">
-                <img slot="cover-photo" src="https://picsum.photos/200/300" />
-                <div slot="footer">Footer</div>
-            </sp-card>
+            <div style="color: var(--spectrum-global-color-gray-800)">
+                <sp-card title="Card Title" subtitle="JPG">
+                    <img
+                        slot="cover-photo"
+                        src="https://picsum.photos/200/300"
+                    />
+                    <div slot="footer">Footer</div>
+                </sp-card>
+            </div>
         `;
     })
     .add('Gallery', () => {
         return html`
-            <sp-card variant="gallery" title="Card Title" subtitle="JPG">
-                <img slot="cover-photo" src="https://picsum.photos/200/300" />
-                <div slot="description">10/15/18</div>
-                <div slot="footer">Footer</div>
-            </sp-card>
+            <div style="width: 532px; height: 224px">
+                <sp-card variant="gallery" title="Card Title" subtitle="JPG">
+                    <img
+                        slot="preview"
+                        src="https://picsum.photos/532/192"
+                        style="object-fit: cover"
+                    />
+                    <div slot="description">10/15/18</div>
+                    <div slot="footer">Footer</div>
+                </sp-card>
+            </div>
         `;
     })
     .add('Quiet', () => {

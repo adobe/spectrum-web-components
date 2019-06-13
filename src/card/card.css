@@ -19,12 +19,8 @@ slot[name='cover-photo']::slotted(*) {
     object-fit: cover;
 }
 
-slot[name='preview']::slotted(*) {
-    padding: 20px;
-    border-radius: 4px;
-    background-color: rgb(234, 234, 234);
-}
-
+/* The description slot has a psuedo-element that also needs to receive the font styling. 
+We need to add the declaration to the slot as well */
 slot[name='description'] {
     font-size: 11px;
 }
