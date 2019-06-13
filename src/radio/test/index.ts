@@ -51,6 +51,21 @@ describe('Radio', () => {
         expect(el.checked).to.be.true;
     });
 
+    // @TODO unit tests for autofocus on multiple components (radio and checkbox) are
+    // interfering with one another. Need to refactor how karma loads tests to make sure
+    // the DOM of each test are isolated.
+    it.skip('autofocuses', () => {
+        const autoElement = document.querySelector(
+            'sp-radio[autofocus]'
+        ) as Radio;
+
+        expect(autoElement).to.exist;
+        expect(document.activeElement).to.equal(autoElement);
+
+        autoElement.blur();
+        expect(document.activeElement).to.not.equal(autoElement);
+    });
+
     it('ensures clicking disabled does not check them', () => {
         const el = document.querySelector('sp-radio[disabled]') as Radio;
 
