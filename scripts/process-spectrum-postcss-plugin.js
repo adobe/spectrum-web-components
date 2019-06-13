@@ -429,7 +429,7 @@ class SpectrumProcessor {
     }
 
     /**
-     * If the selector has a combiner,
+     * Return true if the selector has a combinator operator in it
      *
      * @param {string} selector - Selector to check
      * @return {string} True if there is a combinator
