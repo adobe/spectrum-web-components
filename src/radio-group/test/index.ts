@@ -23,7 +23,7 @@ function inputForRadio(radio: Radio): HTMLInputElement {
 describe('Radio Group', () => {
     it('loads', () => {
         const radioGroup = document.querySelector(
-            'sp-radio-group'
+            'sp-radio-group#test1'
         ) as RadioGroup;
         const radioChildren = radioGroup.querySelectorAll('sp-radio');
 
@@ -33,29 +33,45 @@ describe('Radio Group', () => {
 
     it('respects checked attribute with selected property', () => {
         const radioGroup = document.querySelector(
-            'sp-radio-group'
+            'sp-radio-group#test1'
         ) as RadioGroup;
         const firstRadio = radioGroup.querySelector(
-            'sp-radio[checked]'
+            'sp-radio[value=first]'
         ) as Radio;
         const secondRadio = radioGroup.querySelector(
-            'sp-radio:not([checked])'
+            'sp-radio[value=second]'
+        ) as Radio;
+        const thirdRadio = radioGroup.querySelector(
+            'sp-radio[value=third]'
         ) as Radio;
 
         expect(firstRadio.checked).to.be.true;
         expect(secondRadio.checked).to.be.false;
+        expect(thirdRadio.checked).to.be.false;
         expect(radioGroup.selected).to.equal(firstRadio.value);
 
         inputForRadio(secondRadio).click();
 
-        expect(firstRadio.checked).to.be.false;
-        expect(secondRadio.checked).to.be.true;
-        expect(radioGroup.selected).to.equal(secondRadio.value);
+        radioGroup.updateComplete.then(() => {
+            expect(firstRadio.checked).to.be.false;
+            expect(secondRadio.checked).to.be.true;
+            expect(thirdRadio.checked).to.be.false;
+            expect(radioGroup.selected).to.equal(secondRadio.value);
+        });
+
+        inputForRadio(thirdRadio).click();
+
+        radioGroup.updateComplete.then(() => {
+            expect(firstRadio.checked).to.be.false;
+            expect(secondRadio.checked).to.be.false;
+            expect(thirdRadio.checked).to.be.true;
+            expect(radioGroup.selected).to.equal(thirdRadio.value);
+        });
     });
 
     it('respects clicking on disabled attribute causing nothing to happen', () => {
         const radioGroup = document.querySelector(
-            'sp-radio-group'
+            'sp-radio-group#test2'
         ) as RadioGroup;
         const checkedRadio = radioGroup.querySelector(
             'sp-radio[checked]'
@@ -66,8 +82,10 @@ describe('Radio Group', () => {
 
         inputForRadio(disabledRadio).click();
 
-        expect(disabledRadio.checked).to.be.false;
-        expect(checkedRadio.checked).to.be.true;
-        expect(radioGroup.selected).to.equal(checkedRadio.value);
+        radioGroup.updateComplete.then(() => {
+            expect(disabledRadio.checked).to.be.false;
+            expect(checkedRadio.checked).to.be.true;
+            expect(radioGroup.selected).to.equal(checkedRadio.value);
+        });
     });
 });

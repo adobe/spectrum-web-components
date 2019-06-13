@@ -9,10 +9,14 @@
 
     <body>
         <div id="test-radio-group">
-            <sp-radio-group>
+            <sp-radio-group id="test1">
                 <sp-radio value="first" checked>Option 1</sp-radio>
                 <sp-radio value="second">Option 2</sp-radio>
-                <sp-radio value="third" disabled>Option 3</sp-radio>
+                <sp-radio value="third">Option 3</sp-radio>
+            </sp-radio-group>
+            <sp-radio-group id="test2">
+                <sp-radio value="first" checked>Option 1</sp-radio>
+                <sp-radio value="second" disabled>Option 2</sp-radio>
             </sp-radio-group>
         </div>
         <script src="./index.js" type="module"></script>

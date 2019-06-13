@@ -44,7 +44,7 @@ describe('Radio', () => {
     });
 
     it('handles click events', () => {
-        const el = document.querySelector('[value=second]') as Radio;
+        const el = document.querySelector('[value=third]') as Radio;
 
         expect(el.checked).to.be.false;
         inputForRadio(el).click();

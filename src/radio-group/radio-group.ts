@@ -57,18 +57,11 @@ export class RadioGroup extends LitElement {
         const previousChecked = this.querySelectorAll('sp-radio[checked]');
 
         previousChecked.forEach((element) => {
-            element.removeAttribute('checked');
+            const radio = element as Radio;
+            radio.checked = false;
         });
 
         if (value.length) {
-            const currentChecked = this.querySelector(
-                `sp-radio[value=${value}]`
-            );
-
-            if (currentChecked) {
-                currentChecked.setAttribute('checked', 'checked');
-            }
-
             this.selected = value;
         }
     }
