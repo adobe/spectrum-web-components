@@ -11,33 +11,23 @@ governing permissions and limitations under the License.
 */
 
 :host {
-    display: inline-flex;
-    flex-direction: row;
-}
-
-#button {
     display: flex;
-    flex: 1 1 auto;
-
-    /* spectrum-css uses "-webkit-appearance: button" to workaround an
-     * iOS and Safari issue. However, it results in incorrect styling 
-     * when applied in :host
-     */
-    -webkit-appearance: none;
+    flex-direction: column;
 }
 
-:host(:focus),
-#button:focus {
-    outline: none;
+#nav-header {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 12px;
 }
 
-:host([disabled]) {
-    pointer-events: none;
+#nav-header a,
+#nav-header a:visited {
+    color: var(--spectrum-alias-text-color);
+    text-decoration: none;
 }
 
-slot[name='icon']::slotted(svg) {
-    fill: currentColor;
-    stroke: currentColor;
-    width: var(--spectrum-alias-workflow-icon-size, 18px);
-    height: var(--spectrum-alias-workflow-icon-size, 18px);
+#nav-header docs-spectrum-logo {
+    margin-bottom: 11px;
 }

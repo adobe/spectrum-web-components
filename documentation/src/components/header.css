@@ -10,34 +10,27 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
-    display: inline-flex;
-    flex-direction: row;
-}
-
-#button {
+.header {
+    padding: 10px;
+    flex: 0 0 auto;
     display: flex;
-    flex: 1 1 auto;
-
-    /* spectrum-css uses "-webkit-appearance: button" to workaround an
-     * iOS and Safari issue. However, it results in incorrect styling 
-     * when applied in :host
-     */
-    -webkit-appearance: none;
 }
 
-:host(:focus),
-#button:focus {
-    outline: none;
+.header svg {
+    width: 32px;
+    height: 27px;
 }
 
-:host([disabled]) {
-    pointer-events: none;
+.header h2 {
+    padding-right: 17px;
 }
 
-slot[name='icon']::slotted(svg) {
-    fill: currentColor;
-    stroke: currentColor;
-    width: var(--spectrum-alias-workflow-icon-size, 18px);
-    height: var(--spectrum-alias-workflow-icon-size, 18px);
+:global(.spectrum-Link) {
+    font-style: normal;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 17px;
+    margin-bottom: 8px;
+    margin-top: 17px;
+    margin-left: 11px;
 }

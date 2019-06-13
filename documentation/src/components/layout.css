@@ -11,33 +11,37 @@ governing permissions and limitations under the License.
 */
 
 :host {
-    display: inline-flex;
-    flex-direction: row;
+    background-color: blueviolet;
 }
 
-#button {
+#app {
+    width: 100%;
+    height: 100%;
     display: flex;
+    flex-direction: column;
+}
+
+#side-nav {
+    display: flex;
+    flex: 0 0 auto;
+}
+
+#body {
+    display: flex;
+    flex-direction: row;
     flex: 1 1 auto;
-
-    /* spectrum-css uses "-webkit-appearance: button" to workaround an
-     * iOS and Safari issue. However, it results in incorrect styling 
-     * when applied in :host
-     */
-    -webkit-appearance: none;
+    padding-bottom: 40px;
 }
 
-:host(:focus),
-#button:focus {
-    outline: none;
+#body > div {
+    padding: 1.5em;
 }
 
-:host([disabled]) {
-    pointer-events: none;
-}
-
-slot[name='icon']::slotted(svg) {
-    fill: currentColor;
-    stroke: currentColor;
-    width: var(--spectrum-alias-workflow-icon-size, 18px);
-    height: var(--spectrum-alias-workflow-icon-size, 18px);
+#body #layout-content {
+    overflow: auto;
+    padding: 40px 52px 24px 52px;
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
 }
