@@ -167,7 +167,7 @@ class SpectrumProcessor {
                 const slot = this.component.slotForNode(node);
                 if (!slot) return;
                 const isSiblingSelector = getCombinator(selector) === '+';
-                const isLastNode = result.length - 1 === index;
+                const isLastNode = index === result.length - 1;
 
                 if (isSiblingSelector && !isLastNode) {
                     // If a sibling selector is used, and the slot is not the last
