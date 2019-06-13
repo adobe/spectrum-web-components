@@ -9,46 +9,52 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Radio } from '../..';
+import { Radio } from '..';
+import '..';
 
 function inputForRadio(radio: Radio): HTMLInputElement {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
+
     return radio.shadowRoot.querySelector('#input') as HTMLInputElement;
 }
 
 function labelNodeForRadio(radio: Radio): Node {
-    console.log(radio);
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
     const slotEl = radio.shadowRoot.querySelector('slot') as HTMLSlotElement;
+
     return slotEl.assignedNodes()[0];
 }
 
 describe('Radio', () => {
     it('loads', () => {
         const el = document.querySelector('sp-radio[value=first]') as Radio;
+        const textNode = labelNodeForRadio(el as Radio);
+
         expect(el).to.not.equal(undefined);
         expect(el.innerText).to.equal('Option 1');
-        const textNode = labelNodeForRadio(el);
         expect(textNode.textContent).to.equal('Option 1');
     });
 
-    it('autofocuses', () => {
-        const autoElement = document.querySelector('sp-radio[autofocus]');
-        expect(autoElement).to.exist;
-        expect(document.activeElement).to.equal(autoElement);
-    });
-
     it('respects checked attribute', () => {
-        let el = document.querySelector('[value=first]') as Radio;
-        expect(el.checked).to.be.false;
+        const el1 = document.querySelector('[value=first]') as Radio;
+        const el2 = document.querySelector('[value=second]') as Radio;
 
-        el = document.querySelector('[value=second]') as Radio;
-        expect(el.checked).to.be.true;
+        expect(el1.checked).to.be.true;
+        expect(el2.checked).to.be.false;
     });
 
     it('handles click events', () => {
         const el = document.querySelector('[value=second]') as Radio;
+
+        expect(el.checked).to.be.false;
+        inputForRadio(el).click();
         expect(el.checked).to.be.true;
+    });
+
+    it('ensures clicking disabled does not check them', () => {
+        const el = document.querySelector('sp-radio[disabled]') as Radio;
+
+        expect(el.checked).to.be.false;
         inputForRadio(el).click();
         expect(el.checked).to.be.false;
     });

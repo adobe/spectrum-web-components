@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Spectrum Web Components - Radio Tests</title>
+        <script src="/node_modules/karma-web-components/framework.js"></script>
+        <link rel="stylesheet" href="../../../styles/all-medium-light.css" />
+    </head>
+
+    <body>
+        <div id="test-radio-group">
+            <sp-radio-group>
+                <sp-radio value="first" checked>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+                <sp-radio value="third" disabled>Option 3</sp-radio>
+            </sp-radio-group>
+        </div>
+        <script src="./index.js" type="module"></script>
+    </body>
+</html>

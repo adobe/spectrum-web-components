@@ -13,7 +13,6 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import '../src/radio';
 import '../src/radio-group';
-import { RadioGroup } from '../src/radio-group';
 
 storiesOf('Radio', module)
     .add('Default', () => {
