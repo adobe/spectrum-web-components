@@ -154,7 +154,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-dimension-size-100)
     );
 }
-#label + slot[name='icon'] {
+#label + ::slotted([slot='icon']) {
     /* .spectrum-Button .spectrum-Button-label + .spectrum-Icon */
     margin-left: calc(
         var(
