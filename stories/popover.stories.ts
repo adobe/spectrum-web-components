@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { withKnobs, boolean, text } from '@storybook/addon-knobs';
+import { withKnobs, boolean, text, radios } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
 import '../src/popover';
@@ -17,22 +17,27 @@ import '../src/popover';
 storiesOf('Popover', module)
     .addDecorator(withKnobs)
     .add('Default', () => {
+        const loremIpsum = 'The quick brown fox jumps over the lazy dog';
+        const content = text('Text content', loremIpsum);
         return html`
             <div style="color: var(--spectrum-global-color-gray-800)">
                 <sp-popover variant="default" open style="max-width: 320px">
                     <div style="font-size: 14px; padding: 10px">
-                        Cupcake ipsum dolor sit amet jelly beans. Chocolate
-                        jelly caramels. Icing soufflé chupa chups donut
-                        cheesecake. Jelly-o chocolate cake sweet roll cake
-                        danish candy biscuit halvah
+                        ${content}
                     </div>
                 </sp-popover>
             </div>
         `;
     })
     .add('Dialog', () => {
-        const direction = text('Direction', 'top');
         const tip = boolean('Has Tip', true);
+        const directions = {
+            top: 'top',
+            bottom: 'bottom',
+            left: 'left',
+            right: 'right',
+        };
+        const direction = radios('Direction', directions, directions.bottom);
         return html`
             <div
                 style="color: var(--spectrum-global-color-gray-800); position: relative"
