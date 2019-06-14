@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './popover';
+
+import { Popover } from './popover';
+
+if (!customElements.get('sp-popover')) {
+    customElements.define('sp-popover', Popover);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-popover': Popover;
+    }
+}

@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
+import {
+    html,
+    LitElement,
+    CSSResultArray,
+    TemplateResult,
+    property,
+} from 'lit-element';
 
 import popoverStyles from './popover.css';
 
@@ -21,10 +27,22 @@ export class Popover extends LitElement {
         return [popoverStyles];
     }
 
+    @property({ reflect: true })
+    public direction: 'top' | 'bottom' | 'left' | 'right' | 'none' = 'none';
+
+    @property({ type: Boolean, reflect: true })
+    public tip = false;
+
+    protected renderTip(): TemplateResult {
+        return html`
+            <div id="tip"></div>
+        `;
+    }
+
     protected render(): TemplateResult {
         return html`
             <slot></slot>
-            <div id="tip"></div>
+            ${this.tip ? this.renderTip() : null}
         `;
     }
 }
