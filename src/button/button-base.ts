@@ -32,17 +32,15 @@ export class ButtonBase extends Focusable {
     }
 
     protected renderWithIcon(): TemplateResult {
-        return html`
-            ${this.iconRight
-                ? html`
-                      <div id="label"><slot></slot></div>
-                      <slot name="icon"></slot>
-                  `
-                : html`
-                      <slot name="icon"></slot>
-                      <div id="label"><slot></slot></div>
-                  `}
-        `;
+        return this.iconRight
+            ? html`
+                  <div id="label"><slot></slot></div>
+                  <slot name="icon"></slot>
+              `
+            : html`
+                  <slot name="icon"></slot>
+                  <div id="label"><slot></slot></div>
+              `;
     }
 
     protected render(): TemplateResult {
