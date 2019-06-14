@@ -31,7 +31,11 @@ export default class LayoutElement extends RouteComponent {
             <div id="app">
                 <div id="body">
                     <docs-side-nav id="side-nav"></docs-side-nav>
-                    <div id="layout-content">${this.renderContent()}</div>
+                    <div id="layout-content">
+                        <div id="page">
+                            ${this.renderContent()}
+                        </div>
+                    </div>
                 </div>
             </div>
         `;

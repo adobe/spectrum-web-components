@@ -24,9 +24,11 @@ governing permissions and limitations under the License.
 #side-nav {
     display: flex;
     flex: 0 0 auto;
+    padding: 1.5em;
 }
 
 #body {
+    position: relative;
     display: flex;
     flex-direction: row;
     flex: 1 1 auto;
@@ -34,15 +36,16 @@ governing permissions and limitations under the License.
     height: 100%;
 }
 
-#body > div {
-    padding: 1.5em;
+#body #layout-content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
 }
 
-#body #layout-content {
-    overflow: auto;
+#body #layout-content #page {
     padding: 40px 52px 24px 52px;
     max-width: 1080px;
     margin-left: auto;
     margin-right: auto;
-    height: 100%;
 }
