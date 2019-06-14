@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import * as MediumIcons from '../src/icons/icons-medium';
 
@@ -21,6 +22,7 @@ import '../src/button';
 defineCustomElements(Icon, ...Object.values(MediumIcons));
 
 storiesOf('Button', module)
+    .addDecorator(withKnobs)
     .add('Default', () => {
         return renderButtonPair({});
     })
@@ -86,6 +88,7 @@ storiesOf('Button', module)
         `;
     })
     .add('with icon', () => {
+        const iconRight = boolean('Icon on Right', false);
         return html`
             <sp-icons-medium></sp-icons-medium>
             <style>
@@ -96,6 +99,7 @@ storiesOf('Button', module)
             <div class="row">
                 ${renderButtonPair({
                     variant: 'primary',
+                    iconRight: iconRight,
                     content: html`
                         <sp-icon
                             slot="icon"
@@ -109,6 +113,7 @@ storiesOf('Button', module)
             <div class="row">
                 ${renderButtonPair({
                     variant: 'primary',
+                    iconRight: iconRight,
                     content: html`
                         <svg
                             slot="icon"
@@ -162,6 +167,7 @@ function renderButton(properties) {
                 variant="${properties.variant}"
                 ?quiet="${!!properties.quiet}"
                 ?disabled=${!!properties.disabled}
+                ?icon-right=${properties.iconRight}
                 @click=${action(`Click ${properties.variant}`)}
             >
                 ${properties.content || 'Click Me'}
