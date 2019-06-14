@@ -23,6 +23,7 @@ import { toHtmlTemplateString } from '../utils/templates';
 import DarkThemeStyles from 'prismjs/themes/prism-okaidia.css';
 import LightThemeStyles from 'prismjs/themes/prism.css';
 import Styles from './code-example.css';
+import { stripIndent } from 'common-tags';
 
 class Code extends LitElement {
     @property()
@@ -63,7 +64,7 @@ export default class CodeExample extends LitElement {
     }
 
     public get code(): string {
-        return this.textContent || '';
+        return stripIndent`${this.textContent}` || '';
     }
 
     public get language(): 'markup' | 'javascript' {
