@@ -10,10 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root,
-body {
+@import '../../styles/core-global/all.css';
+@import '../../styles/typography/all.css';
+
+:host {
+    position: relative;
+    display: block;
+}
+
+#scale,
+#theme {
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    margin: 0;
 }

@@ -28,7 +28,7 @@ export default class LayoutElement extends RouteComponent {
 
     render() {
         return html`
-            <div id="app">
+            <sp-theme color="light" scale="medium" id="app">
                 <div id="body">
                     <docs-side-nav id="side-nav"></docs-side-nav>
                     <div id="layout-content">
@@ -37,7 +37,7 @@ export default class LayoutElement extends RouteComponent {
                         </div>
                     </div>
                 </div>
-            </div>
+            </sp-theme>
         `;
     }
 }
