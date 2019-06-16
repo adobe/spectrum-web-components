@@ -1,5 +1,5 @@
 import { html, CSSResultArray } from 'lit-element';
-import LayoutElement from './layout';
+import { LayoutElement } from './layout';
 import componentStyles from './markdown.css';
 import homeStyles from './home.css';
 
