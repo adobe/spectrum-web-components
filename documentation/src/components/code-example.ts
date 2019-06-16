@@ -55,7 +55,7 @@ export class LightCode extends Code {
 }
 
 @customElement('code-example')
-export default class CodeExample extends LitElement {
+export class CodeExample extends LitElement {
     @property()
     protected codeTheme: 'dark' | 'light' = 'light';
 

@@ -1,6 +1,6 @@
 # Adding a New Component
 
-This guide is explains how to contribute the implementation of a Spectrum control
+This guide explains how to contribute the implementation of a Spectrum control
 to [spectrum-web-components](https://github.com/adobe/spectrum-web-components).
 
 The components in spectrum-web-components are based on the CSS definitions in

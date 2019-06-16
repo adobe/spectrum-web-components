@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 import { html, CSSResultArray } from 'lit-element';
 import './layout';
 import './code-example';
-import GuideDocs from '../../guides';
-import LayoutElement from './layout';
+import { GuideDocs } from '../../guides';
+import { LayoutElement } from './layout';
 import componentStyles from './markdown.css';
 
 class GuideElement extends LayoutElement {

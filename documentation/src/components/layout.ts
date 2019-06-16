@@ -13,9 +13,9 @@ governing permissions and limitations under the License.
 import { html, CSSResultArray } from 'lit-element';
 import './side-nav';
 import layoutStyles from './layout.css';
-import RouteComponent from './route-component';
+import { RouteComponent } from './route-component';
 
-export default class LayoutElement extends RouteComponent {
+export class LayoutElement extends RouteComponent {
     public static get styles(): CSSResultArray {
         return [layoutStyles];
     }

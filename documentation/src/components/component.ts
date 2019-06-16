@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 import { html, CSSResultArray } from 'lit-element';
 import './code-example';
-import ComponentDocs from '../../components';
-import LayoutElement from './layout';
+import { ComponentDocs } from '../../components';
+import { LayoutElement } from './layout';
 import componentStyles from './markdown.css';
 
 class ComponentElement extends LayoutElement {
-    location?: {
+    public location?: {
         baseUrl: string;
         params: {
             component: string;

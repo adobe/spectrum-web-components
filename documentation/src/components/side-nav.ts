@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { LitElement, html, CSSResultArray } from 'lit-element';
-import ComponentDocs from '../../components';
+import { ComponentDocs } from '../../components';
 import AppRouter from '../router';
 import { StrictCustomEvent } from '../../../src/events';
 import sideNavStyles from './side-nav.css';

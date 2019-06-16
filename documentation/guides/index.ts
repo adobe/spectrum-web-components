@@ -3,12 +3,10 @@ import { TemplateResult } from 'lit-element';
 
 const guideDocs = require.context('../guides', true, /\.md$/);
 
-const guides = new Map<string, TemplateResult>();
+export const GuideDocs = new Map<string, TemplateResult>();
 
 for (const key of guideDocs.keys()) {
     const componentName = /([a-zA-Z-]+)\.md$/.exec(key)![1];
     const templateString = toHtmlTemplateString(guideDocs(key));
-    guides.set(componentName, templateString);
+    GuideDocs.set(componentName, templateString);
 }
-
-export default guides;
