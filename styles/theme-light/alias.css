@@ -22,6 +22,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-highlight-active: rgba(44, 44, 44, 0.1);
     --spectrum-alias-highlight-selected: rgba(20, 115, 230, 0.1);
     --spectrum-alias-highlight-selected-hover: rgba(20, 115, 230, 0.2);
+    --spectrum-alias-text-highlight-color: rgba(20, 115, 230, 0.2);
     --spectrum-alias-background-color-quickactions: rgba(245, 245, 245, 0.9);
     --spectrum-alias-background-color-quickactions-overlay: rgba(0, 0, 0, 0.2);
     --spectrum-alias-placeholder-text-color: rgb(142, 142, 142);
@@ -55,6 +56,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-track-color-disabled: rgb(225, 225, 225);
     --spectrum-alias-track-color-over-background: rgba(255, 255, 255, 0.2);
     --spectrum-alias-icon-color: rgb(110, 110, 110);
+    --spectrum-alias-icon-color-over-background: rgb(255, 255, 255);
     --spectrum-alias-icon-color-hover: rgb(44, 44, 44);
     --spectrum-alias-icon-color-down: rgb(44, 44, 44);
     --spectrum-alias-icon-color-focus: rgb(44, 44, 44);
@@ -66,4 +68,8 @@ governing permissions and limitations under the License.
     --spectrum-alias-icon-color-selected-focus: rgb(13, 102, 208);
     --spectrum-alias-icon-color-error: rgb(227, 72, 80);
     --spectrum-alias-radial-reaction-color-default: rgba(75, 75, 75, 0.6);
+    --spectrum-alias-pasteboard-background-color: rgb(225, 225, 225);
+    --spectrum-alias-appframe-border-color: rgb(225, 225, 225);
+    --spectrum-alias-appframe-separator-color: rgb(225, 225, 225);
+    --spectrum-alias-toolbar-background-color: rgb(245, 245, 245);
 }
