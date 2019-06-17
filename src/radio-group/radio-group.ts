@@ -22,6 +22,11 @@ import radioGroupStyles from './radio-group.css';
 import { RadioChangeDetail } from '../radio/radio';
 import { Radio } from '../radio/radio';
 
+/**
+ * Radio group component
+ *
+ * @attr column - arranges radio buttons vertically
+ */
 export class RadioGroup extends LitElement {
     public static readonly is = 'sp-radio-group';
 

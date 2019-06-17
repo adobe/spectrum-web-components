@@ -16,3 +16,9 @@ import { Radio } from './radio';
 if (!customElements.get('sp-radio')) {
     customElements.define('sp-radio', Radio);
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-radio': Radio;
+    }
+}

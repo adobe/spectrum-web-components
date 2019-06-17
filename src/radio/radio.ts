@@ -26,6 +26,15 @@ export interface RadioChangeDetail {
     value: string;
 }
 
+/**
+ * Radio button component
+ *
+ * @attr quiet - uses the quiet style
+ * @attr label-below - moves the label below the radio button
+ * @attr invalid - uses the invalid style
+ * @attr disabled - uses the disabled style
+ * @attr checked - represents when the input is checked
+ */
 export class Radio extends Focusable {
     public static get styles(): CSSResultArray {
         return [radioStyles];

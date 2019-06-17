@@ -16,3 +16,9 @@ import { RadioGroup } from './radio-group';
 if (!customElements.get('sp-radio-group')) {
     customElements.define('sp-radio-group', RadioGroup);
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-radio-group': RadioGroup;
+    }
+}
