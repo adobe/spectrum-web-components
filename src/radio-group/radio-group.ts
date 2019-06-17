@@ -32,8 +32,26 @@ export class RadioGroup extends LitElement {
     @property({ type: String, reflect: true })
     public name = '';
 
-    @property({ type: String, reflect: true })
-    public selected = '';
+    private _selected = '';
+
+    @property({ reflect: true })
+    public get selected(): string {
+        return this._selected;
+    }
+
+    public set selected(value: string) {
+        const radio = this.querySelector(`sp-radio[value=${value}]`) as Radio;
+
+        this.deselectChecked();
+
+        if (radio) {
+            this._selected = value;
+            radio.checked = true;
+            // If no matching radio, selected is reset to empty string
+        } else {
+            this._selected = '';
+        }
+    }
 
     protected render(): TemplateResult {
         return html`
@@ -43,26 +61,25 @@ export class RadioGroup extends LitElement {
 
     protected firstUpdated(): void {
         const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
-        this.selected = checkedRadio ? checkedRadio.value : '';
+        const checkedRadioValue = checkedRadio ? checkedRadio.value : '';
+
+        // If selected already assigned, don't overwrite
+        this.selected = this.selected || checkedRadioValue;
 
         this.addEventListener(
             'sp-radio:change',
             (ev: CustomEvent<RadioChangeDetail>) => {
-                this.onRadioChange(ev.detail.value);
+                this.selected = ev.detail.value;
             }
         );
     }
 
-    private onRadioChange(value: string): void {
+    private deselectChecked(): void {
         const previousChecked = this.querySelectorAll('sp-radio[checked]');
 
         previousChecked.forEach((element) => {
             const radio = element as Radio;
             radio.checked = false;
         });
-
-        if (value.length) {
-            this.selected = value;
-        }
     }
 }

@@ -73,8 +73,8 @@ storiesOf('Radio', module)
     })
     .add('Group example', () => {
         return html`
-            <sp-radio-group column name="group-example">
-                <sp-radio value="first" checked>Option 1</sp-radio>
+            <sp-radio-group column selected="first" name="group-example">
+                <sp-radio value="first">Option 1</sp-radio>
                 <sp-radio value="second">Option 2</sp-radio>
                 <sp-radio value="third">Option 3</sp-radio>
                 <sp-radio value="fourth">Option 4</sp-radio>
