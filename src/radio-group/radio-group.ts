@@ -28,8 +28,6 @@ import { Radio } from '../radio/radio';
  * @attr column - arranges radio buttons vertically
  */
 export class RadioGroup extends LitElement {
-    public static readonly is = 'sp-radio-group';
-
     public static get styles(): CSSResultArray {
         return [radioGroupStyles];
     }
