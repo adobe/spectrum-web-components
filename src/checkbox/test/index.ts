@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { defineCustomElements } from '../../define';
-import { Checkbox } from '../..';
+import { Checkbox } from '..';
 import * as MediumIcons from '../../icons/icons-medium';
 
 defineCustomElements(...Object.values(MediumIcons));

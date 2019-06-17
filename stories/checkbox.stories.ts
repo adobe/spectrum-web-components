@@ -23,7 +23,12 @@ storiesOf('Checkbox', module)
     .add('Default', () => {
         return html`
             <sp-icons-medium></sp-icons-medium>
-            <sp-checkbox>Checkbox</sp-checkbox>
+            <sp-checkbox
+                @click="${action('Click')}"
+                @change="${action('Change')}"
+            >
+                Checkbox
+            </sp-checkbox>
         `;
     })
     .add('Checked', () => {

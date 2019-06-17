@@ -24,21 +24,26 @@ export class ButtonBase extends Focusable {
 
     public get focusElement(): HTMLElement {
         if (this.shadowRoot) {
-            return this.shadowRoot.querySelector('button') as HTMLElement;
+            return this.shadowRoot.querySelector('#button') as HTMLElement;
         }
         return this;
     }
 
     protected render(): TemplateResult {
-        return html`
-            <button id="button">
-                ${this.hasIcon
-                    ? html`
-                          <slot name="icon"></slot>
-                      `
-                    : nothing}
-                <div id="label"><slot></slot></div>
-            </button>
+        const buttonContents = html`
+            ${this.hasIcon
+                ? html`
+                      <slot name="icon"></slot>
+                  `
+                : nothing}
+            <div id="label"><slot></slot></div>
         `;
+        return this.href && this.href.length > 0
+            ? html`
+                  <a href="${this.href}" id="button">${buttonContents}</a>
+              `
+            : html`
+                  <button id="button">${buttonContents}</button>
+              `;
     }
 }
