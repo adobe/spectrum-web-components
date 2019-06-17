@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './illustrated-message';
+
+import { IllustratedMessage } from './illustrated-message';
+
+if (!customElements.get('sp-illustrated-message')) {
+    customElements.define('sp-illustrated-message', IllustratedMessage);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-illustrated-message': IllustratedMessage;
+    }
+}
