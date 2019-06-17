@@ -14,6 +14,9 @@ governing permissions and limitations under the License.
 :host {
     --spectrum-button-cta-height: 32px;
     --spectrum-button-cta-padding-x: 16px;
+    --spectrum-button-cta-text-padding-x: 16px;
+    --spectrum-button-cta-icon-padding-left: 14px;
+    --spectrum-button-cta-icon-padding-right: 8px;
     --spectrum-button-cta-border-radius: 16px;
     --spectrum-button-cta-border-size: 2px;
     --spectrum-button-cta-text-font-weight: 700;
@@ -26,6 +29,9 @@ governing permissions and limitations under the License.
     --spectrum-button-cta-border-size-increase-key-focus: 1px;
     --spectrum-button-over-background-height: 32px;
     --spectrum-button-over-background-padding-x: 16px;
+    --spectrum-button-over-background-text-padding-x: 16px;
+    --spectrum-button-over-background-icon-padding-left: 14px;
+    --spectrum-button-over-background-icon-padding-right: 8px;
     --spectrum-button-over-background-border-radius: 16px;
     --spectrum-button-over-background-border-size: 2px;
     --spectrum-button-over-background-text-font-weight: 700;
@@ -38,6 +44,9 @@ governing permissions and limitations under the License.
     --spectrum-button-over-background-border-size-increase-key-focus: 1px;
     --spectrum-button-primary-height: 32px;
     --spectrum-button-primary-padding-x: 16px;
+    --spectrum-button-primary-text-padding-x: 16px;
+    --spectrum-button-primary-icon-padding-left: 14px;
+    --spectrum-button-primary-icon-padding-right: 8px;
     --spectrum-button-primary-border-radius: 16px;
     --spectrum-button-primary-border-size: 2px;
     --spectrum-button-primary-text-font-weight: 700;
@@ -50,6 +59,9 @@ governing permissions and limitations under the License.
     --spectrum-button-primary-border-size-increase-key-focus: 1px;
     --spectrum-button-quiet-over-background-height: 32px;
     --spectrum-button-quiet-over-background-padding-x: 16px;
+    --spectrum-button-quiet-over-background-text-padding-x: 16px;
+    --spectrum-button-quiet-over-background-icon-padding-left: 14px;
+    --spectrum-button-quiet-over-background-icon-padding-right: 8px;
     --spectrum-button-quiet-over-background-border-radius: 16px;
     --spectrum-button-quiet-over-background-border-size: 0;
     --spectrum-button-quiet-over-background-text-font-weight: 700;
@@ -63,6 +75,9 @@ governing permissions and limitations under the License.
     --spectrum-button-quiet-over-background-border-size-increase-key-focus: 1px;
     --spectrum-button-quiet-primary-height: 32px;
     --spectrum-button-quiet-primary-padding-x: 16px;
+    --spectrum-button-quiet-primary-text-padding-x: 16px;
+    --spectrum-button-quiet-primary-icon-padding-left: 14px;
+    --spectrum-button-quiet-primary-icon-padding-right: 8px;
     --spectrum-button-quiet-primary-border-radius: 16px;
     --spectrum-button-quiet-primary-border-size: 0;
     --spectrum-button-quiet-primary-text-font-weight: 700;
@@ -76,6 +91,9 @@ governing permissions and limitations under the License.
     --spectrum-button-quiet-primary-border-size-increase-key-focus: 1px;
     --spectrum-button-quiet-secondary-height: 32px;
     --spectrum-button-quiet-secondary-padding-x: 16px;
+    --spectrum-button-quiet-secondary-text-padding-x: 16px;
+    --spectrum-button-quiet-secondary-icon-padding-left: 14px;
+    --spectrum-button-quiet-secondary-icon-padding-right: 8px;
     --spectrum-button-quiet-secondary-border-radius: 16px;
     --spectrum-button-quiet-secondary-border-size: 0;
     --spectrum-button-quiet-secondary-text-font-weight: 700;
@@ -89,6 +107,9 @@ governing permissions and limitations under the License.
     --spectrum-button-quiet-secondary-border-size-increase-key-focus: 1px;
     --spectrum-button-quiet-warning-height: 32px;
     --spectrum-button-quiet-warning-padding-x: 16px;
+    --spectrum-button-quiet-warning-text-padding-x: 16px;
+    --spectrum-button-quiet-warning-icon-padding-left: 14px;
+    --spectrum-button-quiet-warning-icon-padding-right: 8px;
     --spectrum-button-quiet-warning-border-radius: 16px;
     --spectrum-button-quiet-warning-border-size: 0;
     --spectrum-button-quiet-warning-text-font-weight: 700;
@@ -102,6 +123,9 @@ governing permissions and limitations under the License.
     --spectrum-button-quiet-warning-border-size-increase-key-focus: 1px;
     --spectrum-button-secondary-height: 32px;
     --spectrum-button-secondary-padding-x: 16px;
+    --spectrum-button-secondary-text-padding-x: 16px;
+    --spectrum-button-secondary-icon-padding-left: 14px;
+    --spectrum-button-secondary-icon-padding-right: 8px;
     --spectrum-button-secondary-border-radius: 16px;
     --spectrum-button-secondary-border-size: 2px;
     --spectrum-button-secondary-text-font-weight: 700;
@@ -114,6 +138,9 @@ governing permissions and limitations under the License.
     --spectrum-button-secondary-border-size-increase-key-focus: 1px;
     --spectrum-button-warning-height: 32px;
     --spectrum-button-warning-padding-x: 16px;
+    --spectrum-button-warning-text-padding-x: 16px;
+    --spectrum-button-warning-icon-padding-left: 14px;
+    --spectrum-button-warning-icon-padding-right: 8px;
     --spectrum-button-warning-border-radius: 16px;
     --spectrum-button-warning-border-size: 2px;
     --spectrum-button-warning-text-font-weight: 700;

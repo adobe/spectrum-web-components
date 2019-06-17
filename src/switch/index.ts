@@ -16,3 +16,9 @@ import { Switch } from './switch';
 if (!customElements.get('sp-switch')) {
     customElements.define('sp-switch', Switch);
 }
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-switch': Switch;
+    }
+}

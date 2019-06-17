@@ -16,13 +16,13 @@ import buttonStyles from './action-button.css';
 
 export class ActionButton extends ButtonBase {
     @property({ type: Boolean, reflect: true })
-    protected quiet: boolean = false;
+    public quiet: boolean = false;
 
     @property({ type: Boolean, reflect: true })
-    protected selected: boolean = false;
+    public selected: boolean = false;
 
     @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
-    protected holdAffordance: boolean = false;
+    public holdAffordance: boolean = false;
 
     public static get styles(): CSSResultArray {
         return [buttonStyles];
