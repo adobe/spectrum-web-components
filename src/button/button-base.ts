@@ -45,13 +45,11 @@ export class ButtonBase extends Focusable {
 
     protected render(): TemplateResult {
         const buttonContents = html`
-            <button id="button">
-                ${this.hasIcon
-                    ? this.renderWithIcon()
-                    : html`
-                          <div id="label"><slot></slot></div>
-                      `}
-            </button>
+            ${this.hasIcon
+                ? this.renderWithIcon()
+                : html`
+                      <div id="label"><slot></slot></div>
+                  `}
         `;
         return this.href && this.href.length > 0
             ? html`
