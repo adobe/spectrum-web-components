@@ -9,10 +9,17 @@
         "strict": true,
         "noUnusedLocals": true,
         "target": "es2017",
-        "types": ["mocha", "chai", "sinon", "karma-chai"],
+        "types": [
+            "mocha",
+            "chai",
+            "sinon",
+            "karma-chai",
+            "webpack-env",
+            "storybook__addon-actions"
+        ],
         "typeRoots": ["./node_modules/@types", "./types"],
         "lib": ["es2017", "dom", "dom.iterable"],
         "outDir": "lib"
     },
-    "include": ["./src/**/*.ts"]
+    "include": ["./src/**/*.ts", "./documentation/**/*.ts"]
 }

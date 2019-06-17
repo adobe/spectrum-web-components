@@ -146,6 +146,13 @@ storiesOf('Button', module)
                 })}
             </div>
         `;
+    })
+    .add('button with href', () => {
+        return html`
+            <sp-button href="https://github.com/adobe/spectrum-web-components">
+                Github
+            </sp-button>
+        `;
     });
 
 function renderButton(properties) {
