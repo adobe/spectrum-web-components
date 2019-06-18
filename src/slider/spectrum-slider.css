@@ -14,6 +14,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Slider,
    * .spectrum-Dial */
     position: relative;
+
+    /* Don't let z-index'd child elements float above other things on the page */
     z-index: 1;
     display: block;
     min-height: var(
@@ -41,6 +43,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
     position: relative;
     z-index: auto;
+
+    /* These calculations prevent the track from spilling outside of the control */
     width: calc(
         100% -
             var(
@@ -137,6 +141,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Slider-buffer */
     padding: 0 var(--spectrum-slider-handle-gap, 4px) 0 0;
     /* .spectrum-Slider-buffer */
+    /* Appear above track */
     z-index: 2;
 }
 .track ~ .track,
@@ -338,6 +343,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #input {
     /* .spectrum-Slider-input,
    * .spectrum-Dial-input */
+    /*  Remove the margin for input in Firefox and Safari. */
     margin: 0;
 
     width: var(
@@ -417,11 +423,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-grow: 0;
     padding-right: 0;
     cursor: default;
-    /* .spectrum-Slider-value */
-    margin-left: var(
-        --spectrum-slider-label-gap-x,
-        var(--spectrum-global-dimension-size-200)
-    );
 }
 .spectrum-Slider-ticks {
     /* .spectrum-Slider-ticks */
@@ -676,6 +677,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Slider--ramp .spectrum-Dial-handle {
     /* .spectrum-Slider--ramp .spectrum-Slider-handle,
    * .spectrum-Slider--ramp .spectrum-Dial-handle */
+    /* We can't draw this one correctly without this hack : ( */
     box-shadow: 0 0 0 4px
         var(
             --spectrum-alias-background-color-default,
@@ -708,6 +710,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-color-static-white,
         rgb(255, 255, 255)
     );
+    /* Add a half-percent to fix diagonal line issue in Chrome on non-retina displays */
     background-image: linear-gradient(
             -45deg,
             transparent 75.5%,

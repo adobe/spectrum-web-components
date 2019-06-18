@@ -26,7 +26,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
     text-align: center;
 }
-::slotted([slot='illustration']) {
+#illustration {
     /* .spectrum-IllustratedMessage-illustration */
     margin-bottom: 24px;
     /* .spectrum-IllustratedMessage-illustration */

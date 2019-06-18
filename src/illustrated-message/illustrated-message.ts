@@ -35,7 +35,7 @@ export class IllustratedMessage extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <slot name="illustration"></slot>
+            <div id="illustration"><slot></slot></div>
             <div id="heading">${this.heading}</div>
             <div id="description">${this.description}</div>
         `;

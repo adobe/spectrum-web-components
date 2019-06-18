@@ -30,11 +30,9 @@ module.exports = {
                     selector: '.spectrum-IllustratedMessage-description',
                     name: 'description',
                 },
-            ],
-            slots: [
                 {
-                    name: 'illustration',
                     selector: '.spectrum-IllustratedMessage-illustration',
+                    name: 'illustration',
                 },
             ],
         },

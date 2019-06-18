@@ -9,8 +9,18 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import '../';
+import { IllustratedMessage } from '../';
 
-declare module '*.css' {
-    const styles: import('lit-element').CSSResult;
-    export default styles;
-}
+describe('Illustrated Message', () => {
+    it('loads', () => {
+        const el = document.querySelector(
+            'sp-illustrated-message'
+        ) as IllustratedMessage;
+        expect(el).to.not.equal(undefined);
+        if (!el.shadowRoot) throw new Error('No shadowRoot');
+        const slot = el.shadowRoot.querySelector('slot') as HTMLSlotElement;
+        expect(slot).to.not.equal(undefined);
+        return true;
+    });
+});

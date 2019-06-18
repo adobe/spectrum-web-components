@@ -26,14 +26,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     align-items: center;
     -ms-flex-pack: center;
     justify-content: center;
+
+    /* Show the button overflow in Edge. */
     overflow: visible;
+
+    /* Remove button the margin in Firefox and Safari. */
     margin: 0;
 
     border-style: solid;
+    white-space: nowrap;
+
+    /* Remove the inheritance of text transform on button in Edge, Firefox, and IE. */
     text-transform: none;
     -webkit-font-smoothing: antialiased;
+    /* Font smoothing for Firefox */
     -moz-osx-font-smoothing: grayscale;
+
+    /* Correct the inability to style clickable types in iOS and Safari. */
     -webkit-appearance: button;
+
+    /* Adjacent buttons should be aligned correctly */
     vertical-align: top;
 
     transition: background var(--spectrum-global-animation-duration-100, 130ms)
@@ -46,8 +58,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     text-decoration: none;
     font-family: adobe-clean, 'Source Sans Pro', -apple-system,
         BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-    line-height: 1.3;
 
     cursor: pointer;
 
@@ -63,6 +73,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-actionbutton-min-width,
         var(--spectrum-global-dimension-size-400)
     );
+
+    /* Use icon padding by default as it's smaller */
     padding: 0
         calc(
             var(
@@ -134,8 +146,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton::-moz-focus-inner,
    * .spectrum-Tool::-moz-focus-inner */
     border: 0;
+
+    /* Remove the inner border and padding for button in Firefox. */
     border-style: none;
     padding: 0;
+
+    /* Use uppercase PX so values don't get converted to rem */
     margin-top: -2px;
     margin-bottom: -2px;
 }
@@ -192,10 +208,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Icon + #label {
     /* .spectrum-ActionButton .spectrum-Icon + .spectrum-ActionButton-label,
    * .spectrum-Tool .spectrum-Icon + .spectrum-ActionButton-label */
+    /* Have icon padding on the left */
     padding-left: var(
         --spectrum-actionbutton-icon-padding-x,
         var(--spectrum-global-dimension-size-85)
     );
+
+    /* Have text padding on the right */
     padding-right: calc(
         var(
                 --spectrum-actionbutton-text-padding-x,
@@ -210,6 +229,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Icon--sizeS:only-child {
     /* .spectrum-ActionButton .spectrum-Icon--sizeS:only-child,
    * .spectrum-Tool .spectrum-Icon--sizeS:only-child */
+    /* Position absolutely to avoid layout errors introduced by padding */
     position: absolute;
     top: calc(
         50% -
@@ -229,6 +249,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #label:only-child {
     /* .spectrum-ActionButton .spectrum-ActionButton-label:only-child,
    * .spectrum-Tool .spectrum-ActionButton-label:only-child */
+    /* Add padding for text only buttons */
     padding: 0
         calc(
             var(
@@ -262,15 +283,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #label {
     /* .spectrum-ActionButton-label,
    * .spectrum-Button-label */
-    -ms-flex-item-align: center;
-    -ms-grid-row-align: center;
-    align-self: center;
-    justify-self: center;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    /* @safari10 Workaround for https://bugs.webkit.org/show_bug.cgi?id=169700 */
     width: 100%;
-    /* .spectrum-ActionButton-label */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 #label:empty {
     /* .spectrum-ActionButton-label:empty,

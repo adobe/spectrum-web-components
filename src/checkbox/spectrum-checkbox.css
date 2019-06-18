@@ -14,12 +14,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Checkbox */
     display: -ms-inline-flexbox;
     display: inline-flex;
-    -ms-flex-align: start;
-    align-items: flex-start;
+    -ms-flex-align: center;
+    align-items: center;
 
     position: relative;
 
-    min-height: var(
+    height: var(
         --spectrum-checkbox-height,
         var(--spectrum-global-dimension-size-400)
     );
@@ -42,13 +42,24 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #input {
     /* .spectrum-Checkbox-input */
+    /* Change the font styles in all browsers for input. */
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
+
+    /* Remove the margin for input in Firefox and Safari. */
     margin: 0;
+
+    /* Show the overflow for input in Edge. */
     overflow: visible;
+
+    /* Add the correct box sizing for [type="checkbox"] in IE 10-. */
     box-sizing: border-box;
+
+    /* Remove the padding for [type="checkbox"] in IE 10-. */
     padding: 0;
+
+    /* Hit area */
     position: absolute;
     top: 0;
     left: calc(
@@ -129,8 +140,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: color var(--spectrum-global-animation-duration-100, 130ms)
         ease-in-out;
 
-    margin-top: var(--spectrum-global-dimension-size-75);
+    white-space: nowrap;
 
+    overflow: hidden;
+    text-overflow: ellipsis;
     /* .spectrum-Checkbox-label */
     color: var(
         --spectrum-checkbox-text-color,
@@ -149,19 +162,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-checkbox-box-size,
         var(--spectrum-global-dimension-size-175)
     );
-    margin: calc(
-            (
-                    var(
-                            --spectrum-checkbox-height,
-                            var(--spectrum-global-dimension-size-400)
-                        ) -
-                        var(
-                            --spectrum-checkbox-box-size,
-                            var(--spectrum-global-dimension-size-175)
-                        )
-                ) / 2
-        )
-        0;
 
     -ms-flex-positive: 0;
 
@@ -289,6 +289,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([disabled]) #input + #box {
     /* .spectrum-Checkbox-input:disabled + .spectrum-Checkbox-box */
+    /* Use important to override hover states */
     border-color: var(
         --spectrum-checkbox-box-border-color-disabled,
         var(--spectrum-global-color-gray-400)
@@ -308,6 +309,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #input:focus + #box {
     /* .spectrum-Checkbox-input.focus-ring + .spectrum-Checkbox-box */
+    /* Since the specificity of .focus-ring is less than :hover, we need important */
     border-color: var(
         --spectrum-checkbox-box-border-color-key-focus,
         var(--spectrum-global-color-blue-400)
