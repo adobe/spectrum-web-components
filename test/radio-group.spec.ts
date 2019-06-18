@@ -67,8 +67,6 @@ describe('Radio Group', () => {
                 </div>
             `
         );
-
-        return true;
     });
 
     it('loads', () => {
@@ -115,8 +113,6 @@ describe('Radio Group', () => {
         expect(secondRadio.checked).to.be.false;
         expect(thirdRadio.checked).to.be.true;
         expect(radioGroup.selected).to.equal(thirdRadio.value);
-
-        return true;
     });
 
     it('forces only one radio to be checked', () => {
@@ -146,8 +142,6 @@ describe('Radio Group', () => {
         expect(disabledRadio.checked).to.be.false;
         expect(checkedRadio.checked).to.be.true;
         expect(radioGroup.selected).to.equal(checkedRadio.value);
-
-        return true;
     });
 
     it('de-checks all but first checked radio if multiple checked', () => {
@@ -199,8 +193,6 @@ describe('Radio Group', () => {
         expect(radio1.checked).to.be.true;
         expect(radio2.checked).to.be.false;
         expect(radio3.checked).to.be.false;
-
-        return true;
     });
 
     it('ensures setting selected and clicking on radio both work together', async () => {
@@ -232,8 +224,6 @@ describe('Radio Group', () => {
         expect(radio1.checked).to.be.true;
         expect(radio2.checked).to.be.false;
         expect(radio3.checked).to.be.false;
-
-        return true;
     });
 
     it('prioritizes selected over checked on initialization when conflicting', () => {

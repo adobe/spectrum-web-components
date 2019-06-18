@@ -32,6 +32,5 @@ describe('banner', () => {
         expect(el).to.not.equal(undefined);
         expect(el.textContent).to.include('Header Text');
         expect(el.textContent).to.include('Content');
-        return true;
     });
 });

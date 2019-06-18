@@ -1,5 +1,5 @@
 const path = require('path');
-const { postCSSPlugins } = require('./scripts/css-processing');
+const { postCSSPlugins } = require('../scripts/css-processing');
 const transpilePackages = ['lit-html', 'lit-element'];
 
 module.exports = function(includeRegex, excludeRegex) {

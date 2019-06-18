@@ -13,7 +13,11 @@ import { defineCustomElements } from '../src/define';
 import { Checkbox } from '../src/checkbox';
 import '../src/checkbox';
 import * as MediumIcons from '../src/icons/icons-medium';
-import { fixture, elementUpdated } from '@open-wc/testing-helpers';
+import {
+    fixture,
+    elementUpdated,
+    triggerBlurFor,
+} from '@open-wc/testing-helpers';
 import { chaiDomDiff } from '@open-wc/semantic-dom-diff';
 import { html } from 'lit-html';
 
@@ -66,8 +70,6 @@ describe('Checkbox', () => {
                 </div>
             `
         );
-
-        return true;
     });
 
     it('loads', () => {
@@ -90,12 +92,9 @@ describe('Checkbox', () => {
         expect(autoElement).to.exist;
         expect(document.activeElement).to.equal(autoElement);
 
-        autoElement.blur();
-        await elementUpdated(autoElement);
+        await triggerBlurFor(autoElement);
 
         expect(document.activeElement).to.not.equal(autoElement);
-
-        return true;
     });
 
     it('respects checked attribute', () => {
@@ -114,7 +113,5 @@ describe('Checkbox', () => {
         await elementUpdated(el);
 
         expect(el.checked).to.be.false;
-
-        return true;
     });
 });

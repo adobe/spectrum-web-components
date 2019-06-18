@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 const merge = require('webpack-merge');
-const webpackBaseConfig = require('./webpack-base.config');
+const webpackBaseConfig = require('./utils/webpack-base.config');
 const path = require('path');
 const webpackConfig = merge(webpackBaseConfig(undefined, /documentation\/.*/), {
     mode: 'development',
