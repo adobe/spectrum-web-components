@@ -20,9 +20,15 @@ import {
 import commonStyles from './theme.css';
 
 export class Theme extends LitElement {
+    /**
+     * The color theme to apply to Spectrum controls
+     */
     @property({ reflect: true })
     public color: 'light' | 'dark' = 'light';
 
+    /**
+     * The scale to apply to Spectrum controls. Currently only medium is supported
+     */
     @property({ reflect: true })
     public scale: 'medium' = 'medium';
 
