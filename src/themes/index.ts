@@ -36,6 +36,7 @@ if (!customElements.get('sp-theme')) {
 declare global {
     interface HTMLElementTagNameMap {
         'sp-theme-dark': ThemeDark;
+        'sp-theme-light': ThemeLight;
         'sp-scale-medium': ScaleMedium;
         'sp-theme': Theme;
     }

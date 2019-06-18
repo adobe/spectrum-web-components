@@ -81,7 +81,7 @@ color themes (dark and light) one one of the scales (medium).
 
 There are a few cases where it is necessary to embed one theme within another.
 For example, if you have an application that is using a dark theme that is
-prviewing or editing content that will be displayed in a light theme.
+previewing or editing content that will be displayed in a light theme.
 
 If you only want to change colors, you can use the `sp-theme-dark` or
 `sp-theme-light` class instead. They are a little lighter weight than
