@@ -18,12 +18,22 @@ import { LitElement, property } from 'lit-element';
  * https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
  */
 export class Focusable extends LitElement {
+    /**
+     * Disable this control. It will not receive focus or events
+     */
     @property({ type: Boolean, reflect: true })
     public disabled: boolean = false;
 
+    /**
+     * When this control is rendered, focus it automatically
+     */
     @property({ type: Boolean })
     public autofocus: boolean = false;
 
+    /**
+     * The tab index to apply to this control. See general documentation about
+     * the tabindex HTML property
+     */
     @property({ type: Number, reflect: true })
     public tabIndex: number = 0;
 

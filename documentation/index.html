@@ -42,6 +42,11 @@
                 }
             })(window.location);
         </script>
+        <script>
+            // @TODO: Remove this after user agent stylesheet bug is fixed
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=946975
+            delete Document.prototype.adoptedStyleSheets;
+        </script>
         <script
             src="https://use.typekit.net/ruf7eed.js"
             type="text/javascript"

@@ -14,8 +14,12 @@ import { property, html, TemplateResult } from 'lit-element';
 import { Focusable } from '../shared/focusable';
 
 export class ButtonBase extends Focusable {
+    /**
+     * Supplies an address that the browser will navigate to when this button is
+     * clicked
+     */
     @property()
-    protected href?: string;
+    public href?: string;
 
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;
