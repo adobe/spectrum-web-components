@@ -9,8 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Radio } from '..';
-import '..';
+import { Radio } from '../src/radio/radio';
+import '../src/radio'; // import the index for side-effects (element registration)
+import { fixture } from '@open-wc/testing-helpers';
+import { html } from 'lit-html';
 
 function inputForRadio(radio: Radio): HTMLInputElement {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
@@ -26,8 +28,21 @@ function labelNodeForRadio(radio: Radio): Node {
 }
 
 describe('Radio', () => {
-    it('loads', () => {
-        const el = document.querySelector('sp-radio[value=first]') as Radio;
+    let testDiv!: HTMLDivElement;
+    beforeEach(async () => {
+        testDiv = await fixture<HTMLDivElement>(
+            html`
+                <div id="test-radio">
+                    <sp-radio value="first" checked>Option 1</sp-radio>
+                    <sp-radio value="second">Option 2</sp-radio>
+                    <sp-radio value="third" autofocus>Option 3</sp-radio>
+                    <sp-radio value="fourth" disabled>Option 4</sp-radio>
+                </div>
+            `
+        );
+    });
+    it('loads', async () => {
+        const el = testDiv.querySelector('sp-radio[value=first]') as Radio;
         const textNode = labelNodeForRadio(el as Radio);
 
         expect(el).to.not.equal(undefined);
@@ -37,25 +52,22 @@ describe('Radio', () => {
 
     it('respects checked attribute', () => {
         const el1 = document.querySelector('[value=first]') as Radio;
-        const el2 = document.querySelector('[value=second]') as Radio;
+        const el2 = testDiv.querySelector('[value=second]') as Radio;
 
         expect(el1.checked).to.be.true;
         expect(el2.checked).to.be.false;
     });
 
     it('handles click events', () => {
-        const el = document.querySelector('[value=third]') as Radio;
+        const el = testDiv.querySelector('[value=third]') as Radio;
 
         expect(el.checked).to.be.false;
         inputForRadio(el).click();
         expect(el.checked).to.be.true;
     });
 
-    // @TODO unit tests for autofocus on multiple components (radio and checkbox) are
-    // interfering with one another. Need to refactor how karma loads tests to make sure
-    // the DOM of each test are isolated.
-    it.skip('autofocuses', () => {
-        const autoElement = document.querySelector(
+    it('autofocuses', () => {
+        const autoElement = testDiv.querySelector(
             'sp-radio[autofocus]'
         ) as Radio;
 
@@ -67,7 +79,7 @@ describe('Radio', () => {
     });
 
     it('ensures clicking disabled does not check them', () => {
-        const el = document.querySelector('sp-radio[disabled]') as Radio;
+        const el = testDiv.querySelector('sp-radio[disabled]') as Radio;
 
         expect(el.checked).to.be.false;
         inputForRadio(el).click();

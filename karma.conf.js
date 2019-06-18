@@ -11,40 +11,97 @@ governing permissions and limitations under the License.
 */
 const path = require('path');
 
-module.exports = function(config) {
-    config.set({
-        basePath: './src/',
-        esModulesMiddleware: {
-            paths: {
-                '/': path.resolve(path.join(__dirname, 'lib')),
-                '/styles': path.resolve(path.join(__dirname, 'styles')),
-                '/node_modules': path.resolve(
-                    path.join(__dirname, 'node_modules')
+const { postCSSPlugins } = require('./scripts/css-processing');
+const transpilePackages = ['lit-html', 'lit-element'];
+
+const webpackConfig = {
+    mode: 'development',
+    devtool: 'inline-source-map',
+    resolve: {
+        extensions: ['.js', '.ts', '.css'],
+    },
+    module: {
+        rules: [
+            {
+                // tweak babel-loader to transpile dependencies
+                test: new RegExp(
+                    `node_modules(\\/|\\\\)(${transpilePackages.join(
+                        '|'
+                    )})(.*)\\.js$`
                 ),
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        plugins: ['@babel/plugin-proposal-object-rest-spread'],
+                        presets: [
+                            [
+                                '@babel/preset-env',
+                                {
+                                    useBuiltIns: 'entry',
+                                    corejs: 2,
+                                },
+                            ],
+                        ],
+                        babelrc: false,
+                    },
+                },
             },
-        },
-        plugins: ['karma-*', require('@adobe/es-modules-middleware')],
-        frameworks: ['mocha', 'chai', 'sinon', 'web-components'],
-        middleware: ['es-modules'],
-        files: [
             {
-                pattern: './**/*.test.html',
-                watched: true,
-                included: false,
-                served: true,
+                test: /\.ts$/,
+                //include: srcPath,
+                exclude: /documentation\/.*/,
+                loader: 'ts-loader',
             },
             {
-                pattern: './**/*.ts',
-                watched: true,
-                included: false,
-                served: false,
+                // Package CSS up so that it can be consumed directly by lit-element
+                test: /\.css$/,
+                exclude: /documentation\/.*/,
+                //include: srcPath,
+                use: [
+                    {
+                        loader: path.resolve(
+                            __dirname,
+                            './.storybook/lit-css-typed-loader'
+                        ),
+                    },
+                    'extract-loader',
+                    {
+                        loader: 'css-loader',
+                        options: { importLoaders: 1 },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: (loader) =>
+                                postCSSPlugins(loader.resourcePath),
+                        },
+                    },
+                ],
             },
         ],
-        // proxy styles and node_modules paths to base so they get picked up by
-        // the middleware
-        proxies: {
-            '/styles/': '/base/styles/',
-            '/node_modules/': '/base/node_modules/',
+    },
+};
+
+module.exports = function(config) {
+    config.set({
+        plugins: ['karma-*'],
+        frameworks: ['mocha', 'chai', 'sinon'],
+        files: ['./test/test_index.ts'],
+        preprocessors: {
+            // add webpack as preprocessor
+            'test/test_index.ts': ['webpack', 'sourcemap'],
+        },
+        webpack: webpackConfig,
+        webpackMiddleware: {
+            // webpack-dev-middleware configuration
+            // i.e.
+            noInfo: true,
+            // and use stats to turn off verbose output
+            stats: {
+                // options i.e.
+                chunks: false,
+            },
         },
         reporters: ['mocha'],
         browsers: [
