@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Radio } from '../src/radio/radio';
 import '../src/radio'; // import the index for side-effects (element registration)
-import { fixture } from '@open-wc/testing-helpers';
+import { fixture, elementUpdated } from '@open-wc/testing-helpers';
 import { html } from 'lit-html';
 
 function inputForRadio(radio: Radio): HTMLInputElement {
@@ -29,6 +29,7 @@ function labelNodeForRadio(radio: Radio): Node {
 
 describe('Radio', () => {
     let testDiv!: HTMLDivElement;
+
     beforeEach(async () => {
         testDiv = await fixture<HTMLDivElement>(
             html`
@@ -40,6 +41,8 @@ describe('Radio', () => {
                 </div>
             `
         );
+
+        return true;
     });
     it('loads', async () => {
         const el = testDiv.querySelector('sp-radio[value=first]') as Radio;
@@ -58,15 +61,20 @@ describe('Radio', () => {
         expect(el2.checked).to.be.false;
     });
 
-    it('handles click events', () => {
+    it('handles click events', async () => {
         const el = testDiv.querySelector('[value=third]') as Radio;
 
         expect(el.checked).to.be.false;
+
         inputForRadio(el).click();
+        await elementUpdated(el);
+
         expect(el.checked).to.be.true;
+
+        return true;
     });
 
-    it('autofocuses', () => {
+    it('autofocuses', async () => {
         const autoElement = testDiv.querySelector(
             'sp-radio[autofocus]'
         ) as Radio;
@@ -75,14 +83,23 @@ describe('Radio', () => {
         expect(document.activeElement).to.equal(autoElement);
 
         autoElement.blur();
+        await elementUpdated(autoElement);
+
         expect(document.activeElement).to.not.equal(autoElement);
+
+        return true;
     });
 
-    it('ensures clicking disabled does not check them', () => {
+    it('ensures clicking disabled does not check them', async () => {
         const el = testDiv.querySelector('sp-radio[disabled]') as Radio;
 
         expect(el.checked).to.be.false;
+
         inputForRadio(el).click();
+        await elementUpdated(el);
+
         expect(el.checked).to.be.false;
+
+        return true;
     });
 });

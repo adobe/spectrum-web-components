@@ -19,7 +19,7 @@ fi
 [ -z "$CHROME_BIN" ] && echo "Need to specify CHROME_BIN environment variable to point to your chrome binary" && exit 1
 
 TARGET_URL=$1
-CHROME_HOME=$(mktemp)
+CHROME_HOME=$(mktemp -d)
 
 cleanup() {        
     rm -rf $CHROME_HOME
@@ -27,10 +27,6 @@ cleanup() {
 
 # listen for exit signals and trigger kill of background PID, wait a moment and then cleanup
 trap 'kill -TERM $PID && sleep 0.5 && cleanup' EXIT TERM INT
-
-# clean just in case of a bad exit previously
-cleanup
-
 
 PROFILE_PATH=$CHROME_HOME
 # are we in a linux with /proc/version?

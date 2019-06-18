@@ -18,7 +18,7 @@ fi
 [ -z "$FIREFOX_BIN" ] && echo "Need to specify FIREFOX_BIN environment variable to point to your firefox binary" && exit 1
 
 TARGET_URL=$1
-FIREFOX_HOME=$(mktemp)
+FIREFOX_HOME=$(mktemp -d)
 PREFS_FILE=$FIREFOX_HOME/prefs.js
 
 cleanup() {        
@@ -27,10 +27,6 @@ cleanup() {
 
 # listen for exit signals and trigger kill of background PID, wait a moment and then cleanup
 trap 'kill -TERM $PID && sleep 0.5 && cleanup' EXIT TERM INT
-
-# clean just in case of a bad exit previously
-cleanup
-
 
 # write the prefs file
 cat >$PREFS_FILE <<EOL

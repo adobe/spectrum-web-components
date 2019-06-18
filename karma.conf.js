@@ -9,79 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+const merge = require('webpack-merge');
+const webpackBaseConfig = require('./webpack-base.config');
 const path = require('path');
-
-const { postCSSPlugins } = require('./scripts/css-processing');
-const transpilePackages = ['lit-html', 'lit-element'];
-
-const webpackConfig = {
+const webpackConfig = merge(webpackBaseConfig(undefined, /documentation\/.*/), {
     mode: 'development',
     devtool: 'inline-source-map',
-    resolve: {
-        extensions: ['.js', '.ts', '.css'],
-    },
-    module: {
-        rules: [
-            {
-                // tweak babel-loader to transpile dependencies
-                test: new RegExp(
-                    `node_modules(\\/|\\\\)(${transpilePackages.join(
-                        '|'
-                    )})(.*)\\.js$`
-                ),
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        plugins: ['@babel/plugin-proposal-object-rest-spread'],
-                        presets: [
-                            [
-                                '@babel/preset-env',
-                                {
-                                    useBuiltIns: 'entry',
-                                    corejs: 2,
-                                },
-                            ],
-                        ],
-                        babelrc: false,
-                    },
-                },
-            },
-            {
-                test: /\.ts$/,
-                //include: srcPath,
-                exclude: /documentation\/.*/,
-                loader: 'ts-loader',
-            },
-            {
-                // Package CSS up so that it can be consumed directly by lit-element
-                test: /\.css$/,
-                exclude: /documentation\/.*/,
-                //include: srcPath,
-                use: [
-                    {
-                        loader: path.resolve(
-                            __dirname,
-                            './.storybook/lit-css-typed-loader'
-                        ),
-                    },
-                    'extract-loader',
-                    {
-                        loader: 'css-loader',
-                        options: { importLoaders: 1 },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: (loader) =>
-                                postCSSPlugins(loader.resourcePath),
-                        },
-                    },
-                ],
-            },
-        ],
-    },
-};
+});
 
 module.exports = function(config) {
     config.set({

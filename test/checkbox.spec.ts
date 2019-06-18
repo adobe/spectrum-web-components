@@ -13,7 +13,7 @@ import { defineCustomElements } from '../src/define';
 import { Checkbox } from '../src/checkbox';
 import '../src/checkbox';
 import * as MediumIcons from '../src/icons/icons-medium';
-import { fixture } from '@open-wc/testing-helpers';
+import { fixture, elementUpdated } from '@open-wc/testing-helpers';
 import { chaiDomDiff } from '@open-wc/semantic-dom-diff';
 import { html } from 'lit-html';
 
@@ -66,6 +66,8 @@ describe('Checkbox', () => {
                 </div>
             `
         );
+
+        return true;
     });
 
     it('loads', () => {
@@ -80,7 +82,7 @@ describe('Checkbox', () => {
         expect(textNode.textContent!.trim()).to.equal('Component');
     });
 
-    it('autofocuses', () => {
+    it('autofocuses', async () => {
         const autoElement = testFixture.querySelector(
             'sp-checkbox[autofocus]'
         ) as Checkbox;
@@ -89,7 +91,11 @@ describe('Checkbox', () => {
         expect(document.activeElement).to.equal(autoElement);
 
         autoElement.blur();
+        await elementUpdated(autoElement);
+
         expect(document.activeElement).to.not.equal(autoElement);
+
+        return true;
     });
 
     it('respects checked attribute', () => {
@@ -100,10 +106,15 @@ describe('Checkbox', () => {
         expect(el.checked).to.be.true;
     });
 
-    it('handles click events', () => {
+    it('handles click events', async () => {
         const el = testFixture.querySelector('#checkbox1') as Checkbox;
         expect(el.checked).to.be.true;
+
         inputForCheckbox(el).click();
+        await elementUpdated(el);
+
         expect(el.checked).to.be.false;
+
+        return true;
     });
 });
