@@ -1,5 +1,5 @@
 /*
-Copyright 2018 Adobe. All rights reserved.
+Copyright 2019 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './radio-group';
+
+import { RadioGroup } from './radio-group';
+
+if (!customElements.get('sp-radio-group')) {
+    customElements.define('sp-radio-group', RadioGroup);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-radio-group': RadioGroup;
+    }
+}

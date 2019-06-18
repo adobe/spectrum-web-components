@@ -52,7 +52,7 @@
     },
     "devDependencies": {
         "@adobe/es-modules-middleware": "~1.1.0",
-        "@adobe/spectrum-css": "^2.10.0",
+        "@adobe/spectrum-css": "^2.13.0",
         "@babel/core": "^7.4.0",
         "@open-wc/building-webpack": "^1.1.1",
         "@open-wc/polyfills-loader": "^0.3.0",

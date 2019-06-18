@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './radio';
+
+import { Radio } from './radio';
+
+if (!customElements.get('sp-radio')) {
+    customElements.define('sp-radio', Radio);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-radio': Radio;
+    }
+}

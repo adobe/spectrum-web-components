@@ -19,16 +19,23 @@ import {
 } from 'lit-element';
 
 import radioGroupStyles from './radio-group.css';
+import { RadioChangeDetail } from '../radio/radio';
+import { Radio } from '../radio/radio';
 
+/**
+ * Radio group component
+ *
+ * @attr column - arranges radio buttons vertically
+ */
 export class RadioGroup extends LitElement {
-    public static readonly is = 'sp-radio-group';
-
     public static get styles(): CSSResultArray {
         return [radioGroupStyles];
     }
 
-    @property({ reflect: true })
+    @property({ type: String, reflect: true })
     public name = '';
+
+    private _selected = '';
 
     @property({ reflect: true })
     public get selected(): string {
@@ -36,42 +43,48 @@ export class RadioGroup extends LitElement {
     }
 
     public set selected(value: string) {
-        const oldValue = this.selected;
+        const radio = value
+            ? (this.querySelector(`sp-radio[value=${value}]`) as Radio)
+            : undefined;
 
-        if (value === oldValue) {
-            return;
+        this.deselectChecked();
+
+        if (radio) {
+            this._selected = value;
+            radio.checked = true;
+        } else {
+            // If no matching radio, selected is reset to empty string
+            this._selected = '';
         }
-        this.updateCheckedState(value);
-
-        this._selected = value;
-        this.requestUpdate('selected', oldValue);
     }
-
-    private _selected = '';
 
     protected render(): TemplateResult {
         return html`
-            <slot @slotchange=${this.onSlotChange}></slot>
+            <slot></slot>
         `;
     }
 
-    private onSlotChange(): void {
-        this.updateCheckedState(this.selected);
+    protected firstUpdated(): void {
+        const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
+        const checkedRadioValue = checkedRadio ? checkedRadio.value : '';
+
+        // If selected already assigned, don't overwrite
+        this.selected = this.selected || checkedRadioValue;
+
+        this.addEventListener(
+            'sp-radio:change',
+            (ev: CustomEvent<RadioChangeDetail>) => {
+                this.selected = ev.detail.value;
+            }
+        );
     }
 
-    private updateCheckedState(value: string): void {
-        const previousChecked = this.querySelectorAll('[checked]');
+    private deselectChecked(): void {
+        const previousChecked = this.querySelectorAll('sp-radio[checked]');
 
         previousChecked.forEach((element) => {
-            element.removeAttribute('checked');
+            const radio = element as Radio;
+            radio.checked = false;
         });
-
-        if (value.length) {
-            const currentChecked = this.querySelector(`[value=${value}]`);
-
-            if (currentChecked) {
-                currentChecked.setAttribute('checked', 'true');
-            }
-        }
     }
 }

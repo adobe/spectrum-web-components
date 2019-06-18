@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { defineCustomElements } from '../../define';
 import { Checkbox } from '..';
+import '..';
 import * as MediumIcons from '../../icons/icons-medium';
 
 defineCustomElements(...Object.values(MediumIcons));
@@ -25,8 +26,7 @@ function labelNodeForCheckbox(checkbox: Checkbox): Node {
     const slotEl = checkbox.shadowRoot.querySelector('slot') as HTMLSlotElement;
     return slotEl.assignedNodes()[0];
 }
-
-describe('button', () => {
+describe('Checkbox', () => {
     it('loads', () => {
         const el = document.querySelector('sp-checkbox') as Checkbox;
         expect(el).to.not.equal(undefined);
@@ -36,9 +36,15 @@ describe('button', () => {
     });
 
     it('autofocuses', () => {
-        const autoElement = document.querySelector('sp-checkbox[autofocus]');
+        const autoElement = document.querySelector(
+            'sp-checkbox[autofocus]'
+        ) as Checkbox;
+
         expect(autoElement).to.exist;
         expect(document.activeElement).to.equal(autoElement);
+
+        autoElement.blur();
+        expect(document.activeElement).to.not.equal(autoElement);
     });
 
     it('respects checked attribute', () => {
