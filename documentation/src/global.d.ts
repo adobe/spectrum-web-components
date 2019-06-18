@@ -12,3 +12,21 @@ declare module 'element-closest' {
     function polyfill(window: Window): void;
     export default polyfill;
 }
+
+declare module '@vaadin/router' {
+    export interface RouterOptions {
+        baseUrl: string | undefined;
+    }
+
+    export interface Route {
+        path: string;
+        component: string;
+    }
+
+    export class Router {
+        constructor(outlet: Node, options: RouterOptions);
+        static go(pathname: String): boolean;
+        setRoutes(routes: Route | Route[]): void;
+        urlForPath(path: string, params?: object): string;
+    }
+}

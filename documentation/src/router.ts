@@ -10,18 +10,45 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { Router } = require('@vaadin/router');
+import { Router, Route, RouterOptions } from '@vaadin/router';
 
 const githubUrl =
     'https://git.corp.adobe.com/pages/ponysaurus/react-spectrum-web-components/';
 const baseUrl =
     document.location.hostname === 'git.corp.adobe.com' ? githubUrl : undefined;
 
-const router = new Router(document.body, { baseUrl: baseUrl });
-router.setRoutes([
+class DocumentationRouter extends Router {
+    public location:
+        | undefined
+        | {
+              baseUrl: string;
+              params: object;
+              pathname: string;
+              redirectFrom: string | undefined;
+              route: Route | undefined;
+              routes: Route[];
+          };
+
+    public constructor(outlet: Node, options: RouterOptions) {
+        super(outlet, options);
+    }
+
+    public go(pathname: string): boolean {
+        return Router.go(pathname);
+    }
+
+    public changeParams(params: object): boolean {
+        if (!this.location || !this.location.route) return false;
+        const newUrl = this.urlForPath(this.location.route.path, params);
+        return this.go(newUrl);
+    }
+}
+
+export const AppRouter = new DocumentationRouter(document.body, {
+    baseUrl: baseUrl,
+});
+AppRouter.setRoutes([
     { path: '/', component: 'docs-home' },
-    { path: '/components/:component', component: 'docs-component' },
+    { path: '/components/:component/:tab?', component: 'docs-component' },
     { path: '/guides/:guide', component: 'docs-guide' },
 ]);
-
-export default router;

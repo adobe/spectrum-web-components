@@ -14,7 +14,14 @@ import { CSSResultArray, property } from 'lit-element';
 import { ButtonBase } from './button-base';
 import buttonStyles from './button.css';
 
+/**
+ * A Spectrum button control.
+ * @element sp-button
+ */
 export class Button extends ButtonBase {
+    /**
+     * The visual variant to apply to this button.
+     */
     @property({ reflect: true })
     public variant:
         | 'cta'
@@ -23,9 +30,15 @@ export class Button extends ButtonBase {
         | 'secondary'
         | 'negative' = 'cta';
 
+    /**
+     * There is a warning in place for this control
+     */
     @property({ type: Boolean, reflect: true })
     public warning: boolean = false;
 
+    /**
+     * Style this button to be less obvious
+     */
     @property({ type: Boolean, reflect: true })
     public quiet: boolean = false;
 
