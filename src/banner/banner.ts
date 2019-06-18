@@ -12,22 +12,34 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
     property,
     CSSResultArray,
     TemplateResult,
+    query,
 } from 'lit-element';
 
 import bannerStyles from './banner.css';
+import { Focusable } from '../shared/focusable';
 
-export class Banner extends LitElement {
-    public static readonly is = 'sp-banner';
-
+/**
+ * Banner component
+ *
+ * @attr type - Determines the style, can be "info", "warning", or "error". Default is "info"
+ * @attr corner - Determines if banner sets position at upper right corner or not.
+ */
+export class Banner extends Focusable {
     @property({ reflect: true })
     public type: 'info' | 'warning' | 'error' = 'info';
 
     @property({ reflect: true, type: Boolean })
     public corner = false;
+
+    @query('#root')
+    private rootElement!: HTMLDivElement;
+
+    public get focusElement(): HTMLElement {
+        return this.rootElement;
+    }
 
     public static get styles(): CSSResultArray {
         return [bannerStyles];
@@ -35,8 +47,10 @@ export class Banner extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <div id="header"><slot name="header"></slot></div>
-            <div id="content"><slot name="content"></slot></div>
+            <div id="root">
+                <div id="header"><slot name="header"></slot></div>
+                <div id="content"><slot name="content"></slot></div>
+            </div>
         `;
     }
 }

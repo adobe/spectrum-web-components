@@ -9,8 +9,24 @@
 
     <body>
         <sp-banner type="info">
+            <div slot="header">Info Text</div>
+            <div slot="content">Info Content</div>
+        </sp-banner>
+        <sp-banner type="warning">
+            <div slot="header">Warning Text</div>
+            <div slot="content">Warning Content</div>
+        </sp-banner>
+        <sp-banner type="error">
+            <div slot="header">Error Text</div>
+            <div slot="content">Error Content</div>
+        </sp-banner>
+        <sp-banner id="default-info">
             <div slot="header">Header Text</div>
             <div slot="content">Content</div>
+        </sp-banner>
+        <sp-banner corner>
+            <div slot="header">Corner Text</div>
+            <div slot="content">Corner Content</div>
         </sp-banner>
         <script src="./index.js" type="module"></script>
     </body>
