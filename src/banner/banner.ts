@@ -28,7 +28,7 @@ import { Focusable } from '../shared/focusable';
  * @attr corner - Determines if banner sets position at upper right corner or not.
  */
 export class Banner extends Focusable {
-    @property({ reflect: true })
+    @property({ reflect: true, type: Boolean })
     public type: 'info' | 'warning' | 'error' = 'info';
 
     @property({ reflect: true, type: Boolean })
