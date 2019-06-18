@@ -11,12 +11,10 @@ governing permissions and limitations under the License.
 */
 import { LitElement, html, CSSResultArray } from 'lit-element';
 import { ComponentDocs } from '../../components';
-import AppRouter from '../router';
+import { AppRouter } from '../router';
 import { StrictCustomEvent } from '../../../src/events';
 import sideNavStyles from './side-nav.css';
 import './spectrum-logo';
-
-const { Router } = require('@vaadin/router');
 
 class SideNav extends LitElement {
     public static get styles(): CSSResultArray {
@@ -32,7 +30,7 @@ class SideNav extends LitElement {
         kind: 'guides' | 'components'
     ): void {
         const path = AppRouter.urlForPath(`/${kind}/${event.detail.value}`);
-        Router.go(path);
+        AppRouter.go(path);
     }
 
     private handleComponentSelect(

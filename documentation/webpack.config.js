@@ -17,6 +17,7 @@ const WebpackBar = require('webpackbar');
 
 const srcPath = path.resolve(__dirname, '../src');
 const componentDir = path.resolve(__dirname, 'src/components');
+const apiDocPath = path.resolve(__dirname, 'api-docs');
 
 const configOptions = {
     entry: path.resolve(__dirname, './src/main.ts'),
@@ -36,6 +37,9 @@ const babelLoader = openWcConfig.module.rules.find(
 );
 
 module.exports = merge(openWcConfig, {
+    output: {
+        path: path.join(__dirname, 'dist'),
+    },
     resolve: {
         extensions: ['.js', '.ts', '.json'],
     },
@@ -131,6 +135,11 @@ module.exports = merge(openWcConfig, {
                         },
                     },
                 ],
+            },
+            {
+                test: /\.html$/,
+                include: apiDocPath,
+                loader: 'raw-loader',
             },
         ],
     },

@@ -15,8 +15,12 @@ import { nothing } from 'lit-html';
 import { Focusable } from '../shared/focusable';
 
 export class ButtonBase extends Focusable {
+    /**
+     * Supplies an address that the browser will navigate to when this button is
+     * clicked
+     */
     @property()
-    protected href?: string;
+    public href?: string;
 
     private get hasIcon(): boolean {
         return !!this.querySelector('[slot="icon"]');
