@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import * as MediumIcons from '../src/icons/icons-medium';
 
@@ -21,6 +22,7 @@ import '../src/button';
 defineCustomElements(Icon, ...Object.values(MediumIcons));
 
 storiesOf('Button', module)
+    .addDecorator(withKnobs)
     .add('Default', () => {
         return renderButtonPair({});
     })
@@ -86,6 +88,7 @@ storiesOf('Button', module)
         `;
     })
     .add('with icon', () => {
+        const iconRight = boolean('Icon on Right', false);
         return html`
             <sp-icons-medium></sp-icons-medium>
             <style>
@@ -96,6 +99,7 @@ storiesOf('Button', module)
             <div class="row">
                 ${renderButtonPair({
                     variant: 'primary',
+                    iconRight: iconRight,
                     content: html`
                         <sp-icon
                             slot="icon"
@@ -109,6 +113,7 @@ storiesOf('Button', module)
             <div class="row">
                 ${renderButtonPair({
                     variant: 'primary',
+                    iconRight: iconRight,
                     content: html`
                         <svg
                             slot="icon"
@@ -124,6 +129,36 @@ storiesOf('Button', module)
                         Custom SVG
                     `,
                 })}
+            </div>
+            <div class="row">
+                <sp-button variant="secondary" icon-right>
+                    <svg
+                        slot="icon"
+                        viewBox="0 0 36 36"
+                        focusable="false"
+                        aria-hidden="true"
+                        role="img"
+                    >
+                        <path
+                            d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+                        ></path>
+                    </svg>
+                    Custom SVG
+                </sp-button>
+                <sp-button variant="secondary">
+                    <svg
+                        slot="icon"
+                        viewBox="0 0 36 36"
+                        focusable="false"
+                        aria-hidden="true"
+                        role="img"
+                    >
+                        <path
+                            d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+                        ></path>
+                    </svg>
+                    Custom SVG
+                </sp-button>
             </div>
         `;
         return renderButtonPair({
@@ -162,6 +197,7 @@ function renderButton(properties) {
                 variant="${properties.variant}"
                 ?quiet="${!!properties.quiet}"
                 ?disabled=${!!properties.disabled}
+                ?icon-right=${properties.iconRight}
                 @click=${action(`Click ${properties.variant}`)}
             >
                 ${properties.content || 'Click Me'}
@@ -183,8 +219,6 @@ function renderButton(properties) {
 function renderButtonPair(properties) {
     const disabled = Object.assign({}, properties, { disabled: true });
     return html`
-        <div>
-            ${renderButton(properties)} ${renderButton(disabled)}
-        </div>
+        ${renderButton(properties)} ${renderButton(disabled)}
     `;
 }
