@@ -1,6 +1,6 @@
 ## Overview
 
-An **sp-link** is used to turn an option on or off. Switches allow users to select the state of a single option at a time. Use a switch rather than a checkbox when activating (or deactivating) an option, instead of selecting.
+An **sp-link** allow users to navigate to a different location. They can be presented in-line inside a paragraph or as a standalone text.
 
 ## Example
 
@@ -12,11 +12,9 @@ This is an
 
 ## Variants
 
-### Standard Switches
+### Standard Links
 
-Standard switches are the default style for switches. The blue color provides a
-visual prominence that is optimal for forms, settings, etc. where the switches
-need to be noticed.
+Standard links can follow any of the character styles defined in Spectrum. Therefore, they can be displayed in various font sizes and weights. Standard links appear blue, in order to stand out from the rest of the text and be recognized as interactive.
 
 ```html
 This is a
@@ -26,10 +24,7 @@ This is a
 
 ### Quiet Links
 
-Quiet switches are a secondary style for switches. The gray color provides a
-less prominent style than the standard switches. They are optimal for
-application panels where all visual elements are monochrome in order to direct
-focus to the content.
+Quiet links appear with an underline and use the default text color. The subdued appearance is optimal for use in content lower in your application’s hierarchy such as links in a footer.
 
 ```html
 This is a
@@ -39,10 +34,7 @@ This is a
 
 ### Links Over Backgrounds
 
-Quiet switches are a secondary style for switches. The gray color provides a
-less prominent style than the standard switches. They are optimal for
-application panels where all visual elements are monochrome in order to direct
-focus to the content.
+When a link needs to be placed on top of a colored background or a visual, use the over background link. This link uses a white opaque color instead of a blue color and stands out from the rest of the text with the addition of an underline.
 
 ```html
 <div
