@@ -19,10 +19,13 @@ import {
 } from 'lit-element';
 
 import cardStyles from './card.css';
-import '../button/button';
-import '../icon/icon';
-import '../icons/icons-medium';
 
+/**
+ * @slot preview - This is the preview image for Gallery Cards
+ * @slot cover-photo - This is the cover photo for Default and Quiet Cards
+ * @slot description - A description of the card
+ * @slot footer - Footer text
+ */
 export class Card extends LitElement {
     @property({ reflect: true })
     public variant: 'default' | 'gallery' | 'quiet' = 'default';
@@ -39,7 +42,6 @@ export class Card extends LitElement {
 
     protected renderGallery(): TemplateResult {
         return html`
-            <slot name="cover-photo"></slot>
             <slot name="preview"></slot>
             <div id="body">
                 <div id="header">

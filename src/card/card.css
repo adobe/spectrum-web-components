@@ -26,5 +26,8 @@ slot[name='preview']::slotted(*) {
 /* The description slot has a psuedo-element that also needs to receive the font styling. 
 We need to add the declaration to the slot as well */
 slot[name='description'] {
-    font-size: 11px;
+    font-size: var(
+        --spectrum-card-subtitle-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
 }
