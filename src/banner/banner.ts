@@ -12,11 +12,10 @@ governing permissions and limitations under the License.
 
 import {
     html,
+    LitElement,
     property,
     CSSResultArray,
     TemplateResult,
-    query,
-    LitElement,
 } from 'lit-element';
 
 import bannerStyles from './banner.css';
