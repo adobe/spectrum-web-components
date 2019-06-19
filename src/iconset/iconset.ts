@@ -20,10 +20,6 @@ export abstract class Iconset extends LitElement {
 
     private _name!: string;
 
-    public constructor() {
-        super();
-    }
-
     protected firstUpdated(
         changedProperties: Map<string | number | symbol, unknown>
     ): void {
