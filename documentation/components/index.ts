@@ -10,4 +10,3 @@ for (const key of componentDocs.keys()) {
     const templateString = toHtmlTemplateString(componentDocs(key));
     ComponentDocs.set(componentName, templateString);
 }
-///trest
