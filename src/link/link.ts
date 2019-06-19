@@ -21,17 +21,21 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 
 import linkStyles from './link.css';
 
+/**
+ * Link component
+ *
+ * @attr quiet - uses quiet styles or not
+ * @attr over-background - uses over background styles or not
+ */
 export class Link extends LitElement {
-    public static readonly is = 'sp-link';
-
     public static get styles(): CSSResultArray {
         return [linkStyles];
     }
 
-    @property()
+    @property({ reflect: true })
     public href: string | undefined = undefined;
 
-    @property()
+    @property({ reflect: true })
     public target: string | undefined = undefined;
 
     protected render(): TemplateResult {
