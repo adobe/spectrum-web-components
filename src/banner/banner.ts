@@ -16,10 +16,10 @@ import {
     CSSResultArray,
     TemplateResult,
     query,
+    LitElement,
 } from 'lit-element';
 
 import bannerStyles from './banner.css';
-import { Focusable } from '../shared/focusable';
 
 /**
  * Banner component
@@ -27,19 +27,12 @@ import { Focusable } from '../shared/focusable';
  * @attr type - Determines the style, can be "info", "warning", or "error". Default is "info"
  * @attr corner - Determines if banner sets position at upper right corner or not.
  */
-export class Banner extends Focusable {
-    @property({ reflect: true, type: Boolean })
+export class Banner extends LitElement {
+    @property({ reflect: true, type: String })
     public type: 'info' | 'warning' | 'error' = 'info';
 
     @property({ reflect: true, type: Boolean })
     public corner = false;
-
-    @query('#root')
-    private rootElement!: HTMLDivElement;
-
-    public get focusElement(): HTMLElement {
-        return this.rootElement;
-    }
 
     public static get styles(): CSSResultArray {
         return [bannerStyles];
