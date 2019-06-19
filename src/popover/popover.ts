@@ -16,10 +16,15 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
-    nothing,
 } from 'lit-element';
 
+import { nothing } from 'lit-html';
+
 import popoverStyles from './popover.css';
+
+/**
+ * @attr {Boolean} open - The open state of the popover
+ */
 
 export class Popover extends LitElement {
     public static is = 'sp-popover';
