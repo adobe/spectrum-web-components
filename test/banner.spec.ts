@@ -9,18 +9,28 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { defineCustomElement } from '../../define';
+import { defineCustomElement } from '../src/define';
+import { fixture, elementUpdated } from '@open-wc/testing-helpers';
+import { Banner } from '../src/banner/banner';
 
-import { Banner } from '../';
+import { html } from 'lit-element';
 
 defineCustomElement(Banner);
 
 describe('banner', () => {
-    it('loads', () => {
-        const el = document.querySelector('sp-banner') as HTMLElement;
+    it('loads', async () => {
+        const el = await fixture<Banner>(
+            html`
+                <sp-banner type="info">
+                    <div slot="header">Header Text</div>
+                    <div slot="content">Content</div>
+                </sp-banner>
+            `
+        );
+
+        await elementUpdated(el);
         expect(el).to.not.equal(undefined);
         expect(el.textContent).to.include('Header Text');
         expect(el.textContent).to.include('Content');
-        return true;
     });
 });

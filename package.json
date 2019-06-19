@@ -33,10 +33,8 @@
         "docs:build": "gulp docsCompile",
         "docs:start": "gulp docsWatchCompile",
         "lint": "bash ./scripts/lint.sh",
-        "test": "npm run build && karma start --single-run",
-        "test:nobuild": "karma start",
-        "test:nobuildsingle": "karma start --single-run",
-        "test:watch": "npm run build && (npm run watch & karma start)"
+        "test": "karma start --single-run",
+        "test:watch": "karma start"
     },
     "husky": {
         "hooks": {
@@ -55,6 +53,8 @@
         "@babel/core": "^7.4.0",
         "@open-wc/building-webpack": "^1.1.1",
         "@open-wc/polyfills-loader": "^0.3.0",
+        "@open-wc/semantic-dom-diff": "^0.11.8",
+        "@open-wc/testing-helpers": "^1.0.1",
         "@storybook/addon-actions": "^5.0.11",
         "@storybook/addon-knobs": "^5.0.5",
         "@storybook/addons": "^5.0.5",
@@ -108,7 +108,8 @@
         "karma-mocha-reporter": "^2.2.5",
         "karma-script-launcher": "^1.0.0",
         "karma-sinon": "^1.0.5",
-        "karma-web-components": "^1.0.4",
+        "karma-sourcemap-loader": "^0.3.7",
+        "karma-webpack": "^4.0.2",
         "linebyline": "^1.3.0",
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",

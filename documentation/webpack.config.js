@@ -70,7 +70,7 @@ module.exports = merge(openWcConfig, {
                     {
                         loader: path.resolve(
                             __dirname,
-                            '../.storybook/lit-css-typed-loader'
+                            '../utils/lit-css-typed-loader'
                         ),
                     },
                     'extract-loader',

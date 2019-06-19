@@ -9,42 +9,33 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+const merge = require('webpack-merge');
+const webpackBaseConfig = require('./utils/webpack-base.config');
 const path = require('path');
+const webpackConfig = merge(webpackBaseConfig(undefined, /documentation\/.*/), {
+    mode: 'development',
+    devtool: 'inline-source-map',
+});
 
 module.exports = function(config) {
     config.set({
-        basePath: './src/',
-        esModulesMiddleware: {
-            paths: {
-                '/': path.resolve(path.join(__dirname, 'lib')),
-                '/styles': path.resolve(path.join(__dirname, 'styles')),
-                '/node_modules': path.resolve(
-                    path.join(__dirname, 'node_modules')
-                ),
-            },
+        plugins: ['karma-*'],
+        frameworks: ['mocha', 'chai', 'sinon'],
+        files: ['./test/test_index.ts'],
+        preprocessors: {
+            // add webpack as preprocessor
+            'test/test_index.ts': ['webpack', 'sourcemap'],
         },
-        plugins: ['karma-*', require('@adobe/es-modules-middleware')],
-        frameworks: ['mocha', 'chai', 'sinon', 'web-components'],
-        middleware: ['es-modules'],
-        files: [
-            {
-                pattern: './**/*.test.html',
-                watched: true,
-                included: false,
-                served: true,
+        webpack: webpackConfig,
+        webpackMiddleware: {
+            // webpack-dev-middleware configuration
+            // i.e.
+            noInfo: true,
+            // and use stats to turn off verbose output
+            stats: {
+                // options i.e.
+                chunks: false,
             },
-            {
-                pattern: './**/*.ts',
-                watched: true,
-                included: false,
-                served: false,
-            },
-        ],
-        // proxy styles and node_modules paths to base so they get picked up by
-        // the middleware
-        proxies: {
-            '/styles/': '/base/styles/',
-            '/node_modules/': '/base/node_modules/',
         },
         reporters: ['mocha'],
         browsers: [
