@@ -11,6 +11,10 @@ npm-debug.log
 .vscode
 .npmrc
 
+documentation/api-docs/component_data.json
+documentation/api-docs/*.html
+documentation/dist
+
 package-deps.json
 spectrum-web-components.build.log
 spectrum-web-components.build.error.log

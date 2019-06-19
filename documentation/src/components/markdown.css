@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 @import '@adobe/spectrum-css/dist/components/typography/index-vars.css';
 @import '@adobe/spectrum-css/dist/components/rule/index-vars.css';
 @import '@adobe/spectrum-css/dist/components/link/index-vars.css';
+@import '@adobe/spectrum-css/dist/components/table/index-vars.css';
 
 /* 
  * Note that there is a webpack/posthtml transformation that modifies the

@@ -386,3 +386,31 @@ and match the style.
 We have a working specification for the APIs for each of the Spectrum components.
 If you file an issue for the component that you want to implement, we can provide
 the necessary specifications for it.
+
+### Documenting the component
+
+Each component should have a page in the documentation system. The pages are
+written in [Markdown](https://www.markdownguide.org/cheat-sheet). See one of
+the [existing pages](https://github.com/adobe/spectrum-web-components/blob/master/documentation/components/button.md) for an example.
+
+To run the local documentation server, use the command:
+
+    npm run docs:start
+
+The documentation automatically extracts the properties and attributes from the
+source code. You should document your component using the [appropriate jsdoc
+tags](https://github.com/runem/web-component-analyzer#-how-to-document-your-components-using-jsdoc).
+See
+[button.ts](https://github.com/adobe/spectrum-web-components/blob/master/src/button/button.ts)
+for an example.
+
+### Working with Storybook
+
+We use [Storybook](https://storybook.js.org/) for developing our components.
+This gives us a rapid way to test our components in various configurations. The
+best way to start is to copy [one of the existing
+stories](https://github.com/adobe/spectrum-web-components/blob/master/stories/button.stories.ts).
+
+To run Storybook, use the command:
+
+    npm run storybook

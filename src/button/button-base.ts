@@ -11,12 +11,18 @@ governing permissions and limitations under the License.
 */
 
 import { property, html, TemplateResult } from 'lit-element';
-import { nothing } from 'lit-html';
 import { Focusable } from '../shared/focusable';
 
 export class ButtonBase extends Focusable {
+    /**
+     * Supplies an address that the browser will navigate to when this button is
+     * clicked
+     */
     @property()
-    protected href?: string;
+    public href?: string;
+
+    @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
+    protected iconRight = false;
 
     private get hasIcon(): boolean {
         return !!this.querySelector('[slot="icon"]');
@@ -29,14 +35,25 @@ export class ButtonBase extends Focusable {
         return this;
     }
 
+    protected renderWithIcon(): TemplateResult {
+        return this.iconRight
+            ? html`
+                  <div id="label"><slot></slot></div>
+                  <slot name="icon"></slot>
+              `
+            : html`
+                  <slot name="icon"></slot>
+                  <div id="label"><slot></slot></div>
+              `;
+    }
+
     protected render(): TemplateResult {
         const buttonContents = html`
             ${this.hasIcon
-                ? html`
-                      <slot name="icon"></slot>
-                  `
-                : nothing}
-            <div id="label"><slot></slot></div>
+                ? this.renderWithIcon()
+                : html`
+                      <div id="label"><slot></slot></div>
+                  `}
         `;
         return this.href && this.href.length > 0
             ? html`
