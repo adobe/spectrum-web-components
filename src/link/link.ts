@@ -22,7 +22,7 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 import linkStyles from './link.css';
 
 /**
- * Link component
+ * Spectrum Link Component
  *
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
