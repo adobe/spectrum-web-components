@@ -41,3 +41,7 @@ When a link needs to be placed on top of a colored background or a visual, use t
     </p>
 </div>
 ```
+
+## Accessibility
+
+Links are accessible by default, rendered in HTML using the `<a>` element. The correct aria roles will automatically be applied.
