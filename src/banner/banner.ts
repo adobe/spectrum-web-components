@@ -25,6 +25,9 @@ import bannerStyles from './banner.css';
  *
  * @attr type - Determines the style, can be "info", "warning", or "error". Default is "info"
  * @attr corner - Determines if banner sets position at upper right corner or not.
+ *
+ * @slot header - Primary message of the banner.
+ * @slot content - Secondary message of the banner. Used to provide a description.
  */
 export class Banner extends LitElement {
     @property({ reflect: true, type: String })
