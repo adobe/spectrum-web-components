@@ -10,8 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../';
-import { Card } from '../';
+import { Card } from '../src/card/card';
+import '../src/card';
+import { fixture, elementUpdated } from '@open-wc/testing-helpers';
+import { html } from 'lit-html';
 
 function previewNode(card: Card): Node {
     if (!card.shadowRoot) throw new Error('No shadowRoot');
@@ -20,8 +22,18 @@ function previewNode(card: Card): Node {
 }
 
 describe('card', () => {
-    it('loads', () => {
-        const el = document.querySelector('sp-card') as Card;
+    it('loads', async () => {
+        const el = await fixture<Card>(
+            html`
+                <sp-card variant="gallery" title="Card Title" subtitle="JPG">
+                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <div slot="description">10/15/18</div>
+                    <div slot="footer">Footer</div>
+                </sp-card>
+            `
+        );
+
+        await elementUpdated(el);
         expect(el).to.not.equal(undefined);
         const preview = previewNode(el);
         expect(preview).to.not.equal(undefined);
