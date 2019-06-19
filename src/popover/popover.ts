@@ -16,6 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
+    nothing,
 } from 'lit-element';
 
 import popoverStyles from './popover.css';
@@ -42,7 +43,7 @@ export class Popover extends LitElement {
     protected render(): TemplateResult {
         return html`
             <slot></slot>
-            ${this.tip ? this.renderTip() : null}
+            ${this.tip ? this.renderTip() : nothing}
         `;
     }
 }
