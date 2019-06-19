@@ -22,6 +22,11 @@ export abstract class Iconset extends LitElement {
 
     public constructor() {
         super();
+    }
+
+    protected firstUpdated(
+        changedProperties: Map<string | number | symbol, unknown>
+    ): void {
         // force no display for all iconsets
         this.style.display = 'none';
     }
