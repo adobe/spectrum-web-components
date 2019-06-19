@@ -20,8 +20,9 @@ export abstract class Iconset extends LitElement {
 
     private _name!: string;
 
-    public constructor() {
-        super();
+    protected firstUpdated(
+        changedProperties: Map<string | number | symbol, unknown>
+    ): void {
         // force no display for all iconsets
         this.style.display = 'none';
     }

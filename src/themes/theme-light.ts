@@ -10,10 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    margin: 0;
+import { LitElement, CSSResultArray, html, TemplateResult } from 'lit-element';
+import lightStyles from './theme-light.css';
+
+export class ThemeLight extends LitElement {
+    public static get styles(): CSSResultArray {
+        return [lightStyles];
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            <slot></slot>
+        `;
+    }
 }

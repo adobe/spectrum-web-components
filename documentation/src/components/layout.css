@@ -30,6 +30,8 @@ governing permissions and limitations under the License.
     flex: 1 1 auto;
     padding-bottom: 40px;
     height: 100%;
+    background-color: var(--spectrum-alias-background-color-default);
+    color: var(--spectrum-alias-text-color);
 }
 
 #body #layout-content {
