@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-#root {
+:host {
     /* .spectrum-Banner */
     display: inline-block;
     border-radius: var(--spectrum-banner-border-radius, 8px);
@@ -28,27 +28,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Banner-header */
     font-weight: bold;
 }
-:host([corner]) #root {
+:host([corner]) {
     /* .spectrum-Banner--corner */
     position: absolute;
     top: -10px;
     right: -10px;
 }
-:host([type='info']) #root {
+:host([type='info']) {
     /* .spectrum-Banner--info */
     background-color: var(
         --spectrum-banner-info-background-color,
         var(--spectrum-global-color-blue-500)
     );
 }
-:host([type='warning']) #root {
+:host([type='warning']) {
     /* .spectrum-Banner--warning */
     background-color: var(
         --spectrum-banner-warning-background-color,
         var(--spectrum-global-color-orange-500)
     );
 }
-:host([type='error']) #root {
+:host([type='error']) {
     /* .spectrum-Banner--error */
     background-color: var(
         --spectrum-banner-error-background-color,

@@ -17,7 +17,6 @@ module.exports = {
             name: 'banner',
             host: {
                 selector: '.spectrum-Banner',
-                shadowSelector: '#root',
             },
             focus: '#root',
             attributes: [

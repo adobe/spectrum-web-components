@@ -40,10 +40,8 @@ export class Banner extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <div id="root">
-                <div id="header"><slot name="header"></slot></div>
-                <div id="content"><slot name="content"></slot></div>
-            </div>
+            <div id="header"><slot name="header"></slot></div>
+            <div id="content"><slot name="content"></slot></div>
         `;
     }
 }
