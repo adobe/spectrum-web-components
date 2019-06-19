@@ -16,16 +16,12 @@ import '../src/link';
 storiesOf('Link', module)
     .add('Default', () => {
         return html`
-            This is a
-            <sp-link href="#">link</sp-link>
-            .
+            This is a <sp-link href="#">link</sp-link>.
         `;
     })
     .add('Quiet', () => {
         return html`
-            This is a
-            <sp-link quiet href="#">quiet link</sp-link>
-            .
+            This is a <sp-link quiet href="#">quiet link</sp-link>.
         `;
     })
     .add('Over Background', () => {
