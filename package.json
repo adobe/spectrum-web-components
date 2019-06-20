@@ -11,7 +11,9 @@
     ],
     "sideEffects": [
         "./lib/*/index.js",
-        "./styles/*.css"
+        "./src/*/index.ts",
+        "./styles/*.css",
+        "./documentation/src/components/*.ts"
     ],
     "main": "lib/index.js",
     "module": "lib/index.js",
