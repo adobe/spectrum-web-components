@@ -6,6 +6,7 @@ executors:
         environment:
             NPM_CONFIG_PREFIX: ~/.npm-global
             CHROME_BIN: /usr/bin/google-chrome
+            FIREFOX_BIN: /usr/local/bin/firefox
 commands:
     setup:
         steps:
