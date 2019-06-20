@@ -30,6 +30,7 @@ module.exports = {
                     selector: '.spectrum-Link--overBackground',
                 },
             ],
+            exclude: [/\.is-disabled/, /\.spectrum-Link--subtle/],
         },
     ],
 };

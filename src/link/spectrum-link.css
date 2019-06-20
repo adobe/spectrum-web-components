@@ -46,27 +46,13 @@ a:focus {
         var(--spectrum-global-color-blue-600)
     );
 }
-a.is-disabled {
-    /* .spectrum-Link.is-disabled */
-    cursor: default;
-    pointer-events: none;
-    /* .spectrum-Link.is-disabled */
-    color: var(
-        --spectrum-link-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
-    );
-}
-a.is-disabled:hover,
-a.is-disabled:focus {
-    /* .spectrum-Link.is-disabled:hover,
-   * .spectrum-Link.is-disabled:focus */
-    text-decoration: none;
-}
-.spectrum-Link--subtle,
 :host([quiet]) a {
     /* .spectrum-Link--subtle,
    * .spectrum-Link--quiet */
     text-decoration: underline;
+    /* .spectrum-Link--quiet,
+   * .spectrum-Link--subtle */
+    color: inherit;
 }
 :host([over-background]) a {
     /* .spectrum-Link--overBackground */
@@ -81,26 +67,17 @@ a:active {
         var(--spectrum-global-color-blue-700)
     );
 }
-:host([quiet]) a,
-.spectrum-Link--subtle {
-    /* .spectrum-Link--quiet,
-   * .spectrum-Link--subtle */
-    color: inherit;
-}
-:host([quiet]) a:hover,
-.spectrum-Link--subtle:hover {
+:host([quiet]) a:hover {
     /* .spectrum-Link--quiet:hover,
    * .spectrum-Link--subtle:hover */
     color: inherit;
 }
-:host([quiet]) a:active,
-.spectrum-Link--subtle:active {
+:host([quiet]) a:active {
     /* .spectrum-Link--quiet:active,
    * .spectrum-Link--subtle:active */
     color: inherit;
 }
-:host([quiet]) a:focus,
-.spectrum-Link--subtle:focus {
+:host([quiet]) a:focus {
     /* .spectrum-Link--quiet:focus,
    * .spectrum-Link--subtle:focus */
     color: inherit;
@@ -124,12 +101,5 @@ a:active {
     color: var(
         --spectrum-link-over-background-text-color-key-focus,
         rgb(255, 255, 255)
-    );
-}
-:host([over-background]) a.is-disabled {
-    /* .spectrum-Link--overBackground.is-disabled */
-    color: var(
-        --spectrum-link-over-background-text-color-disabled,
-        rgba(255, 255, 255, 0.5)
     );
 }
