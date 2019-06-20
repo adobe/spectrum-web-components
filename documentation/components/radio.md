@@ -6,10 +6,13 @@
 
 ### Example
 
-<sp-icons-medium></sp-icons-medium>
-
 ```html
-<sp-checkbox>Web component</sp-checkbox>
+<sp-radio-group selected="first" name="example">
+    <sp-radio value="first">Option 1</sp-radio>
+    <sp-radio value="second">Option 2</sp-radio>
+    <sp-radio value="third">Option 3</sp-radio>
+    <sp-radio value="fourth">Option 4</sp-radio>
+</sp-radio-group>
 ```
 
 ## Variants
@@ -18,58 +21,74 @@
 
 Standard radio buttons are the default style for radio buttons. The blue color provides a visual prominence that is optimal for forms, settings, etc. where the radio buttons need to be noticed.
 
-<Checkbox label="React" defaultChecked />
-
 ```html
-<sp-checkbox checked>Web component</sp-checkbox>
+<sp-radio>Standard Radio Button</sp-radio>
 ```
 
 ### Quiet Radio
 
-Quiet checkboxes are a secondary style for checkboxes. The gray color provides a
-less prominent style than the standard checkboxes. They are optimal for
+Quiet radio buttons are a secondary style for radio buttons. The gray color provides a
+less prominent style than the standard radioes. They are optimal for
 application panels where all visual elements are monochrome in order to direct
 focus to the content.
 
 ```html
-<sp-checkbox quiet>Web component</sp-checkbox>
+<sp-radio quiet>Quiet Radio Button</sp-radio>
 ```
 
 ## States
 
-In addition to the variant, sp-checkboxes have a number of attributes for
-controlling their visual state. All checkbox variants support the `disabled`,
-`indeterminate`, `invalid` attributes, which applies a disabled style to the
-checkbox, and also prevents clicks from activating it.
+In addition to the variant, **sp-radio** buttons have a number of attributes for
+controlling their visual state. All radio variants support the `disabled` and `invalid` attributes. Invalid which applies a disabled style to the
+radio, and also prevents clicks from activating it.
 
 ### Checked
 
+When the radio is selected. Can be deselected only by selecting another radio in the group or by manually setting checked property
+
 ```html
-<div>checked:</div>
-<sp-checkbox checked>Web component</sp-checkbox>
+<sp-radio checked>Checked Radio Button</sp-radio>
+```
 
 ### Invalid
 
-<div>invalid:</div>
-<sp-checkbox invalid>Web component</sp-checkbox>
+Indicates some error state related to the radio button. Can still be checked.
+
+```html
+<sp-radio invalid>Invalid Radio Button</sp-radio>
+```
 
 ### Disabled
 
-<div>disabled:</div>
-<sp-checkbox disabled>Web component</sp-checkbox>
+When the radio button is no longer interactable. The button cannot be checked.
+
+```html
+<sp-radio disabled>Disabled Radio Button</sp-radio>
+```
+
+### Radio Group Column
+
+By default, radio groups are inline and appear vertically. By adding the `column` property to **sp-radio-group**
+the radio buttons will be listed vertically on their own line.
+
+```html
+<sp-radio-group column name="column-example">
+    <sp-radio value="first">Option 1</sp-radio>
+    <sp-radio value="second">Option 2</sp-radio>
+    <sp-radio value="third">Option 3</sp-radio>
+</sp-radio-group>
 ```
 
 ### Handling Events
 
-Event handlers for clicks and other user actions can be registered on an `sp-checkbox` just as a normal `<input type="checkbox">` element.
+Event handlers for clicks and other user actions can be registered on an `sp-radio` just as a normal `<input type="radio">` element.
 
 ```html
-<sp-checkbox id="checkbox-example" onclick="javascript:alert('Click')">
+<sp-radio id="radio-example" onclick="javascript:alert('Click')">
     Web component
-</sp-checkbox>
+</sp-radio>
 ```
 
 ## Accessibility
 
-Checkboxes are accessible by default, rendered in HTML using the `<input type="checkbox">` element. When the checkbox is set as `indeterminate` or
-`invalid`, the appropriate ARIA state attribute will automatically be applied.
+Radio buttons are accessible by default, rendered in HTML using the `<input type="radio">` element. Tabbing into a group of radio buttons places the focus on the first radio button selected. If none of the radio buttons are selected, the focus is set on the first one in the group. Space selects the radio button in focus (if not already selected). Using the arrow keys moves focus and selection to the previous or next radio button in the group (last becomes first, and first becomes last). The new radio button in focus gets selected even if the previous one was not.
