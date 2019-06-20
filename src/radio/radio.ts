@@ -27,13 +27,17 @@ export interface RadioChangeDetail {
 }
 
 /**
- * Radio button component
+ * Spectrum Radio Button Component
  *
- * @attr quiet - uses the quiet style
- * @attr label-below - moves the label below the radio button
- * @attr invalid - uses the invalid style
- * @attr disabled - uses the disabled style
- * @attr checked - represents when the input is checked
+ * @attr quiet - Uses the quiet style
+ * @attr label-below - Moves the label below the radio button
+ * @attr invalid - Uses the invalid style
+ * @attr disabled - Uses the disabled style
+ * @attr checked - Represents when the input is checked
+ * @attr name - Represents the group this radio is a part of
+ * @attr value - Identifies this radio button within its radio group
+ *
+ * @event sp-radio:change - When the input is interacted with and its state is changed
  */
 export class Radio extends Focusable {
     public static get styles(): CSSResultArray {
