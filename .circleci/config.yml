@@ -1,0 +1,55 @@
+version: 2.1
+executors:
+    node8:
+        docker:
+            - image: circleci/node:8-browsers
+        environment:
+            NPM_CONFIG_PREFIX: ~/.npm-global
+commands:
+    setup:
+        steps:
+            - checkout
+            - restore_cache:
+                  keys:
+                      - v1-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
+            - run:
+                  name: install npm 6.4.1
+                  command: sudo npm -g install npm@6.4.1
+            - run:
+                  name: Installing Dependencies
+                  command: npm install
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: v1-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
+            - run:
+                  name: prepare test git user
+                  command: git config --global user.email "circleci@example.com" && git config --global user.name "CircleCi Build"
+jobs:
+    build:
+        executor: node8
+
+        steps:
+            - setup
+            - run: mkdir junit
+            - run:
+                  name: Lint
+                  command: npm run lint
+
+            # test & get code coverage
+            - run:
+                  name: Run tests
+                  # TODO
+                  # - [ ] use CircleCI parallelization
+                  # - [ ] get code coverage reporting
+                  # - [ ] use XUnit reporting
+                  #command: circleci tests glob test/test*.js | circleci tests split --split-by=timings | xargs ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- -R mocha-junit-reporter --exit && npx codecov
+                  command: npm test
+                  environment:
+                      MOCHA_FILE: junit/test-results.xml
+
+            - store_test_results:
+                  path: junit
+
+            - store_artifacts:
+                  path: junit
