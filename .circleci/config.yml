@@ -48,10 +48,10 @@ jobs:
                   #command: circleci tests glob test/test*.js | circleci tests split --split-by=timings | xargs ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- -R mocha-junit-reporter --exit && npx codecov
                   command: npm test
                   environment:
-                      MOCHA_FILE: junit/test-results.xml
+                      JUNIT_REPORT_PATH: ./junit/
+                      JUNIT_REPORT_NAME: test-results.xml
 
             - store_test_results:
-                  path: junit
-
+                  path: ./junit
             - store_artifacts:
-                  path: junit
+                  path: ./junit
