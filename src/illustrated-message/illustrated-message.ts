@@ -21,7 +21,7 @@ import {
 import messageStyles from './illustrated-message.css';
 
 /**
- * @slot - This svg that represents the illustration
+ * @slot - The SVG that represents the illustration
  */
 
 export class IllustratedMessage extends LitElement {
