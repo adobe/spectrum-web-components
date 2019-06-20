@@ -1,0 +1,11 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "example-project/package.json",
+        "linters/stylelint-header/package.json",
+        "package.json"
+      ]
+    }
+  }
+}

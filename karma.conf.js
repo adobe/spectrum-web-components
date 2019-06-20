@@ -37,7 +37,12 @@ module.exports = function(config) {
                 chunks: false,
             },
         },
-        reporters: ['mocha'],
+        reporters: ['mocha', 'junit'],
+        junitReporter: {
+            outputDir: process.env.JUNIT_REPORT_PATH,
+            outputFile: process.env.JUNIT_REPORT_NAME,
+            useBrowserName: false,
+        },
         browsers: [
             path.resolve(path.join(__dirname, 'scripts/firefox.sh')),
             path.resolve(path.join(__dirname, 'scripts/chrome.sh')),

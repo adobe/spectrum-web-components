@@ -1,5 +1,7 @@
 # spectrum-web-components
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/adobe/spectrum-web-components.svg?token=da7a46ab9a22534bdbfa457636e420177675b0e3c7018966f710e224c3b4f3fe&ts=1561021438574)](https://greenkeeper.io/)
+
 Spectrum Web Components is a future-looking project to develop Adobe Spectrum design language based around web components, ES-Modules, and modern browser standards.
 
 It will not support older browsers and will only target modern ever-green browsers that fully implement the Custom Elements V1 specification, e.g. Chrome, Firefox, Safari. Polyfills will be avoided as much as possible.
