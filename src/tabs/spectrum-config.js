@@ -11,26 +11,36 @@ governing permissions and limitations under the License.
 */
 
 module.exports = {
-    spectrum: 'sidenav',
+    spectrum: 'tabs',
     components: [
         {
-            name: 'sidenav',
-            host: '.spectrum-SideNav',
+            name: 'tabs',
+            host: '.spectrum-Tabs',
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-SideNav--multiLevel',
+                    selector: '.spectrum-Tabs--horizontal',
+                },
+                {
+                    type: 'boolean',
+                    selector: '.spectrum-Tabs--compact',
                 },
             ],
-            exclude: [
-                /^\.spectrum-SideNav-(item|heading)/,
-                // We cannot do global matches like this with shadow DOM
-                /^\.spectrum-SideNav--multiLevel\s\.spectrum-SideNav/,
+            ids: [
+                {
+                    selector: '.spectrum-Tabs-itemLabel',
+                    name: 'itemLabel',
+                },
+                {
+                    selector: '.spectrum-Tabs-selectionIndicator',
+                    name: 'selectorIndicator',
+                },
             ],
+            exclude: [/^\.spectrum-Tabs-item/],
         },
         {
-            name: 'sidenav-item',
-            host: '.spectrum-SideNav-item',
+            name: 'tabs-item',
+            host: '.spectrum-Tabs-item',
             attributes: [
                 {
                     type: 'boolean',
@@ -41,36 +51,6 @@ module.exports = {
                     type: 'boolean',
                     selector: '.is-disabled',
                     name: 'disabled',
-                },
-            ],
-            ids: [
-                {
-                    selector: '.spectrum-SideNav-itemLink',
-                    name: 'itemLink',
-                },
-                {
-                    // Sub-lists also inherit from .spectrum-SideNav
-                    selector: '.spectrum-SideNav',
-                    name: 'list',
-                },
-            ],
-        },
-        {
-            name: 'sidenav-heading',
-            host: {
-                selector: '.spectrum-SideNav-heading',
-                shadowSelector: '#heading',
-            },
-            ids: [
-                {
-                    // Headings also inherit from .spectrum-SideNav
-                    selector: '.spectrum-SideNav-heading',
-                    name: 'heading',
-                },
-                {
-                    // Headings also inherit from .spectrum-SideNav
-                    selector: '.spectrum-SideNav',
-                    name: 'list',
                 },
             ],
         },
