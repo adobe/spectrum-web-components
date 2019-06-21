@@ -35,6 +35,11 @@ governing permissions and limitations under the License.
     width: var(--spectrum-icon-size);
 }
 
+#container {
+    width: inherit;
+    height: inherit;
+}
+
 img,
 svg {
     height: var(--spectrum-icon-size);

@@ -9,4 +9,28 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './tab';
+export * from './tabs';
+export * from './tab-item';
+
+import { Tabs } from './tabs';
+import { TabItem } from './tab-item';
+
+if (!customElements.get('sp-tabs')) {
+    customElements.define('sp-tabs', Tabs);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-tabs': Tabs;
+    }
+}
+
+if (!customElements.get('sp-tab-item')) {
+    customElements.define('sp-tab-item', TabItem);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-tab-item': TabItem;
+    }
+}

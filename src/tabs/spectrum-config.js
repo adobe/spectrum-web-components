@@ -19,28 +19,42 @@ module.exports = {
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Tabs--horizontal',
+                    selector: '.spectrum-Tabs--compact',
                 },
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Tabs--compact',
+                    selector: '.spectrum-Tabs--quiet',
+                },
+                {
+                    type: 'enum',
+                    name: 'direction',
+                    values: [
+                        '.spectrum-Tabs--vertical',
+                        '.spectrum-Tabs--horizontal',
+                    ],
                 },
             ],
             ids: [
                 {
-                    selector: '.spectrum-Tabs-itemLabel',
-                    name: 'itemLabel',
-                },
-                {
                     selector: '.spectrum-Tabs-selectionIndicator',
-                    name: 'selectorIndicator',
+                    name: 'selectionIndicator',
+                },
+            ],
+            slots: [
+                {
+                    selector: '.spectrum-Tabs-item',
                 },
             ],
             exclude: [/^\.spectrum-Tabs-item/],
         },
         {
-            name: 'tabs-item',
-            host: '.spectrum-Tabs-item',
+            name: 'tab-item',
+            host: {
+                // A lot of the styling in tab-item relies on the ::before psuedo element,
+                // which is incompatible with :host
+                selector: '.spectrum-Tabs-item',
+                shadowSelector: '#tab',
+            },
             attributes: [
                 {
                     type: 'boolean',
@@ -51,6 +65,18 @@ module.exports = {
                     type: 'boolean',
                     selector: '.is-disabled',
                     name: 'disabled',
+                },
+            ],
+            ids: [
+                {
+                    selector: '.spectrum-Tabs-itemLabel',
+                    name: 'itemLabel',
+                },
+            ],
+            slots: [
+                {
+                    name: 'icon',
+                    selector: '.spectrum-Icon',
                 },
             ],
         },
