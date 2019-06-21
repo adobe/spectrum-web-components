@@ -59,3 +59,23 @@ jobs:
             - run:
                   name: Generate Docs
                   command: npm run docs:build
+
+    publish-docs:
+        executor: node8
+
+        steps:
+            - setup
+            - run: npm run docs:build
+
+workflows:
+    version: 2
+    build:
+        jobs:
+            - build
+            - publish-docs:
+                  filters:
+                      branches:
+                          only:
+                              - master_disabled # change this to `master` once we are ready to publish
+                  requires:
+                      - build
