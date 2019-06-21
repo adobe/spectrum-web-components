@@ -55,3 +55,7 @@ jobs:
                   path: ./junit
             - store_artifacts:
                   path: ./junit
+
+            - run:
+                  name: Generate Docs
+                  command: npm run docs:build
