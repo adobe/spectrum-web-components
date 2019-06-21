@@ -66,6 +66,8 @@ jobs:
         steps:
             - setup
             - run: npm run docs:build
+            - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
+            - run: git worktree add -f documentation/dist gh-pages && git commit -m "[ci skip] updating documentation" && git push
 
 workflows:
     version: 2
