@@ -14,7 +14,7 @@ module.exports = {
     spectrum: 'tabs',
     components: [
         {
-            name: 'tabs',
+            name: 'tab-list',
             host: '.spectrum-Tabs',
             attributes: [
                 {
@@ -46,39 +46,6 @@ module.exports = {
                 },
             ],
             exclude: [/^\.spectrum-Tabs-item/],
-        },
-        {
-            name: 'tab-item',
-            host: {
-                // A lot of the styling in tab-item relies on the ::before psuedo element,
-                // which is incompatible with :host
-                selector: '.spectrum-Tabs-item',
-                shadowSelector: '#tab',
-            },
-            attributes: [
-                {
-                    type: 'boolean',
-                    selector: '.is-selected',
-                    name: 'selected',
-                },
-                {
-                    type: 'boolean',
-                    selector: '.is-disabled',
-                    name: 'disabled',
-                },
-            ],
-            ids: [
-                {
-                    selector: '.spectrum-Tabs-itemLabel',
-                    name: 'itemLabel',
-                },
-            ],
-            slots: [
-                {
-                    name: 'icon',
-                    selector: '.spectrum-Icon',
-                },
-            ],
         },
     ],
 };

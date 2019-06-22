@@ -18,18 +18,26 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import tabListStyles from './tab-list.css';
-import { strictCustomEvent } from '../events';
+import tabStyles from './tab-list.css';
+
+/**
+ * @slot - Child tab elements
+ * @attr {Boolean} quiet - The tab-list border is a lot smaller
+ * @attr {Boolean} compact - The collection of tabs take up less space
+ */
 
 export class TabList extends LitElement {
-    public static readonly is = 'sp-tab-list';
-
     public static get styles(): CSSResultArray {
-        return [tabListStyles];
+        return [tabStyles];
     }
-
     @property({ reflect: true })
-    public direction: 'column' | 'row' = 'column';
+    public direction: 'vertical' | 'horizontal' = 'horizontal';
+
+    @property()
+    public selectionIndicatorStyle = '';
+
+    @property({ type: String, reflect: true })
+    public value = '';
 
     @property({ reflect: true })
     public get selected(): string {
@@ -50,35 +58,30 @@ export class TabList extends LitElement {
 
     private _selected = '';
 
-    public onClick(ev: Event): void {
+    protected render(): TemplateResult {
+        return html`
+            <slot
+                @click=${this.onClick}
+                @slotchange=${this.onSlotChange}
+            ></slot>
+            <div
+                id="selectionIndicator"
+                style=${this.selectionIndicatorStyle}
+            ></div>
+        `;
+    }
+
+    private onClick(ev: Event): void {
         const target = ev.target as Element;
         if (target) {
             const value = target.getAttribute('value');
             if (value) {
-                const applyDefault = this.dispatchEvent(
-                    strictCustomEvent('sp-tab-list:change', {
-                        bubbles: true,
-                        composed: true,
-                        detail: {
-                            selected: value,
-                        },
-                    })
-                );
+                const applyDefault = this.dispatchEvent(new Event('change'));
                 if (applyDefault) {
                     this.selected = value;
                 }
             }
         }
-    }
-
-    @property()
-    protected render(): TemplateResult {
-        return html`
-            <slot
-                @click="${this.onClick}"
-                @slotchange=${this.onSlotChange}
-            ></slot>
-        `;
     }
 
     private onSlotChange(): void {
@@ -99,11 +102,29 @@ export class TabList extends LitElement {
                 currentChecked.setAttribute('selected', '');
             }
         }
-    }
-}
 
-declare global {
-    interface GlobalEventHandlersEventMap {
-        'sp-tab-list:change': CustomEvent<{ selected: string }>;
+        this.updateSelectionIndicator();
+    }
+
+    private updateSelectionIndicator(): void {
+        const selectedElement = this.querySelector('[selected]');
+        if (!selectedElement) {
+            return;
+        }
+        const bounds = selectedElement.getBoundingClientRect();
+
+        if (this.direction === 'horizontal') {
+            const width = bounds.width;
+            const parentOffset = this.getBoundingClientRect().left;
+            const offset = bounds.left - parentOffset;
+
+            this.selectionIndicatorStyle = `width: ${width}px; transform: translateX(${offset}px)`;
+        } else {
+            const height = bounds.height;
+            const parentOffset = this.getBoundingClientRect().top;
+            const offset = bounds.top - parentOffset;
+
+            this.selectionIndicatorStyle = `height: ${height}px; transform: translateY(${offset}px)`;
+        }
     }
 }

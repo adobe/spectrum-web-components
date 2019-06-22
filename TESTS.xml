@@ -1,30 +1,32 @@
 <?xml version="1.0"?>
-<testsuite name="Firefox 66.0.0 (Mac OS X 10.13.0)" package="" timestamp="2019-06-20T18:16:16" id="0" hostname="atran-macOS" tests="22" errors="0" failures="0" time="0.029">
+<testsuite name="Firefox 66.0.0 (Mac OS X 10.13.0)" package="" timestamp="2019-06-22T00:37:04" id="0" hostname="atran-macOS" tests="24" errors="0" failures="0" time="0.038">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:66.0) Gecko/20100101 Firefox/66.0"/>
   </properties>
-  <testcase name="banner loads info" time="0.005" classname="banner"/>
-  <testcase name="banner loads warning" time="0.001" classname="banner"/>
-  <testcase name="banner loads error" time="0.002" classname="banner"/>
-  <testcase name="banner loads corner" time="0.001" classname="banner"/>
-  <testcase name="banner defaults type to info when none provided" time="0" classname="banner"/>
-  <testcase name="Checkbox loads" time="0.007" classname="Checkbox"/>
-  <testcase name="Checkbox autofocuses" time="0.002" classname="Checkbox"/>
-  <testcase name="Checkbox respects checked attribute" time="0.001" classname="Checkbox"/>
-  <testcase name="Checkbox handles click events" time="0.002" classname="Checkbox"/>
+  <testcase name="banner loads" time="0.01" classname="banner"/>
+  <testcase name="Checkbox loads" time="0.008" classname="Checkbox"/>
+  <testcase name="Checkbox autofocuses" time="0.001" classname="Checkbox"/>
+  <testcase name="Checkbox respects checked attribute" time="0" classname="Checkbox"/>
+  <testcase name="Checkbox handles click events" time="0" classname="Checkbox"/>
   <testcase name="Radio Group loads" time="0" classname="Radio Group"/>
-  <testcase name="Radio Group reflects checked radio with selected property" time="0.001" classname="Radio Group"/>
-  <testcase name="Radio Group forces only one radio to be checked" time="0.001" classname="Radio Group"/>
-  <testcase name="Radio Group respects clicking on disabled attribute causing nothing to happen" time="0" classname="Radio Group"/>
+  <testcase name="Radio Group reflects checked radio with selected property" time="0.002" classname="Radio Group"/>
+  <testcase name="Radio Group forces only one radio to be checked" time="0" classname="Radio Group"/>
+  <testcase name="Radio Group respects clicking on disabled attribute causing nothing to happen" time="0.001" classname="Radio Group"/>
   <testcase name="Radio Group de-checks all but first checked radio if multiple checked" time="0" classname="Radio Group"/>
-  <testcase name="Radio Group ensures setting selection updates checked radio" time="0.001" classname="Radio Group"/>
-  <testcase name="Radio Group ensures setting selected and clicking on radio both work together" time="0.002" classname="Radio Group"/>
-  <testcase name="Radio Group prioritizes selected over checked on initialization when conflicting" time="0" classname="Radio Group"/>
-  <testcase name="Radio loads" time="0.002" classname="Radio"/>
+  <testcase name="Radio Group ensures setting selection updates checked radio" time="0.003" classname="Radio Group"/>
+  <testcase name="Radio Group ensures setting selected and clicking on radio both work together" time="0.001" classname="Radio Group"/>
+  <testcase name="Radio Group prioritizes selected over checked on initialization when conflicting" time="0.001" classname="Radio Group"/>
+  <testcase name="Radio loads" time="0.001" classname="Radio"/>
   <testcase name="Radio respects checked attribute" time="0" classname="Radio"/>
   <testcase name="Radio handles click events" time="0" classname="Radio"/>
-  <testcase name="Radio autofocuses" time="0" classname="Radio"/>
-  <testcase name="Radio ensures clicking disabled does not check them" time="0.001" classname="Radio"/>
+  <testcase name="Radio autofocuses" time="0.001" classname="Radio"/>
+  <testcase name="Radio ensures clicking disabled does not check them" time="0" classname="Radio"/>
+  <testcase name="TabList loads" time="0.001" classname="TabList"/>
+  <testcase name="TabList reflects selected tab with selected property" time="0.003" classname="TabList"/>
+  <testcase name="TabList forces only one tab to be selected" time="0" classname="TabList"/>
+  <testcase name="TabList de-selects all but first selected tab if multiple selected" time="0" classname="TabList"/>
+  <testcase name="TabList ensures setting selection updates selected tab" time="0.003" classname="TabList"/>
+  <testcase name="TabList ensures setting selected and clicking on tab both work together" time="0.002" classname="TabList"/>
   <system-out>
     <![CDATA[
 ]]>

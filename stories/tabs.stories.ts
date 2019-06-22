@@ -13,7 +13,8 @@ import { storiesOf } from '@storybook/polymer';
 import { radios, withKnobs } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 import * as MediumIcons from '../src/icons/icons-medium';
-import '../src/tabs';
+import '../src/tab-list';
+import '../src/tab';
 
 import { defineCustomElements, Icon } from '../src';
 
@@ -21,102 +22,102 @@ storiesOf('Tabs', module)
     .addDecorator(withKnobs)
     .add('Default', () => {
         return html`
-            <sp-tabs selected="1">
-                <sp-tab-item label="Tab 1" value="1" tabindex="1"></sp-tab-item>
-                <sp-tab-item label="Tab 2" value="2" tabindex="2"></sp-tab-item>
-                <sp-tab-item label="Tab 3" value="3" tabindex="3"></sp-tab-item>
-                <sp-tab-item label="Tab 4" value="4 tabindex="4"></sp-tab-item>
-            </sp-tabs>
+            <sp-tab-list selected="1">
+                <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
+                <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
+                <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
+                <sp-tab label="Tab 4" value="4 tabindex="4"></sp-tab>
+            </sp-tab-list>
         `;
     })
     .add('Vertical', () => {
         return html`
-            <sp-tabs selected="1" direction="vertical">
-                <sp-tab-item label="Tab 1" value="1" tabindex="1"></sp-tab-item>
-                <sp-tab-item label="Tab 2" value="2" tabindex="2"></sp-tab-item>
-                <sp-tab-item label="Tab 3" value="3" tabindex="3"></sp-tab-item>
-                <sp-tab-item label="Tab 4" value="4 tabindex=" 4></sp-tab-item>
-            </sp-tabs>
+            <sp-tab-list selected="1" direction="vertical">
+                <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
+                <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
+                <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
+                <sp-tab label="Tab 4" value="4 tabindex=" 4></sp-tab>
+            </sp-tab-list>
         `;
     })
     .add('Icons', () => {
         const directions = {
-            horizontal: 'Horizontal',
-            vertical: 'Vertical',
+            horizontal: 'horizontal',
+            vertical: 'vertical',
         };
         const type = radios('Type', directions, directions.horizontal);
         return html`
             <sp-icons-medium></sp-icons-medium>
-            <sp-tabs selected="1" direction="${type}">
-                <sp-tab-item label="Tab 1" value="1" tabindex="1">
+            <sp-tab-list selected="1" direction="${type}">
+                <sp-tab label="Tab 1" value="1" tabindex="1">
                     <sp-icon
                         slot="icon"
                         size="m"
                         name="ui:CheckmarkSmall"
                     ></sp-icon>
-                </sp-tab-item>
-                <sp-tab-item label="Tab 2" value="2" tabindex="2">
+                </sp-tab>
+                <sp-tab label="Tab 2" value="2" tabindex="2">
                     <sp-icon
                         slot="icon"
                         size="m"
                         name="ui:CrossSmall"
                     ></sp-icon>
-                </sp-tab-item>
-                <sp-tab-item label="Tab 3" value="3" tabindex="3">
+                </sp-tab>
+                <sp-tab label="Tab 3" value="3" tabindex="3">
                     <sp-icon
                         slot="icon"
                         size="m"
                         name="ui:ChevronDownSmall"
                     ></sp-icon>
-                </sp-tab-item>
-                <sp-tab-item label="Tab 4" value="4 tabindex=" 4>
+                </sp-tab>
+                <sp-tab label="Tab 4" value="4 tabindex=" 4>
                     <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
-                </sp-tab-item>
-            </sp-tabs>
+                </sp-tab>
+            </sp-tab-list>
         `;
     })
     .add('Quiet', () => {
         const directions = {
-            horizontal: 'Horizontal',
-            vertical: 'Vertical',
+            horizontal: 'horizontal',
+            vertical: 'vertical',
         };
         const type = radios('Type', directions, directions.horizontal);
         return html`
-        <sp-tabs selected="1" quiet direction="${type}">
-            <sp-tab-item label="Tab 1" value="1" tabindex="1"></sp-tab-item>
-            <sp-tab-item label="Tab 2" value="2" tabindex="2"></sp-tab-item>
-            <sp-tab-item label="Tab 3" value="3" tabindex="3"></sp-tab-item>
-            <sp-tab-item label="Tab 4" value="4 tabindex="4""></sp-tab-item>
-        </sp-tabs>
+        <sp-tab-list selected="1" quiet direction="${type}">
+            <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4 tabindex="4""></sp-tab>
+        </sp-tab-list>
         `;
     })
     .add('Compact', () => {
         const directions = {
-            horizontal: 'Horizontal',
-            vertical: 'Vertical',
+            horizontal: 'horizontal',
+            vertical: 'vertical',
         };
         const type = radios('Type', directions, directions.horizontal);
         return html`
-        <sp-tabs selected="1" compact direction="${type}">
-            <sp-tab-item label="Tab 1" value="1" tabindex="1"></sp-tab-item>
-            <sp-tab-item label="Tab 2" value="2" tabindex="2"></sp-tab-item>
-            <sp-tab-item label="Tab 3" value="3" tabindex="3"></sp-tab-item>
-            <sp-tab-item label="Tab 4" value="4 tabindex="4""></sp-tab-item>
-        </sp-tabs>
+        <sp-tab-list selected="1" compact direction="${type}">
+            <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4 tabindex="4""></sp-tab>
+        </sp-tab-list>
         `;
     })
     .add('Quiet Compact', () => {
         const directions = {
-            horizontal: 'Horizontal',
-            vertical: 'Vertical',
+            horizontal: 'horizontal',
+            vertical: 'vertical',
         };
         const type = radios('Type', directions, directions.horizontal);
         return html`
-        <sp-tabs selected="1" quiet compact direction="${type}">
-            <sp-tab-item label="Tab 1" value="1" tabindex="1"></sp-tab-item>
-            <sp-tab-item label="Tab 2" value="2" tabindex="2"></sp-tab-item>
-            <sp-tab-item label="Tab 3" value="3" tabindex="3"></sp-tab-item>
-            <sp-tab-item label="Tab 4" value="4 tabindex="4""></sp-tab-item>
-        </sp-tabs>
+        <sp-tab-list selected="1" quiet compact direction="${type}">
+            <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4 tabindex="4""></sp-tab>
+        </sp-tab-list>
         `;
     });

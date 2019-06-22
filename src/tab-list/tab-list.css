@@ -10,18 +10,41 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
-    display: flex;
-    z-index: 0;
+@import './spectrum-tab-list.css';
+
+/* 
+ * The shorthand border declaration in :host([direction='horizontal']) was overiding
+ * the border-bottom-color declared in :host 
+ */
+:host([direction='horizontal']) {
+    border-bottom-color: var(
+        --spectrum-tabs-rule-color,
+        var(--spectrum-global-color-gray-200)
+    );
 }
 
-:host([direction='column']) {
-    height: 100%;
-    flex-direction: column;
-    border-left: var(--spectrum-global-color-gray-400) solid;
+/* Original selector from spectrum-css:
+ * .spectrum-Tabs--horizontal .spectrum-Tabs-item + *:not(.spectrum-Tabs-selectionIndicator)
+ *
+ * The original selector matches all elements (excluding the selectionIndicactor) that are adjacent to a tab-item.
+ * We can't follow this approach because complex selectors are restricted in ::slotted pseudo elements.
+ * The following would not work -- :host([direction='horizontal']) ::slotted(sp-tab-item + *:not(.spectrum-Tabs-selectionIndicator))
+ *
+ * This revision matches all tabs except for the first, which achieves the same effect.
+ */
+
+:host([direction='horizontal']) ::slotted(sp-tab:not(:first-child)) {
+    margin-left: var(
+        --spectrum-tabs-item-gap,
+        var(--spectrum-global-dimension-size-300)
+    );
 }
 
-:host([direction='row']) {
-    width: 100%;
-    flex-direction: row;
+/* 
+ * Since #tab is the shadowSelector for tab-item, the default line-height
+ * declaration in #tab overrides the compact line-height declared in
+ * :host([direction='vertical'][compact]) ::slotted(*)
+ */
+:host([compact]) {
+    --spectrum-tabs-height: var(--spectrum-tabs-quiet-compact-height);
 }
