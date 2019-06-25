@@ -12,17 +12,12 @@ governing permissions and limitations under the License.
 
 const path = require('path');
 const merge = require('webpack-merge');
-const createConfig = require('@open-wc/building-webpack/modern-and-legacy-config');
+const createDefaultConfig = require('@open-wc/building-webpack/modern-config');
 const WebpackBar = require('webpackbar');
 
 const srcPath = path.resolve(__dirname, '../src');
 const componentDir = path.resolve(__dirname, 'src/components');
 const apiDocPath = path.resolve(__dirname, 'api-docs');
-
-const configOptions = {
-    entry: path.resolve(__dirname, './src/main.ts'),
-    indexHTML: path.resolve(__dirname, './index.html'),
-};
 
 const litComponentDirectories = [
     componentDir,
@@ -30,7 +25,9 @@ const litComponentDirectories = [
     path.dirname(require.resolve('prismjs/themes/prism-okaidia.css')),
 ];
 
-const openWcConfig = createConfig(configOptions);
+const openWcConfig = createDefaultConfig({
+    input: path.resolve(__dirname, './index.html'),
+});
 
 const babelLoader = openWcConfig.module.rules.find(
     (rule) => rule.use.loader === 'babel-loader'
