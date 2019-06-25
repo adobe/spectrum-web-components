@@ -10,25 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './tab-skin.css';
-
-:host {
-    display: flex;
-    position: relative;
-    margin: 0;
-    padding: 0 var(--spectrum-tabs-focus-ring-padding-x);
-    line-height: 46px;
-    vertical-align: top;
-    cursor: pointer;
-    font-size: var(--spectrum-tabs-text-size);
-    font-weight: var(--spectrum-tabs-text-font-weight);
-    color: var(--spectrum-tabs-text-color);
-}
-
-:host(:hover) {
-    color: var(--spectrum-tabs-text-color-hover);
-}
-
-:host * {
-    pointer-events: none;
-}
+@import './spectrum-tab.css';

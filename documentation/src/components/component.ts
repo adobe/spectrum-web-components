@@ -15,7 +15,6 @@ import { ComponentDocs } from '../../components';
 import { ComponentApiDocs } from '../../api-docs';
 import { LayoutElement } from './layout';
 import componentStyles from './markdown.css';
-import { StrictCustomEvent } from '../../../src';
 import { AppRouter } from '../router';
 
 enum TabValue {
@@ -51,10 +50,11 @@ class ComponentElement extends LayoutElement {
         return TabValue.Examples;
     }
 
-    public handleTabChange(event: StrictCustomEvent<'sp-tab-list:change'>) {
-        if (!this.location) return;
+    public handleTabChange(event: Event) {
+        if (!this.location || !event.target) return;
 
-        const selected = event.detail.selected as TabValue;
+        const target = event.target as HTMLElement;
+        const selected = target.getAttribute('selected') as TabValue;
         AppRouter.changeParams({
             component: this.location.params.component,
             tab: selected,
@@ -75,7 +75,7 @@ class ComponentElement extends LayoutElement {
                     </div>
                     <sp-tab-list
                         selected="${this.tab}"
-                        @sp-tab-list:change="${this.handleTabChange}"
+                        @change="${this.handleTabChange}"
                         direction="row"
                     >
                         <sp-tab value="examples">

@@ -644,6 +644,8 @@ class ComponentConfig {
         this.slots = this.slots.map((slot) => {
             let selector = slot.selector || slot;
             let name = slot.name;
+            let shadowSlotSelector;
+            let shadowSlottedSelector;
             if (!name) {
                 const match = hostPortion.exec(selector);
                 if (match) {
@@ -652,9 +654,12 @@ class ComponentConfig {
                     const message = `Unable to determine name for slot ${selector}`;
                     throw new Error(message);
                 }
+                shadowSlotSelector = 'slot';
+                shadowSlottedSelector = `::slotted(*)`;
+            } else {
+                shadowSlotSelector = `slot[name="${name}"]`;
+                shadowSlottedSelector = `::slotted([slot='${name}'])`;
             }
-            const shadowSlotSelector = `slot[name="${name}"]`;
-            const shadowSlottedSelector = `::slotted([slot='${name}'])`;
             return {
                 name,
                 selector,

@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './tab';
+
+import { Tab } from './tab';
+
+if (!customElements.get('sp-tab')) {
+    customElements.define('sp-tab', Tab);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-tab': Tab;
+    }
+}

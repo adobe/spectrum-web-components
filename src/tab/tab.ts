@@ -12,20 +12,30 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
     property,
     CSSResultArray,
+    query,
     TemplateResult,
 } from 'lit-element';
 
-import tabStyles from './tab.css';
+import { Focusable } from '../shared/focusable';
 
-export class Tab extends LitElement {
-    public static readonly is = 'sp-tab';
+import tabItemStyles from './tab.css';
 
+/**
+ * @slot icon - The icon that appears on the left of the label
+ */
+
+export class Tab extends Focusable {
     public static get styles(): CSSResultArray {
-        return [tabStyles];
+        return [tabItemStyles];
     }
+
+    @query('#tab')
+    private tabElement!: HTMLElement;
+
+    @property({ reflect: true })
+    public label = '';
 
     @property({ type: Boolean, reflect: true })
     public selected = false;
@@ -33,10 +43,18 @@ export class Tab extends LitElement {
     @property({ type: String, reflect: true })
     public value = '';
 
-    @property()
+    public get focusElement(): HTMLElement {
+        return this.tabElement;
+    }
+
     protected render(): TemplateResult {
         return html`
-            <slot></slot>
+            <div id="tab">
+                <slot name="icon"></slot>
+                <label id="itemLabel">
+                    ${this.label}
+                </label>
+            </div>
         `;
     }
 }
