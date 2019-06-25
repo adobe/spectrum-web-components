@@ -5,12 +5,12 @@ The sp-tab-list component contains set of tab-item elements. This is typically u
 ## Example
 
 ```html
-    <sp-tab-list selected="1">
-        <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
-        <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
-        <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
-        <sp-tab label="Tab 4" value="4 tabindex="4"></sp-tab>
-    </sp-tab-list>
+<sp-tab-list selected="1">
+    <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4" tabindex="4"></sp-tab>
+</sp-tab-list>
 ```
 
 ### Vertical
@@ -20,7 +20,7 @@ The sp-tab-list component contains set of tab-item elements. This is typically u
     <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
     <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
     <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
-    <sp-tab label="Tab 4" value="4 tabindex=" 4></sp-tab>
+    <sp-tab label="Tab 4" value="4" tabindex="4"></sp-tab>
 </sp-tab-list>
 ```
 
@@ -29,23 +29,23 @@ The sp-tab-list component contains set of tab-item elements. This is typically u
 ### Quiet
 
 ```html
-    <sp-tab-list selected="1" quiet>
-        <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
-        <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
-        <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
-        <sp-tab label="Tab 4" value="4 tabindex="4"></sp-tab>
-    </sp-tab-list>
+<sp-tab-list selected="1" quiet>
+    <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4" tabindex="4"></sp-tab>
+</sp-tab-list>
 ```
 
 ### Compact
 
 ```html
-    <sp-tab-list selected="1" compact>
-        <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
-        <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
-        <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
-        <sp-tab label="Tab 4" value="4 tabindex="4"></sp-tab>
-    </sp-tab-list>
+<sp-tab-list selected="1" compact>
+    <sp-tab label="Tab 1" value="1" tabindex="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2" tabindex="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3" tabindex="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4" tabindex="4"></sp-tab>
+</sp-tab-list>
 ```
 
 ## With Icons
@@ -63,7 +63,7 @@ The sp-tab-list component contains set of tab-item elements. This is typically u
         <sp-tab label="Tab 3" value="3" tabindex="3">
             <sp-icon slot="icon" size="m" name="ui:ChevronDownSmall"></sp-icon>
         </sp-tab>
-        <sp-tab label="Tab 4" value="4 tabindex=" 4>
+        <sp-tab label="Tab 4" value="4" tabindex="4">
             <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
         </sp-tab>
     </sp-tab-list>

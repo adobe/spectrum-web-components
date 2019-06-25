@@ -24,6 +24,7 @@ export * from './icons';
 export * from './iconset';
 export * from './sidenav';
 export * from './switch';
+export * from './tab';
 export * from './tab-list';
 export * from './themes';
 export * from './overlay-root';
