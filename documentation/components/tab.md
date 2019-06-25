@@ -53,7 +53,7 @@ The sp-tab-list component contains set of tab-item elements. This is typically u
 ```html
 <div>
     <sp-icons-medium></sp-icons-medium>
-    <sp-tab-list selected="1" direction="${type}">
+    <sp-tab-list selected="1" direction="horizontal">
         <sp-tab label="Tab 1" value="1" tabindex="1">
             <sp-icon slot="icon" size="m" name="ui:CheckmarkSmall"></sp-icon>
         </sp-tab>
