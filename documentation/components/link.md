@@ -4,11 +4,9 @@ An **sp-link** allow users to navigate to a different location. They can be pres
 
 ## Example
 
-```html
 <!-- prettier-ignore -->
-This is an
-<sp-link href="#">example link</sp-link>
-.
+```html
+This is an <sp-link href="#">example link</sp-link>.
 ```
 
 ## Variants
