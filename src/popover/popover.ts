@@ -24,6 +24,7 @@ import popoverStyles from './popover.css';
 
 /**
  * @attr {Boolean} open - The open state of the popover
+ * @attr {Boolean} dialog - Adds some padding to the popover
  */
 
 export class Popover extends LitElement {
