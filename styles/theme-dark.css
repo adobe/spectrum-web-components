@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root,
-:host {
+:host,
+:root {
     --spectrum-global-color-celery-400: rgb(68, 181, 86);
     --spectrum-global-color-celery-500: rgb(75, 195, 95);
     --spectrum-global-color-celery-600: rgb(81, 210, 103);
@@ -61,6 +61,7 @@ governing permissions and limitations under the License.
     --spectrum-global-color-blue-600: rgb(75, 156, 245);
     --spectrum-global-color-blue-700: rgb(90, 169, 250);
     --spectrum-global-color-gray-50: rgb(37, 37, 37);
+    --spectrum-alias-pasteboard-background-color: rgb(37, 37, 37);
     --spectrum-global-color-gray-75: rgb(47, 47, 47);
     --spectrum-global-color-gray-100: rgb(50, 50, 50);
     --spectrum-global-color-gray-200: rgb(62, 62, 62);
@@ -71,4 +72,28 @@ governing permissions and limitations under the License.
     --spectrum-global-color-gray-700: rgb(185, 185, 185);
     --spectrum-global-color-gray-800: rgb(227, 227, 227);
     --spectrum-global-color-gray-900: rgb(255, 255, 255);
+    --spectrum-alias-background-color-modal-overlay: rgba(0, 0, 0, 0.5);
+    --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.5);
+    --spectrum-alias-background-color-hover-overlay: rgba(255, 255, 255, 0.06);
+    --spectrum-alias-highlight-hover: rgba(255, 255, 255, 0.07);
+    --spectrum-alias-highlight-active: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-alias-highlight-selected: rgba(55, 142, 240, 0.15);
+    --spectrum-alias-highlight-selected-hover: rgba(55, 142, 240, 0.25);
+    --spectrum-alias-background-color-quickactions: rgba(50, 50, 50, 0.9);
+    --spectrum-alias-radial-reaction-color-default: rgba(227, 227, 227, 0.6);
+    --spectrum-miller-column-item-background-color-selected: rgba(
+        55,
+        142,
+        240,
+        0.1
+    );
+    --spectrum-miller-column-item-background-color-selected-hover: rgba(
+        55,
+        142,
+        240,
+        0.2
+    );
+    --spectrum-well-background-color: rgba(227, 227, 227, 0.02);
+    --spectrum-well-border-color: rgba(255, 255, 255, 0.05);
 }

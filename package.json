@@ -21,7 +21,7 @@
         "npm": ">=6.4.0"
     },
     "scripts": {
-        "split-spectrum": "node ./scripts/split-spectrum.js",
+        "spectrum-vars": "node ./scripts/spectrum-vars.js",
         "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'src/**/*.css'",
         "process-icons": "node ./scripts/process-icons.js",
         "prebuild": "rimraf lib",

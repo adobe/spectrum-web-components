@@ -11,12 +11,11 @@ governing permissions and limitations under the License.
 */
 
 /* import the global stylesheets */
-@import '../../styles/core-global/all.css';
-@import '../../styles/typography/font.css';
+@import '../../styles/core-global.css';
+@import '../../styles/fonts.css';
 
-/* import theme specific aliases */
-@import '../../styles/theme-light/alias.css';
+/* import theme stylesheets */
+@import '../../styles/theme-light.css';
 
-/* import skin and scale stylesheets for our used components */
-@import '../../styles/scale-medium/components/button.css';
-@import '../../styles/theme-light/components/button.css';
+/* import scale stylesheets */
+@import '../../styles/scale-medium.css';

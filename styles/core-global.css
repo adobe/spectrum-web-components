@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:root,
-:host {
+/* generated from dna-version: 5.15.0 */
+:root {
     --spectrum-global-color-static-black: rgb(0, 0, 0);
     --spectrum-global-color-static-white: rgb(255, 255, 255);
     --spectrum-global-color-static-blue: rgb(20, 115, 230);

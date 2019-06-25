@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import 'core-global/all.css';
-@import 'typography/all.css';
-@import 'theme-light/all.css';
-@import 'scale-medium/all.css';
+@import 'core-global.css';
+@import 'fonts.css';
+@import 'theme-light.css';
+@import 'scale-medium.css';
