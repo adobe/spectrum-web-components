@@ -5,6 +5,7 @@ An **sp-link** allow users to navigate to a different location. They can be pres
 ## Example
 
 ```html
+<!-- prettier-ignore -->
 This is an
 <sp-link href="#">example link</sp-link>
 .
@@ -17,6 +18,7 @@ This is an
 Standard links can follow any of the character styles defined in Spectrum. Therefore, they can be displayed in various font sizes and weights. Standard links appear blue, in order to stand out from the rest of the text and be recognized as interactive.
 
 ```html
+<!-- prettier-ignore -->
 This is a
 <sp-link href="#">standard link</sp-link>
 .
@@ -27,6 +29,7 @@ This is a
 Quiet links appear with an underline and use the default text color. The subdued appearance is optimal for use in content lower in your application’s hierarchy such as links in a footer.
 
 ```html
+<!-- prettier-ignore -->
 This is a
 <sp-link quiet href="#">quiet link</sp-link>
 .

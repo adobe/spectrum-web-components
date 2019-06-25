@@ -39,6 +39,7 @@ export class Link extends LitElement {
     public target: string | undefined = undefined;
 
     protected render(): TemplateResult {
+        // prettier-ignore
         return html
         `<a href=${ifDefined(this.href)} target=${ifDefined(this.target)}><slot></slot></a>`
         ;

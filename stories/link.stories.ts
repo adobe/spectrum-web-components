@@ -15,11 +15,13 @@ import '../src/link';
 
 storiesOf('Link', module)
     .add('Default', () => {
+        // prettier-ignore
         return html`
             This is a <sp-link href="#">link</sp-link>.
         `;
     })
     .add('Quiet', () => {
+        // prettier-ignore
         return html`
             This is a <sp-link quiet href="#">quiet link</sp-link>.
         `;
