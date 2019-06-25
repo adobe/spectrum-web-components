@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host,
-:root {
+:root,
+:host {
     --spectrum-global-dimension-scale-factor: 1;
     --spectrum-global-dimension-size-40: 3px;
     --spectrum-actionbutton-touch-hit-x: 8px;

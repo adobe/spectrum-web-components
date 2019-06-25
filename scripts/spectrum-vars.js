@@ -26,7 +26,7 @@ const processCSS = (srcPath, dstPath, identifier) => {
             return console.log(err);
         }
 
-        let result = data.replace(`.spectrum--${identifier}`, ':host, :root');
+        let result = data.replace(`.spectrum--${identifier}`, ':root,\n :host');
         result = `${license}\n ${result}`;
 
         fs.writeFile(dstPath, result, 'utf8');

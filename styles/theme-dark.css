@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host,
-:root {
+:root,
+:host {
     --spectrum-global-color-celery-400: rgb(68, 181, 86);
     --spectrum-global-color-celery-500: rgb(75, 195, 95);
     --spectrum-global-color-celery-600: rgb(81, 210, 103);
