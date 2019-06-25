@@ -10,5 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './card';
-export * from './card-quiet';
-export * from './card-gallery';
+
+import { Card } from './card';
+
+if (!customElements.get('sp-card')) {
+    customElements.define('sp-card', Card);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-card': Card;
+    }
+}

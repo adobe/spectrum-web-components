@@ -18,14 +18,20 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import cardBaseStyles from './card-base.css';
 import cardStyles from './card.css';
 
+/**
+ * @slot preview - This is the preview image for Gallery Cards
+ * @slot cover-photo - This is the cover photo for Default and Quiet Cards
+ * @slot description - A description of the card
+ * @slot footer - Footer text
+ */
 export class Card extends LitElement {
-    public static readonly is = 'sp-card';
+    @property({ reflect: true })
+    public variant: 'default' | 'gallery' | 'quiet' = 'default';
 
     public static get styles(): CSSResultArray {
-        return [cardBaseStyles, cardStyles];
+        return [cardStyles];
     }
 
     @property()
@@ -34,16 +40,55 @@ export class Card extends LitElement {
     @property()
     public subtitle = '';
 
-    protected render(): TemplateResult {
+    protected renderGallery(): TemplateResult {
         return html`
-            <slot name="cover-photo"></slot>
+            <slot name="preview"></slot>
+            <div id="body">
+                <div id="header">
+                    <div id="title">${this.title}</div>
+                    <div id="subtitle">${this.subtitle}</div>
+                    <slot name="description"></slot>
+                </div>
+            </div>
+        `;
+    }
+
+    protected renderQuiet(): TemplateResult {
+        return html`
+            <slot name="preview"></slot>
             <div id="body">
                 <div id="header"><div id="title">${this.title}</div></div>
+                <div id="content">
+                    <div id="subtitle">${this.subtitle}</div>
+                    <slot name="description"></slot>
+                </div>
+            </div>
+        `;
+    }
+
+    protected renderDefault(): TemplateResult {
+        return html`
+            <slot name="cover-photo" id="cover-photo"></slot>
+            <div id="body">
+                <div id="header">
+                    <div id="title">${this.title}</div>
+                </div>
                 <div id="content">
                     <div id="subtitle">${this.subtitle}</div>
                 </div>
             </div>
             <div id="footer"><slot name="footer"></slot></div>
         `;
+    }
+
+    protected render(): TemplateResult {
+        switch (this.variant) {
+            case 'gallery':
+                return this.renderGallery();
+            case 'quiet':
+                return this.renderQuiet();
+            default:
+                return this.renderDefault();
+        }
     }
 }
