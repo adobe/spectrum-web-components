@@ -28,9 +28,7 @@ Quiet links appear with an underline and use the default text color. The subdued
 
 <!-- prettier-ignore -->
 ```html
-This is a
-<sp-link quiet href="#">quiet link</sp-link>
-.
+This is a <sp-link quiet href="#">quiet link</sp-link>.
 ```
 
 ### Links Over Backgrounds
