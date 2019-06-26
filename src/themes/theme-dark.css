@@ -12,6 +12,12 @@ governing permissions and limitations under the License.
 
 @import '../../styles/theme-dark.css';
 
+/* Explicity assign alias variables */
+:root,
+:host {
+    --spectrum-alias-background-color-default: rgb(50, 50, 50);
+}
+
 :host {
     display: block;
 }
