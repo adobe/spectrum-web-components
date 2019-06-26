@@ -26,7 +26,21 @@ const processCSS = (srcPath, dstPath, identifier) => {
             return console.log(err);
         }
 
-        let result = data.replace(`.spectrum--${identifier}`, ':root,\n :host');
+        let result = '';
+
+        // possible selectors to replace
+        const selector1 = `.spectrum--${identifier}`;
+        const selector2 = ':root';
+
+        // new selector values
+        const shadowSelector = ':root,\n :host';
+
+        if (data.indexOf(selector1) >= 0) {
+            result = data.replace(selector1, shadowSelector);
+        } else if (data.indexOf(selector2) >= 0) {
+            result = data.replace(selector2, shadowSelector);
+        }
+
         result = `${license}\n ${result}`;
 
         fs.writeFile(dstPath, result, 'utf8');

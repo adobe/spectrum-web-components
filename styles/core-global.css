@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 
 /* generated from dna-version: 5.15.0 */
-:root {
+:root,
+:host {
     --spectrum-global-color-static-black: rgb(0, 0, 0);
     --spectrum-global-color-static-white: rgb(255, 255, 255);
     --spectrum-global-color-static-blue: rgb(20, 115, 230);
