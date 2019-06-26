@@ -25,6 +25,9 @@ export type DropzoneEventDetail = DragEvent;
 
 export type DropEffects = 'copy' | 'move' | 'link' | 'none';
 
+/**
+ * @slot default - This is the illustrated message slot
+ */
 export class Dropzone extends LitElement {
     public static readonly is = 'sp-dropzone';
 
@@ -42,10 +45,26 @@ export class Dropzone extends LitElement {
         }
     }
 
-    @property({ type: Boolean, reflect: true, attribute: 'is-dragged' })
+    @property({ type: Boolean, reflect: true, attribute: 'dragged' })
     public isDragged = false;
 
     private debouncedDragLeave: number | null = null;
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+
+        this.addEventListener('drop', this.onDrop);
+        this.addEventListener('dragover', this.onDragOver);
+        this.addEventListener('dragleave', this.onDragLeave);
+    }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+
+        this.removeEventListener('drop', this.onDrop);
+        this.removeEventListener('dragover', this.onDragOver);
+        this.removeEventListener('dragleave', this.onDragLeave);
+    }
 
     public onDragOver(ev: DragEvent): void {
         const shouldAcceptEvent = strictCustomEvent(
@@ -117,14 +136,7 @@ export class Dropzone extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <div
-                id="container"
-                @drop="${this.onDrop}"
-                @dragover="${this.onDragOver}"
-                @dragleave="${this.onDragLeave}"
-            >
-                <slot></slot>
-            </div>
+            <slot></slot>
         `;
     }
 

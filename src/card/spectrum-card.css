@@ -61,7 +61,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card:focus .spectrum-Card-actions,
    * .spectrum-Card:hover .spectrum-Card-quickActions,
    * .spectrum-Card:hover .spectrum-Card-actions */
-    /* Ideally, this would simply apply is-open to the QuickActions component */
     visibility: visible;
     opacity: 1;
     pointer-events: all;
@@ -435,7 +434,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card--small .spectrum-Card-title */
     font-size: var(
         --spectrum-card-quiet-small-title-text-size,
-        var(--spectrum-global-dimension-size-150)
+        var(--spectrum-global-dimension-font-size-100)
     );
 }
 :host([variant='gallery']) {

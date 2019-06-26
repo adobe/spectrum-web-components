@@ -62,6 +62,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-style: normal;
     text-decoration: none;
 
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+
     cursor: pointer;
 
     transition: background-color

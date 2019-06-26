@@ -647,13 +647,7 @@ class ComponentConfig {
             let shadowSlotSelector;
             let shadowSlottedSelector;
             if (!name) {
-                const match = hostPortion.exec(selector);
-                if (match) {
-                    name = match[1];
-                } else {
-                    const message = `Unable to determine name for slot ${selector}`;
-                    throw new Error(message);
-                }
+                // If no name is specified, fallback to default slot
                 shadowSlotSelector = 'slot';
                 shadowSlottedSelector = `::slotted(*)`;
             } else {
