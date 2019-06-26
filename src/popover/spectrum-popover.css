@@ -25,8 +25,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     pointer-events: none;
 
     /* .spectrum-Popover */
-
-    /* Be a flexbox to allow a full sized content area that scrolls */
     display: -ms-inline-flexbox;
     display: inline-flex;
     -ms-flex-direction: column;
@@ -56,10 +54,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-popover-border-color,
         var(--spectrum-global-color-gray-400)
     );
-    /*
-    box-shadow offset/blur is hardcoded here as it cannot be adjusted when scale changes,
-    and we'd rather it be able to change when color stops change
-  */
     box-shadow: 0 1px 4px
         var(
             --spectrum-popover-shadow-color,
@@ -113,7 +107,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #tip {
     /* .spectrum-Popover-tip */
     position: absolute;
-    /* This hides half of the tooltip, but it also crops the shadow slightly, which is undesireable */
     overflow: hidden;
     width: calc(
         var(
@@ -154,10 +147,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-popover-border-color,
         var(--spectrum-global-color-gray-400)
     );
-    /* The math is weird here since the tip is rotated 45°... Technically it should be different for each tip position */
     box-shadow: -1px -1px 4px var(--spectrum-popover-shadow-color, var(--spectrum-alias-dropshadow-color));
 }
-:host([variant='dialog']) {
+:host([dialog]) {
     /* .spectrum-Popover--dialog */
     min-width: 270px;
     padding: 30px 29px;
