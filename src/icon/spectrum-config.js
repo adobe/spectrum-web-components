@@ -52,7 +52,6 @@ module.exports = {
                     ],
                 },
             ],
-            exclude: [/\.is-disabled/, /\.spectrum-Link--subtle/],
         },
     ],
 };
