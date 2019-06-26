@@ -36,10 +36,8 @@ storiesOf('Theme', module)
                 #example {
                     width: 500px;
                     padding: 3em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #buttons {
@@ -83,19 +81,15 @@ storiesOf('Theme', module)
                 #outer {
                     width: 500px;
                     padding: 3em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #inner {
                     margin-top: 2em;
                     padding: 2em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #buttons {
@@ -148,19 +142,15 @@ storiesOf('Theme', module)
                 #outer {
                     width: 500px;
                     padding: 3em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #inner {
                     margin-top: 2em;
                     padding: 2em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #buttons {

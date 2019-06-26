@@ -12,12 +12,6 @@ governing permissions and limitations under the License.
 
 @import '../../styles/theme-light.css';
 
-/* Explicity assign alias variables */
-:root,
-:host {
-    --spectrum-alias-background-color-default: rgb(245, 245, 245);
-}
-
 :host {
     display: block;
 }
