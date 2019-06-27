@@ -20,12 +20,16 @@ governing permissions and limitations under the License.
 #box sp-icon#checkmark,
 #box sp-icon#partialCheckmark {
     margin-top: calc(
-        var(--spectrum-icon-size, var(--spectrum-global-dimension-font-size-25)) /
-            -2
+        var(
+                ---spectrum-alias-workflow-icon-size,
+                var(--spectrum-global-dimension-size-225)
+            ) / -2
     );
     margin-left: calc(
-        var(--spectrum-icon-size, var(--spectrum-global-dimension-font-size-25)) /
-            -2
+        var(
+                --spectrum-alias-workflow-icon-size,
+                var(--spectrum-global-dimension-size-225)
+            ) / -2
     );
 }
 
