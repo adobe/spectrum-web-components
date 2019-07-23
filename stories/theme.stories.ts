@@ -122,11 +122,11 @@ storiesOf('Theme', module)
                                     min="1"
                                     max="11"
                                     label="Volume"
-                                    id="volume-slider"
+                                    id="volume-slider-inner"
                                 ></sp-slider>
                             </div>
                             <div><sp-switch>Overdrive</sp-switch></div>
-                            <div id="buttons">
+                            <div id="buttons-inner">
                                 <sp-button variant="primary">Cancel</sp-button>
                                 <sp-button variant="cta">Continue</sp-button>
                             </div>
@@ -183,11 +183,11 @@ storiesOf('Theme', module)
                                     min="1"
                                     max="11"
                                     label="Volume"
-                                    id="volume-slider"
+                                    id="volume-slider-inner"
                                 ></sp-slider>
                             </div>
                             <div><sp-switch>Overdrive</sp-switch></div>
-                            <div id="buttons">
+                            <div id="buttons-inner">
                                 <sp-button variant="primary">Cancel</sp-button>
                                 <sp-button variant="cta">Continue</sp-button>
                             </div>

@@ -20,7 +20,7 @@ storiesOf('Dropzone', module)
     .add('Default', () => {
         return html`
             <div style="width: 600px; height: 250px">
-                <sp-dropzone id="dropzone" tabindex="1">
+                <sp-dropzone id="dropzone" tabindex="0">
                     <sp-illustrated-message heading="Drag and Drop Your File">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
