@@ -147,14 +147,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Button:active */
     box-shadow: none;
 }
-:host(:not([icon-right])) slot[name='icon']::slotted(*) {
+slot[name='icon'] + #label {
     /* .spectrum-Button .spectrum-Icon + .spectrum-Button-label */
-    margin-right: var(
+    margin-left: var(
         --spectrum-button-primary-text-gap,
         var(--spectrum-global-dimension-size-100)
     );
 }
-:host([icon-right]) slot[name='icon']::slotted(*) {
+#label + ::slotted([slot='icon']) {
     /* .spectrum-Button .spectrum-Button-label + .spectrum-Icon */
     margin-left: calc(
         var(

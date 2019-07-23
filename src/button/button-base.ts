@@ -31,11 +31,16 @@ export class ButtonBase extends Focusable {
         return this;
     }
 
-    protected renderWithIcon(): TemplateResult {
-        return html`
-            <slot name="icon"></slot>
-            <div id="label"><slot></slot></div>
-        `;
+    protected renderWithIcon(): TemplateResult[] {
+        const iconAndLabel = [
+            html`
+                <slot name="icon"></slot>
+            `,
+            html`
+                <div id="label"><slot></slot></div>
+            `,
+        ];
+        return this.iconRight ? iconAndLabel.reverse() : iconAndLabel;
     }
 
     protected render(): TemplateResult {
