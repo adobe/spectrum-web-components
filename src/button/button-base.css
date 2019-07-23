@@ -35,6 +35,10 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
+:host([icon-right]) #button {
+    flex-direction: row-reverse;
+}
+
 slot[name='icon']::slotted(svg) {
     fill: currentColor;
     stroke: currentColor;

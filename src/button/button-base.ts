@@ -24,10 +24,6 @@ export class ButtonBase extends Focusable {
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;
 
-    private get hasIcon(): boolean {
-        return !!this.querySelector('[slot="icon"]');
-    }
-
     public get focusElement(): HTMLElement {
         if (this.shadowRoot) {
             return this.shadowRoot.querySelector('#button') as HTMLElement;
@@ -36,31 +32,21 @@ export class ButtonBase extends Focusable {
     }
 
     protected renderWithIcon(): TemplateResult {
-        return this.iconRight
-            ? html`
-                  <div id="label"><slot></slot></div>
-                  <slot name="icon"></slot>
-              `
-            : html`
-                  <slot name="icon"></slot>
-                  <div id="label"><slot></slot></div>
-              `;
+        return html`
+            <slot name="icon"></slot>
+            <div id="label"><slot></slot></div>
+        `;
     }
 
     protected render(): TemplateResult {
-        const buttonContents = html`
-            ${this.hasIcon
-                ? this.renderWithIcon()
-                : html`
-                      <div id="label"><slot></slot></div>
-                  `}
-        `;
         return this.href && this.href.length > 0
             ? html`
-                  <a href="${this.href}" id="button">${buttonContents}</a>
+                  <a href="${this.href}" id="button">
+                      ${this.renderWithIcon()}
+                  </a>
               `
             : html`
-                  <button id="button">${buttonContents}</button>
+                  <button id="button">${this.renderWithIcon()}</button>
               `;
     }
 }
