@@ -58,7 +58,8 @@ export abstract class Iconset extends LitElement {
     public abstract applyIconToElement(
         el: HTMLElement,
         icon: string,
-        size: string
+        size: string,
+        label: string
     ): void;
 
     /**
