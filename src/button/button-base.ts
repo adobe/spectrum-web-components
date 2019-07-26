@@ -35,32 +35,31 @@ export class ButtonBase extends Focusable {
         return this;
     }
 
-    protected renderWithIcon(): TemplateResult {
-        return this.iconRight
-            ? html`
-                  <div id="label"><slot></slot></div>
-                  <slot name="icon"></slot>
-              `
-            : html`
-                  <slot name="icon"></slot>
-                  <div id="label"><slot></slot></div>
-              `;
+    protected get buttonContent(): TemplateResult[] {
+        const icon = html`
+            <slot name="icon"></slot>
+        `;
+        const content = [
+            html`
+                <div id="label"><slot></slot></div>
+            `,
+        ];
+        if (!this.hasIcon) {
+            return content;
+        }
+        this.iconRight ? content.push(icon) : content.unshift(icon);
+        return content;
     }
 
     protected render(): TemplateResult {
-        const buttonContents = html`
-            ${this.hasIcon
-                ? this.renderWithIcon()
-                : html`
-                      <div id="label"><slot></slot></div>
-                  `}
-        `;
         return this.href && this.href.length > 0
             ? html`
-                  <a href="${this.href}" id="button">${buttonContents}</a>
+                  <a href="${this.href}" id="button">
+                      ${this.buttonContent}
+                  </a>
               `
             : html`
-                  <button id="button">${buttonContents}</button>
+                  <button id="button">${this.buttonContent}</button>
               `;
     }
 }

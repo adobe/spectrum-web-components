@@ -306,7 +306,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     );
     background: var(
-        --spectrum-global-color-gray-100,
+        --spectrum-alias-background-color-default,
         var(--spectrum-global-color-gray-100)
     );
 }
@@ -678,7 +678,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Slider--ramp .spectrum-Dial-handle */
     box-shadow: 0 0 0 4px
         var(
-            --spectrum-global-color-gray-100,
+            --spectrum-alias-background-color-default,
             var(--spectrum-global-color-gray-100)
         );
 }
@@ -808,7 +808,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-400)
     );
     background: var(
-        --spectrum-global-color-gray-100,
+        --spectrum-alias-background-color-default,
         var(--spectrum-global-color-gray-100)
     );
 }
