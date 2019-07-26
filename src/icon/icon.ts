@@ -33,8 +33,11 @@ export class Icon extends LitElement {
     @property()
     public name?: string;
 
-    @property()
+    @property({ reflect: true })
     public size: string = 'm';
+
+    @property()
+    public label?: string;
 
     @query('#container')
     private iconContainer?: HTMLElement;
@@ -115,7 +118,8 @@ export class Icon extends LitElement {
         iconset.applyIconToElement(
             this.iconContainer,
             icon.icon,
-            this.size ? this.size : ''
+            this.size ? this.size : '',
+            this.label ? this.label : ''
         );
     }
 

@@ -20,9 +20,7 @@ export abstract class Iconset extends LitElement {
 
     private _name!: string;
 
-    protected firstUpdated(
-        changedProperties: Map<string | number | symbol, unknown>
-    ): void {
+    protected firstUpdated(): void {
         // force no display for all iconsets
         this.style.display = 'none';
     }
@@ -58,7 +56,8 @@ export abstract class Iconset extends LitElement {
     public abstract applyIconToElement(
         el: HTMLElement,
         icon: string,
-        size: string
+        size: string,
+        label: string
     ): void;
 
     /**
