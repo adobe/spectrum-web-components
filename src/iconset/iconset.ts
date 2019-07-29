@@ -68,7 +68,6 @@ export abstract class Iconset extends LitElement {
     }
 
     private handleRemoved = ({ detail }: { detail: { name: string } }) => {
-        console.log('removed');
         if (detail.name === this.name) {
             this.registered = false;
             this.addIconset();
