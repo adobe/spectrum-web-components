@@ -67,24 +67,39 @@ export abstract class Iconset extends LitElement {
         throw new Error('Not implemented!');
     }
 
+    private handleRemoved = ({ detail }: { detail: { name: string } }) => {
+        if (detail.name === this.name) {
+            this.registered = false;
+            this.addIconset();
+        }
+    };
+
     /**
      * On updated we register the iconset if we're not already registered
      */
     public connectedCallback(): void {
         super.connectedCallback();
-
-        if (!this.name || this.registered) {
-            return;
-        }
-        IconsetRegistry.getInstance().addIconset(this.name, this);
-        this.registered = true;
+        this.addIconset();
+        window.addEventListener('sp-iconset:removed', this.handleRemoved);
     }
     /**
      * On disconnected we remove the iconset
      */
     public disconnectedCallback(): void {
         super.disconnectedCallback();
+        window.removeEventListener('sp-iconset:removed', this.handleRemoved);
+        this.removeIconset();
+    }
 
+    private addIconset(): void {
+        if (!this.name || this.registered) {
+            return;
+        }
+        IconsetRegistry.getInstance().addIconset(this.name, this);
+        this.registered = true;
+    }
+
+    private removeIconset(): void {
         if (!this.name) {
             return;
         }
