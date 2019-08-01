@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture } from '@open-wc/testing-helpers';
+import { fixture, nextFrame, elementUpdated } from '@open-wc/testing-helpers';
 import { Icon } from '../src/icon';
 import { defineCustomElements } from '../src/define';
 import * as MediumIcons from '../src/icons/icons-medium';
@@ -28,11 +28,9 @@ describe('Iconset', () => {
         let icons2 = document.createElement('sp-icons-medium');
         document.body.append(icons2);
 
-        await 0;
-
         icons2.remove();
 
-        await new Promise((res) => setTimeout(res));
+        await nextFrame();
 
         const el = await fixture<Icon>(
             html`
@@ -40,7 +38,8 @@ describe('Iconset', () => {
             `
         );
 
-        await el.updateComplete;
+        await elementUpdated(el);
+
         const svg = el.shadowRoot!.querySelector('[role="img"]');
         expect(svg).to.not.be.null;
     });
