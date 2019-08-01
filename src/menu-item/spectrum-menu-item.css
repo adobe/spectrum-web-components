@@ -1,0 +1,177 @@
+/* stylelint-disable */ /* 
+Copyright 2018 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+#selected {
+    /* .spectrum-Menu-checkmark */
+    transform: scale(1);
+    opacity: 1;
+    /* .spectrum-Menu-checkmark */
+    display: none;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+    margin-top: var(--spectrum-global-dimension-size-50);
+    /* .spectrum-Menu-checkmark,
+   * .spectrum-Menu-chevron */
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    margin-left: var(
+        --spectrum-selectlist-option-icon-padding-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+}
+#item {
+    /* .spectrum-Menu-item */
+    cursor: pointer;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    padding: var(--spectrum-global-dimension-size-85)
+        var(--spectrum-selectlist-option-padding, 12px)
+        var(--spectrum-global-dimension-size-85)
+        calc(
+            var(--spectrum-selectlist-option-padding, 12px) -
+                var(--spectrum-selectlist-border-size-key-focus, 2px)
+        );
+
+    margin: 0;
+
+    border-left: var(--spectrum-selectlist-border-size-key-focus, 2px) solid
+        transparent;
+
+    min-height: var(--spectrum-selectlist-option-height);
+
+    font-size: var(
+        --spectrum-selectlist-option-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    font-weight: var(--spectrum-selectlist-option-text-font-weight, 400);
+    font-style: normal;
+    /* .spectrum-Menu-item */
+    background-color: var(
+        --spectrum-selectlist-option-background-color,
+        rgba(0, 0, 0, 0)
+    );
+    color: var(
+        --spectrum-selectlist-option-text-color,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+#item:focus {
+    /* .spectrum-Menu-item:focus */
+    outline: none;
+}
+:host([selected]) #item {
+    /* .spectrum-Menu-item.is-selected */
+    padding-right: calc(
+        var(--spectrum-selectlist-option-padding, 12px) -
+            var(--spectrum-popover-border-size, 1px)
+    );
+    /* .spectrum-Menu-item.is-selected */
+    color: var(
+        --spectrum-selectlist-option-text-color-selected,
+        var(--spectrum-global-color-blue-600)
+    );
+}
+:host([selected]) #item #selected {
+    /* .spectrum-Menu-item.is-selected .spectrum-Menu-checkmark */
+    display: block;
+    /* .spectrum-Menu-item.is-selected .spectrum-Menu-checkmark */
+    color: var(
+        --spectrum-selectlist-option-icon-color-selected,
+        var(--spectrum-global-color-blue-500)
+    );
+}
+::slotted([slot='icon']) {
+    /* .spectrum-Menu-item .spectrum-Icon */
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+}
+slot[name='icon'] + #label {
+    /* .spectrum-Menu-item .spectrum-Icon + .spectrum-Menu-itemLabel */
+    margin-left: var(
+        --spectrum-selectlist-thumbnail-image-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+#label {
+    /* .spectrum-Menu-itemLabel */
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    line-height: 1.3;
+}
+.spectrum-Menu-itemLabel--wrapping {
+    /* .spectrum-Menu-itemLabel--wrapping */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+#item:focus,
+#item.is-focused {
+    /* .spectrum-Menu-item.focus-ring,
+   * .spectrum-Menu-item.is-focused */
+    background-color: var(
+        --spectrum-selectlist-option-background-color-key-focus,
+        var(--spectrum-alias-background-color-hover-overlay)
+    );
+    color: var(
+        --spectrum-selectlist-option-text-color-key-focus,
+        var(--spectrum-global-color-gray-800)
+    );
+    border-left-color: var(
+        --spectrum-selectlist-option-focus-indicator-color,
+        var(--spectrum-global-color-blue-400)
+    );
+}
+#item:hover,
+#item:focus,
+#item.is-open {
+    /* .spectrum-Menu-item:hover,
+   * .spectrum-Menu-item:focus,
+   * .spectrum-Menu-item.is-open */
+    background-color: var(
+        --spectrum-selectlist-option-background-color-hover,
+        var(--spectrum-alias-background-color-hover-overlay)
+    );
+    color: var(
+        --spectrum-selectlist-option-text-color-hover,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+.is-active,
+#item:active {
+    /* .spectrum-Menu-item .is-active,
+   * .spectrum-Menu-item:active */
+    background-color: var(
+        --spectrum-selectlist-option-background-color-down,
+        var(--spectrum-alias-background-color-hover-overlay)
+    );
+}
+:host([disabled]) #item {
+    /* .spectrum-Menu-item.is-disabled */
+    background-color: var(
+        --spectrum-selectlist-option-background-color-disabled,
+        rgba(0, 0, 0, 0)
+    );
+    background-image: none;
+    color: var(
+        --spectrum-selectlist-option-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    );
+    cursor: default;
+}
