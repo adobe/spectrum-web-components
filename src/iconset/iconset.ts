@@ -91,7 +91,7 @@ export abstract class Iconset extends LitElement {
         this.removeIconset();
     }
 
-    private addIconset() {
+    private addIconset(): void {
         if (!this.name || this.registered) {
             return;
         }
@@ -99,7 +99,7 @@ export abstract class Iconset extends LitElement {
         this.registered = true;
     }
 
-    private removeIconset() {
+    private removeIconset(): void {
         if (!this.name) {
             return;
         }
