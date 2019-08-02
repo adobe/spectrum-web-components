@@ -1,5 +1,5 @@
 /*
-Copyright 2018 Adobe. All rights reserved.
+Copyright 2019 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,23 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-menu-item.css';
+import { CSSResultArray, LitElement } from 'lit-element';
 
-#item {
-    width: 100%;
-}
+import menuDividerStyles from './menu-divider.css';
 
-button {
-    border: 0;
-    background: 0;
-    padding: 0;
-    margin: 0;
-    display: inherit;
-    font: inherit;
-    color: inherit;
-    text-align: inherit;
-}
+/**
+ * Spectrum Menu Divider Component
+ *
+ */
+export class MenuDivider extends LitElement {
+    public static get styles(): CSSResultArray {
+        return [menuDividerStyles];
+    }
 
-#selected {
-    flex-shrink: 0;
+    protected firstUpdated(): void {
+        this.setAttribute('role', 'separator');
+    }
 }

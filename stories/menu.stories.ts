@@ -38,7 +38,7 @@ storiesOf('Menu', module)
                     <sp-menu-item>
                         Select and Mask...
                     </sp-menu-item>
-                    <sp-menu-item divider></sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
                     <sp-menu-item>
                         Save Selection
                     </sp-menu-item>
@@ -55,11 +55,7 @@ storiesOf('Menu', module)
             <sp-popover open>
                 <sp-menu>
                     <sp-menu-group>
-                        <span
-                            class="spectrum-Menu-sectionHeading"
-                            id="menu-heading-category-1"
-                            aria-hidden="true"
-                        >
+                        <span slot="header">
                             Section Heading
                         </span>
                         <sp-menu-item>
@@ -72,13 +68,9 @@ storiesOf('Menu', module)
                             Action 3
                         </sp-menu-item>
                     </sp-menu-group>
-                    <sp-menu-item divider></sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
                     <sp-menu-group>
-                        <span
-                            class="spectrum-Menu-sectionHeading"
-                            id="menu-heading-category-1"
-                            aria-hidden="true"
-                        >
+                        <span slot="header">
                             Section Heading
                         </span>
                         <sp-menu-item>
@@ -108,11 +100,7 @@ storiesOf('Menu', module)
             <sp-popover open style="width: 200px;">
                 <sp-menu>
                     <sp-menu-group>
-                        <span
-                            class="spectrum-Menu-sectionHeading"
-                            id="menu-heading-category-1"
-                            aria-hidden="true"
-                        >
+                        <span slot="header">
                             San Francisco
                         </span>
                         <sp-menu-item>
@@ -125,13 +113,9 @@ storiesOf('Menu', module)
                             North Beach
                         </sp-menu-item>
                     </sp-menu-group>
-                    <sp-menu-item divider></sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
                     <sp-menu-group>
-                        <span
-                            class="spectrum-Menu-sectionHeading"
-                            id="menu-heading-category-1"
-                            aria-hidden="true"
-                        >
+                        <span slot="header">
                             Oakland
                         </span>
                         <sp-menu-item>

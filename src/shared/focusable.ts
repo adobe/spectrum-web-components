@@ -67,6 +67,7 @@ export class Focusable extends LitElement {
         }
 
         this.addEventListener('focusin', (event) => {
+            console.log('focus', this.isShiftTabbing);
             if (event.composedPath()[0] === this) {
                 this.handleFocus();
             }

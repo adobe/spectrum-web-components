@@ -52,7 +52,6 @@ module.exports = {
             name: 'menu-divider',
             host: {
                 selector: '.spectrum-Menu-divider',
-                shadowSelector: ':host([divider]) #item',
             },
             attributes: [
                 {

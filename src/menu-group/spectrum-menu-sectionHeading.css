@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-::slotted(.spectrum-Menu-sectionHeading) {
+.header {
     /* .spectrum-Menu-sectionHeading */
     display: block;
     margin: var(--spectrum-global-dimension-size-75) 0 0 0;

@@ -12,11 +12,10 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
     property,
     CSSResultArray,
-    PropertyValues,
     TemplateResult,
+    query,
 } from 'lit-element';
 
 import menuItemStyles from './menu-item.css';
@@ -24,6 +23,7 @@ import { nothing } from 'lit-html';
 import { defineCustomElements } from '../define';
 import '../icon';
 import * as MediumIcons from '../icons/icons-medium';
+import { Focusable } from '../shared/focusable';
 
 defineCustomElements(...Object.values(MediumIcons));
 
@@ -33,7 +33,7 @@ defineCustomElements(...Object.values(MediumIcons));
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
  */
-export class MenuItem extends LitElement {
+export class MenuItem extends Focusable {
     public static get styles(): CSSResultArray {
         return [menuItemStyles];
     }
@@ -43,24 +43,28 @@ export class MenuItem extends LitElement {
     }
 
     @property({ type: Boolean, reflect: true })
-    public disabled = false;
-
-    @property({ type: Boolean, reflect: true })
-    public divider = false;
-
-    @property({ type: Boolean, reflect: true })
     public selected = false;
 
-    @property({ type: Number })
-    public tabindex = 0;
+    @property({ type: Number, reflect: true })
+    public tabIndex = -1;
+
+    @query('#item')
+    public item?: HTMLButtonElement;
+
+    public get focusElement(): HTMLButtonElement | MenuItem {
+        if (typeof this.item === 'undefined') {
+            return this;
+        }
+        return this.item;
+    }
 
     public render(): TemplateResult {
-        if (this.divider)
-            return html`
-                <div id="item" class="divider"></div>
-            `;
         return html`
-            <button id="item" tabindex=${this.disabled ? -1 : this.tabindex}>
+            <button
+                ?disabled=${this.disabled}
+                id="item"
+                tabindex=${this.tabIndex}
+            >
                 ${this.hasIcon
                     ? html`
                           <slot name="icon"></slot>
@@ -81,9 +85,8 @@ export class MenuItem extends LitElement {
         `;
     }
 
-    protected updated(changedProperties: PropertyValues): void {
-        if (changedProperties.has('divider')) {
-            this.setAttribute('role', this.divider ? 'separator' : 'menuitem');
-        }
+    protected firstUpdated(): void {
+        super.firstUpdated();
+        this.setAttribute('role', 'menuitem');
     }
 }

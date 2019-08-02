@@ -14,20 +14,124 @@ import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
 
 import menuStyles from './menu.css';
 
+interface MenuItem extends HTMLElement {
+    disabled: boolean;
+    selected: boolean;
+    tabIndex: number;
+}
+
 /**
- * Spectrum Link Component
+ * Spectrum Menu Component
  *
- * @attr quiet - uses quiet styles or not
- * @attr over-background - uses over background styles or not
  */
 export class Menu extends LitElement {
     public static get styles(): CSSResultArray {
         return [menuStyles];
     }
 
+    public menuItems?: Element[];
+    public focusedItemIndex = 0;
+    public focusInItemIndex = 0;
+
+    public constructor() {
+        super();
+        this.handleKeydown = this.handleKeydown.bind(this);
+        this.startListeningToKeyboard = this.startListeningToKeyboard.bind(
+            this
+        );
+        this.stopListeningToKeyboard = this.stopListeningToKeyboard.bind(this);
+        this.addEventListener('focusin', this.startListeningToKeyboard);
+        this.addEventListener('focusout', this.stopListeningToKeyboard);
+    }
+
+    public startListeningToKeyboard(): void {
+        this.addEventListener('keydown', this.handleKeydown);
+    }
+
+    public stopListeningToKeyboard(): void {
+        this.removeEventListener('keydown', this.handleKeydown);
+    }
+
+    public handleKeydown(e: KeyboardEvent): void {
+        const { code } = e;
+        if (code === 'Tab') {
+            document.addEventListener(
+                'focusout',
+                () => {
+                    this.focusedItemIndex = this.focusInItemIndex;
+                    if (
+                        typeof this.menuItems === 'undefined' ||
+                        this.menuItems.length === 0
+                    ) {
+                        return;
+                    }
+                    const itemToFocus = this.menuItems[
+                        this.focusInItemIndex
+                    ] as MenuItem;
+                    itemToFocus.tabIndex = 0;
+                },
+                { once: true }
+            );
+            return;
+        }
+        if (code !== 'ArrowDown' && code !== 'ArrowUp') {
+            return;
+        }
+        e.preventDefault();
+        const direction = code === 'ArrowDown' ? 1 : -1;
+        this.focusMenuItemByOffset(direction);
+    }
+
+    public focusMenuItemByOffset(offset: number): void {
+        if (
+            typeof this.menuItems === 'undefined' ||
+            this.menuItems.length === 0
+        ) {
+            return;
+        }
+        const focusedItem = this.menuItems[this.focusedItemIndex] as MenuItem;
+        this.focusedItemIndex =
+            (this.menuItems.length + this.focusedItemIndex + offset) %
+            this.menuItems.length;
+        let itemToFocus = this.menuItems[this.focusedItemIndex] as MenuItem;
+        while (itemToFocus.disabled) {
+            this.focusedItemIndex =
+                (this.menuItems.length + this.focusedItemIndex + offset) %
+                this.menuItems.length;
+            itemToFocus = this.menuItems[this.focusedItemIndex] as MenuItem;
+        }
+        itemToFocus.focus();
+        focusedItem.tabIndex = -1;
+    }
+
+    public handleSlotchange(): void {
+        this.menuItems = [...this.querySelectorAll('[role="menuitem"]')];
+        if (!this.menuItems || this.menuItems.length === 0) {
+            return;
+        }
+        if (this.querySelector('[selected]')) {
+            let index = this.menuItems.length - 1;
+            let item = this.menuItems[index] as MenuItem;
+            while (!item.selected) {
+                index -= 1;
+                item = this.menuItems[index] as MenuItem;
+            }
+            this.focusInItemIndex = index;
+        } else {
+            this.focusInItemIndex = 0;
+        }
+        const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
+        focusInItem.tabIndex = 0;
+        this.focusedItemIndex = this.focusInItemIndex;
+    }
+
     public render(): TemplateResult {
         return html`
-            <slot></slot>
+            <slot @slotchange=${this.handleSlotchange}></slot>
         `;
+    }
+
+    protected firstUpdated(): void {
+        this.setAttribute('role', 'menu');
     }
 }

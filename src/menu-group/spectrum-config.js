@@ -17,7 +17,7 @@ module.exports = {
             name: 'menu-sectionHeading',
             host: {
                 selector: '.spectrum-Menu-sectionHeading',
-                shadowSelector: '::slotted(.spectrum-Menu-sectionHeading)',
+                shadowSelector: '.header',
             },
         },
     ],

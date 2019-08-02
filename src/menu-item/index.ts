@@ -10,5 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { MenuItem } from './menu-item';
+import { MenuDivider } from './menu-divider';
 
 customElements.define('sp-menu-item', MenuItem);
+customElements.define('sp-menu-divider', MenuDivider);

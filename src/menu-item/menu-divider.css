@@ -10,23 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-menu-item.css';
+@import './spectrum-menu-divider.css';
 
-#item {
-    width: 100%;
-}
-
-button {
-    border: 0;
-    background: 0;
-    padding: 0;
-    margin: 0;
-    display: inherit;
-    font: inherit;
-    color: inherit;
-    text-align: inherit;
-}
-
-#selected {
-    flex-shrink: 0;
+:host {
+    display: block;
 }

@@ -14,6 +14,8 @@ import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
 
 import menuGroupStyles from './menu-group.css';
 
+let instances = 0;
+
 /**
  * Spectrum Link Component
  *
@@ -25,9 +27,17 @@ export class MenuGroup extends LitElement {
         return [menuGroupStyles];
     }
 
+    private instanceCount = instances++;
+
     public render(): TemplateResult {
+        const labelledby = `menu-heading-category-${this.instanceCount}`;
         return html`
-            <slot></slot>
+            <span class="header" id=${labelledby} aria-hidden="true">
+                <slot name="header"></slot>
+            </span>
+            <div aria-labelledby=${labelledby} role="group">
+                <slot></slot>
+            </div>
         `;
     }
 }

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([divider]) #item {
+:host {
     /* .spectrum-Menu-divider */
     box-sizing: content-box;
     overflow: visible;
