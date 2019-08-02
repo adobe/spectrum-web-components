@@ -24,6 +24,7 @@ storiesOf('Card', module)
                     <img
                         slot="cover-photo"
                         src="https://picsum.photos/200/300"
+                        alt="Demo Image"
                     />
                     <div slot="footer">Footer</div>
                 </sp-card>
@@ -38,6 +39,7 @@ storiesOf('Card', module)
                         slot="preview"
                         src="https://picsum.photos/532/192"
                         style="object-fit: cover"
+                        alt="Demo Image"
                     />
                     <div slot="description">10/15/18</div>
                     <div slot="footer">Footer</div>
@@ -49,7 +51,11 @@ storiesOf('Card', module)
         return html`
             <div style="width: 208px; height: 264px">
                 <sp-card variant="quiet" title="Card Title" subtitle="JPG">
-                    <img slot="preview" src="https://picsum.photos/200/300" />
+                    <img
+                        slot="preview"
+                        src="https://picsum.photos/200/300"
+                        alt="Demo Image"
+                    />
                     <div slot="description">10/15/18</div>
                     <div slot="footer">Footer</div>
                 </sp-card>

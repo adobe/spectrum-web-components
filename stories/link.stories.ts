@@ -29,7 +29,7 @@ storiesOf('Link', module)
     .add('Over Background', () => {
         return html`
             <div
-                style="background-color: rgb(255, 160, 175); padding: 15px 20px; display: inline-block;"
+                style="background-color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block;"
             >
                 <p style="color: rgb(240, 240, 240);">
                     This
