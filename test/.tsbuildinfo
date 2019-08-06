@@ -113,97 +113,85 @@
         "version": "63b66918290d794f73832a6d0325be5026236674fe8c0cb0b68d162000d7bbe8",
         "signature": "63b66918290d794f73832a6d0325be5026236674fe8c0cb0b68d162000d7bbe8"
       },
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/cli.d.ts": {
-        "version": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts": {
+        "version": "22429444f81efbaa7a2875cdaa5a03709b951fcb32ddc6dd6e92b759d6c5df1f",
+        "signature": "22429444f81efbaa7a2875cdaa5a03709b951fcb32ddc6dd6e92b759d6c5df1f"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts": {
+        "version": "e4ab9c261d87997afc6780060066be58404a67a64abc33fad7ce3411952483b7",
+        "signature": "e4ab9c261d87997afc6780060066be58404a67a64abc33fad7ce3411952483b7"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts": {
+        "version": "d6e69ff9c9a53db0aeb247e3913d486db8c6dbbb429a77e7c60aa0795fd9f621",
+        "signature": "d6e69ff9c9a53db0aeb247e3913d486db8c6dbbb429a77e7c60aa0795fd9f621"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts": {
+        "version": "204209292c16fb064402c0e3a1ece5725b81aa93f3f001837c37c2724968aa19",
+        "signature": "204209292c16fb064402c0e3a1ece5725b81aa93f3f001837c37c2724968aa19"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts": {
+        "version": "317052476ffc2fd93bd94b7433f4f10a394d9458e0a246e67b12c9c1a2f3e53b",
+        "signature": "317052476ffc2fd93bd94b7433f4f10a394d9458e0a246e67b12c9c1a2f3e53b"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts": {
+        "version": "793008d580ab9cf6264dbb0cd3037795c41fd44a7529e2a4503f9180b89e3a04",
+        "signature": "793008d580ab9cf6264dbb0cd3037795c41fd44a7529e2a4503f9180b89e3a04"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts": {
+        "version": "3fd0e852461de166c450c9c84161f954f7c125ddf03fd62660475efb7d43be88",
+        "signature": "3fd0e852461de166c450c9c84161f954f7c125ddf03fd62660475efb7d43be88"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts": {
+        "version": "71dce184668f5ef3ce1d4892b7381a9e0bfded902945d9f70257f4fb35b63fbd",
+        "signature": "71dce184668f5ef3ce1d4892b7381a9e0bfded902945d9f70257f4fb35b63fbd"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts": {
+        "version": "ef0151031c10e5bfe71453926873e41aaa74ae0431d8b4c7e665890887bfef22",
+        "signature": "ef0151031c10e5bfe71453926873e41aaa74ae0431d8b4c7e665890887bfef22"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts": {
+        "version": "2e404ec9d1cebacc94ab5fcc778b1467fcf652ffeb57d8447f106629eb3bd213",
+        "signature": "2e404ec9d1cebacc94ab5fcc778b1467fcf652ffeb57d8447f106629eb3bd213"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts": {
+        "version": "62677ea5af47584bcfa1b4b9d096d08d57dd505488098435983fec84fb8b9bb9",
+        "signature": "62677ea5af47584bcfa1b4b9d096d08d57dd505488098435983fec84fb8b9bb9"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts": {
+        "version": "09688bf4eab544a92950ad4681f4fae8acefb7e4a7d8f51d4613262f0318bd99",
+        "signature": "09688bf4eab544a92950ad4681f4fae8acefb7e4a7d8f51d4613262f0318bd99"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts": {
+        "version": "263f47ebe0561d5c01ae0c262cf9644ea880b871c708469874c1560dfdcbec06",
+        "signature": "263f47ebe0561d5c01ae0c262cf9644ea880b871c708469874c1560dfdcbec06"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/browser.d.ts": {
+        "version": "537643b4d7f68ab81f968b423763d3e939cbdb23f43d328ddc3d9e0658a9a959",
+        "signature": "537643b4d7f68ab81f968b423763d3e939cbdb23f43d328ddc3d9e0658a9a959"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/types.d.ts": {
+        "version": "ef6786a3a90c632bc008a2c325eea8971b42c6c1c7edf2e2ce1ab4b82daec2ca",
+        "signature": "ef6786a3a90c632bc008a2c325eea8971b42c6c1c7edf2e2ce1ab4b82daec2ca"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/stats.d.ts": {
+        "version": "0a34e421bc8d3fca60ec06249e5c0bf159b36ae6aca6d31dfa4b4bc784f141e2",
+        "signature": "0a34e421bc8d3fca60ec06249e5c0bf159b36ae6aca6d31dfa4b4bc784f141e2"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/cli.d.ts": {
+        "version": "f44a960790e5a6e2dc585f8411456d3477b7286b5f5800410707fca68a86c9c9",
+        "signature": "f44a960790e5a6e2dc585f8411456d3477b7286b5f5800410707fca68a86c9c9"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-args/index.d.ts": {
+        "version": "e2790204f9394425bf7d8e93a919887823d03dc2830d31d09c8f6af5562634dd",
+        "signature": "e2790204f9394425bf7d8e93a919887823d03dc2830d31d09c8f6af5562634dd"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-usage/index.d.ts": {
+        "version": "65fa9dd7434e469671c4fb384cc9c610ad8ffc572351adec3e3d46f36a68f358",
+        "signature": "65fa9dd7434e469671c4fb384cc9c610ad8ffc572351adec3e3d46f36a68f358"
+      },
+      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/cli.ts": {
+        "version": "0f3051273e226ad1bdbf4ca13bcae49977650c38c98c32c7c0129ce9811a2004",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts": {
-        "version": "4cffbce0e6607ff338517892c7257bb2b9fbb402dfcb958181dd064e80a4da02",
-        "signature": "4cffbce0e6607ff338517892c7257bb2b9fbb402dfcb958181dd064e80a4da02"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts": {
-        "version": "0c106a456dd44f924983891c950f4d255e07ee76d63ef7474c48dc7aeb614dc0",
-        "signature": "0c106a456dd44f924983891c950f4d255e07ee76d63ef7474c48dc7aeb614dc0"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-factory.d.ts": {
-        "version": "60dc284c88ce8dbeee84419dca4ac2584af52ee2143b2841fa5b1d4e10305d74",
-        "signature": "60dc284c88ce8dbeee84419dca4ac2584af52ee2143b2841fa5b1d4e10305d74"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts": {
-        "version": "ed006217b8cd57d2cbc36a15cb54802688a4bd58d99266d53b1ba3173542d03f",
-        "signature": "ed006217b8cd57d2cbc36a15cb54802688a4bd58d99266d53b1ba3173542d03f"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts": {
-        "version": "ff20b0419de89e903bd3ffd4d31f13f88c6e1f9072bec43c27ed5b5d46e34fde",
-        "signature": "ff20b0419de89e903bd3ffd4d31f13f88c6e1f9072bec43c27ed5b5d46e34fde"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts": {
-        "version": "23a1574da23f232ecb27ba6c0794c9efc5820a55a032755dddf38af896e343fb",
-        "signature": "23a1574da23f232ecb27ba6c0794c9efc5820a55a032755dddf38af896e343fb"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts": {
-        "version": "20d8806d7a9c3c1b7cb3b5f31715b1df0e1932fdd6caa83eda47c5f8940ba3c4",
-        "signature": "20d8806d7a9c3c1b7cb3b5f31715b1df0e1932fdd6caa83eda47c5f8940ba3c4"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/default-template-processor.d.ts": {
-        "version": "db0353beffb699d76939ab4efb3123beae1d936abc16e858fca38728fd7b9a1f",
-        "signature": "db0353beffb699d76939ab4efb3123beae1d936abc16e858fca38728fd7b9a1f"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/directive.d.ts": {
-        "version": "65cc17e6a285f6c1762ea2bdc0eeb0069bcdb9cdedc077af743443a5b6184437",
-        "signature": "65cc17e6a285f6c1762ea2bdc0eeb0069bcdb9cdedc077af743443a5b6184437"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/dom.d.ts": {
-        "version": "07e68e3257ac03612286e959aa0269ea39701caaee6ba00b07efdd8295ffc3f1",
-        "signature": "07e68e3257ac03612286e959aa0269ea39701caaee6ba00b07efdd8295ffc3f1"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render.d.ts": {
-        "version": "681860c201a35c8b30b08dcf2850cd936decea0141c7d3b7021bbf611a8b0102",
-        "signature": "681860c201a35c8b30b08dcf2850cd936decea0141c7d3b7021bbf611a8b0102"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-instance.d.ts": {
-        "version": "eb897943eca986445c7c9d7037920a784b3fdac434c331a1fb5d040587252587",
-        "signature": "eb897943eca986445c7c9d7037920a784b3fdac434c331a1fb5d040587252587"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts": {
-        "version": "98a780cce6e0c824539a52b0d983c54bbdd75d06caf8ab2166e90c721458fd8b",
-        "signature": "98a780cce6e0c824539a52b0d983c54bbdd75d06caf8ab2166e90c721458fd8b"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/updating-element.d.ts": {
-        "version": "2c1a86771b18eee486c831af725bb7b85faddd66d9b8db5a37bbd1147a8a0d2c",
-        "signature": "2c1a86771b18eee486c831af725bb7b85faddd66d9b8db5a37bbd1147a8a0d2c"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/decorators.d.ts": {
-        "version": "e7bb5d5be7ea17feb659c513c2a8d8c1c68e6af20a971fbadf1f95ff7c8f0a93",
-        "signature": "e7bb5d5be7ea17feb659c513c2a8d8c1c68e6af20a971fbadf1f95ff7c8f0a93"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/css-tag.d.ts": {
-        "version": "c603920b29913d93b04bba97b463bdf55a4e2982ef3ceebcea95892c66496de3",
-        "signature": "c603920b29913d93b04bba97b463bdf55a4e2982ef3ceebcea95892c66496de3"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/shady-render.d.ts": {
-        "version": "902c258141d855d3400fc191a672732e894c0c1d7a41b312a30cd3c23663c9d1",
-        "signature": "902c258141d855d3400fc191a672732e894c0c1d7a41b312a30cd3c23663c9d1"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lit-element.d.ts": {
-        "version": "15d1d7f076d27ae16d10626263e890f1e39b663ebda325d5dfc41f48620df0ec",
-        "signature": "15d1d7f076d27ae16d10626263e890f1e39b663ebda325d5dfc41f48620df0ec"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/helpers.ts": {
-        "version": "972bc75732a7f33bb8fa8ca119a00162078cad85bedd44a949f37ca7856763b3",
-        "signature": "aacd7243f814ff6363eaffb9ae8e7774ef33df5693ea87d3bae90876be41d0c0"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/banner.d.ts": {
-        "version": "fe87fdc037b072ef9a605d417558586e0ea489ae6e9e6238376efad46f6f5859",
-        "signature": "fe87fdc037b072ef9a605d417558586e0ea489ae6e9e6238376efad46f6f5859"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/index.d.ts": {
-        "version": "fb9cc35b4ed1f3073d6d52d3a8584cd213f7c49e41149d41efff7744fb47f4b4",
-        "signature": "fb9cc35b4ed1f3073d6d52d3a8584cd213f7c49e41149d41efff7744fb47f4b4"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/banner/test-basic.ts": {
-        "version": "492017bfaa91b6942a061c363704d79bb7e8237fcff835ed900b48d78113ef4e",
-        "signature": "31963b9b8f212af672c4564f9b18b8c5d81f668407cb7e06cd3601315dd23418"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/globals.d.ts": {
         "version": "bb1712d53ccdcdb6e98e5099ff6a978bc66f41e4234f6727dba5bfdbe9201d4e",
@@ -425,14 +413,6 @@
         "version": "9b1b35d8f7e9063fe1980c595338a67e47e345f82b677005ffc425094d96ecf5",
         "signature": "9b1b35d8f7e9063fe1980c595338a67e47e345f82b677005ffc425094d96ecf5"
       },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-args/index.d.ts": {
-        "version": "e2790204f9394425bf7d8e93a919887823d03dc2830d31d09c8f6af5562634dd",
-        "signature": "e2790204f9394425bf7d8e93a919887823d03dc2830d31d09c8f6af5562634dd"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-usage/index.d.ts": {
-        "version": "65fa9dd7434e469671c4fb384cc9c610ad8ffc572351adec3e3d46f36a68f358",
-        "signature": "65fa9dd7434e469671c4fb384cc9c610ad8ffc572351adec3e3d46f36a68f358"
-      },
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/common-tags/index.d.ts": {
         "version": "3b93231babdb3ee9470a7e6103e48bf6585c4185f96941c08a77e097f8f469ae",
         "signature": "3b93231babdb3ee9470a7e6103e48bf6585c4185f96941c08a77e097f8f469ae"
@@ -605,58 +585,6 @@
         "version": "57427a9a368f8f0ee4ce03c36a762e19166756b95ab688948b29be553b24a78a",
         "signature": "57427a9a368f8f0ee4ce03c36a762e19166756b95ab688948b29be553b24a78a"
       },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts": {
-        "version": "22429444f81efbaa7a2875cdaa5a03709b951fcb32ddc6dd6e92b759d6c5df1f",
-        "signature": "22429444f81efbaa7a2875cdaa5a03709b951fcb32ddc6dd6e92b759d6c5df1f"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts": {
-        "version": "e4ab9c261d87997afc6780060066be58404a67a64abc33fad7ce3411952483b7",
-        "signature": "e4ab9c261d87997afc6780060066be58404a67a64abc33fad7ce3411952483b7"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts": {
-        "version": "d6e69ff9c9a53db0aeb247e3913d486db8c6dbbb429a77e7c60aa0795fd9f621",
-        "signature": "d6e69ff9c9a53db0aeb247e3913d486db8c6dbbb429a77e7c60aa0795fd9f621"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts": {
-        "version": "204209292c16fb064402c0e3a1ece5725b81aa93f3f001837c37c2724968aa19",
-        "signature": "204209292c16fb064402c0e3a1ece5725b81aa93f3f001837c37c2724968aa19"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts": {
-        "version": "317052476ffc2fd93bd94b7433f4f10a394d9458e0a246e67b12c9c1a2f3e53b",
-        "signature": "317052476ffc2fd93bd94b7433f4f10a394d9458e0a246e67b12c9c1a2f3e53b"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts": {
-        "version": "793008d580ab9cf6264dbb0cd3037795c41fd44a7529e2a4503f9180b89e3a04",
-        "signature": "793008d580ab9cf6264dbb0cd3037795c41fd44a7529e2a4503f9180b89e3a04"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts": {
-        "version": "3fd0e852461de166c450c9c84161f954f7c125ddf03fd62660475efb7d43be88",
-        "signature": "3fd0e852461de166c450c9c84161f954f7c125ddf03fd62660475efb7d43be88"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts": {
-        "version": "71dce184668f5ef3ce1d4892b7381a9e0bfded902945d9f70257f4fb35b63fbd",
-        "signature": "71dce184668f5ef3ce1d4892b7381a9e0bfded902945d9f70257f4fb35b63fbd"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts": {
-        "version": "ef0151031c10e5bfe71453926873e41aaa74ae0431d8b4c7e665890887bfef22",
-        "signature": "ef0151031c10e5bfe71453926873e41aaa74ae0431d8b4c7e665890887bfef22"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts": {
-        "version": "2e404ec9d1cebacc94ab5fcc778b1467fcf652ffeb57d8447f106629eb3bd213",
-        "signature": "2e404ec9d1cebacc94ab5fcc778b1467fcf652ffeb57d8447f106629eb3bd213"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts": {
-        "version": "62677ea5af47584bcfa1b4b9d096d08d57dd505488098435983fec84fb8b9bb9",
-        "signature": "62677ea5af47584bcfa1b4b9d096d08d57dd505488098435983fec84fb8b9bb9"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts": {
-        "version": "09688bf4eab544a92950ad4681f4fae8acefb7e4a7d8f51d4613262f0318bd99",
-        "signature": "09688bf4eab544a92950ad4681f4fae8acefb7e4a7d8f51d4613262f0318bd99"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts": {
-        "version": "263f47ebe0561d5c01ae0c262cf9644ea880b871c708469874c1560dfdcbec06",
-        "signature": "263f47ebe0561d5c01ae0c262cf9644ea880b871c708469874c1560dfdcbec06"
-      },
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/shelljs/index.d.ts": {
         "version": "c28c80a7ad12093d1cec4b2e3d925a5694c724fd247fdbb8ac031c0901549933",
         "signature": "c28c80a7ad12093d1cec4b2e3d925a5694c724fd247fdbb8ac031c0901549933"
@@ -720,7 +648,7 @@
     },
     "options": {
       "target": 4,
-      "module": 5,
+      "module": 1,
       "moduleResolution": 2,
       "lib": [
         "lib.es2017.d.ts",
@@ -747,7 +675,7 @@
           "../lib/*"
         ]
       },
-      "configFilePath": "/Users/wesjohns/Documents/repos/spectrum-web-components/test/tsconfig.json"
+      "configFilePath": "/Users/wesjohns/Documents/repos/spectrum-web-components/test/tsconfig-node.json"
     },
     "referencedMap": {
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/typescript/lib/lib.es5.d.ts": [
@@ -862,142 +790,120 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/cli.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-factory.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-factory.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/default-template-processor.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/directive.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/dom.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-instance.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/default-template-processor.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/directive.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/dom.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-factory.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-instance.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/browser.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/updating-element.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/types.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/browser.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/decorators.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/updating-element.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/stats.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/types.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/css-tag.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/cli.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/stats.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/shady-render.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-args/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lit-element.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/updating-element.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/decorators.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/css-tag.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/shady-render.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-usage/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/helpers.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lit-element.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/banner.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lit-element.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/banner.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/banner/test-basic.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/helpers.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/cli.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/cli.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/fs.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/path.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-args/index.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-usage/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1317,14 +1223,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/clone/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-args/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-usage/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1706,86 +1604,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/shelljs/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/child_process.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/glob/index.d.ts",
@@ -1890,125 +1708,93 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/cli.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-factory.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-factory.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/default-template-processor.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/directive.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/dom.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-instance.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/default-template-processor.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/directive.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/dom.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-factory.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-instance.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-args/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/updating-element.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-usage/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/decorators.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/updating-element.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/css-tag.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/shady-render.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lit-element.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/updating-element.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/decorators.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/css-tag.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/shady-render.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/helpers.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lit-element.d.ts"
       ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/globals.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
@@ -2322,14 +2108,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/clone/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-args/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-usage/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -2705,86 +2483,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/shelljs/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/child_process.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/glob/index.d.ts",
@@ -2847,18 +2545,25 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/banner.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lit-element.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/browser.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/banner.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/types.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/browser.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/banner/test-basic.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/index.d.ts"
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/stats.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/types.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/cli.d.ts": [
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/stats.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
+        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -2890,26 +2595,21 @@
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/typescript/lib/lib.es2018.regexp.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/typescript/lib/lib.esnext.bigint.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/cli.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/part.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-factory.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render-options.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/parts.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-processor.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-result.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/default-template-processor.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/directive.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/dom.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/render.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/template-instance.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lit-html.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/updating-element.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/decorators.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lib/css-tag.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-html/lib/shady-render.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lit-element.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/helpers.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-args/index.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-usage/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/globals.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/assert.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/async_hooks.d.ts",
@@ -2965,8 +2665,6 @@
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/chai/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/chai-as-promised/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/clone/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-args/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/command-line-usage/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/common-tags/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/keygrip/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/range-parser/index.d.ts",
@@ -3010,19 +2708,6 @@
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/prismjs/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/progress/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/q/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/http.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/remote.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/chrome.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/edge.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/firefox.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/ie.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/by.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/command.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/input.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/promise.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/lib/until.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/safari.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/selenium-webdriver/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/shelljs/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/sinon/ts3.1/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/storybook__addon-actions/index.d.ts",
@@ -3038,9 +2723,11 @@
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/webpack/node_modules/source-map/source-map.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/webpack/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/webpack-env/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/banner.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/lib/banner/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/banner/test-basic.ts"
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/browser.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/types.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/stats.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/tachometer/lib/cli.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/test/benchmark/cli.ts"
     ]
   },
   "version": "3.4.1"

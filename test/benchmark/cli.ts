@@ -66,11 +66,11 @@ interface Options {
             commandLineUsage([
                 {
                     header: 'benchmark runner',
-                    content: `Runs benchmarks for MWC`,
+                    content: `Runs benchmarks for SWC`,
                 },
                 {
                     header: 'Usage',
-                    content: `Run all benchmarks for all MWC components:
+                    content: `Run all benchmarks for all SWC components:
 $ node test/benchmark/cli
 Run all benchmarks for specific components:
 $ node test/benchmark/cli -p button ripple

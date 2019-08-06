@@ -1,4 +1,4 @@
-import '../../../lib/banner/index.js';
+import '../../../lib/banner';
 import { html } from 'lit-html';
 import { measureFixtureCreation } from '../helpers';
 
