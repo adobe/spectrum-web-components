@@ -19,12 +19,15 @@ import { html } from 'lit-element';
 defineCustomElements(...Object.values(MediumIcons));
 
 describe('Iconset', () => {
-    before(() => {
-        let icons = document.createElement('sp-icons-medium');
-        document.body.append(icons);
+    after(() => {
+        const sets = [...document.querySelectorAll('sp-icons-medium')];
+        sets.map((set) => set.remove());
     });
 
     it('renders after adding and removing a second iconset', async () => {
+        let icons = document.createElement('sp-icons-medium');
+        document.body.append(icons);
+
         let icons2 = document.createElement('sp-icons-medium');
         document.body.append(icons2);
 
@@ -43,4 +46,18 @@ describe('Iconset', () => {
         const svg = el.shadowRoot!.querySelector('[role="img"]');
         expect(svg).to.not.be.null;
     });
+
+    it('can be after `<sp-icon/>` in the DOM order', async () => {
+        const el = await fixture<Icon>(
+            html`
+                <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
+                <sp-icons-medium></sp-icons-medium>
+            `
+        );
+
+        const svg = el.shadowRoot!.querySelector('[role="img"]');
+        expect(svg).to.not.be.null;
+    });
 });
+
+describe('Iconset order', () => {});

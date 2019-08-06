@@ -38,12 +38,13 @@ export class IconsetSVG extends Iconset {
      * @param el - the element to apply the icon to
      * @param icon - the name of the icon within this set to apply.
      */
-    public applyIconToElement(
+    public async applyIconToElement(
         el: HTMLElement,
         icon: string,
         size: string,
         label: string
-    ): void {
+    ): Promise<void> {
+        await this.updateComplete;
         const iconSymbol = this.iconMap.get(icon);
         if (!iconSymbol) {
             throw new Error(`Unable to find icon ${icon}`);
