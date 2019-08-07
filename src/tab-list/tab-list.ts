@@ -92,9 +92,11 @@ export class TabList extends LitElement {
     private selectTarget(target: HTMLElement): void {
         const value = target.getAttribute('value');
         if (value) {
+            const oldValue = this.selected;
+            this.selected = value;
             const applyDefault = this.dispatchEvent(new Event('change'));
-            if (applyDefault) {
-                this.selected = value;
+            if (!applyDefault) {
+                this.selected = oldValue;
             }
         }
     }
