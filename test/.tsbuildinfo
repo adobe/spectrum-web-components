@@ -449,10 +449,6 @@
         "version": "3b3f1a5cecf368037f4cc8d34834d71465e299690eeb2ddde4cd350160320949",
         "signature": "3b3f1a5cecf368037f4cc8d34834d71465e299690eeb2ddde4cd350160320949"
       },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/fs-extra/index.d.ts": {
-        "version": "aca36e2d27783f4bad7fc1786a532ff76024f0fc8575df48bcd9a5eb452fe7e7",
-        "signature": "aca36e2d27783f4bad7fc1786a532ff76024f0fc8575df48bcd9a5eb452fe7e7"
-      },
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/minimatch/index.d.ts": {
         "version": "1d1e6bd176eee5970968423d7e215bfd66828b6db8d54d17afec05a831322633",
         "signature": "1d1e6bd176eee5970968423d7e215bfd66828b6db8d54d17afec05a831322633"
@@ -469,9 +465,9 @@
         "version": "ba82e80cceb9a174719bb2afa983f8e76436e65aa7a9f5f5c229a68635594206",
         "signature": "ba82e80cceb9a174719bb2afa983f8e76436e65aa7a9f5f5c229a68635594206"
       },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/highlight.js/index.d.ts": {
-        "version": "128ffe0fd9465c6b64611d673132e2c8865454788d85f39a5553d2782c11ede5",
-        "signature": "128ffe0fd9465c6b64611d673132e2c8865454788d85f39a5553d2782c11ede5"
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/handlebars/types/index.d.ts": {
+        "version": "c0a212cd61f06c79b06c9166ba942fbbb0fe36dbb074d9a1567132ccf102668d",
+        "signature": "c0a212cd61f06c79b06c9166ba942fbbb0fe36dbb074d9a1567132ccf102668d"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/http-assert/index.d.ts": {
         "version": "b3e6e319acb1dd787664945fc947e1d908f4c2da1ad0472758494d5dd9456cdf",
@@ -509,62 +505,6 @@
         "version": "215712cbf38642a0f2ed1496a0fd5a9ae67c230bad9c50c92d8cce475c31379d",
         "signature": "215712cbf38642a0f2ed1496a0fd5a9ae67c230bad9c50c92d8cce475c31379d"
       },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts": {
-        "version": "4025cf62742c5bb3d383c8a62342481622c87e3397ea5e7b7baab18b9efd5798",
-        "signature": "4025cf62742c5bb3d383c8a62342481622c87e3397ea5e7b7baab18b9efd5798"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts": {
-        "version": "b6d3763d7f9ce84118df4340505c24384267ccb48fa8772852260cb5ed4617c2",
-        "signature": "b6d3763d7f9ce84118df4340505c24384267ccb48fa8772852260cb5ed4617c2"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts": {
-        "version": "0c75b204aed9cf6ff1c7b4bed87a3ece0d9d6fc857a6350c0c95ed0c38c814e8",
-        "signature": "0c75b204aed9cf6ff1c7b4bed87a3ece0d9d6fc857a6350c0c95ed0c38c814e8"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts": {
-        "version": "187119ff4f9553676a884e296089e131e8cc01691c546273b1d0089c3533ce42",
-        "signature": "187119ff4f9553676a884e296089e131e8cc01691c546273b1d0089c3533ce42"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts": {
-        "version": "45bf6da7cede8211b7d0579deabfa227490dfe8b932a56a962599efc48356e68",
-        "signature": "45bf6da7cede8211b7d0579deabfa227490dfe8b932a56a962599efc48356e68"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts": {
-        "version": "c2d47e5668f89ed8768d306919c42bb88d50d4029d68f58343141360895cfcc0",
-        "signature": "c2d47e5668f89ed8768d306919c42bb88d50d4029d68f58343141360895cfcc0"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts": {
-        "version": "65648639567d214f62c1b21d200c852807e68bdb08311f95ab6f526ef5b98995",
-        "signature": "65648639567d214f62c1b21d200c852807e68bdb08311f95ab6f526ef5b98995"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts": {
-        "version": "00baffbe8a2f2e4875367479489b5d43b5fc1429ecb4a4cc98cfc3009095f52a",
-        "signature": "00baffbe8a2f2e4875367479489b5d43b5fc1429ecb4a4cc98cfc3009095f52a"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts": {
-        "version": "d9e9cc5cc0bad6669e74bdbb8cd555c041d9c4f82886d6aef91ba42d1ac950b1",
-        "signature": "d9e9cc5cc0bad6669e74bdbb8cd555c041d9c4f82886d6aef91ba42d1ac950b1"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts": {
-        "version": "3c92b6dfd43cc1c2485d9eba5ff0b74a19bb8725b692773ef1d66dac48cda4bd",
-        "signature": "3c92b6dfd43cc1c2485d9eba5ff0b74a19bb8725b692773ef1d66dac48cda4bd"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts": {
-        "version": "e34f3f6159b1e23de9bb5521382795aaa5aaed6f53b4702e70a2ec45bc76ddb5",
-        "signature": "e34f3f6159b1e23de9bb5521382795aaa5aaed6f53b4702e70a2ec45bc76ddb5"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts": {
-        "version": "c84107ce3522799b7a821463b1743ef230669093b2746afd1e817fcbb5885e67",
-        "signature": "c84107ce3522799b7a821463b1743ef230669093b2746afd1e817fcbb5885e67"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts": {
-        "version": "bbf144d4354e2aaa6439f32761f3ee798cc68d1600adab6e2a596f25269f106d",
-        "signature": "bbf144d4354e2aaa6439f32761f3ee798cc68d1600adab6e2a596f25269f106d"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/marked/index.d.ts": {
-        "version": "c08a5e873738f5576ae1ca5810b5ebc30509f05bde56c3a3bbdd75d6c0806e6a",
-        "signature": "c08a5e873738f5576ae1ca5810b5ebc30509f05bde56c3a3bbdd75d6c0806e6a"
-      },
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/mocha/index.d.ts": {
         "version": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102",
         "signature": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102"
@@ -584,10 +524,6 @@
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/q/index.d.ts": {
         "version": "57427a9a368f8f0ee4ce03c36a762e19166756b95ab688948b29be553b24a78a",
         "signature": "57427a9a368f8f0ee4ce03c36a762e19166756b95ab688948b29be553b24a78a"
-      },
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/shelljs/index.d.ts": {
-        "version": "c28c80a7ad12093d1cec4b2e3d925a5694c724fd247fdbb8ac031c0901549933",
-        "signature": "c28c80a7ad12093d1cec4b2e3d925a5694c724fd247fdbb8ac031c0901549933"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/sinon/ts3.1/index.d.ts": {
         "version": "3fdf5e086de03fc17dd943691526d07bc4d951ec223e4685cac5f21d6533de3e",
@@ -669,7 +605,7 @@
       "composite": true,
       "outDir": "/Users/wesjohns/Documents/repos/spectrum-web-components/test",
       "tsBuildInfoFile": "/Users/wesjohns/Documents/repos/spectrum-web-components/test/.tsbuildinfo",
-      "baseUrl": "/Users/wesjohns/Documents/repos/spectrum-web-components/test/packages",
+      "baseUrl": "/Users/wesjohns/Documents/repos/spectrum-web-components/test/",
       "paths": {
         "@crisp/spectrum-web-components/*": [
           "../lib/*"
@@ -1277,12 +1213,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/fs-extra/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/fs.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/minimatch/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
@@ -1308,7 +1238,7 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/highlight.js/index.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/handlebars/types/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1368,218 +1298,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/marked/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/mocha/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
@@ -1601,13 +1319,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/q/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/shelljs/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/child_process.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/glob/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -2162,12 +1873,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/fs-extra/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/fs.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/minimatch/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
@@ -2193,7 +1898,7 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/highlight.js/index.d.ts": [
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/handlebars/types/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -2251,218 +1956,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/marked/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/parse5/index.d.ts": [
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/stream.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/events.d.ts",
@@ -2480,13 +1973,6 @@
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/q/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/shelljs/index.d.ts": [
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/child_process.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/glob/index.d.ts",
-        "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/index.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/util.d.ts",
         "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -2674,12 +2160,11 @@
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/express/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/cookies/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/csv-stringify/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/fs-extra/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/minimatch/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/glob/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/tough-cookie/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/got/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/highlight.js/index.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/handlebars/types/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/http-assert/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/jsonwebtoken/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/karma-chai/index.d.ts",
@@ -2689,26 +2174,11 @@
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/koa-mount/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/koa-send/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/koa-static/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/common.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/array.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/date.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/function.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/lang.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/math.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/number.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/object.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/seq.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/string.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/common/util.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/lodash/ts3.1/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/marked/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/mocha/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/parse5/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/prismjs/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/progress/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/q/index.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/shelljs/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/sinon/ts3.1/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/storybook__addon-actions/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/systeminformation/index.d.ts",

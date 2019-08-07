@@ -18,7 +18,7 @@
         "composite": true,
         "outDir": ".",
         "tsBuildInfoFile": ".tsbuildinfo",
-        "baseUrl": "./packages",
+        "baseUrl": "./",
         "paths": {
             "@crisp/spectrum-web-components/*": ["../lib/*"]
         }
