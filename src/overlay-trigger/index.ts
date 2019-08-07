@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './overlay-trigger';
+
+import { OverlayTrigger } from './overlay-trigger';
+
+if (!customElements.get('overlay-trigger')) {
+    customElements.define('overlay-trigger', OverlayTrigger);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'overlay-trigger': OverlayTrigger;
+    }
+}

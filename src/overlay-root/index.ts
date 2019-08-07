@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './overlay-root';
+
+import { OverlayRoot } from './overlay-root';
+
+if (!customElements.get('overlay-root')) {
+    customElements.define('overlay-root', OverlayRoot);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'overlay-root': OverlayRoot;
+    }
+}

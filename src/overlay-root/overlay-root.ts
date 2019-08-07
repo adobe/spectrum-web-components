@@ -145,19 +145,8 @@ export class OverlayRoot extends LitElement {
     }
 
     protected render(): TemplateResult {
-        const maskClickListener = {
-            handleEvent: (ev: Event) => {
-                this.onMaskClick(ev);
-            },
-            capture: true,
-        };
-
         return html`
-            <slot
-                @sp-overlay:open=${this.onOverlayOpen}
-                @sp-overlay:close=${this.onOverlayClose}
-                @click=${maskClickListener}
-            ></slot>
+            <slot></slot>
             <div
                 id="overlay"
                 ?active=${this.active}
@@ -237,6 +226,24 @@ export class OverlayRoot extends LitElement {
         }
 
         return '';
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.addEventListener('click', this.onMaskClick, true);
+        this.addEventListener('sp-overlay:open', this
+            .onOverlayOpen as EventListener);
+        this.addEventListener('sp-overlay:close', this
+            .onOverlayClose as EventListener);
+    }
+
+    public disconnectedCallback(): void {
+        this.removeEventListener('click', this.onMaskClick);
+        this.removeEventListener('sp-overlay:open', this
+            .onOverlayOpen as EventListener);
+        this.removeEventListener('sp-overlay:close', this
+            .onOverlayClose as EventListener);
+        super.disconnectedCallback();
     }
 }
 
