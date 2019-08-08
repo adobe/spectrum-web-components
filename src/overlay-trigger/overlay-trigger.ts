@@ -28,6 +28,13 @@ import {
 } from '../overlay-root';
 import { strictCustomEvent } from '../events';
 
+/**
+ * A overlay trigger component for displaying overlays relative to other content.
+ * @element overlay-trigger
+ *
+ * @slot hover-content - The content that will be displayed on hover
+ * @slot click-content - The content that will be displayed on click
+ */
 export class OverlayTrigger extends LitElement {
     public static is = 'overlay-trigger';
 
@@ -47,6 +54,7 @@ export class OverlayTrigger extends LitElement {
 
     public onOverlayOpen(ev: Event, interaction: TriggerInteractions): void {
         const isClick = interaction === 'click';
+        // if (!isClick) return;
         const overlayElement = isClick ? this.clickContent : this.hoverContent;
         const delayAttribute = overlayElement
             ? overlayElement.getAttribute('delay')
@@ -123,16 +131,16 @@ export class OverlayTrigger extends LitElement {
             >
                 <slot name="trigger"></slot>
             </div>
-            <slot
-                @slotchange=${this.onClickSlotChange}
-                name="click-content"
-                id="click-content"
-            ></slot>
-            <slot
-                @slotchange=${this.onHoverSlotChange}
-                name="hover-content"
-                id="hover-content"
-            ></slot>
+            <div id="overlay-content">
+                <slot
+                    @slotchange=${this.onClickSlotChange}
+                    name="click-content"
+                ></slot>
+                <slot
+                    @slotchange=${this.onHoverSlotChange}
+                    name="hover-content"
+                ></slot>
+            </div>
         `;
     }
 

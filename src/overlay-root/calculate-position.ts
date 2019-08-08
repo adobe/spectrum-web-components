@@ -488,7 +488,17 @@ export default function calculatePosition(
             parseInt(target.style.marginLeft as string, 10) || 0;
     }
 
-    const overlaySize = overlayNode.getBoundingClientRect() as Offset;
+    const {
+        top,
+        right,
+        bottom,
+        left,
+        width,
+        height,
+        x,
+        y,
+    } = overlayNode.getBoundingClientRect() as Offset;
+    const overlaySize = { top, right, bottom, left, width, height, x, y };
     const margins = getMargins(overlayNode);
     overlaySize.width += margins.left + margins.right;
     overlaySize.height += margins.top + margins.bottom;
