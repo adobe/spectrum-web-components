@@ -92,9 +92,15 @@ export class TabList extends LitElement {
     private selectTarget(target: HTMLElement): void {
         const value = target.getAttribute('value');
         if (value) {
-            const applyDefault = this.dispatchEvent(new Event('change'));
-            if (applyDefault) {
-                this.selected = value;
+            const selected = this.selected;
+            this.selected = value;
+            const applyDefault = this.dispatchEvent(
+                new Event('change', {
+                    cancelable: true,
+                })
+            );
+            if (!applyDefault) {
+                this.selected = selected;
             }
         }
     }
