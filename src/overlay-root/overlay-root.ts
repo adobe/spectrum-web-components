@@ -238,7 +238,7 @@ export class OverlayRoot extends LitElement {
     }
 
     public disconnectedCallback(): void {
-        this.removeEventListener('click', this.onMaskClick);
+        this.removeEventListener('click', this.onMaskClick, true);
         this.removeEventListener('sp-overlay:open', this
             .onOverlayOpen as EventListener);
         this.removeEventListener('sp-overlay:close', this
