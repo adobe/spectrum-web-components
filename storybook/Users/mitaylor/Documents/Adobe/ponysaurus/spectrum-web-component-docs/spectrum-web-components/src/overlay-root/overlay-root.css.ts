@@ -1,0 +1,5 @@
+import { css } from 'lit-element';
+const styles = css`
+:host{display:flex;flex-direction:column;width:100%;height:100%}#overlay{z-index:2;position:absolute;display:none;opacity:0;background:red}#overlay[active]{display:block}#overlay[visible]{opacity:1;transform:translate(0)!important;visibility:visible;pointer-events:all;transition:transform var(--spectrum-global-animation-duration-100) ease-in-out,opacity var(--spectrum-global-animation-duration-100) ease-in-out,visibility 0ms linear var(--spectrum-global-animation-duration-100)}:host([placement=top]) #overlay{transform:translateY(6px)}:host([placement=right]) #overlay{transform:translate(-6px)}:host([placement=bottom]) #overlay{transform:translateY(-6px)}:host([placement=left]) #overlay{transform:translate(6px)}
+`;
+export default styles;
