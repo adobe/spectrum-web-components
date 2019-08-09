@@ -9,30 +9,33 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+@import './spectrum-dropzone.css';
 
+/* 
+ * Host is inline-block by default which caused all the computed styling to be wrong.
+ * We need it as a block 
+ */
 :host {
     display: block;
-    border-color: var(--spectrum-dropzone-border-color);
-    text-align: center;
-    border-width: var(--spectrum-dropzone-border-width);
-    border-radius: var(--spectrum-dropzone-border-radius);
-    padding: var(--spectrum-dropzone-padding);
-    border-style: dashed;
-    color: var(--spectrum-global-color-static-gray-700);
+
+    --spectrum-dropzone-illustration-color: var(
+        --spectrum-global-color-static-blue-400
+    );
 }
 
-:host(:focus) {
-    border-color: var(--spectrum-dropzone-border-color);
-    outline: 0;
-    border-style: dashed;
-}
+/* 
+ * IllustratedMessage in spectrum-css has a rule that sets the illustration 
+ * color to (--spectrum-global-color-gray-500) instead of a unique 
+ * component variable. 
+ *
+ * Color declaration at this level will not get inherited by the illustration
+ * and will be overridden by the gray variable. 
+ * 
+ * This is a temporary workaround
+ */
 
-:host([is-dragged]) {
-    border-color: var(--spectrum-dropzone-border-color-selected-hover);
-    background-color: var(--spectrum-dropzone-background-color-selected-hover);
-    border-style: solid;
-}
-
-:host([is-dragged]) ::slotted(*) {
-    color: var(--spectrum-global-color-static-blue-400);
+:host([dragged]) ::slotted(*) {
+    --spectrum-global-color-gray-500: var(
+        --spectrum-dropzone-illustration-color
+    );
 }

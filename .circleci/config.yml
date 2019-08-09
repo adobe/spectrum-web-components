@@ -6,6 +6,7 @@ executors:
         environment:
             NPM_CONFIG_PREFIX: ~/.npm-global
             CHROME_BIN: /usr/bin/google-chrome
+            FIREFOX_BIN: /usr/local/bin/firefox
 commands:
     setup:
         steps:
@@ -47,10 +48,36 @@ jobs:
                   #command: circleci tests glob test/test*.js | circleci tests split --split-by=timings | xargs ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- -R mocha-junit-reporter --exit && npx codecov
                   command: npm test
                   environment:
-                      MOCHA_FILE: junit/test-results.xml
+                      JUNIT_REPORT_PATH: ./junit/
+                      JUNIT_REPORT_NAME: test-results.xml
 
             - store_test_results:
-                  path: junit
-
+                  path: ./junit
             - store_artifacts:
-                  path: junit
+                  path: ./junit
+
+            - run:
+                  name: Generate Docs
+                  command: npm run docs:build
+
+    publish-docs:
+        executor: node8
+
+        steps:
+            - setup
+            - run: npm run docs:build
+            - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
+            - run: git worktree add -f documentation/dist gh-pages && git commit -m "[ci skip] updating documentation" && git push
+
+workflows:
+    version: 2
+    build:
+        jobs:
+            - build
+            - publish-docs:
+                  filters:
+                      branches:
+                          only:
+                              - master_disabled # change this to `master` once we are ready to publish
+                  requires:
+                      - build

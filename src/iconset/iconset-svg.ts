@@ -38,7 +38,13 @@ export class IconsetSVG extends Iconset {
      * @param el - the element to apply the icon to
      * @param icon - the name of the icon within this set to apply.
      */
-    public applyIconToElement(el: HTMLElement, icon: string): void {
+    public async applyIconToElement(
+        el: HTMLElement,
+        icon: string,
+        size: string,
+        label: string
+    ): Promise<void> {
+        await this.updateComplete;
         const iconSymbol = this.iconMap.get(icon);
         if (!iconSymbol) {
             throw new Error(`Unable to find icon ${icon}`);
@@ -46,6 +52,12 @@ export class IconsetSVG extends Iconset {
         // we cannot share a single SVG globally across shadowroot boundaries
         // so copy the template node so we can inject it where we need it
         const clonedNode = this.prepareSvgClone(iconSymbol);
+        clonedNode.setAttribute('role', 'img');
+        if (label) {
+            clonedNode.setAttribute('aria-label', label);
+        } else {
+            clonedNode.setAttribute('aria-hidden', 'true');
+        }
         // append the svg to the node either in its shadowroot or directly into its dom
         if (el.shadowRoot) {
             el.shadowRoot.appendChild(clonedNode);

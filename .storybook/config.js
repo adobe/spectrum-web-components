@@ -1,4 +1,5 @@
-import { configure } from '@storybook/polymer';
+import { configure, addDecorator } from '@storybook/polymer';
+import { withA11y } from '@storybook/addon-a11y';
 
 import '../styles/all-medium-light.css';
 
@@ -16,4 +17,5 @@ function loadStories() {
     req.keys().forEach((filename) => req(filename));
 }
 
+addDecorator(withA11y);
 configure(loadStories, module);

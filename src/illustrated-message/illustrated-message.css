@@ -10,33 +10,29 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--spectrum-global-color-static-gray-500);
-}
+@import './spectrum-illustratedmessage.css';
 
-::slotted(*) {
-    margin-bottom: var(
-        --spectrum-illustrated-message-illustration-margin-bottom
-    );
-    fill: currentColor;
-    stroke: currentColor;
-}
+/* 
+    @TODO: Implement spectrum typography components (ex: specturm-heading, spectrum-body)
 
+    The following block maps to the .spectrum-Heading--pageTitle selector 
+    in spectrum-css/dist/components/typography
+
+    The css in that folder defines multiple typography classes, such as
+    .spectrum-Heading and .spectrum-Body
+
+    These components need to be implemented in another pass
+*/
 #heading {
-    max-width: var(--spectrum-illustrated-message-heading-max-width);
-    margin: var(--spectrum-illustrated-message-heading-margin);
-    color: var(--spectrum-global-color-static-gray-700);
-}
-
-#description {
-    max-width: var(--spectrum-illustrated-message-description-max-width);
-    margin: var(--spectrum-illustrated-message-description-margin);
-    color: var(--spectrum-global-color-static-gray-700);
-    font-style: italic;
+    font-size: var(
+        --spectrum-heading-quiet-2-text-size,
+        var(--spectrum-alias-heading2-text-size)
+    );
+    font-weight: var(--spectrum-heading-quiet-2-text-font-weight, 300);
+    line-height: var(--spectrum-heading-quiet-2-text-line-height, 1.3);
+    font-style: var(--spectrum-heading-quiet-2-text-font-style, normal);
+    letter-spacing: var(--spectrum-heading-quiet-2-text-letter-spacing, 0);
+    text-transform: var(--spectrum-heading-quiet-2-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0;
 }

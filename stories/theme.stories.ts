@@ -36,10 +36,8 @@ storiesOf('Theme', module)
                 #example {
                     width: 500px;
                     padding: 3em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #buttons {
@@ -83,19 +81,15 @@ storiesOf('Theme', module)
                 #outer {
                     width: 500px;
                     padding: 3em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #inner {
                     margin-top: 2em;
                     padding: 2em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #buttons {
@@ -128,11 +122,11 @@ storiesOf('Theme', module)
                                     min="1"
                                     max="11"
                                     label="Volume"
-                                    id="volume-slider"
+                                    id="volume-slider-inner"
                                 ></sp-slider>
                             </div>
                             <div><sp-switch>Overdrive</sp-switch></div>
-                            <div id="buttons">
+                            <div id="buttons-inner">
                                 <sp-button variant="primary">Cancel</sp-button>
                                 <sp-button variant="cta">Continue</sp-button>
                             </div>
@@ -148,19 +142,15 @@ storiesOf('Theme', module)
                 #outer {
                     width: 500px;
                     padding: 3em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #inner {
                     margin-top: 2em;
                     padding: 2em;
-                    background-color: var(
-                        --spectrum-alias-background-color-default
-                    );
-                    color: var(--spectrum-alias-text-color);
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
                 }
 
                 #buttons {
@@ -193,11 +183,11 @@ storiesOf('Theme', module)
                                     min="1"
                                     max="11"
                                     label="Volume"
-                                    id="volume-slider"
+                                    id="volume-slider-inner"
                                 ></sp-slider>
                             </div>
                             <div><sp-switch>Overdrive</sp-switch></div>
-                            <div id="buttons">
+                            <div id="buttons-inner">
                                 <sp-button variant="primary">Cancel</sp-button>
                                 <sp-button variant="cta">Continue</sp-button>
                             </div>

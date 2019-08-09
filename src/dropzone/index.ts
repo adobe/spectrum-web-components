@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './dropzone';
+
+import { Dropzone } from './dropzone';
+
+if (!customElements.get('sp-dropzone')) {
+    customElements.define('sp-dropzone', Dropzone);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-dropzone': Dropzone;
+    }
+}

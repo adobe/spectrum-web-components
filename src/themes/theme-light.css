@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import '../../styles/theme-light/all.css';
+@import '../../styles/theme-light.css';
 
 :host {
     display: block;

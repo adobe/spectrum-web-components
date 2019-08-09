@@ -13,8 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { withKnobs, boolean, radios, text } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
-import { defineCustomElements, Banner } from '../src';
-defineCustomElements(Banner);
+import '../src/banner';
 
 storiesOf('Banner', module)
     .addDecorator(withKnobs)

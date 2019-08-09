@@ -18,3 +18,4 @@ documentation/dist
 package-deps.json
 spectrum-web-components.build.log
 spectrum-web-components.build.error.log
+TESTS.xml

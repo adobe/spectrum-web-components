@@ -10,3 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './banner';
+
+import { Banner } from './banner';
+
+if (!customElements.get('sp-banner')) {
+    customElements.define('sp-banner', Banner);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-banner': Banner;
+    }
+}

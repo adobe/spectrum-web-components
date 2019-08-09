@@ -20,6 +20,10 @@ import {
 
 import messageStyles from './illustrated-message.css';
 
+/**
+ * @slot - The SVG that represents the illustration
+ */
+
 export class IllustratedMessage extends LitElement {
     public static readonly is = 'sp-illustrated-message';
 
@@ -35,7 +39,7 @@ export class IllustratedMessage extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <slot></slot>
+            <div id="illustration"><slot></slot></div>
             <div id="heading">${this.heading}</div>
             <div id="description">${this.description}</div>
         `;

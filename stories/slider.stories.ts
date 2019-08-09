@@ -118,7 +118,7 @@ storiesOf('Slider', module)
                     min="${min}"
                     max="${max}"
                     label="Opacity"
-                    id="opacity-slider"
+                    id="opacity-slider-opacity"
                 />
             </div>
             <div style="width: 500px; margin: 20px;">
@@ -128,7 +128,7 @@ storiesOf('Slider', module)
                     min="${min}"
                     max="${max}"
                     label="Lightness"
-                    id="opacity-slider"
+                    id="opacity-slider-lightness"
                 />
             </div>
             <div style="width: 500px; margin: 20px;">
@@ -138,7 +138,7 @@ storiesOf('Slider', module)
                     min="${min}"
                     max="${max}"
                     label="Saturation"
-                    id="opacity-slider"
+                    id="opacity-slider-saturation"
                 />
             </div>
         `;
