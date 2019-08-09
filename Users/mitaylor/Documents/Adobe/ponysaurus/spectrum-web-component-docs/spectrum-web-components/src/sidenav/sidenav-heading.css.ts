@@ -1,5 +1,0 @@
-import { css } from 'lit-element';
-const styles = css`
-#list{list-style-type:none;margin:0;padding:0}#heading{height:var(--spectrum-sidenav-header-height,var(--spectrum-global-dimension-size-400));line-height:var(--spectrum-sidenav-header-height,var(--spectrum-global-dimension-size-400));margin:var(--spectrum-sidenav-header-gap-top,var(--spectrum-global-dimension-size-200)) 0 var(--spectrum-sidenav-header-gap-bottom,var(--spectrum-global-dimension-size-50)) 0;padding:0 var(--spectrum-sidenav-header-padding-x,var(--spectrum-global-dimension-size-150));border-radius:var(--spectrum-sidenav-header-border-radius,var(--spectrum-global-dimension-size-50));font-size:var(--spectrum-sidenav-header-text-size,var(--spectrum-global-dimension-font-size-50));font-weight:var(--spectrum-sidenav-header-font-weight,500);font-style:normal;letter-spacing:var(--spectrum-sidenav-header-letter-spacing,.06em);text-transform:uppercase;color:var(--spectrum-sidenav-header-text-color,var(--spectrum-global-color-gray-700))}:host{display:block}
-`;
-export default styles;

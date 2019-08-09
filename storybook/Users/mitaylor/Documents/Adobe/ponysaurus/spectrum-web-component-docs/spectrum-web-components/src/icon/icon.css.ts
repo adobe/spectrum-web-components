@@ -1,9 +1,0 @@
-import { css } from 'lit-element';
-const styles = css`
-:host{display:inline-block;color:inherit;fill:currentColor;pointer-events:none}:host(:not(:root)){overflow:hidden}:host([size=xxs]),:host([size=xxs]) img,:host([size=xxs]) svg{height:calc(var(--spectrum-alias-workflow-icon-size,
-var(--spectrum-global-dimension-size-225))/2);width:calc(var(--spectrum-alias-workflow-icon-size,
-var(--spectrum-global-dimension-size-225))/2)}:host([size=xs]),:host([size=xs]) img,:host([size=xs]) svg{height:calc(var(--spectrum-global-dimension-size-300)/2);width:calc(var(--spectrum-global-dimension-size-300)/2)}:host([size=s]),:host([size=s]) img,:host([size=s]) svg{height:var(--spectrum-alias-workflow-icon-size,var(--spectrum-global-dimension-size-225));width:var(--spectrum-alias-workflow-icon-size,var(--spectrum-global-dimension-size-225))}:host([size=m]),:host([size=m]) img,:host([size=m]) svg{height:var(--spectrum-global-dimension-size-300);width:var(--spectrum-global-dimension-size-300)}:host([size=l]),:host([size=l]) img,:host([size=l]) svg{height:calc(var(--spectrum-alias-workflow-icon-size,
-var(--spectrum-global-dimension-size-225))*2);width:calc(var(--spectrum-alias-workflow-icon-size,
-var(--spectrum-global-dimension-size-225))*2)}:host([size=xl]),:host([size=xl]) img,:host([size=xl]) svg{height:calc(var(--spectrum-global-dimension-size-300)*2);width:calc(var(--spectrum-global-dimension-size-300)*2)}:host([size=xxl]),:host([size=xxl]) img,:host([size=xxl]) svg{height:calc(var(--spectrum-global-dimension-size-300)*3);width:calc(var(--spectrum-global-dimension-size-300)*3)}
-`;
-export default styles;
