@@ -12,10 +12,11 @@ governing permissions and limitations under the License.
 
 import { Router, Route, RouterOptions } from '@vaadin/router';
 
-const githubUrl =
-    'https://git.corp.adobe.com/pages/ponysaurus/react-spectrum-web-components/';
+const githubUrl = 'http://opensource.adobe.com/spectrum-web-components/';
 const baseUrl =
-    document.location.hostname === 'git.corp.adobe.com' ? githubUrl : undefined;
+    document.location.hostname === 'opensource.adobe.com'
+        ? githubUrl
+        : undefined;
 
 class DocumentationRouter extends Router {
     public location:

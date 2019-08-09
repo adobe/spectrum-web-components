@@ -1,6 +1,8 @@
 import { configure, addDecorator } from '@storybook/polymer';
 import { withA11y } from '@storybook/addon-a11y';
 
+import '../styles/all-medium-light.css';
+
 // NOTE: Because we use CustomElement registry, we will need to refresh the whole iframe on
 // HMR of our web components to allow us to register the new versions
 if (module.hot) {
