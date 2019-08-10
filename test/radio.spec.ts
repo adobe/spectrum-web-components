@@ -9,14 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Radio } from '../src/radio/radio';
-import '../src/radio'; // import the index for side-effects (element registration)
-import {
-    fixture,
-    elementUpdated,
-    triggerBlurFor,
-} from '@open-wc/testing-helpers';
+import { Radio } from '../lib/radio/radio';
+import '../lib/radio'; // import the index for side-effects (element registration)
+import { fixture, elementUpdated, triggerBlurFor } from '@open-wc/testing';
 import { html } from 'lit-html';
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 function inputForRadio(radio: Radio): HTMLInputElement {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');

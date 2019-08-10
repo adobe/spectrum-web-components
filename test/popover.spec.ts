@@ -9,10 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Popover } from '../src/popover/popover';
-import '../src/popover'; // import the index for side-effects (element registration)
-import { fixture } from '@open-wc/testing-helpers';
+import { Popover } from '../lib/popover/popover';
+import '../lib/popover'; // import the index for side-effects (element registration)
+import { fixture } from '@open-wc/testing';
 import { html } from 'lit-html';
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 describe('popover', () => {
     let popover!: Popover;

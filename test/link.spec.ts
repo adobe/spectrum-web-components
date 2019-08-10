@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { chaiDomDiff } from '@open-wc/semantic-dom-diff';
-import { fixture, elementUpdated } from '@open-wc/testing-helpers';
-import { Link } from '../src/link';
-import '../src/link';
+import { fixture, elementUpdated } from '@open-wc/testing';
+import { Link } from '../lib/link';
+import '../lib/link';
 import { html } from 'lit-element';
 
-chai.use(chaiDomDiff);
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 describe('Link', () => {
     it('loads', async () => {

@@ -6,6 +6,8 @@ declare namespace Chai {
     }
 }
 
+declare module '@bundled-es-modules/chai';
+
 declare module '@open-wc/semantic-dom-diff' {
     /**
      * @param {any} chai
@@ -82,7 +84,7 @@ declare module '@open-wc/semantic-dom-diff' {
      */
     export var getCleanedShadowDom: any;
 }
-declare module '@open-wc/testing-helpers' {
+declare module '@open-wc/testing' {
     import { TemplateResult } from 'lit-html';
     /**
      * Awaits for "update complete promises" of elements
