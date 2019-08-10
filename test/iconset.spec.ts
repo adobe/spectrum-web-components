@@ -10,7 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+<<<<<<< HEAD
 import { fixture, nextFrame, elementUpdated } from '@open-wc/testing';
+=======
+import { fixture, nextFrame } from '@open-wc/testing';
+>>>>>>> Test of running tests with open-wc
 import { Icon } from '../lib/icon';
 import { defineCustomElements } from '../lib/define';
 import * as MediumIcons from '../lib/icons/icons-medium';
@@ -58,12 +62,16 @@ describe('Iconset', () => {
             `
         );
 
+<<<<<<< HEAD
         const icon = el.querySelector('sp-icon') as Icon | null;
         const iconSet = el.querySelector('sp-icons-medium') as Icon | null;
 
         await elementUpdated(iconSet!);
         await elementUpdated(icon!);
 
+=======
+        const icon = el.querySelector('sp-icon');
+>>>>>>> Test of running tests with open-wc
         const svg = icon!.shadowRoot!.querySelector('[role="img"]');
         expect(svg).to.not.be.null;
     });

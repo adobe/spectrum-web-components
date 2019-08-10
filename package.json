@@ -59,6 +59,7 @@
         "@adobe/es-modules-middleware": "~1.1.0",
         "@adobe/spectrum-css": "^2.13.0",
         "@babel/core": "^7.4.0",
+        "@bundled-es-modules/chai": "^4.2.1",
         "@open-wc/building-webpack": "^2.1.1",
         "@open-wc/polyfills-loader": "^0.3.2",
         "@open-wc/testing": "^2.2.8",
