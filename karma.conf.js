@@ -36,6 +36,16 @@ module.exports = (config) => {
                 outputFile: process.env.JUNIT_REPORT_NAME,
                 useBrowserName: false,
             },
+            coverageIstanbulReporter: {
+                thresholds: {
+                    global: {
+                        statements: 80,
+                        branches: 53,
+                        functions: 83,
+                        lines: 79,
+                    },
+                },
+            },
         })
     );
     return config;
