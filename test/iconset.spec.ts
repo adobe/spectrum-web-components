@@ -59,9 +59,13 @@ describe('Iconset', () => {
         );
 
         const icon = el.querySelector('sp-icon') as Icon | null;
+<<<<<<< HEAD
         const iconSet = el.querySelector('sp-icons-medium') as Icon | null;
 
         await elementUpdated(iconSet!);
+=======
+
+>>>>>>> Massage test for CI
         await elementUpdated(icon!);
 
         const svg = icon!.shadowRoot!.querySelector('[role="img"]');
