@@ -14,12 +14,37 @@ import { radios, withKnobs } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 import '../src/textfield';
 
-import { defineCustomElements, Icon } from '../src';
-
 storiesOf('Textfield', module)
     .addDecorator(withKnobs)
     .add('Default', () => {
         return html`
             <sp-textfield label="Enter your name"></sp-textfield>
+            <sp-textfield label="Enter your name" disabled></sp-textfield>
+            <sp-textfield
+                label="Enter your name"
+                pattern="[\\w\\s]+"
+                required
+                value="A valid input"
+            ></sp-textfield>
+            <sp-textfield
+                label="Enter your name"
+                pattern="[\\w\\s]+"
+                required
+                value="A valid input"
+                disabled
+            ></sp-textfield>
+            <sp-textfield
+                label="Enter your name"
+                pattern="[\\d]+"
+                required
+                value="Not a valid input"
+            ></sp-textfield>
+            <sp-textfield
+                label="Enter your name"
+                invalid
+                required
+                value="Not a valid input"
+                disabled
+            ></sp-textfield>
         `;
     });

@@ -11,3 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-textfield.css';
+
+:host([disabled]) {
+    pointer-events: none;
+}

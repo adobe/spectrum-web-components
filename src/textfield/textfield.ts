@@ -21,6 +21,7 @@ import {
 import { Focusable } from '../shared/focusable';
 
 import textfieldStyles from './textfield.css';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 /**
  * @slot icon - The icon that appears on the left of the label
@@ -34,14 +35,23 @@ export class Textfield extends Focusable {
     @query('#input')
     private inputElement!: HTMLElement;
 
+    @property({ type: Boolean, reflect: true })
+    public invalid = false;
+
     @property()
     public label = '';
+
+    @property()
+    public pattern = '';
+
+    @property({ type: Boolean, reflect: true })
+    public multiline = false;
 
     @property({ type: String })
     public value = '';
 
     @property({ type: Boolean, reflect: true })
-    public multiline = false;
+    public required = false;
 
     public get focusElement(): HTMLElement {
         return this.inputElement;
@@ -51,19 +61,27 @@ export class Textfield extends Focusable {
         if (this.multiline) {
             return html`
                 <textarea
-                    id="input"
                     aria-label=${this.label}
+                    class=${ifDefined(!this.invalid ? undefined : 'is-invalid')}
+                    id="input"
+                    pattern=${ifDefined(this.pattern)}
                     placeholder=${this.label}
                     .value=${this.value}
+                    ?disabled=${this.disabled}
+                    ?required=${this.required}
                 ></textarea>
             `;
         }
         return html`
             <input
-                id="input"
                 aria-label=${this.label}
+                class=${ifDefined(!this.invalid ? undefined : 'is-invalid')}
+                id="input"
+                pattern=${ifDefined(this.pattern)}
                 placeholder=${this.label}
                 .value=${this.value}
+                ?disabled=${this.disabled}
+                ?required=${this.required}
             />
         `;
     }

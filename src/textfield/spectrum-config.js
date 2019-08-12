@@ -32,11 +32,6 @@ module.exports = {
                     selector: '.spectrum-Textfield--quiet',
                     name: 'quiet',
                 },
-                {
-                    type: 'boolean',
-                    selector: '.spectrum-Textfield--quiet',
-                    name: 'quiet',
-                },
             ],
         },
     ],
