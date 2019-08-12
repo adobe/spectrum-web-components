@@ -11,3 +11,34 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-tab.css';
+
+:host([vertical]) {
+    height: auto !important;
+}
+
+:host([vertical]) #tab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+:host([vertical]) #tab::before {
+    height: auto;
+    margin-top: 0;
+    top: 0;
+    bottom: 0;
+}
+
+:host([vertical]) ::slotted([slot='icon']) {
+    flex-shrink: 0;
+}
+
+:host([vertical]) #itemLabel {
+    font-size: 13px;
+    padding: 8px 0;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0;
+}

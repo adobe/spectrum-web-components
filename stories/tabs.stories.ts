@@ -45,32 +45,88 @@ storiesOf('Tabs', module)
             horizontal: 'horizontal',
             vertical: 'vertical',
         };
-        const type = radios('Type', directions, directions.horizontal);
+        const type = radios('List Type', directions, directions.horizontal);
+        const tabType = radios('Tab Type', directions, directions.horizontal);
         return html`
             <sp-icons-medium></sp-icons-medium>
             <sp-tab-list selected="1" direction="${type}">
-                <sp-tab label="Tab 1" value="1" tabindex="0">
+                <sp-tab
+                    label="Tab 1"
+                    value="1"
+                    tabindex="0"
+                    ?vertical=${tabType === directions.vertical}
+                >
                     <sp-icon
                         slot="icon"
                         size="m"
                         name="ui:CheckmarkSmall"
                     ></sp-icon>
                 </sp-tab>
-                <sp-tab label="Tab 2" value="2" tabindex="0">
+                <sp-tab
+                    label="Tab 2"
+                    value="2"
+                    tabindex="0"
+                    ?vertical=${tabType === directions.vertical}
+                >
                     <sp-icon
                         slot="icon"
                         size="m"
                         name="ui:CrossSmall"
                     ></sp-icon>
                 </sp-tab>
-                <sp-tab label="Tab 3" value="3" tabindex="0">
+                <sp-tab
+                    label="Tab 3"
+                    value="3"
+                    tabindex="0"
+                    ?vertical=${tabType === directions.vertical}
+                >
                     <sp-icon
                         slot="icon"
                         size="m"
                         name="ui:ChevronDownSmall"
                     ></sp-icon>
                 </sp-tab>
-                <sp-tab label="Tab 4" value="4" tabindex="0">
+                <sp-tab
+                    label="Tab 4"
+                    value="4"
+                    tabindex="0"
+                    ?vertical=${tabType === directions.vertical}
+                >
+                    <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
+                </sp-tab>
+            </sp-tab-list>
+        `;
+    })
+    .add('Icons II', () => {
+        const directions = {
+            horizontal: 'horizontal',
+            vertical: 'vertical',
+        };
+        return html`
+            <sp-icons-medium></sp-icons-medium>
+            <sp-tab-list selected="1" direction="vertical">
+                <sp-tab label="Tab 1" value="1" tabindex="0" vertical>
+                    <sp-icon
+                        slot="icon"
+                        size="m"
+                        name="ui:CheckmarkSmall"
+                    ></sp-icon>
+                </sp-tab>
+                <sp-tab label="Tab 2" value="2" tabindex="0" vertical>
+                    <sp-icon
+                        slot="icon"
+                        size="m"
+                        name="ui:CrossSmall"
+                    ></sp-icon>
+                </sp-tab>
+                <sp-tab label="Tab 3" value="3" tabindex="0" vertical>
+                    <sp-icon
+                        slot="icon"
+                        size="m"
+                        name="ui:ChevronDownSmall"
+                    ></sp-icon>
+                </sp-tab>
+                <sp-tab label="Tab 4" value="4" tabindex="0" vertical>
                     <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
                 </sp-tab>
             </sp-tab-list>

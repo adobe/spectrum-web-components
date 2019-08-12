@@ -40,6 +40,9 @@ export class Tab extends Focusable {
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
+    @property({ type: Boolean, reflect: true })
+    public vertical = false;
+
     @property({ type: String, reflect: true })
     public value = '';
 
