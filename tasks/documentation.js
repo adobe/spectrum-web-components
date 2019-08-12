@@ -17,6 +17,7 @@ const PluginError = require('plugin-error');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server/lib/Server');
 const webpackConfig = require('../documentation/webpack.config');
+const merge = require('webpack-merge');
 
 const projectDir = path.dirname(__dirname);
 const srcPath = path.join(projectDir, 'src');
@@ -72,7 +73,13 @@ const webpackDevServer = () => {
 };
 
 const webpackBuild = () => {
-    const config = Object.assign({ mode: 'production' }, webpackConfig);
+    const config = merge(webpackConfig, {
+        mode: 'production',
+        output: {
+            filename: '[name].[hash].bundle.js',
+            chunkFilename: '[name].[hash].js',
+        },
+    });
     return new Promise((resolve, reject) => {
         webpack(config, (errors, stats) => {
             if (errors) {
