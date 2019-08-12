@@ -44,7 +44,7 @@ export class Icon extends LitElement {
 
     private iconsetListener?: EventListener;
 
-    private updateIconPromise?: Promise<any>;
+    private updateIconPromise?: Promise<void>;
 
     public static get styles(): CSSResultArray {
         return [iconStyles];
@@ -98,7 +98,7 @@ export class Icon extends LitElement {
         `;
     }
 
-    private async updateIcon(): Promise<any> {
+    private async updateIcon(): Promise<void> {
         if (!this.name) {
             return Promise.resolve();
         }
@@ -150,7 +150,7 @@ export class Icon extends LitElement {
         `;
     }
 
-    protected async _getUpdateComplete() {
+    protected async _getUpdateComplete(): Promise<void> {
         await super._getUpdateComplete();
         await this.updateIconPromise;
     }
