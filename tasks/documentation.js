@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 const gulp = require('gulp');
 const path = require('path');
+const fs = require('fs-extra');
 const { exec } = require('child_process');
 const PluginError = require('plugin-error');
 const webpack = require('webpack');
@@ -22,6 +23,8 @@ const merge = require('webpack-merge');
 const projectDir = path.dirname(__dirname);
 const srcPath = path.join(projectDir, 'src');
 const storybookOut = path.join(projectDir, 'documentation/dist/storybook');
+
+const BASE_URL = 'https://opensource.adobe.com/spectrum-web-components/';
 
 const extractComponentDocumentation = () => {
     return exec(
@@ -72,7 +75,7 @@ const webpackDevServer = () => {
     );
 };
 
-const webpackBuild = () => {
+const webpackBuild = async () => {
     const config = merge(webpackConfig, {
         mode: 'production',
         output: {
@@ -80,13 +83,24 @@ const webpackBuild = () => {
             chunkFilename: '[name].[hash].js',
         },
     });
-    return new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
         webpack(config, (errors, stats) => {
             if (errors) {
                 console.log('Webpack', errors);
             }
             resolve();
         });
+    });
+    const indexPath = path.join(projectDir, 'documentation/dist/index.html');
+    let indexHtml = await fs.readFile(indexPath, {
+        encoding: 'utf8',
+    });
+    indexHtml = indexHtml.replace(
+        '<base href="/">',
+        `<base href="${BASE_URL}">`
+    );
+    return fs.writeFile(indexPath, indexHtml, {
+        encoding: 'utf8',
     });
 };
 
