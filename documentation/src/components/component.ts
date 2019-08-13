@@ -79,12 +79,8 @@ class ComponentElement extends LayoutElement {
                         @change="${this.handleTabChange}"
                         direction="horizontal"
                     >
-                        <sp-tab
-                            value="examples"
-                            label="Examples"
-                            tabindex="1"
-                        ></sp-tab>
-                        <sp-tab value="api" label="API" tabindex="2"></sp-tab>
+                        <sp-tab value="examples" label="Examples"></sp-tab>
+                        <sp-tab value="api" label="API"></sp-tab>
                     </sp-tab-list>
                     ${this.tab === TabValue.Examples
                         ? ComponentDocs.get(this.location.params.component)
