@@ -55,6 +55,9 @@ describe('Menu', () => {
     });
 
     it('handle focus and keyboard input', async () => {
+        // !!! WHEN RUNNING THIS TEST LOCALLY !!!
+        // If you don't focus (click) on the FireFox browser that gets spawned,
+        // then it won't be able to take focus events and this test will fail.
         const handleFocus = (e: Event) => {
             activeElement = e.target as MenuItem;
         };
