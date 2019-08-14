@@ -60,7 +60,9 @@ describe('Iconset', () => {
         );
 
         const icon = el.querySelector('sp-icon') as Icon | null;
+        const iconSet = el.querySelector('sp-icons-medium') as Icon | null;
 
+        await elementUpdated(iconSet!);
         await elementUpdated(icon!);
 
         const svg = icon!.shadowRoot!.querySelector('[role="img"]');
