@@ -24,12 +24,14 @@ storiesOf('Textfield', module)
                 label="Enter your name"
                 pattern="[\\w\\s]+"
                 required
+                valid
                 value="A valid input"
             ></sp-textfield>
             <sp-textfield
                 label="Enter your name"
                 pattern="[\\w\\s]+"
                 required
+                valid
                 value="A valid input"
                 disabled
             ></sp-textfield>

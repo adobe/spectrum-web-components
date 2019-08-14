@@ -144,15 +144,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Textfield:-moz-ui-invalid */
     box-shadow: none;
 }
-#input.is-invalid,
+:host([invalid]) #input,
 #input:invalid,
-#input.is-valid {
+:host([valid]) #input {
     /* .spectrum-Textfield.is-invalid,
    * .spectrum-Textfield:invalid,
    * .spectrum-Textfield.is-valid */
     background-repeat: no-repeat;
 }
-#input.is-invalid,
+:host([invalid]) #input,
 #input:invalid {
     /* .spectrum-Textfield.is-invalid,
    * .spectrum-Textfield:invalid */
@@ -187,7 +187,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
-#input.is-valid {
+:host([valid]) #input {
     /* .spectrum-Textfield.is-valid */
     background-size: var(--spectrum-icon-checkmark-medium-width)
         var(--spectrum-icon-checkmark-medium-width);
@@ -210,6 +210,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
     /* .spectrum-Textfield.is-valid */
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' height='12' viewBox='0 0 12 12' width='12'%3E%3Cpath style='fill:var%28--spectrum-alert-success-icon-color%2C var%28--spectrum-global-color-green-600%29%29' d='M4.5 10a1.023 1.023 0 0 1-.8-.384l-2.488-3a1 1 0 0 1 1.577-1.233L4.5 7.376l4.712-5.991a1 1 0 1 1 1.576 1.23l-5.511 7A.977.977 0 0 1 4.5 10z'/%3E%3C/svg%3E");
 }
 :host([multiline]) #input {
     /* .spectrum-Textfield--multiline */
@@ -217,9 +218,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding: 4px 8px;
     overflow: auto;
 }
-:host([multiline]) #input.is-invalid,
+:host([multiline][invalid]) #input,
 :host([multiline]) #input:invalid,
-:host([multiline]) #input.is-valid {
+:host([multiline][valid]) #input {
     /* .spectrum-Textfield--multiline.is-invalid,
    * .spectrum-Textfield--multiline:invalid,
    * .spectrum-Textfield--multiline.is-valid */
@@ -256,9 +257,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-300)
     );
 }
-:host([quiet]) #input.is-invalid,
+:host([quiet][invalid]) #input,
 :host([quiet]) #input:invalid,
-:host([quiet]) #input.is-valid {
+:host([quiet][valid]) #input {
     /* .spectrum-Textfield--quiet.is-invalid,
    * .spectrum-Textfield--quiet:invalid,
    * .spectrum-Textfield--quiet.is-valid */
@@ -317,7 +318,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-#input.is-invalid,
+:host([invalid]) #input,
 #input:invalid {
     /* .spectrum-Textfield.is-invalid,
    * .spectrum-Textfield:invalid */
@@ -325,8 +326,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-textfield-border-color-error,
         var(--spectrum-global-color-red-500)
     );
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' height='18' viewBox='0 0 18 18' width='18'%3E%3Cpath style='fill:var%28--spectrum-alert-error-border-color%2C var%28--spectrum-global-color-red-400%29%29' d='M8.564 1.289L.2 16.256A.5.5 0 0 0 .636 17h16.728a.5.5 0 0 0 .5-.5.494.494 0 0 0-.064-.244L9.436 1.289a.5.5 0 0 0-.872 0zM10 14.75a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25zm0-3a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25v-6a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25z'/%3E%3C/svg%3E");
 }
-#input.is-invalid:focus:not(:active),
+:host([invalid]) #input:focus:not(:active),
 #input:invalid:focus:not(:active) {
     /* .spectrum-Textfield.is-invalid.focus-ring:not(:active),
    * .spectrum-Textfield:invalid.focus-ring:not(:active) */
@@ -389,7 +391,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-300)
     );
 }
-:host([quiet]) #input.is-invalid,
+:host([quiet][invalid]) #input,
 :host([quiet]) #input:invalid {
     /* .spectrum-Textfield--quiet.is-invalid,
    * .spectrum-Textfield--quiet:invalid */
@@ -398,7 +400,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-red-500)
     );
 }
-:host([quiet]) #input.is-invalid:focus,
+:host([quiet][invalid]) #input:focus,
 :host([quiet]) #input:invalid:focus {
     /* .spectrum-Textfield--quiet.is-invalid:focus,
    * .spectrum-Textfield--quiet:invalid:focus */
@@ -408,7 +410,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-red-500)
         );
 }
-:host([quiet]) #input.is-invalid:focus:not(:active),
+:host([quiet][invalid]) #input:focus:not(:active),
 :host([quiet]) #input:invalid:focus:not(:active) {
     /* .spectrum-Textfield--quiet.is-invalid.focus-ring:not(:active),
    * .spectrum-Textfield--quiet:invalid.focus-ring:not(:active) */

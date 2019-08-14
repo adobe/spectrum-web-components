@@ -42,10 +42,13 @@ export class Textfield extends Focusable {
     public label = '';
 
     @property()
-    public pattern = '';
+    public pattern?: string;
 
     @property({ type: Boolean, reflect: true })
     public multiline = false;
+
+    @property({ type: Boolean, reflect: true })
+    public valid = false;
 
     @property({ type: String })
     public value = '';
@@ -62,7 +65,6 @@ export class Textfield extends Focusable {
             return html`
                 <textarea
                     aria-label=${this.label}
-                    class=${ifDefined(!this.invalid ? undefined : 'is-invalid')}
                     id="input"
                     pattern=${ifDefined(this.pattern)}
                     placeholder=${this.label}
@@ -75,7 +77,6 @@ export class Textfield extends Focusable {
         return html`
             <input
                 aria-label=${this.label}
-                class=${ifDefined(!this.invalid ? undefined : 'is-invalid')}
                 id="input"
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.label}
