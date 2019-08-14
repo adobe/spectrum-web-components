@@ -188,6 +188,16 @@ storiesOf('Button', module)
                 Github
             </sp-button>
         `;
+    })
+    .add('button with href target="_blank"', () => {
+        return html`
+            <sp-button
+                href="https://github.com/adobe/spectrum-web-components"
+                target="_blank"
+            >
+                Github
+            </sp-button>
+        `;
     });
 
 function renderButton(properties) {

@@ -21,6 +21,9 @@ export class ButtonBase extends Focusable {
     @property()
     public href?: string;
 
+    @property()
+    public target?: string;
+
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;
 
@@ -51,13 +54,23 @@ export class ButtonBase extends Focusable {
         return content;
     }
 
-    protected render(): TemplateResult {
-        return this.href && this.href.length > 0
+    protected get anchorTagContent(): TemplateResult {
+        return this.target && this.target.length > 0
             ? html`
-                  <a href="${this.href}" id="button">
+                  <a href="${this.href}" target="${this.target}" id="button">
                       ${this.buttonContent}
                   </a>
               `
+            : html`
+                  <a href="${this.href}" id="button">
+                      ${this.buttonContent}
+                  </a>
+              `;
+    }
+
+    protected render(): TemplateResult {
+        return this.href && this.href.length > 0
+            ? this.anchorTagContent
             : html`
                   <button id="button">${this.buttonContent}</button>
               `;
