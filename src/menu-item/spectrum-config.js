@@ -17,7 +17,7 @@ module.exports = {
             name: 'menu-item',
             host: {
                 selector: '.spectrum-Menu-item',
-                shadowSelector: '#item',
+                shadowSelector: '#button',
             },
             attributes: [
                 {

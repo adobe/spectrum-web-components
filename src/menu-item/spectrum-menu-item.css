@@ -28,7 +28,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-150)
     );
 }
-#item {
+#button {
     /* .spectrum-Menu-item */
     cursor: pointer;
     position: relative;
@@ -70,11 +70,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
-#item:focus {
+#button:focus {
     /* .spectrum-Menu-item:focus */
     outline: none;
 }
-:host([selected]) #item {
+:host([selected]) #button {
     /* .spectrum-Menu-item.is-selected */
     padding-right: calc(
         var(--spectrum-selectlist-option-padding, 12px) -
@@ -86,7 +86,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-600)
     );
 }
-:host([selected]) #item #selected {
+:host([selected]) #button #selected {
     /* .spectrum-Menu-item.is-selected .spectrum-Menu-checkmark */
     display: block;
     /* .spectrum-Menu-item.is-selected .spectrum-Menu-checkmark */
@@ -121,8 +121,8 @@ slot[name='icon'] + #label {
     white-space: nowrap;
     overflow: hidden;
 }
-#item:focus,
-#item.is-focused {
+#button:focus,
+#button.is-focused {
     /* .spectrum-Menu-item.focus-ring,
    * .spectrum-Menu-item.is-focused */
     background-color: var(
@@ -138,9 +138,9 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-blue-400)
     );
 }
-#item:hover,
-#item:focus,
-#item.is-open {
+#button:hover,
+#button:focus,
+#button.is-open {
     /* .spectrum-Menu-item:hover,
    * .spectrum-Menu-item:focus,
    * .spectrum-Menu-item.is-open */
@@ -154,7 +154,7 @@ slot[name='icon'] + #label {
     );
 }
 .is-active,
-#item:active {
+#button:active {
     /* .spectrum-Menu-item .is-active,
    * .spectrum-Menu-item:active */
     background-color: var(
@@ -162,7 +162,7 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-background-color-hover-overlay)
     );
 }
-:host([disabled]) #item {
+:host([disabled]) #button {
     /* .spectrum-Menu-item.is-disabled */
     background-color: var(
         --spectrum-selectlist-option-background-color-disabled,

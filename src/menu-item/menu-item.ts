@@ -10,20 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    html,
-    property,
-    CSSResultArray,
-    TemplateResult,
-    query,
-} from 'lit-element';
+import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
 
 import menuItemStyles from './menu-item.css';
-import { nothing } from 'lit-html';
 import { defineCustomElements } from '../define';
 import '../icon';
 import * as MediumIcons from '../icons/icons-medium';
-import { Focusable } from '../shared/focusable';
+import { ActionButton } from '../button';
 
 defineCustomElements(...Object.values(MediumIcons));
 
@@ -33,56 +26,27 @@ defineCustomElements(...Object.values(MediumIcons));
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
  */
-export class MenuItem extends Focusable {
+export class MenuItem extends ActionButton {
     public static get styles(): CSSResultArray {
         return [menuItemStyles];
     }
 
-    private get hasIcon(): boolean {
-        return !!this.querySelector('[slot="icon"]');
-    }
-
-    @property({ type: Boolean, reflect: true })
-    public selected = false;
-
     @property({ type: Number, reflect: true })
     public tabIndex = -1;
 
-    @query('#item')
-    public item?: HTMLButtonElement;
-
-    public get focusElement(): HTMLButtonElement | MenuItem {
-        if (typeof this.item === 'undefined') {
-            return this;
+    protected get buttonContent(): TemplateResult[] {
+        const content = super.buttonContent;
+        if (this.selected) {
+            content.push(html`
+                <sp-icon
+                    id="selected"
+                    name="ui:CheckmarkMedium"
+                    size="s"
+                    slot="icon"
+                ></sp-icon>
+            `);
         }
-        return this.item;
-    }
-
-    public render(): TemplateResult {
-        return html`
-            <button
-                ?disabled=${this.disabled}
-                id="item"
-                tabindex=${this.tabIndex}
-            >
-                ${this.hasIcon
-                    ? html`
-                          <slot name="icon"></slot>
-                      `
-                    : nothing}
-                <span id="label"><slot></slot></span>
-                ${this.selected
-                    ? html`
-                          <sp-icon
-                              id="selected"
-                              name="ui:CheckmarkMedium"
-                              size="s"
-                              slot="icon"
-                          ></sp-icon>
-                      `
-                    : nothing}
-            </button>
-        `;
+        return content;
     }
 
     protected firstUpdated(): void {
