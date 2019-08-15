@@ -73,8 +73,8 @@ interface Options {
                     content: `Run all benchmarks for all SWC components:
 $ node test/benchmark/cli
 Run all benchmarks for specific components:
-$ node test/benchmark/cli -p button ripple
-$ node test/benchmark/cli -p button -p ripple
+$ node test/benchmark/cli -p button textfield
+$ node test/benchmark/cli -p button -p textfield
 Run benchmarks on remote Selenium server or SSH tunnel:
 $ node test/benchmark/cli -r http://localhost:4444/wd/hub
 Run benchmarks n times on each package:

@@ -10,5 +10,5 @@ measureFixtureCreation(html`
         max="100"
         label="Opacity"
         id="opacity-slider"
-    />
+    ></sp-slider>
 `);
