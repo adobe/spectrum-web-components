@@ -4,12 +4,13 @@ styles/**/*.css.ts
 
 node_modules
 npm-debug.log
-.nvmrc
 .DS_STORE
 .chrome
 .firefox
-.vscode
 .npmrc
+.nvmrc
+.vscode
+.tsbuildinfo
 
 documentation/api-docs/component_data.json
 documentation/api-docs/*.html
