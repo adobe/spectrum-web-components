@@ -59,10 +59,11 @@ During development you may wish to use `npm run test:watch` to automatically bui
 You can acquire current runtimes for the individual elements with:
 
 ```
+npm run build:tests
 npm run test:bench
 ```
 
-This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer) tests and report the current runtime cost of each individual element.
+This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer) tests and report the current runtime cost of each individual element. When not making changes to the benchmarks thy have been built on your local machine, you can stip `npm run build:tests` for later passes.
 
 ## Development within Adobe
 
