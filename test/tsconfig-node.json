@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "commonjs",
+        "types": ["node"],
+        "typeRoots": ["../node_modules/@types"]
+    },
+    "include": ["benchmark/cli.ts"],
+    "exclude": []
+}
