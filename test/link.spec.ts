@@ -22,7 +22,7 @@ describe('Link', () => {
     it('loads', async () => {
         const el = await fixture<Link>(
             html`
-                <sp-link href="test_url">Default Link</sp-banner>
+                <sp-link href="test_url">Default Link</sp-link>
             `
         );
 

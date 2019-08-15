@@ -4,12 +4,12 @@ styles/**/*.css.ts
 
 node_modules
 npm-debug.log
-.nvmrc
 .DS_STORE
 .chrome
 .firefox
-.vscode
 .npmrc
+.nvmrc
+.tsbuildinfo
 
 coverage
 documentation/api-docs/component_data.json
@@ -24,3 +24,7 @@ package-deps.json
 spectrum-web-components.build.log
 spectrum-web-components.build.error.log
 TESTS.xml
+
+/test/benchmark/**/*.js
+/test/benchmark/**/*.js.map
+/test/benchmark/**/*.d.ts 

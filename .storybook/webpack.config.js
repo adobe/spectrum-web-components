@@ -10,6 +10,6 @@ module.exports = ({ config }) => {
     );
     cssRule.exclude = srcPath;
 
-    const result = merge(config, webpackBaseConfig(srcPath, /test\/.*/));
+    const result = merge(config, webpackBaseConfig(srcPath, /\.spec\.ts$/));
     return result;
 };

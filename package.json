@@ -28,6 +28,7 @@
         "process-icons": "node ./scripts/process-icons.js",
         "prebuild": "rimraf lib",
         "build": "gulp",
+        "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "watch": "gulp watch",
         "serve": "node ./scripts/serve.js",
         "serve:watch": "npm run build && (npm run serve & npm run watch)",
@@ -40,7 +41,8 @@
         "test:watch": "npm run watch & npm run test:build -- -w & karma start --auto-watch=true --single-run=false",
         "test:update-snapshots": "npm run test:build && karma start --update-snapshots",
         "test:prune-snapshots": "npm run test:build && karma start --prune-snapshots",
-        "test:compatibility": "npm run test:build && karma start --compatibility all --auto-watch=true --single-run=false"
+        "test:compatibility": "npm run test:build && karma start --compatibility all --auto-watch=true --single-run=false",
+        "test:bench": "node test/benchmark/cli.js"
     },
     "husky": {
         "hooks": {
@@ -67,6 +69,9 @@
         "@storybook/addons": "5.0.11",
         "@storybook/core": "5.0.11",
         "@storybook/polymer": "5.0.11",
+        "@types/chai": "^4.1.7",
+        "@types/command-line-args": "^5.0.0",
+        "@types/command-line-usage": "^5.0.1",
         "@types/common-tags": "^1.4.0",
         "@types/karma-chai": "^0.1.1",
         "@types/node": "^11.11.0",
@@ -141,6 +146,7 @@
         "stylelint": "^9.10.1",
         "stylelint-config-prettier": "^4.0.0",
         "stylelint-config-standard": "^18.2.0",
+        "tachometer": "^0.4.9",
         "ts-loader": "^6.0.0",
         "typedoc": "^0.15.0",
         "typescript": "^3.4.1",
