@@ -9,7 +9,6 @@ npm-debug.log
 .firefox
 .npmrc
 .nvmrc
-.vscode
 .tsbuildinfo
 
 documentation/api-docs/component_data.json

@@ -1,27 +1,9 @@
 {
+    "extends": "../tsconfig.json",
     "compilerOptions": {
-        "target": "es2017",
-        "module": "es2015",
-        "moduleResolution": "node",
-        "lib": ["es2017", "dom", "dom.iterable"],
-        "declaration": true,
-        "sourceMap": true,
-        "inlineSources": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "experimentalDecorators": true,
-        "skipLibCheck": true,
-        "strict": true,
-        "noImplicitAny": false,
         "composite": true,
         "outDir": ".",
-        "tsBuildInfoFile": ".tsbuildinfo",
-        "baseUrl": "./",
-        "paths": {
-            "@crisp/spectrum-web-components/*": ["../lib/*"]
-        }
+        "tsBuildInfoFile": ".tsbuildinfo"
     },
     "include": ["benchmark/**/*.ts"],
     "exclude": ["benchmark/cli.ts"]

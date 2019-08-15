@@ -6,7 +6,9 @@ import { measureFixtureCreation } from '../helpers';
 
 defineCustomElements(...Object.values(MediumIcons));
 
+const iconset = document.createElement('sp-icons-medium');
+document.body.append(iconset);
+
 measureFixtureCreation(html`
-    <sp-icons-medium></sp-icons-medium>
     <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
 `);
