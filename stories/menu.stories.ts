@@ -41,7 +41,7 @@ storiesOf('Menu', module)
                 <sp-menu-item>
                     Save Selection
                 </sp-menu-item>
-                <sp-menu-item disabled aria-disabled="true">
+                <sp-menu-item disabled>
                     Make Work Path
                 </sp-menu-item>
             </sp-menu>
@@ -64,7 +64,7 @@ storiesOf('Menu', module)
                     <sp-menu-item>
                         Save Selection
                     </sp-menu-item>
-                    <sp-menu-item disabled aria-disabled="true">
+                    <sp-menu-item disabled>
                         Make Work Path
                     </sp-menu-item>
                 </sp-menu>
@@ -118,7 +118,6 @@ storiesOf('Menu', module)
     })
     .add('Selected', () => {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <sp-popover open style="width: 200px;">
                 <sp-menu>
                     <sp-menu-group>

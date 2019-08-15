@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
 
 import menuItemStyles from './menu-item.css';
+import focusableStyles from '../shared/focusable.css';
 import { defineCustomElements } from '../define';
 import '../icon';
 import * as MediumIcons from '../icons/icons-medium';
@@ -28,7 +29,7 @@ defineCustomElements(...Object.values(MediumIcons));
  */
 export class MenuItem extends ActionButton {
     public static get styles(): CSSResultArray {
-        return [menuItemStyles];
+        return [focusableStyles, menuItemStyles];
     }
 
     @property({ type: Number, reflect: true })
@@ -38,6 +39,7 @@ export class MenuItem extends ActionButton {
         const content = super.buttonContent;
         if (this.selected) {
             content.push(html`
+                <sp-icons-medium></sp-icons-medium>
                 <sp-icon
                     id="selected"
                     name="ui:CheckmarkMedium"

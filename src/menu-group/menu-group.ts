@@ -40,4 +40,8 @@ export class MenuGroup extends LitElement {
             </div>
         `;
     }
+
+    protected firstUpdated(): void {
+        this.setAttribute('role', 'group');
+    }
 }

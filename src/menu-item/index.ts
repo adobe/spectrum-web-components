@@ -11,6 +11,15 @@ governing permissions and limitations under the License.
 */
 import { MenuItem } from './menu-item';
 import { MenuDivider } from './menu-divider';
+export * from './menu-item';
+export * from './menu-divider';
 
 customElements.define('sp-menu-item', MenuItem);
 customElements.define('sp-menu-divider', MenuDivider);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-menu-item': MenuItem;
+        'sp-menu-divider': MenuDivider;
+    }
+}

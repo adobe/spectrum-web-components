@@ -35,6 +35,7 @@ function extractComponentData(component) {
 class CustomAnalyzer extends AnalyzeCliCommand {
     constructor(...args) {
         super(...args);
+        console.log('hi');
         const renderer = new marked.Renderer();
         this.parser = new marked.Parser({ renderer });
         Object.assign(renderer, {
