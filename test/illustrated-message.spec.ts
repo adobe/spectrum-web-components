@@ -13,8 +13,7 @@ import { IllustratedMessage } from '../lib/illustrated-message/illustrated-messa
 import '../lib/illustrated-message'; // import the index for side-effects (element registration)
 import { fixture } from '@open-wc/testing';
 import { html } from 'lit-html';
-import { chai } from '@bundled-es-modules/chai';
-const expect = chai.expect;
+import { expect } from '@bundled-es-modules/chai';
 
 describe('Illustrated Message', () => {
     it('loads', async () => {
