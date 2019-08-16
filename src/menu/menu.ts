@@ -29,7 +29,7 @@ export class Menu extends LitElement {
         return [menuStyles];
     }
 
-    public menuItems?: Element[];
+    public menuItems = [] as Element[];
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
@@ -44,7 +44,19 @@ export class Menu extends LitElement {
         this.addEventListener('focusout', this.stopListeningToKeyboard);
     }
 
+    public focus(): void {
+        if (this.menuItems.length === 0) {
+            return;
+        }
+
+        const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
+        focusInItem.focus();
+    }
+
     public startListeningToKeyboard(): void {
+        if (this.menuItems.length === 0) {
+            return;
+        }
         this.addEventListener('keydown', this.handleKeydown);
     }
 
@@ -59,12 +71,6 @@ export class Menu extends LitElement {
                 'focusout',
                 () => {
                     this.focusedItemIndex = this.focusInItemIndex;
-                    if (
-                        typeof this.menuItems === 'undefined' ||
-                        this.menuItems.length === 0
-                    ) {
-                        return;
-                    }
                     const itemToFocus = this.menuItems[
                         this.focusInItemIndex
                     ] as MenuItem;
@@ -83,12 +89,6 @@ export class Menu extends LitElement {
     }
 
     public focusMenuItemByOffset(offset: number): void {
-        if (
-            typeof this.menuItems === 'undefined' ||
-            this.menuItems.length === 0
-        ) {
-            return;
-        }
         const focusedItem = this.menuItems[this.focusedItemIndex] as MenuItem;
         this.focusedItemIndex =
             (this.menuItems.length + this.focusedItemIndex + offset) %

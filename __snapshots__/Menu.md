@@ -1,6 +1,6 @@
 # `Menu`
 
-#### `renders`
+#### `renders w/ menu items`
 
 ```html
 <sp-menu-item role="menuitem" tabindex="0">
