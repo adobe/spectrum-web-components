@@ -9,22 +9,20 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './overlay';
-export * from './overlay-root';
 
-import { OverlayRoot } from './overlay-root';
-import { ActiveOverlay } from './active-overlay';
+export type TriggerInteractions = 'click' | 'hover';
 
-if (!customElements.get('overlay-root')) {
-    customElements.define('overlay-root', OverlayRoot);
+export type Placement = 'top' | 'right' | 'bottom' | 'left';
+
+export interface OverlayOpenDetail {
+    content: HTMLElement;
+    delay: number;
+    offset: number;
+    placement: Placement;
+    trigger: HTMLElement;
+    interaction: TriggerInteractions;
 }
-if (!customElements.get('active-overlay')) {
-    customElements.define('active-overlay', ActiveOverlay);
-}
 
-declare global {
-    interface HTMLElementTagNameMap {
-        'overlay-root': OverlayRoot;
-        'active-overlay': ActiveOverlay;
-    }
+export interface OverlayCloseDetail {
+    content: HTMLElement;
 }

@@ -26,7 +26,6 @@ import {
     TriggerInteractions,
     Placement,
 } from '../overlay-root';
-import { strictCustomEvent } from '../events';
 
 /**
  * A overlay trigger component for displaying overlays relative to other content.
@@ -52,9 +51,8 @@ export class OverlayTrigger extends LitElement {
 
     private hoverContent?: HTMLElement;
 
-    public onOverlayOpen(ev: Event, interaction: TriggerInteractions): void {
+    public onOverlayOpen(event: Event, interaction: TriggerInteractions): void {
         const isClick = interaction === 'click';
-        // if (!isClick) return;
         const overlayElement = isClick ? this.clickContent : this.hoverContent;
         const delayAttribute = overlayElement
             ? overlayElement.getAttribute('delay')
@@ -73,11 +71,14 @@ export class OverlayTrigger extends LitElement {
             interaction: interaction,
         };
 
-        const overlayOpenEvent = strictCustomEvent('sp-overlay:open', {
-            bubbles: true,
-            composed: true,
-            detail: overlayOpenDetail,
-        });
+        const overlayOpenEvent = new CustomEvent<OverlayOpenDetail>(
+            'sp-overlay:open',
+            {
+                bubbles: true,
+                composed: true,
+                detail: overlayOpenDetail,
+            }
+        );
 
         this.dispatchEvent(overlayOpenEvent);
     }
@@ -94,11 +95,14 @@ export class OverlayTrigger extends LitElement {
             content: overlayElement,
         };
 
-        const overlayCloseEvent = strictCustomEvent('sp-overlay:close', {
-            bubbles: true,
-            composed: true,
-            detail: overlayCloseDetail,
-        });
+        const overlayCloseEvent = new CustomEvent<OverlayCloseDetail>(
+            'sp-overlay:close',
+            {
+                bubbles: true,
+                composed: true,
+                detail: overlayCloseDetail,
+            }
+        );
 
         this.dispatchEvent(overlayCloseEvent);
     }
