@@ -54,12 +54,12 @@ export class ButtonBase extends Focusable {
     protected render(): TemplateResult {
         return this.href && this.href.length > 0
             ? html`
-                  <a href="${this.href}" id="button" ?disabled=${this.disabled}>
+                  <a href="${this.href}" id="button">
                       ${this.buttonContent}
                   </a>
               `
             : html`
-                  <button id="button" ?disabled=${this.disabled}>
+                  <button id="button">
                       ${this.buttonContent}
                   </button>
               `;
