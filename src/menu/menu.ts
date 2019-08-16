@@ -22,6 +22,7 @@ interface MenuItem extends HTMLElement {
 
 /**
  * Spectrum Menu Component
+ * @element sp-menu
  *
  */
 export class Menu extends LitElement {

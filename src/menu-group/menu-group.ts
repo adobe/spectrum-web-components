@@ -17,10 +17,8 @@ import menuGroupStyles from './menu-group.css';
 let instances = 0;
 
 /**
- * Spectrum Link Component
- *
- * @attr quiet - uses quiet styles or not
- * @attr over-background - uses over background styles or not
+ * Spectrum Menu Group Component
+ * @element sp-menu-group
  */
 export class MenuGroup extends LitElement {
     public static get styles(): CSSResultArray {

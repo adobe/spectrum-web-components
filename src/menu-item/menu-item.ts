@@ -22,10 +22,8 @@ import { ActionButton } from '../button';
 defineCustomElements(...Object.values(MediumIcons));
 
 /**
- * Spectrum Link Component
- *
- * @attr quiet - uses quiet styles or not
- * @attr over-background - uses over background styles or not
+ * Spectrum Menu Item Component
+ * @element sp-menu-item
  */
 export class MenuItem extends ActionButton {
     public static get styles(): CSSResultArray {

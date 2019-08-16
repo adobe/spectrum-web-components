@@ -16,6 +16,7 @@ import menuDividerStyles from './menu-divider.css';
 
 /**
  * Spectrum Menu Divider Component
+ * @element sp-menu-divider
  *
  */
 export class MenuDivider extends LitElement {
