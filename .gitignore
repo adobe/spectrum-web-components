@@ -11,9 +11,14 @@ npm-debug.log
 .nvmrc
 .tsbuildinfo
 
+coverage
 documentation/api-docs/component_data.json
 documentation/api-docs/*.html
 documentation/dist
+test/**/*.js
+test/**/*.js.map
+test/**/*.d.ts 
+!test/global.d.ts
 
 package-deps.json
 spectrum-web-components.build.log

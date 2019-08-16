@@ -21,7 +21,7 @@ import {
 
 import { IconsetRegistry } from '../iconset/iconset-registry';
 
-import styles from './icon.css';
+import iconStyles from './icon.css';
 import { nothing } from 'lit-html';
 
 export class Icon extends LitElement {
@@ -44,8 +44,10 @@ export class Icon extends LitElement {
 
     private iconsetListener?: EventListener;
 
+    private updateIconPromise?: Promise<void>;
+
     public static get styles(): CSSResultArray {
-        return [styles];
+        return [iconStyles];
     }
 
     public connectedCallback(): void {
@@ -62,7 +64,7 @@ export class Icon extends LitElement {
                 return;
             }
             if (ev.detail.name === icon.iconset) {
-                this.updateIcon();
+                this.updateIconPromise = this.updateIcon();
             }
         }) as EventListener;
         window.addEventListener('sp-iconset:added', this.iconsetListener);
@@ -78,7 +80,7 @@ export class Icon extends LitElement {
     }
 
     public firstUpdated(): void {
-        this.updateIcon();
+        this.updateIconPromise = this.updateIcon();
     }
 
     public attributeChangedCallback(
@@ -87,7 +89,7 @@ export class Icon extends LitElement {
         value: string
     ): void {
         super.attributeChangedCallback(name, old, value);
-        this.updateIcon(); // any of our attributes change, update our icon
+        this.updateIconPromise = this.updateIcon(); // any of our attributes change, update our icon
     }
 
     protected render(): TemplateResult {
@@ -96,26 +98,26 @@ export class Icon extends LitElement {
         `;
     }
 
-    private updateIcon(): void {
+    private async updateIcon(): Promise<void> {
         if (!this.name) {
-            return;
+            return Promise.resolve();
         }
         // parse the icon name to get iconset name
         const icon = this.parseIcon(this.name);
         if (!icon) {
-            return;
+            return Promise.resolve();
         }
         // try to retrieve the iconset
         const iconset = IconsetRegistry.getInstance().getIconset(icon.iconset);
         if (!iconset) {
             // we can stop here as there's nothing to be done till we get the iconset
-            return;
+            return Promise.resolve();
         }
         if (!this.iconContainer) {
-            return;
+            return Promise.resolve();
         }
         this.iconContainer.innerHTML = '';
-        iconset.applyIconToElement(
+        return iconset.applyIconToElement(
             this.iconContainer,
             icon.icon,
             this.size ? this.size : '',
@@ -146,5 +148,10 @@ export class Icon extends LitElement {
                   `
                 : nothing}
         `;
+    }
+
+    protected async _getUpdateComplete(): Promise<void> {
+        await super._getUpdateComplete();
+        await this.updateIconPromise;
     }
 }
