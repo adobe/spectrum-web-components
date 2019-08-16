@@ -50,7 +50,7 @@ describe('Iconset', () => {
     });
 
     it('can be after `<sp-icon/>` in the DOM order', async () => {
-        const el = await fixture<Icon>(
+        const el = await fixture<HTMLDivElement>(
             html`
                 <div>
                     <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
