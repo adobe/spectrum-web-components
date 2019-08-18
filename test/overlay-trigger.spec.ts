@@ -40,6 +40,12 @@ function waitForPredicate(
     });
 }
 
+function wait(timeout: number): Promise<undefined> {
+    return new Promise<undefined>((resolve) => {
+        setTimeout(() => resolve(), timeout);
+    });
+}
+
 function isVisible(element: HTMLElement) {
     return !!element.offsetParent;
 }
@@ -233,7 +239,7 @@ describe('Overlays', () => {
 
         pressEscape();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
+        // Wait for the DOM node to be put back in its original place
         await waitForPredicate(
             () => innerPopover.parentElement instanceof OverlayTrigger
         );
@@ -243,7 +249,7 @@ describe('Overlays', () => {
 
         pressEscape();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
+        // Wait for the DOM node to be put back in its original place
         await waitForPredicate(
             () => outerPopover.parentElement instanceof OverlayTrigger
         );
@@ -279,9 +285,15 @@ describe('Overlays', () => {
         expect(isVisible(outerPopover)).to.be.true;
         expect(isVisible(innerPopover)).to.be.true;
 
+        // Test that clicking in the overlay content does not the overlay
+        innerPopover.click();
+        await wait(200);
+        expect(isVisible(outerPopover)).to.be.true;
+        expect(isVisible(innerPopover)).to.be.true;
+
         document.body.click();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
+        // Wait for the DOM node to be put back in its original place
         await waitForPredicate(
             () => innerPopover.parentElement instanceof OverlayTrigger
         );
@@ -291,7 +303,7 @@ describe('Overlays', () => {
 
         document.body.click();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
+        // Wait for the DOM node to be put back in its original place
         await waitForPredicate(
             () => outerPopover.parentElement instanceof OverlayTrigger
         );
