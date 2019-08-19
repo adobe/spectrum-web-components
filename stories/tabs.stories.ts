@@ -12,11 +12,8 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { radios, withKnobs } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
-import * as MediumIcons from '../src/icons/icons-medium';
 import '../src/tab-list';
 import '../src/tab';
-
-import { defineCustomElements, Icon } from '../src';
 
 storiesOf('Tabs', module)
     .addDecorator(withKnobs)
@@ -98,10 +95,6 @@ storiesOf('Tabs', module)
         `;
     })
     .add('Icons II', () => {
-        const directions = {
-            horizontal: 'horizontal',
-            vertical: 'vertical',
-        };
         return html`
             <sp-icons-medium></sp-icons-medium>
             <sp-tab-list selected="1" direction="vertical">

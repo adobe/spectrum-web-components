@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
-import { withKnobs, boolean, radios, text } from '@storybook/addon-knobs';
+import { withKnobs, radios } from '@storybook/addon-knobs';
 import * as MediumIcons from '../src/icons/icons-medium';
 
 import { defineCustomElements, Icon } from '../src';

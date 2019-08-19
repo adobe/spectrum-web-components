@@ -10,13 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import {
-    withKnobs,
-    boolean,
-    radios,
-    text,
-    number,
-} from '@storybook/addon-knobs';
+import { withKnobs, text, number } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
 import '../src/slider';
@@ -38,7 +32,7 @@ storiesOf('Slider', module)
                     max="${max}"
                     label="${label}"
                     id="opacity-slider"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -53,7 +47,7 @@ storiesOf('Slider', module)
                     min="0"
                     max="20"
                     label="${label}"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -68,7 +62,7 @@ storiesOf('Slider', module)
                     max="20"
                     label="Color"
                     id="color-slider"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -84,7 +78,7 @@ storiesOf('Slider', module)
                     max="20"
                     label="Color"
                     id="color-slider"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -101,7 +95,7 @@ storiesOf('Slider', module)
                     max="20"
                     label="Color"
                     id="color-slider"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -119,7 +113,7 @@ storiesOf('Slider', module)
                     max="${max}"
                     label="Opacity"
                     id="opacity-slider-opacity"
-                />
+                ></sp-slider>
             </div>
             <div style="width: 500px; margin: 20px;">
                 <sp-slider
@@ -129,7 +123,7 @@ storiesOf('Slider', module)
                     max="${max}"
                     label="Lightness"
                     id="opacity-slider-lightness"
-                />
+                ></sp-slider>
             </div>
             <div style="width: 500px; margin: 20px;">
                 <sp-slider
@@ -139,7 +133,7 @@ storiesOf('Slider', module)
                     max="${max}"
                     label="Saturation"
                     id="opacity-slider-saturation"
-                />
+                ></sp-slider>
             </div>
         `;
     });

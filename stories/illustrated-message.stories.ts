@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { withKnobs, boolean, radios, text } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
 import '../src/illustrated-message';

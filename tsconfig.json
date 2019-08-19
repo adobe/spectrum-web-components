@@ -21,5 +21,11 @@
         "lib": ["es2017", "dom", "dom.iterable"],
         "outDir": "lib"
     },
-    "include": ["./src/**/*.ts", "./documentation/**/*.ts", "./test/**/*.ts"]
+    "include": [
+        "./src/**/*.ts",
+        "./documentation/**/*.ts",
+        "./test/**/*.ts",
+        "./.storybook/*.ts",
+        "./stories/**/*.ts"
+    ]
 }
