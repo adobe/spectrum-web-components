@@ -10,8 +10,10 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { withKnobs, number, radios } from '@storybook/addon-knobs';
-import { html, LitElement, css } from 'lit-element';
+import { html, LitElement, css, property } from 'lit-element';
 
+import { Placement } from '../src/overlay-root/overlay';
+import { RadioChangeDetail } from '../src/radio/radio';
 import '../src/overlay-root';
 import '../src/overlay-trigger';
 import '../src/button';
@@ -24,12 +26,11 @@ import '../src/radio-group';
 const MAX_DEPTH = 7;
 
 class RecursivePopover extends LitElement {
-    static get properties() {
-        return {
-            placement: { type: String },
-            depth: { type: Number },
-        };
-    }
+    @property({ type: String })
+    private placement: Placement;
+
+    @property({ type: Number })
+    private depth: number = 0;
 
     static get styles() {
         return css`
@@ -49,8 +50,8 @@ class RecursivePopover extends LitElement {
         this.depth = 0;
     }
 
-    onRadioChange(event) {
-        this.placement = event.detail.value;
+    onRadioChange(event: CustomEvent<RadioChangeDetail>) {
+        this.placement = event.detail.value as Placement;
     }
 
     render() {
@@ -104,11 +105,11 @@ storiesOf('Overlay Root', module)
             left: 'left',
             right: 'right',
         };
-        const position = radios(
+        const placement = radios(
             'Type',
             positionOptions,
             positionOptions.bottom
-        );
+        ) as Placement;
         const offset = number('Offset', 6);
 
         return html`
@@ -150,7 +151,7 @@ storiesOf('Overlay Root', module)
             <overlay-root>
                 <overlay-trigger
                     id="trigger"
-                    placement="${position}"
+                    placement="${placement}"
                     offset="${offset}"
                 >
                     <sp-button variant="primary" slot="trigger">
@@ -159,7 +160,7 @@ storiesOf('Overlay Root', module)
                     <sp-popover
                         dialog
                         slot="click-content"
-                        direction="${position}"
+                        direction="${placement}"
                         tip
                         open
                     >
