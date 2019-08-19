@@ -9,19 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { defineCustomElements } from '../src/define';
-import { Checkbox } from '../src/checkbox';
-import '../src/checkbox';
-import * as MediumIcons from '../src/icons/icons-medium';
-import {
-    fixture,
-    elementUpdated,
-    triggerBlurFor,
-} from '@open-wc/testing-helpers';
-import { chaiDomDiff } from '@open-wc/semantic-dom-diff';
-import { html } from 'lit-html';
 
-chai.use(chaiDomDiff);
+import { defineCustomElements } from '../lib/define';
+import { Checkbox } from '../lib/checkbox';
+import '../lib/checkbox';
+import * as MediumIcons from '../lib/icons/icons-medium';
+import { fixture, elementUpdated, triggerBlurFor } from '@open-wc/testing';
+import { html } from 'lit-html';
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 defineCustomElements(...Object.values(MediumIcons));
 
