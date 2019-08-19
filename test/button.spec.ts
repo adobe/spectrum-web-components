@@ -11,10 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import { chaiDomDiff } from '@open-wc/semantic-dom-diff';
-import { fixture, elementUpdated } from '@open-wc/testing-helpers';
-import { Button } from '../src/button/button';
-import '../src/button'; // Register <sp-button>
+import { fixture, elementUpdated } from '@open-wc/testing';
+import { Button } from '../lib/button/button';
+import '../lib/button'; // Register <sp-button>
 import { html } from 'lit-element';
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 chai.use(chaiDomDiff);
 

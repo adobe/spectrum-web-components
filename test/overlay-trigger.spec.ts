@@ -20,6 +20,8 @@ import '../lib/popover';
 
 import { fixture } from '@open-wc/testing';
 import { html } from 'lit-html';
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 function waitForPredicate(
     predicateFn: () => boolean | undefined,
@@ -145,10 +147,16 @@ describe('Overlays', () => {
     });
 
     it('loads', async () => {
-        const element = testDiv.querySelector('overlay-root') as OverlayRoot;
+        const element = testDiv.querySelector('overlay-root');
+        if (!(element instanceof OverlayRoot))
+            throw new Error('element is not an instance of OverlayRoot');
         expect(element).to.exist;
         expect(element.shadowRoot).to.exist;
-        const popover = element.querySelector('sp-popover') as Popover;
+
+        const popover = element.querySelector('sp-popover');
+        if (!(popover instanceof Popover))
+            throw new Error('popover is not an instance of Popover');
+
         expect(popover).to.exist;
         expect(popover.shadowRoot).to.exist;
         expect(popover.parentElement).to.be.an.instanceOf(OverlayTrigger);
