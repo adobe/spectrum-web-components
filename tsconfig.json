@@ -22,7 +22,6 @@
         "lib": ["es2017", "dom", "dom.iterable"],
         "allowSyntheticDefaultImports": true
     },
-<<<<<<< HEAD
     "include": [
         "./src/**/*.ts",
         "./documentation/**/*.ts",
@@ -30,7 +29,4 @@
         "./.storybook/*.ts",
         "./stories/**/*.ts"
     ]
-=======
-    "include": ["./packages/**/*.ts", "./documentation/**/*.ts"]
->>>>>>> WIP: let us do lerna!
 }
