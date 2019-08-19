@@ -9,16 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { OverlayRoot } from '../src/overlay-root/overlay-root';
-import { OverlayTrigger } from '../src/overlay-trigger';
-import { Popover } from '../src/popover/popover';
+import { OverlayRoot } from '../lib/overlay-root/overlay-root';
+import { OverlayTrigger } from '../lib/overlay-trigger';
+import { Popover } from '../lib/popover/popover';
 
-import '../src/overlay-root';
-import '../src/overlay-trigger';
-import '../src/button';
-import '../src/popover';
+import '../lib/overlay-root';
+import '../lib/overlay-trigger';
+import '../lib/button';
+import '../lib/popover';
 
-import { fixture } from '@open-wc/testing-helpers';
+import { fixture } from '@open-wc/testing';
 import { html } from 'lit-html';
 
 function waitForPredicate(
