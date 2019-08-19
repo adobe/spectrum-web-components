@@ -48,7 +48,10 @@ describe('TabList', () => {
     });
 
     it('loads', () => {
-        const tabList = testDiv.querySelector('sp-tab-list') as TabList;
+        const tabList = testDiv.querySelector('sp-tab-list');
+        if (!(tabList instanceof TabList))
+            throw new Error('tablist not of type TabList');
+
         const tabs = tabList.querySelectorAll('sp-tab');
 
         expect(tabList).to.exist;
@@ -56,10 +59,20 @@ describe('TabList', () => {
     });
 
     it('reflects selected tab with selected property', async () => {
-        const tabList = testDiv.querySelector('sp-tab-list') as TabList;
-        const firstTab = tabList.querySelector('sp-tab[value=first]') as Tab;
-        const secondTab = tabList.querySelector('sp-tab[value=second]') as Tab;
-        const thirdTab = tabList.querySelector('sp-tab[value=third]') as Tab;
+        const tabList = testDiv.querySelector('sp-tab-list');
+        if (!(tabList instanceof TabList))
+            throw new Error('tablist not of type TabList');
+
+        const firstTab = tabList.querySelector('sp-tab[value=first]');
+        const secondTab = tabList.querySelector('sp-tab[value=second]');
+        const thirdTab = tabList.querySelector('sp-tab[value=third]');
+
+        if (!(firstTab instanceof Tab))
+            throw new Error('firstTab not of type Tab');
+        if (!(secondTab instanceof Tab))
+            throw new Error('secondTab not of type Tab');
+        if (!(thirdTab instanceof Tab))
+            throw new Error('thirdTab not of type Tab');
 
         expect(firstTab.selected).to.be.true;
         expect(secondTab.selected).to.be.false;
@@ -84,7 +97,10 @@ describe('TabList', () => {
     });
 
     it('forces only one tab to be selected', () => {
-        const tabList = testDiv.querySelector('sp-tab-list') as TabList;
+        const tabList = testDiv.querySelector('sp-tab-list');
+        if (!(tabList instanceof TabList))
+            throw new Error('tablist not of type TabList');
+
         const selectedTabs = tabList.querySelectorAll('sp-tab[selected]');
 
         expect(tabList.selected).to.equal('first');
@@ -92,9 +108,14 @@ describe('TabList', () => {
     });
 
     it('de-selects all but first selected tab if multiple selected', () => {
-        const tabList = testDiv.querySelector('sp-tab-list') as TabList;
+        const tabList = testDiv.querySelector('sp-tab-list');
+        if (!(tabList instanceof TabList))
+            throw new Error('tablist not of type TabList');
+
         const tab1 = tabList.querySelector('sp-tab[value=first]') as Tab;
         const tab2 = tabList.querySelector('sp-tab[value=second]') as Tab;
+        if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
+        if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
 
         expect(tabList.selected).to.equal('first');
         expect(tab1.selected).to.be.true;
@@ -102,10 +123,17 @@ describe('TabList', () => {
     });
 
     it('ensures setting selection updates selected tab', async () => {
-        const tabList = testDiv.querySelector('sp-tab-list') as TabList;
+        const tabList = testDiv.querySelector('sp-tab-list');
+        if (!(tabList instanceof TabList))
+            throw new Error('tablist not of type TabList');
+
         const tab1 = tabList.querySelector('sp-tab[value=first]') as Tab;
         const tab2 = tabList.querySelector('sp-tab[value=second]') as Tab;
         const tab3 = tabList.querySelector('sp-tab[value=third]') as Tab;
+
+        if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
+        if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
+        if (!(tab3 instanceof Tab)) throw new Error('tab3 not of type Tab');
 
         expect(tabList.selected).to.equal('first');
         expect(tab1.selected).to.be.true;
@@ -129,10 +157,17 @@ describe('TabList', () => {
     });
 
     it('ensures setting selected and clicking on tab both work together', async () => {
-        const tabList = testDiv.querySelector('sp-tab-list') as TabList;
+        const tabList = testDiv.querySelector('sp-tab-list');
+        if (!(tabList instanceof TabList))
+            throw new Error('tablist not of type TabList');
+
         const tab1 = tabList.querySelector('sp-tab[value=first]') as Tab;
         const tab2 = tabList.querySelector('sp-tab[value=second]') as Tab;
         const tab3 = tabList.querySelector('sp-tab[value=third]') as Tab;
+
+        if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
+        if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
+        if (!(tab3 instanceof Tab)) throw new Error('tab3 not of type Tab');
 
         tab2.click();
         await elementUpdated(tabList);
