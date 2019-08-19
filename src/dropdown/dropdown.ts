@@ -1,5 +1,5 @@
 /*
-Copyright 2018 Adobe. All rights reserved.
+Copyright 2019 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -24,6 +24,9 @@ import dropdownStyles from './dropdown.css';
 import { defineCustomElements } from '../define';
 import '../icon';
 import '../popover';
+import '../menu';
+import '../menu-item';
+import '../menu-group';
 import * as MediumIcons from '../icons/icons-medium';
 import { nothing } from 'lit-html';
 
@@ -53,66 +56,51 @@ export class Dropdown extends LitElement {
     protected render(): TemplateResult {
         return html`
             <sp-icons-medium></sp-icons-medium>
-            <button
+            <sp-action-button
                 @click=${this.toggle}
                 ?disabled=${this.disabled}
-                class="spectrum-FieldButton spectrum-Dropdown-trigger"
                 aria-haspopup="true"
+                icon-right
+                class="spectrum-Dropdown-trigger"
             >
-                <span class="spectrum-Dropdown-label is-placeholder">
-                    Select a Country with a very long label, too long in fact
-                </span>
+                Select a Country with a very long label, too long in fact
                 ${this.invalid
                     ? html`
-                          <sp-icon name="ui:AlertSmall" class="icon"></sp-icon>
+                          <sp-icon name="ui:AlertSmall" slot="icon"></sp-icon>
                       `
                     : nothing}
                 <sp-icon
                     name="ui:ChevronDownMedium"
-                    class="icon dropdown"
                     size="s"
+                    slot="icon"
                 ></sp-icon>
-            </button>
+            </sp-action-button>
             <sp-popover
                 direction="bottom"
                 ?open=${this.open}
                 class="spectrum-Dropdown-popover"
             >
-                <ul class="spectrum-Menu" role="listbox">
-                    <li
-                        class="spectrum-Menu-item is-selected"
-                        role="option"
-                        aria-selected="true"
-                        tabindex="0"
-                    >
-                        <span class="spectrum-Menu-itemLabel">Ballard</span>
-                        <svg
-                            class="spectrum-Icon spectrum-UIIcon-CheckmarkMedium spectrum-Menu-checkmark"
-                            focusable="false"
-                            aria-hidden="true"
-                        >
-                            <use
-                                xlink:href="#spectrum-css-icon-CheckmarkMedium"
-                            ></use>
-                        </svg>
-                    </li>
-                    <li class="spectrum-Menu-item" role="option" tabindex="0">
-                        <span class="spectrum-Menu-itemLabel">Fremont</span>
-                    </li>
-                    <li class="spectrum-Menu-item" role="option" tabindex="0">
-                        <span class="spectrum-Menu-itemLabel">Greenwood</span>
-                    </li>
-                    <li class="spectrum-Menu-divider" role="separator"></li>
-                    <li
-                        class="spectrum-Menu-item is-disabled"
-                        role="option"
-                        aria-disabled="true"
-                    >
-                        <span class="spectrum-Menu-itemLabel">
-                            United States of America
-                        </span>
-                    </li>
-                </ul>
+                <sp-menu>
+                    <sp-menu-item>
+                        Deselect
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Select Inverse
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Feather...
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Select and Mask...
+                    </sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>
+                        Save Selection
+                    </sp-menu-item>
+                    <sp-menu-item disabled>
+                        Make Work Path
+                    </sp-menu-item>
+                </sp-menu>
             </sp-popover>
         `;
     }
