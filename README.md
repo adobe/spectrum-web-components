@@ -54,6 +54,17 @@ npm run test
 
 During development you may wish to use `npm run test:watch` to automatically build and re-run the test suites.
 
+## Benchmarking
+
+You can acquire current runtimes for the individual elements with:
+
+```
+npm run build:tests
+npm run test:bench
+```
+
+This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer) tests and report the current runtime cost of each individual element. When not making changes to the benchmarks thy have been built on your local machine, you can stip `npm run build:tests` for later passes.
+
 ## Development within Adobe
 
 Due to the internal `@adobe` npm registry served by Artifactory, when developing this module internally it is necessary to provide an `.npmrc` local to this project which forces the use of the public `@adobe` scope on public npm. Therefore if you are an Adobe employee working on this project add the following to a `.npmrc` file in this folder:

@@ -10,16 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { chaiDomDiff } from '@open-wc/semantic-dom-diff';
-import { fixture, elementUpdated } from '@open-wc/testing-helpers';
-import { Icon } from '../src/icon';
-import { defineCustomElements } from '../src/define';
-import * as MediumIcons from '../src/icons/icons-medium';
+import { fixture, elementUpdated } from '@open-wc/testing';
+import { Icon } from '../lib/icon';
+import { defineCustomElements } from '../lib/define';
+import * as MediumIcons from '../lib/icons/icons-medium';
 import { html } from 'lit-element';
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 defineCustomElements(...Object.values(MediumIcons));
-
-chai.use(chaiDomDiff);
 
 describe('Icon', () => {
     before(() => {

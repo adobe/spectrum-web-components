@@ -38,7 +38,7 @@ storiesOf('Slider', module)
                     max="${max}"
                     label="${label}"
                     id="opacity-slider"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -53,7 +53,7 @@ storiesOf('Slider', module)
                     min="0"
                     max="20"
                     label="${label}"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -68,7 +68,7 @@ storiesOf('Slider', module)
                     max="20"
                     label="Color"
                     id="color-slider"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -84,7 +84,7 @@ storiesOf('Slider', module)
                     max="20"
                     label="Color"
                     id="color-slider"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -101,7 +101,7 @@ storiesOf('Slider', module)
                     max="20"
                     label="Color"
                     id="color-slider"
-                />
+                ></sp-slider>
             </div>
         `;
     })
@@ -119,7 +119,7 @@ storiesOf('Slider', module)
                     max="${max}"
                     label="Opacity"
                     id="opacity-slider-opacity"
-                />
+                ></sp-slider>
             </div>
             <div style="width: 500px; margin: 20px;">
                 <sp-slider
@@ -129,7 +129,7 @@ storiesOf('Slider', module)
                     max="${max}"
                     label="Lightness"
                     id="opacity-slider-lightness"
-                />
+                ></sp-slider>
             </div>
             <div style="width: 500px; margin: 20px;">
                 <sp-slider
@@ -139,7 +139,7 @@ storiesOf('Slider', module)
                     max="${max}"
                     label="Saturation"
                     id="opacity-slider-saturation"
-                />
+                ></sp-slider>
             </div>
         `;
     });

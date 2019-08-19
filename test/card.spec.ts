@@ -10,10 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Card } from '../src/card/card';
-import '../src/card';
-import { fixture, elementUpdated } from '@open-wc/testing-helpers';
+import { Card } from '../lib/card/card';
+import '../lib/card';
+import { fixture, elementUpdated } from '@open-wc/testing';
 import { html } from 'lit-html';
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 function previewNode(card: Card): Node {
     if (!card.shadowRoot) throw new Error('No shadowRoot');

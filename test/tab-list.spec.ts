@@ -9,12 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TabList } from '../src/tab-list';
-import '../src/tab-list';
-import { Tab } from '../src/tab';
-import '../src/tab';
-import { fixture, elementUpdated } from '@open-wc/testing-helpers';
+import { TabList } from '../lib/tab-list';
+import '../lib/tab-list';
+import { Tab } from '../lib/tab';
+import '../lib/tab';
+import { fixture, elementUpdated } from '@open-wc/testing';
 import { html } from 'lit-html';
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 describe('TabList', () => {
     let testDiv!: HTMLDivElement;

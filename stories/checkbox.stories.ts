@@ -106,20 +106,10 @@ storiesOf('Checkbox', module)
     .add('Tab index example', () => {
         return html`
             <sp-icons-medium></sp-icons-medium>
-            <div>
-                <sp-checkbox tabindex="0">Checkbox 0</sp-checkbox>
-            </div>
-            <div>
-                <sp-checkbox disabled tabindex="3">Checkbox 3</sp-checkbox>
-            </div>
-            <div>
-                <sp-checkbox tabindex="4">Checkbox 4</sp-checkbox>
-            </div>
-            <div>
-                <sp-checkbox tabindex="2" autofocus>Checkbox 2</sp-checkbox>
-            </div>
-            <div>
-                <sp-checkbox tabindex="1">Checkbox 1</sp-checkbox>
-            </div>
+            <sp-checkbox tabindex="0">Checkbox 0</sp-checkbox>
+            <sp-checkbox disabled tabindex="3">Checkbox 3</sp-checkbox>
+            <sp-checkbox tabindex="4">Checkbox 4</sp-checkbox>
+            <sp-checkbox tabindex="2" autofocus>Checkbox 2</sp-checkbox>
+            <sp-checkbox tabindex="1">Checkbox 1</sp-checkbox>
         `;
     });

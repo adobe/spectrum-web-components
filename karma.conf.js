@@ -9,43 +9,44 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const merge = require('webpack-merge');
-const webpackBaseConfig = require('./utils/webpack-base.config');
+const { createDefaultConfig } = require('@open-wc/testing-karma');
+const merge = require('deepmerge');
 const path = require('path');
-const webpackConfig = merge(webpackBaseConfig(undefined, /documentation\/.*/), {
-    mode: 'development',
-    devtool: 'inline-source-map',
-});
 
-module.exports = function(config) {
-    config.set({
-        plugins: ['karma-*'],
-        frameworks: ['mocha', 'chai', 'sinon'],
-        files: ['./test/test_index.ts'],
-        preprocessors: {
-            // add webpack as preprocessor
-            'test/test_index.ts': ['webpack', 'sourcemap'],
-        },
-        webpack: webpackConfig,
-        webpackMiddleware: {
-            // webpack-dev-middleware configuration
-            // i.e.
-            noInfo: true,
-            // and use stats to turn off verbose output
-            stats: {
-                // options i.e.
-                chunks: false,
+module.exports = (config) => {
+    config.set(
+        merge(createDefaultConfig(config), {
+            files: [
+                {
+                    pattern: config.grep ? config.grep : 'test/**/*.spec.js',
+                    type: 'module',
+                },
+            ],
+            reporters: ['junit'],
+
+            esm: {
+                nodeResolve: true,
             },
-        },
-        reporters: ['mocha', 'junit'],
-        junitReporter: {
-            outputDir: process.env.JUNIT_REPORT_PATH,
-            outputFile: process.env.JUNIT_REPORT_NAME,
-            useBrowserName: false,
-        },
-        browsers: [
-            path.resolve(path.join(__dirname, 'scripts/firefox.sh')),
-            path.resolve(path.join(__dirname, 'scripts/chrome.sh')),
-        ],
-    });
+            browsers: [
+                path.resolve(path.join(__dirname, 'scripts/firefox.sh')),
+                path.resolve(path.join(__dirname, 'scripts/chrome.sh')),
+            ],
+            junitReporter: {
+                outputDir: process.env.JUNIT_REPORT_PATH,
+                outputFile: process.env.JUNIT_REPORT_NAME,
+                useBrowserName: false,
+            },
+            coverageIstanbulReporter: {
+                thresholds: {
+                    global: {
+                        statements: 80,
+                        branches: 52,
+                        functions: 83,
+                        lines: 78,
+                    },
+                },
+            },
+        })
+    );
+    return config;
 };

@@ -10,11 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, nextFrame } from '@open-wc/testing-helpers';
-import { Icon } from '../src/icon';
-import { defineCustomElements } from '../src/define';
-import * as MediumIcons from '../src/icons/icons-medium';
+import { fixture, nextFrame, elementUpdated } from '@open-wc/testing';
+import { Icon } from '../lib/icon';
+import { defineCustomElements } from '../lib/define';
+import * as MediumIcons from '../lib/icons/icons-medium';
 import { html } from 'lit-element';
+import { chai } from '@bundled-es-modules/chai';
+const expect = chai.expect;
 
 defineCustomElements(...Object.values(MediumIcons));
 
@@ -48,14 +50,22 @@ describe('Iconset', () => {
     });
 
     it('can be after `<sp-icon/>` in the DOM order', async () => {
-        const el = await fixture<Icon>(
+        const el = await fixture<HTMLDivElement>(
             html`
-                <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
-                <sp-icons-medium></sp-icons-medium>
+                <div>
+                    <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
+                    <sp-icons-medium></sp-icons-medium>
+                </div>
             `
         );
 
-        const svg = el.shadowRoot!.querySelector('[role="img"]');
+        const icon = el.querySelector('sp-icon') as Icon | null;
+        const iconSet = el.querySelector('sp-icons-medium') as Icon | null;
+
+        await elementUpdated(iconSet!);
+        await elementUpdated(icon!);
+
+        const svg = icon!.shadowRoot!.querySelector('[role="img"]');
         expect(svg).to.not.be.null;
     });
 });
