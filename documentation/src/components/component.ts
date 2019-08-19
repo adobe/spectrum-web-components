@@ -16,6 +16,7 @@ import { ComponentApiDocs } from '../../api-docs';
 import { LayoutElement } from './layout';
 import componentStyles from './markdown.css';
 import { AppRouter } from '../router';
+import { TabList } from '../../../src/tab-list/tab-list';
 
 enum TabValue {
     Api = 'api',
@@ -53,8 +54,8 @@ class ComponentElement extends LayoutElement {
     public handleTabChange(event: Event) {
         if (!this.location || !event.target) return;
 
-        const target = event.target as HTMLElement;
-        const selected = target.getAttribute('selected') as TabValue;
+        const target = event.target as TabList;
+        const selected = target.selected as TabValue;
         AppRouter.changeParams({
             component: this.location.params.component,
             tab: selected,
@@ -76,14 +77,10 @@ class ComponentElement extends LayoutElement {
                     <sp-tab-list
                         selected="${this.tab}"
                         @change="${this.handleTabChange}"
-                        direction="row"
+                        direction="horizontal"
                     >
-                        <sp-tab value="examples">
-                            Examples
-                        </sp-tab>
-                        <sp-tab value="api">
-                            API
-                        </sp-tab>
+                        <sp-tab value="examples" label="Examples"></sp-tab>
+                        <sp-tab value="api" label="API"></sp-tab>
                     </sp-tab-list>
                     ${this.tab === TabValue.Examples
                         ? ComponentDocs.get(this.location.params.component)
