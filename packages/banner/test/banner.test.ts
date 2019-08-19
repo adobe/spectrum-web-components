@@ -12,8 +12,7 @@ import '../lib';
 import { Banner } from '../lib';
 import { fixture } from '@open-wc/testing';
 import { html } from 'lit-html';
-import { chai } from '@bundled-es-modules/chai';
-const expect = chai.expect;
+import { expect } from '@bundled-es-modules/chai';
 
 describe('banner', () => {
     let testDiv!: HTMLDivElement;

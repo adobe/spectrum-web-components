@@ -13,6 +13,7 @@ export * from './banner';
 
 import { Banner } from './banner';
 
+/* istanbul ignore else */
 if (!customElements.get('sp-banner')) {
     customElements.define('sp-banner', Banner);
 }
