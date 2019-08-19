@@ -18,7 +18,7 @@
             "storybook__addon-actions",
             "node"
         ],
-        "typeRoots": ["./node_modules/@types"],
+        "typeRoots": ["./node_modules/@types", "./packages"],
         "lib": ["es2017", "dom", "dom.iterable"],
         "allowSyntheticDefaultImports": true
     },

@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, property, TemplateResult } from 'lit-element';
+import {
+    html,
+    LitElement,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from 'lit-element';
 
 import bannerStyles from './banner.css';
 
@@ -30,7 +36,9 @@ export class Banner extends LitElement {
     @property({ reflect: true, type: Boolean })
     public corner = false;
 
-    public static styles = [bannerStyles];
+    public static get styles(): CSSResultArray {
+        return [bannerStyles];
+    }
 
     protected render(): TemplateResult {
         return html`
