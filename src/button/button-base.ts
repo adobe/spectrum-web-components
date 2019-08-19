@@ -67,7 +67,9 @@ export class ButtonBase extends Focusable {
                   </a>
               `
             : html`
-                  <button id="button">${this.buttonContent}</button>
+                  <button id="button">
+                      ${this.buttonContent}
+                  </button>
               `;
     }
 }

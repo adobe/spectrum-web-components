@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2018 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,24 +10,24 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated } from '@open-wc/testing';
-import { Link } from '../lib/link';
-import '../lib/link';
-import { html } from 'lit-element';
 import { expect } from '@bundled-es-modules/chai';
+import { fixture, elementUpdated } from '@open-wc/testing';
+import '../lib/menu-item';
+import { MenuItem } from '../lib/menu-item/menu-item';
+import { html } from 'lit-element';
 
-describe('Link', () => {
-    it('loads', async () => {
-        const el = await fixture<Link>(
+describe('Menu item', () => {
+    it('renders', async () => {
+        const el = await fixture<MenuItem>(
             html`
-                <sp-link href="test_url">Default Link</sp-link>
+                <sp-menu-item selected>
+                    Selected
+                </sp-menu-item>
             `
         );
 
         await elementUpdated(el);
-        expect(el).to.not.be.undefined;
-        expect(el.textContent).to.include('Default Link');
-        // make sure href is being passed to <a>
-        expect(el).shadowDom.to.equal(`<a href="test_url"><slot></slot></a>`);
+
+        expect(el).shadowDom.to.equalSnapshot();
     });
 });

@@ -15,8 +15,7 @@ import { Tab } from '../lib/tab';
 import '../lib/tab';
 import { fixture, elementUpdated } from '@open-wc/testing';
 import { html } from 'lit-html';
-import { chai } from '@bundled-es-modules/chai';
-const expect = chai.expect;
+import { expect } from '@bundled-es-modules/chai';
 
 describe('TabList', () => {
     let testDiv!: HTMLDivElement;

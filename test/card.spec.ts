@@ -14,8 +14,7 @@ import { Card } from '../lib/card/card';
 import '../lib/card';
 import { fixture, elementUpdated } from '@open-wc/testing';
 import { html } from 'lit-html';
-import { chai } from '@bundled-es-modules/chai';
-const expect = chai.expect;
+import { expect } from '@bundled-es-modules/chai';
 
 function previewNode(card: Card): Node {
     if (!card.shadowRoot) throw new Error('No shadowRoot');

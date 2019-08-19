@@ -16,8 +16,7 @@ import '../lib/checkbox';
 import * as MediumIcons from '../lib/icons/icons-medium';
 import { fixture, elementUpdated, triggerBlurFor } from '@open-wc/testing';
 import { html } from 'lit-html';
-import { chai } from '@bundled-es-modules/chai';
-const expect = chai.expect;
+import { expect } from '@bundled-es-modules/chai';
 
 defineCustomElements(...Object.values(MediumIcons));
 

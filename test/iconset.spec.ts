@@ -15,8 +15,7 @@ import { Icon } from '../lib/icon';
 import { defineCustomElements } from '../lib/define';
 import * as MediumIcons from '../lib/icons/icons-medium';
 import { html } from 'lit-element';
-import { chai } from '@bundled-es-modules/chai';
-const expect = chai.expect;
+import { expect } from '@bundled-es-modules/chai';
 
 defineCustomElements(...Object.values(MediumIcons));
 
