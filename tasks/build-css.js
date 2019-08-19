@@ -21,11 +21,20 @@ const postcss = require('gulp-postcss');
 const rename = require('gulp-rename');
 const wrap = require('gulp-wrap');
 const merge = require('merge2');
+const tap = require('gulp-tap');
 
 const stripIndent = require('common-tags').stripIndents;
 
 const srcPath = path.resolve(path.join(__dirname, '..'));
-const dstPath = path.resolve(path.join(__dirname, '..', 'lib'));
+
+function whichDst(file, t) {
+    const dirname = path.dirname(file.path);
+    const component = dirname.split('packages/')[1].split('/')[0];
+    const name = file.relative.split('/')[2];
+    const base = file.base;
+    file.path = path.join(base, name);
+    t.through(gulp.dest, ['packages/' + component + '/lib/']);
+}
 const configPath = path.resolve(path.join(__dirname, '..', 'config'));
 
 const { postCSSPlugins, wrapCSSResult } = require('../scripts/css-processing');
@@ -35,10 +44,10 @@ const tsProject = ts.createProject('tsconfig.json');
 
 const buildCSS = () => {
     const tsResult = merge([
-        gulp.src(['./src/**/*.css'], { base: './src' }),
-        gulp.src(['./styles/*.css', './styles/**/*.css'], {
-            base: '.',
-        }),
+        gulp.src(['./packages/**/src/*.css']),
+        // gulp.src(['./styles/*.css', './styles/**/*.css'], {
+        //     base: '.',
+        // }),
     ])
         // create in-memory cache of css files so we don't reprocess everything all the time
         .pipe(cached('css'))
@@ -67,8 +76,8 @@ const buildCSS = () => {
 
     // compile the ts to js
     return merge(
-        tsResult.js.pipe(gulp.dest(dstPath)),
-        tsResult.dts.pipe(gulp.dest(dstPath))
+        tsResult.js.pipe(tap(whichDst)),
+        tsResult.dts.pipe(tap(whichDst))
     );
 };
 const watchBuildCSS = () => {

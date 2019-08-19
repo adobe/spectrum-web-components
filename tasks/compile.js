@@ -16,18 +16,28 @@ const gulp = require('gulp');
 const cached = require('gulp-cached');
 const debug = require('gulp-debug');
 const ts = require('gulp-typescript');
+const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 const merge = require('merge2');
+const tap = require('gulp-tap');
 
 const tsProject = ts.createProject('tsconfig.json');
 
 const srcPath = path.resolve(path.join(__dirname, '..'));
-const dstPath = path.resolve(path.join(__dirname, '..', 'lib'));
+
+function whichDst(file, t) {
+    const dirname = path.dirname(file.path);
+    const component = dirname.split('packages/')[1].split('/')[0];
+    const name = file.relative.split('/')[2];
+    const base = file.base;
+    file.path = path.join(base, name);
+    t.through(gulp.dest, ['packages/' + component + '/lib/']);
+}
 
 const compile = () => {
     const tsResult = merge([
-        gulp.src(['./src/**/*.ts'], { base: path.join(srcPath, 'src') }),
-        gulp.src(['./styles/**/*.ts'], { base: srcPath }),
+        gulp.src(['./packages/**/src/*.ts']),
+        // gulp.src(['./styles/**/*.ts'], { base: srcPath }),
     ])
         .pipe(cached('typescript'))
         .pipe(debug({ title: 'typescript' }))
@@ -41,8 +51,8 @@ const compile = () => {
                     includeContent: true,
                 })
             )
-            .pipe(gulp.dest(dstPath)),
-        tsResult.dts.pipe(gulp.dest(dstPath))
+            .pipe(tap(whichDst)),
+        tsResult.dts.pipe(tap(whichDst))
     );
 };
 

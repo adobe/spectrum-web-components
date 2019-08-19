@@ -1,8 +1,9 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "outDir": "../"
+        "outDir": "../",
+        "typeRoots": ["./node_modules/@types", "./types"]
     },
-    "include": ["*.ts"],
+    "include": ["../packages/**/test/*.ts"],
     "exclude": ["benchmark/*"]
 }

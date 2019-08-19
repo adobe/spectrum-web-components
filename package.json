@@ -24,9 +24,8 @@
     },
     "scripts": {
         "spectrum-vars": "node ./scripts/spectrum-vars.js",
-        "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'src/**/*.css'",
+        "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'packages/**/*.css'",
         "process-icons": "node ./scripts/process-icons.js",
-        "prebuild": "rimraf lib",
         "build": "gulp",
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "watch": "gulp watch",
@@ -50,8 +49,8 @@
         }
     },
     "peerDependencies": {
-        "lit-element": "^2.1.0",
         "common-tags": "^1.8.0",
+        "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",
         "prismjs": "^1.15.0"
     },
@@ -110,6 +109,7 @@
         "gulp-postcss": "^8.0.0",
         "gulp-rename": "^1.4.0",
         "gulp-sourcemaps": "^2.6.5",
+        "gulp-tap": "^1.0.1",
         "gulp-typescript": "^5.0.0",
         "gulp-wrap": "^0.14.0",
         "html-loader": "^0.5.5",
@@ -117,6 +117,7 @@
         "karma": "^4.2.0",
         "karma-junit-reporter": "^1.2.0",
         "karma-script-launcher": "^1.0.0",
+        "lerna": "^3.16.4",
         "linebyline": "^1.3.0",
         "lit-element": "^2.2.1",
         "lit-html": "^1.0.0",
@@ -159,6 +160,5 @@
         "webpack-dev-server": "^3.2.1",
         "webpack-merge": "^4.2.1",
         "webpackbar": "^3.2.0"
-    },
-    "dependencies": {}
+    }
 }

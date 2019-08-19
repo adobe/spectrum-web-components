@@ -18,10 +18,11 @@
             "storybook__addon-actions",
             "node"
         ],
-        "typeRoots": ["./node_modules/@types"],
+        "typeRoots": ["./node_modules/@types", "./packages"],
         "lib": ["es2017", "dom", "dom.iterable"],
-        "outDir": "lib"
+        "allowSyntheticDefaultImports": true
     },
+<<<<<<< HEAD
     "include": [
         "./src/**/*.ts",
         "./documentation/**/*.ts",
@@ -29,4 +30,7 @@
         "./.storybook/*.ts",
         "./stories/**/*.ts"
     ]
+=======
+    "include": ["./packages/**/*.ts", "./documentation/**/*.ts"]
+>>>>>>> WIP: let us do lerna!
 }
