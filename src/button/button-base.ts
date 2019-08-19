@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { property, html, TemplateResult } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { Focusable } from '../shared/focusable';
 
 export class ButtonBase extends Focusable {
@@ -20,6 +21,9 @@ export class ButtonBase extends Focusable {
      */
     @property()
     public href?: string;
+
+    @property()
+    public target?: string;
 
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;
@@ -54,7 +58,11 @@ export class ButtonBase extends Focusable {
     protected render(): TemplateResult {
         return this.href && this.href.length > 0
             ? html`
-                  <a href="${this.href}" id="button">
+                  <a
+                      href="${this.href}"
+                      id="button"
+                      target=${ifDefined(this.target)}
+                  >
                       ${this.buttonContent}
                   </a>
               `
