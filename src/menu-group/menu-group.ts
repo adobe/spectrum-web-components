@@ -14,8 +14,6 @@ import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
 
 import menuGroupStyles from './menu-group.css';
 
-let instances = 0;
-
 /**
  * Spectrum Menu Group Component
  * @element sp-menu-group
@@ -25,7 +23,14 @@ export class MenuGroup extends LitElement {
         return [menuGroupStyles];
     }
 
-    private instanceCount = instances++;
+    private instanceCount = MenuGroup.instances;
+
+    private static instances = 0;
+
+    public constructor() {
+        super();
+        MenuGroup.instances += 1;
+    }
 
     public render(): TemplateResult {
         const labelledby = `menu-heading-category-${this.instanceCount}`;
