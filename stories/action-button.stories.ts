@@ -16,10 +16,20 @@ import { action } from '@storybook/addon-actions';
 import '../src/button';
 
 storiesOf('ActionButton', module).add('Default', () => {
-    return renderButtonsSelected({});
+    return renderButtonsSelected({
+        quiet: false,
+        disabled: false,
+        selected: false,
+    });
 });
 
-function renderButton(properties) {
+interface Properties {
+    quiet: boolean;
+    disabled: boolean;
+    selected: boolean;
+}
+
+function renderButton(properties: Properties) {
     return html`
         <sp-action-button
             .quiet="${!!properties.quiet}"
@@ -32,7 +42,7 @@ function renderButton(properties) {
     `;
 }
 
-function renderButtonsSelected(properties) {
+function renderButtonsSelected(properties: Properties) {
     const disabled = Object.assign({}, properties, { disabled: true });
     const selected = Object.assign({}, properties, { selected: true });
     return html`

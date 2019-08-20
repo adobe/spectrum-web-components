@@ -10,19 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import {
-    withKnobs,
-    boolean,
-    radios,
-    text,
-    number,
-} from '@storybook/addon-knobs';
+import { text, number } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
 import '../src/slider';
 
 storiesOf('Slider', module)
-    .addDecorator(withKnobs)
     .add('Default', () => {
         const value = number('Value', 50);
         const min = number('Min', 0);

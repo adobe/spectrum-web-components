@@ -9,13 +9,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { withKnobs, boolean, text, radios } from '@storybook/addon-knobs';
+import { boolean, text, radios } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
 import '../src/popover';
 
 storiesOf('Popover', module)
-    .addDecorator(withKnobs)
     .add('Default', () => {
         const loremIpsum = 'The quick brown fox jumps over the lazy dog';
         const content = text('Text content', loremIpsum);

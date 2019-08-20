@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { decorate } from '@storybook/addon-actions';
+import { decorateAction } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
 import {
@@ -22,12 +22,12 @@ import {
 
 defineCustomElements(SideNav, SideNavItem, SideNavHeading);
 
-const eventValue = decorate([(args) => [args[0].detail.value]]);
+const eventValueAction = decorateAction([(args) => [args[0].detail.value]]);
 
 storiesOf('Sidenav', module)
     .add('Default', () => {
         return html`
-            <sp-sidenav @select=${eventValue.action('select')}>
+            <sp-sidenav @select=${eventValueAction('select')}>
                 <sp-sidenav-item
                     value="Section 1"
                     label="Section 1"
@@ -55,7 +55,7 @@ storiesOf('Sidenav', module)
             <sp-sidenav
                 variant="multilevel"
                 value="2.3.1"
-                @select=${eventValue.action('select')}
+                @select=${eventValueAction('select')}
             >
                 <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
                 <sp-sidenav-item value="baz" label="baz">
@@ -79,7 +79,7 @@ storiesOf('Sidenav', module)
     })
     .add('Hrefs', () => {
         return html`
-            <sp-sidenav @select=${eventValue.action('select')}>
+            <sp-sidenav @select=${eventValueAction('select')}>
                 <sp-sidenav-heading label="GITHUB">
                     <sp-sidenav-item
                         href="https://github.com/adobe/spectrum-web-components"
