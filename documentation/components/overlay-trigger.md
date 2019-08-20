@@ -4,6 +4,11 @@ An **overlay-trigger** is used to overlay content that is positioned relative to
 another control. Two kinds of triggers are supported, `hover` and `click`. Each
 may have it's own content.
 
+Please note that you need to wrap your UI in an
+[`overlay-root`](/components/overlay-root) component, which acts as a host for
+the overlay content. You only need a single `overlay-root` for all of your
+overlays.
+
 ## Example
 
 ```html
