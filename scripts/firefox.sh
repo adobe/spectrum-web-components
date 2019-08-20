@@ -53,7 +53,7 @@ if [ -f /proc/version ]; then
 fi
 
 # launch firefox and grab the PID
-"$FIREFOX_BIN" -profile $PROFILE_PATH -no-remote $1 &
+"$FIREFOX_BIN" -profile $PROFILE_PATH -no-remote -headless $1 &
 PID=$!
 
 # wait on the process to exit

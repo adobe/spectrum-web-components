@@ -1,5 +1,5 @@
 /*
-Copyright 2018 Adobe. All rights reserved.
+Copyright 2019 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -194,6 +194,16 @@ storiesOf('Button', module)
     .add('button with href', () => {
         return html`
             <sp-button href="https://github.com/adobe/spectrum-web-components">
+                Github
+            </sp-button>
+        `;
+    })
+    .add('button with href target="_blank"', () => {
+        return html`
+            <sp-button
+                href="https://github.com/adobe/spectrum-web-components"
+                target="_blank"
+            >
                 Github
             </sp-button>
         `;

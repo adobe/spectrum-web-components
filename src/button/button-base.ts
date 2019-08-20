@@ -1,5 +1,5 @@
 /*
-Copyright 2018 Adobe. All rights reserved.
+Copyright 2019 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { property, html, TemplateResult } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import { Focusable } from '../shared/focusable';
 
 export class ButtonBase extends Focusable {
@@ -20,6 +21,9 @@ export class ButtonBase extends Focusable {
      */
     @property()
     public href?: string;
+
+    @property()
+    public target?: string;
 
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;
@@ -54,12 +58,18 @@ export class ButtonBase extends Focusable {
     protected render(): TemplateResult {
         return this.href && this.href.length > 0
             ? html`
-                  <a href="${this.href}" id="button">
+                  <a
+                      href="${this.href}"
+                      id="button"
+                      target=${ifDefined(this.target)}
+                  >
                       ${this.buttonContent}
                   </a>
               `
             : html`
-                  <button id="button">${this.buttonContent}</button>
+                  <button id="button">
+                      ${this.buttonContent}
+                  </button>
               `;
     }
 }

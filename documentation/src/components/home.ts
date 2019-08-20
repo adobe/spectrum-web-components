@@ -71,8 +71,7 @@ class HomeElement extends LayoutElement {
                     </p>
                     <p class="spectrum-Body3">
                         Because Web Components are supported and encapsulated at
-                        the browser level, you can use them from any framework
-                        without.
+                        the browser level, you can use them with any framework.
                     </p>
                 </div>
             </section>
