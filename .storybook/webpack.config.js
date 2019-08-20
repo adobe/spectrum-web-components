@@ -13,7 +13,11 @@ module.exports = ({ config }) => {
 
     const result = merge(
         config,
-        webpackBaseConfig([srcPath, storiesPath], /test\/.*/)
+        webpackBaseConfig(
+            [srcPath, storiesPath],
+            /test\/.*/,
+            '.storybook/tsconfig.json'
+        )
     );
     return result;
 };

@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
-import { withKnobs, radios } from '@storybook/addon-knobs';
+import { radios } from '@storybook/addon-knobs';
 import * as MediumIcons from '../src/icons/icons-medium';
 
 import { defineCustomElements, Icon } from '../src';
@@ -24,7 +24,6 @@ import '../src/themes';
 defineCustomElements(Icon, ...Object.values(MediumIcons));
 
 storiesOf('Theme', module)
-    .addDecorator(withKnobs)
     .add('Default', () => {
         const colorOptions = {
             Light: 'light',
