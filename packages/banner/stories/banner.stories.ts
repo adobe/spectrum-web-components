@@ -10,13 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { withKnobs, boolean, radios, text } from '@storybook/addon-knobs';
+import { boolean, radios, text } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
-import '../src/banner';
+import '../lib';
 
 storiesOf('Banner', module)
-    .addDecorator(withKnobs)
     .add('Default', () => {
         const header = text('Header', 'Header Text');
         const content = text('Content', 'Content of the banner!');
