@@ -68,10 +68,7 @@ describe('Checkbox', () => {
     });
 
     it('loads', () => {
-        const el = testFixture.querySelector('sp-checkbox');
-        if (!(el instanceof Checkbox))
-            throw new Error('el not of type Checkbox');
-
+        const el = testFixture.querySelector('sp-checkbox') as Checkbox;
         expect(el).to.not.equal(undefined);
         expect(el).dom.to.equal(`
             <sp-checkbox id="checkbox0" tabindex="5">
