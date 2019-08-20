@@ -1,5 +1,5 @@
 /*
-Copyright 2018 Adobe. All rights reserved.
+Copyright 2019 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -39,10 +39,10 @@ module.exports = (config) => {
             coverageIstanbulReporter: {
                 thresholds: {
                     global: {
-                        statements: 80,
-                        branches: 52,
-                        functions: 83,
-                        lines: 78,
+                        statements: 83,
+                        branches: 57,
+                        functions: 86,
+                        lines: 83,
                     },
                 },
             },

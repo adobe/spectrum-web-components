@@ -1,5 +1,5 @@
 /*
-Copyright 2018 Adobe. All rights reserved.
+Copyright 2019 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,8 +12,7 @@ import '../lib/banner';
 import { Banner } from '../lib/banner';
 import { fixture } from '@open-wc/testing';
 import { html } from 'lit-html';
-import { chai } from '@bundled-es-modules/chai';
-const expect = chai.expect;
+import { expect } from '@bundled-es-modules/chai';
 
 describe('banner', () => {
     let testDiv!: HTMLDivElement;
