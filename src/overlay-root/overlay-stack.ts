@@ -165,7 +165,7 @@ export class OverlayStack {
         return undefined;
     }
 
-    private async closeTopOverlay(): Promise<undefined> {
+    private closeTopOverlay(): Promise<undefined> {
         return this.hideAndCloseOverlay(this.topOverlay);
     }
 

@@ -29,6 +29,20 @@ interface CalculatePositionOptions {
     placement: string;
 }
 
+class Deferred<T> {
+    private resolveFn?: (value: T) => void;
+
+    public promise: Promise<T> = new Promise(
+        (resolve: (value: T) => void) => (this.resolveFn = resolve)
+    );
+
+    public resolve(value: T): void {
+        if (this.resolveFn) {
+            this.resolveFn(value);
+        }
+    }
+}
+
 const defaultOptions: CalculatePositionOptions = {
     containerPadding: 10,
     crossOffset: 0,
@@ -36,6 +50,8 @@ const defaultOptions: CalculatePositionOptions = {
     offset: 0,
     placement: 'left',
 };
+
+const FadeOutAnimation = 'fadeOut';
 
 export class ActiveOverlay extends LitElement {
     public overlayContent?: HTMLElement;
@@ -55,7 +71,7 @@ export class ActiveOverlay extends LitElement {
     public interaction: TriggerInteractions = 'hover';
 
     private timeout?: number;
-    private hiddenPromise?: Promise<undefined>;
+    private hiddenDeferred?: Deferred<void>;
 
     public static get styles(): CSSResultArray {
         return [styles];
@@ -73,6 +89,9 @@ export class ActiveOverlay extends LitElement {
             this.state = 'visible';
             delete this.timeout;
         }, openEvent.detail.delay);
+
+        this.hiddenDeferred = new Deferred<void>();
+        this.addEventListener('animationend', this.onAnimationEnd);
     }
 
     private extractEventDetail(ev: CustomEvent<OverlayOpenDetail>): void {
@@ -168,37 +187,18 @@ export class ActiveOverlay extends LitElement {
         this.style.setProperty('left', `${this.position.positionLeft}px`);
     }
 
-    public hide(): Promise<undefined> {
-        if (!this.hiddenPromise) {
-            this.hiddenPromise = new Promise((resolve) => {
-                // Resolve after the next CSS animation starts and completes
-                const animationStartHandler = (): void => {
-                    this.removeEventListener(
-                        'animationstart',
-                        animationStartHandler
-                    );
-                    const animationEndedHandler = (): void => {
-                        this.removeEventListener(
-                            'animationend',
-                            animationEndedHandler
-                        );
-                        this.removeEventListener(
-                            'animationcancel',
-                            animationEndedHandler
-                        );
-                        resolve();
-                    };
-                    this.addEventListener(
-                        'animationend',
-                        animationEndedHandler
-                    );
-                };
-                this.addEventListener('animationstart', animationStartHandler);
-                this.state = 'hiding';
-            });
+    public async hide(): Promise<void> {
+        this.state = 'hiding';
+        if (this.hiddenDeferred) {
+            return this.hiddenDeferred.promise;
         }
-        return this.hiddenPromise;
     }
+
+    private onAnimationEnd = (event: AnimationEvent): void => {
+        if (this.hiddenDeferred && event.animationName === FadeOutAnimation) {
+            this.hiddenDeferred.resolve();
+        }
+    };
 
     private onSlotChange(): void {
         this.updateOverlayPosition();
@@ -207,10 +207,6 @@ export class ActiveOverlay extends LitElement {
     public connectedCallback(): void {
         super.connectedCallback();
         this.updateOverlayPosition();
-    }
-
-    public disconnectedCallback(): void {
-        super.disconnectedCallback();
     }
 
     public render(): TemplateResult {

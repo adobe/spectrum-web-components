@@ -19,32 +19,9 @@ import '../lib/button';
 import '../lib/popover';
 
 import { fixture, aTimeout } from '@open-wc/testing';
+import { waitForPredicate, isVisible } from './testing-helpers';
 import { html } from 'lit-html';
-import { chai } from '@bundled-es-modules/chai';
-const expect = chai.expect;
-
-function waitForPredicate(
-    predicateFn: () => boolean | undefined,
-    timeout: number = 250
-): Promise<boolean> {
-    const initialTime = Date.now();
-    return new Promise<boolean>((resolve, reject) => {
-        function testPredicate() {
-            if (predicateFn()) {
-                resolve(true);
-            } else if (Date.now() - initialTime < timeout) {
-                requestAnimationFrame(testPredicate);
-            } else {
-                reject(false);
-            }
-        }
-        testPredicate();
-    });
-}
-
-function isVisible(element: HTMLElement) {
-    return !!element.offsetParent;
-}
+import { expect } from '@bundled-es-modules/chai';
 
 function pressEscape() {
     const up = new KeyboardEvent('keyup', {
