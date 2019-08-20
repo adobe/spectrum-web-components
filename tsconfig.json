@@ -15,11 +15,18 @@
             "sinon",
             "karma-chai",
             "webpack-env",
-            "storybook__addon-actions"
+            "storybook__addon-actions",
+            "node"
         ],
         "typeRoots": ["./node_modules/@types"],
         "lib": ["es2017", "dom", "dom.iterable"],
         "outDir": "lib"
     },
-    "include": ["./src/**/*.ts", "./documentation/**/*.ts"]
+    "include": [
+        "./src/**/*.ts",
+        "./documentation/**/*.ts",
+        "./test/**/*.ts",
+        "./.storybook/*.ts",
+        "./stories/**/*.ts"
+    ]
 }

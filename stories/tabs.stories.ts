@@ -10,16 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { radios, withKnobs } from '@storybook/addon-knobs';
+import { radios } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 import * as MediumIcons from '../src/icons/icons-medium';
+import { defineCustomElements, Icon } from '../src';
 import '../src/tab-list';
 import '../src/tab';
 
-import { defineCustomElements, Icon } from '../src';
+defineCustomElements(Icon, ...Object.values(MediumIcons));
 
 storiesOf('Tabs', module)
-    .addDecorator(withKnobs)
     .add('Default', () => {
         return html`
             <sp-tab-list selected="1">
@@ -98,10 +98,6 @@ storiesOf('Tabs', module)
         `;
     })
     .add('Icons II', () => {
-        const directions = {
-            horizontal: 'horizontal',
-            vertical: 'vertical',
-        };
         return html`
             <sp-icons-medium></sp-icons-medium>
             <sp-tab-list selected="1" direction="vertical">

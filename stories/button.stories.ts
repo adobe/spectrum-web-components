@@ -11,9 +11,10 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import * as MediumIcons from '../src/icons/icons-medium';
+import { TemplateResult } from 'lit-element';
 
 import { defineCustomElements, Icon } from '../src';
 
@@ -21,8 +22,15 @@ import '../src/button';
 
 defineCustomElements(Icon, ...Object.values(MediumIcons));
 
+interface Properties {
+    variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
+    quiet?: boolean;
+    content?: TemplateResult;
+    disabled?: boolean;
+    iconRight?: boolean;
+}
+
 storiesOf('Button', module)
-    .addDecorator(withKnobs)
     .add('Default', () => {
         return renderButtonPair({});
     })
@@ -200,7 +208,7 @@ storiesOf('Button', module)
         `;
     });
 
-function renderButton(properties) {
+function renderButton(properties: Properties): TemplateResult {
     if (properties.variant) {
         return html`
             <sp-button
@@ -226,7 +234,7 @@ function renderButton(properties) {
     }
 }
 
-function renderButtonPair(properties) {
+function renderButtonPair(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
     return html`
         ${renderButton(properties)} ${renderButton(disabled)}

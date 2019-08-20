@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { withKnobs } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
 import '../src/icon';
@@ -24,7 +23,6 @@ defineCustomElements(
 );
 
 storiesOf('Icons', module)
-    .addDecorator(withKnobs)
     .add('Medium', () => {
         return html`
             <sp-icons-medium></sp-icons-medium>

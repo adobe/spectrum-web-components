@@ -17,27 +17,57 @@ import '../src/switch';
 storiesOf('Switch', module)
     .add('Default', () => {
         return html`
-            <sp-switch>Switch</sp-switch>
+            <sp-switch
+                @click="${action('Click')}"
+                @change="${action('Change')}"
+            >
+                Switch
+            </sp-switch>
         `;
     })
     .add('Checked', () => {
         return html`
-            <sp-switch checked>Switch</sp-switch>
+            <sp-switch
+                checked
+                @click="${action('Click')}"
+                @change="${action('Change')}"
+            >
+                Switch
+            </sp-switch>
         `;
     })
     .add('Quiet', () => {
         return html`
-            <sp-switch quiet>Switch</sp-switch>
+            <sp-switch
+                quiet
+                @click="${action('Click')}"
+                @change="${action('Change')}"
+            >
+                Switch
+            </sp-switch>
         `;
     })
     .add('Quiet checked', () => {
         return html`
-            <sp-switch quiet checked>Switch</sp-switch>
+            <sp-switch
+                quiet
+                checked
+                @click="${action('Click')}"
+                @change="${action('Change')}"
+            >
+                Switch
+            </sp-switch>
         `;
     })
     .add('Autofocus', () => {
         return html`
-            <sp-switch autofocus>Switch</sp-switch>
+            <sp-switch
+                autofocus
+                @click="${action('Click')}"
+                @change="${action('Change')}"
+            >
+                Switch
+            </sp-switch>
         `;
     })
     .add('Disabled', () => {

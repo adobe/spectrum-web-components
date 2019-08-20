@@ -1,5 +1,6 @@
 import { configure, addDecorator } from '@storybook/polymer';
 import { withA11y } from '@storybook/addon-a11y';
+import { withKnobs } from '@storybook/addon-knobs';
 
 import '../styles/all-medium-light.css';
 
@@ -18,4 +19,5 @@ function loadStories() {
 }
 
 addDecorator(withA11y);
+addDecorator(withKnobs);
 configure(loadStories, module);

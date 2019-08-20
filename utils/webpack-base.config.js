@@ -14,7 +14,11 @@ const path = require('path');
 const { postCSSPlugins } = require('../scripts/css-processing');
 const transpilePackages = ['lit-html', 'lit-element'];
 
-module.exports = function(includeRegex, excludeRegex) {
+module.exports = function(
+    includeRegex,
+    excludeRegex,
+    tsconfigLocation = 'tsconfig.json'
+) {
     return {
         resolve: {
             extensions: ['.js', '.ts', '.css'],
@@ -52,6 +56,9 @@ module.exports = function(includeRegex, excludeRegex) {
                     include: includeRegex,
                     exclude: excludeRegex,
                     loader: 'ts-loader',
+                    options: {
+                        configFile: tsconfigLocation,
+                    },
                 },
                 {
                     // Package CSS up so that it can be consumed directly by lit-element

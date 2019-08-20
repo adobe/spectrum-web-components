@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { withKnobs, number, radios } from '@storybook/addon-knobs';
+import { number, radios } from '@storybook/addon-knobs';
 import { html, LitElement, css, property } from 'lit-element';
 
 import { Placement } from '../src/overlay-root/overlay';
@@ -97,7 +97,6 @@ class RecursivePopover extends LitElement {
 customElements.define('recursive-popover', RecursivePopover);
 
 storiesOf('Overlay Root', module)
-    .addDecorator(withKnobs)
     .add('Default', () => {
         const positionOptions = {
             top: 'top',
