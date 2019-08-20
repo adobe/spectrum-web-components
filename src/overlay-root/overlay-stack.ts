@@ -150,9 +150,7 @@ export class OverlayStack {
         }
     }
 
-    private async hideAndCloseOverlay(
-        overlay?: ActiveOverlay
-    ): Promise<undefined> {
+    private async hideAndCloseOverlay(overlay?: ActiveOverlay): Promise<void> {
         if (overlay) {
             await overlay.hide();
             const index = this.overlays.indexOf(overlay);
@@ -162,10 +160,9 @@ export class OverlayStack {
             }
             this.onChange(this.overlays);
         }
-        return undefined;
     }
 
-    private closeTopOverlay(): Promise<undefined> {
+    private closeTopOverlay(): Promise<void> {
         return this.hideAndCloseOverlay(this.topOverlay);
     }
 
