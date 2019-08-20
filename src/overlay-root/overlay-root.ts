@@ -19,8 +19,6 @@ import { ActiveOverlay } from './active-overlay';
 import { OverlayStack } from './overlay-stack';
 
 export class OverlayRoot extends LitElement {
-    public static is = 'overlay-root';
-
     public static get styles(): CSSResultArray {
         return [overlayStyles];
     }
@@ -45,16 +43,20 @@ export class OverlayRoot extends LitElement {
     }
 
     private onOverlayStackChange = (activeOverlays: ActiveOverlay[]): void => {
-        // Add the overlays as children. We use a slot to render them so that
-        // they are not rendered into the shadow DOM and isolated from the page
-        this.childNodes.forEach((child) => {
-            if (child instanceof ActiveOverlay) {
+        // Remove inactive overlays
+        const activeSet = new Set<ActiveOverlay>(activeOverlays);
+        for (const child of this.children) {
+            if (child instanceof ActiveOverlay && !activeSet.has(child)) {
                 this.removeChild(child);
             }
-        });
+        }
+
+        // Append new overlays
         for (const overlay of activeOverlays) {
-            overlay.setAttribute('slot', 'overlays');
-            this.appendChild(overlay);
+            if (overlay.parentElement !== this) {
+                overlay.setAttribute('slot', 'overlays');
+                this.appendChild(overlay);
+            }
         }
     };
 

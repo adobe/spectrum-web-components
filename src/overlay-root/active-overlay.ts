@@ -21,8 +21,6 @@ import {
 } from 'lit-element';
 import styles from './active-overlay.css';
 
-const CLOSE_ANIMATION_TIME = 150;
-
 interface CalculatePositionOptions {
     containerPadding: number;
     crossOffset: number;
@@ -40,8 +38,6 @@ const defaultOptions: CalculatePositionOptions = {
 };
 
 export class ActiveOverlay extends LitElement {
-    public static is = 'active-overlay';
-
     public overlayContent?: HTMLElement;
     public trigger?: HTMLElement;
 
@@ -54,13 +50,8 @@ export class ActiveOverlay extends LitElement {
     @property({ reflect: true })
     public placement: Placement = 'bottom';
 
-    @property({ type: Number, reflect: true })
     public offset = 6;
-
-    @property()
     private position?: PositionResult;
-
-    @property()
     public interaction: TriggerInteractions = 'hover';
 
     private timeout?: number;
@@ -179,16 +170,40 @@ export class ActiveOverlay extends LitElement {
 
     public hide(): Promise<undefined> {
         if (!this.hiddenPromise) {
-            this.state = 'hiding';
             this.hiddenPromise = new Promise((resolve) => {
-                setTimeout(() => resolve(), CLOSE_ANIMATION_TIME);
+                // Resolve after the next CSS animation starts and completes
+                const animationStartHandler = (): void => {
+                    this.removeEventListener(
+                        'animationstart',
+                        animationStartHandler
+                    );
+                    const animationEndedHandler = (): void => {
+                        this.removeEventListener(
+                            'animationend',
+                            animationEndedHandler
+                        );
+                        this.removeEventListener(
+                            'animationcancel',
+                            animationEndedHandler
+                        );
+                        resolve();
+                    };
+                    this.addEventListener(
+                        'animationend',
+                        animationEndedHandler
+                    );
+                };
+                this.addEventListener('animationstart', animationStartHandler);
+                this.state = 'hiding';
             });
         }
         return this.hiddenPromise;
     }
+
     private onSlotChange(): void {
         this.updateOverlayPosition();
     }
+
     public connectedCallback(): void {
         super.connectedCallback();
         this.updateOverlayPosition();
@@ -208,7 +223,9 @@ export class ActiveOverlay extends LitElement {
         openEvent: CustomEvent<OverlayOpenDetail>,
         root: HTMLElement
     ): ActiveOverlay {
-        const overlay = document.createElement(this.is) as ActiveOverlay;
+        const overlay = document.createElement(
+            'active-overlay'
+        ) as ActiveOverlay;
 
         if (openEvent.detail.content) {
             overlay.root = root;

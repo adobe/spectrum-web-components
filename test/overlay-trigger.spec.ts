@@ -18,7 +18,7 @@ import '../lib/overlay-trigger';
 import '../lib/button';
 import '../lib/popover';
 
-import { fixture } from '@open-wc/testing';
+import { fixture, aTimeout } from '@open-wc/testing';
 import { html } from 'lit-html';
 import { chai } from '@bundled-es-modules/chai';
 const expect = chai.expect;
@@ -39,12 +39,6 @@ function waitForPredicate(
             }
         }
         testPredicate();
-    });
-}
-
-function wait(timeout: number): Promise<undefined> {
-    return new Promise<undefined>((resolve) => {
-        setTimeout(() => resolve(), timeout);
     });
 }
 
@@ -293,9 +287,11 @@ describe('Overlays', () => {
         expect(isVisible(outerPopover)).to.be.true;
         expect(isVisible(innerPopover)).to.be.true;
 
-        // Test that clicking in the overlay content does not the overlay
+        // Test that clicking in the overlay content does not close the overlay
+        // 200ms is slightly more than the overlay animation fade out time (130ms)
         innerPopover.click();
-        await wait(200);
+        await aTimeout(200);
+
         expect(isVisible(outerPopover)).to.be.true;
         expect(isVisible(innerPopover)).to.be.true;
 

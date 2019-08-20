@@ -35,8 +35,6 @@ import {
  * @slot click-content - The content that will be displayed on click
  */
 export class OverlayTrigger extends LitElement {
-    public static is = 'overlay-trigger';
-
     public static get styles(): CSSResultArray {
         return [overlayTriggerStyles];
     }

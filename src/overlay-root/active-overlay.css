@@ -10,11 +10,37 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: var(--animation-transform);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+
+    to {
+        opacity: 0;
+        transform: var(--animation-transform);
+    }
+}
+
 :host {
     z-index: 2;
     position: absolute;
     display: none;
     opacity: 0;
+    animation-duration: var(--spectrum-global-animation-duration-100);
+    animation-timing-function: ease-in-out;
 }
 
 :host([state]) {
@@ -25,28 +51,25 @@ governing permissions and limitations under the License.
     opacity: 1;
     transform: translate(0, 0) !important;
     visibility: visible;
+    animation-name: fadeIn;
 }
 
-:host([state='visible']),
 :host([state='hiding']) {
-    transition: transform var(--spectrum-global-animation-duration-100)
-            ease-in-out,
-        opacity var(--spectrum-global-animation-duration-100) ease-in-out,
-        visibility 0ms linear var(--spectrum-global-animation-duration-100);
+    animation-name: fadeOut;
 }
 
 :host([placement='top']) {
-    transform: translate(0, 6px);
+    --animation-transform: translate(0, 6px);
 }
 
 :host([placement='right']) {
-    transform: translate(-6px, 0);
+    --animation-transform: translate(-6px, 0);
 }
 
 :host([placement='bottom']) {
-    transform: translate(0, -6px);
+    --animation-transform: translate(0, -6px);
 }
 
 :host([placement='left']) {
-    transform: translate(6px, 0);
+    --animation-transform: translate(6px, 0);
 }
