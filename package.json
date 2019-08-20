@@ -79,6 +79,7 @@
         "@types/sinon": "^7.0.11",
         "@types/storybook__addon-actions": "^3.4.3",
         "@types/storybook__addon-knobs": "^5.0.3",
+        "@types/storybook__polymer": "^5.1.0",
         "@types/webpack": "^4.4.26",
         "@types/webpack-env": "^1.13.9",
         "@typescript-eslint/eslint-plugin": "^1.5.0",

@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import * as MediumIcons from '../src/icons/icons-medium';
 import { TemplateResult } from 'lit-element';
@@ -31,7 +31,6 @@ interface Properties {
 }
 
 storiesOf('Button', module)
-    .addDecorator(withKnobs)
     .add('Default', () => {
         return renderButtonPair({});
     })
