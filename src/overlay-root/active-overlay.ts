@@ -92,6 +92,9 @@ export class ActiveOverlay extends LitElement {
 
         this.hiddenDeferred = new Deferred<void>();
         this.addEventListener('animationend', this.onAnimationEnd);
+        this.hiddenDeferred.promise.then(() => {
+            this.removeEventListener('animationend', this.onAnimationEnd);
+        });
     }
 
     private extractEventDetail(ev: CustomEvent<OverlayOpenDetail>): void {
