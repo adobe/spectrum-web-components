@@ -43,6 +43,16 @@ module.exports = {
                     name: 'checkmark',
                 },
             ],
+            ids: [
+                {
+                    selector: '.spectrum-Dropdown-trigger',
+                    name: 'button',
+                },
+                {
+                    selector: '.spectrum-Dropdown-label',
+                    name: 'label',
+                },
+            ],
         },
     ],
 };

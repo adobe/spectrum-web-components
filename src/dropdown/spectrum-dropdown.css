@@ -51,7 +51,7 @@ select + .dropdown {
             ) / -2
     );
 }
-.spectrum-Dropdown-trigger {
+#button {
     /* .spectrum-Dropdown-trigger */
     position: relative;
     width: 100%;
@@ -62,7 +62,7 @@ select + .dropdown {
     -ms-flex-align: center;
     align-items: center;
 }
-.spectrum-Dropdown-label {
+#label {
     /* .spectrum-Dropdown-label */
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
@@ -91,7 +91,7 @@ select + .dropdown {
     text-overflow: ellipsis;
     text-align: left;
 }
-.spectrum-Dropdown-label.is-placeholder {
+#label.is-placeholder {
     /* .spectrum-Dropdown-label.is-placeholder */
     font-weight: var(--spectrum-dropdown-placeholder-text-font-weight, 400);
     font-style: var(--spectrum-dropdown-placeholder-text-font-style, italic);
@@ -103,14 +103,14 @@ select + .dropdown {
         var(--spectrum-global-color-gray-600)
     );
 }
-.spectrum-Dropdown-label + .dropdown {
+#label + .dropdown {
     /* .spectrum-Dropdown-label + .spectrum-Dropdown-icon */
     margin-left: var(
         --spectrum-dropdown-icon-margin-left,
         var(--spectrum-global-dimension-size-150)
     );
 }
-.spectrum-Dropdown-label ~ .dropdown {
+#label ~ .dropdown {
     /* .spectrum-Dropdown-label ~ .spectrum-Dropdown-icon */
     margin-left: var(
         --spectrum-dropdown-icon-margin-left,
@@ -157,7 +157,7 @@ select + .dropdown {
         var(--spectrum-global-color-gray-700)
     );
 }
-.spectrum-Dropdown-trigger .icon:not(.dropdown) {
+#button .icon:not(.dropdown) {
     /* .spectrum-Dropdown-trigger .spectrum-Icon:not(.spectrum-Dropdown-icon) */
     margin-top: calc(
         (
@@ -184,7 +184,7 @@ select + .dropdown {
             ) / 2
     );
 }
-.spectrum-Dropdown-trigger .spectrum-Dropdown-label + .icon:not(.dropdown) {
+#button #label + .icon:not(.dropdown) {
     /* .spectrum-Dropdown-trigger .spectrum-Dropdown-label + .spectrum-Icon:not(.spectrum-Dropdown-icon) */
     margin-left: var(
         --spectrum-dropdown-icon-margin-left,
@@ -212,14 +212,14 @@ select + .dropdown {
                     ) + var(--spectrum-popover-border-size, 1px))
     );
 }
-.spectrum-Dropdown-trigger:hover .dropdown {
+#button:hover .dropdown {
     /* .spectrum-Dropdown .spectrum-Dropdown-trigger:hover .spectrum-Dropdown-icon */
     color: var(
         --spectrum-dropdown-icon-color-hover,
         var(--spectrum-global-color-gray-900)
     );
 }
-.spectrum-Dropdown-trigger.is-selected .is-placeholder {
+#button.is-selected .is-placeholder {
     /* .spectrum-Dropdown .spectrum-Dropdown-trigger.is-selected .is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color-down,
@@ -243,7 +243,7 @@ select + .dropdown {
     );
 }
 :host([disabled]) .dropdown,
-:host([disabled]) .spectrum-Dropdown-trigger:hover .dropdown {
+:host([disabled]) #button:hover .dropdown {
     /* .spectrum-Dropdown.is-disabled .spectrum-Dropdown-icon,
    * .spectrum-Dropdown.is-disabled .spectrum-Dropdown-trigger:hover .spectrum-Dropdown-icon */
     color: var(
@@ -251,35 +251,35 @@ select + .dropdown {
         var(--spectrum-global-color-gray-400)
     );
 }
-:host([disabled]) .spectrum-Dropdown-label.is-placeholder {
+:host([disabled]) #label.is-placeholder {
     /* .spectrum-Dropdown.is-disabled .spectrum-Dropdown-label.is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color-disabled,
         var(--spectrum-global-color-gray-500)
     );
 }
-.spectrum-Dropdown-label.is-placeholder:hover {
+#label.is-placeholder:hover {
     /* .spectrum-Dropdown-label.is-placeholder:hover */
     color: var(
         --spectrum-dropdown-placeholder-text-color-hover,
         var(--spectrum-global-color-gray-900)
     );
 }
-.spectrum-Dropdown-label.is-placeholder:active {
+#label.is-placeholder:active {
     /* .spectrum-Dropdown-label.is-placeholder:active */
     color: var(
         --spectrum-dropdown-placeholder-text-color-mouse-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
-.spectrum-Dropdown-trigger:focus .spectrum-Dropdown-label.is-placeholder {
+#button:focus #label.is-placeholder {
     /* .spectrum-Dropdown-trigger.focus-ring .spectrum-Dropdown-label.is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color-key-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
-.spectrum-Dropdown-trigger:focus .dropdown {
+#button:focus .dropdown {
     /* .spectrum-Dropdown-trigger.focus-ring .spectrum-Dropdown-icon */
     color: var(
         --spectrum-dropdown-icon-color-key-focus,

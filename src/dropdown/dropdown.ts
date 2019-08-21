@@ -20,19 +20,16 @@ import {
 } from 'lit-element';
 
 import dropdownStyles from './dropdown.css';
+import buttonStyles from '../button/action-button.css';
 
 import { defineCustomElements } from '../define';
 import '../icon';
 import '../popover';
-import '../button';
-import '../menu';
 import '../menu-item';
-import '../menu-group';
 import * as MediumIcons from '../icons/icons-medium';
 import { nothing } from 'lit-html';
 import { Menu } from '../menu';
 import { MenuItem } from '../menu-item';
-import { ActionButton } from '../button';
 import { Focusable } from '../shared/focusable';
 
 defineCustomElements(...Object.values(MediumIcons));
@@ -42,11 +39,11 @@ defineCustomElements(...Object.values(MediumIcons));
  */
 export class Dropdown extends Focusable {
     public static get styles(): CSSResultArray {
-        return [dropdownStyles];
+        return [buttonStyles, dropdownStyles];
     }
 
     @query('#button')
-    public button?: ActionButton;
+    public button?: HTMLButtonElement;
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
@@ -80,11 +77,26 @@ export class Dropdown extends Focusable {
         this.optionsMenu = this.querySelector('sp-menu');
     }
 
-    public onBlur(): void {
+    public onButtonBlur(): void {
         if (typeof this.button === 'undefined') {
             return;
         }
         this.button.removeEventListener('keydown', this.onKeydown);
+    }
+
+    protected onButtonClick(ev: Event): void {
+        this.toggle();
+    }
+
+    public onButtonFocus(): void {
+        if (this.open) {
+            this.requestUpdate('open');
+            return;
+        }
+        if (typeof this.button === 'undefined') {
+            return;
+        }
+        this.button.addEventListener('keydown', this.onKeydown);
     }
 
     public onClick(ev: Event): void {
@@ -99,17 +111,6 @@ export class Dropdown extends Focusable {
             return;
         }
         this.setValueFromItem(target);
-    }
-
-    public onFocus(): void {
-        if (this.open) {
-            this.requestUpdate('open');
-            return;
-        }
-        if (typeof this.button === 'undefined') {
-            return;
-        }
-        this.button.addEventListener('keydown', this.onKeydown);
     }
 
     public onKeydown(ev: KeyboardEvent): void {
@@ -139,23 +140,13 @@ export class Dropdown extends Focusable {
         this.open = !this.open;
     }
 
-    protected render(): TemplateResult {
-        return html`
-            <sp-icons-medium></sp-icons-medium>
-            <sp-action-button
-                aria-haspopup="true"
-                class="spectrum-Dropdown-trigger"
-                icon-right
-                id="button"
-                @blur=${this.onBlur}
-                @click=${this.toggle}
-                @focus=${this.onFocus}
-                ?disabled=${this.disabled}
-            >
+    protected get buttonContent(): TemplateResult[] {
+        return [
+            html`
                 ${this.value
                     ? this.value
                     : html`
-                          <slot></slot>
+                          <div id="label"><slot></slot></div>
                       `}
                 ${this.invalid
                     ? html`
@@ -167,7 +158,23 @@ export class Dropdown extends Focusable {
                     size="s"
                     slot="icon"
                 ></sp-icon>
-            </sp-action-button>
+            `,
+        ];
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            <sp-icons-medium></sp-icons-medium>
+            <button
+                aria-haspopup="true"
+                id="button"
+                @blur=${this.onButtonBlur}
+                @click=${this.onButtonClick}
+                @focus=${this.onButtonFocus}
+                ?disabled=${this.disabled}
+            >
+                ${this.buttonContent}
+            </button>
             <sp-popover
                 direction="bottom"
                 ?open=${this.open}
