@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
     property,
     PropertyValues,
     CSSResultArray,
     TemplateResult,
+    query,
 } from 'lit-element';
 
 import dropdownStyles from './dropdown.css';
@@ -24,21 +24,29 @@ import dropdownStyles from './dropdown.css';
 import { defineCustomElements } from '../define';
 import '../icon';
 import '../popover';
+import '../button';
 import '../menu';
 import '../menu-item';
 import '../menu-group';
 import * as MediumIcons from '../icons/icons-medium';
 import { nothing } from 'lit-html';
+import { Menu } from '../menu';
+import { MenuItem } from '../menu-item';
+import { ActionButton } from '../button';
+import { Focusable } from '../shared/focusable';
 
 defineCustomElements(...Object.values(MediumIcons));
 
 /**
  * @slot default - This is the illustrated message slot
  */
-export class Dropdown extends LitElement {
+export class Dropdown extends Focusable {
     public static get styles(): CSSResultArray {
         return [dropdownStyles];
     }
+
+    @query('#button')
+    public button?: ActionButton;
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
@@ -49,6 +57,84 @@ export class Dropdown extends LitElement {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    public optionsMenu: Menu | null = null;
+
+    @property({ type: String })
+    public value = '';
+
+    public constructor() {
+        super();
+        this.onClick = this.onClick.bind(this);
+        this.onKeydown = this.onKeydown.bind(this);
+        this.addEventListener('click', this.onClick);
+    }
+
+    public get focusElement(): HTMLElement {
+        if (this.button) {
+            return this.button;
+        }
+        return this;
+    }
+
+    public onOptionsChange(): void {
+        this.optionsMenu = this.querySelector('sp-menu');
+    }
+
+    public onBlur(): void {
+        if (typeof this.button === 'undefined') {
+            return;
+        }
+        this.button.removeEventListener('keydown', this.onKeydown);
+    }
+
+    public onClick(ev: Event): void {
+        const path = ev.composedPath();
+        const target = path.find((el) => {
+            if (!(el instanceof Element)) {
+                return false;
+            }
+            return el.getAttribute('role') === 'menuitem';
+        }) as MenuItem;
+        if (!target) {
+            return;
+        }
+        this.setValueFromItem(target);
+    }
+
+    public onFocus(): void {
+        if (this.open) {
+            this.requestUpdate('open');
+            return;
+        }
+        if (typeof this.button === 'undefined') {
+            return;
+        }
+        this.button.addEventListener('keydown', this.onKeydown);
+    }
+
+    public onKeydown(ev: KeyboardEvent): void {
+        if (ev.code !== 'ArrowDown') {
+            return;
+        }
+        if (this.optionsMenu === null) {
+            return;
+        }
+        this.open = true;
+    }
+
+    public setValueFromItem(item: MenuItem): void {
+        const selectedItem = this.querySelector('[selected]') as MenuItem;
+        if (selectedItem) {
+            selectedItem.selected = false;
+        }
+        item.selected = true;
+        this.value = (item.textContent || '').trim();
+        this.open = false;
+        if (this.button) {
+            this.button.focus();
+        }
+    }
+
     public toggle(): void {
         this.open = !this.open;
     }
@@ -57,13 +143,20 @@ export class Dropdown extends LitElement {
         return html`
             <sp-icons-medium></sp-icons-medium>
             <sp-action-button
-                @click=${this.toggle}
-                ?disabled=${this.disabled}
                 aria-haspopup="true"
-                icon-right
                 class="spectrum-Dropdown-trigger"
+                icon-right
+                id="button"
+                @blur=${this.onBlur}
+                @click=${this.toggle}
+                @focus=${this.onFocus}
+                ?disabled=${this.disabled}
             >
-                Select a Country with a very long label, too long in fact
+                ${this.value
+                    ? this.value
+                    : html`
+                          <slot></slot>
+                      `}
                 ${this.invalid
                     ? html`
                           <sp-icon name="ui:AlertSmall" slot="icon"></sp-icon>
@@ -80,34 +173,27 @@ export class Dropdown extends LitElement {
                 ?open=${this.open}
                 class="spectrum-Dropdown-popover"
             >
-                <sp-menu>
-                    <sp-menu-item>
-                        Deselect
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Select Inverse
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Feather...
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Select and Mask...
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Save Selection
-                    </sp-menu-item>
+                <slot name="options" @slotchange=${this.onOptionsChange}>
                     <sp-menu-item disabled>
-                        Make Work Path
+                        There are no options currently available.
                     </sp-menu-item>
-                </sp-menu>
+                </slot>
             </sp-popover>
         `;
     }
 
     protected updated(changedProperties: PropertyValues): void {
+        super.updated(changedProperties);
         if (changedProperties.has('disabled') && this.disabled) {
             this.open = false;
+        }
+        if (changedProperties.has('open') && this.open) {
+            requestAnimationFrame(() => {
+                if (this.optionsMenu === null) {
+                    return;
+                }
+                this.optionsMenu.focus();
+            });
         }
     }
 }

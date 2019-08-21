@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { expect } from '@bundled-es-modules/chai';
-import { fixture, elementUpdated } from '@open-wc/testing';
+import { fixture, elementUpdated, nextFrame } from '@open-wc/testing';
 import { Menu } from '../lib/menu';
 import '../lib/menu';
 import '../lib/menu-item';
@@ -196,6 +196,7 @@ describe('Menu', () => {
                 bubbles: true,
             })
         );
+        await nextFrame();
         // re-bind keyevents
         el.startListeningToKeyboard();
         // focus management should start again from the first item.
