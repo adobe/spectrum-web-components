@@ -27,6 +27,7 @@ export class OverlayStack {
     private preventMouseRootClose: boolean = false;
     private root: HTMLElement = document.body;
     private onChange: (overlays: ActiveOverlay[]) => void;
+    private handlingResize: boolean = false;
 
     public constructor(
         root: HTMLElement,
@@ -179,8 +180,14 @@ export class OverlayStack {
     };
 
     private handleResize = (): void => {
-        this.overlays.forEach((overlay) => {
-            overlay.updateOverlayPosition();
+        if (this.handlingResize) return;
+
+        this.handlingResize = true;
+        requestAnimationFrame(() => {
+            this.overlays.forEach((overlay) => {
+                overlay.updateOverlayPosition();
+            });
+            this.handlingResize = false;
         });
     };
 }
