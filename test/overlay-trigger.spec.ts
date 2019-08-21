@@ -92,18 +92,11 @@ describe('Overlays', () => {
                                                 Another Popover
                                             </div>
                                         </sp-popover>
-
-                                        <div
-                                            slot="hover-content"
-                                            class="tooltip"
-                                            delay="100"
-                                        >
-                                            Tooltip
-                                        </div>
                                     </overlay-trigger>
                                 </div>
                             </sp-popover>
                             <div
+                                id="hover-content"
                                 slot="hover-content"
                                 class="tooltip"
                                 delay="100"
@@ -291,5 +284,48 @@ describe('Overlays', () => {
 
         expect(isVisible(outerPopover)).to.be.false;
         expect(isVisible(innerPopover)).to.be.false;
+    });
+
+    it('opens a hover popover', async () => {
+        const outerButton = testDiv.querySelector(
+            '#outer-button'
+        ) as HTMLElement;
+        const hoverContent = testDiv.querySelector(
+            '#hover-content'
+        ) as HTMLElement;
+        const outerTrigger = testDiv.querySelector('#trigger') as HTMLElement;
+
+        let triggerShadowDiv: HTMLElement | null = null;
+        if (outerTrigger.shadowRoot) {
+            triggerShadowDiv = outerTrigger.shadowRoot.querySelector('div');
+        }
+
+        expect(triggerShadowDiv).to.exist;
+        if (!triggerShadowDiv) return;
+
+        expect(outerButton).to.exist;
+        expect(hoverContent).to.exist;
+
+        expect(isVisible(hoverContent)).to.be.false;
+
+        const mouseEnter = new MouseEvent('mouseenter');
+        triggerShadowDiv.dispatchEvent(mouseEnter);
+
+        // Wait for the DOM node to be put back in its original place
+        await waitForPredicate(
+            () => !(hoverContent.parentElement instanceof OverlayTrigger)
+        );
+
+        expect(isVisible(hoverContent)).to.be.true;
+
+        const mouseLeave = new MouseEvent('mouseleave');
+        triggerShadowDiv.dispatchEvent(mouseLeave);
+
+        // Wait for the DOM node to be put back in its original place
+        await waitForPredicate(
+            () => hoverContent.parentElement instanceof OverlayTrigger
+        );
+
+        expect(isVisible(hoverContent)).to.be.false;
     });
 });
