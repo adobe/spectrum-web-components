@@ -77,7 +77,7 @@ export class OverlayStack {
     }
 
     private isClickOverlayActiveForTrigger(trigger: HTMLElement): boolean {
-        return !!this.overlays.find(
+        return this.overlays.some(
             (item) => item.trigger === trigger && item.interaction === 'click'
         );
     }
