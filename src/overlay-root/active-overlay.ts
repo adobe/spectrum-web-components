@@ -222,9 +222,7 @@ export class ActiveOverlay extends LitElement {
         openEvent: CustomEvent<OverlayOpenDetail>,
         root: HTMLElement
     ): ActiveOverlay {
-        const overlay = document.createElement(
-            'active-overlay'
-        ) as ActiveOverlay;
+        const overlay = new ActiveOverlay();
 
         if (openEvent.detail.content) {
             overlay.root = root;
