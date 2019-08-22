@@ -53,26 +53,18 @@ export class MenuItem extends ActionButton {
         return content;
     }
 
-    protected firstUpdated(): void {
-        super.firstUpdated();
+    public connectedCallback() {
+        super.connectedCallback();
         if (!this.hasAttribute('role')) {
-            requestAnimationFrame(() => {
-                const queryRoleEvent = new CustomEvent(
-                    'sp-menu-item-query-role',
-                    {
-                        bubbles: true,
-                        composed: true,
-                        detail: {
-                            role: '',
-                        },
-                    }
-                );
-                this.dispatchEvent(queryRoleEvent);
-                this.setAttribute(
-                    'role',
-                    queryRoleEvent.detail.role || 'menuitem'
-                );
+            const queryRoleEvent = new CustomEvent('sp-menu-item-query-role', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    role: '',
+                },
             });
+            this.dispatchEvent(queryRoleEvent);
+            this.setAttribute('role', queryRoleEvent.detail.role || 'menuitem');
         }
     }
 }

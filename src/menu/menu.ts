@@ -13,12 +13,15 @@ governing permissions and limitations under the License.
 import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
 
 import menuStyles from './menu.css';
-import { MenuItemQueryRoleEventDetail } from '../menu-item';
 
 interface MenuItem extends HTMLElement {
     disabled: boolean;
     selected: boolean;
     tabIndex: number;
+}
+
+export interface MenuQueryRoleEventDetail {
+    role: string;
 }
 
 /**
@@ -50,13 +53,6 @@ export class Menu extends LitElement {
         this.addEventListener('click', this.onClick);
         this.addEventListener('focusin', this.startListeningToKeyboard);
         this.addEventListener('focusout', this.stopListeningToKeyboard);
-        this.addEventListener(
-            'sp-menu-item-query-role',
-            (event: CustomEvent<MenuItemQueryRoleEventDetail>) => {
-                event.stopPropagation();
-                event.detail.role = this.childRole;
-            }
-        );
     }
 
     public focus(): void {
@@ -179,9 +175,24 @@ export class Menu extends LitElement {
         `;
     }
 
-    protected firstUpdated(): void {
+    public connectedCallback() {
+        super.connectedCallback();
         if (!this.hasAttribute('role')) {
-            this.setAttribute('role', 'menu');
+            const queryRoleEvent = new CustomEvent('sp-menu-query-role', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    role: '',
+                },
+            });
+            this.dispatchEvent(queryRoleEvent);
+            this.setAttribute('role', queryRoleEvent.detail.role || 'menu');
         }
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-menu-query-role': CustomEvent<MenuQueryRoleEventDetail>;
     }
 }

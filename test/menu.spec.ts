@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect } from '@bundled-es-modules/chai';
 import { fixture, elementUpdated, nextFrame } from '@open-wc/testing';
 import { Menu } from '../lib/menu';
 import '../lib/menu';
 import '../lib/menu-item';
 import { html } from 'lit-element';
 import { MenuItem } from '../lib/menu-item/menu-item';
+import { expect } from '@bundled-es-modules/chai';
 
 const keyboardEvent = (code: string) =>
     new KeyboardEvent('keydown', {
@@ -157,7 +157,7 @@ describe('Menu', () => {
     it('cleans up when tabbing away', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu>
+                <sp-menu tabindex="0">
                     <sp-menu-item>
                         Deselect
                     </sp-menu-item>

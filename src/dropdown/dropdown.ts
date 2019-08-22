@@ -29,8 +29,8 @@ import '../popover';
 import '../menu-item';
 import * as MediumIcons from '../icons/icons-medium';
 import { nothing } from 'lit-html';
-import { Menu } from '../menu';
-import { MenuItem } from '../menu-item';
+import { Menu, MenuQueryRoleEventDetail } from '../menu';
+import { MenuItem, MenuItemQueryRoleEventDetail } from '../menu-item';
 import { Focusable } from '../shared/focusable';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
@@ -69,6 +69,21 @@ export class Dropdown extends Focusable {
         this.onClick = this.onClick.bind(this);
         this.onKeydown = this.onKeydown.bind(this);
         this.addEventListener('click', this.onClick);
+
+        this.addEventListener(
+            'sp-menu-item-query-role',
+            (event: CustomEvent<MenuItemQueryRoleEventDetail>) => {
+                event.stopPropagation();
+                event.detail.role = 'option';
+            }
+        );
+        this.addEventListener(
+            'sp-menu-query-role',
+            (event: CustomEvent<MenuQueryRoleEventDetail>) => {
+                event.stopPropagation();
+                event.detail.role = 'listbox';
+            }
+        );
     }
 
     public get focusElement(): HTMLElement {
