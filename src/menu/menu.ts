@@ -175,7 +175,7 @@ export class Menu extends LitElement {
         `;
     }
 
-    public connectedCallback() {
+    public connectedCallback(): void {
         super.connectedCallback();
         if (!this.hasAttribute('role')) {
             const queryRoleEvent = new CustomEvent('sp-menu-query-role', {

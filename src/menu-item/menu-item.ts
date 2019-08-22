@@ -53,7 +53,7 @@ export class MenuItem extends ActionButton {
         return content;
     }
 
-    public connectedCallback() {
+    public connectedCallback(): void {
         super.connectedCallback();
         if (!this.hasAttribute('role')) {
             const queryRoleEvent = new CustomEvent('sp-menu-item-query-role', {
