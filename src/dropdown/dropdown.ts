@@ -89,7 +89,7 @@ export class Dropdown extends Focusable {
         this.button.removeEventListener('keydown', this.onKeydown);
     }
 
-    protected onButtonClick(ev: Event): void {
+    protected onButtonClick(): void {
         this.toggle();
     }
 

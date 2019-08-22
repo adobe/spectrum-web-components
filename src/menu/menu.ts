@@ -35,7 +35,7 @@ export class Menu extends LitElement {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
-    public get childRole() {
+    public get childRole(): string {
         return this.getAttribute('role') === 'menu' ? 'menuitem' : 'option';
     }
 
