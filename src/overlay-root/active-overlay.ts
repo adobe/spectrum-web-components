@@ -51,7 +51,7 @@ const defaultOptions: CalculatePositionOptions = {
     placement: 'left',
 };
 
-const FadeOutAnimation = 'fadeOut';
+const FadeOutAnimation = 'spOverlayFadeOut';
 
 export class ActiveOverlay extends LitElement {
     public overlayContent?: HTMLElement;
