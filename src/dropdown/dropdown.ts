@@ -137,7 +137,6 @@ export class Dropdown extends Focusable {
     }
 
     public onKeydown(ev: KeyboardEvent): void {
-        console.warn('keydown', this.optionsMenu);
         if (ev.code !== 'ArrowDown') {
             return;
         }

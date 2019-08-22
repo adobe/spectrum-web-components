@@ -25,6 +25,7 @@ const keyboardEvent = (code: string) =>
         code,
     });
 const arrowDownEvent = keyboardEvent('ArrowDown');
+const arrowUpEvent = keyboardEvent('ArrowUp');
 
 describe('Dropdown', () => {
     it('loads', async () => {
@@ -153,6 +154,13 @@ describe('Dropdown', () => {
 
         el.focus();
         await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+
+        button.dispatchEvent(arrowUpEvent);
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
 
         button.dispatchEvent(arrowDownEvent);
         await elementUpdated(el);
