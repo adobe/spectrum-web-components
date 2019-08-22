@@ -20,7 +20,8 @@ import {
 } from 'lit-element';
 
 import dropdownStyles from './dropdown.css';
-import buttonStyles from '../button/action-button.css';
+import actionButtonStyles from '../button/action-button.css';
+import fieldButtonStyles from '../button/field-button.css';
 
 import { defineCustomElements } from '../define';
 import '../icon';
@@ -31,6 +32,7 @@ import { nothing } from 'lit-html';
 import { Menu } from '../menu';
 import { MenuItem } from '../menu-item';
 import { Focusable } from '../shared/focusable';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 defineCustomElements(...Object.values(MediumIcons));
 
@@ -39,7 +41,7 @@ defineCustomElements(...Object.values(MediumIcons));
  */
 export class Dropdown extends Focusable {
     public static get styles(): CSSResultArray {
-        return [buttonStyles, dropdownStyles];
+        return [actionButtonStyles, fieldButtonStyles, dropdownStyles];
     }
 
     @query('#button')
@@ -124,12 +126,22 @@ export class Dropdown extends Focusable {
     }
 
     public setValueFromItem(item: MenuItem): void {
+        const oldValue = this.value;
+        this.value = (item.textContent || '').trim();
+        const applyDefault = this.dispatchEvent(
+            new Event('change', {
+                cancelable: true,
+            })
+        );
+        if (!applyDefault) {
+            this.value = oldValue;
+            return;
+        }
         const selectedItem = this.querySelector('[selected]') as MenuItem;
         if (selectedItem) {
             selectedItem.selected = false;
         }
         item.selected = true;
-        this.value = (item.textContent || '').trim();
         this.open = false;
         if (this.button) {
             this.button.focus();
@@ -143,20 +155,29 @@ export class Dropdown extends Focusable {
     protected get buttonContent(): TemplateResult[] {
         return [
             html`
-                ${this.value
-                    ? this.value
-                    : html`
-                          <div id="label"><slot></slot></div>
-                      `}
+                <div
+                    id="label"
+                    class=${ifDefined(this.value ? undefined : 'placeholder')}
+                >
+                    ${this.value
+                        ? this.value
+                        : html`
+                              <slot></slot>
+                          `}
+                </div>
                 ${this.invalid
                     ? html`
-                          <sp-icon name="ui:AlertSmall" slot="icon"></sp-icon>
+                          <sp-icon
+                              class="icon"
+                              name="ui:AlertSmall"
+                              size="s"
+                          ></sp-icon>
                       `
                     : nothing}
                 <sp-icon
+                    class="icon dropdown"
                     name="ui:ChevronDownMedium"
                     size="s"
-                    slot="icon"
                 ></sp-icon>
             `,
         ];
@@ -175,11 +196,7 @@ export class Dropdown extends Focusable {
             >
                 ${this.buttonContent}
             </button>
-            <sp-popover
-                direction="bottom"
-                ?open=${this.open}
-                class="spectrum-Dropdown-popover"
-            >
+            <sp-popover direction="bottom" id="popover" ?open=${this.open}>
                 <slot name="options" @slotchange=${this.onOptionsChange}>
                     <sp-menu-item disabled>
                         There are no options currently available.

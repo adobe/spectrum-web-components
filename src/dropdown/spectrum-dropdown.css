@@ -91,7 +91,7 @@ select + .dropdown {
     text-overflow: ellipsis;
     text-align: left;
 }
-#label.is-placeholder {
+#label.placeholder {
     /* .spectrum-Dropdown-label.is-placeholder */
     font-weight: var(--spectrum-dropdown-placeholder-text-font-weight, 400);
     font-style: var(--spectrum-dropdown-placeholder-text-font-style, italic);
@@ -191,7 +191,7 @@ select + .dropdown {
         var(--spectrum-global-dimension-size-150)
     );
 }
-.spectrum-Dropdown--quiet {
+:host([quiet]) {
     /* .spectrum-Dropdown--quiet */
     width: auto;
     min-width: var(
@@ -199,7 +199,7 @@ select + .dropdown {
         var(--spectrum-global-dimension-size-600)
     );
 }
-.spectrum-Dropdown-popover {
+#popover {
     /* .spectrum-Dropdown-popover */
     max-width: var(--spectrum-global-dimension-size-3000);
 }
@@ -219,7 +219,7 @@ select + .dropdown {
         var(--spectrum-global-color-gray-900)
     );
 }
-#button.is-selected .is-placeholder {
+#button.is-selected .placeholder {
     /* .spectrum-Dropdown .spectrum-Dropdown-trigger.is-selected .is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color-down,
@@ -251,28 +251,28 @@ select + .dropdown {
         var(--spectrum-global-color-gray-400)
     );
 }
-:host([disabled]) #label.is-placeholder {
+:host([disabled]) #label.placeholder {
     /* .spectrum-Dropdown.is-disabled .spectrum-Dropdown-label.is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color-disabled,
         var(--spectrum-global-color-gray-500)
     );
 }
-#label.is-placeholder:hover {
+#label.placeholder:hover {
     /* .spectrum-Dropdown-label.is-placeholder:hover */
     color: var(
         --spectrum-dropdown-placeholder-text-color-hover,
         var(--spectrum-global-color-gray-900)
     );
 }
-#label.is-placeholder:active {
+#label.placeholder:active {
     /* .spectrum-Dropdown-label.is-placeholder:active */
     color: var(
         --spectrum-dropdown-placeholder-text-color-mouse-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
-#button:focus #label.is-placeholder {
+#button:focus #label.placeholder {
     /* .spectrum-Dropdown-trigger.focus-ring .spectrum-Dropdown-label.is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color-key-focus,

@@ -14,6 +14,21 @@ module.exports = {
     spectrum: 'button',
     components: [
         {
+            name: 'fieldbutton',
+            host: {
+                selector: '.spectrum-FieldButton',
+                shadowSelector: '#button',
+            },
+            focus: '#button',
+            attributes: [
+                {
+                    type: 'boolean',
+                    selector: '.is-invalid',
+                    name: 'invalid',
+                },
+            ],
+        },
+        {
             name: 'button',
             host: {
                 selector: '.spectrum-Button',

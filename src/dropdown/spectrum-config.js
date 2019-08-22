@@ -20,6 +20,10 @@ module.exports = {
             attributes: [
                 {
                     type: 'boolean',
+                    selector: '.spectrum-Dropdown--quiet',
+                },
+                {
+                    type: 'boolean',
                     selector: '.is-disabled',
                     name: 'disabled',
                 },
@@ -42,6 +46,10 @@ module.exports = {
                     selector: '.spectrum-Menu-checkmark',
                     name: 'checkmark',
                 },
+                {
+                    selector: '.is-placeholder',
+                    name: 'placeholder',
+                },
             ],
             ids: [
                 {
@@ -51,6 +59,10 @@ module.exports = {
                 {
                     selector: '.spectrum-Dropdown-label',
                     name: 'label',
+                },
+                {
+                    selector: '.spectrum-Dropdown-popover',
+                    name: 'popover',
                 },
             ],
         },
