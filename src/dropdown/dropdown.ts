@@ -58,6 +58,9 @@ export class Dropdown extends Focusable {
 
     public optionsMenu: Menu | null = null;
 
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
+
     @property({ type: String })
     public value = '';
 
@@ -104,10 +107,10 @@ export class Dropdown extends Focusable {
     public onClick(ev: Event): void {
         const path = ev.composedPath();
         const target = path.find((el) => {
-            if (!(el instanceof Element)) {
+            if (!(el instanceof Element) || this.optionsMenu === null) {
                 return false;
             }
-            return el.getAttribute('role') === 'menuitem';
+            return el.getAttribute('role') === this.optionsMenu.childRole;
         }) as MenuItem;
         if (!target) {
             return;

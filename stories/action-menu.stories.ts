@@ -14,22 +14,22 @@ import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
-import '../src/dropdown';
-import { Dropdown } from '../lib/dropdown';
+import '../src/action-menu';
+import { ActionMenu } from '../lib/action-menu';
 
-storiesOf('Dropdown', module).add('Default', () => {
+storiesOf('Action menu', module).add('Default', () => {
     return html`
-        <sp-dropdown
+        <sp-action-menu
+            label="More Actions"
             ?disabled=${boolean('Is Disabled', false, 'Component')}
             ?invalid=${boolean('Is Invalid', false, 'Component')}
             ?quiet=${boolean('Is Quiet', false, 'Component')}
             @change="${(e: Event) => {
-                const dropdown = e.target as Dropdown;
-                action(`Change: ${dropdown.value}`)();
+                const actionMenu = e.target as ActionMenu;
+                action(`Change: ${actionMenu.value}`)();
             }}"
         >
-            Select a Country with a very long label, too long in fact
-            <sp-menu slot="options" role="listbox">
+            <sp-menu slot="options">
                 <sp-menu-item>
                     Deselect
                 </sp-menu-item>
@@ -50,6 +50,7 @@ storiesOf('Dropdown', module).add('Default', () => {
                     Make Work Path
                 </sp-menu-item>
             </sp-menu>
-        </sp-dropdown>
+        </sp-action-menu>
+        <div>Test thing.</div>
     `;
 });

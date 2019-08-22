@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
 
 import menuStyles from './menu.css';
+import { MenuItemQueryRoleEventDetail } from '../menu-item';
 
 interface MenuItem extends HTMLElement {
     disabled: boolean;
@@ -34,6 +35,10 @@ export class Menu extends LitElement {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
+    public get childRole() {
+        return this.getAttribute('role') === 'menu' ? 'menuitem' : 'option';
+    }
+
     public constructor() {
         super();
         this.handleKeydown = this.handleKeydown.bind(this);
@@ -45,6 +50,13 @@ export class Menu extends LitElement {
         this.addEventListener('click', this.onClick);
         this.addEventListener('focusin', this.startListeningToKeyboard);
         this.addEventListener('focusout', this.stopListeningToKeyboard);
+        this.addEventListener(
+            'sp-menu-item-query-role',
+            (event: CustomEvent<MenuItemQueryRoleEventDetail>) => {
+                event.stopPropagation();
+                event.detail.role = this.childRole;
+            }
+        );
     }
 
     public focus(): void {
@@ -145,7 +157,9 @@ export class Menu extends LitElement {
     }
 
     public handleSlotchange(): void {
-        this.menuItems = [...this.querySelectorAll('[role="menuitem"]')];
+        this.menuItems = [
+            ...this.querySelectorAll(`[role="${this.childRole}"]`),
+        ];
         if (!this.menuItems || this.menuItems.length === 0) {
             return;
         }
@@ -166,6 +180,8 @@ export class Menu extends LitElement {
     }
 
     protected firstUpdated(): void {
-        this.setAttribute('role', 'menu');
+        if (!this.hasAttribute('role')) {
+            this.setAttribute('role', 'menu');
+        }
     }
 }

@@ -21,6 +21,10 @@ import { ActionButton } from '../button';
 
 defineCustomElements(...Object.values(MediumIcons));
 
+export interface MenuItemQueryRoleEventDetail {
+    role: string;
+}
+
 /**
  * Spectrum Menu Item Component
  * @element sp-menu-item
@@ -51,6 +55,30 @@ export class MenuItem extends ActionButton {
 
     protected firstUpdated(): void {
         super.firstUpdated();
-        this.setAttribute('role', 'menuitem');
+        if (!this.hasAttribute('role')) {
+            requestAnimationFrame(() => {
+                const queryRoleEvent = new CustomEvent(
+                    'sp-menu-item-query-role',
+                    {
+                        bubbles: true,
+                        composed: true,
+                        detail: {
+                            role: '',
+                        },
+                    }
+                );
+                this.dispatchEvent(queryRoleEvent);
+                this.setAttribute(
+                    'role',
+                    queryRoleEvent.detail.role || 'menuitem'
+                );
+            });
+        }
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-menu-item-query-role': CustomEvent<MenuItemQueryRoleEventDetail>;
     }
 }
