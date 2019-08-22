@@ -26,7 +26,6 @@ import {
     TriggerInteractions,
     Placement,
 } from '../overlay-root';
-import { strictCustomEvent } from '../events';
 
 /**
  * A overlay trigger component for displaying overlays relative to other content.
@@ -36,8 +35,6 @@ import { strictCustomEvent } from '../events';
  * @slot click-content - The content that will be displayed on click
  */
 export class OverlayTrigger extends LitElement {
-    public static is = 'overlay-trigger';
-
     public static get styles(): CSSResultArray {
         return [overlayTriggerStyles];
     }
@@ -52,9 +49,8 @@ export class OverlayTrigger extends LitElement {
 
     private hoverContent?: HTMLElement;
 
-    public onOverlayOpen(ev: Event, interaction: TriggerInteractions): void {
+    public onOverlayOpen(event: Event, interaction: TriggerInteractions): void {
         const isClick = interaction === 'click';
-        // if (!isClick) return;
         const overlayElement = isClick ? this.clickContent : this.hoverContent;
         const delayAttribute = overlayElement
             ? overlayElement.getAttribute('delay')
@@ -73,16 +69,22 @@ export class OverlayTrigger extends LitElement {
             interaction: interaction,
         };
 
-        const overlayOpenEvent = strictCustomEvent('sp-overlay:open', {
-            bubbles: true,
-            composed: true,
-            detail: overlayOpenDetail,
-        });
+        const overlayOpenEvent = new CustomEvent<OverlayOpenDetail>(
+            'sp-overlay:open',
+            {
+                bubbles: true,
+                composed: true,
+                detail: overlayOpenDetail,
+            }
+        );
 
         this.dispatchEvent(overlayOpenEvent);
     }
 
-    public onOverlayClose(ev: Event, interaction: TriggerInteractions): void {
+    public onOverlayClose(
+        event: Event,
+        interaction: TriggerInteractions
+    ): void {
         const isClick = interaction === 'click';
         const overlayElement = isClick ? this.clickContent : this.hoverContent;
 
@@ -94,30 +96,33 @@ export class OverlayTrigger extends LitElement {
             content: overlayElement,
         };
 
-        const overlayCloseEvent = strictCustomEvent('sp-overlay:close', {
-            bubbles: true,
-            composed: true,
-            detail: overlayCloseDetail,
-        });
+        const overlayCloseEvent = new CustomEvent<OverlayCloseDetail>(
+            'sp-overlay:close',
+            {
+                bubbles: true,
+                composed: true,
+                detail: overlayCloseDetail,
+            }
+        );
 
         this.dispatchEvent(overlayCloseEvent);
     }
 
-    public onTriggerClick(ev: Event): void {
+    public onTriggerClick(event: Event): void {
         if (this.clickContent) {
-            this.onOverlayOpen(ev, 'click');
+            this.onOverlayOpen(event, 'click');
         }
     }
 
-    public onTriggerMouseOver(ev: Event): void {
+    public onTriggerMouseOver(event: Event): void {
         if (this.hoverContent) {
-            this.onOverlayOpen(ev, 'hover');
+            this.onOverlayOpen(event, 'hover');
         }
     }
 
-    public onTriggerMouseLeave(ev: Event): void {
+    public onTriggerMouseLeave(event: Event): void {
         if (this.hoverContent) {
-            this.onOverlayClose(ev, 'hover');
+            this.onOverlayClose(event, 'hover');
         }
     }
 
@@ -144,9 +149,9 @@ export class OverlayTrigger extends LitElement {
         `;
     }
 
-    private onClickSlotChange(ev: Event): void {
-        if (ev.target) {
-            const slot = ev.target as HTMLSlotElement;
+    private onClickSlotChange(event: Event): void {
+        if (event.target) {
+            const slot = event.target as HTMLSlotElement;
             const content = this.extractSlotContent(slot);
 
             if (content) {
@@ -155,9 +160,9 @@ export class OverlayTrigger extends LitElement {
         }
     }
 
-    private onHoverSlotChange(ev: Event): void {
-        if (ev.target) {
-            const slot = ev.target as HTMLSlotElement;
+    private onHoverSlotChange(event: Event): void {
+        if (event.target) {
+            const slot = event.target as HTMLSlotElement;
             const content = this.extractSlotContent(slot);
 
             if (content) {
