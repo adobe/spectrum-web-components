@@ -64,6 +64,9 @@ export class Dropdown extends Focusable {
     @property({ type: String })
     public value = '';
 
+    protected listRole: string = 'listbox';
+    protected itemRole: string = 'option';
+
     public constructor() {
         super();
         this.onClick = this.onClick.bind(this);
@@ -74,14 +77,14 @@ export class Dropdown extends Focusable {
             'sp-menu-item-query-role',
             (event: CustomEvent<MenuItemQueryRoleEventDetail>) => {
                 event.stopPropagation();
-                event.detail.role = 'option';
+                event.detail.role = this.itemRole;
             }
         );
         this.addEventListener(
             'sp-menu-query-role',
             (event: CustomEvent<MenuQueryRoleEventDetail>) => {
                 event.stopPropagation();
-                event.detail.role = 'listbox';
+                event.detail.role = this.listRole;
             }
         );
     }
@@ -134,6 +137,7 @@ export class Dropdown extends Focusable {
     }
 
     public onKeydown(ev: KeyboardEvent): void {
+        console.warn('keydown', this.optionsMenu);
         if (ev.code !== 'ArrowDown') {
             return;
         }
@@ -161,9 +165,7 @@ export class Dropdown extends Focusable {
         }
         item.selected = true;
         this.open = false;
-        if (this.button) {
-            this.button.focus();
-        }
+        this.focus();
     }
 
     public toggle(): void {
