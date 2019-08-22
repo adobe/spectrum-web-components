@@ -126,18 +126,10 @@ export class OverlayStack {
         }
 
         if (event.target instanceof Node) {
-            if (event.composedPath) {
-                const path = event.composedPath();
-                if (path.indexOf(topOverlay.overlayContent) >= 0) {
-                    this.preventMouseRootClose = true;
-                    return;
-                }
-            } else {
-                // Polyfilled browsers
-                if (topOverlay.overlayContent.contains(event.target)) {
-                    this.preventMouseRootClose = true;
-                    return;
-                }
+            const path = event.composedPath();
+            if (path.indexOf(topOverlay.overlayContent) >= 0) {
+                this.preventMouseRootClose = true;
+                return;
             }
             this.preventMouseRootClose = false;
         }
