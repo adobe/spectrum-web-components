@@ -37,7 +37,8 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 defineCustomElements(...Object.values(MediumIcons));
 
 /**
- * @slot default - This is the illustrated message slot
+ * @slot default - The placeholder content for the dropdown
+ * @slot options - The menu with options that will display when the dropdown is open
  */
 export class Dropdown extends Focusable {
     public static get styles(): CSSResultArray {

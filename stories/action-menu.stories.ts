@@ -51,6 +51,5 @@ storiesOf('Action menu', module).add('Default', () => {
                 </sp-menu-item>
             </sp-menu>
         </sp-action-menu>
-        <div>Test thing.</div>
     `;
 });

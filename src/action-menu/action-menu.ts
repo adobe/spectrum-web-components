@@ -21,6 +21,9 @@ import { Dropdown } from '../dropdown';
 import actionMenuStyles from './action-menu.css';
 import { nothing } from 'lit-html';
 
+/**
+ * @slot options - The menu with options that will display when the dropdown is open
+ */
 export class ActionMenu extends Dropdown {
     public static get styles(): CSSResultArray {
         return [...super.styles, actionMenuStyles];
@@ -64,6 +67,9 @@ export class ActionMenu extends Dropdown {
         }
         if (changedProperties.has('quiet')) {
             this.quiet = true;
+        }
+        if (changedProperties.has('invalid')) {
+            this.invalid = false;
         }
     }
 
