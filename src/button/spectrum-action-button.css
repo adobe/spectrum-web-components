@@ -172,7 +172,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-.spectrum-Icon {
+.icon {
     /* .spectrum-Button .spectrum-Icon,
    * .spectrum-ActionButton .spectrum-Icon,
    * .spectrum-LogicButton .spectrum-Icon,
@@ -189,7 +189,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     );
 }
-.spectrum-Icon + #label {
+.icon + #label {
     /* .spectrum-ActionButton .spectrum-Icon + .spectrum-ActionButton-label,
    * .spectrum-Tool .spectrum-Icon + .spectrum-ActionButton-label */
     padding-left: var(
@@ -323,7 +323,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-#button:hover .spectrum-Icon {
+#button:hover .icon {
     /* .spectrum-ActionButton:hover .spectrum-Icon,
    * .spectrum-Tool:hover .spectrum-Icon */
     color: var(
@@ -339,7 +339,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-#button:focus .spectrum-Icon {
+#button:focus .icon {
     /* .spectrum-ActionButton.focus-ring .spectrum-Icon,
    * .spectrum-Tool.focus-ring .spectrum-Icon */
     color: var(
@@ -380,7 +380,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([disabled]) #button .spectrum-Icon {
+:host([disabled]) #button .icon {
     /* .spectrum-ActionButton:disabled .spectrum-Icon,
    * .spectrum-ActionButton.is-disabled .spectrum-Icon,
    * .spectrum-Tool:disabled .spectrum-Icon */
@@ -413,7 +413,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([selected]) #button .spectrum-Icon {
+:host([selected]) #button .icon {
     /* .spectrum-ActionButton.is-selected .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-selected,
@@ -435,7 +435,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([selected]) #button:focus .spectrum-Icon {
+:host([selected]) #button:focus .icon {
     /* .spectrum-ActionButton.is-selected.focus-ring .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-selected-key-focus,
@@ -457,7 +457,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([selected]) #button:hover .spectrum-Icon {
+:host([selected]) #button:hover .icon {
     /* .spectrum-ActionButton.is-selected:hover .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-selected-hover,
@@ -479,7 +479,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([selected]) #button:active .spectrum-Icon {
+:host([selected]) #button:active .icon {
     /* .spectrum-ActionButton.is-selected:active .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-selected-down,
@@ -502,7 +502,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-:host([selected][disabled]) #button .spectrum-Icon {
+:host([selected][disabled]) #button .icon {
     /* .spectrum-ActionButton.is-selected:disabled .spectrum-Icon,
    * .spectrum-ActionButton.is-selected.is-disabled .spectrum-Icon */
     color: var(

@@ -27,6 +27,12 @@ module.exports = {
                     name: 'invalid',
                 },
             ],
+            classes: [
+                {
+                    selector: '.spectrum-Icon',
+                    name: 'icon',
+                },
+            ],
         },
         {
             name: 'button',
@@ -95,6 +101,12 @@ module.exports = {
                 {
                     name: 'hold-affordance',
                     selector: '.spectrum-ActionButton-hold',
+                },
+            ],
+            classes: [
+                {
+                    selector: '.spectrum-Icon',
+                    name: 'icon',
                 },
             ],
             exclude: [/\.is-disabled/],

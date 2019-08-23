@@ -146,7 +146,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tool:disabled */
     cursor: default;
 }
-.spectrum-Icon {
+.icon {
     /* .spectrum-Button .spectrum-Icon,
    * .spectrum-ActionButton .spectrum-Icon,
    * .spectrum-LogicButton .spectrum-Icon,
@@ -316,8 +316,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-FieldButton.is-disabled.focus-ring */
     box-shadow: none;
 }
-#button:disabled .spectrum-Icon,
-#button.is-disabled .spectrum-Icon {
+#button:disabled .icon,
+#button.is-disabled .icon {
     /* .spectrum-FieldButton:disabled .spectrum-Icon,
    * .spectrum-FieldButton.is-disabled .spectrum-Icon */
     color: var(
