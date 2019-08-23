@@ -26,7 +26,7 @@
         "spectrum-vars": "node ./scripts/spectrum-vars.js",
         "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'packages/**/*.css'",
         "process-icons": "node ./scripts/process-icons.js",
-        "build": "tsc --build tsconfig.json",
+        "build": "gulp css && tsc --build packages/**/tsconfig.json",
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "watch": "gulp watch",
         "storybook": "start-storybook -s styles,stories/assets -p 6006",

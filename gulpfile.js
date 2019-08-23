@@ -22,6 +22,7 @@ const defaultTasks = gulp.series(buildCSS, compile);
 const watchTasks = gulp.parallel(watchCompile, watchBuildCSS);
 
 exports.default = defaultTasks;
+exports.css = buildCSS;
 exports.watch = watchTasks;
 exports.docsCompile = docsCompile;
 exports.docsWatchCompile = docsWatchCompile;
