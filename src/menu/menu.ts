@@ -70,7 +70,7 @@ export class Menu extends LitElement {
             if (!(el instanceof Element)) {
                 return false;
             }
-            return el.getAttribute('role') === 'menuitem';
+            return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
         if (!target) {
             return;
