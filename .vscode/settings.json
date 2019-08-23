@@ -6,6 +6,7 @@
         "test/**/*.spec.js": true,
         "test/**/*.spec.d.ts": true,
         "test/**/*.spec.js.map": true,
+        "packages/*/src/**/*.css.ts": true,
         "packages/**/*.test.js": true,
         "packages/**/*.test.d.ts": true,
         "packages/**/*.test.js.map": true

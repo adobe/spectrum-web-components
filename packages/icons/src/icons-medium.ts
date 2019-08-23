@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 import { TemplateResult } from 'lit-element';
 
-import { IconsetSVG } from '@spectrum-web-components/iconset/lib/iconset-svg';
+import { IconsetSVG } from '@spectrum-web-components/iconset/lib/iconset-svg.js';
 
-import iconsSVG from './icons-medium.svg';
+import iconsSVG from './icons-medium.svg.js';
 
 export class IconsMedium extends IconsetSVG {
     public constructor() {

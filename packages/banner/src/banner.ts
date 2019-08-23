@@ -18,7 +18,7 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import bannerStyles from './banner.css';
+import bannerStyles from './banner.css.js';
 
 /**
  * Banner component

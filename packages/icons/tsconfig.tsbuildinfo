@@ -194,28 +194,28 @@
         "signature": "043dde3e058216a7813e262644b249f18c89a0aac28e50b713bf2af5292c4590"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/packages/iconset/lib/iconset-svg.d.ts": {
-        "version": "c62b496226e753b2acf9b7469878d78c045c07786e0cdeaba1db08c1e0517a46",
-        "signature": "c62b496226e753b2acf9b7469878d78c045c07786e0cdeaba1db08c1e0517a46"
+        "version": "21c12728e8a7fd0a632e7410c9b57316fc497ea1f1f2c026db3652b4e57a62f4",
+        "signature": "21c12728e8a7fd0a632e7410c9b57316fc497ea1f1f2c026db3652b4e57a62f4"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/icons-large.ts": {
-        "version": "7420e298ddeafed5d8d3dbd210edce12ec127879c85be419389124e437459d5d",
-        "signature": "410cdcc372c602f6b46b68bf10a5391c3e82ab29f03708c6591d722c11de3d5e"
+        "version": "03b5ec94175bfd7f65bbdc413e62156ce7e988b0f8d9c9eb905e1f1c9aa477b5",
+        "signature": "404d6db77d5808ee474bee4b3e91067e339fd97682464a8ad3c0f1492f80ad2c"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/icons-medium.svg.ts": {
         "version": "1f12cfa9de3f483808eea728b67fe7aa87f9c72445d5824333e7eb61497e461d",
         "signature": "f308cfad0aef1a5d0a775b9932386225388232745f30fdcd98b6864cb1d30623"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/icons-medium.ts": {
-        "version": "46b0675e9bdd9b456919a436c4b8df83d5e18ab5a4fe2d88ed7032fb75bbb7b2",
-        "signature": "794b3bcf66bcfb1735bd19991a73fc802a352c9f30fbd3819756050b9f9db8df"
+        "version": "c50ada3eb431790377fc111dfedc0a3503379d9fea9e80f6e2c3e55fcc946b9d",
+        "signature": "74ac95aa1aa1c92cf5fb40599a3f6f732b4a3d9f2e418de74e15e0ed9cae7fdb"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/index.ts": {
         "version": "b2a1cc83793fee304c0a27f934b0d09ddf5c2e282dc30545d0e499892b989fd6",
         "signature": "3db5507436e248bae1105ca6ec8daef643dac6053232ebe4f5f9ad28f773c477"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/mocha/index.d.ts": {
-        "version": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102",
-        "signature": "0d2394ead194f57249ac193360c6529ff4b4ec675e3499651eed6baf20867102"
+        "version": "c4c03cf65951d980ba618ae9601d10438730803fc9c8a1f7b34af8739981e205",
+        "signature": "c4c03cf65951d980ba618ae9601d10438730803fc9c8a1f7b34af8739981e205"
       },
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/chai/index.d.ts": {
         "version": "c465afa89ac28f74167a2ee7c3c6eb8dd1245c2b3bdaa4704d58d35b932de4b7",
@@ -439,19 +439,16 @@
         "storybook__addon-actions",
         "node"
       ],
-      "typeRoots": [
-        "/Users/wesjohns/Documents/repos/spectrum-web-components/node_modules/@types"
-      ],
       "lib": [
         "lib.es2017.d.ts",
         "lib.dom.d.ts",
         "lib.dom.iterable.d.ts"
       ],
       "allowSyntheticDefaultImports": true,
-      "baseUrl": "/Users/wesjohns/Documents/repos/spectrum-web-components",
+      "baseUrl": "/Users/wesjohns/Documents/repos/spectrum-web-components/packages",
       "paths": {
         "@spectrum-web-components/*": [
-          "./packages/*"
+          "./*/lib"
         ]
       },
       "composite": true,
@@ -1619,11 +1616,7 @@
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/lit-element/lit-element.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/icons-large.svg.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/packages/iconset/lib/iconset.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/packages/iconset/lib/iconset-svg.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/icons-large.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/icons-medium.svg.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/icons-medium.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/index.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/mocha/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/chai/index.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/sinon/ts3.1/index.d.ts",
@@ -1674,7 +1667,11 @@
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/base.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/util.d.ts",
       "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/globals.d.ts",
-      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/index.d.ts"
+      "/users/wesjohns/documents/repos/spectrum-web-components/node_modules/@types/node/ts3.2/index.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/packages/iconset/lib/iconset-svg.d.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/icons-large.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/icons-medium.ts",
+      "/users/wesjohns/documents/repos/spectrum-web-components/packages/icons/src/index.ts"
     ]
   },
   "version": "3.4.1"

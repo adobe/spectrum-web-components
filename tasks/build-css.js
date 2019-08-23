@@ -33,7 +33,7 @@ function whichDst(file, t) {
     const name = file.relative.split('/')[2];
     const base = file.base;
     file.path = path.join(base, name);
-    t.through(gulp.dest, ['packages/' + component + '/lib/']);
+    t.through(gulp.dest, ['packages/' + component + '/src/']);
 }
 const configPath = path.resolve(path.join(__dirname, '..', 'config'));
 
@@ -70,14 +70,14 @@ const buildCSS = () => {
             rename((path) => {
                 path.extname = '.css.ts';
             })
-        )
-        // feed to the typescript project
-        .pipe(tsProject());
+        );
+    // feed to the typescript project
+    // .pipe(tsProject());
 
     // compile the ts to js
     return merge(
-        tsResult.js.pipe(tap(whichDst)),
-        tsResult.dts.pipe(tap(whichDst))
+        tsResult.pipe(tap(whichDst))
+        // tsResult.dts.pipe(tap(whichDst))
     );
 };
 const watchBuildCSS = () => {

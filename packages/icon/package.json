@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/icons",
+    "name": "@spectrum-web-components/icon",
     "version": "0.0.0",
     "description": "",
     "main": "lib/index.js",
@@ -14,8 +14,5 @@
     "license": "ISC",
     "dependencies": {
         "@spectrum-web-components/iconset": "0.0.0"
-    },
-    "devDependencies": {
-        "@spectrum-web-components/icon": "0.0.0"
     }
 }

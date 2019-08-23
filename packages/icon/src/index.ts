@@ -9,17 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './banner.js';
+export * from './icon.js';
+import { Icon } from './icon.js';
 
-import { Banner } from './banner.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-banner')) {
-    customElements.define('sp-banner', Banner);
+if (!customElements.get('sp-icon')) {
+    customElements.define('sp-icon', Icon);
 }
 
 declare global {
     interface HTMLElementTagNameMap {
-        'sp-banner': Banner;
+        'sp-icon': Icon;
     }
 }

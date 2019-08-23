@@ -10,9 +10,10 @@ governing permissions and limitations under the License.
 */
 import '../lib';
 import { IconsMedium, IconsLarge } from '../lib';
-import { fixture, elementUpdated } from '@open-wc/testing';
+import { elementUpdated, fixture } from '@open-wc/testing';
 import { html } from 'lit-html';
-import { expect } from '@bundled-es-modules/chai';
+// @ts-ignore
+const { expect } = window.chai;
 
 describe('icons', () => {
     it('large', async () => {

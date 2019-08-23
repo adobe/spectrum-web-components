@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 import { html, query, TemplateResult, PropertyValues } from 'lit-element';
 
-import { Iconset } from './iconset';
+import { Iconset } from './iconset.js';
 
-export class IconsetSVG extends Iconset {
+export abstract class IconsetSVG extends Iconset {
     private iconMap: Map<string, SVGSymbolElement> = new Map();
 
     @query('slot')
