@@ -10,4 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-banner.css';
+import '../../lib/banner';
+import { html } from 'lit-html';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+
+measureFixtureCreation(html`
+    <sp-banner type="info">
+        <div slot="header">Info Text</div>
+        <div slot="content">Info Content</div>
+    </sp-banner>
+`);

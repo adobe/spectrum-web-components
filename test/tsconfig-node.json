@@ -1,6 +1,8 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
+        "outDir": ".",
+        "rootDir": ".",
         "module": "commonjs",
         "types": ["node"],
         "typeRoots": ["../node_modules/@types"]

@@ -95,7 +95,7 @@ $ node test/benchmark/cli -n 20
     if (opts.package.length) {
         packages = opts.package;
     } else {
-        packages = readdirSync(pathjoin('test', 'benchmark'), {
+        packages = readdirSync(pathjoin('packages'), {
             withFileTypes: true,
         })
             .filter((dirEntry) => dirEntry.isDirectory())
@@ -107,7 +107,7 @@ $ node test/benchmark/cli -n 20
         const runCommands: string[] = [];
 
         const benchmarks = readdirSync(
-            pathjoin('test', 'benchmark', packageName),
+            pathjoin('packages', packageName, 'test', 'benchmark'),
             { withFileTypes: true }
         )
             .filter(
