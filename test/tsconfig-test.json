@@ -5,5 +5,5 @@
         "typeRoots": ["./node_modules/@types", "./types"]
     },
     "include": ["../packages/**/test/*.ts"],
-    "exclude": ["benchmark/*"]
+    "exclude": []
 }

@@ -9,14 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-import '../../lib';
-import { html } from 'lit-html';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
-
-measureFixtureCreation(html`
-    <sp-banner type="info">
-        <div slot="header">Info Text</div>
-        <div slot="content">Info Content</div>
-    </sp-banner>
-`);
+export * from './iconset';
+export * from './iconset-svg';
+export * from './iconset-registry';
+//# sourceMappingURL=index.js.map

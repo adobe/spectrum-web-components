@@ -9,14 +9,24 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { IconsLarge } from './icons-large';
+import { IconsMedium } from './icons-medium';
+export * from './icons-large';
+export * from './icons-medium';
 
-import '../../lib';
-import { html } from 'lit-html';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+/* istanbul ignore else */
+if (!customElements.get('sp-icons-large')) {
+    customElements.define('sp-icons-large', IconsLarge);
+}
 
-measureFixtureCreation(html`
-    <sp-banner type="info">
-        <div slot="header">Info Text</div>
-        <div slot="content">Info Content</div>
-    </sp-banner>
-`);
+/* istanbul ignore else */
+if (!customElements.get('sp-icons-medium')) {
+    customElements.define('sp-icons-medium', IconsMedium);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-icons-large': IconsLarge;
+        'sp-icons-medium': IconsMedium;
+    }
+}

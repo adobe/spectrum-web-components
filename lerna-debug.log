@@ -1,0 +1,15 @@
+0 silly argv { _: [ 'bootstrap' ],
+0 silly argv   lernaVersion: '3.16.4',
+0 silly argv   '$0': 'node_modules/.bin/lerna' }
+1 notice cli v3.16.4
+2 verbose rootPath /Users/westbrook/Documents/web/repos/spectrum-web-components
+3 info versioning independent
+4 error Error: Invalid tag name "0,0,0": Tags may not have any characters that encodeURIComponent encodes.
+4 error     at invalidTagName (/Users/westbrook/Documents/web/repos/spectrum-web-components/node_modules/npm-package-arg/npa.js:87:15)
+4 error     at fromRegistry (/Users/westbrook/Documents/web/repos/spectrum-web-components/node_modules/npm-package-arg/npa.js:290:13)
+4 error     at Function.resolve (/Users/westbrook/Documents/web/repos/spectrum-web-components/node_modules/npm-package-arg/npa.js:77:12)
+4 error     at Object.keys.forEach.depName (/Users/westbrook/Documents/web/repos/spectrum-web-components/node_modules/@lerna/package-graph/index.js:235:30)
+4 error     at Array.forEach (<anonymous>)
+4 error     at PackageGraph.forEach (/Users/westbrook/Documents/web/repos/spectrum-web-components/node_modules/@lerna/package-graph/index.js:229:38)
+4 error     at Map.forEach (<anonymous>)
+4 error     at new PackageGraph (/Users/westbrook/Documents/web/repos/spectrum-web-components/node_modules/@lerna/package-graph/index.js:218:10)

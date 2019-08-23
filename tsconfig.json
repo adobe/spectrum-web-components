@@ -6,9 +6,11 @@
         "moduleResolution": "node",
         "rootDir": ".",
         "sourceMap": true,
+        "inlineSources": true,
         "strict": true,
         "noUnusedLocals": true,
         "target": "es2017",
+        "skipLibCheck": true,
         "types": [
             "mocha",
             "chai",
@@ -20,13 +22,12 @@
         ],
         "typeRoots": ["./node_modules/@types", "./packages"],
         "lib": ["es2017", "dom", "dom.iterable"],
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "paths": {
+            "@spectrum-web-components/*": ["./packages/*"]
+        }
     },
-    "include": [
-        "./src/**/*.ts",
-        "./documentation/**/*.ts",
-        "./test/**/*.ts",
-        "./.storybook/*.ts",
-        "./stories/**/*.ts"
-    ]
+    "include": ["./packages/*/src/**/*.ts"],
+    "exclude": ["node_modules", "./packages/*/node_modules/**/*.ts"]
 }

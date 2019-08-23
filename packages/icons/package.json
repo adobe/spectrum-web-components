@@ -1,0 +1,19 @@
+{
+    "name": "@spectrum-web-components/icons",
+    "version": "0.0.0",
+    "description": "",
+    "main": "lib/index.js",
+    "module": "lib/index.js",
+    "files": [
+        "lib"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@spectrum-web-components/iconset": "0.0.0",
+        "@spectrum-web-components/banner": "0.0.0"
+    }
+}

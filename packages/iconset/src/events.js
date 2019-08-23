@@ -9,14 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-import '../../lib';
-import { html } from 'lit-html';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
-
-measureFixtureCreation(html`
-    <sp-banner type="info">
-        <div slot="header">Info Text</div>
-        <div slot="content">Info Content</div>
-    </sp-banner>
-`);
+/**
+ * Creates a strictly typed CustomEvent<T> using the DocumentEventMap.
+ *
+ * To make use of this helper ensure that your events are added to the DocumentEventMap. The
+ * easiest way to do this is to include them in the GlobalEventMap
+ *
+ * @param name The name of the CustomEvent to create
+ * @param payload The arguments for the CustomEvent constructor
+ */
+export function strictCustomEvent(name, payload) {
+    return new CustomEvent(name, payload);
+}
+//# sourceMappingURL=events.js.map

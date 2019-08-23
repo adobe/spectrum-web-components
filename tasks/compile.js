@@ -36,7 +36,10 @@ function whichDst(file, t) {
 
 const compile = () => {
     const tsResult = merge([
-        gulp.src(['./packages/**/src/*.ts']),
+        gulp.src([
+            './packages/**/src/*.ts',
+            '!./packages/**/node_modules/**/*.ts',
+        ]),
         // gulp.src(['./styles/**/*.ts'], { base: srcPath }),
     ])
         .pipe(cached('typescript'))
