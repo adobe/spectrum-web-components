@@ -44,7 +44,10 @@ const tsProject = ts.createProject('tsconfig.json');
 
 const buildCSS = () => {
     const tsResult = merge([
-        gulp.src(['./packages/**/src/*.css']),
+        gulp.src([
+            './packages/**/src/*.css',
+            '!./packages/**/node_modules/**/*.css',
+        ]),
         // gulp.src(['./styles/*.css', './styles/**/*.css'], {
         //     base: '.',
         // }),

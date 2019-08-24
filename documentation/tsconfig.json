@@ -1,10 +1,6 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {},
-    "include": [
-        "./packages/**/src/*.ts",
-        "./documentation/**/*.ts",
-        "./documentation/src/global.d.ts"
-    ],
+    "include": ["./documentation/**/*.ts", "./documentation/src/global.d.ts"],
     "exclude": []
 }

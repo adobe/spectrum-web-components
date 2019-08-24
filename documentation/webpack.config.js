@@ -103,7 +103,7 @@ module.exports = merge(openWcConfig, {
                             context: path.dirname(__dirname),
                             configFile: path.resolve(
                                 __dirname,
-                                '../tsconfig.json'
+                                '../documentation/tsconfig.json'
                             ),
                             onlyCompileBundledFiles: true,
                         },
