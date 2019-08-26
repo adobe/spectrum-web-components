@@ -44,6 +44,7 @@ describe('Iconset', () => {
         );
 
         await elementUpdated(el);
+        await nextFrame();
 
         const svg = el.shadowRoot
             ? el.shadowRoot.querySelector('[role="img"]')
