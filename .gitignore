@@ -5,6 +5,7 @@ styles/**/*.css.ts
 
 node_modules
 npm-debug.log
+lerna-debug.log
 .DS_STORE
 .chrome
 .firefox
