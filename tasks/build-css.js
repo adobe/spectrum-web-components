@@ -48,9 +48,6 @@ const buildCSS = () => {
             './packages/**/src/*.css',
             '!./packages/**/node_modules/**/*.css',
         ]),
-        // gulp.src(['./styles/*.css', './styles/**/*.css'], {
-        //     base: '.',
-        // }),
     ])
         // create in-memory cache of css files so we don't reprocess everything all the time
         .pipe(cached('css'))
@@ -74,14 +71,9 @@ const buildCSS = () => {
                 path.extname = '.css.ts';
             })
         );
-    // feed to the typescript project
-    // .pipe(tsProject());
 
     // compile the ts to js
-    return merge(
-        tsResult.pipe(tap(whichDst))
-        // tsResult.dts.pipe(tap(whichDst))
-    );
+    return tsResult.pipe(tap(whichDst));
 };
 const watchBuildCSS = () => {
     return gulp.watch(path.join(srcPath, '**/*.css'), buildCSS);
