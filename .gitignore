@@ -23,7 +23,8 @@ packages/*/test/**/*.js
 packages/*/test/**/*.js.map
 packages/*/test/**/*.d.ts 
 !test/global.d.ts
-!packages/*/test/global.d.ts 
+!packages/*/test/global.d.ts
+**/tsconfig.tsbuildinfo
 
 package-deps.json
 spectrum-web-components.build.log

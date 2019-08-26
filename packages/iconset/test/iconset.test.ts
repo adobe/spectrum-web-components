@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, nextFrame, elementUpdated } from '@open-wc/testing';
-import '../lib/index.js';
+import '../../icons/lib/index.js';
 import '../../icon/lib/index.js';
+import { IconsMedium } from '../../icons/lib/index.js';
 import { Icon } from '../../icon/lib/index.js';
 import { html } from 'lit-element';
 // @ts-ignore
@@ -42,7 +43,7 @@ describe('Iconset', () => {
             `
         );
 
-        await nextFrame();
+        await elementUpdated(el);
 
         const svg = el.shadowRoot
             ? el.shadowRoot.querySelector('[role="img"]')
@@ -61,7 +62,7 @@ describe('Iconset', () => {
         );
 
         const icon = el.querySelector('sp-icon') as Icon;
-        const iconSet = el.querySelector('sp-icons-medium') as Icon;
+        const iconSet = el.querySelector('sp-icons-medium') as IconsMedium;
 
         await elementUpdated(iconSet);
         await elementUpdated(icon);
