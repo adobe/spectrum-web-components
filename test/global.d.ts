@@ -6,8 +6,6 @@ declare namespace Chai {
     }
 }
 
-declare module '@bundled-es-modules/chai';
-
 declare module '@open-wc/semantic-dom-diff' {
     /**
      * @param {any} chai

@@ -106,6 +106,22 @@ $ node test/benchmark/cli -n 20
     for (const packageName of packages) {
         const runCommands: string[] = [];
 
+        const hasTests = readdirSync(pathjoin('packages', packageName)).find(
+            (dirEntry) => dirEntry === 'test'
+        );
+
+        if (!hasTests) {
+            return;
+        }
+
+        const hasBenchmarks = readdirSync(
+            pathjoin('packages', packageName, 'test')
+        ).find((dirEntry) => dirEntry === 'benchmark');
+
+        if (!hasBenchmarks) {
+            return;
+        }
+
         const benchmarks = readdirSync(
             pathjoin('packages', packageName, 'test', 'benchmark'),
             { withFileTypes: true }
