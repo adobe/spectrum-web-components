@@ -9,7 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { LitElement, property, CSSResultArray } from 'lit-element';
+import {
+    LitElement,
+    property,
+    CSSResultArray,
+    PropertyValues,
+} from 'lit-element';
 import focusableStyles from './focusable.css';
 
 /**
@@ -106,9 +111,7 @@ export class Focusable extends LitElement {
         super.update(changedProperties);
     }
 
-    protected updated(
-        changedProperties: Map<string, boolean | number | string>
-    ): void {
+    protected updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
 
         if (changedProperties.has('disabled')) {

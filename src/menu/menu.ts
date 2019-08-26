@@ -20,6 +20,10 @@ interface MenuItem extends HTMLElement {
     tabIndex: number;
 }
 
+export interface MenuQueryRoleEventDetail {
+    role: string;
+}
+
 /**
  * Spectrum Menu Component
  * @element sp-menu
@@ -34,6 +38,10 @@ export class Menu extends LitElement {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
+    public get childRole(): string {
+        return this.getAttribute('role') === 'menu' ? 'menuitem' : 'option';
+    }
+
     public constructor() {
         super();
         this.handleKeydown = this.handleKeydown.bind(this);
@@ -41,6 +49,8 @@ export class Menu extends LitElement {
             this
         );
         this.stopListeningToKeyboard = this.stopListeningToKeyboard.bind(this);
+        this.onClick = this.onClick.bind(this);
+        this.addEventListener('click', this.onClick);
         this.addEventListener('focusin', this.startListeningToKeyboard);
         this.addEventListener('focusout', this.stopListeningToKeyboard);
     }
@@ -52,6 +62,20 @@ export class Menu extends LitElement {
 
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
         focusInItem.focus();
+    }
+
+    private onClick(ev: Event): void {
+        const path = ev.composedPath();
+        const target = path.find((el) => {
+            if (!(el instanceof Element)) {
+                return false;
+            }
+            return el.getAttribute('role') === this.childRole;
+        }) as MenuItem;
+        if (!target) {
+            return;
+        }
+        this.prepareToCleanUp();
     }
 
     public startListeningToKeyboard(): void {
@@ -68,17 +92,7 @@ export class Menu extends LitElement {
     public handleKeydown(e: KeyboardEvent): void {
         const { code } = e;
         if (code === 'Tab') {
-            document.addEventListener(
-                'focusout',
-                () => {
-                    this.focusedItemIndex = this.focusInItemIndex;
-                    const itemToFocus = this.menuItems[
-                        this.focusInItemIndex
-                    ] as MenuItem;
-                    itemToFocus.tabIndex = 0;
-                },
-                { once: true }
-            );
+            this.prepareToCleanUp();
             return;
         }
         if (code !== 'ArrowDown' && code !== 'ArrowUp') {
@@ -105,19 +119,48 @@ export class Menu extends LitElement {
         focusedItem.tabIndex = -1;
     }
 
+    private prepareToCleanUp(): void {
+        document.addEventListener(
+            'focusout',
+            () => {
+                requestAnimationFrame(() => {
+                    if (this.querySelector('[selected]')) {
+                        const itemToBlur = this.menuItems[
+                            this.focusInItemIndex
+                        ] as MenuItem;
+                        itemToBlur.tabIndex = -1;
+                        this.focusInItemIndex = this.getSelectedItemIndex();
+                    }
+                    this.focusedItemIndex = this.focusInItemIndex;
+                    const itemToFocus = this.menuItems[
+                        this.focusInItemIndex
+                    ] as MenuItem;
+                    itemToFocus.tabIndex = 0;
+                });
+            },
+            { once: true }
+        );
+    }
+
+    private getSelectedItemIndex(): number {
+        let index = this.menuItems.length - 1;
+        let item = this.menuItems[index] as MenuItem;
+        while (!item.selected) {
+            index -= 1;
+            item = this.menuItems[index] as MenuItem;
+        }
+        return index;
+    }
+
     public handleSlotchange(): void {
-        this.menuItems = [...this.querySelectorAll('[role="menuitem"]')];
+        this.menuItems = [
+            ...this.querySelectorAll(`[role="${this.childRole}"]`),
+        ];
         if (!this.menuItems || this.menuItems.length === 0) {
             return;
         }
         if (this.querySelector('[selected]')) {
-            let index = this.menuItems.length - 1;
-            let item = this.menuItems[index] as MenuItem;
-            while (!item.selected) {
-                index -= 1;
-                item = this.menuItems[index] as MenuItem;
-            }
-            this.focusInItemIndex = index;
+            this.focusInItemIndex = this.getSelectedItemIndex();
         } else {
             this.focusInItemIndex = 0;
         }
@@ -132,7 +175,24 @@ export class Menu extends LitElement {
         `;
     }
 
-    protected firstUpdated(): void {
-        this.setAttribute('role', 'menu');
+    public connectedCallback(): void {
+        super.connectedCallback();
+        if (!this.hasAttribute('role')) {
+            const queryRoleEvent = new CustomEvent('sp-menu-query-role', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    role: '',
+                },
+            });
+            this.dispatchEvent(queryRoleEvent);
+            this.setAttribute('role', queryRoleEvent.detail.role || 'menu');
+        }
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-menu-query-role': CustomEvent<MenuQueryRoleEventDetail>;
     }
 }

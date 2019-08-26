@@ -12,3 +12,7 @@ governing permissions and limitations under the License.
 
 @import './spectrum-action-button.css';
 @import './button-base.css';
+
+:host(.spectrum-Dropdown-trigger) #button {
+    text-align: left;
+}

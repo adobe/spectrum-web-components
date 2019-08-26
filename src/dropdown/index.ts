@@ -9,25 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+export * from './dropdown';
 
-@import './spectrum-menu-item.css';
+import { Dropdown } from './dropdown';
 
-#button {
-    width: 100%;
+if (!customElements.get('sp-dropdown')) {
+    customElements.define('sp-dropdown', Dropdown);
 }
 
-button {
-    border: 0;
-    background: 0;
-    padding: 0;
-    margin: 0;
-    display: inherit;
-    font: inherit;
-    color: inherit;
-    text-align: inherit;
-}
-
-#selected {
-    flex-shrink: 0;
-    margin-top: 0;
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-dropdown': Dropdown;
+    }
 }

@@ -14,6 +14,27 @@ module.exports = {
     spectrum: 'button',
     components: [
         {
+            name: 'fieldbutton',
+            host: {
+                selector: '.spectrum-FieldButton',
+                shadowSelector: '#button',
+            },
+            focus: '#button',
+            attributes: [
+                {
+                    type: 'boolean',
+                    selector: '.is-invalid',
+                    name: 'invalid',
+                },
+            ],
+            classes: [
+                {
+                    selector: '.spectrum-Icon',
+                    name: 'icon',
+                },
+            ],
+        },
+        {
             name: 'button',
             host: {
                 selector: '.spectrum-Button',
@@ -80,6 +101,12 @@ module.exports = {
                 {
                     name: 'hold-affordance',
                     selector: '.spectrum-ActionButton-hold',
+                },
+            ],
+            classes: [
+                {
+                    selector: '.spectrum-Icon',
+                    name: 'icon',
                 },
             ],
             exclude: [/\.is-disabled/],
