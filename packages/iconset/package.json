@@ -9,5 +9,13 @@
     ],
     "scripts": {},
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "peerDependencies": {
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0"
+    },
+    "devDependencies": {
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0"
+    }
 }

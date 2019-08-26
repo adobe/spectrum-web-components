@@ -12,7 +12,13 @@
     },
     "author": "",
     "license": "ISC",
-    "dependencies": {
-        "@spectrum-web-components/iconset": "0.0.0"
+    "peerDependencies": {
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0"
+    },
+    "devDependencies": {
+        "@spectrum-web-components/iconset": "0.0.0",
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0"
     }
 }
