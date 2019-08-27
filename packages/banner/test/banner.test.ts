@@ -10,8 +10,7 @@ governing permissions and limitations under the License.
 */
 import '../lib/index.js';
 import { Banner } from '../lib/index.js';
-import { fixture } from '@open-wc/testing';
-import { html } from 'lit-html';
+import { fixture, html } from '@open-wc/testing';
 // @ts-ignore
 const { expect } = window.chai;
 

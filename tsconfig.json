@@ -22,10 +22,7 @@
         ],
         "lib": ["es2017", "dom", "dom.iterable"],
         "allowSyntheticDefaultImports": true,
-        "baseUrl": "./packages",
-        "paths": {
-            "@spectrum-web-components/*": ["./*/lib"]
-        }
+        "baseUrl": "./packages"
     },
     "include": ["./global.d.ts", "./packages/*/src/**/*.ts"]
 }

@@ -12,16 +12,17 @@ governing permissions and limitations under the License.
 
 import '../lib/index.js';
 import { Icon } from '../lib/index.js';
-import { fixture, elementUpdated } from '@open-wc/testing';
-import { html } from 'lit-element';
+import '../../icons/lib/index.js';
+import { fixture, elementUpdated, html } from '@open-wc/testing';
 // @ts-ignore
 const { expect } = window.chai;
 
-
 describe('Icon', () => {
-    before(() => {
+    before(async () => {
         let icons = document.createElement('sp-icons-medium');
         document.body.append(icons);
+
+        await elementUpdated(icons);
     });
 
     it('loads', async () => {

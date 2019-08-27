@@ -10,15 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, nextFrame, elementUpdated } from '@open-wc/testing';
+import { fixture, elementUpdated, html } from '@open-wc/testing';
+import { waitForPredicate } from '../../../test/testing-helpers';
 import '../../icons/lib/index.js';
 import '../../icon/lib/index.js';
 import { IconsMedium } from '../../icons/lib/index.js';
 import { Icon } from '../../icon/lib/index.js';
-import { html } from 'lit-element';
 // @ts-ignore
 const { expect } = window.chai;
-
 
 describe('Iconset', () => {
     after(() => {
@@ -35,20 +34,26 @@ describe('Iconset', () => {
 
         icons2.remove();
 
-        await nextFrame();
-
         const el = await fixture<Icon>(
             html`
                 <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
             `
         );
 
-        await elementUpdated(el);
-        await nextFrame();
-
-        const svg = el.shadowRoot
+        let svg = el.shadowRoot
             ? el.shadowRoot.querySelector('[role="img"]')
             : null;
+
+        function getSVG() {
+            svg = el.shadowRoot
+                ? el.shadowRoot.querySelector('[role="img"]')
+                : null;
+
+            return svg !== null;
+        }
+
+        await waitForPredicate(getSVG);
+
         expect(svg).to.not.be.null;
     });
 

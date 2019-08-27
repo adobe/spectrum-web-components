@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { IconsLarge } from './icons-large';
-import { IconsMedium } from './icons-medium';
-export * from './icons-large';
-export * from './icons-medium';
+import { IconsLarge } from './icons-large.js';
+import { IconsMedium } from './icons-medium.js';
+export * from './icons-large.js';
+export * from './icons-medium.js';
 
 /* istanbul ignore else */
 if (!customElements.get('sp-icons-large')) {

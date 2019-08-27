@@ -10,8 +10,7 @@ governing permissions and limitations under the License.
 */
 import '../lib';
 import { IconsMedium, IconsLarge } from '../lib';
-import { elementUpdated, fixture } from '@open-wc/testing';
-import { html } from 'lit-html';
+import { elementUpdated, fixture, html } from '@open-wc/testing';
 // @ts-ignore
 const { expect } = window.chai;
 

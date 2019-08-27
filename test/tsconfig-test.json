@@ -1,9 +1,9 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "outDir": "../",
-        "typeRoots": ["./node_modules/@types", "./types"]
+        "composite": true,
+        "outDir": "../"
     },
-    "include": ["../packages/**/test/*.ts"],
-    "exclude": []
+    "include": ["../packages/**/test/*.ts", "./testing-helpers.ts"],
+    "exclude": ["../packages/**/node_modules/**/*"]
 }
