@@ -44,7 +44,7 @@ describe('Iconset', () => {
             ? el.shadowRoot.querySelector('[role="img"]')
             : null;
 
-        function getSVG() {
+        function getSVG(): boolean {
             svg = el.shadowRoot
                 ? el.shadowRoot.querySelector('[role="img"]')
                 : null;
