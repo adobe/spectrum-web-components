@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { Router, Route, RouterOptions } from '@vaadin/router';
 
-const githubUrl = 'http://opensource.adobe.com/spectrum-web-components/';
+const githubUrl = 'https://opensource.adobe.com/spectrum-web-components/';
 const baseUrl =
     document.location.hostname === 'opensource.adobe.com'
         ? githubUrl
