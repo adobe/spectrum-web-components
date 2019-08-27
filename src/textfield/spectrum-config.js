@@ -42,6 +42,11 @@ module.exports = {
                     selector: '.is-invalid',
                     name: 'invalid',
                 },
+                {
+                    type: 'boolean',
+                    selector: 'spectrum-Textfield--quiet',
+                    name: 'quiet',
+                },
             ],
         },
     ],

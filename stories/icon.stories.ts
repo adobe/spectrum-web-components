@@ -17,7 +17,7 @@ import { defineCustomElements } from '../src/define';
 import * as MediumIcons from '../src/icons/icons-medium';
 import * as LargeIcons from '../src/icons/icons-large';
 import { LitElement, property, css } from 'lit-element';
-import { Iconset } from '../src/iconset/iconset';
+import { IconsetAddedDetail } from '../src/iconset';
 
 defineCustomElements(
     ...Object.values(MediumIcons),
@@ -25,17 +25,19 @@ defineCustomElements(
 );
 
 class IconsDemo extends LitElement {
+    @property({ type: Array })
+    iconset: string[] = [];
     constructor() {
         super();
-        this.iconset = [];
         this.handleIconSetAdded = this.handleIconSetAdded.bind(this);
     }
     connectedCallback() {
         super.connectedCallback();
         window.addEventListener('sp-iconset:added', this.handleIconSetAdded);
     }
-    handleIconSetAdded({ detail: { iconset } }) {
-        this.iconset = [...iconset.iconMap.keys()];
+    handleIconSetAdded(event: CustomEvent<IconsetAddedDetail>): void {
+        const { iconset } = event.detail;
+        this.iconset = iconset.getIconList();
         this.requestUpdate();
     }
     static get styles() {

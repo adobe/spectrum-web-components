@@ -19,9 +19,12 @@ import {
 } from 'lit-element';
 
 import { Focusable } from '../shared/focusable';
+import '../icon';
+import '../icons';
 
 import textfieldStyles from './textfield.css';
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { nothing } from 'lit-html';
 
 /**
  * @slot icon - The icon that appears on the left of the label
@@ -33,7 +36,7 @@ export class Textfield extends Focusable {
     }
 
     @query('#input')
-    private inputElement!: HTMLElement;
+    private inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
@@ -45,6 +48,9 @@ export class Textfield extends Focusable {
     public pattern?: string;
 
     @property({ type: Boolean, reflect: true })
+    public grows = false;
+
+    @property({ type: Boolean, reflect: true })
     public multiline = false;
 
     @property({ type: Boolean, reflect: true })
@@ -54,24 +60,55 @@ export class Textfield extends Focusable {
     public value = '';
 
     @property({ type: Boolean, reflect: true })
+    public quiet = false;
+
+    @property({ type: Boolean, reflect: true })
     public required = false;
 
     public get focusElement(): HTMLElement {
         return this.inputElement;
     }
 
+    protected onInput(): void {
+        if (this.inputElement) {
+            this.value = this.inputElement.value;
+        }
+    }
+
+    protected renderStateIcons(): TemplateResult | {} {
+        if (this.invalid) {
+            return html`
+                <sp-icons-large></sp-icons-large>
+                <sp-icon id="invalid" name="ui:AlertSmall"></sp-icon>
+            `;
+        } else if (this.valid) {
+            return html`
+                <sp-icons-large></sp-icons-large>
+                <sp-icon id="valid" name="ui:CheckmarkSmall"></sp-icon>
+            `;
+        }
+        return nothing;
+    }
+
     protected render(): TemplateResult {
         if (this.multiline) {
             return html`
+                ${this.grows
+                    ? html`
+                          <div id="sizer">${this.value}</div>
+                      `
+                    : nothing}
                 <textarea
                     aria-label=${this.label}
                     id="input"
                     pattern=${ifDefined(this.pattern)}
                     placeholder=${this.label}
                     .value=${this.value}
+                    @input=${this.onInput}
                     ?disabled=${this.disabled}
                     ?required=${this.required}
                 ></textarea>
+                ${this.renderStateIcons()}
             `;
         }
         return html`
@@ -81,9 +118,28 @@ export class Textfield extends Focusable {
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.label}
                 .value=${this.value}
+                @input=${this.onInput}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
             />
+            ${this.renderStateIcons()}
         `;
+    }
+
+    protected updated(): void {
+        if (this.value) {
+            let validity = this.inputElement.checkValidity();
+            if ((this.disabled || this.multiline) && this.pattern) {
+                let regex = new RegExp(this.pattern);
+                validity = regex.test(this.value);
+            }
+            if (validity) {
+                this.valid = true;
+                this.invalid = false;
+            } else {
+                this.valid = false;
+                this.invalid = true;
+            }
+        }
     }
 }
