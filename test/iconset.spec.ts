@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, nextFrame, elementUpdated } from '@open-wc/testing';
+import { waitForPredicate } from './testing-helpers';
 import { Icon } from '../lib/icon';
 import { defineCustomElements } from '../lib/define';
 import * as MediumIcons from '../lib/icons/icons-medium';
@@ -42,9 +43,20 @@ describe('Iconset', () => {
             `
         );
 
-        await nextFrame();
+        let svg = el.shadowRoot
+            ? el.shadowRoot.querySelector('[role="img"]')
+            : null;
 
-        const svg = el.shadowRoot!.querySelector('[role="img"]');
+        function getSVG(): boolean {
+            svg = el.shadowRoot
+                ? el.shadowRoot.querySelector('[role="img"]')
+                : null;
+
+            return svg !== null;
+        }
+
+        await waitForPredicate(getSVG);
+
         expect(svg).to.not.be.null;
     });
 
