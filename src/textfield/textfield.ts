@@ -129,7 +129,9 @@ export class Textfield extends Focusable {
     }
 
     protected updated(changedProperties: PropertyValues): void {
-        this.checkValidity();
+        if (changedProperties.has('value')) {
+            this.checkValidity();
+        }
     }
 
     public checkValidity(): boolean {
