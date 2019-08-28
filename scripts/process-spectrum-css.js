@@ -20,7 +20,7 @@ const postcss = require('postcss');
 const postcssSpectrumPlugin = require('./process-spectrum-postcss-plugin');
 const reporter = require('postcss-reporter');
 
-const componentRoot = path.resolve(__dirname, '../src');
+const componentRoot = path.resolve(__dirname, '../packages');
 
 async function processComponent(componentPath) {
     const configPath = path.join(componentPath, 'spectrum-config.js');

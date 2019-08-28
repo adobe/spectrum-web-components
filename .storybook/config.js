@@ -14,7 +14,7 @@ if (module.hot) {
 }
 
 function loadStories() {
-    const req = require.context('../stories', true, /\.stories\.ts$/);
+    const req = require.context('../packages', true, /\.stories\.ts$/);
     req.keys().forEach((filename) => req(filename));
 }
 

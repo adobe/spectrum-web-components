@@ -1,7 +1,7 @@
 const webpackBaseConfig = require('../utils/webpack-base.config');
 const merge = require('webpack-merge');
 const path = require('path');
-const srcPath = path.resolve(__dirname, '../src');
+const srcPath = path.resolve(__dirname, '../packages');
 const storiesPath = path.resolve(__dirname, '../stories');
 
 module.exports = ({ config }) => {

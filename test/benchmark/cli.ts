@@ -95,7 +95,7 @@ $ node test/benchmark/cli -n 20
     if (opts.package.length) {
         packages = opts.package;
     } else {
-        packages = readdirSync(pathjoin('test', 'benchmark'), {
+        packages = readdirSync(pathjoin('packages'), {
             withFileTypes: true,
         })
             .filter((dirEntry) => dirEntry.isDirectory())
@@ -106,8 +106,24 @@ $ node test/benchmark/cli -n 20
     for (const packageName of packages) {
         const runCommands: string[] = [];
 
+        const hasTests = readdirSync(pathjoin('packages', packageName)).find(
+            (dirEntry) => dirEntry === 'test'
+        );
+
+        if (!hasTests) {
+            return;
+        }
+
+        const hasBenchmarks = readdirSync(
+            pathjoin('packages', packageName, 'test')
+        ).find((dirEntry) => dirEntry === 'benchmark');
+
+        if (!hasBenchmarks) {
+            return;
+        }
+
         const benchmarks = readdirSync(
-            pathjoin('test', 'benchmark', packageName),
+            pathjoin('packages', packageName, 'test', 'benchmark'),
             { withFileTypes: true }
         )
             .filter(

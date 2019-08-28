@@ -37,6 +37,7 @@ jobs:
             - run:
                   name: Lint
                   command: npm run lint
+            - run: npx lerna bootstrap
             - run: npm run build
 
             # test & get code coverage

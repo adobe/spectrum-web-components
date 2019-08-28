@@ -1,9 +1,11 @@
 lib
 src/**/*.css.ts
+packages/**/*.css.ts
 styles/**/*.css.ts
 
 node_modules
 npm-debug.log
+lerna-debug.log
 .DS_STORE
 .chrome
 .firefox
@@ -18,7 +20,12 @@ documentation/dist
 test/**/*.js
 test/**/*.js.map
 test/**/*.d.ts 
+packages/*/test/**/*.js
+packages/*/test/**/*.js.map
+packages/*/test/**/*.d.ts 
 !test/global.d.ts
+!packages/*/test/global.d.ts
+*.tsbuildinfo
 
 package-deps.json
 spectrum-web-components.build.log

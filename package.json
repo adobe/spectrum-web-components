@@ -24,18 +24,18 @@
     },
     "scripts": {
         "spectrum-vars": "node ./scripts/spectrum-vars.js",
-        "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'src/**/*.css'",
+        "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'packages/**/*.css'",
         "process-icons": "node ./scripts/process-icons.js",
-        "prebuild": "rimraf lib",
-        "build": "gulp",
+        "build": "gulp css && tsc --build packages/**/tsconfig.json",
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "watch": "gulp watch",
-        "serve": "node ./scripts/serve.js",
-        "serve:watch": "npm run build && (npm run serve & npm run watch)",
         "storybook": "start-storybook -s styles,stories/assets -p 6006",
         "docs:build": "gulp docsCompile",
         "docs:start": "gulp docsWatchCompile",
-        "lint": "bash ./scripts/lint.sh",
+        "lint": "npm run lint:js && npm run lint:ts && npm run lint:css",
+        "lint:js": "eslint -f pretty 'tasks/**/*.js' && eslint -f pretty 'scripts/**/*.js'",
+        "lint:ts": "eslint -f pretty 'packages/**/*.ts'",
+        "lint:css": "stylelint 'packages/**/*.css' 'styles/**/*.css'",
         "test": "npm run test:build && karma start --coverage",
         "test:build": "npm run build && tsc --build test/tsconfig-test.json",
         "test:watch": "npm run watch & npm run test:build -- -w & karma start --auto-watch=true --single-run=false",
@@ -50,8 +50,8 @@
         }
     },
     "peerDependencies": {
-        "lit-element": "^2.1.0",
         "common-tags": "^1.8.0",
+        "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",
         "prismjs": "^1.15.0"
     },
@@ -61,8 +61,8 @@
         "@babel/core": "^7.4.0",
         "@open-wc/building-webpack": "^2.1.1",
         "@open-wc/polyfills-loader": "^0.3.2",
-        "@open-wc/testing": "^2.2.8",
-        "@open-wc/testing-karma": "^3.1.14",
+        "@open-wc/testing": "^2.3.2",
+        "@open-wc/testing-karma": "^3.1.24",
         "@storybook/addon-a11y": "5.0.11",
         "@storybook/addon-actions": "5.0.11",
         "@storybook/addon-knobs": "5.0.11",
@@ -110,6 +110,7 @@
         "gulp-postcss": "^8.0.0",
         "gulp-rename": "^1.4.0",
         "gulp-sourcemaps": "^2.6.5",
+        "gulp-tap": "^1.0.1",
         "gulp-typescript": "^5.0.0",
         "gulp-wrap": "^0.14.0",
         "html-loader": "^0.5.5",
@@ -117,6 +118,7 @@
         "karma": "^4.2.0",
         "karma-junit-reporter": "^1.2.0",
         "karma-script-launcher": "^1.0.0",
+        "lerna": "^3.16.4",
         "linebyline": "^1.3.0",
         "lit-element": "^2.2.1",
         "lit-html": "^1.0.0",
@@ -159,6 +161,5 @@
         "webpack-dev-server": "^3.2.1",
         "webpack-merge": "^4.2.1",
         "webpackbar": "^3.2.0"
-    },
-    "dependencies": {}
+    }
 }

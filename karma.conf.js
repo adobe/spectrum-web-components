@@ -18,7 +18,9 @@ module.exports = (config) => {
         merge(createDefaultConfig(config), {
             files: [
                 {
-                    pattern: config.grep ? config.grep : 'test/**/*.spec.js',
+                    pattern: config.grep
+                        ? config.grep
+                        : 'packages/*/test/**/*.test.js',
                     type: 'module',
                 },
             ],
@@ -40,8 +42,8 @@ module.exports = (config) => {
                 thresholds: {
                     global: {
                         statements: 85,
-                        branches: 64,
-                        functions: 90,
+                        branches: 59,
+                        functions: 85,
                         lines: 85,
                     },
                 },
