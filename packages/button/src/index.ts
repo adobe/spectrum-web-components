@@ -9,16 +9,18 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './button';
-export * from './action-button';
+export * from './button.js';
+export * from './action-button.js';
 
-import { Button } from './button';
-import { ActionButton } from './action-button';
+import { Button } from './button.js';
+import { ActionButton } from './action-button.js';
 
+/* istanbul ignore else */
 if (!customElements.get('sp-action-button')) {
     customElements.define('sp-action-button', ActionButton);
 }
 
+/* istanbul ignore else */
 if (!customElements.get('sp-button')) {
     customElements.define('sp-button', Button);
 }

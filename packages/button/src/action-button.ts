@@ -11,36 +11,18 @@ governing permissions and limitations under the License.
 */
 
 import { CSSResultArray, property } from 'lit-element';
-import { ButtonBase } from './button-base';
-import buttonStyles from './button.css';
+import { ButtonBase } from './button-base.js';
+import buttonStyles from './action-button.css.js';
 
-/**
- * A Spectrum button control.
- * @element sp-button
- */
-export class Button extends ButtonBase {
-    /**
-     * The visual variant to apply to this button.
-     */
-    @property({ reflect: true })
-    public variant:
-        | 'cta'
-        | 'overBackground'
-        | 'primary'
-        | 'secondary'
-        | 'negative' = 'cta';
-
-    /**
-     * There is a warning in place for this control
-     */
-    @property({ type: Boolean, reflect: true })
-    public warning: boolean = false;
-
-    /**
-     * Style this button to be less obvious
-     */
+export class ActionButton extends ButtonBase {
     @property({ type: Boolean, reflect: true })
     public quiet: boolean = false;
+
+    @property({ type: Boolean, reflect: true })
+    public selected: boolean = false;
+
+    @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
+    public holdAffordance: boolean = false;
 
     public static get styles(): CSSResultArray {
         return [buttonStyles];
