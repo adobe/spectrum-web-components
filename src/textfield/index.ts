@@ -13,6 +13,7 @@ export * from './textfield';
 
 import { Textfield } from './textfield';
 
+/* istanbul ignore else */
 if (!customElements.get('sp-textfield')) {
     customElements.define('sp-textfield', Textfield);
 }

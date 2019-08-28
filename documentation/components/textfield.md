@@ -5,7 +5,7 @@
 ## Example
 
 ```html
-<sp-textfield label="Enter your name"></sp-textfield>
+<sp-textfield placeholder="Enter your name"></sp-textfield>
 ```
 
 ## Variants
@@ -15,7 +15,7 @@
 Dictate the validity state of the text entry with the `valid` attribute.
 
 ```html
-<sp-textfield label="Enter your name" valid></sp-textfield>
+<sp-textfield placeholder="Enter your name" valid></sp-textfield>
 ```
 
 ### Invalid
@@ -23,7 +23,7 @@ Dictate the validity state of the text entry with the `valid` attribute.
 Dictate the invalidity state of the text entry with the `invalid` attribute.
 
 ```html
-<sp-textfield label="Enter your name" invalid></sp-textfield>
+<sp-textfield placeholder="Enter your name" invalid></sp-textfield>
 ```
 
 ### Quiet
@@ -31,5 +31,5 @@ Dictate the invalidity state of the text entry with the `invalid` attribute.
 The quiet style works best when a clear layout (vertical stack, table, grid) makes it easy to parse. Too many quiet components in a small space can be hard to read.
 
 ```html
-<sp-textfield label="Enter your name" quiet></sp-textfield>
+<sp-textfield placeholder="Enter your name" quiet></sp-textfield>
 ```

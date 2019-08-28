@@ -17,14 +17,17 @@ import { boolean } from '@storybook/addon-knobs';
 storiesOf('Textfield', module).add('Default', () => {
     const quiet = boolean('Quiet', false, 'Element');
     return html`
-        <sp-textfield label="Enter your name" ?quiet=${quiet}></sp-textfield>
         <sp-textfield
-            label="Enter your name"
+            placeholder="Enter your name"
+            ?quiet=${quiet}
+        ></sp-textfield>
+        <sp-textfield
+            placeholder="Enter your name"
             disabled
             ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
-            label="Enter your name"
+            placeholder="Enter your name"
             pattern="[\\w\\s]+"
             required
             valid
@@ -32,7 +35,7 @@ storiesOf('Textfield', module).add('Default', () => {
             ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
-            label="Enter your name"
+            placeholder="Enter your name"
             pattern="[\\w\\s]+"
             required
             valid
@@ -41,14 +44,14 @@ storiesOf('Textfield', module).add('Default', () => {
             ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
-            label="Enter your name"
+            placeholder="Enter your name"
             pattern="[\\d]+"
             required
             value="Not a valid input"
             ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
-            label="Enter your name"
+            placeholder="Enter your name"
             pattern="[\\d]+"
             invalid
             required

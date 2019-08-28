@@ -16,6 +16,7 @@ import {
     CSSResultArray,
     query,
     TemplateResult,
+    PropertyValues,
 } from 'lit-element';
 
 import { Focusable } from '../shared/focusable';
@@ -45,6 +46,9 @@ export class Textfield extends Focusable {
     public label = '';
 
     @property()
+    public placeholder = '';
+
+    @property()
     public pattern?: string;
 
     @property({ type: Boolean, reflect: true })
@@ -65,14 +69,12 @@ export class Textfield extends Focusable {
     @property({ type: Boolean, reflect: true })
     public required = false;
 
-    public get focusElement(): HTMLElement {
+    public get focusElement(): HTMLInputElement | HTMLTextAreaElement {
         return this.inputElement;
     }
 
     protected onInput(): void {
-        if (this.inputElement) {
-            this.value = this.inputElement.value;
-        }
+        this.value = this.inputElement.value;
     }
 
     protected renderStateIcons(): TemplateResult | {} {
@@ -99,10 +101,10 @@ export class Textfield extends Focusable {
                       `
                     : nothing}
                 <textarea
-                    aria-label=${this.label}
+                    aria-label=${this.label || this.placeholder}
                     id="input"
                     pattern=${ifDefined(this.pattern)}
-                    placeholder=${this.label}
+                    placeholder=${this.placeholder}
                     .value=${this.value}
                     @input=${this.onInput}
                     ?disabled=${this.disabled}
@@ -113,10 +115,10 @@ export class Textfield extends Focusable {
         }
         return html`
             <input
-                aria-label=${this.label}
+                aria-label=${this.label || this.placeholder}
                 id="input"
                 pattern=${ifDefined(this.pattern)}
-                placeholder=${this.label}
+                placeholder=${this.placeholder}
                 .value=${this.value}
                 @input=${this.onInput}
                 ?disabled=${this.disabled}
@@ -126,7 +128,11 @@ export class Textfield extends Focusable {
         `;
     }
 
-    protected updated(): void {
+    protected updated(changedProperties: PropertyValues): void {
+        this.checkValidity();
+    }
+
+    public checkValidity(): boolean {
         if (this.value && (this.pattern || this.required)) {
             let validity = this.inputElement.checkValidity();
             if ((this.disabled || this.multiline) && this.pattern) {
@@ -140,6 +146,9 @@ export class Textfield extends Focusable {
                 this.valid = false;
                 this.invalid = true;
             }
+
+            return this.valid;
         }
+        return true;
     }
 }
