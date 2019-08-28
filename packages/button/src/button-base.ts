@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { property, html, TemplateResult } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined';
-import { Focusable } from '../shared/focusable';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
 export class ButtonBase extends Focusable {
     /**

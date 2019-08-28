@@ -15,7 +15,7 @@ import {
     CSSResultArray,
     PropertyValues,
 } from 'lit-element';
-import focusableStyles from './focusable.css';
+import focusableStyles from './focusable.css.js';
 
 /**
  * Focusable base class handles tabindex setting into shadowed elements automatically.

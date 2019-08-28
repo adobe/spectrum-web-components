@@ -1,6 +1,6 @@
 {
     "extends": "../tsconfig.json",
-    "include": ["../global.d.ts", "../stories/**/*.ts"],
+    "include": ["../global.d.ts", "../packages/*/stories/**/*.ts"],
     "exclude": [
         "../packages/*/src/**/*.ts",
         "../packages/*/node_modules/**/*.ts"

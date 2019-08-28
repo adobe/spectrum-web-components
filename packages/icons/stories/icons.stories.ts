@@ -14,6 +14,7 @@ import { html, TemplateResult } from 'lit-html';
 
 import '../lib';
 import '@spectrum-web-components/icon';
+import { IconsetAddedDetail } from '@spectrum-web-components/iconset';
 import { LitElement, css, CSSResult } from 'lit-element';
 import { color } from '@storybook/addon-knobs';
 
@@ -28,11 +29,9 @@ class IconsDemo extends LitElement {
         super.connectedCallback();
         window.addEventListener('sp-iconset:added', this.handleIconSetAdded);
     }
-    public handleIconSetAdded(event: CustomEvent): void {
-        const {
-            detail: { iconset },
-        } = event;
-        this.iconset = [...iconset.iconMap.keys()];
+    public handleIconSetAdded(event: CustomEvent<IconsetAddedDetail>): void {
+        const { iconset } = event.detail;
+        this.iconset = iconset.getIconList();
         this.requestUpdate();
     }
     public static get styles(): CSSResult[] {
