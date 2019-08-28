@@ -29,7 +29,7 @@ class IconsDemo extends LitElement {
         super.connectedCallback();
         window.addEventListener('sp-iconset:added', this.handleIconSetAdded);
     }
-    public handleIconSetAdded(event: CustomEvent): void {
+    public handleIconSetAdded(event: CustomEvent<IconsetAddedDetail>): void {
         const { iconset } = event.detail;
         this.iconset = iconset.getIconList();
         this.requestUpdate();
