@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Card } from '../lib/card/card';
-import '../lib/card';
-import { fixture, elementUpdated } from '@open-wc/testing';
-import { html } from 'lit-html';
-import { expect } from '@bundled-es-modules/chai';
+import '../lib/index.js';
+import { Card } from '../lib/index.js';
+import { fixture, elementUpdated, html } from '@open-wc/testing';
+// @ts-ignore
+const { expect } = window.chai;
 
 function previewNode(card: Card): Node {
     if (!card.shadowRoot) throw new Error('No shadowRoot');
