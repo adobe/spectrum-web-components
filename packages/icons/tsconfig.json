@@ -6,5 +6,5 @@
         "rootDir": "./src"
     },
     "include": ["src/*.ts"],
-    "references": [{ "path": "../iconset" }]
+    "references": [{ "path": "../icon" }, { "path": "../iconset" }]
 }
