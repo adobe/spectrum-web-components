@@ -1,0 +1,23 @@
+{
+    "name": "@spectrum-web-components/checkbox",
+    "version": "0.0.0",
+    "description": "",
+    "main": "lib/index.js",
+    "module": "lib/index.js",
+    "files": [
+        "lib"
+    ],
+    "scripts": {
+        "test": "karma start --coverage"
+    },
+    "author": "",
+    "license": "ISC",
+    "peerDependencies": {
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0"
+    },
+    "dependencies": {
+        "@spectrum-web-components/icon": "0.0.0",
+        "@spectrum-web-components/icons": "0.0.0"
+    }
+}
