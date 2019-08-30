@@ -15,5 +15,11 @@
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
+    },
+    "dependencies": {
+        "@spectrum-web-components/button": "0.0.0",
+        "@spectrum-web-components/icon": "0.0.0",
+        "@spectrum-web-components/icons": "0.0.0",
+        "@spectrum-web-components/shared": "0.0.0"
     }
 }

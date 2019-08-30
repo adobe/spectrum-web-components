@@ -71,12 +71,12 @@ describe('Menu group', () => {
                   '[aria-labelledby]'
               ) as HTMLDivElement)
             : null;
-        const firstLabelledById = firstLabelledByEl.getAttribute(
-            'aria-labelledby'
-        ) as string;
-        const secondLabelledById = secondLabelledByEl.getAttribute(
-            'aria-labelledby'
-        ) as string;
+        const firstLabelledById = firstLabelledByEl
+            ? (firstLabelledByEl.getAttribute('aria-labelledby') as string)
+            : null;
+        const secondLabelledById = secondLabelledByEl
+            ? (secondLabelledByEl.getAttribute('aria-labelledby') as string)
+            : null;
 
         expect(firstLabelledById).to.not.be.null;
         expect(secondLabelledById).to.not.be.null;

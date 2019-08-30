@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
 
 import menuItemStyles from './menu-item.css.js';
-import focusableStyles from '../shared/focusable.css.js';
+import focusableStyles from '@spectrum-web-components/shared/lib/focusable.css.js';
 import '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons';
 import { ActionButton } from '@spectrum-web-components/button';
