@@ -9,13 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { RadioGroup } from '../lib/radio-group';
-import '../lib/radio-group';
-import { Radio } from '../lib/radio';
-import '../lib/radio';
-import { fixture, elementUpdated } from '@open-wc/testing';
-import { html } from 'lit-html';
-import { expect } from '@bundled-es-modules/chai';
+
+import '../../radio-group/lib/index.js';
+import { RadioGroup } from '../../radio-group/lib/index.js';
+import '../lib/index.js';
+import { Radio } from '../lib/index.js';
+import { fixture, elementUpdated, html } from '@open-wc/testing';
+// @ts-ignore
+const { expect } = window.chai;
 
 function inputForRadio(radio: Radio): HTMLInputElement {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
