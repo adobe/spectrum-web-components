@@ -40,8 +40,8 @@ module.exports = (config) => {
                 thresholds: {
                     global: {
                         statements: 85,
-                        branches: 64,
-                        functions: 90,
+                        branches: 66,
+                        functions: 89,
                         lines: 85,
                     },
                 },

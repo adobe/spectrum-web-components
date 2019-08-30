@@ -23,7 +23,14 @@ const postCSSPlugins = (resourcePath) => {
             stage: 0,
         }),
         // minify the css with cssnano presets
-        require('cssnano')({ preset: 'default' }),
+        require('cssnano')({
+            preset: [
+                'default',
+                {
+                    svgo: false,
+                },
+            ],
+        }),
     ];
 };
 
