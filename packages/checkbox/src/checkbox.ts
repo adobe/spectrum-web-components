@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import { CSSResultArray, TemplateResult, html, property } from 'lit-element';
-import { CheckboxBase } from './checkbox-base';
+import { CheckboxBase } from './checkbox-base.js';
 import '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons';
-import checkboxStyles from './checkbox.css';
+import checkboxStyles from './checkbox.css.js';
 
 export class Checkbox extends CheckboxBase {
     @property({ type: Boolean, reflect: true })

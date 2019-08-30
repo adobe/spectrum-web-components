@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "@spectrum-web-components/icon": "0.0.0",
-        "@spectrum-web-components/icons": "0.0.0"
+        "@spectrum-web-components/icons": "0.0.0",
+        "@spectrum-web-components/shared": "0.0.0"
     }
 }

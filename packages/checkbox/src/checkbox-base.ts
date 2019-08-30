@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { property, html, TemplateResult, query } from 'lit-element';
-import { Focusable } from '../shared/focusable';
+import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
 export class CheckboxBase extends Focusable {
     @property({ type: Boolean, reflect: true })
