@@ -9,25 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { MenuGroup } from './menu-group.js';
+export * from './menu-group.js';
 
-import { expect } from '@bundled-es-modules/chai';
-import { fixture, elementUpdated } from '@open-wc/testing';
-import '../lib/menu-item';
-import { MenuItem } from '../lib/menu-item/menu-item';
-import { html } from 'lit-element';
+customElements.define('sp-menu-group', MenuGroup);
 
-describe('Menu item', () => {
-    it('renders', async () => {
-        const el = await fixture<MenuItem>(
-            html`
-                <sp-menu-item selected>
-                    Selected
-                </sp-menu-item>
-            `
-        );
-
-        await elementUpdated(el);
-
-        expect(el).shadowDom.to.equalSnapshot();
-    });
-});
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-menu-group': MenuGroup;
+    }
+}

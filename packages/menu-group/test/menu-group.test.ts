@@ -9,15 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-import { expect } from '@bundled-es-modules/chai';
-import { fixture, elementUpdated } from '@open-wc/testing';
-import { Menu } from '../lib/menu';
-import '../lib/menu';
-import '../lib/menu-item';
-import { MenuGroup } from '../lib/menu-group';
-import '../lib/menu-group';
-import { html } from 'lit-element';
+import '../lib/index.js';
+import { MenuGroup } from '../lib/index.js';
+import '../../menu/lib/index.js';
+import { Menu } from '../../menu/lib/index.js';
+import '../../menu-item/lib/index.js';
+import { fixture, elementUpdated, html } from '@open-wc/testing';
+// @ts-ignore
+const { expect } = window.chai;
 
 describe('Menu group', () => {
     it('renders', async () => {
@@ -62,12 +61,16 @@ describe('Menu group', () => {
         const secondGroup = el.querySelector(
             'sp-menu-group:nth-of-type(2)'
         ) as MenuGroup;
-        const firstLabelledByEl = firstGroup.shadowRoot!.querySelector(
-            '[aria-labelledby]'
-        ) as HTMLDivElement;
-        const secondLabelledByEl = secondGroup.shadowRoot!.querySelector(
-            '[aria-labelledby]'
-        ) as HTMLDivElement;
+        const firstLabelledByEl = firstGroup.shadowRoot
+            ? (firstGroup.shadowRoot.querySelector(
+                  '[aria-labelledby]'
+              ) as HTMLDivElement)
+            : null;
+        const secondLabelledByEl = secondGroup.shadowRoot
+            ? (secondGroup.shadowRoot.querySelector(
+                  '[aria-labelledby]'
+              ) as HTMLDivElement)
+            : null;
         const firstLabelledById = firstLabelledByEl.getAttribute(
             'aria-labelledby'
         ) as string;
