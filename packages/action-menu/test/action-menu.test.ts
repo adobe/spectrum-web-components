@@ -10,11 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated } from '@open-wc/testing';
-import { ActionMenu } from '../lib/action-menu';
-import '../lib/action-menu';
-import { html } from 'lit-element';
-import { expect } from '@bundled-es-modules/chai';
+import '../lib/index.js';
+import { ActionMenu } from '../lib/index.js';
+import '../../menu/lib/index.js';
+import '../../menu-item/lib/index.js';
+import { fixture, elementUpdated, html } from '@open-wc/testing';
+// @ts-ignore
+const { expect } = window.chai;
 
 describe('Action menu', () => {
     it('loads', async () => {

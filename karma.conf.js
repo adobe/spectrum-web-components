@@ -41,10 +41,10 @@ module.exports = (config) => {
             coverageIstanbulReporter: {
                 thresholds: {
                     global: {
-                        statements: 85,
-                        branches: 59,
-                        functions: 85,
-                        lines: 85,
+                        statements: 83,
+                        branches: 68,
+                        functions: 86,
+                        lines: 83,
                     },
                 },
             },

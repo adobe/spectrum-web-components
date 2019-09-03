@@ -10,14 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated } from '@open-wc/testing';
-import '../lib/dropdown';
-import { Dropdown } from '../lib/dropdown';
-import { html } from 'lit-element';
-import { expect } from '@bundled-es-modules/chai';
-import { MenuItem } from '../lib/menu-item';
+import '../lib/index.js';
+import { Dropdown } from '../lib/index.js';
+import '../../menu/lib/index.js';
+import '../../menu-item/lib/index.js';
+import { MenuItem } from '../../menu-item/lib/index.js';
+import { fixture, elementUpdated, html } from '@open-wc/testing';
+// @ts-ignore
+const { expect } = window.chai;
 
-const keyboardEvent = (code: string) =>
+const keyboardEvent = (code: string): KeyboardEvent =>
     new KeyboardEvent('keydown', {
         bubbles: true,
         composed: true,
@@ -105,14 +107,16 @@ describe('Dropdown', () => {
         button.click();
         await elementUpdated(el);
 
+        const openContent = button.textContent ? button.textContent : '';
         expect(el.open).to.be.true;
-        expect(button.textContent!.trim()).to.equal('');
+        expect(openContent.trim()).to.equal('');
 
         secondItem.click();
         await elementUpdated(el);
 
+        const closedContent = button.textContent ? button.textContent : '';
         expect(el.open).to.be.false;
-        expect(button.textContent!.trim()).to.equal('Select Inverse');
+        expect(closedContent.trim()).to.equal('Select Inverse');
     });
 
     it('opens on ArrowDown', async () => {
@@ -165,13 +169,15 @@ describe('Dropdown', () => {
         button.dispatchEvent(arrowDownEvent);
         await elementUpdated(el);
 
+        const openContent = button.textContent ? button.textContent : '';
         expect(el.open).to.be.true;
-        expect(button.textContent!.trim()).to.equal('');
+        expect(openContent.trim()).to.equal('');
 
         firstItem.click();
         await elementUpdated(el);
 
+        const closedContent = button.textContent ? button.textContent : '';
         expect(el.open).to.be.false;
-        expect(button.textContent!.trim()).to.equal('Deselect');
+        expect(closedContent.trim()).to.equal('Deselect');
     });
 });

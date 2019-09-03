@@ -14,8 +14,10 @@ import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
-import '../src/action-menu';
-import { ActionMenu } from '../lib/action-menu';
+import '../lib';
+import { ActionMenu } from '../lib';
+import '../../menu';
+import '../../menu-item';
 
 storiesOf('Action menu', module).add('Default', () => {
     return html`
