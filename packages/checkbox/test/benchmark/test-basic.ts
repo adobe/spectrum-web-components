@@ -10,10 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from '@spectrum-web-components/banner';
-export * from '@spectrum-web-components/button';
-export * from '@spectrum-web-components/dropzone';
-export * from '@spectrum-web-components/card';
-export * from '@spectrum-web-components/checkbox';
-export * from '@spectrum-web-components/icon';
-export * from '@spectrum-web-components/icons';
+import '../../lib';
+import { html } from 'lit-html';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+
+measureFixtureCreation(html`
+    <sp-checkbox id="checkbox0" tabindex="5">
+        Component
+    </sp-checkbox>
+`);
