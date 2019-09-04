@@ -9,6 +9,8 @@
     "references": [
         { "path": "../banner" },
         { "path": "../button" },
+        { "path": "../card" },
+        { "path": "../checkbox" },
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../iconset" },
