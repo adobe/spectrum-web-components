@@ -1,0 +1,16 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "outDir": "./lib",
+        "rootDir": "./src"
+    },
+    "include": ["src/*.ts"],
+    "references": [
+        { "path": "../banner" },
+        { "path": "../button" },
+        { "path": "../icon" },
+        { "path": "../icons" },
+        { "path": "../iconset" }
+    ]
+}
