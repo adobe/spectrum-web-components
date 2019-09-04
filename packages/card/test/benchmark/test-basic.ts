@@ -10,11 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from '@spectrum-web-components/banner';
-export * from '@spectrum-web-components/button';
-export * from '@spectrum-web-components/dropzone';
-export * from '@spectrum-web-components/card';
-export * from '@spectrum-web-components/checkbox';
-export * from '@spectrum-web-components/icon';
-export * from '@spectrum-web-components/icons';
-export * from '@spectrum-web-components/illustrated-message';
+import '../../../lib';
+import { html } from 'lit-html';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+
+measureFixtureCreation(html`
+    <sp-card variant="gallery" title="Card Title" subtitle="JPG">
+        <img slot="preview" src="https://picsum.photos/532/192" />
+        <div slot="description">10/15/18</div>
+        <div slot="footer">Footer</div>
+    </sp-card>
+`);
