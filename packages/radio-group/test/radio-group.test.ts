@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../../radio-group/lib/index.js';
-import { RadioGroup } from '../../radio-group/lib/index.js';
 import '../lib/index.js';
-import { Radio } from '../lib/index.js';
+import { RadioGroup } from '../lib/index.js';
+import '../../radio/lib/index.js';
+import { Radio } from '../../radio/lib/index.js';
 import { fixture, elementUpdated, html } from '@open-wc/testing';
 // @ts-ignore
 const { expect } = window.chai;

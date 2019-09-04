@@ -21,6 +21,8 @@
         "@spectrum-web-components/button": "0.0.0",
         "@spectrum-web-components/icon": "0.0.0",
         "@spectrum-web-components/icons": "0.0.0",
-        "@spectrum-web-components/iconset": "0.0.0"
+        "@spectrum-web-components/iconset": "0.0.0",
+        "@spectrum-web-components/radio": "0.0.0",
+        "@spectrum-web-components/radio-group": "0.0.0"
     }
 }

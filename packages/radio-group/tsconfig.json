@@ -6,5 +6,5 @@
         "rootDir": "./src"
     },
     "include": ["src/*.ts", "../../global.d.ts"],
-    "references": [{ "path": "../shared" }]
+    "references": [{ "path": "../radio" }]
 }
