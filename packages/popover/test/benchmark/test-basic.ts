@@ -10,13 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from '@spectrum-web-components/banner';
-export * from '@spectrum-web-components/button';
-export * from '@spectrum-web-components/dropzone';
-export * from '@spectrum-web-components/card';
-export * from '@spectrum-web-components/checkbox';
-export * from '@spectrum-web-components/icon';
-export * from '@spectrum-web-components/icons';
-export * from '@spectrum-web-components/illustrated-message';
-export * from '@spectrum-web-components/popover';
-export * from '@spectrum-web-components/sidenav';
+import '../../lib';
+import { html } from 'lit-html';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+
+measureFixtureCreation(html`
+    <sp-popover variant="dialog" direction="top" open>
+        <div id="title">
+            Popover Title
+        </div>
+        <div id="content">
+            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
+            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
+            sweet roll cake danish candy biscuit halvah
+        </div>
+    </sp-popover>
+`);
