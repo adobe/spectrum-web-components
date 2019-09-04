@@ -25,6 +25,7 @@
         "@spectrum-web-components/icon": "0.0.0",
         "@spectrum-web-components/icons": "0.0.0",
         "@spectrum-web-components/iconset": "0.0.0",
-        "@spectrum-web-components/popover": "0.0.0"
+        "@spectrum-web-components/popover": "0.0.0",
+        "@spectrum-web-components/slider": "0.0.0"
     }
 }

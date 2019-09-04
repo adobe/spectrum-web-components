@@ -9,13 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+export * from './slider';
 
-export * from '@spectrum-web-components/banner';
-export * from '@spectrum-web-components/button';
-export * from '@spectrum-web-components/dropzone';
-export * from '@spectrum-web-components/card';
-export * from '@spectrum-web-components/checkbox';
-export * from '@spectrum-web-components/icon';
-export * from '@spectrum-web-components/icons';
-export * from '@spectrum-web-components/popover';
-export * from '@spectrum-web-components/slider';
+import { Slider } from './slider';
+
+if (!customElements.get('sp-slider')) {
+    customElements.define('sp-slider', Slider);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-slider': Slider;
+    }
+}
