@@ -29,6 +29,7 @@ export class Checkbox extends CheckboxBase {
 
     protected render(): TemplateResult {
         return html`
+            <sp-icons-medium></sp-icons-medium>
             <label id="root">
                 ${super.render()}
                 <span id="box">
