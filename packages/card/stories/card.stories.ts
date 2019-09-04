@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 
-import '../src/card';
+import '../lib';
 
 storiesOf('Card', module)
     .add('Default', () => {
