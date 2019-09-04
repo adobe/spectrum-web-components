@@ -11,15 +11,14 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
-import '../src/popover';
-import '../src/menu';
-import '../src/menu-item';
-import '../src/menu-group';
-import { defineCustomElements } from '../src/define';
-import '../src/icon';
-import * as MediumIcons from '../src/icons/icons-medium';
 
-defineCustomElements(...Object.values(MediumIcons));
+import '../lib';
+import '../../popover/lib';
+import '../../menu/lib';
+import '../../menu-item/lib';
+import '../../menu-group/lib';
+import '../../icon/lib';
+import '../../icons/lib';
 
 storiesOf('Menu', module)
     .add('Default', () => {

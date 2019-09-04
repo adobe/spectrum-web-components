@@ -16,9 +16,11 @@
         { "path": "../icons" },
         { "path": "../iconset" },
         { "path": "../illustrated-message" },
+        { "path": "../menu" },
+        { "path": "../menu-group" },
+        { "path": "../menu-item" },
         { "path": "../popover" },
         { "path": "../radio" },
-        { "path": "../radio-group" },
-        { "path": "../popover" }
+        { "path": "../radio-group" }
     ]
 }
