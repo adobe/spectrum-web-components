@@ -13,14 +13,11 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import * as MediumIcons from '../src/icons/icons-medium';
 import { TemplateResult } from 'lit-element';
 
-import { defineCustomElements, Icon } from '../src';
-
-import '../src/button';
-
-defineCustomElements(Icon, ...Object.values(MediumIcons));
+import '../lib';
+import '@spectrum-web-components/icon';
+import '@spectrum-web-components/icons';
 
 interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
@@ -28,6 +25,39 @@ interface Properties {
     content?: TemplateResult;
     disabled?: boolean;
     iconRight?: boolean;
+}
+
+function renderButton(properties: Properties): TemplateResult {
+    if (properties.variant) {
+        return html`
+            <sp-button
+                variant="${properties.variant}"
+                ?quiet="${!!properties.quiet}"
+                ?disabled=${!!properties.disabled}
+                ?icon-right=${properties.iconRight}
+                @click=${action(`Click ${properties.variant}`)}
+            >
+                ${properties.content || 'Click Me'}
+            </sp-button>
+        `;
+    } else {
+        return html`
+            <sp-button
+                ?quiet="${!!properties.quiet}"
+                ?disabled=${!!properties.disabled}
+                @click=${action(`Click ${properties.variant}`)}
+            >
+                ${properties.content || 'Click Me'}
+            </sp-button>
+        `;
+    }
+}
+
+function renderButtonPair(properties: Properties): TemplateResult {
+    const disabled = Object.assign({}, properties, { disabled: true });
+    return html`
+        ${renderButton(properties)} ${renderButton(disabled)}
+    `;
 }
 
 storiesOf('Button', module)
@@ -207,36 +237,3 @@ storiesOf('Button', module)
             </sp-button>
         `;
     });
-
-function renderButton(properties: Properties): TemplateResult {
-    if (properties.variant) {
-        return html`
-            <sp-button
-                variant="${properties.variant}"
-                ?quiet="${!!properties.quiet}"
-                ?disabled=${!!properties.disabled}
-                ?icon-right=${properties.iconRight}
-                @click=${action(`Click ${properties.variant}`)}
-            >
-                ${properties.content || 'Click Me'}
-            </sp-button>
-        `;
-    } else {
-        return html`
-            <sp-button
-                ?quiet="${!!properties.quiet}"
-                ?disabled=${!!properties.disabled}
-                @click=${action(`Click ${properties.variant}`)}
-            >
-                ${properties.content || 'Click Me'}
-            </sp-button>
-        `;
-    }
-}
-
-function renderButtonPair(properties: Properties): TemplateResult {
-    const disabled = Object.assign({}, properties, { disabled: true });
-    return html`
-        ${renderButton(properties)} ${renderButton(disabled)}
-    `;
-}

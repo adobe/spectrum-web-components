@@ -23,6 +23,7 @@ test/**/*.d.ts
 packages/*/test/**/*.js
 packages/*/test/**/*.js.map
 packages/*/test/**/*.d.ts 
+packages/*/stories/**/*.d.ts 
 !test/global.d.ts
 !packages/*/test/global.d.ts
 *.tsbuildinfo
