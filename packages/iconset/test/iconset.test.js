@@ -9,74 +9,50 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
 import { fixture, nextFrame, elementUpdated } from '@open-wc/testing';
-import { waitForPredicate } from './testing-helpers';
-import { Icon } from '../lib/icon';
-import { defineCustomElements } from '../lib/define';
-import * as MediumIcons from '../lib/icons/icons-medium';
+import '../../icons/lib/index.js';
+import '../../icon/lib/index.js';
 import { html } from 'lit-element';
-import { expect } from '@bundled-es-modules/chai';
-
-defineCustomElements(...Object.values(MediumIcons));
-
+// @ts-ignore
+const { expect } = window.chai;
 describe('Iconset', () => {
     after(() => {
         const sets = [...document.querySelectorAll('sp-icons-medium')];
         sets.map((set) => set.remove());
     });
-
     it('renders after adding and removing a second iconset', async () => {
         let icons = document.createElement('sp-icons-medium');
         document.body.append(icons);
-
         let icons2 = document.createElement('sp-icons-medium');
         document.body.append(icons2);
-
         icons2.remove();
-
         await nextFrame();
-
-        const el = await fixture<Icon>(
-            html`
-                <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
-            `
-        );
-
-        let svg = el.shadowRoot
+        const el = await fixture(html`
+            <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
+        `);
+        await elementUpdated(el);
+        await nextFrame();
+        const svg = el.shadowRoot
             ? el.shadowRoot.querySelector('[role="img"]')
             : null;
-
-        function getSVG(): boolean {
-            svg = el.shadowRoot
-                ? el.shadowRoot.querySelector('[role="img"]')
-                : null;
-
-            return svg !== null;
-        }
-
-        await waitForPredicate(getSVG);
-
         expect(svg).to.not.be.null;
     });
-
     it('can be after `<sp-icon/>` in the DOM order', async () => {
-        const el = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
-                    <sp-icons-medium></sp-icons-medium>
-                </div>
-            `
-        );
-
-        const icon = el.querySelector('sp-icon') as Icon | null;
-        const iconSet = el.querySelector('sp-icons-medium') as Icon | null;
-
-        await elementUpdated(iconSet!);
-        await elementUpdated(icon!);
-
-        const svg = icon!.shadowRoot!.querySelector('[role="img"]');
+        const el = await fixture(html`
+            <div>
+                <sp-icon size="xxs" name="ui:CheckmarkMedium"></sp-icon>
+                <sp-icons-medium></sp-icons-medium>
+            </div>
+        `);
+        const icon = el.querySelector('sp-icon');
+        const iconSet = el.querySelector('sp-icons-medium');
+        await elementUpdated(iconSet);
+        await elementUpdated(icon);
+        const svg = icon.shadowRoot
+            ? icon.shadowRoot.querySelector('[role="img"]')
+            : null;
         expect(svg).to.not.be.null;
     });
 });
+describe('Iconset order', () => {});
+//# sourceMappingURL=iconset.test.js.map

@@ -69,7 +69,7 @@ describe('Checkbox', () => {
     });
 
     it('loads', () => {
-        const el = testFixture.querySelector('sp-checkbox') as Checkbox;
+        const el = testFixture.querySelector('sp-checkbox') as Checkbox | null;
         expect(el).to.not.equal(undefined);
         expect(el).dom.to.equal(`
             <sp-checkbox id="checkbox0" tabindex="5">
