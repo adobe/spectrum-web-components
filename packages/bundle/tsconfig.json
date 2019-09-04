@@ -14,6 +14,7 @@
         { "path": "../checkbox" },
         { "path": "../icon" },
         { "path": "../icons" },
-        { "path": "../iconset" }
+        { "path": "../iconset" },
+        { "path": "../popover" }
     ]
 }
