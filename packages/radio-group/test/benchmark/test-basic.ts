@@ -10,14 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from '@spectrum-web-components/banner';
-export * from '@spectrum-web-components/button';
-export * from '@spectrum-web-components/card';
-export * from '@spectrum-web-components/checkbox';
-export * from '@spectrum-web-components/dropzone';
-export * from '@spectrum-web-components/icon';
-export * from '@spectrum-web-components/icons';
-export * from '@spectrum-web-components/illustrated-message';
-export * from '@spectrum-web-components/popover';
-export * from '@spectrum-web-components/radio';
-export * from '@spectrum-web-components/radio-group';
+import '../../lib';
+import '../../../radio/lib';
+import { html } from 'lit-html';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+
+measureFixtureCreation(html`
+    <sp-radio-group id="test-default">
+        <sp-radio value="first" checked>Option 1</sp-radio>
+        <sp-radio value="second">Option 2</sp-radio>
+        <sp-radio value="third">Option 3</sp-radio>
+    </sp-radio-group>
+`);

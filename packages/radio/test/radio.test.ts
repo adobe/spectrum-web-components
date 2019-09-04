@@ -9,11 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Radio } from '../lib/radio/radio';
-import '../lib/radio'; // import the index for side-effects (element registration)
-import { fixture, elementUpdated, triggerBlurFor } from '@open-wc/testing';
-import { html } from 'lit-html';
-import { expect } from '@bundled-es-modules/chai';
+
+import '../lib/index.js';
+import { Radio } from '../lib/index.js';
+import {
+    fixture,
+    elementUpdated,
+    triggerBlurFor,
+    html,
+} from '@open-wc/testing';
+// @ts-ignore
+const { expect } = window.chai;
 
 function inputForRadio(radio: Radio): HTMLInputElement {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');

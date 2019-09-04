@@ -9,15 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+export * from './radio.js';
 
-export * from '@spectrum-web-components/banner';
-export * from '@spectrum-web-components/button';
-export * from '@spectrum-web-components/card';
-export * from '@spectrum-web-components/checkbox';
-export * from '@spectrum-web-components/dropzone';
-export * from '@spectrum-web-components/icon';
-export * from '@spectrum-web-components/icons';
-export * from '@spectrum-web-components/illustrated-message';
-export * from '@spectrum-web-components/popover';
-export * from '@spectrum-web-components/radio';
-export * from '@spectrum-web-components/radio-group';
+import { Radio } from './radio.js';
+
+/* istanbul ignore else */
+if (!customElements.get('sp-radio')) {
+    customElements.define('sp-radio', Radio);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-radio': Radio;
+    }
+}
