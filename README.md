@@ -10,35 +10,34 @@ It will not support older browsers and will only target modern ever-green browse
 -   Typescript
 -   Browsers with Custom Elements V1 and Shadow DOM support, e.g. Chrome, Firefox, Safari.
 
-# Installation
+# Getting Started
 
 ```bash
+git clone https://github.com/adobe/spectrum-web-components.git
+cd spectrum-web-components
 npm install
+npx lerna bootstrap
 ```
 
-# Usage
+# Documentation
+
+The Spectrum Web Components documentation site is available via the following command:
 
 ```bash
-npm run serve:watch
+npm run docs:start
 ```
 
-Browse to http://localhost:4000/ to explore components, for example http://localhost:4000/banner/ contains the demo for the banner component.
-
-# Development
-
-The following command will build and run a development server allowing you to develop your components using BrowserSync reloading.
-
-```bash
-npm run serve:watch
-```
+By default the resulting site will be available at [http://localhost:8080](http://localhost:8080).
 
 # Storybook
 
-Alternatively you can run [Storybook](https://storybook.js.org) through the command:
+You can run [Storybook](https://storybook.js.org) through the command:
 
 ```bash
 npm run storybook
 ```
+
+By default the resulting site will be available at [http://localhost:6006](http://localhost:6006).
 
 ## Linting
 
@@ -65,6 +64,30 @@ npm run test:bench
 
 This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer) tests and report the current runtime cost of each individual element. When not making changes to the benchmarks thy have been built on your local machine, you can stip `npm run build:tests` for later passes.
 
+## Anatomy of a Component
+
+There is extended documentation on adding a new component to the library in the [documentation site](http://localhost:8080/guides/adding-component). However, at a high level, you will be building the following structure:
+
+-   packages
+    -   new-component-name
+        -   src
+            -   index.ts
+            -   new-component-name.css
+            -   new-component-name.ts
+            -   spectrum-config.js
+            -   spectrum-new-component-name.css
+        -   stories
+            -   new-component-name.stories.ts
+        -   test
+            -   benchmark
+                -   test-basic.ts
+            -   new-component-name.test.ts
+        -   package.json
+        -   README.md
+        -   tsconfig.json
+
+For a list of component waiting to be implemented, visit our [`missing components`](https://github.com/adobe/spectrum-web-components/labels/missing%20components) tag.
+
 ## Development within Adobe
 
 Due to the internal `@adobe` npm registry served by Artifactory, when developing this module internally it is necessary to provide an `.npmrc` local to this project which forces the use of the public `@adobe` scope on public npm. Therefore if you are an Adobe employee working on this project add the following to a `.npmrc` file in this folder:
@@ -79,24 +102,6 @@ This will ensure that when installing dependencies you do not accidentally pull 
 ## IDE Notes
 
 The build process compiles `.css` files using PostCSS and wraps them in the `lit-html` `css` template tag and writes out a `.css.ts` file for easy import into TypeScript files. This file should not be edited, and is ignored by `.gitignore`, but you may also wish to hide the files in your IDE.
-
-### Visual Studio Code
-
-In Visual Studio Code you can hide the untracked files by adding the following to your `.vscode/settings.json` in this project folder:
-
-```json
-{
-    "files.exclude": {
-        "styles/**/*.css.ts": true,
-        "src/**/*.css.ts": true,
-        ".chrome": true,
-        ".firefox": true
-    },
-    "eslint.validate": ["javascript", "javascriptreact", "typescript"]
-}
-```
-
-Note this also enables typescript linting in the eslint plugin in VSCode, highly recommended.
 
 # Contributing
 
