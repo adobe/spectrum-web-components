@@ -7,8 +7,10 @@
     },
     "include": ["src/*.ts"],
     "references": [
+        { "path": "../action-menu" },
         { "path": "../banner" },
         { "path": "../button" },
+        { "path": "../dropdown" },
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../iconset" }
