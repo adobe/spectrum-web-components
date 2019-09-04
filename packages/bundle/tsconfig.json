@@ -11,6 +11,7 @@
         { "path": "../button" },
         { "path": "../icon" },
         { "path": "../icons" },
-        { "path": "../iconset" }
+        { "path": "../iconset" },
+        { "path": "../link" }
     ]
 }
