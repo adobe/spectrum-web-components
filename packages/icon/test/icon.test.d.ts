@@ -1,1 +1,0 @@
-import '../lib/index.js';
