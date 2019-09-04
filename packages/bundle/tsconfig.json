@@ -9,9 +9,9 @@
     "references": [
         { "path": "../banner" },
         { "path": "../button" },
-        { "path": "../dropzone" },
         { "path": "../card" },
         { "path": "../checkbox" },
+        { "path": "../dropzone" },
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../iconset" },
@@ -19,6 +19,8 @@
         { "path": "../menu" },
         { "path": "../menu-group" },
         { "path": "../menu-item" },
-        { "path": "../popover" }
+        { "path": "../popover" },
+        { "path": "../radio" },
+        { "path": "../radio-group" }
     ]
 }

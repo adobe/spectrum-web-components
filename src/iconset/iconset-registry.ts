@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { Iconset } from './iconset';
-import { strictCustomEvent } from '../events';
+export interface IconsetAddedDetail {
+    name: string;
+    iconset: Iconset;
+}
+export interface IconsetRemovedDetail {
+    name: string;
+}
 
 export class IconsetRegistry {
     // singleton getter
@@ -30,7 +36,9 @@ export class IconsetRegistry {
         // dispatch a sp-iconset-added event on window to let everyone know we have a new iconset
         // note we're using window here for efficiency since we don't need to bubble through the dom since everyone
         // will know where to look for this event
-        const event = strictCustomEvent('sp-iconset:added', {
+        const event = new CustomEvent('sp-iconset:added', {
+            bubbles: true,
+            composed: true,
             detail: { name, iconset },
         });
         // we're dispatching this event in the next tick to allow the iconset to finish any slotchange or other event
@@ -43,7 +51,9 @@ export class IconsetRegistry {
         // dispatch a sp-iconset-removed event on window to let everyone know we have a new iconset
         // note we're using window here for efficiency since we don't need to bubble through the dom since everyone
         // will know where to look for this event
-        const event = strictCustomEvent('sp-iconset:removed', {
+        const event = new CustomEvent('sp-iconset:removed', {
+            bubbles: true,
+            composed: true,
             detail: { name },
         });
         // we're dispatching this event in the next tick To keep the event model consistent with the added event
@@ -56,7 +66,7 @@ export class IconsetRegistry {
 
 declare global {
     interface GlobalEventHandlersEventMap {
-        'sp-iconset:added': CustomEvent<{ name: string; iconset: Iconset }>;
-        'sp-iconset:removed': CustomEvent<{ name: string }>;
+        'sp-iconset:added': CustomEvent<IconsetAddedDetail>;
+        'sp-iconset:removed': CustomEvent<IconsetRemovedDetail>;
     }
 }
