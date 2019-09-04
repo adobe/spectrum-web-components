@@ -15,6 +15,7 @@
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../iconset" },
-        { "path": "../popover" }
+        { "path": "../popover" },
+        { "path": "../switch" }
     ]
 }
