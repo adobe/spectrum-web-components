@@ -9,13 +9,16 @@
     "references": [
         { "path": "../banner" },
         { "path": "../button" },
-        { "path": "../dropzone" },
         { "path": "../card" },
         { "path": "../checkbox" },
+        { "path": "../dropzone" },
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../iconset" },
-        { "path": "../illustrated-message" }
+        { "path": "../illustrated-message" },
+        { "path": "../popover" },
+        { "path": "../radio" },
+        { "path": "../radio-group" },
         { "path": "../popover" }
     ]
 }
