@@ -15,6 +15,7 @@
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../iconset" },
+        { "path": "../illustrated-message" },
         { "path": "../popover" },
         { "path": "../slider" }
     ]
