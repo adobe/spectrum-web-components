@@ -9,11 +9,15 @@
     "references": [
         { "path": "../banner" },
         { "path": "../button" },
+        { "path": "../dropzone" },
+        { "path": "../card" },
+        { "path": "../checkbox" },
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../iconset" },
         { "path": "../menu" },
         { "path": "../menu-group" },
-        { "path": "../menu-item" }
+        { "path": "../menu-item" },
+        { "path": "../popover" }
     ]
 }

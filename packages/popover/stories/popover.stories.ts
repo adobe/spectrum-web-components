@@ -12,7 +12,7 @@ import { storiesOf } from '@storybook/polymer';
 import { boolean, text, radios } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
-import '../src/popover';
+import '../lib';
 
 storiesOf('Popover', module)
     .add('Default', () => {
