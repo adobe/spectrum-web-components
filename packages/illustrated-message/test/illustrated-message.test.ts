@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { IllustratedMessage } from '../lib/illustrated-message/illustrated-message';
-import '../lib/illustrated-message'; // import the index for side-effects (element registration)
-import { fixture } from '@open-wc/testing';
-import { html } from 'lit-html';
-import { expect } from '@bundled-es-modules/chai';
+import '../lib';
+import { IllustratedMessage } from '../lib';
+import { fixture, html } from '@open-wc/testing';
+// @ts-ignore
+const { expect } = window.chai;
 
 describe('Illustrated Message', () => {
     it('loads', async () => {
