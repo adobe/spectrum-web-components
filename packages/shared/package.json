@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/bundle",
+    "name": "@spectrum-web-components/shared",
     "version": "0.0.0",
     "description": "",
     "main": "lib/index.js",
@@ -15,12 +15,5 @@
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
-    },
-    "dependencies": {
-        "@spectrum-web-components/banner": "0.0.0",
-        "@spectrum-web-components/button": "0.0.0",
-        "@spectrum-web-components/icon": "0.0.0",
-        "@spectrum-web-components/icons": "0.0.0",
-        "@spectrum-web-components/iconset": "0.0.0"
     }
 }

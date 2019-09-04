@@ -10,7 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from '@spectrum-web-components/banner';
-export * from '@spectrum-web-components/button';
-export * from '@spectrum-web-components/icon';
-export * from '@spectrum-web-components/icons';
+import { CSSResultArray, property } from 'lit-element';
+import { ButtonBase } from './button-base.js';
+import buttonStyles from './action-button.css.js';
+
+export class ActionButton extends ButtonBase {
+    @property({ type: Boolean, reflect: true })
+    public quiet: boolean = false;
+
+    @property({ type: Boolean, reflect: true })
+    public selected: boolean = false;
+
+    @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
+    public holdAffordance: boolean = false;
+
+    public static get styles(): CSSResultArray {
+        return [buttonStyles];
+    }
+}

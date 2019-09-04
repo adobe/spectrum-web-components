@@ -10,18 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
+import { html, TemplateResult } from 'lit-html';
 import { action } from '@storybook/addon-actions';
 
-import '../src/button';
-
-storiesOf('ActionButton', module).add('Default', () => {
-    return renderButtonsSelected({
-        quiet: false,
-        disabled: false,
-        selected: false,
-    });
-});
+import '../lib';
 
 interface Properties {
     quiet: boolean;
@@ -29,7 +21,7 @@ interface Properties {
     selected: boolean;
 }
 
-function renderButton(properties: Properties) {
+function renderButton(properties: Properties): TemplateResult {
     return html`
         <sp-action-button
             .quiet="${!!properties.quiet}"
@@ -42,7 +34,7 @@ function renderButton(properties: Properties) {
     `;
 }
 
-function renderButtonsSelected(properties: Properties) {
+function renderButtonsSelected(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
     const selected = Object.assign({}, properties, { selected: true });
     return html`
@@ -52,3 +44,11 @@ function renderButtonsSelected(properties: Properties) {
         </div>
     `;
 }
+
+storiesOf('ActionButton', module).add('Default', () => {
+    return renderButtonsSelected({
+        quiet: false,
+        disabled: false,
+        selected: false,
+    });
+});
