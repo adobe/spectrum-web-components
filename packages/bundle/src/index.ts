@@ -14,3 +14,6 @@ export * from '@spectrum-web-components/banner';
 export * from '@spectrum-web-components/button';
 export * from '@spectrum-web-components/icon';
 export * from '@spectrum-web-components/icons';
+export * from '@spectrum-web-components/menu';
+export * from '@spectrum-web-components/menu-group';
+export * from '@spectrum-web-components/menu-item';
