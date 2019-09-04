@@ -1,0 +1,421 @@
+/* stylelint-disable */ /* 
+Copyright 2019 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+#button {
+    /* .spectrum-Button,
+   * .spectrum-ActionButton,
+   * .spectrum-LogicButton,
+   * .spectrum-FieldButton,
+   * .spectrum-ClearButton,
+   * .spectrum-Tool */
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    box-sizing: border-box;
+
+    -ms-flex-align: center;
+
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: visible;
+    margin: 0;
+
+    border-style: solid;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-appearance: button;
+    vertical-align: top;
+
+    transition: background var(--spectrum-global-animation-duration-100, 130ms)
+            ease-out,
+        border-color var(--spectrum-global-animation-duration-100, 130ms)
+            ease-out,
+        color var(--spectrum-global-animation-duration-100, 130ms) ease-out,
+        box-shadow var(--spectrum-global-animation-duration-100, 130ms) ease-out;
+
+    text-decoration: none;
+    font-family: adobe-clean, 'Source Sans Pro', -apple-system,
+        BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    line-height: 1.3;
+
+    cursor: pointer;
+
+    /* .spectrum-FieldButton */
+
+    height: var(
+        --spectrum-dropdown-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+
+    padding: 0
+        var(
+            --spectrum-dropdown-padding-x,
+            var(--spectrum-global-dimension-size-150)
+        );
+
+    font-family: inherit;
+    font-weight: normal;
+    font-size: var(
+        --spectrum-dropdown-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    line-height: normal;
+    -webkit-font-smoothing: initial;
+
+    cursor: pointer;
+    outline: none;
+    /* .spectrum-FieldButton */
+    margin: 0;
+    padding: 0
+        var(
+            --spectrum-dropdown-padding-x,
+            var(--spectrum-global-dimension-size-150)
+        );
+
+    border-width: var(--spectrum-dropdown-border-size, 1px);
+    border-style: solid;
+    border-radius: var(--spectrum-global-dimension-size-50);
+
+    transition: background-color
+            var(--spectrum-global-animation-duration-100, 130ms),
+        box-shadow var(--spectrum-global-animation-duration-100, 130ms),
+        border-color var(--spectrum-global-animation-duration-100, 130ms);
+
+    /* .spectrum-FieldButton */
+    color: var(
+        --spectrum-fieldbutton-text-color,
+        var(--spectrum-global-color-gray-800)
+    );
+    background-color: var(
+        --spectrum-fieldbutton-background-color,
+        var(--spectrum-global-color-gray-75)
+    );
+    border-color: var(
+        --spectrum-fieldbutton-border-color,
+        var(--spectrum-global-color-gray-300)
+    );
+}
+#button:focus {
+    /* .spectrum-Button:focus,
+   * .spectrum-ActionButton:focus,
+   * .spectrum-LogicButton:focus,
+   * .spectrum-FieldButton:focus,
+   * .spectrum-ClearButton:focus,
+   * .spectrum-Tool:focus */
+    outline: none;
+}
+#button::-moz-focus-inner {
+    /* .spectrum-Button::-moz-focus-inner,
+   * .spectrum-ActionButton::-moz-focus-inner,
+   * .spectrum-LogicButton::-moz-focus-inner,
+   * .spectrum-FieldButton::-moz-focus-inner,
+   * .spectrum-ClearButton::-moz-focus-inner,
+   * .spectrum-Tool::-moz-focus-inner */
+    border: 0;
+    border-style: none;
+    padding: 0;
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+#button:-moz-focusring {
+    /* .spectrum-Button:-moz-focusring,
+   * .spectrum-ActionButton:-moz-focusring,
+   * .spectrum-LogicButton:-moz-focusring,
+   * .spectrum-FieldButton:-moz-focusring,
+   * .spectrum-ClearButton:-moz-focusring,
+   * .spectrum-Tool:-moz-focusring */
+    outline: 1px dotted ButtonText;
+}
+#button:disabled {
+    /* .spectrum-Button:disabled,
+   * .spectrum-ActionButton:disabled,
+   * .spectrum-LogicButton:disabled,
+   * .spectrum-FieldButton:disabled,
+   * .spectrum-ClearButton:disabled,
+   * .spectrum-Tool:disabled */
+    cursor: default;
+}
+.icon {
+    /* .spectrum-Button .spectrum-Icon,
+   * .spectrum-ActionButton .spectrum-Icon,
+   * .spectrum-LogicButton .spectrum-Icon,
+   * .spectrum-FieldButton .spectrum-Icon,
+   * .spectrum-ClearButton .spectrum-Icon,
+   * .spectrum-Tool .spectrum-Icon */
+    max-height: 100%;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+#button:disabled,
+#button.is-disabled {
+    /* .spectrum-FieldButton:disabled,
+   * .spectrum-FieldButton.is-disabled */
+    border-width: 0;
+    cursor: default;
+}
+#button.is-open {
+    /* .spectrum-FieldButton.is-open */
+    border-width: var(--spectrum-dropdown-border-size, 1px);
+}
+.spectrum-FieldButton--quiet {
+    /* .spectrum-FieldButton--quiet */
+    margin: 0;
+    padding: 0;
+
+    border-width: 0;
+    border-radius: var(--spectrum-fieldbutton-quiet-border-radius, 0px);
+    /* .spectrum-FieldButton--quiet */
+    color: var(
+        --spectrum-fieldbutton-text-color,
+        var(--spectrum-global-color-gray-800)
+    );
+    border-color: var(
+        --spectrum-fieldbutton-quiet-border-color,
+        rgba(0, 0, 0, 0)
+    );
+    background-color: var(
+        --spectrum-fieldbutton-quiet-background-color,
+        rgba(0, 0, 0, 0)
+    );
+}
+#button:hover {
+    /* .spectrum-FieldButton:hover */
+    color: var(
+        --spectrum-fieldbutton-text-color-hover,
+        var(--spectrum-global-color-gray-900)
+    );
+    background-color: var(
+        --spectrum-fieldbutton-background-color-hover,
+        var(--spectrum-global-color-gray-50)
+    );
+    border-color: var(
+        --spectrum-fieldbutton-border-color-hover,
+        var(--spectrum-global-color-gray-400)
+    );
+}
+#button:focus,
+#button.is-focused {
+    /* .spectrum-FieldButton.focus-ring,
+   * .spectrum-FieldButton.is-focused */
+    background-color: var(
+        --spectrum-fieldbutton-background-color-key-focus,
+        var(--spectrum-global-color-gray-50)
+    );
+    border-color: var(
+        --spectrum-fieldbutton-border-color-key-focus,
+        var(--spectrum-global-color-blue-400)
+    );
+    box-shadow: 0 0 0
+        var(--spectrum-button-primary-border-size-increase-key-focus, 1px)
+        var(
+            --spectrum-fieldbutton-border-color-key-focus,
+            var(--spectrum-global-color-blue-400)
+        );
+    color: var(
+        --spectrum-fieldbutton-text-color-key-focus,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+#button:focus.is-placeholder,
+#button.is-focused.is-placeholder {
+    /* .spectrum-FieldButton.focus-ring.is-placeholder,
+   * .spectrum-FieldButton.is-focused.is-placeholder */
+    color: var(
+        --spectrum-fieldbutton-placeholder-text-color-key-focus,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+#button:active,
+#button.is-selected {
+    /* .spectrum-FieldButton:active,
+   * .spectrum-FieldButton.is-selected */
+    background-color: var(
+        --spectrum-fieldbutton-background-color-down,
+        var(--spectrum-global-color-gray-200)
+    );
+    border-color: var(
+        --spectrum-fieldbutton-border-color-down,
+        var(--spectrum-global-color-gray-400)
+    );
+}
+#button:active:focus,
+#button:active.is-focused,
+#button.is-selected:focus,
+#button.is-selected.is-focused {
+    /* .spectrum-FieldButton:active.focus-ring,
+   * .spectrum-FieldButton:active.is-focused,
+   * .spectrum-FieldButton.is-selected.focus-ring,
+   * .spectrum-FieldButton.is-selected.is-focused */
+    box-shadow: none;
+}
+:host([invalid]) #button {
+    /* .spectrum-FieldButton.is-invalid */
+    border-color: var(
+        --spectrum-fieldbutton-border-color-error,
+        var(--spectrum-global-color-red-500)
+    );
+}
+:host([invalid]) #button:hover {
+    /* .spectrum-FieldButton.is-invalid:hover */
+    border-color: var(
+        --spectrum-fieldbutton-border-color-error-hover,
+        var(--spectrum-global-color-red-600)
+    );
+}
+:host([invalid]) #button:active,
+:host([invalid]) #button.is-selected {
+    /* .spectrum-FieldButton.is-invalid:active,
+   * .spectrum-FieldButton.is-invalid.is-selected */
+    border-color: var(
+        --spectrum-fieldbutton-border-color-error-down,
+        var(--spectrum-global-color-red-600)
+    );
+}
+:host([invalid]) #button:focus,
+:host([invalid]) #button.is-focused {
+    /* .spectrum-FieldButton.is-invalid.focus-ring,
+   * .spectrum-FieldButton.is-invalid.is-focused */
+    border-color: var(
+        --spectrum-fieldbutton-border-color-error-key-focus,
+        var(--spectrum-global-color-blue-400)
+    );
+    box-shadow: 0 0 0
+        var(--spectrum-button-primary-border-size-increase-key-focus, 1px)
+        var(
+            --spectrum-fieldbutton-border-color-error-key-focus,
+            var(--spectrum-global-color-blue-400)
+        );
+}
+#button:disabled,
+#button.is-disabled {
+    /* .spectrum-FieldButton:disabled,
+   * .spectrum-FieldButton.is-disabled */
+    background-color: var(
+        --spectrum-fieldbutton-background-color-disabled,
+        var(--spectrum-global-color-gray-200)
+    );
+    color: var(
+        --spectrum-fieldbutton-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    );
+}
+#button:disabled:focus,
+#button.is-disabled:focus {
+    /* .spectrum-FieldButton:disabled.focus-ring,
+   * .spectrum-FieldButton.is-disabled.focus-ring */
+    box-shadow: none;
+}
+#button:disabled .icon,
+#button.is-disabled .icon {
+    /* .spectrum-FieldButton:disabled .spectrum-Icon,
+   * .spectrum-FieldButton.is-disabled .spectrum-Icon */
+    color: var(
+        --spectrum-fieldbutton-icon-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+}
+.spectrum-FieldButton--quiet:hover {
+    /* .spectrum-FieldButton--quiet:hover */
+    background-color: var(
+        --spectrum-fieldbutton-quiet-background-color-hover,
+        rgba(0, 0, 0, 0)
+    );
+    color: var(
+        --spectrum-fieldbutton-text-color-hover,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+.spectrum-FieldButton--quiet:focus,
+.spectrum-FieldButton--quiet.is-focused {
+    /* .spectrum-FieldButton--quiet.focus-ring,
+   * .spectrum-FieldButton--quiet.is-focused */
+    background-color: var(
+        --spectrum-fieldbutton-quiet-background-color-key-focus,
+        rgba(0, 0, 0, 0)
+    );
+    box-shadow: 0 2px 0 0
+        var(
+            --spectrum-fieldbutton-border-color-key-focus,
+            var(--spectrum-global-color-blue-400)
+        );
+}
+.spectrum-FieldButton--quiet:focus.is-placeholder,
+.spectrum-FieldButton--quiet.is-focused.is-placeholder {
+    /* .spectrum-FieldButton--quiet.focus-ring.is-placeholder,
+   * .spectrum-FieldButton--quiet.is-focused.is-placeholder */
+    color: var(
+        --spectrum-fieldbutton-quiet-placeholder-text-color-key-focus,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+.spectrum-FieldButton--quiet:active,
+.spectrum-FieldButton--quiet.is-selected {
+    /* .spectrum-FieldButton--quiet:active,
+   * .spectrum-FieldButton--quiet.is-selected */
+    background-color: var(
+        --spectrum-fieldbutton-quiet-background-color-down,
+        rgba(0, 0, 0, 0)
+    );
+    border-color: var(
+        --spectrum-fieldbutton-quiet-border-color-down,
+        rgba(0, 0, 0, 0)
+    );
+}
+.spectrum-FieldButton--quiet:active:focus,
+.spectrum-FieldButton--quiet:active.is-focused,
+.spectrum-FieldButton--quiet.is-selected:focus,
+.spectrum-FieldButton--quiet.is-selected.is-focused {
+    /* .spectrum-FieldButton--quiet:active.focus-ring,
+   * .spectrum-FieldButton--quiet:active.is-focused,
+   * .spectrum-FieldButton--quiet.is-selected.focus-ring,
+   * .spectrum-FieldButton--quiet.is-selected.is-focused */
+    background-color: var(
+        --spectrum-fieldbutton-quiet-background-color-key-focus,
+        rgba(0, 0, 0, 0)
+    );
+    box-shadow: 0 2px 0 0
+        var(
+            --spectrum-fieldbutton-border-color-key-focus,
+            var(--spectrum-global-color-blue-400)
+        );
+}
+:host([invalid]) .spectrum-FieldButton--quiet:focus,
+:host([invalid]) .spectrum-FieldButton--quiet.is-focused {
+    /* .spectrum-FieldButton--quiet.is-invalid.focus-ring,
+   * .spectrum-FieldButton--quiet.is-invalid.is-focused */
+    box-shadow: 0 2px 0 0
+        var(
+            --spectrum-fieldbutton-border-color-error-key-focus,
+            var(--spectrum-global-color-blue-400)
+        );
+}
+.spectrum-FieldButton--quiet:disabled,
+.spectrum-FieldButton--quiet.is-disabled {
+    /* .spectrum-FieldButton--quiet:disabled,
+   * .spectrum-FieldButton--quiet.is-disabled */
+    background-color: var(
+        --spectrum-fieldbutton-quiet-background-color-disabled,
+        rgba(0, 0, 0, 0)
+    );
+    color: var(
+        --spectrum-fieldbutton-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    );
+}
+.spectrum-FieldButton--quiet:disabled:focus,
+.spectrum-FieldButton--quiet.is-disabled:focus {
+    /* .spectrum-FieldButton--quiet:disabled.focus-ring,
+   * .spectrum-FieldButton--quiet.is-disabled.focus-ring */
+    box-shadow: none;
+}

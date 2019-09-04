@@ -11,10 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, elementUpdated } from '@open-wc/testing';
-import { Button } from '../lib/button/button';
-import '../lib/button'; // Register <sp-button>
+import '../lib/index.js';
+import { Button } from '../lib/index.js';
 import { html } from 'lit-element';
-import { expect } from '@bundled-es-modules/chai';
+// @ts-ignore
+const { expect } = window.chai;
 
 describe('Button', () => {
     it('loads default', async () => {
