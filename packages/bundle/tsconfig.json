@@ -9,6 +9,7 @@
     "references": [
         { "path": "../banner" },
         { "path": "../button" },
+        { "path": "../dropzone" },
         { "path": "../card" },
         { "path": "../checkbox" },
         { "path": "../icon" },
