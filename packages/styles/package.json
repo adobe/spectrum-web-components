@@ -1,0 +1,18 @@
+{
+    "name": "@spectrum-web-components/styles",
+    "version": "0.0.0",
+    "description": "",
+    "style": "all-medium-lightest.css",
+    "files": [
+        "*.css"
+    ],
+    "scripts": {
+        "test": "karma start --coverage"
+    },
+    "author": "",
+    "license": "ISC",
+    "peerDependencies": {
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0"
+    }
+}
