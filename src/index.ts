@@ -31,6 +31,7 @@ export * from './sidenav';
 export * from './switch';
 export * from './tab';
 export * from './tab-list';
+export * from './textfield';
 export * from './themes';
 export * from './overlay-root';
 export * from './overlay-trigger';

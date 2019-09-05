@@ -12,11 +12,17 @@ governing permissions and limitations under the License.
 
 export * from '@spectrum-web-components/banner';
 export * from '@spectrum-web-components/button';
-export * from '@spectrum-web-components/dropzone';
 export * from '@spectrum-web-components/card';
 export * from '@spectrum-web-components/checkbox';
+export * from '@spectrum-web-components/dropzone';
 export * from '@spectrum-web-components/icon';
 export * from '@spectrum-web-components/icons';
 export * from '@spectrum-web-components/illustrated-message';
+export * from '@spectrum-web-components/menu';
+export * from '@spectrum-web-components/menu-group';
+export * from '@spectrum-web-components/menu-item';
 export * from '@spectrum-web-components/popover';
+export * from '@spectrum-web-components/radio';
+export * from '@spectrum-web-components/radio-group';
+export * from '@spectrum-web-components/sidenav';
 export * from '@spectrum-web-components/slider';

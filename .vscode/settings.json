@@ -9,6 +9,9 @@
         "packages/*/src/**/*.css.ts": true,
         "packages/**/*.test.js": true,
         "packages/**/*.test.d.ts": true,
-        "packages/**/*.test.js.map": true
+        "packages/**/*.test.js.map": true,
+        "test/testing-helpers.js": true,
+        "test/testing-helpers.d.ts": true,
+        "test/testing-helpers.js.map": true
     }
 }
