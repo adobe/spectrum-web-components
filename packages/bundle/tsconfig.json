@@ -10,9 +10,19 @@
         { "path": "../action-menu" },
         { "path": "../banner" },
         { "path": "../button" },
+        { "path": "../card" },
+        { "path": "../checkbox" },
         { "path": "../dropdown" },
+        { "path": "../dropzone" },
         { "path": "../icon" },
         { "path": "../icons" },
-        { "path": "../iconset" }
+        { "path": "../iconset" },
+        { "path": "../illustrated-message" },
+        { "path": "../menu" },
+        { "path": "../menu-group" },
+        { "path": "../menu-item" },
+        { "path": "../popover" },
+        { "path": "../radio" },
+        { "path": "../radio-group" }
     ]
 }
