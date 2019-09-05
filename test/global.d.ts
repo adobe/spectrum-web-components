@@ -264,7 +264,7 @@ declare module '@open-wc/testing' {
      * @param {Array[any]} values Dynamic Parts
      * @returns {import('lit-html').TemplateResult}
      */
-    export function html(strings: TemplateStringsArray, values: any): any;
+    export function html(strings: TemplateStringsArray, values?: any): any;
 
     /**
      * Setups an element synchronously from the provided lit-html template and puts it in the DOM.
