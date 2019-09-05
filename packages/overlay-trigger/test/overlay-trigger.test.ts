@@ -13,14 +13,14 @@ import '../lib';
 import { OverlayTrigger } from '../lib';
 import { OverlayRoot } from '@spectrum-web-components/overlay-root';
 import '@spectrum-web-components/overlay-root';
-import '../../lib/button';
-import '../../lib/popover';
-import { Popover } from '../../lib/popover';
+import '../../button/lib';
+import '../../popover/lib';
+import { Popover } from '../../popover/lib';
 
-import { fixture, aTimeout } from '@open-wc/testing';
-import { waitForPredicate, isVisible } from './testing-helpers';
-import { html } from 'lit-html';
-import { expect } from '@bundled-es-modules/chai';
+import { fixture, aTimeout, html } from '@open-wc/testing';
+import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
+// @ts-ignore
+const { expect } = window.chai;
 
 function pressEscape(): void {
     const up = new KeyboardEvent('keyup', {
