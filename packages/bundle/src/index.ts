@@ -24,3 +24,4 @@ export * from '@spectrum-web-components/menu-item';
 export * from '@spectrum-web-components/popover';
 export * from '@spectrum-web-components/radio';
 export * from '@spectrum-web-components/radio-group';
+export * from '@spectrum-web-components/sidenav';

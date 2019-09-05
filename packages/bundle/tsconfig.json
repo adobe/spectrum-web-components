@@ -21,6 +21,7 @@
         { "path": "../menu-item" },
         { "path": "../popover" },
         { "path": "../radio" },
-        { "path": "../radio-group" }
+        { "path": "../radio-group" },
+        { "path": "../sidenav" }
     ]
 }

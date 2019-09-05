@@ -13,14 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { decorateAction } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
-import {
-    defineCustomElements,
-    SideNav,
-    SideNavItem,
-    SideNavHeading,
-} from '../src';
-
-defineCustomElements(SideNav, SideNavItem, SideNavHeading);
+import '../lib';
 
 const eventValueAction = decorateAction([(args) => [args[0].detail.value]]);
 
