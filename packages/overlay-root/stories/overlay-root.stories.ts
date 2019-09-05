@@ -21,14 +21,14 @@ import {
 
 import '../lib';
 import { Placement } from '../lib';
-import { RadioChangeDetail } from '../../lib/radio';
-import '../../lib/overlay-root';
-import '../../lib/overlay-trigger';
-import '../../lib/button';
-import '../../lib/popover';
-import '../../lib/slider';
-import '../../lib/radio';
-import '../../lib/radio-group';
+import { RadioChangeDetail } from '../../radio/lib';
+import '../../overlay-root/lib';
+import '../../overlay-trigger/lib';
+import '../../button/lib';
+import '../../popover/lib';
+import '../../slider/lib';
+import '../../radio/lib';
+import '../../radio-group/lib';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;

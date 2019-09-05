@@ -15,8 +15,5 @@
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
-    },
-    "devDependencies": {
-        "@spectrum-web-components/overlay-trigger": "0.0.0"
     }
 }
