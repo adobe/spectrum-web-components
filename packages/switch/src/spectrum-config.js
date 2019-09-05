@@ -50,12 +50,6 @@ module.exports = {
                 /* deprecated */
                 /spectrum-ToggleSwitch--ab/,
             ],
-            // selectorTransforms: [
-            //     (selector) => {
-            //         const match = /host\(:hover\)\s+#input\s*[+~]\s*(.*)/.exec(selector);
-            //         return match ? `:host\(:hover\) ${match[1]}` : selector;
-            //     }
-            // ]
         },
     ],
 };
