@@ -11,52 +11,65 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
-import '../src/textfield';
 import { boolean } from '@storybook/addon-knobs';
 
-storiesOf('Textfield', module).add('Default', () => {
+import '../lib';
+
+storiesOf('Textarea', module).add('Default', () => {
+    const grows = boolean('Grows', false, 'Element');
     const quiet = boolean('Quiet', false, 'Element');
     return html`
         <sp-textfield
-            placeholder="Enter your name"
+            multiline
+            label="Enter your life story"
+            ?grows=${grows}
             ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
-            placeholder="Enter your name"
+            multiline
+            label="Enter your life story"
             disabled
+            ?grows=${grows}
             ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
-            placeholder="Enter your name"
+            multiline
+            label="Enter your life story"
             pattern="[\\w\\s]+"
             required
             valid
             value="A valid input"
+            ?grows=${grows}
             ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
-            placeholder="Enter your name"
-            pattern="[\\w\\s]+"
+            multiline
+            label="Enter your life story"
             required
             valid
             value="A valid input"
             disabled
+            ?grows=${grows}
             ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
-            placeholder="Enter your name"
+            multiline
+            label="Enter your life story"
             pattern="[\\d]+"
             required
             value="Not a valid input"
+            ?grows=${grows}
             ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
-            placeholder="Enter your name"
+            multiline
+            label="Enter your life story"
             pattern="[\\d]+"
             invalid
             required
             value="Not a valid input"
             disabled
+            ?grows=${grows}
             ?quiet=${quiet}
         ></sp-textfield>
     `;
