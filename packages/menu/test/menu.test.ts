@@ -9,16 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import '../lib/index.js';
+import { Menu } from '../lib/index.js';
+import '../../menu-item/lib/index.js';
+import { MenuItem } from '../../menu-item/lib/index.js';
+import { fixture, elementUpdated, nextFrame, html } from '@open-wc/testing';
+// @ts-ignore
+const { expect } = window.chai;
 
-import { fixture, elementUpdated, nextFrame } from '@open-wc/testing';
-import { Menu } from '../lib/menu';
-import '../lib/menu';
-import '../lib/menu-item';
-import { html } from 'lit-element';
-import { MenuItem } from '../lib/menu-item/menu-item';
-import { expect } from '@bundled-es-modules/chai';
-
-const keyboardEvent = (code: string) =>
+const keyboardEvent = (code: string): KeyboardEvent =>
     new KeyboardEvent('keydown', {
         bubbles: true,
         composed: true,

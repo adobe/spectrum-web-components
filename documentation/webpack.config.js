@@ -88,7 +88,14 @@ module.exports = merge(openWcConfig, {
                                     stage: 0,
                                 }),
                                 // minify the css with cssnano presets
-                                require('cssnano')({ preset: 'default' }),
+                                require('cssnano')({
+                                    preset: [
+                                        'default',
+                                        {
+                                            svgo: false,
+                                        },
+                                    ],
+                                }),
                             ],
                         },
                     },

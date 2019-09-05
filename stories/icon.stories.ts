@@ -16,11 +16,65 @@ import '../src/icon';
 import { defineCustomElements } from '../src/define';
 import * as MediumIcons from '../src/icons/icons-medium';
 import * as LargeIcons from '../src/icons/icons-large';
+import { LitElement, property, css } from 'lit-element';
+import { IconsetAddedDetail } from '../src/iconset';
 
 defineCustomElements(
     ...Object.values(MediumIcons),
     ...Object.values(LargeIcons)
 );
+
+class IconsDemo extends LitElement {
+    @property({ type: Array })
+    iconset: string[] = [];
+    constructor() {
+        super();
+        this.handleIconSetAdded = this.handleIconSetAdded.bind(this);
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        window.addEventListener('sp-iconset:added', this.handleIconSetAdded);
+    }
+    handleIconSetAdded(event: CustomEvent<IconsetAddedDetail>): void {
+        const { iconset } = event.detail;
+        this.iconset = iconset.getIconList();
+        this.requestUpdate();
+    }
+    static get styles() {
+        return [
+            css`
+                :host {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                    gap: 20px;
+                }
+                .icon {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+                sp-icon {
+                    margin-bottom: 10px;
+                }
+            `,
+        ];
+    }
+    render() {
+        return html`
+            <sp-icons-large></sp-icons-large>
+            ${this.iconset.map(
+                (icon) => html`
+                    <div class="icon">
+                        <sp-icon size="l" name=${`ui:${icon}`}></sp-icon>
+                        ${icon}
+                    </div>
+                `
+            )}
+        `;
+    }
+}
+
+customElements.define('icons-demo', IconsDemo);
 
 storiesOf('Icons', module)
     .add('Medium', () => {
@@ -45,5 +99,10 @@ storiesOf('Icons', module)
             <sp-icon size="l" name="ui:Magnifier"></sp-icon>
             <sp-icon size="xl" name="ui:Magnifier"></sp-icon>
             <sp-icon size="xxl" name="ui:Magnifier"></sp-icon>
+        `;
+    })
+    .add('All Medium', () => {
+        return html`
+            <icons-demo></icons-demo>
         `;
     });
