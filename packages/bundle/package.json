@@ -32,6 +32,7 @@
         "@spectrum-web-components/popover": "0.0.0",
         "@spectrum-web-components/radio": "0.0.0",
         "@spectrum-web-components/radio-group": "0.0.0",
+        "@spectrum-web-components/sidenav": "0.0.0",
         "@spectrum-web-components/tab": "0.0.0",
         "@spectrum-web-components/tab-list": "0.0.0"
     }
