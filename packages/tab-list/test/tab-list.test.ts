@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TabList } from '../lib/tab-list';
-import '../lib/tab-list';
-import { Tab } from '../lib/tab';
-import '../lib/tab';
-import { fixture, elementUpdated } from '@open-wc/testing';
-import { html } from 'lit-html';
-import { expect } from '@bundled-es-modules/chai';
+import '../lib/index.js';
+import { TabList } from '../lib/index.js';
+import '../../tab/lib/index.js';
+import { Tab } from '../../tab/lib/index.js';
+import { fixture, elementUpdated, html } from '@open-wc/testing';
+// @ts-ignore
+const { expect } = window.chai;
 
 describe('TabList', () => {
     let testDiv!: HTMLDivElement;
@@ -76,7 +76,7 @@ describe('TabList', () => {
         expect(firstTab.selected).to.be.true;
         expect(secondTab.selected).to.be.false;
         expect(thirdTab.selected).to.be.false;
-        expect(tabList!.selected).to.equal(firstTab.value);
+        expect(tabList.selected).to.equal(firstTab.value);
 
         secondTab.click();
         await elementUpdated(tabList);
@@ -84,7 +84,7 @@ describe('TabList', () => {
         expect(firstTab.selected).to.be.false;
         expect(secondTab.selected).to.be.true;
         expect(thirdTab.selected).to.be.false;
-        expect(tabList!.selected).to.equal(secondTab.value);
+        expect(tabList.selected).to.equal(secondTab.value);
 
         thirdTab.click();
         await elementUpdated(tabList);
@@ -92,7 +92,7 @@ describe('TabList', () => {
         expect(firstTab.selected).to.be.false;
         expect(secondTab.selected).to.be.false;
         expect(thirdTab.selected).to.be.true;
-        expect(tabList!.selected).to.equal(thirdTab.value);
+        expect(tabList.selected).to.equal(thirdTab.value);
     });
 
     it('forces only one tab to be selected', () => {
@@ -102,7 +102,7 @@ describe('TabList', () => {
 
         const selectedTabs = tabList.querySelectorAll('sp-tab[selected]');
 
-        expect(tabList!.selected).to.equal('first');
+        expect(tabList.selected).to.equal('first');
         expect(selectedTabs.length).to.equal(1);
     });
 
@@ -116,7 +116,7 @@ describe('TabList', () => {
         if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
         if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
 
-        expect(tabList!.selected).to.equal('first');
+        expect(tabList.selected).to.equal('first');
         expect(tab1.selected).to.be.true;
         expect(tab2.selected).to.be.false;
     });
@@ -139,17 +139,17 @@ describe('TabList', () => {
         expect(tab2.selected).to.be.false;
         expect(tab3.selected).to.be.false;
 
-        tabList!.selected = 'second';
+        tabList.selected = 'second';
         await elementUpdated(tabList);
 
-        expect(tabList!.selected).to.equal('second');
+        expect(tabList.selected).to.equal('second');
         expect(tab1.selected).to.be.false;
         expect(tab2.selected).to.be.true;
         expect(tab3.selected).to.be.false;
 
-        tabList!.selected = 'third';
+        tabList.selected = 'third';
 
-        expect(tabList!.selected).to.equal('third');
+        expect(tabList.selected).to.equal('third');
         expect(tab1.selected).to.be.false;
         expect(tab2.selected).to.be.false;
         expect(tab3.selected).to.be.true;
@@ -171,15 +171,15 @@ describe('TabList', () => {
         tab2.click();
         await elementUpdated(tabList);
 
-        expect(tabList!.selected).to.equal('second');
+        expect(tabList.selected).to.equal('second');
         expect(tab1.selected).to.be.false;
         expect(tab2.selected).to.be.true;
         expect(tab3.selected).to.be.false;
 
-        tabList!.selected = 'first';
+        tabList.selected = 'first';
         await elementUpdated(tabList);
 
-        expect(tabList!.selected).to.equal('first');
+        expect(tabList.selected).to.equal('first');
         expect(tab1.selected).to.be.true;
         expect(tab2.selected).to.be.false;
         expect(tab3.selected).to.be.false;
