@@ -12,12 +12,10 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { radios } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
-import * as MediumIcons from '../src/icons/icons-medium';
-import { defineCustomElements, Icon } from '../src';
-import '../src/tab-list';
-import '../src/tab';
-
-defineCustomElements(Icon, ...Object.values(MediumIcons));
+import '../../icon/lib';
+import '../../icons/lib';
+import '../../tab-list/lib';
+import '../lib';
 
 storiesOf('Tabs', module)
     .add('Default', () => {
@@ -163,7 +161,9 @@ storiesOf('Tabs', module)
             horizontal: 'horizontal',
             vertical: 'vertical',
         };
-        const type = radios('Type', directions, directions.horizontal);
+        const type = radios('Type', directions, directions.horizontal) as
+            | 'vertical'
+            | 'horizontal';
         return html`
             <sp-tab-list selected="1" quiet compact direction="${type}">
                 <sp-tab label="Tab 1" value="1" tabindex="0"></sp-tab>

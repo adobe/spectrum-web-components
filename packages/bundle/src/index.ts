@@ -27,3 +27,5 @@ export * from '@spectrum-web-components/radio-group';
 export * from '@spectrum-web-components/sidenav';
 export * from '@spectrum-web-components/slider';
 export * from '@spectrum-web-components/switch';
+export * from '@spectrum-web-components/tab';
+export * from '@spectrum-web-components/tab-list';
