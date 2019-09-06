@@ -23,6 +23,7 @@
         { "path": "../radio" },
         { "path": "../radio-group" },
         { "path": "../sidenav" },
-        { "path": "../slider" }
+        { "path": "../slider" },
+        { "path": "../switch" }
     ]
 }
