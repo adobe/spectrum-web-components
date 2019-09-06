@@ -12,16 +12,11 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { radios } from '@storybook/addon-knobs';
-import * as MediumIcons from '../src/icons/icons-medium';
 
-import { defineCustomElements, Icon } from '../src';
-
-import '../src/button';
-import '../src/switch';
-import '../src/slider';
-import '../src/themes';
-
-defineCustomElements(Icon, ...Object.values(MediumIcons));
+import '../lib';
+import '../../button/lib';
+import '../../switch/lib';
+import '../../slider/lib';
 
 storiesOf('Theme', module)
     .add('Default', () => {
@@ -173,7 +168,7 @@ storiesOf('Theme', module)
                         <sp-button variant="primary">Cancel</sp-button>
                         <sp-button variant="cta">Continue</sp-button>
                     </div>
-                    <sp-theme-light>
+                    <sp-theme-lightest>
                         <div id="inner">
                             <div>
                                 <sp-slider
@@ -191,7 +186,7 @@ storiesOf('Theme', module)
                                 <sp-button variant="cta">Continue</sp-button>
                             </div>
                         </div>
-                    </sp-theme-light>
+                    </sp-theme-lightest>
                 </div>
             </sp-theme>
         `;
