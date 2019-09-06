@@ -23,6 +23,7 @@
         { "path": "../radio" },
         { "path": "../radio-group" },
         { "path": "../sidenav" },
+        { "path": "../switch" },
         { "path": "../tab" },
         { "path": "../tab-list" }
     ]

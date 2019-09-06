@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { action } from '@storybook/addon-actions';
-import '../src/switch';
+
+import '../lib';
 
 storiesOf('Switch', module)
     .add('Default', () => {
