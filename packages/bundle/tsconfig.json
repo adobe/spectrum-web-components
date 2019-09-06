@@ -22,6 +22,10 @@
         { "path": "../popover" },
         { "path": "../radio" },
         { "path": "../radio-group" },
-        { "path": "../sidenav" }
+        { "path": "../sidenav" },
+        { "path": "../slider" },
+        { "path": "../switch" },
+        { "path": "../tab" },
+        { "path": "../tab-list" }
     ]
 }
