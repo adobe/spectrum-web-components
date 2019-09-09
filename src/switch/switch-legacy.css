@@ -12,7 +12,9 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
 #switch::after {
-    /* .spectrum-ToggleSwitch-switch::after */
+    /* Override this to remove the transform transition, which does not work
+     * in Edge
+     */
     transition: background var(--spectrum-global-animation-duration-100, 130ms)
             ease-in-out,
         border var(--spectrum-global-animation-duration-100, 130ms) ease-in-out,
