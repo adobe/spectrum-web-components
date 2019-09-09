@@ -1,0 +1,18 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "outDir": "./lib",
+        "rootDir": "./src"
+    },
+    "include": ["src/*.ts", "../../global.d.ts"],
+    "references": [
+        { "path": "../button" },
+        { "path": "../icon" },
+        { "path": "../icons" },
+        { "path": "../menu" },
+        { "path": "../menu-item" },
+        { "path": "../popover" },
+        { "path": "../shared" }
+    ]
+}

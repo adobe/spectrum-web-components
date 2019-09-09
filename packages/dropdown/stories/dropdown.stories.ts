@@ -14,8 +14,10 @@ import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
-import '../src/dropdown';
-import { Dropdown } from '../lib/dropdown';
+import '../lib';
+import { Dropdown } from '../lib';
+import '../../menu';
+import '../../menu-item';
 
 storiesOf('Dropdown', module).add('Default', () => {
     return html`

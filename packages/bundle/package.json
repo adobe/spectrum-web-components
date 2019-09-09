@@ -17,11 +17,13 @@
         "lit-html": "^1.0.0"
     },
     "dependencies": {
+        "@spectrum-web-components/action-menu": "0.0.0",
         "@spectrum-web-components/banner": "0.0.0",
         "@spectrum-web-components/button": "0.0.0",
-        "@spectrum-web-components/dropzone": "0.0.0",
         "@spectrum-web-components/card": "0.0.0",
         "@spectrum-web-components/checkbox": "0.0.0",
+        "@spectrum-web-components/dropdown": "0.0.0",
+        "@spectrum-web-components/dropzone": "0.0.0",
         "@spectrum-web-components/icon": "0.0.0",
         "@spectrum-web-components/icons": "0.0.0",
         "@spectrum-web-components/iconset": "0.0.0",

@@ -10,10 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+export * from '@spectrum-web-components/action-menu';
 export * from '@spectrum-web-components/banner';
 export * from '@spectrum-web-components/button';
 export * from '@spectrum-web-components/card';
 export * from '@spectrum-web-components/checkbox';
+export * from '@spectrum-web-components/dropdown';
 export * from '@spectrum-web-components/dropzone';
 export * from '@spectrum-web-components/icon';
 export * from '@spectrum-web-components/icons';

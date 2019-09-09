@@ -7,10 +7,12 @@
     },
     "include": ["src/*.ts"],
     "references": [
+        { "path": "../action-menu" },
         { "path": "../banner" },
         { "path": "../button" },
         { "path": "../card" },
         { "path": "../checkbox" },
+        { "path": "../dropdown" },
         { "path": "../dropzone" },
         { "path": "../icon" },
         { "path": "../icons" },
