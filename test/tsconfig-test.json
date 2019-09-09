@@ -1,7 +1,16 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "outDir": "../"
+        "outDir": "../",
+        "types": [
+            "mocha",
+            "chai",
+            "sinon",
+            "karma-chai",
+            "webpack-env",
+            "storybook__addon-actions",
+            "node"
+        ]
     },
     "include": ["*.ts"],
     "exclude": ["benchmark/*"]

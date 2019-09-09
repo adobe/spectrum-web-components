@@ -10,7 +10,6 @@
         "noUnusedLocals": true,
         "target": "es2017",
         "types": [
-            "mocha",
             "chai",
             "sinon",
             "karma-chai",
