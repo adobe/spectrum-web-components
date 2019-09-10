@@ -16,8 +16,6 @@ module.exports = {
         {
             name: 'textfield',
             host: {
-                // A lot of the styling in tab-item relies on the ::before psuedo element,
-                // which is incompatible with :host
                 selector: '.spectrum-Textfield',
                 shadowSelector: '#input',
             },
