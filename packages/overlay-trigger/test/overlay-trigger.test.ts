@@ -9,21 +9,20 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { OverlayRoot } from '../lib/overlay-root/overlay-root';
-import { OverlayTrigger } from '../lib/overlay-trigger';
-import { Popover } from '../lib/popover/popover';
+import '../lib';
+import { OverlayTrigger } from '../lib';
+import { OverlayRoot } from '@spectrum-web-components/overlay-root';
+import '@spectrum-web-components/overlay-root';
+import '../../button/lib';
+import '../../popover/lib';
+import { Popover } from '../../popover/lib';
 
-import '../lib/overlay-root';
-import '../lib/overlay-trigger';
-import '../lib/button';
-import '../lib/popover';
+import { fixture, aTimeout, html } from '@open-wc/testing';
+import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
+// @ts-ignore
+const { expect } = window.chai;
 
-import { fixture, aTimeout } from '@open-wc/testing';
-import { waitForPredicate, isVisible } from './testing-helpers';
-import { html } from 'lit-html';
-import { expect } from '@bundled-es-modules/chai';
-
-function pressEscape() {
+function pressEscape(): void {
     const up = new KeyboardEvent('keyup', {
         bubbles: true,
         cancelable: true,

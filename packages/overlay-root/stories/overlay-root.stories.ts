@@ -10,17 +10,25 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { number, radios } from '@storybook/addon-knobs';
-import { html, LitElement, css, property } from 'lit-element';
+import {
+    html,
+    LitElement,
+    css,
+    property,
+    TemplateResult,
+    CSSResultArray,
+} from 'lit-element';
 
-import { Placement } from '../src/overlay-root/overlay';
-import { RadioChangeDetail } from '../src/radio/radio';
-import '../src/overlay-root';
-import '../src/overlay-trigger';
-import '../src/button';
-import '../src/popover';
-import '../src/slider';
-import '../src/radio';
-import '../src/radio-group';
+import '../lib';
+import { Placement } from '../lib';
+import { RadioChangeDetail } from '../../radio/lib';
+import '../../overlay-root/lib';
+import '../../overlay-trigger/lib';
+import '../../button/lib';
+import '../../popover/lib';
+import '../../slider/lib';
+import '../../radio/lib';
+import '../../radio-group/lib';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;
@@ -32,29 +40,31 @@ class RecursivePopover extends LitElement {
     @property({ type: Number })
     private depth: number = 0;
 
-    static get styles() {
-        return css`
-            :host {
-                text-align: center;
-            }
+    public static get styles(): CSSResultArray {
+        return [
+            css`
+                :host {
+                    text-align: center;
+                }
 
-            sp-button {
-                margin-top: 11px;
-            }
-        `;
+                sp-button {
+                    margin-top: 11px;
+                }
+            `,
+        ];
     }
 
-    constructor() {
+    public constructor() {
         super();
         this.placement = 'right';
         this.depth = 0;
     }
 
-    onRadioChange(event: CustomEvent<RadioChangeDetail>) {
+    public onRadioChange(event: CustomEvent<RadioChangeDetail>): void {
         this.placement = event.detail.value as Placement;
     }
 
-    render() {
+    public render(): TemplateResult {
         return html`
             <sp-radio-group selected="${this.placement}" name="group-example">
                 <sp-radio @sp-radio:change=${this.onRadioChange} value="top">
