@@ -77,7 +77,7 @@ export class Textfield extends Focusable {
         this.value = this.inputElement.value;
     }
 
-    protected renderStateIcons(): TemplateResult | {} {
+    protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
                 <sp-icons-large></sp-icons-large>
