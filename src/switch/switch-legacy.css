@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 #switch::after {
-    /* Override this to remove the transform transition, which does not work
-     * in Edge
+    /* This rule includes all of the transitions from spectrum-css except the
+     * one for the transform attribute, which causes issue in Edge.
      */
     transition: background var(--spectrum-global-animation-duration-100, 130ms)
             ease-in-out,
