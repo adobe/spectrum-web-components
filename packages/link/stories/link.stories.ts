@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
-import '../src/link';
+
+import '../lib';
 
 storiesOf('Link', module)
     .add('Default', () => {
