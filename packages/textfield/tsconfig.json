@@ -1,0 +1,14 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "outDir": "./lib",
+        "rootDir": "./src"
+    },
+    "include": ["src/*.ts", "../../global.d.ts"],
+    "references": [
+        { "path": "../icon" },
+        { "path": "../icons" },
+        { "path": "../shared" }
+    ]
+}

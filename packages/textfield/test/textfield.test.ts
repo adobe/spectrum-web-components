@@ -9,10 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../lib/textfield';
-import { Textfield } from '../lib/textfield';
+import '../lib/index.js';
+import { Textfield } from '../lib/index.js';
 import { litFixture, html, elementUpdated } from '@open-wc/testing';
-import { expect } from '@bundled-es-modules/chai';
+// @ts-ignore
+const { expect } = window.chai;
 
 describe('Textfield', () => {
     it('loads', async () => {
@@ -121,7 +122,7 @@ describe('Textfield', () => {
     });
     it('receives focus', async () => {
         let activeElement: HTMLInputElement | null = null;
-        const onFocusIn = (event: Event) => {
+        const onFocusIn = (event: Event): void => {
             const path = event.composedPath();
             activeElement = path[0] as HTMLInputElement;
         };
@@ -141,7 +142,7 @@ describe('Textfield', () => {
     });
     it('does not receive focus when disabled', async () => {
         let activeElement: HTMLInputElement | null = null;
-        const onFocusIn = (event: Event) => {
+        const onFocusIn = (event: Event): void => {
             const path = event.composedPath();
             activeElement = path[0] as HTMLInputElement;
         };
