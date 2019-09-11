@@ -80,10 +80,10 @@ export class Textfield extends Focusable {
     }
 
     protected onChange(): void {
-	this.dispatchEvent(new Event('change', {
-	    bubbles:  true,
-	    composed: true,
-	}));
+        this.dispatchEvent(new Event('change', {
+            bubbles:  true,
+            composed: true,
+        }));
     }
 
     protected renderStateIcons(): TemplateResult | {} {
