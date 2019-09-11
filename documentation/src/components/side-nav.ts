@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { LitElement, html, CSSResultArray } from 'lit-element';
 import { ComponentDocs } from '../../components';
 import { AppRouter } from '../router';
-import { StrictCustomEvent } from '../../../src/events';
+import { SidenavSelectDetail } from '../../../packages/sidenav';
 import sideNavStyles from './side-nav.css';
 import './spectrum-logo';
 
@@ -26,7 +26,7 @@ class SideNav extends LitElement {
     }
 
     private handleSelect(
-        event: StrictCustomEvent<'sp-sidenav:select'>,
+        event: CustomEvent<SidenavSelectDetail>,
         kind: 'guides' | 'components'
     ): void {
         const path = AppRouter.urlForPath(`/${kind}/${event.detail.value}`);
@@ -34,14 +34,12 @@ class SideNav extends LitElement {
     }
 
     private handleComponentSelect(
-        event: StrictCustomEvent<'sp-sidenav:select'>
+        event: CustomEvent<SidenavSelectDetail>
     ): void {
         this.handleSelect(event, 'components');
     }
 
-    private handleGuideSelect(
-        event: StrictCustomEvent<'sp-sidenav:select'>
-    ): void {
+    private handleGuideSelect(event: CustomEvent<SidenavSelectDetail>): void {
         this.handleSelect(event, 'guides');
     }
 

@@ -66,12 +66,6 @@ module.exports = function(
                     include: includeRegex,
                     exclude: excludeRegex,
                     use: [
-                        {
-                            loader: path.resolve(
-                                __dirname,
-                                'lit-css-typed-loader'
-                            ),
-                        },
                         'extract-loader',
                         {
                             loader: 'css-loader',
