@@ -21,7 +21,7 @@ module.exports = function(
 ) {
     return {
         resolve: {
-            extensions: ['.js', '.ts', '.css'],
+            extensions: ['.css', '.js', '.ts'],
         },
         module: {
             rules: [
@@ -66,12 +66,6 @@ module.exports = function(
                     include: includeRegex,
                     exclude: excludeRegex,
                     use: [
-                        {
-                            loader: path.resolve(
-                                __dirname,
-                                'lit-css-typed-loader'
-                            ),
-                        },
                         'extract-loader',
                         {
                             loader: 'css-loader',
