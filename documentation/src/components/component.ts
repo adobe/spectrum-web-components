@@ -16,7 +16,7 @@ import { ComponentApiDocs } from '../../api-docs';
 import { LayoutElement } from './layout';
 import componentStyles from './markdown.css';
 import { AppRouter } from '../router';
-import { TabList } from '../../../src/tab-list/tab-list';
+import { TabList } from '../../../packages/tab-list';
 
 enum TabValue {
     Api = 'api',
