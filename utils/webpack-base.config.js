@@ -21,7 +21,7 @@ module.exports = function(
 ) {
     return {
         resolve: {
-            extensions: ['.css', '.js', '.ts'],
+            extensions: ['.js', '.ts', '.css'],
         },
         module: {
             rules: [
