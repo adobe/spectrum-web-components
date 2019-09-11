@@ -14,7 +14,6 @@ import '../lib/index.js';
 import { ActionMenu } from '../lib/index.js';
 import '../../menu/lib/index.js';
 import '../../menu-item/lib/index.js';
-import '@open-wc/testing';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Action menu', () => {

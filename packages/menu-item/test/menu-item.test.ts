@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import '../lib/index.js';
 import { MenuItem } from '../lib/index.js';
-import '@open-wc/testing';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Menu item', () => {

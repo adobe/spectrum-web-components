@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import '../lib/index.js';
 import { Button } from '../lib/index.js';
 import { html } from 'lit-element';
-import '@open-wc/testing';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
 describe('Button', () => {

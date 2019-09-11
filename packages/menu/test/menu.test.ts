@@ -13,7 +13,6 @@ import '../lib/index.js';
 import { Menu } from '../lib/index.js';
 import '../../menu-item/lib/index.js';
 import { MenuItem } from '../../menu-item/lib/index.js';
-import '@open-wc/testing';
 import {
     fixture,
     elementUpdated,
