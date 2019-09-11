@@ -11,16 +11,15 @@ governing permissions and limitations under the License.
 */
 import '../lib';
 import { OverlayTrigger } from '../lib';
-import { OverlayRoot } from '@spectrum-web-components/overlay-root';
+import { OverlayRoot } from '../../overlay-root/lib';
 import '@spectrum-web-components/overlay-root';
 import '../../button/lib';
 import '../../popover/lib';
 import { Popover } from '../../popover/lib';
 
-import { fixture, aTimeout, html } from '@open-wc/testing';
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
-// @ts-ignore
-const { expect } = window.chai;
+import { ActiveOverlay } from '@spectrum-web-components/overlay-root/lib/active-overlay';
+import { fixture, aTimeout, html, expect } from '@open-wc/testing';
 
 function pressEscape(): void {
     const up = new KeyboardEvent('keyup', {
@@ -194,16 +193,20 @@ describe('Overlays', () => {
         outerButton.click();
 
         // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(outerPopover.parentElement instanceof OverlayTrigger)
-        );
+        await waitForPredicate(() => {
+            const parent = outerPopover.parentElement as ActiveOverlay;
+            const state = parent.state || '';
+            return state === 'visible';
+        });
 
         innerButton.click();
 
         // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(innerPopover.parentElement instanceof OverlayTrigger)
-        );
+        await waitForPredicate(() => {
+            const parent = innerPopover.parentElement as ActiveOverlay;
+            const state = parent.state || '';
+            return state === 'visible';
+        });
 
         expect(isVisible(outerPopover)).to.be.true;
         expect(isVisible(innerPopover)).to.be.true;

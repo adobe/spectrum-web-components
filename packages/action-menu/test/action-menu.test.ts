@@ -14,9 +14,8 @@ import '../lib/index.js';
 import { ActionMenu } from '../lib/index.js';
 import '../../menu/lib/index.js';
 import '../../menu-item/lib/index.js';
-import { fixture, elementUpdated, html } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import '@open-wc/testing';
+import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Action menu', () => {
     it('loads', async () => {
@@ -51,9 +50,7 @@ describe('Action menu', () => {
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
-        // @ts-ignore
         expect(el).lightDom.to.equalSnapshot();
-        // @ts-ignore
         expect(el).shadowDom.to.equalSnapshot();
     });
 });

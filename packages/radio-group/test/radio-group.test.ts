@@ -14,9 +14,7 @@ import '../lib/index.js';
 import { RadioGroup } from '../lib/index.js';
 import '../../radio/lib/index.js';
 import { Radio } from '../../radio/lib/index.js';
-import { fixture, elementUpdated, html } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 function inputForRadio(radio: Radio): HTMLInputElement {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');

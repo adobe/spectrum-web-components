@@ -13,9 +13,14 @@ import '../lib/index.js';
 import { Menu } from '../lib/index.js';
 import '../../menu-item/lib/index.js';
 import { MenuItem } from '../../menu-item/lib/index.js';
-import { fixture, elementUpdated, nextFrame, html } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    nextFrame,
+    html,
+    expect,
+} from '@open-wc/testing';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
     new KeyboardEvent('keydown', {

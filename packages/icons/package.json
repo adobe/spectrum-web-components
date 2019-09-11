@@ -5,13 +5,14 @@
     "main": "lib/index.js",
     "module": "lib/index.js",
     "files": [
-        "lib"
+        "/lib/",
+        "/src/"
     ],
     "scripts": {
         "test": "karma start --coverage"
     },
     "author": "",
-    "license": "ISC",
+    "license": "Apache-2.0",
     "dependencies": {
         "@spectrum-web-components/iconset": "0.0.0"
     },

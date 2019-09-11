@@ -11,9 +11,7 @@ governing permissions and limitations under the License.
 */
 import '../lib';
 import { Popover } from '../lib';
-import { fixture, html } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import { fixture, html, expect } from '@open-wc/testing';
 
 describe('popover', () => {
     let popover!: Popover;

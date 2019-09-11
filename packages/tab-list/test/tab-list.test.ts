@@ -13,9 +13,7 @@ import '../lib/index.js';
 import { TabList } from '../lib/index.js';
 import '../../tab/lib/index.js';
 import { Tab } from '../../tab/lib/index.js';
-import { fixture, elementUpdated, html } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('TabList', () => {
     let testDiv!: HTMLDivElement;

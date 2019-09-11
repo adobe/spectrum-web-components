@@ -11,9 +11,7 @@ governing permissions and limitations under the License.
 */
 import '../lib/index.js';
 import { Textfield } from '../lib/index.js';
-import { litFixture, html, elementUpdated } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
 
 describe('Textfield', () => {
     it('loads', async () => {

@@ -17,9 +17,8 @@ import {
     elementUpdated,
     triggerBlurFor,
     html,
+    expect,
 } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');

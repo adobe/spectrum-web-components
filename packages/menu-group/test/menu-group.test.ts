@@ -14,9 +14,7 @@ import { MenuGroup } from '../lib/index.js';
 import '../../menu/lib/index.js';
 import { Menu } from '../../menu/lib/index.js';
 import '../../menu-item/lib/index.js';
-import { fixture, elementUpdated, html } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Menu group', () => {
     it('renders', async () => {

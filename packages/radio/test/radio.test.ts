@@ -17,9 +17,8 @@ import {
     elementUpdated,
     triggerBlurFor,
     html,
+    expect,
 } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
 
 function inputForRadio(radio: Radio): HTMLInputElement {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');

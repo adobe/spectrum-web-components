@@ -11,9 +11,7 @@ governing permissions and limitations under the License.
 */
 import '../lib';
 import { IllustratedMessage } from '../lib';
-import { fixture, html } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import { fixture, html, expect } from '@open-wc/testing';
 
 describe('Illustrated Message', () => {
     it('loads', async () => {

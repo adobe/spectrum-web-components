@@ -196,6 +196,10 @@ export class ActiveOverlay extends LitElement {
 
     public async hide(): Promise<void> {
         this.state = 'hiding';
+        // if (this.timeout) {
+        //     clearTimeout(this.timeout);
+        //     delete this.timeout;
+        // }
         if (this.hiddenDeferred) {
             return this.hiddenDeferred.promise;
         }

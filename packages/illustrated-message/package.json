@@ -5,11 +5,12 @@
     "main": "lib/index.js",
     "module": "lib/index.js",
     "files": [
-        "lib"
+        "/lib/",
+        "/src/"
     ],
     "scripts": {},
     "author": "",
-    "license": "ISC",
+    "license": "Apache-2.0",
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
