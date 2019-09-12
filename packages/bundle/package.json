@@ -33,6 +33,8 @@
         "@spectrum-web-components/menu": "0.0.0",
         "@spectrum-web-components/menu-group": "0.0.0",
         "@spectrum-web-components/menu-item": "0.0.0",
+        "@spectrum-web-components/overlay-root": "0.0.0",
+        "@spectrum-web-components/overlay-trigger": "0.0.0",
         "@spectrum-web-components/popover": "0.0.0",
         "@spectrum-web-components/radio": "0.0.0",
         "@spectrum-web-components/radio-group": "0.0.0",
@@ -40,6 +42,8 @@
         "@spectrum-web-components/slider": "0.0.0",
         "@spectrum-web-components/switch": "0.0.0",
         "@spectrum-web-components/tab": "0.0.0",
-        "@spectrum-web-components/tab-list": "0.0.0"
+        "@spectrum-web-components/tab-list": "0.0.0",
+        "@spectrum-web-components/textfield": "0.0.0",
+        "@spectrum-web-components/themes": "0.0.0"
     }
 }
