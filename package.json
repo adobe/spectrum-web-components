@@ -29,7 +29,7 @@
         "build": "gulp css && tsc --build packages/**/tsconfig.json",
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "watch": "gulp watch",
-        "storybook": "start-storybook -s styles,stories/assets -p 6006",
+        "storybook": "npm run watch & tsc --build packages/**/tsconfig.json -w & start-storybook -s styles,stories/assets -p 6006",
         "docs:build": "gulp docsCompile",
         "docs:start": "gulp docsWatchCompile",
         "lint": "npm run lint:js && npm run lint:ts && npm run lint:css",

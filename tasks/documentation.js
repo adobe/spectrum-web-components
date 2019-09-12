@@ -44,7 +44,7 @@ const buildStorybookWebpack = () => {
 
 const copyStorybookStyles = () => {
     return gulp
-        .src(path.join(projectDir, 'styles/all-medium-light.css'))
+        .src(path.join(projectDir, 'packages/styles/all-medium-light.css'))
         .pipe(gulp.dest(path.join(storybookOut)));
 };
 

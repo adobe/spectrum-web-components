@@ -16,7 +16,7 @@ import { ComponentApiDocs } from '../../api-docs';
 import { LayoutElement } from './layout';
 import componentStyles from './markdown.css';
 import { AppRouter } from '../router';
-import { TabList } from '../../../src/tab-list/tab-list';
+import { TabList } from '../../../packages/tab-list';
 
 enum TabValue {
     Api = 'api',
@@ -65,6 +65,9 @@ class ComponentElement extends LayoutElement {
     renderContent() {
         let result;
         if (this.location && this.location.params) {
+            const hasAPIdocs =
+                typeof ComponentApiDocs.get(this.location.params.component) !==
+                'undefined';
             result = html`
                 <article class="spectrum-Typography">
                     <div id="title-header" class="spectrum-Article">
@@ -74,14 +77,21 @@ class ComponentElement extends LayoutElement {
                             ${this.componentName}
                         </p>
                     </div>
-                    <sp-tab-list
-                        selected="${this.tab}"
-                        @change="${this.handleTabChange}"
-                        direction="horizontal"
-                    >
-                        <sp-tab value="examples" label="Examples"></sp-tab>
-                        <sp-tab value="api" label="API"></sp-tab>
-                    </sp-tab-list>
+                    ${hasAPIdocs
+                        ? html`
+                              <sp-tab-list
+                                  selected="${this.tab}"
+                                  @change="${this.handleTabChange}"
+                                  direction="horizontal"
+                              >
+                                  <sp-tab
+                                      value="examples"
+                                      label="Examples"
+                                  ></sp-tab>
+                                  <sp-tab value="api" label="API"></sp-tab>
+                              </sp-tab-list>
+                          `
+                        : html``}
                     ${this.tab === TabValue.Examples
                         ? ComponentDocs.get(this.location.params.component)
                         : ComponentApiDocs.get(this.location.params.component)}
