@@ -59,7 +59,9 @@ export class Focusable extends LitElement {
             return;
         }
 
-        this.focusElement.focus();
+        if (!this.isSameNode(this.focusElement)) {
+            this.focusElement.focus();
+        }
     }
 
     public blur(): void {

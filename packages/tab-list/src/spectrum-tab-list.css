@@ -64,7 +64,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) - var(--spectrum-tabs-rule-height, 2px)
     );
 }
-:host([compact]) ::slotted(*) .spectrum-Icon {
+:host([compact]) .spectrum-Tabs-item .spectrum-Icon {
     /* .spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
     height: calc(
         var(
@@ -85,7 +85,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     vertical-align: top;
 }
 :host([direction='horizontal'])
-    ::slotted(*)
+    .spectrum-Tabs-item
     + *:not(.spectrum-Tabs-selectionIndicator) {
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-item + *:not(.spectrum-Tabs-selectionIndicator) */
     margin-left: var(
@@ -163,7 +163,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-50)
     );
 }
-:host([direction='vertical']) ::slotted(*)::before {
+:host([direction='vertical']) .spectrum-Tabs-item::before {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-item::before */
     left: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
     right: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
@@ -189,7 +189,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-50)
     );
 }
-:host([direction='vertical'][compact]) ::slotted(*) .spectrum-Icon {
+:host([direction='vertical'][compact]) .spectrum-Tabs-item .spectrum-Icon {
     /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
     height: var(
         --spectrum-tabs-compact-vertical-item-height,

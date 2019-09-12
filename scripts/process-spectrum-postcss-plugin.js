@@ -115,7 +115,14 @@ class SpectrumProcessor {
                         const node = remainder;
                         remainder = remainder.next();
                         node.remove();
-                        hostSelector.append(node);
+                        if (
+                            node.value === '::before' ||
+                            node.value === '::after'
+                        ) {
+                            result.insertAfter(host, node);
+                        } else {
+                            hostSelector.append(node);
+                        }
                     }
                 } else {
                     replaceNode(
@@ -173,6 +180,8 @@ class SpectrumProcessor {
                     // If a sibling selector is used, and the slot is not the last
                     // element in the combinator, we will need to refer to the slot itself
                     replaceNode(node, slot.shadowSlotNode);
+                } else if (!isLastNode) {
+                    result.remove();
                 } else {
                     replaceNode(node, slot.shadowSlottedNode);
                 }
@@ -453,7 +462,7 @@ class SpectrumProcessor {
         // make sure that the first component of the select is
         // wrapped in :host()
         if (!/^:host/.test(selector)) {
-            return selector.replace(/^([^\s>+~\|]+)(.*)/, ':host($1)$2');
+            return selector.replace(/^([^\s>+~\|\:{2}]+)(.*)/, ':host($1)$2');
         } else {
             return selector;
         }

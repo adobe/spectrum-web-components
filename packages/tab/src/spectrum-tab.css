@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-#tab {
+:host {
     /* .spectrum-Tabs-item */
     position: relative;
 
@@ -39,7 +39,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     );
 }
-:host([disabled]) #tab {
+:host([disabled]) {
     /* .spectrum-Tabs-item.is-disabled */
     cursor: default;
     /* .spectrum-Tabs-item.is-disabled */
@@ -48,7 +48,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-:host([disabled]) #tab #itemLabel {
+:host([disabled]) #itemLabel {
     /* .spectrum-Tabs-item.is-disabled .spectrum-Tabs-itemLabel */
     cursor: default;
 }
@@ -71,7 +71,7 @@ slot[name='icon'] + #itemLabel {
             var(--spectrum-global-dimension-size-40)
     );
 }
-#tab::before {
+:host()::before {
     /* .spectrum-Tabs-item::before */
     content: '';
     position: absolute;
@@ -119,56 +119,56 @@ slot[name='icon'] + #itemLabel {
     /* .spectrum-Tabs-itemLabel:empty */
     display: none;
 }
-#tab:hover {
+:host(:hover) {
     /* .spectrum-Tabs-item:hover */
     color: var(
         --spectrum-tabs-text-color-hover,
         var(--spectrum-global-color-gray-900)
     );
 }
-#tab:hover ::slotted([slot='icon']) {
+:host(:hover) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item:hover .spectrum-Icon */
     color: var(
         --spectrum-tabs-icon-color-hover,
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([selected]) #tab {
+:host([selected]) {
     /* .spectrum-Tabs-item.is-selected */
     color: var(
         --spectrum-tabs-text-color-selected,
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([selected]) #tab ::slotted([slot='icon']) {
+:host([selected]) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item.is-selected .spectrum-Icon */
     color: var(
         --spectrum-tabs-icon-color-selected,
         var(--spectrum-global-color-gray-900)
     );
 }
-#tab:focus {
+:host(:focus) {
     /* .spectrum-Tabs-item.focus-ring */
     color: var(
         --spectrum-tabs-text-color-key-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
-#tab:focus::before {
+:host(:focus)::before {
     /* .spectrum-Tabs-item.focus-ring::before */
     border-color: var(
         --spectrum-tabs-focus-ring-color,
         var(--spectrum-global-color-blue-400)
     );
 }
-#tab:focus ::slotted([slot='icon']) {
+:host(:focus) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item.focus-ring .spectrum-Icon */
     color: var(
         --spectrum-tabs-icon-color-key-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([disabled]) #tab ::slotted([slot='icon']) {
+:host([disabled]) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item.is-disabled .spectrum-Icon */
     color: var(
         --spectrum-tabs-icon-color-disabled,

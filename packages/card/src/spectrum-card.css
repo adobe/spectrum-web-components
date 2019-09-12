@@ -351,8 +351,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-animation-duration-100, 130ms);
     overflow: visible;
 }
-:host([variant='quiet']) ::slotted([slot='preview']):before,
-:host([variant='gallery']) ::slotted([slot='preview']):before {
+:host([variant='quiet']) .spectrum-Card-preview:before,
+:host([variant='gallery']) .spectrum-Card-preview:before {
     /* .spectrum-Card--quiet .spectrum-Card-preview:before,
    * .spectrum-Card--gallery .spectrum-Card-preview:before */
     content: '';
@@ -535,10 +535,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-200)
     );
 }
-:host([variant='quiet'][selected]) ::slotted([slot='preview']):before,
-:host([variant='quiet']) :focus ::slotted([slot='preview']):before,
-:host([variant='gallery'][selected]) ::slotted([slot='preview']):before,
-:host([variant='gallery']) :focus ::slotted([slot='preview']):before {
+:host([variant='quiet'][selected]) .spectrum-Card-preview:before,
+:host([variant='quiet']) :focus .spectrum-Card-preview:before,
+:host([variant='gallery'][selected]) .spectrum-Card-preview:before,
+:host([variant='gallery']) :focus .spectrum-Card-preview:before {
     /* .spectrum-Card--quiet.is-selected .spectrum-Card-preview:before,
    * .spectrum-Card--quiet.focus-ring .spectrum-Card-preview:before,
    * .spectrum-Card--gallery.is-selected .spectrum-Card-preview:before,
@@ -567,8 +567,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--gallery.is-drop-target .spectrum-Card-preview */
     background-color: var(--spectrum-alias-highlight-selected);
 }
-:host([variant='quiet'][drop-target]) ::slotted([slot='preview']):before,
-:host([variant='gallery'][drop-target]) ::slotted([slot='preview']):before {
+:host([variant='quiet'][drop-target]) .spectrum-Card-preview:before,
+:host([variant='gallery'][drop-target]) .spectrum-Card-preview:before {
     /* .spectrum-Card--quiet.is-drop-target .spectrum-Card-preview:before,
    * .spectrum-Card--gallery.is-drop-target .spectrum-Card-preview:before */
     border-color: var(

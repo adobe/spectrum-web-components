@@ -10,13 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    html,
-    property,
-    CSSResultArray,
-    query,
-    TemplateResult,
-} from 'lit-element';
+import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
 
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
@@ -31,9 +25,6 @@ export class Tab extends Focusable {
         return [tabItemStyles];
     }
 
-    @query('#tab')
-    private tabElement!: HTMLElement;
-
     @property({ reflect: true })
     public label = '';
 
@@ -47,17 +38,15 @@ export class Tab extends Focusable {
     public value = '';
 
     public get focusElement(): HTMLElement {
-        return this.tabElement;
+        return this;
     }
 
     protected render(): TemplateResult {
         return html`
-            <div id="tab">
-                <slot name="icon"></slot>
-                <label id="itemLabel">
-                    ${this.label}
-                </label>
-            </div>
+            <slot name="icon"></slot>
+            <label id="itemLabel">
+                ${this.label}
+            </label>
         `;
     }
 }

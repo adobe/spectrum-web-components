@@ -16,7 +16,7 @@ governing permissions and limitations under the License.
     height: auto !important;
 }
 
-:host([vertical]) #tab {
+:host([vertical]) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,7 +24,7 @@ governing permissions and limitations under the License.
     height: auto;
 }
 
-:host([vertical]) #tab::before {
+:host([vertical])::before {
     height: auto;
     margin-top: 0;
     top: 0;
