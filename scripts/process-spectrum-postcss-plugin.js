@@ -107,7 +107,6 @@ class SpectrumProcessor {
                     // :host declaration
                     const hostSelector = parser.selector();
                     const host = parser.pseudo({ value: ':host' });
-                    host.append(hostSelector);
                     result.first.replaceWith(host);
 
                     let remainder = host.next();
@@ -123,6 +122,9 @@ class SpectrumProcessor {
                         } else {
                             hostSelector.append(node);
                         }
+                    }
+                    if (hostSelector.nodes.length) {
+                        host.append(hostSelector);
                     }
                 } else {
                     replaceNode(

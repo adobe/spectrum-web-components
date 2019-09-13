@@ -27,6 +27,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
     overflow: auto;
 
+    /* .spectrum-Menu .spectrum-Menu */
+    display: block;
     /* .spectrum-Menu */
     background-color: var(
         --spectrum-selectlist-background-color,
@@ -201,10 +203,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-heading-subtitle3-text-color,
         var(--spectrum-global-color-gray-700)
     );
-}
-:host() {
-    /* .spectrum-Menu .spectrum-Menu */
-    display: block;
 }
 .spectrum-Menu-item:focus,
 .spectrum-Menu-item.is-focused {

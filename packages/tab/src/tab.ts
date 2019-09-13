@@ -25,6 +25,10 @@ export class Tab extends Focusable {
         return [tabItemStyles];
     }
 
+    private get hasIcon(): boolean {
+        return !!this.querySelector('[slot="icon"]');
+    }
+
     @property({ reflect: true })
     public label = '';
 
@@ -43,7 +47,11 @@ export class Tab extends Focusable {
 
     protected render(): TemplateResult {
         return html`
-            <slot name="icon"></slot>
+            ${this.hasIcon
+                ? html`
+                      <slot name="icon"></slot>
+                  `
+                : html``}
             <label id="itemLabel">
                 ${this.label}
             </label>

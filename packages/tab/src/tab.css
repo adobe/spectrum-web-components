@@ -13,15 +13,11 @@ governing permissions and limitations under the License.
 @import './spectrum-tab.css';
 
 :host([vertical]) {
-    height: auto !important;
-}
-
-:host([vertical]) {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: auto;
+    height: auto !important;
 }
 
 :host([vertical])::before {

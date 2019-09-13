@@ -71,7 +71,7 @@ slot[name='icon'] + #itemLabel {
             var(--spectrum-global-dimension-size-40)
     );
 }
-:host()::before {
+:host::before {
     /* .spectrum-Tabs-item::before */
     content: '';
     position: absolute;
