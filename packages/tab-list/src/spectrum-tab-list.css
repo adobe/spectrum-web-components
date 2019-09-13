@@ -64,15 +64,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) - var(--spectrum-tabs-rule-height, 2px)
     );
 }
-:host([compact]) .spectrum-Tabs-item .spectrum-Icon {
-    /* .spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
-    height: calc(
-        var(
-                --spectrum-tabs-quiet-compact-height,
-                var(--spectrum-global-dimension-size-400)
-            ) - var(--spectrum-tabs-rule-height, 2px)
-    );
-}
 :host([direction='horizontal']) {
     /* .spectrum-Tabs--horizontal */
     -ms-flex-align: center;
@@ -83,15 +74,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([direction='horizontal']) ::slotted(*) {
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
     vertical-align: top;
-}
-:host([direction='horizontal'])
-    .spectrum-Tabs-item
-    + *:not(.spectrum-Tabs-selectionIndicator) {
-    /* .spectrum-Tabs--horizontal .spectrum-Tabs-item + *:not(.spectrum-Tabs-selectionIndicator) */
-    margin-left: var(
-        --spectrum-tabs-item-gap,
-        var(--spectrum-global-dimension-size-300)
-    );
 }
 :host([direction='horizontal']) #selectionIndicator {
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-selectionIndicator */
@@ -163,17 +145,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-50)
     );
 }
-:host([direction='vertical']) .spectrum-Tabs-item::before {
-    /* .spectrum-Tabs--vertical .spectrum-Tabs-item::before */
-    left: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
-    right: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
-    margin-top: calc(
-        var(
-                --spectrum-tabs-focus-ring-height,
-                var(--spectrum-global-dimension-size-400)
-            ) / -2
-    );
-}
 :host([direction='vertical'][compact]) ::slotted(*) {
     /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item */
     height: var(
@@ -187,13 +158,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-bottom: var(
         --spectrum-tabs-compact-vertical-item-gap,
         var(--spectrum-global-dimension-size-50)
-    );
-}
-:host([direction='vertical'][compact]) .spectrum-Tabs-item .spectrum-Icon {
-    /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
-    height: var(
-        --spectrum-tabs-compact-vertical-item-height,
-        var(--spectrum-global-dimension-size-400)
     );
 }
 :host([direction='vertical']) #selectionIndicator {

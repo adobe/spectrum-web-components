@@ -174,6 +174,7 @@ class SpectrumProcessor {
         // e.g. ".spectrum-Icon" -> "::slotted([slot='icon'])"
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
+            let isInvalidSelector = false;
             result.each((node, index) => {
                 const slot = this.component.slotForNode(node);
                 if (!slot) return;
@@ -185,15 +186,15 @@ class SpectrumProcessor {
                     // element in the combinator, we will need to refer to the slot itself
                     replaceNode(node, slot.shadowSlotNode);
                 } else if (!isLastNode) {
-                    // This sloppy check kills the conversion if there is content after a `::slotted()` selector.
+                    // If there are selectors after ::slotted() the rule is invalid CSS, let's remove it.
                     // The browser would do this anyways, and then merged selectors in CSS minification output
                     // e.g. `.valid .selector, ::slotted(.invalid) .selector {}` would be lost.
-                    result.remove();
+                    isInvalidSelector = true;
                 } else {
                     replaceNode(node, slot.shadowSlottedNode);
                 }
             });
-            return result;
+            return isInvalidSelector ? null : result;
         });
 
         // Convert instances of the .focus-ring selector to a :focus
