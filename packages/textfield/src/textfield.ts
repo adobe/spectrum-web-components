@@ -77,6 +77,15 @@ export class Textfield extends Focusable {
         this.value = this.inputElement.value;
     }
 
+    protected onChange(): void {
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
@@ -106,6 +115,7 @@ export class Textfield extends Focusable {
                     pattern=${ifDefined(this.pattern)}
                     placeholder=${this.placeholder}
                     .value=${this.value}
+                    @change=${this.onChange}
                     @input=${this.onInput}
                     ?disabled=${this.disabled}
                     ?required=${this.required}
@@ -120,6 +130,7 @@ export class Textfield extends Focusable {
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${this.value}
+                @change=${this.onChange}
                 @input=${this.onInput}
                 ?disabled=${this.disabled}
                 ?required=${this.required}

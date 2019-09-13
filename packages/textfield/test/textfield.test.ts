@@ -176,4 +176,28 @@ describe('Textfield', () => {
 
         expect(el.value).to.equal(testValue);
     });
+    it('dispatches a `change` event', async () => {
+        const testValue = 'Test Name';
+        let eventSource = null as Textfield | null;
+        const onChange = (e: Event) => {
+            eventSource = e.composedPath()[0] as Textfield;
+        };
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your name"
+                    @change=${onChange}
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        el.focusElement.value = testValue;
+        el.focusElement.dispatchEvent(new Event('input'));
+        el.focusElement.dispatchEvent(new Event('change'));
+
+        expect(el.value).to.equal(testValue);
+        const testSource = eventSource as Textfield;
+        expect(testSource.isSameNode(el)).to.be.true;
+    });
 });
