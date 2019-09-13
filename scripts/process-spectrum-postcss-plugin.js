@@ -114,6 +114,7 @@ class SpectrumProcessor {
                         const node = remainder;
                         remainder = remainder.next();
                         node.remove();
+                        // Pseudo-elements go after the host selector `:host::before` or `:host([attr])::after`.
                         if (
                             node.value === '::before' ||
                             node.value === '::after'
@@ -123,6 +124,7 @@ class SpectrumProcessor {
                             hostSelector.append(node);
                         }
                     }
+                    // Appending the `hostSelector` updates `:host` to `:host(...)` so only do it when there is content to apply.
                     if (hostSelector.nodes.length) {
                         host.append(hostSelector);
                     }
@@ -183,6 +185,9 @@ class SpectrumProcessor {
                     // element in the combinator, we will need to refer to the slot itself
                     replaceNode(node, slot.shadowSlotNode);
                 } else if (!isLastNode) {
+                    // This sloppy check kills the conversion if there is content after a `::slotted()` selector.
+                    // The browser would do this anyways, and then merged selectors in CSS minification output
+                    // e.g. `.valid .selector, ::slotted(.invalid) .selector {}` would be lost.
                     result.remove();
                 } else {
                     replaceNode(node, slot.shadowSlottedNode);
@@ -464,6 +469,7 @@ class SpectrumProcessor {
         // make sure that the first component of the select is
         // wrapped in :host()
         if (!/^:host/.test(selector)) {
+            // Ensure that pseudo elements are listed _after_, not as a part of, the `:host` or `:host(...)` selector.
             return selector.replace(/^([^\s>+~\|\:{2}]+)(.*)/, ':host($1)$2');
         } else {
             return selector;
