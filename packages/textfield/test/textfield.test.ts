@@ -179,7 +179,7 @@ describe('Textfield', () => {
     it('dispatches a `change` event', async () => {
         const testValue = 'Test Name';
         let eventSource = null as Textfield | null;
-        const onChange = (e: Event) => {
+        const onChange = (e: Event): void => {
             eventSource = e.composedPath()[0] as Textfield;
         };
         const el = await litFixture<Textfield>(
