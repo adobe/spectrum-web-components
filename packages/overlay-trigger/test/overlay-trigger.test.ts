@@ -16,9 +16,9 @@ import { OverlayRoot } from '../../overlay-root';
 import '../../button';
 import '../../popover';
 import { Popover } from '../../popover';
+import { ActiveOverlay } from '../../overlay-root/lib/active-overlay';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
-import { ActiveOverlay } from '@spectrum-web-components/overlay-root/lib/active-overlay';
 import { fixture, aTimeout, html, expect } from '@open-wc/testing';
 
 function pressEscape(): void {
