@@ -21,6 +21,11 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical])::before {
+    /* .spectrum-Tabs--vertical .spectrum-Tabs-item::before */
+    left: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
+    right: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
+
+    /* Custom */
     height: auto;
     margin-top: 0;
     top: 0;
