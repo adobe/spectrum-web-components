@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { html, TemplateResult } from 'lit-html';
 
-import '../lib';
-import '@spectrum-web-components/icon';
-import { IconsetAddedDetail } from '@spectrum-web-components/iconset';
+import '../';
+import '../../icon';
+import { IconsetAddedDetail } from '../../iconset';
 import { LitElement, css, CSSResult } from 'lit-element';
 import { color } from '@storybook/addon-knobs';
 

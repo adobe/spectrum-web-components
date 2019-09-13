@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../lib/index.js';
-import { Dropdown } from '../lib/index.js';
-import '../../menu/lib/index.js';
-import '../../menu-item/lib/index.js';
-import { MenuItem } from '../../menu-item/lib/index.js';
+import '../';
+import { Dropdown } from '../';
+import '../../menu';
+import '../../menu-item';
+import { MenuItem } from '../../menu-item';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 const keyboardEvent = (code: string): KeyboardEvent =>

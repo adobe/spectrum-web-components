@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../lib/index.js';
-import { Menu } from '../lib/index.js';
-import '../../menu-item/lib/index.js';
-import { MenuItem } from '../../menu-item/lib/index.js';
+import '../';
+import { Menu } from '../';
+import '../../menu-item';
+import { MenuItem } from '../../menu-item';
 import {
     fixture,
     elementUpdated,

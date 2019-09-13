@@ -13,7 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { boolean, radios, text } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
-import '../lib';
+import '../';
 
 storiesOf('Banner', module)
     .add('Default', () => {

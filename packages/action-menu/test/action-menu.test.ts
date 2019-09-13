@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../lib/index.js';
-import { ActionMenu } from '../lib/index.js';
+import '../';
+import { ActionMenu } from '../';
 import '../../menu/lib/index.js';
 import '../../menu-item/lib/index.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../lib/index.js';
-import { Checkbox } from '../lib/index.js';
+import '../';
+import { Checkbox } from '../';
 import {
     fixture,
     elementUpdated,

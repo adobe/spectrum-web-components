@@ -13,10 +13,10 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { radios } from '@storybook/addon-knobs';
 
-import '../lib';
-import '../../button/lib';
-import '../../switch/lib';
-import '../../slider/lib';
+import '../';
+import '../../button';
+import '../../switch';
+import '../../slider';
 
 storiesOf('Theme', module)
     .add('Default', () => {

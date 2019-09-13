@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../lib';
-import { OverlayTrigger } from '../lib';
-import { OverlayRoot } from '../../overlay-root/lib';
-import '@spectrum-web-components/overlay-root';
-import '../../button/lib';
-import '../../popover/lib';
-import { Popover } from '../../popover/lib';
+import '../';
+import { OverlayTrigger } from '../';
+import '../../overlay-root';
+import { OverlayRoot } from '../../overlay-root';
+import '../../button';
+import '../../popover';
+import { Popover } from '../../popover';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
 import { ActiveOverlay } from '@spectrum-web-components/overlay-root/lib/active-overlay';

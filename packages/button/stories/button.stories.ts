@@ -15,9 +15,9 @@ import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { TemplateResult } from 'lit-element';
 
-import '../lib';
-import '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons';
+import '../';
+import '../../icon';
+import '../../icons';
 
 interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';

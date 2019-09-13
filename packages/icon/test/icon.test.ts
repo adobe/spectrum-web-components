@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../lib/index.js';
-import { Icon } from '../lib/index.js';
-import '../../icons/lib/index.js';
+import '../';
+import { Icon } from '../';
+import '../../icons';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Icon', () => {

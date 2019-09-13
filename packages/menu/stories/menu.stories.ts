@@ -12,13 +12,13 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 
-import '../lib';
-import '../../popover/lib';
-import '../../menu/lib';
-import '../../menu-item/lib';
-import '../../menu-group/lib';
-import '../../icon/lib';
-import '../../icons/lib';
+import '../';
+import '../../popover';
+import '../../menu';
+import '../../menu-item';
+import '../../menu-group';
+import '../../icon';
+import '../../icons';
 
 storiesOf('Menu', module)
     .add('Default', () => {

@@ -8,8 +8,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../lib';
-import { IconsMedium, IconsLarge } from '../lib';
+import '../';
+import { IconsMedium, IconsLarge } from '../';
 import { elementUpdated, fixture, html, expect } from '@open-wc/testing';
 
 describe('icons', () => {

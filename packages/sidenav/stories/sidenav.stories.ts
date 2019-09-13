@@ -13,7 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { decorateAction } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
-import '../lib';
+import '../';
 
 const eventValueAction = decorateAction([(args) => [args[0].detail.value]]);
 

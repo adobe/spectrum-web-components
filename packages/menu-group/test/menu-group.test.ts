@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../lib/index.js';
-import { MenuGroup } from '../lib/index.js';
-import '../../menu/lib/index.js';
-import { Menu } from '../../menu/lib/index.js';
-import '../../menu-item/lib/index.js';
+import '../';
+import { MenuGroup } from '../';
+import '../../menu';
+import { Menu } from '../../menu';
+import '../../menu-item';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Menu group', () => {
