@@ -62,6 +62,7 @@ export class TabList extends LitElement {
         return html`
             <slot
                 @click=${this.onClick}
+                @keydown=${this.onKeyDown}
                 @slotchange=${this.onSlotChange}
             ></slot>
             <div
@@ -74,6 +75,16 @@ export class TabList extends LitElement {
     private onClick(ev: Event): void {
         const target = ev.target as HTMLElement;
         this.selectTarget(target);
+    }
+
+    private onKeyDown(ev: KeyboardEvent): void {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+            ev.preventDefault();
+            const target = ev.target as HTMLElement;
+            if (target) {
+                this.selectTarget(target);
+            }
+        }
     }
 
     private selectTarget(target: HTMLElement): void {
