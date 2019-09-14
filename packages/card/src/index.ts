@@ -13,6 +13,7 @@ export * from './card.js';
 
 import { Card } from './card.js';
 
+/* istanbul ignore else */
 if (!customElements.get('sp-card')) {
     customElements.define('sp-card', Card);
 }
