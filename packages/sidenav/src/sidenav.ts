@@ -34,6 +34,7 @@ export class SideNav extends LitElement {
 
     private handleSelect(ev: CustomEvent<SidenavSelectDetail>): void {
         this.value = ev.detail.value;
+        console.log(this.value);
     }
 
     protected render(): TemplateResult {

@@ -70,7 +70,7 @@ export class SideNavItem extends LitElement {
     protected firstUpdated(): void {
         const parentSideNav = this.parentSideNav;
         if (parentSideNav) {
-            parentSideNav.addEventListener('sp-sidenav:select', (ev) =>
+            parentSideNav.addEventListener('sidenav-select', (ev) =>
                 this.handleSideNavSelect(ev)
             );
             this.selected =
@@ -91,7 +91,7 @@ export class SideNavItem extends LitElement {
                     value: this.value,
                 };
 
-                const selectionEvent = new CustomEvent('sp-sidenav:select', {
+                const selectionEvent = new CustomEvent('sidenav-select', {
                     bubbles: true,
                     composed: true,
                     detail: selectDetail,
@@ -100,6 +100,10 @@ export class SideNavItem extends LitElement {
                 this.dispatchEvent(selectionEvent);
             }
         }
+    }
+
+    public click(): void {
+        this.handleClick();
     }
 
     protected render(): TemplateResult {

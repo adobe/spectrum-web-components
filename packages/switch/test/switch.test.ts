@@ -9,17 +9,21 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './slider';
 
-import { Slider } from './slider';
+import '../';
+import { Switch } from '../';
+import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
-/* istanbul ignore else */
-if (!customElements.get('sp-slider')) {
-    customElements.define('sp-slider', Slider);
-}
+describe('Switch', () => {
+    it('loads', async () => {
+        const el = await fixture<Switch>(
+            html`
+                <sp-switch></sp-switch>
+            `
+        );
 
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-slider': Slider;
-    }
-}
+        await elementUpdated(el);
+
+        expect(el).shadowDom.to.equalSnapshot();
+    });
+});
