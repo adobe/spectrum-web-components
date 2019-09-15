@@ -61,9 +61,7 @@ export abstract class Iconset extends LitElement {
     /**
      * Returns a list of all icons in this iconset.
      */
-    public getIconList(): string[] {
-        throw new Error('Not implemented!');
-    }
+    public abstract getIconList(): string[];
 
     private handleRemoved = ({ detail }: { detail: { name: string } }) => {
         if (detail.name === this.name) {

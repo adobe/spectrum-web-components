@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 export * from './icon.js';
 import { Icon } from './icon.js';
 
+/* istanbul ignore else */
 if (!customElements.get('sp-icon')) {
     customElements.define('sp-icon', Icon);
 }
