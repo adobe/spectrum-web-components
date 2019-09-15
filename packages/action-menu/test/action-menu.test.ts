@@ -21,7 +21,6 @@ describe('Action menu', () => {
         const el = await fixture<ActionMenu>(
             html`
                 <sp-action-menu>
-                    Select a Country with a very long label, too long in fact
                     <sp-menu slot="options" role="listbox">
                         <sp-menu-item>
                             Deselect
@@ -51,5 +50,115 @@ describe('Action menu', () => {
         expect(el).to.not.be.undefined;
         expect(el).lightDom.to.equalSnapshot();
         expect(el).shadowDom.to.equalSnapshot();
+    });
+    it('loads - [label]', async () => {
+        const el = await fixture<ActionMenu>(
+            html`
+                <sp-action-menu label="More Actions">
+                    <sp-menu slot="options" role="listbox">
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el).lightDom.to.equalSnapshot();
+        expect(el).shadowDom.to.equalSnapshot();
+    });
+    it('stays `quiet`', async () => {
+        const el = await fixture<ActionMenu>(
+            html`
+                <sp-action-menu>
+                    <sp-menu slot="options" role="listbox">
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.quiet).to.be.true;
+
+        el.quiet = false;
+        await elementUpdated(el);
+
+        expect(el.quiet).to.be.true;
+    });
+    it('stay `valid`', async () => {
+        const el = await fixture<ActionMenu>(
+            html`
+                <sp-action-menu>
+                    <sp-menu slot="options" role="listbox">
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.invalid).to.be.false;
+
+        el.invalid = true;
+        await elementUpdated(el);
+
+        expect(el.invalid).to.be.false;
     });
 });

@@ -31,6 +31,42 @@ describe('Button', () => {
             `<button id="button" tabindex="0"><div id="label"><slot></slot></div></button>`
         );
     });
+    it('loads default w/ an icon', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button>
+                    Button
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.textContent).to.include('Button');
+        // make sure href is being passed to <a>
+        expect(el).shadowDom.to.equal(
+            `<button id="button" tabindex="0"><slot name="icon"></slot><div id="label"><slot></slot></div></button>`
+        );
+    });
+    it('loads default w/ an icon on the right', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button icon-right>
+                    Button
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.textContent).to.include('Button');
+        // make sure href is being passed to <a>
+        expect(el).shadowDom.to.equal(
+            `<button id="button" tabindex="0"><div id="label"><slot></slot></div><slot name="icon"></slot></button>`
+        );
+    });
     it('loads with href', async () => {
         const el = await fixture<Button>(
             html`

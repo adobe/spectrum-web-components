@@ -3,7 +3,6 @@
 #### `loads`
 
 ```html
-Select a Country with a very long label, too long in fact
 <sp-menu role="listbox" slot="options">
     <sp-menu-item role="menuitem" tabindex="-1">
         Deselect
@@ -49,8 +48,9 @@ Select a Country with a very long label, too long in fact
 </sp-popover>
 ```
 
+#### `loads - [label]`
+
 ```html
-Select a Country with a very long label, too long in fact
 <sp-menu role="listbox" slot="options">
     <sp-menu-item role="menuitem" tabindex="-1">
         Deselect
@@ -81,7 +81,11 @@ Select a Country with a very long label, too long in fact
 
 ```html
 <sp-icons-medium style="display: none;"></sp-icons-medium>
-<button aria-haspopup="true" id="button" tabindex="0"></button>
+<button aria-haspopup="true" id="button" tabindex="0">
+    <div id="label">
+        More Actions
+    </div>
+</button>
 <sp-popover direction="bottom" id="popover">
     <slot name="options">
         <sp-menu-item
