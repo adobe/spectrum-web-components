@@ -81,7 +81,7 @@ describe('Icon', () => {
         }
     });
 
-    it('does not error with unkown set', async () => {
+    it('does not error with unknown set', async () => {
         const el = document.createElement('sp-icon');
         el.name = 'unknown-icon';
         try {
@@ -95,7 +95,7 @@ describe('Icon', () => {
         }
     });
 
-    it('does error with unkown icon', async () => {
+    it('does error with unknown icon', async () => {
         const el = document.createElement('sp-icon');
         el.name = 'ui:unknown-icon';
         try {
