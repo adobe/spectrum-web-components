@@ -36,7 +36,6 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        // make sure href is being passed to <a>
         expect(el).shadowDom.to.equal(
             `<button id="button" tabindex="0"><div id="label"><slot></slot></div></button>`
         );
@@ -54,7 +53,6 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        // make sure href is being passed to <a>
         expect(el).shadowDom.to.equal(
             `<button id="button" tabindex="0"><slot name="icon"></slot><div id="label"><slot></slot></div></button>`
         );
@@ -72,7 +70,6 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        // make sure href is being passed to <a>
         expect(el).shadowDom.to.equal(
             `<button id="button" tabindex="0"><div id="label"><slot></slot></div><slot name="icon"></slot></button>`
         );
