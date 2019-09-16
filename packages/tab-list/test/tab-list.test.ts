@@ -258,7 +258,7 @@ describe('TabList', () => {
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
     });
-    it('accespts keyboard based selection', async () => {
+    it('accepts keyboard based selection', async () => {
         const el = await fixture<TabList>(html`
             <sp-tab-list selected="first">
                 <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
