@@ -24,7 +24,7 @@ describe('icons', () => {
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
-        expect(el.getIconList().length).to.equal(35);
+        expect(el.getIconList().length).to.be.above(0);
     });
     it('medium', async () => {
         const el = await fixture<IconsMedium>(
@@ -36,7 +36,7 @@ describe('icons', () => {
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
-        expect(el.getIconList().length).to.equal(35);
+        expect(el.getIconList().length).to.be.above(0);
     });
     it('listens to slotchange events', async () => {
         const el = await fixture<IconsMedium>(
