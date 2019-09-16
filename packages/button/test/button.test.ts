@@ -122,7 +122,7 @@ describe('Button', () => {
         await elementUpdated(el);
 
         const focusElement = el.focusElement as HTMLButtonElement;
-        focusElement.addEventListener('focus', (_) => (focusedCount += 1));
+        focusElement.addEventListener('focus', () => (focusedCount += 1));
         expect(focusedCount).to.equal(0);
 
         el.focus();
