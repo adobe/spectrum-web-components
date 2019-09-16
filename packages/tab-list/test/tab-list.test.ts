@@ -15,6 +15,17 @@ import '../../tab';
 import { Tab } from '../../tab';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
+const keyboardEvent = (code: string): KeyboardEvent =>
+    new KeyboardEvent('keydown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        code,
+        key: code,
+    });
+const enterEvent = keyboardEvent('Enter');
+const spaceEvent = keyboardEvent(' ');
+
 describe('TabList', () => {
     let testDiv!: HTMLDivElement;
 
@@ -181,5 +192,93 @@ describe('TabList', () => {
         expect(tab1.selected).to.be.true;
         expect(tab2.selected).to.be.false;
         expect(tab3.selected).to.be.false;
+    });
+    it('displays `vertical`', async () => {
+        const el = await fixture<TabList>(html`
+            <sp-tab-list selected="first" direction="vertical">
+                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
+                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
+                <sp-tab label="Tab 3" value="third" tabindex="3"></sp-tab>
+            </sp-tab-list>
+        `);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
+
+        el.selected = 'first';
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
+    });
+    it('displays with nothing `selected`', async () => {
+        const el = await fixture<TabList>(html`
+            <sp-tab-list>
+                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
+                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
+                <sp-tab label="Tab 3" value="third" tabindex="3"></sp-tab>
+            </sp-tab-list>
+        `);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('');
+
+        el.selected = 'first';
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
+    });
+    it('ignores children with no `value`', async () => {
+        const el = await fixture<TabList>(html`
+            <sp-tab-list selected="first">
+                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
+                <div id="other">Other thing</div>
+            </sp-tab-list>
+        `);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
+
+        const otherThing = el.querySelector('#other') as HTMLDivElement;
+        otherThing.click();
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
+    });
+    it('allows selection to be cancellable', async () => {
+        const cancelSelection = (e: Event): void => e.preventDefault();
+        const el = await fixture<TabList>(html`
+            <sp-tab-list selected="first" @change=${cancelSelection}>
+                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
+                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
+            </sp-tab-list>
+        `);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
+
+        const secondTab = el.querySelector('[value="second"]') as Tab;
+        secondTab.click();
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
+    });
+    it('accepts keyboard based selection', async () => {
+        const el = await fixture<TabList>(html`
+            <sp-tab-list selected="first">
+                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
+                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
+            </sp-tab-list>
+        `);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
+
+        const secondTab = el.querySelector('[value="second"]') as Tab;
+        secondTab.dispatchEvent(enterEvent);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('second');
+
+        const firstTab = el.querySelector('[value="first"]') as Tab;
+        firstTab.dispatchEvent(spaceEvent);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
     });
 });

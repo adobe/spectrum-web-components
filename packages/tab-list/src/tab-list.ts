@@ -74,9 +74,7 @@ export class TabList extends LitElement {
 
     private onClick(ev: Event): void {
         const target = ev.target as HTMLElement;
-        if (target) {
-            this.selectTarget(target);
-        }
+        this.selectTarget(target);
     }
 
     private onKeyDown(ev: KeyboardEvent): void {
