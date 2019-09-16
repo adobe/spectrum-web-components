@@ -14,14 +14,37 @@ import '../';
 import { Card } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
-function previewNode(card: Card): Node {
-    if (!card.shadowRoot) throw new Error('No shadowRoot');
-    const slotEl = card.shadowRoot.querySelector('slot') as HTMLSlotElement;
-    return slotEl;
-}
-
 describe('card', () => {
     it('loads', async () => {
+        const el = await fixture<Card>(
+            html`
+                <sp-card title="Card Title" subtitle="JPG">
+                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <div slot="footer">Footer</div>
+                </sp-card>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).shadowDom.to.equalSnapshot();
+    });
+    it('loads - [quiet]', async () => {
+        const el = await fixture<Card>(
+            html`
+                <sp-card variant="quiet" title="Card Title" subtitle="JPG">
+                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <div slot="description">10/15/18</div>
+                    <div slot="footer">Footer</div>
+                </sp-card>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).shadowDom.to.equalSnapshot();
+    });
+    it('loads - [gallery]', async () => {
         const el = await fixture<Card>(
             html`
                 <sp-card variant="gallery" title="Card Title" subtitle="JPG">
@@ -33,10 +56,7 @@ describe('card', () => {
         );
 
         await elementUpdated(el);
-        expect(el).to.not.equal(undefined);
-        const preview = previewNode(el);
-        expect(preview).to.not.equal(undefined);
-        expect(el.textContent).to.include('10/15/18');
-        expect(el.textContent).to.include('Footer');
+
+        expect(el).shadowDom.to.equalSnapshot();
     });
 });
