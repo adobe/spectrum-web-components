@@ -15,6 +15,16 @@ import { Button } from '../';
 import { html } from 'lit-element';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
+const keyboardEvent = (code: string, shiftKey: boolean): KeyboardEvent =>
+    new KeyboardEvent('keydown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        code,
+        shiftKey,
+    });
+const shiftTabEvent = keyboardEvent('Tab', true);
+
 describe('Button', () => {
     it('loads default', async () => {
         const el = await fixture<Button>(
@@ -98,5 +108,32 @@ describe('Button', () => {
         expect(el).shadowDom.to.equal(
             `<a href="test_url" target="_blank" id="button" tabindex="0"><div id="label"><slot></slot></div></a>`
         );
+    });
+    it('accepts shit+tab interactions', async () => {
+        let focusedCount = 0;
+        const el = await fixture<Button>(
+            html`
+                <sp-button href="test_url" target="_blank">
+                    With Target
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const focusElement = el.focusElement as HTMLButtonElement;
+        focusElement.addEventListener('focus', (_) => (focusedCount += 1));
+        expect(focusedCount).to.equal(0);
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(focusedCount).to.equal(1);
+
+        el.dispatchEvent(shiftTabEvent);
+        el.dispatchEvent(new Event('focusin'));
+        await elementUpdated(el);
+
+        expect(focusedCount).to.equal(1);
     });
 });
