@@ -13,7 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { boolean } from '@storybook/addon-knobs';
 
-import '../lib';
+import '../';
 
 storiesOf('Textfield', module).add('Default', () => {
     const quiet = boolean('Quiet', false, 'Element');

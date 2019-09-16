@@ -10,13 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../lib/index.js';
-import { RadioGroup } from '../lib/index.js';
-import '../../radio/lib/index.js';
-import { Radio } from '../../radio/lib/index.js';
-import { fixture, elementUpdated, html } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import '../';
+import { RadioGroup } from '../';
+import '../../radio';
+import { Radio } from '../../radio';
+import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 function inputForRadio(radio: Radio): HTMLInputElement {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');

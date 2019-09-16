@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { radios } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
-import '../../icon/lib';
-import '../../icons/lib';
-import '../../tab-list/lib';
-import '../lib';
+import '../../icon';
+import '../../icons';
+import '../../tab-list';
+import '../';
 
 storiesOf('Tabs', module)
     .add('Default', () => {

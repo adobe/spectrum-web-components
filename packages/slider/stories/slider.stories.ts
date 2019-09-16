@@ -13,7 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { text, number } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
 
-import '../lib';
+import '../';
 
 storiesOf('Slider', module)
     .add('Default', () => {

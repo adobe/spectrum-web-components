@@ -19,16 +19,16 @@ import {
     CSSResultArray,
 } from 'lit-element';
 
-import '../lib';
-import { Placement } from '../lib';
-import { RadioChangeDetail } from '../../radio/lib';
-import '../../overlay-root/lib';
-import '../../overlay-trigger/lib';
-import '../../button/lib';
-import '../../popover/lib';
-import '../../slider/lib';
-import '../../radio/lib';
-import '../../radio-group/lib';
+import '../';
+import { Placement } from '../';
+import { RadioChangeDetail } from '../../radio';
+import '../../overlay-root';
+import '../../overlay-trigger';
+import '../../button';
+import '../../popover';
+import '../../slider';
+import '../../radio';
+import '../../radio-group';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;

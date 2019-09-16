@@ -10,14 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, html } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
 import '../../icons/lib/index.js';
 import '../../icon/lib/index.js';
 import { IconsMedium } from '../../icons/lib/index.js';
 import { Icon } from '../../icon/lib/index.js';
-// @ts-ignore
-const { expect } = window.chai;
+import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Iconset', () => {
     after(() => {

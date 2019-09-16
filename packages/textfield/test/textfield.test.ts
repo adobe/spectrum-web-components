@@ -9,11 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../lib/index.js';
-import { Textfield } from '../lib/index.js';
-import { litFixture, html, elementUpdated } from '@open-wc/testing';
-// @ts-ignore
-const { expect } = window.chai;
+import '../';
+import { Textfield } from '../';
+import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
 
 describe('Textfield', () => {
     it('loads', async () => {
@@ -177,5 +175,29 @@ describe('Textfield', () => {
         el.focusElement.dispatchEvent(new Event('input'));
 
         expect(el.value).to.equal(testValue);
+    });
+    it('dispatches a `change` event', async () => {
+        const testValue = 'Test Name';
+        let eventSource = null as Textfield | null;
+        const onChange = (e: Event): void => {
+            eventSource = e.composedPath()[0] as Textfield;
+        };
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your name"
+                    @change=${onChange}
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        el.focusElement.value = testValue;
+        el.focusElement.dispatchEvent(new Event('input'));
+        el.focusElement.dispatchEvent(new Event('change'));
+
+        expect(el.value).to.equal(testValue);
+        const testSource = eventSource as Textfield;
+        expect(testSource.isSameNode(el)).to.be.true;
     });
 });

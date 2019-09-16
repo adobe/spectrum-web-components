@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 
-import '../lib';
-import '../../radio-group/lib';
+import '../';
+import '../../radio-group';
 
 storiesOf('Radio', module)
     .add('Default', () => {

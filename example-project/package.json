@@ -10,7 +10,7 @@
         "serve": "npm run build:prod && http-server dist"
     },
     "author": "",
-    "license": "ISC",
+    "license": "Apache-2.0",
     "dependencies": {
         "lit-element": "^2.0.0-rc.3",
         "lit-html": "^1.0.0-rc.2"

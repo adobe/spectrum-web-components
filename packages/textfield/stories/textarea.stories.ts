@@ -13,7 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { boolean } from '@storybook/addon-knobs';
 
-import '../lib';
+import '../';
 
 storiesOf('Textarea', module).add('Default', () => {
     const grows = boolean('Grows', false, 'Element');

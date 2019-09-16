@@ -14,8 +14,8 @@ import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
-import '../lib';
-import { Dropdown } from '../lib';
+import '../';
+import { Dropdown } from '../';
 import '../../menu';
 import '../../menu-item';
 

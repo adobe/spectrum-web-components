@@ -13,7 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 import { action } from '@storybook/addon-actions';
 
-import '../lib';
+import '../';
 
 storiesOf('Checkbox', module)
     .add('Default', () => {

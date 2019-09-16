@@ -13,9 +13,14 @@ governing permissions and limitations under the License.
 import { CSSResultArray, TemplateResult, html } from 'lit-element';
 import { CheckboxBase } from '@spectrum-web-components/checkbox/lib/checkbox-base.js';
 import switchStyles from './switch.css.js';
+import legacyStyles from './switch-legacy.css.js';
 
 export class Switch extends CheckboxBase {
     public static get styles(): CSSResultArray {
+        if (window.hasOwnProperty('ShadyDOM')) {
+            // Override some styles if we are using the web component polyfill
+            return [switchStyles, legacyStyles];
+        }
         return [switchStyles];
     }
 

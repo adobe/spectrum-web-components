@@ -10,12 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated } from '@open-wc/testing';
-import '../lib/index.js';
-import { Button } from '../lib/index.js';
+import '../';
+import { Button } from '../';
 import { html } from 'lit-element';
-// @ts-ignore
-const { expect } = window.chai;
+import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
 describe('Button', () => {
     it('loads default', async () => {
