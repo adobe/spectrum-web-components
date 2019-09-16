@@ -29,47 +29,44 @@ describe('Iconset', () => {
         document.body.append(icons);
         icons.name = 'first-name';
 
-        expect(IconsetRegistry.getInstance().getIconset('first-name')).to.not.be
-            .undefined;
-        expect(IconsetRegistry.getInstance().getIconset('')).to.be.undefined;
-        expect(IconsetRegistry.getInstance().getIconset('second-name')).to.be
-            .undefined;
-        expect(IconsetRegistry.getInstance().getIconset('ui')).to.be.undefined;
+        const registry = IconsetRegistry.getInstance();
+
+        expect(registry.getIconset('first-name')).to.not.be.undefined;
+        expect(registry.getIconset('')).to.be.undefined;
+        expect(registry.getIconset('second-name')).to.be.undefined;
+        expect(registry.getIconset('ui')).to.be.undefined;
 
         icons.name = '';
 
-        expect(IconsetRegistry.getInstance().getIconset('first-name')).to.be
-            .undefined;
-        expect(IconsetRegistry.getInstance().getIconset('')).to.be.undefined;
-        expect(IconsetRegistry.getInstance().getIconset('second-name')).to.be
-            .undefined;
-        expect(IconsetRegistry.getInstance().getIconset('ui')).to.be.undefined;
+        expect(registry.getIconset('first-name')).to.be.undefined;
+        expect(registry.getIconset('')).to.be.undefined;
+        expect(registry.getIconset('second-name')).to.be.undefined;
+        expect(registry.getIconset('ui')).to.be.undefined;
 
         icons.name = 'second-name';
 
-        expect(IconsetRegistry.getInstance().getIconset('first-name')).to.be
-            .undefined;
-        expect(IconsetRegistry.getInstance().getIconset('')).to.be.undefined;
-        expect(IconsetRegistry.getInstance().getIconset('second-name')).to.not
-            .be.undefined;
-        expect(IconsetRegistry.getInstance().getIconset('ui')).to.be.undefined;
+        expect(registry.getIconset('first-name')).to.be.undefined;
+        expect(registry.getIconset('')).to.be.undefined;
+        expect(registry.getIconset('second-name')).to.not.be.undefined;
+        expect(registry.getIconset('ui')).to.be.undefined;
     });
     it('will not re-register on (dis)connect without a name', async () => {
         let icons = document.createElement('sp-icons-medium');
         document.body.append(icons);
 
-        expect(IconsetRegistry.getInstance().getIconset('ui')).to.not.be
-            .undefined;
+        const registry = IconsetRegistry.getInstance();
+
+        expect(registry.getIconset('ui')).to.not.be.undefined;
 
         icons.name = '';
 
-        expect(IconsetRegistry.getInstance().getIconset('ui')).to.be.undefined;
+        expect(registry.getIconset('ui')).to.be.undefined;
 
         icons.remove();
 
         document.body.append(icons);
 
-        expect(IconsetRegistry.getInstance().getIconset('ui')).to.be.undefined;
+        expect(registry.getIconset('ui')).to.be.undefined;
     });
     it('renders after adding and removing a second iconset of same name', async () => {
         let icons = document.createElement('sp-icons-medium');
