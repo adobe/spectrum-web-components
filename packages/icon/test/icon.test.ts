@@ -68,31 +68,19 @@ describe('Icon', () => {
         );
     });
 
-    it('does not error when name is missing', async () => {
+    it('does not error when name is missing', () => {
         const el = document.createElement('sp-icon');
-        try {
-            document.body.appendChild(el);
-            await elementUpdated(el);
-            expect('passed').to.equal('passed');
-        } catch (err) {
-            expect(() => {
-                throw err;
-            }).to.not.throw();
-        }
+
+        document.body.appendChild(el);
+        return elementUpdated(el);
     });
 
-    it('does not error with unknown set', async () => {
+    it('does not error with unknown set', () => {
         const el = document.createElement('sp-icon');
         el.name = 'unknown-icon';
-        try {
-            document.body.appendChild(el);
-            await elementUpdated(el);
-            expect('passed').to.equal('passed');
-        } catch (err) {
-            expect(() => {
-                throw err;
-            }).to.not.throw();
-        }
+
+        document.body.appendChild(el);
+        return elementUpdated(el);
     });
 
     it('does error with unknown icon', async () => {
