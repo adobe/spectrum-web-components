@@ -3,7 +3,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -17,13 +17,13 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/iconset": "^0.0.1"
+        "@spectrum-web-components/iconset": "^0.0.2"
     },
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-web-components/icon": "^0.0.1"
+        "@spectrum-web-components/icon": "^0.0.2"
     }
 }
