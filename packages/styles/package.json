@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/styles",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "",
     "style": "all-medium-lightest.css",
     "files": [

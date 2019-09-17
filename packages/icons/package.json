@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -14,13 +14,13 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/iconset": "0.0.0"
+        "@spectrum-web-components/iconset": "^0.0.1"
     },
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-web-components/icon": "0.0.0"
+        "@spectrum-web-components/icon": "^0.0.1"
     }
 }

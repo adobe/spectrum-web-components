@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/button",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -18,10 +18,10 @@
         "lit-html": "^1.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/shared": "0.0.0"
+        "@spectrum-web-components/shared": "^0.0.1"
     },
     "devDependencies": {
-        "@spectrum-web-components/icon": "0.0.0",
-        "@spectrum-web-components/icons": "0.0.0"
+        "@spectrum-web-components/icon": "^0.0.1",
+        "@spectrum-web-components/icons": "^0.0.1"
     }
 }

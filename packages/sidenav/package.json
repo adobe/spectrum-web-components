@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/sidenav",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
