@@ -10,6 +10,7 @@ governing permissions and limitations under the License.
 */
 import '../';
 import { IconsMedium, IconsLarge } from '../';
+import IconsetSVG from '../lib/icons-large.svg';
 import { elementUpdated, fixture, html, expect } from '@open-wc/testing';
 
 describe('icons', () => {
@@ -23,6 +24,7 @@ describe('icons', () => {
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
+        expect(el.getIconList().length).to.be.above(0);
     });
     it('medium', async () => {
         const el = await fixture<IconsMedium>(
@@ -34,5 +36,18 @@ describe('icons', () => {
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
+        expect(el.getIconList().length).to.be.above(0);
+    });
+    it('listens to slotchange events', async () => {
+        const el = await fixture<IconsMedium>(
+            html`
+                <sp-icons-medium>${IconsetSVG}</sp-icons-medium>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        expect(el.getIconList().length).to.equal(35);
     });
 });

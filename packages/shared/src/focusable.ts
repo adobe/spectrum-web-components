@@ -85,7 +85,7 @@ export class Focusable extends LitElement {
             if (
                 !event.defaultPrevented &&
                 event.shiftKey &&
-                event.keyCode === 9
+                event.code === 'Tab'
             ) {
                 this.isShiftTabbing = true;
                 HTMLElement.prototype.focus.apply(this);

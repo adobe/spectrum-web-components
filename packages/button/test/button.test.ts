@@ -15,6 +15,16 @@ import { Button } from '../';
 import { html } from 'lit-element';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
+const keyboardEvent = (code: string, shiftKey: boolean): KeyboardEvent =>
+    new KeyboardEvent('keydown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        code,
+        shiftKey,
+    });
+const shiftTabEvent = keyboardEvent('Tab', true);
+
 describe('Button', () => {
     it('loads default', async () => {
         const el = await fixture<Button>(
@@ -26,9 +36,42 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        // make sure href is being passed to <a>
         expect(el).shadowDom.to.equal(
             `<button id="button" tabindex="0"><div id="label"><slot></slot></div></button>`
+        );
+    });
+    it('loads default w/ an icon', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button>
+                    Button
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.textContent).to.include('Button');
+        expect(el).shadowDom.to.equal(
+            `<button id="button" tabindex="0"><slot name="icon"></slot><div id="label"><slot></slot></div></button>`
+        );
+    });
+    it('loads default w/ an icon on the right', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button icon-right>
+                    Button
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.textContent).to.include('Button');
+        expect(el).shadowDom.to.equal(
+            `<button id="button" tabindex="0"><div id="label"><slot></slot></div><slot name="icon"></slot></button>`
         );
     });
     it('loads with href', async () => {
@@ -62,5 +105,32 @@ describe('Button', () => {
         expect(el).shadowDom.to.equal(
             `<a href="test_url" target="_blank" id="button" tabindex="0"><div id="label"><slot></slot></div></a>`
         );
+    });
+    it('accepts shit+tab interactions', async () => {
+        let focusedCount = 0;
+        const el = await fixture<Button>(
+            html`
+                <sp-button href="test_url" target="_blank">
+                    With Target
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const focusElement = el.focusElement as HTMLButtonElement;
+        focusElement.addEventListener('focus', () => (focusedCount += 1));
+        expect(focusedCount).to.equal(0);
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(focusedCount).to.equal(1);
+
+        el.dispatchEvent(shiftTabEvent);
+        el.dispatchEvent(new Event('focusin'));
+        await elementUpdated(el);
+
+        expect(focusedCount).to.equal(1);
     });
 });

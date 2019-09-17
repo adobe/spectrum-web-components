@@ -42,8 +42,6 @@ export class Icon extends LitElement {
     @query('#container')
     private iconContainer?: HTMLElement;
 
-    private iconsetListener?: EventListener;
-
     private updateIconPromise?: Promise<void>;
 
     public static get styles(): CSSResultArray {
@@ -52,31 +50,12 @@ export class Icon extends LitElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
-
-        // start listening for iconset-added and do updateIcon if we get one later
-        this.iconsetListener = ((ev: CustomEvent) => {
-            if (!this.name) {
-                return;
-            }
-            // parse the icon name to get iconset name
-            const icon = this.parseIcon(this.name);
-            if (!icon) {
-                return;
-            }
-            if (ev.detail.name === icon.iconset) {
-                this.updateIconPromise = this.updateIcon();
-            }
-        }) as EventListener;
         window.addEventListener('sp-iconset:added', this.iconsetListener);
     }
+
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        if (this.iconsetListener) {
-            window.removeEventListener(
-                'sp-iconset:added',
-                this.iconsetListener
-            );
-        }
+        window.removeEventListener('sp-iconset:added', this.iconsetListener);
     }
 
     public firstUpdated(): void {
@@ -92,6 +71,17 @@ export class Icon extends LitElement {
         this.updateIconPromise = this.updateIcon(); // any of our attributes change, update our icon
     }
 
+    private iconsetListener = (ev: CustomEvent): void => {
+        if (!this.name) {
+            return;
+        }
+        // parse the icon name to get iconset name
+        const icon = this.parseIcon(this.name);
+        if (ev.detail.name === icon.iconset) {
+            this.updateIconPromise = this.updateIcon();
+        }
+    };
+
     protected render(): TemplateResult {
         return html`
             <div id="container">${this.renderIcon()}</div>
@@ -104,9 +94,6 @@ export class Icon extends LitElement {
         }
         // parse the icon name to get iconset name
         const icon = this.parseIcon(this.name);
-        if (!icon) {
-            return Promise.resolve();
-        }
         // try to retrieve the iconset
         const iconset = IconsetRegistry.getInstance().getIconset(icon.iconset);
         if (!iconset) {
@@ -120,15 +107,12 @@ export class Icon extends LitElement {
         return iconset.applyIconToElement(
             this.iconContainer,
             icon.icon,
-            this.size ? this.size : '',
+            this.size,
             this.label ? this.label : ''
         );
     }
 
-    private parseIcon(icon: string): { iconset: string; icon: string } | null {
-        if (!icon) {
-            return null;
-        }
+    private parseIcon(icon: string): { iconset: string; icon: string } {
         const iconParts = icon.split(':');
         let iconsetName = 'default';
         let iconName = icon;

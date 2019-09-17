@@ -13,6 +13,7 @@ export * from './slider';
 
 import { Slider } from './slider';
 
+/* istanbul ignore else */
 if (!customElements.get('sp-slider')) {
     customElements.define('sp-slider', Slider);
 }

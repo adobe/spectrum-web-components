@@ -91,10 +91,11 @@ export class Dropdown extends Focusable {
     }
 
     public get focusElement(): HTMLElement {
-        if (this.button) {
-            return this.button;
+        /* istanbul ignore if */
+        if (typeof this.button === 'undefined') {
+            return this;
         }
-        return this;
+        return this.button;
     }
 
     public onOptionsChange(): void {
@@ -102,6 +103,7 @@ export class Dropdown extends Focusable {
     }
 
     public onButtonBlur(): void {
+        /* istanbul ignore if */
         if (typeof this.button === 'undefined') {
             return;
         }
@@ -117,6 +119,7 @@ export class Dropdown extends Focusable {
             this.requestUpdate('open');
             return;
         }
+        /* istanbul ignore if */
         if (typeof this.button === 'undefined') {
             return;
         }
@@ -141,6 +144,7 @@ export class Dropdown extends Focusable {
         if (ev.code !== 'ArrowDown') {
             return;
         }
+        /* istanbul ignore if */
         if (this.optionsMenu === null) {
             return;
         }
@@ -149,7 +153,7 @@ export class Dropdown extends Focusable {
 
     public setValueFromItem(item: MenuItem): void {
         const oldValue = this.value;
-        this.value = (item.textContent || '').trim();
+        this.value = (item.textContent || /* istanbul ignore next */ '').trim();
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
@@ -233,6 +237,7 @@ export class Dropdown extends Focusable {
         }
         if (changedProperties.has('open') && this.open) {
             requestAnimationFrame(() => {
+                /* istanbul ignore if */
                 if (this.optionsMenu === null) {
                     return;
                 }

@@ -9,16 +9,21 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './icon.js';
-import { Icon } from './icon.js';
 
-/* istanbul ignore else */
-if (!customElements.get('sp-icon')) {
-    customElements.define('sp-icon', Icon);
-}
+import '../';
+import { Switch } from '../';
+import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-icon': Icon;
-    }
-}
+describe('Switch', () => {
+    it('loads', async () => {
+        const el = await fixture<Switch>(
+            html`
+                <sp-switch></sp-switch>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).shadowDom.to.equalSnapshot();
+    });
+});

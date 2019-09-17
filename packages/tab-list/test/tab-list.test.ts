@@ -26,39 +26,20 @@ const keyboardEvent = (code: string): KeyboardEvent =>
 const enterEvent = keyboardEvent('Enter');
 const spaceEvent = keyboardEvent(' ');
 
+const createTabList = async (): Promise<TabList> =>
+    await fixture<TabList>(
+        html`
+            <sp-tab-list selected="first">
+                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
+                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
+                <sp-tab label="Tab 3" value="third" tabindex="3"></sp-tab>
+            </sp-tab-list>
+        `
+    );
+
 describe('TabList', () => {
-    let testDiv!: HTMLDivElement;
-
-    beforeEach(async () => {
-        testDiv = await fixture<HTMLDivElement>(
-            html`
-                <div id="test-tab-list">
-                    <sp-tab-list selected="first">
-                        <sp-tab
-                            label="Tab 1"
-                            value="first"
-                            tabindex="1"
-                        ></sp-tab>
-                        <sp-tab
-                            label="Tab 2"
-                            value="second"
-                            tabindex="2"
-                        ></sp-tab>
-                        <sp-tab
-                            label="Tab 3"
-                            value="third"
-                            tabindex="3"
-                        ></sp-tab>
-                    </sp-tab-list>
-                </div>
-            `
-        );
-    });
-
-    it('loads', () => {
-        const tabList = testDiv.querySelector('sp-tab-list');
-        if (!(tabList instanceof TabList))
-            throw new Error('tablist not of type TabList');
+    it('loads', async () => {
+        const tabList = await createTabList();
 
         const tabs = tabList.querySelectorAll('sp-tab');
 
@@ -67,9 +48,7 @@ describe('TabList', () => {
     });
 
     it('reflects selected tab with selected property', async () => {
-        const tabList = testDiv.querySelector('sp-tab-list');
-        if (!(tabList instanceof TabList))
-            throw new Error('tablist not of type TabList');
+        const tabList = await createTabList();
 
         const firstTab = tabList.querySelector('sp-tab[value=first]');
         const secondTab = tabList.querySelector('sp-tab[value=second]');
@@ -104,10 +83,8 @@ describe('TabList', () => {
         expect(tabList.selected).to.equal(thirdTab.value);
     });
 
-    it('forces only one tab to be selected', () => {
-        const tabList = testDiv.querySelector('sp-tab-list');
-        if (!(tabList instanceof TabList))
-            throw new Error('tablist not of type TabList');
+    it('forces only one tab to be selected', async () => {
+        const tabList = await createTabList();
 
         const selectedTabs = tabList.querySelectorAll('sp-tab[selected]');
 
@@ -115,10 +92,8 @@ describe('TabList', () => {
         expect(selectedTabs.length).to.equal(1);
     });
 
-    it('de-selects all but first selected tab if multiple selected', () => {
-        const tabList = testDiv.querySelector('sp-tab-list');
-        if (!(tabList instanceof TabList))
-            throw new Error('tablist not of type TabList');
+    it('de-selects all but first selected tab if multiple selected', async () => {
+        const tabList = await createTabList();
 
         const tab1 = tabList.querySelector('sp-tab[value=first]') as Tab;
         const tab2 = tabList.querySelector('sp-tab[value=second]') as Tab;
@@ -131,9 +106,7 @@ describe('TabList', () => {
     });
 
     it('ensures setting selection updates selected tab', async () => {
-        const tabList = testDiv.querySelector('sp-tab-list');
-        if (!(tabList instanceof TabList))
-            throw new Error('tablist not of type TabList');
+        const tabList = await createTabList();
 
         const tab1 = tabList.querySelector('sp-tab[value=first]') as Tab;
         const tab2 = tabList.querySelector('sp-tab[value=second]') as Tab;
@@ -165,9 +138,7 @@ describe('TabList', () => {
     });
 
     it('ensures setting selected and clicking on tab both work together', async () => {
-        const tabList = testDiv.querySelector('sp-tab-list');
-        if (!(tabList instanceof TabList))
-            throw new Error('tablist not of type TabList');
+        const tabList = await createTabList();
 
         const tab1 = tabList.querySelector('sp-tab[value=first]') as Tab;
         const tab2 = tabList.querySelector('sp-tab[value=second]') as Tab;

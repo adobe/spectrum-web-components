@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 export * from './theme-dark.js';
 export * from './scale-medium.js';
+export * from './theme.js';
 
 import { ThemeDark } from './theme-dark.js';
 import { ThemeLight } from './theme-light.js';

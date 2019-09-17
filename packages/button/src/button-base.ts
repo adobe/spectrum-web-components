@@ -33,10 +33,11 @@ export class ButtonBase extends Focusable {
     }
 
     public get focusElement(): HTMLElement {
-        if (this.shadowRoot) {
-            return this.shadowRoot.querySelector('#button') as HTMLElement;
+        /* istanbul ignore if */
+        if (!this.shadowRoot) {
+            return this;
         }
-        return this;
+        return this.shadowRoot.querySelector('#button') as HTMLElement;
     }
 
     protected get buttonContent(): TemplateResult[] {
