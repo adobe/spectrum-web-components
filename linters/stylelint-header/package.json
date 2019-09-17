@@ -1,6 +1,6 @@
 {
     "name": "stylelint-header",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "main": "index.js",
     "devDependencies": {
         "stylelint": "^9.9.0"
