@@ -1,5 +1,6 @@
 {
     "name": "@crisp/spectrum-web-components",
+    "private": true,
     "publishConfig": {
         "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-crisp-release-local/"
     },
