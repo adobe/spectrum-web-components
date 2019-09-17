@@ -39,6 +39,7 @@ export class Dropzone extends LitElement {
         return this._dropEffect;
     }
     public set dropEffect(value: DropEffects) {
+        /* istanbul ignore else */
         if (['copy', 'move', 'link', 'none'].includes(value)) {
             this._dropEffect = value;
         }
@@ -101,9 +102,7 @@ export class Dropzone extends LitElement {
         this.clearDebouncedDragLeave();
 
         this.debouncedDragLeave = window.setTimeout(() => {
-            if (this.isDragged) {
-                this.isDragged = false;
-            }
+            this.isDragged = false;
 
             const dragLeave = new CustomEvent('sp-dropzone:dragleave', {
                 bubbles: true,
@@ -119,9 +118,7 @@ export class Dropzone extends LitElement {
 
         this.clearDebouncedDragLeave();
 
-        if (this.isDragged) {
-            this.isDragged = false;
-        }
+        this.isDragged = false;
         const dropEvent = new CustomEvent('sp-dropzone:drop', {
             bubbles: true,
             composed: true,

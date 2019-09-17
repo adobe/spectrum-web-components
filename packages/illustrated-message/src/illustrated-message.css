@@ -36,3 +36,8 @@ governing permissions and limitations under the License.
     margin-top: 0;
     margin-bottom: 0;
 }
+
+/* Ensure that SVGs with viewBox attributes size correctly. */
+::slotted(svg[viewBox]) {
+    width: 100%;
+}
