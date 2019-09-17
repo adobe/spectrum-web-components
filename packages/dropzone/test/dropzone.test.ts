@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 import '../';
 import { Dropzone } from '../';
 import { illustration } from './test-svg';
-import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
+import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 
 describe('Dropzone', () => {
     it('loads', async () => {
@@ -87,16 +87,22 @@ describe('Dropzone', () => {
 
         expect(el.isDragged).to.be.false;
 
-        el.dispatchEvent(
-            new DragEvent('dragover', {
-                dataTransfer: new DataTransfer(),
-            })
-        );
+        const dataTransfer = new DataTransfer();
+        const dragOverEvent = new DragEvent('dragover', {
+            dataTransfer,
+        });
+
+        el.dispatchEvent(dragOverEvent);
 
         expect(el.isDragged).to.be.true;
+        // We should be able to make the following test here:
+        // expect(dataTransfer.dropEffect).to.equal(el.dropEffect);
+        // However, Chrome doesn't like it in the context of a test...
     });
     it('allows `dragover` events to be canceled', async () => {
-        const canceledDrag = (e: DragEvent): void => e.preventDefault();
+        const canceledDrag = (e: DragEvent): void => {
+            e.preventDefault();
+        };
         const el = await fixture<Dropzone>(
             html`
                 <sp-dropzone
@@ -110,18 +116,21 @@ describe('Dropzone', () => {
 
         expect(el.isDragged).to.be.false;
 
-        el.dispatchEvent(
-            new DragEvent('dragover', {
-                dataTransfer: new DataTransfer(),
-            })
-        );
+        const dataTransfer = new DataTransfer();
+        const dragOverEvent = new DragEvent('dragover', {
+            dataTransfer,
+        });
+
+        el.dispatchEvent(dragOverEvent);
 
         expect(el.isDragged).to.be.false;
+        expect(dataTransfer.dropEffect).to.not.equal(el.dropEffect);
+        expect(dataTransfer.dropEffect).to.equal('none');
     });
-    it('manages `dragleave` events', async () => {
-        let dragLeft = false;
+    it('manages `dragleave` events via debounce', async () => {
+        let dragLeftCount = 0;
         const onDragLeave = (): void => {
-            dragLeft = true;
+            dragLeftCount += 1;
         };
         const el = await fixture<Dropzone>(
             html`
@@ -134,14 +143,14 @@ describe('Dropzone', () => {
 
         await elementUpdated(el);
 
-        expect(dragLeft).to.be.false;
+        expect(dragLeftCount).to.equal(0);
 
         el.dispatchEvent(new DragEvent('dragleave'));
         el.dispatchEvent(new DragEvent('dragleave'));
 
-        await waitForPredicate(() => (dragLeft = true));
+        await waitForPredicate(() => dragLeftCount === 1);
 
-        expect(dragLeft).to.be.true;
+        expect(dragLeftCount).to.equal(1);
     });
 
     it('manages `dragleave` events', async () => {
