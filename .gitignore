@@ -10,6 +10,7 @@ npm-debug.log
 .npmrc
 .nvmrc
 .tsbuildinfo
+.rush
 
 coverage
 documentation/api-docs/component_data.json
@@ -20,7 +21,6 @@ test/**/*.js.map
 test/**/*.d.ts 
 !test/global.d.ts
 
-package-deps.json
 spectrum-web-components.build.log
 spectrum-web-components.build.error.log
 TESTS.xml
