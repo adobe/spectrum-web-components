@@ -3,7 +3,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -21,6 +21,6 @@
         "lit-html": "^1.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/checkbox": "^0.1.0"
+        "@spectrum-web-components/checkbox": "^0.1.1"
     }
 }
