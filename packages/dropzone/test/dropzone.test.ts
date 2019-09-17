@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 import '../';
 import { Dropzone } from '../';
 import { illustration } from './test-svg';
-import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
+import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 
 describe('Dropzone', () => {
     it('loads', async () => {
