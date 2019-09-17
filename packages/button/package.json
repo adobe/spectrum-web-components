@@ -3,7 +3,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "version": "0.0.1",
+    "version": "0.0.0",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -24,7 +24,7 @@
         "@spectrum-web-components/shared": "^0.0.2"
     },
     "devDependencies": {
-        "@spectrum-web-components/icon": "^0.0.2",
+        "@spectrum-web-components/icon": "^0.0.0",
         "@spectrum-web-components/icons": "^0.0.2"
     }
 }
