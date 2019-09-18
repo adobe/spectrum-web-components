@@ -26,9 +26,7 @@ async function processComponent(componentPath) {
     const configPath = path.join(componentPath, 'spectrum-config.js');
     const spectrumConfig = require(configPath);
     const inputCssPath = require.resolve(
-        `@adobe/spectrum-css/dist/components/${
-            spectrumConfig.spectrum
-        }/index-vars.css`
+        `@adobe/spectrum-css/dist/components/${spectrumConfig.spectrum}/index-vars.css`
     );
     const inputCss = await fs.readFile(inputCssPath);
     console.log(chalk.bold.green(`- ${spectrumConfig.spectrum}`));
