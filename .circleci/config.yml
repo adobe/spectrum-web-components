@@ -80,6 +80,6 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - master # change this to `master` once we are ready to publish
+                              - master
                   requires:
                       - build
