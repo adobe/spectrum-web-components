@@ -16,7 +16,7 @@ import { SidenavSelectDetail } from '../../../packages/sidenav';
 import sideNavStyles from './side-nav.css';
 import './spectrum-logo';
 
-class SideNav extends LitElement {
+class SiteNav extends LitElement {
     public static get styles(): CSSResultArray {
         return [sideNavStyles];
     }
@@ -40,6 +40,7 @@ class SideNav extends LitElement {
     }
 
     private handleGuideSelect(event: CustomEvent<SidenavSelectDetail>): void {
+        debugger;
         this.handleSelect(event, 'guides');
     }
 
@@ -54,7 +55,7 @@ class SideNav extends LitElement {
             <sp-sidenav>
                 <sp-sidenav-heading
                     label="Components"
-                    @sp-sidenav:select=${this.handleComponentSelect}
+                    @sidenav-select=${this.handleComponentSelect}
                 >
                     ${this.components.map(
                         (name) =>
@@ -68,7 +69,7 @@ class SideNav extends LitElement {
                 </sp-sidenav-heading>
                 <sp-sidenav-heading
                     label="Contributing"
-                    @sp-sidenav:select=${this.handleGuideSelect}
+                    @sidenav-select=${this.handleGuideSelect}
                 >
                     <sp-sidenav-item
                         value="adding-component"
@@ -83,4 +84,4 @@ class SideNav extends LitElement {
         `;
     }
 }
-customElements.define('docs-side-nav', SideNav);
+customElements.define('docs-side-nav', SiteNav);
