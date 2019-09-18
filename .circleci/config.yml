@@ -13,17 +13,14 @@ commands:
             - checkout
             - restore_cache:
                   keys:
-                      - v1-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
-            - run:
-                  name: install npm 6.4.1
-                  command: sudo npm -g install npm@6.4.1
+                      - v1-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
                   name: Installing Dependencies
-                  command: npm install
+                  command: yarn install
             - save_cache:
                   paths:
                       - node_modules
-                  key: v1-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
+                  key: v1-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
                   name: prepare test git user
                   command: git config --global user.email "circleci@example.com" && git config --global user.name "CircleCi Build"
@@ -36,9 +33,9 @@ jobs:
             - run: mkdir junit
             - run:
                   name: Lint
-                  command: npm run lint
+                  command: yarn lint
             - run: npx lerna bootstrap
-            - run: npm run build
+            - run: yarn build
 
             # test & get code coverage
             - run:
@@ -60,14 +57,14 @@ jobs:
 
             - run:
                   name: Generate Docs
-                  command: npm run docs:build
+                  command: yarn docs:build
 
     publish-docs:
         executor: node8
 
         steps:
             - setup
-            - run: npm run docs:build
+            - run: yarn docs:build
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
             - run: git worktree add -f documentation/dist gh-pages && git commit -m "[ci skip] updating documentation" && git push
 
