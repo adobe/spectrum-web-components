@@ -12,6 +12,12 @@
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
     "homepage": "https://adobe.github.io/spectrum-web-components/components/tab",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
     "version": "0.1.1",
     "description": "",
     "main": "lib/index.js",
