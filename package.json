@@ -27,8 +27,8 @@
         "npm": ">=6.4.0"
     },
     "scripts": {
-        "get-ready": "npm run build:clear-cache && npm run spectrum-vars && npm run process-icons && npm run process-spectrum",
-        "prepublishOnly": "npm run get-ready && npm run build",
+        "get-ready": "yarn build:clear-cache && yarn spectrum-vars && yarn process-icons && yarn process-spectrum",
+        "prepublishOnly": "yarn get-ready && yarn build",
         "spectrum-vars": "node ./scripts/spectrum-vars.js",
         "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'packages/**/*.css'",
         "process-icons": "node ./scripts/process-icons.js; npx pretty-quick --pattern 'packages/**/*.svg.ts'",
@@ -36,24 +36,24 @@
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "build:clear-cache": "rm -rf packages/*/lib && rm -rf packages/*/tsconfig.tsbuildinfo",
         "watch": "gulp watch",
-        "storybook": "npm run watch & tsc --build packages/**/tsconfig.json -w & start-storybook -s styles,stories/assets -p 6006",
+        "storybook": "yarn watch & tsc --build packages/**/tsconfig.json -w & start-storybook -s styles,stories/assets -p 6006",
         "docs:build": "gulp docsCompile",
         "docs:start": "gulp docsWatchCompile",
-        "lint": "npm run lint:js && npm run lint:ts && npm run lint:css",
+        "lint": "yarn lint:js && yarn lint:ts && yarn lint:css",
         "lint:js": "eslint -f pretty 'tasks/**/*.js' && eslint -f pretty 'scripts/**/*.js'",
         "lint:ts": "eslint -f pretty 'packages/**/*.ts'",
         "lint:css": "stylelint 'packages/**/*.css' 'styles/**/*.css'",
-        "test": "npm run test:build && karma start --coverage",
-        "test:build": "npm run build && tsc --build test/tsconfig-test.json",
-        "test:watch": "npm run watch & npm run test:build -- -w & karma start --auto-watch=true --single-run=false",
-        "test:update-snapshots": "npm run test:build && karma start --update-snapshots",
-        "test:prune-snapshots": "npm run test:build && karma start --prune-snapshots",
-        "test:compatibility": "npm run test:build && karma start --compatibility all --auto-watch=true --single-run=false",
+        "test": "yarn test:build && karma start --coverage",
+        "test:build": "yarn build && tsc --build test/tsconfig-test.json",
+        "test:watch": "yarn watch & yarn test:build -- -w & karma start --auto-watch=true --single-run=false",
+        "test:update-snapshots": "yarn test:build && karma start --update-snapshots",
+        "test:prune-snapshots": "yarn test:build && karma start --prune-snapshots",
+        "test:compatibility": "yarn test:build && karma start --compatibility all --auto-watch=true --single-run=false",
         "test:bench": "node test/benchmark/cli.js"
     },
     "husky": {
         "hooks": {
-            "pre-commit": "pretty-quick --staged && npm run lint"
+            "pre-commit": "pretty-quick --staged && yarn lint"
         }
     },
     "peerDependencies": {
