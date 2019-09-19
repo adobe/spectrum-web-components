@@ -10,7 +10,6 @@ lerna-debug.log
 .chrome
 .firefox
 .npmrc
-.nvmrc
 .tsbuildinfo
 
 coverage
