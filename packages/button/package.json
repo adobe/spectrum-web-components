@@ -31,9 +31,5 @@
     },
     "dependencies": {
         "@spectrum-web-components/shared": "^0.1.1"
-    },
-    "devDependencies": {
-        "@spectrum-web-components/icon": "^0.1.1",
-        "@spectrum-web-components/icons": "^0.1.1"
     }
 }

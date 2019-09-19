@@ -31,8 +31,5 @@
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
-    },
-    "devDependencies": {
-        "@spectrum-web-components/icon": "^0.1.1"
     }
 }
