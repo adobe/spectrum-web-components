@@ -1,6 +1,9 @@
 {
     "name": "@adobe/spectrum-web-components",
     "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
     "publishConfig": {
         "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-crisp-release-local/"
     },
@@ -46,8 +49,7 @@
         "test:update-snapshots": "yarn test:build && karma start --update-snapshots",
         "test:prune-snapshots": "yarn test:build && karma start --prune-snapshots",
         "test:compatibility": "yarn test:build && karma start --compatibility all --auto-watch=true --single-run=false",
-        "test:bench": "node test/benchmark/cli.js",
-        "postinstall": "npx lerna bootstrap"
+        "test:bench": "node test/benchmark/cli.js"
     },
     "husky": {
         "hooks": {
