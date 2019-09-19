@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -32,7 +32,7 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/iconset": "^0.1.1"
+        "@spectrum-web-components/iconset": "^0.1.2"
     },
     "peerDependencies": {
         "lit-element": "^2.1.0",
