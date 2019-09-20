@@ -12,7 +12,13 @@
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
     "homepage": "https://adobe.github.io/spectrum-web-components/components/menu-item",
-    "version": "0.1.1",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.1.2",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -30,9 +36,9 @@
         "lit-html": "^1.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/button": "^0.1.1",
-        "@spectrum-web-components/icon": "^0.1.1",
-        "@spectrum-web-components/icons": "^0.1.1",
-        "@spectrum-web-components/shared": "^0.1.1"
+        "@spectrum-web-components/button": "^0.1.2",
+        "@spectrum-web-components/icon": "^0.1.2",
+        "@spectrum-web-components/icons": "^0.1.2",
+        "@spectrum-web-components/shared": "^0.1.2"
     }
 }

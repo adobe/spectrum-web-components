@@ -12,7 +12,13 @@
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
     "homepage": "https://adobe.github.io/spectrum-web-components/components/icons",
-    "version": "0.1.1",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.1.2",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -26,13 +32,10 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/iconset": "^0.1.1"
+        "@spectrum-web-components/iconset": "^0.1.2"
     },
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
-    },
-    "devDependencies": {
-        "@spectrum-web-components/icon": "^0.1.1"
     }
 }

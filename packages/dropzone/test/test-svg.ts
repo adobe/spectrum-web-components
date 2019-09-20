@@ -12,7 +12,12 @@ governing permissions and limitations under the License.
 import { html } from 'lit-html';
 
 export const illustration = html`
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 200 100"
+        width="200"
+        height="100"
+    >
         <defs>
             <style>
                 .cls-1,
