@@ -46,9 +46,9 @@ export class Focusable extends LitElement {
     @property({ type: Number, reflect: true })
     public tabIndex = 0;
 
-    private isShiftTabbing: boolean = false;
+    private isShiftTabbing = false;
     private newTabindex?: number = 0;
-    private oldTabindex: number = 0;
+    private oldTabindex = 0;
 
     public get focusElement(): HTMLElement {
         throw new Error('Must implement focusElement getter!');
