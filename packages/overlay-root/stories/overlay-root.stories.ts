@@ -38,7 +38,7 @@ class RecursivePopover extends LitElement {
     private placement: Placement;
 
     @property({ type: Number })
-    private depth: number = 0;
+    private depth = 0;
 
     public static get styles(): CSSResultArray {
         return [

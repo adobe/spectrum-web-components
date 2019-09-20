@@ -31,20 +31,20 @@ export class Focusable extends LitElement {
      * Disable this control. It will not receive focus or events
      */
     @property({ type: Boolean, reflect: true })
-    public disabled: boolean = false;
+    public disabled = false;
 
     /**
      * When this control is rendered, focus it automatically
      */
     @property({ type: Boolean })
-    public autofocus: boolean = false;
+    public autofocus = false;
 
     /**
      * The tab index to apply to this control. See general documentation about
      * the tabindex HTML property
      */
     @property({ type: Number, reflect: true })
-    public tabIndex: number = 0;
+    public tabIndex = 0;
 
     private isShiftTabbing: boolean = false;
     private newTabindex?: number = 0;

@@ -2,7 +2,16 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "composite": true,
-        "outDir": "../"
+        "outDir": "../",
+        "types": [
+            "mocha",
+            "chai",
+            "sinon",
+            "karma-chai",
+            "webpack-env",
+            "storybook__addon-actions",
+            "node"
+        ]
     },
     "include": ["../packages/**/test/*.ts", "./testing-helpers.ts"],
     "exclude": ["../packages/**/node_modules/**/*"]

@@ -17,7 +17,7 @@ import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Icon', () => {
     before(async () => {
-        let icons = document.createElement('sp-icons-medium');
+        const icons = document.createElement('sp-icons-medium');
         document.body.append(icons);
 
         await elementUpdated(icons);
