@@ -57,7 +57,7 @@ export class Slider extends Focusable {
     public label = '';
 
     @property({ reflect: true, attribute: 'aria-label' })
-    public ariaLabel? = null;
+    public ariaLabel?: string;
 
     @property({ type: Number })
     public max = 20;
