@@ -49,7 +49,7 @@ export class Radio extends Focusable {
     public value = '';
 
     @property({ type: Boolean, reflect: true })
-    public checked: boolean = false;
+    public checked = false;
 
     @query('#input')
     private inputElement!: HTMLInputElement;

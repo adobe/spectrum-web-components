@@ -1,0 +1,41 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "example-project/package.json",
+        "linters/stylelint-header/package.json",
+        "package.json",
+        "packages/action-menu/package.json",
+        "packages/banner/package.json",
+        "packages/bundle/package.json",
+        "packages/button/package.json",
+        "packages/card/package.json",
+        "packages/checkbox/package.json",
+        "packages/dropdown/package.json",
+        "packages/dropzone/package.json",
+        "packages/icon/package.json",
+        "packages/icons/package.json",
+        "packages/iconset/package.json",
+        "packages/illustrated-message/package.json",
+        "packages/link/package.json",
+        "packages/menu-group/package.json",
+        "packages/menu-item/package.json",
+        "packages/menu/package.json",
+        "packages/overlay-root/package.json",
+        "packages/overlay-trigger/package.json",
+        "packages/popover/package.json",
+        "packages/radio-group/package.json",
+        "packages/radio/package.json",
+        "packages/shared/package.json",
+        "packages/sidenav/package.json",
+        "packages/slider/package.json",
+        "packages/styles/package.json",
+        "packages/switch/package.json",
+        "packages/tab-list/package.json",
+        "packages/tab/package.json",
+        "packages/textfield/package.json",
+        "packages/themes/package.json"
+      ]
+    }
+  }
+}

@@ -33,10 +33,10 @@ export class ActionMenu extends Dropdown {
     public label = '';
 
     @property({ type: Boolean, reflect: true })
-    public selected: boolean = false;
+    public selected = false;
 
-    protected listRole: string = 'menu';
-    protected itemRole: string = 'menuitem';
+    protected listRole = 'menu';
+    protected itemRole = 'menuitem';
 
     protected get buttonContent(): TemplateResult[] {
         return [

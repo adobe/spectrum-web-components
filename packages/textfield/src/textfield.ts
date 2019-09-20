@@ -149,7 +149,7 @@ export class Textfield extends Focusable {
         if (this.value && (this.pattern || this.required)) {
             let validity = this.inputElement.checkValidity();
             if ((this.disabled || this.multiline) && this.pattern) {
-                let regex = new RegExp(this.pattern);
+                const regex = new RegExp(this.pattern);
                 validity = regex.test(this.value);
             }
             if (validity) {
