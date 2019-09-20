@@ -1,53 +1,52 @@
 ## Overview
 
-An `<sp-menu />` is used for creating a menu list. The various elements inside a menu are given as `<sp-menu-group/>`, `<sp-menu-item />`, or `<sp-menu-divider />`. Often a `<sp-menu />` element will appear in a `<sp-popover />` element so that it displays as a togglig menu.
+An `<sp-menu />` is used for creating a menu list. The various elements inside a menu are given as `<sp-menu-group/>`, `<sp-menu-item />`, or `<sp-menu-divider />`.
 
-## Example
+## Variants
+
+### Menu Items
+
+Menus are a collection of `<sp-menu-items />` that can be modified to be `disabled` or `selected`.
 
 <!-- prettier-ignore -->
 ```html
 <sp-menu>
     <sp-menu-item>
-        Deselect
-    </sp-menu-item>
-    <sp-menu-item>
-        Select Inverse
-    </sp-menu-item>
-    <sp-menu-item>
-        Feather...
-    </sp-menu-item>
-    <sp-menu-item>
-        Select and Mask...
-    </sp-menu-item>
-    <sp-menu-item>
-        Save Selection
+        Active Menu Item
     </sp-menu-item>
     <sp-menu-item disabled>
-        Make Work Path
+        Disabled Menu Item
+    </sp-menu-item>
+    <sp-menu-item selected>
+        Selected Menu Item
     </sp-menu-item>
 </sp-menu>
 ```
 
+### Organization
+
+The content of a menu can be organized by either adding `<sp-menu-divider />` elements to a flat list.
+
+<!-- prettier-ignore -->
 ```html
 <sp-popover open style="position: relative">
     <sp-menu>
         <sp-menu-item>
-            Deselect
+            Menu Item 1a
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Menu Item 2a
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>
+            Menu Item 3a
         </sp-menu-item>
         <sp-menu-item>
-            Feather...
+            Menu Item 1b
         </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Select and Mask...
-        </sp-menu-item>
-        <sp-menu-item>
-            Save Selection
-        </sp-menu-item>
-        <sp-menu-item disabled>
-            Make Work Path
+            Menu Item 2b
         </sp-menu-item>
     </sp-menu>
 </sp-popover>

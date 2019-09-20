@@ -54,7 +54,7 @@ class SideNav extends LitElement {
             <sp-sidenav>
                 <sp-sidenav-heading
                     label="Components"
-                    @sp-sidenav:select=${this.handleComponentSelect}
+                    @sidenav-select=${this.handleComponentSelect}
                 >
                     ${this.components.map(
                         (name) =>
@@ -68,7 +68,7 @@ class SideNav extends LitElement {
                 </sp-sidenav-heading>
                 <sp-sidenav-heading
                     label="Contributing"
-                    @sp-sidenav:select=${this.handleGuideSelect}
+                    @sidenav-select=${this.handleGuideSelect}
                 >
                     <sp-sidenav-item
                         value="adding-component"

@@ -1,5 +1,6 @@
 {
-    "name": "@crisp/spectrum-web-components",
+    "name": "@adobe/spectrum-web-components",
+    "private": true,
     "publishConfig": {
         "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-crisp-release-local/"
     },
@@ -23,9 +24,11 @@
         "npm": ">=6.4.0"
     },
     "scripts": {
+        "get-ready": "npm run build:clear-cache && npm run spectrum-vars && npm run process-icons && npm run process-spectrum",
+        "prepublishOnly": "npm run get-ready && npm run build",
         "spectrum-vars": "node ./scripts/spectrum-vars.js",
         "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'packages/**/*.css'",
-        "process-icons": "node ./scripts/process-icons.js",
+        "process-icons": "node ./scripts/process-icons.js; npx pretty-quick --pattern 'packages/**/*.svg.ts'",
         "build": "gulp css && tsc --build packages/**/tsconfig.json",
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "build:clear-cache": "rm -rf packages/*/lib && rm -rf packages/*/tsconfig.tsbuildinfo",

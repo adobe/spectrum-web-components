@@ -66,19 +66,6 @@ When the radio button is no longer interactable. The button cannot be checked.
 <sp-radio disabled>Disabled Radio Button</sp-radio>
 ```
 
-### Radio Group Column
-
-By default, radio groups are inline and appear vertically. By adding the `column` property to **sp-radio-group**
-the radio buttons will be listed vertically on their own line.
-
-```html
-<sp-radio-group column name="column-example">
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-</sp-radio-group>
-```
-
 ### Handling Events
 
 Event handlers for clicks and other user actions can be registered on an `sp-radio` just as a normal `<input type="radio">` element.

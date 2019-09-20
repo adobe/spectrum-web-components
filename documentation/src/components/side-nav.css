@@ -19,14 +19,14 @@ governing permissions and limitations under the License.
 }
 
 #nav-header {
-    padding-top: calc(1.5em + 30px);
+    padding-top: calc(1.5rem + 30px);
     padding-bottom: 20px;
     text-align: center;
     font-size: 12px;
     position: sticky;
     left: 0;
-    top: -1.5em;
-    margin-top: -1.5em;
+    top: -1.5rem;
+    margin-top: -1.5rem;
     background-color: var(--spectrum-global-color-gray-100);
     z-index: 2;
 }
