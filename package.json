@@ -160,7 +160,7 @@
         "tachometer": "^0.4.9",
         "ts-loader": "^6.0.0",
         "typedoc": "^0.15.0",
-        "typescript": "3.4.1",
+        "typescript": "^3.4.1",
         "walker": "^1.0.7",
         "web-component-analyzer": "^0.1.9",
         "webpack": "^4.33.0",
