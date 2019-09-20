@@ -36,7 +36,7 @@ attributes can be combined to apply sub-variants, e.g. `quiet`.
 
 ## Content
 
-**sp-buttons** can have a label, and icon, or both. An icon is provided by
+**sp-buttons** can have a label, or a label with an icon. An icon is provided by
 placing an icon component to the `icon` slot. The icon may be an `sp-icon` or an
 SVG.
 
@@ -46,9 +46,6 @@ SVG.
 <sp-button variant="primary">
     <sp-icon slot="icon" size="s" name="ui:HelpMedium"></sp-icon>
     Icon + Label
-</sp-button>
-<sp-button variant="primary">
-    <sp-icon slot="icon" size="s" name="ui:HelpMedium"></sp-icon>
 </sp-button>
 <sp-button variant="primary">
     <svg
