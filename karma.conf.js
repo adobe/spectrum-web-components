@@ -53,7 +53,7 @@ module.exports = (config) => {
                         statements: 93,
                         branches: 72,
                         functions: 96,
-                        lines: 94,
+                        lines: 95,
                     },
                 },
             },
