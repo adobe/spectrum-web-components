@@ -14,5 +14,4 @@ governing permissions and limitations under the License.
 import './styles.css';
 
 // import the components we'll use in this page
-import { defineCustomElements, Button } from '../../lib';
-defineCustomElements(Button);
+import '@spectrum-web-components/button';
