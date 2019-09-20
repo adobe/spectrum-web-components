@@ -106,6 +106,33 @@ describe('Button', () => {
             `<a href="test_url" target="_blank" id="button" tabindex="0"><div id="label"><slot></slot></div></a>`
         );
     });
+    it('targets `el.focusElement` on `focusin`', async () => {
+        let focusedCount = 0;
+        const el = await fixture<Button>(
+            html`
+                <sp-button href="test_url" target="_blank">
+                    With Target
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const focusElement = el.focusElement as HTMLButtonElement;
+        focusElement.addEventListener('focus', () => (focusedCount += 1));
+        expect(focusedCount).to.equal(0);
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(focusedCount).to.equal(1);
+
+        focusElement.blur();
+        el.dispatchEvent(new Event('focusin'));
+        await elementUpdated(el);
+
+        expect(focusedCount).to.equal(2);
+    });
     it('accepts shit+tab interactions', async () => {
         let focusedCount = 0;
         const el = await fixture<Button>(
@@ -132,5 +159,56 @@ describe('Button', () => {
         await elementUpdated(el);
 
         expect(focusedCount).to.equal(1);
+    });
+    it('manages `aria-disabled`', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button href="test_url" target="_blank">
+                    With Target
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-disabled')).to.be.false;
+
+        el.disabled = true;
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-disabled')).to.be.true;
+
+        el.disabled = false;
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-disabled')).to.be.false;
+    });
+    it('manages tabIndex while disabled', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button href="test_url" target="_blank">
+                    With Target
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(0);
+
+        el.disabled = true;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+
+        el.tabIndex = 2;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+
+        el.disabled = false;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(2);
     });
 });

@@ -47,8 +47,8 @@ export class Focusable extends LitElement {
     public tabIndex: number = 0;
 
     private isShiftTabbing: boolean = false;
-    private newTabindex?: number;
-    private oldTabindex?: number;
+    private newTabindex?: number = 0;
+    private oldTabindex: number = 0;
 
     public get focusElement(): HTMLElement {
         throw new Error('Must implement focusElement getter!');
@@ -67,10 +67,6 @@ export class Focusable extends LitElement {
     }
 
     protected firstUpdated(): void {
-        if (!this.hasAttribute('tabindex')) {
-            this.tabIndex = 0;
-        }
-
         if (this.autofocus) {
             this.focus();
         }
@@ -149,9 +145,7 @@ export class Focusable extends LitElement {
             this.tabIndex = -1;
             this.setAttribute('aria-disabled', 'true');
         } else if (oldDisabled) {
-            if (this.oldTabindex !== undefined) {
-                this.tabIndex = this.oldTabindex;
-            }
+            this.tabIndex = this.oldTabindex;
             this.removeAttribute('aria-disabled');
         }
     }
