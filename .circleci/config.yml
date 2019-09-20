@@ -34,7 +34,7 @@ jobs:
             - run:
                   name: Lint
                   command: yarn lint
-            - run: npx lerna bootstrap
+            - run: yarn analyze
             - run: yarn build
 
             # test & get code coverage
