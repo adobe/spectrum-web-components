@@ -15,8 +15,7 @@ It will not support older browsers and will only target modern ever-green browse
 ```bash
 git clone https://github.com/adobe/spectrum-web-components.git
 cd spectrum-web-components
-npm install
-npx lerna bootstrap
+yarn
 ```
 
 # Documentation
@@ -24,7 +23,7 @@ npx lerna bootstrap
 The Spectrum Web Components documentation site is available via the following command:
 
 ```bash
-npm run docs:start
+yarn docs:start
 ```
 
 By default the resulting site will be available at [http://localhost:8080](http://localhost:8080).
@@ -34,7 +33,7 @@ By default the resulting site will be available at [http://localhost:8080](http:
 You can run [Storybook](https://storybook.js.org) through the command:
 
 ```bash
-npm run storybook
+yarn storybook
 ```
 
 By default the resulting site will be available at [http://localhost:6006](http://localhost:6006).
@@ -48,7 +47,7 @@ The project will be linted on a pre-commit hook, but you can also run the lint s
 Tests are implemented using the Karma test runner with Chai, Mocha and Sinon frameworks. These tests can be executed with:
 
 ```
-npm run test
+yarn test
 ```
 
 During development you may wish to use `npm run test:watch` to automatically build and re-run the test suites.
@@ -58,8 +57,8 @@ During development you may wish to use `npm run test:watch` to automatically bui
 You can acquire current runtimes for the individual elements with:
 
 ```
-npm run build:tests
-npm run test:bench
+yarn build:tests
+yarn test:bench
 ```
 
 This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer) tests and report the current runtime cost of each individual element. When not making changes to the benchmarks thy have been built on your local machine, you can stip `npm run build:tests` for later passes.
