@@ -1,6 +1,7 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
+        "composite": true,
         "outDir": "../",
         "types": [
             "mocha",
@@ -12,6 +13,6 @@
             "node"
         ]
     },
-    "include": ["*.ts"],
-    "exclude": ["benchmark/*"]
+    "include": ["../packages/**/test/*.ts", "./testing-helpers.ts"],
+    "exclude": ["../packages/**/node_modules/**/*"]
 }

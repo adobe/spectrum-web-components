@@ -4,16 +4,17 @@
     "description": "An example project that uses the web components and gives an example of how to bundle them minimally with webpack.",
     "main": "index.js",
     "scripts": {
-        "build:deps": "cd .. && npm run build",
         "build": "webpack",
-        "build:prod": "npm run build:deps && webpack --env.NODE_ENV=production --optimize-minimize",
-        "serve": "npm run build:prod && http-server dist"
+        "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
+        "serve": "yarn build:prod && http-server dist"
     },
     "author": "",
-    "license": "ISC",
+    "license": "Apache-2.0",
     "dependencies": {
-        "lit-element": "^2.0.0-rc.3",
-        "lit-html": "^1.0.0-rc.2"
+        "@spectrum-web-components/button": "^0.1.2",
+        "@spectrum-web-components/styles": "^0.1.2",
+        "lit-element": "^2.0.0",
+        "lit-html": "^1.0.0"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^1.0.0",

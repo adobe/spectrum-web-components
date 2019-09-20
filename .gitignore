@@ -1,14 +1,16 @@
 lib
 src/**/*.css.ts
+packages/**/*.css.ts
 styles/**/*.css.ts
 
 node_modules
 npm-debug.log
+lerna-debug.log
+yarn-error.log
 .DS_STORE
 .chrome
 .firefox
 .npmrc
-.nvmrc
 .tsbuildinfo
 .rush
 
@@ -19,7 +21,14 @@ documentation/dist
 test/**/*.js
 test/**/*.js.map
 test/**/*.d.ts 
+packages/*/src/**/*.css.js
+packages/*/test/**/*.js
+packages/*/test/**/*.js.map
+packages/*/test/**/*.d.ts 
+packages/*/stories/**/*.d.ts 
 !test/global.d.ts
+!packages/*/test/global.d.ts
+*.tsbuildinfo
 
 spectrum-web-components.build.log
 spectrum-web-components.build.error.log

@@ -1,0 +1,38 @@
+{
+    "name": "@spectrum-web-components/card",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/card"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/card",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.1.2",
+    "description": "",
+    "main": "lib/index.js",
+    "module": "lib/index.js",
+    "files": [
+        "/lib/",
+        "/src/"
+    ],
+    "scripts": {
+        "test": "karma start --coverage"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "peerDependencies": {
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0"
+    }
+}

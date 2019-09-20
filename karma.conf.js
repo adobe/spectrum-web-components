@@ -18,7 +18,9 @@ module.exports = (config) => {
         merge(createDefaultConfig(config), {
             files: [
                 {
-                    pattern: config.grep ? config.grep : 'test/**/*.spec.js',
+                    pattern: config.grep
+                        ? config.grep
+                        : 'packages/*/test/**/*.test.js',
                     type: 'module',
                 },
             ],
@@ -37,12 +39,21 @@ module.exports = (config) => {
                 useBrowserName: false,
             },
             coverageIstanbulReporter: {
+                // TODO(#212): reapply coverage based on source files.
+                // thresholds: {
+                //     global: {
+                //         statements: 94,
+                //         branches: 82,
+                //         functions: 96,
+                //         lines: 94,
+                //     },
+                // },
                 thresholds: {
                     global: {
-                        statements: 85,
-                        branches: 66,
-                        functions: 89,
-                        lines: 85,
+                        statements: 93,
+                        branches: 72,
+                        functions: 96,
+                        lines: 94,
                     },
                 },
             },

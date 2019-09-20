@@ -63,6 +63,7 @@ const spectrumPath = path.resolve(
 
 // sources to use from spectrum-css
 const themes = [
+    'lightest',
     'light',
     'dark',
     /*'darkest', 'lightest', 'middark', 'midlight'*/
@@ -77,7 +78,7 @@ const processes = [];
 themes.forEach(async (theme) => {
     const srcPath = path.join(spectrumPath, `spectrum-${theme}-unique.css`);
     const dstPath = path.resolve(
-        path.join(__dirname, '..', 'styles', `theme-${theme}.css`)
+        path.join(__dirname, '..', 'packages', 'styles', `theme-${theme}.css`)
     );
 
     console.log(`processing theme ${srcPath}`);
@@ -87,7 +88,7 @@ themes.forEach(async (theme) => {
 scales.forEach(async (scale) => {
     const srcPath = path.join(spectrumPath, `spectrum-${scale}-unique.css`);
     const dstPath = path.resolve(
-        path.join(__dirname, '..', 'styles', `scale-${scale}.css`)
+        path.join(__dirname, '..', 'packages', 'styles', `scale-${scale}.css`)
     );
     console.log(`processing scale  ${srcPath}`);
     processes.push(processCSS(srcPath, dstPath, scale));
@@ -96,7 +97,7 @@ scales.forEach(async (scale) => {
 cores.forEach(async (core) => {
     const srcPath = path.join(spectrumPath, `spectrum-${core}.css`);
     const dstPath = path.resolve(
-        path.join(__dirname, '..', 'styles', `core-${core}.css`)
+        path.join(__dirname, '..', 'packages', 'styles', `core-${core}.css`)
     );
     console.log(`processing core ${srcPath}`);
     processes.push(processCSS(srcPath, dstPath, core));

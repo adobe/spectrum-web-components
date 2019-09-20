@@ -20,7 +20,7 @@ const fs = require('fs-extra');
 const marked = require('marked');
 
 const projectDir = path.dirname(path.dirname(__dirname));
-const glob = path.join(projectDir, 'src/*/*.ts');
+const glob = path.join(projectDir, 'packages/*/src/**/*.ts');
 const outputDir = path.join(projectDir, 'documentation/api-docs');
 const outFile = path.join(
     projectDir,

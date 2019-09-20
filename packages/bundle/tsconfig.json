@@ -1,0 +1,38 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "outDir": "./lib",
+        "rootDir": "./src"
+    },
+    "include": ["src/*.ts"],
+    "references": [
+        { "path": "../action-menu" },
+        { "path": "../banner" },
+        { "path": "../button" },
+        { "path": "../card" },
+        { "path": "../checkbox" },
+        { "path": "../dropdown" },
+        { "path": "../dropzone" },
+        { "path": "../icon" },
+        { "path": "../icons" },
+        { "path": "../iconset" },
+        { "path": "../illustrated-message" },
+        { "path": "../link" },
+        { "path": "../menu" },
+        { "path": "../menu-group" },
+        { "path": "../menu-item" },
+        { "path": "../popover" },
+        { "path": "../overlay-root" },
+        { "path": "../overlay-trigger" },
+        { "path": "../radio" },
+        { "path": "../radio-group" },
+        { "path": "../sidenav" },
+        { "path": "../slider" },
+        { "path": "../switch" },
+        { "path": "../tab" },
+        { "path": "../tab-list" },
+        { "path": "../textfield" },
+        { "path": "../themes" }
+    ]
+}

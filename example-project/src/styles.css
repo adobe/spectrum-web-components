@@ -11,11 +11,4 @@ governing permissions and limitations under the License.
 */
 
 /* import the global stylesheets */
-@import '../../styles/core-global.css';
-@import '../../styles/fonts.css';
-
-/* import theme stylesheets */
-@import '../../styles/theme-light.css';
-
-/* import scale stylesheets */
-@import '../../styles/scale-medium.css';
+@import '@spectrum-web-components/styles/all-medium-light.css';

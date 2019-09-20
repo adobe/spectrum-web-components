@@ -1,0 +1,41 @@
+{
+    "name": "@spectrum-web-components/themes",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/themes"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/themes",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.1.2",
+    "description": "",
+    "main": "lib/index.js",
+    "module": "lib/index.js",
+    "files": [
+        "/lib/",
+        "/src/"
+    ],
+    "scripts": {
+        "test": "karma start --coverage"
+    },
+    "author": "",
+    "license": "ISC",
+    "peerDependencies": {
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0"
+    },
+    "dependencies": {
+        "@spectrum-web-components/styles": "^0.1.2"
+    }
+}

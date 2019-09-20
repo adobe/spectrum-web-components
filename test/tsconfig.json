@@ -1,10 +1,9 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "outDir": ".",
-        "rootDir": ".",
-        "typeRoots": ["../node_modules/@types"]
+        "outDir": "../",
+        "rootDir": "../"
     },
-    "include": ["benchmark/**/*.ts"],
+    "include": ["../packages/*/test/benchmark/**/*.ts"],
     "exclude": ["benchmark/cli.ts"]
 }

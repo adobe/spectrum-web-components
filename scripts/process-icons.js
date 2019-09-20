@@ -76,8 +76,9 @@ Object.keys(scales).forEach((scaleKey) => {
     const outputPath = path.join(
         __dirname,
         '..',
-        'src',
+        'packages',
         'icons',
+        'src',
         `icons-${scaleKey}.svg.ts`
     );
     let outputFd = fs.openSync(outputPath, 'w');

@@ -598,18 +598,14 @@ class ComponentConfig {
                 if (match) {
                     attribute.name = match[1];
                 } else {
-                    const message = `Unable to determine name for attribute ${
-                        attribute.selector
-                    }`;
+                    const message = `Unable to determine name for attribute ${attribute.selector}`;
                     throw new Error(message);
                 }
             }
             let regex;
             if (attribute.type === 'boolean') {
                 attribute.shadowSelector = `[${attribute.name}]`;
-                attribute.regex = re`(?:${attribute.selector}|${
-                    attribute.shadowSelector
-                })`;
+                attribute.regex = re`(?:${attribute.selector}|${attribute.shadowSelector})`;
                 attribute.node = nodeFromSelector(attribute.selector);
                 attribute.shadowNode = nodeFromSelector(
                     attribute.shadowSelector

@@ -1,12 +1,18 @@
 import { toHtmlTemplateString } from '../src/utils/templates';
 import { TemplateResult } from 'lit-element';
 
-const componentDocs = require.context('../components', true, /\.md$/);
+const componentDocs = require.context('../../packages', true, /\.md$/);
 
 export const ComponentDocs = new Map<string, TemplateResult>();
 
 for (const key of componentDocs.keys()) {
-    const componentName = /([a-zA-Z-]+)\.md$/.exec(key)![1];
-    const templateString = toHtmlTemplateString(componentDocs(key));
-    ComponentDocs.set(componentName, templateString);
+    if (!/node_modules/.test(key)) {
+        let componentName = key.split('/')[1];
+        const fileName = /([a-zA-Z-]+)\.md$/.exec(key)![0];
+        if (fileName !== 'README.md') {
+            componentName = fileName.replace('.md', '');
+        }
+        const templateString = toHtmlTemplateString(componentDocs(key));
+        ComponentDocs.set(componentName, templateString);
+    }
 }

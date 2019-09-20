@@ -1,0 +1,44 @@
+{
+    "name": "@spectrum-web-components/menu-item",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/menu-item"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/menu-item",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.1.2",
+    "description": "",
+    "main": "lib/index.js",
+    "module": "lib/index.js",
+    "files": [
+        "/lib/",
+        "/src/"
+    ],
+    "scripts": {
+        "test": "karma start --coverage"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "peerDependencies": {
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0"
+    },
+    "dependencies": {
+        "@spectrum-web-components/button": "^0.1.2",
+        "@spectrum-web-components/icon": "^0.1.2",
+        "@spectrum-web-components/icons": "^0.1.2",
+        "@spectrum-web-components/shared": "^0.1.2"
+    }
+}
