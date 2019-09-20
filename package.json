@@ -7,7 +7,7 @@
     "publishConfig": {
         "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-crisp-release-local/"
     },
-    "version": "0.0.7",
+    "version": "0.0.9",
     "description": "",
     "files": [
         "lib",
