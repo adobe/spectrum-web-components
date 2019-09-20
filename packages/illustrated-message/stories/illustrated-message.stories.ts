@@ -13,6 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 
 import '../';
+import { illustration } from '../../dropzone/test/test-svg';
 
 storiesOf('IllustratedMessage', module)
     .add('Default', () => {
@@ -21,14 +22,7 @@ storiesOf('IllustratedMessage', module)
                 heading="Drag and Drop Your File"
                 description="This message has italics"
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="150"
-                    height="103"
-                    viewBox="0 0 150 103"
-                >
-                    <use xlink:href="error_message_geometry.svg#error-notice" />
-                </svg>
+                ${illustration}
             </sp-illustrated-message>
         `;
     })
@@ -39,14 +33,7 @@ storiesOf('IllustratedMessage', module)
                 description="This message has no italics"
                 cta
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="150"
-                    height="103"
-                    viewBox="0 0 150 103"
-                >
-                    <use xlink:href="error_message_geometry.svg#error-notice" />
-                </svg>
+                ${illustration}
             </sp-illustrated-message>
         `;
     });
