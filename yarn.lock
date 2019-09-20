@@ -1683,9 +1683,9 @@
     universal-user-agent "^4.0.0"
 
 "@octokit/rest@^16.28.4":
-  version "16.28.9"
-  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-16.28.9.tgz#ac8c5f3ff305e9e0a0989a5245e4286f057a95d7"
-  integrity sha512-IKGnX+Tvzt7XHhs8f4ajqxyJvYAMNX5nWfoJm4CQj8LZToMiaJgutf5KxxpxoC3y5w7JTJpW5rnWnF4TsIvCLA==
+  version "16.29.0"
+  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-16.29.0.tgz#5bbbfc818a44bb9ab32bee72cc0acc32e4556058"
+  integrity sha512-t01+Hz6sUJx2/HzY4KSgmST5n7KcTYr8i6+UwqS6TkgyjyA6YmeTxVhZrQUobEXaDdQFxs1dRhh1hgmOo6OF9Q==
   dependencies:
     "@octokit/request" "^5.0.0"
     "@octokit/request-error" "^1.0.2"
@@ -2883,24 +2883,24 @@
     "@xtuc/long" "4.2.2"
 
 "@webcomponents/custom-elements@^1.2.1":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@webcomponents/custom-elements/-/custom-elements-1.2.4.tgz#7074543155396114617722724d6f6cb7b3800a14"
-  integrity sha512-WiTlgz6/kuwajYIcgyq64rSlCtb2AvbxwwrExP3wr6rKbJ72I3hi/sb4KdGUumfC+isDn2F0btZGk4MnWpyO1Q==
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@webcomponents/custom-elements/-/custom-elements-1.3.0.tgz#d0c2fb908b5f03dc1d902f780f81503b815425cb"
+  integrity sha512-Mj2g0ZlqHgV+HFFb4ErPbu64l3Bq//wTv/jOBcMBYM178zLF5YN77mBd9er8xLjekeqvI6FFUuQxwEsnbKL3CQ==
 
 "@webcomponents/shadycss@^1.8.0":
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.9.1.tgz#d769fbadfa504f11b84caeef26701f89070ec49a"
-  integrity sha512-IaZOnWOKXHghqk/WfPNDRIgDBi3RsVPY2IFAw6tYiL9UBGvQRy5R6uC+Fk7qTZsReTJ0xh5MTT8yAcb3MUR4mQ==
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.9.2.tgz#6a3a65951b5a97279dd9b92cc277dd815d0e1fad"
+  integrity sha512-GsD7RpDVrVdgC6e+D8zQia8RGNmEGQ9/qotnVPQYPrIXhGS5xSt6ZED9YmuHz3HbLqY+E54tE1EK3tjLzSCGrw==
 
 "@webcomponents/shadydom@^1.4.2":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@webcomponents/shadydom/-/shadydom-1.6.0.tgz#5918eccd07ff506a3a258fa0a7339bd7434bcf0a"
-  integrity sha512-2r9SGHv13MS488ZwYXd2W123bXn/ZjWo5/pO4s9FOZmpEYv8ALWRc4VazmiFNl+3n4Cdu0uvCwju4V6ivgZKXA==
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@webcomponents/shadydom/-/shadydom-1.6.1.tgz#ae0d4384d45f6f31eaf8d8a063bad96a8c1c1d19"
+  integrity sha512-jajkrVafQ/QVWvTQNCO2QTPlZf4ut16T9V/wIn7WHt6q1V8FPIkAvnho+eYqwXb3DPxIxm2ngtO1XoFFQUtbQg==
 
 "@webcomponents/template@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@webcomponents/template/-/template-1.4.0.tgz#2ffd4574a5a2b662f0330dbeb40b231244a41c52"
-  integrity sha512-HJfhAxCD+DZmtm8oCALtvyOL9JlisSDqwE/4FWfaxq4SK3gUIp/2eUjLE6zqt9n6VHeo1zQjMTOA4fKKF6qSQg==
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@webcomponents/template/-/template-1.4.1.tgz#0ac6fa2053701e067829bf20c8304888472c7382"
+  integrity sha512-v7vwYZPKsAxczkWIjCOfCki9SpRdUcDjMZyweTGj3EPvVi+awQVHFPZ6X3jDW5nLSOs6Ls3h/AX8x8T+df2X0Q==
 
 "@webcomponents/webcomponents-platform@^1.0.0":
   version "1.0.1"
@@ -2913,9 +2913,9 @@
   integrity sha512-eLH04VBMpuZGzBIhOnUjECcQPEPcmfhWEijW9u1B5I+2PPYdWf3vWUExdDxu4Y3GljRSTCOlWnGtS9tpzmXMyQ==
 
 "@webcomponents/webcomponentsjs@^2.2.0", "@webcomponents/webcomponentsjs@^2.2.10":
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.2.10.tgz#6f6bee0277833ae98d7e5b46f1e0fdb48cd5ff44"
-  integrity sha512-5dzhUhP+h0qMiK0IWb7VNb0OGBoXO3AuI6Qi8t9PoKT50s5L1jv0xnwnLq+cFgPuTB8FLTNP8xIDmyoOsKBy9Q==
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.3.0.tgz#d17c67e9602d46f5a6c425bc00613bba83dcd0e2"
+  integrity sha512-sR6FOrNnnncRuoJDqq9QxtRsJMbIvASw4vnJwIYKVlKO3AMc+NAr/bIQNnUiTTE9pBDTJkFpVaUdjJaRdsjmyA==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -4759,9 +4759,9 @@ chokidar@^2.0.0, chokidar@^2.0.2, chokidar@^2.0.4, chokidar@^2.1.8:
     fsevents "^1.2.7"
 
 chokidar@^3.0.0, chokidar@^3.0.2:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.1.0.tgz#ff23d077682a90eadd209bfa76eb10ed6d359668"
-  integrity sha512-6vZfo+7W0EOlbSo0nhVKMz4yyssrwiPbBZ8wj1lq8/+l4ZhGZ2U4Md7PspvmijXp1a26D3B7AHEBmIB7aVtaOQ==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.1.1.tgz#27e953f3950336efcc455fd03e240c7299062003"
+  integrity sha512-df4o16uZmMHzVQwECZRHwfguOt5ixpuQVaZHjYMvYisgKhE+JXwcj/Tcr3+3bu/XeOJQ9ycYmzu7Mv8XrGxJDQ==
   dependencies:
     anymatch "^3.1.0"
     braces "^3.0.2"
@@ -6523,9 +6523,9 @@ ejs@^2.6.1:
   integrity sha512-kS/gEPzZs3Y1rRsbGX4UOSjtP/CeJP0CxSNZHYxGfVM/VgLcv0ZqM7C45YyTj2DI2g7+P9Dd24C+IMIg6D0nYQ==
 
 electron-to-chromium@^1.3.103, electron-to-chromium@^1.3.247:
-  version "1.3.261"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.261.tgz#51b35a3126fb09b6852f24e907a6d3bd01c67724"
-  integrity sha512-nA9xFj1SgHXlW/6T4+udW2u/Ic/bne25UoFsddoNM7Ut2bgNGLLQUhLhk+vQlbKh9WiRgDDlHaC36Oy7AgRR9w==
+  version "1.3.262"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.262.tgz#8022933e46e5a2c7b0fd1565d215872326520a7c"
+  integrity sha512-YFr53qZWr2pWkiTUorWEhAweujdf0ALiUp8VkNa0WGtbMVR+kZ8jNy3VTCemLsA4sT6+srCqehNn8TEAD0Ngrw==
 
 element-closest@^3.0.1:
   version "3.0.1"
