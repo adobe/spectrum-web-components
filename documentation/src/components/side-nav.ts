@@ -16,7 +16,7 @@ import { SidenavSelectDetail } from '../../../packages/sidenav';
 import sideNavStyles from './side-nav.css';
 import './spectrum-logo';
 
-class SiteNav extends LitElement {
+class SideNav extends LitElement {
     public static get styles(): CSSResultArray {
         return [sideNavStyles];
     }
@@ -83,4 +83,4 @@ class SiteNav extends LitElement {
         `;
     }
 }
-customElements.define('docs-side-nav', SiteNav);
+customElements.define('docs-side-nav', SideNav);
