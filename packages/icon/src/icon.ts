@@ -34,7 +34,7 @@ export class Icon extends LitElement {
     public name?: string;
 
     @property({ reflect: true })
-    public size: string = 'm';
+    public size = 'm';
 
     @property()
     public label?: string;

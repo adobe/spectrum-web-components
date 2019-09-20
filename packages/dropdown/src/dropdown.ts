@@ -65,8 +65,8 @@ export class Dropdown extends Focusable {
     @property({ type: String })
     public value = '';
 
-    protected listRole: string = 'listbox';
-    protected itemRole: string = 'option';
+    protected listRole = 'listbox';
+    protected itemRole = 'option';
 
     public constructor() {
         super();

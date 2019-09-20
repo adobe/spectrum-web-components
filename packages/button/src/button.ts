@@ -34,13 +34,13 @@ export class Button extends ButtonBase {
      * There is a warning in place for this control
      */
     @property({ type: Boolean, reflect: true })
-    public warning: boolean = false;
+    public warning = false;
 
     /**
      * Style this button to be less obvious
      */
     @property({ type: Boolean, reflect: true })
-    public quiet: boolean = false;
+    public quiet = false;
 
     public static get styles(): CSSResultArray {
         return [buttonStyles];

@@ -32,7 +32,7 @@ export class SideNavItem extends LitElement {
     public value: string | undefined = undefined;
 
     @property({ type: Boolean, reflect: true })
-    public selected: boolean = false;
+    public selected = false;
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
@@ -47,7 +47,7 @@ export class SideNavItem extends LitElement {
     public target: string | undefined = undefined;
 
     @property()
-    public label: string = '';
+    public label = '';
 
     protected get parentSideNav(): SideNav | undefined {
         return this.closest('sp-sidenav') as SideNav | undefined;

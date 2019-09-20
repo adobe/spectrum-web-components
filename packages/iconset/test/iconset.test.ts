@@ -25,7 +25,7 @@ describe('Iconset', () => {
     });
 
     it('will re-register with new name', async () => {
-        let icons = document.createElement('sp-icons-medium');
+        const icons = document.createElement('sp-icons-medium');
         document.body.append(icons);
         icons.name = 'first-name';
 
@@ -51,7 +51,7 @@ describe('Iconset', () => {
         expect(registry.getIconset('ui')).to.be.undefined;
     });
     it('will not re-register on (dis)connect without a name', async () => {
-        let icons = document.createElement('sp-icons-medium');
+        const icons = document.createElement('sp-icons-medium');
         document.body.append(icons);
 
         const registry = IconsetRegistry.getInstance();
@@ -69,10 +69,10 @@ describe('Iconset', () => {
         expect(registry.getIconset('ui')).to.be.undefined;
     });
     it('renders after adding and removing a second iconset of same name', async () => {
-        let icons = document.createElement('sp-icons-medium');
+        const icons = document.createElement('sp-icons-medium');
         document.body.append(icons);
 
-        let icons2 = document.createElement('sp-icons-medium');
+        const icons2 = document.createElement('sp-icons-medium');
         document.body.append(icons2);
 
         icons2.remove();
