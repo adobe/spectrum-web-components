@@ -106,3 +106,11 @@ The build process compiles `.css` files using PostCSS and wraps them in the `lit
 
 We'd be very grateful if you contributed to the project! Check out our
 [contribution guidelines](CONTRIBUTING.md) for more information.
+
+## Commitlint
+
+We use [Commitlint](https://github.com/conventional-changelog/commitlint/#what-is-commitlint) to help manage the semantic versions across the various packages in this library. Please be sure that you take this into concideration when submitting PRs to this repositiory. Generally, your commits should look like the following:
+
+```
+type(scope?): subject #scope is optional, but should reference the package you are updating
+```
