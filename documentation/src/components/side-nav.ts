@@ -40,7 +40,6 @@ class SiteNav extends LitElement {
     }
 
     private handleGuideSelect(event: CustomEvent<SidenavSelectDetail>): void {
-        debugger;
         this.handleSelect(event, 'guides');
     }
 

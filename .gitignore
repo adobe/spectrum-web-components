@@ -6,11 +6,13 @@ styles/**/*.css.ts
 node_modules
 npm-debug.log
 lerna-debug.log
+yarn-error.log
 .DS_STORE
 .chrome
 .firefox
 .npmrc
 .tsbuildinfo
+.rush
 
 coverage
 documentation/api-docs/component_data.json
@@ -28,7 +30,6 @@ packages/*/stories/**/*.d.ts
 !packages/*/test/global.d.ts
 *.tsbuildinfo
 
-package-deps.json
 spectrum-web-components.build.log
 spectrum-web-components.build.error.log
 TESTS.xml

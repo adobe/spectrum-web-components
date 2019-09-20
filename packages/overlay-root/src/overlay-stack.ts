@@ -24,10 +24,10 @@ function hasModifier(event: MouseEvent): boolean {
 export class OverlayStack {
     public overlays: ActiveOverlay[] = [];
 
-    private preventMouseRootClose: boolean = false;
+    private preventMouseRootClose = false;
     private root: HTMLElement = document.body;
     private onChange: (overlays: ActiveOverlay[]) => void;
-    private handlingResize: boolean = false;
+    private handlingResize = false;
 
     public constructor(
         root: HTMLElement,

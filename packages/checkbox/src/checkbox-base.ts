@@ -15,10 +15,10 @@ import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
 export class CheckboxBase extends Focusable {
     @property({ type: Boolean, reflect: true })
-    public checked: boolean = false;
+    public checked = false;
 
     @property({ type: Boolean, reflect: true })
-    public quiet: boolean = false;
+    public quiet = false;
 
     @query('#input')
     private inputElement!: HTMLInputElement;

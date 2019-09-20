@@ -18,10 +18,10 @@ import checkboxStyles from './checkbox.css.js';
 
 export class Checkbox extends CheckboxBase {
     @property({ type: Boolean, reflect: true })
-    public indeterminate: boolean = false;
+    public indeterminate = false;
 
     @property({ type: Boolean, reflect: true })
-    public invalid: boolean = false;
+    public invalid = false;
 
     public static get styles(): CSSResultArray {
         return [checkboxStyles];

@@ -110,50 +110,51 @@ $ node test/benchmark/cli -n 20
             (dirEntry) => dirEntry === 'test'
         );
 
-        if (hasTests) {
-            const hasBenchmarks = readdirSync(
-                pathjoin('packages', packageName, 'test')
-            ).find((dirEntry) => dirEntry === 'benchmark');
+        if (!hasTests) {
+            continue;
+        }
 
-            if (hasBenchmarks) {
-                const benchmarks = readdirSync(
-                    pathjoin('packages', packageName, 'test', 'benchmark'),
-                    { withFileTypes: true }
-                )
-                    .filter(
-                        (dirEntry) =>
-                            dirEntry.isFile() && dirEntry.name.endsWith('.js')
-                    )
-                    .map((dirEntry) => dirEntry.name.replace(/\.js$/, ''));
+        const hasBenchmarks = readdirSync(
+            pathjoin('packages', packageName, 'test')
+        ).find((dirEntry) => dirEntry === 'benchmark');
 
-                for (const benchmark of benchmarks) {
-                    runCommands.push(
-                        `${packageName}:${benchmark}=test/benchmark/bench-runner.html` +
-                            `?bench=${benchmark}` +
-                            `&package=${packageName}`
-                    );
-                }
+        if (!hasBenchmarks) {
+            continue;
+        }
 
-                const statResults = await main([
-                    ...runCommands,
-                    '--measure=global',
-                    `--browser=${opts.browser}${
-                        opts.remote ? `@${opts.remote}` : ''
-                    }`,
-                    `--sample-size=${opts['sample-size']}`,
-                ]);
+        const benchmarks = readdirSync(
+            pathjoin('packages', packageName, 'test', 'benchmark'),
+            { withFileTypes: true }
+        )
+            .filter(
+                (dirEntry) => dirEntry.isFile() && dirEntry.name.endsWith('.js')
+            )
+            .map((dirEntry) => dirEntry.name.replace(/\.js$/, ''));
 
-                if (!statResults) {
-                    return;
-                }
+        for (const benchmark of benchmarks) {
+            runCommands.push(
+                `${packageName}:${benchmark}=test/benchmark/bench-runner.html` +
+                    `?bench=${benchmark}` +
+                    `&package=${packageName}`
+            );
+        }
 
-                for (const statResult of statResults) {
-                    const name = statResult.result.name;
-                    const low = statResult.stats.meanCI.low.toFixed(2);
-                    const high = statResult.stats.meanCI.high.toFixed(2);
-                    printResults.push(`${name}: ${low}ms - ${high}ms`);
-                }
-            }
+        const statResults = await main([
+            ...runCommands,
+            '--measure=global',
+            `--browser=${opts.browser}${opts.remote ? `@${opts.remote}` : ''}`,
+            `--sample-size=${opts['sample-size']}`,
+        ]);
+
+        if (!statResults) {
+            return;
+        }
+
+        for (const statResult of statResults) {
+            const name = statResult.result.name;
+            const low = statResult.stats.meanCI.low.toFixed(2);
+            const high = statResult.stats.meanCI.high.toFixed(2);
+            printResults.push(`${name}: ${low}ms - ${high}ms`);
         }
     }
 

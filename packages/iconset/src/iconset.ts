@@ -14,7 +14,7 @@ import { IconsetRegistry } from './iconset-registry.js';
 import { LitElement, property } from 'lit-element';
 
 export abstract class Iconset extends LitElement {
-    protected registered: boolean = false;
+    protected registered = false;
 
     private _name!: string;
 
@@ -63,7 +63,11 @@ export abstract class Iconset extends LitElement {
      */
     public abstract getIconList(): string[];
 
-    private handleRemoved = ({ detail }: { detail: { name: string } }) => {
+    private handleRemoved = ({
+        detail,
+    }: {
+        detail: { name: string };
+    }): void => {
         if (detail.name === this.name) {
             this.registered = false;
             this.addIconset();
