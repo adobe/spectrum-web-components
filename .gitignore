@@ -6,11 +6,11 @@ styles/**/*.css.ts
 node_modules
 npm-debug.log
 lerna-debug.log
+yarn-error.log
 .DS_STORE
 .chrome
 .firefox
 .npmrc
-.nvmrc
 .tsbuildinfo
 
 coverage

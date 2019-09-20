@@ -111,7 +111,7 @@ $ node test/benchmark/cli -n 20
         );
 
         if (!hasTests) {
-            return;
+            continue;
         }
 
         const hasBenchmarks = readdirSync(
@@ -119,7 +119,7 @@ $ node test/benchmark/cli -n 20
         ).find((dirEntry) => dirEntry === 'benchmark');
 
         if (!hasBenchmarks) {
-            return;
+            continue;
         }
 
         const benchmarks = readdirSync(
