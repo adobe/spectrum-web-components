@@ -1,0 +1,294 @@
+/* stylelint-disable */ /* 
+Copyright 2019 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    /* .spectrum-Tooltip */
+    visibility: hidden;
+
+    opacity: 0;
+
+    transition: transform var(--spectrum-global-animation-duration-100, 130ms)
+            ease-in-out,
+        opacity var(--spectrum-global-animation-duration-100, 130ms) ease-in-out,
+        visibility 0ms linear
+            var(--spectrum-global-animation-duration-100, 130ms);
+
+    pointer-events: none;
+
+    /* .spectrum-Tooltip */
+
+    position: relative;
+    left: 0px;
+    top: 0px;
+
+    display: -ms-inline-flexbox;
+
+    display: inline-flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center;
+    box-sizing: border-box;
+
+    vertical-align: top;
+
+    width: auto;
+    padding: var(
+            --spectrum-tooltip-padding-top,
+            var(--spectrum-global-dimension-size-50)
+        )
+        var(
+            --spectrum-tooltip-padding-x,
+            var(--spectrum-global-dimension-size-125)
+        );
+    border-radius: var(
+        --spectrum-tooltip-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
+    min-height: var(
+        --spectrum-tooltip-min-height,
+        var(--spectrum-global-dimension-size-300)
+    );
+
+    font-size: var(
+        --spectrum-tooltip-text-size,
+        var(--spectrum-global-dimension-size-150)
+    );
+    font-weight: var(--spectrum-tooltip-text-font-weight, 400);
+    line-height: var(
+        --spectrum-tooltip-text-line-height,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    /* .spectrum-Tooltip */
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* .spectrum-Tooltip */
+    background-color: var(
+        --spectrum-tooltip-background-color,
+        rgb(116, 116, 116)
+    );
+
+    color: var(--spectrum-tooltip-text-color, rgb(255, 255, 255));
+}
+:host([open]) {
+    /* .spectrum-Tooltip.is-open */
+    visibility: visible;
+
+    opacity: 1;
+
+    transition-delay: 0ms;
+
+    pointer-events: auto;
+}
+:host([tip='bottom'][open]) {
+    /* .spectrum-Tooltip--bottom.is-open */
+    transform: translateY(
+        var(
+            --spectrum-dropdown-flyout-menu-offset-y,
+            var(--spectrum-global-dimension-size-75)
+        )
+    );
+}
+:host([tip='top'][open]) {
+    /* .spectrum-Tooltip--top.is-open */
+    transform: translateY(
+        calc(
+            -1 * var(--spectrum-dropdown-flyout-menu-offset-y, var(--spectrum-global-dimension-size-75))
+        )
+    );
+}
+:host([tip='right'][open]) {
+    /* .spectrum-Tooltip--right.is-open */
+    transform: translateX(
+        var(
+            --spectrum-dropdown-flyout-menu-offset-y,
+            var(--spectrum-global-dimension-size-75)
+        )
+    );
+}
+:host([tip='left'][open]) {
+    /* .spectrum-Tooltip--left.is-open */
+    transform: translateX(
+        calc(
+            -1 * var(--spectrum-dropdown-flyout-menu-offset-y, var(--spectrum-global-dimension-size-75))
+        )
+    );
+}
+#tip {
+    /* .spectrum-Tooltip-tip */
+    position: absolute;
+
+    height: 0;
+    width: 0;
+
+    border-width: var(
+        --spectrum-tooltip-tip-height,
+        var(--spectrum-global-dimension-size-50)
+    );
+    border-style: solid;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    /* .spectrum-Tooltip-tip */
+    border-top-color: var(
+        --spectrum-tooltip-background-color,
+        rgb(116, 116, 116)
+    );
+}
+:host([tip='right']) #tip,
+:host([tip='left']) #tip {
+    /* .spectrum-Tooltip--right .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--left .spectrum-Tooltip-tip */
+    top: 50%;
+    margin-top: calc(
+        -1 * var(--spectrum-tooltip-tip-height, var(--spectrum-global-dimension-size-50))
+    );
+}
+:host([tip='right']) {
+    /* .spectrum-Tooltip--right */
+    margin-left: 3px;
+}
+:host([tip='right']) #tip {
+    /* .spectrum-Tooltip--right .spectrum-Tooltip-tip */
+    right: 100%;
+    transform: rotate(90deg);
+}
+:host([tip='left']) {
+    /* .spectrum-Tooltip--left */
+    margin-right: 3px;
+}
+:host([tip='left']) #tip {
+    /* .spectrum-Tooltip--left .spectrum-Tooltip-tip */
+    left: 100%;
+    transform: rotate(-90deg);
+}
+:host([tip='top']) {
+    /* .spectrum-Tooltip--top */
+    margin-bottom: 3px;
+}
+:host([tip='top']) #tip {
+    /* .spectrum-Tooltip--top .spectrum-Tooltip-tip */
+    top: 100%;
+}
+:host([tip='bottom']) {
+    /* .spectrum-Tooltip--bottom */
+    margin-top: 3px;
+}
+:host([tip='bottom']) #tip {
+    /* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip */
+    bottom: 100%;
+    transform: rotate(-180deg);
+}
+:host([tip='bottom']) #tip,
+:host([tip='top']) #tip {
+    /* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--top .spectrum-Tooltip-tip */
+    left: 50%;
+    margin-left: calc(
+        -1 * var(--spectrum-tooltip-tip-height, var(--spectrum-global-dimension-size-50))
+    );
+}
+::slotted([slot='icon']) {
+    /* .spectrum-Tooltip-typeIcon */
+    margin-left: calc(
+        var(
+                --spectrum-tooltip-icon-margin-x,
+                var(--spectrum-global-dimension-size-100)
+            ) -
+            var(
+                --spectrum-tooltip-padding-x,
+                var(--spectrum-global-dimension-size-125)
+            )
+    );
+    margin-right: var(
+        --spectrum-tooltip-icon-margin-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+    width: var(
+        --spectrum-tooltip-icon-size,
+        var(--spectrum-global-dimension-size-175)
+    );
+    height: var(
+        --spectrum-tooltip-icon-size,
+        var(--spectrum-global-dimension-size-175)
+    );
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+    margin-top: 1px;
+}
+#label {
+    /* .spectrum-Tooltip-label */
+    max-width: var(--spectrum-tooltip-content-max-width);
+    line-height: var(
+        --spectrum-tooltip-text-line-height,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+}
+:host([variant='negative']),
+.spectrum-Tooltip--error {
+    /* .spectrum-Tooltip--negative,
+   * .spectrum-Tooltip--error */
+    background-color: var(
+        --spectrum-tooltip-negative-background-color,
+        rgb(201, 37, 45)
+    );
+}
+:host([variant='negative']) #tip,
+.spectrum-Tooltip--error #tip {
+    /* .spectrum-Tooltip--negative .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--error .spectrum-Tooltip-tip */
+    border-top-color: var(
+        --spectrum-tooltip-negative-background-color,
+        rgb(201, 37, 45)
+    );
+}
+:host([variant='info']),
+.spectrum-Tooltip--help {
+    /* .spectrum-Tooltip--info,
+   * .spectrum-Tooltip--help */
+    background-color: var(
+        --spectrum-tooltip-info-background-color,
+        rgb(13, 102, 208)
+    );
+}
+:host([variant='info']) #tip,
+.spectrum-Tooltip--help #tip {
+    /* .spectrum-Tooltip--info .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--help .spectrum-Tooltip-tip */
+    border-top-color: var(
+        --spectrum-tooltip-info-background-color,
+        rgb(13, 102, 208)
+    );
+}
+:host([variant='positive']),
+.spectrum-Tooltip--success {
+    /* .spectrum-Tooltip--positive,
+   * .spectrum-Tooltip--success */
+    background-color: var(
+        --spectrum-tooltip-positive-background-color,
+        rgb(18, 128, 92)
+    );
+}
+:host([variant='positive']) #tip,
+.spectrum-Tooltip--success #tip {
+    /* .spectrum-Tooltip--positive .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--success .spectrum-Tooltip-tip */
+    border-top-color: var(
+        --spectrum-tooltip-positive-background-color,
+        rgb(18, 128, 92)
+    );
+}
