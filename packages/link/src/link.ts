@@ -36,7 +36,7 @@ export class Link extends LitElement {
     public href: string | undefined = undefined;
 
     @property({ reflect: true })
-    public target: string | undefined = undefined;
+    public target?: '_blank' | '_parent' | '_self' | '_top';
 
     protected render(): TemplateResult {
         // prettier-ignore

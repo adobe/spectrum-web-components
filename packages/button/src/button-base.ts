@@ -23,7 +23,7 @@ export class ButtonBase extends Focusable {
     public href?: string;
 
     @property()
-    public target?: string;
+    public target?: '_blank' | '_parent' | '_self' | '_top';
 
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;

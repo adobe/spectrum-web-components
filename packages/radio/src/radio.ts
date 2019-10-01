@@ -73,18 +73,18 @@ export class Radio extends Focusable {
 
     protected render(): TemplateResult {
         return html`
-        <label id="root">
-            <input
-                id="input"
-                type="radio"
-                name=${this.name}
-                value=${this.value}
-                .checked=${this.checked}
-                @change=${this.handleChange}
-            />
-            <span id="button"></span>
-            <span id="label"><slot></slot></span>
-        </div>
+            <label id="root">
+                <input
+                    id="input"
+                    type="radio"
+                    name=${this.name}
+                    value=${this.value}
+                    .checked=${this.checked}
+                    @change=${this.handleChange}
+                />
+                <span id="button"></span>
+                <span id="label"><slot></slot></span>
+            </label>
         `;
     }
 }

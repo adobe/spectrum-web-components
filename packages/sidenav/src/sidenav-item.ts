@@ -44,7 +44,7 @@ export class SideNavItem extends LitElement {
     public href: string | undefined = undefined;
 
     @property()
-    public target: string | undefined = undefined;
+    public target?: '_blank' | '_parent' | '_self' | '_top';
 
     @property()
     public label = '';
