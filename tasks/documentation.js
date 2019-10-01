@@ -22,7 +22,6 @@ const merge = require('webpack-merge');
 
 const projectDir = path.dirname(__dirname);
 const srcPath = path.join(projectDir, 'src');
-const storybookOut = path.join(projectDir, 'documentation/dist/storybook');
 
 const BASE_URL = 'https://opensource.adobe.com/spectrum-web-components/';
 
@@ -34,24 +33,6 @@ const extractComponentDocumentation = () => {
         )}"`
     );
 };
-
-const buildStorybookWebpack = () => {
-    const storybookDir = path.join(projectDir, '.storybook');
-    return exec(
-        `npx build-storybook --config-dir "${storybookDir}" --output-dir "${storybookOut}"`
-    );
-};
-
-const copyStorybookStyles = () => {
-    return gulp
-        .src(path.join(projectDir, 'packages/styles/all-medium-light.css'))
-        .pipe(gulp.dest(path.join(storybookOut)));
-};
-
-const buildStorybook = gulp.series([
-    buildStorybookWebpack,
-    copyStorybookStyles,
-]);
 
 const watchComponentDocumentation = () => {
     gulp.watch(
@@ -105,16 +86,11 @@ const webpackBuild = async () => {
 };
 
 module.exports = {
-    docsCompile: gulp.parallel([
-        buildStorybook,
-        gulp.series(extractComponentDocumentation, webpackBuild),
-    ]),
+    docsCompile: gulp.series(extractComponentDocumentation, webpackBuild),
     docsWatchCompile: gulp.parallel(
         watchComponentDocumentation,
         webpackDevServer
     ),
     extractComponentDocumentation,
-    buildStorybookWebpack,
-    buildStorybook,
     webpackBuild,
 };
