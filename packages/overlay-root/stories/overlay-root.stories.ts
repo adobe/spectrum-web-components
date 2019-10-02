@@ -29,6 +29,7 @@ import '../../popover';
 import '../../slider';
 import '../../radio';
 import '../../radio-group';
+import '../../tooltip';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;
@@ -148,11 +149,6 @@ storiesOf('Overlay Root', module)
                     margin-bottom: 10px;
                 }
 
-                .tooltip {
-                    background-color: rgb(200, 200, 200);
-                    padding: 4px 7px;
-                }
-
                 #inner-trigger {
                     display: inline-block;
                 }
@@ -201,19 +197,25 @@ storiesOf('Overlay Root', module)
                                     </div>
                                 </sp-popover>
 
-                                <div
+                                <sp-tooltip
                                     slot="hover-content"
-                                    class="tooltip"
                                     delay="100"
+                                    open
+                                    tip="bottom"
                                 >
-                                    Tooltip
-                                </div>
+                                    Click to open another popover.
+                                </sp-tooltip>
                             </overlay-trigger>
                         </div>
                     </sp-popover>
-                    <div slot="hover-content" class="tooltip" delay="100">
-                        Tooltip
-                    </div>
+                    <sp-tooltip
+                        open
+                        slot="hover-content"
+                        delay="100"
+                        tip="bottom"
+                    >
+                        Click to open a popover.
+                    </sp-tooltip>
                 </overlay-trigger>
             </overlay-root>
         `;
@@ -244,11 +246,6 @@ storiesOf('Overlay Root', module)
                     color: white;
                     padding: 4px 10px;
                     margin-bottom: 10px;
-                }
-
-                .tooltip {
-                    background-color: rgb(200, 200, 200);
-                    padding: 4px 7px;
                 }
 
                 #inner-trigger {

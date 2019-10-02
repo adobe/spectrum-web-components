@@ -62,6 +62,7 @@
         "@spectrum-web-components/tab": "^0.1.2",
         "@spectrum-web-components/tab-list": "^0.1.2",
         "@spectrum-web-components/textfield": "^0.1.2",
-        "@spectrum-web-components/themes": "^0.1.2"
+        "@spectrum-web-components/themes": "^0.1.2",
+        "@spectrum-web-components/tooltip": "^0.0.0"
     }
 }
