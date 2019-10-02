@@ -71,7 +71,7 @@ const stateMachine: {
 } = {
     initial: 'idle',
     states: {
-        null: {
+        idle: {
             on: {
                 active: 'active',
             },
@@ -80,18 +80,18 @@ const stateMachine: {
             on: {
                 visible: 'visible',
                 hiding: 'hiding',
-                null: 'idle',
+                idle: 'idle',
             },
         },
         visible: {
             on: {
                 hiding: 'hiding',
-                null: 'idle',
+                idle: 'idle',
             },
         },
         hiding: {
             on: {
-                null: 'idle',
+                idle: 'idle',
             },
         },
     },
