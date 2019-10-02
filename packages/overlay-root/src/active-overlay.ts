@@ -57,7 +57,7 @@ const defaultOptions: CalculatePositionOptions = {
 
 const FadeOutAnimation = 'spOverlayFadeOut';
 
-type OverlayStateType = 'null' | 'active' | 'visible' | 'hiding';
+type OverlayStateType = 'idle' | 'active' | 'visible' | 'hiding';
 
 const stateMachine: {
     initial: OverlayStateType;
@@ -69,7 +69,7 @@ const stateMachine: {
         };
     };
 } = {
-    initial: 'null',
+    initial: 'idle',
     states: {
         null: {
             on: {
@@ -80,18 +80,18 @@ const stateMachine: {
             on: {
                 visible: 'visible',
                 hiding: 'hiding',
-                null: 'null',
+                null: 'idle',
             },
         },
         visible: {
             on: {
                 hiding: 'hiding',
-                null: 'null',
+                null: 'idle',
             },
         },
         hiding: {
             on: {
-                null: 'null',
+                null: 'idle',
             },
         },
     },
@@ -124,7 +124,7 @@ export class ActiveOverlay extends LitElement {
             return;
         }
         this._state = nextState;
-        if (this.state === 'null') {
+        if (this.state === 'idle') {
             this.removeAttribute('state');
         } else {
             this.setAttribute('state', this.state);
@@ -174,7 +174,7 @@ export class ActiveOverlay extends LitElement {
     }
 
     public dispose(): void {
-        this.state = 'null';
+        this.state = 'idle';
 
         if (this.timeout) {
             clearTimeout(this.timeout);
