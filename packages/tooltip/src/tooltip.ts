@@ -10,17 +10,47 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, CSSResultArray, TemplateResult, LitElement } from 'lit-element';
+import {
+    html,
+    CSSResultArray,
+    TemplateResult,
+    LitElement,
+    property,
+} from 'lit-element';
 
 import tooltipStyles from './tooltip.css.js';
 
 /**
  * @slot icon - The icon that appears on the left of the label
+ * @slot - The label
  */
 
 export class Tooltip extends LitElement {
     public static get styles(): CSSResultArray {
         return [tooltipStyles];
+    }
+
+    @property({ reflect: true })
+    public tip: 'top' | 'bottom' | 'left' | 'right' = 'top';
+
+    /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
+    private _variant = '';
+
+    @property({ type: String })
+    public get variant(): string {
+        return this._variant;
+    }
+    public set variant(variant: string) {
+        if (variant === this.variant) {
+            return;
+        }
+        if (['info', 'positive', 'negative'].includes(variant)) {
+            this.setAttribute('variant', variant);
+            this._variant = variant;
+            return;
+        }
+        this.removeAttribute('variant');
+        this._variant = '';
     }
 
     render(): TemplateResult {
