@@ -16,7 +16,6 @@ import { OverlayRoot } from '../../overlay-root';
 import '../../button';
 import '../../popover';
 import { Popover } from '../../popover';
-import { ActiveOverlay } from '../../overlay-root/lib/active-overlay';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
 import { fixture, aTimeout, html, expect } from '@open-wc/testing';
@@ -193,20 +192,16 @@ describe('Overlays', () => {
         outerButton.click();
 
         // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(() => {
-            const parent = outerPopover.parentElement as ActiveOverlay;
-            const state = parent.state || '';
-            return state === 'visible';
-        });
+        await waitForPredicate(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger)
+        );
 
         innerButton.click();
 
         // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(() => {
-            const parent = innerPopover.parentElement as ActiveOverlay;
-            const state = parent.state || '';
-            return state === 'visible';
-        });
+        await waitForPredicate(
+            () => !(innerPopover.parentElement instanceof OverlayTrigger)
+        );
 
         expect(isVisible(outerPopover)).to.be.true;
         expect(isVisible(innerPopover)).to.be.true;

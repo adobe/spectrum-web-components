@@ -57,6 +57,55 @@ const defaultOptions: CalculatePositionOptions = {
 
 const FadeOutAnimation = 'spOverlayFadeOut';
 
+type OverlayStateType = 'null' | 'active' | 'visible' | 'hiding';
+
+const stateMachine: {
+    initial: OverlayStateType;
+    states: {
+        [stateName: string]: {
+            on: {
+                [transitionName: string]: OverlayStateType;
+            };
+        };
+    };
+} = {
+    initial: 'null',
+    states: {
+        null: {
+            on: {
+                active: 'active',
+            },
+        },
+        active: {
+            on: {
+                visible: 'visible',
+                hiding: 'hiding',
+                null: 'null',
+            },
+        },
+        visible: {
+            on: {
+                hiding: 'hiding',
+                null: 'null',
+            },
+        },
+        hiding: {
+            on: {
+                null: 'null',
+            },
+        },
+    },
+};
+
+const stateTransition = (
+    state?: OverlayStateType,
+    event?: string
+): OverlayStateType => {
+    if (!state) return stateMachine.initial;
+    if (!event) return state;
+    return stateMachine.states[state].on[event] || state;
+};
+
 export class ActiveOverlay extends LitElement {
     public overlayContent?: HTMLElement;
     public trigger?: HTMLElement;
@@ -64,8 +113,23 @@ export class ActiveOverlay extends LitElement {
     private placeholder?: Comment;
     private root?: HTMLElement;
 
-    @property({ reflect: true })
-    public state?: 'active' | 'visible' | 'hiding';
+    @property()
+    public _state = stateTransition();
+    public get state(): OverlayStateType {
+        return this._state;
+    }
+    public set state(state) {
+        const nextState = stateTransition(this.state, state);
+        if (nextState === this.state) {
+            return;
+        }
+        this._state = nextState;
+        if (this.state === 'null') {
+            this.removeAttribute('state');
+        } else {
+            this.setAttribute('state', this.state);
+        }
+    }
 
     @property({ reflect: true })
     public placement: Placement = 'bottom';
@@ -110,7 +174,7 @@ export class ActiveOverlay extends LitElement {
     }
 
     public dispose(): void {
-        delete this.state;
+        this.state = 'null';
 
         if (this.timeout) {
             clearTimeout(this.timeout);
