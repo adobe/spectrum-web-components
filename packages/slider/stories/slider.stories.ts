@@ -19,7 +19,7 @@ storiesOf('Slider', module)
     .add('Default', () => {
         const value = number('Value', 50);
         const min = number('Min', 0);
-        const max = number('Min', 100);
+        const max = number('Max', 100);
         const step = number('Step', 1);
         const label = text('Label', 'Opacity');
         return html`
