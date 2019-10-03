@@ -45,6 +45,7 @@
         "lint:js": "eslint -f pretty 'tasks/**/*.js' && eslint -f pretty 'scripts/**/*.js'",
         "lint:ts": "eslint -f pretty 'packages/**/*.ts'",
         "lint:css": "stylelint 'packages/**/*.css' 'styles/**/*.css'",
+        "lerna-publish": "lerna publish --message 'chore: release new versions'",
         "test": "yarn test:build && karma start --coverage",
         "test:build": "yarn build && tsc --build test/tsconfig-test.json",
         "test:watch": "yarn watch & yarn test:build -- -w & karma start --auto-watch=true --single-run=false",
