@@ -6,3 +6,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## 0.1.3 (2019-10-03)
 
 **Note:** Version bump only for package @spectrum-web-components/themes
+
+## 0.1.3 (2019-10-03)
+
+**Note:** Version bump only for package @spectrum-web-components/themes
