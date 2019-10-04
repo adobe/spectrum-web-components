@@ -8,7 +8,7 @@ Select a Country with a very long label, too long in fact
     <sp-menu-item role="option" tabindex="0">
         Deselect
     </sp-menu-item>
-    <sp-menu-item role="option" tabindex="-1">
+    <sp-menu-item role="option" tabindex="-1" value="option-2">
         Select Inverse
     </sp-menu-item>
     <sp-menu-item role="option" tabindex="-1">
@@ -61,7 +61,7 @@ Select a Country with a very long label, too long in fact
     <sp-menu-item role="option" tabindex="0">
         Deselect
     </sp-menu-item>
-    <sp-menu-item role="option" tabindex="-1">
+    <sp-menu-item role="option" tabindex="-1" value="option-2">
         Select Inverse
     </sp-menu-item>
     <sp-menu-item role="option" tabindex="-1">

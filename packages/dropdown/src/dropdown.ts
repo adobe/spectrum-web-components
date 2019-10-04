@@ -73,6 +73,9 @@ export class Dropdown extends Focusable {
     @property({ type: String })
     public value = '';
 
+    @property({ type: String })
+    public selectedItemText = '';
+
     protected listRole = 'listbox';
     protected itemRole = 'option';
 
@@ -108,6 +111,9 @@ export class Dropdown extends Focusable {
 
     public onOptionsChange(): void {
         this.optionsMenu = this.querySelector('sp-menu');
+        if (this.value) {
+            this.requestUpdate('value');
+        }
     }
 
     public onButtonBlur(): void {
@@ -158,16 +164,18 @@ export class Dropdown extends Focusable {
         }
         this.open = true;
     }
-
     public setValueFromItem(item: MenuItem): void {
+        const oldSelectedItemText = this.selectedItemText;
         const oldValue = this.value;
-        this.value = (item.textContent || /* istanbul ignore next */ '').trim();
+        this.selectedItemText = item.itemText;
+        this.value = item.value;
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
             })
         );
         if (!applyDefault) {
+            this.selectedItemText = oldSelectedItemText;
             this.value = oldValue;
             return;
         }
@@ -192,7 +200,7 @@ export class Dropdown extends Focusable {
                     class=${ifDefined(this.value ? undefined : 'placeholder')}
                 >
                     ${this.value
-                        ? this.value
+                        ? this.selectedItemText
                         : html`
                               <slot></slot>
                           `}
@@ -240,6 +248,23 @@ export class Dropdown extends Focusable {
 
     protected updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
+        if (changedProperties.has('value') && this.optionsMenu) {
+            const items = [
+                ...this.querySelectorAll(
+                    `[role=${this.optionsMenu.childRole}]`
+                ),
+            ] as MenuItem[];
+            const selectedItem = items.find(
+                (item) => this.value === item.value
+            ) as MenuItem;
+            if (selectedItem) {
+                selectedItem.selected = true;
+                this.selectedItemText = selectedItem.itemText;
+            } else {
+                this.value = '';
+                this.selectedItemText = '';
+            }
+        }
         if (changedProperties.has('disabled') && this.disabled) {
             this.open = false;
         }

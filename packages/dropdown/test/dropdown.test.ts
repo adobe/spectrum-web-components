@@ -37,7 +37,7 @@ const dropdownFixture = async (): Promise<Dropdown> =>
                     <sp-menu-item>
                         Deselect
                     </sp-menu-item>
-                    <sp-menu-item>
+                    <sp-menu-item value="option-2">
                         Select Inverse
                     </sp-menu-item>
                     <sp-menu-item>
@@ -107,16 +107,14 @@ describe('Dropdown', () => {
         button.click();
         await elementUpdated(el);
 
-        const openContent = button.textContent ? button.textContent : '';
-        expect(el.open).to.be.true;
-        expect(openContent.trim()).to.equal('');
+        expect(el.selectedItemText).to.equal('');
+        expect(el.value).to.equal('');
 
         secondItem.click();
         await elementUpdated(el);
 
-        const closedContent = button.textContent ? button.textContent : '';
-        expect(el.open).to.be.false;
-        expect(closedContent.trim()).to.equal('Select Inverse');
+        expect(el.selectedItemText).to.equal('Select Inverse');
+        expect(el.value).to.equal('option-2');
     });
     it('re-selects', async () => {
         const el = await dropdownFixture();
@@ -134,29 +132,27 @@ describe('Dropdown', () => {
         button.click();
         await elementUpdated(el);
 
-        const openContent = button.textContent ? button.textContent : '';
-        expect(el.open).to.be.true;
-        expect(openContent.trim()).to.equal('');
+        expect(el.selectedItemText).to.equal('');
+        expect(el.value).to.equal('');
 
         secondItem.click();
         await elementUpdated(el);
 
-        let closedContent = button.textContent ? button.textContent : '';
-        expect(el.open).to.be.false;
-        expect(closedContent.trim()).to.equal('Select Inverse');
+        expect(el.selectedItemText).to.equal('Select Inverse');
+        expect(el.value).to.equal('option-2');
 
         button.click();
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
-        expect(openContent.trim()).to.equal('');
+        expect(el.selectedItemText).to.equal('Select Inverse');
+        expect(el.value).to.equal('option-2');
 
         firstItem.click();
         await elementUpdated(el);
 
-        closedContent = button.textContent ? button.textContent : '';
-        expect(el.open).to.be.false;
-        expect(closedContent.trim()).to.equal('Deselect');
+        expect(el.selectedItemText).to.equal('Deselect');
+        expect(el.value).to.equal('Deselect');
     });
     it('can have selection prevented', async () => {
         const el = await dropdownFixture();
@@ -171,17 +167,13 @@ describe('Dropdown', () => {
         button.click();
         await elementUpdated(el);
 
-        const openContent = button.textContent ? button.textContent : '';
-        expect(el.open).to.be.true;
-        expect(openContent.trim()).to.equal('');
+        expect(el.selectedItemText).to.equal('');
+        expect(el.value).to.equal('');
         expect(secondItem.selected).to.be.false;
 
-        el.addEventListener(
-            'change',
-            (e: Event): void => {
-                e.preventDefault();
-            }
-        );
+        el.addEventListener('change', (e: Event): void => {
+            e.preventDefault();
+        });
 
         secondItem.click();
         await elementUpdated(el);
@@ -212,16 +204,16 @@ describe('Dropdown', () => {
         button.dispatchEvent(arrowDownEvent);
         await elementUpdated(el);
 
-        const openContent = button.textContent ? button.textContent : '';
         expect(el.open).to.be.true;
-        expect(openContent.trim()).to.equal('');
+        expect(el.selectedItemText).to.equal('');
+        expect(el.value).to.equal('');
 
         firstItem.click();
         await elementUpdated(el);
 
-        const closedContent = button.textContent ? button.textContent : '';
         expect(el.open).to.be.false;
-        expect(closedContent.trim()).to.equal('Deselect');
+        expect(el.selectedItemText).to.equal('Deselect');
+        expect(el.value).to.equal('Deselect');
     });
     it('loads', async () => {
         const el = await dropdownFixture();
@@ -249,5 +241,75 @@ describe('Dropdown', () => {
         await waitForPredicate(() => document.activeElement === firstItem);
         expect(el.open).to.be.true;
         expect(document.activeElement === firstItem).to.be.true;
+    });
+    it('displays selected item text by default', async () => {
+        const el = await fixture<Dropdown>(
+            html`
+                <sp-dropdown value="inverse">
+                    Select a Country with a very long label, too long in fact
+                    <sp-menu slot="options">
+                        <sp-menu-item value="deselect">
+                            Deselect Text
+                        </sp-menu-item>
+                        <sp-menu-item value="inverse">
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-dropdown>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('inverse');
+        expect(el.selectedItemText).to.equal('Select Inverse');
+    });
+    it('resets value when item not available', async () => {
+        const el = await fixture<Dropdown>(
+            html`
+                <sp-dropdown value="missing">
+                    Select a Country with a very long label, too long in fact
+                    <sp-menu slot="options">
+                        <sp-menu-item value="deselect">
+                            Deselect Text
+                        </sp-menu-item>
+                        <sp-menu-item value="inverse">
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-dropdown>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('');
+        expect(el.selectedItemText).to.equal('');
     });
 });
