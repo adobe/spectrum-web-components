@@ -36,6 +36,28 @@ export class MenuItem extends ActionButton {
     @property({ type: Number, reflect: true })
     public tabIndex = -1;
 
+    private _value = '';
+
+    @property({ type: String })
+    public get value(): string {
+        return this._value || this.itemText;
+    }
+    public set value(value) {
+        if (value === this.value) {
+            return;
+        }
+        this._value = value || '';
+        if (this.value) {
+            this.setAttribute('value', this.value);
+        } else {
+            this.removeAttribute('value');
+        }
+    }
+
+    public get itemText(): string {
+        return (this.textContent || /* istanbul ignore next */ '').trim();
+    }
+
     protected get buttonContent(): TemplateResult[] {
         const content = super.buttonContent;
         if (this.selected) {
