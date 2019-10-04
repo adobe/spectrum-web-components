@@ -28,4 +28,26 @@ describe('Menu item', () => {
 
         expect(el).shadowDom.to.equalSnapshot();
     });
+    it('value attribute', async () => {
+        const el = await fixture<MenuItem>(
+            html`
+                <sp-menu-item value="selected" selected>
+                    Selected Text
+                </sp-menu-item>
+            `
+        );
+        expect(el.itemText).to.equal('Selected Text');
+        expect(el.value).to.equal('selected');
+    });
+    it('no value attribute', async () => {
+        const el = await fixture<MenuItem>(
+            html`
+                <sp-menu-item selected>
+                    Selected Text
+                </sp-menu-item>
+            `
+        );
+        expect(el.itemText).to.equal('Selected Text');
+        expect(el.value).to.equal('Selected Text');
+    });
 });
