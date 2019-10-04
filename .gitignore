@@ -20,12 +20,12 @@ documentation/api-docs/*.html
 documentation/dist
 test/**/*.js
 test/**/*.js.map
-test/**/*.d.ts 
+test/**/*.d.ts
 packages/*/src/**/*.css.js
 packages/*/test/**/*.js
 packages/*/test/**/*.js.map
-packages/*/test/**/*.d.ts 
-packages/*/stories/**/*.d.ts 
+packages/*/test/**/*.d.ts
+packages/*/stories/**/*.d.ts
 !test/global.d.ts
 !packages/*/test/global.d.ts
 *.tsbuildinfo
@@ -36,4 +36,6 @@ TESTS.xml
 
 /test/benchmark/**/*.js
 /test/benchmark/**/*.js.map
-/test/benchmark/**/*.d.ts 
+/test/benchmark/**/*.d.ts
+
+package-lock.json
