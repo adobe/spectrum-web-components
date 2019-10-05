@@ -16,6 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     query,
+    PropertyValues,
 } from 'lit-element';
 
 import spectrumSliderStyles from './spectrum-slider.css.js';
@@ -44,7 +45,7 @@ export class Slider extends Focusable {
             return;
         }
 
-        this._value = this.clampValue(value);
+        this._value = value;
         this.requestUpdate('value', oldValue);
     }
 
@@ -97,6 +98,12 @@ export class Slider extends Focusable {
                 ? this.renderColorTrack()
                 : this.renderTrack()}
         `;
+    }
+
+    protected updated(changedProperties: PropertyValues): void {
+        if (changedProperties.has('value')) {
+            this.value = this.clampValue(this.value);
+        }
     }
 
     private renderLabel(): TemplateResult {
