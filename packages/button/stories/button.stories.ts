@@ -141,7 +141,7 @@ storiesOf('Button', module)
                     content: html`
                         <sp-icon
                             slot="icon"
-                            size="m"
+                            size="s"
                             name="ui:HelpMedium"
                         ></sp-icon>
                         Help
