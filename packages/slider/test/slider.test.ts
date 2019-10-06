@@ -104,6 +104,7 @@ describe('Slider', () => {
                 pointerId: 2,
             })
         );
+        document.dispatchEvent(new MouseEvent('mouseup'));
         await elementUpdated(el);
 
         expect(el.dragging).to.be.false;

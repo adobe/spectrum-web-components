@@ -229,9 +229,6 @@ export class Slider extends Focusable {
     }
 
     private onMouseUp = (ev: MouseEvent): void => {
-        if (this._supportsPointerEvent) {
-            return;
-        }
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.input.focus();
         this._currentMouseEvent = ev;
@@ -252,12 +249,6 @@ export class Slider extends Focusable {
     }
 
     private onMouseMove = (ev: MouseEvent): void => {
-        if (this._supportsPointerEvent) {
-            return;
-        }
-        if (!this.dragging) {
-            return;
-        }
         this._currentMouseEvent = ev;
         this.dispatchInputEvent();
     };
