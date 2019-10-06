@@ -34,7 +34,7 @@ Select a Country with a very long label, too long in fact
         <slot></slot>
     </div>
     <sp-icon
-        class="dropdown icon"
+        class="chevron-down-medium dropdown icon"
         name="ui:ChevronDownMedium"
         size="s"
     ></sp-icon>
@@ -86,9 +86,9 @@ Select a Country with a very long label, too long in fact
     <div class="placeholder" id="label">
         <slot></slot>
     </div>
-    <sp-icon class="icon" name="ui:AlertSmall" size="s"></sp-icon>
+    <sp-icon class="alert-small icon" name="ui:AlertSmall" size="s"></sp-icon>
     <sp-icon
-        class="dropdown icon"
+        class="chevron-down-medium dropdown icon"
         name="ui:ChevronDownMedium"
         size="s"
     ></sp-icon>
