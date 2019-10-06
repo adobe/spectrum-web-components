@@ -30,7 +30,6 @@ jobs:
 
         steps:
             - setup
-            - run: mkdir junit
             - run:
                   name: Lint
                   command: yarn lint
@@ -40,24 +39,11 @@ jobs:
             # test & get code coverage
             - run:
                   name: Run tests
-                  # TODO
-                  # - [ ] use CircleCI parallelization
-                  # - [ ] get code coverage reporting
-                  # - [ ] use XUnit reporting
-                  #command: circleci tests glob test/test*.js | circleci tests split --split-by=timings | xargs ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- -R mocha-junit-reporter --exit && npx codecov
-                  command: npm test
-                  environment:
-                      JUNIT_REPORT_PATH: ./junit/
-                      JUNIT_REPORT_NAME: test-results.xml
-
-            - store_test_results:
-                  path: ./junit
-            - store_artifacts:
-                  path: ./junit
+                  command: yarn test:ci
 
             - run:
                   name: Generate Docs
-                  command: yarn docs:build
+                  command: yarn docs:ci
 
     publish-docs:
         executor: node8
