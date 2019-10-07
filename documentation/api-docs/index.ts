@@ -7,7 +7,7 @@ export const ComponentApiDocs = new Map<string, TemplateResult>();
 
 for (const key of componentApiDocs.keys()) {
     const componentName = /([a-zA-Z-]+)\.html$/.exec(key)![1];
-    const templateString = toHtmlTemplateString(componentApiDocs(key));
+    const templateString = toHtmlTemplateString(componentApiDocs(key).default);
 
     ComponentApiDocs.set(componentName, templateString);
 }
