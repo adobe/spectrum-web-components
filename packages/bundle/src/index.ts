@@ -28,6 +28,7 @@ export * from '@spectrum-web-components/overlay-trigger';
 export * from '@spectrum-web-components/popover';
 export * from '@spectrum-web-components/radio';
 export * from '@spectrum-web-components/radio-group';
+export * from '@spectrum-web-components/search';
 export * from '@spectrum-web-components/sidenav';
 export * from '@spectrum-web-components/slider';
 export * from '@spectrum-web-components/switch';
