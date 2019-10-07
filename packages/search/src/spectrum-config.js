@@ -19,6 +19,13 @@ module.exports = {
                 selector: '.spectrum-Search',
             },
             focus: '#input',
+            attributes: [
+                {
+                    type: 'boolean',
+                    selector: '.spectrum-Textfield--quiet',
+                    name: 'quiet',
+                },
+            ],
             ids: [
                 {
                     selector: '.spectrum-Search-input',
@@ -30,6 +37,10 @@ module.exports = {
                 },
                 {
                     selector: '.spectrum-ClearButton',
+                    name: 'button',
+                },
+                {
+                    selector: '.spectrum-Search-clear',
                     name: 'button',
                 },
             ],

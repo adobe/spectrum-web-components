@@ -75,13 +75,13 @@ export class Search extends Textfield {
                 @submit=${this.handleSubmit}
             >
                 <sp-icons-medium></sp-icons-medium>
+                ${super.render()}
                 <sp-icon
                     id="icon"
                     class="icon magnifier"
                     size="s"
                     name="ui:Magnifier"
                 ></sp-icon>
-                ${super.render()}
                 <button id="button" type="reset" aria-label="Reset">
                     <sp-icon
                         class="icon cross-medium"

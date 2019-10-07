@@ -36,20 +36,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Search-input::-webkit-search-decoration */
     -webkit-appearance: none;
 }
-#input.spectrum-Textfield--quiet {
+:host([quiet]) #input {
     /* .spectrum-Search-input.spectrum-Textfield--quiet */
     padding-left: var(--spectrum-search-quiet-padding-left, 24px);
     padding-right: var(--spectrum-search-quiet-padding-right, 20px);
 }
-#input.spectrum-Textfield--quiet ~ #icon {
+:host([quiet]) #input ~ #icon {
     /* .spectrum-Search-input.spectrum-Textfield--quiet ~ .spectrum-Search-icon */
     left: 0;
 }
-#input.spectrum-Textfield--quiet ~ .spectrum-Search-clear {
+:host([quiet]) #input ~ #button {
     /* .spectrum-Search-input.spectrum-Textfield--quiet ~ .spectrum-Search-clear */
     right: -8px;
 }
-#input.spectrum-Textfield--quiet ~ .spectrum-Search-rightIcon {
+:host([quiet]) #input ~ .spectrum-Search-rightIcon {
     /* .spectrum-Search-input.spectrum-Textfield--quiet ~ .spectrum-Search-rightIcon */
     right: 0;
 }
