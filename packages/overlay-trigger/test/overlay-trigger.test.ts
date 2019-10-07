@@ -18,7 +18,7 @@ import '../../popover';
 import { Popover } from '../../popover';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
-import { fixture, aTimeout, html, expect } from '@open-wc/testing';
+import { fixture, aTimeout, html, expect, nextFrame } from '@open-wc/testing';
 
 function pressEscape(): void {
     const up = new KeyboardEvent('keyup', {
@@ -322,6 +322,39 @@ describe('Overlays', () => {
         await waitForPredicate(
             () => hoverContent.parentElement instanceof OverlayTrigger
         );
+
+        expect(isVisible(hoverContent)).to.be.false;
+    });
+
+    it('closes a hover popover', async () => {
+        const outerButton = testDiv.querySelector(
+            '#outer-button'
+        ) as HTMLElement;
+        const hoverContent = testDiv.querySelector(
+            '#hover-content'
+        ) as HTMLElement;
+        const outerTrigger = testDiv.querySelector('#trigger') as HTMLElement;
+
+        let triggerShadowDiv: HTMLElement | null = null;
+        if (outerTrigger.shadowRoot) {
+            triggerShadowDiv = outerTrigger.shadowRoot.querySelector('div');
+        }
+
+        expect(triggerShadowDiv).to.exist;
+        if (!triggerShadowDiv) return;
+
+        expect(outerButton).to.exist;
+        expect(hoverContent).to.exist;
+
+        expect(isVisible(hoverContent)).to.be.false;
+
+        const mouseEnter = new MouseEvent('mouseenter');
+        const mouseLeave = new MouseEvent('mouseleave');
+        triggerShadowDiv.dispatchEvent(mouseEnter);
+        triggerShadowDiv.dispatchEvent(mouseLeave);
+
+        await nextFrame();
+        await nextFrame();
 
         expect(isVisible(hoverContent)).to.be.false;
     });
