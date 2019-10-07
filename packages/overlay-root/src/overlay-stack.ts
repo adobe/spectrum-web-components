@@ -105,11 +105,13 @@ export class OverlayStack {
     }
 
     public closeOverlay(event: CustomEvent<OverlayCloseDetail>): void {
-        const overlayContent = event.detail.content;
-        const overlay = this.overlays.find(
-            (item) => item.overlayContent === overlayContent
-        );
-        this.hideAndCloseOverlay(overlay);
+        requestAnimationFrame(() => {
+            const overlayContent = event.detail.content;
+            const overlay = this.overlays.find(
+                (item) => item.overlayContent === overlayContent
+            );
+            this.hideAndCloseOverlay(overlay);
+        });
     }
 
     private handleMouseCapture = (event: MouseEvent): void => {
