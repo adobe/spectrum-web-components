@@ -23,6 +23,9 @@ export class ButtonBase extends Focusable {
     public href?: string;
 
     @property()
+    public label?: string;
+
+    @property()
     public target?: '_blank' | '_parent' | '_self' | '_top';
 
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
@@ -63,12 +66,13 @@ export class ButtonBase extends Focusable {
                       href="${this.href}"
                       id="button"
                       target=${ifDefined(this.target)}
+                      aria-label=${ifDefined(this.label)}
                   >
                       ${this.buttonContent}
                   </a>
               `
             : html`
-                  <button id="button">
+                  <button id="button" aria-label=${ifDefined(this.label)}>
                       ${this.buttonContent}
                   </button>
               `;
