@@ -84,8 +84,8 @@ export class Slider extends Focusable {
     @query('#input')
     private input!: HTMLInputElement;
 
-    private _supportsPointerEvent = 'setPointerCapture' in this;
-    private _currentMouseEvent?: MouseEvent;
+    private supportsPointerEvent = 'setPointerCapture' in this;
+    private currentMouseEvent?: MouseEvent;
 
     public get focusElement(): HTMLElement {
         return this.input ? this.input : this;
@@ -196,7 +196,7 @@ export class Slider extends Focusable {
     }
 
     private onMouseDown(ev: MouseEvent): void {
-        if (this._supportsPointerEvent) {
+        if (this.supportsPointerEvent) {
             return;
         }
         if (this.disabled) {
@@ -206,15 +206,15 @@ export class Slider extends Focusable {
         document.addEventListener('mouseup', this.onMouseUp);
         this.input.focus();
         this.dragging = true;
-        this._currentMouseEvent = ev;
+        this.currentMouseEvent = ev;
         this._trackMouseEvent();
     }
 
     private _trackMouseEvent(): void {
-        if (!this._currentMouseEvent || !this.dragging) {
+        if (!this.currentMouseEvent || !this.dragging) {
             return;
         }
-        this.value = this.calculateHandlePosition(this._currentMouseEvent);
+        this.value = this.calculateHandlePosition(this.currentMouseEvent);
         this.dispatchInputEvent();
         requestAnimationFrame(() => this._trackMouseEvent());
     }
@@ -231,7 +231,7 @@ export class Slider extends Focusable {
     private onMouseUp = (ev: MouseEvent): void => {
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.input.focus();
-        this._currentMouseEvent = ev;
+        this.currentMouseEvent = ev;
         document.removeEventListener('mousemove', this.onMouseMove);
         document.removeEventListener('mouseup', this.onMouseUp);
         requestAnimationFrame(() => {
@@ -249,7 +249,7 @@ export class Slider extends Focusable {
     }
 
     private onMouseMove = (ev: MouseEvent): void => {
-        this._currentMouseEvent = ev;
+        this.currentMouseEvent = ev;
         this.dispatchInputEvent();
     };
 
@@ -274,7 +274,7 @@ export class Slider extends Focusable {
     }
 
     private onTrackMouseDown(ev: MouseEvent): void {
-        if (this._supportsPointerEvent) {
+        if (this.supportsPointerEvent) {
             return;
         }
         if (ev.target === this.handle || this.disabled) {
@@ -283,7 +283,7 @@ export class Slider extends Focusable {
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
         this.dragging = true;
-        this._currentMouseEvent = ev;
+        this.currentMouseEvent = ev;
         this._trackMouseEvent();
     }
 

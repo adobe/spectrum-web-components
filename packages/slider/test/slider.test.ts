@@ -21,7 +21,7 @@ import {
 } from '@open-wc/testing';
 
 type TestableSliderType = {
-    _supportsPointerEvent: boolean;
+    supportsPointerEvent: boolean;
 };
 
 describe('Slider', () => {
@@ -137,9 +137,9 @@ describe('Slider', () => {
                 <sp-slider style="width: 500px; float: left;"></sp-slider>
             `
         );
-        const _supportsPointerEvent = ((el as unknown) as TestableSliderType)
-            ._supportsPointerEvent;
-        ((el as unknown) as TestableSliderType)._supportsPointerEvent = false;
+        const supportsPointerEvent = ((el as unknown) as TestableSliderType)
+            .supportsPointerEvent;
+        ((el as unknown) as TestableSliderType).supportsPointerEvent = false;
 
         await elementUpdated(el);
 
@@ -184,7 +184,7 @@ describe('Slider', () => {
 
         expect(el.value).to.equal(5);
 
-        ((el as unknown) as TestableSliderType)._supportsPointerEvent = _supportsPointerEvent;
+        ((el as unknown) as TestableSliderType).supportsPointerEvent = supportsPointerEvent;
     });
     it('will `trackPointerDown` on `#controls`', async () => {
         let pointerId = -1;
@@ -223,9 +223,9 @@ describe('Slider', () => {
                 <sp-slider></sp-slider>
             `
         );
-        const _supportsPointerEvent = ((el as unknown) as TestableSliderType)
-            ._supportsPointerEvent;
-        ((el as unknown) as TestableSliderType)._supportsPointerEvent = false;
+        const supportsPointerEvent = ((el as unknown) as TestableSliderType)
+            .supportsPointerEvent;
+        ((el as unknown) as TestableSliderType).supportsPointerEvent = false;
 
         await elementUpdated(el);
 
@@ -243,7 +243,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(1);
-        ((el as unknown) as TestableSliderType)._supportsPointerEvent = _supportsPointerEvent;
+        ((el as unknown) as TestableSliderType).supportsPointerEvent = supportsPointerEvent;
     });
     it('can be disabled', async () => {
         let pointerId = -1;
