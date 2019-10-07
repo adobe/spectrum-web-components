@@ -16,3 +16,7 @@ governing permissions and limitations under the License.
 :host(.spectrum-Dropdown-trigger) #button {
     text-align: left;
 }
+
+::slotted([slot='icon']) {
+    flex-shrink: 0;
+}
