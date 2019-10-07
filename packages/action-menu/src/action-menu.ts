@@ -74,6 +74,7 @@ export class ActionMenu extends Dropdown {
     }
 
     protected firstUpdated(): void {
+        super.firstUpdated();
         this.quiet = true;
     }
 }
