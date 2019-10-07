@@ -1990,6 +1990,16 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
+"@spectrum-css/actionbar@^2.0.0-alpha.6":
+  version "2.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-2.0.0-alpha.6.tgz#03e1f38f265d0e90447e692d135619ec8515c494"
+  integrity sha512-VgK9efs0Wejg9JrmYY+qG9ptL+JkqPuw0e00yRTPoS3/J//pTUlR2maoRTpOWk2BSjb49b2VRPCTQnLbKPo6MA==
+
+"@spectrum-css/commons@^2.0.0-alpha.2":
+  version "2.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-2.0.0-alpha.2.tgz#7105a71cf650bb26f87ccc32b9609d678b3ff3d6"
+  integrity sha512-r+lkvJD+EGl4/nMNvKPO9ULEeQkzekoZa9qTN9dVvEj/IVdTlTKQwZWO0Fb/npOcGfmYSc3GUj6mtB9w3tO59A==
+
 "@storybook/addon-a11y@5.2.1":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-5.2.1.tgz#4ab013ea7910189cdbfc2dbfecdd6c2dab5f04d8"
