@@ -10,14 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
+import { action } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
 import '../';
+import { Search } from '../';
 
 storiesOf('Search', module).add(
     'Default',
     () => html`
-        <sp-search></sp-search>
+        <sp-search
+            @submit=${(e: Event) => {
+                e.preventDefault();
+                const search = e.target as Search;
+                action(`Search: ${search.value}`)();
+            }}
+        ></sp-search>
         <sp-search disabled></sp-search>
     `
 );

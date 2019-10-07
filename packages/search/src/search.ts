@@ -17,6 +17,7 @@ import {
     TemplateResult,
     property,
 } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/icon';
@@ -43,14 +44,35 @@ export class Search extends Textfield {
     }
 
     @property()
+    public action?: string;
+
+    @property()
     public label = 'Search';
+
+    @property()
+    public method?: 'GET' | 'POST' | 'dialog';
 
     @property()
     public placeholder = 'Search';
 
+    private handleSubmit(event: Event): void {
+        const applyDefault = this.dispatchEvent(
+            new Event('submit', {
+                cancelable: true,
+            })
+        );
+        if (!applyDefault) {
+            event.preventDefault();
+        }
+    }
+
     protected render(): TemplateResult {
         return html`
-            <form>
+            <form
+                action=${ifDefined(this.action)}
+                method=${ifDefined(this.method)}
+                @submit=${this.handleSubmit}
+            >
                 <sp-icons-medium></sp-icons-medium>
                 <sp-icon
                     id="icon"
