@@ -21,7 +21,3 @@ governing permissions and limitations under the License.
 sp-popover {
     width: 100%;
 }
-
-:host([quiet]) {
-    width: var(--spectrum-global-dimension-size-2400);
-}
