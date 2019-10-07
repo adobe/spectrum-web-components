@@ -59,6 +59,7 @@ export class Search extends Textfield {
         const applyDefault = this.dispatchEvent(
             new Event('submit', {
                 cancelable: true,
+                bubbles: true,
             })
         );
         if (!applyDefault) {
