@@ -20,53 +20,6 @@ import { boolean, select } from '@storybook/addon-knobs';
 storiesOf('Actionbar', module).add('Default', () => {
     const variants = ['', ...actionbarVariants];
     return html`
-        <style>
-            :root {
-                --spectrum-global-animation-duration-0: 0ms;
-                --spectrum-global-animation-duration-100: 130ms;
-                --spectrum-global-animation-duration-200: 160ms;
-                --spectrum-global-animation-duration-300: 190ms;
-                --spectrum-global-animation-duration-400: 220ms;
-                --spectrum-global-animation-duration-500: 250ms;
-                --spectrum-global-animation-duration-600: 300ms;
-                --spectrum-global-animation-duration-700: 350ms;
-                --spectrum-global-animation-duration-800: 400ms;
-                --spectrum-global-animation-duration-900: 450ms;
-                --spectrum-global-animation-duration-1000: 500ms;
-                --spectrum-global-animation-duration-2000: 1000ms;
-                --spectrum-global-animation-duration-4000: 2000ms;
-                --spectrum-global-animation-ease-in-out: cubic-bezier(
-                    0.45,
-                    0,
-                    0.4,
-                    1
-                );
-                --spectrum-global-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
-                --spectrum-global-animation-ease-out: cubic-bezier(
-                    0,
-                    0,
-                    0.4,
-                    1
-                );
-                --spectrum-global-animation-linear: cubic-bezier(0, 0, 1, 1);
-
-                --spectrum-actionbar-height: var(
-                    --spectrum-global-dimension-size-600
-                );
-                --spectrum-actionbar-padding-x: var(
-                    --spectrum-global-dimension-size-200
-                );
-                --spectrum-actionbar-margin-x: var(
-                    --spectrum-global-dimension-size-200
-                );
-                --spectrum-actionbar-offset-y: var(
-                    --spectrum-global-dimension-size-200
-                );
-
-                --spectrum-actionbar-min-width: 280px;
-                --spectrum-actionbar-max-width: 960px;
-            }
-        </style>
         <sp-actionbar
             ?open=${boolean('Open', true, 'Element')}
             variant=${ifDefined(
