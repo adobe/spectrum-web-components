@@ -8,7 +8,7 @@ It will not support older browsers and will only target modern ever-green browse
 
 # Requirements
 
--   NodeJS >= 8.10.0
+-   NodeJS >= 10.15
 -   Typescript
 -   Browsers with Custom Elements V1 and Shadow DOM support, e.g. Chrome, Firefox, Safari.
 
