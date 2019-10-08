@@ -17,19 +17,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     bottom: 0;
     z-index: 1;
     box-sizing: border-box;
-    padding: 0 var(--spectrum-actionbar-margin-x);
+    padding: 0 var(--spectrum-global-dimension-size-200);
     height: 0;
     opacity: 0;
     overflow: hidden;
     pointer-events: none;
-    transition: height var(--spectrum-global-animation-duration-100) ease-in-out,
-        opacity var(--spectrum-global-animation-duration-100) ease-in-out;
+    transition: height var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out;
 }
 :host([open]) {
     /* .spectrum-ActionBar.is-open */
     height: calc(
-        var(--spectrum-actionbar-height) + var(--spectrum-actionbar-margin-x) *
-            2
+        var(--spectrum-global-dimension-size-600) +
+            var(--spectrum-global-dimension-size-200) * 2
     );
     opacity: 1;
 }
@@ -50,10 +51,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-sizing: border-box;
     width: 100%;
     margin: auto;
-    height: var(--spectrum-actionbar-height);
-    min-width: var(--spectrum-actionbar-min-width);
-    max-width: var(--spectrum-actionbar-max-width);
-    padding: 0 var(--spectrum-actionbar-padding-x);
+    height: var(--spectrum-global-dimension-size-600);
+    min-width: 280px;
+    max-width: 960px;
+    padding: 0 var(--spectrum-global-dimension-size-200);
     flex-direction: row;
     align-items: center;
     justify-content: space-between;

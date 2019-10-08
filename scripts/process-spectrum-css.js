@@ -30,7 +30,7 @@ async function processComponent(componentPath) {
     let packageCss = false;
     try {
         inputCssPath = require.resolve(
-            `@spectrum-css/${spectrumConfig.spectrum}/index.css`
+            `@spectrum-css/${spectrumConfig.spectrum}/dist/index-vars.css`
         );
         packageCss = true;
     } catch (e) {
