@@ -30,13 +30,13 @@ export class Actionbar extends LitElement {
         return [actionbarStyles];
     }
 
-    /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
-    private _variant = '';
-
-    @property({ type: String })
-    public get variant(): string {
-        return this._variant;
-    }
+    /**
+     * The variant applies specific styling when set to `sticky` or `fixed`.
+     * `variant` attribute is removed when not matching one of the above.
+     *
+     * @param {String} variant
+     */
+    @property({ type: String, reflect: true })
     public set variant(variant: string) {
         if (variant === this.variant) {
             return;
@@ -49,6 +49,12 @@ export class Actionbar extends LitElement {
         this.removeAttribute('variant');
         this._variant = '';
     }
+
+    public get variant(): string {
+        return this._variant;
+    }
+
+    private _variant = '';
 
     public render(): TemplateResult {
         return html`
