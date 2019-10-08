@@ -30,6 +30,9 @@ export class Actionbar extends LitElement {
         return [actionbarStyles];
     }
 
+    @property({ type: Boolean, reflect: true })
+    public open = false;
+
     /**
      * The variant applies specific styling when set to `sticky` or `fixed`.
      * `variant` attribute is removed when not matching one of the above.
