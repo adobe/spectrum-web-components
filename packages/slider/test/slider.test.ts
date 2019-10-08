@@ -12,7 +12,17 @@ governing permissions and limitations under the License.
 
 import '../';
 import { Slider } from '../';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    html,
+    expect,
+    nextFrame,
+} from '@open-wc/testing';
+
+type TestableSliderType = {
+    supportsPointerEvent: boolean;
+};
 
 describe('Slider', () => {
     it('loads', async () => {
@@ -94,6 +104,7 @@ describe('Slider', () => {
                 pointerId: 2,
             })
         );
+        document.dispatchEvent(new MouseEvent('mouseup'));
         await elementUpdated(el);
 
         expect(el.dragging).to.be.false;
@@ -119,6 +130,61 @@ describe('Slider', () => {
 
         expect(el.dragging).to.be.false;
         expect(pointerId).to.equal(3);
+    });
+    it('will fallback to mouse events', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider style="width: 500px; float: left;"></sp-slider>
+            `
+        );
+        const supportsPointerEvent = ((el as unknown) as TestableSliderType)
+            .supportsPointerEvent;
+        ((el as unknown) as TestableSliderType).supportsPointerEvent = false;
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(10);
+
+        const handle = el.shadowRoot
+            ? (el.shadowRoot.querySelector('#handle') as HTMLDivElement)
+            : (el as Slider);
+
+        handle.dispatchEvent(
+            new MouseEvent('mousedown', {
+                clientX: 131,
+            })
+        );
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        expect(el.value).to.equal(5);
+
+        await elementUpdated(el);
+
+        document.dispatchEvent(
+            new MouseEvent('mousemove', {
+                clientX: 200,
+            })
+        );
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        expect(el.value).to.equal(8);
+
+        document.dispatchEvent(
+            new MouseEvent('mouseup', {
+                clientX: 131,
+            })
+        );
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
+        expect(el.value).to.equal(5);
+
+        ((el as unknown) as TestableSliderType).supportsPointerEvent = supportsPointerEvent;
     });
     it('will `trackPointerDown` on `#controls`', async () => {
         let pointerId = -1;
@@ -150,6 +216,34 @@ describe('Slider', () => {
 
         expect(pointerId).to.equal(4);
         expect(el.value).to.equal(1);
+    });
+    it('will fallback to `trackMouseDown` on `#controls`', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider></sp-slider>
+            `
+        );
+        const supportsPointerEvent = ((el as unknown) as TestableSliderType)
+            .supportsPointerEvent;
+        ((el as unknown) as TestableSliderType).supportsPointerEvent = false;
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(10);
+
+        const controls = el.shadowRoot
+            ? (el.shadowRoot.querySelector('#controls') as HTMLDivElement)
+            : (el as Slider);
+
+        controls.dispatchEvent(
+            new MouseEvent('mousedown', {
+                clientX: 50,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(1);
+        ((el as unknown) as TestableSliderType).supportsPointerEvent = supportsPointerEvent;
     });
     it('can be disabled', async () => {
         let pointerId = -1;
