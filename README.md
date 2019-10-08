@@ -42,7 +42,7 @@ By default the resulting site will be available at [http://localhost:6006](http:
 
 ## Linting
 
-The project will be linted on a pre-commit hook, but you can also run the lint suite with `npm run lint`. It uses ESLint to lint the JS / TS files, and StyleLint to lint the CSS files.
+The project will be linted on a pre-commit hook, but you can also run the lint suite with `yarn lint`. It uses ESLint to lint the JS / TS files, and StyleLint to lint the CSS files.
 
 ## Testing
 
@@ -52,7 +52,7 @@ Tests are implemented using the Karma test runner with Chai, Mocha and Sinon fra
 yarn test
 ```
 
-During development you may wish to use `npm run test:watch` to automatically build and re-run the test suites.
+During development you may wish to use `yarn test:watch` to automatically build and re-run the test suites.
 
 ## Benchmarking
 
@@ -63,7 +63,7 @@ yarn build:tests
 yarn test:bench
 ```
 
-This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer) tests and report the current runtime cost of each individual element. When not making changes to the benchmarks thy have been built on your local machine, you can stip `npm run build:tests` for later passes.
+This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer) tests and report the current runtime cost of each individual element. When not making changes to the benchmarks thy have been built on your local machine, you can stip `yarn build:tests` for later passes.
 
 ## Anatomy of a Component
 
