@@ -34,5 +34,8 @@
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
+    },
+    "dependencies": {
+        "tslib": "^1.10.0"
     }
 }

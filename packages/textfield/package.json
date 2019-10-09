@@ -38,6 +38,7 @@
     "dependencies": {
         "@spectrum-web-components/icon": "^0.1.3",
         "@spectrum-web-components/icons": "^0.1.3",
-        "@spectrum-web-components/shared": "^0.1.3"
+        "@spectrum-web-components/shared": "^0.1.3",
+        "tslib": "^1.10.0"
     }
 }
