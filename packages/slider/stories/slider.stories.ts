@@ -10,18 +10,27 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { text, number } from '@storybook/addon-knobs';
+import { text, number, select } from '@storybook/addon-knobs';
 import { html } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 import '../';
+import { variants } from '../';
 
 storiesOf('Slider', module)
     .add('Default', () => {
-        const value = number('Value', 50);
-        const min = number('Min', 0);
-        const max = number('Max', 100);
-        const step = number('Step', 1);
-        const label = text('Label', 'Opacity');
+        const sliderVariants = ['', ...variants];
+        const value = number('Value', 50, {}, 'Element');
+        const min = number('Min', 0, {}, 'Element');
+        const max = number('Max', 100, {}, 'Element');
+        const step = number('Step', 1, {}, 'Element');
+        const label = text('Label', 'Opacity', 'Element');
+        const variant = select(
+            'Variant',
+            sliderVariants,
+            sliderVariants[0],
+            'Element'
+        );
         return html`
             <div style="width: 500px; margin: 20px;">
                 <sp-slider
@@ -31,6 +40,7 @@ storiesOf('Slider', module)
                     max="${max}"
                     label="${label}"
                     id="opacity-slider"
+                    variant=${ifDefined(variant || undefined)}
                 ></sp-slider>
             </div>
         `;

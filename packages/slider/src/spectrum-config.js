@@ -39,6 +39,8 @@ module.exports = {
                         '.spectrum-Slider--color',
                         '.spectrum-Slider--range',
                         '.spectrum-Slider--filled',
+                        '.spectrum-Slider--ramp',
+                        '.spectrum-Slider--tick',
                     ],
                 },
             ],
@@ -83,15 +85,19 @@ module.exports = {
                     selector: '.spectrum-Slider-fill',
                     name: 'fill',
                 },
-                {
-                    selector: '.spectrum-Slider-tick',
-                    name: 'tick',
-                },
             ],
             classes: [
                 {
                     selector: '.spectrum-Slider-track',
                     name: 'track',
+                },
+                {
+                    selector: '.spectrum-Slider-ticks',
+                    name: 'ticks',
+                },
+                {
+                    selector: '.spectrum-Slider-tick',
+                    name: 'tick',
                 },
             ],
             exclude: [/^\.is-disabled/],
