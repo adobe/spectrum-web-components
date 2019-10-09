@@ -31,15 +31,10 @@ const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
     const svgWidth = parseInt(match[1], 10);
     const svgHeight = parseInt(match[2], 10);
     const svgContent = match[3];
-    // calculate viewbox offsets to be centered within the target icon size at this scale
-    const viewBoxMinX = -(scaleWidth - svgWidth) / 2;
-    const viewBoxMinY = -(scaleHeight - svgHeight) / 2;
-    const viewBoxWidth = scaleWidth;
-    const viewBoxHeight = scaleHeight;
     // append the content to the target file handle
     fs.writeSync(
         fd,
-        `<symbol id="spectrum-icon-${iconName}" viewBox="${viewBoxMinX} ${viewBoxMinY} ${viewBoxWidth} ${viewBoxHeight}">${svgContent}</symbol>`
+        `<symbol id="spectrum-icon-${iconName}" viewBox="0 0 ${svgWidth} ${svgHeight}">${svgContent}</symbol>`
     );
 };
 

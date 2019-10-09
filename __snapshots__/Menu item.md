@@ -9,6 +9,7 @@
     </div>
     <sp-icons-medium style="display: none;"></sp-icons-medium>
     <sp-icon
+        class="checkmark-medium"
         id="selected"
         name="ui:CheckmarkMedium"
         size="s"

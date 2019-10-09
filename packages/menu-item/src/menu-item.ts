@@ -12,11 +12,13 @@ governing permissions and limitations under the License.
 
 import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
 
-import menuItemStyles from './menu-item.css.js';
-import focusableStyles from '@spectrum-web-components/shared/lib/focusable.css.js';
 import '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons';
 import { ActionButton } from '@spectrum-web-components/button';
+
+import menuItemStyles from './menu-item.css.js';
+import focusableStyles from '@spectrum-web-components/shared/lib/focusable.css.js';
+import checkmarkMediumStyles from '@spectrum-web-components/icon/lib/spectrum-icon-checkmark-medium.css.js';
 
 export interface MenuItemQueryRoleEventDetail {
     role: string;
@@ -28,7 +30,7 @@ export interface MenuItemQueryRoleEventDetail {
  */
 export class MenuItem extends ActionButton {
     public static get styles(): CSSResultArray {
-        return [focusableStyles, menuItemStyles];
+        return [focusableStyles, menuItemStyles, checkmarkMediumStyles];
     }
 
     @property({ type: Number, reflect: true })
@@ -44,6 +46,7 @@ export class MenuItem extends ActionButton {
                     name="ui:CheckmarkMedium"
                     size="s"
                     slot="icon"
+                    class="checkmark-medium"
                 ></sp-icon>
             `);
         }

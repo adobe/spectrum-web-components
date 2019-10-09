@@ -11,17 +11,19 @@ governing permissions and limitations under the License.
 */
 @import './spectrum-dropdown.css';
 
-.icon,
-#button .icon:not(.dropdown) {
-    margin-top: 0;
-    margin-bottom: 0;
-    flex-shrink: 0;
-}
-
 sp-popover {
     width: 100%;
 }
 
 :host([quiet]) {
     width: var(--spectrum-global-dimension-size-2400);
+}
+
+#label ~ .dropdown {
+    /* .spectrum-Icon + .spectrum-Dropdown-icon
+        with specificity bump to counteract #label ~ .dropdown elsewhere */
+    margin-left: var(
+        --spectrum-dropdown-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
 }

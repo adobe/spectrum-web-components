@@ -56,7 +56,7 @@ storiesOf('Tabs', module)
                 >
                     <sp-icon
                         slot="icon"
-                        size="m"
+                        size="s"
                         name="ui:CheckmarkSmall"
                     ></sp-icon>
                 </sp-tab>
@@ -68,7 +68,7 @@ storiesOf('Tabs', module)
                 >
                     <sp-icon
                         slot="icon"
-                        size="m"
+                        size="s"
                         name="ui:CrossSmall"
                     ></sp-icon>
                 </sp-tab>
@@ -80,7 +80,7 @@ storiesOf('Tabs', module)
                 >
                     <sp-icon
                         slot="icon"
-                        size="m"
+                        size="s"
                         name="ui:ChevronDownSmall"
                     ></sp-icon>
                 </sp-tab>
@@ -90,7 +90,7 @@ storiesOf('Tabs', module)
                     tabindex="0"
                     ?vertical=${tabType === directions.vertical}
                 >
-                    <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
+                    <sp-icon slot="icon" size="s" name="ui:HelpSmall"></sp-icon>
                 </sp-tab>
             </sp-tab-list>
         `;
@@ -102,26 +102,26 @@ storiesOf('Tabs', module)
                 <sp-tab label="Tab 1" value="1" tabindex="0" vertical>
                     <sp-icon
                         slot="icon"
-                        size="m"
+                        size="s"
                         name="ui:CheckmarkSmall"
                     ></sp-icon>
                 </sp-tab>
                 <sp-tab label="Tab 2" value="2" tabindex="0" vertical>
                     <sp-icon
                         slot="icon"
-                        size="m"
+                        size="s"
                         name="ui:CrossSmall"
                     ></sp-icon>
                 </sp-tab>
                 <sp-tab label="Tab 3" value="3" tabindex="0" vertical>
                     <sp-icon
                         slot="icon"
-                        size="m"
+                        size="s"
                         name="ui:ChevronDownSmall"
                     ></sp-icon>
                 </sp-tab>
                 <sp-tab label="Tab 4" value="4" tabindex="0" vertical>
-                    <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
+                    <sp-icon slot="icon" size="s" name="ui:HelpSmall"></sp-icon>
                 </sp-tab>
             </sp-tab-list>
         `;
