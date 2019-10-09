@@ -16,16 +16,31 @@ import { html } from 'lit-html';
 import '../';
 import { Search } from '../';
 
-storiesOf('Search', module).add(
-    'Default',
-    () => html`
-        <sp-search
-            @submit=${(e: Event) => {
-                e.preventDefault();
-                const search = e.target as Search;
-                action(`Search: ${search.value}`)();
-            }}
-        ></sp-search>
-        <sp-search disabled></sp-search>
-    `
-);
+storiesOf('Search', module)
+    .add(
+        'Default',
+        () => html`
+            <sp-search
+                @submit=${(e: Event) => {
+                    e.preventDefault();
+                    const search = e.target as Search;
+                    action(`Search: ${search.value}`)();
+                }}
+            ></sp-search>
+            <sp-search disabled></sp-search>
+        `
+    )
+    .add(
+        'Quiet',
+        () => html`
+            <sp-search
+                quiet
+                @submit=${(e: Event) => {
+                    e.preventDefault();
+                    const search = e.target as Search;
+                    action(`Search: ${search.value}`)();
+                }}
+            ></sp-search>
+            <sp-search quiet disabled></sp-search>
+        `
+    );
