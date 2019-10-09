@@ -107,12 +107,14 @@ describe('Dropdown', () => {
         button.click();
         await elementUpdated(el);
 
+        expect(el.open).to.be.true;
         expect(el.selectedItemText).to.equal('');
         expect(el.value).to.equal('');
 
         secondItem.click();
         await elementUpdated(el);
 
+        expect(el.open).to.be.false;
         expect(el.selectedItemText).to.equal('Select Inverse');
         expect(el.value).to.equal('option-2');
     });
@@ -132,12 +134,14 @@ describe('Dropdown', () => {
         button.click();
         await elementUpdated(el);
 
+        expect(el.open).to.be.true;
         expect(el.selectedItemText).to.equal('');
         expect(el.value).to.equal('');
 
         secondItem.click();
         await elementUpdated(el);
 
+        expect(el.open).to.be.false;
         expect(el.selectedItemText).to.equal('Select Inverse');
         expect(el.value).to.equal('option-2');
 
@@ -151,6 +155,7 @@ describe('Dropdown', () => {
         firstItem.click();
         await elementUpdated(el);
 
+        expect(el.open).to.be.false;
         expect(el.selectedItemText).to.equal('Deselect');
         expect(el.value).to.equal('Deselect');
     });
@@ -167,6 +172,7 @@ describe('Dropdown', () => {
         button.click();
         await elementUpdated(el);
 
+        expect(el.open).to.be.true;
         expect(el.selectedItemText).to.equal('');
         expect(el.value).to.equal('');
         expect(secondItem.selected).to.be.false;
