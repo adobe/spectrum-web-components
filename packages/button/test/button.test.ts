@@ -57,6 +57,21 @@ describe('Button', () => {
             `<button id="button" tabindex="0"><slot name="icon"></slot><div id="label"><slot></slot></div></button>`
         );
     });
+    it('loads default only icon', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button>
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el).shadowDom.to.equal(
+            `<button id="button" tabindex="0"><slot name="icon"></slot><div id="label" hidden><slot></slot></div></button>`
+        );
+    });
     it('loads default w/ an icon on the right', async () => {
         const el = await fixture<Button>(
             html`
