@@ -9,15 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-@import './spectrum-dropdown.css';
+import '../../';
+import { html } from 'lit-html';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 
-.icon,
-#button .icon:not(.dropdown) {
-    margin-top: 0;
-    margin-bottom: 0;
-    flex-shrink: 0;
-}
-
-sp-popover {
-    width: 100%;
-}
+measureFixtureCreation(html`
+    <sp-actionbar open></sp-actionbar>
+`);

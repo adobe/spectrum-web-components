@@ -103,10 +103,10 @@ module.exports = {
                     selector: '.spectrum-ActionButton-hold',
                 },
             ],
-            classes: [
+            slots: [
                 {
-                    selector: '.spectrum-Icon',
                     name: 'icon',
+                    selector: '.spectrum-Icon',
                 },
             ],
             exclude: [/\.is-disabled/],
