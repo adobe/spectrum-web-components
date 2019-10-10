@@ -47,6 +47,23 @@ describe('Slider', () => {
 
         expect(el).shadowDom.to.equalSnapshot();
     });
+    it('loads - [variant="tick"]', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    min="-100"
+                    max="100"
+                    value="0"
+                    tick-labels
+                    variant="tick"
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).shadowDom.to.equalSnapshot();
+    });
     it('receives value from the outside', async () => {
         const el = await fixture<Slider>(
             html`

@@ -91,6 +91,12 @@ export class Slider extends Focusable {
     @property({ type: Number })
     public step = 1;
 
+    @property({ type: Number, attribute: 'tick-step' })
+    public tickStep = 0;
+
+    @property({ type: Boolean, attribute: 'tick-labels' })
+    public tickLabels = false;
+
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
@@ -196,18 +202,25 @@ export class Slider extends Focusable {
         if (this.variant !== 'tick') {
             return html``;
         }
-        const tickCount = (this.max - this.min) / this.step;
+        const tickStep = this.tickStep || this.step;
+        const tickCount = (this.max - this.min) / tickStep;
         const ticks = new Array(tickCount + 1);
-        ticks.fill(
-            html`
-                <div class="tick"></div>
-            `,
-            0,
-            tickCount + 1
-        );
+        ticks.fill(0, 0, tickCount + 1);
         return html`
             <div class="ticks">
-                ${ticks}
+                ${ticks.map(
+                    (tick, i) => html`
+                        <div class="tick">
+                            ${this.tickLabels
+                                ? html`
+                                      <div class="tickLabel">
+                                          ${i * tickStep}
+                                      </div>
+                                  `
+                                : html``}
+                        </div>
+                    `
+                )}
             </div>
         `;
     }

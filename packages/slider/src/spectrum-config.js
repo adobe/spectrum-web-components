@@ -70,10 +70,6 @@ module.exports = {
                     name: 'label',
                 },
                 {
-                    selector: '.spectrum-Slider-tickLabel',
-                    name: 'tickLabel',
-                },
-                {
                     selector: '.spectrum-Slider-labelContainer',
                     name: 'labelContainer',
                 },
@@ -98,6 +94,10 @@ module.exports = {
                 {
                     selector: '.spectrum-Slider-tick',
                     name: 'tick',
+                },
+                {
+                    selector: '.spectrum-Slider-tickLabel',
+                    name: 'tickLabel',
                 },
             ],
             exclude: [/^\.is-disabled/],
