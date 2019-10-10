@@ -33,7 +33,9 @@
 
 ```html
 <sp-icons-medium style="display: none;"></sp-icons-medium>
-<button aria-haspopup="true" id="button" tabindex="0"></button>
+<button aria-haspopup="true" id="button" tabindex="0">
+    <slot name="icon"></slot>
+</button>
 <sp-popover direction="bottom" id="popover">
     <slot name="options">
         <sp-menu-item
@@ -82,6 +84,7 @@
 ```html
 <sp-icons-medium style="display: none;"></sp-icons-medium>
 <button aria-haspopup="true" id="button" tabindex="0">
+    <slot name="icon"></slot>
     <div id="label">
         More Actions
     </div>
