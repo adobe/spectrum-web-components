@@ -24,12 +24,30 @@ This file brings together the globals variables and font settings with the "Ligh
 
 This file brings together the globals variables and font settings with the "Lightest" color set and "Medium" scale system specification.
 
+```
+@import '@spectrum-web-components/styles/all-large-dark.css';
+```
+
+This file brings together the globals variables and font settings with the "Dark" color set and "Large" scale system specification.
+
+```
+@import '@spectrum-web-components/styles/all-large-light.css';
+```
+
+This file brings together the globals variables and font settings with the "Light" color set and "Large" scale system specification.
+
+```
+@import '@spectrum-web-components/styles/all-large-lightest.css';
+```
+
+This file brings together the globals variables and font settings with the "Lightest" color set and "Large" scale system specification.
+
 ## Color Sets
 
 ### Dark
 
 ```
-@import '@spectrum-web-components/styles/theme-drk.css';
+@import '@spectrum-web-components/styles/theme-dark.css';
 ```
 
 This file provides only the variables needed to power a color pallet featuring colors found in the "Dark" theme.
@@ -54,8 +72,16 @@ This file provides only the variables needed to power a color pallet featuring c
 
 ### Medium
 
-At current, Spectrum Web Components only provides the "Medium" scale system as available via:
-
 ```
 @import '@spectrum-web-components/styles/scale-medium.css';
 ```
+
+This file provides only the variables needed to power the "Medium" scale system specification.
+
+### Large
+
+```
+@import '@spectrum-web-components/styles/scale-large.css';
+```
+
+This file provides only the variables needed to power the "Large" scale system specification.
