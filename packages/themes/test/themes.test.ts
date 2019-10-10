@@ -15,15 +15,52 @@ import { Theme } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Themes', () => {
-    it('loads', async () => {
+    it('loads - light', async () => {
         const el = await fixture<Theme>(
             html`
-                <sp-Theme></sp-Theme>
+                <sp-theme color="light"></sp-theme>
             `
         );
 
         await elementUpdated(el);
 
+        expect(el).shadowDom.to.equalSnapshot();
+    });
+    it('loads - dark', async () => {
+        const el = await fixture<Theme>(
+            html`
+                <sp-theme color="dark"></sp-theme>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).shadowDom.to.equalSnapshot();
+    });
+    it('loads - unkown', async () => {
+        const el = await fixture<Theme>(
+            html`
+                <sp-theme color="unknown" scale="unknown"></sp-theme>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).shadowDom.to.equalSnapshot();
+    });
+});
+
+describe('Lightest', () => {
+    it('loads', async () => {
+        const el = await fixture<Theme>(
+            html`
+                <sp-theme-lightest></sp-theme-lightest>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).to.not.be.undefined;
         expect(el).shadowDom.to.equalSnapshot();
     });
 });

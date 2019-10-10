@@ -16570,7 +16570,7 @@ ts-simple-type@~0.3.5:
   resolved "https://registry.yarnpkg.com/ts-simple-type/-/ts-simple-type-0.3.6.tgz#aa5a107c420c3ebe9cf5de2fe426984d0f77c665"
   integrity sha512-dybO9ebUqOzldR5+SPP1uQSbxl/uiSIvjRC7dFuU45XE7H+4EoQMuxCFKoZj99qEo7pdDWSx52DEQAPZqL3SFg==
 
-tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
