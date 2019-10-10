@@ -40,18 +40,10 @@ module.exports = (config) => {
             },
             coverageIstanbulReporter: {
                 // TODO(#212): reapply coverage based on source files.
-                // thresholds: {
-                //     global: {
-                //         statements: 94,
-                //         branches: 82,
-                //         functions: 96,
-                //         lines: 94,
-                //     },
-                // },
                 thresholds: {
                     global: {
-                        statements: 93,
-                        branches: 72,
+                        statements: 95,
+                        branches: 85,
                         functions: 96,
                         lines: 95,
                     },

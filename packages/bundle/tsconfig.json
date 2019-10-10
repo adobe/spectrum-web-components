@@ -8,6 +8,7 @@
     "include": ["src/*.ts"],
     "references": [
         { "path": "../action-menu" },
+        { "path": "../actionbar" },
         { "path": "../banner" },
         { "path": "../button" },
         { "path": "../card" },
@@ -27,6 +28,7 @@
         { "path": "../overlay-trigger" },
         { "path": "../radio" },
         { "path": "../radio-group" },
+        { "path": "../search" },
         { "path": "../sidenav" },
         { "path": "../slider" },
         { "path": "../switch" },

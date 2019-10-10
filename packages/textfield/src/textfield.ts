@@ -24,6 +24,8 @@ import '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons';
 
 import textfieldStyles from './textfield.css.js';
+import checkmarkSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-checkmark-small.css.js';
+import alertSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-alert-small.css.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { nothing } from 'lit-html';
 
@@ -33,7 +35,7 @@ import { nothing } from 'lit-html';
 
 export class Textfield extends Focusable {
     public static get styles(): CSSResultArray {
-        return [textfieldStyles];
+        return [textfieldStyles, checkmarkSmallStyles, alertSmallStyles];
     }
 
     @query('#input')
@@ -90,12 +92,20 @@ export class Textfield extends Focusable {
         if (this.invalid) {
             return html`
                 <sp-icons-large></sp-icons-large>
-                <sp-icon id="invalid" name="ui:AlertSmall"></sp-icon>
+                <sp-icon
+                    id="invalid"
+                    name="ui:AlertSmall"
+                    class="alert-small"
+                ></sp-icon>
             `;
         } else if (this.valid) {
             return html`
                 <sp-icons-large></sp-icons-large>
-                <sp-icon id="valid" name="ui:CheckmarkSmall"></sp-icon>
+                <sp-icon
+                    id="valid"
+                    name="ui:CheckmarkSmall"
+                    class="checkmark-small"
+                ></sp-icon>
             `;
         }
         return nothing;

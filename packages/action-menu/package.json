@@ -38,6 +38,7 @@
     "dependencies": {
         "@spectrum-web-components/dropdown": "^0.1.3",
         "@spectrum-web-components/menu": "^0.1.3",
-        "@spectrum-web-components/menu-item": "^0.1.3"
+        "@spectrum-web-components/menu-item": "^0.1.3",
+        "tslib": "^1.10.0"
     }
 }

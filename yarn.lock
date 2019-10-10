@@ -1990,6 +1990,11 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
+"@spectrum-css/actionbar@^2.0.0-alpha.6":
+  version "2.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-2.0.0-alpha.6.tgz#03e1f38f265d0e90447e692d135619ec8515c494"
+  integrity sha512-VgK9efs0Wejg9JrmYY+qG9ptL+JkqPuw0e00yRTPoS3/J//pTUlR2maoRTpOWk2BSjb49b2VRPCTQnLbKPo6MA==
+
 "@storybook/addon-a11y@5.2.1":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-5.2.1.tgz#4ab013ea7910189cdbfc2dbfecdd6c2dab5f04d8"
@@ -16565,7 +16570,7 @@ ts-simple-type@~0.3.5:
   resolved "https://registry.yarnpkg.com/ts-simple-type/-/ts-simple-type-0.3.6.tgz#aa5a107c420c3ebe9cf5de2fe426984d0f77c665"
   integrity sha512-dybO9ebUqOzldR5+SPP1uQSbxl/uiSIvjRC7dFuU45XE7H+4EoQMuxCFKoZj99qEo7pdDWSx52DEQAPZqL3SFg==
 
-tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
