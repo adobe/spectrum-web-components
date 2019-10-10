@@ -16,6 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     query,
+    PropertyValues,
 } from 'lit-element';
 
 import spectrumSliderStyles from './spectrum-slider.css.js';
@@ -44,7 +45,7 @@ export class Slider extends Focusable {
             return;
         }
 
-        this._value = this.clampValue(value);
+        this._value = value;
         this.requestUpdate('value', oldValue);
     }
 
@@ -83,6 +84,9 @@ export class Slider extends Focusable {
     @query('#input')
     private input!: HTMLInputElement;
 
+    private supportsPointerEvent = 'setPointerCapture' in this;
+    private currentMouseEvent?: MouseEvent;
+
     public get focusElement(): HTMLElement {
         return this.input ? this.input : this;
     }
@@ -94,6 +98,12 @@ export class Slider extends Focusable {
                 ? this.renderColorTrack()
                 : this.renderTrack()}
         `;
+    }
+
+    protected updated(changedProperties: PropertyValues): void {
+        if (changedProperties.has('value')) {
+            this.value = this.clampValue(this.value);
+        }
     }
 
     private renderLabel(): TemplateResult {
@@ -119,6 +129,7 @@ export class Slider extends Focusable {
                 style=${this.handleStyle}
                 @pointermove=${this.onPointerMove}
                 @pointerdown=${this.onPointerDown}
+                @mousedown=${this.onMouseDown}
                 @pointerup=${this.onPointerUp}
                 @pointercancel=${this.onPointerCancel}
                 role="presentation"
@@ -145,7 +156,10 @@ export class Slider extends Focusable {
 
     private renderTrack(): TemplateResult {
         return html`
-            <div id="controls" @pointerdown=${this.onTrackPointerDown}>
+            <div id="controls"
+                @pointerdown=${this.onTrackPointerDown}
+                @mousedown=${this.onTrackMouseDown}
+            >
                 <div class="track" id="track-left"
                     style=${this.trackLeftStyle} 
                     role="presentation"
@@ -181,6 +195,30 @@ export class Slider extends Focusable {
         this.handle.setPointerCapture(ev.pointerId);
     }
 
+    private onMouseDown(ev: MouseEvent): void {
+        if (this.supportsPointerEvent) {
+            return;
+        }
+        if (this.disabled) {
+            return;
+        }
+        document.addEventListener('mousemove', this.onMouseMove);
+        document.addEventListener('mouseup', this.onMouseUp);
+        this.input.focus();
+        this.dragging = true;
+        this.currentMouseEvent = ev;
+        this._trackMouseEvent();
+    }
+
+    private _trackMouseEvent(): void {
+        if (!this.currentMouseEvent || !this.dragging) {
+            return;
+        }
+        this.value = this.calculateHandlePosition(this.currentMouseEvent);
+        this.dispatchInputEvent();
+        requestAnimationFrame(() => this._trackMouseEvent());
+    }
+
     private onPointerUp(ev: PointerEvent): void {
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.input.focus();
@@ -190,13 +228,30 @@ export class Slider extends Focusable {
         this.dispatchChangeEvent();
     }
 
+    private onMouseUp = (ev: MouseEvent): void => {
+        // Retain focus on input element after mouse up to enable keyboard interactions
+        this.input.focus();
+        this.currentMouseEvent = ev;
+        document.removeEventListener('mousemove', this.onMouseMove);
+        document.removeEventListener('mouseup', this.onMouseUp);
+        requestAnimationFrame(() => {
+            this.handleHighlight = false;
+            this.dragging = false;
+            this.dispatchChangeEvent();
+        });
+    };
+
     private onPointerMove(ev: PointerEvent): void {
         if (!this.dragging) {
             return;
         }
         this.value = this.calculateHandlePosition(ev);
-        this.dispatchInputEvent();
     }
+
+    private onMouseMove = (ev: MouseEvent): void => {
+        this.currentMouseEvent = ev;
+        this.dispatchInputEvent();
+    };
 
     private onPointerCancel(ev: PointerEvent): void {
         this.dragging = false;
@@ -216,6 +271,20 @@ export class Slider extends Focusable {
 
         this.value = this.calculateHandlePosition(ev);
         this.dispatchInputEvent();
+    }
+
+    private onTrackMouseDown(ev: MouseEvent): void {
+        if (this.supportsPointerEvent) {
+            return;
+        }
+        if (ev.target === this.handle || this.disabled) {
+            return;
+        }
+        document.addEventListener('mousemove', this.onMouseMove);
+        document.addEventListener('mouseup', this.onMouseUp);
+        this.dragging = true;
+        this.currentMouseEvent = ev;
+        this._trackMouseEvent();
     }
 
     /**
@@ -243,7 +312,7 @@ export class Slider extends Focusable {
      * @param: PointerEvent on slider
      * @return: Slider value that correlates to the position under the pointer
      */
-    private calculateHandlePosition(ev: PointerEvent): number {
+    private calculateHandlePosition(ev: PointerEvent | MouseEvent): number {
         const rect = this.getBoundingClientRect();
         const minOffset = rect.left;
         const offset = ev.clientX;

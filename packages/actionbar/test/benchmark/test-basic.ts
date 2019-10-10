@@ -9,17 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-@import './spectrum-dropdown.css';
+import '../../';
+import { html } from 'lit-html';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 
-sp-popover {
-    width: 100%;
-}
-
-#label ~ .dropdown {
-    /* .spectrum-Icon + .spectrum-Dropdown-icon
-        with specificity bump to counteract #label ~ .dropdown elsewhere */
-    margin-left: var(
-        --spectrum-dropdown-icon-gap,
-        var(--spectrum-global-dimension-size-100)
-    );
-}
+measureFixtureCreation(html`
+    <sp-actionbar open></sp-actionbar>
+`);

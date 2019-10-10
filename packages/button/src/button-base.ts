@@ -23,6 +23,9 @@ export class ButtonBase extends Focusable {
     public href?: string;
 
     @property()
+    public label?: string;
+
+    @property()
     public target?: '_blank' | '_parent' | '_self' | '_top';
 
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
@@ -32,6 +35,8 @@ export class ButtonBase extends Focusable {
         return !!this.querySelector('[slot="icon"]');
     }
 
+    private hasLabel = false;
+
     public get focusElement(): HTMLElement {
         /* istanbul ignore if */
         if (!this.shadowRoot) {
@@ -40,13 +45,30 @@ export class ButtonBase extends Focusable {
         return this.shadowRoot.querySelector('#button') as HTMLElement;
     }
 
+    private manageLabelSlot(e: Event): void {
+        const slot = e.target as HTMLSlotElement;
+        let assignedElements = slot.assignedElements
+            ? slot.assignedNodes()
+            : [...this.childNodes].filter((node) => {
+                  const el = node as HTMLElement;
+                  return !el.hasAttribute('slot');
+              });
+        assignedElements = assignedElements.filter((node) => {
+            return node.textContent ? node.textContent.trim() : false;
+        });
+        this.hasLabel = assignedElements.length > 0;
+        this.requestUpdate();
+    }
+
     protected get buttonContent(): TemplateResult[] {
         const icon = html`
             <slot name="icon"></slot>
         `;
         const content = [
             html`
-                <div id="label"><slot></slot></div>
+                <div id="label" ?hidden=${!this.hasLabel}>
+                    <slot @slotchange=${this.manageLabelSlot}></slot>
+                </div>
             `,
         ];
         if (!this.hasIcon) {
@@ -63,12 +85,13 @@ export class ButtonBase extends Focusable {
                       href="${this.href}"
                       id="button"
                       target=${ifDefined(this.target)}
+                      aria-label=${ifDefined(this.label)}
                   >
                       ${this.buttonContent}
                   </a>
               `
             : html`
-                  <button id="button">
+                  <button id="button" aria-label=${ifDefined(this.label)}>
                       ${this.buttonContent}
                   </button>
               `;

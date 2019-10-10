@@ -9,17 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-@import './spectrum-dropdown.css';
+export * from './actionbar.js';
 
-sp-popover {
-    width: 100%;
+import { Actionbar } from './actionbar.js';
+
+/* istanbul ignore else */
+if (!customElements.get('sp-actionbar')) {
+    customElements.define('sp-actionbar', Actionbar);
 }
 
-#label ~ .dropdown {
-    /* .spectrum-Icon + .spectrum-Dropdown-icon
-        with specificity bump to counteract #label ~ .dropdown elsewhere */
-    margin-left: var(
-        --spectrum-dropdown-icon-gap,
-        var(--spectrum-global-dimension-size-100)
-    );
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-actionbar': Actionbar;
+    }
 }

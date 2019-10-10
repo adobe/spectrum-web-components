@@ -27,7 +27,6 @@
             max="20"
             min="0"
             step="1"
-            tabindex="0"
             type="range"
             value="10"
         />
@@ -63,7 +62,6 @@
             max="20"
             min="0"
             step="1"
-            tabindex="0"
             type="range"
             value="10"
         />
