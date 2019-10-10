@@ -68,10 +68,7 @@ const themes = [
     'dark',
     /*'darkest', 'lightest', 'middark', 'midlight'*/
 ];
-const scales = [
-    'medium',
-    /* 'large' */
-];
+const scales = ['medium', 'large'];
 const cores = ['global'];
 const processes = [];
 
