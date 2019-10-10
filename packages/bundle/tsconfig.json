@@ -28,6 +28,7 @@
         { "path": "../overlay-trigger" },
         { "path": "../radio" },
         { "path": "../radio-group" },
+        { "path": "../search" },
         { "path": "../sidenav" },
         { "path": "../slider" },
         { "path": "../switch" },

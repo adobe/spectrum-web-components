@@ -1,0 +1,279 @@
+/* stylelint-disable */ /* 
+Copyright 2019 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+#button {
+    /* .spectrum-Button,
+   * .spectrum-ActionButton,
+   * .spectrum-LogicButton,
+   * .spectrum-FieldButton,
+   * .spectrum-ClearButton,
+   * .spectrum-Tool */
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    box-sizing: border-box;
+
+    -ms-flex-align: center;
+
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: visible;
+    margin: 0;
+
+    border-style: solid;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-appearance: button;
+    vertical-align: top;
+
+    transition: background var(--spectrum-global-animation-duration-100, 130ms)
+            ease-out,
+        border-color var(--spectrum-global-animation-duration-100, 130ms)
+            ease-out,
+        color var(--spectrum-global-animation-duration-100, 130ms) ease-out,
+        box-shadow var(--spectrum-global-animation-duration-100, 130ms) ease-out;
+
+    text-decoration: none;
+    font-family: adobe-clean, 'Source Sans Pro', -apple-system,
+        BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    line-height: 1.3;
+
+    cursor: pointer;
+
+    /* .spectrum-ClearButton */
+
+    width: var(
+        --spectrum-clearbutton-medium-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    height: var(
+        --spectrum-clearbutton-medium-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+
+    border-radius: 100%;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+
+    /* .spectrum-ClearButton */
+    background-color: var(
+        --spectrum-clearbutton-medium-background-color,
+        rgba(0, 0, 0, 0)
+    );
+
+    color: var(
+        --spectrum-clearbutton-medium-icon-color,
+        var(--spectrum-global-color-gray-600)
+    );
+}
+#button:focus {
+    /* .spectrum-Button:focus,
+   * .spectrum-ActionButton:focus,
+   * .spectrum-LogicButton:focus,
+   * .spectrum-FieldButton:focus,
+   * .spectrum-ClearButton:focus,
+   * .spectrum-Tool:focus */
+    outline: none;
+    /* .spectrum-ClearButton.focus-ring */
+    background-color: var(
+        --spectrum-clearbutton-medium-background-color-key-focus,
+        rgba(0, 0, 0, 0)
+    );
+
+    color: var(
+        --spectrum-clearbutton-medium-icon-color-key-focus,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+#button::-moz-focus-inner {
+    /* .spectrum-Button::-moz-focus-inner,
+   * .spectrum-ActionButton::-moz-focus-inner,
+   * .spectrum-LogicButton::-moz-focus-inner,
+   * .spectrum-FieldButton::-moz-focus-inner,
+   * .spectrum-ClearButton::-moz-focus-inner,
+   * .spectrum-Tool::-moz-focus-inner */
+    border: 0;
+    border-style: none;
+    padding: 0;
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+#button:-moz-focusring {
+    /* .spectrum-Button:-moz-focusring,
+   * .spectrum-ActionButton:-moz-focusring,
+   * .spectrum-LogicButton:-moz-focusring,
+   * .spectrum-FieldButton:-moz-focusring,
+   * .spectrum-ClearButton:-moz-focusring,
+   * .spectrum-Tool:-moz-focusring */
+    outline: 1px dotted ButtonText;
+}
+#button:disabled {
+    /* .spectrum-Button:disabled,
+   * .spectrum-ActionButton:disabled,
+   * .spectrum-LogicButton:disabled,
+   * .spectrum-FieldButton:disabled,
+   * .spectrum-ClearButton:disabled,
+   * .spectrum-Tool:disabled */
+    cursor: default;
+}
+.spectrum-Icon {
+    /* .spectrum-Button .spectrum-Icon,
+   * .spectrum-ActionButton .spectrum-Icon,
+   * .spectrum-LogicButton .spectrum-Icon,
+   * .spectrum-FieldButton .spectrum-Icon,
+   * .spectrum-ClearButton .spectrum-Icon,
+   * .spectrum-Tool .spectrum-Icon */
+    max-height: 100%;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+.spectrum-ClearButton--small {
+    /* .spectrum-ClearButton--small */
+    width: var(
+        --spectrum-clearbutton-small-width,
+        var(--spectrum-global-dimension-size-300)
+    );
+    height: var(
+        --spectrum-clearbutton-small-height,
+        var(--spectrum-global-dimension-size-300)
+    );
+}
+#button:hover {
+    /* .spectrum-ClearButton:hover */
+    background-color: var(
+        --spectrum-clearbutton-medium-background-color-hover,
+        rgba(0, 0, 0, 0)
+    );
+
+    color: var(
+        --spectrum-clearbutton-medium-icon-color-hover,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+#button:active {
+    /* .spectrum-ClearButton:active */
+    background-color: var(
+        --spectrum-clearbutton-medium-background-color-down,
+        rgba(0, 0, 0, 0)
+    );
+
+    color: var(
+        --spectrum-clearbutton-medium-icon-color-down,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+#button:disabled,
+#button.is-disabled {
+    /* .spectrum-ClearButton:disabled,
+   * .spectrum-ClearButton.is-disabled */
+    background-color: var(
+        --spectrum-clearbutton-medium-background-color-disabled,
+        rgba(0, 0, 0, 0)
+    );
+
+    color: var(
+        --spectrum-clearbutton-medium-icon-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    );
+}
+.spectrum-ClearButton--overBackground {
+    /* .spectrum-Button--overBackground.spectrum-Button--quiet,
+   * .spectrum-ClearButton--overBackground */
+    background-color: var(
+        --spectrum-button-quiet-over-background-background-color,
+        rgba(0, 0, 0, 0)
+    );
+    border-color: var(
+        --spectrum-button-quiet-over-background-border-color,
+        rgba(0, 0, 0, 0)
+    );
+    color: var(
+        --spectrum-button-quiet-over-background-text-color,
+        rgb(255, 255, 255)
+    );
+}
+.spectrum-ClearButton--overBackground:hover {
+    /* .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
+   * .spectrum-ClearButton--overBackground:hover */
+    background-color: var(
+        --spectrum-button-quiet-over-background-background-color-hover,
+        rgba(255, 255, 255, 0.1)
+    );
+    border-color: var(
+        --spectrum-button-quiet-over-background-border-color-hover,
+        rgba(0, 0, 0, 0)
+    );
+    color: var(
+        --spectrum-button-quiet-over-background-text-color-hover,
+        rgb(255, 255, 255)
+    );
+}
+.spectrum-ClearButton--overBackground:focus {
+    /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
+   * .spectrum-ClearButton--overBackground.focus-ring */
+    background-color: var(
+        --spectrum-button-quiet-over-background-background-color-key-focus,
+        rgb(255, 255, 255)
+    );
+    border-color: var(
+        --spectrum-button-quiet-over-background-border-color-key-focus,
+        rgb(255, 255, 255)
+    );
+    color: inherit;
+    box-shadow: 0 0 0
+        var(--spectrum-button-primary-border-size-increase-key-focus, 1px)
+        var(
+            --spectrum-button-quiet-over-background-border-color-key-focus,
+            rgb(255, 255, 255)
+        );
+}
+.spectrum-ClearButton--overBackground:active {
+    /* .spectrum-Button--overBackground.spectrum-Button--quiet:active,
+   * .spectrum-ClearButton--overBackground:active */
+    background-color: var(
+        --spectrum-button-quiet-over-background-background-color-down,
+        rgba(255, 255, 255, 0.15)
+    );
+    border-color: var(
+        --spectrum-button-quiet-over-background-border-color-down,
+        rgba(0, 0, 0, 0)
+    );
+    color: var(
+        --spectrum-button-quiet-over-background-text-color-down,
+        rgb(255, 255, 255)
+    );
+    box-shadow: none;
+}
+.spectrum-ClearButton--overBackground:disabled,
+.spectrum-ClearButton--overBackground.is-disabled {
+    /* .spectrum-Button--overBackground.spectrum-Button--quiet:disabled,
+   * .spectrum-Button--overBackground.spectrum-Button--quiet.is-disabled,
+   * .spectrum-ClearButton--overBackground:disabled,
+   * .spectrum-ClearButton--overBackground.is-disabled */
+    background-color: var(
+        --spectrum-button-quiet-over-background-background-color-disabled,
+        rgba(0, 0, 0, 0)
+    );
+    border-color: var(
+        --spectrum-button-quiet-over-background-border-color-disabled,
+        rgba(0, 0, 0, 0)
+    );
+    color: var(
+        --spectrum-button-quiet-over-background-text-color-disabled,
+        rgba(255, 255, 255, 0.15)
+    );
+}

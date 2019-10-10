@@ -24,6 +24,8 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 import dropdownStyles from './dropdown.css.js';
 import actionButtonStyles from '@spectrum-web-components/button/lib/action-button.css.js';
 import fieldButtonStyles from '@spectrum-web-components/button/lib/field-button.css.js';
+import alertSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-alert-small.css.js';
+import chevronDownMediumStyles from '@spectrum-web-components/icon/lib/spectrum-icon-chevron-down-medium.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 import '@spectrum-web-components/icon';
@@ -42,7 +44,13 @@ import '@spectrum-web-components/popover';
  */
 export class Dropdown extends Focusable {
     public static get styles(): CSSResultArray {
-        return [actionButtonStyles, fieldButtonStyles, dropdownStyles];
+        return [
+            actionButtonStyles,
+            fieldButtonStyles,
+            dropdownStyles,
+            alertSmallStyles,
+            chevronDownMediumStyles,
+        ];
     }
 
     @query('#button')
@@ -192,14 +200,14 @@ export class Dropdown extends Focusable {
                 ${this.invalid
                     ? html`
                           <sp-icon
-                              class="icon"
+                              class="icon alert-small"
                               name="ui:AlertSmall"
                               size="s"
                           ></sp-icon>
                       `
                     : nothing}
                 <sp-icon
-                    class="icon dropdown"
+                    class="icon dropdown chevron-down-medium"
                     name="ui:ChevronDownMedium"
                     size="s"
                 ></sp-icon>

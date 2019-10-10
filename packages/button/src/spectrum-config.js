@@ -111,5 +111,13 @@ module.exports = {
             ],
             exclude: [/\.is-disabled/],
         },
+        {
+            name: 'clear-button',
+            host: {
+                selector: '.spectrum-ClearButton',
+                shadowSelector: '#button',
+            },
+            focus: '#button',
+        },
     ],
 };

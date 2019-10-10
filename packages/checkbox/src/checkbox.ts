@@ -15,6 +15,8 @@ import { CheckboxBase } from './checkbox-base.js';
 import '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons';
 import checkboxStyles from './checkbox.css.js';
+import checkmarkSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-checkmark-small.css.js';
+import dashSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-dash-small.css.js';
 
 export class Checkbox extends CheckboxBase {
     @property({ type: Boolean, reflect: true })
@@ -24,7 +26,7 @@ export class Checkbox extends CheckboxBase {
     public invalid = false;
 
     public static get styles(): CSSResultArray {
-        return [checkboxStyles];
+        return [checkboxStyles, checkmarkSmallStyles, dashSmallStyles];
     }
 
     protected render(): TemplateResult {
@@ -38,12 +40,14 @@ export class Checkbox extends CheckboxBase {
                         size="s"
                         name="ui:CheckmarkSmall"
                         aria-hidden="true"
+                        class="checkmark-small"
                     ></sp-icon>
                     <sp-icon
                         id="partialCheckmark"
                         size="s"
                         name="ui:DashSmall"
                         aria-hidden="true"
+                        class="dash-small"
                     ></sp-icon>
                 </span>
                 <span id="label"><slot></slot></span>
