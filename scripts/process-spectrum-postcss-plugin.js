@@ -107,7 +107,6 @@ class SpectrumProcessor {
                     // :host declaration
                     const hostSelector = parser.selector();
                     const host = parser.pseudo({ value: ':host' });
-                    host.append(hostSelector);
                     result.first.replaceWith(host);
 
                     let remainder = host.next();
@@ -115,7 +114,19 @@ class SpectrumProcessor {
                         const node = remainder;
                         remainder = remainder.next();
                         node.remove();
-                        hostSelector.append(node);
+                        // Pseudo-elements go after the host selector `:host::before` or `:host([attr])::after`.
+                        if (
+                            node.value === '::before' ||
+                            node.value === '::after'
+                        ) {
+                            result.insertAfter(host, node);
+                        } else {
+                            hostSelector.append(node);
+                        }
+                    }
+                    // Appending the `hostSelector` updates `:host` to `:host(...)` so only do it when there is content to apply.
+                    if (hostSelector.nodes.length) {
+                        host.append(hostSelector);
                     }
                 } else {
                     replaceNode(
@@ -163,6 +174,7 @@ class SpectrumProcessor {
         // e.g. ".spectrum-Icon" -> "::slotted([slot='icon'])"
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
+            let isInvalidSelector = false;
             result.each((node, index) => {
                 const slot = this.component.slotForNode(node);
                 if (!slot) return;
@@ -173,11 +185,22 @@ class SpectrumProcessor {
                     // If a sibling selector is used, and the slot is not the last
                     // element in the combinator, we will need to refer to the slot itself
                     replaceNode(node, slot.shadowSlotNode);
+                } else if (!isLastNode) {
+                    // If there are selectors after ::slotted() the rule is invalid CSS, let's remove it.
+                    // The browser would do this anyways, and then merged selectors in CSS minification output
+                    // e.g. `.valid .selector, ::slotted(.invalid) .selector {}` would be lost.
+                    isInvalidSelector = true;
+                    this.warn(
+                        `:slotted() rules must be the last in the selector`,
+                        {
+                            node: rule,
+                        }
+                    );
                 } else {
                     replaceNode(node, slot.shadowSlottedNode);
                 }
             });
-            return result;
+            return isInvalidSelector ? null : result;
         });
 
         // Convert instances of the .focus-ring selector to a :focus
@@ -453,7 +476,8 @@ class SpectrumProcessor {
         // make sure that the first component of the select is
         // wrapped in :host()
         if (!/^:host/.test(selector)) {
-            return selector.replace(/^([^\s>+~\|]+)(.*)/, ':host($1)$2');
+            // Ensure that pseudo elements are listed _after_, not as a part of, the `:host` or `:host(...)` selector.
+            return selector.replace(/^([^\s>+~\|\:{2}]+)(.*)/, ':host($1)$2');
         } else {
             return selector;
         }
