@@ -7,3 +7,29 @@
 ```html
 <sp-slider></sp-slider>
 ```
+
+### Variants
+
+#### Filled
+
+```html
+<sp-slider variant="filled"></sp-slider>
+```
+
+#### Ramp
+
+```html
+<sp-slider variant="ramp"></sp-slider>
+```
+
+#### Tick
+
+```html
+<sp-slider variant="tick" tick-step="4"></sp-slider>
+```
+
+#### Tick w/ Labels
+
+```html
+<sp-slider variant="tick" tick-step="5" tick-labels></sp-slider>
+```

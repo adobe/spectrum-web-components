@@ -25,6 +25,8 @@ import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
 export type SliderEventDetail = number;
 
+export const variants = ['color', 'filled', 'ramp', 'range', 'tick'];
+
 export class Slider extends Focusable {
     public static get styles(): CSSResultArray {
         return [sliderStyles, spectrumSliderStyles];
@@ -51,8 +53,28 @@ export class Slider extends Focusable {
 
     private _value = 10;
 
-    @property({ reflect: true })
-    public variant = '';
+    @property({ type: String })
+    public set variant(variant: string) {
+        const oldVariant = this.variant;
+        if (variant === this.variant) {
+            return;
+        }
+        if (variants.includes(variant)) {
+            this.setAttribute('variant', variant);
+            this._variant = variant;
+        } else {
+            this.removeAttribute('variant');
+            this._variant = '';
+        }
+        this.requestUpdate('variant', oldVariant);
+    }
+
+    public get variant(): string {
+        return this._variant;
+    }
+
+    /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
+    private _variant = '';
 
     @property()
     public label = '';
@@ -68,6 +90,12 @@ export class Slider extends Focusable {
 
     @property({ type: Number })
     public step = 1;
+
+    @property({ type: Number, attribute: 'tick-step' })
+    public tickStep = 0;
+
+    @property({ type: Boolean, attribute: 'tick-labels' })
+    public tickLabels = false;
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
@@ -122,6 +150,81 @@ export class Slider extends Focusable {
         `;
     }
 
+    private renderTrackLeft(): TemplateResult {
+        if (this.variant === 'ramp') {
+            return html``;
+        }
+        return html`
+            <div
+                class="track"
+                id="track-left"
+                style=${this.trackLeftStyle}
+                role="presentation"
+            ></div>
+        `;
+    }
+
+    private renderTrackRight(): TemplateResult {
+        if (this.variant === 'ramp') {
+            return html``;
+        }
+        return html`
+            <div
+                class="track"
+                id="track-right"
+                style=${this.trackRightStyle}
+                role="presentation"
+            ></div>
+        `;
+    }
+
+    private renderRamp(): TemplateResult {
+        if (this.variant !== 'ramp') {
+            return html``;
+        }
+        return html`
+            <div id="ramp">
+                <svg
+                    viewBox="0 0 240 16"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                    focusable="false"
+                >
+                    <path
+                        d="M240,4v8c0,2.3-1.9,4.1-4.2,4L1,9C0.4,9,0,8.5,0,8c0-0.5,0.4-1,1-1l234.8-7C238.1-0.1,240,1.7,240,4z"
+                    ></path>
+                </svg>
+            </div>
+        `;
+    }
+
+    private renderTicks(): TemplateResult {
+        if (this.variant !== 'tick') {
+            return html``;
+        }
+        const tickStep = this.tickStep || this.step;
+        const tickCount = (this.max - this.min) / tickStep;
+        const ticks = new Array(tickCount + 1);
+        ticks.fill(0, 0, tickCount + 1);
+        return html`
+            <div class="ticks">
+                ${ticks.map(
+                    (tick, i) => html`
+                        <div class="tick">
+                            ${this.tickLabels
+                                ? html`
+                                      <div class="tickLabel">
+                                          ${i * tickStep}
+                                      </div>
+                                  `
+                                : html``}
+                        </div>
+                    `
+                )}
+            </div>
+        `;
+    }
+
     private renderHandle(): TemplateResult {
         return html`
             <div
@@ -160,18 +263,11 @@ export class Slider extends Focusable {
                 @pointerdown=${this.onTrackPointerDown}
                 @mousedown=${this.onTrackMouseDown}
             >
-                <div class="track" id="track-left"
-                    style=${this.trackLeftStyle} 
-                    role="presentation"
-                >
-                </div>
+                ${this.renderTrackLeft()}
+                ${this.renderRamp()}
+                ${this.renderTicks()}
                 ${this.renderHandle()}
-                <div class="track"
-                    id="track-right"
-                    style=${this.trackRightStyle}
-                    role="presentation"
-                >
-                </div>
+                ${this.renderTrackRight()}
                 </div>
             </div>
         `;
