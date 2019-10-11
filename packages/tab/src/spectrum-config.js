@@ -19,7 +19,6 @@ module.exports = {
                 // A lot of the styling in tab-item relies on the ::before psuedo element,
                 // which is incompatible with :host
                 selector: '.spectrum-Tabs-item',
-                shadowSelector: '#tab',
             },
             attributes: [
                 {

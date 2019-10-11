@@ -14,11 +14,9 @@ import {
     html,
     property,
     CSSResultArray,
-    query,
     TemplateResult,
+    LitElement,
 } from 'lit-element';
-
-import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
 import tabItemStyles from './tab.css.js';
 
@@ -26,13 +24,14 @@ import tabItemStyles from './tab.css.js';
  * @slot icon - The icon that appears on the left of the label
  */
 
-export class Tab extends Focusable {
+export class Tab extends LitElement {
     public static get styles(): CSSResultArray {
         return [tabItemStyles];
     }
 
-    @query('#tab')
-    private tabElement!: HTMLElement;
+    private get hasIcon(): boolean {
+        return !!this.querySelector('[slot="icon"]');
+    }
 
     @property({ reflect: true })
     public label = '';
@@ -46,18 +45,16 @@ export class Tab extends Focusable {
     @property({ type: String, reflect: true })
     public value = '';
 
-    public get focusElement(): HTMLElement {
-        return this.tabElement;
-    }
-
     protected render(): TemplateResult {
         return html`
-            <div id="tab">
-                <slot name="icon"></slot>
-                <label id="itemLabel">
-                    ${this.label}
-                </label>
-            </div>
+            ${this.hasIcon
+                ? html`
+                      <slot name="icon"></slot>
+                  `
+                : html``}
+            <label id="itemLabel">
+                ${this.label}
+            </label>
         `;
     }
 }
