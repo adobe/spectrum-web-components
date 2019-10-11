@@ -41,16 +41,19 @@ export class ActionMenu extends Dropdown {
     protected get buttonContent(): TemplateResult[] {
         return [
             html`
-                <svg
-                    viewBox="0 0 36 36"
-                    class="icon"
-                    focusable="false"
-                    aria-hidden="true"
-                >
-                    <circle cx="17.8" cy="18.2" r="3.4"></circle>
-                    <circle cx="29.5" cy="18.2" r="3.4"></circle>
-                    <circle cx="6.1" cy="18.2" r="3.4"></circle>
-                </svg>
+                <slot name="icon">
+                    <svg
+                        slot="icon"
+                        viewBox="0 0 36 36"
+                        class="icon"
+                        focusable="false"
+                        aria-hidden="true"
+                    >
+                        <circle cx="17.8" cy="18.2" r="3.4"></circle>
+                        <circle cx="29.5" cy="18.2" r="3.4"></circle>
+                        <circle cx="6.1" cy="18.2" r="3.4"></circle>
+                    </svg>
+                </slot>
                 ${this.label
                     ? html`
                           <div id="label">${this.label}</div>
