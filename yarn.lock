@@ -2080,6 +2080,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/avatar/-/avatar-2.0.0.tgz#7d0bb3f4902249665d7ac5d9f49e6cdf3a15441d"
   integrity sha512-K1se5/am+ehu7UJ0K2J4d+uMubkoBI6QlbNXISUBJftxZ6sA3tDIo3kX4og6SiCr93LF5LxzJ3bhpQkkqFHVtQ==
 
+"@spectrum-css/tabs@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-2.0.0.tgz#1426eb9e36b8f6131c36be15bd1093e5e62f9a9e"
+  integrity sha512-KzkEi+4rAKXaBr7rnmYWtaPOBwWO+DPF0zkVPLucng4615nFdAuMRwL+a96Fo+15HilN9reFvl3Kw06Ys1lK2g==
+
 "@storybook/addon-a11y@5.2.1":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-5.2.1.tgz#4ab013ea7910189cdbfc2dbfecdd6c2dab5f04d8"

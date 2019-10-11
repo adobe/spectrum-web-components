@@ -13,10 +13,6 @@ governing permissions and limitations under the License.
 @import './spectrum-tab.css';
 
 :host([vertical]) {
-    height: auto !important;
-}
-
-:host([vertical]) #tab {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,7 +20,12 @@ governing permissions and limitations under the License.
     height: auto;
 }
 
-:host([vertical]) #tab::before {
+:host([vertical])::before {
+    /* .spectrum-Tabs--vertical .spectrum-Tabs-item::before */
+    left: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
+    right: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
+
+    /* Custom */
     height: auto;
     margin-top: 0;
     top: 0;
