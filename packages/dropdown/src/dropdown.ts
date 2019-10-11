@@ -250,7 +250,7 @@ export class Dropdown extends Focusable {
         super.updated(changedProperties);
         if (changedProperties.has('value') && this.optionsMenu) {
             const items = [
-                ...this.querySelectorAll(
+                ...this.optionsMenu.querySelectorAll(
                     `[role=${this.optionsMenu.childRole}]`
                 ),
             ] as MenuItem[];
