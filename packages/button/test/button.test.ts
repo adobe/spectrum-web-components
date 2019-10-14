@@ -40,6 +40,19 @@ describe('Button', () => {
             `<button id="button" tabindex="0"><div id="label"><slot></slot></div></button>`
         );
     });
+    it('loads default w/ element content', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button><svg></svg></sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el).shadowDom.to.equal(
+            `<button id="button" tabindex="0"><div id="label"><slot></slot></div></button>`
+        );
+    });
     it('loads default w/ an icon', async () => {
         const el = await fixture<Button>(
             html`

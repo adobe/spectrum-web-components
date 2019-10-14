@@ -54,6 +54,9 @@ export class ButtonBase extends Focusable {
                   return !el.hasAttribute('slot');
               });
         assignedElements = assignedElements.filter((node) => {
+            if ((node as HTMLElement).tagName) {
+                return true;
+            }
             return node.textContent ? node.textContent.trim() : false;
         });
         this.hasLabel = assignedElements.length > 0;
