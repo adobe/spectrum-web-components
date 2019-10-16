@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.2.0...@spectrum-web-components/button@0.2.1) (2019-10-16)
+
+### Bug Fixes
+
+-   **button:** allow element content in the default/label slot ([7b0ef58](https://github.com/adobe/spectrum-web-components/commit/7b0ef58))
+
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.1.3...@spectrum-web-components/button@0.2.0) (2019-10-14)
 
 ### Bug Fixes
