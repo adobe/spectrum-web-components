@@ -37,5 +37,8 @@
     },
     "devDependencies": {
         "@spectrum-css/actionbar": "^2.0.0-alpha.6"
+    },
+    "dependencies": {
+        "tslib": "^1.10.0"
     }
 }
