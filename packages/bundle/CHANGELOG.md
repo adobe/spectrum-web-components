@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.2.2...@spectrum-web-components/bundle@0.3.0) (2019-10-18)
+
+### Features
+
+-   **avatar:** add avatar component ([a6882b4](https://github.com/adobe/spectrum-web-components/commit/a6882b4))
+
 ## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.2.1...@spectrum-web-components/bundle@0.2.2) (2019-10-16)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle
