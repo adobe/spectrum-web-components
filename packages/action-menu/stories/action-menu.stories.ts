@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
@@ -20,9 +20,11 @@ import '../../menu';
 import '../../menu-item';
 
 storiesOf('Action menu', module).add('Default', () => {
+    const ariaLabel = text('Aria Label', 'More Actions', 'Component');
+    const visibleLabel = text('Visible Label', 'More Actions', 'Component');
     return html`
         <sp-action-menu
-            label="More Actions"
+            label=${ariaLabel}
             ?disabled=${boolean('Is Disabled', false, 'Component')}
             ?invalid=${boolean('Is Invalid', false, 'Component')}
             ?quiet=${boolean('Is Quiet', false, 'Component')}
@@ -31,6 +33,7 @@ storiesOf('Action menu', module).add('Default', () => {
                 action(`Change: ${actionMenu.value}`)();
             }}"
         >
+            ${visibleLabel}
             <sp-menu slot="options">
                 <sp-menu-item>
                     Deselect

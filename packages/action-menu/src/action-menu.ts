@@ -18,25 +18,28 @@ import {
     html,
 } from 'lit-element';
 import { Dropdown } from '@spectrum-web-components/dropdown';
+import { ObserveSlotText } from '@spectrum-web-components/shared/lib/observe-slot-text';
 import actionMenuStyles from './action-menu.css.js';
-import { nothing } from 'lit-html';
 
 /**
  * @slot options - The menu with options that will display when the dropdown is open
  */
-export class ActionMenu extends Dropdown {
+export class ActionMenu extends ObserveSlotText(Dropdown) {
     public static get styles(): CSSResultArray {
         return [...super.styles, actionMenuStyles];
     }
 
-    @property({ type: String })
-    public label = '';
-
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
+    @property({ type: Boolean, reflect: true })
+    public quiet = true;
+
     protected listRole = 'menu';
     protected itemRole = 'menuitem';
+    private get hasLabel(): boolean {
+        return this.slotHasContent;
+    }
 
     protected get buttonContent(): TemplateResult[] {
         return [
@@ -54,11 +57,12 @@ export class ActionMenu extends Dropdown {
                         <circle cx="6.1" cy="18.2" r="3.4"></circle>
                     </svg>
                 </slot>
-                ${this.label
-                    ? html`
-                          <div id="label">${this.label}</div>
-                      `
-                    : nothing}
+                <div id="label" ?hidden=${!this.hasLabel}>
+                    <slot
+                        id="slot"
+                        @slotchange=${this.manageObservedSlot}
+                    ></slot>
+                </div>
             `,
         ];
     }
@@ -74,10 +78,5 @@ export class ActionMenu extends Dropdown {
         if (changedProperties.has('invalid')) {
             this.invalid = false;
         }
-    }
-
-    protected firstUpdated(): void {
-        super.firstUpdated();
-        this.quiet = true;
     }
 }
