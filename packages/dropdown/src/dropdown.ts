@@ -62,6 +62,9 @@ export class Dropdown extends Focusable {
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    @property()
+    public label?: string;
+
     @property({ type: Boolean, reflect: true })
     public open = false;
 
@@ -228,6 +231,7 @@ export class Dropdown extends Focusable {
             <sp-icons-medium></sp-icons-medium>
             <button
                 aria-haspopup="true"
+                aria-label=${ifDefined(this.label || undefined)}
                 id="button"
                 @blur=${this.onButtonBlur}
                 @click=${this.onButtonClick}
