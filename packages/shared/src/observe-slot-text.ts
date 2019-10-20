@@ -31,7 +31,7 @@ export function ObserveSlotText<T extends Constructor<UpdatingElement>>(
 ): T & Constructor<SlotTextObservingInterface> {
     return class SlotTextObservingElement extends constructor
         implements SlotTextObservingInterface {
-        private [observedSlotElement]: HTMLSlotElement;
+        private [observedSlotElement]: HTMLSlotElement | undefined;
 
         private [slotElementObserver]: MutationObserver;
 
