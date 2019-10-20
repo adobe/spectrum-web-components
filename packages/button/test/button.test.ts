@@ -25,6 +25,10 @@ const keyboardEvent = (code: string, shiftKey: boolean): KeyboardEvent =>
     });
 const shiftTabEvent = keyboardEvent('Tab', true);
 
+type TestableButtonType = {
+    hasLabel: boolean;
+};
+
 describe('Button', () => {
     it('loads default', async () => {
         const el = await fixture<Button>(
@@ -84,6 +88,35 @@ describe('Button', () => {
         expect(el).shadowDom.to.equal(
             `<button id="button" tabindex="0"><slot name="icon"></slot><div id="label" hidden><slot></slot></div></button>`
         );
+    });
+    it('allows label to be toggled', async () => {
+        const testNode = document.createTextNode('Button');
+        const el = await fixture<Button>(
+            html`
+                <sp-button>
+                    ${testNode}
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const labelTestableEl = (el as unknown) as TestableButtonType;
+
+        expect(labelTestableEl.hasLabel).to.be.true;
+
+        testNode.textContent = '';
+
+        await elementUpdated(el);
+
+        expect(labelTestableEl.hasLabel).to.be.false;
+
+        testNode.textContent = 'Button';
+
+        await elementUpdated(el);
+
+        expect(labelTestableEl.hasLabel).to.be.true;
     });
     it('loads default w/ an icon on the right', async () => {
         const el = await fixture<Button>(
