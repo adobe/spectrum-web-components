@@ -9,35 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { boolean, text } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
-import { ActionMenu } from '../';
-import '../../menu';
-import '../../menu-item';
-
-export { Default } from './';
-
-export default {
-    title: 'Action menu',
-};
-
-export const knobyActionMenu = (): TemplateResult => {
-    const ariaLabel = text('Arial Label', 'More Actions', 'Component');
-    const visibleLabel = text('Visible Label', 'More Actions', 'Component');
-    const disabled = boolean('Is Disabled', false, 'Component');
+export const Default = (): TemplateResult => {
     return html`
-        <sp-action-menu
-            label=${ariaLabel}
-            ?disabled=${disabled}
-            @change="${(e: Event) => {
-                const actionMenu = e.target as ActionMenu;
-                action(`Change: ${actionMenu.value}`)();
-            }}"
-        >
-            ${visibleLabel}
+        <sp-action-menu label="More Actions">
             <sp-menu slot="options">
                 <sp-menu-item>
                     Deselect
@@ -61,8 +37,4 @@ export const knobyActionMenu = (): TemplateResult => {
             </sp-menu>
         </sp-action-menu>
     `;
-};
-
-knobyActionMenu.story = {
-    name: 'Customizable Action Menu',
 };

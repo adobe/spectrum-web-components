@@ -13,11 +13,6 @@ if (module.hot) {
     });
 }
 
-function loadStories() {
-    const req = require.context('../packages', true, /\.stories\.ts$/);
-    req.keys().forEach((filename) => req(filename));
-}
-
 addDecorator(withA11y);
 addDecorator(withKnobs);
-configure(loadStories, module);
+configure(require.context('../packages', true, /\.stories\.ts$/), module);

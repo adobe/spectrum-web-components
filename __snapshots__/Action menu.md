@@ -3,8 +3,8 @@
 #### `loads`
 
 ```html
-<sp-menu role="listbox" slot="options">
-    <sp-menu-item role="menuitem" tabindex="-1">
+<sp-menu role="menu" slot="options">
+    <sp-menu-item role="menuitem" tabindex="0">
         Deselect
     </sp-menu-item>
     <sp-menu-item role="menuitem" tabindex="-1">
@@ -53,8 +53,8 @@
 #### `loads - [label]`
 
 ```html
-<sp-menu role="listbox" slot="options">
-    <sp-menu-item role="menuitem" tabindex="-1">
+<sp-menu role="menu" slot="options">
+    <sp-menu-item role="menuitem" tabindex="0">
         Deselect
     </sp-menu-item>
     <sp-menu-item role="menuitem" tabindex="-1">

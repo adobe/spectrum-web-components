@@ -13,6 +13,10 @@
             "node"
         ]
     },
-    "include": ["../packages/**/test/*.ts", "./testing-helpers.ts"],
+    "include": [
+        "../packages/**/test/*.ts",
+        "../packages/**/stories/index.ts",
+        "./testing-helpers.ts"
+    ],
     "exclude": ["../packages/**/node_modules/**/*"]
 }
