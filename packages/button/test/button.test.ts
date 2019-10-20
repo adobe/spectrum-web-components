@@ -40,9 +40,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        expect(el).shadowDom.to.equal(
-            `<button id="button" tabindex="0"><div id="label"><slot></slot></div></button>`
-        );
+        expect(el).shadowDom.to.equalSnapshot();
     });
     it('loads default w/ element content', async () => {
         const el = await fixture<Button>(
@@ -53,9 +51,7 @@ describe('Button', () => {
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
-        expect(el).shadowDom.to.equal(
-            `<button id="button" tabindex="0"><div id="label"><slot></slot></div></button>`
-        );
+        expect(el).shadowDom.to.equalSnapshot();
     });
     it('loads default w/ an icon', async () => {
         const el = await fixture<Button>(
@@ -70,9 +66,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        expect(el).shadowDom.to.equal(
-            `<button id="button" tabindex="0"><slot name="icon"></slot><div id="label"><slot></slot></div></button>`
-        );
+        expect(el).shadowDom.to.equalSnapshot();
     });
     it('loads default only icon', async () => {
         const el = await fixture<Button>(
@@ -85,9 +79,7 @@ describe('Button', () => {
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
-        expect(el).shadowDom.to.equal(
-            `<button id="button" tabindex="0"><slot name="icon"></slot><div id="label" hidden><slot></slot></div></button>`
-        );
+        expect(el).shadowDom.to.equalSnapshot();
     });
     it('allows label to be toggled', async () => {
         const testNode = document.createTextNode('Button');
@@ -131,9 +123,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        expect(el).shadowDom.to.equal(
-            `<button id="button" tabindex="0"><div id="label"><slot></slot></div><slot name="icon"></slot></button>`
-        );
+        expect(el).shadowDom.to.equalSnapshot();
     });
     it('loads with href', async () => {
         const el = await fixture<Button>(
@@ -146,9 +136,7 @@ describe('Button', () => {
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('With Href');
         // make sure href is being passed to <a>
-        expect(el).shadowDom.to.equal(
-            `<a href="test_url" id="button" tabindex="0"><div id="label"><slot></slot></div></a>`
-        );
+        expect(el).shadowDom.to.equalSnapshot();
     });
     it('loads with href and target', async () => {
         const el = await fixture<Button>(
@@ -163,9 +151,7 @@ describe('Button', () => {
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('With Target');
         // make sure href is being passed to <a>
-        expect(el).shadowDom.to.equal(
-            `<a href="test_url" target="_blank" id="button" tabindex="0"><div id="label"><slot></slot></div></a>`
-        );
+        expect(el).shadowDom.to.equalSnapshot();
     });
     it('targets `el.focusElement` on `focusin`', async () => {
         let focusedCount = 0;

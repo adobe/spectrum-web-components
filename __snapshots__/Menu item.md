@@ -5,7 +5,7 @@
 ```html
 <button id="button" tabindex="-1">
     <div id="label">
-        <slot></slot>
+        <slot id="slot"></slot>
     </div>
     <sp-icons-medium style="display: none;"></sp-icons-medium>
     <sp-icon

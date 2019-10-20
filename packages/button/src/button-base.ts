@@ -13,8 +13,9 @@ governing permissions and limitations under the License.
 import { property, html, TemplateResult } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
+import { ObserveSlotText } from '@spectrum-web-components/shared/lib/observe-slot-text';
 
-export class ButtonBase extends Focusable {
+export class ButtonBase extends ObserveSlotText(Focusable) {
     /**
      * Supplies an address that the browser will navigate to when this button is
      * clicked
@@ -35,7 +36,9 @@ export class ButtonBase extends Focusable {
         return !!this.querySelector('[slot="icon"]');
     }
 
-    private hasLabel = false;
+    private get hasLabel(): boolean {
+        return this.slotHasContent;
+    }
 
     public get focusElement(): HTMLElement {
         /* istanbul ignore if */
@@ -45,24 +48,6 @@ export class ButtonBase extends Focusable {
         return this.shadowRoot.querySelector('#button') as HTMLElement;
     }
 
-    private manageLabelSlot(e: Event): void {
-        const slot = e.target as HTMLSlotElement;
-        let assignedElements = slot.assignedElements
-            ? slot.assignedNodes()
-            : [...this.childNodes].filter((node) => {
-                  const el = node as HTMLElement;
-                  return !el.hasAttribute('slot');
-              });
-        assignedElements = assignedElements.filter((node) => {
-            if ((node as HTMLElement).tagName) {
-                return true;
-            }
-            return node.textContent ? node.textContent.trim() : false;
-        });
-        this.hasLabel = assignedElements.length > 0;
-        this.requestUpdate();
-    }
-
     protected get buttonContent(): TemplateResult[] {
         const icon = html`
             <slot name="icon"></slot>
@@ -70,7 +55,10 @@ export class ButtonBase extends Focusable {
         const content = [
             html`
                 <div id="label" ?hidden=${!this.hasLabel}>
-                    <slot @slotchange=${this.manageLabelSlot}></slot>
+                    <slot
+                        id="slot"
+                        @slotchange=${this.manageObservedSlot}
+                    ></slot>
                 </div>
             `,
         ];
