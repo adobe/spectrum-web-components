@@ -6,5 +6,5 @@
         "rootDir": "./src"
     },
     "include": ["src/*.ts"],
-    "references": [{ "path": "../dropdown" }]
+    "references": [{ "path": "../dropdown" }, { "path": "../shared" }]
 }
