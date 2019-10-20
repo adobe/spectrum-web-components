@@ -6,9 +6,8 @@ An `<sp-action-menu />` is simply an action button with a Popover. Use an `<sp-m
 
 <!-- prettier-ignore -->
 ```html
-<sp-action-menu
-    label="More Actions"
->
+<sp-action-menu>
+    More Actions
     <sp-menu slot="options">
         <sp-menu-item>
             Deselect
@@ -35,14 +34,48 @@ An `<sp-action-menu />` is simply an action button with a Popover. Use an `<sp-m
 
 ## Variants
 
-### No Label
+### No Visible Label
 
-If you ommit the `label` attribtue, then only the ellipse icon will deplay while close.
+The visible label that is be provided via the default `<slot>` interface can be ommitted in preference of an icon only interface. In this context be sure that the `<sp-action-menu>` remains accessible to screen readers by applying the `label` attribute. This will apply an `aria-label` attribute of the same value to the `<botton>` element that toggles the menu list.
 
 <!-- prettier-ignore -->
 ```html
+<sp-action-menu label="More Actions">
+    <sp-menu slot="options">
+        <sp-menu-item>
+            Deselect
+        </sp-menu-item>
+        <sp-menu-item>
+            Select Inverse
+        </sp-menu-item>
+        <sp-menu-item>
+            Feather...
+        </sp-menu-item>
+        <sp-menu-item>
+            Select and Mask...
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>
+            Save Selection
+        </sp-menu-item>
+        <sp-menu-item disabled>
+            Make Work Path
+        </sp-menu-item>
+    </sp-menu>
+</sp-action-menu>
+```
 
-<sp-action-menu>
+### Alternate Icon
+
+A custom icon can be supplied via the `icon` slot in order to replace the default meatballs icon.
+
+<sp-icons-medium></sp-icons-medium>
+
+<!-- prettier-ignore -->
+```html
+<sp-action-menu label="More Actions">
+    <sp-icon slot="icon" size="xxs" name="ui:ChevronDownSmall"></sp-icon>
+    Actions Under the Arrow
     <sp-menu slot="options">
         <sp-menu-item>
             Deselect
