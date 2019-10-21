@@ -11,9 +11,19 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
 
-export const Default = (): TemplateResult => {
+export const ActionMenuMarkup = ({
+    ariaLabel = 'More Actions',
+    changeHandler = (() => {}) as ((e: Event) => void),
+    disabled = false,
+    visibleLabel = '',
+} = {}): TemplateResult => {
     return html`
-        <sp-action-menu label="More Actions">
+        <sp-action-menu
+            label=${ariaLabel}
+            ?disabled=${disabled}
+            @change="${changeHandler}"
+        >
+            ${visibleLabel}
             <sp-menu slot="options">
                 <sp-menu-item>
                     Deselect

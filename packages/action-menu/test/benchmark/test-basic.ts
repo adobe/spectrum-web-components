@@ -12,6 +12,6 @@ governing permissions and limitations under the License.
 import '../../';
 import '../../../menu';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
-import { Default as basicActionMenu } from '../../stories/';
+import { ActionMenuMarkup } from '../../stories/';
 
-measureFixtureCreation(basicActionMenu());
+measureFixtureCreation(ActionMenuMarkup());

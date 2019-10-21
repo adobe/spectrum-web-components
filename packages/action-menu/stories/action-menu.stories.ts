@@ -11,56 +11,34 @@ governing permissions and limitations under the License.
 */
 import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import { html, TemplateResult } from 'lit-html';
+import { TemplateResult } from 'lit-html';
 
 import '../';
 import { ActionMenu } from '../';
 import '../../menu';
 import '../../menu-item';
-
-export { Default } from './';
+import { ActionMenuMarkup } from './';
 
 export default {
     title: 'Action menu',
 };
 
+export { ActionMenuMarkup as Default };
+
 export const knobyActionMenu = (): TemplateResult => {
     const ariaLabel = text('Arial Label', 'More Actions', 'Component');
     const visibleLabel = text('Visible Label', 'More Actions', 'Component');
     const disabled = boolean('Is Disabled', false, 'Component');
-    return html`
-        <sp-action-menu
-            label=${ariaLabel}
-            ?disabled=${disabled}
-            @change="${(e: Event) => {
-                const actionMenu = e.target as ActionMenu;
-                action(`Change: ${actionMenu.value}`)();
-            }}"
-        >
-            ${visibleLabel}
-            <sp-menu slot="options">
-                <sp-menu-item>
-                    Deselect
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select Inverse
-                </sp-menu-item>
-                <sp-menu-item>
-                    Feather...
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select and Mask...
-                </sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>
-                    Save Selection
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Make Work Path
-                </sp-menu-item>
-            </sp-menu>
-        </sp-action-menu>
-    `;
+    const changeHandler = (e: Event): void => {
+        const actionMenu = e.target as ActionMenu;
+        action(`Change: ${actionMenu.value}`)();
+    };
+    return ActionMenuMarkup({
+        ariaLabel,
+        disabled,
+        changeHandler,
+        visibleLabel,
+    });
 };
 
 knobyActionMenu.story = {
