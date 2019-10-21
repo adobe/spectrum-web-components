@@ -20,6 +20,14 @@ cd spectrum-web-components
 yarn
 ```
 
+The call to `yarn` will subsequently trigger scripting which will ensure that your local repo is adequately prepared to develop and run the packages in this library. Commands therein include:
+
+-   `yarn build:clear-cache` to remove previously created artifacts of the `tsc build` process.
+-   `yarn spectrum-vars` to ensure that theme files are up-to-date.
+-   `yarn process-icons` to make sure that the most recent icons are included.
+-   `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
+-   `yarn build` to make sure the most recent code base is represented in each package's `lib` folders.
+
 # Documentation
 
 The Spectrum Web Components documentation site is available via the following command:

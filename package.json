@@ -28,7 +28,8 @@
     },
     "scripts": {
         "analyze": "lit-analyzer 'packages/*/src/**/*.ts'",
-        "get-ready": "yarn build:clear-cache && yarn spectrum-vars && yarn process-icons && yarn process-spectrum",
+        "get-ready": "yarn build:clear-cache && yarn spectrum-vars && yarn process-icons && yarn process-spectrum && yarn build",
+        "postinstall": "yarn get-ready",
         "spectrum-vars": "node ./scripts/spectrum-vars.js",
         "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'packages/**/*.css'",
         "process-icons": "node ./scripts/process-icons.js; npx pretty-quick --pattern 'packages/**/*.svg.ts'",
@@ -47,7 +48,7 @@
         "lint:js": "eslint -f pretty 'tasks/**/*.js' && eslint -f pretty 'scripts/**/*.js'",
         "lint:ts": "eslint -f pretty 'packages/**/*.ts'",
         "lint:css": "stylelint 'packages/**/*.css'",
-        "prelerna-publish": "yarn get-ready && yarn build",
+        "prelerna-publish": "yarn get-ready",
         "lerna-publish": "lerna publish --message 'chore: release new versions'",
         "test": "yarn build && yarn test:ci",
         "test:build": "tsc --build test/tsconfig-test.json",
