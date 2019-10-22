@@ -32,6 +32,7 @@
         { "path": "../search" },
         { "path": "../sidenav" },
         { "path": "../slider" },
+        { "path": "../status-light" },
         { "path": "../switch" },
         { "path": "../tab" },
         { "path": "../tab-list" },
