@@ -11,11 +11,12 @@ governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
 import { text, number, select, boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 import '../';
-import { variants } from '../';
+import { variants, SliderEventDetail } from '../';
 
 storiesOf('Slider', module)
     .add('Default', () => {
@@ -33,6 +34,9 @@ storiesOf('Slider', module)
             sliderVariants[0],
             'Element'
         );
+        const handleEvent = (e: CustomEvent<SliderEventDetail>): void => {
+            action(e.type)(e.detail);
+        };
         return html`
             <div style="width: 500px; margin: 20px;">
                 <sp-slider
@@ -45,6 +49,8 @@ storiesOf('Slider', module)
                     ?tick-labels="${tickLabels}"
                     id="opacity-slider"
                     variant=${ifDefined(variant || undefined)}
+                    @sp-slider:input=${handleEvent}
+                    @sp-slider:change=${handleEvent}
                 ></sp-slider>
             </div>
         `;

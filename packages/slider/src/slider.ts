@@ -131,7 +131,9 @@ export class Slider extends Focusable {
     protected updated(changedProperties: PropertyValues): void {
         if (changedProperties.has('value')) {
             this.value = this.clampValue(this.value);
-            this.dispatchInputEvent();
+            if (this.dragging) {
+                this.dispatchInputEvent();
+            }
         }
     }
 
