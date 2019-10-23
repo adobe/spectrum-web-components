@@ -131,6 +131,7 @@ export class Slider extends Focusable {
     protected updated(changedProperties: PropertyValues): void {
         if (changedProperties.has('value')) {
             this.value = this.clampValue(this.value);
+            this.dispatchInputEvent();
         }
     }
 
@@ -311,7 +312,6 @@ export class Slider extends Focusable {
             return;
         }
         this.value = this.calculateHandlePosition(this.currentMouseEvent);
-        this.dispatchInputEvent();
         requestAnimationFrame(() => this._trackMouseEvent());
     }
 
@@ -346,7 +346,6 @@ export class Slider extends Focusable {
 
     private onMouseMove = (ev: MouseEvent): void => {
         this.currentMouseEvent = ev;
-        this.dispatchInputEvent();
     };
 
     private onPointerCancel(ev: PointerEvent): void {
@@ -366,7 +365,6 @@ export class Slider extends Focusable {
         this.handle.setPointerCapture(ev.pointerId);
 
         this.value = this.calculateHandlePosition(ev);
-        this.dispatchInputEvent();
     }
 
     private onTrackMouseDown(ev: MouseEvent): void {
@@ -391,7 +389,6 @@ export class Slider extends Focusable {
         this.value = this.clampValue(inputValue);
         this.input.value = this.value.toString();
 
-        this.dispatchInputEvent();
         this.dispatchChangeEvent();
     }
 
