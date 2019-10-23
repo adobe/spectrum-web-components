@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.3.0...@spectrum-web-components/bundle@0.4.0) (2019-10-23)
+
+### Bug Fixes
+
+-   **status-light:** review comments for status-light ([80caa08](https://github.com/adobe/spectrum-web-components/commit/80caa08))
+-   **status-light:** update version in bundle pjson ([a8eabdb](https://github.com/adobe/spectrum-web-components/commit/a8eabdb))
+
+### Features
+
+-   **status-light:** add status-light component ([e3a5b3d](https://github.com/adobe/spectrum-web-components/commit/e3a5b3d))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.2.2...@spectrum-web-components/bundle@0.3.0) (2019-10-18)
 
 ### Features
