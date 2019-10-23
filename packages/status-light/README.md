@@ -11,7 +11,7 @@ An **sp-status-light** is a great way to convey semantic meaning, such as status
 ### Variants
 
 There are many variants to choose from in Spectrum. The `variant`
-attribute controls the main variant of the status light, and `positive` being the default. Following are the supported variants:
+attribute controls the main variant of the status light, and `neutral` being the default. Following are the supported variants:
 
 -   positive
 -   negative
@@ -24,4 +24,5 @@ attribute controls the main variant of the status light, and `positive` being th
 -   seafoam
 -   chartreuse
 -   magenta
+-   celery
 -   purple

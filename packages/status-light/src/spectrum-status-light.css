@@ -124,7 +124,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-.spectrum-StatusLight--celery::before {
+:host([variant='celery']) #root::before {
     /* .spectrum-StatusLight--celery::before */
     background-color: var(
         --spectrum-statuslight-dot-color-label-celery,

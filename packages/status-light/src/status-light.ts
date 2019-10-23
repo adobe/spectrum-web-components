@@ -44,7 +44,8 @@ export class StatusLight extends LitElement {
         | 'seafoam'
         | 'chartreuse'
         | 'magenta'
-        | 'purple' = 'positive';
+        | 'celery'
+        | 'purple' = 'neutral';
 
     protected render(): TemplateResult {
         return html`
