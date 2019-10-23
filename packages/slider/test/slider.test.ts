@@ -157,9 +157,16 @@ describe('Slider', () => {
         expect(pointerId).to.equal(3);
     });
     it('will fallback to mouse events', async () => {
+        let inputsHandled = 0;
+        const handleInput = (): void => {
+            inputsHandled += 1;
+        };
         const el = await fixture<Slider>(
             html`
-                <sp-slider style="width: 500px; float: left;"></sp-slider>
+                <sp-slider
+                    style="width: 500px; float: left;"
+                    @sp-slider:input=${handleInput}
+                ></sp-slider>
             `
         );
         const supportsPointerEvent = ((el as unknown) as TestableSliderType)
@@ -169,6 +176,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(10);
+        expect(inputsHandled).to.equal(0);
 
         const handle = el.shadowRoot
             ? (el.shadowRoot.querySelector('#handle') as HTMLDivElement)
@@ -184,6 +192,7 @@ describe('Slider', () => {
         await nextFrame();
 
         expect(el.value).to.equal(5);
+        expect(inputsHandled).to.equal(1);
 
         await elementUpdated(el);
 
@@ -197,6 +206,7 @@ describe('Slider', () => {
         await nextFrame();
 
         expect(el.value).to.equal(8);
+        expect(inputsHandled).to.equal(2);
 
         document.dispatchEvent(
             new MouseEvent('mouseup', {
@@ -208,6 +218,7 @@ describe('Slider', () => {
         await nextFrame();
 
         expect(el.value).to.equal(5);
+        expect(inputsHandled).to.equal(3);
 
         ((el as unknown) as TestableSliderType).supportsPointerEvent = supportsPointerEvent;
     });
@@ -402,15 +413,24 @@ describe('Slider', () => {
     });
     it('accepts pointermove events - [step=0]', async () => {
         let pointerId = -1;
+        let inputsHandled = 0;
+        const handleInput = (): void => {
+            inputsHandled += 1;
+        };
         const el = await fixture<Slider>(
             html`
-                <sp-slider step="0"></sp-slider>
+                <sp-slider
+                    step="0"
+                    @sp-slider:input=${handleInput}
+                    style="width: 500px; float: left;"
+                ></sp-slider>
             `
         );
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(10);
+        expect(inputsHandled).to.equal(0);
 
         const handle = el.shadowRoot
             ? (el.shadowRoot.querySelector('#handle') as HTMLDivElement)
@@ -431,12 +451,23 @@ describe('Slider', () => {
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
-                clientX: 0,
+                clientX: 200,
             })
         );
         await elementUpdated(el);
 
-        expect(el.value).to.equal(0);
+        expect(el.value).to.equal(8);
+        expect(inputsHandled).to.equal(1);
+
+        handle.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: 125,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(5);
+        expect(inputsHandled).to.equal(2);
     });
     it('will not pointermove unless `pointerdown`', async () => {
         const el = await fixture<Slider>(
