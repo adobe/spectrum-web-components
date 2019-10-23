@@ -40,6 +40,7 @@ module.exports = {
                         '.spectrum-StatusLight--chartreuse',
                         '.spectrum-StatusLight--magenta',
                         '.spectrum-StatusLight--purple',
+                        '.spectrum-StatusLight--celery',
                     ],
                 },
             ],
