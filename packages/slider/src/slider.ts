@@ -471,8 +471,10 @@ export class Slider extends Focusable {
     }
 
     private get trackRightStyle(): string {
-        const width = `width: ${(1 - this.trackProgress) * 100}%; `;
-        const offset = `left: calc(${this.trackProgress * 100}% + 8px)`;
+        const width = `width: ${(1 - this.trackProgress) * 100}%;`;
+        const halfHandleWidth = `var(--spectrum-slider-handle-width, var(--spectrum-global-dimension-size-200)) / 2`;
+        const offset = `left: calc(${this.trackProgress *
+            100}% + ${halfHandleWidth})`;
 
         return width + offset;
     }
