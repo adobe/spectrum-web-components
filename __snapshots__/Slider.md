@@ -35,7 +35,7 @@
         class="track"
         id="track-right"
         role="presentation"
-        style="width: 50%; left: calc(50% + 8px)"
+        style="width: 50%;left: calc(50% + var(--spectrum-slider-handle-width, var(--spectrum-global-dimension-size-200)) / 2)"
     ></div>
 </div>
 ```
@@ -1111,7 +1111,7 @@
         class="track"
         id="track-right"
         role="presentation"
-        style="width: 50%; left: calc(50% + 8px)"
+        style="width: 50%;left: calc(50% + var(--spectrum-slider-handle-width, var(--spectrum-global-dimension-size-200)) / 2)"
     ></div>
 </div>
 ```
