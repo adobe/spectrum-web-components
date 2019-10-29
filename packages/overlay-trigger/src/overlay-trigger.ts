@@ -45,6 +45,9 @@ export class OverlayTrigger extends LitElement {
     @property({ type: Number, reflect: true })
     public offset = 6;
 
+    @property({ type: Boolean, reflect: true })
+    public disabled = false;
+
     private clickContent?: HTMLElement;
 
     private hoverContent?: HTMLElement;
