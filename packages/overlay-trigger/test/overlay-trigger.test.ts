@@ -18,7 +18,14 @@ import '../../popover';
 import { Popover } from '../../popover';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
-import { fixture, aTimeout, html, expect, nextFrame } from '@open-wc/testing';
+import {
+    fixture,
+    aTimeout,
+    html,
+    expect,
+    nextFrame,
+    elementUpdated,
+} from '@open-wc/testing';
 
 function pressEscape(): void {
     const up = new KeyboardEvent('keyup', {
@@ -141,6 +148,22 @@ describe('Overlays', () => {
             OverlayTrigger
         );
         expect(isVisible(outerPopover)).to.be.true;
+    });
+
+    it('does not open a popover when [disabled]', async () => {
+        const trigger = testDiv.querySelector('#trigger') as OverlayTrigger;
+        const root = trigger.shadowRoot ? trigger.shadowRoot : trigger;
+        const triggerZone = root.querySelector('#trigger') as HTMLDivElement;
+        const styles = getComputedStyle(triggerZone);
+
+        expect(trigger.disabled).to.be.false;
+        expect(styles.pointerEvents).to.equal('auto');
+
+        trigger.disabled = true;
+        await elementUpdated(trigger);
+
+        expect(trigger.disabled).to.be.true;
+        expect(styles.pointerEvents).to.equal('none');
     });
 
     it('opens a nested popover', async () => {
