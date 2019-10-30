@@ -107,7 +107,7 @@ describe('Dropzone', () => {
             html`
                 <sp-dropzone
                     id="dropzone"
-                    @sp-dropzone:should-accept=${canceledDrag}
+                    @sp-dropzone-should-accept=${canceledDrag}
                 ></sp-dropzone>
             `
         );
@@ -136,7 +136,7 @@ describe('Dropzone', () => {
             html`
                 <sp-dropzone
                     id="dropzone"
-                    @sp-dropzone:dragleave=${onDragLeave}
+                    @sp-dropzone-dragleave=${onDragLeave}
                 ></sp-dropzone>
             `
         );
@@ -162,7 +162,7 @@ describe('Dropzone', () => {
             html`
                 <sp-dropzone
                     id="dropzone"
-                    @sp-dropzone:drop=${onDrop}
+                    @sp-dropzone-drop=${onDrop}
                 ></sp-dropzone>
             `
         );

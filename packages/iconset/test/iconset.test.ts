@@ -78,7 +78,7 @@ describe('Iconset', () => {
         icons2.remove();
 
         window.dispatchEvent(
-            new CustomEvent('sp-iconset:removed', {
+            new CustomEvent('sp-iconset-removed', {
                 detail: { name: 'Other Set' },
             })
         );
