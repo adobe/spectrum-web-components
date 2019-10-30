@@ -19,7 +19,7 @@ import {
 } from 'lit-element';
 
 import radioGroupStyles from './radio-group.css.js';
-import { Radio, RadioChangeDetail } from '@spectrum-web-components/radio';
+import { Radio } from '@spectrum-web-components/radio';
 
 /**
  * Radio group component
@@ -70,12 +70,10 @@ export class RadioGroup extends LitElement {
         // If selected already assigned, don't overwrite
         this.selected = this.selected || checkedRadioValue;
 
-        this.addEventListener(
-            'sp-radio:change',
-            (ev: CustomEvent<RadioChangeDetail>) => {
-                this.selected = ev.detail.value;
-            }
-        );
+        this.addEventListener('change', (ev: Event) => {
+            const target = ev.target as Radio;
+            this.selected = target.value;
+        });
     }
 
     private deselectChecked(): void {

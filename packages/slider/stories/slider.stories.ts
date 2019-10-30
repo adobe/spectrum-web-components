@@ -16,7 +16,7 @@ import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 import '../';
-import { variants, SliderEventDetail } from '../';
+import { variants, Slider } from '../';
 
 storiesOf('Slider', module)
     .add('Default', () => {
@@ -34,8 +34,9 @@ storiesOf('Slider', module)
             sliderVariants[0],
             'Element'
         );
-        const handleEvent = (e: CustomEvent<SliderEventDetail>): void => {
-            action(e.type)(e.detail);
+        const handleEvent = (e: Event): void => {
+            const target = e.target as Slider;
+            action(e.type)(target.value);
         };
         return html`
             <div style="width: 500px; margin: 20px;">

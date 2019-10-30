@@ -21,10 +21,6 @@ import {
 import radioStyles from './radio.css.js';
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
-export interface RadioChangeDetail {
-    value: string;
-}
-
 /**
  * Spectrum Radio Button Component
  *
@@ -61,12 +57,9 @@ export class Radio extends Focusable {
     public handleChange(): void {
         this.checked = this.inputElement.checked;
         this.dispatchEvent(
-            new CustomEvent('sp-radio:change', {
+            new Event('change', {
                 bubbles: true,
                 composed: true,
-                detail: {
-                    value: this.value,
-                },
             })
         );
     }
@@ -86,11 +79,5 @@ export class Radio extends Focusable {
                 <span id="label"><slot></slot></span>
             </label>
         `;
-    }
-}
-
-declare global {
-    interface GlobalEventHandlersEventMap {
-        'sp-radio:change': CustomEvent<RadioChangeDetail>;
     }
 }
