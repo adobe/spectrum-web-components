@@ -80,14 +80,14 @@ export abstract class Iconset extends LitElement {
     public connectedCallback(): void {
         super.connectedCallback();
         this.addIconset();
-        window.addEventListener('sp-iconset:removed', this.handleRemoved);
+        window.addEventListener('sp-iconset-removed', this.handleRemoved);
     }
     /**
      * On disconnected we remove the iconset
      */
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        window.removeEventListener('sp-iconset:removed', this.handleRemoved);
+        window.removeEventListener('sp-iconset-removed', this.handleRemoved);
         this.removeIconset();
     }
 

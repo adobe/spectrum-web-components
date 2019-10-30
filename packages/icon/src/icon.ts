@@ -50,12 +50,12 @@ export class Icon extends LitElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        window.addEventListener('sp-iconset:added', this.iconsetListener);
+        window.addEventListener('sp-iconset-added', this.iconsetListener);
     }
 
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        window.removeEventListener('sp-iconset:added', this.iconsetListener);
+        window.removeEventListener('sp-iconset-added', this.iconsetListener);
     }
 
     public firstUpdated(): void {

@@ -36,7 +36,7 @@ export class IconsetRegistry {
         // dispatch a sp-iconset-added event on window to let everyone know we have a new iconset
         // note we're using window here for efficiency since we don't need to bubble through the dom since everyone
         // will know where to look for this event
-        const event = new CustomEvent('sp-iconset:added', {
+        const event = new CustomEvent('sp-iconset-added', {
             bubbles: true,
             composed: true,
             detail: { name, iconset },
@@ -51,7 +51,7 @@ export class IconsetRegistry {
         // dispatch a sp-iconset-removed event on window to let everyone know we have a new iconset
         // note we're using window here for efficiency since we don't need to bubble through the dom since everyone
         // will know where to look for this event
-        const event = new CustomEvent('sp-iconset:removed', {
+        const event = new CustomEvent('sp-iconset-removed', {
             bubbles: true,
             composed: true,
             detail: { name },
@@ -66,7 +66,7 @@ export class IconsetRegistry {
 
 declare global {
     interface GlobalEventHandlersEventMap {
-        'sp-iconset:added': CustomEvent<IconsetAddedDetail>;
-        'sp-iconset:removed': CustomEvent<IconsetRemovedDetail>;
+        'sp-iconset-added': CustomEvent<IconsetAddedDetail>;
+        'sp-iconset-removed': CustomEvent<IconsetRemovedDetail>;
     }
 }

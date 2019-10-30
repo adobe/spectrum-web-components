@@ -27,7 +27,7 @@ class IconsDemo extends LitElement {
     }
     public connectedCallback(): void {
         super.connectedCallback();
-        window.addEventListener('sp-iconset:added', this.handleIconSetAdded);
+        window.addEventListener('sp-iconset-added', this.handleIconSetAdded);
     }
     public handleIconSetAdded(event: CustomEvent<IconsetAddedDetail>): void {
         const { iconset } = event.detail;
