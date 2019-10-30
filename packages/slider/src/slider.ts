@@ -23,8 +23,6 @@ import spectrumSliderStyles from './spectrum-slider.css.js';
 import sliderStyles from './slider.css.js';
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
-export type SliderEventDetail = number;
-
 export const variants = ['color', 'filled', 'ramp', 'range', 'tick'];
 
 export class Slider extends Focusable {
@@ -435,10 +433,9 @@ export class Slider extends Focusable {
     }
 
     private dispatchInputEvent(): void {
-        const inputEvent = new CustomEvent('sp-slider:input', {
+        const inputEvent = new Event('input', {
             bubbles: true,
             composed: true,
-            detail: this.value,
         });
 
         this.dispatchEvent(inputEvent);
@@ -447,10 +444,9 @@ export class Slider extends Focusable {
     private dispatchChangeEvent(): void {
         this.input.value = this.value.toString();
 
-        const changeEvent = new CustomEvent('sp-slider:change', {
+        const changeEvent = new Event('change', {
             bubbles: true,
             composed: true,
-            detail: this.value,
         });
 
         this.dispatchEvent(changeEvent);
@@ -481,12 +477,5 @@ export class Slider extends Focusable {
 
     private get handleStyle(): string {
         return `left: ${this.trackProgress * 100}%`;
-    }
-}
-
-declare global {
-    interface GlobalEventHandlersEventMap {
-        'sp-slider:input': CustomEvent<SliderEventDetail>;
-        'sp-slider:change': CustomEvent<SliderEventDetail>;
     }
 }

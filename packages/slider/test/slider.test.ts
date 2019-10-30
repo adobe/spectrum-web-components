@@ -165,7 +165,7 @@ describe('Slider', () => {
             html`
                 <sp-slider
                     style="width: 500px; float: left;"
-                    @sp-slider:input=${handleInput}
+                    @input=${handleInput}
                 ></sp-slider>
             `
         );
@@ -421,7 +421,7 @@ describe('Slider', () => {
             html`
                 <sp-slider
                     step="0"
-                    @sp-slider:input=${handleInput}
+                    @input=${handleInput}
                     style="width: 500px; float: left;"
                 ></sp-slider>
             `

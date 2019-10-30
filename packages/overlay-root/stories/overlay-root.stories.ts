@@ -21,7 +21,6 @@ import {
 
 import '../';
 import { Placement } from '../';
-import { RadioChangeDetail } from '../../radio';
 import '../../overlay-root';
 import '../../overlay-trigger';
 import '../../button';
@@ -30,6 +29,7 @@ import '../../slider';
 import '../../radio';
 import '../../radio-group';
 import '../../tooltip';
+import { Radio } from '../../radio';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;
@@ -61,23 +61,24 @@ class RecursivePopover extends LitElement {
         this.depth = 0;
     }
 
-    public onRadioChange(event: CustomEvent<RadioChangeDetail>): void {
-        this.placement = event.detail.value as Placement;
+    public onRadioChange(event: Event): void {
+        const target = event.target as Radio;
+        this.placement = target.value as Placement;
     }
 
     public render(): TemplateResult {
         return html`
             <sp-radio-group selected="${this.placement}" name="group-example">
-                <sp-radio @sp-radio:change=${this.onRadioChange} value="top">
+                <sp-radio @change=${this.onRadioChange} value="top">
                     Top
                 </sp-radio>
-                <sp-radio @sp-radio:change=${this.onRadioChange} value="right">
+                <sp-radio @change=${this.onRadioChange} value="right">
                     Right
                 </sp-radio>
-                <sp-radio @sp-radio:change=${this.onRadioChange} value="bottom">
+                <sp-radio @change=${this.onRadioChange} value="bottom">
                     Bottom
                 </sp-radio>
-                <sp-radio @sp-radio:change=${this.onRadioChange} value="left">
+                <sp-radio @change=${this.onRadioChange} value="left">
                     Left
                 </sp-radio>
             </sp-radio-group>

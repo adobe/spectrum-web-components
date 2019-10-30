@@ -66,14 +66,25 @@ describe('Radio', () => {
     });
 
     it('handles click events', async () => {
+        let value = '';
+        let checked = false;
         const el = testDiv.querySelector('[value=third]') as Radio;
+        el.addEventListener('change', (e) => {
+            const target = e.target as Radio;
+            value = target.value;
+            checked = target.checked;
+        });
 
         expect(el.checked).to.be.false;
+        expect(value).to.equal('');
+        expect(checked).to.be.false;
 
         inputForRadio(el).click();
         await elementUpdated(el);
 
         expect(el.checked).to.be.true;
+        expect(value).to.equal('third');
+        expect(checked).to.be.true;
     });
 
     it('autofocuses', async () => {
