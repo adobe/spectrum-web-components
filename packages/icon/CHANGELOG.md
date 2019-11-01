@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.2.0...@spectrum-web-components/icon@0.3.0) (2019-11-01)
+
+### Bug Fixes
+
+-   remove ":" based namespacing of events ([d77a843](https://github.com/adobe/spectrum-web-components/commit/d77a843))
+
+### Features
+
+-   **icon:** allow <sp-icon> to accept a slotted icon ([cbf7a07](https://github.com/adobe/spectrum-web-components/commit/cbf7a07))
+
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.1.3...@spectrum-web-components/icon@0.2.0) (2019-10-14)
 
 ### Features

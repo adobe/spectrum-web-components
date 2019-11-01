@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.2.1...@spectrum-web-components/slider@0.2.2) (2019-11-01)
+
+### Bug Fixes
+
+-   **slider:** ensure track widths follow dynamic Spectrum CSS values ([5ad1c1a](https://github.com/adobe/spectrum-web-components/commit/5ad1c1a))
+-   **slider:** use standard "change" and "input" events ([59cf786](https://github.com/adobe/spectrum-web-components/commit/59cf786))
+
 ## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.2.0...@spectrum-web-components/slider@0.2.1) (2019-10-23)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.2.0...@spectrum-web-components/dropdown@0.2.1) (2019-11-01)
+
+### Bug Fixes
+
+-   **dropdown:** connect "label" attribute to "aria-label" ([49b89a9](https://github.com/adobe/spectrum-web-components/commit/49b89a9))
+
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.1.4...@spectrum-web-components/dropdown@0.2.0) (2019-10-16)
 
 ### Features

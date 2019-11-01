@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.2.1...@spectrum-web-components/action-menu@0.2.2) (2019-11-01)
+
+### Bug Fixes
+
+-   **action-menu:** apply slot text observer pattern ([bbe6bb5](https://github.com/adobe/spectrum-web-components/commit/bbe6bb5))
+
 ## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.2.0...@spectrum-web-components/action-menu@0.2.1) (2019-10-16)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

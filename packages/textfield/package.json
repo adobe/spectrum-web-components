@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -36,9 +36,9 @@
         "lit-html": "^1.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/icon": "^0.2.0",
-        "@spectrum-web-components/icons": "^0.1.4",
-        "@spectrum-web-components/shared": "^0.1.4",
+        "@spectrum-web-components/icon": "^0.3.0",
+        "@spectrum-web-components/icons": "^0.1.5",
+        "@spectrum-web-components/shared": "^0.2.0",
         "tslib": "^1.10.0"
     }
 }

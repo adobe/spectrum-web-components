@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay-root@0.1.4...@spectrum-web-components/overlay-root@0.1.5) (2019-11-01)
+
+### Bug Fixes
+
+-   **slider:** use standard "change" and "input" events ([59cf786](https://github.com/adobe/spectrum-web-components/commit/59cf786))
+
 ## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay-root@0.1.3...@spectrum-web-components/overlay-root@0.1.4) (2019-10-14)
 
 ### Bug Fixes

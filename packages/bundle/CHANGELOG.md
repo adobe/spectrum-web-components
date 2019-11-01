@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.4.0...@spectrum-web-components/bundle@0.4.1) (2019-11-01)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.3.0...@spectrum-web-components/bundle@0.4.0) (2019-10-23)
 
 ### Bug Fixes
