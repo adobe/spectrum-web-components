@@ -22,7 +22,7 @@ import {
 import { IconsetRegistry } from '@spectrum-web-components/iconset/lib/iconset-registry.js';
 
 import iconStyles from './icon.css.js';
-import { nothing } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 export class Icon extends LitElement {
     public static is = 'sp-icon';
@@ -83,8 +83,17 @@ export class Icon extends LitElement {
     };
 
     protected render(): TemplateResult {
+        if (this.name) {
+            return html`
+                <div id="container"></div>
+            `;
+        } else if (this.src) {
+            return html`
+                <img src="${this.src}" alt=${ifDefined(this.label)} />
+            `;
+        }
         return html`
-            <div id="container">${this.renderIcon()}</div>
+            <slot></slot>
         `;
     }
 
@@ -121,17 +130,6 @@ export class Icon extends LitElement {
             iconName = iconParts[1];
         }
         return { iconset: iconsetName, icon: iconName };
-    }
-
-    private renderIcon(): TemplateResult {
-        // handle src image case
-        return html`
-            ${this.src
-                ? html`
-                      <img src="${this.src}" />
-                  `
-                : nothing}
-        `;
     }
 
     protected async _getUpdateComplete(): Promise<void> {

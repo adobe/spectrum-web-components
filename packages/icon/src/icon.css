@@ -15,3 +15,15 @@ governing permissions and limitations under the License.
 #container {
     height: 100%;
 }
+
+img {
+    width: 100%;
+    height: auto;
+    vertical-align: top;
+}
+
+::slotted(*) {
+    height: 100%;
+    width: 100%;
+    vertical-align: top;
+}
