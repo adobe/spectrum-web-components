@@ -219,16 +219,19 @@ describe('Button', () => {
         await elementUpdated(el);
 
         expect(el.hasAttribute('aria-disabled')).to.be.false;
+        expect((el.focusElement as HTMLButtonElement).disabled).to.be.false;
 
         el.disabled = true;
         await elementUpdated(el);
 
         expect(el.hasAttribute('aria-disabled')).to.be.true;
+        expect((el.focusElement as HTMLButtonElement).disabled).to.be.true;
 
         el.disabled = false;
         await elementUpdated(el);
 
         expect(el.hasAttribute('aria-disabled')).to.be.false;
+        expect((el.focusElement as HTMLButtonElement).disabled).to.be.false;
     });
     it('manages tabIndex while disabled', async () => {
         const el = await fixture<Button>(

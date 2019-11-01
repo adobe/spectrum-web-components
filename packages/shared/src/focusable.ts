@@ -17,6 +17,8 @@ import {
 } from 'lit-element';
 import focusableStyles from './focusable.css.js';
 
+type DisableableElement = HTMLElement & { disabled?: boolean };
+
 /**
  * Focusable base class handles tabindex setting into shadowed elements automatically.
  *
@@ -50,7 +52,7 @@ export class Focusable extends LitElement {
     private newTabindex?: number = 0;
     private oldTabindex = 0;
 
-    public get focusElement(): HTMLElement {
+    public get focusElement(): DisableableElement {
         throw new Error('Must implement focusElement getter!');
     }
 
@@ -111,9 +113,7 @@ export class Focusable extends LitElement {
         super.updated(changedProperties);
 
         if (changedProperties.has('disabled')) {
-            if (this.focusElement instanceof HTMLInputElement) {
-                this.focusElement.disabled = this.disabled;
-            }
+            this.focusElement.disabled = this.disabled;
             if (this.disabled) {
                 this.blur();
             }
