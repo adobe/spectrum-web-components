@@ -440,7 +440,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([selected]),
-:host(:focus) {
+:host(:focus-visible) {
     /* .spectrum-Card.is-selected,
    * .spectrum-Card.focus-ring */
     border-color: var(
@@ -498,9 +498,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([variant='quiet'][selected]),
-:host([variant='quiet']) :focus,
+:host([variant='quiet']) :focus-visible,
 :host([variant='gallery'][selected]),
-:host([variant='gallery']) :focus {
+:host([variant='gallery']) :focus-visible {
     /* .spectrum-Card--quiet.is-selected,
    * .spectrum-Card--quiet.focus-ring,
    * .spectrum-Card--gallery.is-selected,
@@ -509,9 +509,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-shadow: none;
 }
 :host([variant='quiet'][selected]) ::slotted([slot='preview']),
-:host([variant='quiet']) :focus ::slotted([slot='preview']),
+:host([variant='quiet']) :focus-visible ::slotted([slot='preview']),
 :host([variant='gallery'][selected]) ::slotted([slot='preview']),
-:host([variant='gallery']) :focus ::slotted([slot='preview']) {
+:host([variant='gallery']) :focus-visible ::slotted([slot='preview']) {
     /* .spectrum-Card--quiet.is-selected .spectrum-Card-preview,
    * .spectrum-Card--quiet.focus-ring .spectrum-Card-preview,
    * .spectrum-Card--gallery.is-selected .spectrum-Card-preview,

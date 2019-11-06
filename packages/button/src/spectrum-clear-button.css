@@ -88,16 +88,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton:focus,
    * .spectrum-Tool:focus */
     outline: none;
-    /* .spectrum-ClearButton.focus-ring */
-    background-color: var(
-        --spectrum-clearbutton-medium-background-color-key-focus,
-        rgba(0, 0, 0, 0)
-    );
-
-    color: var(
-        --spectrum-clearbutton-medium-icon-color-key-focus,
-        var(--spectrum-global-color-gray-900)
-    );
 }
 #button::-moz-focus-inner {
     /* .spectrum-Button::-moz-focus-inner,
@@ -176,6 +166,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
+#button:focus-visible {
+    /* .spectrum-ClearButton.focus-ring */
+    background-color: var(
+        --spectrum-clearbutton-medium-background-color-key-focus,
+        rgba(0, 0, 0, 0)
+    );
+
+    color: var(
+        --spectrum-clearbutton-medium-icon-color-key-focus,
+        var(--spectrum-global-color-gray-900)
+    );
+}
 #button:disabled,
 #button.is-disabled {
     /* .spectrum-ClearButton:disabled,
@@ -222,7 +224,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         rgb(255, 255, 255)
     );
 }
-.spectrum-ClearButton--overBackground:focus {
+.spectrum-ClearButton--overBackground:focus-visible {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-ClearButton--overBackground.focus-ring */
     background-color: var(

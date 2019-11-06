@@ -3,12 +3,20 @@
 #### `loads`
 
 ```html
-<sp-checkbox indeterminate="" tabindex="0">
+<sp-checkbox data-js-focus-visible="" indeterminate="" tabindex="0">
     228 Selected
 </sp-checkbox>
 <div class="spectrum-ButtonGroup">
-    <sp-action-button quiet="" tabindex="0"></sp-action-button>
-    <sp-action-button quiet="" tabindex="0"></sp-action-button>
+    <sp-action-button
+        data-js-focus-visible=""
+        quiet=""
+        tabindex="0"
+    ></sp-action-button>
+    <sp-action-button
+        data-js-focus-visible=""
+        quiet=""
+        tabindex="0"
+    ></sp-action-button>
 </div>
 ```
 

@@ -5,23 +5,34 @@
 ```html
 Select a Country with a very long label, too long in fact
 <sp-menu role="listbox" slot="options">
-    <sp-menu-item role="option" tabindex="0">
+    <sp-menu-item data-js-focus-visible="" role="option" tabindex="0">
         Deselect
     </sp-menu-item>
-    <sp-menu-item role="option" tabindex="-1" value="option-2">
+    <sp-menu-item
+        data-js-focus-visible=""
+        role="option"
+        tabindex="-1"
+        value="option-2"
+    >
         Select Inverse
     </sp-menu-item>
-    <sp-menu-item role="option" tabindex="-1">
+    <sp-menu-item data-js-focus-visible="" role="option" tabindex="-1">
         Feather...
     </sp-menu-item>
-    <sp-menu-item role="option" tabindex="-1">
+    <sp-menu-item data-js-focus-visible="" role="option" tabindex="-1">
         Select and Mask...
     </sp-menu-item>
     <sp-menu-divider role="separator"></sp-menu-divider>
-    <sp-menu-item role="option" tabindex="-1">
+    <sp-menu-item data-js-focus-visible="" role="option" tabindex="-1">
         Save Selection
     </sp-menu-item>
-    <sp-menu-item aria-disabled="true" disabled="" role="option" tabindex="-1">
+    <sp-menu-item
+        aria-disabled="true"
+        data-js-focus-visible=""
+        disabled=""
+        role="option"
+        tabindex="-1"
+    >
         Make Work Path
     </sp-menu-item>
 </sp-menu>
@@ -43,6 +54,7 @@ Select a Country with a very long label, too long in fact
     <slot name="options">
         <sp-menu-item
             aria-disabled="true"
+            data-js-focus-visible=""
             disabled=""
             role="option"
             tabindex="-1"
@@ -58,23 +70,34 @@ Select a Country with a very long label, too long in fact
 ```html
 Select a Country with a very long label, too long in fact
 <sp-menu role="listbox" slot="options">
-    <sp-menu-item role="option" tabindex="0">
+    <sp-menu-item data-js-focus-visible="" role="option" tabindex="0">
         Deselect
     </sp-menu-item>
-    <sp-menu-item role="option" tabindex="-1" value="option-2">
+    <sp-menu-item
+        data-js-focus-visible=""
+        role="option"
+        tabindex="-1"
+        value="option-2"
+    >
         Select Inverse
     </sp-menu-item>
-    <sp-menu-item role="option" tabindex="-1">
+    <sp-menu-item data-js-focus-visible="" role="option" tabindex="-1">
         Feather...
     </sp-menu-item>
-    <sp-menu-item role="option" tabindex="-1">
+    <sp-menu-item data-js-focus-visible="" role="option" tabindex="-1">
         Select and Mask...
     </sp-menu-item>
     <sp-menu-divider role="separator"></sp-menu-divider>
-    <sp-menu-item role="option" tabindex="-1">
+    <sp-menu-item data-js-focus-visible="" role="option" tabindex="-1">
         Save Selection
     </sp-menu-item>
-    <sp-menu-item aria-disabled="true" disabled="" role="option" tabindex="-1">
+    <sp-menu-item
+        aria-disabled="true"
+        data-js-focus-visible=""
+        disabled=""
+        role="option"
+        tabindex="-1"
+    >
         Make Work Path
     </sp-menu-item>
 </sp-menu>
@@ -97,6 +120,7 @@ Select a Country with a very long label, too long in fact
     <slot name="options">
         <sp-menu-item
             aria-disabled="true"
+            data-js-focus-visible=""
             disabled=""
             role="option"
             tabindex="-1"

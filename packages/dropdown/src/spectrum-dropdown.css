@@ -272,14 +272,14 @@ select + .dropdown {
         var(--spectrum-global-color-gray-900)
     );
 }
-#button:focus #label.placeholder {
+#button:focus-visible #label.placeholder {
     /* .spectrum-Dropdown-trigger.focus-ring .spectrum-Dropdown-label.is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color-key-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
-#button:focus .dropdown {
+#button:focus-visible .dropdown {
     /* .spectrum-Dropdown-trigger.focus-ring .spectrum-Dropdown-icon */
     color: var(
         --spectrum-dropdown-icon-color-key-focus,

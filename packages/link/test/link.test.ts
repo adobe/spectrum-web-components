@@ -26,6 +26,8 @@ describe('Link', () => {
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Default Link');
         // make sure href is being passed to <a>
-        expect(el).shadowDom.to.equal(`<a href="test_url"><slot></slot></a>`);
+        expect(el).shadowDom.to.equal(
+            `<a href="test_url" id="anchor" tabindex="0"><slot></slot></a>`
+        );
     });
 });

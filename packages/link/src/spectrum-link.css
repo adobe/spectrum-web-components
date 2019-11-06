@@ -33,7 +33,7 @@ a:hover {
         var(--spectrum-global-color-blue-600)
     );
 }
-a:focus {
+a:focus-visible {
     /* .spectrum-Link.focus-ring */
     text-decoration: underline;
     /* .spectrum-Link.focus-ring */

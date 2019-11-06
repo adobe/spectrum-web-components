@@ -210,7 +210,9 @@ class SpectrumProcessor {
             const result = selector.clone();
             result.walkClasses((selector) => {
                 if (selector.value === 'focus-ring') {
-                    selector.replaceWith(parser.pseudo({ value: ':focus' }));
+                    selector.replaceWith(
+                        parser.pseudo({ value: ':focus-visible' })
+                    );
                 }
             });
             return result;

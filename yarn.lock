@@ -2080,11 +2080,6 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/avatar/-/avatar-2.0.0.tgz#7d0bb3f4902249665d7ac5d9f49e6cdf3a15441d"
   integrity sha512-K1se5/am+ehu7UJ0K2J4d+uMubkoBI6QlbNXISUBJftxZ6sA3tDIo3kX4og6SiCr93LF5LxzJ3bhpQkkqFHVtQ==
 
-"@spectrum-css/tabs@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-2.0.0.tgz#1426eb9e36b8f6131c36be15bd1093e5e62f9a9e"
-  integrity sha512-KzkEi+4rAKXaBr7rnmYWtaPOBwWO+DPF0zkVPLucng4615nFdAuMRwL+a96Fo+15HilN9reFvl3Kw06Ys1lK2g==
-
 "@storybook/addon-a11y@5.2.1":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-5.2.1.tgz#4ab013ea7910189cdbfc2dbfecdd6c2dab5f04d8"
@@ -7790,6 +7785,11 @@ focus-lock@^0.6.3:
   resolved "https://registry.yarnpkg.com/focus-lock/-/focus-lock-0.6.6.tgz#98119a755a38cfdbeda0280eaa77e307eee850c7"
   integrity sha512-Dx69IXGCq1qsUExWuG+5wkiMqVM/zGx/reXSJSLogECwp3x6KeNQZ+NAetgxEFpnC41rD8U3+jRCW68+LNzdtw==
 
+focus-visible@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/focus-visible/-/focus-visible-5.0.2.tgz#4fae9cf40458b73c10701c9774c462e3ccd53caf"
+  integrity sha512-zT2fj/bmOgEBjqGbURGlowTmCwsIs3bRDMr/sFZz8Ly7VkEiwuCn9swNTL3pPuf8Oua2de7CLuKdnuNajWdDsQ==
+
 follow-redirects@1.5.10:
   version "1.5.10"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
@@ -13323,7 +13323,7 @@ postcss-place@^4.0.1:
     postcss "^7.0.2"
     postcss-values-parser "^2.0.0"
 
-postcss-preset-env@^6.5.0:
+postcss-preset-env@^6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-6.7.0.tgz#c34ddacf8f902383b35ad1e030f178f4cdf118a5"
   integrity sha512-eU4/K5xzSFwUFJ8hTdTQzo2RBLbDVt83QZrAvI07TULOkmyQlnYlpwep+2yIK+K+0KlZO4BvFcleOCCcUtwchg==

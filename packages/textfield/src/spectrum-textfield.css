@@ -280,7 +280,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-500)
     );
 }
-#input:focus:not(:active) {
+#input:focus-visible:not(:active) {
     /* .spectrum-Textfield.focus-ring:not(:active) */
     border-color: var(
         --spectrum-textfield-border-color-key-focus,
@@ -328,8 +328,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' height='18' viewBox='0 0 18 18' width='18'%3E%3Cpath style='fill:var%28--spectrum-alert-error-border-color%2C var%28--spectrum-global-color-red-400%29%29' d='M8.564 1.289L.2 16.256A.5.5 0 0 0 .636 17h16.728a.5.5 0 0 0 .5-.5.494.494 0 0 0-.064-.244L9.436 1.289a.5.5 0 0 0-.872 0zM10 14.75a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25zm0-3a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25v-6a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25z'/%3E%3C/svg%3E");
 }
-:host([invalid]) #input:focus:not(:active),
-#input:invalid:focus:not(:active) {
+:host([invalid]) #input:focus-visible:not(:active),
+#input:invalid:focus-visible:not(:active) {
     /* .spectrum-Textfield.is-invalid.focus-ring:not(:active),
    * .spectrum-Textfield:invalid.focus-ring:not(:active) */
     border-color: var(
@@ -368,7 +368,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-blue-400)
         );
 }
-:host([quiet]) #input:focus:not(:active) {
+:host([quiet]) #input:focus-visible:not(:active) {
     /* .spectrum-Textfield--quiet.focus-ring:not(:active) */
     border-color: var(
         --spectrum-textfield-border-color-key-focus,
@@ -410,8 +410,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-red-500)
         );
 }
-:host([quiet][invalid]) #input:focus:not(:active),
-:host([quiet]) #input:invalid:focus:not(:active) {
+:host([quiet][invalid]) #input:focus-visible:not(:active),
+:host([quiet]) #input:invalid:focus-visible:not(:active) {
     /* .spectrum-Textfield--quiet.is-invalid.focus-ring:not(:active),
    * .spectrum-Textfield--quiet:invalid.focus-ring:not(:active) */
     border-color: var(

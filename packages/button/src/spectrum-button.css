@@ -94,10 +94,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton:focus,
    * .spectrum-Tool:focus */
     outline: none;
-    /* .spectrum-Button.focus-ring */
-    box-shadow: 0 0 0
-        var(--spectrum-button-primary-border-size-increase-key-focus, 1px)
-        var(--spectrum-button-primary-border-color-key-focus, rgb(20, 115, 230));
 }
 #button::-moz-focus-inner {
     /* .spectrum-Button::-moz-focus-inner,
@@ -177,6 +173,12 @@ slot[name='icon'] + #label {
    * .spectrum-Button-label:empty */
     display: none;
 }
+#button:focus-visible {
+    /* .spectrum-Button.focus-ring */
+    box-shadow: 0 0 0
+        var(--spectrum-button-primary-border-size-increase-key-focus, 1px)
+        var(--spectrum-button-primary-border-color-key-focus, rgb(20, 115, 230));
+}
 #button:active {
     /* .spectrum-Button:active */
     box-shadow: none;
@@ -202,7 +204,7 @@ slot[name='icon'] + #label {
     );
     color: var(--spectrum-button-cta-text-color-hover, rgb(255, 255, 255));
 }
-:host([variant='cta']) #button:focus {
+:host([variant='cta']) #button:focus-visible {
     /* .spectrum-Button--cta.focus-ring */
     background-color: var(
         --spectrum-button-cta-background-color-key-focus,
@@ -272,7 +274,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-50)
     );
 }
-:host([variant='primary']) #button:focus {
+:host([variant='primary']) #button:focus-visible {
     /* .spectrum-Button--primary.focus-ring */
     background-color: var(
         --spectrum-button-primary-background-color-key-focus,
@@ -348,7 +350,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-50)
     );
 }
-:host([variant='secondary']) #button:focus {
+:host([variant='secondary']) #button:focus-visible {
     /* .spectrum-Button--secondary.focus-ring */
     background-color: var(
         --spectrum-button-secondary-background-color-key-focus,
@@ -424,7 +426,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-50)
     );
 }
-:host([variant='negative']) #button:focus {
+:host([variant='negative']) #button:focus-visible {
     /* .spectrum-Button--warning.focus-ring */
     background-color: var(
         --spectrum-button-warning-background-color-key-focus,
@@ -497,7 +499,7 @@ slot[name='icon'] + #label {
     );
     color: inherit;
 }
-:host([variant='overBackground']) #button:focus {
+:host([variant='overBackground']) #button:focus-visible {
     /* .spectrum-Button--overBackground.focus-ring */
     background-color: var(
         --spectrum-button-over-background-background-color-key-focus,
@@ -576,7 +578,7 @@ slot[name='icon'] + #label {
         rgb(255, 255, 255)
     );
 }
-:host([variant='overBackground'][quiet]) #button:focus {
+:host([variant='overBackground'][quiet]) #button:focus-visible {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-ClearButton--overBackground.focus-ring */
     background-color: var(
@@ -660,7 +662,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([variant='primary'][quiet]) #button:focus {
+:host([variant='primary'][quiet]) #button:focus-visible {
     /* .spectrum-Button--primary.spectrum-Button--quiet.focus-ring */
     background-color: var(
         --spectrum-button-quiet-primary-background-color-key-focus,
@@ -736,7 +738,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([variant='secondary'][quiet]) #button:focus {
+:host([variant='secondary'][quiet]) #button:focus-visible {
     /* .spectrum-Button--secondary.spectrum-Button--quiet.focus-ring */
     background-color: var(
         --spectrum-button-quiet-secondary-background-color-key-focus,
@@ -812,7 +814,7 @@ slot[name='icon'] + #label {
         var(--spectrum-global-color-red-600)
     );
 }
-:host([variant='negative'][quiet]) #button:focus {
+:host([variant='negative'][quiet]) #button:focus-visible {
     /* .spectrum-Button--warning.spectrum-Button--quiet.focus-ring */
     background-color: var(
         --spectrum-button-quiet-warning-background-color-key-focus,

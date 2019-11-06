@@ -52,7 +52,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-300)
     );
 }
-:host(:focus:focus) {
+:host(:focus:focus-visible) {
     /* .spectrum-Dropzone:focus.focus-ring */
     border-style: solid;
     /* .spectrum-Dropzone:focus.focus-ring */
@@ -69,7 +69,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Dropzone:focus .spectrum-IllustratedMessage-illustration */
     color: var(--spectrum-global-color-static-gray-500, rgb(188, 188, 188));
 }
-:host(:focus:focus[dragged]) ::slotted(*) {
+:host(:focus:focus-visible[dragged]) ::slotted(*) {
     /* .spectrum-Dropzone:focus.is-dragged.focus-ring .spectrum-IllustratedMessage-illustration */
     color: var(--spectrum-global-color-blue-400);
 }

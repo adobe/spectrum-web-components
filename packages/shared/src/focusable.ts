@@ -17,6 +17,8 @@ import {
 } from 'lit-element';
 import focusableStyles from './focusable.css.js';
 
+import { FocusVisiblePolyfillMixin } from './focus-visible.js';
+
 type DisableableElement = HTMLElement & { disabled?: boolean };
 
 /**
@@ -25,7 +27,7 @@ type DisableableElement = HTMLElement & { disabled?: boolean };
  * This implementation is based heavily on the aybolit delegate-focus-mixin at
  * https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
  */
-export class Focusable extends LitElement {
+export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
     public static get styles(): CSSResultArray {
         return [focusableStyles];
     }

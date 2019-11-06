@@ -71,7 +71,7 @@ describe('Checkbox', () => {
         const el = testFixture.querySelector('sp-checkbox') as Checkbox;
         expect(el).to.not.equal(undefined);
         expect(el).dom.to.equal(`
-            <sp-checkbox id="checkbox0" tabindex="5">
+            <sp-checkbox data-js-focus-visible="" id="checkbox0" tabindex="5">
                 Component
             </sp-checkbox>
         `);

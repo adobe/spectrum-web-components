@@ -314,10 +314,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     ) !important;
 }
-#input:focus + #button,
-#root:hover #input:focus + #button,
-:host([quiet]) #input:focus + #button,
-:host([quiet]) #root:hover #input:focus + #button {
+#input:focus-visible + #button,
+#root:hover #input:focus-visible + #button,
+:host([quiet]) #input:focus-visible + #button,
+:host([quiet]) #root:hover #input:focus-visible + #button {
     /* .spectrum-Radio .spectrum-Radio-input.focus-ring + .spectrum-Radio-button,
    * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring + .spectrum-Radio-button,
    * .spectrum-Radio--quiet .spectrum-Radio-input.focus-ring + .spectrum-Radio-button,
@@ -332,10 +332,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-blue-400)
         );
 }
-#input:focus ~ #label,
-#root:hover #input:focus ~ #label,
-:host([quiet]) #input:focus ~ #label,
-:host([quiet]) #root:hover #input:focus ~ #label {
+#input:focus-visible ~ #label,
+#root:hover #input:focus-visible ~ #label,
+:host([quiet]) #input:focus-visible ~ #label,
+:host([quiet]) #root:hover #input:focus-visible ~ #label {
     /* .spectrum-Radio .spectrum-Radio-input.focus-ring ~ .spectrum-Radio-label,
    * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring ~ .spectrum-Radio-label,
    * .spectrum-Radio--quiet .spectrum-Radio-input.focus-ring ~ .spectrum-Radio-label,
@@ -345,8 +345,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-600)
     );
 }
-:host([invalid][checked]) #root #input:focus + #button,
-:host([quiet][invalid][checked]) #root #input:focus + #button {
+:host([invalid][checked]) #root #input:focus-visible + #button,
+:host([quiet][invalid][checked]) #root #input:focus-visible + #button {
     /* .spectrum-Radio.is-invalid .spectrum-Radio-input:checked.focus-ring + .spectrum-Radio-button,
    * .spectrum-Radio--quiet.is-invalid .spectrum-Radio-input:checked.focus-ring + .spectrum-Radio-button */
     border-color: var(

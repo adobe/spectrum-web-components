@@ -27,11 +27,6 @@ governing permissions and limitations under the License.
     -webkit-appearance: none;
 }
 
-:host(:focus),
-#button:focus {
-    outline: none;
-}
-
 :host([disabled]) {
     pointer-events: none;
 }
