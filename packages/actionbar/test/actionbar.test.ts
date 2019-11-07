@@ -13,6 +13,8 @@ governing permissions and limitations under the License.
 import '../';
 import { Actionbar } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { waitForPredicate } from '../../../test/testing-helpers';
+import { FocusVisiblePolyfillableElement } from '../../shared/lib/focus-visible.js';
 
 describe('Actionbar', () => {
     it('loads', async () => {
@@ -48,7 +50,13 @@ describe('Actionbar', () => {
             `
         );
 
+        await waitForPredicate(
+            () =>
+                !!((window as unknown) as FocusVisiblePolyfillableElement)
+                    .applyFocusVisiblePolyfill
+        );
         await elementUpdated(el);
+
         expect(el).to.not.be.undefined;
         expect(el).lightDom.to.equalSnapshot();
         expect(el).shadowDom.to.equalSnapshot();

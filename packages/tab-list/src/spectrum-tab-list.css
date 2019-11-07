@@ -12,16 +12,19 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Tabs */
+    display: -ms-flexbox;
     display: flex;
     position: relative;
     z-index: 0;
+
     margin: 0;
     padding: 0
         var(
             --spectrum-tabs-focus-ring-padding-x,
             var(--spectrum-global-dimension-size-100)
         );
-    vertical-align: top; /* .spectrum-Tabs */
+    vertical-align: top;
+    /* .spectrum-Tabs */
     border-bottom-color: var(
         --spectrum-tabs-rule-color,
         var(--spectrum-global-color-gray-200)
@@ -32,17 +35,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: absolute;
     left: 0;
     z-index: 0;
+
     transition: transform
-        var(
-            --spectrum-tabs-selection-indicator-animation-duration,
-            var(--spectrum-global-animation-duration-100)
-        )
+        var(--spectrum-tabs-selection-indicator-animation-duration, 130ms)
         ease-in-out;
     transform-origin: top left;
-    border-radius: var(
-        --spectrum-tabs-rule-border-radius,
-        var(--spectrum-global-dimension-static-size-10)
-    ); /* .spectrum-Tabs-selectionIndicator */
+
+    border-radius: var(--spectrum-tabs-rule-border-radius, 1px);
+
+    /* .spectrum-Tabs-selectionIndicator */
     background-color: var(
         --spectrum-tabs-selection-indicator-color,
         var(--spectrum-global-color-gray-900)
@@ -50,36 +51,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([compact]) ::slotted(*) {
     /* .spectrum-Tabs--compact .spectrum-Tabs-item */
-    line-height: calc(
-        var(
-                --spectrum-tabs-quiet-compact-height,
-                var(--spectrum-global-dimension-size-400)
-            ) -
-            var(
-                --spectrum-tabs-rule-height,
-                var(--spectrum-alias-border-size-thick)
-            )
-    ); /* .spectrum-Tabs--compact .spectrum-Tabs-item,
-   * .spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
     height: calc(
         var(
                 --spectrum-tabs-quiet-compact-height,
                 var(--spectrum-global-dimension-size-400)
-            ) -
-            var(
-                --spectrum-tabs-rule-height,
-                var(--spectrum-alias-border-size-thick)
-            )
+            ) - var(--spectrum-tabs-rule-height, 2px)
+    );
+    line-height: calc(
+        var(
+                --spectrum-tabs-quiet-compact-height,
+                var(--spectrum-global-dimension-size-400)
+            ) - var(--spectrum-tabs-rule-height, 2px)
     );
 }
 :host([direction='horizontal']) {
     /* .spectrum-Tabs--horizontal */
+    -ms-flex-align: center;
     align-items: center;
-    border-bottom: var(
-            --spectrum-tabs-rule-height,
-            var(--spectrum-alias-border-size-thick)
-        )
-        solid;
+
+    border-bottom: var(--spectrum-tabs-rule-height, 2px) solid;
 }
 :host([direction='horizontal']) ::slotted(*) {
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
@@ -89,47 +79,41 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-selectionIndicator */
     position: absolute;
     bottom: 0;
-    height: var(
-        --spectrum-tabs-rule-height,
-        var(--spectrum-alias-border-size-thick)
-    );
-    bottom: calc(
-        -1 * var(--spectrum-tabs-rule-height, var(--spectrum-alias-border-size-thick))
-    );
+    height: var(--spectrum-tabs-rule-height, 2px);
+
+    bottom: calc(-1 * var(--spectrum-tabs-rule-height, 2px));
 }
 :host([direction='horizontal'][compact]) {
     /* .spectrum-Tabs--horizontal.spectrum-Tabs--compact */
-    box-sizing: initial;
+    box-sizing: content-box;
     height: calc(
         var(
                 --spectrum-tabs-quiet-compact-height,
                 var(--spectrum-global-dimension-size-400)
-            ) -
-            var(
-                --spectrum-tabs-rule-height,
-                var(--spectrum-alias-border-size-thick)
-            )
+            ) - var(--spectrum-tabs-rule-height, 2px)
     );
+    -ms-flex-align: end;
     align-items: end;
 }
 :host([quiet]) {
     /* .spectrum-Tabs--quiet */
-    display: inline-flex; /* .spectrum-Tabs--quiet */
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    /* .spectrum-Tabs--quiet */
     border-bottom-color: var(
         --spectrum-tabs-quiet-rule-color,
-        var(--spectrum-alias-border-color-transparent)
+        rgba(0, 0, 0, 0)
     );
 }
 :host([direction='vertical']) {
     /* .spectrum-Tabs--vertical */
+    display: -ms-inline-flexbox;
     display: inline-flex;
+    -ms-flex-direction: column;
     flex-direction: column;
     padding: 0;
-    border-left: var(
-            --spectrum-tabs-vertical-rule-width,
-            var(--spectrum-alias-border-size-thick)
-        )
-        solid; /* .spectrum-Tabs--vertical */
+    border-left: var(--spectrum-tabs-vertical-rule-width, 2px) solid;
+    /* .spectrum-Tabs--vertical */
     border-left-color: var(
         --spectrum-tabs-vertical-rule-color,
         var(--spectrum-global-color-gray-200)
@@ -163,6 +147,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([direction='vertical'][compact]) ::slotted(*) {
     /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item */
+    height: var(
+        --spectrum-tabs-compact-vertical-item-height,
+        var(--spectrum-global-dimension-size-400)
+    );
     line-height: var(
         --spectrum-tabs-compact-vertical-item-height,
         var(--spectrum-global-dimension-size-400)
@@ -170,24 +158,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-bottom: var(
         --spectrum-tabs-compact-vertical-item-gap,
         var(--spectrum-global-dimension-size-50)
-    ); /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item,
-   * .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
-    height: var(
-        --spectrum-tabs-compact-vertical-item-height,
-        var(--spectrum-global-dimension-size-400)
     );
 }
 :host([direction='vertical']) #selectionIndicator {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     position: absolute;
-    left: 0;
-    width: var(
-        --spectrum-tabs-vertical-rule-width,
-        var(--spectrum-alias-border-size-thick)
-    );
-    left: calc(
-        -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
-    );
+    left: 0px;
+    width: var(--spectrum-tabs-vertical-rule-width, 2px);
+
+    left: calc(-1 * var(--spectrum-tabs-vertical-rule-width, 2px));
 }
 :host([quiet]) #selectionIndicator {
     /* .spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator */
@@ -196,19 +175,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([direction='vertical'][compact]),
-:host([direction='vertical'][quiet]) {
-    /* .spectrum-Tabs--vertical.spectrum-Tabs--compact,
-   * .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
+:host([direction='vertical'][quiet]),
+:host([direction='vertical'][compact]) {
+    /* .spectrum-Tabs--vertical.spectrum-Tabs--quiet,
+   * .spectrum-Tabs--vertical.spectrum-Tabs--compact */
     border-left-color: var(
         --spectrum-tabs-quiet-vertical-rule-color,
-        var(--spectrum-alias-border-color-transparent)
+        rgba(0, 0, 0, 0)
     );
 }
-:host([direction='vertical'][compact]) #selectionIndicator,
-:host([direction='vertical'][quiet]) #selectionIndicator {
-    /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-selectionIndicator,
-   * .spectrum-Tabs--vertical.spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator */
+:host([direction='vertical'][quiet]) #selectionIndicator,
+:host([direction='vertical'][compact]) #selectionIndicator {
+    /* .spectrum-Tabs--vertical.spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator,
+   * .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-selectionIndicator */
     background-color: var(
         --spectrum-tabs-quiet-selection-indicator-color,
         var(--spectrum-global-color-gray-900)

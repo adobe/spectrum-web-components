@@ -18,6 +18,13 @@ module.exports = {
             host: {
                 selector: '.spectrum-Menu',
             },
+            exclude: [
+                /\.spectrum-Menu-item/,
+                /\.spectrum-Menu-divider/,
+                /\.spectrum-Menu-sectionHeading/,
+                /\.spectrum-Menu-checkmark/,
+                /\.spectrum-Menu-chevron/,
+            ],
         },
     ],
 };

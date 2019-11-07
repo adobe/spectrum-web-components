@@ -121,7 +121,7 @@ slot[name='icon'] + #label {
     white-space: nowrap;
     overflow: hidden;
 }
-#button:focus,
+#button:focus-visible,
 #button.is-focused {
     /* .spectrum-Menu-item.focus-ring,
    * .spectrum-Menu-item.is-focused */

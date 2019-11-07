@@ -287,7 +287,7 @@ export class Slider extends Focusable {
         if (this.disabled) {
             return;
         }
-        this.input.focus();
+        this.focus();
         this.dragging = true;
         this.handle.setPointerCapture(ev.pointerId);
     }
@@ -301,7 +301,7 @@ export class Slider extends Focusable {
         }
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
-        this.input.focus();
+        this.focus();
         this.dragging = true;
         this.currentMouseEvent = ev;
         this._trackMouseEvent();
@@ -317,7 +317,7 @@ export class Slider extends Focusable {
 
     private onPointerUp(ev: PointerEvent): void {
         // Retain focus on input element after mouse up to enable keyboard interactions
-        this.input.focus();
+        this.focus();
         this.handleHighlight = false;
         this.dragging = false;
         this.handle.releasePointerCapture(ev.pointerId);
@@ -326,7 +326,7 @@ export class Slider extends Focusable {
 
     private onMouseUp = (ev: MouseEvent): void => {
         // Retain focus on input element after mouse up to enable keyboard interactions
-        this.input.focus();
+        this.focus();
         this.currentMouseEvent = ev;
         document.removeEventListener('mousemove', this.onMouseMove);
         document.removeEventListener('mouseup', this.onMouseUp);

@@ -22,6 +22,7 @@ const postCSSPlugins = (resourcePath) => {
         require('postcss-preset-env')({
             stage: 0,
         }),
+        require('postcss-focus-visible')({ preserve: false }),
         // minify the css with cssnano presets
         require('cssnano')({
             preset: [

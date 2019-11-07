@@ -12,12 +12,13 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
     property,
     CSSResultArray,
     TemplateResult,
+    query,
 } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
 import linkStyles from './link.css.js';
 
@@ -27,9 +28,20 @@ import linkStyles from './link.css.js';
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
  */
-export class Link extends LitElement {
+export class Link extends Focusable {
     public static get styles(): CSSResultArray {
         return [linkStyles];
+    }
+
+    @query('#anchor')
+    anchorElement?: HTMLAnchorElement;
+
+    public get focusElement(): HTMLElement {
+        /* istanbul ignore if */
+        if (!this.shadowRoot || !this.anchorElement) {
+            return this;
+        }
+        return this.anchorElement;
     }
 
     @property({ reflect: true })
@@ -41,7 +53,13 @@ export class Link extends LitElement {
     protected render(): TemplateResult {
         // prettier-ignore
         return html
-        `<a href=${ifDefined(this.href)} target=${ifDefined(this.target)}><slot></slot></a>`
-        ;
+            `<a
+                id="anchor"
+                href=${ifDefined(this.href)}
+                target=${ifDefined(this.target)}
+            >
+                <slot></slot>
+            </a>
+        `;
     }
 }

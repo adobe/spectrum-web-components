@@ -278,6 +278,12 @@ export class Dropdown extends Focusable {
                 if (this.optionsMenu === null) {
                     return;
                 }
+                /* Trick :focus-visible polyfill into thinking keyboard based focus */
+                this.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        code: 'Tab',
+                    })
+                );
                 this.optionsMenu.focus();
             });
         }

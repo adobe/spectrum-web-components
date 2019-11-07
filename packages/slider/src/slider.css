@@ -15,7 +15,7 @@ governing permissions and limitations under the License.
  * This situation is not addressed in spectrum-css because the slider element itself
  * is not intended to receive focus. 
  * This is not the case with web-components. The :host will receive focus when
- * the page is tabbed through. 
+ * interacting with the slider via the mouse.
 */
 :host(:focus) {
     outline-width: 0;

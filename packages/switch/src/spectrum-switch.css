@@ -350,10 +350,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-#input:focus + #switch::after,
-:host(:hover) #input:focus + #switch::after,
-:host([quiet]) #input:focus + #switch::after,
-:host([quiet]) :hover #input:focus + #switch::after {
+#input:focus-visible + #switch::after,
+:host(:hover) #input:focus-visible + #switch::after,
+:host([quiet]) #input:focus-visible + #switch::after,
+:host([quiet]) :hover #input:focus-visible + #switch::after {
     /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input.focus-ring + .spectrum-ToggleSwitch-switch::after,
    * .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input.focus-ring + .spectrum-ToggleSwitch-switch::after,
    * .spectrum-ToggleSwitch--quiet .spectrum-ToggleSwitch-input.focus-ring + .spectrum-ToggleSwitch-switch::after,
@@ -368,10 +368,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-blue-400)
         );
 }
-#input:focus ~ #label,
-:host(:hover) #input:focus ~ #label,
-:host([quiet]) #input:focus ~ #label,
-:host([quiet]) :hover #input:focus ~ #label {
+#input:focus-visible ~ #label,
+:host(:hover) #input:focus-visible ~ #label,
+:host([quiet]) #input:focus-visible ~ #label,
+:host([quiet]) :hover #input:focus-visible ~ #label {
     /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input.focus-ring ~ .spectrum-ToggleSwitch-label,
    * .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input.focus-ring ~ .spectrum-ToggleSwitch-label,
    * .spectrum-ToggleSwitch--quiet .spectrum-ToggleSwitch-input.focus-ring ~ .spectrum-ToggleSwitch-label,
@@ -381,10 +381,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-600)
     );
 }
-:host([checked]) #input:focus + #switch::before,
-:host(:hover[checked]) #input:focus + #switch::before,
-:host([quiet][checked]) #input:focus + #switch::before,
-:host([quiet][checked]) :hover #input:focus + #switch::before {
+:host([checked]) #input:focus-visible + #switch::before,
+:host(:hover[checked]) #input:focus-visible + #switch::before,
+:host([quiet][checked]) #input:focus-visible + #switch::before,
+:host([quiet][checked]) :hover #input:focus-visible + #switch::before {
     /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input.focus-ring:checked + .spectrum-ToggleSwitch-switch::before,
    * .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input.focus-ring:checked + .spectrum-ToggleSwitch-switch::before,
    * .spectrum-ToggleSwitch--quiet .spectrum-ToggleSwitch-input.focus-ring:checked + .spectrum-ToggleSwitch-switch::before,
@@ -394,10 +394,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-400)
     );
 }
-:host([checked]) #input:focus + #switch::after,
-:host(:hover[checked]) #input:focus + #switch::after,
-:host([quiet][checked]) #input:focus + #switch::after,
-:host([quiet][checked]) :hover #input:focus + #switch::after {
+:host([checked]) #input:focus-visible + #switch::after,
+:host(:hover[checked]) #input:focus-visible + #switch::after,
+:host([quiet][checked]) #input:focus-visible + #switch::after,
+:host([quiet][checked]) :hover #input:focus-visible + #switch::after {
     /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input.focus-ring:checked + .spectrum-ToggleSwitch-switch::after,
    * .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input.focus-ring:checked + .spectrum-ToggleSwitch-switch::after,
    * .spectrum-ToggleSwitch--quiet .spectrum-ToggleSwitch-input.focus-ring:checked + .spectrum-ToggleSwitch-switch::after,
@@ -412,10 +412,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-blue-400)
         );
 }
-:host([checked]) #input:focus ~ #label,
-:host(:hover[checked]) #input:focus ~ #label,
-:host([quiet][checked]) #input:focus ~ #label,
-:host([quiet][checked]) :hover #input:focus ~ #label {
+:host([checked]) #input:focus-visible ~ #label,
+:host(:hover[checked]) #input:focus-visible ~ #label,
+:host([quiet][checked]) #input:focus-visible ~ #label,
+:host([quiet][checked]) :hover #input:focus-visible ~ #label {
     /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input.focus-ring:checked ~ .spectrum-ToggleSwitch-label,
    * .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input.focus-ring:checked ~ .spectrum-ToggleSwitch-label,
    * .spectrum-ToggleSwitch--quiet .spectrum-ToggleSwitch-input.focus-ring:checked ~ .spectrum-ToggleSwitch-label,

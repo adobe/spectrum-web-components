@@ -306,7 +306,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-#input:focus + #box {
+#input:focus-visible + #box {
     /* .spectrum-Checkbox-input.focus-ring + .spectrum-Checkbox-box */
     border-color: var(
         --spectrum-checkbox-box-border-color-key-focus,
@@ -319,7 +319,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-blue-400)
         ) !important;
 }
-#input:focus ~ #label {
+#input:focus-visible ~ #label {
     /* .spectrum-Checkbox-input.focus-ring ~ .spectrum-Checkbox-label */
     color: var(
         --spectrum-checkbox-text-color-key-focus,

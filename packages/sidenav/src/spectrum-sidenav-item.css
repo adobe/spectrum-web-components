@@ -86,17 +86,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #itemLink:focus {
     /* .spectrum-SideNav-itemLink:focus */
     outline: none;
-    /* .spectrum-SideNav-itemLink.focus-ring */
-    background-color: var(
-        --spectrum-sidenav-item-background-color-key-focus,
-        var(--spectrum-alias-highlight-hover)
-    );
-    color: var(
-        --spectrum-sidenav-item-text-color-key-focus,
-        var(--spectrum-global-color-gray-900)
-    );
 }
-#itemLink:focus::before {
+#itemLink:focus-visible::before {
     /* .spectrum-SideNav-itemLink.focus-ring::before */
     content: '';
     position: absolute;
@@ -171,5 +162,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     background-color: var(
         --spectrum-sidenav-item-background-color-down,
         var(--spectrum-alias-highlight-hover)
+    );
+}
+#itemLink:focus-visible {
+    /* .spectrum-SideNav-itemLink.focus-ring */
+    background-color: var(
+        --spectrum-sidenav-item-background-color-key-focus,
+        var(--spectrum-alias-highlight-hover)
+    );
+    color: var(
+        --spectrum-sidenav-item-text-color-key-focus,
+        var(--spectrum-global-color-gray-900)
     );
 }
