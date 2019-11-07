@@ -10,18 +10,24 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+declare global {
+    interface Window {
+        applyFocusVisiblePolyfill?: (scope: Document | ShadowRoot) => void;
+    }
+}
+
 type Constructor<T = object> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     new (...args: any[]): T;
     prototype: T;
 };
 
-export interface OptionalLifecycleCallbacks {
+interface OptionalLifecycleCallbacks {
     connectedCallback?(): void;
     disconnectedCallback?(): void;
 }
 
-export type MixableBaseClass = HTMLElement & OptionalLifecycleCallbacks;
+type MixableBaseClass = HTMLElement & OptionalLifecycleCallbacks;
 
 type EndPolyfillCoordinationCallback = () => void;
 
