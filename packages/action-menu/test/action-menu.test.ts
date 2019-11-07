@@ -16,7 +16,6 @@ import '../../menu/lib/index.js';
 import '../../menu-item/lib/index.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
-import { FocusVisiblePolyfillableElement } from '../../shared/lib/focus-visible.js';
 
 describe('Action menu', () => {
     it('loads', async () => {
@@ -48,11 +47,7 @@ describe('Action menu', () => {
             `
         );
 
-        await waitForPredicate(
-            () =>
-                !!((window as unknown) as FocusVisiblePolyfillableElement)
-                    .applyFocusVisiblePolyfill
-        );
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
 
         expect(el).to.not.be.undefined;
@@ -88,11 +83,7 @@ describe('Action menu', () => {
             `
         );
 
-        await waitForPredicate(
-            () =>
-                !!((window as unknown) as FocusVisiblePolyfillableElement)
-                    .applyFocusVisiblePolyfill
-        );
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
 
         expect(el).to.not.be.undefined;
