@@ -14,7 +14,7 @@ import '../';
 import { Actionbar } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
-import { FocusVisiblePolyfillableElement } from '../../shared/lib/focus-visible.js';
+import '../../shared/lib/focus-visible.js';
 
 describe('Actionbar', () => {
     it('loads', async () => {
@@ -50,11 +50,7 @@ describe('Actionbar', () => {
             `
         );
 
-        await waitForPredicate(
-            () =>
-                !!((window as unknown) as FocusVisiblePolyfillableElement)
-                    .applyFocusVisiblePolyfill
-        );
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
 
         expect(el).to.not.be.undefined;
