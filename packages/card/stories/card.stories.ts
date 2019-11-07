@@ -21,7 +21,7 @@ storiesOf('Card', module)
                 <sp-card title="Card Title" subtitle="JPG">
                     <img
                         slot="cover-photo"
-                        src="https://picsum.photos/200/300"
+                        src="https://placedog.net/200/300?id=4"
                         alt="Demo Image"
                     />
                     <div slot="footer">Footer</div>
@@ -35,7 +35,7 @@ storiesOf('Card', module)
                 <sp-card variant="gallery" title="Card Title" subtitle="JPG">
                     <img
                         slot="preview"
-                        src="https://picsum.photos/532/192"
+                        src="https://placedog.net/532/192?id=4"
                         style="object-fit: cover"
                         alt="Demo Image"
                     />
@@ -51,7 +51,7 @@ storiesOf('Card', module)
                 <sp-card variant="quiet" title="Card Title" subtitle="JPG">
                     <img
                         slot="preview"
-                        src="https://picsum.photos/200/300"
+                        src="https://placedog.net/200/300?id=4"
                         alt="Demo Image"
                     />
                     <div slot="description">10/15/18</div>

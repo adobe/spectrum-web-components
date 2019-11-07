@@ -25,6 +25,7 @@ type Constructor<T = object> = {
 interface OptionalLifecycleCallbacks {
     connectedCallback?(): void;
     disconnectedCallback?(): void;
+    manageAutoFocus?(): void;
 }
 
 type MixableBaseClass = HTMLElement & OptionalLifecycleCallbacks;
@@ -69,6 +70,10 @@ export const FocusVisiblePolyfillMixin = <
             const coordinationHandler = (): void => {
                 if (self.applyFocusVisiblePolyfill && instance.shadowRoot) {
                     self.applyFocusVisiblePolyfill(instance.shadowRoot);
+                }
+
+                if (instance.manageAutoFocus) {
+                    instance.manageAutoFocus();
                 }
             };
             // Otherwise, wait for the polyfill to be loaded lazily. It might

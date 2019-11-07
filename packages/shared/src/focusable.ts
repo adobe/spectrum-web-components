@@ -70,10 +70,20 @@ export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
         this.focusElement.blur();
     }
 
-    protected firstUpdated(): void {
+    protected manageAutoFocus(): void {
         if (this.autofocus) {
+            /* Trick :focus-visible polyfill into thinking keyboard based focus */
+            this.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    code: 'Tab',
+                })
+            );
             this.focus();
         }
+    }
+
+    protected firstUpdated(): void {
+        this.manageAutoFocus();
 
         this.addEventListener('focusin', (event) => {
             if (event.composedPath()[0] === this) {

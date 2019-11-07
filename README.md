@@ -54,13 +54,44 @@ The project will be linted on a pre-commit hook, but you can also run the lint s
 
 ## Testing
 
-Tests are implemented using the Karma test runner with Chai, Mocha and Sinon frameworks. These tests can be executed with:
+### Unit Tests
+
+Unit tests are implemented using the Karma test runner with Chai, Mocha and Sinon frameworks. These tests can be executed with:
 
 ```
 yarn test
 ```
 
 During development you may wish to use `yarn test:watch` to automatically build and re-run the test suites.
+
+### Screenshot Testing
+
+Visual regressions are tracked via screenshot testing powered by Puppeteer. There are _two_ types of visual testing built into this library: those that should only be run in CircleCI to power the continuous integreation workflow and those that can be run on your local machine. Due to the font metrics not being identical, it is difficult to rely on screenshot based testing across OSes, so if you'd like to leverage these tests to manage changes you are making, be sure to create a local baseline before you start to develop.
+
+To create a baseline, and then later compare the current state of the repo to it, use the following commands:
+
+```bash
+yarn storybook:build # creates the test assets
+yarn test:visual:baseline:local
+# ...
+yarn test:visual:local
+```
+
+These tests are run against the built Storybook artifacts, so be sure to run `yarn storybook:build` first.
+
+#### Adding New Tests
+
+Visual testing is run against the stories in Storybook, and stories added there need to be manaully added to [`test/visual/stories.js`](test/visual/stories.js). Only stories that are listed there will be included in the visual regression, so please add any new stories you create to this list so that the quality of this library can be maintained over time.
+
+#### Keeping CI Assets Up-to-date
+
+When making additions to the collection of components/stories that are tested visually, the "golden" (or baseline) screenshots which are tests in CI will fall out of sync. If you are not expecting this, the first step if to confirm whether the same failures happen locally (before and after your changes) via the commands above. Once you've collected local regression results, compare those results to the in the [Artifacts](https://circleci.com/docs/2.0/artifacts/) tab of the CircleCI build that would be failing in this case. The changes _should_ be the same in both locations, and the `*diff.png` files that the testing process creates will support your in analysing those changes. When you are comfortable with adopting the changes in the results, the following command will download the updated "golden" screenshots into your local repo:
+
+```
+yarn test:visual:baseline:ci ${circleToken} ${buildNumber}
+```
+
+A `circleToken` can be created via [these instructions](https://circleci.com/docs/2.0/managing-api-tokens/), and the `buildNumber` can be acquired via the CircleCI UI.
 
 ## Benchmarking
 

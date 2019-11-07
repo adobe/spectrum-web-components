@@ -34,7 +34,6 @@ jobs:
                   name: Lint
                   command: yarn lint
             - run: yarn analyze
-            - run: yarn build
 
             # test & get code coverage
             - run:
@@ -44,6 +43,23 @@ jobs:
             - run:
                   name: Generate Docs
                   command: yarn docs:ci
+
+            - save_cache:
+                  paths:
+                      - documentation/dist/storybook
+                  key: v1-dependencies-{{ arch }}-{{ .Revision }}
+
+    visual-testing:
+        executor: node8
+
+        steps:
+            - setup
+            - restore_cache:
+                  keys:
+                      - v1-dependencies-{{ arch }}-{{ .Revision }}
+            - run: yarn test:visual:ci
+            - store_artifacts:
+                  path: test/visual/screenshots-current
 
     publish-docs:
         executor: node8
@@ -59,6 +75,9 @@ workflows:
     build:
         jobs:
             - build
+            - visual-testing:
+                  requires:
+                      - build
             - publish-docs:
                   filters:
                       branches:
