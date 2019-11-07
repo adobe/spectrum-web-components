@@ -9,6 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
 type Constructor<T = object> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     new (...args: any[]): T;
@@ -23,10 +24,6 @@ export interface OptionalLifecycleCallbacks {
 export type MixableBaseClass = HTMLElement & OptionalLifecycleCallbacks;
 
 type EndPolyfillCoordinationCallback = () => void;
-
-export type FocusVisiblePolyfillableElement = {
-    applyFocusVisiblePolyfill: (shadowRoot: ShadowRoot | null) => void;
-};
 
 /**
  * This mixin function is designed to be applied to a class that inherits
@@ -60,18 +57,13 @@ export const FocusVisiblePolyfillMixin = <
 
         // The polyfill might already be loaded. If so, we can apply it to
         // the shadow root immediately:
-        if (
-            ((self as unknown) as FocusVisiblePolyfillableElement)
-                .applyFocusVisiblePolyfill
-        ) {
-            ((self as unknown) as FocusVisiblePolyfillableElement).applyFocusVisiblePolyfill(
-                instance.shadowRoot
-            );
+        if (self.applyFocusVisiblePolyfill) {
+            self.applyFocusVisiblePolyfill(instance.shadowRoot);
         } else {
             const coordinationHandler = (): void => {
-                ((self as unknown) as FocusVisiblePolyfillableElement).applyFocusVisiblePolyfill(
-                    instance.shadowRoot
-                );
+                if (self.applyFocusVisiblePolyfill && instance.shadowRoot) {
+                    self.applyFocusVisiblePolyfill(instance.shadowRoot);
+                }
             };
             // Otherwise, wait for the polyfill to be loaded lazily. It might
             // never be loaded, but if it is then we can apply it to the
