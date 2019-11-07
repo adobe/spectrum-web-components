@@ -16,6 +16,7 @@ import '../../menu/lib/index.js';
 import '../../menu-item/lib/index.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
+import '../../shared/lib/focus-visible.js';
 
 describe('Action menu', () => {
     it('loads', async () => {
