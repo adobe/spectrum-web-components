@@ -11,3 +11,16 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-menu.css';
+
+/* TODO: remove the following when https://github.com/adobe/spectrum-web-components/issues/199
+ * is corrected and the spectrum-menu.css file is generated with this values already.
+ */
+:host {
+    /* .spectrum-Menu */
+    display: inline-block;
+}
+
+:host sp-menu {
+    /* .spectrum-Menu .spectrum-Menu */
+    display: block;
+}

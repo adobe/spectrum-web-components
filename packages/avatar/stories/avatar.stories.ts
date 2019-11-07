@@ -17,7 +17,11 @@ import '../';
 
 storiesOf('Avatar', module).add('Default', () => {
     const label = text('Label', 'Place Dog', 'Element');
-    const src = text('Image Source', 'https://placedog.net/50/50', 'Element');
+    const src = text(
+        'Image Source',
+        'https://placedog.net/50/50?id=4',
+        'Element'
+    );
     return html`
         <sp-avatar label=${label} src=${src}></sp-avatar>
     `;
