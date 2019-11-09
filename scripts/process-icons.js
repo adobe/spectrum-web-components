@@ -46,14 +46,7 @@ const license = fs.readFileSync(
 // where is spectrum-css?
 // TODO: use resolve package to find node_modules
 const spectrumIconsPath = path.resolve(
-    path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@adobe',
-        'spectrum-css',
-        'icons'
-    )
+    path.join(__dirname, '..', 'node_modules', '@spectrum-css', 'icon')
 );
 
 // define the target icon sizes for each scale

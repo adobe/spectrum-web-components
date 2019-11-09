@@ -16,7 +16,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin: var(--spectrum-global-dimension-size-75) 0 0 0;
     padding: 0 var(--spectrum-global-dimension-size-450) 0
         var(--spectrum-global-dimension-size-150);
-
     font-size: var(--spectrum-global-dimension-font-size-50);
     font-weight: 400;
     line-height: var(
@@ -24,8 +23,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-250)
     );
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    /* .spectrum-Menu-sectionHeading */
+    letter-spacing: 0.06em; /* .spectrum-Menu-sectionHeading */
     color: var(
         --spectrum-heading-subtitle3-text-color,
         var(--spectrum-global-color-gray-700)

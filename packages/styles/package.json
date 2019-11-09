@@ -32,5 +32,8 @@
     "peerDependencies": {
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
+    },
+    "devDependencies": {
+        "@spectrum-css/vars": "^2.0.2"
     }
 }

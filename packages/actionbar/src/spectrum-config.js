@@ -25,6 +25,11 @@ module.exports = {
                     selector: '.is-open',
                 },
                 {
+                    type: 'boolean',
+                    name: 'flexible',
+                    selector: '.spectrum-ActionBar--flexible',
+                },
+                {
                     type: 'enum',
                     name: 'variant',
                     values: [

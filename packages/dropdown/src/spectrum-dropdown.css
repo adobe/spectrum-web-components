@@ -34,10 +34,10 @@ select::-ms-expand {
 }
 select::-ms-value {
     /* .spectrum-Dropdown select::-ms-value */
-    background-color: transparent;
+    background-color: initial;
 }
 select + .dropdown {
-    /* .spectrum-Dropdown select + .spectrum-Dropdown-icon */
+    /* .spectrum-Dropdown select+.spectrum-Dropdown-icon */
     position: absolute;
     right: var(
         --spectrum-dropdown-padding-x,
@@ -55,21 +55,15 @@ select + .dropdown {
     /* .spectrum-Dropdown-trigger */
     position: relative;
     width: 100%;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-pack: justify;
     justify-content: space-between;
-    -ms-flex-align: center;
     align-items: center;
 }
 #label {
     /* .spectrum-Dropdown-label */
-    -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-
     white-space: nowrap;
     overflow: hidden;
-
     height: calc(
         var(
                 --spectrum-dropdown-height,
@@ -90,12 +84,10 @@ select + .dropdown {
                 var(--spectrum-alias-border-size-thin)
             ) * 2
     );
-
     font-size: var(
         --spectrum-dropdown-text-size,
         var(--spectrum-alias-font-size-default)
     );
-
     text-overflow: ellipsis;
     text-align: left;
 }
@@ -109,23 +101,22 @@ select + .dropdown {
         --spectrum-dropdown-placeholder-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
-    transition: color var(--spectrum-global-animation-duration-100, 130ms)
-        ease-in-out;
-    /* .spectrum-Dropdown-label.is-placeholder */
+    transition: color var(--spectrum-global-animation-duration-100, 0.13s)
+        ease-in-out; /* .spectrum-Dropdown-label.is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color,
         var(--spectrum-alias-placeholder-text-color)
     );
 }
 #label + .dropdown {
-    /* .spectrum-Dropdown-label + .spectrum-Dropdown-icon */
+    /* .spectrum-Dropdown-label+.spectrum-Dropdown-icon */
     margin-left: var(
         --spectrum-dropdown-icon-margin-left,
         var(--spectrum-global-dimension-size-150)
     );
 }
 #label ~ .dropdown {
-    /* .spectrum-Dropdown-label ~ .spectrum-Dropdown-icon */
+    /* .spectrum-Dropdown-label~.spectrum-Dropdown-icon */
     margin-left: var(
         --spectrum-dropdown-icon-margin-left,
         var(--spectrum-global-dimension-size-150)
@@ -136,7 +127,7 @@ select + .dropdown {
     display: inline-block;
     position: relative;
     vertical-align: top;
-    transition: color var(--spectrum-global-animation-duration-100, 130ms)
+    transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-out;
     margin-top: calc(
         (
@@ -170,10 +161,7 @@ select + .dropdown {
                     )
             ) / 2
     );
-
-    opacity: 1;
-
-    /* .spectrum-Dropdown-icon */
+    opacity: 1; /* .spectrum-Dropdown-icon */
     color: var(
         --spectrum-dropdown-icon-color,
         var(--spectrum-alias-icon-color)
@@ -215,7 +203,7 @@ select + .dropdown {
     );
 }
 #button #label + .icon:not(.dropdown) {
-    /* .spectrum-Dropdown-trigger .spectrum-Dropdown-label + .spectrum-Icon:not(.spectrum-Dropdown-icon) */
+    /* .spectrum-Dropdown-trigger .spectrum-Dropdown-label+.spectrum-Icon:not(.spectrum-Dropdown-icon) */
     margin-left: var(
         --spectrum-dropdown-icon-margin-left,
         var(--spectrum-global-dimension-size-150)
@@ -267,19 +255,14 @@ select + .dropdown {
         var(--spectrum-semantic-negative-color-icon)
     );
 }
+:host([disabled]) .dropdown,
+:host([disabled]) #button:hover .dropdown,
 :host([invalid][disabled]) .icon,
 :host([invalid][disabled]) .icon:not(.dropdown):not(.checkmark) {
-    /* .spectrum-Dropdown.is-invalid.is-disabled .spectrum-Icon,
-   * .spectrum-Dropdown.is-invalid.is-disabled .spectrum-Icon:not(.spectrum-Dropdown-icon):not(.spectrum-Menu-checkmark) */
-    color: var(
-        --spectrum-dropdown-icon-color-disabled,
-        var(--spectrum-alias-icon-color-disabled)
-    );
-}
-:host([disabled]) .dropdown,
-:host([disabled]) #button:hover .dropdown {
     /* .spectrum-Dropdown.is-disabled .spectrum-Dropdown-icon,
-   * .spectrum-Dropdown.is-disabled .spectrum-Dropdown-trigger:hover .spectrum-Dropdown-icon */
+   * .spectrum-Dropdown.is-disabled .spectrum-Dropdown-trigger:hover .spectrum-Dropdown-icon,
+   * .spectrum-Dropdown.is-invalid.is-disabled .spectrum-Icon,
+   * .spectrum-Dropdown.is-invalid.is-disabled .spectrum-Icon:not(.spectrum-Dropdown-icon):not(.spectrum-Menu-checkmark) */
     color: var(
         --spectrum-dropdown-icon-color-disabled,
         var(--spectrum-alias-icon-color-disabled)

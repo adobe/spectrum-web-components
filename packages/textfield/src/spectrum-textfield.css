@@ -33,7 +33,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-dimension-size-150)
         );
     text-indent: 0;
-
     min-width: var(
         --spectrum-textfield-min-width,
         var(--spectrum-global-dimension-size-600)
@@ -46,7 +45,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-alias-single-line-width,
         var(--spectrum-global-dimension-size-2400)
     );
-
     vertical-align: top;
     margin: 0;
     overflow: visible;
@@ -60,17 +58,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-body-text-line-height)
     );
     text-overflow: ellipsis;
-
     transition: border-color
-            var(--spectrum-global-animation-duration-100, 130ms) ease-in-out,
-        box-shadow var(--spectrum-global-animation-duration-100, 130ms)
+            var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out;
-
     outline: none;
-
     -webkit-appearance: none;
-    -moz-appearance: textfield;
-    /* .spectrum-Textfield */
+    -moz-appearance: textfield; /* .spectrum-Textfield */
     background-color: var(
         --spectrum-textfield-background-color,
         var(--spectrum-global-color-gray-50)
@@ -94,43 +88,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-textfield-placeholder-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
-    transition: color var(--spectrum-global-animation-duration-100, 130ms)
+    transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-in-out;
-    opacity: 1;
-    /* .spectrum-Textfield::placeholder */
+    opacity: 1; /* .spectrum-Textfield::placeholder */
     color: var(
         --spectrum-textfield-placeholder-text-color,
         var(--spectrum-alias-placeholder-text-color)
     );
 }
-#input::-ms-input-placeholder {
-    /* .spectrum-Textfield::-ms-input-placeholder */
-    font-weight: var(
-        --spectrum-textfield-placeholder-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
-    );
-    font-style: var(
-        --spectrum-textfield-placeholder-text-font-style,
-        var(--spectrum-global-font-style-italic)
-    );
-    transition: color var(--spectrum-global-animation-duration-100, 130ms)
-        ease-in-out;
-    opacity: 1;
-}
 #input:lang(ja)::placeholder,
-#input:lang(zh)::placeholder,
-#input:lang(ko)::placeholder {
+#input:lang(ko)::placeholder,
+#input:lang(zh)::placeholder {
     /* .spectrum-Textfield:lang(ja)::placeholder,
-   * .spectrum-Textfield:lang(zh)::placeholder,
-   * .spectrum-Textfield:lang(ko)::placeholder */
-    font-style: normal;
-}
-#input:lang(ja)::-ms-input-placeholder,
-#input:lang(zh)::-ms-input-placeholder,
-#input:lang(ko)::-ms-input-placeholder {
-    /* .spectrum-Textfield:lang(ja)::-ms-input-placeholder,
-   * .spectrum-Textfield:lang(zh)::-ms-input-placeholder,
-   * .spectrum-Textfield:lang(ko)::-ms-input-placeholder */
+   * .spectrum-Textfield:lang(ko)::placeholder,
+   * .spectrum-Textfield:lang(zh)::placeholder */
     font-style: normal;
 }
 #input:hover::placeholder {
@@ -138,8 +109,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-weight: var(
         --spectrum-textfield-placeholder-text-font-weight,
         var(--spectrum-global-font-weight-regular)
-    );
-    /* .spectrum-Textfield:hover::placeholder */
+    ); /* .spectrum-Textfield:hover::placeholder */
     color: var(
         --spectrum-textfield-placeholder-text-color-hover,
         var(--spectrum-alias-placeholder-text-color-hover)
@@ -173,11 +143,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-shadow: none;
 }
 :host([invalid]) #input,
-#input:invalid,
-:host([valid]) #input {
+:host([valid]) #input,
+#input:invalid {
     /* .spectrum-Textfield.is-invalid,
-   * .spectrum-Textfield:invalid,
-   * .spectrum-Textfield.is-valid */
+   * .spectrum-Textfield.is-valid,
+   * .spectrum-Textfield:invalid */
     background-repeat: no-repeat;
 }
 :host([invalid]) #input,
@@ -192,14 +162,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-icon-alert-medium-width,
             var(--spectrum-global-dimension-size-225)
         );
-    background-position: calc(
-            100% -
-                var(
-                    --spectrum-textfield-padding-x,
-                    var(--spectrum-global-dimension-size-150)
-                )
-        )
-        50%;
     padding-right: calc(
         var(
                 --spectrum-textfield-padding-x,
@@ -215,10 +177,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
-:host([valid]) #input {
-    /* .spectrum-Textfield.is-valid */
-    background-size: var(--spectrum-icon-checkmark-medium-width)
-        var(--spectrum-icon-checkmark-medium-width);
+:host([invalid]) #input,
+:host([valid]) #input,
+#input:invalid {
+    /* .spectrum-Textfield.is-invalid,
+   * .spectrum-Textfield.is-valid,
+   * .spectrum-Textfield:invalid */
     background-position: calc(
             100% -
                 var(
@@ -227,6 +191,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 )
         )
         50%;
+}
+:host([valid]) #input {
+    /* .spectrum-Textfield.is-valid */
+    background-size: var(--spectrum-icon-checkmark-medium-width)
+        var(--spectrum-icon-checkmark-medium-width);
     padding-right: calc(
         var(
                 --spectrum-textfield-padding-x,
@@ -236,8 +205,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-textfield-icon-margin-left,
                 var(--spectrum-global-dimension-size-150)
             )
-    );
-    /* .spectrum-Textfield.is-valid */
+    ); /* .spectrum-Textfield.is-valid */
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' height='12' viewBox='0 0 12 12' width='12'%3E%3Cpath style='fill:var%28--spectrum-alert-success-icon-color%2C var%28--spectrum-semantic-positive-color-icon%29%29' d='M4.5 10a1.023 1.023 0 0 1-.8-.384l-2.488-3a1 1 0 0 1 1.577-1.233L4.5 7.376l4.712-5.991a1 1 0 1 1 1.576 1.23l-5.511 7A.977.977 0 0 1 4.5 10z'/%3E%3C/svg%3E");
 }
 :host([multiline]) #input {
@@ -257,11 +225,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     overflow: auto;
 }
 :host([multiline][invalid]) #input,
-:host([multiline]) #input:invalid,
-:host([multiline][valid]) #input {
+:host([multiline][valid]) #input,
+:host([multiline]) #input:invalid {
     /* .spectrum-Textfield--multiline.is-invalid,
-   * .spectrum-Textfield--multiline:invalid,
-   * .spectrum-Textfield--multiline.is-valid */
+   * .spectrum-Textfield--multiline.is-valid,
+   * .spectrum-Textfield--multiline:invalid */
     background-position: calc(
             100% -
                 var(
@@ -280,17 +248,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([quiet]) #input {
     /* .spectrum-Textfield--quiet */
     border-radius: 0;
-    border-width: 0 0
-        var(
-            --spectrum-textfield-quiet-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        0;
+    border-left-width: 0;
+    border-bottom-width: var(
+        --spectrum-textfield-quiet-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    border-right-width: 0;
+    border-top-width: 0;
     padding-left: var(--spectrum-textfield-quiet-padding-x, 0);
     padding-right: var(--spectrum-textfield-quiet-padding-x, 0);
     resize: none;
-    overflow-y: hidden;
-    /* .spectrum-Textfield--quiet */
+    overflow-y: hidden; /* .spectrum-Textfield--quiet */
     background-color: var(
         --spectrum-textfield-quiet-background-color,
         var(--spectrum-alias-background-color-transparent)
@@ -301,11 +269,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([quiet][invalid]) #input,
-:host([quiet]) #input:invalid,
-:host([quiet][valid]) #input {
+:host([quiet][valid]) #input,
+:host([quiet]) #input:invalid {
     /* .spectrum-Textfield--quiet.is-invalid,
-   * .spectrum-Textfield--quiet:invalid,
-   * .spectrum-Textfield--quiet.is-valid */
+   * .spectrum-Textfield--quiet.is-valid,
+   * .spectrum-Textfield--quiet:invalid */
     background-position: 100% 50%;
 }
 #input:hover {

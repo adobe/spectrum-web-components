@@ -19,6 +19,8 @@ import {
     html,
     expect,
 } from '@open-wc/testing';
+import { waitForPredicate } from '../../../test/testing-helpers';
+import '../../shared/lib/focus-visible.js';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
@@ -67,8 +69,11 @@ describe('Checkbox', () => {
         );
     });
 
-    it('loads', () => {
+    it('loads', async () => {
         const el = testFixture.querySelector('sp-checkbox') as Checkbox;
+
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
+
         expect(el).to.not.equal(undefined);
         expect(el).dom.to.equal(`
             <sp-checkbox data-js-focus-visible="" id="checkbox0" tabindex="5">

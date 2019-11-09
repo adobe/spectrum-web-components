@@ -13,34 +13,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Tooltip */
     visibility: hidden;
-
     opacity: 0;
-
-    transition: transform var(--spectrum-global-animation-duration-100, 130ms)
+    transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
-        opacity var(--spectrum-global-animation-duration-100, 130ms) ease-in-out,
+        opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
         visibility 0ms linear
-            var(--spectrum-global-animation-duration-100, 130ms);
-
-    pointer-events: none;
-
-    /* .spectrum-Tooltip */
-
+            var(--spectrum-global-animation-duration-100, 0.13s);
+    pointer-events: none; /* .spectrum-Tooltip */
     position: relative;
-    left: 0px;
-    top: 0px;
-
-    display: -ms-inline-flexbox;
-
+    left: 0;
+    top: 0;
     display: inline-flex;
-    -ms-flex-direction: row;
     flex-direction: row;
-    -ms-flex-align: center;
     align-items: center;
     box-sizing: border-box;
-
     vertical-align: top;
-
     width: auto;
     padding: var(
             --spectrum-tooltip-padding-top,
@@ -58,7 +45,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tooltip-min-height,
         var(--spectrum-global-dimension-size-300)
     );
-
     font-size: var(
         --spectrum-tooltip-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -73,18 +59,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     word-break: break-word;
     -webkit-font-smoothing: antialiased;
-    /* .spectrum-Tooltip */
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    /* .spectrum-Tooltip */
+    user-select: none; /* .spectrum-Tooltip */
     background-color: var(
         --spectrum-tooltip-background-color,
         var(--spectrum-global-color-static-gray-700)
     );
-
     color: var(
         --spectrum-tooltip-text-color,
         var(--spectrum-global-color-static-white)
@@ -93,11 +75,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([open]) {
     /* .spectrum-Tooltip.is-open */
     visibility: visible;
-
     opacity: 1;
-
     transition-delay: 0ms;
-
     pointer-events: auto;
 }
 :host([tip='bottom'][open]) {
@@ -141,28 +120,37 @@ p {
 #tip {
     /* .spectrum-Tooltip-tip */
     position: absolute;
-
     height: 0;
     width: 0;
-
-    border-width: var(
+    border-top-width: var(
         --spectrum-tooltip-tip-height,
         var(--spectrum-global-dimension-size-50)
     );
-    border-style: solid;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    /* .spectrum-Tooltip-tip */
+    border-top-style: solid;
+    border-left: var(
+            --spectrum-tooltip-tip-height,
+            var(--spectrum-global-dimension-size-50)
+        )
+        solid transparent;
+    border-right: var(
+            --spectrum-tooltip-tip-height,
+            var(--spectrum-global-dimension-size-50)
+        )
+        solid transparent;
+    border-bottom: var(
+            --spectrum-tooltip-tip-height,
+            var(--spectrum-global-dimension-size-50)
+        )
+        solid transparent; /* .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-background-color,
         var(--spectrum-global-color-static-gray-700)
     );
 }
-:host([tip='right']) #tip,
-:host([tip='left']) #tip {
-    /* .spectrum-Tooltip--right .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left .spectrum-Tooltip-tip */
+:host([tip='left']) #tip,
+:host([tip='right']) #tip {
+    /* .spectrum-Tooltip--left .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--right .spectrum-Tooltip-tip */
     top: 50%;
     margin-top: calc(
         -1 * var(--spectrum-tooltip-tip-height, var(--spectrum-global-dimension-size-50))
@@ -236,7 +224,6 @@ p {
         --spectrum-tooltip-icon-size,
         var(--spectrum-global-dimension-size-175)
     );
-    -ms-flex-item-align: start;
     align-self: flex-start;
     margin-top: 1px;
 }
@@ -248,37 +235,37 @@ p {
         var(--spectrum-global-dimension-font-size-200)
     );
 }
-:host([variant='negative']),
-.spectrum-Tooltip--error {
-    /* .spectrum-Tooltip--negative,
-   * .spectrum-Tooltip--error */
+.spectrum-Tooltip--error,
+:host([variant='negative']) {
+    /* .spectrum-Tooltip--error,
+   * .spectrum-Tooltip--negative */
     background-color: var(
         --spectrum-tooltip-negative-background-color,
         var(--spectrum-global-color-static-red-700)
     );
 }
-:host([variant='negative']) #tip,
-.spectrum-Tooltip--error #tip {
-    /* .spectrum-Tooltip--negative .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--error .spectrum-Tooltip-tip */
+.spectrum-Tooltip--error #tip,
+:host([variant='negative']) #tip {
+    /* .spectrum-Tooltip--error .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--negative .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-negative-background-color,
         var(--spectrum-global-color-static-red-700)
     );
 }
-:host([variant='info']),
-.spectrum-Tooltip--help {
-    /* .spectrum-Tooltip--info,
-   * .spectrum-Tooltip--help */
+.spectrum-Tooltip--help,
+:host([variant='info']) {
+    /* .spectrum-Tooltip--help,
+   * .spectrum-Tooltip--info */
     background-color: var(
         --spectrum-tooltip-info-background-color,
         var(--spectrum-global-color-static-blue-700)
     );
 }
-:host([variant='info']) #tip,
-.spectrum-Tooltip--help #tip {
-    /* .spectrum-Tooltip--info .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--help .spectrum-Tooltip-tip */
+.spectrum-Tooltip--help #tip,
+:host([variant='info']) #tip {
+    /* .spectrum-Tooltip--help .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--info .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-info-background-color,
         var(--spectrum-global-color-static-blue-700)

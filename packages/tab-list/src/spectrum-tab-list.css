@@ -12,19 +12,16 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Tabs */
-    display: -ms-flexbox;
     display: flex;
     position: relative;
     z-index: 0;
-
     margin: 0;
     padding: 0
         var(
             --spectrum-tabs-focus-ring-padding-x,
             var(--spectrum-global-dimension-size-100)
         );
-    vertical-align: top;
-    /* .spectrum-Tabs */
+    vertical-align: top; /* .spectrum-Tabs */
     border-bottom-color: var(
         --spectrum-tabs-rule-color,
         var(--spectrum-global-color-gray-200)
@@ -35,7 +32,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: absolute;
     left: 0;
     z-index: 0;
-
     transition: transform
         var(
             --spectrum-tabs-selection-indicator-animation-duration,
@@ -43,13 +39,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
         ease-in-out;
     transform-origin: top left;
-
     border-radius: var(
         --spectrum-tabs-rule-border-radius,
         var(--spectrum-global-dimension-static-size-10)
-    );
-
-    /* .spectrum-Tabs-selectionIndicator */
+    ); /* .spectrum-Tabs-selectionIndicator */
     background-color: var(
         --spectrum-tabs-selection-indicator-color,
         var(--spectrum-global-color-gray-900)
@@ -57,7 +50,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([compact]) ::slotted(*) {
     /* .spectrum-Tabs--compact .spectrum-Tabs-item */
-    height: calc(
+    line-height: calc(
         var(
                 --spectrum-tabs-quiet-compact-height,
                 var(--spectrum-global-dimension-size-400)
@@ -66,8 +59,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-tabs-rule-height,
                 var(--spectrum-alias-border-size-thick)
             )
-    );
-    line-height: calc(
+    ); /* .spectrum-Tabs--compact .spectrum-Tabs-item,
+   * .spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
+    height: calc(
         var(
                 --spectrum-tabs-quiet-compact-height,
                 var(--spectrum-global-dimension-size-400)
@@ -80,9 +74,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([direction='horizontal']) {
     /* .spectrum-Tabs--horizontal */
-    -ms-flex-align: center;
     align-items: center;
-
     border-bottom: var(
             --spectrum-tabs-rule-height,
             var(--spectrum-alias-border-size-thick)
@@ -101,14 +93,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tabs-rule-height,
         var(--spectrum-alias-border-size-thick)
     );
-
     bottom: calc(
         -1 * var(--spectrum-tabs-rule-height, var(--spectrum-alias-border-size-thick))
     );
 }
 :host([direction='horizontal'][compact]) {
     /* .spectrum-Tabs--horizontal.spectrum-Tabs--compact */
-    box-sizing: content-box;
+    box-sizing: initial;
     height: calc(
         var(
                 --spectrum-tabs-quiet-compact-height,
@@ -119,14 +110,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-alias-border-size-thick)
             )
     );
-    -ms-flex-align: end;
     align-items: end;
 }
 :host([quiet]) {
     /* .spectrum-Tabs--quiet */
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    /* .spectrum-Tabs--quiet */
+    display: inline-flex; /* .spectrum-Tabs--quiet */
     border-bottom-color: var(
         --spectrum-tabs-quiet-rule-color,
         var(--spectrum-alias-border-color-transparent)
@@ -134,17 +122,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([direction='vertical']) {
     /* .spectrum-Tabs--vertical */
-    display: -ms-inline-flexbox;
     display: inline-flex;
-    -ms-flex-direction: column;
     flex-direction: column;
     padding: 0;
     border-left: var(
             --spectrum-tabs-vertical-rule-width,
             var(--spectrum-alias-border-size-thick)
         )
-        solid;
-    /* .spectrum-Tabs--vertical */
+        solid; /* .spectrum-Tabs--vertical */
     border-left-color: var(
         --spectrum-tabs-vertical-rule-color,
         var(--spectrum-global-color-gray-200)
@@ -178,10 +163,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([direction='vertical'][compact]) ::slotted(*) {
     /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item */
-    height: var(
-        --spectrum-tabs-compact-vertical-item-height,
-        var(--spectrum-global-dimension-size-400)
-    );
     line-height: var(
         --spectrum-tabs-compact-vertical-item-height,
         var(--spectrum-global-dimension-size-400)
@@ -189,17 +170,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-bottom: var(
         --spectrum-tabs-compact-vertical-item-gap,
         var(--spectrum-global-dimension-size-50)
+    ); /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item,
+   * .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
+    height: var(
+        --spectrum-tabs-compact-vertical-item-height,
+        var(--spectrum-global-dimension-size-400)
     );
 }
 :host([direction='vertical']) #selectionIndicator {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     position: absolute;
-    left: 0px;
+    left: 0;
     width: var(
         --spectrum-tabs-vertical-rule-width,
         var(--spectrum-alias-border-size-thick)
     );
-
     left: calc(
         -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
     );
@@ -211,19 +196,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([direction='vertical'][quiet]),
-:host([direction='vertical'][compact]) {
-    /* .spectrum-Tabs--vertical.spectrum-Tabs--quiet,
-   * .spectrum-Tabs--vertical.spectrum-Tabs--compact */
+:host([direction='vertical'][compact]),
+:host([direction='vertical'][quiet]) {
+    /* .spectrum-Tabs--vertical.spectrum-Tabs--compact,
+   * .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
     border-left-color: var(
         --spectrum-tabs-quiet-vertical-rule-color,
         var(--spectrum-alias-border-color-transparent)
     );
 }
-:host([direction='vertical'][quiet]) #selectionIndicator,
-:host([direction='vertical'][compact]) #selectionIndicator {
-    /* .spectrum-Tabs--vertical.spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator,
-   * .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-selectionIndicator */
+:host([direction='vertical'][compact]) #selectionIndicator,
+:host([direction='vertical'][quiet]) #selectionIndicator {
+    /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-selectionIndicator,
+   * .spectrum-Tabs--vertical.spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator */
     background-color: var(
         --spectrum-tabs-quiet-selection-indicator-color,
         var(--spectrum-global-color-gray-900)

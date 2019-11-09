@@ -41,6 +41,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: -webkit-sticky;
     position: sticky;
 }
+:host([flexible]) #popover {
+    /* .spectrum-ActionBar--flexible .spectrum-ActionBar-popover */
+    width: auto;
+}
 :host([variant='fixed']) {
     /* .spectrum-ActionBar--fixed */
     position: fixed;

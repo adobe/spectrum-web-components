@@ -25,8 +25,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-dropzone-padding,
         var(--spectrum-global-dimension-size-900)
     );
-    border-style: dashed;
-    /* .spectrum-Dropzone */
+    border-style: dashed; /* .spectrum-Dropzone */
     border-color: var(
         --spectrum-dropzone-border-color,
         var(--spectrum-global-color-gray-300)
@@ -34,8 +33,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dragged]) {
     /* .spectrum-Dropzone.is-dragged */
-    border-style: solid;
-    /* .spectrum-Dropzone.is-dragged */
+    border-style: solid; /* .spectrum-Dropzone.is-dragged */
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
@@ -48,8 +46,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host(:focus) {
     /* .spectrum-Dropzone:focus */
     outline: 0;
-    border-style: dashed;
-    /* .spectrum-Dropzone:focus */
+    border-style: dashed; /* .spectrum-Dropzone:focus */
     border-color: var(
         --spectrum-dropzone-border-color,
         var(--spectrum-global-color-gray-300)
@@ -57,8 +54,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host(:focus:focus-visible) {
     /* .spectrum-Dropzone:focus.focus-ring */
-    border-style: solid;
-    /* .spectrum-Dropzone:focus.focus-ring */
+    border-style: solid; /* .spectrum-Dropzone:focus.focus-ring */
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
@@ -70,7 +66,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host(:focus) ::slotted(*) {
     /* .spectrum-Dropzone:focus .spectrum-IllustratedMessage-illustration */
-    color: var(--spectrum-global-color-static-gray-500, rgb(188, 188, 188));
+    color: var(--spectrum-global-color-static-gray-500, #bcbcbc);
 }
 :host(:focus:focus-visible[dragged]) ::slotted(*) {
     /* .spectrum-Dropzone:focus.is-dragged.focus-ring .spectrum-IllustratedMessage-illustration */
