@@ -40,7 +40,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     width: 100%;
     min-height: var(
         --spectrum-sidenav-item-height,
-        var(--spectrum-global-dimension-size-400)
+        var(--spectrum-alias-single-line-height)
     );
 
     padding: var(--spectrum-global-dimension-size-65)
@@ -51,14 +51,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
     border-radius: var(
         --spectrum-sidenav-item-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-border-radius-regular)
     );
 
     font-size: var(
         --spectrum-sidenav-item-text-size,
-        var(--spectrum-global-dimension-font-size-100)
+        var(--spectrum-alias-font-size-default)
     );
-    font-weight: var(--spectrum-sidenav-item-font-weight, 400);
+    font-weight: var(
+        --spectrum-sidenav-item-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
     font-style: normal;
     text-decoration: none;
 
@@ -76,11 +79,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-SideNav-itemLink */
     background-color: var(
         --spectrum-sidenav-item-background-color,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
     color: var(
         --spectrum-sidenav-item-text-color,
-        var(--spectrum-global-color-gray-800)
+        var(--spectrum-alias-text-color)
     );
 }
 #itemLink:focus {
@@ -96,15 +99,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     right: 0;
     bottom: 0;
 
-    border: var(--spectrum-tabs-focus-ring-size, 2px) solid transparent;
+    border: var(
+            --spectrum-tabs-focus-ring-size,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid transparent;
     border-radius: var(
         --spectrum-sidenav-item-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-border-radius-regular)
     );
     /* .spectrum-SideNav-itemLink.focus-ring::before */
     border-color: var(
         --spectrum-sidenav-item-border-color-key-focus,
-        var(--spectrum-global-color-blue-400)
+        var(--spectrum-alias-border-color-focus)
     );
 }
 #itemLink .spectrum-SideNav-itemIcon {
@@ -118,7 +125,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-SideNav-item.is-selected > .spectrum-SideNav-itemLink */
     color: var(
         --spectrum-sidenav-item-text-color-selected,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-text-color-hover)
     );
     background-color: var(
         --spectrum-sidenav-item-background-color-selected,
@@ -136,11 +143,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-SideNav-item.is-disabled .spectrum-SideNav-itemLink */
     background-color: var(
         --spectrum-sidenav-item-background-color-disabled,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
     color: var(
         --spectrum-sidenav-item-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
+        var(--spectrum-alias-text-color-disabled)
     );
 
     cursor: default;
@@ -154,7 +161,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     color: var(
         --spectrum-sidenav-item-text-color-hover,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-text-color-hover)
     );
 }
 #itemLink:active {
@@ -172,6 +179,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     color: var(
         --spectrum-sidenav-item-text-color-key-focus,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-text-color-hover)
     );
 }

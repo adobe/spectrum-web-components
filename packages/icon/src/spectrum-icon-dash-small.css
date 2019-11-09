@@ -12,12 +12,6 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .dash-small {
     /* .spectrum-UIIcon-DashSmall */
-    width: var(
-        --spectrum-icon-dash-small-width,
-        var(--spectrum-global-dimension-font-size-25)
-    );
-    height: var(
-        --spectrum-icon-dash-small-height,
-        var(--spectrum-global-dimension-font-size-25)
-    );
+    width: var(--spectrum-icon-dash-small-width);
+    height: var(--spectrum-icon-dash-small-height);
 }

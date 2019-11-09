@@ -37,10 +37,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: absolute;
 
     border-style: solid;
-    border-width: var(--spectrum-popover-border-size, 1px);
+    border-width: var(
+        --spectrum-popover-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
     border-radius: var(
         --spectrum-popover-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-border-radius-regular)
     );
 
     outline: none;
@@ -52,7 +55,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     border-color: var(
         --spectrum-popover-border-color,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-alias-border-color-dark)
     );
     box-shadow: 0 1px 4px
         var(
@@ -118,7 +121,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(
                 --spectrum-popover-tip-width,
                 var(--spectrum-global-dimension-size-250)
-            ) / 2 + var(--spectrum-popover-border-size, 1px)
+            ) / 2 +
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
     );
 }
 #tip::after {
@@ -132,7 +139,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-popover-tip-width,
         var(--spectrum-global-dimension-size-250)
     );
-    border-width: var(--spectrum-popover-border-size, 1px);
+    border-width: var(
+        --spectrum-popover-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
     border-style: solid;
     position: absolute;
     transform: rotate(45deg);
@@ -145,7 +155,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     border-color: var(
         --spectrum-popover-border-color,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-alias-border-color-dark)
     );
     box-shadow: -1px -1px 4px var(--spectrum-popover-shadow-color, var(--spectrum-alias-dropshadow-color));
 }

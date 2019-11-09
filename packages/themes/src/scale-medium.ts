@@ -11,11 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import { LitElement, CSSResultArray, html, TemplateResult } from 'lit-element';
+import commonStyles from './theme.css.js';
 import mediumStyles from './scale-medium.css.js';
 
 export class ScaleMedium extends LitElement {
     public static get styles(): CSSResultArray {
-        return [mediumStyles];
+        return [commonStyles, mediumStyles];
     }
 
     protected render(): TemplateResult {

@@ -44,8 +44,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         box-shadow var(--spectrum-global-animation-duration-100, 130ms) ease-out;
 
     text-decoration: none;
-    font-family: adobe-clean, 'Source Sans Pro', -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'adobe-clean-ux', 'adobe-clean', 'Source Sans Pro',
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
     line-height: 1.3;
 
@@ -55,11 +55,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
     width: var(
         --spectrum-clearbutton-medium-width,
-        var(--spectrum-global-dimension-size-400)
+        var(--spectrum-alias-single-line-height)
     );
     height: var(
         --spectrum-clearbutton-medium-height,
-        var(--spectrum-global-dimension-size-400)
+        var(--spectrum-alias-single-line-height)
     );
 
     border-radius: 100%;
@@ -72,12 +72,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ClearButton */
     background-color: var(
         --spectrum-clearbutton-medium-background-color,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
 
     color: var(
         --spectrum-clearbutton-medium-icon-color,
-        var(--spectrum-global-color-gray-600)
+        var(--spectrum-alias-icon-color)
     );
 }
 #button:focus {
@@ -101,15 +101,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding: 0;
     margin-top: -2px;
     margin-bottom: -2px;
-}
-#button:-moz-focusring {
-    /* .spectrum-Button:-moz-focusring,
-   * .spectrum-ActionButton:-moz-focusring,
-   * .spectrum-LogicButton:-moz-focusring,
-   * .spectrum-FieldButton:-moz-focusring,
-   * .spectrum-ClearButton:-moz-focusring,
-   * .spectrum-Tool:-moz-focusring */
-    outline: 1px dotted ButtonText;
 }
 #button:disabled {
     /* .spectrum-Button:disabled,
@@ -146,36 +137,36 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ClearButton:hover */
     background-color: var(
         --spectrum-clearbutton-medium-background-color-hover,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
 
     color: var(
         --spectrum-clearbutton-medium-icon-color-hover,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-icon-color-hover)
     );
 }
 #button:active {
     /* .spectrum-ClearButton:active */
     background-color: var(
         --spectrum-clearbutton-medium-background-color-down,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
 
     color: var(
         --spectrum-clearbutton-medium-icon-color-down,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-icon-color-down)
     );
 }
 #button:focus-visible {
     /* .spectrum-ClearButton.focus-ring */
     background-color: var(
         --spectrum-clearbutton-medium-background-color-key-focus,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
 
     color: var(
         --spectrum-clearbutton-medium-icon-color-key-focus,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-icon-color-focus)
     );
 }
 #button:disabled,
@@ -184,12 +175,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton.is-disabled */
     background-color: var(
         --spectrum-clearbutton-medium-background-color-disabled,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
 
     color: var(
         --spectrum-clearbutton-medium-icon-color-disabled,
-        var(--spectrum-global-color-gray-500)
+        var(--spectrum-alias-icon-color-disabled)
     );
 }
 .spectrum-ClearButton--overBackground {
@@ -197,15 +188,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton--overBackground */
     background-color: var(
         --spectrum-button-quiet-over-background-background-color,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
     border-color: var(
         --spectrum-button-quiet-over-background-border-color,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-border-color-transparent)
     );
     color: var(
         --spectrum-button-quiet-over-background-text-color,
-        rgb(255, 255, 255)
+        var(--spectrum-global-color-static-white)
     );
 }
 .spectrum-ClearButton--overBackground:hover {
@@ -217,11 +208,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     border-color: var(
         --spectrum-button-quiet-over-background-border-color-hover,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-border-color-transparent)
     );
     color: var(
         --spectrum-button-quiet-over-background-text-color-hover,
-        rgb(255, 255, 255)
+        var(--spectrum-global-color-static-white)
     );
 }
 .spectrum-ClearButton--overBackground:focus-visible {
@@ -229,18 +220,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton--overBackground.focus-ring */
     background-color: var(
         --spectrum-button-quiet-over-background-background-color-key-focus,
-        rgb(255, 255, 255)
+        var(--spectrum-global-color-static-white)
     );
     border-color: var(
         --spectrum-button-quiet-over-background-border-color-key-focus,
-        rgb(255, 255, 255)
+        var(--spectrum-global-color-static-white)
     );
     color: inherit;
-    box-shadow: 0 0 0
-        var(--spectrum-button-primary-border-size-increase-key-focus, 1px)
+    box-shadow: 0 0 0 1px
         var(
             --spectrum-button-quiet-over-background-border-color-key-focus,
-            rgb(255, 255, 255)
+            var(--spectrum-global-color-static-white)
         );
 }
 .spectrum-ClearButton--overBackground:active {
@@ -252,11 +242,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     border-color: var(
         --spectrum-button-quiet-over-background-border-color-down,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-border-color-transparent)
     );
     color: var(
         --spectrum-button-quiet-over-background-text-color-down,
-        rgb(255, 255, 255)
+        var(--spectrum-global-color-static-white)
     );
     box-shadow: none;
 }
@@ -268,11 +258,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton--overBackground.is-disabled */
     background-color: var(
         --spectrum-button-quiet-over-background-background-color-disabled,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
     border-color: var(
         --spectrum-button-quiet-over-background-border-color-disabled,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-border-color-transparent)
     );
     color: var(
         --spectrum-button-quiet-over-background-text-color-disabled,

@@ -16,8 +16,5 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-icon-arrow-down-small-width,
         var(--spectrum-global-dimension-size-100)
     );
-    height: var(
-        --spectrum-icon-arrow-down-small-height,
-        var(--spectrum-global-dimension-font-size-25)
-    );
+    height: var(--spectrum-icon-arrow-down-small-height);
 }

@@ -18,7 +18,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: none;
     -ms-flex-item-align: start;
     align-self: flex-start;
-    margin-top: var(--spectrum-global-dimension-size-50);
     /* .spectrum-Menu-checkmark,
    * .spectrum-Menu-chevron */
     -ms-flex-positive: 0;
@@ -27,6 +26,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-selectlist-option-icon-padding-x,
         var(--spectrum-global-dimension-size-150)
     );
+    margin-top: var(--spectrum-global-dimension-size-50);
 }
 #button {
     /* .spectrum-Menu-item */
@@ -40,34 +40,50 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-sizing: border-box;
 
     padding: var(--spectrum-global-dimension-size-85)
-        var(--spectrum-selectlist-option-padding, 12px)
+        var(
+            --spectrum-selectlist-option-padding,
+            var(--spectrum-global-dimension-static-size-150)
+        )
         var(--spectrum-global-dimension-size-85)
         calc(
-            var(--spectrum-selectlist-option-padding, 12px) -
-                var(--spectrum-selectlist-border-size-key-focus, 2px)
+            var(
+                    --spectrum-selectlist-option-padding,
+                    var(--spectrum-global-dimension-static-size-150)
+                ) -
+                var(
+                    --spectrum-selectlist-border-size-key-focus,
+                    var(--spectrum-global-dimension-static-size-25)
+                )
         );
 
     margin: 0;
 
-    border-left: var(--spectrum-selectlist-border-size-key-focus, 2px) solid
-        transparent;
+    border-left: var(
+            --spectrum-selectlist-border-size-key-focus,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        solid transparent;
 
     min-height: var(--spectrum-selectlist-option-height);
 
     font-size: var(
         --spectrum-selectlist-option-text-size,
-        var(--spectrum-global-dimension-font-size-100)
+        var(--spectrum-alias-font-size-default)
     );
-    font-weight: var(--spectrum-selectlist-option-text-font-weight, 400);
+    font-weight: var(
+        --spectrum-selectlist-option-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
     font-style: normal;
+    text-decoration: none;
     /* .spectrum-Menu-item */
     background-color: var(
         --spectrum-selectlist-option-background-color,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
     color: var(
         --spectrum-selectlist-option-text-color,
-        var(--spectrum-global-color-gray-800)
+        var(--spectrum-alias-text-color)
     );
 }
 #button:focus {
@@ -77,13 +93,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([selected]) #button {
     /* .spectrum-Menu-item.is-selected */
     padding-right: calc(
-        var(--spectrum-selectlist-option-padding, 12px) -
-            var(--spectrum-popover-border-size, 1px)
+        var(
+                --spectrum-selectlist-option-padding,
+                var(--spectrum-global-dimension-static-size-150)
+            ) -
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
     );
     /* .spectrum-Menu-item.is-selected */
     color: var(
         --spectrum-selectlist-option-text-color-selected,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-alias-text-color)
     );
 }
 :host([selected]) #button #selected {
@@ -92,18 +114,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Menu-item.is-selected .spectrum-Menu-checkmark */
     color: var(
         --spectrum-selectlist-option-icon-color-selected,
-        var(--spectrum-global-color-blue-500)
+        var(--spectrum-alias-icon-color-selected)
     );
 }
-::slotted([slot='icon']) {
-    /* .spectrum-Menu-item .spectrum-Icon */
+::slotted([slot='icon']),
+.spectrum-Menu-itemIcon {
+    /* .spectrum-Menu-item .spectrum-Icon,
+   * .spectrum-Menu-item .spectrum-Menu-itemIcon */
     -ms-flex-negative: 0;
     flex-shrink: 0;
     -ms-flex-item-align: start;
     align-self: flex-start;
 }
-slot[name='icon'] + #label {
-    /* .spectrum-Menu-item .spectrum-Icon + .spectrum-Menu-itemLabel */
+slot[name='icon'] + #label,
+.spectrum-Menu-itemIcon + #label {
+    /* .spectrum-Menu-item .spectrum-Icon + .spectrum-Menu-itemLabel,
+   * .spectrum-Menu-item .spectrum-Menu-itemIcon  + .spectrum-Menu-itemLabel */
     margin-left: var(
         --spectrum-selectlist-thumbnail-image-padding-x,
         var(--spectrum-global-dimension-size-100)
@@ -131,18 +157,20 @@ slot[name='icon'] + #label {
     );
     color: var(
         --spectrum-selectlist-option-text-color-key-focus,
-        var(--spectrum-global-color-gray-800)
+        var(--spectrum-alias-text-color)
     );
     border-left-color: var(
         --spectrum-selectlist-option-focus-indicator-color,
-        var(--spectrum-global-color-blue-400)
+        var(--spectrum-alias-border-color-focus)
     );
 }
 #button:hover,
 #button:focus,
+#button.is-highlighted,
 #button.is-open {
     /* .spectrum-Menu-item:hover,
    * .spectrum-Menu-item:focus,
+   * .spectrum-Menu-item.is-highlighted,
    * .spectrum-Menu-item.is-open */
     background-color: var(
         --spectrum-selectlist-option-background-color-hover,
@@ -150,7 +178,7 @@ slot[name='icon'] + #label {
     );
     color: var(
         --spectrum-selectlist-option-text-color-hover,
-        var(--spectrum-global-color-gray-800)
+        var(--spectrum-alias-text-color)
     );
 }
 .is-active,
@@ -166,12 +194,12 @@ slot[name='icon'] + #label {
     /* .spectrum-Menu-item.is-disabled */
     background-color: var(
         --spectrum-selectlist-option-background-color-disabled,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
     background-image: none;
     color: var(
         --spectrum-selectlist-option-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
+        var(--spectrum-alias-text-color-disabled)
     );
     cursor: default;
 }

@@ -16,8 +16,5 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-icon-chevron-left-medium-width,
         var(--spectrum-global-dimension-size-75)
     );
-    height: var(
-        --spectrum-icon-chevron-left-medium-height,
-        var(--spectrum-global-dimension-font-size-25)
-    );
+    height: var(--spectrum-icon-chevron-left-medium-height);
 }

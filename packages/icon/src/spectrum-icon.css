@@ -11,14 +11,16 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Icon */
+    /* .spectrum-Icon,
+   * .spectrum-UIIcon */
     display: inline-block;
     color: inherit;
     fill: currentColor;
     pointer-events: none;
 }
 :host(:not(:root)) {
-    /* .spectrum-Icon:not(:root) */
+    /* .spectrum-Icon:not(:root),
+   * .spectrum-UIIcon:not(:root) */
     overflow: hidden;
 }
 :host([size='xxs']),

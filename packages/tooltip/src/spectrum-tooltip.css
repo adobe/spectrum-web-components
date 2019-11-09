@@ -61,9 +61,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
     font-size: var(
         --spectrum-tooltip-text-size,
-        var(--spectrum-global-dimension-size-150)
+        var(--spectrum-global-dimension-font-size-75)
     );
-    font-weight: var(--spectrum-tooltip-text-font-weight, 400);
+    font-weight: var(
+        --spectrum-tooltip-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
     line-height: var(
         --spectrum-tooltip-text-line-height,
         var(--spectrum-global-dimension-font-size-200)
@@ -79,10 +82,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip */
     background-color: var(
         --spectrum-tooltip-background-color,
-        rgb(116, 116, 116)
+        var(--spectrum-global-color-static-gray-700)
     );
 
-    color: var(--spectrum-tooltip-text-color, rgb(255, 255, 255));
+    color: var(
+        --spectrum-tooltip-text-color,
+        var(--spectrum-global-color-static-white)
+    );
 }
 :host([open]) {
     /* .spectrum-Tooltip.is-open */
@@ -128,6 +134,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
     );
 }
+p {
+    /* .spectrum-Tooltip p */
+    margin: 0;
+}
 #tip {
     /* .spectrum-Tooltip-tip */
     position: absolute;
@@ -146,7 +156,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-background-color,
-        rgb(116, 116, 116)
+        var(--spectrum-global-color-static-gray-700)
     );
 }
 :host([tip='right']) #tip,
@@ -244,7 +254,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tooltip--error */
     background-color: var(
         --spectrum-tooltip-negative-background-color,
-        rgb(201, 37, 45)
+        var(--spectrum-global-color-static-red-700)
     );
 }
 :host([variant='negative']) #tip,
@@ -253,7 +263,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tooltip--error .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-negative-background-color,
-        rgb(201, 37, 45)
+        var(--spectrum-global-color-static-red-700)
     );
 }
 :host([variant='info']),
@@ -262,7 +272,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tooltip--help */
     background-color: var(
         --spectrum-tooltip-info-background-color,
-        rgb(13, 102, 208)
+        var(--spectrum-global-color-static-blue-700)
     );
 }
 :host([variant='info']) #tip,
@@ -271,7 +281,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tooltip--help .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-info-background-color,
-        rgb(13, 102, 208)
+        var(--spectrum-global-color-static-blue-700)
     );
 }
 :host([variant='positive']),
@@ -280,7 +290,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tooltip--success */
     background-color: var(
         --spectrum-tooltip-positive-background-color,
-        rgb(18, 128, 92)
+        var(--spectrum-global-color-static-green-700)
     );
 }
 :host([variant='positive']) #tip,
@@ -289,6 +299,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tooltip--success .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-positive-background-color,
-        rgb(18, 128, 92)
+        var(--spectrum-global-color-static-green-700)
     );
 }

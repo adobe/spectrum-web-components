@@ -24,7 +24,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #input {
     /* .spectrum-Search-input */
     display: block;
-    -webkit-appearance: textfield;
+    -webkit-appearance: none;
     outline-offset: -2px;
     padding-left: var(--spectrum-search-padding-left, 36px);
     text-indent: 0;
@@ -61,7 +61,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     top: calc(
         var(
                 --spectrum-textfield-height,
-                var(--spectrum-global-dimension-size-400)
+                var(--spectrum-alias-single-line-height)
             ) / 2 -
             var(
                 --spectrum-icon-magnifier-width,
@@ -74,13 +74,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Search-icon */
     color: var(
         --spectrum-textfield-icon-color,
-        var(--spectrum-global-color-gray-700)
+        var(--spectrum-alias-icon-color)
     );
 }
 #input:disabled ~ #icon {
     /* .spectrum-Search-input:disabled ~ .spectrum-Search-icon */
     color: var(
         --spectrum-textfield-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
+        var(--spectrum-alias-text-color-disabled)
     );
 }

@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/* stylelint-disable no-duplicate-selectors */
 :root,
 :host {
     --spectrum-global-color-celery-400: rgb(68, 181, 86);
@@ -61,7 +62,6 @@ governing permissions and limitations under the License.
     --spectrum-global-color-blue-600: rgb(75, 156, 245);
     --spectrum-global-color-blue-700: rgb(90, 169, 250);
     --spectrum-global-color-gray-50: rgb(37, 37, 37);
-    --spectrum-alias-pasteboard-background-color: rgb(37, 37, 37);
     --spectrum-global-color-gray-75: rgb(47, 47, 47);
     --spectrum-global-color-gray-100: rgb(50, 50, 50);
     --spectrum-global-color-gray-200: rgb(62, 62, 62);
@@ -77,11 +77,46 @@ governing permissions and limitations under the License.
     --spectrum-alias-background-color-hover-overlay: rgba(255, 255, 255, 0.06);
     --spectrum-alias-highlight-hover: rgba(255, 255, 255, 0.07);
     --spectrum-alias-highlight-active: rgba(255, 255, 255, 0.1);
-    --spectrum-colorarea-border-color: rgba(255, 255, 255, 0.1);
     --spectrum-alias-highlight-selected: rgba(55, 142, 240, 0.15);
     --spectrum-alias-highlight-selected-hover: rgba(55, 142, 240, 0.25);
+    --spectrum-alias-text-highlight-color: rgba(55, 142, 240, 0.25);
     --spectrum-alias-background-color-quickactions: rgba(50, 50, 50, 0.9);
     --spectrum-alias-radial-reaction-color-default: rgba(227, 227, 227, 0.6);
+    --spectrum-alias-pasteboard-background-color: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-appframe-border-color: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-appframe-separator-color: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-colorarea-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color-hover: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color-key-focus: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color-hover: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color-key-focus: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-vertical-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-vertical-border-color-hover: rgba(
+        255,
+        255,
+        255,
+        0.1
+    );
+    --spectrum-colorslider-vertical-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-vertical-border-color-key-focus: rgba(
+        255,
+        255,
+        255,
+        0.1
+    );
+    --spectrum-colorwheel-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorwheel-border-color-hover: rgba(255, 255, 255, 0.1);
+    --spectrum-colorwheel-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorwheel-border-color-key-focus: rgba(255, 255, 255, 0.1);
     --spectrum-miller-column-item-background-color-selected: rgba(
         55,
         142,
@@ -94,6 +129,35 @@ governing permissions and limitations under the License.
         240,
         0.2
     );
+    --spectrum-tabs-compact-selection-indicator-color: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-tabs-compact-vertical-rule-color: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-tabs-compact-vertical-emphasized-selection-indicator-color: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-tabs-compact-vertical-emphasized-rule-color: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-tabs-emphasized-selection-indicator-color: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-tabs-quiet-compact-emphasized-selection-indicator-color: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-tabs-quiet-compact-vertical-emphasized-selection-indicator-color: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-tabs-quiet-emphasized-selection-indicator-color: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-tabs-quiet-vertical-emphasized-selection-indicator-color: var(
+        --spectrum-global-color-blue-500
+    );
     --spectrum-well-background-color: rgba(227, 227, 227, 0.02);
     --spectrum-well-border-color: rgba(255, 255, 255, 0.05);
 }
+
+/* stylelint-enable no-duplicate-selectors */

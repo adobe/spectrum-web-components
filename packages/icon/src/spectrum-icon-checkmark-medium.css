@@ -13,8 +13,5 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .checkmark-medium {
     /* .spectrum-UIIcon-CheckmarkMedium */
     width: var(--spectrum-icon-checkmark-medium-width);
-    height: var(
-        --spectrum-icon-checkmark-medium-height,
-        var(--spectrum-icon-checkmark-medium-width)
-    );
+    height: var(--spectrum-icon-checkmark-medium-height);
 }

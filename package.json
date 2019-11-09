@@ -79,7 +79,7 @@
     },
     "devDependencies": {
         "@adobe/es-modules-middleware": "~1.1.0",
-        "@adobe/spectrum-css": "^2.13.0",
+        "@adobe/spectrum-css": "^2.15.1",
         "@babel/core": "^7.6.0",
         "@babel/plugin-syntax-import-meta": "^7.2.0",
         "@commitlint/cli": "^8.2.0",

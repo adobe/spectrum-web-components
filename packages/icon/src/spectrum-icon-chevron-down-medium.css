@@ -12,10 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .chevron-down-medium {
     /* .spectrum-UIIcon-ChevronDownMedium */
-    width: var(
-        --spectrum-icon-chevron-down-medium-width,
-        var(--spectrum-global-dimension-font-size-25)
-    );
+    width: var(--spectrum-icon-chevron-down-medium-width);
     height: var(
         --spectrum-icon-chevron-down-medium-height,
         var(--spectrum-global-dimension-size-75)

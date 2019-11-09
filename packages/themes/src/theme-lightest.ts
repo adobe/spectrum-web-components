@@ -11,11 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import { LitElement, CSSResultArray, html, TemplateResult } from 'lit-element';
+import commonStyles from './theme.css.js';
 import lightestStyles from './theme-lightest.css.js';
 
 export class ThemeLightest extends LitElement {
     public static get styles(): CSSResultArray {
-        return [lightestStyles];
+        return [commonStyles, lightestStyles];
     }
 
     protected render(): TemplateResult {

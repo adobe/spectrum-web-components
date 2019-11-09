@@ -10,10 +10,10 @@
     mime "^2.4.0"
     resolve "^1.9.0"
 
-"@adobe/spectrum-css@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css/-/spectrum-css-2.13.0.tgz#7f8ef0ab74f974fedc80d41764f9b7ca56e3b74f"
-  integrity sha512-v7IJPfWJ2mkq+y7oI/ghpn7ykWHFZoIrcI+ZFnhbt0W2GEbtD0oscQcZHBLUA99AlCCBL2Vi7M3p7dmvB38RQQ==
+"@adobe/spectrum-css@^2.15.1":
+  version "2.15.1"
+  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css/-/spectrum-css-2.15.1.tgz#2742deead0b3f32d83cd62bd7c3812329c3b8911"
+  integrity sha512-NcpkRsfwhPYY16q83B+mVtfOCTpwzMaqvbMDXDJiZV/OP/hbCTimZ8KQOpf/ETm4qcNb75iJcAVqEhLaJK+sGg==
 
 "@babel/code-frame@7.5.5", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
   version "7.5.5"

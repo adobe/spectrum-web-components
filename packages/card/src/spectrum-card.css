@@ -26,11 +26,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-3000)
     );
 
-    border: var(--spectrum-card-border-size, 1px) solid transparent;
+    border: var(
+            --spectrum-card-border-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid transparent;
     border-radius: var(
         --spectrum-card-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-border-radius-regular)
     );
+
+    text-decoration: none;
+
     /* .spectrum-Card */
     border-color: var(
         --spectrum-card-border-color,
@@ -125,18 +132,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -ms-flex-pack: center;
     justify-content: center;
 
-    border-bottom: var(--spectrum-card-coverphoto-border-bottom-size, 1px) solid
-        transparent;
+    border-bottom: var(
+            --spectrum-card-coverphoto-border-bottom-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid transparent;
     border-radius: calc(
             var(
                     --spectrum-card-border-radius,
-                    var(--spectrum-global-dimension-size-50)
+                    var(--spectrum-alias-border-radius-regular)
                 ) - 1px
         )
         calc(
             var(
                     --spectrum-card-border-radius,
-                    var(--spectrum-global-dimension-size-50)
+                    var(--spectrum-alias-border-radius-regular)
                 ) - 1px
         )
         0 0;
@@ -177,11 +187,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: 0 0
         var(
             --spectrum-card-border-radius,
-            var(--spectrum-global-dimension-size-50)
+            var(--spectrum-alias-border-radius-regular)
         )
         var(
             --spectrum-card-border-radius,
-            var(--spectrum-global-dimension-size-50)
+            var(--spectrum-alias-border-radius-regular)
         );
 }
 ::slotted([slot='preview']) {
@@ -190,13 +200,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: calc(
             var(
                     --spectrum-card-border-radius,
-                    var(--spectrum-global-dimension-size-50)
+                    var(--spectrum-alias-border-radius-regular)
                 ) - 1px
         )
         calc(
             var(
                     --spectrum-card-border-radius,
-                    var(--spectrum-global-dimension-size-50)
+                    var(--spectrum-alias-border-radius-regular)
                 ) - 1px
         )
         0 0;
@@ -239,6 +249,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-card-title-padding-right,
         var(--spectrum-global-dimension-size-100)
     );
+    /* .spectrum-Card .spectrum-Card-title */
+    color: var(
+        --spectrum-alias-text-color,
+        var(--spectrum-global-color-gray-800)
+    );
 }
 #subtitle {
     /* .spectrum-Card-subtitle */
@@ -246,11 +261,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-card-subtitle-text-size,
         var(--spectrum-global-dimension-font-size-50)
     );
-    letter-spacing: var(--spectrum-card-subtitle-letter-spacing, 0.06em);
+    letter-spacing: var(
+        --spectrum-card-subtitle-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
     text-transform: uppercase;
     padding-right: var(
         --spectrum-card-subtitle-padding-right,
         var(--spectrum-global-dimension-size-100)
+    );
+    /* .spectrum-Card .spectrum-Card-subtitle */
+    color: var(
+        --spectrum-card-description-text-color,
+        var(--spectrum-global-color-gray-700)
     );
 }
 ::slotted([slot='description']) {
@@ -292,7 +315,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-300)
     );
 
-    border-top: var(--spectrum-card-footer-border-top-size, 1px) solid;
+    border-top: var(
+            --spectrum-card-footer-border-top-size,
+            var(--spectrum-global-dimension-size-10)
+        )
+        solid;
 
     /* .spectrum-Card-footer */
     border-color: var(
@@ -310,6 +337,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: flex;
     -ms-flex-pack: end;
     justify-content: flex-end;
+}
+:host([variant='quiet']) ::slotted([slot='preview']) {
+    /* .spectrum-Card--quiet .spectrum-Card-preview */
+    min-height: var(
+        --spectrum-card-quiet-min-size,
+        var(--spectrum-global-dimension-size-1700)
+    );
 }
 :host([variant='quiet']),
 :host([variant='gallery']) {
@@ -332,10 +366,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     width: 100%;
     -ms-flex: 1;
     flex: 1;
-    min-height: var(
-        --spectrum-card-quiet-min-size,
-        var(--spectrum-global-dimension-size-1700)
-    );
     padding: var(
         --spectrum-card-quiet-preview-padding,
         var(--spectrum-global-dimension-size-250)
@@ -344,7 +374,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-sizing: border-box;
     border-radius: var(
         --spectrum-card-quiet-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-border-radius-regular)
     );
     position: relative;
     transition: background-color
@@ -423,6 +453,75 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-font-size-100)
     );
 }
+.spectrum-Card--horizontal {
+    /* .spectrum-Card--horizontal */
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+.spectrum-Card--horizontal ::slotted([slot='preview']) {
+    /* .spectrum-Card--horizontal .spectrum-Card-preview */
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    min-height: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    border-radius: var(
+            --spectrum-card-quiet-border-radius,
+            var(--spectrum-alias-border-radius-regular)
+        )
+        0 0
+        var(
+            --spectrum-card-quiet-border-radius,
+            var(--spectrum-alias-border-radius-regular)
+        );
+    border-right: var(
+            --spectrum-card-border-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid transparent;
+
+    padding: var(--spectrum-global-dimension-size-175);
+
+    /* .spectrum-Card--horizontal .spectrum-Card-preview */
+    background-color: var(
+        --spectrum-card-quiet-preview-background-color,
+        var(--spectrum-global-color-gray-200)
+    );
+
+    border-color: var(
+        --spectrum-card-border-color,
+        var(--spectrum-global-color-gray-200)
+    );
+}
+.spectrum-Card--horizontal #header,
+.spectrum-Card--horizontal #content {
+    /* .spectrum-Card--horizontal .spectrum-Card-header,
+   * .spectrum-Card--horizontal .spectrum-Card-content */
+    margin-top: 0;
+    height: auto;
+}
+.spectrum-Card--horizontal #title {
+    /* .spectrum-Card--horizontal .spectrum-Card-title */
+    padding-right: 0;
+}
+.spectrum-Card--horizontal #body {
+    /* .spectrum-Card--horizontal .spectrum-Card-body */
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
+    padding: 0 var(--spectrum-global-dimension-size-200);
+}
 :host([variant='gallery']) {
     /* .spectrum-Card--gallery */
     min-width: 0;
@@ -445,24 +544,24 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card.focus-ring */
     border-color: var(
         --spectrum-card-border-color-key-focus,
-        var(--spectrum-global-color-blue-400)
+        var(--spectrum-alias-border-color-focus)
     );
     box-shadow: 0 0 0 1px
         var(
             --spectrum-card-border-color-key-focus,
-            var(--spectrum-global-color-blue-400)
+            var(--spectrum-alias-border-color-focus)
         );
 }
 :host([drop-target]) {
     /* .spectrum-Card.is-drop-target */
     border-color: var(
         --spectrum-card-border-color-key-focus,
-        var(--spectrum-global-color-blue-400)
+        var(--spectrum-alias-border-color-focus)
     );
     box-shadow: 0 0 0 1px
         var(
             --spectrum-card-border-color-key-focus,
-            var(--spectrum-global-color-blue-400)
+            var(--spectrum-alias-border-color-focus)
         );
     background-color: var(--spectrum-alias-highlight-selected);
 }
@@ -574,5 +673,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     color: var(
         --spectrum-card-quiet-subtitle-text-color,
         var(--spectrum-global-color-gray-700)
+    );
+}
+.spectrum-Card--horizontal:hover ::slotted([slot='preview']) {
+    /* .spectrum-Card--horizontal:hover .spectrum-Card-preview */
+    border-color: var(
+        --spectrum-card-border-color-hover,
+        var(--spectrum-global-color-gray-400)
     );
 }

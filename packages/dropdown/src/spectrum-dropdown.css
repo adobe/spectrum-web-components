@@ -74,18 +74,26 @@ select + .dropdown {
         var(
                 --spectrum-dropdown-height,
                 var(--spectrum-global-dimension-size-400)
-            ) - var(--spectrum-dropdown-border-size, 1px) * 2
+            ) -
+            var(
+                --spectrum-dropdown-border-size,
+                var(--spectrum-alias-border-size-thin)
+            ) * 2
     );
     line-height: calc(
         var(
                 --spectrum-dropdown-height,
                 var(--spectrum-global-dimension-size-400)
-            ) - var(--spectrum-dropdown-border-size, 1px) * 2
+            ) -
+            var(
+                --spectrum-dropdown-border-size,
+                var(--spectrum-alias-border-size-thin)
+            ) * 2
     );
 
     font-size: var(
         --spectrum-dropdown-text-size,
-        var(--spectrum-global-dimension-font-size-100)
+        var(--spectrum-alias-font-size-default)
     );
 
     text-overflow: ellipsis;
@@ -93,14 +101,20 @@ select + .dropdown {
 }
 #label.placeholder {
     /* .spectrum-Dropdown-label.is-placeholder */
-    font-weight: var(--spectrum-dropdown-placeholder-text-font-weight, 400);
-    font-style: var(--spectrum-dropdown-placeholder-text-font-style, italic);
+    font-weight: var(
+        --spectrum-dropdown-placeholder-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    font-style: var(
+        --spectrum-dropdown-placeholder-text-font-style,
+        var(--spectrum-global-font-style-italic)
+    );
     transition: color var(--spectrum-global-animation-duration-100, 130ms)
         ease-in-out;
     /* .spectrum-Dropdown-label.is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color,
-        var(--spectrum-global-color-gray-600)
+        var(--spectrum-alias-placeholder-text-color)
     );
 }
 #label + .dropdown {
@@ -129,7 +143,11 @@ select + .dropdown {
                 var(
                         --spectrum-dropdown-height,
                         var(--spectrum-global-dimension-size-400)
-                    ) - var(--spectrum-dropdown-border-size, 1px) * 2 -
+                    ) -
+                    var(
+                        --spectrum-dropdown-border-size,
+                        var(--spectrum-alias-border-size-thin)
+                    ) * 2 -
                     var(
                         --spectrum-icon-chevron-down-medium-height,
                         var(--spectrum-global-dimension-size-75)
@@ -141,7 +159,11 @@ select + .dropdown {
                 var(
                         --spectrum-dropdown-height,
                         var(--spectrum-global-dimension-size-400)
-                    ) - var(--spectrum-dropdown-border-size, 1px) * 2 -
+                    ) -
+                    var(
+                        --spectrum-dropdown-border-size,
+                        var(--spectrum-alias-border-size-thin)
+                    ) * 2 -
                     var(
                         --spectrum-icon-chevron-down-medium-height,
                         var(--spectrum-global-dimension-size-75)
@@ -154,7 +176,7 @@ select + .dropdown {
     /* .spectrum-Dropdown-icon */
     color: var(
         --spectrum-dropdown-icon-color,
-        var(--spectrum-global-color-gray-700)
+        var(--spectrum-alias-icon-color)
     );
 }
 #button .icon:not(.dropdown) {
@@ -164,10 +186,14 @@ select + .dropdown {
                 var(
                         --spectrum-dropdown-height,
                         var(--spectrum-global-dimension-size-400)
-                    ) - var(--spectrum-dropdown-border-size, 1px) * 2 -
+                    ) -
+                    var(
+                        --spectrum-dropdown-border-size,
+                        var(--spectrum-alias-border-size-thin)
+                    ) * 2 -
                     var(
                         --spectrum-dropdown-icon-size,
-                        var(--spectrum-global-dimension-size-225)
+                        var(--spectrum-alias-workflow-icon-size)
                     )
             ) / 2
     );
@@ -176,10 +202,14 @@ select + .dropdown {
                 var(
                         --spectrum-dropdown-height,
                         var(--spectrum-global-dimension-size-400)
-                    ) - var(--spectrum-dropdown-border-size, 1px) * 2 -
+                    ) -
+                    var(
+                        --spectrum-dropdown-border-size,
+                        var(--spectrum-alias-border-size-thin)
+                    ) * 2 -
                     var(
                         --spectrum-dropdown-icon-size,
-                        var(--spectrum-global-dimension-size-225)
+                        var(--spectrum-alias-workflow-icon-size)
                     )
             ) / 2
     );
@@ -209,14 +239,18 @@ select + .dropdown {
         -1 * (var(
                         --spectrum-dropdown-quiet-popover-offset-x,
                         var(--spectrum-global-dimension-size-150)
-                    ) + var(--spectrum-popover-border-size, 1px))
+                    ) +
+                    var(
+                        --spectrum-popover-border-size,
+                        var(--spectrum-alias-border-size-thin)
+                    ))
     );
 }
 #button:hover .dropdown {
     /* .spectrum-Dropdown .spectrum-Dropdown-trigger:hover .spectrum-Dropdown-icon */
     color: var(
         --spectrum-dropdown-icon-color-hover,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-icon-color-hover)
     );
 }
 #button.is-selected .placeholder {
@@ -230,7 +264,7 @@ select + .dropdown {
     /* .spectrum-Dropdown.is-invalid .spectrum-Icon:not(.spectrum-Dropdown-icon):not(.spectrum-Menu-checkmark) */
     color: var(
         --spectrum-dropdown-validation-icon-color-error,
-        var(--spectrum-global-color-red-600)
+        var(--spectrum-semantic-negative-color-icon)
     );
 }
 :host([invalid][disabled]) .icon,
@@ -239,7 +273,7 @@ select + .dropdown {
    * .spectrum-Dropdown.is-invalid.is-disabled .spectrum-Icon:not(.spectrum-Dropdown-icon):not(.spectrum-Menu-checkmark) */
     color: var(
         --spectrum-dropdown-icon-color-disabled,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-alias-icon-color-disabled)
     );
 }
 :host([disabled]) .dropdown,
@@ -248,21 +282,21 @@ select + .dropdown {
    * .spectrum-Dropdown.is-disabled .spectrum-Dropdown-trigger:hover .spectrum-Dropdown-icon */
     color: var(
         --spectrum-dropdown-icon-color-disabled,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-alias-icon-color-disabled)
     );
 }
 :host([disabled]) #label.placeholder {
     /* .spectrum-Dropdown.is-disabled .spectrum-Dropdown-label.is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
+        var(--spectrum-alias-text-color-disabled)
     );
 }
 #label.placeholder:hover {
     /* .spectrum-Dropdown-label.is-placeholder:hover */
     color: var(
         --spectrum-dropdown-placeholder-text-color-hover,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-placeholder-text-color-hover)
     );
 }
 #label.placeholder:active {
@@ -276,13 +310,13 @@ select + .dropdown {
     /* .spectrum-Dropdown-trigger.focus-ring .spectrum-Dropdown-label.is-placeholder */
     color: var(
         --spectrum-dropdown-placeholder-text-color-key-focus,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-placeholder-text-color-hover)
     );
 }
 #button:focus-visible .dropdown {
     /* .spectrum-Dropdown-trigger.focus-ring .spectrum-Dropdown-icon */
     color: var(
         --spectrum-dropdown-icon-color-key-focus,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-icon-color-focus)
     );
 }

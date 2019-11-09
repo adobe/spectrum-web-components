@@ -12,12 +12,6 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .skip-right {
     /* .spectrum-UIIcon-SkipRight */
-    width: var(
-        --spectrum-icon-skip-right-width,
-        var(--spectrum-icon-skip-left-width)
-    );
-    height: var(
-        --spectrum-icon-skip-right-height,
-        var(--spectrum-global-dimension-font-size-25)
-    );
+    width: var(--spectrum-icon-skip-right-width);
+    height: var(--spectrum-icon-skip-right-height);
 }

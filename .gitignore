@@ -37,7 +37,7 @@ TESTS.xml
 /test/benchmark/**/*.js
 /test/benchmark/**/*.js.map
 /test/benchmark/**/*.d.ts
-/test/visual/screenshots-current/ci/**/*.png
+/test/visual/screenshots-current/**/*.png
 /test/visual/**/local/
 !test/visual/**/*.js
 
