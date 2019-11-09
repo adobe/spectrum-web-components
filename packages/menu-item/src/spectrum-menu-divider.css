@@ -15,14 +15,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-sizing: content-box;
     overflow: visible;
 
-    height: var(--spectrum-selectlist-divider-size, 2px);
+    height: var(
+        --spectrum-selectlist-divider-size,
+        var(--spectrum-alias-border-size-thick)
+    );
     margin: calc(var(--spectrum-selectlist-divider-padding, 3px) / 2)
-        var(--spectrum-selectlist-option-padding, 12px);
+        var(
+            --spectrum-selectlist-option-padding,
+            var(--spectrum-global-dimension-static-size-150)
+        );
     padding: 0 0;
     border: none;
     /* .spectrum-Menu-divider */
     background-color: var(
         --spectrum-selectlist-divider-color,
-        var(--spectrum-global-color-gray-100)
+        var(--spectrum-alias-border-color-extralight)
     );
 }

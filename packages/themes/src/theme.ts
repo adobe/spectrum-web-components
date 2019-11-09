@@ -12,12 +12,12 @@ governing permissions and limitations under the License.
 
 import {
     LitElement,
-    CSSResultArray,
+    // CSSResultArray,
     html,
     TemplateResult,
     property,
 } from 'lit-element';
-import commonStyles from './theme.css.js';
+// import commonStyles from './theme.css.js';
 
 export class Theme extends LitElement {
     /**
@@ -32,9 +32,9 @@ export class Theme extends LitElement {
     @property({ reflect: true })
     public scale: 'medium' = 'medium';
 
-    public static get styles(): CSSResultArray {
-        return [commonStyles];
-    }
+    // public static get styles(): CSSResultArray {
+    //     return [commonStyles];
+    // }
 
     private renderTheme(children: TemplateResult): TemplateResult {
         let result;

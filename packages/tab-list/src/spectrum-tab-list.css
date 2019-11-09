@@ -37,11 +37,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     z-index: 0;
 
     transition: transform
-        var(--spectrum-tabs-selection-indicator-animation-duration, 130ms)
+        var(
+            --spectrum-tabs-selection-indicator-animation-duration,
+            var(--spectrum-global-animation-duration-100)
+        )
         ease-in-out;
     transform-origin: top left;
 
-    border-radius: var(--spectrum-tabs-rule-border-radius, 1px);
+    border-radius: var(
+        --spectrum-tabs-rule-border-radius,
+        var(--spectrum-global-dimension-static-size-10)
+    );
 
     /* .spectrum-Tabs-selectionIndicator */
     background-color: var(
@@ -55,13 +61,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(
                 --spectrum-tabs-quiet-compact-height,
                 var(--spectrum-global-dimension-size-400)
-            ) - var(--spectrum-tabs-rule-height, 2px)
+            ) -
+            var(
+                --spectrum-tabs-rule-height,
+                var(--spectrum-alias-border-size-thick)
+            )
     );
     line-height: calc(
         var(
                 --spectrum-tabs-quiet-compact-height,
                 var(--spectrum-global-dimension-size-400)
-            ) - var(--spectrum-tabs-rule-height, 2px)
+            ) -
+            var(
+                --spectrum-tabs-rule-height,
+                var(--spectrum-alias-border-size-thick)
+            )
     );
 }
 :host([direction='horizontal']) {
@@ -69,7 +83,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -ms-flex-align: center;
     align-items: center;
 
-    border-bottom: var(--spectrum-tabs-rule-height, 2px) solid;
+    border-bottom: var(
+            --spectrum-tabs-rule-height,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid;
 }
 :host([direction='horizontal']) ::slotted(*) {
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
@@ -79,9 +97,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-selectionIndicator */
     position: absolute;
     bottom: 0;
-    height: var(--spectrum-tabs-rule-height, 2px);
+    height: var(
+        --spectrum-tabs-rule-height,
+        var(--spectrum-alias-border-size-thick)
+    );
 
-    bottom: calc(-1 * var(--spectrum-tabs-rule-height, 2px));
+    bottom: calc(
+        -1 * var(--spectrum-tabs-rule-height, var(--spectrum-alias-border-size-thick))
+    );
 }
 :host([direction='horizontal'][compact]) {
     /* .spectrum-Tabs--horizontal.spectrum-Tabs--compact */
@@ -90,7 +113,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(
                 --spectrum-tabs-quiet-compact-height,
                 var(--spectrum-global-dimension-size-400)
-            ) - var(--spectrum-tabs-rule-height, 2px)
+            ) -
+            var(
+                --spectrum-tabs-rule-height,
+                var(--spectrum-alias-border-size-thick)
+            )
     );
     -ms-flex-align: end;
     align-items: end;
@@ -102,7 +129,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs--quiet */
     border-bottom-color: var(
         --spectrum-tabs-quiet-rule-color,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-border-color-transparent)
     );
 }
 :host([direction='vertical']) {
@@ -112,7 +139,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -ms-flex-direction: column;
     flex-direction: column;
     padding: 0;
-    border-left: var(--spectrum-tabs-vertical-rule-width, 2px) solid;
+    border-left: var(
+            --spectrum-tabs-vertical-rule-width,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid;
     /* .spectrum-Tabs--vertical */
     border-left-color: var(
         --spectrum-tabs-vertical-rule-color,
@@ -164,9 +195,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     position: absolute;
     left: 0px;
-    width: var(--spectrum-tabs-vertical-rule-width, 2px);
+    width: var(
+        --spectrum-tabs-vertical-rule-width,
+        var(--spectrum-alias-border-size-thick)
+    );
 
-    left: calc(-1 * var(--spectrum-tabs-vertical-rule-width, 2px));
+    left: calc(
+        -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
+    );
 }
 :host([quiet]) #selectionIndicator {
     /* .spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator */
@@ -181,7 +217,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tabs--vertical.spectrum-Tabs--compact */
     border-left-color: var(
         --spectrum-tabs-quiet-vertical-rule-color,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-border-color-transparent)
     );
 }
 :host([direction='vertical'][quiet]) #selectionIndicator,

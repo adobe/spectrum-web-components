@@ -59,6 +59,39 @@ storiesOf('Theme', module)
             </sp-theme>
         `;
     })
+    .add('None', () => {
+        return html`
+            <style color="text/css">
+                #example {
+                    width: 500px;
+                    padding: 3em;
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
+                }
+
+                #buttons {
+                    margin-top: 2em;
+                }
+            </style>
+            <div id="example">
+                <div>
+                    <sp-slider
+                        value="5"
+                        step="1"
+                        min="1"
+                        max="11"
+                        label="Volume"
+                        id="volume-slider"
+                    ></sp-slider>
+                </div>
+                <div><sp-switch>Overdrive</sp-switch></div>
+                <div id="buttons">
+                    <sp-button variant="primary">Cancel</sp-button>
+                    <sp-button variant="cta">Continue</sp-button>
+                </div>
+            </div>
+        `;
+    })
     .add('Nested theme', () => {
         const colorOptions = {
             Light: 'light',

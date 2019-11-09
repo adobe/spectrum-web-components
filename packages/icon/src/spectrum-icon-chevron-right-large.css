@@ -12,10 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .chevron-right-large {
     /* .spectrum-UIIcon-ChevronRightLarge */
-    width: var(
-        --spectrum-icon-chevron-right-large-width,
-        var(--spectrum-icon-checkmark-medium-width)
-    );
+    width: var(--spectrum-icon-chevron-right-large-width);
     height: var(
         --spectrum-icon-chevron-right-large-height,
         var(--spectrum-global-dimension-size-200)

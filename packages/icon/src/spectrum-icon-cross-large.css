@@ -12,12 +12,6 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .cross-large {
     /* .spectrum-UIIcon-CrossLarge */
-    width: var(
-        --spectrum-icon-cross-large-width,
-        var(--spectrum-icon-checkmark-medium-width)
-    );
-    height: var(
-        --spectrum-icon-cross-large-height,
-        var(--spectrum-icon-checkmark-medium-width)
-    );
+    width: var(--spectrum-icon-cross-large-width);
+    height: var(--spectrum-icon-cross-large-height);
 }

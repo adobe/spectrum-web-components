@@ -20,11 +20,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-SideNav-heading */
     height: var(
         --spectrum-sidenav-header-height,
-        var(--spectrum-global-dimension-size-400)
+        var(--spectrum-alias-single-line-height)
     );
     line-height: var(
         --spectrum-sidenav-header-height,
-        var(--spectrum-global-dimension-size-400)
+        var(--spectrum-alias-single-line-height)
     );
 
     margin: var(
@@ -45,16 +45,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
     border-radius: var(
         --spectrum-sidenav-header-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-border-radius-regular)
     );
 
     font-size: var(
         --spectrum-sidenav-header-text-size,
         var(--spectrum-global-dimension-font-size-50)
     );
-    font-weight: var(--spectrum-sidenav-header-font-weight, 500);
+    font-weight: var(
+        --spectrum-sidenav-header-font-weight,
+        var(--spectrum-global-font-weight-medium)
+    );
     font-style: normal;
-    letter-spacing: var(--spectrum-sidenav-header-letter-spacing, 0.06em);
+    letter-spacing: var(
+        --spectrum-sidenav-header-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
 
     text-transform: uppercase;
 

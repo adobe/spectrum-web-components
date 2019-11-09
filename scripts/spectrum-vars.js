@@ -26,22 +26,38 @@ const processCSS = (srcPath, dstPath, identifier) => {
             return console.log(err);
         }
 
-        let result = '';
+        /* lit-html is a JS litteral, so `\` escapes by default.
+         * for there to be unicode characters, the escape must
+         * escape itself...
+         */
+        let result = data.replace(/\\/g, '\\\\');
 
         // possible selectors to replace
         const selector1 = `.spectrum--${identifier}`;
-        const selector2 = ':root';
+        const selector2 = '.spectrum';
 
         // new selector values
-        const shadowSelector = ':root,\n :host';
+        const shadowSelector = ':root,\n:host';
 
         if (data.indexOf(selector1) >= 0) {
-            result = data.replace(selector1, shadowSelector);
+            result = result.replace(selector1, shadowSelector);
         } else if (data.indexOf(selector2) >= 0) {
-            result = data.replace(selector2, shadowSelector);
+            result = result.replace(selector2, shadowSelector);
+            result = result.replace(
+                `.spectrum--medium,
+.spectrum--large`,
+                shadowSelector
+            );
+            result = result.replace(
+                `.spectrum--darkest,
+.spectrum--dark,
+.spectrum--light,
+.spectrum--lightest`,
+                shadowSelector
+            );
         }
 
-        result = `${license}\n ${result}`;
+        result = `${license}\n/* stylelint-disable no-duplicate-selectors */\n${result}\n/* stylelint-enable no-duplicate-selectors */`;
 
         fs.writeFile(dstPath, result, 'utf8');
     });
@@ -73,7 +89,7 @@ const cores = ['global'];
 const processes = [];
 
 themes.forEach(async (theme) => {
-    const srcPath = path.join(spectrumPath, `spectrum-${theme}-unique.css`);
+    const srcPath = path.join(spectrumPath, `spectrum-${theme}.css`);
     const dstPath = path.resolve(
         path.join(__dirname, '..', 'packages', 'styles', `theme-${theme}.css`)
     );
@@ -83,7 +99,7 @@ themes.forEach(async (theme) => {
 });
 
 scales.forEach(async (scale) => {
-    const srcPath = path.join(spectrumPath, `spectrum-${scale}-unique.css`);
+    const srcPath = path.join(spectrumPath, `spectrum-${scale}.css`);
     const dstPath = path.resolve(
         path.join(__dirname, '..', 'packages', 'styles', `scale-${scale}.css`)
     );

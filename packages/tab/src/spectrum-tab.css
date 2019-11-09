@@ -18,11 +18,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 
     height: calc(
         var(--spectrum-tabs-height, var(--spectrum-global-dimension-size-600)) -
-            var(--spectrum-tabs-rule-height, 2px)
+            var(
+                --spectrum-tabs-rule-height,
+                var(--spectrum-alias-border-size-thick)
+            )
     );
     line-height: calc(
         var(--spectrum-tabs-height, var(--spectrum-global-dimension-size-600)) -
-            var(--spectrum-tabs-rule-height, 2px)
+            var(
+                --spectrum-tabs-rule-height,
+                var(--spectrum-alias-border-size-thick)
+            )
     );
     z-index: 1;
 
@@ -36,7 +42,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs-item */
     color: var(
         --spectrum-tabs-text-color,
-        var(--spectrum-global-color-gray-700)
+        var(--spectrum-alias-label-text-color)
     );
 }
 :host([disabled]) {
@@ -45,7 +51,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs-item.is-disabled */
     color: var(
         --spectrum-tabs-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
+        var(--spectrum-alias-text-color-disabled)
     );
 }
 :host([disabled]) #itemLabel {
@@ -56,13 +62,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs-item .spectrum-Icon */
     height: calc(
         var(--spectrum-tabs-height, var(--spectrum-global-dimension-size-600)) -
-            var(--spectrum-tabs-rule-height, 2px)
+            var(
+                --spectrum-tabs-rule-height,
+                var(--spectrum-alias-border-size-thick)
+            )
     );
     /* .spectrum-Tabs-item .spectrum-Icon */
-    color: var(
-        --spectrum-tabs-icon-color,
-        var(--spectrum-global-color-gray-700)
-    );
+    color: var(--spectrum-tabs-icon-color, var(--spectrum-alias-icon-color));
 }
 slot[name='icon'] + #itemLabel {
     /* .spectrum-Tabs-item .spectrum-Icon + .spectrum-Tabs-itemLabel */
@@ -81,13 +87,17 @@ slot[name='icon'] + #itemLabel {
 
     height: var(
         --spectrum-tabs-focus-ring-height,
-        var(--spectrum-global-dimension-size-400)
+        var(--spectrum-alias-single-line-height)
     );
     margin-top: calc(
         var(
                 --spectrum-tabs-focus-ring-height,
-                var(--spectrum-global-dimension-size-400)
-            ) / -2 + var(--spectrum-tabs-rule-height, 2px) / 2
+                var(--spectrum-alias-single-line-height)
+            ) / -2 +
+            var(
+                --spectrum-tabs-rule-height,
+                var(--spectrum-alias-border-size-thick)
+            ) / 2
     );
     left: calc(
         -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
@@ -95,11 +105,12 @@ slot[name='icon'] + #itemLabel {
     right: calc(
         -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
     );
-    border: var(--spectrum-tabs-focus-ring-size, 2px) solid transparent;
-    border-radius: var(
-        --spectrum-tabs-focus-ring-border-radius,
-        var(--spectrum-global-dimension-size-65)
-    );
+    border: var(
+            --spectrum-tabs-focus-ring-size,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid transparent;
+    border-radius: var(--spectrum-tabs-focus-ring-border-radius);
 
     pointer-events: none;
 }
@@ -111,9 +122,12 @@ slot[name='icon'] + #itemLabel {
 
     font-size: var(
         --spectrum-tabs-text-size,
-        var(--spectrum-global-dimension-font-size-100)
+        var(--spectrum-alias-font-size-default)
     );
-    font-weight: var(--spectrum-tabs-text-font-weight, 400);
+    font-weight: var(
+        --spectrum-tabs-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
 }
 #itemLabel:empty {
     /* .spectrum-Tabs-itemLabel:empty */
@@ -123,14 +137,14 @@ slot[name='icon'] + #itemLabel {
     /* .spectrum-Tabs-item:hover */
     color: var(
         --spectrum-tabs-text-color-hover,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-text-color-hover)
     );
 }
 :host(:hover) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item:hover .spectrum-Icon */
     color: var(
         --spectrum-tabs-icon-color-hover,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-icon-color-hover)
     );
 }
 :host([selected]) {
@@ -151,27 +165,27 @@ slot[name='icon'] + #itemLabel {
     /* .spectrum-Tabs-item.focus-ring */
     color: var(
         --spectrum-tabs-text-color-key-focus,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-text-color-hover)
     );
 }
 :host(:focus-visible)::before {
     /* .spectrum-Tabs-item.focus-ring::before */
     border-color: var(
         --spectrum-tabs-focus-ring-color,
-        var(--spectrum-global-color-blue-400)
+        var(--spectrum-alias-border-color-focus)
     );
 }
 :host(:focus-visible) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item.focus-ring .spectrum-Icon */
     color: var(
         --spectrum-tabs-icon-color-key-focus,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-icon-color-focus)
     );
 }
 :host([disabled]) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item.is-disabled .spectrum-Icon */
     color: var(
         --spectrum-tabs-icon-color-disabled,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-alias-icon-color-disabled)
     );
 }

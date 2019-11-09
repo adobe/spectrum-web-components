@@ -12,10 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .triple-gripper {
     /* .spectrum-UIIcon-TripleGripper */
-    width: var(
-        --spectrum-icon-triplegripper-width,
-        var(--spectrum-global-dimension-font-size-25)
-    );
+    width: var(--spectrum-icon-triplegripper-width);
     height: var(
         --spectrum-icon-triplegripper-height,
         var(--spectrum-global-dimension-size-85)

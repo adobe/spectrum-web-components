@@ -13,10 +13,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Dropzone */
     text-align: center;
-    border-width: var(--spectrum-dropzone-border-width, 2px);
+    border-width: var(
+        --spectrum-dropzone-border-width,
+        var(--spectrum-alias-border-size-thick)
+    );
     border-radius: var(
         --spectrum-dropzone-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-border-radius-regular)
     );
     padding: var(
         --spectrum-dropzone-padding,

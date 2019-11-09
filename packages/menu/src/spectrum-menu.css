@@ -32,6 +32,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Menu */
     background-color: var(
         --spectrum-selectlist-background-color,
-        rgba(0, 0, 0, 0)
+        var(--spectrum-alias-background-color-transparent)
     );
 }
