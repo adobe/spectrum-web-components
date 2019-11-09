@@ -13,23 +13,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-IllustratedMessage */
     height: 100%;
-
-    display: -ms-flexbox;
-
     display: flex;
-    -ms-flex-direction: column;
     flex-direction: column;
-    -ms-flex-align: center;
     align-items: center;
-    -ms-flex-pack: center;
     justify-content: center;
-
     text-align: center;
 }
 #illustration {
     /* .spectrum-IllustratedMessage-illustration */
-    margin-bottom: 24px;
-    /* .spectrum-IllustratedMessage-illustration */
+    margin-bottom: 24px; /* .spectrum-IllustratedMessage-illustration */
     color: var(--spectrum-global-color-gray-500);
     fill: currentColor;
     stroke: currentColor;
@@ -42,8 +34,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #description {
     /* .spectrum-IllustratedMessage-description */
     max-width: 500px;
-    margin: 4px 0 0 0;
-
+    margin: 4px 0 0;
     font-style: italic;
 }
 :host([cta]) #description {

@@ -34,11 +34,8 @@ async function processComponent(componentPath) {
         );
         packageCss = true;
     } catch (e) {
-        console.log(
-            `${spectrumConfig.spectrum} uses the repo level Spectrum CSS import...`
-        );
-        inputCssPath = require.resolve(
-            `@adobe/spectrum-css/dist/components/${spectrumConfig.spectrum}/index-vars.css`
+        console.error(
+            `${spectrumConfig.spectrum} does not have a local Spectrum CSS dependency.`
         );
     }
     const inputCss = await fs.readFile(inputCssPath);

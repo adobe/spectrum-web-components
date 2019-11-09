@@ -26,9 +26,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    opacity: NaN;
+    opacity: var(--spectrum-avatar-small-opacity, 1);
 }
 :host([disabled]) {
     /* .spectrum-Avatar.is-disabled */
-    opacity: NaN;
+    opacity: var(--spectrum-avatar-small-opacity-disabled, 0.3);
 }

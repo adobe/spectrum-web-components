@@ -13,23 +13,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Menu */
     display: inline-block;
-
     box-sizing: border-box;
-
     margin: var(
             --spectrum-popover-padding-y,
             var(--spectrum-global-dimension-size-50)
         )
         0;
     padding: 0;
-
     list-style-type: none;
-
-    overflow: auto;
-
-    /* .spectrum-Menu .spectrum-Menu */
-    display: block;
-    /* .spectrum-Menu */
+    overflow: auto; /* .spectrum-Menu .spectrum-Menu */
+    display: block; /* .spectrum-Menu */
     background-color: var(
         --spectrum-selectlist-background-color,
         var(--spectrum-alias-background-color-transparent)

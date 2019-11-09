@@ -12,18 +12,9 @@ governing permissions and limitations under the License.
 
 @import './spectrum-avatar.css';
 
-/*
-Opacity settings correct bugs in @spectrum-css/avatar
-Remove after https://github.com/adobe/spectrum-css/issues/340 is fixed.
-*/
 :host {
-    opacity: 1;
     display: block;
     overflow: hidden;
-}
-
-:host([disabled]) {
-    opacity: 0.5;
 }
 
 img {

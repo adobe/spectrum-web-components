@@ -66,15 +66,7 @@ const processCSS = (srcPath, dstPath, identifier) => {
 // where is spectrum-css?
 // TODO: use resolve package to find node_modules
 const spectrumPath = path.resolve(
-    path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@adobe',
-        'spectrum-css',
-        'dist',
-        'vars'
-    )
+    path.join(__dirname, '..', 'node_modules', '@spectrum-css', 'vars', 'dist')
 );
 
 // sources to use from spectrum-css

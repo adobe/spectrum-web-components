@@ -32,8 +32,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     line-height: var(
         --spectrum-banner-text-line-height,
         var(--spectrum-alias-heading-text-line-height)
-    );
-    /* .spectrum-Banner */
+    ); /* .spectrum-Banner */
     color: var(
         --spectrum-banner-text-color,
         var(--spectrum-global-color-static-white)
@@ -41,7 +40,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #header {
     /* .spectrum-Banner-header */
-    font-weight: bold;
+    font-weight: 700;
 }
 :host([corner]) {
     /* .spectrum-Banner--corner */

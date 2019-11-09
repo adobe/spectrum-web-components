@@ -11,91 +11,65 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #button {
-    /* .spectrum-Button,
-   * .spectrum-ActionButton,
-   * .spectrum-LogicButton,
-   * .spectrum-FieldButton,
+    /* .spectrum-ActionButton,
+   * .spectrum-Button,
    * .spectrum-ClearButton,
+   * .spectrum-FieldButton,
+   * .spectrum-LogicButton,
    * .spectrum-Tool */
-    display: -ms-inline-flexbox;
     display: inline-flex;
     box-sizing: border-box;
-
-    -ms-flex-align: center;
-
     align-items: center;
-    -ms-flex-pack: center;
     justify-content: center;
     overflow: visible;
     margin: 0;
-
     border-style: solid;
     text-transform: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-appearance: button;
     vertical-align: top;
-
-    transition: background var(--spectrum-global-animation-duration-100, 130ms)
+    transition: background var(--spectrum-global-animation-duration-100, 0.13s)
             ease-out,
-        border-color var(--spectrum-global-animation-duration-100, 130ms)
+        border-color var(--spectrum-global-animation-duration-100, 0.13s)
             ease-out,
-        color var(--spectrum-global-animation-duration-100, 130ms) ease-out,
-        box-shadow var(--spectrum-global-animation-duration-100, 130ms) ease-out;
-
+        color var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
     text-decoration: none;
-    font-family: 'adobe-clean-ux', 'adobe-clean', 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
+    font-family: adobe-clean-ux, adobe-clean, Source Sans Pro, -apple-system,
+        BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
     line-height: 1.3;
-
-    cursor: pointer;
-
-    /* .spectrum-FieldButton */
-
+    cursor: pointer; /* .spectrum-FieldButton */
     height: var(
         --spectrum-dropdown-height,
         var(--spectrum-global-dimension-size-400)
     );
-
-    padding: 0
-        var(
-            --spectrum-dropdown-padding-x,
-            var(--spectrum-global-dimension-size-150)
-        );
-
     font-family: inherit;
-    font-weight: normal;
+    font-weight: 400;
     font-size: var(
         --spectrum-dropdown-text-size,
         var(--spectrum-alias-font-size-default)
     );
     line-height: normal;
     -webkit-font-smoothing: initial;
-
     cursor: pointer;
     outline: none;
-    /* .spectrum-FieldButton */
     margin: 0;
     padding: 0
         var(
             --spectrum-dropdown-padding-x,
             var(--spectrum-global-dimension-size-150)
         );
-
     border-width: var(
         --spectrum-dropdown-border-size,
         var(--spectrum-alias-border-size-thin)
     );
     border-style: solid;
     border-radius: var(--spectrum-global-dimension-size-50);
-
     transition: background-color
-            var(--spectrum-global-animation-duration-100, 130ms),
-        box-shadow var(--spectrum-global-animation-duration-100, 130ms),
-        border-color var(--spectrum-global-animation-duration-100, 130ms);
-
-    /* .spectrum-FieldButton */
+            var(--spectrum-global-animation-duration-100, 0.13s),
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s),
+        border-color var(--spectrum-global-animation-duration-100, 0.13s); /* .spectrum-FieldButton */
     color: var(
         --spectrum-fieldbutton-text-color,
         var(--spectrum-alias-text-color)
@@ -110,20 +84,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 #button:focus {
-    /* .spectrum-Button:focus,
-   * .spectrum-ActionButton:focus,
-   * .spectrum-LogicButton:focus,
-   * .spectrum-FieldButton:focus,
+    /* .spectrum-ActionButton:focus,
+   * .spectrum-Button:focus,
    * .spectrum-ClearButton:focus,
+   * .spectrum-FieldButton:focus,
+   * .spectrum-LogicButton:focus,
    * .spectrum-Tool:focus */
     outline: none;
 }
 #button::-moz-focus-inner {
-    /* .spectrum-Button::-moz-focus-inner,
-   * .spectrum-ActionButton::-moz-focus-inner,
-   * .spectrum-LogicButton::-moz-focus-inner,
-   * .spectrum-FieldButton::-moz-focus-inner,
+    /* .spectrum-ActionButton::-moz-focus-inner,
+   * .spectrum-Button::-moz-focus-inner,
    * .spectrum-ClearButton::-moz-focus-inner,
+   * .spectrum-FieldButton::-moz-focus-inner,
+   * .spectrum-LogicButton::-moz-focus-inner,
    * .spectrum-Tool::-moz-focus-inner */
     border: 0;
     border-style: none;
@@ -132,29 +106,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-bottom: -2px;
 }
 #button:disabled {
-    /* .spectrum-Button:disabled,
-   * .spectrum-ActionButton:disabled,
-   * .spectrum-LogicButton:disabled,
-   * .spectrum-FieldButton:disabled,
+    /* .spectrum-ActionButton:disabled,
+   * .spectrum-Button:disabled,
    * .spectrum-ClearButton:disabled,
+   * .spectrum-FieldButton:disabled,
+   * .spectrum-LogicButton:disabled,
    * .spectrum-Tool:disabled */
     cursor: default;
 }
 .icon {
-    /* .spectrum-Button .spectrum-Icon,
-   * .spectrum-ActionButton .spectrum-Icon,
-   * .spectrum-LogicButton .spectrum-Icon,
-   * .spectrum-FieldButton .spectrum-Icon,
+    /* .spectrum-ActionButton .spectrum-Icon,
+   * .spectrum-Button .spectrum-Icon,
    * .spectrum-ClearButton .spectrum-Icon,
+   * .spectrum-FieldButton .spectrum-Icon,
+   * .spectrum-LogicButton .spectrum-Icon,
    * .spectrum-Tool .spectrum-Icon */
     max-height: 100%;
-    -ms-flex-negative: 0;
     flex-shrink: 0;
 }
-#button:disabled,
-#button.is-disabled {
-    /* .spectrum-FieldButton:disabled,
-   * .spectrum-FieldButton.is-disabled */
+#button.is-disabled,
+#button:disabled {
+    /* .spectrum-FieldButton.is-disabled,
+   * .spectrum-FieldButton:disabled */
     border-width: 0;
     cursor: default;
 }
@@ -169,10 +142,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-FieldButton--quiet */
     margin: 0;
     padding: 0;
-
     border-width: 0;
-    border-radius: var(--spectrum-fieldbutton-quiet-border-radius, 0px);
-    /* .spectrum-FieldButton--quiet */
+    border-radius: var(
+        --spectrum-fieldbutton-quiet-border-radius,
+        0
+    ); /* .spectrum-FieldButton--quiet */
     color: var(
         --spectrum-fieldbutton-text-color,
         var(--spectrum-alias-text-color)
@@ -232,10 +206,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-placeholder-text-color-hover)
     );
 }
-#button:active,
-#button.is-selected {
-    /* .spectrum-FieldButton:active,
-   * .spectrum-FieldButton.is-selected */
+#button.is-selected,
+#button:active {
+    /* .spectrum-FieldButton.is-selected,
+   * .spectrum-FieldButton:active */
     background-color: var(
         --spectrum-fieldbutton-background-color-down,
         var(--spectrum-global-color-gray-200)
@@ -245,14 +219,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-400)
     );
 }
-#button:active:focus-visible,
-#button:active.is-focused,
 #button.is-selected:focus-visible,
-#button.is-selected.is-focused {
-    /* .spectrum-FieldButton:active.focus-ring,
-   * .spectrum-FieldButton:active.is-focused,
-   * .spectrum-FieldButton.is-selected.focus-ring,
-   * .spectrum-FieldButton.is-selected.is-focused */
+#button.is-selected.is-focused,
+#button:active:focus-visible,
+#button:active.is-focused {
+    /* .spectrum-FieldButton.is-selected.focus-ring,
+   * .spectrum-FieldButton.is-selected.is-focused,
+   * .spectrum-FieldButton:active.focus-ring,
+   * .spectrum-FieldButton:active.is-focused */
     box-shadow: none;
 }
 :host([invalid]) #button {
@@ -269,10 +243,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-red-600)
     );
 }
-:host([invalid]) #button:active,
-:host([invalid]) #button.is-selected {
-    /* .spectrum-FieldButton.is-invalid:active,
-   * .spectrum-FieldButton.is-invalid.is-selected */
+:host([invalid]) #button.is-selected,
+:host([invalid]) #button:active {
+    /* .spectrum-FieldButton.is-invalid.is-selected,
+   * .spectrum-FieldButton.is-invalid:active */
     border-color: var(
         --spectrum-fieldbutton-border-color-error-down,
         var(--spectrum-global-color-red-600)
@@ -292,10 +266,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-alias-border-color-focus)
         );
 }
-#button:disabled,
-#button.is-disabled {
-    /* .spectrum-FieldButton:disabled,
-   * .spectrum-FieldButton.is-disabled */
+#button.is-disabled,
+#button:disabled {
+    /* .spectrum-FieldButton.is-disabled,
+   * .spectrum-FieldButton:disabled */
     background-color: var(
         --spectrum-fieldbutton-background-color-disabled,
         var(--spectrum-global-color-gray-200)
@@ -305,16 +279,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-disabled)
     );
 }
-#button:disabled:focus-visible,
-#button.is-disabled:focus-visible {
-    /* .spectrum-FieldButton:disabled.focus-ring,
-   * .spectrum-FieldButton.is-disabled.focus-ring */
+#button.is-disabled:focus-visible,
+#button:disabled:focus-visible {
+    /* .spectrum-FieldButton.is-disabled.focus-ring,
+   * .spectrum-FieldButton:disabled.focus-ring */
     box-shadow: none;
 }
-#button:disabled .icon,
-#button.is-disabled .icon {
-    /* .spectrum-FieldButton:disabled .spectrum-Icon,
-   * .spectrum-FieldButton.is-disabled .spectrum-Icon */
+#button.is-disabled .icon,
+#button:disabled .icon {
+    /* .spectrum-FieldButton.is-disabled .spectrum-Icon,
+   * .spectrum-FieldButton:disabled .spectrum-Icon */
     color: var(
         --spectrum-fieldbutton-icon-color-disabled,
         var(--spectrum-alias-icon-color-disabled)
@@ -354,10 +328,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-placeholder-text-color-hover)
     );
 }
-.spectrum-FieldButton--quiet:active,
-.spectrum-FieldButton--quiet.is-selected {
-    /* .spectrum-FieldButton--quiet:active,
-   * .spectrum-FieldButton--quiet.is-selected */
+.spectrum-FieldButton--quiet.is-selected,
+.spectrum-FieldButton--quiet:active {
+    /* .spectrum-FieldButton--quiet.is-selected,
+   * .spectrum-FieldButton--quiet:active */
     background-color: var(
         --spectrum-fieldbutton-quiet-background-color-down,
         var(--spectrum-alias-background-color-transparent)
@@ -367,14 +341,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-color-transparent)
     );
 }
-.spectrum-FieldButton--quiet:active:focus-visible,
-.spectrum-FieldButton--quiet:active.is-focused,
 .spectrum-FieldButton--quiet.is-selected:focus-visible,
-.spectrum-FieldButton--quiet.is-selected.is-focused {
-    /* .spectrum-FieldButton--quiet:active.focus-ring,
-   * .spectrum-FieldButton--quiet:active.is-focused,
-   * .spectrum-FieldButton--quiet.is-selected.focus-ring,
-   * .spectrum-FieldButton--quiet.is-selected.is-focused */
+.spectrum-FieldButton--quiet.is-selected.is-focused,
+.spectrum-FieldButton--quiet:active:focus-visible,
+.spectrum-FieldButton--quiet:active.is-focused {
+    /* .spectrum-FieldButton--quiet.is-selected.focus-ring,
+   * .spectrum-FieldButton--quiet.is-selected.is-focused,
+   * .spectrum-FieldButton--quiet:active.focus-ring,
+   * .spectrum-FieldButton--quiet:active.is-focused */
     background-color: var(
         --spectrum-fieldbutton-quiet-background-color-key-focus,
         var(--spectrum-alias-background-color-transparent)
@@ -395,10 +369,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-alias-border-color-focus)
         );
 }
-.spectrum-FieldButton--quiet:disabled,
-.spectrum-FieldButton--quiet.is-disabled {
-    /* .spectrum-FieldButton--quiet:disabled,
-   * .spectrum-FieldButton--quiet.is-disabled */
+.spectrum-FieldButton--quiet.is-disabled,
+.spectrum-FieldButton--quiet:disabled {
+    /* .spectrum-FieldButton--quiet.is-disabled,
+   * .spectrum-FieldButton--quiet:disabled */
     background-color: var(
         --spectrum-fieldbutton-quiet-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
@@ -408,9 +382,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-disabled)
     );
 }
-.spectrum-FieldButton--quiet:disabled:focus-visible,
-.spectrum-FieldButton--quiet.is-disabled:focus-visible {
-    /* .spectrum-FieldButton--quiet:disabled.focus-ring,
-   * .spectrum-FieldButton--quiet.is-disabled.focus-ring */
+.spectrum-FieldButton--quiet.is-disabled:focus-visible,
+.spectrum-FieldButton--quiet:disabled:focus-visible {
+    /* .spectrum-FieldButton--quiet.is-disabled.focus-ring,
+   * .spectrum-FieldButton--quiet:disabled.focus-ring */
     box-shadow: none;
 }

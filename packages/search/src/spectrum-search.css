@@ -42,15 +42,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-right: var(--spectrum-search-quiet-padding-right, 20px);
 }
 :host([quiet]) #input ~ #icon {
-    /* .spectrum-Search-input.spectrum-Textfield--quiet ~ .spectrum-Search-icon */
+    /* .spectrum-Search-input.spectrum-Textfield--quiet~.spectrum-Search-icon */
     left: 0;
 }
 :host([quiet]) #input ~ #button {
-    /* .spectrum-Search-input.spectrum-Textfield--quiet ~ .spectrum-Search-clear */
+    /* .spectrum-Search-input.spectrum-Textfield--quiet~.spectrum-Search-clear */
     right: -8px;
 }
 :host([quiet]) #input ~ .spectrum-Search-rightIcon {
-    /* .spectrum-Search-input.spectrum-Textfield--quiet ~ .spectrum-Search-rightIcon */
+    /* .spectrum-Search-input.spectrum-Textfield--quiet~.spectrum-Search-rightIcon */
     right: 0;
 }
 #icon {
@@ -68,17 +68,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-200)
             ) / 2
     );
-
     pointer-events: none;
-
-    /* .spectrum-Search-icon */
     color: var(
         --spectrum-textfield-icon-color,
         var(--spectrum-alias-icon-color)
     );
 }
 #input:disabled ~ #icon {
-    /* .spectrum-Search-input:disabled ~ .spectrum-Search-icon */
+    /* .spectrum-Search-input:disabled~.spectrum-Search-icon */
     color: var(
         --spectrum-textfield-text-color-disabled,
         var(--spectrum-alias-text-color-disabled)

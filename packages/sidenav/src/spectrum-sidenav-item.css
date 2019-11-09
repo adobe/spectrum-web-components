@@ -19,7 +19,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-SideNav-item */
     list-style-type: none;
-
     margin: var(
             --spectrum-sidenav-item-gap,
             var(--spectrum-global-dimension-size-50)
@@ -29,31 +28,24 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #itemLink {
     /* .spectrum-SideNav-itemLink */
     position: relative;
-    display: -ms-inline-flexbox;
     display: inline-flex;
-    -ms-flex-align: center;
     align-items: center;
-    -ms-flex-pack: left;
     justify-content: left;
     box-sizing: border-box;
-
     width: 100%;
     min-height: var(
         --spectrum-sidenav-item-height,
         var(--spectrum-alias-single-line-height)
     );
-
     padding: var(--spectrum-global-dimension-size-65)
         var(
             --spectrum-sidenav-item-padding-x,
             var(--spectrum-global-dimension-size-150)
         );
-
     border-radius: var(
         --spectrum-sidenav-item-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
-
     font-size: var(
         --spectrum-sidenav-item-text-size,
         var(--spectrum-alias-font-size-default)
@@ -64,19 +56,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-style: normal;
     text-decoration: none;
-
     word-break: break-word;
     -webkit-hyphens: auto;
-    -ms-hyphens: auto;
     hyphens: auto;
-
     cursor: pointer;
-
     transition: background-color
-            var(--spectrum-global-animation-duration-100, 130ms) ease-out,
-        color var(--spectrum-global-animation-duration-100, 130ms) ease-out;
-
-    /* .spectrum-SideNav-itemLink */
+            var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
+        color var(--spectrum-global-animation-duration-100, 0.13s) ease-out; /* .spectrum-SideNav-itemLink */
     background-color: var(
         --spectrum-sidenav-item-background-color,
         var(--spectrum-alias-background-color-transparent)
@@ -90,15 +76,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-SideNav-itemLink:focus */
     outline: none;
 }
-#itemLink:focus-visible::before {
-    /* .spectrum-SideNav-itemLink.focus-ring::before */
+#itemLink:focus-visible:before {
+    /* .spectrum-SideNav-itemLink.focus-ring:before */
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-
     border: var(
             --spectrum-tabs-focus-ring-size,
             var(--spectrum-alias-border-size-thick)
@@ -107,8 +92,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: var(
         --spectrum-sidenav-item-border-radius,
         var(--spectrum-alias-border-radius-regular)
-    );
-    /* .spectrum-SideNav-itemLink.focus-ring::before */
+    ); /* .spectrum-SideNav-itemLink.focus-ring:before */
     border-color: var(
         --spectrum-sidenav-item-border-color-key-focus,
         var(--spectrum-alias-border-color-focus)
@@ -122,7 +106,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([selected]) > #itemLink {
-    /* .spectrum-SideNav-item.is-selected > .spectrum-SideNav-itemLink */
+    /* .spectrum-SideNav-item.is-selected>.spectrum-SideNav-itemLink */
     color: var(
         --spectrum-sidenav-item-text-color-selected,
         var(--spectrum-alias-text-color-hover)
@@ -133,7 +117,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 .is-active > #itemLink {
-    /* .spectrum-SideNav-item .is-active > .spectrum-SideNav-itemLink */
+    /* .spectrum-SideNav-item .is-active>.spectrum-SideNav-itemLink */
     background-color: var(
         --spectrum-sidenav-item-background-color-down,
         var(--spectrum-alias-highlight-hover)
@@ -149,7 +133,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-sidenav-item-text-color-disabled,
         var(--spectrum-alias-text-color-disabled)
     );
-
     cursor: default;
     pointer-events: none;
 }

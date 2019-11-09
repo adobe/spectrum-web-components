@@ -35,6 +35,9 @@
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0"
     },
+    "devDependencies": {
+        "@spectrum-css/textfield": "^2.0.2"
+    },
     "dependencies": {
         "@spectrum-web-components/icon": "^0.3.0",
         "@spectrum-web-components/icons": "^0.1.5",

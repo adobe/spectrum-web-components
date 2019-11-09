@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import '@adobe/spectrum-css/dist/components/typography/index-vars.css';
-@import '@adobe/spectrum-css/dist/components/rule/index-vars.css';
-@import '@adobe/spectrum-css/dist/components/link/index-vars.css';
-@import '@adobe/spectrum-css/dist/components/table/index-vars.css';
+@import '@spectrum-css/typography/dist/index-vars.css';
+@import '@spectrum-css/rule/dist/index-vars.css';
+@import '@spectrum-css/link/dist/index-vars.css';
+@import '@spectrum-css/table/dist/index-vars.css';
 
 /* 
  * Note that there is a webpack/posthtml transformation that modifies the

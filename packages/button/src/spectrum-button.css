@@ -11,48 +11,35 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #button {
-    /* .spectrum-Button,
-   * .spectrum-ActionButton,
-   * .spectrum-LogicButton,
-   * .spectrum-FieldButton,
+    /* .spectrum-ActionButton,
+   * .spectrum-Button,
    * .spectrum-ClearButton,
+   * .spectrum-FieldButton,
+   * .spectrum-LogicButton,
    * .spectrum-Tool */
-    display: -ms-inline-flexbox;
     display: inline-flex;
     box-sizing: border-box;
-
-    -ms-flex-align: center;
-
     align-items: center;
-    -ms-flex-pack: center;
     justify-content: center;
     overflow: visible;
     margin: 0;
-
     border-style: solid;
     text-transform: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-appearance: button;
     vertical-align: top;
-
-    transition: background var(--spectrum-global-animation-duration-100, 130ms)
+    transition: background var(--spectrum-global-animation-duration-100, 0.13s)
             ease-out,
-        border-color var(--spectrum-global-animation-duration-100, 130ms)
+        border-color var(--spectrum-global-animation-duration-100, 0.13s)
             ease-out,
-        color var(--spectrum-global-animation-duration-100, 130ms) ease-out,
-        box-shadow var(--spectrum-global-animation-duration-100, 130ms) ease-out;
-
+        color var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
     text-decoration: none;
-    font-family: 'adobe-clean-ux', 'adobe-clean', 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
+    font-family: adobe-clean-ux, adobe-clean, Source Sans Pro, -apple-system,
+        BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
     line-height: 1.3;
-
-    cursor: pointer;
-
-    /* .spectrum-Button */
-
+    cursor: pointer; /* .spectrum-Button */
     border-width: var(
         --spectrum-button-primary-border-size,
         var(--spectrum-alias-border-size-thick)
@@ -62,14 +49,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
     );
-
     min-height: var(
         --spectrum-button-primary-height,
         var(--spectrum-alias-single-line-height)
     );
     height: auto;
     min-width: var(--spectrum-button-primary-min-width);
-
     padding: var(--spectrum-global-dimension-size-50)
         calc(
             var(
@@ -83,7 +68,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         );
     padding-bottom: calc(var(--spectrum-global-dimension-size-50) + 0.5px);
     padding-top: calc(var(--spectrum-global-dimension-size-50) - 0.5px);
-
     font-size: var(
         --spectrum-button-primary-text-size,
         var(--spectrum-alias-pill-button-text-size)
@@ -94,20 +78,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 #button:focus {
-    /* .spectrum-Button:focus,
-   * .spectrum-ActionButton:focus,
-   * .spectrum-LogicButton:focus,
-   * .spectrum-FieldButton:focus,
+    /* .spectrum-ActionButton:focus,
+   * .spectrum-Button:focus,
    * .spectrum-ClearButton:focus,
+   * .spectrum-FieldButton:focus,
+   * .spectrum-LogicButton:focus,
    * .spectrum-Tool:focus */
     outline: none;
 }
 #button::-moz-focus-inner {
-    /* .spectrum-Button::-moz-focus-inner,
-   * .spectrum-ActionButton::-moz-focus-inner,
-   * .spectrum-LogicButton::-moz-focus-inner,
-   * .spectrum-FieldButton::-moz-focus-inner,
+    /* .spectrum-ActionButton::-moz-focus-inner,
+   * .spectrum-Button::-moz-focus-inner,
    * .spectrum-ClearButton::-moz-focus-inner,
+   * .spectrum-FieldButton::-moz-focus-inner,
+   * .spectrum-LogicButton::-moz-focus-inner,
    * .spectrum-Tool::-moz-focus-inner */
     border: 0;
     border-style: none;
@@ -116,40 +100,39 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-bottom: -2px;
 }
 :host([disabled]) #button {
-    /* .spectrum-Button:disabled,
-   * .spectrum-ActionButton:disabled,
-   * .spectrum-LogicButton:disabled,
-   * .spectrum-FieldButton:disabled,
+    /* .spectrum-ActionButton:disabled,
+   * .spectrum-Button:disabled,
    * .spectrum-ClearButton:disabled,
+   * .spectrum-FieldButton:disabled,
+   * .spectrum-LogicButton:disabled,
    * .spectrum-Tool:disabled */
     cursor: default;
 }
 ::slotted([slot='icon']) {
-    /* .spectrum-Button .spectrum-Icon,
-   * .spectrum-ActionButton .spectrum-Icon,
-   * .spectrum-LogicButton .spectrum-Icon,
-   * .spectrum-FieldButton .spectrum-Icon,
+    /* .spectrum-ActionButton .spectrum-Icon,
+   * .spectrum-Button .spectrum-Icon,
    * .spectrum-ClearButton .spectrum-Icon,
+   * .spectrum-FieldButton .spectrum-Icon,
+   * .spectrum-LogicButton .spectrum-Icon,
    * .spectrum-Tool .spectrum-Icon */
     max-height: 100%;
-    -ms-flex-negative: 0;
     flex-shrink: 0;
 }
-#button:hover,
-#button:active {
-    /* .spectrum-Button:hover,
-   * .spectrum-Button:active */
+#button:active,
+#button:hover {
+    /* .spectrum-Button:active,
+   * .spectrum-Button:hover */
     box-shadow: none;
 }
 slot[name='icon'] + #label {
-    /* .spectrum-Button .spectrum-Icon + .spectrum-Button-label */
+    /* .spectrum-Button .spectrum-Icon+.spectrum-Button-label */
     margin-left: var(
         --spectrum-button-primary-text-gap,
         var(--spectrum-global-dimension-size-100)
     );
 }
 #label + ::slotted([slot='icon']) {
-    /* .spectrum-Button .spectrum-Button-label + .spectrum-Icon */
+    /* .spectrum-Button .spectrum-Button-label+.spectrum-Icon */
     margin-left: calc(
         var(
                 --spectrum-button-primary-text-gap,
@@ -160,8 +143,6 @@ slot[name='icon'] + #label {
 #label {
     /* .spectrum-ActionButton-label,
    * .spectrum-Button-label */
-    -ms-flex-item-align: center;
-    -ms-grid-row-align: center;
     align-self: center;
     justify-self: center;
     text-align: center;
@@ -245,8 +226,8 @@ slot[name='icon'] + #label {
     );
 }
 :host([variant='cta'][disabled]) #button {
-    /* .spectrum-Button--cta:disabled,
-   * .spectrum-Button--cta.is-disabled */
+    /* .spectrum-Button--cta.is-disabled,
+   * .spectrum-Button--cta:disabled */
     background-color: var(
         --spectrum-button-cta-background-color-disabled,
         var(--spectrum-global-color-gray-200)
@@ -321,8 +302,8 @@ slot[name='icon'] + #label {
     );
 }
 :host([variant='primary'][disabled]) #button {
-    /* .spectrum-Button--primary:disabled,
-   * .spectrum-Button--primary.is-disabled */
+    /* .spectrum-Button--primary.is-disabled,
+   * .spectrum-Button--primary:disabled */
     background-color: var(
         --spectrum-button-primary-background-color-disabled,
         var(--spectrum-global-color-gray-200)
@@ -397,8 +378,8 @@ slot[name='icon'] + #label {
     );
 }
 :host([variant='secondary'][disabled]) #button {
-    /* .spectrum-Button--secondary:disabled,
-   * .spectrum-Button--secondary.is-disabled */
+    /* .spectrum-Button--secondary.is-disabled,
+   * .spectrum-Button--secondary:disabled */
     background-color: var(
         --spectrum-button-secondary-background-color-disabled,
         var(--spectrum-global-color-gray-200)
@@ -473,8 +454,8 @@ slot[name='icon'] + #label {
     );
 }
 :host([variant='negative'][disabled]) #button {
-    /* .spectrum-Button--warning:disabled,
-   * .spectrum-Button--warning.is-disabled */
+    /* .spectrum-Button--warning.is-disabled,
+   * .spectrum-Button--warning:disabled */
     background-color: var(
         --spectrum-button-warning-background-color-disabled,
         var(--spectrum-global-color-gray-200)
@@ -546,11 +527,11 @@ slot[name='icon'] + #label {
     box-shadow: none;
 }
 :host([variant='overBackground'][disabled]) #button {
-    /* .spectrum-Button--overBackground:disabled,
-   * .spectrum-Button--overBackground.is-disabled */
+    /* .spectrum-Button--overBackground.is-disabled,
+   * .spectrum-Button--overBackground:disabled */
     background-color: var(
         --spectrum-button-over-background-background-color-disabled,
-        rgba(255, 255, 255, 0.1)
+        hsla(0, 0%, 100%, 0.1)
     );
     border-color: var(
         --spectrum-button-over-background-border-color-disabled,
@@ -558,7 +539,7 @@ slot[name='icon'] + #label {
     );
     color: var(
         --spectrum-button-over-background-text-color-disabled,
-        rgba(255, 255, 255, 0.35)
+        hsla(0, 0%, 100%, 0.35)
     );
 }
 :host([variant='overBackground'][quiet]) #button {
@@ -582,7 +563,7 @@ slot[name='icon'] + #label {
    * .spectrum-ClearButton--overBackground:hover */
     background-color: var(
         --spectrum-button-quiet-over-background-background-color-hover,
-        rgba(255, 255, 255, 0.1)
+        hsla(0, 0%, 100%, 0.1)
     );
     border-color: var(
         --spectrum-button-quiet-over-background-border-color-hover,
@@ -616,7 +597,7 @@ slot[name='icon'] + #label {
    * .spectrum-ClearButton--overBackground:active */
     background-color: var(
         --spectrum-button-quiet-over-background-background-color-down,
-        rgba(255, 255, 255, 0.15)
+        hsla(0, 0%, 100%, 0.15)
     );
     border-color: var(
         --spectrum-button-quiet-over-background-border-color-down,
@@ -629,10 +610,10 @@ slot[name='icon'] + #label {
     box-shadow: none;
 }
 :host([variant='overBackground'][quiet][disabled]) #button {
-    /* .spectrum-Button--overBackground.spectrum-Button--quiet:disabled,
-   * .spectrum-Button--overBackground.spectrum-Button--quiet.is-disabled,
-   * .spectrum-ClearButton--overBackground:disabled,
-   * .spectrum-ClearButton--overBackground.is-disabled */
+    /* .spectrum-Button--overBackground.spectrum-Button--quiet.is-disabled,
+   * .spectrum-Button--overBackground.spectrum-Button--quiet:disabled,
+   * .spectrum-ClearButton--overBackground.is-disabled,
+   * .spectrum-ClearButton--overBackground:disabled */
     background-color: var(
         --spectrum-button-quiet-over-background-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
@@ -643,7 +624,7 @@ slot[name='icon'] + #label {
     );
     color: var(
         --spectrum-button-quiet-over-background-text-color-disabled,
-        rgba(255, 255, 255, 0.15)
+        hsla(0, 0%, 100%, 0.15)
     );
 }
 :host([variant='primary'][quiet]) #button {
@@ -707,8 +688,8 @@ slot[name='icon'] + #label {
     );
 }
 :host([variant='primary'][quiet][disabled]) #button {
-    /* .spectrum-Button--primary.spectrum-Button--quiet:disabled,
-   * .spectrum-Button--primary.spectrum-Button--quiet.is-disabled */
+    /* .spectrum-Button--primary.spectrum-Button--quiet.is-disabled,
+   * .spectrum-Button--primary.spectrum-Button--quiet:disabled */
     background-color: var(
         --spectrum-button-quiet-primary-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
@@ -783,8 +764,8 @@ slot[name='icon'] + #label {
     );
 }
 :host([variant='secondary'][quiet][disabled]) #button {
-    /* .spectrum-Button--secondary.spectrum-Button--quiet:disabled,
-   * .spectrum-Button--secondary.spectrum-Button--quiet.is-disabled */
+    /* .spectrum-Button--secondary.spectrum-Button--quiet.is-disabled,
+   * .spectrum-Button--secondary.spectrum-Button--quiet:disabled */
     background-color: var(
         --spectrum-button-quiet-secondary-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
@@ -859,8 +840,8 @@ slot[name='icon'] + #label {
     );
 }
 :host([variant='negative'][quiet][disabled]) #button {
-    /* .spectrum-Button--warning.spectrum-Button--quiet:disabled,
-   * .spectrum-Button--warning.spectrum-Button--quiet.is-disabled */
+    /* .spectrum-Button--warning.spectrum-Button--quiet.is-disabled,
+   * .spectrum-Button--warning.spectrum-Button--quiet:disabled */
     background-color: var(
         --spectrum-button-quiet-warning-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
