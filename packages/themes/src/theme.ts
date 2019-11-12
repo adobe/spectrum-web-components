@@ -10,14 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    LitElement,
-    // CSSResultArray,
-    html,
-    TemplateResult,
-    property,
-} from 'lit-element';
-// import commonStyles from './theme.css.js';
+import { LitElement, html, TemplateResult, property } from 'lit-element';
 
 export class Theme extends LitElement {
     /**
@@ -31,10 +24,6 @@ export class Theme extends LitElement {
      */
     @property({ reflect: true })
     public scale: 'medium' = 'medium';
-
-    // public static get styles(): CSSResultArray {
-    //     return [commonStyles];
-    // }
 
     private renderTheme(children: TemplateResult): TemplateResult {
         let result;
