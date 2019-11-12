@@ -17,6 +17,7 @@ import '../../menu-item';
 import { MenuItem } from '../../menu-item';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
+import '../../shared/lib/focus-visible.js';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
     new KeyboardEvent('keydown', {
@@ -62,6 +63,7 @@ describe('Dropdown', () => {
     it('loads', async () => {
         const el = await dropdownFixture();
 
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el).lightDom.to.equalSnapshot();
