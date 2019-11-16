@@ -19,39 +19,77 @@ import { Dropdown } from '../';
 import '../../menu';
 import '../../menu-item';
 
-storiesOf('Dropdown', module).add('Default', () => {
-    return html`
-        <sp-dropdown
-            ?disabled=${boolean('Is Disabled', false, 'Component')}
-            ?invalid=${boolean('Is Invalid', false, 'Component')}
-            ?quiet=${boolean('Is Quiet', false, 'Component')}
-            @change="${(e: Event) => {
-                const dropdown = e.target as Dropdown;
-                action(`Change: ${dropdown.value}`)();
-            }}"
-        >
-            Select a Country with a very long label, too long in fact
-            <sp-menu slot="options" role="listbox">
-                <sp-menu-item>
-                    Deselect
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select Inverse
-                </sp-menu-item>
-                <sp-menu-item>
-                    Feather...
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select and Mask...
-                </sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>
-                    Save Selection
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Make Work Path
-                </sp-menu-item>
-            </sp-menu>
-        </sp-dropdown>
-    `;
-});
+storiesOf('Dropdown', module)
+    .add('Default', () => {
+        return html`
+            <sp-dropdown
+                ?disabled=${boolean('Is Disabled', false, 'Component')}
+                ?invalid=${boolean('Is Invalid', false, 'Component')}
+                ?quiet=${boolean('Is Quiet', false, 'Component')}
+                @change="${(e: Event) => {
+                    const dropdown = e.target as Dropdown;
+                    action(`Change: ${dropdown.value}`)();
+                }}"
+            >
+                Select a Country with a very long label, too long in fact
+                <sp-menu slot="options" role="listbox">
+                    <sp-menu-item>
+                        Deselect
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Select Inverse
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Feather...
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Select and Mask...
+                    </sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>
+                        Save Selection
+                    </sp-menu-item>
+                    <sp-menu-item disabled>
+                        Make Work Path
+                    </sp-menu-item>
+                </sp-menu>
+            </sp-dropdown>
+        `;
+    })
+    .add('Initial Value', () => {
+        return html`
+            <sp-dropdown
+                ?disabled=${boolean('Is Disabled', false, 'Component')}
+                ?invalid=${boolean('Is Invalid', false, 'Component')}
+                ?quiet=${boolean('Is Quiet', false, 'Component')}
+                @change="${(e: Event) => {
+                    const dropdown = e.target as Dropdown;
+                    action(`Change: ${dropdown.value}`)();
+                }}"
+                value="item-2"
+            >
+                Select a Country with a very long label, too long in fact
+                <sp-menu slot="options" role="listbox">
+                    <sp-menu-item>
+                        Deselect
+                    </sp-menu-item>
+                    <sp-menu-item value="item-2">
+                        Select Inverse
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Feather...
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Select and Mask...
+                    </sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>
+                        Save Selection
+                    </sp-menu-item>
+                    <sp-menu-item disabled>
+                        Make Work Path
+                    </sp-menu-item>
+                </sp-menu>
+            </sp-dropdown>
+        `;
+    });
