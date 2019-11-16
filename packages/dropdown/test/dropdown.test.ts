@@ -15,9 +15,16 @@ import { Dropdown } from '../';
 import '../../menu';
 import '../../menu-item';
 import { MenuItem } from '../../menu-item';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    html,
+    expect,
+    nextFrame,
+} from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
 import '../../shared/lib/focus-visible.js';
+import { spy } from 'sinon';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
     new KeyboardEvent('keydown', {
@@ -251,15 +258,25 @@ describe('Dropdown', () => {
         expect(document.activeElement === firstItem).to.be.true;
     });
     it('displays selected item text by default', async () => {
+        const focusSelectedSpy = spy();
+        const focusFirstSpy = spy();
+        const handleFirstFocus = (): void => focusFirstSpy();
+        const handleSelectedFocus = (): void => focusSelectedSpy();
         const el = await fixture<Dropdown>(
             html`
                 <sp-dropdown value="inverse">
                     Select a Country with a very long label, too long in fact
                     <sp-menu slot="options">
-                        <sp-menu-item value="deselect">
+                        <sp-menu-item
+                            value="deselect"
+                            @focus=${handleFirstFocus}
+                        >
                             Deselect Text
                         </sp-menu-item>
-                        <sp-menu-item value="inverse">
+                        <sp-menu-item
+                            value="inverse"
+                            @focus=${handleSelectedFocus}
+                        >
                             Select Inverse
                         </sp-menu-item>
                         <sp-menu-item>
@@ -284,6 +301,16 @@ describe('Dropdown', () => {
 
         expect(el.value).to.equal('inverse');
         expect(el.selectedItemText).to.equal('Select Inverse');
+
+        const button = el.button as HTMLButtonElement;
+        button.click();
+
+        await elementUpdated(el);
+        await nextFrame();
+
+        expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
+        expect(focusSelectedSpy.calledOnce, 'focus selected element').to.be
+            .true;
     });
     it('resets value when item not available', async () => {
         const el = await fixture<Dropdown>(
