@@ -61,6 +61,7 @@ export class Menu extends LitElement {
         }
 
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
+        this.focusedItemIndex = this.focusInItemIndex;
         focusInItem.focus();
     }
 
@@ -129,9 +130,8 @@ export class Menu extends LitElement {
                             this.focusInItemIndex
                         ] as MenuItem;
                         itemToBlur.tabIndex = -1;
-                        this.focusInItemIndex = this.getSelectedItemIndex();
                     }
-                    this.focusedItemIndex = this.focusInItemIndex;
+                    this.focusInItemIndex = this.getSelectedItemIndex();
                     const itemToFocus = this.menuItems[
                         this.focusInItemIndex
                     ] as MenuItem;
@@ -145,10 +145,11 @@ export class Menu extends LitElement {
     private getSelectedItemIndex(): number {
         let index = this.menuItems.length - 1;
         let item = this.menuItems[index] as MenuItem;
-        while (!item.selected) {
+        while (index && item && !item.selected) {
             index -= 1;
             item = this.menuItems[index] as MenuItem;
         }
+        this.focusedItemIndex = index;
         return index;
     }
 
@@ -159,20 +160,21 @@ export class Menu extends LitElement {
         if (!this.menuItems || this.menuItems.length === 0) {
             return;
         }
-        if (this.querySelector('[selected]')) {
-            this.focusInItemIndex = this.getSelectedItemIndex();
-        } else {
-            this.focusInItemIndex = 0;
-        }
+        this.focusInItemIndex = this.getSelectedItemIndex();
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
         focusInItem.tabIndex = 0;
-        this.focusedItemIndex = this.focusInItemIndex;
     }
 
     public render(): TemplateResult {
         return html`
             <slot @slotchange=${this.handleSlotchange}></slot>
         `;
+    }
+
+    protected firstUpdated(): void {
+        requestAnimationFrame(() => {
+            this.focusInItemIndex = this.getSelectedItemIndex();
+        });
     }
 
     public connectedCallback(): void {
