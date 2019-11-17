@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
 :root,
 :host {
     --spectrum-global-color-celery-400: rgb(75, 195, 95);
@@ -155,4 +155,4 @@ governing permissions and limitations under the License.
     --spectrum-well-border-color: rgba(50, 50, 50, 0.05);
 }
 
-/* stylelint-enable no-duplicate-selectors */
+/* stylelint-enable */

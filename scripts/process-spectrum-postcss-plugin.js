@@ -89,6 +89,16 @@ class SpectrumProcessor {
                 result.nodes[1].type === 'combinator' &&
                 result.nodes[1].value === ' '
             ) {
+                if (
+                    result.length === 3 &&
+                    result.nodes[0].value === result.nodes[2].value &&
+                    this.component.tagName
+                ) {
+                    // When self referential, use `tagName` to point a child instance
+                    // of that `tagName` instead of collpasing the selector to `:host`
+                    const node = nodeFromSelector(this.component.tagName);
+                    replaceNode(result.nodes[2], node);
+                }
                 // Remove first node and combinator
                 result.first.remove();
                 result.first.remove();
@@ -640,8 +650,11 @@ class ComponentConfig {
                 attribute.values = attribute.values.map((value) => {
                     const selector = value.selector || value;
                     let name = value.name;
+                    const basePortion = attribute.root
+                        ? re`/${attribute.root}?(.*)$/`
+                        : hostPortion;
                     if (!name) {
-                        const match = hostPortion.exec(selector);
+                        const match = basePortion.exec(selector);
                         if (match) {
                             name = match[1];
                         } else {
