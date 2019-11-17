@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
 :root,
 :host {
     --spectrum-global-dimension-scale-factor: 1.25;
@@ -778,4 +778,4 @@ governing permissions and limitations under the License.
     --spectrum-tooltip-positive-content-max-width: 126px;
 }
 
-/* stylelint-enable no-duplicate-selectors */
+/* stylelint-enable */

@@ -34,6 +34,7 @@
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
+        "@spectrum-css/typography": "^2.0.2",
         "@spectrum-css/vars": "^2.0.2"
     }
 }

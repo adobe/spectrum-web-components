@@ -57,7 +57,7 @@ const processCSS = (srcPath, dstPath, identifier) => {
             );
         }
 
-        result = `${license}\n/* stylelint-disable no-duplicate-selectors */\n${result}\n/* stylelint-enable no-duplicate-selectors */`;
+        result = `${license}\n/* stylelint-disable */\n${result}\n/* stylelint-enable */`;
 
         fs.writeFile(dstPath, result, 'utf8');
     });
@@ -107,6 +107,24 @@ cores.forEach(async (core) => {
     console.log(`processing core ${srcPath}`);
     processes.push(processCSS(srcPath, dstPath, core));
 });
+
+{
+    // Typography
+    const typographyPath = path.join(
+        __dirname,
+        '..',
+        'node_modules',
+        '@spectrum-css',
+        'typography',
+        'dist'
+    );
+    const srcPath = path.join(typographyPath, 'index-vars.css');
+    const dstPath = path.resolve(
+        path.join(__dirname, '..', 'packages', 'styles', 'typography.css')
+    );
+    console.log(`processing typography`);
+    processes.push(processCSS(srcPath, dstPath, 'typography'));
+}
 
 Promise.all(processes).then(() => {
     console.log('complete.');
