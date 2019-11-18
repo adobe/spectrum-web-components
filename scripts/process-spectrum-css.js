@@ -35,8 +35,11 @@ async function processComponent(componentPath) {
         packageCss = true;
     } catch (e) {
         console.error(
-            `${spectrumConfig.spectrum} does not have a local Spectrum CSS dependency.`
+            chalk.bold.red(
+                `!!! '${spectrumConfig.spectrum}' does not have a local Spectrum CSS dependency !!!`
+            )
         );
+        process.exit(1);
     }
     const inputCss = await fs.readFile(inputCssPath);
     console.log(chalk.bold.green(`- ${spectrumConfig.spectrum}`));

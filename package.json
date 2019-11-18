@@ -31,7 +31,7 @@
         "get-ready": "yarn build:clear-cache && yarn spectrum-vars && yarn process-icons && yarn process-spectrum && yarn build",
         "postinstall": "yarn get-ready",
         "spectrum-vars": "node ./scripts/spectrum-vars.js; npx pretty-quick --pattern 'packages/**/*.css'",
-        "process-spectrum": "node ./scripts/process-spectrum-css.js; npx pretty-quick --pattern 'packages/**/*.css'",
+        "process-spectrum": "node ./scripts/process-spectrum-css.js && npx pretty-quick --pattern 'packages/**/*.css'",
         "process-icons": "node ./scripts/process-icons.js; npx pretty-quick --pattern 'packages/**/*.svg.ts'",
         "build": "gulp css && tsc --build packages/**/tsconfig.json",
         "build:watch": "tsc --build packages/**/tsconfig.json -w",
