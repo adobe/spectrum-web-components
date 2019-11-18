@@ -268,6 +268,7 @@ export class Dropdown extends Focusable {
                 this.value = '';
                 this.selectedItemText = '';
             }
+            this.optionsMenu.updateSelectedItemIndex();
         }
         if (changedProperties.has('disabled') && this.disabled) {
             this.open = false;
