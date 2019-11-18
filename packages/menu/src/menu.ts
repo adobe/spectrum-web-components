@@ -131,7 +131,7 @@ export class Menu extends LitElement {
                         ] as MenuItem;
                         itemToBlur.tabIndex = -1;
                     }
-                    this.focusInItemIndex = this.getSelectedItemIndex();
+                    this.updateSelectedItemIndex();
                     const itemToFocus = this.menuItems[
                         this.focusInItemIndex
                     ] as MenuItem;
@@ -142,7 +142,7 @@ export class Menu extends LitElement {
         );
     }
 
-    private getSelectedItemIndex(): number {
+    public updateSelectedItemIndex(): void {
         let index = this.menuItems.length - 1;
         let item = this.menuItems[index] as MenuItem;
         while (index && item && !item.selected) {
@@ -150,7 +150,7 @@ export class Menu extends LitElement {
             item = this.menuItems[index] as MenuItem;
         }
         this.focusedItemIndex = index;
-        return index;
+        this.focusInItemIndex = index;
     }
 
     public handleSlotchange(): void {
@@ -160,7 +160,7 @@ export class Menu extends LitElement {
         if (!this.menuItems || this.menuItems.length === 0) {
             return;
         }
-        this.focusInItemIndex = this.getSelectedItemIndex();
+        this.updateSelectedItemIndex();
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
         focusInItem.tabIndex = 0;
     }
@@ -169,12 +169,6 @@ export class Menu extends LitElement {
         return html`
             <slot @slotchange=${this.handleSlotchange}></slot>
         `;
-    }
-
-    protected firstUpdated(): void {
-        requestAnimationFrame(() => {
-            this.focusInItemIndex = this.getSelectedItemIndex();
-        });
     }
 
     public connectedCallback(): void {
