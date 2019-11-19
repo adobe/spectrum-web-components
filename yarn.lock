@@ -2146,6 +2146,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-2.0.2.tgz#247daf4c7b95359827c2c34a2ba83245f9edee66"
   integrity sha512-QPjrcFZdBGJMi7yBfaKLt38w5Zz7I/LFgir2iRIGdd8/9+2Ub3K20jjUryfz8APzVfurdpmRbq1jAoEYgVHt9w==
 
+"@spectrum-css/circleloader@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/circleloader/-/circleloader-2.0.2.tgz#03dac5ae543f6ec302ca86d6a2149a4afd03b94e"
+  integrity sha512-pIaPHo165hlAVItJOeSqI0C99i3kqMjJ0M7hvVG4IWf97VB2qurzEbqdxsGg/JFmUx/Pv2K0IzuUG7cw/SeINQ==
+
 "@spectrum-css/dropdown@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@spectrum-css/dropdown/-/dropdown-2.1.1.tgz#2db88de635c5e24841b0db85674744856867577a"

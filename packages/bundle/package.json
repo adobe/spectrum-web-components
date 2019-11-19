@@ -43,6 +43,7 @@
         "@spectrum-web-components/button": "^0.3.0",
         "@spectrum-web-components/card": "^0.2.0",
         "@spectrum-web-components/checkbox": "^0.2.0",
+        "@spectrum-web-components/circleloader": "^0.0.1",
         "@spectrum-web-components/dropdown": "^0.3.0",
         "@spectrum-web-components/dropzone": "^0.2.0",
         "@spectrum-web-components/icon": "^0.4.0",
