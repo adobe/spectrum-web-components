@@ -258,9 +258,14 @@ export class Dropdown extends Focusable {
                     `[role=${this.optionsMenu.childRole}]`
                 ),
             ] as MenuItem[];
-            const selectedItem = items.find(
-                (item) => this.value === item.value
-            ) as MenuItem;
+            let selectedItem: MenuItem | undefined;
+            items.map((item) => {
+                if (this.value === item.value && !item.disabled) {
+                    selectedItem = item;
+                } else {
+                    item.selected = false;
+                }
+            });
             if (selectedItem) {
                 selectedItem.selected = true;
                 this.selectedItemText = selectedItem.itemText;
