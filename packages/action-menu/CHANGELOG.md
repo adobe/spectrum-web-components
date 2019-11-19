@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.2.2...@spectrum-web-components/action-menu@0.3.0) (2019-11-19)
+
+### Bug Fixes
+
+-   **shared:** fixes focus-visible types in test ([0dc7d68](https://github.com/adobe/spectrum-web-components/commit/0dc7d68))
+-   **shared:** further tweaks for test types ([ee45173](https://github.com/adobe/spectrum-web-components/commit/ee45173))
+
+### Features
+
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc7))
+
 ## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.2.1...@spectrum-web-components/action-menu@0.2.2) (2019-11-01)
 
 ### Bug Fixes

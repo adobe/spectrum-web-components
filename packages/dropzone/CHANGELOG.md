@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.1.5...@spectrum-web-components/dropzone@0.2.0) (2019-11-19)
+
+### Features
+
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc7))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/3918888))
+
 ## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.1.4...@spectrum-web-components/dropzone@0.1.5) (2019-11-01)
 
 ### Bug Fixes
