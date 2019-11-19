@@ -16,6 +16,7 @@ export * from '@spectrum-web-components/banner';
 export * from '@spectrum-web-components/button';
 export * from '@spectrum-web-components/card';
 export * from '@spectrum-web-components/checkbox';
+export * from '@spectrum-web-components/circleloader';
 export * from '@spectrum-web-components/dropdown';
 export * from '@spectrum-web-components/dropzone';
 export * from '@spectrum-web-components/icon';
