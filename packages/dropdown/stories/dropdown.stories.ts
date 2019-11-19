@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { storiesOf } from '@storybook/polymer';
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { html } from 'lit-html';
 
@@ -57,6 +57,15 @@ storiesOf('Dropdown', module)
         `;
     })
     .add('Initial Value', () => {
+        const values = [
+            '',
+            'item-1',
+            'item-2',
+            'item-3',
+            'item-4',
+            'item-5',
+            'item-6',
+        ];
         return html`
             <sp-dropdown
                 ?disabled=${boolean('Is Disabled', false, 'Component')}
@@ -66,27 +75,27 @@ storiesOf('Dropdown', module)
                     const dropdown = e.target as Dropdown;
                     action(`Change: ${dropdown.value}`)();
                 }}"
-                value="item-2"
+                value=${select('Value', values, values[2], 'Component')}
             >
                 Select a Country with a very long label, too long in fact
                 <sp-menu slot="options" role="listbox">
-                    <sp-menu-item>
+                    <sp-menu-item value="item-1">
                         Deselect
                     </sp-menu-item>
                     <sp-menu-item value="item-2">
                         Select Inverse
                     </sp-menu-item>
-                    <sp-menu-item>
+                    <sp-menu-item value="item-3">
                         Feather...
                     </sp-menu-item>
-                    <sp-menu-item>
+                    <sp-menu-item value="item-4">
                         Select and Mask...
                     </sp-menu-item>
                     <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
+                    <sp-menu-item value="item-5">
                         Save Selection
                     </sp-menu-item>
-                    <sp-menu-item disabled>
+                    <sp-menu-item disabled value="item-6">
                         Make Work Path
                     </sp-menu-item>
                 </sp-menu>
