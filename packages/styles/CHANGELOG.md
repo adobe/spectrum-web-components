@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.3.0...@spectrum-web-components/styles@0.4.0) (2019-11-19)
+
+### Features
+
+-   **styles:** add typography coverage ([e8ab4dd](https://github.com/adobe/spectrum-web-components/commit/e8ab4dd))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.2.0...@spectrum-web-components/styles@0.3.0) (2019-11-19)
 
 ### Features

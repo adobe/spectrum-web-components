@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.4.2",
+    "version": "0.5.0",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -43,7 +43,7 @@
         "@spectrum-web-components/button": "^0.3.0",
         "@spectrum-web-components/card": "^0.2.0",
         "@spectrum-web-components/checkbox": "^0.2.0",
-        "@spectrum-web-components/circleloader": "^0.0.1",
+        "@spectrum-web-components/circleloader": "^0.1.0",
         "@spectrum-web-components/dropdown": "^0.3.0",
         "@spectrum-web-components/dropzone": "^0.2.0",
         "@spectrum-web-components/icon": "^0.4.0",
@@ -67,7 +67,7 @@
         "@spectrum-web-components/tab": "^0.2.0",
         "@spectrum-web-components/tab-list": "^0.2.0",
         "@spectrum-web-components/textfield": "^0.2.0",
-        "@spectrum-web-components/themes": "^0.2.0",
+        "@spectrum-web-components/themes": "^0.2.1",
         "@spectrum-web-components/tooltip": "^0.2.0",
         "tslib": "^1.10.0"
     }
