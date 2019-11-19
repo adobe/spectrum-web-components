@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.2.1...@spectrum-web-components/dropdown@0.3.0) (2019-11-19)
+
+### Features
+
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc7))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/3918888))
+-   **dropdown:** handle being set from outside again and disabaled items ([81e5cab](https://github.com/adobe/spectrum-web-components/commit/81e5cab))
+
 ## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.2.0...@spectrum-web-components/dropdown@0.2.1) (2019-11-01)
 
 ### Bug Fixes
