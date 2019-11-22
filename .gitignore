@@ -22,6 +22,7 @@ test/**/*.js
 test/**/*.js.map
 test/**/*.d.ts
 packages/*/src/**/*.css.js
+packages/*/custom-elements.json
 packages/*/test/**/*.js
 packages/*/test/**/*.js.map
 packages/*/test/**/*.d.ts
