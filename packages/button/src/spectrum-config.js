@@ -118,6 +118,23 @@ module.exports = {
                 shadowSelector: '#button',
             },
             focus: '#button',
+            attributes: [
+                {
+                    type: 'enum',
+                    name: 'variant',
+                    values: [
+                        '.spectrum-ClearButton--cta',
+                        '.spectrum-ClearButton--primary',
+                        '.spectrum-ClearButton--secondary',
+                        {
+                            name: 'negative',
+                            selector: '.spectrum-ClearButton--warning',
+                        },
+                        '.spectrum-ClearButton--overBackground',
+                        '.spectrum-ClearButton--secondary',
+                    ],
+                },
+            ],
         },
     ],
 };

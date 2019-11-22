@@ -41,6 +41,7 @@
         "@spectrum-css/button": "^2.0.2"
     },
     "dependencies": {
+        "@spectrum-web-components/icon": "^0.4.2",
         "@spectrum-web-components/shared": "^0.3.2",
         "tslib": "^1.10.0"
     }
