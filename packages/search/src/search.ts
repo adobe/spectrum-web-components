@@ -16,16 +16,16 @@ import {
     PropertyValues,
     TemplateResult,
     property,
+    query,
 } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 import { Textfield } from '@spectrum-web-components/textfield';
+import '@spectrum-web-components/button';
 import '@spectrum-web-components/icon';
-import '@spectrum-web-components/icon';
+import '@spectrum-web-components/icons';
 
 import searchStyles from './search.css.js';
-import clearButtonStyles from '@spectrum-web-components/button/lib/spectrum-clear-button.css.js';
-import crossMediumStyles from '@spectrum-web-components/icon/lib/spectrum-icon-cross-medium.css.js';
 import magnifierStyles from '@spectrum-web-components/icon/lib/spectrum-icon-magnifier.css.js';
 
 /**
@@ -34,13 +34,7 @@ import magnifierStyles from '@spectrum-web-components/icon/lib/spectrum-icon-mag
 
 export class Search extends Textfield {
     public static get styles(): CSSResultArray {
-        return [
-            ...super.styles,
-            searchStyles,
-            clearButtonStyles,
-            crossMediumStyles,
-            magnifierStyles,
-        ];
+        return [...super.styles, searchStyles, magnifierStyles];
     }
 
     @property()
@@ -55,6 +49,9 @@ export class Search extends Textfield {
     @property()
     public placeholder = 'Search';
 
+    @query('#form')
+    public form?: HTMLFormElement;
+
     private handleSubmit(event: Event): void {
         const applyDefault = this.dispatchEvent(
             new Event('submit', {
@@ -67,14 +64,24 @@ export class Search extends Textfield {
         }
     }
 
+    public reset(): void {
+        /* istanbul ignore if */
+        if (!this.form) {
+            return;
+        }
+        this.value = '';
+        this.form.reset();
+    }
+
     protected render(): TemplateResult {
         return html`
+            <sp-icons-medium></sp-icons-medium>
             <form
                 action=${ifDefined(this.action)}
+                id="form"
                 method=${ifDefined(this.method)}
                 @submit=${this.handleSubmit}
             >
-                <sp-icons-medium></sp-icons-medium>
                 ${super.render()}
                 <sp-icon
                     id="icon"
@@ -82,13 +89,15 @@ export class Search extends Textfield {
                     size="s"
                     name="ui:Magnifier"
                 ></sp-icon>
-                <button id="button" type="reset" aria-label="Reset">
-                    <sp-icon
-                        class="icon cross-medium"
-                        size="s"
-                        name="ui:CrossLarge"
-                    ></sp-icon>
-                </button>
+                ${this.value
+                    ? html`
+                          <sp-clear-button
+                              id="button"
+                              label="Reset"
+                              @click=${this.reset}
+                          ></sp-clear-button>
+                      `
+                    : html``}
             </form>
         `;
     }
