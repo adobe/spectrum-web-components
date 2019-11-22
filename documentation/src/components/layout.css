@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
 #side-nav {
     display: flex;
     flex: 0 0 auto;
-    padding: 1.5em;
+    padding: 30px 24px 24px;
     box-sizing: border-box;
 }
 

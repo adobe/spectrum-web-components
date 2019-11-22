@@ -45,12 +45,16 @@ class SideNav extends LitElement {
 
     render() {
         return html`
-            <div id="nav-header">
+            <h1 id="nav-header">
                 <a href="/">
-                    <docs-spectrum-logo></docs-spectrum-logo>
-                    <div>SPECTRUM WEB COMPONENTS</div>
+                    <docs-spectrum-logo size="36px"></docs-spectrum-logo>
+                    <div>
+                        Spectrum
+                        <br />
+                        Web Components
+                    </div>
                 </a>
-            </div>
+            </h1>
             <sp-sidenav>
                 <sp-sidenav-heading
                     label="Components"

@@ -12,7 +12,6 @@ class HomeElement extends LayoutElement {
         return html`
             <section id="hero">
                 <div class="spectrum-Article">
-                    <docs-spectrum-logo size="128px"></docs-spectrum-logo>
                     <h1 class="spectrum-Heading1--display">
                         Spectrum Web Components
                     </h1>

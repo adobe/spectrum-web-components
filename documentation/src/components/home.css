@@ -11,12 +11,8 @@ governing permissions and limitations under the License.
 */
 
 #hero {
+    margin-top: 32px;
     margin-bottom: 3em;
-}
-
-#hero .spectrum-Article {
-    text-align: center;
-    padding-bottom: 2em;
 }
 
 #hero-buttons {

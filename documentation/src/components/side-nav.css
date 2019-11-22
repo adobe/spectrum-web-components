@@ -19,14 +19,13 @@ governing permissions and limitations under the License.
 }
 
 #nav-header {
-    padding-top: calc(1.5rem + 30px);
+    margin: 0;
     padding-bottom: 20px;
     text-align: center;
     font-size: 12px;
     position: sticky;
     left: 0;
-    top: -1.5rem;
-    margin-top: -1.5rem;
+    top: 0;
     background-color: var(--spectrum-global-color-gray-100);
     z-index: 2;
 }
@@ -35,8 +34,13 @@ governing permissions and limitations under the License.
 #nav-header a:visited {
     color: var(--spectrum-global-color-gray-800);
     text-decoration: none;
+    display: flex;
+    font-size: 20px;
+    text-align: left;
 }
 
 #nav-header docs-spectrum-logo {
     margin-bottom: 11px;
+    margin-right: 16px;
+    flex-shrink: 0;
 }
