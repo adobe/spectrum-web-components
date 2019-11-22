@@ -245,7 +245,7 @@ export class Slider extends Focusable {
                     step="${this.step}"
                     min="${this.min}"
                     max="${this.max}"
-                    aria-disabled=${this.disabled}
+                    aria-disabled=${this.disabled ? 'true' : 'false'}
                     aria-label=${this.ariaLabel || this.label}
                     aria-valuemin=${this.min}
                     aria-valuemax=${this.max}
