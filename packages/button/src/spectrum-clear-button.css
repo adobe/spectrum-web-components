@@ -159,7 +159,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-disabled)
     );
 }
-.spectrum-ClearButton--overBackground {
+:host([variant='overBackground']) #button {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet,
    * .spectrum-ClearButton--overBackground */
     background-color: var(
@@ -175,7 +175,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-.spectrum-ClearButton--overBackground:hover {
+:host([variant='overBackground']) #button:hover {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
    * .spectrum-ClearButton--overBackground:hover */
     background-color: var(
@@ -191,7 +191,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-.spectrum-ClearButton--overBackground:focus-visible {
+:host([variant='overBackground']) #button:focus-visible {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-ClearButton--overBackground.focus-ring */
     background-color: var(
@@ -209,7 +209,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-static-white)
         );
 }
-.spectrum-ClearButton--overBackground:active {
+:host([variant='overBackground']) #button:active {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:active,
    * .spectrum-ClearButton--overBackground:active */
     background-color: var(
@@ -226,8 +226,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     box-shadow: none;
 }
-.spectrum-ClearButton--overBackground.is-disabled,
-.spectrum-ClearButton--overBackground:disabled {
+:host([variant='overBackground']) #button.is-disabled,
+:host([variant='overBackground']) #button:disabled {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.is-disabled,
    * .spectrum-Button--overBackground.spectrum-Button--quiet:disabled,
    * .spectrum-ClearButton--overBackground.is-disabled,

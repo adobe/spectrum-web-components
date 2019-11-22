@@ -11,13 +11,20 @@ governing permissions and limitations under the License.
 */
 export * from './button.js';
 export * from './action-button.js';
+export * from './clear-button.js';
 
 import { Button } from './button.js';
 import { ActionButton } from './action-button.js';
+import { ClearButton } from './clear-button.js';
 
 /* istanbul ignore else */
 if (!customElements.get('sp-action-button')) {
     customElements.define('sp-action-button', ActionButton);
+}
+
+/* istanbul ignore else */
+if (!customElements.get('sp-clear-button')) {
+    customElements.define('sp-clear-button', ClearButton);
 }
 
 /* istanbul ignore else */
@@ -29,5 +36,6 @@ declare global {
     interface HTMLElementTagNameMap {
         'sp-button': Button;
         'sp-action-button': ActionButton;
+        'sp-clear-button': ClearButton;
     }
 }
