@@ -25,6 +25,26 @@ describe('Search', () => {
 
         expect(el).shadowDom.to.equalSnapshot();
     });
+    it('can be cleared', async () => {
+        const el = await litFixture<Search>(
+            html`
+                <sp-search value="Test"></sp-search>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('Test');
+        expect(el).shadowDom.to.equalSnapshot();
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const clearButton = root.querySelector('#button') as HTMLButtonElement;
+        clearButton.click();
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('');
+    });
     it('cannot be multiline', async () => {
         const el = await litFixture<Search>(
             html`
