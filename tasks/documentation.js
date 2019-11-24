@@ -43,7 +43,7 @@ const watchComponentDocumentation = () => {
 };
 
 const webpackDevServer = () => {
-    const config = Object.assign({ mode: 'development' }, webpackConfig);
+    const config = Object.assign(webpackConfig, { mode: 'development' });
     const compiler = webpack(config);
     const devServer = new WebpackDevServer(compiler, config.devServer).listen(
         config.devServer.port,
