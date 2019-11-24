@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import { LitElement, html, CSSResultArray, property } from 'lit-element';
-import logoStyles from './spectrum-logo.css';
+import logoStyles from './adobe-logo.css';
 
 class SpectrumLogo extends LitElement {
     @property({ type: String })
-    public size: string = '32px';
+    public size: string = '36px';
 
     public static get styles(): CSSResultArray {
         return [logoStyles];
@@ -25,31 +25,23 @@ class SpectrumLogo extends LitElement {
         return html`
             <svg
                 version="1.1"
-                id="logosvg"
-                width="${this.size}"
-                height="${this.size}"
+                id="Layer_1"
                 xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                viewBox="61.2 0 177.7 150"
-                enableBackground="new 61.2 0 177.7 150"
-                xmlSpace="preserve"
+                x="0"
+                y="0"
+                viewBox="0 0 30 26"
+                width="${this.size}"
+                xml:space="preserve"
             >
+                <style>
+                    .st0 {
+                        fill: #e1251b;
+                    }
+                </style>
                 <path
-                    className="tier3"
-                    fill="#757575"
-                    d="M238.8,94.9L150,150L61.2,94.9L88.3,78l61.7,38l61.7-38L238.8,94.9z"
-                ></path>
-                <path
-                    className="tier2"
-                    fill="#999999"
-                    d="M188.3,43.5L150,67.2l-38.3-23.7L88.3,57.9l61.7,38l61.4-38L188.3,43.5z"
-                ></path>
-                <path
-                    className="tier1"
-                    fill="#C7C7C7"
-                    d="M150,0l-38.5,23.7l38.3,23.7L188,23.7L150,0z"
-                ></path>
+                    class="st0"
+                    d="M19 0h11v26zM11.1 0H0v26zM15 9.6L22.1 26h-4.6l-2.1-5.2h-5.2z"
+                />
             </svg>
         `;
     }

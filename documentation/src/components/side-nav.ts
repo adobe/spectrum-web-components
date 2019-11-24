@@ -14,7 +14,7 @@ import { ComponentDocs } from '../../components';
 import { AppRouter } from '../router';
 import { SidenavSelectDetail } from '../../../packages/sidenav';
 import sideNavStyles from './side-nav.css';
-import './spectrum-logo';
+import './adobe-logo';
 
 class SideNav extends LitElement {
     public static get styles(): CSSResultArray {
@@ -46,40 +46,48 @@ class SideNav extends LitElement {
     render() {
         return html`
             <div id="nav-header">
-                <a href="/">
-                    <docs-spectrum-logo></docs-spectrum-logo>
-                    <div>SPECTRUM WEB COMPONENTS</div>
-                </a>
+                <div id="logo-container">
+                    <a href="/">
+                        <docs-spectrum-logo></docs-spectrum-logo>
+                        <div id="header-title">
+                            Spectrum
+                            <br />
+                            Web Components
+                        </div>
+                    </a>
+                </div>
             </div>
-            <sp-sidenav>
-                <sp-sidenav-heading
-                    label="Components"
-                    @sidenav-select=${this.handleComponentSelect}
-                >
-                    ${this.components.map(
-                        (name) =>
-                            html`
-                                <sp-sidenav-item
-                                    value="${name}"
-                                    label="${name}"
-                                ></sp-sidenav-item>
-                            `
-                    )}
-                </sp-sidenav-heading>
-                <sp-sidenav-heading
-                    label="Contributing"
-                    @sidenav-select=${this.handleGuideSelect}
-                >
+            <div id="navigation">
+                <sp-sidenav variant="multilevel">
                     <sp-sidenav-item
-                        value="adding-component"
-                        label="Adding Components"
-                    ></sp-sidenav-item>
+                        label="Components"
+                        @sidenav-select=${this.handleComponentSelect}
+                    >
+                        ${this.components.map(
+                            (name) =>
+                                html`
+                                    <sp-sidenav-item
+                                        value="${name}"
+                                        label="${name}"
+                                    ></sp-sidenav-item>
+                                `
+                        )}
+                    </sp-sidenav-item>
                     <sp-sidenav-item
-                        value="spectrum-config"
-                        label="Spectrum Config Reference"
-                    ></sp-sidenav-item>
-                </sp-sidenav-heading>
-            </sp-sidenav>
+                        label="Contributing"
+                        @sidenav-select=${this.handleGuideSelect}
+                    >
+                        <sp-sidenav-item
+                            value="adding-component"
+                            label="Adding Components"
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item
+                            value="spectrum-config"
+                            label="Spectrum Config Reference"
+                        ></sp-sidenav-item>
+                    </sp-sidenav-item>
+                </sp-sidenav>
+            </div>
         `;
     }
 }

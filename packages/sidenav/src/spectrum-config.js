@@ -20,6 +20,7 @@ module.exports = {
                 {
                     type: 'boolean',
                     selector: '.spectrum-SideNav--multiLevel',
+                    name: 'multilevel',
                 },
             ],
             exclude: [
