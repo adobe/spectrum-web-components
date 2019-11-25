@@ -25,7 +25,6 @@ class SpectrumLogo extends LitElement {
         return html`
             <svg
                 version="1.1"
-                id="Layer_1"
                 xmlns="http://www.w3.org/2000/svg"
                 x="0"
                 y="0"
@@ -33,13 +32,8 @@ class SpectrumLogo extends LitElement {
                 width="${this.size}"
                 xml:space="preserve"
             >
-                <style>
-                    .st0 {
-                        fill: #e1251b;
-                    }
-                </style>
                 <path
-                    class="st0"
+                    fill="#e1251b"
                     d="M19 0h11v26zM11.1 0H0v26zM15 9.6L22.1 26h-4.6l-2.1-5.2h-5.2z"
                 />
             </svg>

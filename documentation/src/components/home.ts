@@ -13,7 +13,7 @@ class HomeElement extends LayoutElement {
             <section id="hero">
                 <div class="spectrum-Article">
                     <h1 class="spectrum-Heading1--display">
-                        Spectrum Web Components
+                        Meet Spectrum Web Components
                     </h1>
                 </div>
                 <p class="spectrum-Body3">
