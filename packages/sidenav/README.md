@@ -57,7 +57,7 @@ In the instances where a top-level navigation item has no children, clicking
 will send the user to the location of the item.
 
 ```html
-<sp-sidenav variant="multiLevel" defaultValue="Layout">
+<sp-sidenav variant="multilevel" defaultValue="Layout">
     <sp-sidenav-item value="Guidelines" label="Guidelines"></sp-sidenav-item>
     <sp-sidenav-item value="Styles" label="Styles">
         <sp-sidenav-item value="Color" label="Color"></sp-sidenav-item>

@@ -12,15 +12,18 @@ class HomeElement extends LayoutElement {
         return html`
             <section id="hero">
                 <div class="spectrum-Article">
-                    <docs-spectrum-logo size="128px"></docs-spectrum-logo>
                     <h1 class="spectrum-Heading1--display">
-                        Spectrum Web Components
+                        Meet Spectrum Web Components
                     </h1>
                 </div>
                 <p class="spectrum-Body3">
                     The Spectrum Web Components project is an implementation of
-                    Adobe's Spectrum design language that is designed to work
-                    with any web framework, or even without one.
+                    Adobe's
+                    <a class="spectrum-Link" href="https://spectrum.adobe.com/">
+                        Spectrum design system
+                    </a>
+                    that is designed to work with any web framework, or even
+                    without one.
                 </p>
                 <div id="hero-buttons">
                     <sp-button
