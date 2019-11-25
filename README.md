@@ -52,6 +52,10 @@ By default the resulting site will be available at [http://localhost:6006](http:
 
 The project will be linted on a pre-commit hook, but you can also run the lint suite with `yarn lint`. It uses ESLint to lint the JS / TS files, and StyleLint to lint the CSS files.
 
+### Dependency Linting
+
+There are downstream issues that can arise from multiple packages in this mono-repo using dependencies with mismatching version strings. This is particularly an issue for dependencies below `1.0.0` but can be exacerbated in that context and others by more strict settings that can be applied in various package managers. By default, Lerna will bump version numbers of internal dependencies when the various packages are published and the depended version is pointing to the latest release, which can help to mitigate this issue. This can be further mitigated by using `^0.0.0` structured dependency versions, the `^` allowing for the highest amount of upward flexibility in satisfying the dependency. When using these version strings, `yarn lint: versions` which ensure that all instances of those strings for the same dependency match across the repo.
+
 ## Testing
 
 ### Unit Tests
