@@ -175,8 +175,8 @@ cores.forEach(async (core) => {
 
     // fonts.css (2 sources so a little tricky)
     {
-        const srcPath1 = path.join(typographyPath, 'font.css');
-        const srcPath2 = path.join(commonsPath, 'fonts.css');
+        const srcPath1 = path.join(commonsPath, 'fonts.css');
+        const srcPath2 = path.join(typographyPath, 'font.css');
         const dstPath = path.resolve(
             path.join(__dirname, '..', 'packages', 'styles', 'fonts.css')
         );
