@@ -2763,6 +2763,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/circleloader/-/circleloader-2.0.2.tgz#03dac5ae543f6ec302ca86d6a2149a4afd03b94e"
   integrity sha512-pIaPHo165hlAVItJOeSqI0C99i3kqMjJ0M7hvVG4IWf97VB2qurzEbqdxsGg/JFmUx/Pv2K0IzuUG7cw/SeINQ==
 
+"@spectrum-css/commons@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-2.0.0.tgz#556fc2b2904e624657245eae97dce85a13c9059a"
+  integrity sha512-GGbhwFwK7Bi2vHXWPM4hRcKpbFq/V9tVcyucjU3+Tws6UHArienkXuWSh1PrLZWUDCGCICCXU83S2aUZ6558Aw==
+
 "@spectrum-css/dropdown@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@spectrum-css/dropdown/-/dropdown-2.1.1.tgz#2db88de635c5e24841b0db85674744856867577a"
