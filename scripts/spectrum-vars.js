@@ -20,47 +20,65 @@ const license = fs.readFileSync(
     path.join(__dirname, '..', 'config', 'license.js')
 );
 
+const processCSSData = (data, identifier) => {
+    /* lit-html is a JS litteral, so `\` escapes by default.
+     * for there to be unicode characters, the escape must
+     * escape itself...
+     */
+    let result = data.replace(/\\/g, '\\\\');
+
+    // possible selectors to replace
+    const selector1 = `.spectrum--${identifier}`;
+    const selector2 = '.spectrum';
+
+    // new selector values
+    const shadowSelector = ':root,\n:host';
+
+    if (data.indexOf(selector1) >= 0) {
+        result = result.replace(selector1, shadowSelector);
+    } else if (data.indexOf(selector2) >= 0) {
+        result = result.replace(selector2, shadowSelector);
+        result = result.replace(
+            `.spectrum--medium,
+.spectrum--large`,
+            shadowSelector
+        );
+        result = result.replace(
+            `.spectrum--darkest,
+.spectrum--dark,
+.spectrum--light,
+.spectrum--lightest`,
+            shadowSelector
+        );
+    }
+
+    return result;
+};
+
 const processCSS = (srcPath, dstPath, identifier) => {
     fs.readFile(srcPath, 'utf8', function(error, data) {
         if (error) {
             return console.log(error);
         }
 
-        /* lit-html is a JS litteral, so `\` escapes by default.
-         * for there to be unicode characters, the escape must
-         * escape itself...
-         */
-        let result = data.replace(/\\/g, '\\\\');
-
-        // possible selectors to replace
-        const selector1 = `.spectrum--${identifier}`;
-        const selector2 = '.spectrum';
-
-        // new selector values
-        const shadowSelector = ':root,\n:host';
-
-        if (data.indexOf(selector1) >= 0) {
-            result = result.replace(selector1, shadowSelector);
-        } else if (data.indexOf(selector2) >= 0) {
-            result = result.replace(selector2, shadowSelector);
-            result = result.replace(
-                `.spectrum--medium,
-.spectrum--large`,
-                shadowSelector
-            );
-            result = result.replace(
-                `.spectrum--darkest,
-.spectrum--dark,
-.spectrum--light,
-.spectrum--lightest`,
-                shadowSelector
-            );
-        }
-
+        let result = processCSSData(data, identifier);
         result = `${license}\n/* stylelint-disable */\n${result}\n/* stylelint-enable */`;
 
         fs.writeFile(dstPath, result, 'utf8');
     });
+};
+
+// For fonts.css we need to combine 2 source files into 1
+const processMultiSourceCSS = (srcPaths, dstPath, identifier) => {
+    let result = '';
+
+    for (const srcPath of srcPaths) {
+        let data = fs.readFileSync(srcPath, 'utf8');
+        result = `${result}\n${processCSSData(data, identifier)}`;
+    }
+
+    result = `${license}\n/* stylelint-disable */\n${result}\n/* stylelint-enable */`;
+    fs.writeFile(dstPath, result, 'utf8');
 };
 
 // where is spectrum-css?
@@ -124,6 +142,49 @@ cores.forEach(async (core) => {
     );
     console.log(`processing typography`);
     processes.push(processCSS(srcPath, dstPath, 'typography'));
+}
+
+{
+    // Typography
+    const typographyPath = path.join(
+        __dirname,
+        '..',
+        'node_modules',
+        '@spectrum-css',
+        'typography'
+    );
+
+    // Commons
+    const commonsPath = path.join(
+        __dirname,
+        '..',
+        'node_modules',
+        '@spectrum-css',
+        'commons'
+    );
+
+    // typography.css
+    {
+        const srcPath = path.join(typographyPath, 'dist', 'index-vars.css');
+        const dstPath = path.resolve(
+            path.join(__dirname, '..', 'packages', 'styles', 'typography.css')
+        );
+        console.log(`processing typography`);
+        processes.push(processCSS(srcPath, dstPath, 'typography'));
+    }
+
+    // fonts.css (2 sources so a little tricky)
+    {
+        const srcPath1 = path.join(typographyPath, 'font.css');
+        const srcPath2 = path.join(commonsPath, 'fonts.css');
+        const dstPath = path.resolve(
+            path.join(__dirname, '..', 'packages', 'styles', 'fonts.css')
+        );
+        console.log(`processing fonts from commons & typography`);
+        processes.push(
+            processMultiSourceCSS([srcPath1, srcPath2], dstPath, 'typography')
+        );
+    }
 }
 
 Promise.all(processes).then(() => {
