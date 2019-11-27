@@ -29,17 +29,19 @@ module.exports = (config) => {
             esm: {
                 nodeResolve: true,
             },
-            browsers: [
-                path.resolve(path.join(__dirname, 'scripts/firefox.sh')),
-                path.resolve(path.join(__dirname, 'scripts/chrome.sh')),
-            ],
+            browsers: ['FirefoxHeadless'],
+            customLaunchers: {
+                FirefoxHeadless: {
+                    base: 'Firefox',
+                    flags: ['-headless'],
+                },
+            },
             junitReporter: {
                 outputDir: process.env.JUNIT_REPORT_PATH,
                 outputFile: process.env.JUNIT_REPORT_NAME,
                 useBrowserName: false,
             },
             coverageIstanbulReporter: {
-                // TODO(#212): reapply coverage based on source files.
                 thresholds: {
                     global: {
                         statements: 96,

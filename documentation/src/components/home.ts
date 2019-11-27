@@ -19,9 +19,9 @@ class HomeElement extends LayoutElement {
                 <p class="spectrum-Body3">
                     The Spectrum Web Components project is an implementation of
                     Adobe's
-                    <a class="spectrum-Link" href="https://spectrum.adobe.com/">
+                    <sp-link href="https://spectrum.adobe.com/">
                         Spectrum design system
-                    </a>
+                    </sp-link>
                     that is designed to work with any web framework, or even
                     without one.
                 </p>
@@ -41,12 +41,11 @@ class HomeElement extends LayoutElement {
                         Standards Based
                     </h2>
                     <p class="spectrum-Body3">
-                        <a
-                            class="spectrum-Link"
+                        <sp-link
                             href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"
                         >
                             Web Components
-                        </a>
+                        </sp-link>
                         are set of technologies that work together to allow you
                         create custom elements that work just like the standard
                         HTML elements that are built into your browser.
@@ -58,13 +57,12 @@ class HomeElement extends LayoutElement {
                     </h2>
                     <p class="spectrum-Body3">
                         The Spectrum Web Components are implemented using the
-                        <a
-                            class="spectrum-Link"
+                        <sp-link
                             href="https://lit-element.polymer-project.org/"
                         >
                             LitElement
-                        </a>
-                        framework. LitElement is designed for creating Web
+                        </sp-link>
+                        base class. LitElement is designed for creating Web
                         Components with a minimum amount of overhead.
                     </p>
                 </div>
