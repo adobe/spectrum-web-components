@@ -69,8 +69,8 @@ describe('Radio', () => {
         let value = '';
         let checked = false;
         const el = testDiv.querySelector('[value=third]') as Radio;
-        el.addEventListener('change', (e) => {
-            const target = e.target as Radio;
+        el.addEventListener('change', (event) => {
+            const target = event.target as Radio;
             value = target.value;
             checked = target.checked;
         });

@@ -186,8 +186,8 @@ describe('Dropdown', () => {
         expect(el.value).to.equal('');
         expect(secondItem.selected).to.be.false;
 
-        el.addEventListener('change', (e: Event): void => {
-            e.preventDefault();
+        el.addEventListener('change', (event: Event): void => {
+            event.preventDefault();
         });
 
         secondItem.click();

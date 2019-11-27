@@ -70,8 +70,8 @@ export class RadioGroup extends LitElement {
         // If selected already assigned, don't overwrite
         this.selected = this.selected || checkedRadioValue;
 
-        this.addEventListener('change', (ev: Event) => {
-            const target = ev.target as Radio;
+        this.addEventListener('change', (event: Event) => {
+            const target = event.target as Radio;
             this.selected = target.value;
         });
     }

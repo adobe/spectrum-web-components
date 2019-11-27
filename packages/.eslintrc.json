@@ -6,13 +6,17 @@
         "es6": true
     },
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "notice"],
+    "plugins": ["@typescript-eslint", "notice", "spectrum-web-components"],
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "prettier",
         "prettier/@typescript-eslint"
     ],
     "rules": {
+        "spectrum-web-components/prevent-argument-names": [
+            "error",
+            ["e", "ev", "evt", "err"]
+        ],
         "notice/notice": [
             "error",
             {

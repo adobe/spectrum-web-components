@@ -143,8 +143,8 @@ export class Dropdown extends Focusable {
         this.button.addEventListener('keydown', this.onKeydown);
     }
 
-    public onClick(ev: Event): void {
-        const path = ev.composedPath();
+    public onClick(event: Event): void {
+        const path = event.composedPath();
         const target = path.find((el) => {
             if (!(el instanceof Element) || this.optionsMenu === null) {
                 return false;
@@ -157,8 +157,8 @@ export class Dropdown extends Focusable {
         this.setValueFromItem(target);
     }
 
-    public onKeydown(ev: KeyboardEvent): void {
-        if (ev.code !== 'ArrowDown') {
+    public onKeydown(event: KeyboardEvent): void {
+        if (event.code !== 'ArrowDown') {
             return;
         }
         /* istanbul ignore if */

@@ -34,7 +34,7 @@ const build = process.argv.slice(2)[1] || 'latest';
                             const dest = fs.createWriteStream(path);
                             resp.body.pipe(dest);
                         })
-                        .catch((err) => console.log(err));
+                        .catch((error) => console.log(error));
                 }
             });
         });

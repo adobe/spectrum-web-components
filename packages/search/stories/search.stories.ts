@@ -21,9 +21,9 @@ storiesOf('Search', module)
         'Default',
         () => html`
             <sp-search
-                @submit=${(e: Event) => {
-                    e.preventDefault();
-                    const search = e.target as Search;
+                @submit=${(event: Event) => {
+                    event.preventDefault();
+                    const search = event.target as Search;
                     action(`Search: ${search.value}`)();
                 }}
             ></sp-search>
@@ -35,9 +35,9 @@ storiesOf('Search', module)
         () => html`
             <sp-search
                 quiet
-                @submit=${(e: Event) => {
-                    e.preventDefault();
-                    const search = e.target as Search;
+                @submit=${(event: Event) => {
+                    event.preventDefault();
+                    const search = event.target as Search;
                     action(`Search: ${search.value}`)();
                 }}
             ></sp-search>

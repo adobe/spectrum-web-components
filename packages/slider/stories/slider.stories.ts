@@ -34,9 +34,9 @@ storiesOf('Slider', module)
             sliderVariants[0],
             'Element'
         );
-        const handleEvent = (e: Event): void => {
-            const target = e.target as Slider;
-            action(e.type)(target.value);
+        const handleEvent = (event: Event): void => {
+            const target = event.target as Slider;
+            action(event.type)(target.value);
         };
         return html`
             <div style="width: 500px; margin: 20px;">

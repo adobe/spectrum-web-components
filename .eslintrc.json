@@ -1,6 +1,6 @@
 {
     "root": true,
-    "plugins": ["notice"],
+    "plugins": ["notice", "spectrum-web-components"],
     "env": {
         "browser": true,
         "node": true,
@@ -12,6 +12,10 @@
         "sourceType": "module"
     },
     "rules": {
+        "spectrum-web-components/prevent-argument-names": [
+            "error",
+            ["e", "ev", "evt", "err"]
+        ],
         "notice/notice": [
             "error",
             {

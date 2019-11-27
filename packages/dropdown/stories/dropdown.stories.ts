@@ -26,8 +26,8 @@ storiesOf('Dropdown', module)
                 ?disabled=${boolean('Is Disabled', false, 'Component')}
                 ?invalid=${boolean('Is Invalid', false, 'Component')}
                 ?quiet=${boolean('Is Quiet', false, 'Component')}
-                @change="${(e: Event) => {
-                    const dropdown = e.target as Dropdown;
+                @change="${(event: Event) => {
+                    const dropdown = event.target as Dropdown;
                     action(`Change: ${dropdown.value}`)();
                 }}"
             >
@@ -71,8 +71,8 @@ storiesOf('Dropdown', module)
                 ?disabled=${boolean('Is Disabled', false, 'Component')}
                 ?invalid=${boolean('Is Invalid', false, 'Component')}
                 ?quiet=${boolean('Is Quiet', false, 'Component')}
-                @change="${(e: Event) => {
-                    const dropdown = e.target as Dropdown;
+                @change="${(event: Event) => {
+                    const dropdown = event.target as Dropdown;
                     action(`Change: ${dropdown.value}`)();
                 }}"
                 value=${select('Value', values, values[2], 'Component')}

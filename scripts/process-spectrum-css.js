@@ -33,7 +33,7 @@ async function processComponent(componentPath) {
             `@spectrum-css/${spectrumConfig.spectrum}/dist/index-vars.css`
         );
         packageCss = true;
-    } catch (e) {
+    } catch (error) {
         console.error(
             chalk.bold.red(
                 `!!! '${spectrumConfig.spectrum}' does not have a local Spectrum CSS dependency !!!`

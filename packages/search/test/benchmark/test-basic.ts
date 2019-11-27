@@ -18,8 +18,8 @@ measureFixtureCreation(html`
     <sp-search
         placeholder="Search millions of images"
         label="Search for an image"
-        @submit=${(e: Event) => {
-            e.preventDefault();
+        @submit=${(event: Event) => {
+            event.preventDefault();
         }}
     ></sp-search>
 `);

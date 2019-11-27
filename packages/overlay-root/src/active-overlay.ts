@@ -165,12 +165,12 @@ export class ActiveOverlay extends LitElement {
         });
     }
 
-    private extractEventDetail(ev: CustomEvent<OverlayOpenDetail>): void {
-        this.overlayContent = ev.detail.content;
-        this.trigger = ev.detail.trigger;
-        this.placement = ev.detail.placement;
-        this.offset = ev.detail.offset;
-        this.interaction = ev.detail.interaction;
+    private extractEventDetail(event: CustomEvent<OverlayOpenDetail>): void {
+        this.overlayContent = event.detail.content;
+        this.trigger = event.detail.trigger;
+        this.placement = event.detail.placement;
+        this.offset = event.detail.offset;
+        this.interaction = event.detail.interaction;
     }
 
     public dispose(): void {

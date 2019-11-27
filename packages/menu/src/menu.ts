@@ -65,8 +65,8 @@ export class Menu extends LitElement {
         focusInItem.focus();
     }
 
-    private onClick(ev: Event): void {
-        const path = ev.composedPath();
+    private onClick(event: Event): void {
+        const path = event.composedPath();
         const target = path.find((el) => {
             if (!(el instanceof Element)) {
                 return false;
@@ -90,8 +90,8 @@ export class Menu extends LitElement {
         this.removeEventListener('keydown', this.handleKeydown);
     }
 
-    public handleKeydown(e: KeyboardEvent): void {
-        const { code } = e;
+    public handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
         if (code === 'Tab') {
             this.prepareToCleanUp();
             return;
@@ -99,7 +99,7 @@ export class Menu extends LitElement {
         if (code !== 'ArrowDown' && code !== 'ArrowUp') {
             return;
         }
-        e.preventDefault();
+        event.preventDefault();
         const direction = code === 'ArrowDown' ? 1 : -1;
         this.focusMenuItemByOffset(direction);
     }

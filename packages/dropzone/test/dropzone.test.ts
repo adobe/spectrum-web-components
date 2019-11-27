@@ -100,8 +100,8 @@ describe('Dropzone', () => {
         // However, Chrome doesn't like it in the context of a test...
     });
     it('allows `dragover` events to be canceled', async () => {
-        const canceledDrag = (e: DragEvent): void => {
-            e.preventDefault();
+        const canceledDrag = (event: DragEvent): void => {
+            event.preventDefault();
         };
         const el = await fixture<Dropzone>(
             html`

@@ -137,8 +137,8 @@ export abstract class IconsetSVG extends Iconset {
         return svgNodes;
     }
 
-    private onSlotChange(evt: Event): void {
-        const slotTarget = evt.target as HTMLSlotElement;
+    private onSlotChange(event: Event): void {
+        const slotTarget = event.target as HTMLSlotElement;
         const svgNodes = this.getSVGNodes(slotTarget);
         this.updateSVG(svgNodes);
     }

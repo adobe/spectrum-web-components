@@ -32,8 +32,8 @@ export class SideNav extends LitElement {
     @property({ reflect: true })
     public value: string | undefined = undefined;
 
-    private handleSelect(ev: CustomEvent<SidenavSelectDetail>): void {
-        this.value = ev.detail.value;
+    private handleSelect(event: CustomEvent<SidenavSelectDetail>): void {
+        this.value = event.detail.value;
     }
 
     protected render(): TemplateResult {

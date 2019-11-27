@@ -283,16 +283,16 @@ export class Slider extends Focusable {
         `;
     }
 
-    private onPointerDown(ev: PointerEvent): void {
+    private onPointerDown(event: PointerEvent): void {
         if (this.disabled) {
             return;
         }
         this.focus();
         this.dragging = true;
-        this.handle.setPointerCapture(ev.pointerId);
+        this.handle.setPointerCapture(event.pointerId);
     }
 
-    private onMouseDown(ev: MouseEvent): void {
+    private onMouseDown(event: MouseEvent): void {
         if (this.supportsPointerEvent) {
             return;
         }
@@ -303,7 +303,7 @@ export class Slider extends Focusable {
         document.addEventListener('mouseup', this.onMouseUp);
         this.focus();
         this.dragging = true;
-        this.currentMouseEvent = ev;
+        this.currentMouseEvent = event;
         this._trackMouseEvent();
     }
 
@@ -315,19 +315,19 @@ export class Slider extends Focusable {
         requestAnimationFrame(() => this._trackMouseEvent());
     }
 
-    private onPointerUp(ev: PointerEvent): void {
+    private onPointerUp(event: PointerEvent): void {
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.focus();
         this.handleHighlight = false;
         this.dragging = false;
-        this.handle.releasePointerCapture(ev.pointerId);
+        this.handle.releasePointerCapture(event.pointerId);
         this.dispatchChangeEvent();
     }
 
-    private onMouseUp = (ev: MouseEvent): void => {
+    private onMouseUp = (event: MouseEvent): void => {
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.focus();
-        this.currentMouseEvent = ev;
+        this.currentMouseEvent = event;
         document.removeEventListener('mousemove', this.onMouseMove);
         document.removeEventListener('mouseup', this.onMouseUp);
         requestAnimationFrame(() => {
@@ -337,47 +337,47 @@ export class Slider extends Focusable {
         });
     };
 
-    private onPointerMove(ev: PointerEvent): void {
+    private onPointerMove(event: PointerEvent): void {
         if (!this.dragging) {
             return;
         }
-        this.value = this.calculateHandlePosition(ev);
+        this.value = this.calculateHandlePosition(event);
     }
 
-    private onMouseMove = (ev: MouseEvent): void => {
-        this.currentMouseEvent = ev;
+    private onMouseMove = (event: MouseEvent): void => {
+        this.currentMouseEvent = event;
     };
 
-    private onPointerCancel(ev: PointerEvent): void {
+    private onPointerCancel(event: PointerEvent): void {
         this.dragging = false;
-        this.handle.releasePointerCapture(ev.pointerId);
+        this.handle.releasePointerCapture(event.pointerId);
     }
 
     /**
      * Move the handle under the cursor and begin start a pointer capture when the track
      * is moused down
      */
-    private onTrackPointerDown(ev: PointerEvent): void {
-        if (ev.target === this.handle || this.disabled) {
+    private onTrackPointerDown(event: PointerEvent): void {
+        if (event.target === this.handle || this.disabled) {
             return;
         }
         this.dragging = true;
-        this.handle.setPointerCapture(ev.pointerId);
+        this.handle.setPointerCapture(event.pointerId);
 
-        this.value = this.calculateHandlePosition(ev);
+        this.value = this.calculateHandlePosition(event);
     }
 
-    private onTrackMouseDown(ev: MouseEvent): void {
+    private onTrackMouseDown(event: MouseEvent): void {
         if (this.supportsPointerEvent) {
             return;
         }
-        if (ev.target === this.handle || this.disabled) {
+        if (event.target === this.handle || this.disabled) {
             return;
         }
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
         this.dragging = true;
-        this.currentMouseEvent = ev;
+        this.currentMouseEvent = event;
         this._trackMouseEvent();
     }
 
@@ -405,10 +405,10 @@ export class Slider extends Focusable {
      * @param: PointerEvent on slider
      * @return: Slider value that correlates to the position under the pointer
      */
-    private calculateHandlePosition(ev: PointerEvent | MouseEvent): number {
+    private calculateHandlePosition(event: PointerEvent | MouseEvent): number {
         const rect = this.getBoundingClientRect();
         const minOffset = rect.left;
-        const offset = ev.clientX;
+        const offset = event.clientX;
         const size = rect.width;
 
         const percent = (offset - minOffset) / size;
