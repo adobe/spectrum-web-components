@@ -71,13 +71,13 @@ export class Icon extends LitElement {
         this.updateIconPromise = this.updateIcon(); // any of our attributes change, update our icon
     }
 
-    private iconsetListener = (ev: CustomEvent): void => {
+    private iconsetListener = (event: CustomEvent): void => {
         if (!this.name) {
             return;
         }
         // parse the icon name to get iconset name
         const icon = this.parseIcon(this.name);
-        if (ev.detail.name === icon.iconset) {
+        if (event.detail.name === icon.iconset) {
             this.updateIconPromise = this.updateIcon();
         }
     };

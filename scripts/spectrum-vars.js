@@ -21,9 +21,9 @@ const license = fs.readFileSync(
 );
 
 const processCSS = (srcPath, dstPath, identifier) => {
-    fs.readFile(srcPath, 'utf8', function(err, data) {
-        if (err) {
-            return console.log(err);
+    fs.readFile(srcPath, 'utf8', function(error, data) {
+        if (error) {
+            return console.log(error);
         }
 
         /* lit-html is a JS litteral, so `\` escapes by default.

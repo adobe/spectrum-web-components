@@ -28,8 +28,8 @@ storiesOf('Action menu', module).add('Default', () => {
             ?disabled=${boolean('Is Disabled', false, 'Component')}
             ?invalid=${boolean('Is Invalid', false, 'Component')}
             ?quiet=${boolean('Is Quiet', false, 'Component')}
-            @change="${(e: Event) => {
-                const actionMenu = e.target as ActionMenu;
+            @change="${(event: Event) => {
+                const actionMenu = event.target as ActionMenu;
                 action(`Change: ${actionMenu.value}`)();
             }}"
         >

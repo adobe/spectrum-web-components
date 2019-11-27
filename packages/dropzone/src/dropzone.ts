@@ -66,39 +66,39 @@ export class Dropzone extends LitElement {
         this.removeEventListener('dragleave', this.onDragLeave);
     }
 
-    public onDragOver(ev: DragEvent): void {
+    public onDragOver(event: DragEvent): void {
         const shouldAcceptEvent = new CustomEvent('sp-dropzone-should-accept', {
             bubbles: true,
             cancelable: true,
             composed: true,
-            detail: ev,
+            detail: event,
         });
         // dispatch event returns true if preventDefault() is not called
         const shouldAccept = this.dispatchEvent(shouldAcceptEvent);
-        if (!ev.dataTransfer) {
+        if (!event.dataTransfer) {
             return;
         }
         if (!shouldAccept) {
-            ev.dataTransfer.dropEffect = 'none';
+            event.dataTransfer.dropEffect = 'none';
             return;
         }
 
-        ev.preventDefault();
+        event.preventDefault();
 
         this.clearDebouncedDragLeave();
 
         this.isDragged = true;
 
-        ev.dataTransfer.dropEffect = this.dropEffect;
+        event.dataTransfer.dropEffect = this.dropEffect;
         const dragOverEvent = new CustomEvent('sp-dropzone-dragover', {
             bubbles: true,
             composed: true,
-            detail: ev,
+            detail: event,
         });
         this.dispatchEvent(dragOverEvent);
     }
 
-    public onDragLeave(ev: DragEvent): void {
+    public onDragLeave(event: DragEvent): void {
         this.clearDebouncedDragLeave();
 
         this.debouncedDragLeave = window.setTimeout(() => {
@@ -107,14 +107,14 @@ export class Dropzone extends LitElement {
             const dragLeave = new CustomEvent('sp-dropzone-dragleave', {
                 bubbles: true,
                 composed: true,
-                detail: ev,
+                detail: event,
             });
             this.dispatchEvent(dragLeave);
         }, 100);
     }
 
-    public onDrop(ev: DragEvent): void {
-        ev.preventDefault();
+    public onDrop(event: DragEvent): void {
+        event.preventDefault();
 
         this.clearDebouncedDragLeave();
 
@@ -122,7 +122,7 @@ export class Dropzone extends LitElement {
         const dropEvent = new CustomEvent('sp-dropzone-drop', {
             bubbles: true,
             composed: true,
-            detail: ev,
+            detail: event,
         });
         this.dispatchEvent(dropEvent);
     }

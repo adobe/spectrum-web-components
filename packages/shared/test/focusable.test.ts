@@ -26,9 +26,9 @@ describe('Focusable', () => {
             );
             await elementUpdated(el);
             expect('failed').to.not.equal('failed');
-        } catch (err) {
+        } catch (error) {
             expect(() => {
-                throw err;
+                throw error;
             }).to.throw('Must implement focusElement getter!');
         }
     });

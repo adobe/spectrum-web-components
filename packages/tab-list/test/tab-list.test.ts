@@ -213,7 +213,7 @@ describe('TabList', () => {
         expect(el.selected).to.be.equal('first');
     });
     it('allows selection to be cancellable', async () => {
-        const cancelSelection = (e: Event): void => e.preventDefault();
+        const cancelSelection = (event: Event): void => event.preventDefault();
         const el = await fixture<TabList>(html`
             <sp-tab-list selected="first" @change=${cancelSelection}>
                 <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>

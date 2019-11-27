@@ -84,8 +84,8 @@ describe('Search', () => {
         const el = await litFixture<Search>(
             html`
                 <sp-search
-                    @submit=${(e: Event) => {
-                        e.preventDefault();
+                    @submit=${(event: Event) => {
+                        event.preventDefault();
                     }}
                 ></sp-search>
             `

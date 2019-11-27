@@ -72,15 +72,15 @@ export class TabList extends LitElement {
         `;
     }
 
-    private onClick(ev: Event): void {
-        const target = ev.target as HTMLElement;
+    private onClick(event: Event): void {
+        const target = event.target as HTMLElement;
         this.selectTarget(target);
     }
 
-    private onKeyDown(ev: KeyboardEvent): void {
-        if (ev.key === 'Enter' || ev.key === ' ') {
-            ev.preventDefault();
-            const target = ev.target as HTMLElement;
+    private onKeyDown(event: KeyboardEvent): void {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            const target = event.target as HTMLElement;
             if (target) {
                 this.selectTarget(target);
             }

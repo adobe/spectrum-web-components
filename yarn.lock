@@ -7751,6 +7751,9 @@ eslint-plugin-prettier@^3.0.1:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
+"eslint-plugin-spectrum-web-components@file:./linters/eslint":
+  version "1.0.1"
+
 eslint-rule-docs@^1.1.5:
   version "1.1.158"
   resolved "https://registry.yarnpkg.com/eslint-rule-docs/-/eslint-rule-docs-1.1.158.tgz#aa85789f11b164ee5f9f8be38aa98456bf20dade"

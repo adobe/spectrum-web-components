@@ -70,16 +70,16 @@ export class SideNavItem extends LitElement {
     protected firstUpdated(): void {
         const parentSideNav = this.parentSideNav;
         if (parentSideNav) {
-            parentSideNav.addEventListener('sidenav-select', (ev) =>
-                this.handleSideNavSelect(ev)
+            parentSideNav.addEventListener('sidenav-select', (event) =>
+                this.handleSideNavSelect(event)
             );
             this.selected =
                 this.value != null && this.value === parentSideNav.value;
         }
     }
 
-    protected handleSideNavSelect(ev: Event): void {
-        this.selected = ev.target === this;
+    protected handleSideNavSelect(event: Event): void {
+        this.selected = event.target === this;
     }
 
     protected handleClick(): void {
