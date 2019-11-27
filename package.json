@@ -137,6 +137,7 @@
         "express": "^4.16.4",
         "extract-loader": "^3.1.0",
         "fs-extra": "^8.1.0",
+        "gh-pages": "^2.1.1",
         "gulp": "^4.0.0",
         "gulp-cached": "^1.1.1",
         "gulp-cli": "^2.0.1",

@@ -68,7 +68,7 @@ jobs:
             - setup
             - run: yarn docs:build
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
-            - run: git worktree add -f documentation/dist gh-pages && git commit -m "[ci skip] updating documentation" && git push
+            - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site"
 
 workflows:
     version: 2

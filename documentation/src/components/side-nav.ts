@@ -47,7 +47,7 @@ class SideNav extends LitElement {
         return html`
             <div id="nav-header">
                 <div id="logo-container">
-                    <a href="/">
+                    <a href="#">
                         <docs-spectrum-logo></docs-spectrum-logo>
                         <div id="header-title">
                             Spectrum
