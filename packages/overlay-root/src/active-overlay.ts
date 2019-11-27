@@ -272,7 +272,8 @@ export class ActiveOverlay extends LitElement {
     };
 
     private onSlotChange(): void {
-        this.updateOverlayPosition();
+        // Edge needs a little time to update the DOM before computing the layout
+        requestAnimationFrame(() => this.updateOverlayPosition());
     }
 
     public connectedCallback(): void {
