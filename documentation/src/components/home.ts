@@ -37,9 +37,9 @@ class HomeElement extends LayoutElement {
             <hr class="spectrum-Rule spectrum-Rule--large" />
             <section id="features">
                 <div class="feature">
-                    <p class="spectrum-Heading spectrum-Heading--pageTitle">
+                    <h2 class="spectrum-Heading spectrum-Heading--pageTitle">
                         Standards Based
-                    </p>
+                    </h2>
                     <p class="spectrum-Body3">
                         <a
                             class="spectrum-Link"
@@ -53,9 +53,9 @@ class HomeElement extends LayoutElement {
                     </p>
                 </div>
                 <div class="feature">
-                    <p class="spectrum-Heading spectrum-Heading--pageTitle">
+                    <h2 class="spectrum-Heading spectrum-Heading--pageTitle">
                         Light Weight
-                    </p>
+                    </h2>
                     <p class="spectrum-Body3">
                         The Spectrum Web Components are implemented using the
                         <a
@@ -69,9 +69,9 @@ class HomeElement extends LayoutElement {
                     </p>
                 </div>
                 <div class="feature">
-                    <p class="spectrum-Heading spectrum-Heading--pageTitle">
+                    <h2 class="spectrum-Heading spectrum-Heading--pageTitle">
                         Framework Agnostic
-                    </p>
+                    </h2>
                     <p class="spectrum-Body3">
                         Because Web Components are supported and encapsulated at
                         the browser level, you can use them with any framework.
@@ -79,9 +79,9 @@ class HomeElement extends LayoutElement {
                 </div>
             </section>
             <section id="example">
-                <p class="spectrum-Heading spectrum-Heading--pageTitle">
+                <h2 class="spectrum-Heading spectrum-Heading--pageTitle">
                     Example
-                </p>
+                </h2>
                 <code-example class="language-html">
                     &lt;sp-button variant='cta'&gt;Click Here&lt;/sp-button&gt;
                 </code-example>
