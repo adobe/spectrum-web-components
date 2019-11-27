@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.5.0...@spectrum-web-components/bundle@0.5.1) (2019-11-27)
+
+### Bug Fixes
+
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.4.2...@spectrum-web-components/bundle@0.5.0) (2019-11-19)
 
 ### Features
