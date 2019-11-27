@@ -22,7 +22,7 @@
         "css-loader": "^3.2.0",
         "cssnano": "^4.1.7",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
-        "http-server": "^0.11.1",
+        "http-server": "^0.12.0",
         "postcss-import": "^12.0.1",
         "postcss-loader": "^3.0.0",
         "postcss-preset-env": "^6.5.0",
