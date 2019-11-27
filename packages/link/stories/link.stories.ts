@@ -18,13 +18,13 @@ storiesOf('Link', module)
     .add('Default', () => {
         // prettier-ignore
         return html`
-            This is a <sp-link href="#">link</sp-link>.
+            This is a <sp-link href="#">link</sp-link> in a sentence.
         `;
     })
     .add('Quiet', () => {
         // prettier-ignore
         return html`
-            This is a <sp-link quiet href="#">quiet link</sp-link>.
+            This is a <sp-link quiet href="#">quiet link</sp-link> in a sentence.
         `;
     })
     .add('Over Background', () => {
