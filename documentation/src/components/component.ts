@@ -71,11 +71,11 @@ class ComponentElement extends LayoutElement {
             result = html`
                 <article class="spectrum-Typography">
                     <div id="title-header" class="spectrum-Article">
-                        <p
+                        <h1
                             class="spectrum-Heading1--display spectrum-Heading1--quiet"
                         >
                             ${this.componentName}
-                        </p>
+                        </h1>
                     </div>
                     ${hasAPIdocs
                         ? html`
