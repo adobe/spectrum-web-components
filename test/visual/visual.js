@@ -14,6 +14,7 @@ const expect = require('chai').expect;
 const { startServer } = require('polyserve');
 const path = require('path');
 const fs = require('fs');
+var rimraf = require('rimraf');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
 const stories = require('./stories');
@@ -43,12 +44,19 @@ module.exports = {
                 if (!fs.existsSync(`${currentDir}/${type}`)) {
                     fs.mkdirSync(`${currentDir}/${type}`);
                 }
+
+                if (fs.existsSync(`${baselineDir}/${type}/userDataDir`)) {
+                    rimraf.sync(`${baselineDir}/${type}/userDataDir`);
+                }
+                fs.mkdirSync(`${baselineDir}/${type}/userDataDir`);
             });
 
             after((done) => polyserve.close(done));
 
             beforeEach(async function() {
-                browser = await puppeteer.launch();
+                browser = await puppeteer.launch({
+                    userDataDir: `${baselineDir}/${type}/userDataDir`,
+                });
                 page = await browser.newPage();
             });
 

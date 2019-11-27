@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 const puppeteer = require('puppeteer');
+var rimraf = require('rimraf');
 const { startServer } = require('polyserve');
 const path = require('path');
 const fs = require('fs');
@@ -38,12 +39,19 @@ module.exports = {
                 if (!fs.existsSync(`${baselineDir}/${type}`)) {
                     fs.mkdirSync(`${baselineDir}/${type}`);
                 }
+
+                if (fs.existsSync(`${baselineDir}/${type}/userDataDir`)) {
+                    rimraf.sync(`${baselineDir}/${type}/userDataDir`);
+                }
+                fs.mkdirSync(`${baselineDir}/${type}/userDataDir`);
             });
 
             after((done) => polyserve.close(done));
 
             beforeEach(async function() {
-                browser = await puppeteer.launch();
+                browser = await puppeteer.launch({
+                    userDataDir: `${baselineDir}/${type}/userDataDir`,
+                });
                 page = await browser.newPage();
             });
 
