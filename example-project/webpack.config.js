@@ -15,7 +15,7 @@ const { resolve, join } = require('path');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const ENV = process.argv.find((arg) => arg.includes('NODE_ENV=production'))
@@ -45,7 +45,7 @@ const copyStatics = {
  * Plugin configuration
  */
 const plugins = [
-    new CleanWebpackPlugin('dist', {}),
+    new CleanWebpackPlugin(),
     new CopyWebpackPlugin([].concat(copyStatics.copyOthers)),
     new ExtractTextPlugin('[name].bundle.css'),
 ];
