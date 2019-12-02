@@ -9,7 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { LitElement, html, CSSResultArray } from 'lit-element';
+import {
+    LitElement,
+    html,
+    CSSResultArray,
+    property,
+    PropertyValues,
+} from 'lit-element';
 import { ComponentDocs } from '../../components';
 import { AppRouter } from '../router';
 import { SidenavSelectDetail } from '../../../packages/sidenav';
@@ -20,6 +26,9 @@ class SideNav extends LitElement {
     public static get styles(): CSSResultArray {
         return [sideNavStyles];
     }
+
+    @property({ type: Boolean, reflect: true })
+    public open = false;
 
     private get components(): string[] {
         return Array.from(ComponentDocs.keys());
@@ -43,52 +52,65 @@ class SideNav extends LitElement {
         this.handleSelect(event, 'guides');
     }
 
+    public toggle() {
+        this.open = !this.open;
+    }
+
     render() {
         return html`
-            <div id="nav-header">
-                <div id="logo-container">
-                    <a href="#">
-                        <docs-spectrum-logo></docs-spectrum-logo>
-                        <div id="header-title">
-                            Spectrum
-                            <br />
-                            Web Components
-                        </div>
-                    </a>
+            <div class="scrim" @click=${this.toggle}></div>
+            <aside>
+                <div id="nav-header">
+                    <div id="logo-container">
+                        <a href="#">
+                            <docs-spectrum-logo></docs-spectrum-logo>
+                            <div id="header-title">
+                                Spectrum
+                                <br />
+                                Web Components
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div id="navigation">
-                <sp-sidenav variant="multilevel">
-                    <sp-sidenav-item
-                        label="Components"
-                        @sidenav-select=${this.handleComponentSelect}
-                    >
-                        ${this.components.map(
-                            (name) =>
-                                html`
-                                    <sp-sidenav-item
-                                        value="${name}"
-                                        label="${name}"
-                                    ></sp-sidenav-item>
-                                `
-                        )}
-                    </sp-sidenav-item>
-                    <sp-sidenav-item
-                        label="Contributing"
-                        @sidenav-select=${this.handleGuideSelect}
-                    >
+                <div id="navigation">
+                    <sp-sidenav variant="multilevel">
                         <sp-sidenav-item
-                            value="adding-component"
-                            label="Adding Components"
-                        ></sp-sidenav-item>
+                            label="Components"
+                            @sidenav-select=${this.handleComponentSelect}
+                        >
+                            ${this.components.map(
+                                (name) =>
+                                    html`
+                                        <sp-sidenav-item
+                                            value="${name}"
+                                            label="${name}"
+                                        ></sp-sidenav-item>
+                                    `
+                            )}
+                        </sp-sidenav-item>
                         <sp-sidenav-item
-                            value="spectrum-config"
-                            label="Spectrum Config Reference"
-                        ></sp-sidenav-item>
-                    </sp-sidenav-item>
-                </sp-sidenav>
-            </div>
+                            label="Contributing"
+                            @sidenav-select=${this.handleGuideSelect}
+                        >
+                            <sp-sidenav-item
+                                value="adding-component"
+                                label="Adding Components"
+                            ></sp-sidenav-item>
+                            <sp-sidenav-item
+                                value="spectrum-config"
+                                label="Spectrum Config Reference"
+                            ></sp-sidenav-item>
+                        </sp-sidenav-item>
+                    </sp-sidenav>
+                </div>
+            </aside>
         `;
+    }
+
+    updated(changes: PropertyValues) {
+        if (changes.has('open') && !this.open && changes.get('open')) {
+            this.dispatchEvent(new Event('close'));
+        }
     }
 }
 customElements.define('docs-side-nav', SideNav);
