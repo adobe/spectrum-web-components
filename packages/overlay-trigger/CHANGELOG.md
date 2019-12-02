@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay-trigger@0.1.6...@spectrum-web-components/overlay-trigger@0.1.7) (2019-12-02)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay-trigger
+
 ## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay-trigger@0.1.5...@spectrum-web-components/overlay-trigger@0.1.6) (2019-11-27)
 
 ### Bug Fixes

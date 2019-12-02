@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay-root@0.1.6...@spectrum-web-components/overlay-root@0.1.7) (2019-12-02)
+
+### Bug Fixes
+
+-   make overlays open in correct position on Edge ([5e57b0a](https://github.com/adobe/spectrum-web-components/commit/5e57b0a))
+-   normalize "event" and "error" argument names ([8d382cd](https://github.com/adobe/spectrum-web-components/commit/8d382cd))
+
 ## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay-root@0.1.5...@spectrum-web-components/overlay-root@0.1.6) (2019-11-27)
 
 ### Bug Fixes

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.4.1...@spectrum-web-components/styles@0.4.2) (2019-12-02)
+
+### Bug Fixes
+
+-   code review feedback ([441bbb7](https://github.com/adobe/spectrum-web-components/commit/441bbb7))
+-   font.css not auto-generated from spectrum-css ([2621a8a](https://github.com/adobe/spectrum-web-components/commit/2621a8a)), closes [#308](https://github.com/adobe/spectrum-web-components/issues/308)
+-   swap the order here so the variables are defined first ([01d8724](https://github.com/adobe/spectrum-web-components/commit/01d8724))
+
 ## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.4.0...@spectrum-web-components/styles@0.4.1) (2019-11-27)
 
 ### Bug Fixes

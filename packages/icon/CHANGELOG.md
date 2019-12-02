@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.4.1...@spectrum-web-components/icon@0.4.2) (2019-12-02)
+
+### Bug Fixes
+
+-   normalize "event" and "error" argument names ([8d382cd](https://github.com/adobe/spectrum-web-components/commit/8d382cd))
+
 ## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.4.0...@spectrum-web-components/icon@0.4.1) (2019-11-27)
 
 ### Bug Fixes
