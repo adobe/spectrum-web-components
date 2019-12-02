@@ -28,7 +28,8 @@ const processCSSData = (data, identifier) => {
     let result = data.replace(/\\/g, '\\\\');
 
     // possible selectors to replace
-    const selector1 = `.spectrum--${identifier}`;
+    const selector1 =
+        identifier == ':root ' ? identifier : `.spectrum--${identifier}`;
     const selector2 = '.spectrum';
 
     // new selector values
@@ -55,6 +56,11 @@ const processCSSData = (data, identifier) => {
     return result;
 };
 
+const writeProcessedCSSToFile = (dstPath, contents) => {
+    result = `${license}\n/* stylelint-disable */\n${contents}\n/* stylelint-enable */`;
+    fs.writeFile(dstPath, result, 'utf8');
+};
+
 const processCSS = (srcPath, dstPath, identifier) => {
     fs.readFile(srcPath, 'utf8', function(error, data) {
         if (error) {
@@ -62,9 +68,7 @@ const processCSS = (srcPath, dstPath, identifier) => {
         }
 
         let result = processCSSData(data, identifier);
-        result = `${license}\n/* stylelint-disable */\n${result}\n/* stylelint-enable */`;
-
-        fs.writeFile(dstPath, result, 'utf8');
+        writeProcessedCSSToFile(dstPath, result);
     });
 };
 
@@ -77,8 +81,7 @@ const processMultiSourceCSS = (srcPaths, dstPath, identifier) => {
         result = `${result}\n${processCSSData(data, identifier)}`;
     }
 
-    result = `${license}\n/* stylelint-disable */\n${result}\n/* stylelint-enable */`;
-    fs.writeFile(dstPath, result, 'utf8');
+    writeProcessedCSSToFile(dstPath, result);
 };
 
 // where is spectrum-css?
@@ -182,7 +185,7 @@ cores.forEach(async (core) => {
         );
         console.log(`processing fonts from commons & typography`);
         processes.push(
-            processMultiSourceCSS([srcPath1, srcPath2], dstPath, 'typography')
+            processMultiSourceCSS([srcPath1, srcPath2], dstPath, ':root ')
         );
     }
 }
