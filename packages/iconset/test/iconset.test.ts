@@ -128,5 +128,3 @@ describe('Iconset', () => {
         expect(svg).to.not.be.null;
     });
 });
-
-describe('Iconset order', () => {});
