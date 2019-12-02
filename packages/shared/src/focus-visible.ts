@@ -59,6 +59,7 @@ export const FocusVisiblePolyfillMixin = <
             instance.shadowRoot == null ||
             instance.hasAttribute('data-js-focus-visible')
         ) {
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             return () => {};
         }
 
@@ -94,6 +95,7 @@ export const FocusVisiblePolyfillMixin = <
             };
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         return () => {};
     };
 
