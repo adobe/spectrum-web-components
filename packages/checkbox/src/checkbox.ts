@@ -26,7 +26,12 @@ export class Checkbox extends CheckboxBase {
     public invalid = false;
 
     public static get styles(): CSSResultArray {
-        return [checkboxStyles, checkmarkSmallStyles, dashSmallStyles];
+        return [
+            ...super.styles,
+            checkboxStyles,
+            checkmarkSmallStyles,
+            dashSmallStyles,
+        ];
     }
 
     protected render(): TemplateResult {
