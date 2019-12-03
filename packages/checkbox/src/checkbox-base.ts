@@ -10,10 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { property, html, TemplateResult, query } from 'lit-element';
+import {
+    property,
+    html,
+    TemplateResult,
+    query,
+    CSSResultArray,
+} from 'lit-element';
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
 export class CheckboxBase extends Focusable {
+    public static get styles(): CSSResultArray {
+        return [...super.styles];
+    }
+
     @property({ type: Boolean, reflect: true })
     public checked = false;
 

@@ -22,7 +22,7 @@ export class Switch extends CheckboxBase {
             // Override some styles if we are using the web component polyfill
             return [switchStyles, legacyStyles];
         }
-        return [switchStyles];
+        return [...super.styles, switchStyles];
     }
 
     protected render(): TemplateResult {
