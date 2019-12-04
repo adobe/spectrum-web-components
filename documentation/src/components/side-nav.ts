@@ -16,7 +16,7 @@ import {
     property,
     PropertyValues,
 } from 'lit-element';
-import { ComponentDocs } from '../../components';
+import { ComponentApiDocs } from '../../api-docs';
 import { AppRouter } from '../router';
 import { SidenavSelectDetail } from '../../../packages/sidenav';
 import sideNavStyles from './side-nav.css';
@@ -31,7 +31,7 @@ class SideNav extends LitElement {
     public open = false;
 
     private get components(): string[] {
-        return Array.from(ComponentDocs.keys());
+        return Array.from(ComponentApiDocs.keys());
     }
 
     private handleSelect(
