@@ -9,14 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, CSSResultArray } from 'lit-element';
-import './code-example';
-import { ComponentDocs } from '../../components';
-import { ComponentApiDocs } from '../../api-docs';
+import { html, CSSResultArray, TemplateResult } from 'lit-element';
 import { LayoutElement } from './layout';
 import componentStyles from './markdown.css';
 import { AppRouter } from '../router';
 import { TabList } from '../../../packages/tab-list';
+
+let ComponentApiDocs: Map<string, TemplateResult>;
+let ComponentDocs: Map<string, TemplateResult>;
 
 enum TabValue {
     Api = 'api',
@@ -32,6 +32,9 @@ class ComponentElement extends LayoutElement {
         };
         pathname: string;
     };
+
+    private apiDocsLoaded = false;
+    private docsLoaded = false;
 
     public static get styles(): CSSResultArray {
         return [super.styles, componentStyles];
@@ -60,6 +63,27 @@ class ComponentElement extends LayoutElement {
             component: this.location.params.component,
             tab: selected,
         });
+    }
+
+    loadDocs() {
+        import('../../api-docs').then((module) => {
+            ComponentApiDocs = module.ComponentApiDocs;
+            this.apiDocsLoaded = true;
+            this.requestUpdate();
+        });
+
+        import('../../components').then((module) => {
+            ComponentDocs = module.ComponentDocs;
+            this.docsLoaded = true;
+            this.requestUpdate();
+        });
+    }
+
+    shouldUpdate() {
+        if (!this.apiDocsLoaded && !this.docsLoaded) {
+            this.loadDocs();
+        }
+        return this.docsLoaded && this.apiDocsLoaded;
     }
 
     renderContent() {

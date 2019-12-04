@@ -13,6 +13,8 @@ governing permissions and limitations under the License.
 const path = require('path');
 const merge = require('webpack-merge');
 const createDefaultConfig = require('@open-wc/building-webpack/modern-config');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin;
 const WebpackBar = require('webpackbar');
 
 const srcPath = path.resolve(__dirname, '../src');
@@ -147,5 +149,19 @@ module.exports = merge(openWcConfig, {
             },
         ],
     },
-    plugins: [new WebpackBar()],
+    plugins: [
+        new WebpackBar(),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: false,
+            reportFilename: '../report/report.html',
+            statsFilename: '../report/stats.json',
+            generateStatsFile: true,
+            statsOptions: {
+                chunkModules: true,
+                children: false,
+                source: false,
+            },
+        }),
+    ],
 });

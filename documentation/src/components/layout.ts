@@ -95,4 +95,9 @@ export class LayoutElement extends RouteComponent {
             </sp-theme>
         `;
     }
+
+    connectedCallback() {
+        super.connectedCallback();
+        import('./code-example');
+    }
 }
