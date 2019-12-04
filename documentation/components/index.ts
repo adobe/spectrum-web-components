@@ -1,7 +1,11 @@
 import { toHtmlTemplateString } from '../src/utils/templates';
 import { TemplateResult } from 'lit-element';
 
-const componentDocs = require.context('../../packages', true, /\.md$/);
+const componentDocs = require.context(
+    '../../packages',
+    true,
+    /(?<!CHANGELOG)\.md$/
+);
 
 export const ComponentDocs = new Map<string, TemplateResult>();
 
