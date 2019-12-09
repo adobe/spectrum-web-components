@@ -118,6 +118,10 @@ module.exports = [
     'theme--none',
     'theme--nested-theme',
     'theme--nested-color',
+    'toast--default',
+    'toast--negative',
+    'toast--positive',
+    'toast--info',
     'tooltip--default',
     'tooltip--w-icon',
 ];
