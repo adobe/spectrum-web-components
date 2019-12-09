@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.3.2...@spectrum-web-components/button@0.4.0) (2019-12-09)
+
+### Features
+
+-   **button:** add support for "sp-clear-button" ([9028b6d](https://github.com/adobe/spectrum-web-components/commit/9028b6d))
+
 ## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.3.1...@spectrum-web-components/button@0.3.2) (2019-12-02)
 
 **Note:** Version bump only for package @spectrum-web-components/button

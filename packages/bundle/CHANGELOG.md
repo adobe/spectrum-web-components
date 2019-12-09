@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.5.3...@spectrum-web-components/bundle@0.6.0) (2019-12-09)
+
+### Features
+
+-   **toast:** add "sp-toast" pattern ([d0a5f00](https://github.com/adobe/spectrum-web-components/commit/d0a5f00))
+
 ## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.5.2...@spectrum-web-components/bundle@0.5.3) (2019-12-03)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle
