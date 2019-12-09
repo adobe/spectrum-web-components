@@ -1,0 +1,198 @@
+/* stylelint-disable */ /* 
+Copyright 2019 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    /* .spectrum-Toast */
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: var(
+        --spectrum-toast-border-radius,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    padding: var(
+            --spectrum-toast-padding-y,
+            var(--spectrum-global-dimension-size-100)
+        )
+        var(
+            --spectrum-toast-padding-right,
+            var(--spectrum-global-dimension-size-100)
+        )
+        var(
+            --spectrum-toast-padding-y,
+            var(--spectrum-global-dimension-size-100)
+        )
+        var(
+            --spectrum-toast-padding-left,
+            var(--spectrum-global-dimension-size-200)
+        );
+    font-size: var(
+        --spectrum-toast-text-size,
+        var(--spectrum-alias-font-size-default)
+    );
+    font-weight: var(
+        --spectrum-toast-text-font-weight,
+        var(--spectrum-global-font-weight-bold)
+    );
+    -webkit-font-smoothing: antialiased; /* .spectrum-Toast */
+    background-color: var(
+        --spectrum-toast-background-color,
+        var(--spectrum-global-color-static-gray-700)
+    );
+    color: var(
+        --spectrum-toast-background-color,
+        var(--spectrum-global-color-static-gray-700)
+    );
+}
+.type {
+    /* .spectrum-Toast-typeIcon */
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin: var(--spectrum-global-dimension-size-85)
+        var(
+            --spectrum-toast-icon-padding-right,
+            var(--spectrum-global-dimension-size-150)
+        )
+        var(--spectrum-global-dimension-size-85) 0; /* .spectrum-Toast-typeIcon */
+    color: #fff;
+}
+.content {
+    /* .spectrum-Toast-content */
+    flex: 1 1 auto;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: var(--spectrum-global-dimension-size-65)
+        var(
+            --spectrum-toast-content-padding-right,
+            var(--spectrum-global-dimension-size-200)
+        )
+        var(--spectrum-global-dimension-size-65) 0;
+    text-align: left; /* .spectrum-Toast-content */
+    color: var(
+        --spectrum-toast-text-color,
+        var(--spectrum-global-color-static-white)
+    );
+}
+.buttons {
+    /* .spectrum-Toast-buttons */
+    display: flex;
+    flex: 0 0 auto;
+    align-items: flex-start; /* .spectrum-Toast-buttons */
+    border-left-color: hsla(0, 0%, 100%, 0.2);
+}
+.buttons .spectrum-ClearButton + ::slotted([slot='action']),
+.buttons .spectrum-ClearButton + .spectrum-ClearButton {
+    /* .spectrum-Toast-buttons .spectrum-Button+.spectrum-Button,
+   * .spectrum-Toast-buttons .spectrum-Button+.spectrum-ClearButton,
+   * .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-Button,
+   * .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */
+    margin-left: var(
+        --spectrum-toast-button-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+.body {
+    /* .spectrum-Toast-body */
+    flex: 1 1 auto;
+    align-self: center;
+}
+.body ::slotted([slot='action']) {
+    /* .spectrum-Toast-body .spectrum-Button */
+    float: right;
+    margin-right: var(--spectrum-global-dimension-size-130);
+}
+.body + .buttons {
+    /* .spectrum-Toast-body+.spectrum-Toast-buttons */
+    padding-left: var(
+        --spectrum-toast-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    border-left-width: 1px;
+    border-left-style: solid;
+}
+:host([variant='warning']) {
+    /* .spectrum-Toast--warning */
+    background-color: var(
+        --spectrum-toast-warning-background-color,
+        var(--spectrum-global-color-static-orange-700)
+    );
+}
+:host([variant='warning']),
+:host([variant='warning']) .closeButton:focus-visible:not(:active) {
+    /* .spectrum-Toast--warning,
+   * .spectrum-Toast--warning .spectrum-Toast-closeButton.focus-ring:not(:active) */
+    color: var(
+        --spectrum-toast-warning-background-color,
+        var(--spectrum-global-color-static-orange-700)
+    );
+}
+:host([variant='error']),
+:host([variant='negative']) {
+    /* .spectrum-Toast--error,
+   * .spectrum-Toast--negative */
+    background-color: var(
+        --spectrum-toast-error-background-color,
+        var(--spectrum-global-color-static-red-700)
+    );
+}
+:host([variant='error']),
+:host([variant='error']) .closeButton:focus-visible:not(:active),
+:host([variant='negative']),
+:host([variant='negative']) .closeButton:focus-visible:not(:active) {
+    /* .spectrum-Toast--error,
+   * .spectrum-Toast--error .spectrum-Toast-closeButton.focus-ring:not(:active),
+   * .spectrum-Toast--negative,
+   * .spectrum-Toast--negative .spectrum-Toast-closeButton.focus-ring:not(:active) */
+    color: var(
+        --spectrum-toast-error-background-color,
+        var(--spectrum-global-color-static-red-700)
+    );
+}
+:host([variant='info']) {
+    /* .spectrum-Toast--info */
+    background-color: var(
+        --spectrum-toast-info-background-color,
+        var(--spectrum-global-color-static-blue-700)
+    );
+}
+:host([variant='info']),
+:host([variant='info']) .closeButton:focus-visible:not(:active) {
+    /* .spectrum-Toast--info,
+   * .spectrum-Toast--info .spectrum-Toast-closeButton.focus-ring:not(:active) */
+    color: var(
+        --spectrum-toast-info-background-color,
+        var(--spectrum-global-color-static-blue-700)
+    );
+}
+:host([variant='positive']),
+:host([variant='success']) {
+    /* .spectrum-Toast--positive,
+   * .spectrum-Toast--success */
+    background-color: var(
+        --spectrum-toast-positive-background-color,
+        var(--spectrum-global-color-static-green-700)
+    );
+}
+:host([variant='positive']),
+:host([variant='positive']) .closeButton:focus-visible:not(:active),
+:host([variant='success']),
+:host([variant='success']) .closeButton:focus-visible:not(:active) {
+    /* .spectrum-Toast--positive,
+   * .spectrum-Toast--positive .spectrum-Toast-closeButton.focus-ring:not(:active),
+   * .spectrum-Toast--success,
+   * .spectrum-Toast--success .spectrum-Toast-closeButton.focus-ring:not(:active) */
+    color: var(
+        --spectrum-toast-positive-background-color,
+        var(--spectrum-global-color-static-green-700)
+    );
+}

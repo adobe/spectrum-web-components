@@ -42,10 +42,10 @@ module.exports = (config) => {
                 // TODO(#212): reapply coverage based on source files.
                 thresholds: {
                     global: {
-                        statements: 95,
-                        branches: 85,
+                        statements: 96,
+                        branches: 86,
                         functions: 97,
-                        lines: 95,
+                        lines: 96,
                     },
                 },
             },

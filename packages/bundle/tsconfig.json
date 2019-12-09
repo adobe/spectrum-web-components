@@ -39,6 +39,7 @@
         { "path": "../tab-list" },
         { "path": "../textfield" },
         { "path": "../themes" },
+        { "path": "../toast" },
         { "path": "../tooltip" }
     ]
 }
