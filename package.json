@@ -144,7 +144,7 @@
         "gulp-debug": "^4.0.0",
         "gulp-header": "^2.0.5",
         "gulp-postcss": "^8.0.0",
-        "gulp-rename": "^1.4.0",
+        "gulp-rename": "^2.0.0",
         "gulp-sourcemaps": "^2.6.5",
         "gulp-tap": "^2.0.0",
         "gulp-typescript": "^5.0.0",
