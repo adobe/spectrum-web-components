@@ -36,6 +36,9 @@
         "@spectrum-css/toast": "^2.0.2"
     },
     "dependencies": {
+        "@spectrum-web-components/button": "^0.4.0",
+        "@spectrum-web-components/icon": "^0.4.2",
+        "@spectrum-web-components/icons": "^0.2.2",
         "tslib": "^1.10.0"
     }
 }
