@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.2.2...@spectrum-web-components/textfield@0.2.3) (2019-12-12)
+
+### Bug Fixes
+
+-   apply Focuable styles in class extensions ([38f7afd](https://github.com/adobe/spectrum-web-components/commit/38f7afd))
+
 ## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.2.1...@spectrum-web-components/textfield@0.2.2) (2019-12-02)
 
 ### Bug Fixes

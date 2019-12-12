@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.1.0...@spectrum-web-components/toast@0.1.1) (2019-12-12)
+
+### Bug Fixes
+
+-   **toast:** include dependencies ([1b82212](https://github.com/adobe/spectrum-web-components/commit/1b82212))
+
 # 0.1.0 (2019-12-09)
 
 ### Features
