@@ -45,6 +45,7 @@ import '@spectrum-web-components/popover';
 export class Dropdown extends Focusable {
     public static get styles(): CSSResultArray {
         return [
+            ...super.styles,
             actionButtonStyles,
             fieldButtonStyles,
             dropdownStyles,
