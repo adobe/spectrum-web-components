@@ -161,7 +161,7 @@
         "lit-html": "^1.0.0",
         "lodash": "^4.17.15",
         "markdown-loader": "^5.1.0",
-        "marked": "^0.7.0",
+        "marked": "^0.8.0",
         "merge2": "^1.2.3",
         "node-fetch": "^2.6.0",
         "npm-run-all": "^4.1.5",
