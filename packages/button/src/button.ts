@@ -43,6 +43,6 @@ export class Button extends ButtonBase {
     public quiet = false;
 
     public static get styles(): CSSResultArray {
-        return [buttonStyles];
+        return [...super.styles, buttonStyles];
     }
 }
