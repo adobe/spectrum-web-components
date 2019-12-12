@@ -30,12 +30,6 @@ module.exports = (config) => {
                 nodeResolve: true,
             },
             browsers: ['FirefoxHeadless'],
-            customLaunchers: {
-                FirefoxHeadless: {
-                    base: 'Firefox',
-                    flags: ['-headless'],
-                },
-            },
             junitReporter: {
                 outputDir: process.env.JUNIT_REPORT_PATH,
                 outputFile: process.env.JUNIT_REPORT_NAME,
@@ -44,7 +38,7 @@ module.exports = (config) => {
             coverageIstanbulReporter: {
                 thresholds: {
                     global: {
-                        statements: 96,
+                        statements: 95,
                         branches: 86,
                         functions: 97,
                         lines: 96,
