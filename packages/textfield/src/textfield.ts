@@ -35,7 +35,12 @@ import { nothing } from 'lit-html';
 
 export class Textfield extends Focusable {
     public static get styles(): CSSResultArray {
-        return [textfieldStyles, checkmarkSmallStyles, alertSmallStyles];
+        return [
+            ...super.styles,
+            textfieldStyles,
+            checkmarkSmallStyles,
+            alertSmallStyles,
+        ];
     }
 
     @query('#input')

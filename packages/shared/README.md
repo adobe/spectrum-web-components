@@ -13,6 +13,9 @@ import { Focusable } from '@spectrum-web-components/shared/lib/focusable';
 import { html } from 'lit-element';
 
 class FocusableButton extends Focusable {
+    public static get styles(): CSSResultArray {
+        return [...super.styles];
+    }
     public get focusElement(): HTMLElement {
         /* istanbul ignore if */
         if (!this.shadowRoot) {

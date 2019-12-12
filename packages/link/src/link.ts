@@ -30,7 +30,7 @@ import linkStyles from './link.css.js';
  */
 export class Link extends Focusable {
     public static get styles(): CSSResultArray {
-        return [linkStyles];
+        return [...super.styles, linkStyles];
     }
 
     @query('#anchor')
