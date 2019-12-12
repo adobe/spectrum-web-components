@@ -70,6 +70,6 @@ The `<sp-tab-list>` component contains set of tab-item elements. This is typical
 </div>
 ```
 
-## Keyboard Focus
+## Accessibility
 
-By default, the first tab in tab-list automatically becomes selected when the tab-list receives focus.
+When an `<sp-tab-list>` has a `selected` value, the `<sp-tab>` child of that `value` will be given `[tabindex="0"]` and will receive initial focus when tabbing into the `<sp-tab-list>` element. When no `selected` value is present, the first `<sp-tab>` child will be treated in this way. When focus is currently within the `<sp-tab-list>` element, the left and right arrows will move that focus back and forth through the available `<sp-tab>` children.

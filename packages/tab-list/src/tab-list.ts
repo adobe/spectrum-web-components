@@ -16,9 +16,16 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
+    PropertyValues,
 } from 'lit-element';
+import { Tab } from '@spectrum-web-components/tab';
 
 import tabStyles from './tab-list.css.js';
+
+const availableArrowsByDirection = {
+    vertical: ['ArrowUp', 'ArrowDown'],
+    horizontal: ['ArrowLeft', 'ArrowRight'],
+};
 
 /**
  * @slot - Child tab elements
@@ -58,6 +65,8 @@ export class TabList extends LitElement {
 
     private _selected = '';
 
+    private tabs: Tab[] = [];
+
     protected render(): TemplateResult {
         return html`
             <slot
@@ -72,6 +81,47 @@ export class TabList extends LitElement {
         `;
     }
 
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
+        this.setAttribute('role', 'tablist');
+        this.addEventListener('focusin', this.startListeningToKeyboard);
+        this.addEventListener('focusout', this.stopListeningToKeyboard);
+    }
+
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (changes.has('direction')) {
+            if (this.direction === 'vertical') {
+                this.setAttribute('aria-orientation', 'vertical');
+            } else {
+                this.removeAttribute('aria-orientation');
+            }
+        }
+    }
+
+    public startListeningToKeyboard = (): void => {
+        this.addEventListener('keydown', this.handleKeydown);
+    };
+
+    public stopListeningToKeyboard = (): void => {
+        this.removeEventListener('keydown', this.handleKeydown);
+    };
+
+    public handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
+        const availableArrows = availableArrowsByDirection[this.direction];
+        if (!availableArrows.includes(code)) {
+            return;
+        }
+        event.preventDefault();
+        const currentFocusedTab = document.activeElement as Tab;
+        let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
+        currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
+        this.tabs[
+            (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
+        ].focus();
+    }
+
     private onClick(event: Event): void {
         const target = event.target as HTMLElement;
         this.selectTarget(target);
@@ -81,6 +131,7 @@ export class TabList extends LitElement {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             const target = event.target as HTMLElement;
+            /* istanbul ignore else */
             if (target) {
                 this.selectTarget(target);
             }
@@ -105,6 +156,7 @@ export class TabList extends LitElement {
 
     private onSlotChange(): void {
         this.updateCheckedState(this.selected);
+        this.tabs = [...this.querySelectorAll('[role="tab"]')] as Tab[];
     }
 
     private updateCheckedState(value: string): void {
@@ -119,6 +171,14 @@ export class TabList extends LitElement {
 
             if (currentChecked) {
                 currentChecked.setAttribute('selected', '');
+            } else {
+                this.selected = '';
+            }
+        }
+        if (!this.selected) {
+            const firstTab = this.querySelector('[role="tab"]');
+            if (firstTab) {
+                firstTab.setAttribute('tabindex', '0');
             }
         }
 
