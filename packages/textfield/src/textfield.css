@@ -18,10 +18,6 @@ governing permissions and limitations under the License.
     vertical-align: top;
 }
 
-:host([disabled]) {
-    pointer-events: none;
-}
-
 #input:invalid,
 :host([invalid]) #input {
     background-image: none;
