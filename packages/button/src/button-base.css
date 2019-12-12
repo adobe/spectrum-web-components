@@ -21,14 +21,10 @@ governing permissions and limitations under the License.
     flex: 1 1 auto;
 
     /* spectrum-css uses "-webkit-appearance: button" to workaround an
-     * iOS and Safari issue. However, it results in incorrect styling 
+     * iOS and Safari issue. However, it results in incorrect styling
      * when applied in :host
      */
     -webkit-appearance: none;
-}
-
-:host([disabled]) {
-    pointer-events: none;
 }
 
 slot[name='icon']::slotted(svg) {

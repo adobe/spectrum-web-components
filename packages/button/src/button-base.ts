@@ -10,12 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { property, html, TemplateResult } from 'lit-element';
+import { property, html, TemplateResult, CSSResultArray } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/lib/observe-slot-text';
 
 export class ButtonBase extends ObserveSlotText(Focusable) {
+    public static get styles(): CSSResultArray {
+        return [...super.styles];
+    }
+
     /**
      * Supplies an address that the browser will navigate to when this button is
      * clicked

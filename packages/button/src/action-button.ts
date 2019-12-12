@@ -25,6 +25,6 @@ export class ActionButton extends ButtonBase {
     public holdAffordance = false;
 
     public static get styles(): CSSResultArray {
-        return [buttonStyles];
+        return [...super.styles, buttonStyles];
     }
 }

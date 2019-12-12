@@ -17,7 +17,7 @@ import crossMediumStyles from '@spectrum-web-components/icon/lib/spectrum-icon-c
 
 export class ClearButton extends ButtonBase {
     public static get styles(): CSSResultArray {
-        return [buttonStyles, crossMediumStyles];
+        return [...super.styles, buttonStyles, crossMediumStyles];
     }
 
     /**
