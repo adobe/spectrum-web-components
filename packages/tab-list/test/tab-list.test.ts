@@ -25,14 +25,18 @@ const keyboardEvent = (code: string): KeyboardEvent =>
     });
 const enterEvent = keyboardEvent('Enter');
 const spaceEvent = keyboardEvent(' ');
+const arrowRightEvent = keyboardEvent('ArrowRight');
+const arrowLeftEvent = keyboardEvent('ArrowLeft');
+const arrowUpEvent = keyboardEvent('ArrowUp');
+const arrowDownEvent = keyboardEvent('ArrowDown');
 
 const createTabList = async (): Promise<TabList> =>
     await fixture<TabList>(
         html`
             <sp-tab-list selected="first">
-                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
-                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
-                <sp-tab label="Tab 3" value="third" tabindex="3"></sp-tab>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+                <sp-tab label="Tab 2" value="second"></sp-tab>
+                <sp-tab label="Tab 3" value="third"></sp-tab>
             </sp-tab-list>
         `
     );
@@ -167,9 +171,9 @@ describe('TabList', () => {
     it('displays `vertical`', async () => {
         const el = await fixture<TabList>(html`
             <sp-tab-list selected="first" direction="vertical">
-                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
-                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
-                <sp-tab label="Tab 3" value="third" tabindex="3"></sp-tab>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+                <sp-tab label="Tab 2" value="second"></sp-tab>
+                <sp-tab label="Tab 3" value="third"></sp-tab>
             </sp-tab-list>
         `);
 
@@ -183,9 +187,9 @@ describe('TabList', () => {
     it('displays with nothing `selected`', async () => {
         const el = await fixture<TabList>(html`
             <sp-tab-list>
-                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
-                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
-                <sp-tab label="Tab 3" value="third" tabindex="3"></sp-tab>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+                <sp-tab label="Tab 2" value="second"></sp-tab>
+                <sp-tab label="Tab 3" value="third"></sp-tab>
             </sp-tab-list>
         `);
 
@@ -199,7 +203,7 @@ describe('TabList', () => {
     it('ignores children with no `value`', async () => {
         const el = await fixture<TabList>(html`
             <sp-tab-list selected="first">
-                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
                 <div id="other">Other thing</div>
             </sp-tab-list>
         `);
@@ -216,8 +220,8 @@ describe('TabList', () => {
         const cancelSelection = (event: Event): void => event.preventDefault();
         const el = await fixture<TabList>(html`
             <sp-tab-list selected="first" @change=${cancelSelection}>
-                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
-                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+                <sp-tab label="Tab 2" value="second"></sp-tab>
             </sp-tab-list>
         `);
 
@@ -231,22 +235,109 @@ describe('TabList', () => {
     });
     it('accepts keyboard based selection', async () => {
         const el = await fixture<TabList>(html`
-            <sp-tab-list selected="first">
-                <sp-tab label="Tab 1" value="first" tabindex="1"></sp-tab>
-                <sp-tab label="Tab 2" value="second" tabindex="2"></sp-tab>
+            <sp-tab-list selected="Unknown">
+                <sp-tab label="Tab 1" value="first">
+                    <sp-icon
+                        slot="icon"
+                        size="s"
+                        name="ui:CheckmarkSmall"
+                    ></sp-icon>
+                </sp-tab>
+                <sp-tab label="Tab 2" value="second">
+                    <sp-icon
+                        slot="icon"
+                        size="s"
+                        name="ui:CheckmarkSmall"
+                    ></sp-icon>
+                </sp-tab>
             </sp-tab-list>
         `);
 
         await elementUpdated(el);
-        expect(el.selected).to.be.equal('first');
+        expect(el.selected).to.be.equal('');
 
+        const firstTab = el.querySelector('[value="first"]') as Tab;
         const secondTab = el.querySelector('[value="second"]') as Tab;
+        firstTab.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+        firstTab.focus();
+
+        await elementUpdated(el);
+        expect(document.activeElement === firstTab, 'Focus first tab').to.be
+            .true;
+
+        firstTab.dispatchEvent(arrowLeftEvent);
+        firstTab.dispatchEvent(arrowUpEvent);
+
+        await elementUpdated(el);
+        expect(document.activeElement === secondTab, 'Focus second tab').to.be
+            .true;
+
         secondTab.dispatchEvent(enterEvent);
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('second');
 
+        secondTab.dispatchEvent(arrowRightEvent);
+
+        await elementUpdated(el);
+        expect(document.activeElement === firstTab, 'Focus first tab').to.be
+            .true;
+
+        firstTab.dispatchEvent(spaceEvent);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('first');
+    });
+    it('accepts keyboard based selection - [direction="vertical"]', async () => {
+        const el = await fixture<TabList>(html`
+            <sp-tab-list selected="Unknown" direction="vertical">
+                <sp-tab label="Tab 1" value="first">
+                    <sp-icon
+                        slot="icon"
+                        size="s"
+                        name="ui:CheckmarkSmall"
+                    ></sp-icon>
+                </sp-tab>
+                <sp-tab label="Tab 2" value="second">
+                    <sp-icon
+                        slot="icon"
+                        size="s"
+                        name="ui:CheckmarkSmall"
+                    ></sp-icon>
+                </sp-tab>
+            </sp-tab-list>
+        `);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('');
+
         const firstTab = el.querySelector('[value="first"]') as Tab;
+        const secondTab = el.querySelector('[value="second"]') as Tab;
+        firstTab.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+        firstTab.focus();
+
+        await elementUpdated(el);
+        expect(document.activeElement === firstTab, 'Focus first tab').to.be
+            .true;
+
+        firstTab.dispatchEvent(arrowLeftEvent);
+        firstTab.dispatchEvent(arrowUpEvent);
+
+        await elementUpdated(el);
+        expect(document.activeElement === secondTab, 'Focus second tab').to.be
+            .true;
+
+        secondTab.dispatchEvent(enterEvent);
+
+        await elementUpdated(el);
+        expect(el.selected).to.be.equal('second');
+
+        secondTab.dispatchEvent(arrowDownEvent);
+
+        await elementUpdated(el);
+        expect(document.activeElement === firstTab, 'Focus first tab').to.be
+            .true;
+
         firstTab.dispatchEvent(spaceEvent);
 
         await elementUpdated(el);

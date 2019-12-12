@@ -41,6 +41,7 @@
         "@spectrum-css/tabs": "^2.1.1"
     },
     "dependencies": {
+        "@spectrum-web-components/tab": "^0.2.2",
         "tslib": "^1.10.0"
     }
 }
