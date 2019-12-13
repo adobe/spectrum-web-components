@@ -137,6 +137,7 @@ export class ActiveOverlay extends LitElement {
     public offset = 6;
     private position?: PositionResult;
     public interaction: TriggerInteractions = 'hover';
+    private positionAnimationFrame = 0;
 
     private timeout?: number;
     private hiddenDeferred?: Deferred<void>;
@@ -254,8 +255,8 @@ export class ActiveOverlay extends LitElement {
             positionOptions.crossOffset
         );
 
-        this.style.setProperty('top', `${this.position.positionTop}px`);
         this.style.setProperty('left', `${this.position.positionLeft}px`);
+        this.style.setProperty('top', `${this.position.positionTop}px`);
     }
 
     public async hide(): Promise<void> {
@@ -271,14 +272,21 @@ export class ActiveOverlay extends LitElement {
         }
     };
 
-    private onSlotChange(): void {
+    private schedulePositionUpdate(): void {
         // Edge needs a little time to update the DOM before computing the layout
-        requestAnimationFrame(() => this.updateOverlayPosition());
+        cancelAnimationFrame(this.positionAnimationFrame);
+        this.positionAnimationFrame = requestAnimationFrame(() =>
+            this.updateOverlayPosition()
+        );
+    }
+
+    private onSlotChange(): void {
+        this.schedulePositionUpdate();
     }
 
     public connectedCallback(): void {
         super.connectedCallback();
-        this.updateOverlayPosition();
+        this.schedulePositionUpdate();
     }
 
     public render(): TemplateResult {

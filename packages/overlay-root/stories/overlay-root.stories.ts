@@ -257,4 +257,84 @@ storiesOf('Overlay Root', module)
                 <recursive-popover></recursive-popover>
             </overlay-root>
         `;
+    })
+    .add('Edges', () => {
+        return html`
+            <style>
+                overlay-root {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                }
+                overlay-trigger {
+                    position: absolute;
+                }
+                .top-right {
+                    top: 0;
+                    right: 0;
+                }
+                .bottom-right {
+                    bottom: 0;
+                    right: 0;
+                }
+                .bottom-left {
+                    bottom: 0;
+                    left: 0;
+                }
+            </style>
+            <overlay-root>
+                <overlay-trigger class="top-left" placement="bottom">
+                    <sp-button slot="trigger">
+                        Top/
+                        <br />
+                        Right
+                    </sp-button>
+                    <sp-tooltip
+                        slot="hover-content"
+                        delay="100"
+                        open
+                        tip="bottom"
+                    >
+                        Triskaidekaphobia and More
+                    </sp-tooltip>
+                </overlay-trigger>
+                <overlay-trigger class="top-right" placement="bottom">
+                    <sp-button slot="trigger">
+                        Top/
+                        <br />
+                        Right
+                    </sp-button>
+                    <sp-tooltip
+                        slot="hover-content"
+                        delay="100"
+                        open
+                        tip="bottom"
+                    >
+                        Triskaidekaphobia and More
+                    </sp-tooltip>
+                </overlay-trigger>
+                <overlay-trigger class="bottom-left" placement="top">
+                    <sp-button slot="trigger">
+                        Bottom/
+                        <br />
+                        Left
+                    </sp-button>
+                    <sp-tooltip slot="hover-content" delay="100" open tip="top">
+                        Triskaidekaphobia and More
+                    </sp-tooltip>
+                </overlay-trigger>
+                <overlay-trigger class="bottom-right" placement="top">
+                    <sp-button slot="trigger">
+                        Bottom/
+                        <br />
+                        Right
+                    </sp-button>
+                    <sp-tooltip slot="hover-content" delay="100" open tip="top">
+                        Triskaidekaphobia and More
+                    </sp-tooltip>
+                </overlay-trigger>
+            </overlay-root>
+        `;
     });
