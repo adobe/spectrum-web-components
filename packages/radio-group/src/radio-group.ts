@@ -43,7 +43,7 @@ export class RadioGroup extends LitElement {
 
     public set selected(value: string) {
         const radio = value
-            ? (this.querySelector(`sp-radio[value=${value}]`) as Radio)
+            ? (this.querySelector(`sp-radio[value="${value}"]`) as Radio)
             : undefined;
 
         this.deselectChecked();
