@@ -38,7 +38,7 @@
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/toggle": "^2.0.2"
+        "@spectrum-css/toggle": "^2.0.3"
     },
     "dependencies": {
         "@spectrum-web-components/checkbox": "^0.2.5",
