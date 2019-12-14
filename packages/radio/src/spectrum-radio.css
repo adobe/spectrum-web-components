@@ -84,15 +84,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-radio-text-gap,
         var(--spectrum-global-dimension-size-125)
     );
+    margin-top: var(--spectrum-global-dimension-size-85);
     font-size: var(
         --spectrum-radio-text-size,
         var(--spectrum-alias-font-size-default)
     );
+    line-height: 1.49;
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
-        ease-in-out;
-    margin-top: var(
-        --spectrum-global-dimension-size-75
-    ); /* .spectrum-Radio-label */
+        ease-in-out; /* .spectrum-Radio-label */
     color: var(
         --spectrum-radio-emphasized-text-color,
         var(--spectrum-alias-text-color)

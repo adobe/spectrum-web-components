@@ -71,13 +71,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-switch-text-gap,
             var(--spectrum-global-dimension-size-125)
         );
+    margin-top: var(--spectrum-global-dimension-size-85);
     font-size: var(
         --spectrum-switch-text-size,
         var(--spectrum-alias-font-size-default)
     );
+    line-height: 1.49;
     transition: color var(--spectrum-global-animation-duration-200, 0.16s)
         ease-in-out;
-    margin-top: var(--spectrum-global-dimension-size-75);
 }
 #switch {
     /* .spectrum-ToggleSwitch-switch */

@@ -16,9 +16,3 @@ governing permissions and limitations under the License.
     display: inline-flex;
     vertical-align: top;
 }
-
-/* Part of the focus ring gets cut off on the left without this */
-#label {
-    overflow: visible;
-    line-height: 1.5em; /* revert when https://github.com/adobe/spectrum-css/issues/243 is fixed */
-}

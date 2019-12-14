@@ -38,7 +38,7 @@
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/radio": "^2.0.2"
+        "@spectrum-css/radio": "^2.0.3"
     },
     "dependencies": {
         "@spectrum-web-components/shared": "^0.3.3",
