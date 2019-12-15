@@ -2,6 +2,16 @@
 
 An **sp-illustrated-message** displays an illustration icon and a message, usually in an empty state or on an error page. It is also used inside a DropZone.
 
+### Installation
+
+```
+npm install @spectrum-web-components/illustrated-message
+
+# or
+
+yarn add @spectrum-web-components/illustrated-message
+```
+
 ## Example
 
 ```html

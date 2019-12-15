@@ -2,6 +2,16 @@
 
 An **sp-switch** is used to turn an option on or off. Switches allow users to select the state of a single option at a time. Use a switch rather than a checkbox when activating (or deactivating) an option, instead of selecting.
 
+### Installation
+
+```
+npm install @spectrum-web-components/switch
+
+# or
+
+yarn add @spectrum-web-components/switch
+```
+
 ## Example
 
 ```html

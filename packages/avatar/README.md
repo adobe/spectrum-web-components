@@ -2,6 +2,16 @@
 
 An **sp-avatar** is a great way to feature a visual representation of a user.
 
+### Installation
+
+```
+npm install @spectrum-web-components/avatar
+
+# or
+
+yarn add @spectrum-web-components/avatar
+```
+
 ## Example
 
 ```html

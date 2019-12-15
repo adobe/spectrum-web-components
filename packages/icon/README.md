@@ -2,6 +2,16 @@
 
 `<sp-icon>` renders an icon to the page. By default the `name` attribute will pair with separately registered icon sets to deliver the icons. When not present, `<sp-icon>` will subsequently check for its `src` attribute which could populate the icon via an image, and then fallback to any slotted content for an element based icon.
 
+### Installation
+
+```
+npm install @spectrum-web-components/icon
+
+# or
+
+yarn add @spectrum-web-components/icon
+```
+
 ## Example
 
 Names icons on this page are provided by the [`<sp-icons-medium>` icon set](/components/icons). Learn how to create your own via [`sp-iconset`](/components/iconset).

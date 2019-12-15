@@ -1,6 +1,12 @@
 ## Overview
 
+### Installation
+
 ```
+npm install @spectrum-web-components/shared
+
+# or
+
 yarn add @spectrum-web-components/shared
 ```
 

@@ -5,6 +5,16 @@ The Spectrum design system supports four color themes and two different
 scales. `spectrum-web-components` currently supports two of the four
 color themes (dark and light) one one of the scales (medium).
 
+### Installation
+
+```
+npm install @spectrum-web-components/themes
+
+# or
+
+yarn add @spectrum-web-components/themes
+```
+
 ## Light theme
 
 ```html demo

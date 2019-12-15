@@ -2,6 +2,16 @@
 
 An `<sp-action-menu />` is simply an action button with a Popover. Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with the `sp-action-menu` element.
 
+### Installation
+
+```
+npm install @spectrum-web-components/action-menu
+
+# or
+
+yarn add @spectrum-web-components/action-menu
+```
+
 ## Example
 
 <!-- prettier-ignore -->

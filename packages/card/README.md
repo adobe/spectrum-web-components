@@ -6,6 +6,16 @@ to encapsulate units of a data set, such as a gallery of
 image/caption pairs.
 Spectrum has several card variations for different uses.
 
+### Installation
+
+```
+npm install @spectrum-web-components/card
+
+# or
+
+yarn add @spectrum-web-components/card
+```
+
 ## Example
 
 ```html demo

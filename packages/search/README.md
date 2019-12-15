@@ -2,6 +2,16 @@
 
 The `<sp-search />` element delivers a single input field with a "reset" button as well as a mangifying glass icon with which to power search interactions.
 
+### Installation
+
+```
+npm install @spectrum-web-components/search
+
+# or
+
+yarn add @spectrum-web-components/search
+```
+
 ## Example
 
 ```html

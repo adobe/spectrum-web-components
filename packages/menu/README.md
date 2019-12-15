@@ -2,6 +2,16 @@
 
 An `<sp-menu />` is used for creating a menu list. The various elements inside a menu are given as `<sp-menu-group/>`, `<sp-menu-item />`, or `<sp-menu-divider />`. Often a `<sp-menu />` element will appear in a `<sp-popover />` element so that it displays as a togglig menu.
 
+### Installation
+
+```
+npm install @spectrum-web-components/menu
+
+# or
+
+yarn add @spectrum-web-components/menu
+```
+
 ## Example
 
 <!-- prettier-ignore -->

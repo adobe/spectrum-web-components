@@ -2,6 +2,16 @@
 
 `sp-toast`s display brief, temporary notifications. They are noticeable but do not disrupt the user experience and do not require an action to be taken.
 
+### Installation
+
+```
+npm install @spectrum-web-components/toast
+
+# or
+
+yarn add @spectrum-web-components/toast
+```
+
 ## Example
 
 ### Default

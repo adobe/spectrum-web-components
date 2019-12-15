@@ -6,6 +6,16 @@ options, or to mark an individual option as selected.
 Should I use a checkbox or a switch? Use a switch when activating something
 instead of selecting.
 
+### Installation
+
+```
+npm install @spectrum-web-components/checkbox
+
+# or
+
+yarn add @spectrum-web-components/checkbox
+```
+
 ### Example
 
 <sp-icons-medium></sp-icons-medium>
@@ -19,8 +29,6 @@ instead of selecting.
 Standard checkboxes are the default style for checkboxes. The blue color
 provides a visual prominence that is optimal for forms, settings, lists or grids
 of assets, etc. where the checkboxes need to be noticed.
-
-<Checkbox label="React" defaultChecked />
 
 ```html
 <sp-checkbox checked>Web component</sp-checkbox>

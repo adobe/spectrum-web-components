@@ -4,6 +4,16 @@ A **sp-dropzone** is an area on the screen into which an object can be dragged a
 
 DropZones should be used with an IllustratedMessage component as a child if the drop zone is empty, otherwise the existing content should be passed as a child.
 
+### Installation
+
+```
+npm install @spectrum-web-components/dropzone
+
+# or
+
+yarn add @spectrum-web-components/dropzone
+```
+
 ## Example
 
 ```html

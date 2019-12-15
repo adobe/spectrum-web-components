@@ -9,6 +9,16 @@ Please note that you need to wrap your UI in an
 the overlay content. You only need a single `overlay-root` for all of your
 overlays.
 
+### Installation
+
+```
+npm install @spectrum-web-components/overlay-trigger
+
+# or
+
+yarn add @spectrum-web-components/overlay-trigger
+```
+
 ## Example
 
 ```html
