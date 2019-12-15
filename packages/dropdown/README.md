@@ -2,6 +2,16 @@
 
 An `<sp-dropdown />` is an alternative to HTML's `select` element. Use an `<sp-menu>` element to outline the options that will be made available to the user when interacting with the `sp-dropdown` element.
 
+### Installation
+
+```
+npm install @spectrum-web-components/dropdown
+
+# or
+
+yarn add @spectrum-web-components/dropdown
+```
+
 ## Example
 
 <!-- prettier-ignore -->

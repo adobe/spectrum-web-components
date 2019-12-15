@@ -4,6 +4,16 @@
 
 **sp-radio-group** holds a list of **sp-radio** elements, and is responsible for deselecting radio buttons when a new one is selected, which in turn makes it responsible for keeping track of which one is selected. **sp-radio** is responsible for handling user interactions and for visually reflecting if it is the one that is checked or not.
 
+### Installation
+
+```
+npm install @spectrum-web-components/radio-group
+
+# or
+
+yarn add @spectrum-web-components/radio-group
+```
+
 ### Example
 
 ```html

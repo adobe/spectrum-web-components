@@ -2,6 +2,16 @@
 
 An **sp-link** allow users to navigate to a different location. They can be presented in-line inside a paragraph or as a standalone text.
 
+### Installation
+
+```
+npm install @spectrum-web-components/link
+
+# or
+
+yarn add @spectrum-web-components/link
+```
+
 ## Example
 
 <!-- prettier-ignore -->

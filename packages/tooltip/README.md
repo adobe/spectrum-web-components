@@ -2,6 +2,16 @@
 
 `sp-tooltip` allow users to get contextual help or information about specific components when hovering or focusing on them.
 
+### Installation
+
+```
+npm install @spectrum-web-components/tooltip
+
+# or
+
+yarn add @spectrum-web-components/tooltip
+```
+
 ### Example
 
 Tooltips can be top, bottom, left, or right.

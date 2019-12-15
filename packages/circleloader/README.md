@@ -2,6 +2,16 @@
 
 An `<sp-circleloader>` shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent determinate or indeterminate progress.
 
+### Installation
+
+```
+npm install @spectrum-web-components/circleloader
+
+# or
+
+yarn add @spectrum-web-components/circleloader
+```
+
 ## Variants
 
 ### Default

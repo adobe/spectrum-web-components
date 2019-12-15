@@ -2,6 +2,16 @@
 
 An **sp-status-light** is a great way to convey semantic meaning, such as statuses and categories.
 
+### Installation
+
+```
+npm install @spectrum-web-components/status-light
+
+# or
+
+yarn add @spectrum-web-components/status-light
+```
+
 ## Example
 
 ```html

@@ -5,6 +5,16 @@ or tapped to perform an action or to navigate to another page. sp-buttons in
 Spectrum have several variations for different uses and multiple levels of
 loudness for various attention-getting needs.
 
+### Installation
+
+```
+npm install @spectrum-web-components/button
+
+# or
+
+yarn add @spectrum-web-components/button
+```
+
 ## Example
 
 ```html demo

@@ -7,6 +7,16 @@ prioritize content or features based on your users’ needs in a way that
 maintains clear, persistent visibility. Use side navigation within the context
 of larger elements and mechanisms within the app frame.
 
+### Installation
+
+```
+npm install @spectrum-web-components/sidenav
+
+# or
+
+yarn add @spectrum-web-components/sidenav
+```
+
 ## Example
 
 ```html
