@@ -586,4 +586,25 @@ describe('Slider', () => {
         expect(input).to.not.be.undefined;
         expect(input.type).to.equal('range');
     });
+    it('displays result of getAriaValueText', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    value="50"
+                    min="0"
+                    max="100"
+                    .getAriaValueText=${(value: number) => `${value}%`}
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('aria-valuetext')).to.equal('50%');
+
+        el.value = 100;
+        await elementUpdated(el);
+
+        expect(el.getAttribute('aria-valuetext')).to.equal('100%');
+    });
 });
