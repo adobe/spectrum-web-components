@@ -126,8 +126,8 @@ class SpectrumProcessor {
                         node.remove();
                         // Pseudo-elements go after the host selector `:host::before` or `:host([attr])::after`.
                         if (
-                            node.value === '::before' ||
-                            node.value === '::after'
+                            node.value.match(/before$/) !== null ||
+                            node.value.match(/after$/) !== null
                         ) {
                             result.insertAfter(host, node);
                         } else {
