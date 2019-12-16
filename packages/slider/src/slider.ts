@@ -46,7 +46,6 @@ export class Slider extends Focusable {
         }
 
         this._value = value;
-        this.ariaValueText = this.getAriaValueText(this._value);
         this.requestUpdate('value', oldValue);
     }
 
@@ -78,8 +77,13 @@ export class Slider extends Focusable {
     @property({ attribute: false })
     public getAriaValueText: (value: number) => string = (value) => `${value}`;
 
-    @property({ reflect: true, attribute: 'aria-valuetext' })
-    private ariaValueText = '';
+    @property({ attribute: false })
+    private get ariaValueText(): string {
+        if (!this.getAriaValueText) {
+            return `${this.value}`;
+        }
+        return this.getAriaValueText(this.value);
+    }
 
     @property()
     public label = '';
@@ -254,6 +258,7 @@ export class Slider extends Focusable {
                     max="${this.max}"
                     aria-disabled=${this.disabled ? 'true' : 'false'}
                     aria-label=${this.ariaLabel || this.label}
+                    aria-valuenow=${this.value}
                     aria-valuemin=${this.min}
                     aria-valuemax=${this.max}
                     aria-valuetext=${this.ariaValueText}

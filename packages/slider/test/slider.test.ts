@@ -600,11 +600,12 @@ describe('Slider', () => {
 
         await elementUpdated(el);
 
-        expect(el.getAttribute('aria-valuetext')).to.equal('50%');
+        const input = el.focusElement as HTMLInputElement;
+        expect(input.getAttribute('aria-valuetext')).to.equal('50%');
 
         el.value = 100;
         await elementUpdated(el);
 
-        expect(el.getAttribute('aria-valuetext')).to.equal('100%');
+        expect(input.getAttribute('aria-valuetext')).to.equal('100%');
     });
 });
