@@ -82,7 +82,8 @@ export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
         }
     }
 
-    protected firstUpdated(): void {
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
         this.manageAutoFocus();
 
         this.addEventListener('focusin', (event) => {

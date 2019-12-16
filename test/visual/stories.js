@@ -106,6 +106,7 @@ module.exports = [
     'switch--disabled',
     'switch--disabled-checked',
     'tabs--default',
+    'tabs--autofocus',
     'tabs--vertical',
     'tabs--icons',
     'tabs--icons-ii',

@@ -12,13 +12,13 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
     property,
     CSSResultArray,
     TemplateResult,
     PropertyValues,
 } from 'lit-element';
 import { Tab } from '@spectrum-web-components/tab';
+import { Focusable } from '@spectrum-web-components/shared';
 
 import tabStyles from './tab-list.css.js';
 
@@ -33,7 +33,7 @@ const availableArrowsByDirection = {
  * @attr {Boolean} compact - The collection of tabs take up less space
  */
 
-export class TabList extends LitElement {
+export class TabList extends Focusable {
     public static get styles(): CSSResultArray {
         return [tabStyles];
     }
@@ -66,6 +66,17 @@ export class TabList extends LitElement {
     private _selected = '';
 
     private tabs: Tab[] = [];
+
+    public get focusElement(): Tab {
+        return (this.querySelector('[tabindex="0"]') ||
+            this.querySelector('sp-tab')) as Tab;
+    }
+
+    protected manageAutoFocus(): void {
+        const tabs = [...this.querySelectorAll('[role="tab"]')] as Tab[];
+        const tabUpdateCompletes = tabs.map((tab) => tab.updateComplete);
+        Promise.all(tabUpdateCompletes).then(() => super.manageAutoFocus());
+    }
 
     protected render(): TemplateResult {
         return html`
@@ -100,10 +111,12 @@ export class TabList extends LitElement {
     }
 
     public startListeningToKeyboard = (): void => {
+        console.warn('start');
         this.addEventListener('keydown', this.handleKeydown);
     };
 
     public stopListeningToKeyboard = (): void => {
+        console.warn('stop');
         this.removeEventListener('keydown', this.handleKeydown);
     };
 
@@ -186,7 +199,7 @@ export class TabList extends LitElement {
     }
 
     private updateSelectionIndicator(): void {
-        const selectedElement = this.querySelector('[selected]');
+        const selectedElement = this.querySelector('[selected]') as Tab;
         if (!selectedElement) {
             return;
         }

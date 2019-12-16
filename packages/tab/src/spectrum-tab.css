@@ -64,7 +64,7 @@ slot[name='icon'] + #itemLabel {
             var(--spectrum-global-dimension-size-40)
     );
 }
-:host(:before) {
+:host:before {
     /* .spectrum-Tabs-item:before */
     content: '';
     position: absolute;
@@ -151,7 +151,7 @@ slot[name='icon'] + #itemLabel {
         var(--spectrum-alias-text-color-hover)
     );
 }
-:host(:focus-visible:before) {
+:host(:focus-visible):before {
     /* .spectrum-Tabs-item.focus-ring:before */
     border-color: var(
         --spectrum-tabs-focus-ring-color,
