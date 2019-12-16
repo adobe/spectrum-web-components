@@ -71,6 +71,22 @@ storiesOf('Slider', module)
             </div>
         `;
     })
+    .add('Value Text', () => {
+        const label = text('Label', 'Percentage');
+        return html`
+            <div style="width: 500px; margin: 20px;">
+                <sp-slider
+                    value="0.5"
+                    step="0.1"
+                    min="0"
+                    max="1"
+                    label="${label}"
+                    .getAriaValueText=${(value: number) =>
+                        `${Math.floor(value * 100)}%`}
+                ></sp-slider>
+            </div>
+        `;
+    })
     .add('Color', () => {
         return html`
             <div style="width: 500px; margin: 20px;">

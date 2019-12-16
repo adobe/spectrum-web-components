@@ -5,9 +5,12 @@
 ```html
 <div id="labelContainer">
     <label for="input" id="label"></label>
-    <div aria-labelledby="label" aria-readonly="true" id="value" role="textbox">
-        10
-    </div>
+    <div
+        aria-labelledby="label"
+        aria-readonly="true"
+        id="value"
+        role="textbox"
+    ></div>
 </div>
 <div id="controls">
     <div
@@ -22,7 +25,7 @@
             aria-label=""
             aria-valuemax="20"
             aria-valuemin="0"
-            aria-valuetext="10"
+            aria-valuetext=""
             id="input"
             max="20"
             min="0"
@@ -45,9 +48,12 @@
 ```html
 <div id="labelContainer">
     <label for="input" id="label"></label>
-    <div aria-labelledby="label" aria-readonly="true" id="value" role="textbox">
-        10
-    </div>
+    <div
+        aria-labelledby="label"
+        aria-readonly="true"
+        id="value"
+        role="textbox"
+    ></div>
 </div>
 <div id="controls">
     <div class="track"></div>
@@ -57,7 +63,7 @@
             aria-label=""
             aria-valuemax="20"
             aria-valuemin="0"
-            aria-valuetext="10"
+            aria-valuetext=""
             id="input"
             max="20"
             min="0"
