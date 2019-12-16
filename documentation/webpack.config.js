@@ -29,6 +29,11 @@ const litComponentDirectories = [
 
 const openWcConfig = createDefaultConfig({
     input: path.resolve(__dirname, './index.html'),
+    webpackIndexHTMLPlugin: {
+        polyfills: {
+            webcomponents: true, // Needed until Chromium Edge is released
+        },
+    },
 });
 
 const babelLoader = openWcConfig.module.rules.find(
