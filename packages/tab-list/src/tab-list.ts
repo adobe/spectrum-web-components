@@ -111,12 +111,10 @@ export class TabList extends Focusable {
     }
 
     public startListeningToKeyboard = (): void => {
-        console.warn('start');
         this.addEventListener('keydown', this.handleKeydown);
     };
 
     public stopListeningToKeyboard = (): void => {
-        console.warn('stop');
         this.removeEventListener('keydown', this.handleKeydown);
     };
 
