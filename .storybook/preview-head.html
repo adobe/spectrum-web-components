@@ -2,6 +2,9 @@
     // @TODO: Remove this after user agent stylesheet bug is fixed
     // https://bugs.chromium.org/p/chromium/issues/detail?id=946975
     delete Document.prototype.adoptedStyleSheets;
+
+    window.ShadyDOM = { force: true };
+    window.ShadyCSS = { shimcssproperties: true };
 </script>
 
 <!-- For Adobe Clean font support -->

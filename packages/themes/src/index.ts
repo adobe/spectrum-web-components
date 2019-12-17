@@ -13,31 +13,11 @@ export * from './theme-dark.js';
 export * from './scale-medium.js';
 export * from './theme.js';
 
-import { ThemeDark } from './theme-dark.js';
-import { ThemeLight } from './theme-light.js';
-import { ThemeLightest } from './theme-lightest.js';
-import { ScaleMedium } from './scale-medium.js';
+import './theme-dark.js';
+import './theme-light.js';
+import './theme-lightest.js';
+import './scale-medium.js';
 import { Theme } from './theme.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-theme-dark')) {
-    customElements.define('sp-theme-dark', ThemeDark);
-}
-
-/* istanbul ignore else */
-if (!customElements.get('sp-theme-light')) {
-    customElements.define('sp-theme-light', ThemeLight);
-}
-
-/* istanbul ignore else */
-if (!customElements.get('sp-theme-lightest')) {
-    customElements.define('sp-theme-lightest', ThemeLightest);
-}
-
-/* istanbul ignore else */
-if (!customElements.get('sp-scale-medium')) {
-    customElements.define('sp-scale-medium', ScaleMedium);
-}
 
 /* istanbul ignore else */
 if (!customElements.get('sp-theme')) {
@@ -46,10 +26,6 @@ if (!customElements.get('sp-theme')) {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'sp-theme-dark': ThemeDark;
-        'sp-theme-light': ThemeLight;
-        'sp-theme-lightest': ThemeLightest;
-        'sp-scale-medium': ScaleMedium;
         'sp-theme': Theme;
     }
 }

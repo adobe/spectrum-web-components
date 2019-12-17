@@ -10,18 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, CSSResultArray, html, TemplateResult } from 'lit-element';
-import commonStyles from './theme.css.js';
 import lightStyles from './theme-light.css.js';
+import { Theme } from './theme';
 
-export class ThemeLight extends LitElement {
-    public static get styles(): CSSResultArray {
-        return [commonStyles, lightStyles];
-    }
-
-    protected render(): TemplateResult {
-        return html`
-            <slot></slot>
-        `;
-    }
-}
+Theme.registerThemeFragment('light', lightStyles);

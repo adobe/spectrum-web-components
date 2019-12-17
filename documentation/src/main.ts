@@ -10,10 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import loadPolyfills from '@open-wc/polyfills-loader';
 import polyfill from 'element-closest';
 
-polyfill(window);
-import('./components');
-import('./main.css');
-import('./router');
-import('./utils/spectrum');
+loadPolyfills().then(() => {
+    polyfill(window);
+    require('./utils/spectrum');
+    require('./components');
+    require('./router');
+    require('./main.css');
+});

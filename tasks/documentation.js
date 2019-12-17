@@ -43,7 +43,13 @@ const watchComponentDocumentation = () => {
 };
 
 const webpackDevServer = () => {
-    const config = Object.assign(webpackConfig, { mode: 'development' });
+    const config = Object.assign(webpackConfig, {
+        mode: 'development',
+        devServer: {
+            host: '0.0.0.0',
+            port: '8080',
+        },
+    });
     const compiler = webpack(config);
     const devServer = new WebpackDevServer(compiler, config.devServer).listen(
         config.devServer.port,
