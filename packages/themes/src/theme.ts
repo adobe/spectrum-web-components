@@ -94,7 +94,7 @@ export class Theme extends HTMLElement {
         ];
     }
 
-    private static get template() {
+    private static get template(): HTMLTemplateElement {
         if (!this.templateElement) {
             this.templateElement = document.createElement('template');
             this.templateElement.innerHTML = '<slot></slot>';
@@ -113,7 +113,7 @@ export class Theme extends HTMLElement {
         this.adoptStyles();
     }
 
-    connectedCallback() {
+    protected connectedCallback(): void {
         // Note, first update/render handles styleElement so we only call this if
         // connected after first update.
         if (window.ShadyCSS !== undefined) {
@@ -121,7 +121,7 @@ export class Theme extends HTMLElement {
         }
     }
 
-    protected adoptStyles() {
+    protected adoptStyles(): void {
         const styles = this.styles;
         if (styles.length === 0) {
             return;
@@ -131,16 +131,23 @@ export class Theme extends HTMLElement {
         // (2) shadowRoot.adoptedStyleSheets available: use it.
         // (3) shadowRoot.adoptedStyleSheets polyfilled: append styles after
         // rendering
-        if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
-            window.ShadyCSS.ScopingShim!.prepareAdoptedCssText(
+        if (
+            window.ShadyCSS !== undefined &&
+            !window.ShadyCSS.nativeShadow &&
+            window.ShadyCSS.ScopingShim
+        ) {
+            window.ShadyCSS.ScopingShim.prepareAdoptedCssText(
                 styles.map((s) => s.cssText),
                 this.localName
             );
             window.ShadyCSS.prepareTemplate(Theme.template, this.localName);
         } else if (supportsAdoptingStyleSheets && this.shadowRoot) {
-            this.shadowRoot.adoptedStyleSheets = styles.map(
-                (s) => s.styleSheet!
-            );
+            this.shadowRoot.adoptedStyleSheets = [];
+            for (const style of styles) {
+                if (style.styleSheet) {
+                    this.shadowRoot.adoptedStyleSheets.push(style.styleSheet);
+                }
+            }
         } else {
             // This must be done after rendering so the actual style insertion is done
             // in `update`.
