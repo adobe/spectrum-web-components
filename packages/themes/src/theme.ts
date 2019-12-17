@@ -161,7 +161,7 @@ export class Theme extends HTMLElement {
         }
     }
 
-    static registerThemeFragment(name: string, styles: CSSResult) {
+    static registerThemeFragment(name: string, styles: CSSResult): void {
         this.themeFragments.set(name, styles);
     }
 
