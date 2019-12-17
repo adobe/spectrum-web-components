@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 const { createDefaultConfig } = require('@open-wc/testing-karma');
 const merge = require('deepmerge');
-const path = require('path');
 
 module.exports = (config) => {
     config.set(
@@ -24,16 +23,19 @@ module.exports = (config) => {
                     type: 'module',
                 },
             ],
-            reporters: ['junit'],
-
             esm: {
                 nodeResolve: true,
             },
-            browsers: ['FirefoxHeadless'],
-            junitReporter: {
-                outputDir: process.env.JUNIT_REPORT_PATH,
-                outputFile: process.env.JUNIT_REPORT_NAME,
-                useBrowserName: false,
+            browsers: ['FirefoxHeadlessCustom'],
+            customLaunchers: {
+                FirefoxHeadlessCustom: {
+                    base: 'Firefox',
+                    flags: ['-headless'],
+                    prefs: {
+                        'toolkit.telemetry.reportingpolicy.firstRun': false,
+                        'extensions.enabledScopes': 0,
+                    },
+                },
             },
             coverageIstanbulReporter: {
                 thresholds: {
