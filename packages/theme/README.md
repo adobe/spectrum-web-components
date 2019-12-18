@@ -2,8 +2,8 @@
 
 An **sp-theme** sets the rendering theme for all child components.
 The Spectrum design system supports four color themes and two different
-scales. `spectrum-web-components` currently supports two of the four
-color themes (dark and light) one one of the scales (medium).
+scales. `spectrum-web-components` currently supports three of the four
+color themes (dark, light and lightest) and one one of the scales (medium).
 
 ## Light theme
 
@@ -82,11 +82,6 @@ color themes (dark and light) one one of the scales (medium).
 There are a few cases where it is necessary to embed one theme within another.
 For example, if you have an application that is using a dark theme that is
 previewing or editing content that will be displayed in a light theme.
-
-If you only want to change colors, you can use the `sp-theme-dark` or
-`sp-theme-light` class instead. They are a little lighter weight than
-the full `sp-theme` class. You should still use `sp-theme` at the root
-because it installs extra styles that do not change between colors.
 
 ```html
 <style type="text/css">
