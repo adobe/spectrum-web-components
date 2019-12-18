@@ -54,7 +54,7 @@ describe('Lightest', () => {
     it('loads', async () => {
         const el = await fixture<Theme>(
             html`
-                <sp-theme-lightest></sp-theme-lightest>
+                <sp-theme color="lightest"></sp-theme>
             `
         );
 
@@ -62,5 +62,45 @@ describe('Lightest', () => {
 
         expect(el).to.not.be.undefined;
         expect(el).shadowDom.to.equalSnapshot();
+    });
+});
+
+describe('Medium', () => {
+    it('loads', async () => {
+        const el = await fixture<Theme>(
+            html`
+                <sp-theme size="medium"></sp-theme>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).to.not.be.undefined;
+        expect(el).shadowDom.to.equalSnapshot();
+    });
+});
+
+describe('Setting attributes', () => {
+    it('loads', async () => {
+        const el = await fixture<Theme>(
+            html`
+                <sp-theme color="light"></sp-theme>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).to.not.be.undefined;
+        expect(el).shadowDom.to.equalSnapshot();
+
+        el.color = 'dark';
+        el.size = 'medium';
+        expect(el.getAttribute('color')).to.equal('dark');
+        expect(el.getAttribute('size')).to.equal('medium');
+
+        // Invalid value
+        el.setAttribute('color', 'fish');
+        expect(el.getAttribute('color')).to.equal('fish');
+        expect(el.color).to.equal('light');
     });
 });

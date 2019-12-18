@@ -3,21 +3,13 @@
 #### `loads - light`
 
 ```html
-<sp-theme-light id="theme">
-    <sp-scale-medium id="scale">
-        <slot></slot>
-    </sp-scale-medium>
-</sp-theme-light>
+<slot></slot>
 ```
 
 #### `loads - dark`
 
 ```html
-<sp-theme-dark id="theme">
-    <sp-scale-medium id="scale">
-        <slot></slot>
-    </sp-scale-medium>
-</sp-theme-dark>
+<slot></slot>
 ```
 
 #### `loads - unkown`

@@ -34,7 +34,7 @@
                 "packages/tab-list/package.json",
                 "packages/tab/package.json",
                 "packages/textfield/package.json",
-                "packages/themes/package.json"
+                "packages/theme/package.json"
             ]
         }
     }
