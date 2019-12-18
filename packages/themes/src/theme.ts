@@ -39,17 +39,8 @@ declare global {
     }
 }
 
-enum Color {
-    light = 'light',
-    lightest = 'lightest',
-    dark = 'dark',
-    darkest = 'darkest',
-}
-
-enum Size {
-    medium = 'medium',
-    large = 'large',
-}
+type Color = 'light' | 'lightest' | 'dark' | 'darkest';
+type Size = 'medium' | 'large';
 
 export class Theme extends HTMLElement {
     private static themeFragments: Map<string, CSSResult> = new Map<
@@ -98,7 +89,6 @@ export class Theme extends HTMLElement {
         if (!this.templateElement) {
             this.templateElement = document.createElement('template');
             this.templateElement.innerHTML = '<slot></slot>';
-            // this.templateElement.appendChild(document.createElement('slot'));
         }
         return this.templateElement;
     }
@@ -149,15 +139,26 @@ export class Theme extends HTMLElement {
                 }
             }
         } else {
-            // This must be done after rendering so the actual style insertion is done
-            // in `update`.
-            styles.forEach((s) => {
-                const style = document.createElement('style');
-                style.textContent = s.cssText;
-                if (this.shadowRoot) {
-                    this.shadowRoot.appendChild(style);
+            if (this.shadowRoot) {
+                const styleNodes = this.shadowRoot.querySelectorAll('style');
+                if (styleNodes) {
+                    styleNodes.forEach((element) => element.remove());
                 }
-            });
+                styles.forEach((s) => {
+                    const style = document.createElement('style');
+                    style.textContent = s.cssText;
+                    if (this.shadowRoot) {
+                        this.shadowRoot.appendChild(style);
+                    }
+                });
+            }
+        }
+    }
+
+    protected attributeChangedCallback(): void {
+        this.adoptStyles();
+        if (window.ShadyCSS !== undefined) {
+            window.ShadyCSS.styleElement(this);
         }
     }
 
