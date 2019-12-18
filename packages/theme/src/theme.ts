@@ -39,14 +39,23 @@ declare global {
     }
 }
 
+type FragmentType = 'color' | 'size' | 'core';
+type FragmentMap = Map<
+    Color | Size | 'core',
+    { kind: FragmentType; styles: CSSResult }
+>;
 type Color = 'light' | 'lightest' | 'dark' | 'darkest';
 type Size = 'medium' | 'large';
+type FragmentName = Color | Size | 'core';
 
 export class Theme extends HTMLElement {
-    private static themeFragments: Map<string, CSSResult> = new Map<
-        string,
-        CSSResult
-    >();
+    private static themeFragments: FragmentMap = new Map();
+    private static defaultFragments: Set<FragmentName> = new Set([
+        'core',
+        'light',
+        'medium',
+    ]);
+
     private static templateElement?: HTMLTemplateElement;
 
     static get observedAttributes(): string[] {
@@ -69,19 +78,11 @@ export class Theme extends HTMLElement {
         this.setAttribute('size', newValue);
     }
 
-    public get colorStyles(): CSSResult {
-        return Theme.themeFragment(this.color);
-    }
-
-    public get sizeStyles(): CSSResult {
-        return Theme.themeFragment(this.size);
-    }
-
     private get styles(): CSSResult[] {
         return [
             coreStyles,
-            Theme.themeFragment(this.color),
-            Theme.themeFragment(this.size),
+            Theme.themeFragment(this.color).styles,
+            Theme.themeFragment(this.size).styles,
         ];
     }
 
@@ -126,8 +127,23 @@ export class Theme extends HTMLElement {
             !window.ShadyCSS.nativeShadow &&
             window.ShadyCSS.ScopingShim
         ) {
+            // For browsers using the shim, there seems to be one set of
+            // processed styles per template, so it is hard to nest styles. So,
+            // for those, we load in all style fragments and then switch using a
+            // host selector (e.g. :host([color='dark']))
+            const fragmentCSS: string[] = [];
+            for (const [name, { kind, styles }] of Theme.themeFragments) {
+                let cssText = styles.cssText;
+                if (!Theme.defaultFragments.has(name)) {
+                    cssText = cssText.replace(
+                        ':host',
+                        `:host([${kind}='${name}'])`
+                    );
+                }
+                fragmentCSS.push(cssText);
+            }
             window.ShadyCSS.ScopingShim.prepareAdoptedCssText(
-                styles.map((s) => s.cssText),
+                fragmentCSS,
                 this.localName
             );
             window.ShadyCSS.prepareTemplate(Theme.template, this.localName);
@@ -156,17 +172,24 @@ export class Theme extends HTMLElement {
     }
 
     protected attributeChangedCallback(): void {
-        this.adoptStyles();
         if (window.ShadyCSS !== undefined) {
             window.ShadyCSS.styleElement(this);
+        } else {
+            this.adoptStyles();
         }
     }
 
-    static registerThemeFragment(name: string, styles: CSSResult): void {
-        this.themeFragments.set(name, styles);
+    static registerThemeFragment(
+        name: FragmentName,
+        kind: FragmentType,
+        styles: CSSResult
+    ): void {
+        this.themeFragments.set(name, { kind, styles });
     }
 
-    static themeFragment(name: string): CSSResult {
+    static themeFragment(
+        name: FragmentName
+    ): { kind: FragmentType; styles: CSSResult } {
         const fragment = this.themeFragments.get(name);
         if (!fragment) {
             throw new Error(`Unknown theme fragment '${name}'`);
@@ -174,3 +197,5 @@ export class Theme extends HTMLElement {
         return fragment;
     }
 }
+
+Theme.registerThemeFragment('core', 'core', coreStyles);

@@ -13,4 +13,4 @@ governing permissions and limitations under the License.
 import lightestStyles from './theme-lightest.css.js';
 import { Theme } from './theme';
 
-Theme.registerThemeFragment('lightest', lightestStyles);
+Theme.registerThemeFragment('lightest', 'color', lightestStyles);

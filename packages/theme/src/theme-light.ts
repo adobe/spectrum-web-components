@@ -13,4 +13,4 @@ governing permissions and limitations under the License.
 import lightStyles from './theme-light.css.js';
 import { Theme } from './theme';
 
-Theme.registerThemeFragment('light', lightStyles);
+Theme.registerThemeFragment('light', 'color', lightStyles);
