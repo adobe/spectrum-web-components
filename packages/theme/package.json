@@ -1,17 +1,17 @@
 {
-    "name": "@spectrum-web-components/themes",
+    "name": "@spectrum-web-components/theme",
     "publishConfig": {
         "access": "public"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/themes"
+        "directory": "packages/theme"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/themes",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/theme",
     "keywords": [
         "spectrum css",
         "web components",

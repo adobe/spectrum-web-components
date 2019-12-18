@@ -39,6 +39,6 @@ export * from '@spectrum-web-components/switch';
 export * from '@spectrum-web-components/tab';
 export * from '@spectrum-web-components/tab-list';
 export * from '@spectrum-web-components/textfield';
-export * from '@spectrum-web-components/themes';
+export * from '@spectrum-web-components/theme';
 export * from '@spectrum-web-components/toast';
 export * from '@spectrum-web-components/tooltip';
