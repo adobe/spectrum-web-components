@@ -125,7 +125,7 @@ because it installs extra styles that do not change between colors.
             <sp-button variant="primary">Cancel</sp-button>
             <sp-button variant="cta">Continue</sp-button>
         </div>
-        <sp-theme-light>
+        <sp-theme color="light">
             <div id="inner">
                 <div>
                     <sp-slider
@@ -143,7 +143,7 @@ because it installs extra styles that do not change between colors.
                     <sp-button variant="cta">Continue</sp-button>
                 </div>
             </div>
-        </sp-theme-light>
+        </sp-theme>
     </div>
 </sp-theme>
 ```
