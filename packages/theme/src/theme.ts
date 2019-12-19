@@ -182,7 +182,7 @@ export class Theme extends HTMLElement {
     }
 
     protected attributeChangedCallback(): void {
-        if (window.ShadyCSS !== undefined) {
+        if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
             window.ShadyCSS.styleElement(this);
         } else {
             this.adoptStyles();
