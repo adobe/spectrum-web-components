@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 import '../';
 import { Search } from '../';
 import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
+import { waitForPredicate } from '../../../test/testing-helpers';
+import '../../shared/lib/focus-visible.js';
 
 describe('Search', () => {
     it('loads', async () => {
@@ -22,6 +24,7 @@ describe('Search', () => {
         );
 
         await elementUpdated(el);
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         expect(el).shadowDom.to.equalSnapshot();
     });
@@ -33,6 +36,7 @@ describe('Search', () => {
         );
 
         await elementUpdated(el);
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         expect(el.value).to.equal('Test');
         expect(el).shadowDom.to.equalSnapshot();
