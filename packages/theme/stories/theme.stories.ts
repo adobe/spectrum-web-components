@@ -162,4 +162,75 @@ storiesOf('Theme', module)
                 </div>
             </sp-theme>
         `;
+    })
+    .add('Reverse color nested theme', () => {
+        const colorOptions = {
+            Light: 'light',
+            Dark: 'dark',
+        };
+        const outer = radios(
+            'Outer color stop',
+            colorOptions,
+            colorOptions.Light
+        );
+        const inner = outer === 'light' ? 'dark' : 'light';
+        return html`
+            <style type="text/css">
+                #outer {
+                    width: 500px;
+                    padding: 3em;
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
+                }
+
+                #inner {
+                    margin-top: 2em;
+                    padding: 2em;
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(--spectrum-global-color-gray-800);
+                }
+
+                #buttons {
+                    margin-top: 2em;
+                }
+            </style>
+            <sp-theme color="${inner}">
+                <div id="outer">
+                    <div>
+                        <sp-slider
+                            value="5"
+                            step="1"
+                            min="1"
+                            max="11"
+                            label="Volume"
+                            id="volume-slider"
+                        ></sp-slider>
+                    </div>
+                    <div><sp-switch>Overdrive</sp-switch></div>
+                    <div id="buttons">
+                        <sp-button variant="primary">Cancel</sp-button>
+                        <sp-button variant="cta">Continue</sp-button>
+                    </div>
+                    <sp-theme color="${outer}">
+                        <div id="inner">
+                            <div>
+                                <sp-slider
+                                    value="5"
+                                    step="1"
+                                    min="1"
+                                    max="11"
+                                    label="Volume"
+                                    id="volume-slider-inner"
+                                ></sp-slider>
+                            </div>
+                            <div><sp-switch>Overdrive</sp-switch></div>
+                            <div id="buttons-inner">
+                                <sp-button variant="primary">Cancel</sp-button>
+                                <sp-button variant="cta">Continue</sp-button>
+                            </div>
+                        </div>
+                    </sp-theme>
+                </div>
+            </sp-theme>
+        `;
     });
