@@ -69,7 +69,7 @@
         "@spectrum-web-components/tab": "^0.2.3",
         "@spectrum-web-components/tab-list": "^0.2.2",
         "@spectrum-web-components/textfield": "^0.2.3",
-        "@spectrum-web-components/theme": "^0.2.3",
+        "@spectrum-web-components/theme": "^0.1.0",
         "@spectrum-web-components/toast": "^0.1.1",
         "@spectrum-web-components/tooltip": "^0.2.1",
         "tslib": "^1.10.0"
