@@ -116,6 +116,7 @@ module.exports = [
     'textarea--default',
     'textfield--default',
     'theme--default',
+    'theme--display-flex',
     'theme--none',
     'theme--nested-theme',
     'theme--reverse-color-nested-theme',
