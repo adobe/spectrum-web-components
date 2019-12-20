@@ -118,6 +118,7 @@ module.exports = [
     'theme--default',
     'theme--none',
     'theme--nested-theme',
+    'theme--reverse-color-nested-theme',
     'toast--default',
     'toast--negative',
     'toast--positive',

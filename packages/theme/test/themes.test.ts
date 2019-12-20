@@ -24,7 +24,8 @@ describe('Themes', () => {
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        expect(el).to.exist;
+        expect(el).shadowDom.to.exist;
     });
     it('loads - dark', async () => {
         const el = await fixture<Theme>(
@@ -35,7 +36,8 @@ describe('Themes', () => {
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        expect(el).to.exist;
+        expect(el).shadowDom.to.exist;
     });
     it('loads - unkown', async () => {
         const el = await fixture<Theme>(
@@ -46,7 +48,8 @@ describe('Themes', () => {
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        expect(el).to.exist;
+        expect(el).shadowDom.to.exist;
     });
 });
 
@@ -60,8 +63,8 @@ describe('Lightest', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.not.be.undefined;
-        expect(el).shadowDom.to.equalSnapshot();
+        expect(el).to.exist;
+        expect(el).shadowDom.to.exist;
     });
 });
 
@@ -75,8 +78,8 @@ describe('Medium', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.not.be.undefined;
-        expect(el).shadowDom.to.equalSnapshot();
+        expect(el).to.exist;
+        expect(el).shadowDom.to.exist;
     });
 });
 
