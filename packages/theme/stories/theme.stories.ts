@@ -233,4 +233,25 @@ storiesOf('Theme', module)
                 </div>
             </sp-theme>
         `;
+    })
+    .add('Display flex', () => {
+        return html`
+            <style type="text/css">
+                #flex-theme {
+                    display: flex;
+                    flex-direction: row;
+                }
+                #flex-theme sp-button {
+                    flex: 0 0;
+                }
+                #flex-theme #middle-button {
+                    flex: 1 0;
+                }
+            </style>
+            <sp-theme id="flex-theme" color="dark">
+                <sp-button>Left</sp-button>
+                <sp-button id="middle-button">Middle</sp-button>
+                <sp-button>Right</sp-button>
+            </sp-theme>
+        `;
     });
