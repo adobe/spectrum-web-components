@@ -46,39 +46,24 @@ export class OverlayStack {
         return this.overlays.slice(-1)[0];
     }
 
-    public dispose(): void {
-        this.removeEventListeners();
-    }
-
     private addEventListeners(): void {
-        if (!this.document) return;
         this.document.addEventListener('click', this.handleMouseCapture, true);
         this.document.addEventListener('click', this.handleMouse);
         this.document.addEventListener('keyup', this.handleKeyUp);
         window.addEventListener('resize', this.handleResize);
     }
 
-    private removeEventListeners(): void {
-        if (!this.document) return;
-        this.document.removeEventListener(
-            'click',
-            this.handleMouseCapture,
-            true
-        );
-        this.document.removeEventListener('click', this.handleMouse);
-        this.document.removeEventListener('keyup', this.handleKeyUp);
-        window.removeEventListener('resize', this.handleResize);
-    }
-
     private isOverlayActive(overlayContent: HTMLElement): boolean {
-        return !!this.overlays.find(
-            (item) => item.overlayContent === overlayContent
+        return !!this.overlays.find((item) =>
+            overlayContent.isSameNode(item.overlayContent as HTMLElement)
         );
     }
 
     private isClickOverlayActiveForTrigger(trigger: HTMLElement): boolean {
         return this.overlays.some(
-            (item) => item.trigger === trigger && item.interaction === 'click'
+            (item) =>
+                trigger.isSameNode(item.trigger as HTMLElement) &&
+                item.interaction === 'click'
         );
     }
 
@@ -107,8 +92,8 @@ export class OverlayStack {
     public closeOverlay(event: CustomEvent<OverlayCloseDetail>): void {
         requestAnimationFrame(() => {
             const overlayContent = event.detail.content;
-            const overlay = this.overlays.find(
-                (item) => item.overlayContent === overlayContent
+            const overlay = this.overlays.find((item) =>
+                overlayContent.isSameNode(item.overlayContent as HTMLElement)
             );
             this.hideAndCloseOverlay(overlay);
         });

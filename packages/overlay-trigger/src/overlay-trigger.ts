@@ -21,11 +21,15 @@ import {
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
 import {
+    OverlayRoot,
     OverlayCloseDetail,
     OverlayOpenDetail,
     TriggerInteractions,
     Placement,
 } from '@spectrum-web-components/overlay-root';
+import { ThemeData } from '@spectrum-web-components/theme';
+
+let overlayRoot: OverlayRoot;
 
 /**
  * A overlay trigger component for displaying overlays relative to other content.
@@ -38,6 +42,8 @@ export class OverlayTrigger extends LitElement {
     public static get styles(): CSSResultArray {
         return [overlayTriggerStyles];
     }
+
+    static overlayRoot: OverlayRoot;
 
     @property({ reflect: true })
     public placement: Placement = 'bottom';
@@ -63,6 +69,21 @@ export class OverlayTrigger extends LitElement {
         if (!overlayElement) {
             return;
         }
+        if (!overlayRoot) {
+            overlayRoot = new OverlayRoot();
+        }
+        const queryThemeDetail: ThemeData = {
+            color: undefined,
+            size: undefined,
+        };
+        const queryThemeEvent = new CustomEvent<ThemeData>('query-theme', {
+            bubbles: true,
+            composed: true,
+            detail: queryThemeDetail,
+            cancelable: true,
+        });
+        this.dispatchEvent(queryThemeEvent);
+
         const overlayOpenDetail: OverlayOpenDetail = {
             content: overlayElement,
             delay: delay,
@@ -70,10 +91,11 @@ export class OverlayTrigger extends LitElement {
             placement: this.placement,
             trigger: this,
             interaction: interaction,
+            theme: queryThemeDetail,
         };
 
         const overlayOpenEvent = new CustomEvent<OverlayOpenDetail>(
-            'sp-overlay:open',
+            'sp-overlay-open',
             {
                 bubbles: true,
                 composed: true,
@@ -100,7 +122,7 @@ export class OverlayTrigger extends LitElement {
         };
 
         const overlayCloseEvent = new CustomEvent<OverlayCloseDetail>(
-            'sp-overlay:close',
+            'sp-overlay-close',
             {
                 bubbles: true,
                 composed: true,
@@ -109,6 +131,7 @@ export class OverlayTrigger extends LitElement {
         );
 
         this.dispatchEvent(overlayCloseEvent);
+        // overlayRoot.onOverlayClose(overlayCloseEvent);
     }
 
     public onTriggerClick(event: Event): void {
@@ -182,5 +205,15 @@ export class OverlayTrigger extends LitElement {
         }
 
         return null;
+    }
+
+    public disconnectedCallback(): void {
+        if (this.clickContent) {
+            this.onOverlayClose(new Event('remove'), 'click');
+        }
+        if (this.hoverContent) {
+            this.onOverlayClose(new Event('remove'), 'hover');
+        }
+        super.disconnectedCallback();
     }
 }

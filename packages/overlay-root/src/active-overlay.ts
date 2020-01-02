@@ -17,6 +17,12 @@ import {
 } from './overlay.js';
 import calculatePosition, { PositionResult } from './calculate-position.js';
 import {
+    Size,
+    Color,
+    DefaultColor,
+    DefaultSize,
+} from '@spectrum-web-components/theme';
+import {
     html,
     LitElement,
     TemplateResult,
@@ -133,6 +139,12 @@ export class ActiveOverlay extends LitElement {
 
     @property({ reflect: true })
     public placement: Placement = 'bottom';
+    @property({ attribute: false })
+    public color: Color = DefaultColor;
+    @property({ attribute: false })
+    public size: Size = DefaultSize;
+    @property({ type: Boolean, attribute: false })
+    public hasTheme = false;
 
     public offset = 6;
     private position?: PositionResult;
@@ -172,6 +184,9 @@ export class ActiveOverlay extends LitElement {
         this.placement = event.detail.placement;
         this.offset = event.detail.offset;
         this.interaction = event.detail.interaction;
+        this.color = event.detail.theme.color || DefaultColor;
+        this.size = event.detail.theme.size || DefaultSize;
+        this.hasTheme = !!event.detail.theme.color || !!event.detail.theme.size;
     }
 
     public dispose(): void {
@@ -289,10 +304,20 @@ export class ActiveOverlay extends LitElement {
         this.schedulePositionUpdate();
     }
 
-    public render(): TemplateResult {
+    public renderTheme(content: TemplateResult): TemplateResult {
+        import('@spectrum-web-components/theme');
         return html`
+            <sp-theme .color=${this.color} .size=${this.size}>
+                ${content}
+            </sp-theme>
+        `;
+    }
+
+    public render(): TemplateResult {
+        const content = html`
             <slot @slotchange=${this.onSlotChange} name="overlay"></slot>
         `;
+        return this.hasTheme ? this.renderTheme(content) : content;
     }
 
     public static create(

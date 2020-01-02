@@ -11,8 +11,6 @@ governing permissions and limitations under the License.
 */
 import '../';
 import { OverlayTrigger } from '../';
-import '../../overlay-root';
-import { OverlayRoot } from '../../overlay-root';
 import '../../button';
 import '../../popover';
 import { Popover } from '../../popover';
@@ -44,7 +42,7 @@ describe('Overlays', () => {
             html`
                 <div>
                     <style>
-                        overlay-root {
+                        body {
                             display: flex;
                             align-items: center;
                             justify-content: center;
@@ -54,74 +52,61 @@ describe('Overlays', () => {
                             flex: none;
                         }
                     </style>
-                    <overlay-root>
-                        <overlay-trigger id="trigger" placement="top">
-                            <sp-button
-                                id="outer-button"
-                                variant="primary"
-                                slot="trigger"
-                            >
-                                Show Popover
-                            </sp-button>
-                            <sp-popover
-                                id="outer-popover"
-                                dialog
-                                slot="click-content"
-                                direction="bottom"
-                                tip
-                                open
-                            >
-                                <div class="options-popover-content">
-                                    <overlay-trigger
-                                        id="inner-trigger"
-                                        placement="bottom"
+                    <overlay-trigger id="trigger" placement="top">
+                        <sp-button
+                            id="outer-button"
+                            variant="primary"
+                            slot="trigger"
+                        >
+                            Show Popover
+                        </sp-button>
+                        <sp-popover
+                            id="outer-popover"
+                            dialog
+                            slot="click-content"
+                            direction="bottom"
+                            tip
+                            open
+                        >
+                            <div class="options-popover-content">
+                                <overlay-trigger
+                                    id="inner-trigger"
+                                    placement="bottom"
+                                >
+                                    <sp-button id="inner-button" slot="trigger">
+                                        Press Me
+                                    </sp-button>
+                                    <sp-popover
+                                        id="inner-popover"
+                                        dialog
+                                        slot="click-content"
+                                        direction="bottom"
+                                        tip
+                                        open
                                     >
-                                        <sp-button
-                                            id="inner-button"
-                                            slot="trigger"
-                                        >
-                                            Press Me
-                                        </sp-button>
-                                        <sp-popover
-                                            id="inner-popover"
-                                            dialog
-                                            slot="click-content"
-                                            direction="bottom"
-                                            tip
-                                            open
-                                        >
-                                            <div
-                                                class="options-popover-content"
-                                            >
-                                                Another Popover
-                                            </div>
-                                        </sp-popover>
-                                    </overlay-trigger>
-                                </div>
-                            </sp-popover>
-                            <div
-                                id="hover-content"
-                                slot="hover-content"
-                                class="tooltip"
-                                delay="100"
-                            >
-                                Tooltip
+                                        <div class="options-popover-content">
+                                            Another Popover
+                                        </div>
+                                    </sp-popover>
+                                </overlay-trigger>
                             </div>
-                        </overlay-trigger>
-                    </overlay-root>
+                        </sp-popover>
+                        <div
+                            id="hover-content"
+                            slot="hover-content"
+                            class="tooltip"
+                            delay="100"
+                        >
+                            Tooltip
+                        </div>
+                    </overlay-trigger>
                 </div>
             `
         );
     });
 
     it('loads', async () => {
-        const element = testDiv.querySelector('overlay-root');
-        if (!(element instanceof OverlayRoot))
-            throw new Error('element is not an instance of OverlayRoot');
-        expect(element).to.exist;
-        expect(element.shadowRoot).to.exist;
-
-        const popover = element.querySelector('sp-popover');
+        const popover = document.body.querySelector('sp-popover');
         if (!(popover instanceof Popover))
             throw new Error('popover is not an instance of Popover');
 
@@ -188,9 +173,10 @@ describe('Overlays', () => {
         expect(isVisible(outerPopover)).to.be.true;
         expect(isVisible(innerPopover)).to.be.false;
 
-        const innerButton = testDiv.querySelector(
+        const innerButton = document.querySelector(
             '#inner-button'
         ) as HTMLElement;
+
         innerButton.click();
 
         // Wait for the DOM node to be stolen and reparented into the overlay

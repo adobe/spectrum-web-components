@@ -16,10 +16,6 @@ import { OverlayRoot } from './overlay-root.js';
 import { ActiveOverlay } from './active-overlay.js';
 
 /* istanbul ignore else */
-if (!customElements.get('overlay-root')) {
-    customElements.define('overlay-root', OverlayRoot);
-}
-/* istanbul ignore else */
 if (!customElements.get('active-overlay')) {
     customElements.define('active-overlay', ActiveOverlay);
 }

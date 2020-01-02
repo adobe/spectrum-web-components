@@ -10,79 +10,60 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, TemplateResult, CSSResultArray } from 'lit-element';
-
-import overlayStyles from './overlay-root.css.js';
-
 import { OverlayOpenDetail, OverlayCloseDetail } from './overlay.js';
 import { ActiveOverlay } from './active-overlay.js';
 import { OverlayStack } from './overlay-stack.js';
 
-export class OverlayRoot extends LitElement {
-    public static get styles(): CSSResultArray {
-        return [overlayStyles];
-    }
-
-    private overlayStack?: OverlayStack;
-
+export class OverlayRoot {
     public constructor() {
-        super();
-        this.overlayStack = new OverlayStack(this, this.onOverlayStackChange);
+        this.listen();
     }
 
-    public onOverlayOpen(event: CustomEvent<OverlayOpenDetail>): void {
-        if (!this.overlayStack) return;
+    public onOverlayOpen = (event: CustomEvent<OverlayOpenDetail>): void => {
+        event.stopPropagation();
 
         this.overlayStack.openOverlay(event);
-    }
+    };
 
-    public onOverlayClose(event: CustomEvent<OverlayCloseDetail>): void {
-        if (!this.overlayStack) return;
+    public onOverlayClose = (event: CustomEvent<OverlayCloseDetail>): void => {
+        event.stopPropagation();
 
         this.overlayStack.closeOverlay(event);
-    }
+    };
 
     private onOverlayStackChange = (activeOverlays: ActiveOverlay[]): void => {
         // Remove inactive overlays
         const activeSet = new Set<ActiveOverlay>(activeOverlays);
-        for (const child of this.children) {
+        for (const child of document.body.children) {
             if (child instanceof ActiveOverlay && !activeSet.has(child)) {
-                this.removeChild(child);
+                document.body.removeChild(child);
             }
         }
 
         // Append new overlays
         for (const overlay of activeOverlays) {
-            if (overlay.parentElement !== this) {
+            if (overlay.parentElement !== document.body) {
                 overlay.setAttribute('slot', 'overlays');
-                this.appendChild(overlay);
+                document.body.append(overlay);
             }
         }
     };
 
-    protected render(): TemplateResult {
-        return html`
-            <slot></slot>
-            <slot name="overlays"></slot>
-        `;
+    public listen(): void {
+        document.body.addEventListener(
+            'sp-overlay-open',
+            this.onOverlayOpen as EventListener,
+            true
+        );
+        document.body.addEventListener(
+            'sp-overlay-close',
+            this.onOverlayClose as EventListener,
+            true
+        );
     }
 
-    public connectedCallback(): void {
-        super.connectedCallback();
-        this.addEventListener('sp-overlay:open', this
-            .onOverlayOpen as EventListener);
-        this.addEventListener('sp-overlay:close', this
-            .onOverlayClose as EventListener);
-    }
-
-    public disconnectedCallback(): void {
-        this.removeEventListener('sp-overlay:open', this
-            .onOverlayOpen as EventListener);
-        this.removeEventListener('sp-overlay:close', this
-            .onOverlayClose as EventListener);
-        if (this.overlayStack) {
-            this.overlayStack.dispose();
-        }
-        super.disconnectedCallback();
-    }
+    private overlayStack = new OverlayStack(
+        document.body,
+        this.onOverlayStackChange
+    );
 }

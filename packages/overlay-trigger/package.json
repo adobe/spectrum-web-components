@@ -39,6 +39,7 @@
     },
     "dependencies": {
         "@spectrum-web-components/overlay-root": "^0.1.7",
+        "@spectrum-web-components/theme": "^0.1.0",
         "tslib": "^1.10.0"
     }
 }

@@ -14,6 +14,8 @@ export type TriggerInteractions = 'click' | 'hover';
 
 export type Placement = 'top' | 'right' | 'bottom' | 'left';
 
+import { ThemeData } from '@spectrum-web-components/theme';
+
 export interface OverlayOpenDetail {
     content: HTMLElement;
     delay: number;
@@ -21,6 +23,7 @@ export interface OverlayOpenDetail {
     placement: Placement;
     trigger: HTMLElement;
     interaction: TriggerInteractions;
+    theme: ThemeData;
 }
 
 export interface OverlayCloseDetail {

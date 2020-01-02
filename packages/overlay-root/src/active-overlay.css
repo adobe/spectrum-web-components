@@ -39,6 +39,8 @@ governing permissions and limitations under the License.
     position: absolute;
     display: none;
     opacity: 0;
+    top: -999em;
+    left: -999em;
     animation-duration: var(--spectrum-global-animation-duration-100);
     animation-timing-function: ease-in-out;
 }
