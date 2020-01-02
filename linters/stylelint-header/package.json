@@ -3,6 +3,6 @@
     "version": "0.0.1",
     "main": "index.js",
     "devDependencies": {
-        "stylelint": "^11.0.0"
+        "stylelint": "^12.0.0"
     }
 }
