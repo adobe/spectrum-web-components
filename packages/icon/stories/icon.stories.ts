@@ -13,6 +13,7 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 
 import '../';
+import { back } from './images';
 
 const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'];
 
@@ -41,10 +42,7 @@ storiesOf('Icon', module)
         return html`
             ${sizes.map(
                 (size) => html`
-                    <sp-icon
-                        size=${size}
-                        src="https://spectrum.corp.adobe.com/static/icons/workflow_22/Smock_FullScreen_22_N.svg"
-                    ></sp-icon>
+                    <sp-icon size=${size} src=${back}></sp-icon>
                 `
             )}
         `;

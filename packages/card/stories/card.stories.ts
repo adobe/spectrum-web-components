@@ -13,17 +13,14 @@ import { storiesOf } from '@storybook/polymer';
 import { html } from 'lit-html';
 
 import '../';
+import { landscape, portrait } from './images';
 
 storiesOf('Card', module)
     .add('Default', () => {
         return html`
             <div style="color: var(--spectrum-global-color-gray-800)">
                 <sp-card title="Card Title" subtitle="JPG">
-                    <img
-                        slot="cover-photo"
-                        src="https://placedog.net/200/300?id=4"
-                        alt="Demo Image"
-                    />
+                    <img slot="cover-photo" src=${portrait} alt="Demo Image" />
                     <div slot="footer">Footer</div>
                 </sp-card>
             </div>
@@ -35,7 +32,7 @@ storiesOf('Card', module)
                 <sp-card variant="gallery" title="Card Title" subtitle="JPG">
                     <img
                         slot="preview"
-                        src="https://placedog.net/532/192?id=4"
+                        src=${landscape}
                         style="object-fit: cover"
                         alt="Demo Image"
                     />
@@ -49,11 +46,7 @@ storiesOf('Card', module)
         return html`
             <div style="width: 208px; height: 264px">
                 <sp-card variant="quiet" title="Card Title" subtitle="JPG">
-                    <img
-                        slot="preview"
-                        src="https://placedog.net/200/300?id=4"
-                        alt="Demo Image"
-                    />
+                    <img slot="preview" src=${portrait} alt="Demo Image" />
                     <div slot="description">10/15/18</div>
                     <div slot="footer">Footer</div>
                 </sp-card>
