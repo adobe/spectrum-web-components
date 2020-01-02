@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 import coreStyles from './theme.css';
 import { CSSResult, supportsAdoptingStyleSheets } from 'lit-element';
 
-const DefaultColor = 'light';
-const DefaultSize = 'medium';
+export const DefaultColor = 'light';
+export const DefaultSize = 'medium';
 
 declare global {
     interface Window {
@@ -41,9 +41,14 @@ declare global {
 
 type FragmentType = 'color' | 'size' | 'core';
 type FragmentMap = Map<string, { kind: FragmentType; styles: CSSResult }>;
-type Color = 'light' | 'lightest' | 'dark' | 'darkest';
-type Size = 'medium' | 'large';
+export type Color = 'light' | 'lightest' | 'dark' | 'darkest';
+export type Size = 'medium' | 'large';
 type FragmentName = Color | Size | 'core';
+
+export interface ThemeData {
+    color?: Color;
+    size?: Size;
+}
 
 export class Theme extends HTMLElement {
     private static themeFragments: FragmentMap = new Map();
@@ -113,6 +118,18 @@ export class Theme extends HTMLElement {
             this.shadowRoot.appendChild(node);
         }
         this.adoptStyles();
+        this.addEventListener('query-theme', this
+            .onQueryTheme as EventListener);
+    }
+
+    private onQueryTheme(event: CustomEvent<ThemeData>): void {
+        if (event.defaultPrevented) {
+            return;
+        }
+        event.preventDefault();
+        const { detail: theme } = event;
+        theme.color = this.color;
+        theme.size = this.size;
     }
 
     protected connectedCallback(): void {

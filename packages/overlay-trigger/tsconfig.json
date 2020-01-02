@@ -6,5 +6,5 @@
         "rootDir": "./src"
     },
     "include": ["src/*.ts"],
-    "references": [{ "path": "../overlay-root" }]
+    "references": [{ "path": "../overlay-root" }, { "path": "../theme" }]
 }
