@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action } from '@open-wc/demoing-storybook';
+import { html, action, boolean } from '@open-wc/demoing-storybook';
 
 import '../';
 import { TemplateResult } from 'lit-html';
@@ -21,7 +21,10 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-sidenav @sidenav-select=${action('select')}>
+        <sp-sidenav
+            @sidenav-select=${action('select')}
+            ?manage-tab-index=${boolean('Manage Tab Index', false, 'Element')}
+        >
             <sp-sidenav-item
                 value="Section 1"
                 label="Section 1"
@@ -62,6 +65,7 @@ export const Multilevel = (): TemplateResult => {
                         label="2.3.1"
                     ></sp-sidenav-item>
                     <sp-sidenav-item
+                        disabled
                         value="2.3.2"
                         label="2.3.2"
                     ></sp-sidenav-item>
@@ -75,6 +79,30 @@ export const Multilevel = (): TemplateResult => {
 
 Multilevel.story = {
     name: 'Multi-level',
+};
+
+export const levelsAndDisabled = (): TemplateResult => {
+    return html`
+        <sp-sidenav>
+            <sp-sidenav-heading label="CATEGORY 1">
+                <sp-sidenav-item
+                    value="Section 1"
+                    label="Section 1"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Section 2"
+                    label="Section 2"
+                    disabled
+                ></sp-sidenav-item>
+                <sp-sidenav-item value="Section 3" label="Section 3">
+                    <sp-sidenav-item
+                        value="Section 3a"
+                        label="Section 3a"
+                    ></sp-sidenav-item>
+                </sp-sidenav-item>
+            </sp-sidenav-heading>
+        </sp-sidenav>
+    `;
 };
 
 export const Hrefs = (): TemplateResult => {

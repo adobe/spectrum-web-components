@@ -12,24 +12,28 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
     CSSResultArray,
     TemplateResult,
     property,
+    PropertyValues,
 } from 'lit-element';
+import { Focusable } from '@spectrum-web-components/shared';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import { SidenavSelectDetail, SideNav } from './sidenav.js';
 
 import sidenavItemStyles from './sidenav-item.css.js';
 
-export class SideNavItem extends LitElement {
+export class SideNavItem extends Focusable {
     public static get styles(): CSSResultArray {
         return [sidenavItemStyles];
     }
 
     @property()
     public value: string | undefined = undefined;
+
+    @property({ type: Boolean, attribute: false })
+    public manageTabIndex = false;
 
     @property({ type: Boolean, reflect: true })
     public selected = false;
@@ -38,7 +42,7 @@ export class SideNavItem extends LitElement {
     public disabled = false;
 
     @property({ type: Boolean, reflect: true })
-    public expanded = true;
+    public expanded = false;
 
     @property()
     public href: string | undefined = undefined;
@@ -67,7 +71,8 @@ export class SideNavItem extends LitElement {
         return depth;
     }
 
-    protected firstUpdated(): void {
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
         const parentSideNav = this.parentSideNav;
         if (parentSideNav) {
             parentSideNav.addEventListener('sidenav-select', (event) =>
@@ -82,7 +87,10 @@ export class SideNavItem extends LitElement {
         this.selected = event.target === this;
     }
 
-    protected handleClick(): void {
+    protected handleClick(event?: Event): void {
+        if (!this.href && event) {
+            event.preventDefault();
+        }
         if (this.value && !this.disabled) {
             if (this.hasChildren) {
                 this.expanded = !this.expanded;
@@ -106,10 +114,20 @@ export class SideNavItem extends LitElement {
         this.handleClick();
     }
 
+    public get focusElement(): HTMLElement {
+        /* istanbul ignore if */
+        if (!this.shadowRoot) {
+            return this;
+        }
+        return this.shadowRoot.querySelector('#itemLink') as HTMLElement;
+    }
+
     protected render(): TemplateResult {
+        const tabIndexForSelectedState = this.selected ? '0' : '-1';
         return html`
             <a
-                href=${ifDefined(this.href)}
+                tabindex=${this.manageTabIndex ? tabIndexForSelectedState : '0'}
+                href=${this.href || '#'}
                 target=${ifDefined(this.target)}
                 data-level="${this.depth}"
                 @click="${this.handleClick}"
@@ -123,5 +141,25 @@ export class SideNavItem extends LitElement {
                   `
                 : undefined}
         `;
+    }
+
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (changes.has('selected') || changes.has('manageTabIndex')) {
+            const tabIndexForSelectedState = this.selected ? 0 : -1;
+            this.tabIndex = this.manageTabIndex ? tabIndexForSelectedState : 0;
+        }
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        const manageTabIndex = this.dispatchEvent(
+            new Event('manage-tab-index', {
+                cancelable: true,
+            })
+        );
+        if (manageTabIndex) {
+            this.manageTabIndex = true;
+        }
     }
 }

@@ -81,3 +81,7 @@ will send the user to the location of the item.
     <sp-sidenav-item value="Patterns" label="Patterns"></sp-sidenav-item>
 </sp-sidenav-itm>
 ```
+
+## Accessibility
+
+When the `manage-tab-index` attribute is set on an `sp-sidenav` element then it will presents its child `sp-sidenav-item` children with a single tab-stop. This will leave items beyond the selected item, or first when there is no focusable selected item, will be accessibile via the up and down arrow keys.
