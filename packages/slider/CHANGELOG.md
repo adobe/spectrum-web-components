@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.3.3...@spectrum-web-components/slider@0.4.0) (2020-01-06)
+
+### Bug Fixes
+
+-   **slider:** fixes usage of aria-valuetext, adds aria-valuenow ([4b25a89](https://github.com/adobe/spectrum-web-components/commit/4b25a89))
+
+### Features
+
+-   **slider:** adds getAriaValueText property, fixes [#381](https://github.com/adobe/spectrum-web-components/issues/381) ([5800915](https://github.com/adobe/spectrum-web-components/commit/5800915))
+
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.3.2...@spectrum-web-components/slider@0.3.3) (2019-12-12)
 
 ### Bug Fixes

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.3.3...@spectrum-web-components/shared@0.4.0) (2020-01-06)
+
+### Features
+
+-   **sidenav:** add keyboard accessibility ([6ff622b](https://github.com/adobe/spectrum-web-components/commit/6ff622b))
+-   **tab-list:** autofocus, :before/after processing, visual test ([83dddb0](https://github.com/adobe/spectrum-web-components/commit/83dddb0))
+
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.3.2...@spectrum-web-components/shared@0.3.3) (2019-12-12)
 
 ### Bug Fixes
