@@ -9,13 +9,19 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
+import { html, TemplateResult } from 'lit-html';
 
 import '../';
 import { illustration } from '../test/test-svg';
+import './../../illustrated-message/lib';
+import './../../link/lib';
 
-storiesOf('Dropzone', module).add('Default', () => {
+export default {
+    component: 'sp-dropzone',
+    title: 'Dropzone',
+};
+
+export const Default = (): TemplateResult => {
     return html`
         <sp-dropzone id="dropzone">
             <sp-illustrated-message heading="Drag and Drop Your File">
@@ -39,4 +45,4 @@ storiesOf('Dropzone', module).add('Default', () => {
             </div>
         </sp-dropzone>
     `;
-});
+};

@@ -9,34 +9,43 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
+import { html, TemplateResult } from 'lit-html';
 
 import '../';
 
-storiesOf('Link', module)
-    .add('Default', () => {
-        // prettier-ignore
-        return html`
-            This is a <sp-link href="#">link</sp-link> in a sentence.
-        `;
-    })
-    .add('Quiet', () => {
-        // prettier-ignore
-        return html`
-            This is a <sp-link quiet href="#">quiet link</sp-link> in a sentence.
-        `;
-    })
-    .add('Over Background', () => {
-        return html`
-            <div
-                style="background-color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block;"
-            >
-                <p style="color: rgb(240, 240, 240);">
-                    This
-                    <sp-link over-background href="#">link</sp-link>
-                    has a background.
-                </p>
-            </div>
-        `;
-    });
+export default {
+    component: 'sp-link',
+    title: 'Link',
+};
+
+export const Default = (): TemplateResult => {
+    // prettier-ignore
+    return html`
+        This is a <sp-link href="#">link</sp-link> in a sentence.
+    `;
+};
+
+export const Quiet = (): TemplateResult => {
+    // prettier-ignore
+    return html`
+        This is a <sp-link quiet href="#">quiet link</sp-link> in a sentence.
+    `;
+};
+
+export const overBackground = (): TemplateResult => {
+    return html`
+        <div
+            style="background-color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block;"
+        >
+            <p style="color: rgb(240, 240, 240);">
+                This
+                <sp-link over-background href="#">link</sp-link>
+                has a background.
+            </p>
+        </div>
+    `;
+};
+
+overBackground.story = {
+    name: 'Over Background',
+};

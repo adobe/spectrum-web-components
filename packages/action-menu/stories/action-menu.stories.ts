@@ -9,52 +9,41 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { boolean, text } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
-import { html } from 'lit-html';
+import { html, action, boolean, text } from '@open-wc/demoing-storybook';
+import { TemplateResult } from 'lit-html';
 
 import '../';
 import { ActionMenu } from '../';
 import '../../menu';
 import '../../menu-item';
+import { ActionMenuMarkup } from './';
 
-storiesOf('Action menu', module).add('Default', () => {
-    const ariaLabel = text('Aria Label', 'More Actions', 'Component');
+export default {
+    component: 'sp-action-menu',
+    title: 'Action menu',
+};
+
+export const iconOnly = (): TemplateResult => html`
+    <style>
+        sp-menu {
+            min-width: 125px;
+        }
+    </style>
+    ${ActionMenuMarkup()}
+`;
+
+export const Default = (): TemplateResult => {
+    const ariaLabel = text('Arial Label', 'More Actions', 'Component');
     const visibleLabel = text('Visible Label', 'More Actions', 'Component');
-    return html`
-        <sp-action-menu
-            label=${ariaLabel}
-            ?disabled=${boolean('Is Disabled', false, 'Component')}
-            ?invalid=${boolean('Is Invalid', false, 'Component')}
-            ?quiet=${boolean('Is Quiet', false, 'Component')}
-            @change="${(event: Event) => {
-                const actionMenu = event.target as ActionMenu;
-                action(`Change: ${actionMenu.value}`)();
-            }}"
-        >
-            ${visibleLabel}
-            <sp-menu slot="options">
-                <sp-menu-item>
-                    Deselect
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select Inverse
-                </sp-menu-item>
-                <sp-menu-item>
-                    Feather...
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select and Mask...
-                </sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>
-                    Save Selection
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Make Work Path
-                </sp-menu-item>
-            </sp-menu>
-        </sp-action-menu>
-    `;
-});
+    const disabled = boolean('Is Disabled', false, 'Component');
+    const changeHandler = (event: Event): void => {
+        const actionMenu = event.target as ActionMenu;
+        action(`Change: ${actionMenu.value}`)();
+    };
+    return ActionMenuMarkup({
+        ariaLabel,
+        disabled,
+        changeHandler,
+        visibleLabel,
+    });
+};

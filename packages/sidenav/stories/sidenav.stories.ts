@@ -9,84 +9,91 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { decorateAction } from '@storybook/addon-actions';
-import { html } from 'lit-html';
+import { html, action } from '@open-wc/demoing-storybook';
 
 import '../';
+import { TemplateResult } from 'lit-html';
 
-const eventValueAction = decorateAction([(args) => [args[0].detail.value]]);
+export default {
+    component: 'sp-sidenav',
+    title: 'Sidenav',
+};
 
-storiesOf('Sidenav', module)
-    .add('Default', () => {
-        return html`
-            <sp-sidenav @select=${eventValueAction('select')}>
+export const Default = (): TemplateResult => {
+    return html`
+        <sp-sidenav @sidenav-select=${action('select')}>
+            <sp-sidenav-item
+                value="Section 1"
+                label="Section 1"
+            ></sp-sidenav-item>
+            <sp-sidenav-item
+                selected
+                value="Section 2"
+                label="Section 2"
+            ></sp-sidenav-item>
+            <sp-sidenav-heading label="CATEGORY 1">
                 <sp-sidenav-item
-                    value="Section 1"
-                    label="Section 1"
+                    value="Section 3"
+                    label="Section 3"
                 ></sp-sidenav-item>
                 <sp-sidenav-item
-                    selected
-                    value="Section 2"
-                    label="Section 2"
+                    value="Section 4"
+                    label="Section 4"
                 ></sp-sidenav-item>
-                <sp-sidenav-heading label="CATEGORY 1">
+            </sp-sidenav-heading>
+        </sp-sidenav>
+    `;
+};
+
+export const Multilevel = (): TemplateResult => {
+    return html`
+        <sp-sidenav
+            variant="multilevel"
+            value="2.3.1"
+            @sidenav-select=${action('select')}
+        >
+            <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
+            <sp-sidenav-item value="baz" label="baz">
+                <sp-sidenav-item value="2.1" label="2.1"></sp-sidenav-item>
+                <sp-sidenav-item value="2.2" label="2.2"></sp-sidenav-item>
+                <sp-sidenav-item value="2.3" label="2.3">
                     <sp-sidenav-item
-                        value="Section 3"
-                        label="Section 3"
+                        value="2.3.1"
+                        label="2.3.1"
                     ></sp-sidenav-item>
                     <sp-sidenav-item
-                        value="Section 4"
-                        label="Section 4"
+                        value="2.3.2"
+                        label="2.3.2"
                     ></sp-sidenav-item>
-                </sp-sidenav-heading>
-            </sp-sidenav>
-        `;
-    })
-    .add('MultiLevel', () => {
-        return html`
-            <sp-sidenav
-                variant="multilevel"
-                value="2.3.1"
-                @select=${eventValueAction('select')}
-            >
-                <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
-                <sp-sidenav-item value="baz" label="baz">
-                    <sp-sidenav-item value="2.1" label="2.1"></sp-sidenav-item>
-                    <sp-sidenav-item value="2.2" label="2.2"></sp-sidenav-item>
-                    <sp-sidenav-item value="2.3" label="2.3">
-                        <sp-sidenav-item
-                            value="2.3.1"
-                            label="2.3.1"
-                        ></sp-sidenav-item>
-                        <sp-sidenav-item
-                            value="2.3.2"
-                            label="2.3.2"
-                        ></sp-sidenav-item>
-                    </sp-sidenav-item>
                 </sp-sidenav-item>
-                <sp-sidenav-item value="test" label="test"></sp-sidenav-item>
-                <sp-sidenav-item value="hi" label="hi"></sp-sidenav-item>
-            </sp-sidenav>
-        `;
-    })
-    .add('Hrefs', () => {
-        return html`
-            <sp-sidenav @select=${eventValueAction('select')}>
-                <sp-sidenav-heading label="GITHUB">
-                    <sp-sidenav-item
-                        href="https://github.com/adobe/spectrum-web-components"
-                        label="Code"
-                    ></sp-sidenav-item>
-                    <sp-sidenav-item
-                        href="https://github.com/adobe/spectrum-web-components/issues"
-                        label="Issues"
-                    ></sp-sidenav-item>
-                    <sp-sidenav-item
-                        href="https://github.com/adobe/spectrum-web-components/pulls"
-                        label="Pull Requests"
-                    ></sp-sidenav-item>
-                </sp-sidenav-heading>
-            </sp-sidenav>
-        `;
-    });
+            </sp-sidenav-item>
+            <sp-sidenav-item value="test" label="test"></sp-sidenav-item>
+            <sp-sidenav-item value="hi" label="hi"></sp-sidenav-item>
+        </sp-sidenav>
+    `;
+};
+
+Multilevel.story = {
+    name: 'Multi-level',
+};
+
+export const Hrefs = (): TemplateResult => {
+    return html`
+        <sp-sidenav @sidenav-select=${action('select')}>
+            <sp-sidenav-heading label="GITHUB">
+                <sp-sidenav-item
+                    href="https://github.com/adobe/spectrum-web-components"
+                    label="Code"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    href="https://github.com/adobe/spectrum-web-components/issues"
+                    label="Issues"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    href="https://github.com/adobe/spectrum-web-components/pulls"
+                    label="Pull Requests"
+                ></sp-sidenav-item>
+            </sp-sidenav-heading>
+        </sp-sidenav>
+    `;
+};

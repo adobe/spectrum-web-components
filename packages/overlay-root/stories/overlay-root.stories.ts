@@ -8,10 +8,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { number, radios } from '@storybook/addon-knobs';
+import { html, number, radios } from '@open-wc/demoing-storybook';
 import {
-    html,
     LitElement,
     css,
     property,
@@ -108,233 +106,126 @@ class RecursivePopover extends LitElement {
 }
 customElements.define('recursive-popover', RecursivePopover);
 
-storiesOf('Overlay Root', module)
-    .add('Default', () => {
-        const positionOptions = {
-            top: 'top',
-            bottom: 'bottom',
-            left: 'left',
-            right: 'right',
-        };
-        const placement = radios(
-            'Type',
-            positionOptions,
-            positionOptions.bottom
-        ) as Placement;
-        const offset = number('Offset', 6);
+const storyStyles = html`
+    <style>
+        overlay-root {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        return html`
-            <style>
-                html,
-                body,
-                #root,
-                #root-inner {
-                    height: 100%;
-                    margin: 0;
-                }
+        overlay-trigger {
+            flex: none;
+        }
 
-                overlay-root {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
+        #styled-div {
+            background-color: blue;
+            color: white;
+            padding: 4px 10px;
+            margin-bottom: 10px;
+        }
 
-                overlay-trigger {
-                    flex: none;
-                }
+        #inner-trigger {
+            display: inline-block;
+        }
+    </style>
+`;
 
-                #styled-div {
-                    background-color: blue;
-                    color: white;
-                    padding: 4px 10px;
-                    margin-bottom: 10px;
-                }
+export default {
+    component: 'overlay-root',
+    title: 'Overlay Root',
+};
 
-                #inner-trigger {
-                    display: inline-block;
-                }
-            </style>
-            <overlay-root>
-                <overlay-trigger
-                    id="trigger"
-                    placement="${placement}"
-                    offset="${offset}"
+export const Default = (): TemplateResult => {
+    const positionOptions = {
+        top: 'top',
+        bottom: 'bottom',
+        left: 'left',
+        right: 'right',
+    };
+    const placement = radios(
+        'Type',
+        positionOptions,
+        positionOptions.bottom
+    ) as Placement;
+    const offset = number('Offset', 6);
+
+    return html`
+        ${storyStyles}
+        <overlay-root>
+            <overlay-trigger
+                id="trigger"
+                placement="${placement}"
+                offset="${offset}"
+            >
+                <sp-button variant="primary" slot="trigger">
+                    Show Popover
+                </sp-button>
+                <sp-popover
+                    dialog
+                    slot="click-content"
+                    direction="${placement}"
+                    tip
+                    open
                 >
-                    <sp-button variant="primary" slot="trigger">
-                        Show Popover
-                    </sp-button>
-                    <sp-popover
-                        dialog
-                        slot="click-content"
-                        direction="${placement}"
-                        tip
-                        open
-                    >
-                        <div class="options-popover-content">
-                            <sp-slider
-                                value="5"
-                                step="0.5"
-                                min="0"
-                                max="20"
-                                label="Awesomeness"
-                            ></sp-slider>
-                            <div id="styled-div">
-                                The background of this div should be blue
-                            </div>
-                            <overlay-trigger
-                                id="inner-trigger"
-                                placement="bottom"
-                            >
-                                <sp-button slot="trigger">Press Me</sp-button>
-                                <sp-popover
-                                    dialog
-                                    slot="click-content"
-                                    direction="bottom"
-                                    tip
-                                    open
-                                >
-                                    <div class="options-popover-content">
-                                        Another Popover
-                                    </div>
-                                </sp-popover>
-
-                                <sp-tooltip
-                                    slot="hover-content"
-                                    delay="100"
-                                    open
-                                    tip="bottom"
-                                >
-                                    Click to open another popover.
-                                </sp-tooltip>
-                            </overlay-trigger>
+                    <div class="options-popover-content">
+                        <sp-slider
+                            value="5"
+                            step="0.5"
+                            min="0"
+                            max="20"
+                            label="Awesomeness"
+                        ></sp-slider>
+                        <div id="styled-div">
+                            The background of this div should be blue
                         </div>
-                    </sp-popover>
-                    <sp-tooltip
-                        open
-                        slot="hover-content"
-                        delay="100"
-                        tip="bottom"
-                    >
-                        Click to open a popover.
-                    </sp-tooltip>
-                </overlay-trigger>
-            </overlay-root>
-        `;
-    })
-    .add('Deep Nesting', () => {
-        return html`
-            <style>
-                html,
-                body,
-                #root,
-                #root-inner {
-                    height: 100%;
-                    margin: 0;
-                }
+                        <overlay-trigger id="inner-trigger" placement="bottom">
+                            <sp-button slot="trigger">Press Me</sp-button>
+                            <sp-popover
+                                dialog
+                                slot="click-content"
+                                direction="bottom"
+                                tip
+                                open
+                            >
+                                <div class="options-popover-content">
+                                    Another Popover
+                                </div>
+                            </sp-popover>
 
-                overlay-root {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
+                            <sp-tooltip
+                                slot="hover-content"
+                                delay="100"
+                                open
+                                tip="bottom"
+                            >
+                                Click to open another popover.
+                            </sp-tooltip>
+                        </overlay-trigger>
+                    </div>
+                </sp-popover>
+                <sp-tooltip open slot="hover-content" delay="100" tip="bottom">
+                    Click to open a popover.
+                </sp-tooltip>
+            </overlay-trigger>
+        </overlay-root>
+    `;
+};
 
-                overlay-trigger {
-                    flex: none;
-                }
+export const deepNesting = (): TemplateResult => {
+    return html`
+        ${storyStyles}
+        <overlay-root>
+            <recursive-popover></recursive-popover>
+        </overlay-root>
+    `;
+};
 
-                #styled-div {
-                    background-color: blue;
-                    color: white;
-                    padding: 4px 10px;
-                    margin-bottom: 10px;
-                }
-
-                #inner-trigger {
-                    display: inline-block;
-                }
-            </style>
-            <overlay-root>
-                <recursive-popover></recursive-popover>
-            </overlay-root>
-        `;
-    })
-    .add('Edges', () => {
-        return html`
-            <style>
-                overlay-root {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100vw;
-                    height: 100vh;
-                }
-                overlay-trigger {
-                    position: absolute;
-                }
-                .top-right {
-                    top: 0;
-                    right: 0;
-                }
-                .bottom-right {
-                    bottom: 0;
-                    right: 0;
-                }
-                .bottom-left {
-                    bottom: 0;
-                    left: 0;
-                }
-            </style>
-            <overlay-root>
-                <overlay-trigger class="top-left" placement="bottom">
-                    <sp-button slot="trigger">
-                        Top/
-                        <br />
-                        Right
-                    </sp-button>
-                    <sp-tooltip
-                        slot="hover-content"
-                        delay="100"
-                        open
-                        tip="bottom"
-                    >
-                        Triskaidekaphobia and More
-                    </sp-tooltip>
-                </overlay-trigger>
-                <overlay-trigger class="top-right" placement="bottom">
-                    <sp-button slot="trigger">
-                        Top/
-                        <br />
-                        Right
-                    </sp-button>
-                    <sp-tooltip
-                        slot="hover-content"
-                        delay="100"
-                        open
-                        tip="bottom"
-                    >
-                        Triskaidekaphobia and More
-                    </sp-tooltip>
-                </overlay-trigger>
-                <overlay-trigger class="bottom-left" placement="top">
-                    <sp-button slot="trigger">
-                        Bottom/
-                        <br />
-                        Left
-                    </sp-button>
-                    <sp-tooltip slot="hover-content" delay="100" open tip="top">
-                        Triskaidekaphobia and More
-                    </sp-tooltip>
-                </overlay-trigger>
-                <overlay-trigger class="bottom-right" placement="top">
-                    <sp-button slot="trigger">
-                        Bottom/
-                        <br />
-                        Right
-                    </sp-button>
-                    <sp-tooltip slot="hover-content" delay="100" open tip="top">
-                        Triskaidekaphobia and More
-                    </sp-tooltip>
-                </overlay-trigger>
-            </overlay-root>
-        `;
-    });
+deepNesting.story = {
+    name: 'Deep Nesting',
+};

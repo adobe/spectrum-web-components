@@ -9,75 +9,89 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
-import { action } from '@storybook/addon-actions';
+import { html, action } from '@open-wc/demoing-storybook';
 
 import '../';
+import { TemplateResult } from 'lit-html';
 
-storiesOf('Switch', module)
-    .add('Default', () => {
-        return html`
-            <sp-switch
-                @click="${action('Click')}"
-                @change="${action('Change')}"
-            >
-                Switch
-            </sp-switch>
-        `;
-    })
-    .add('Checked', () => {
-        return html`
-            <sp-switch
-                checked
-                @click="${action('Click')}"
-                @change="${action('Change')}"
-            >
-                Switch
-            </sp-switch>
-        `;
-    })
-    .add('Quiet', () => {
-        return html`
-            <sp-switch
-                quiet
-                @click="${action('Click')}"
-                @change="${action('Change')}"
-            >
-                Switch
-            </sp-switch>
-        `;
-    })
-    .add('Quiet checked', () => {
-        return html`
-            <sp-switch
-                quiet
-                checked
-                @click="${action('Click')}"
-                @change="${action('Change')}"
-            >
-                Switch
-            </sp-switch>
-        `;
-    })
-    .add('Autofocus', () => {
-        return html`
-            <sp-switch
-                autofocus
-                @click="${action('Click')}"
-                @change="${action('Change')}"
-            >
-                Switch
-            </sp-switch>
-        `;
-    })
-    .add('Disabled', () => {
-        return html`
-            <sp-switch disabled>Switch</sp-switch>
-        `;
-    })
-    .add('Disabled checked', () => {
-        return html`
-            <sp-switch disabled checked>Switch</sp-switch>
-        `;
-    });
+export default {
+    component: 'sp-switch',
+    title: 'Switch',
+};
+
+export const Default = (): TemplateResult => {
+    return html`
+        <sp-switch @click="${action('Click')}" @change="${action('Change')}">
+            Switch
+        </sp-switch>
+    `;
+};
+
+export const Checked = (): TemplateResult => {
+    return html`
+        <sp-switch
+            checked
+            @click="${action('Click')}"
+            @change="${action('Change')}"
+        >
+            Switch
+        </sp-switch>
+    `;
+};
+
+export const Quiet = (): TemplateResult => {
+    return html`
+        <sp-switch
+            quiet
+            @click="${action('Click')}"
+            @change="${action('Change')}"
+        >
+            Switch
+        </sp-switch>
+    `;
+};
+
+export const quietChecked = (): TemplateResult => {
+    return html`
+        <sp-switch
+            quiet
+            checked
+            @click="${action('Click')}"
+            @change="${action('Change')}"
+        >
+            Switch
+        </sp-switch>
+    `;
+};
+
+quietChecked.story = {
+    name: 'Quiet checked',
+};
+
+export const Autofocus = (): TemplateResult => {
+    return html`
+        <sp-switch
+            autofocus
+            @click="${action('Click')}"
+            @change="${action('Change')}"
+        >
+            Switch
+        </sp-switch>
+    `;
+};
+
+export const Disabled = (): TemplateResult => {
+    return html`
+        <sp-switch disabled>Switch</sp-switch>
+    `;
+};
+
+export const disabledChecked = (): TemplateResult => {
+    return html`
+        <sp-switch disabled checked>Switch</sp-switch>
+    `;
+};
+
+disabledChecked.story = {
+    name: 'Disabled checked',
+};

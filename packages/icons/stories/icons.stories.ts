@@ -9,28 +9,32 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
-
 import '../';
 import '../../icon';
 import '../../iconset/lib/icons-demo';
-import { color } from '@storybook/addon-knobs';
+import { html, color } from '@open-wc/demoing-storybook';
+import { TemplateResult } from 'lit-html';
 
-storiesOf('Icons', module)
-    .add(
-        'List - Medium',
-        () => html`
-            <icons-demo style="color: ${color('Color', '#000', 'Element')}">
-                <sp-icons-medium></sp-icons-medium>
-            </icons-demo>
-        `
-    )
-    .add(
-        'List - Large',
-        () => html`
-            <icons-demo style="color: ${color('Color', '#000', 'Element')}">
-                <sp-icons-large></sp-icons-large>
-            </icons-demo>
-        `
-    );
+export default {
+    title: 'Icons',
+};
+
+export const listMedium = (): TemplateResult => html`
+    <icons-demo style="color: ${color('Color', '#000', 'Element')}">
+        <sp-icons-medium></sp-icons-medium>
+    </icons-demo>
+`;
+
+listMedium.story = {
+    name: 'List - Medium',
+};
+
+export const listLarge = (): TemplateResult => html`
+    <icons-demo style="color: ${color('Color', '#000', 'Element')}">
+        <sp-icons-large></sp-icons-large>
+    </icons-demo>
+`;
+
+listLarge.story = {
+    name: 'List - Large',
+};

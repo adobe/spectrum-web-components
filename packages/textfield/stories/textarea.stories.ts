@@ -9,13 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
-import { boolean } from '@storybook/addon-knobs';
+import { html, boolean } from '@open-wc/demoing-storybook';
 
 import '../';
+import { TemplateResult } from 'lit-html';
 
-storiesOf('Textarea', module).add('Default', () => {
+export default {
+    component: 'sp-textfield',
+    title: 'Textarea',
+};
+
+export const Default = (): TemplateResult => {
     const grows = boolean('Grows', false, 'Element');
     const quiet = boolean('Quiet', false, 'Element');
     return html`
@@ -73,4 +77,4 @@ storiesOf('Textarea', module).add('Default', () => {
             ?quiet=${quiet}
         ></sp-textfield>
     `;
-});
+};

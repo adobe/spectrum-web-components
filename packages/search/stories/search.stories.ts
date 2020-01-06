@@ -9,38 +9,36 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { action } from '@storybook/addon-actions';
-import { html } from 'lit-html';
+import { html, action } from '@open-wc/demoing-storybook';
 
 import '../';
 import { Search } from '../';
+import { TemplateResult } from 'lit-html';
 
-storiesOf('Search', module)
-    .add(
-        'Default',
-        () => html`
-            <sp-search
-                @submit=${(event: Event) => {
-                    event.preventDefault();
-                    const search = event.target as Search;
-                    action(`Search: ${search.value}`)();
-                }}
-            ></sp-search>
-            <sp-search disabled></sp-search>
-        `
-    )
-    .add(
-        'Quiet',
-        () => html`
-            <sp-search
-                quiet
-                @submit=${(event: Event) => {
-                    event.preventDefault();
-                    const search = event.target as Search;
-                    action(`Search: ${search.value}`)();
-                }}
-            ></sp-search>
-            <sp-search quiet disabled></sp-search>
-        `
-    );
+export default {
+    component: 'sp-search',
+    title: 'Search',
+};
+
+export const Default = (): TemplateResult => html`
+    <sp-search
+        @submit=${(event: Event) => {
+            event.preventDefault();
+            const search = event.target as Search;
+            action(`Search: ${search.value}`)();
+        }}
+    ></sp-search>
+    <sp-search disabled></sp-search>
+`;
+
+export const Quiet = (): TemplateResult => html`
+    <sp-search
+        quiet
+        @submit=${(event: Event) => {
+            event.preventDefault();
+            const search = event.target as Search;
+            action(`Search: ${search.value}`)();
+        }}
+    ></sp-search>
+    <sp-search quiet disabled></sp-search>
+`;

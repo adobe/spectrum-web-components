@@ -53,6 +53,7 @@ module.exports = [
     'circle-loader--default',
     'circle-loader--over-background',
     'dropdown--default',
+    'dropdown--initial-value',
     'dropzone--default',
     'icon--medium',
     'icon--large',
