@@ -1,24 +1,24 @@
 {
-    "name": "@spectrum-web-components/overlay-root",
+    "name": "@spectrum-web-components/overlay",
     "publishConfig": {
         "access": "public"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/overlay-root"
+        "directory": "packages/overlay"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/overlay-root",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/overlay",
     "keywords": [
         "spectrum css",
         "web components",
         "lit-element",
         "lit-html"
     ],
-    "version": "0.1.7",
+    "version": "0.0.1",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",

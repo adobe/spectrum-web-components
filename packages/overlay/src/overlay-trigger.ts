@@ -20,13 +20,13 @@ import {
 
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
+import { OverlayRoot } from './overlay-root.js';
 import {
-    OverlayRoot,
     OverlayCloseDetail,
     OverlayOpenDetail,
     TriggerInteractions,
     Placement,
-} from '@spectrum-web-components/overlay-root';
+} from './overlay.js';
 import { ThemeData } from '@spectrum-web-components/theme';
 
 let overlayRoot: OverlayRoot;
@@ -61,17 +61,18 @@ export class OverlayTrigger extends LitElement {
     public onOverlayOpen(event: Event, interaction: TriggerInteractions): void {
         const isClick = interaction === 'click';
         const overlayElement = isClick ? this.clickContent : this.hoverContent;
-        const delayAttribute = overlayElement
-            ? overlayElement.getAttribute('delay')
-            : null;
-        const delay = delayAttribute ? parseFloat(delayAttribute) : 0;
 
+        /* istanbul ignore if */
         if (!overlayElement) {
             return;
         }
         if (!overlayRoot) {
             overlayRoot = new OverlayRoot();
         }
+
+        const delayAttribute = overlayElement.getAttribute('delay');
+        const delay = delayAttribute ? parseFloat(delayAttribute) : 0;
+
         const queryThemeDetail: ThemeData = {
             color: undefined,
             size: undefined,
@@ -113,6 +114,7 @@ export class OverlayTrigger extends LitElement {
         const isClick = interaction === 'click';
         const overlayElement = isClick ? this.clickContent : this.hoverContent;
 
+        /* istanbul ignore if */
         if (!overlayElement) {
             return;
         }
@@ -131,22 +133,24 @@ export class OverlayTrigger extends LitElement {
         );
 
         this.dispatchEvent(overlayCloseEvent);
-        // overlayRoot.onOverlayClose(overlayCloseEvent);
     }
 
     public onTriggerClick(event: Event): void {
+        /* istanbul ignore else */
         if (this.clickContent) {
             this.onOverlayOpen(event, 'click');
         }
     }
 
     public onTriggerMouseOver(event: Event): void {
+        /* istanbul ignore else */
         if (this.hoverContent) {
             this.onOverlayOpen(event, 'hover');
         }
     }
 
     public onTriggerMouseLeave(event: Event): void {
+        /* istanbul ignore else */
         if (this.hoverContent) {
             this.onOverlayClose(event, 'hover');
         }
@@ -176,24 +180,28 @@ export class OverlayTrigger extends LitElement {
     }
 
     private onClickSlotChange(event: Event): void {
-        if (event.target) {
-            const slot = event.target as HTMLSlotElement;
-            const content = this.extractSlotContent(slot);
+        /* istanbul ignore if */
+        if (!event.target) {
+            return;
+        }
+        const slot = event.target as HTMLSlotElement;
+        const content = this.extractSlotContent(slot);
 
-            if (content) {
-                this.clickContent = content;
-            }
+        if (content) {
+            this.clickContent = content;
         }
     }
 
     private onHoverSlotChange(event: Event): void {
-        if (event.target) {
-            const slot = event.target as HTMLSlotElement;
-            const content = this.extractSlotContent(slot);
+        /* istanbul ignore if */
+        if (!event.target) {
+            return;
+        }
+        const slot = event.target as HTMLSlotElement;
+        const content = this.extractSlotContent(slot);
 
-            if (content) {
-                this.hoverContent = content;
-            }
+        if (content) {
+            this.hoverContent = content;
         }
     }
 
@@ -208,6 +216,7 @@ export class OverlayTrigger extends LitElement {
     }
 
     public disconnectedCallback(): void {
+        /* istanbul ignore else */
         if (this.clickContent) {
             this.onOverlayClose(new Event('remove'), 'click');
         }

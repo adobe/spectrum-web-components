@@ -16,12 +16,7 @@ import {
     TriggerInteractions,
 } from './overlay.js';
 import calculatePosition, { PositionResult } from './calculate-position.js';
-import {
-    Size,
-    Color,
-    DefaultColor,
-    DefaultSize,
-} from '@spectrum-web-components/theme';
+import { Size, Color } from '@spectrum-web-components/theme';
 import {
     html,
     LitElement,
@@ -47,6 +42,7 @@ class Deferred<T> {
     );
 
     public resolve(value: T): void {
+        /* istanbul ignore else */
         if (this.resolveFn) {
             this.resolveFn(value);
         }
@@ -108,6 +104,7 @@ const stateTransition = (
     event?: string
 ): OverlayStateType => {
     if (!state) return stateMachine.initial;
+    /* istanbul ignore if */
     if (!event) return state;
     return stateMachine.states[state].on[event] || state;
 };
@@ -140,11 +137,13 @@ export class ActiveOverlay extends LitElement {
     @property({ reflect: true })
     public placement: Placement = 'bottom';
     @property({ attribute: false })
-    public color: Color = DefaultColor;
+    public color?: Color;
     @property({ attribute: false })
-    public size: Size = DefaultSize;
-    @property({ type: Boolean, attribute: false })
-    public hasTheme = false;
+    public size?: Size;
+
+    private get hasTheme(): boolean {
+        return !!this.color || !!this.size;
+    }
 
     public offset = 6;
     private position?: PositionResult;
@@ -162,6 +161,7 @@ export class ActiveOverlay extends LitElement {
         this.extractEventDetail(openEvent);
         this.stealOverlayContent(openEvent.detail.content);
 
+        /* istanbul ignore if */
         if (!this.overlayContent) return;
 
         this.state = 'active';
@@ -184,9 +184,8 @@ export class ActiveOverlay extends LitElement {
         this.placement = event.detail.placement;
         this.offset = event.detail.offset;
         this.interaction = event.detail.interaction;
-        this.color = event.detail.theme.color || DefaultColor;
-        this.size = event.detail.theme.size || DefaultSize;
-        this.hasTheme = !!event.detail.theme.color || !!event.detail.theme.size;
+        this.color = event.detail.theme.color;
+        this.size = event.detail.theme.size;
     }
 
     public dispose(): void {
@@ -201,13 +200,16 @@ export class ActiveOverlay extends LitElement {
     }
 
     private stealOverlayContent(element: HTMLElement): void {
+        /* istanbul ignore if */
         if (this.placeholder || !element) return;
+        /* istanbul ignore else */
         if (!this.placeholder) {
             this.placeholder = document.createComment(
                 'placeholder for ' + element.nodeName
             );
         }
 
+        /* istanbul ignore else */
         if (element.parentElement) {
             element.parentElement.replaceChild(this.placeholder, element);
         }
@@ -218,10 +220,12 @@ export class ActiveOverlay extends LitElement {
     }
 
     private returnOverlayContent(): void {
+        /* istanbul ignore if */
         if (!this.overlayContent) return;
 
         this.overlayContent.removeAttribute('slot');
 
+        /* istanbul ignore else */
         if (this.placeholder && this.placeholder.parentElement) {
             this.placeholder.parentElement.replaceChild(
                 this.overlayContent,
@@ -276,6 +280,7 @@ export class ActiveOverlay extends LitElement {
 
     public async hide(): Promise<void> {
         this.state = 'hiding';
+        /* istanbul ignore else */
         if (this.hiddenDeferred) {
             return this.hiddenDeferred.promise;
         }
@@ -306,8 +311,10 @@ export class ActiveOverlay extends LitElement {
 
     public renderTheme(content: TemplateResult): TemplateResult {
         import('@spectrum-web-components/theme');
+        const color = this.color as Color;
+        const size = this.size as Size;
         return html`
-            <sp-theme .color=${this.color} .size=${this.size}>
+            <sp-theme .color=${color} .size=${size}>
                 ${content}
             </sp-theme>
         `;
@@ -326,6 +333,7 @@ export class ActiveOverlay extends LitElement {
     ): ActiveOverlay {
         const overlay = new ActiveOverlay();
 
+        /* istanbul ignore else */
         if (openEvent.detail.content) {
             overlay.root = root;
             overlay.open(openEvent);
