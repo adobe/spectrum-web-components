@@ -14,12 +14,15 @@ governing permissions and limitations under the License.
     background-color: var(--spectrum-global-color-gray-100);
 }
 
+aside {
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    overflow: auto;
+}
+
 @media screen and (max-width: 960px) {
     aside {
-        display: flex;
-        flex-direction: column;
-        max-height: 100vh;
-        overflow: auto;
         position: fixed;
         top: 0;
         left: 0;
@@ -70,7 +73,7 @@ governing permissions and limitations under the License.
 
 #navigation {
     width: 256px;
-    padding: 0px 24px;
+    padding: 0 24px 24px 24px;
     flex: 1;
     flex-grow: 1;
     overflow: auto;
