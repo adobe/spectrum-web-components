@@ -3,12 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.3...@spectrum-web-components/link@0.2.4) (2020-01-06)
-
-### Bug Fixes
-
--   **link:** correct white space management ([a7a63dc](https://github.com/adobe/spectrum-web-components/commit/a7a63dc))
-
 ## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.2...@spectrum-web-components/link@0.2.3) (2019-12-12)
 
 ### Bug Fixes
