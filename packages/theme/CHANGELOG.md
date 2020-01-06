@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.1.1 (2020-01-06)
+
+### Bug Fixes
+
+-   factor theme to use a single DOM node ([7641228](https://github.com/adobe/spectrum-web-components/commit/7641228)), closes [#154](https://github.com/adobe/spectrum-web-components/issues/154)
+-   get theme element working in storybook ([4c5e478](https://github.com/adobe/spectrum-web-components/commit/4c5e478))
+
 ## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/themes@0.2.2...@spectrum-web-components/themes@0.2.3) (2019-12-02)
 
 **Note:** Version bump only for package @spectrum-web-components/themes

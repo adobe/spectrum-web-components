@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.6.1...@spectrum-web-components/bundle@0.7.0) (2020-01-06)
+
+### Bug Fixes
+
+-   factor theme to use a single DOM node ([7641228](https://github.com/adobe/spectrum-web-components/commit/7641228)), closes [#154](https://github.com/adobe/spectrum-web-components/issues/154)
+
+### Features
+
+-   join overlay-root and overlay-trigger as overlay ([dcde42c](https://github.com/adobe/spectrum-web-components/commit/dcde42c))
+
 ## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.6.0...@spectrum-web-components/bundle@0.6.1) (2019-12-12)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle

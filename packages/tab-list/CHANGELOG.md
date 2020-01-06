@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.2.2...@spectrum-web-components/tab-list@0.3.0) (2020-01-06)
+
+### Bug Fixes
+
+-   **tab-list:** remove logging ([dc73329](https://github.com/adobe/spectrum-web-components/commit/dc73329))
+
+### Features
+
+-   upgrade accessibility of tab/tab-list family of elements ([c7ea803](https://github.com/adobe/spectrum-web-components/commit/c7ea803))
+-   **tab-list:** autofocus, :before/after processing, visual test ([83dddb0](https://github.com/adobe/spectrum-web-components/commit/83dddb0))
+
 ## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.2.1...@spectrum-web-components/tab-list@0.2.2) (2019-12-02)
 
 ### Bug Fixes
