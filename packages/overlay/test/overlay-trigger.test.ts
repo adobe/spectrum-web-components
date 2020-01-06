@@ -10,10 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../';
-import { OverlayTrigger } from '../';
+import { OverlayTrigger } from '../lib/index.js';
 import '../../button';
 import '../../popover';
 import { Popover } from '../../popover';
+import '../../theme';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
 import {
@@ -24,6 +25,8 @@ import {
     nextFrame,
     elementUpdated,
 } from '@open-wc/testing';
+import { Button } from '../../button';
+import { ActiveOverlay } from '../lib/active-overlay';
 
 function pressEscape(): void {
     const up = new KeyboardEvent('keyup', {
@@ -366,5 +369,49 @@ describe('Overlays', () => {
         await nextFrame();
 
         expect(isVisible(hoverContent)).to.be.false;
+    });
+    it('acquires a `color` and `size` from `sp-theme`', async () => {
+        const el = await fixture<HTMLDivElement>(html`
+            <sp-theme color="dark">
+                <sp-theme color="light">
+                    <overlay-trigger id="trigger" placement="top">
+                        <sp-button
+                            id="outer-button"
+                            variant="primary"
+                            slot="trigger"
+                        >
+                            Show Popover
+                        </sp-button>
+                        <sp-popover
+                            id="outer-popover"
+                            dialog
+                            slot="click-content"
+                            direction="bottom"
+                            tip
+                            open
+                        >
+                            Popover content!
+                        </sp-popover>
+                    </overlay-trigger>
+                </sp-theme>
+            </sp-theme>
+        `);
+
+        await elementUpdated(el);
+
+        expect(document.querySelector('active-overlay')).to.be.null;
+
+        const button = el.querySelector('sp-button') as Button;
+        button.click();
+
+        await elementUpdated(el);
+
+        const overlay = document.querySelector(
+            'active-overlay'
+        ) as ActiveOverlay;
+
+        expect(overlay).to.exist;
+        expect(overlay.color).to.not.equal('dark');
+        expect(overlay.color).to.equal('light');
     });
 });

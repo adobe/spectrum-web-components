@@ -19,8 +19,6 @@ import {
 
 import '../';
 import { Placement } from '../';
-import '../../overlay-root';
-import '../../overlay-trigger';
 import '../../button';
 import '../../popover';
 import '../../slider';

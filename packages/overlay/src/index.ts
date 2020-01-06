@@ -9,17 +9,26 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './overlay-trigger.js';
-
 import { OverlayTrigger } from './overlay-trigger.js';
+import { ActiveOverlay } from './active-overlay.js';
+
+export * from './overlay.js';
+export * from './overlay-root.js';
+export * from './overlay-trigger.js';
 
 /* istanbul ignore else */
 if (!customElements.get('overlay-trigger')) {
     customElements.define('overlay-trigger', OverlayTrigger);
 }
 
+/* istanbul ignore else */
+if (!customElements.get('active-overlay')) {
+    customElements.define('active-overlay', ActiveOverlay);
+}
+
 declare global {
     interface HTMLElementTagNameMap {
         'overlay-trigger': OverlayTrigger;
+        'active-overlay': ActiveOverlay;
     }
 }
