@@ -26,6 +26,18 @@ export type DropEffects = 'copy' | 'move' | 'link' | 'none';
 
 /**
  * @slot default - This is the illustrated message slot
+ *
+ * @cssproperty {Color} [--spectrum-dropzone-border-color=var(--spectrum-global-color-gray-300)]
+ * @cssproperty {Color} [--spectrum-dropzone-background-color=var(--spectrum-global-color-gray-100)]
+ * @cssproperty {Color} [--spectrum-dropzone-icon-color=var(--spectrum-global-color-gray-500)]
+ * @cssproperty {Color} [--spectrum-dropzone-border-color-selected-hover=var(--spectrum-global-color-blue-400)]
+ * @cssproperty {Color} [--spectrum-dropzone-background-color-selected-hover=var(--spectrum-alias-highlight-selected)]
+ * @cssproperty {Color} [--spectrum-dropzone-icon-color-selected-hover=var(--spectrum-global-color-blue-500)]
+ * @cssproperty {Length} [--spectrum-dropzone-padding=var(--spectrum-global-dimension-size-900)]
+ * @cssproperty {Length} [--spectrum-dropzone-border-width=var(--spectrum-alias-border-size-thick)]
+ * @cssproperty {Length} [--spectrum-dropzone-border-radius=var(--spectrum-alias-border-radius-regular)]
+ * @cssproperty {Length} [--spectrum-dropzone-content-text-size=var(--spectrum-alias-font-size-default)]
+ * @cssproperty {Length} [--spectrum-dropzone-icon-margin-y=var(--spectrum-global-dimension-size-175)]
  */
 export class Dropzone extends LitElement {
     public static readonly is = 'sp-dropzone';

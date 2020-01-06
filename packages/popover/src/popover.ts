@@ -25,6 +25,23 @@ import popoverStyles from './popover.css.js';
 /**
  * @attr {Boolean} open - The open state of the popover
  * @attr {Boolean} dialog - Adds some padding to the popover
+ *
+ * @cssproperty {Color} [--spectrum-popover-background-color=var(--spectrum-global-color-gray-50)]
+ * @cssproperty {Color} [--spectrum-popover-border-color=var(--spectrum-alias-border-color-dark)]
+ * @cssproperty {Color} [--spectrum-popover-shadow-color=var(--spectrum-alias-dropshadow-color)]
+ * @cssproperty {Length} [--spectrum-popover-shadow-blur=var(--spectrum-alias-dropshadow-blur)]
+ * @cssproperty {Length} [--spectrum-popover-shadow-offset-y=var(--spectrum-alias-dropshadow-offset-y)]
+ * @cssproperty {Length} [--spectrum-popover-elevation=2dp]
+ * @cssproperty {Length} [--spectrum-popover-border-size=var(--spectrum-alias-border-size-thin)]
+ * @cssproperty {Length} [--spectrum-popover-border-radius=var(--spectrum-alias-border-radius-regular)]
+ * @cssproperty {Length} [--spectrum-popover-padding-x=0px]
+ * @cssproperty {Length} [--spectrum-popover-padding-y=var(--spectrum-global-dimension-size-50)]
+ * @cssproperty {Length} [--spectrum-popover-tip-width=var(--spectrum-global-dimension-size-250)]
+ * @cssproperty {Length} [--spectrum-popover-tip-height=var(--spectrum-global-dimension-size-125)]
+ * @cssproperty {Length} [--spectrum-popover-shadow-y-offset=var(--spectrum-global-dimension-size-10)]
+ * @cssproperty {Length} [--spectrum-popover-source-gap=var(--spectrum-global-dimension-size-75)]
+ * @cssproperty {Length} [--spectrum-popover-min-width=var(--spectrum-global-dimension-size-400)]
+ * @cssproperty {Length} [--spectrum-popover-min-height=var(--spectrum-global-dimension-size-400)]
  */
 
 export class Popover extends LitElement {

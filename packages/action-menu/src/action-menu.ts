@@ -22,7 +22,7 @@ import { ObserveSlotText } from '@spectrum-web-components/shared/lib/observe-slo
 import actionMenuStyles from './action-menu.css.js';
 
 /**
- * @slot options - The menu with options that will display when the dropdown is open
+ * @slot icon - The icon that will adorn the action-menu
  */
 export class ActionMenu extends ObserveSlotText(Dropdown) {
     public static get styles(): CSSResultArray {

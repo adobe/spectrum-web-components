@@ -15,9 +15,9 @@ yarn-error.log
 .rush
 
 coverage
-dist
-documentation/api-docs/component_data.json
-documentation/api-docs/*.html
+documentation/custom-elements.json
+documentation/api-docs
+documentation/dist
 test/**/*.js
 test/**/*.js.map
 test/**/*.d.ts

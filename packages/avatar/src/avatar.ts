@@ -23,6 +23,12 @@ import avatarStyles from './avatar.css.js';
 
 /**
  * Avatar component
+ *
+ * @cssproperty {Opacity} [--spectrum-avatar-small-opacity=1]
+ * @cssproperty {Opacity} [--spectrum-avatar-small-opacity-disabled=0.3]
+ * @cssproperty {Length} [--spectrum-avatar-small-border-radius=50%]
+ * @cssproperty {Length} [--spectrum-avatar-small-width=var(--spectrum-global-dimension-size-200)]
+ * @cssproperty {Length} [--spectrum-avatar-small-height=var(--spectrum-global-dimension-size-200)]
  */
 export class Avatar extends LitElement {
     public static get styles(): CSSResultArray {

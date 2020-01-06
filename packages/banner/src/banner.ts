@@ -28,6 +28,16 @@ import bannerStyles from './banner.css.js';
  *
  * @slot header - Primary message of the banner.
  * @slot content - Secondary message of the banner. Used to provide a description.
+ *
+ * @cssproperty {Color} [--spectrum-banner-text-color=var(--spectrum-global-color-static-white)]
+ * @cssproperty {Length} [--spectrum-banner-border-radius=var(--spectrum-global-dimension-static-size-100)]
+ * @cssproperty {Length} [--spectrum-banner-padding-y=var(--spectrum-global-dimension-static-size-50)]
+ * @cssproperty {Length} [--spectrum-banner-padding-x=var(--spectrum-global-dimension-static-size-100)]
+ * @cssproperty {Length} [--spectrum-banner-text-size=var(--spectrum-global-dimension-font-size-75)]
+ * @cssproperty {Length} [--spectrum-banner-text-line-height=var(--spectrum-alias-heading-text-line-height)]
+ * @cssproperty {Color} [--spectrum-banner-error-background-color=var(--spectrum-semantic-negative-color-default)]
+ * @cssproperty {Color} [--spectrum-banner-info-background-color=var(--spectrum-semantic-informative-color-default)]
+ * @cssproperty {Color} [--spectrum-banner-warning-background-color=var(--spectrum-semantic-notice-color-default)]
  */
 export class Banner extends LitElement {
     @property({ reflect: true, type: String })

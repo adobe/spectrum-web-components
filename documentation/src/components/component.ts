@@ -14,13 +14,77 @@ import { LayoutElement } from './layout';
 import componentStyles from './markdown.css';
 import { AppRouter } from '../router';
 import { TabList } from '../../../packages/tab-list';
+import docs from '../../custom-elements.json';
 
-let ComponentApiDocs: Map<string, TemplateResult>;
 let ComponentDocs: Map<string, TemplateResult>;
 
 enum TabValue {
     Api = 'api',
     Examples = 'examples',
+}
+
+interface JsDocTagParsed {
+    tag: string;
+    name?: string;
+    attribute?: string;
+    type?: string;
+    optional?: boolean;
+    default?: string;
+    description?: string;
+}
+
+type ParsedTagArray = JsDocTagParsed[];
+
+function sortByName(a: JsDocTagParsed, b: JsDocTagParsed) {
+    if (!a.name || !b.name) {
+        return 0;
+    }
+    if (a.name > b.name) {
+        return 1;
+    }
+    if (b.name > a.name) {
+        return -1;
+    }
+    return 0;
+}
+
+function buildTable(
+    title: string,
+    rowData: ParsedTagArray,
+    headings: string[],
+    cells: ((property: JsDocTagParsed) => TemplateResult)[]
+): TemplateResult {
+    return html`
+        <h2 class="spectrum-Heading2--quiet">${title}</h2>
+        <table class="spectrum-Table">
+            <thead class="spectrum-Table-head">
+                <tr>
+                    ${headings.map(
+                        (heading) => html`
+                            <th class="spectrum-Table-headCell">
+                                ${heading}
+                            </th>
+                        `
+                    )}
+                </tr>
+            </thead>
+            <tbody class="spectrum-Table-body">
+                ${rowData.sort(sortByName).map(
+                    (property) => html`
+                        <tr class="spectrum-Table-row">
+                            ${cells.map(
+                                (cell) => html`
+                                    <td class="spectrum-Table-cell">
+                                        ${cell(property)}
+                                    </td>
+                                `
+                            )}
+                        </tr>
+                    `
+                )}
+            </tbody>
+        </table>
+    `;
 }
 
 class ComponentElement extends LayoutElement {
@@ -33,7 +97,6 @@ class ComponentElement extends LayoutElement {
         pathname: string;
     };
 
-    private apiDocsLoaded = false;
     private docsLoaded = false;
 
     public static get styles(): CSSResultArray {
@@ -66,12 +129,6 @@ class ComponentElement extends LayoutElement {
     }
 
     loadDocs() {
-        import('../../api-docs').then((module) => {
-            ComponentApiDocs = module.ComponentApiDocs;
-            this.apiDocsLoaded = true;
-            this.requestUpdate();
-        });
-
         import('../../components').then((module) => {
             ComponentDocs = module.ComponentDocs;
             this.docsLoaded = true;
@@ -80,18 +137,18 @@ class ComponentElement extends LayoutElement {
     }
 
     shouldUpdate() {
-        if (!this.apiDocsLoaded && !this.docsLoaded) {
+        if (!this.docsLoaded) {
             this.loadDocs();
         }
-        return this.docsLoaded && this.apiDocsLoaded;
+        return this.docsLoaded;
     }
 
     renderContent() {
         let result;
         if (this.location && this.location.params) {
-            const hasAPIdocs =
-                typeof ComponentApiDocs.get(this.location.params.component) !==
-                'undefined';
+            const hasAPIdocs = docs.tags.find(
+                (el) => el.name === this.componentName
+            );
             result = html`
                 <article class="spectrum-Typography">
                     <div id="title-header" class="spectrum-Article">
@@ -118,11 +175,112 @@ class ComponentElement extends LayoutElement {
                         : html``}
                     ${this.tab === TabValue.Examples
                         ? ComponentDocs.get(this.location.params.component)
-                        : ComponentApiDocs.get(this.location.params.component)}
+                        : this.renderDocs()}
                 </article>
             `;
         }
         return result || super.renderContent();
+    }
+
+    protected renderDocs(): TemplateResult {
+        const tag = docs.tags.find((el) => el.name === this.componentName) as {
+            description: string;
+            properties?: ParsedTagArray;
+            slots?: ParsedTagArray;
+            events?: ParsedTagArray;
+            cssProperties?: ParsedTagArray;
+        };
+        if (!tag) {
+            return html``;
+        }
+        return html`
+            <p>${tag.description}</p>
+            ${tag.properties && tag.properties.length
+                ? buildTable(
+                      'Properties',
+                      tag.properties,
+                      ['Name', 'Attribute', 'Type', 'Default', 'Description'],
+                      [
+                          (property) =>
+                              html`
+                                  <code>${property.name}</code>
+                              `,
+                          (property) =>
+                              html`
+                                  <code>${property.attribute || ''}</code>
+                              `,
+                          (property) =>
+                              html`
+                                  <code>${property.type || ''}</code>
+                              `,
+                          (property) =>
+                              html`
+                                  <code>${property.default || ''}</code>
+                              `,
+                          (property) =>
+                              html`
+                                  ${property.description || ''}
+                              `,
+                      ]
+                  )
+                : html``}
+            ${tag.slots && tag.slots.length
+                ? buildTable(
+                      'Slots',
+                      tag.slots,
+                      ['Name', 'Description'],
+                      [
+                          (property) =>
+                              html`
+                                  <code>${property.name}</code>
+                              `,
+                          (property) =>
+                              html`
+                                  ${property.description || ''}
+                              `,
+                      ]
+                  )
+                : html``}
+            ${tag.events && tag.events.length
+                ? buildTable(
+                      'Events',
+                      tag.events,
+                      ['Name'],
+                      [
+                          (property) =>
+                              html`
+                                  <code>${property.name}</code>
+                              `,
+                      ]
+                  )
+                : html``}
+            ${tag.cssProperties && tag.cssProperties.length
+                ? buildTable(
+                      'CSS Custom Properties',
+                      tag.cssProperties,
+                      ['Name', 'Type', 'Default'],
+                      [
+                          (property) =>
+                              html`
+                                  <code>${property.name}</code>
+                              `,
+                          (property) =>
+                              html`
+                                  <code>${property.type || ''}</code>
+                              `,
+                          (property) =>
+                              html`
+                                  <code>
+                                      ${(property.default || '""').slice(
+                                          1,
+                                          (property.default || '""').length - 1
+                                      )}
+                                  </code>
+                              `,
+                      ]
+                  )
+                : html``}
+        `;
     }
 }
 customElements.define('docs-component', ComponentElement);

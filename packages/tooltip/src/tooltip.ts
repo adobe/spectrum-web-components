@@ -21,8 +21,8 @@ import {
 import tooltipStyles from './tooltip.css.js';
 
 /**
- * @slot icon - The icon that appears on the left of the label
- * @slot - The label
+ * @slot icon - The icon that appears on the left of the text
+ * @slot - The text of the tooltip
  */
 
 export class Tooltip extends LitElement {
