@@ -55,7 +55,6 @@ export class Toast extends LitElement {
     @property({ type: Number })
     public set timeout(timeout: number | null) {
         const hasTimeout = typeof timeout !== null && (timeout as number) > 0;
-        debugger;
         const newTimeout = hasTimeout
             ? Math.max(6000, timeout as number)
             : null;
