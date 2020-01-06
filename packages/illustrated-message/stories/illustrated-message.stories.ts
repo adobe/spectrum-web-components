@@ -9,31 +9,35 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
+import { html, TemplateResult } from 'lit-html';
 
 import '../';
 import { illustration } from '../../dropzone/test/test-svg';
 
-storiesOf('IllustratedMessage', module)
-    .add('Default', () => {
-        return html`
-            <sp-illustrated-message
-                heading="Drag and Drop Your File"
-                description="This message has italics"
-            >
-                ${illustration}
-            </sp-illustrated-message>
-        `;
-    })
-    .add('CTA', () => {
-        return html`
-            <sp-illustrated-message
-                heading="Drag and Drop Your File"
-                description="This message has no italics"
-                cta
-            >
-                ${illustration}
-            </sp-illustrated-message>
-        `;
-    });
+export default {
+    component: 'sp-illustrated-message',
+    title: 'IllustratedMessage',
+};
+
+export const Default = (): TemplateResult => {
+    return html`
+        <sp-illustrated-message
+            heading="Drag and Drop Your File"
+            description="This message has italics"
+        >
+            ${illustration}
+        </sp-illustrated-message>
+    `;
+};
+
+export const CTA = (): TemplateResult => {
+    return html`
+        <sp-illustrated-message
+            heading="Drag and Drop Your File"
+            description="This message has no italics"
+            cta
+        >
+            ${illustration}
+        </sp-illustrated-message>
+    `;
+};

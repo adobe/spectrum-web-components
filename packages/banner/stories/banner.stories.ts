@@ -9,24 +9,28 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { boolean, radios, text } from '@storybook/addon-knobs';
-import { html } from 'lit-html';
+import { html, boolean, radios, text } from '@open-wc/demoing-storybook';
 
 import '../';
+import { TemplateResult } from 'lit-html';
 
-storiesOf('Banner', module)
-    .add('Default', () => {
-        const header = text('Header', 'Header Text');
-        const content = text('Content', 'Content of the banner!');
-        const typeOptions = {
-            info: 'info',
-            warning: 'warning',
-            error: 'error',
-        };
-        const type = radios('Type', typeOptions, typeOptions.info);
-        const inCorner = boolean('In Corner', false);
-        return html`
+export default {
+    component: 'sp-banner',
+    title: 'Banner',
+};
+
+export const Default = (): TemplateResult => {
+    const header = text('Header', 'Header Text');
+    const content = text('Content', 'Content of the banner!');
+    const typeOptions = {
+        info: 'info',
+        warning: 'warning',
+        error: 'error',
+    };
+    const type = radios('Type', typeOptions, typeOptions.info);
+    const inCorner = boolean('In Corner', false);
+    return html`
+        <div style="margin: -8px 0;">
             <div
                 style="width: 300px; height: 200px; background-color: #ccc; position: relative; margin: 20px;"
             >
@@ -35,26 +39,34 @@ storiesOf('Banner', module)
                     <div slot="content">${content}</div>
                 </sp-banner>
             </div>
-        `;
-    })
-    .add('Banner Types', () => {
-        return html`
-            <sp-banner type="info">
-                <div slot="header">Header Text</div>
-                <div slot="content">Content of the banner!</div>
-            </sp-banner>
-            <sp-banner type="warning">
-                <div slot="header">Header Text</div>
-                <div slot="content">Content of the banner!</div>
-            </sp-banner>
-            <sp-banner type="error">
-                <div slot="header">Header Text</div>
-                <div slot="content">Content of the banner!</div>
-            </sp-banner>
-        `;
-    })
-    .add('Corner Placement', () => {
-        return html`
+        </div>
+    `;
+};
+
+export const bannerTypes = (): TemplateResult => {
+    return html`
+        <sp-banner type="info">
+            <div slot="header">Header Text</div>
+            <div slot="content">Content of the banner!</div>
+        </sp-banner>
+        <sp-banner type="warning">
+            <div slot="header">Header Text</div>
+            <div slot="content">Content of the banner!</div>
+        </sp-banner>
+        <sp-banner type="error">
+            <div slot="header">Header Text</div>
+            <div slot="content">Content of the banner!</div>
+        </sp-banner>
+    `;
+};
+
+bannerTypes.story = {
+    name: 'Banner Types',
+};
+
+export const cornerPlacement = (): TemplateResult => {
+    return html`
+        <div style="margin: -8px 0;">
             <div
                 style="width: 300px; height: 200px; background-color: #ccc; position: relative; margin: 20px;"
             >
@@ -63,5 +75,10 @@ storiesOf('Banner', module)
                     <div slot="content">Content of the banner!</div>
                 </sp-banner>
             </div>
-        `;
-    });
+        </div>
+    `;
+};
+
+cornerPlacement.story = {
+    name: 'Corner Placement',
+};

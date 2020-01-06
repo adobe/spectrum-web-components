@@ -9,9 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html, TemplateResult } from 'lit-html';
-import { action } from '@storybook/addon-actions';
+import { html, action } from '@open-wc/demoing-storybook';
+import { TemplateResult } from 'lit-html';
 
 import '../';
 
@@ -45,34 +44,44 @@ function renderButtonsSelected(properties: Properties): TemplateResult {
     `;
 }
 
-storiesOf('ActionButton', module)
-    .add('Default', () => {
-        return renderButtonsSelected({
-            quiet: false,
-            disabled: false,
-            selected: false,
-        });
-    })
-    .add('w/ Icon button', () => {
-        return html`
-            <sp-action-button>
-                <svg slot="icon" id="spectrum-icon-18-Edit" viewBox="0 0 36 36">
-                    <path
-                        d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945zM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73z"
-                    ></path>
-                </svg>
-                This is an action button
-            </sp-action-button>
-        `;
-    })
-    .add('Icon only button', () => {
-        return html`
-            <sp-action-button>
-                <svg slot="icon" id="spectrum-icon-18-Edit" viewBox="0 0 36 36">
-                    <path
-                        d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945zM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73z"
-                    ></path>
-                </svg>
-            </sp-action-button>
-        `;
+export default {
+    component: 'sp-action-button',
+    title: 'ActionButton',
+};
+
+export const Default = (): TemplateResult => {
+    return renderButtonsSelected({
+        quiet: false,
+        disabled: false,
+        selected: false,
     });
+};
+
+export const wIconButton = (): TemplateResult => {
+    return html`
+        <sp-action-button>
+            <svg slot="icon" id="spectrum-icon-18-Edit" viewBox="0 0 36 36">
+                <path
+                    d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945zM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73z"
+                ></path>
+            </svg>
+            This is an action button
+        </sp-action-button>
+    `;
+};
+
+wIconButton.story = {
+    name: 'w/ Icon button',
+};
+
+export const iconOnlyButton = (): TemplateResult => {
+    return html`
+        <sp-action-button>
+            <svg slot="icon" id="spectrum-icon-18-Edit" viewBox="0 0 36 36">
+                <path
+                    d="M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945zM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73z"
+                ></path>
+            </svg>
+        </sp-action-button>
+    `;
+};

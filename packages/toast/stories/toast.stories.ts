@@ -9,9 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { select, boolean, text } from '@storybook/addon-knobs';
-import { html, TemplateResult } from 'lit-html';
+import { html, select, boolean, text } from '@open-wc/demoing-storybook';
+import { TemplateResult } from 'lit-html';
 
 import '../';
 import { toastVariants } from '../';
@@ -28,24 +27,29 @@ const toast = ({
     </sp-toast>
 `;
 
-const stories = storiesOf('Toast', module).add('Default', () => {
+export default {
+    component: 'sp-toast',
+    title: 'Toast',
+};
+
+export const Default = (): TemplateResult => {
     const content = text('Content', 'This is a toast message.', 'Component');
     const variants = ['', ...toastVariants];
     const variant = select('Variant', variants, variants[0], 'Component');
     const disappearing = boolean('Disappearing', false, 'Component');
     const open = boolean('Open', true, 'Component');
     return toast({ variant, disappearing, open, content });
-});
+};
 
-['positive', 'negative', 'info'].map((variant) => {
-    stories.add(variant, () => {
-        const content = text(
-            'Content',
-            'This is a toast message.',
-            'Component'
-        );
-        const disappearing = boolean('Disappearing', false, 'Component');
-        const open = boolean('Open', true, 'Component');
-        return toast({ variant, disappearing, open, content });
-    });
-});
+const variantDemo = (variant): TemplateResult => {
+    const content = text('Content', 'This is a toast message.', 'Component');
+    const disappearing = boolean('Disappearing', false, 'Component');
+    const open = boolean('Open', true, 'Component');
+    return toast({ variant, disappearing, open, content });
+};
+
+export const Positive = (): TemplateResult => variantDemo('positive');
+
+export const Negative = (): TemplateResult => variantDemo('negative');
+
+export const Info = (): TemplateResult => variantDemo('info');

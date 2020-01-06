@@ -1,5 +1,9 @@
 {
     "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "noUnusedLocals": false
+    },
     "include": ["../global.d.ts", "../packages/*/stories/**/*.ts"],
     "exclude": [
         "../packages/*/src/**/*.ts",

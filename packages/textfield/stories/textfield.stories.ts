@@ -9,13 +9,23 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
-import { boolean } from '@storybook/addon-knobs';
+import {
+    html,
+    boolean,
+    withKnobs,
+    withWebComponentsKnobs,
+} from '@open-wc/demoing-storybook';
 
 import '../';
+import { TemplateResult } from 'lit-html';
 
-storiesOf('Textfield', module).add('Default', () => {
+export default {
+    component: 'sp-textfield',
+    title: 'Textfield',
+    decorators: [withKnobs, withWebComponentsKnobs],
+};
+
+export const Default = (): TemplateResult => {
     const quiet = boolean('Quiet', false, 'Element');
     return html`
         <sp-textfield
@@ -61,4 +71,4 @@ storiesOf('Textfield', module).add('Default', () => {
             ?quiet=${quiet}
         ></sp-textfield>
     `;
-});
+};

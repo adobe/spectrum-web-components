@@ -9,17 +9,21 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { text } from '@storybook/addon-knobs';
-import { html } from 'lit-html';
+import { html, text } from '@open-wc/demoing-storybook';
+import { TemplateResult } from 'lit-html';
 
 import '../';
 import { avatar } from './images';
 
-storiesOf('Avatar', module).add('Default', () => {
+export default {
+    component: 'sp-avatar',
+    title: 'Avatar',
+};
+
+export const Default = (): TemplateResult => {
     const label = text('Label', 'Place Dog', 'Element');
     const src = text('Image Source', avatar, 'Element');
     return html`
         <sp-avatar label=${label} src=${src}></sp-avatar>
     `;
-});
+};

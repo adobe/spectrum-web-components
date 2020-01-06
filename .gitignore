@@ -15,14 +15,17 @@ yarn-error.log
 .rush
 
 coverage
+dist
 documentation/api-docs/component_data.json
 documentation/api-docs/*.html
-documentation/dist
 test/**/*.js
 test/**/*.js.map
 test/**/*.d.ts
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
+packages/*/stories/**/*.js
+packages/*/stories/**/*.js.map
+packages/*/stories/**/*.d.ts
 packages/*/test/**/*.js
 packages/*/test/**/*.js.map
 packages/*/test/**/*.d.ts

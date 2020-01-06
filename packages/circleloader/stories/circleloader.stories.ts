@@ -9,81 +9,88 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
-
 import '../';
-import { number, boolean } from '@storybook/addon-knobs';
+import { html, number, boolean } from '@open-wc/demoing-storybook';
+import { TemplateResult } from 'lit-html';
 
-storiesOf('Circle Loader', module)
-    .add('Default', () => {
-        const progress = number(
-            'Progress',
-            27,
-            {
-                range: true,
-                min: 0,
-                max: 100,
-                step: 1,
-            },
-            'Component'
-        );
-        const indeterminate = boolean('Indeterminate', false, 'Component');
-        return html`
-            <div
-                style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
-            >
-                <sp-circleloader
-                    progress=${progress}
-                    size="small"
-                    ?indeterminate=${indeterminate}
-                ></sp-circleloader>
-                <sp-circleloader
-                    progress=${progress}
-                    ?indeterminate=${indeterminate}
-                ></sp-circleloader>
-                <sp-circleloader
-                    progress=${progress}
-                    size="large"
-                    ?indeterminate=${indeterminate}
-                ></sp-circleloader>
-            </div>
-        `;
-    })
-    .add('Over background', () => {
-        const progress = number(
-            'Progress',
-            53,
-            {
-                range: true,
-                min: 0,
-                max: 100,
-                step: 1,
-            },
-            'Component'
-        );
-        const indeterminate = boolean('Indeterminate', false, 'Component');
-        return html`
-            <div
-                style="width: 250px; height: 150px; background-color: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: space-around;"
-            >
-                <sp-circleloader
-                    progress=${progress}
-                    over-background
-                    size="small"
-                    ?indeterminate=${indeterminate}
-                ></sp-circleloader>
-                <sp-circleloader
-                    progress=${progress}
-                    over-background
-                    ?indeterminate=${indeterminate}
-                ></sp-circleloader>
-                <sp-circleloader
-                    progress=${progress}
-                    over-background
-                    size="large"
-                    ?indeterminate=${indeterminate}
-                ></sp-circleloader>
-            </div>
-        `;
-    });
+export default {
+    component: 'sp-circleloader',
+    title: 'Circle Loader',
+};
+
+export const Default = (): TemplateResult => {
+    const progress = number(
+        'Progress',
+        27,
+        {
+            range: true,
+            min: 0,
+            max: 100,
+            step: 1,
+        },
+        'Component'
+    );
+    const indeterminate = boolean('Indeterminate', false, 'Component');
+    return html`
+        <div
+            style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
+        >
+            <sp-circleloader
+                progress=${progress}
+                size="small"
+                ?indeterminate=${indeterminate}
+            ></sp-circleloader>
+            <sp-circleloader
+                progress=${progress}
+                ?indeterminate=${indeterminate}
+            ></sp-circleloader>
+            <sp-circleloader
+                progress=${progress}
+                size="large"
+                ?indeterminate=${indeterminate}
+            ></sp-circleloader>
+        </div>
+    `;
+};
+
+export const overBackground = (): TemplateResult => {
+    const progress = number(
+        'Progress',
+        53,
+        {
+            range: true,
+            min: 0,
+            max: 100,
+            step: 1,
+        },
+        'Component'
+    );
+    const indeterminate = boolean('Indeterminate', false, 'Component');
+    return html`
+        <div
+            style="width: 250px; height: 150px; background-color: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: space-around;"
+        >
+            <sp-circleloader
+                progress=${progress}
+                over-background
+                size="small"
+                ?indeterminate=${indeterminate}
+            ></sp-circleloader>
+            <sp-circleloader
+                progress=${progress}
+                over-background
+                ?indeterminate=${indeterminate}
+            ></sp-circleloader>
+            <sp-circleloader
+                progress=${progress}
+                over-background
+                size="large"
+                ?indeterminate=${indeterminate}
+            ></sp-circleloader>
+        </div>
+    `;
+};
+
+overBackground.story = {
+    name: 'Over background',
+};

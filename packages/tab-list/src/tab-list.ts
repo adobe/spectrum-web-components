@@ -196,11 +196,12 @@ export class TabList extends Focusable {
         this.updateSelectionIndicator();
     }
 
-    private updateSelectionIndicator(): void {
+    private async updateSelectionIndicator(): Promise<void> {
         const selectedElement = this.querySelector('[selected]') as Tab;
         if (!selectedElement) {
             return;
         }
+        await selectedElement.updateComplete;
         const bounds = selectedElement.getBoundingClientRect();
 
         if (this.direction === 'horizontal') {

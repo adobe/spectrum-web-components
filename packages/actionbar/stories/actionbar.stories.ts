@@ -9,15 +9,21 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { storiesOf } from '@storybook/polymer';
-import { html } from 'lit-html';
+import { TemplateResult } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 import '../';
 import { actionbarVariants } from '../';
-import { boolean, select } from '@storybook/addon-knobs';
+import { html, boolean, select } from '@open-wc/demoing-storybook';
+import './../../checkbox/';
+import './../../button/';
 
-storiesOf('Actionbar', module).add('Default', () => {
+export default {
+    component: 'sp-actionbar',
+    title: 'Actionbar',
+};
+
+export const Default = (): TemplateResult => {
     const variants = ['', ...actionbarVariants];
     return html`
         <sp-actionbar
@@ -53,4 +59,4 @@ storiesOf('Actionbar', module).add('Default', () => {
             </div>
         </sp-actionbar>
     `;
-});
+};
