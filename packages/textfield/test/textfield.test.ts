@@ -200,4 +200,30 @@ describe('Textfield', () => {
         const testSource = eventSource as Textfield;
         expect(testSource.isSameNode(el)).to.be.true;
     });
+
+    it('passes through `autocomplete` attribute', async () => {
+        let el = await litFixture<Textfield>(
+            html`
+                <sp-textfield autocomplete="off"></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        let input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('autocomplete')).to.equal('off');
+        }
+
+        el = await litFixture<Textfield>(
+            html`
+                <sp-textfield></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('autocomplete')).to.not.exist;
+        }
+    });
 });

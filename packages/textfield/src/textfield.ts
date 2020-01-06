@@ -76,6 +76,11 @@ export class Textfield extends Focusable {
     @property({ type: Boolean, reflect: true })
     public required = false;
 
+    @property({ type: String, reflect: true })
+    public autocomplete?:
+        | HTMLInputElement['autocomplete']
+        | HTMLTextAreaElement['autocomplete'];
+
     public get focusElement(): HTMLInputElement | HTMLTextAreaElement {
         return this.inputElement;
     }
@@ -124,6 +129,7 @@ export class Textfield extends Focusable {
                           <div id="sizer">${this.value}</div>
                       `
                     : nothing}
+                <!-- @ts-ignore -->
                 <textarea
                     aria-label=${this.label || this.placeholder}
                     id="input"
@@ -134,11 +140,13 @@ export class Textfield extends Focusable {
                     @input=${this.onInput}
                     ?disabled=${this.disabled}
                     ?required=${this.required}
+                    autocomplete=${ifDefined(this.autocomplete)}
                 ></textarea>
                 ${this.renderStateIcons()}
             `;
         }
         return html`
+            <!-- @ts-ignore -->
             <input
                 aria-label=${this.label || this.placeholder}
                 id="input"
@@ -149,6 +157,7 @@ export class Textfield extends Focusable {
                 @input=${this.onInput}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
+                autocomplete=${ifDefined(this.autocomplete)}
             />
             ${this.renderStateIcons()}
         `;
