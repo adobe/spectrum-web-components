@@ -99,7 +99,7 @@ self.__precacheManifest = [
   },
   {
     "url": "iframe.html",
-    "revision": "eb0e1e3635657f9264a6b8276b6d5ec1"
+    "revision": "b75b0c3b390fe0c9f611d7fd22d1e75a"
   },
   {
     "url": "illustrated-message.stories-16e60917.js",
@@ -108,6 +108,10 @@ self.__precacheManifest = [
   {
     "url": "index-047233f1.js",
     "revision": "ba2a1b11fcd0e9a76aa6c74204f8b859"
+  },
+  {
+    "url": "index-08ca6137.js",
+    "revision": "a27779c105fc1e2ac404fd4c53ee49e5"
   },
   {
     "url": "index-1dd7cf0f.js",
@@ -128,10 +132,6 @@ self.__precacheManifest = [
   {
     "url": "index-7e76b33c.js",
     "revision": "6015baa16a5499a31974b7aef4e54dd3"
-  },
-  {
-    "url": "index-85338889.js",
-    "revision": "39e2c4a68e736d468a73bfd2a9021907"
   },
   {
     "url": "index-8cb2e63e.js",
@@ -166,8 +166,8 @@ self.__precacheManifest = [
     "revision": "605b1c94a48abdd0d0a8dc987e313e84"
   },
   {
-    "url": "inline-entry.0-c5c23ec7.js",
-    "revision": "21cdf0237250d54681c5cb4d853a5d1d"
+    "url": "inline-entry.0-46f69670.js",
+    "revision": "2a08ea04d2ca198a739c94cc2f275bf1"
   },
   {
     "url": "legacy/_rollupPluginBabelHelpers-dd1c7cf9.js",
@@ -254,6 +254,10 @@ self.__precacheManifest = [
     "revision": "ffabe539e91dc3e77c69bded67a3aeae"
   },
   {
+    "url": "legacy/index-4ca68bc5.js",
+    "revision": "36517e75679df61c4594364189db7b5a"
+  },
+  {
     "url": "legacy/index-59e6a6b8.js",
     "revision": "3e26920855c7c66940f31cdc161fe228"
   },
@@ -276,10 +280,6 @@ self.__precacheManifest = [
   {
     "url": "legacy/index-81133a3c.js",
     "revision": "f25409acf6ca5dface8715a93d5a9edd"
-  },
-  {
-    "url": "legacy/index-a66de84b.js",
-    "revision": "52c71d6645ee721edef17363703cc386"
   },
   {
     "url": "legacy/index-b3312fbd.js",
@@ -306,8 +306,8 @@ self.__precacheManifest = [
     "revision": "e1bc199be329a9169b2fd3883327a96f"
   },
   {
-    "url": "legacy/inline-entry.0-6001fa2f.js",
-    "revision": "07c399034af654f4ac6d5a88bf2fc06a"
+    "url": "legacy/inline-entry.0-9d8ca504.js",
+    "revision": "c5714d71eba9dc67cb1f713cdbdd27cb"
   },
   {
     "url": "legacy/link.stories-41ff85fc.js",
@@ -330,16 +330,16 @@ self.__precacheManifest = [
     "revision": "660d664881a5a2cff4ba8f915f678f29"
   },
   {
-    "url": "legacy/overlay-root.stories-82f9a277.js",
-    "revision": "05c9475a560f0c59643ee8ff2911ccb2"
+    "url": "legacy/overlay.stories-d5acc4a0.js",
+    "revision": "b4b29ff176906553a42fe4ff8d721d45"
   },
   {
     "url": "legacy/popover.stories-3b4bad38.js",
     "revision": "9480bd39cf9eab6a785bee8997a47852"
   },
   {
-    "url": "legacy/preview-a8f476dc.js",
-    "revision": "12ae75ef4e7c2ce37355dd8f0573b066"
+    "url": "legacy/preview-a0a114c9.js",
+    "revision": "e9a8ff514766375fcc11ed7cb33c9f4e"
   },
   {
     "url": "legacy/radio.stories-e969d146.js",
@@ -386,8 +386,8 @@ self.__precacheManifest = [
     "revision": "87b0998fde3bf4166a629eaed490347d"
   },
   {
-    "url": "legacy/theme.stories-88419ea4.js",
-    "revision": "6af2ddd84fe765faca6dccbadedd5675"
+    "url": "legacy/theme.stories-81a6d8d9.js",
+    "revision": "e6acb5888ed32cb1eebf54f964a7c0ca"
   },
   {
     "url": "legacy/toast.stories-bce9c76e.js",
@@ -422,8 +422,8 @@ self.__precacheManifest = [
     "revision": "1a06a2bbfd38b40f3331174ad07eceab"
   },
   {
-    "url": "overlay-root.stories-a23e18d5.js",
-    "revision": "72fce8d384876f202b7e4832c790a2fe"
+    "url": "overlay.stories-2640a8a2.js",
+    "revision": "10559518ef207d3541483fbae8b1668f"
   },
   {
     "url": "polyfills/core-js.b2c7423344f27be9129697050c5c57bd.js",
@@ -458,8 +458,8 @@ self.__precacheManifest = [
     "revision": "1d0f562398cc35d16912725207cc9e24"
   },
   {
-    "url": "preview-1b8e9cee.js",
-    "revision": "e32ab6ec6a44199ffbc597d849b6a32a"
+    "url": "preview-060b457c.js",
+    "revision": "fe2317f2610fc787e758f1ede9c2cf64"
   },
   {
     "url": "radio.stories-7697e1da.js",
@@ -506,8 +506,8 @@ self.__precacheManifest = [
     "revision": "40eb2449cda93d544567fc6f3b7dba45"
   },
   {
-    "url": "theme.stories-fd87fc5f.js",
-    "revision": "64f3a7ae4675af3b919945547296dead"
+    "url": "theme.stories-815fc99e.js",
+    "revision": "6abdeda444be4c22f78d51df57302abb"
   },
   {
     "url": "toast.stories-e46feccc.js",
