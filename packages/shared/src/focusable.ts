@@ -50,7 +50,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
     @property({ type: Number, reflect: true })
     public tabIndex = 0;
 
-    private isShiftTabbing = false;
+    protected isShiftTabbing = false;
     private newTabindex?: number = 0;
     private oldTabindex = 0;
 
@@ -85,13 +85,19 @@ export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.manageAutoFocus();
+        this.manageFocusIn();
+        this.manageShiftTab();
+    }
 
+    protected manageFocusIn(): void {
         this.addEventListener('focusin', (event) => {
             if (event.composedPath()[0] === this) {
                 this.handleFocus();
             }
         });
+    }
 
+    protected manageShiftTab(): void {
         this.addEventListener('keydown', (event) => {
             if (
                 !event.defaultPrevented &&

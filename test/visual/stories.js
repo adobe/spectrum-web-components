@@ -91,6 +91,7 @@ module.exports = [
     'search--quiet',
     'sidenav--default',
     'sidenav--multilevel',
+    'sidenav--levels-and-disabled',
     'sidenav--hrefs',
     'slider--default',
     'slider--disabled',

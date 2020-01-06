@@ -148,7 +148,7 @@ export default {
     title: 'Overlay',
 };
 
-export const Default = () => {
+export const Default = (): TemplateResult => {
     const positionOptions = {
         top: 'top',
         bottom: 'bottom',
@@ -220,9 +220,9 @@ export const Default = () => {
             </sp-tooltip>
         </overlay-trigger>
     `;
-}
-    
-export const deepNesting = () => {
+};
+
+export const deepNesting = (): TemplateResult => {
     const colorOptions = {
         Light: 'light',
         Dark: 'dark',
@@ -249,7 +249,7 @@ export const deepNesting = () => {
     `;
 };
 
-export const edges = () => {
+export const edges = (): TemplateResult => {
     return html`
         <style>
             .demo {
