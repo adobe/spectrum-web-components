@@ -1,0 +1,2 @@
+System.register(["./_rollupPluginBabelHelpers-dd1c7cf9.js","./lit-element-d4673852.js"],(function(e){"use strict";var t,c;return{setters:[function(e){t=e.j},function(e){c=e.c}],execute:function(){function r(){var e=t([".checkmark-small{width:var(--spectrum-icon-checkmark-small-width);height:var(--spectrum-icon-checkmark-small-height)}"]);return r=function(){return e},e}var n=c(r());e("c",n)}}}));
+//# sourceMappingURL=spectrum-icon-checkmark-small.css-397ebde3.js.map
