@@ -138,6 +138,43 @@ describe('Overlays', () => {
         expect(isVisible(outerPopover)).to.be.true;
     });
 
+    it('does not open a hover popover when a click popover is open', async () => {
+        const button = testDiv.querySelector('#outer-button') as HTMLElement;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+        const hoverContent = testDiv.querySelector(
+            '#hover-content'
+        ) as HTMLDivElement;
+
+        expect(isVisible(outerPopover)).to.be.false;
+        expect(isVisible(hoverContent)).to.be.false;
+
+        expect(button).to.exist;
+        button.click();
+
+        // Wait for the DOM node to be stolen and reparented into the overlay
+        await waitForPredicate(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger)
+        );
+
+        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+            OverlayTrigger
+        );
+        expect(isVisible(outerPopover)).to.be.true;
+        expect(isVisible(hoverContent)).to.be.false;
+
+        button.dispatchEvent(
+            new Event('mouseenter', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+
+        await nextFrame();
+
+        expect(isVisible(outerPopover)).to.be.true;
+        expect(isVisible(hoverContent)).to.be.false;
+    });
+
     it('does not open a popover when [disabled]', async () => {
         const trigger = testDiv.querySelector('#trigger') as OverlayTrigger;
         const root = trigger.shadowRoot ? trigger.shadowRoot : trigger;

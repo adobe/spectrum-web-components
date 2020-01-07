@@ -134,6 +134,7 @@ export class OverlayStack {
         if (overlay) {
             await overlay.hide();
             const index = this.overlays.indexOf(overlay);
+            /* istanbul ignore else */
             if (index >= 0) {
                 this.overlays[index].dispose();
                 this.overlays.splice(index, 1);
