@@ -73,9 +73,10 @@ class SideNav extends LitElement {
                     </div>
                 </div>
                 <div id="navigation">
-                    <sp-sidenav variant="multilevel">
+                    <sp-sidenav manage-tab-index variant="multilevel">
                         <sp-sidenav-item
                             label="Components"
+                            expanded
                             @sidenav-select=${this.handleComponentSelect}
                         >
                             ${this.components.map(
@@ -90,6 +91,7 @@ class SideNav extends LitElement {
                         </sp-sidenav-item>
                         <sp-sidenav-item
                             label="Contributing"
+                            expanded
                             @sidenav-select=${this.handleGuideSelect}
                         >
                             <sp-sidenav-item

@@ -91,10 +91,10 @@ export class SideNavItem extends Focusable {
         if (!this.href && event) {
             event.preventDefault();
         }
-        if (this.value && !this.disabled) {
+        if (!this.disabled) {
             if (this.hasChildren) {
                 this.expanded = !this.expanded;
-            } else {
+            } else if (this.value) {
                 const selectDetail: SidenavSelectDetail = {
                     value: this.value,
                 };
