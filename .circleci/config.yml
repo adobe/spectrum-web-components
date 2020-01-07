@@ -43,6 +43,9 @@ jobs:
                   name: Run tests
                   command: yarn test:ci
 
+            - store_artifacts:
+                  path: coverage
+
             - run:
                   name: Generate Docs
                   command: yarn docs:ci
