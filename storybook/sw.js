@@ -99,7 +99,7 @@ self.__precacheManifest = [
   },
   {
     "url": "iframe.html",
-    "revision": "5a8e8c9d4a5d9e092266d8d8931836ce"
+    "revision": "e48fb8c4037a5236cf90b7c24b9670d6"
   },
   {
     "url": "illustrated-message.stories-16e60917.js",
@@ -166,8 +166,8 @@ self.__precacheManifest = [
     "revision": "605b1c94a48abdd0d0a8dc987e313e84"
   },
   {
-    "url": "inline-entry.0-4c94bf42.js",
-    "revision": "69187301c54fb341d01296464461db2c"
+    "url": "inline-entry.0-9ff1c665.js",
+    "revision": "e30aeb4956c1731521e2a9cc0672e95c"
   },
   {
     "url": "legacy/_rollupPluginBabelHelpers-dd1c7cf9.js",
@@ -306,8 +306,8 @@ self.__precacheManifest = [
     "revision": "915f2647e4647a956c1a53a3368ca5fd"
   },
   {
-    "url": "legacy/inline-entry.0-c39a29bd.js",
-    "revision": "05c7163c3ac49c476a70e6fae52f1597"
+    "url": "legacy/inline-entry.0-fe7d72b4.js",
+    "revision": "7bb3db3866afa064ac8f0b78e31c00eb"
   },
   {
     "url": "legacy/link.stories-1237179f.js",
@@ -350,8 +350,8 @@ self.__precacheManifest = [
     "revision": "535b8da11d794d4ecb126426a213bde5"
   },
   {
-    "url": "legacy/sidenav.stories-6035b889.js",
-    "revision": "a9340d15f49cec1e01ddf71feb277fe6"
+    "url": "legacy/sidenav.stories-de6ed63b.js",
+    "revision": "5f39626f51933c87059a26d72b140b6b"
   },
   {
     "url": "legacy/slider.stories-cfe01d06.js",
@@ -470,8 +470,8 @@ self.__precacheManifest = [
     "revision": "f50fcfe772f6f984176e2d085a90bd7f"
   },
   {
-    "url": "sidenav.stories-786fe594.js",
-    "revision": "155cf4371efab80cbd2e0a230b1dc7a6"
+    "url": "sidenav.stories-7592d753.js",
+    "revision": "4313ec8abd40109b005d58656fd2dca3"
   },
   {
     "url": "slider.stories-9bf77689.js",
