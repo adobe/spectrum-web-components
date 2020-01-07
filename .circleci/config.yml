@@ -67,6 +67,7 @@ jobs:
         steps:
             - setup
             - run: yarn docs:build
+            - run: cp documentation/404.html documentation/dist/
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
             - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site"
 
