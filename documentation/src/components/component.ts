@@ -35,6 +35,14 @@ interface JsDocTagParsed {
 
 type ParsedTagArray = JsDocTagParsed[];
 
+type TagType = {
+    description: string;
+    properties?: ParsedTagArray;
+    slots?: ParsedTagArray;
+    events?: ParsedTagArray;
+    cssProperties?: ParsedTagArray;
+};
+
 function sortByName(a: JsDocTagParsed, b: JsDocTagParsed) {
     if (!a.name || !b.name) {
         return 0;
@@ -146,9 +154,9 @@ class ComponentElement extends LayoutElement {
     renderContent() {
         let result;
         if (this.location && this.location.params) {
-            const hasAPIdocs = docs.tags.find(
+            const APIdocs = docs.tags.find(
                 (el) => el.name === this.componentName
-            );
+            ) as TagType;
             result = html`
                 <article class="spectrum-Typography">
                     <div id="title-header" class="spectrum-Article">
@@ -158,7 +166,7 @@ class ComponentElement extends LayoutElement {
                             ${this.componentName}
                         </h1>
                     </div>
-                    ${hasAPIdocs
+                    ${APIdocs
                         ? html`
                               <sp-tab-list
                                   selected="${this.tab}"
@@ -175,24 +183,14 @@ class ComponentElement extends LayoutElement {
                         : html``}
                     ${this.tab === TabValue.Examples
                         ? ComponentDocs.get(this.location.params.component)
-                        : this.renderDocs()}
+                        : this.renderDocs(APIdocs)}
                 </article>
             `;
         }
         return result || super.renderContent();
     }
 
-    protected renderDocs(): TemplateResult {
-        const tag = docs.tags.find((el) => el.name === this.componentName) as {
-            description: string;
-            properties?: ParsedTagArray;
-            slots?: ParsedTagArray;
-            events?: ParsedTagArray;
-            cssProperties?: ParsedTagArray;
-        };
-        if (!tag) {
-            return html``;
-        }
+    protected renderDocs(tag: TagType): TemplateResult {
         return html`
             <p>${tag.description}</p>
             ${tag.properties && tag.properties.length
