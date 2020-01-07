@@ -49,4 +49,43 @@ describe('Sidenav Item', () => {
 
         expect(selected).to.be.true;
     });
+
+    it('clicking expands a sidenav item with children', async () => {
+        const el = await fixture<SideNavItem>(
+            html`
+                <sp-sidenav-item>
+                    <sp-sidenav-item
+                        value="Section 1"
+                        label="Section 1"
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item
+                        value="Section 2"
+                        label="Section 2"
+                    ></sp-sidenav-item>
+                </sp-sidenav-item>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.shadowRoot).to.exist;
+        if (!el.shadowRoot) return;
+
+        let slot = el.shadowRoot.querySelector('slot');
+        expect(slot).not.to.exist;
+
+        expect(el.expanded).to.be.false;
+
+        el.click();
+
+        await elementUpdated(el);
+
+        expect(el.expanded).to.be.true;
+
+        slot = el.shadowRoot.querySelector('slot');
+        expect(slot).to.exist;
+        if (!slot) return;
+
+        expect(slot.assignedElements().length).to.equal(2);
+    });
 });
