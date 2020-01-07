@@ -16,7 +16,7 @@ commands:
                       - v1-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
                   name: Installing Dependencies
-                  command: yarn install
+                  command: yarn install --ignore-scripts
             - save_cache:
                   paths:
                       - node_modules
@@ -31,6 +31,9 @@ jobs:
         steps:
             - setup
             - run:
+                  name: Get Ready
+                  command: yarn get-ready
+            - run:
                   name: Lint
                   command: yarn lint
             - run: yarn analyze
@@ -44,19 +47,18 @@ jobs:
                   name: Generate Docs
                   command: yarn docs:ci
 
-            - save_cache:
+            - persist_to_workspace:
+                  root: ~/
                   paths:
-                      - documentation/dist/storybook
-                  key: v1-dependencies-{{ arch }}-{{ .Revision }}
+                      - project/documentation/dist
 
     visual-testing:
         executor: node8
 
         steps:
             - setup
-            - restore_cache:
-                  keys:
-                      - v1-dependencies-{{ arch }}-{{ .Revision }}
+            - attach_workspace:
+                  at: ~/
             - run: yarn test:visual:ci
             - store_artifacts:
                   path: test/visual/screenshots-current
@@ -66,7 +68,8 @@ jobs:
 
         steps:
             - setup
-            - run: yarn docs:build
+            - attach_workspace:
+                  at: ~/
             - run: cp documentation/404.html documentation/dist/
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
             - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site"
