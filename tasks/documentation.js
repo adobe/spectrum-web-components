@@ -25,23 +25,6 @@ const srcPath = path.join(projectDir, 'src');
 
 const BASE_URL = 'https://opensource.adobe.com/spectrum-web-components/';
 
-const extractComponentDocumentation = () => {
-    return exec(
-        `node "${path.join(
-            projectDir,
-            'documentation/scripts/extractComponentAPIDocs.js'
-        )}"`
-    );
-};
-
-const watchComponentDocumentation = () => {
-    gulp.watch(
-        path.join(srcPath, '**/*.ts'),
-        { ignoreInitial: false },
-        extractComponentDocumentation
-    );
-};
-
 const webpackDevServer = () => {
     const config = Object.assign(webpackConfig, { mode: 'development' });
     const compiler = webpack(config);
@@ -86,11 +69,7 @@ const webpackBuild = async () => {
 };
 
 module.exports = {
-    docsCompile: gulp.series(extractComponentDocumentation, webpackBuild),
-    docsWatchCompile: gulp.parallel(
-        watchComponentDocumentation,
-        webpackDevServer
-    ),
-    extractComponentDocumentation,
+    docsCompile: webpackBuild,
+    docsWatchCompile: webpackDevServer,
     webpackBuild,
 };
