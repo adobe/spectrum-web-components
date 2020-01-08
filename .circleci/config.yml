@@ -16,7 +16,7 @@ commands:
                       - v1-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
                   name: Installing Dependencies
-                  command: yarn install --ignore-scripts
+                  command: yarn
             - save_cache:
                   paths:
                       - node_modules
@@ -24,15 +24,24 @@ commands:
             - run:
                   name: prepare test git user
                   command: git config --global user.email "circleci@example.com" && git config --global user.name "CircleCi Build"
+    downstream:
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: ~/
+            - run:
+                  name: Installing Dependencies
+                  command: yarn --ignore-scripts
+            - run:
+                  name: prepare test git user
+                  command: git config --global user.email "circleci@example.com" && git config --global user.name "CircleCi Build"
+
 jobs:
     build:
         executor: node8
 
         steps:
             - setup
-            - run:
-                  name: Get Ready
-                  command: yarn get-ready
             - run:
                   name: Lint
                   command: yarn lint
@@ -53,15 +62,14 @@ jobs:
             - persist_to_workspace:
                   root: ~/
                   paths:
+                      - project/node_modules
                       - project/documentation/dist
 
     visual-testing:
         executor: node8
 
         steps:
-            - setup
-            - attach_workspace:
-                  at: ~/
+            - downstream
             - run: yarn test:visual:ci
             - store_artifacts:
                   path: test/visual/screenshots-current
@@ -70,9 +78,7 @@ jobs:
         executor: node8
 
         steps:
-            - setup
-            - attach_workspace:
-                  at: ~/
+            - downstream
             - run: cp documentation/404.html documentation/dist/
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
             - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site"
