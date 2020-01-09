@@ -37,7 +37,7 @@ function pressEscape(): void {
     document.dispatchEvent(up);
 }
 
-describe('Overlays', () => {
+describe('Overlay Trigger', () => {
     let testDiv!: HTMLDivElement;
 
     beforeEach(async () => {
@@ -106,6 +106,7 @@ describe('Overlays', () => {
                 </div>
             `
         );
+        await elementUpdated(testDiv);
     });
 
     it('loads', async () => {

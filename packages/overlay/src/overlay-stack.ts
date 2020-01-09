@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { ActiveOverlay } from './active-overlay.js';
-import { OverlayOpenDetail, OverlayCloseDetail } from './overlay.js';
+import { OverlayOpenDetail } from './overlay-types';
 
 function isLeftClick(event: MouseEvent): boolean {
     return event.button === 0;
@@ -22,19 +22,11 @@ function hasModifier(event: MouseEvent): boolean {
 }
 
 export class OverlayStack {
-    public overlays: ActiveOverlay[] = [];
-
     private preventMouseRootClose = false;
     private root: HTMLElement = document.body;
-    private onChange: (overlays: ActiveOverlay[]) => void;
     private handlingResize = false;
 
-    public constructor(
-        root: HTMLElement,
-        onChange: (overlays: ActiveOverlay[]) => void
-    ) {
-        this.root = root;
-        this.onChange = onChange;
+    public constructor() {
         this.addEventListeners();
     }
 
@@ -43,7 +35,44 @@ export class OverlayStack {
     }
 
     private get topOverlay(): ActiveOverlay | undefined {
-        return this.overlays.slice(-1)[0];
+        for (
+            let index = document.body.children.length - 1;
+            index >= 0;
+            index--
+        ) {
+            const element = document.body.children[index];
+            if (element instanceof ActiveOverlay) {
+                return element;
+            }
+        }
+    }
+
+    private *overlays(): Generator<ActiveOverlay, void, undefined> {
+        for (const item of document.body.children) {
+            if (item instanceof ActiveOverlay) {
+                yield item;
+            }
+        }
+    }
+
+    private findOverlayForContent(
+        overlayContent: HTMLElement
+    ): ActiveOverlay | undefined {
+        for (const item of this.overlays()) {
+            if (overlayContent.isSameNode(item.overlayContent as HTMLElement)) {
+                return item;
+            }
+        }
+    }
+
+    private findOverlayForTrigger(
+        overlayContent: HTMLElement
+    ): ActiveOverlay | undefined {
+        for (const item of this.overlays()) {
+            if (overlayContent.isSameNode(item.trigger as HTMLElement)) {
+                return item;
+            }
+        }
     }
 
     private addEventListeners(): void {
@@ -54,47 +83,37 @@ export class OverlayStack {
     }
 
     private isOverlayActive(overlayContent: HTMLElement): boolean {
-        return !!this.overlays.find((item) =>
-            overlayContent.isSameNode(item.overlayContent as HTMLElement)
-        );
+        return !!this.findOverlayForContent(overlayContent);
     }
 
     private isClickOverlayActiveForTrigger(trigger: HTMLElement): boolean {
-        return this.overlays.some(
-            (item) =>
-                trigger.isSameNode(item.trigger as HTMLElement) &&
-                item.interaction === 'click'
-        );
+        const overlay = this.findOverlayForTrigger(trigger);
+        return overlay != null && overlay.interaction === 'click';
     }
 
-    public openOverlay(event: CustomEvent<OverlayOpenDetail>): void {
-        if (this.isOverlayActive(event.detail.content)) return;
+    public openOverlay(details: OverlayOpenDetail): void {
+        /* istanbul ignore if */
+        if (this.isOverlayActive(details.content)) return;
 
         requestAnimationFrame(() => {
-            const interaction = event.detail.interaction;
-            if (interaction === 'click') {
+            if (details.interaction === 'click') {
                 this.closeAllHoverOverlays();
             } else if (
-                interaction === 'hover' &&
-                this.isClickOverlayActiveForTrigger(event.detail.trigger)
+                details.interaction === 'hover' &&
+                this.isClickOverlayActiveForTrigger(details.trigger)
             ) {
                 // Don't show a hover popover if the click popover is already active
                 return;
             }
 
-            const activeOverlay = ActiveOverlay.create(event, this.root);
-            this.overlays.push(activeOverlay);
-
-            this.onChange(this.overlays);
+            const activeOverlay = ActiveOverlay.create(details);
+            document.body.appendChild(activeOverlay);
         });
     }
 
-    public closeOverlay(event: CustomEvent<OverlayCloseDetail>): void {
+    public closeOverlay(content: HTMLElement): void {
         requestAnimationFrame(() => {
-            const overlayContent = event.detail.content;
-            const overlay = this.overlays.find((item) =>
-                overlayContent.isSameNode(item.overlayContent as HTMLElement)
-            );
+            const overlay = this.findOverlayForContent(content);
             this.hideAndCloseOverlay(overlay);
         });
     }
@@ -123,7 +142,7 @@ export class OverlayStack {
     };
 
     private closeAllHoverOverlays(): void {
-        for (const overlay of this.overlays) {
+        for (const overlay of this.overlays()) {
             if (overlay.interaction === 'hover') {
                 this.hideAndCloseOverlay(overlay);
             }
@@ -133,13 +152,8 @@ export class OverlayStack {
     private async hideAndCloseOverlay(overlay?: ActiveOverlay): Promise<void> {
         if (overlay) {
             await overlay.hide();
-            const index = this.overlays.indexOf(overlay);
-            /* istanbul ignore else */
-            if (index >= 0) {
-                this.overlays[index].dispose();
-                this.overlays.splice(index, 1);
-            }
-            this.onChange(this.overlays);
+            overlay.remove();
+            overlay.dispose();
         }
     }
 
@@ -164,9 +178,9 @@ export class OverlayStack {
 
         this.handlingResize = true;
         requestAnimationFrame(() => {
-            this.overlays.forEach((overlay) => {
+            for (const overlay of this.overlays()) {
                 overlay.updateOverlayPosition();
-            });
+            }
             this.handlingResize = false;
         });
     };

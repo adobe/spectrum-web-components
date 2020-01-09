@@ -14,7 +14,7 @@ import {
     Placement,
     OverlayOpenDetail,
     TriggerInteractions,
-} from './overlay.js';
+} from './overlay-types.js';
 import calculatePosition, { PositionResult } from './calculate-position.js';
 import { Size, Color } from '@spectrum-web-components/theme';
 import {
@@ -114,7 +114,7 @@ export class ActiveOverlay extends LitElement {
     public trigger?: HTMLElement;
 
     private placeholder?: Comment;
-    private root?: HTMLElement;
+    private root?: HTMLElement = document.body;
 
     @property()
     public _state = stateTransition();
@@ -157,9 +157,9 @@ export class ActiveOverlay extends LitElement {
         return [styles];
     }
 
-    private open(openEvent: CustomEvent<OverlayOpenDetail>): void {
-        this.extractEventDetail(openEvent);
-        this.stealOverlayContent(openEvent.detail.content);
+    private open(openDetail: OverlayOpenDetail): void {
+        this.extractDetail(openDetail);
+        this.stealOverlayContent(openDetail.content);
 
         /* istanbul ignore if */
         if (!this.overlayContent) return;
@@ -169,7 +169,7 @@ export class ActiveOverlay extends LitElement {
         this.timeout = window.setTimeout(() => {
             this.state = 'visible';
             delete this.timeout;
-        }, openEvent.detail.delay);
+        }, openDetail.delay);
 
         this.hiddenDeferred = new Deferred<void>();
         this.addEventListener('animationend', this.onAnimationEnd);
@@ -178,14 +178,14 @@ export class ActiveOverlay extends LitElement {
         });
     }
 
-    private extractEventDetail(event: CustomEvent<OverlayOpenDetail>): void {
-        this.overlayContent = event.detail.content;
-        this.trigger = event.detail.trigger;
-        this.placement = event.detail.placement;
-        this.offset = event.detail.offset;
-        this.interaction = event.detail.interaction;
-        this.color = event.detail.theme.color;
-        this.size = event.detail.theme.size;
+    private extractDetail(detail: OverlayOpenDetail): void {
+        this.overlayContent = detail.content;
+        this.trigger = detail.trigger;
+        this.placement = detail.placement;
+        this.offset = detail.offset;
+        this.interaction = detail.interaction;
+        this.color = detail.theme.color;
+        this.size = detail.theme.size;
     }
 
     public dispose(): void {
@@ -327,16 +327,12 @@ export class ActiveOverlay extends LitElement {
         return this.hasTheme ? this.renderTheme(content) : content;
     }
 
-    public static create(
-        openEvent: CustomEvent<OverlayOpenDetail>,
-        root: HTMLElement
-    ): ActiveOverlay {
+    public static create(details: OverlayOpenDetail): ActiveOverlay {
         const overlay = new ActiveOverlay();
 
         /* istanbul ignore else */
-        if (openEvent.detail.content) {
-            overlay.root = root;
-            overlay.open(openEvent);
+        if (details.content) {
+            overlay.open(details);
         }
 
         return overlay;

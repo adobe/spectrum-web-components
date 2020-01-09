@@ -20,16 +20,8 @@ import {
 
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
-import { OverlayRoot } from './overlay-root.js';
-import {
-    OverlayCloseDetail,
-    OverlayOpenDetail,
-    TriggerInteractions,
-    Placement,
-} from './overlay.js';
-import { ThemeData } from '@spectrum-web-components/theme';
-
-let overlayRoot: OverlayRoot;
+import { Placement } from './overlay-types';
+import { Overlay } from './overlay.js';
 
 /**
  * A overlay trigger component for displaying overlays relative to other content.
@@ -39,11 +31,12 @@ let overlayRoot: OverlayRoot;
  * @slot click-content - The content that will be displayed on click
  */
 export class OverlayTrigger extends LitElement {
+    private clickOverlay?: Overlay;
+    private hoverOverlay?: Overlay;
+
     public static get styles(): CSSResultArray {
         return [overlayTriggerStyles];
     }
-
-    static overlayRoot: OverlayRoot;
 
     @property({ reflect: true })
     public placement: Placement = 'bottom';
@@ -55,104 +48,32 @@ export class OverlayTrigger extends LitElement {
     public disabled = false;
 
     private clickContent?: HTMLElement;
-
     private hoverContent?: HTMLElement;
 
-    public onOverlayOpen(event: Event, interaction: TriggerInteractions): void {
-        const isClick = interaction === 'click';
-        const overlayElement = isClick ? this.clickContent : this.hoverContent;
-
-        /* istanbul ignore if */
-        if (!overlayElement) {
-            return;
-        }
-        if (!overlayRoot) {
-            overlayRoot = new OverlayRoot();
-        }
-
-        const delayAttribute = overlayElement.getAttribute('delay');
-        const delay = delayAttribute ? parseFloat(delayAttribute) : 0;
-
-        const queryThemeDetail: ThemeData = {
-            color: undefined,
-            size: undefined,
-        };
-        const queryThemeEvent = new CustomEvent<ThemeData>('query-theme', {
-            bubbles: true,
-            composed: true,
-            detail: queryThemeDetail,
-            cancelable: true,
-        });
-        this.dispatchEvent(queryThemeEvent);
-
-        const overlayOpenDetail: OverlayOpenDetail = {
-            content: overlayElement,
-            delay: delay,
-            offset: this.offset,
-            placement: this.placement,
-            trigger: this,
-            interaction: interaction,
-            theme: queryThemeDetail,
-        };
-
-        const overlayOpenEvent = new CustomEvent<OverlayOpenDetail>(
-            'sp-overlay-open',
-            {
-                bubbles: true,
-                composed: true,
-                detail: overlayOpenDetail,
-            }
-        );
-
-        this.dispatchEvent(overlayOpenEvent);
-    }
-
-    public onOverlayClose(
-        event: Event,
-        interaction: TriggerInteractions
-    ): void {
-        const isClick = interaction === 'click';
-        const overlayElement = isClick ? this.clickContent : this.hoverContent;
-
-        /* istanbul ignore if */
-        if (!overlayElement) {
-            return;
-        }
-
-        const overlayCloseDetail: OverlayCloseDetail = {
-            content: overlayElement,
-        };
-
-        const overlayCloseEvent = new CustomEvent<OverlayCloseDetail>(
-            'sp-overlay-close',
-            {
-                bubbles: true,
-                composed: true,
-                detail: overlayCloseDetail,
-            }
-        );
-
-        this.dispatchEvent(overlayCloseEvent);
-    }
-
-    public onTriggerClick(event: Event): void {
+    public onTriggerClick(): void {
         /* istanbul ignore else */
         if (this.clickContent) {
-            this.onOverlayOpen(event, 'click');
+            this.clickOverlay = Overlay.open(this, 'click', this.clickContent, {
+                offset: this.offset,
+                placement: this.placement,
+            });
         }
     }
 
-    public onTriggerMouseOver(event: Event): void {
+    public onTriggerMouseOver(): void {
         /* istanbul ignore else */
         if (this.hoverContent) {
-            this.onOverlayOpen(event, 'hover');
+            this.hoverOverlay = Overlay.open(this, 'hover', this.hoverContent, {
+                offset: this.offset,
+                placement: this.placement,
+            });
         }
     }
 
-    public onTriggerMouseLeave(event: Event): void {
+    public onTriggerMouseLeave(): void {
         /* istanbul ignore else */
-        if (this.hoverContent) {
-            this.onOverlayClose(event, 'hover');
+        if (this.hoverOverlay) {
+            this.hoverOverlay.close();
         }
     }
 
@@ -217,11 +138,11 @@ export class OverlayTrigger extends LitElement {
 
     public disconnectedCallback(): void {
         /* istanbul ignore else */
-        if (this.clickContent) {
-            this.onOverlayClose(new Event('remove'), 'click');
+        if (this.clickOverlay) {
+            this.clickOverlay.close();
         }
-        if (this.hoverContent) {
-            this.onOverlayClose(new Event('remove'), 'hover');
+        if (this.hoverOverlay) {
+            this.hoverOverlay.close();
         }
         super.disconnectedCallback();
     }
