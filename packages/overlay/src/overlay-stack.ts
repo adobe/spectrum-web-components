@@ -22,6 +22,8 @@ function hasModifier(event: MouseEvent): boolean {
 }
 
 export class OverlayStack {
+    public overlays: ActiveOverlay[] = [];
+
     private preventMouseRootClose = false;
     private root: HTMLElement = document.body;
     private handlingResize = false;
@@ -35,41 +37,14 @@ export class OverlayStack {
     }
 
     private get topOverlay(): ActiveOverlay | undefined {
-        for (
-            let index = document.body.children.length - 1;
-            index >= 0;
-            index--
-        ) {
-            const element = document.body.children[index];
-            if (element instanceof ActiveOverlay) {
-                return element;
-            }
-        }
-    }
-
-    private *overlays(): Generator<ActiveOverlay, void, undefined> {
-        for (const item of document.body.children) {
-            if (item instanceof ActiveOverlay) {
-                yield item;
-            }
-        }
+        return this.overlays.slice(-1)[0];
     }
 
     private findOverlayForContent(
         overlayContent: HTMLElement
     ): ActiveOverlay | undefined {
-        for (const item of this.overlays()) {
+        for (const item of this.overlays) {
             if (overlayContent.isSameNode(item.overlayContent as HTMLElement)) {
-                return item;
-            }
-        }
-    }
-
-    private findOverlayForTrigger(
-        overlayContent: HTMLElement
-    ): ActiveOverlay | undefined {
-        for (const item of this.overlays()) {
-            if (overlayContent.isSameNode(item.trigger as HTMLElement)) {
                 return item;
             }
         }
@@ -83,12 +58,17 @@ export class OverlayStack {
     }
 
     private isOverlayActive(overlayContent: HTMLElement): boolean {
-        return !!this.findOverlayForContent(overlayContent);
+        return !!this.overlays.find((item) =>
+            overlayContent.isSameNode(item.overlayContent as HTMLElement)
+        );
     }
 
     private isClickOverlayActiveForTrigger(trigger: HTMLElement): boolean {
-        const overlay = this.findOverlayForTrigger(trigger);
-        return overlay != null && overlay.interaction === 'click';
+        return this.overlays.some(
+            (item) =>
+                trigger.isSameNode(item.trigger as HTMLElement) &&
+                item.interaction === 'click'
+        );
     }
 
     public openOverlay(details: OverlayOpenDetail): void {
@@ -107,6 +87,7 @@ export class OverlayStack {
             }
 
             const activeOverlay = ActiveOverlay.create(details);
+            this.overlays.push(activeOverlay);
             document.body.appendChild(activeOverlay);
         });
     }
@@ -142,7 +123,7 @@ export class OverlayStack {
     };
 
     private closeAllHoverOverlays(): void {
-        for (const overlay of this.overlays()) {
+        for (const overlay of this.overlays) {
             if (overlay.interaction === 'hover') {
                 this.hideAndCloseOverlay(overlay);
             }
@@ -154,6 +135,12 @@ export class OverlayStack {
             await overlay.hide();
             overlay.remove();
             overlay.dispose();
+
+            const index = this.overlays.indexOf(overlay);
+            /* istanbul ignore else */
+            if (index >= 0) {
+                this.overlays.splice(index, 1);
+            }
         }
     }
 
@@ -178,7 +165,7 @@ export class OverlayStack {
 
         this.handlingResize = true;
         requestAnimationFrame(() => {
-            for (const overlay of this.overlays()) {
+            for (const overlay of this.overlays) {
                 overlay.updateOverlayPosition();
             }
             this.handlingResize = false;
