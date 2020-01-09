@@ -148,7 +148,7 @@
         "gulp-typescript": "^5.0.0",
         "gulp-wrap": "^0.15.0",
         "html-loader": "^0.5.5",
-        "husky": "^3.0.5",
+        "husky": "^4.0.2",
         "karma": "^4.4.1",
         "karma-firefox-launcher": "^1.2.0",
         "karma-script-launcher": "^1.0.0",
