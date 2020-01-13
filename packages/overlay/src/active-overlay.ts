@@ -10,12 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { createPopper, Instance } from './popper';
 import {
     Placement,
     OverlayOpenDetail,
     TriggerInteractions,
 } from './overlay-types.js';
-import calculatePosition, { PositionResult } from './calculate-position.js';
+// import calculatePosition, { PositionResult } from './calculate-position.js';
 import { Size, Color } from '@spectrum-web-components/theme';
 import {
     html,
@@ -26,12 +27,13 @@ import {
 } from 'lit-element';
 import styles from './active-overlay.css.js';
 
-interface CalculatePositionOptions {
-    containerPadding: number;
-    crossOffset: number;
-    flip: boolean;
-    offset: number;
+export interface PositionResult {
+    arrowOffsetLeft: number;
+    arrowOffsetTop: number;
+    maxHeight: number;
     placement: string;
+    positionLeft: number;
+    positionTop: number;
 }
 
 class Deferred<T> {
@@ -48,14 +50,6 @@ class Deferred<T> {
         }
     }
 }
-
-const defaultOptions: CalculatePositionOptions = {
-    containerPadding: 10,
-    crossOffset: 0,
-    flip: true,
-    offset: 0,
-    placement: 'left',
-};
 
 const FadeOutAnimation = 'spOverlayFadeOut';
 
@@ -114,7 +108,7 @@ export class ActiveOverlay extends LitElement {
     public trigger?: HTMLElement;
 
     private placeholder?: Comment;
-    private root?: HTMLElement = document.body;
+    private popper?: Instance;
 
     @property()
     public _state = stateTransition();
@@ -146,7 +140,6 @@ export class ActiveOverlay extends LitElement {
     }
 
     public offset = 6;
-    private position?: PositionResult;
     public interaction: TriggerInteractions = 'hover';
     private positionAnimationFrame = 0;
 
@@ -162,7 +155,11 @@ export class ActiveOverlay extends LitElement {
         this.stealOverlayContent(openDetail.content);
 
         /* istanbul ignore if */
-        if (!this.overlayContent) return;
+        if (!this.overlayContent || !this.trigger) return;
+
+        this.popper = createPopper(this.trigger, this.overlayContent, {
+            placement: this.placement,
+        });
 
         this.state = 'active';
 
@@ -194,6 +191,11 @@ export class ActiveOverlay extends LitElement {
         if (this.timeout) {
             clearTimeout(this.timeout);
             delete this.timeout;
+        }
+
+        if (this.popper) {
+            this.popper.destroy();
+            this.popper = undefined;
         }
 
         this.returnOverlayContent();
@@ -235,47 +237,10 @@ export class ActiveOverlay extends LitElement {
         delete this.placeholder;
     }
 
-    private get hasSlotenOverlayContent(): boolean {
-        return !!(
-            this.overlayContent && this.overlayContent.parentElement === this
-        );
-    }
-
     public updateOverlayPosition(): void {
-        if (
-            !this.trigger ||
-            !this.overlayContent ||
-            !this.hasSlotenOverlayContent ||
-            !this.root ||
-            !this.isConnected
-        ) {
-            return;
+        if (this.popper) {
+            this.popper.update();
         }
-
-        const options: CalculatePositionOptions = {
-            containerPadding: 0,
-            crossOffset: 0,
-            flip: false,
-            offset: this.offset,
-            placement: this.placement,
-        };
-
-        const positionOptions = { ...defaultOptions, ...options };
-
-        this.position = calculatePosition(
-            positionOptions.placement,
-            this.overlayContent,
-            this.trigger,
-            this.root,
-            positionOptions.containerPadding,
-            positionOptions.flip,
-            this.root,
-            positionOptions.offset,
-            positionOptions.crossOffset
-        );
-
-        this.style.setProperty('left', `${this.position.positionLeft}px`);
-        this.style.setProperty('top', `${this.position.positionTop}px`);
     }
 
     public async hide(): Promise<void> {

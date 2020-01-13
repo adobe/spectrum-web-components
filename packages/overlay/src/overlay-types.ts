@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { ThemeData } from '@spectrum-web-components/theme';
+import { Placement } from './popper';
 
 export type TriggerInteractions = 'click' | 'hover' | 'custom';
-export type Placement = 'top' | 'right' | 'bottom' | 'left';
 
 export interface OverlayOpenDetail {
     content: HTMLElement;
@@ -24,3 +24,5 @@ export interface OverlayOpenDetail {
     interaction: TriggerInteractions;
     theme: ThemeData;
 }
+
+export { Placement };

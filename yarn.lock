@@ -2841,6 +2841,11 @@
   resolved "https://registry.yarnpkg.com/@polymer/esm-amd-loader/-/esm-amd-loader-1.0.4.tgz#4e77f2f59b29b01e0ad02aa83d33716cddc5f9f9"
   integrity sha512-h+hqYkL+tQV/y2ESD5gFXMl5z4cC+XY1jTlBeGSBaTcj3VbB5OBEScbvRXm63NcEbBneQQYbHfBAXAkF9i9wIA==
 
+"@popperjs/core@^2.0.0-rc.1":
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.0.0-rc.1.tgz#339e92c42d538fccbb1888c73a8f5cf13d98358d"
+  integrity sha512-An374+TW+9muQS/eAdHyT0bhzO2V1We1LL29jZSVpyGQdr6cujMLo26lPAens1xqYCb1BZm+dWz13k5gKDHiEA==
+
 "@reach/router@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.2.1.tgz#34ae3541a5ac44fa7796e5506a5d7274a162be4e"
