@@ -1,2 +1,0 @@
-System.register(["./_rollupPluginBabelHelpers-dd1c7cf9.js","./lit-element-d4673852.js"],(function(e){"use strict";var t,r;return{setters:[function(e){t=e.j},function(e){r=e.c}],execute:function(){function n(){var e=t([".alert-small{width:var(--spectrum-icon-alert-small-width,var(--spectrum-global-dimension-size-175));height:var(--spectrum-icon-alert-small-height,var(--spectrum-global-dimension-size-175))}"]);return n=function(){return e},e}var i=r(n());e("a",i)}}}));
-//# sourceMappingURL=spectrum-icon-alert-small.css-3d2f3cb8.js.map
