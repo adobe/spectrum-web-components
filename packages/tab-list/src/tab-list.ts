@@ -110,11 +110,15 @@ export class TabList extends Focusable {
         }
     }
 
+    private isListeningToKeyboard = false;
+
     public startListeningToKeyboard = (): void => {
         this.addEventListener('keydown', this.handleKeydown);
+        this.isListeningToKeyboard = true;
     };
 
     public stopListeningToKeyboard = (): void => {
+        this.isListeningToKeyboard = false;
         this.removeEventListener('keydown', this.handleKeydown);
     };
 
@@ -136,6 +140,15 @@ export class TabList extends Focusable {
     private onClick(event: Event): void {
         const target = event.target as HTMLElement;
         this.selectTarget(target);
+        if (this.isListeningToKeyboard) {
+            /* Trick :focus-visible polyfill into thinking keyboard based focus */
+            this.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    code: 'Tab',
+                })
+            );
+            target.focus();
+        }
     }
 
     private onKeyDown(event: KeyboardEvent): void {
