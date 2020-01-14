@@ -15,3 +15,16 @@ governing permissions and limitations under the License.
 :host {
     display: inline;
 }
+
+/*
+Current processing of Spectrum CSS turns `.spectrum-Link.focus-ring` into `a:focus-visible` and _then_
+`.spectrum-Link--overBackground` into `:host([over-background]) a` inverting the specificty relationship.
+Until we find a non-spot fix, this manual extension of the selector specificity will be required.
+*/
+:host([over-background]) a:focus-visible,
+:host([quiet]) a:focus-visible {
+    /* .spectrum-Link.focus-ring */
+    text-decoration: underline;
+    -webkit-text-decoration-style: double;
+    text-decoration-style: double; /* .spectrum-Link.focus-ring */
+}
