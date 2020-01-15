@@ -12,3 +12,7 @@ declare module '@popperjs/core/lib/modifiers/flip' {
 declare module '@popperjs/core/lib/modifiers/preventOverflow' {
     export * from '@popperjs/core/dist/typescript/modifiers/preventOverflow.d.ts';
 }
+
+declare module '@popperjs/core/lib/modifiers/arrow' {
+    export * from '@popperjs/core/dist/typescript/modifiers/arrow.d.ts';
+}

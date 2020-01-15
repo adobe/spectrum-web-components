@@ -11,7 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import { ThemeData } from '@spectrum-web-components/theme';
-import { TriggerInteractions, Placement } from './overlay-types';
+import {
+    TriggerInteractions,
+    Placement,
+    OverlayDisplayQueryDetail,
+} from './overlay-types';
 import { OverlayStack } from './overlay-stack';
 
 type OverlayOptions = {
@@ -71,6 +75,15 @@ export class Overlay {
         return overlay;
     }
 
+    public static update(): void {
+        const overlayUpdateEvent = new CustomEvent('sp-update-overlays', {
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+        });
+        document.dispatchEvent(overlayUpdateEvent);
+    }
+
     /**
      * Open an overlay
      *
@@ -97,7 +110,7 @@ export class Overlay {
             color: undefined,
             size: undefined,
         };
-        const queryThemeEvent = new CustomEvent<ThemeData>('query-theme', {
+        const queryThemeEvent = new CustomEvent<ThemeData>('sp-query-theme', {
             bubbles: true,
             composed: true,
             detail: queryThemeDetail,
@@ -105,14 +118,27 @@ export class Overlay {
         });
         this.owner.dispatchEvent(queryThemeEvent);
 
+        const overlayDetailQuery: OverlayDisplayQueryDetail = {};
+        const queryOverlayDetailEvent = new CustomEvent<
+            OverlayDisplayQueryDetail
+        >('sp-overlay-query', {
+            bubbles: true,
+            composed: true,
+            detail: overlayDetailQuery,
+            cancelable: true,
+        });
+        this.overlayElement.dispatchEvent(queryOverlayDetailEvent);
+
         Overlay.overlayStack.openOverlay({
             content: this.overlayElement,
+            contentTip: overlayDetailQuery.overlayContentTipElement,
             delay: delay,
             offset: offset,
             placement: placement,
             trigger: this.owner,
             interaction: this.interaction,
             theme: queryThemeDetail,
+            ...overlayDetailQuery,
         });
         this.isOpen = true;
     }

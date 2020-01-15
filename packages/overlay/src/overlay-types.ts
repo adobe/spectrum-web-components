@@ -17,6 +17,7 @@ export type TriggerInteractions = 'click' | 'hover' | 'custom';
 
 export interface OverlayOpenDetail {
     content: HTMLElement;
+    contentTip?: HTMLElement;
     delay: number;
     offset: number;
     placement: Placement;
@@ -25,4 +26,20 @@ export interface OverlayOpenDetail {
     theme: ThemeData;
 }
 
+/**
+ * Used, via an event, to query details about how an element should be shown in
+ * an overlay
+ */
+export interface OverlayDisplayQueryDetail {
+    overlayRootName?: string;
+    overlayRootElement?: HTMLElement;
+    overlayContentTipElement?: HTMLElement;
+}
+
 export { Placement };
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-overlay-query': CustomEvent<OverlayDisplayQueryDetail>;
+    }
+}

@@ -49,24 +49,35 @@ export class OverlayTrigger extends LitElement {
 
     private clickContent?: HTMLElement;
     private hoverContent?: HTMLElement;
+    private targetContent?: HTMLElement;
 
     public onTriggerClick(): void {
         /* istanbul ignore else */
-        if (this.clickContent) {
-            this.clickOverlay = Overlay.open(this, 'click', this.clickContent, {
-                offset: this.offset,
-                placement: this.placement,
-            });
+        if (this.targetContent && this.clickContent) {
+            this.clickOverlay = Overlay.open(
+                this.targetContent,
+                'click',
+                this.clickContent,
+                {
+                    offset: this.offset,
+                    placement: this.placement,
+                }
+            );
         }
     }
 
     public onTriggerMouseOver(): void {
         /* istanbul ignore else */
-        if (this.hoverContent) {
-            this.hoverOverlay = Overlay.open(this, 'hover', this.hoverContent, {
-                offset: this.offset,
-                placement: this.placement,
-            });
+        if (this.targetContent && this.hoverContent) {
+            this.hoverOverlay = Overlay.open(
+                this.targetContent,
+                'hover',
+                this.hoverContent,
+                {
+                    offset: this.offset,
+                    placement: this.placement,
+                }
+            );
         }
     }
 
@@ -74,6 +85,7 @@ export class OverlayTrigger extends LitElement {
         /* istanbul ignore else */
         if (this.hoverOverlay) {
             this.hoverOverlay.close();
+            delete this.hoverOverlay;
         }
     }
 
@@ -85,7 +97,10 @@ export class OverlayTrigger extends LitElement {
                 @mouseenter=${this.onTriggerMouseOver}
                 @mouseleave=${this.onTriggerMouseLeave}
             >
-                <slot name="trigger"></slot>
+                <slot
+                    @slotchange=${this.onTargetSlotChange}
+                    name="trigger"
+                ></slot>
             </div>
             <div id="overlay-content">
                 <slot
@@ -101,48 +116,39 @@ export class OverlayTrigger extends LitElement {
     }
 
     private onClickSlotChange(event: Event): void {
-        /* istanbul ignore if */
-        if (!event.target) {
-            return;
-        }
-        const slot = event.target as HTMLSlotElement;
-        const content = this.extractSlotContent(slot);
-
-        if (content) {
-            this.clickContent = content;
-        }
+        const content = this.extractSlotContentFromEvent(event);
+        this.clickContent = content || undefined;
     }
 
     private onHoverSlotChange(event: Event): void {
-        /* istanbul ignore if */
-        if (!event.target) {
-            return;
-        }
-        const slot = event.target as HTMLSlotElement;
-        const content = this.extractSlotContent(slot);
-
-        if (content) {
-            this.hoverContent = content;
-        }
+        const content = this.extractSlotContentFromEvent(event);
+        this.hoverContent = content || undefined;
     }
 
-    private extractSlotContent(slot: HTMLSlotElement): HTMLElement | null {
-        const nodes = slot.assignedNodes();
+    private onTargetSlotChange(event: Event): void {
+        const content = this.extractSlotContentFromEvent(event);
+        this.targetContent = content || undefined;
+    }
 
-        if (nodes.length) {
-            return nodes[0] as HTMLElement;
+    private extractSlotContentFromEvent(event: Event): HTMLElement | null {
+        /* istanbul ignore if */
+        if (!event.target) {
+            return null;
         }
-
-        return null;
+        const slot = event.target as HTMLSlotElement;
+        const nodes = slot.assignedNodes();
+        return nodes.find((node) => node instanceof HTMLElement) as HTMLElement;
     }
 
     public disconnectedCallback(): void {
         /* istanbul ignore else */
         if (this.clickOverlay) {
             this.clickOverlay.close();
+            delete this.clickOverlay;
         }
         if (this.hoverOverlay) {
             this.hoverOverlay.close();
+            delete this.hoverOverlay;
         }
         super.disconnectedCallback();
     }

@@ -17,6 +17,7 @@ import {
     LitElement,
     property,
 } from 'lit-element';
+import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
 
 import tooltipStyles from './tooltip.css.js';
 
@@ -53,11 +54,39 @@ export class Tooltip extends LitElement {
         this._variant = '';
     }
 
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.addEventListener('sp-overlay-query', this.onOverlyQuery);
+    }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.removeEventListener('sp-overlay-query', this.onOverlyQuery);
+    }
+
+    public onOverlyQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
+        if (!event.target || !this.shadowRoot) return;
+
+        const target = event.target as Node;
+        if (!target.isSameNode(this)) return;
+
+        const tipElement = this.shadowRoot.querySelector('#tip') as HTMLElement;
+        if (tipElement) {
+            event.detail.overlayContentTipElement = tipElement;
+        }
+    }
+
     render(): TemplateResult {
         return html`
             <slot name="icon"></slot>
             <span id="label"><slot></slot></span>
             <span id="tip"></span>
         `;
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'sp-overlay-query': CustomEvent<OverlayDisplayQueryDetail>;
     }
 }

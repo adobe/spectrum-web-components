@@ -109,6 +109,7 @@ export class ActiveOverlay extends LitElement {
 
     private placeholder?: Comment;
     private popper?: Instance;
+    private originalSlot: string | null = null;
 
     @property()
     public _state = stateTransition();
@@ -159,6 +160,14 @@ export class ActiveOverlay extends LitElement {
 
         this.popper = createPopper(this.trigger, this.overlayContent, {
             placement: this.placement,
+            modifiers: [
+                {
+                    name: 'arrow',
+                    options: {
+                        element: openDetail.contentTip,
+                    },
+                },
+            ],
         });
 
         this.state = 'active';
@@ -173,6 +182,10 @@ export class ActiveOverlay extends LitElement {
         this.hiddenDeferred.promise.then(() => {
             this.removeEventListener('animationend', this.onAnimationEnd);
         });
+
+        document.addEventListener('sp-update-overlays', () =>
+            this.updateOverlayPosition()
+        );
     }
 
     private extractDetail(detail: OverlayOpenDetail): void {
@@ -217,6 +230,7 @@ export class ActiveOverlay extends LitElement {
         }
 
         this.overlayContent = element;
+        this.originalSlot = this.overlayContent.getAttribute('slot');
         this.overlayContent.setAttribute('slot', 'overlay');
         this.appendChild(this.overlayContent);
     }
@@ -225,7 +239,12 @@ export class ActiveOverlay extends LitElement {
         /* istanbul ignore if */
         if (!this.overlayContent) return;
 
-        this.overlayContent.removeAttribute('slot');
+        if (this.originalSlot) {
+            this.overlayContent.setAttribute('slot', this.originalSlot);
+            delete this.originalSlot;
+        } else {
+            this.overlayContent.removeAttribute('slot');
+        }
 
         /* istanbul ignore else */
         if (this.placeholder && this.placeholder.parentElement) {

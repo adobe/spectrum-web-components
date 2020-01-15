@@ -9,15 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, number, radios } from '@open-wc/demoing-storybook';
-import {
-    LitElement,
-    css,
-    property,
-    TemplateResult,
-    CSSResultArray,
-} from 'lit-element';
+import { TemplateResult } from 'lit-element';
 
-import '../';
 import { Placement } from '../';
 import '../../button';
 import '../../popover';
@@ -26,86 +19,9 @@ import '../../radio';
 import '../../radio-group';
 import '../../tooltip';
 import '../../theme';
-import { Radio } from '../../radio';
 import { Color } from '../../theme';
 
-// Prevent infinite recursion in browser
-const MAX_DEPTH = 7;
-
-class RecursivePopover extends LitElement {
-    @property({ type: String })
-    private placement: Placement;
-
-    @property({ type: Number })
-    private depth = 0;
-
-    public static get styles(): CSSResultArray {
-        return [
-            css`
-                :host {
-                    display: block;
-                    text-align: center;
-                }
-
-                sp-button {
-                    margin-top: 11px;
-                }
-            `,
-        ];
-    }
-
-    public constructor() {
-        super();
-        this.placement = 'right';
-        this.depth = 0;
-    }
-
-    public onRadioChange(event: Event): void {
-        const target = event.target as Radio;
-        this.placement = target.value as Placement;
-    }
-
-    public render(): TemplateResult {
-        return html`
-            <sp-radio-group selected="${this.placement}" name="group-example">
-                <sp-radio @change=${this.onRadioChange} value="top">
-                    Top
-                </sp-radio>
-                <sp-radio @change=${this.onRadioChange} value="right">
-                    Right
-                </sp-radio>
-                <sp-radio @change=${this.onRadioChange} value="bottom">
-                    Bottom
-                </sp-radio>
-                <sp-radio @change=${this.onRadioChange} value="left">
-                    Left
-                </sp-radio>
-            </sp-radio-group>
-            <overlay-trigger placement="${this.placement}">
-                <sp-button slot="trigger" variant="cta">Open Popover</sp-button>
-                <sp-popover
-                    dialog
-                    slot="click-content"
-                    direction="${this.placement}"
-                    tip
-                    open
-                >
-                    ${this.depth < MAX_DEPTH
-                        ? html`
-                              <recursive-popover
-                                  position="${this.placement}"
-                                  depth="${this.depth + 1}"
-                              ></recursive-popover>
-                          `
-                        : html`
-                              <div>Maximum Depth</div>
-                          `}
-                </sp-popover>
-            </overlay-trigger>
-        `;
-    }
-}
-customElements.define('recursive-popover', RecursivePopover);
+import './overlay-story-components';
 
 const storyStyles = html`
     <style>
@@ -312,5 +228,53 @@ export const edges = (): TemplateResult => {
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
+    `;
+};
+
+export const updated = (): TemplateResult => {
+    return html`
+        <style>
+            sp-tooltip {
+                transition: none;
+            }
+        </style>
+        <overlay-drag>
+            <overlay-trigger class="demo top-left" placement="bottom">
+                <overlay-target-icon slot="trigger"></overlay-target-icon>
+                <sp-tooltip slot="hover-content" delay="100" open tip="bottom">
+                    Drag Me!!
+                </sp-tooltip>
+            </overlay-trigger>
+        </overlay-drag>
+    `;
+};
+
+export const updatedSide = (): TemplateResult => {
+    return html`
+        <style>
+            sp-tooltip {
+                transition: none;
+            }
+        </style>
+        <overlay-drag>
+            <overlay-trigger placement="right">
+                <overlay-target-icon slot="trigger"></overlay-target-icon>
+                <sp-tooltip slot="hover-content" delay="100" open tip="right">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Vivamus egestas sed enim sed condimentum. Nunc facilisis
+                    scelerisque massa sed luctus. Orci varius natoque penatibus
+                    et magnis dis parturient montes, nascetur ridiculus mus.
+                    Suspendisse sagittis sodales purus vitae ultricies. Integer
+                    at dui sem. Sed quam tortor, ornare in nisi et, rhoncus
+                    lacinia mauris. Sed vel rutrum mauris, ac pellentesque nibh.
+                    Sed feugiat semper libero, sit amet vehicula orci fermentum
+                    id. Vivamus imperdiet egestas luctus. Mauris tincidunt
+                    malesuada ante, faucibus viverra nunc blandit a. Fusce et
+                    nisl nisi. Aenean dictum quam id mollis faucibus. Nulla a
+                    ultricies dui. In hac habitasse platea dictumst. Curabitur
+                    gravida lobortis vestibulum.
+                </sp-tooltip>
+            </overlay-trigger>
+        </overlay-drag>
     `;
 };

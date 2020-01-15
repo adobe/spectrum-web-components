@@ -22,9 +22,10 @@ import {
 
 import flip from '@popperjs/core/lib/modifiers/flip';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
+import arrow from '@popperjs/core/lib/modifiers/arrow';
 
 export const createPopper = popperGenerator({
-    defaultModifiers: [...defaultModifiers, flip, preventOverflow],
+    defaultModifiers: [...defaultModifiers, flip, preventOverflow, arrow],
 });
 
 interface WindowNodeWorkaround {
