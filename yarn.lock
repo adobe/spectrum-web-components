@@ -2834,10 +2834,10 @@
     "@open-wc/semantic-dom-diff" "^0.13.16"
     "@types/chai" "^4.1.7"
 
-"@open-wc/demoing-storybook@^1.6.4":
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/@open-wc/demoing-storybook/-/demoing-storybook-1.6.4.tgz#3adfaefe9867cd508064951956f7263b496d1f57"
-  integrity sha512-+QUeYOfPG25nQMWnHmGwFVN6SHpVl1KlwBJNM/UGzkBI82Kh20wuypXXTv7/v4tbnyL8Ncys2TaHNjZeBsQYPA==
+"@open-wc/demoing-storybook@^1.8.3":
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/@open-wc/demoing-storybook/-/demoing-storybook-1.8.3.tgz#0c272a8082124fefb8e8c2e2f6ac8f3bd500e22d"
+  integrity sha512-9hNP89Wl0OJkXytIaNtKdrWrF+SlX2xg69UteGQU4KzqpZmQs3SiAkzl97pSArmFuV/iBWyUUBu4c6/cLMoOlQ==
   dependencies:
     "@babel/core" "^7.7.2"
     "@babel/plugin-transform-react-jsx" "^7.3.0"
@@ -3981,11 +3981,6 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
-
-"@types/storybook__addon-actions@^3.4.3":
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/@types/storybook__addon-actions/-/storybook__addon-actions-3.4.3.tgz#bb0c3fd066e1f495d3f2b724487e2b99194b3f1a"
-  integrity sha512-RSFFfruUHL7La4CZpuiKZ0mZvr5orjenFA2jc31tfPwvA3fYNH4/9XSfA2MB08IpJbF3aErtYWT5Dtigkxnltg==
 
 "@types/systeminformation@^3.23.0":
   version "3.23.1"
