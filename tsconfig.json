@@ -12,14 +12,7 @@
         "target": "es2017",
         "skipLibCheck": true,
         "importHelpers": true,
-        "types": [
-            "chai",
-            "sinon",
-            "karma-chai",
-            "webpack-env",
-            "storybook__addon-actions",
-            "node"
-        ],
+        "types": ["chai", "sinon", "karma-chai", "webpack-env", "node"],
         "lib": ["es2017", "dom", "dom.iterable"],
         "allowSyntheticDefaultImports": true,
         "baseUrl": "./packages"
