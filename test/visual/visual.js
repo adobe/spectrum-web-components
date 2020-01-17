@@ -82,7 +82,18 @@ module.exports = {
             await page.screenshot({
                 path: `${currentDir}/${type}/${test}.png`,
             });
-            return compareScreenshots(test);
+            let result = await compareScreenshots(test);
+            // Retry the test once for expected flakiness.
+            if (!result.passes) {
+                console.log(`♻️ ${test}.png => retrying...`);
+                await page.screenshot({
+                    path: `${currentDir}/${type}/${test}.png`,
+                });
+                result = await compareScreenshots(test);
+            }
+            // Always run the test at the end, so that you can recieve the failure/diff file
+            // or deliver the passing comparison to the console.
+            return result.test();
         }
 
         function compareScreenshots(view) {
@@ -138,24 +149,30 @@ module.exports = {
                         `${currentDir}/${type}/${view}.png`
                     );
                     const fileSizeInBytes = stats.size;
-                    console.log(
-                        `📸 ${view}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
-                    );
 
-                    if (numDiffPixels > 10) {
-                        diff.pack().pipe(
-                            fs.createWriteStream(
-                                `${currentDir}/${view}-diff.png`
-                            )
-                        );
-                    }
-                    // A number of comparisons come out to 10 inexplicable pixes EVERY time,
-                    // so let them have their stupid 10 pixels!
-                    expect(
-                        numDiffPixels,
-                        'number of different pixels'
-                    ).be.lessThan(11);
-                    resolve();
+                    resolve({
+                        // Return the diff file creation and file comparisin expect so that the "test"
+                        // can be run only when it "passes" or is the second try.
+                        test: () => {
+                            console.log(
+                                `📸 ${view}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
+                            );
+                            if (numDiffPixels > 10) {
+                                diff.pack().pipe(
+                                    fs.createWriteStream(
+                                        `${currentDir}/${view}-diff.png`
+                                    )
+                                );
+                            }
+                            // A number of comparisons come out to 10 inexplicable pixes EVERY time,
+                            // so let them have their stupid 10 pixels!
+                            expect(
+                                numDiffPixels,
+                                'number of different pixels'
+                            ).be.lessThan(11);
+                        },
+                        passes: numDiffPixels < 11,
+                    });
                 }
             });
         }
