@@ -51,7 +51,7 @@ The visible label that is be provided via the default `<slot>` interface can be 
 <!-- prettier-ignore -->
 ```html
 <sp-action-menu label="More Actions">
-    <sp-menu slot="options">
+    <sp-menu slot="options" style="min-width: 125px">
         <sp-menu-item>
             Deselect
         </sp-menu-item>

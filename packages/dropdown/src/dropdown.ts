@@ -42,12 +42,11 @@ import '@spectrum-web-components/popover';
  * @slot default - The placeholder content for the dropdown
  * @slot options - The menu with options that will display when the dropdown is open
  */
-export class Dropdown extends Focusable {
+export class DropdownBase extends Focusable {
     public static get styles(): CSSResultArray {
         return [
             ...super.styles,
             actionButtonStyles,
-            fieldButtonStyles,
             dropdownStyles,
             alertSmallStyles,
             chevronDownMediumStyles,
@@ -294,5 +293,11 @@ export class Dropdown extends Focusable {
                 this.optionsMenu.focus();
             });
         }
+    }
+}
+
+export class Dropdown extends DropdownBase {
+    public static get styles(): CSSResultArray {
+        return [...super.styles, fieldButtonStyles];
     }
 }
