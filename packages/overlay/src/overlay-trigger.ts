@@ -75,7 +75,7 @@ export class OverlayTrigger extends LitElement {
 
         const queryThemeDetail: ThemeData = {
             color: undefined,
-            size: undefined,
+            scale: undefined,
         };
         const queryThemeEvent = new CustomEvent<ThemeData>('query-theme', {
             bubbles: true,
