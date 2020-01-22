@@ -30,8 +30,8 @@ self.__precacheManifest = [
     "revision": "2704ce1f9183f0c706720b4a2708d7bd"
   },
   {
-    "url": "action-menu.stories-3c0bde89.js",
-    "revision": "0db350172672e3ad4f24fc670de33293"
+    "url": "action-menu.stories-0b6d013c.js",
+    "revision": "9c856429484d9c4a7e4fd804cf423350"
   },
   {
     "url": "actionbar.stories-a2f04512.js",
@@ -66,8 +66,8 @@ self.__precacheManifest = [
     "revision": "d1ca41cb1820cb35a349a343a6177da1"
   },
   {
-    "url": "dropdown.stories-8b14f595.js",
-    "revision": "e6080e82e47a9879d3876e19812b19f2"
+    "url": "dropdown.stories-a6c95206.js",
+    "revision": "8492a4f5a4d0882bd64d559ee2cb27aa"
   },
   {
     "url": "dropzone.stories-76123b61.js",
@@ -99,7 +99,7 @@ self.__precacheManifest = [
   },
   {
     "url": "iframe.html",
-    "revision": "aa910a7d78aa8d69dae114c6754a4dcd"
+    "revision": "90c7fcc81aaae6408af6e69584d5fd12"
   },
   {
     "url": "illustrated-message.stories-3b10a669.js",
@@ -150,12 +150,12 @@ self.__precacheManifest = [
     "revision": "dab49cd392fe89006500ba30a69774a8"
   },
   {
-    "url": "index-ccb5cd95.js",
-    "revision": "7474ab3ce2f4d7fe8d2c05a2b6716a15"
-  },
-  {
     "url": "index-d58ab459.js",
     "revision": "6ff2fb27d8c00aee3c9ba4d4863ab685"
+  },
+  {
+    "url": "index-e4452e6e.js",
+    "revision": "5f5dd1a1df90b8746945f4a1514aa6ff"
   },
   {
     "url": "index-fbb632ee.js",
@@ -166,16 +166,16 @@ self.__precacheManifest = [
     "revision": "fc29a281b95c188081dee5499c11a46a"
   },
   {
-    "url": "inline-entry.0-fa6098d7.js",
-    "revision": "d0105bf3e12d23fee6ddc46c5353af0b"
+    "url": "inline-entry.0-f69cf042.js",
+    "revision": "6cb5f6d1fc6236878fa5d25008c100fb"
   },
   {
     "url": "legacy/action-button.stories-c515bd69.js",
     "revision": "dad74c63cb8b2b10a3ee5e34027c74dd"
   },
   {
-    "url": "legacy/action-menu.stories-e530dbe8.js",
-    "revision": "ea981f85adda0110d13598cee0cb4a32"
+    "url": "legacy/action-menu.stories-1b3d4ade.js",
+    "revision": "921738185d0408294371a46af029c6b1"
   },
   {
     "url": "legacy/actionbar.stories-1e0977e8.js",
@@ -210,8 +210,8 @@ self.__precacheManifest = [
     "revision": "ed36273d1ac6daffcf021eb335395c6c"
   },
   {
-    "url": "legacy/dropdown.stories-9f5c0d2c.js",
-    "revision": "2b9093f2d4936e5159fa84d9877297d6"
+    "url": "legacy/dropdown.stories-b11185e1.js",
+    "revision": "b48edc29772baf471042ab793841afbd"
   },
   {
     "url": "legacy/dropzone.stories-8c856e05.js",
@@ -262,6 +262,10 @@ self.__precacheManifest = [
     "revision": "7caf1208549fec8c3713c06c75ec3a7b"
   },
   {
+    "url": "legacy/index-45429b5b.js",
+    "revision": "988ee41efe32a996a93e1959044e2f88"
+  },
+  {
     "url": "legacy/index-4b7bdaed.js",
     "revision": "d83c9ca4abb9ed7b8c1a40034c0e3cf2"
   },
@@ -282,10 +286,6 @@ self.__precacheManifest = [
     "revision": "9696b6e3474e925e5745f5df3eb87469"
   },
   {
-    "url": "legacy/index-94d17601.js",
-    "revision": "903564c3c5da190d6c6b5e26c808491f"
-  },
-  {
     "url": "legacy/index-a31e4f22.js",
     "revision": "433a66fbd0036ff2b98903c776c0a186"
   },
@@ -302,8 +302,8 @@ self.__precacheManifest = [
     "revision": "53f422b6d04a4b36f31ba26542afa86b"
   },
   {
-    "url": "legacy/inline-entry.0-2f660af4.js",
-    "revision": "8ca1a6471179a62fa05ed73596490ce8"
+    "url": "legacy/inline-entry.0-54d0b03a.js",
+    "revision": "4a6ada92525380a8f5bfe6b1c91bdfc3"
   },
   {
     "url": "legacy/link.stories-80305446.js",
