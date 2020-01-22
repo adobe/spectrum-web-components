@@ -22,6 +22,8 @@ const stories = require('./stories');
 const currentDir = `${process.cwd()}/test/visual/screenshots-current`;
 const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
 
+const PixelDiffThreshold = 0;
+
 module.exports = {
     checkScreenshots(type) {
         describe('👀 page screenshots are correct', function() {
@@ -77,8 +79,9 @@ module.exports = {
 
         async function takeAndCompareScreenshot(page, test) {
             await page.goto(`http://127.0.0.1:4444/iframe.html?id=${test}`, {
-                waitUntil: 'networkidle2',
+                waitUntil: 'networkidle0',
             });
+            await page.mouse.move(5, 5);
             await page.screenshot({
                 path: `${currentDir}/${type}/${test}.png`,
             });
@@ -142,19 +145,17 @@ module.exports = {
                         `📸 ${view}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
                     );
 
-                    if (numDiffPixels > 10) {
+                    if (numDiffPixels > PixelDiffThreshold) {
                         diff.pack().pipe(
                             fs.createWriteStream(
                                 `${currentDir}/${view}-diff.png`
                             )
                         );
                     }
-                    // A number of comparisons come out to 10 inexplicable pixes EVERY time,
-                    // so let them have their stupid 10 pixels!
                     expect(
                         numDiffPixels,
                         'number of different pixels'
-                    ).be.lessThan(11);
+                    ).to.equal(PixelDiffThreshold);
                     resolve();
                 }
             });
