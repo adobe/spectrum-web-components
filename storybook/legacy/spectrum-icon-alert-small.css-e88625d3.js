@@ -1,2 +1,0 @@
-System.register(["./storybook-preview-46d09877.js","./lit-element-02beee92.js"],(function(e){"use strict";var t,r;return{setters:[function(e){t=e.n},function(e){r=e.c}],execute:function(){function n(){var e=t([".alert-small{width:var(--spectrum-icon-alert-small-width,var(--spectrum-global-dimension-size-175));height:var(--spectrum-icon-alert-small-height,var(--spectrum-global-dimension-size-175))}"]);return n=function(){return e},e}var i=r(n());e("a",i)}}}));
-//# sourceMappingURL=spectrum-icon-alert-small.css-e88625d3.js.map

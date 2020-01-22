@@ -1,0 +1,2 @@
+System.register(["./storybook-preview-e56323fc.js","./lit-element-12678eac.js"],(function(e){"use strict";var t,c;return{setters:[function(e){t=e.n},function(e){c=e.c}],execute:function(){function r(){var e=t([".checkmark-small{width:var(--spectrum-icon-checkmark-small-width);height:var(--spectrum-icon-checkmark-small-height)}"]);return r=function(){return e},e}var n=c(r());e("c",n)}}}));
+//# sourceMappingURL=spectrum-icon-checkmark-small.css-c376b745.js.map
