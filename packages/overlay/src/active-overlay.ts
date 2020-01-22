@@ -16,7 +16,7 @@ import {
     TriggerInteractions,
 } from './overlay.js';
 import calculatePosition, { PositionResult } from './calculate-position.js';
-import { Size, Color } from '@spectrum-web-components/theme';
+import { Scale, Color } from '@spectrum-web-components/theme';
 import {
     html,
     LitElement,
@@ -139,10 +139,10 @@ export class ActiveOverlay extends LitElement {
     @property({ attribute: false })
     public color?: Color;
     @property({ attribute: false })
-    public size?: Size;
+    public scale?: Scale;
 
     private get hasTheme(): boolean {
-        return !!this.color || !!this.size;
+        return !!this.color || !!this.scale;
     }
 
     public offset = 6;
@@ -185,7 +185,7 @@ export class ActiveOverlay extends LitElement {
         this.offset = event.detail.offset;
         this.interaction = event.detail.interaction;
         this.color = event.detail.theme.color;
-        this.size = event.detail.theme.size;
+        this.scale = event.detail.theme.scale;
     }
 
     public dispose(): void {
@@ -312,9 +312,9 @@ export class ActiveOverlay extends LitElement {
     public renderTheme(content: TemplateResult): TemplateResult {
         import('@spectrum-web-components/theme');
         const color = this.color as Color;
-        const size = this.size as Size;
+        const scale = this.scale as Scale;
         return html`
-            <sp-theme .color=${color} .size=${size}>
+            <sp-theme .color=${color} .scale=${scale}>
                 ${content}
             </sp-theme>
         `;

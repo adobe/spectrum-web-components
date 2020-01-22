@@ -72,7 +72,7 @@ describe('Medium', () => {
     it('loads', async () => {
         const el = await fixture<Theme>(
             html`
-                <sp-theme size="medium"></sp-theme>
+                <sp-theme scale="medium"></sp-theme>
             `
         );
 
@@ -97,9 +97,9 @@ describe('Setting attributes', () => {
         expect(el).shadowDom.to.equalSnapshot();
 
         el.color = 'dark';
-        el.size = 'medium';
+        el.scale = 'medium';
         expect(el.getAttribute('color')).to.equal('dark');
-        expect(el.getAttribute('size')).to.equal('medium');
+        expect(el.getAttribute('scale')).to.equal('medium');
 
         // Invalid value
         el.setAttribute('color', 'fish');

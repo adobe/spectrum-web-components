@@ -36,7 +36,7 @@ async function run() {
         const scale = select('Scale', scaleOptions, defaultScale, 'Theme');
         defaultScale = scale;
         return html`
-            <sp-theme id="root-theme" color=${color} size=${scale}>
+            <sp-theme id="root-theme" color=${color} scale=${scale}>
                 ${story()}
             </sp-theme>
         `;

@@ -13,4 +13,4 @@ governing permissions and limitations under the License.
 import largeStyles from './scale-large.css.js';
 import { Theme } from './theme';
 
-Theme.registerThemeFragment('large', 'size', largeStyles);
+Theme.registerThemeFragment('large', 'scale', largeStyles);
