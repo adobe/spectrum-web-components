@@ -17,14 +17,14 @@ import {
     PropertyValues,
     html,
 } from 'lit-element';
-import { Dropdown } from '@spectrum-web-components/dropdown';
+import { DropdownBase } from '@spectrum-web-components/dropdown';
 import { ObserveSlotText } from '@spectrum-web-components/shared/lib/observe-slot-text';
 import actionMenuStyles from './action-menu.css.js';
 
 /**
  * @slot options - The menu with options that will display when the dropdown is open
  */
-export class ActionMenu extends ObserveSlotText(Dropdown) {
+export class ActionMenu extends ObserveSlotText(DropdownBase) {
     public static get styles(): CSSResultArray {
         return [...super.styles, actionMenuStyles];
     }
@@ -51,6 +51,7 @@ export class ActionMenu extends ObserveSlotText(Dropdown) {
                         class="icon"
                         focusable="false"
                         aria-hidden="true"
+                        fill="currentColor"
                     >
                         <circle cx="17.8" cy="18.2" r="3.4"></circle>
                         <circle cx="29.5" cy="18.2" r="3.4"></circle>
