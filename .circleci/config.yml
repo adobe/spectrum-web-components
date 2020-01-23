@@ -65,12 +65,57 @@ jobs:
                       - project/node_modules
                       - project/documentation/dist
 
-    visual-testing:
+    visual-lightest-medium:
         executor: node8
 
         steps:
             - downstream
-            - run: yarn test:visual:ci
+            - run: yarn test:visual:ci --color=lightest --scale=medium
+            - store_artifacts:
+                  path: test/visual/screenshots-current
+
+    visual-lightest-large:
+        executor: node8
+
+        steps:
+            - downstream
+            - run: yarn test:visual:ci --color=lightest --scale=large
+            - store_artifacts:
+                  path: test/visual/screenshots-current
+
+    visual-light-medium:
+        executor: node8
+
+        steps:
+            - downstream
+            - run: yarn test:visual:ci --color=light --scale=medium
+            - store_artifacts:
+                  path: test/visual/screenshots-current
+
+    visual-light-large:
+        executor: node8
+
+        steps:
+            - downstream
+            - run: yarn test:visual:ci --color=light --scale=large
+            - store_artifacts:
+                  path: test/visual/screenshots-current
+
+    visual-dark-medium:
+        executor: node8
+
+        steps:
+            - downstream
+            - run: yarn test:visual:ci --color=dark --scale=medium
+            - store_artifacts:
+                  path: test/visual/screenshots-current
+
+    visual-dark-large:
+        executor: node8
+
+        steps:
+            - downstream
+            - run: yarn test:visual:ci --color=dark --scale=large
             - store_artifacts:
                   path: test/visual/screenshots-current
 
@@ -88,7 +133,22 @@ workflows:
     build:
         jobs:
             - build
-            - visual-testing:
+            - visual-lightest-medium:
+                  requires:
+                      - build
+            - visual-lightest-large:
+                  requires:
+                      - build
+            - visual-light-medium:
+                  requires:
+                      - build
+            - visual-light-large:
+                  requires:
+                      - build
+            - visual-dark-medium:
+                  requires:
+                      - build
+            - visual-dark-large:
                   requires:
                       - build
             - publish-docs:

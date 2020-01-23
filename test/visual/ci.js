@@ -11,4 +11,6 @@ governing permissions and limitations under the License.
 */
 const { checkScreenshots } = require('./visual.js');
 
-checkScreenshots('ci');
+const argv = require('yargs').argv;
+
+checkScreenshots('ci', argv.color, argv.scale);

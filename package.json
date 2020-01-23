@@ -95,8 +95,8 @@
         "@commitlint/config-conventional": "^8.3.4",
         "@commitlint/config-lerna-scopes": "^8.3.4",
         "@open-wc/building-webpack": "^2.10.9",
-        "@open-wc/polyfills-loader": "^0.3.3",
         "@open-wc/demoing-storybook": "^1.8.3",
+        "@open-wc/polyfills-loader": "^0.3.3",
         "@open-wc/testing": "^2.5.0",
         "@open-wc/testing-karma": "^3.2.30",
         "@spectrum-css/rule": "^2.0.4",
@@ -204,6 +204,7 @@
         "webpack-cli": "^3.3.0",
         "webpack-dev-server": "^3.10.1",
         "webpack-merge": "^4.2.1",
-        "webpackbar": "^4.0.0"
+        "webpackbar": "^4.0.0",
+        "yargs": "^15.1.0"
     }
 }

@@ -25,7 +25,7 @@ const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
 const PixelDiffThreshold = 0;
 
 module.exports = {
-    checkScreenshots(type) {
+    checkScreenshots(type, color = 'light', scale = 'medium') {
         describe('👀 page screenshots are correct', function() {
             let polyserve, browser, page;
 
@@ -81,11 +81,14 @@ module.exports = {
         });
 
         async function takeAndCompareScreenshot(page, test) {
-            await page.goto(`http://127.0.0.1:4444/iframe.html?id=${test}`, {
-                waitUntil: 'networkidle0',
-            });
+            await page.goto(
+                `http://127.0.0.1:4444/iframe.html?id=${test}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}`,
+                {
+                    waitUntil: 'networkidle0',
+                }
+            );
             await page.screenshot({
-                path: `${currentDir}/${type}/${test}.png`,
+                path: `${currentDir}/${type}/${test}___${color}__${scale}.png`,
             });
             return compareScreenshots(test);
         }
@@ -101,11 +104,15 @@ module.exports = {
                 //     console.log('\n\n')
                 //   });
                 const img1 = fs
-                    .createReadStream(`${currentDir}/${type}/${view}.png`)
+                    .createReadStream(
+                        `${currentDir}/${type}/${view}__${color}__${scale}.png`
+                    )
                     .pipe(new PNG())
                     .on('parsed', doneReading);
                 const img2 = fs
-                    .createReadStream(`${baselineDir}/${type}/${view}.png`)
+                    .createReadStream(
+                        `${baselineDir}/${type}/${view}__${color}__${scale}.png`
+                    )
                     .pipe(new PNG())
                     .on('parsed', doneReading);
 
@@ -140,17 +147,17 @@ module.exports = {
                         (numDiffPixels / (img1.width * img1.height)) * 100;
 
                     const stats = fs.statSync(
-                        `${currentDir}/${type}/${view}.png`
+                        `${currentDir}/${type}/${view}___${color}__${scale}.png`
                     );
                     const fileSizeInBytes = stats.size;
                     console.log(
-                        `📸 ${view}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
+                        `📸 ${view}___${color}__${scale}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
                     );
 
                     if (numDiffPixels > PixelDiffThreshold) {
                         diff.pack().pipe(
                             fs.createWriteStream(
-                                `${currentDir}/${view}-diff.png`
+                                `${currentDir}/${view}__${color}__${scale}-diff.png`
                             )
                         );
                     }
