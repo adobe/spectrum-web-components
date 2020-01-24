@@ -110,7 +110,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-checkbox-text-gap,
         var(--spectrum-global-dimension-size-125)
     );
-    margin-top: var(--spectrum-global-dimension-size-85);
+    margin-top: var(--spectrum-global-dimension-size-65);
     font-size: var(
         --spectrum-checkbox-text-size,
         var(--spectrum-alias-font-size-default)
