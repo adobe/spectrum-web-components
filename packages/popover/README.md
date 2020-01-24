@@ -35,7 +35,7 @@ yarn add @spectrum-web-components/popover
 
 ### Default with no tip
 
-Default popover with no tip and no direction. Popovers will fill up the space of they're containing
+Default popover with no tip and no placement. Popovers will fill up the space of they're containing
 element by default. The default popover has no padding by default
 
 ```html
@@ -86,7 +86,7 @@ Popovers with padding, ideal for dialogs.
 <div
     style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
 >
-    <sp-popover variant="dialog" direction="bottom" tip open>
+    <sp-popover variant="dialog" placement="bottom" tip open>
         <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
             Popover Title
         </div>
@@ -103,7 +103,7 @@ Popovers with padding, ideal for dialogs.
 <div
     style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
 >
-    <sp-popover variant="dialog" direction="top" tip open>
+    <sp-popover variant="dialog" placement="top" tip open>
         <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
             Popover Title
         </div>
@@ -120,7 +120,7 @@ Popovers with padding, ideal for dialogs.
 <div
     style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
 >
-    <sp-popover variant="dialog" direction="left" tip open>
+    <sp-popover variant="dialog" placement="left" tip open>
         <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
             Popover Title
         </div>
@@ -137,7 +137,7 @@ Popovers with padding, ideal for dialogs.
 <div
     style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
 >
-    <sp-popover variant="dialog" direction="right" tip open>
+    <sp-popover variant="dialog" placement="right" tip open>
         <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
             Popover Title
         </div>

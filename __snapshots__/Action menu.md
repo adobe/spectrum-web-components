@@ -40,7 +40,7 @@
         <slot id="slot"></slot>
     </div>
 </button>
-<sp-popover direction="bottom" id="popover">
+<sp-popover direction="bottom" id="popover" placement="none">
     <slot name="options">
         <sp-menu-item
             aria-disabled="true"
@@ -95,7 +95,7 @@
         <slot id="slot"></slot>
     </div>
 </button>
-<sp-popover direction="bottom" id="popover">
+<sp-popover direction="bottom" id="popover" placement="none">
     <slot name="options">
         <sp-menu-item
             aria-disabled="true"

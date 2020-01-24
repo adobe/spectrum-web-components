@@ -21,7 +21,7 @@
 ```
 
 ```html
-<sp-popover direction="none" id="popover" open="">
+<sp-popover id="popover" open="" placement="none">
     <slot></slot>
 </sp-popover>
 ```

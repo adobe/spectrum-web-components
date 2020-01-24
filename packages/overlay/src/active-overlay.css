@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 @keyframes spOverlayFadeIn {
     from {
         opacity: 0;
-        transform: var(--animation-transform);
+        transform: var(--sp-overlay-from);
     }
 
     to {
@@ -30,48 +30,50 @@ governing permissions and limitations under the License.
 
     to {
         opacity: 0;
-        transform: var(--animation-transform);
+        transform: var(--sp-overlay-from);
     }
 }
 
 :host {
     z-index: 2;
     position: absolute;
-    display: none;
-    opacity: 0;
-    top: -999em;
-    left: -999em;
-    animation-duration: var(--spectrum-global-animation-duration-100);
-    animation-timing-function: ease-in-out;
+    display: inline-block;
+    pointer-events: none;
 }
 
-:host([state]) {
-    display: block;
-}
-
-:host([state='visible']) {
+#contents {
+    display: inline-block;
+    pointer-events: none;
+    animation-duration: var(--spectrum-global-animation-duration-200);
+    animation-timing-function: var(--spectrum-global-animation-ease-out);
     opacity: 1;
-    transform: translate(0, 0) !important;
     visibility: visible;
-    animation-name: spOverlayFadeIn;
 }
 
-:host([state='hiding']) {
-    animation-name: spOverlayFadeOut;
+:host([data-popper-placement*='top']) #contents {
+    --sp-overlay-from: translateY(var(--spectrum-global-dimension-size-75));
 }
 
-:host([placement='top']) {
-    --animation-transform: translate(0, 6px);
+:host([data-popper-placement*='right']) #contents {
+    --sp-overlay-from: translateX(
+        calc(-1 * var(--spectrum-global-dimension-size-75))
+    );
 }
 
-:host([placement='right']) {
-    --animation-transform: translate(-6px, 0);
+:host([data-popper-placement*='bottom']) #contents {
+    --sp-overlay-from: translateY(
+        calc(-1 * var(--spectrum-global-dimension-size-75))
+    );
 }
 
-:host([placement='bottom']) {
-    --animation-transform: translate(0, -6px);
+:host([data-popper-placement*='left']) #contents {
+    --sp-overlay-from: translateX(var(--spectrum-global-dimension-size-75));
 }
 
-:host([placement='left']) {
-    --animation-transform: translate(6px, 0);
+::slotted(*) {
+    position: relative;
+}
+
+:host([animating]) ::slotted(*) {
+    pointer-events: none;
 }

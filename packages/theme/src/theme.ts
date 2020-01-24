@@ -118,7 +118,7 @@ export class Theme extends HTMLElement {
             this.shadowRoot.appendChild(node);
         }
         this.adoptStyles();
-        this.addEventListener('query-theme', this
+        this.addEventListener('sp-query-theme', this
             .onQueryTheme as EventListener);
     }
 

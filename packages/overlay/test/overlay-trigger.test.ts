@@ -37,7 +37,7 @@ function pressEscape(): void {
     document.dispatchEvent(up);
 }
 
-describe('Overlays', () => {
+describe('Overlay Trigger', () => {
     let testDiv!: HTMLDivElement;
 
     beforeEach(async () => {
@@ -106,10 +106,11 @@ describe('Overlays', () => {
                 </div>
             `
         );
+        await elementUpdated(testDiv);
     });
 
     it('loads', async () => {
-        const popover = document.body.querySelector('sp-popover');
+        const popover = testDiv.querySelector('sp-popover');
         if (!(popover instanceof Popover))
             throw new Error('popover is not an instance of Popover');
 

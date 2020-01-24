@@ -26,13 +26,14 @@ module.exports = {
                 },
                 {
                     type: 'enum',
-                    name: 'tip',
+                    name: 'placement',
                     values: [
                         '.spectrum-Tooltip--top',
                         '.spectrum-Tooltip--bottom',
                         '.spectrum-Tooltip--left',
                         '.spectrum-Tooltip--right',
                     ],
+                    wildcard: true,
                 },
                 {
                     type: 'enum',

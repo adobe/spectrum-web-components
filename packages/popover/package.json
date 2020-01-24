@@ -41,6 +41,7 @@
         "@spectrum-css/popover": "^2.0.4"
     },
     "dependencies": {
+        "@spectrum-web-components/overlay": "^0.1.0",
         "tslib": "^1.10.0"
     }
 }

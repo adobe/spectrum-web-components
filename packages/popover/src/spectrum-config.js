@@ -33,13 +33,14 @@ module.exports = {
                 },
                 {
                     type: 'enum',
-                    name: 'direction',
+                    name: 'placement',
                     values: [
                         '.spectrum-Popover--top',
                         '.spectrum-Popover--bottom',
                         '.spectrum-Popover--left',
                         '.spectrum-Popover--right',
                     ],
+                    wildcard: true,
                 },
             ],
             ids: [

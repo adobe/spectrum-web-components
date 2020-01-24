@@ -50,7 +50,7 @@ Select a Country with a very long label, too long in fact
         size="s"
     ></sp-icon>
 </button>
-<sp-popover direction="bottom" id="popover">
+<sp-popover direction="bottom" id="popover" placement="none">
     <slot name="options">
         <sp-menu-item
             aria-disabled="true"
@@ -116,7 +116,7 @@ Select a Country with a very long label, too long in fact
         size="s"
     ></sp-icon>
 </button>
-<sp-popover direction="bottom" id="popover">
+<sp-popover direction="bottom" id="popover" placement="none">
     <slot name="options">
         <sp-menu-item
             aria-disabled="true"

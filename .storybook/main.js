@@ -5,6 +5,9 @@ module.exports = {
     esDevServer: {
         nodeResolve: true,
         open: true,
+        babelConfig: {
+            plugins: ['transform-node-env-inline'],
+        },
     },
 
     // Rollup build output directory (build-storybook only)

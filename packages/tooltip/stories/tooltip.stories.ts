@@ -31,7 +31,12 @@ export const Default = (): TemplateResult => {
     return html`
         <sp-tooltip
             ?open=${boolean('Open', true, 'Element')}
-            tip=${select('Tip direction', tipOptions, tipOptions[0], 'Element')}
+            placement=${select(
+                'Tip direction',
+                tipOptions,
+                tipOptions[0],
+                'Element'
+            )}
             variant=${select(
                 'Variant',
                 variantOptions,
@@ -49,7 +54,12 @@ export const wIcon = (): TemplateResult => {
         <sp-icons-medium></sp-icons-medium>
         <sp-tooltip
             ?open=${boolean('Open', true, 'Element')}
-            tip=${select('Tip direction', tipOptions, tipOptions[0], 'Element')}
+            placement=${select(
+                'Tip direction',
+                tipOptions,
+                tipOptions[0],
+                'Element'
+            )}
             variant=${select(
                 'Variant',
                 variantOptions,
