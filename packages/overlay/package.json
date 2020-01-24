@@ -38,6 +38,7 @@
         "lit-html": "^1.0.0"
     },
     "dependencies": {
+        "@popperjs/core": "^2.0.4",
         "@spectrum-web-components/theme": "^0.1.1",
         "tslib": "^1.10.0"
     }

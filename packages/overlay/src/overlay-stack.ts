@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { ActiveOverlay } from './active-overlay.js';
-import { OverlayOpenDetail, OverlayCloseDetail } from './overlay.js';
+import { OverlayOpenDetail } from './overlay-types';
+import { OverlayTimer } from './overlay-timer';
 
 function isLeftClick(event: MouseEvent): boolean {
     return event.button === 0;
@@ -26,15 +27,10 @@ export class OverlayStack {
 
     private preventMouseRootClose = false;
     private root: HTMLElement = document.body;
-    private onChange: (overlays: ActiveOverlay[]) => void;
     private handlingResize = false;
+    private overlayTimer = new OverlayTimer();
 
-    public constructor(
-        root: HTMLElement,
-        onChange: (overlays: ActiveOverlay[]) => void
-    ) {
-        this.root = root;
-        this.onChange = onChange;
+    public constructor() {
         this.addEventListeners();
     }
 
@@ -44,6 +40,16 @@ export class OverlayStack {
 
     private get topOverlay(): ActiveOverlay | undefined {
         return this.overlays.slice(-1)[0];
+    }
+
+    private findOverlayForContent(
+        overlayContent: HTMLElement
+    ): ActiveOverlay | undefined {
+        for (const item of this.overlays) {
+            if (overlayContent.isSameNode(item.overlayContent as HTMLElement)) {
+                return item;
+            }
+        }
     }
 
     private addEventListeners(): void {
@@ -67,34 +73,43 @@ export class OverlayStack {
         );
     }
 
-    public openOverlay(event: CustomEvent<OverlayOpenDetail>): void {
-        if (this.isOverlayActive(event.detail.content)) return;
+    public async openOverlay(details: OverlayOpenDetail): Promise<boolean> {
+        /* istanbul ignore if */
+        if (this.isOverlayActive(details.content)) return false;
 
-        requestAnimationFrame(() => {
-            const interaction = event.detail.interaction;
-            if (interaction === 'click') {
-                this.closeAllHoverOverlays();
-            } else if (
-                interaction === 'hover' &&
-                this.isClickOverlayActiveForTrigger(event.detail.trigger)
-            ) {
-                // Don't show a hover popover if the click popover is already active
-                return;
+        if (details.delayed) {
+            const promise = this.overlayTimer.openTimer(details.content);
+            const cancelled = await promise;
+            if (cancelled) {
+                return promise;
             }
+        }
 
-            const activeOverlay = ActiveOverlay.create(event, this.root);
-            this.overlays.push(activeOverlay);
+        return new Promise((resolve) => {
+            requestAnimationFrame(() => {
+                if (details.interaction === 'click') {
+                    this.closeAllHoverOverlays();
+                } else if (
+                    details.interaction === 'hover' &&
+                    this.isClickOverlayActiveForTrigger(details.trigger)
+                ) {
+                    // Don't show a hover popover if the click popover is already active
+                    resolve(true);
+                    return;
+                }
 
-            this.onChange(this.overlays);
+                const activeOverlay = ActiveOverlay.create(details);
+                this.overlays.push(activeOverlay);
+                document.body.appendChild(activeOverlay);
+                resolve(false);
+            });
         });
     }
 
-    public closeOverlay(event: CustomEvent<OverlayCloseDetail>): void {
+    public closeOverlay(content: HTMLElement): void {
+        this.overlayTimer.close(content);
         requestAnimationFrame(() => {
-            const overlayContent = event.detail.content;
-            const overlay = this.overlays.find((item) =>
-                overlayContent.isSameNode(item.overlayContent as HTMLElement)
-            );
+            const overlay = this.findOverlayForContent(content);
             this.hideAndCloseOverlay(overlay);
         });
     }
@@ -125,21 +140,25 @@ export class OverlayStack {
     private closeAllHoverOverlays(): void {
         for (const overlay of this.overlays) {
             if (overlay.interaction === 'hover') {
-                this.hideAndCloseOverlay(overlay);
+                this.hideAndCloseOverlay(overlay, false);
             }
         }
     }
 
-    private async hideAndCloseOverlay(overlay?: ActiveOverlay): Promise<void> {
+    private async hideAndCloseOverlay(
+        overlay?: ActiveOverlay,
+        animated = true
+    ): Promise<void> {
         if (overlay) {
-            await overlay.hide();
+            await overlay.hide(animated);
+            overlay.remove();
+            overlay.dispose();
+
             const index = this.overlays.indexOf(overlay);
             /* istanbul ignore else */
             if (index >= 0) {
-                this.overlays[index].dispose();
                 this.overlays.splice(index, 1);
             }
-            this.onChange(this.overlays);
         }
     }
 
@@ -163,10 +182,11 @@ export class OverlayStack {
         if (this.handlingResize) return;
 
         this.handlingResize = true;
-        requestAnimationFrame(() => {
-            this.overlays.forEach((overlay) => {
-                overlay.updateOverlayPosition();
-            });
+        requestAnimationFrame(async () => {
+            const promises = this.overlays.map((overlay) =>
+                overlay.updateOverlayPosition()
+            );
+            await Promise.all(promises);
             this.handlingResize = false;
         });
     };

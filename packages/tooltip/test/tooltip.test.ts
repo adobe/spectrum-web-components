@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import '../';
 import { Tooltip } from '../';
+import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Tooltip', () => {
@@ -84,5 +85,33 @@ describe('Tooltip', () => {
 
         expect(el.variant).to.equal('info');
         expect(el.getAttribute('variant')).to.equal('info');
+    });
+
+    it('answers tip query', async () => {
+        const el = await fixture<Tooltip>(
+            html`
+                <sp-tooltip placement="top">Help text.</sp-tooltip>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const overlayDetailQuery: OverlayDisplayQueryDetail = {};
+        const queryOverlayDetailEvent = new CustomEvent<
+            OverlayDisplayQueryDetail
+        >('sp-overlay-query', {
+            bubbles: true,
+            composed: true,
+            detail: overlayDetailQuery,
+            cancelable: true,
+        });
+        el.dispatchEvent(queryOverlayDetailEvent);
+
+        expect(overlayDetailQuery.overlayContentTipElement).to.exist;
+        if (overlayDetailQuery.overlayContentTipElement) {
+            expect(overlayDetailQuery.overlayContentTipElement.id).to.equal(
+                'tip'
+            );
+        }
     });
 });

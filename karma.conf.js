@@ -25,6 +25,9 @@ module.exports = (config) => {
             ],
             esm: {
                 nodeResolve: true,
+                babelConfig: {
+                    plugins: ['transform-node-env-inline'],
+                },
             },
             browsers: ['FirefoxHeadlessCustom'],
             customLaunchers: {

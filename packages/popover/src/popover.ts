@@ -17,9 +17,12 @@ import {
     TemplateResult,
     property,
 } from 'lit-element';
-
 import { nothing } from 'lit-html';
 
+import {
+    Placement,
+    OverlayDisplayQueryDetail,
+} from '@spectrum-web-components/overlay';
 import popoverStyles from './popover.css.js';
 
 /**
@@ -33,7 +36,7 @@ export class Popover extends LitElement {
     }
 
     @property({ reflect: true })
-    public direction: 'top' | 'bottom' | 'left' | 'right' | 'none' = 'none';
+    public placement: Placement = 'none';
 
     @property({ type: Boolean, reflect: true })
     public tip = false;
@@ -42,6 +45,30 @@ export class Popover extends LitElement {
         return html`
             <div id="tip"></div>
         `;
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.addEventListener('sp-overlay-query', this.onOverlayQuery);
+    }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.removeEventListener('sp-overlay-query', this.onOverlayQuery);
+    }
+
+    public onOverlayQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
+        /* istanbul ignore if */
+        if (!event.target || !this.shadowRoot) return;
+
+        const target = event.target as Node;
+        /* istanbul ignore if */
+        if (!target.isSameNode(this)) return;
+
+        const tipElement = this.shadowRoot.querySelector('#tip') as HTMLElement;
+        if (tipElement) {
+            event.detail.overlayContentTipElement = tipElement;
+        }
     }
 
     protected render(): TemplateResult {

@@ -13,8 +13,8 @@ import { OverlayTrigger } from './overlay-trigger.js';
 import { ActiveOverlay } from './active-overlay.js';
 
 export * from './overlay.js';
-export * from './overlay-root.js';
 export * from './overlay-trigger.js';
+export * from './overlay-types';
 
 /* istanbul ignore else */
 if (!customElements.get('overlay-trigger')) {

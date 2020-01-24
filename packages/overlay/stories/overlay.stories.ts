@@ -8,16 +8,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, number, radios } from '@open-wc/demoing-storybook';
-import {
-    LitElement,
-    css,
-    property,
-    TemplateResult,
-    CSSResultArray,
-} from 'lit-element';
+import { html, number, select, radios } from '@open-wc/demoing-storybook';
+import { TemplateResult } from 'lit-element';
 
-import '../';
 import { Placement } from '../';
 import '../../button';
 import '../../popover';
@@ -26,86 +19,9 @@ import '../../radio';
 import '../../radio-group';
 import '../../tooltip';
 import '../../theme';
-import { Radio } from '../../radio';
 import { Color } from '../../theme';
 
-// Prevent infinite recursion in browser
-const MAX_DEPTH = 7;
-
-class RecursivePopover extends LitElement {
-    @property({ type: String })
-    private placement: Placement;
-
-    @property({ type: Number })
-    private depth = 0;
-
-    public static get styles(): CSSResultArray {
-        return [
-            css`
-                :host {
-                    display: block;
-                    text-align: center;
-                }
-
-                sp-button {
-                    margin-top: 11px;
-                }
-            `,
-        ];
-    }
-
-    public constructor() {
-        super();
-        this.placement = 'right';
-        this.depth = 0;
-    }
-
-    public onRadioChange(event: Event): void {
-        const target = event.target as Radio;
-        this.placement = target.value as Placement;
-    }
-
-    public render(): TemplateResult {
-        return html`
-            <sp-radio-group selected="${this.placement}" name="group-example">
-                <sp-radio @change=${this.onRadioChange} value="top">
-                    Top
-                </sp-radio>
-                <sp-radio @change=${this.onRadioChange} value="right">
-                    Right
-                </sp-radio>
-                <sp-radio @change=${this.onRadioChange} value="bottom">
-                    Bottom
-                </sp-radio>
-                <sp-radio @change=${this.onRadioChange} value="left">
-                    Left
-                </sp-radio>
-            </sp-radio-group>
-            <overlay-trigger placement="${this.placement}">
-                <sp-button slot="trigger" variant="cta">Open Popover</sp-button>
-                <sp-popover
-                    dialog
-                    slot="click-content"
-                    direction="${this.placement}"
-                    tip
-                    open
-                >
-                    ${this.depth < MAX_DEPTH
-                        ? html`
-                              <recursive-popover
-                                  position="${this.placement}"
-                                  depth="${this.depth + 1}"
-                              ></recursive-popover>
-                          `
-                        : html`
-                              <div>Maximum Depth</div>
-                          `}
-                </sp-popover>
-            </overlay-trigger>
-        `;
-    }
-}
-customElements.define('recursive-popover', RecursivePopover);
+import './overlay-story-components';
 
 const storyStyles = html`
     <style>
@@ -149,18 +65,30 @@ export default {
 };
 
 export const Default = (): TemplateResult => {
-    const positionOptions = {
-        top: 'top',
-        bottom: 'bottom',
-        left: 'left',
-        right: 'right',
-    };
-    const placement = radios(
-        'Type',
-        positionOptions,
-        positionOptions.bottom
+    const placement = select(
+        'Placement',
+        [
+            'top',
+            'top-start',
+            'top-end',
+            'bottom',
+            'bottom-start',
+            'bottom-end',
+            'left',
+            'left-start',
+            'left-end',
+            'right',
+            'right-start',
+            'right-end',
+            'auto',
+            'auto-start',
+            'auto-end',
+            'none',
+        ],
+        'bottom'
     ) as Placement;
-    const offset = number('Offset', 6);
+
+    const offset = number('Offset', 0);
 
     return html`
         ${storyStyles}
@@ -175,7 +103,7 @@ export const Default = (): TemplateResult => {
             <sp-popover
                 dialog
                 slot="click-content"
-                direction="${placement}"
+                placement="${placement}"
                 tip
                 open
             >
@@ -195,7 +123,7 @@ export const Default = (): TemplateResult => {
                         <sp-popover
                             dialog
                             slot="click-content"
-                            direction="bottom"
+                            placement="bottom"
                             tip
                             open
                         >
@@ -206,7 +134,7 @@ export const Default = (): TemplateResult => {
 
                         <sp-tooltip
                             slot="hover-content"
-                            delay="100"
+                            delayed
                             open
                             tip="bottom"
                         >
@@ -215,7 +143,7 @@ export const Default = (): TemplateResult => {
                     </overlay-trigger>
                 </div>
             </sp-popover>
-            <sp-tooltip open slot="hover-content" delay="100" tip="bottom">
+            <sp-tooltip open slot="hover-content" delayed tip="bottom">
                 Click to open a popover.
             </sp-tooltip>
         </overlay-trigger>
@@ -278,7 +206,7 @@ export const edges = (): TemplateResult => {
                 <br />
                 Left
             </sp-button>
-            <sp-tooltip slot="hover-content" delay="100" open tip="bottom">
+            <sp-tooltip slot="hover-content" delayed open tip="bottom">
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
@@ -288,7 +216,7 @@ export const edges = (): TemplateResult => {
                 <br />
                 Right
             </sp-button>
-            <sp-tooltip slot="hover-content" delay="100" open tip="bottom">
+            <sp-tooltip slot="hover-content" delayed open tip="bottom">
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
@@ -298,7 +226,7 @@ export const edges = (): TemplateResult => {
                 <br />
                 Left
             </sp-button>
-            <sp-tooltip slot="hover-content" delay="100" open tip="top">
+            <sp-tooltip slot="hover-content" delayed open tip="top">
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
@@ -308,9 +236,101 @@ export const edges = (): TemplateResult => {
                 <br />
                 Right
             </sp-button>
-            <sp-tooltip slot="hover-content" delay="100" open tip="top">
+            <sp-tooltip slot="hover-content" delayed open tip="top">
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
+    `;
+};
+
+export const updated = (): TemplateResult => {
+    return html`
+        ${storyStyles}
+        <style>
+            sp-tooltip {
+                transition: none;
+            }
+        </style>
+        <overlay-drag>
+            <overlay-trigger class="demo top-left" placement="bottom">
+                <overlay-target-icon slot="trigger"></overlay-target-icon>
+                <sp-tooltip slot="hover-content" delayed open tip="bottom">
+                    Click to open popover
+                </sp-tooltip>
+                <sp-popover
+                    dialog
+                    slot="click-content"
+                    position="bottom"
+                    tip
+                    open
+                >
+                    <div class="options-popover-content">
+                        <sp-slider
+                            value="5"
+                            step="0.5"
+                            min="0"
+                            max="20"
+                            label="Awesomeness"
+                        ></sp-slider>
+                        <div id="styled-div">
+                            The background of this div should be blue
+                        </div>
+                        <overlay-trigger id="inner-trigger" placement="bottom">
+                            <sp-button slot="trigger">Press Me</sp-button>
+                            <sp-popover
+                                dialog
+                                slot="click-content"
+                                placement="bottom"
+                                tip
+                                open
+                            >
+                                <div class="options-popover-content">
+                                    Another Popover
+                                </div>
+                            </sp-popover>
+
+                            <sp-tooltip
+                                slot="hover-content"
+                                delayed
+                                open
+                                tip="bottom"
+                            >
+                                Click to open another popover.
+                            </sp-tooltip>
+                        </overlay-trigger>
+                    </div>
+                </sp-popover>
+            </overlay-trigger>
+        </overlay-drag>
+    `;
+};
+
+export const sideHoverDraggable = (): TemplateResult => {
+    return html`
+        <style>
+            sp-tooltip {
+                transition: none;
+            }
+        </style>
+        <overlay-drag>
+            <overlay-trigger placement="right">
+                <overlay-target-icon slot="trigger"></overlay-target-icon>
+                <sp-tooltip slot="hover-content" delayed open tip="right">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Vivamus egestas sed enim sed condimentum. Nunc facilisis
+                    scelerisque massa sed luctus. Orci varius natoque penatibus
+                    et magnis dis parturient montes, nascetur ridiculus mus.
+                    Suspendisse sagittis sodales purus vitae ultricies. Integer
+                    at dui sem. Sed quam tortor, ornare in nisi et, rhoncus
+                    lacinia mauris. Sed vel rutrum mauris, ac pellentesque nibh.
+                    Sed feugiat semper libero, sit amet vehicula orci fermentum
+                    id. Vivamus imperdiet egestas luctus. Mauris tincidunt
+                    malesuada ante, faucibus viverra nunc blandit a. Fusce et
+                    nisl nisi. Aenean dictum quam id mollis faucibus. Nulla a
+                    ultricies dui. In hac habitasse platea dictumst. Curabitur
+                    gravida lobortis vestibulum.
+                </sp-tooltip>
+            </overlay-trigger>
+        </overlay-drag>
     `;
 };

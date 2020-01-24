@@ -45,8 +45,8 @@ yarn add @spectrum-web-components/overlay
             <sp-button>Press Me</sp-button>
         </div>
     </sp-popover>
-    <div slot="hover-content" class="tooltip" delay="100">
+    <sp-tooltip slot="hover-content" delayed open>
         Tooltip
-    </div>
+    </sp-tooltip>
 </overlay-trigger>
 ```

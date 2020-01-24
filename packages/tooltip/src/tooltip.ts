@@ -17,6 +17,10 @@ import {
     LitElement,
     property,
 } from 'lit-element';
+import {
+    OverlayDisplayQueryDetail,
+    Placement,
+} from '@spectrum-web-components/overlay';
 
 import tooltipStyles from './tooltip.css.js';
 
@@ -31,7 +35,7 @@ export class Tooltip extends LitElement {
     }
 
     @property({ reflect: true })
-    public tip: 'top' | 'bottom' | 'left' | 'right' = 'top';
+    public placement: Placement = 'top';
 
     /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
     private _variant = '';
@@ -51,6 +55,30 @@ export class Tooltip extends LitElement {
         }
         this.removeAttribute('variant');
         this._variant = '';
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.addEventListener('sp-overlay-query', this.onOverlyQuery);
+    }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.removeEventListener('sp-overlay-query', this.onOverlyQuery);
+    }
+
+    public onOverlyQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
+        /* istanbul ignore if */
+        if (!event.target || !this.shadowRoot) return;
+
+        const target = event.target as Node;
+        /* istanbul ignore if */
+        if (!target.isSameNode(this)) return;
+
+        const tipElement = this.shadowRoot.querySelector('#tip') as HTMLElement;
+        if (tipElement) {
+            event.detail.overlayContentTipElement = tipElement;
+        }
     }
 
     render(): TemplateResult {

@@ -117,6 +117,7 @@
         "@webcomponents/webcomponentsjs": "^2.2.0",
         "babel-loader": "^8.0.5",
         "babel-plugin-bundled-import-meta": "^0.3.2",
+        "babel-plugin-transform-node-env-inline": "^0.4.3",
         "browser-sync": "^2.26.7",
         "chalk": "^3.0.0",
         "common-tags": "^1.8.0",

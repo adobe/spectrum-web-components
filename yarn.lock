@@ -2953,6 +2953,11 @@
   resolved "https://registry.yarnpkg.com/@polymer/esm-amd-loader/-/esm-amd-loader-1.0.4.tgz#4e77f2f59b29b01e0ad02aa83d33716cddc5f9f9"
   integrity sha512-h+hqYkL+tQV/y2ESD5gFXMl5z4cC+XY1jTlBeGSBaTcj3VbB5OBEScbvRXm63NcEbBneQQYbHfBAXAkF9i9wIA==
 
+"@popperjs/core@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.0.4.tgz#50fb4d10c712a7da4b64dc0add8d8ecaefa13bfa"
+  integrity sha512-uFsFsZjz/FyNpAW4pnbKBT50Jwe+5YwM0bYUfbArM1myDr7LtMrNScOFTxiwgf1TBNA2wFXW7/RRRlwjS+ILyQ==
+
 "@reach/router@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.2.1.tgz#34ae3541a5ac44fa7796e5506a5d7274a162be4e"
@@ -5360,6 +5365,11 @@ babel-plugin-transform-minify-booleans@^6.9.4:
   version "6.9.4"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-minify-booleans/-/babel-plugin-transform-minify-booleans-6.9.4.tgz#acbb3e56a3555dd23928e4b582d285162dd2b198"
   integrity sha1-rLs+VqNVXdI5KOS1gtKFFi3SsZg=
+
+babel-plugin-transform-node-env-inline@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-node-env-inline/-/babel-plugin-transform-node-env-inline-0.4.3.tgz#8c84cd74d58f17b0fdf76144a3589f610c3c2497"
+  integrity sha1-jITNdNWPF7D992FEo1ifYQw8JJc=
 
 babel-plugin-transform-object-rest-spread@^6.26.0:
   version "6.26.0"

@@ -34,20 +34,20 @@ export const Default = (): TemplateResult => {
 
 export const Dialog = (): TemplateResult => {
     const tip = boolean('Has Tip', true);
-    const directions = {
+    const placements = {
         top: 'top',
         bottom: 'bottom',
         left: 'left',
         right: 'right',
     };
-    const direction = radios('Direction', directions, directions.bottom);
+    const placement = radios('Placement', placements, placements.bottom);
     return html`
         <div
             style="color: var(--spectrum-global-color-gray-800); position: relative"
         >
             <sp-popover
                 variant="dialog"
-                direction=${direction}
+                placement=${placement}
                 open
                 style=" max-width: 320px"
                 .tip="${tip}"
