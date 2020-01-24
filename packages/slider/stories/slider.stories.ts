@@ -21,6 +21,7 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 
 import '../';
 import { variants, Slider } from '../';
+import { sliderStyleStringFromColors } from '../lib/gradients.js';
 import { TemplateResult } from 'lit-html';
 
 export default {
@@ -169,5 +170,25 @@ export const focusTabDemo = (): TemplateResult => {
                 id="opacity-slider-saturation"
             ></sp-slider>
         </div>
+    `;
+};
+
+export const gradientBackground = (): TemplateResult => {
+    return html`
+        <style>
+            #gradient {
+                --swc-gadient-slider-width: 300px;
+                width: var(--swc-gadient-slider-width);
+            }
+        </style>
+        <sp-slider
+            id="gradient"
+            min="0"
+            max="100"
+            value="20"
+            label="Gradient Slider"
+            variant="filled"
+            style=${sliderStyleStringFromColors(['red', 'green'])}
+        ></sp-slider>
     `;
 };
