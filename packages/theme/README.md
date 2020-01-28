@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-theme** sets the rendering theme for all child components.
 The Spectrum design system supports four color themes and two different

@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 `sp-toast`s display brief, temporary notifications. They are noticeable but do not disrupt the user experience and do not require an action to be taken.
 
@@ -20,7 +20,7 @@ yarn add @spectrum-web-components/toast
 <sp-toast>This is important information that you should read, soon.</sp-toast>
 ```
 
-### With Actions
+### With actions
 
 ```html
 <sp-toast>

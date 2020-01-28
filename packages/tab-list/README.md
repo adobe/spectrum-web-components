@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 The `<sp-tab-list>` component contains set of tab-item elements. This is typically used as the interface for controlling a set of layered sections of content that display one panel of content at a time
 
@@ -58,7 +58,7 @@ yarn add @spectrum-web-components/tab-list
 </sp-tab-list>
 ```
 
-## With Icons
+## With icons
 
 ```html
 <div>

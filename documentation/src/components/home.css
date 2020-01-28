@@ -20,7 +20,6 @@ governing permissions and limitations under the License.
 
 #hero-buttons {
     margin-top: 1em;
-    text-align: center;
 }
 
 #features {
@@ -73,6 +72,6 @@ governing permissions and limitations under the License.
     margin-top: 2em;
 }
 
-code-example {
-    max-width: 500px;
+.spectrum-Heading4 {
+    margin-bottom: 16px;
 }

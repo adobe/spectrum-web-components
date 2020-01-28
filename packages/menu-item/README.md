@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An `<sp-menu />` is used for creating a menu list. The various elements inside a menu are given as `<sp-menu-group/>`, `<sp-menu-item />`, or `<sp-menu-divider />`.
 
@@ -14,7 +14,7 @@ yarn add @spectrum-web-components/menu-item
 
 ## Variants
 
-### Menu Items
+### Menu items
 
 Menus are a collection of `<sp-menu-items />` that can be modified to be `disabled` or `selected`.
 

@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-card** represents a rectangular card that contains
 a variety of text and image layouts. Cards are typically used

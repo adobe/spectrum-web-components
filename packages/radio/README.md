@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 **sp-radio** and **sp-radio-group** allow users to select a single option from a list of mutually exclusive options. All possible options are exposed up front for users to compare.
 
@@ -27,7 +27,7 @@ yarn add @spectrum-web-components/radio
 
 ## Variants
 
-### Standard Radio
+### Standard radio
 
 Standard radio buttons are the default style for radio buttons. The blue color provides a visual prominence that is optimal for forms, settings, etc. where the radio buttons need to be noticed.
 
@@ -35,7 +35,7 @@ Standard radio buttons are the default style for radio buttons. The blue color p
 <sp-radio>Standard Radio Button</sp-radio>
 ```
 
-### Quiet Radio
+### Quiet radio
 
 Quiet radio buttons are a secondary style for radio buttons. The gray color provides a
 less prominent style than the standard radioes. They are optimal for
@@ -76,7 +76,7 @@ When the radio button is no longer interactable. The button cannot be checked.
 <sp-radio disabled>Disabled Radio Button</sp-radio>
 ```
 
-### Handling Events
+### Handling events
 
 Event handlers for clicks and other user actions can be registered on an `sp-radio` just as a normal `<input type="radio">` element.
 

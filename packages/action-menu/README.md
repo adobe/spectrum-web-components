@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An `<sp-action-menu />` is simply an action button with a Popover. Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with the `sp-action-menu` element.
 
@@ -44,7 +44,7 @@ yarn add @spectrum-web-components/action-menu
 
 ## Variants
 
-### No Visible Label
+### No visible label
 
 The visible label that is be provided via the default `<slot>` interface can be ommitted in preference of an icon only interface. In this context be sure that the `<sp-action-menu>` remains accessible to screen readers by applying the `label` attribute. This will apply an `aria-label` attribute of the same value to the `<botton>` element that toggles the menu list.
 
@@ -75,7 +75,7 @@ The visible label that is be provided via the default `<slot>` interface can be 
 </sp-action-menu>
 ```
 
-### Alternate Icon
+### Alternate icon
 
 A custom icon can be supplied via the `icon` slot in order to replace the default meatballs icon.
 

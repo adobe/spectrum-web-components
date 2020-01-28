@@ -1,4 +1,6 @@
-## Overview
+## Description
+
+Shared mixins, tools, etc. that support developing Spectrum Web Components.
 
 ### Installation
 

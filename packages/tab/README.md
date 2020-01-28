@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 The `<sp-tab>` component is intended to be the child of an `<sp-tab-list>` element and accepts both a `label` attribute and a `[slot="icon"]` child to define its contents. Those contents can be further customized with the `vertical` attribute which stacks them in the UI rather than listing them in a row.
 
@@ -34,7 +34,7 @@ yarn add @spectrum-web-components/tab
 </sp-tab>
 ```
 
-### Vertical w/ Icon
+### Vertical w/ icon
 
 ```html
 <sp-tab label="Tab 1" value="1" vertical>

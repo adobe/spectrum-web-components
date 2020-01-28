@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 `sp-textfield` components are text boxes that allow users to input custom text entries with a keyboard. Various decorations can be displayed around the field to communicate the entry requirements.
 

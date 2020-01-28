@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-switch** is used to turn an option on or off. Switches allow users to select the state of a single option at a time. Use a switch rather than a checkbox when activating (or deactivating) an option, instead of selecting.
 
@@ -20,7 +20,7 @@ yarn add @spectrum-web-components/switch
 
 ## Variants
 
-### Standard Switches
+### Standard switches
 
 Standard switches are the default style for switches. The blue color provides a
 visual prominence that is optimal for forms, settings, etc. where the switches
@@ -30,7 +30,7 @@ need to be noticed.
 <sp-switch checked>Web component</sp-switch>
 ```
 
-### Quiet Switches
+### Quiet switches
 
 Quiet switches are a secondary style for switches. The gray color provides a
 less prominent style than the standard switches. They are optimal for

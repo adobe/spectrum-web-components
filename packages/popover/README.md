@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-popover** is used to display transient content (menus, options, additional actions etc.) and appears when clicking/tapping on a source (tools, buttons, etc.) It stands out via its visual style (stroke and drop shadow) and floats on top of the rest of the interface. This component does not implement the actual overlay behavior and interactions. This is handled in the `Overlay Root` and `Overlay Trigger`.
 
@@ -33,7 +33,7 @@ yarn add @spectrum-web-components/popover
 
 ## Variants
 
-### Default with No Tip
+### Default with no tip
 
 Default popover with no tip and no direction. Popovers will fill up the space of they're containing
 element by default. The default popover has no padding by default
@@ -59,7 +59,7 @@ element by default. The default popover has no padding by default
 </div>
 ```
 
-### Dialog Popovers
+### Dialog popovers
 
 Popovers with padding, ideal for dialogs.
 
@@ -80,7 +80,7 @@ Popovers with padding, ideal for dialogs.
 </div>
 ```
 
-### Popover with Tip
+### Popover with tip
 
 ```html
 <div
