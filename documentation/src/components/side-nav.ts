@@ -103,6 +103,11 @@ class SideNav extends LitElement {
                                 label="Spectrum Config Reference"
                             ></sp-sidenav-item>
                         </sp-sidenav-item>
+                        <sp-sidenav-item
+                            class="spectrum-web"
+                            label="Spectrum"
+                            href="https://spectrum.adobe.com/"
+                        ></sp-sidenav-item>
                     </sp-sidenav>
                 </div>
             </aside>

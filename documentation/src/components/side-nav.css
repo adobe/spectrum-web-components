@@ -112,3 +112,12 @@ docs-spectrum-logo {
     font-style: normal;
     letter-spacing: 0;
 }
+
+sp-sidenav {
+    width: 100%;
+}
+
+.spectrum-web {
+    margin-top: 80px;
+    display: block;
+}

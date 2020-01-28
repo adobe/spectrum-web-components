@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 **sp-checkbox** allow users to select multiple items from a list of independent
 options, or to mark an individual option as selected.
@@ -24,7 +24,7 @@ yarn add @spectrum-web-components/checkbox
 <sp-checkbox>Web component</sp-checkbox>
 ```
 
-### Standard Checkboxes
+### Standard checkboxes
 
 Standard checkboxes are the default style for checkboxes. The blue color
 provides a visual prominence that is optimal for forms, settings, lists or grids
@@ -34,7 +34,7 @@ of assets, etc. where the checkboxes need to be noticed.
 <sp-checkbox checked>Web component</sp-checkbox>
 ```
 
-### Quiet Checkboxes
+### Quiet checkboxes
 
 Quiet checkboxes are a secondary style for checkboxes. The gray color provides a
 less prominent style than the standard checkboxes. They are optimal for
@@ -66,7 +66,7 @@ checkbox, and also prevents clicks from activating it.
 <sp-checkbox disabled>Web component</sp-checkbox>
 ```
 
-### Handling Events
+### Handling events
 
 Event handlers for clicks and other user actions can be registered on an `sp-checkbox` just as a normal `<input type="checkbox">` element.
 

@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 Side navigation allows users to locate information and features within the UI.
 It can be used for either hierarchical or flat navigation, and gives the ability
@@ -58,7 +58,7 @@ yarn add @spectrum-web-components/sidenav
 </sp-sidenav>
 ```
 
-## Multi-Level
+## Multi-level
 
 Use this variation when you have multiple layers of hierarchical navigation. The
 headers are styled differently and possess the same interactive behavior as a

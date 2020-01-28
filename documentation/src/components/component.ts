@@ -63,7 +63,7 @@ function buildTable(
     cells: ((property: JsDocTagParsed) => TemplateResult)[]
 ): TemplateResult {
     return html`
-        <h2 class="spectrum-Heading2--quiet">${title}</h2>
+        <h2 class="spectrum-Heading3">${title}</h2>
         <table class="spectrum-Table">
             <thead class="spectrum-Table-head">
                 <tr>

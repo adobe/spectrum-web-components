@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 **sp-radio** and **sp-radio-group** allow users to select a single option from a list of mutually exclusive options. All possible options are exposed up front for users to compare.
 
@@ -25,7 +25,7 @@ yarn add @spectrum-web-components/radio-group
 </sp-radio-group>
 ```
 
-### Radio Group Column
+### Radio group column
 
 By default, radio groups are inline and appear vertically. By adding the `column` property to **sp-radio-group**
 the radio buttons will be listed vertically on their own line.

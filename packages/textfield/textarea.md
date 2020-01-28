@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 `sp-textfield[multiline]` components are text areas that allow users to input custom multiline text entries with a keyboard. Various decorations can be displayed around the field to communicate the entry requirements.
 

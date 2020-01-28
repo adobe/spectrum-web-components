@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An `<sp-dropdown />` is an alternative to HTML's `select` element. Use an `<sp-menu>` element to outline the options that will be made available to the user when interacting with the `sp-dropdown` element.
 
