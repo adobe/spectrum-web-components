@@ -73,7 +73,7 @@ module.exports = {
                 });
 
                 for (let i = 0; i < stories.length; i++) {
-                    it(stories[i], async function() {
+                    it(`${stories[i]}__${color}__${scale}`, async function() {
                         return takeAndCompareScreenshot(page, stories[i]);
                     });
                 }
@@ -88,7 +88,7 @@ module.exports = {
                 }
             );
             await page.screenshot({
-                path: `${currentDir}/${type}/${test}___${color}__${scale}.png`,
+                path: `${currentDir}/${type}/${test}__${color}__${scale}.png`,
             });
             return compareScreenshots(test);
         }
@@ -147,11 +147,11 @@ module.exports = {
                         (numDiffPixels / (img1.width * img1.height)) * 100;
 
                     const stats = fs.statSync(
-                        `${currentDir}/${type}/${view}___${color}__${scale}.png`
+                        `${currentDir}/${type}/${view}__${color}__${scale}.png`
                     );
                     const fileSizeInBytes = stats.size;
                     console.log(
-                        `📸 ${view}___${color}__${scale}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
+                        `📸 ${view}__${color}__${scale}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
                     );
 
                     if (numDiffPixels > PixelDiffThreshold) {

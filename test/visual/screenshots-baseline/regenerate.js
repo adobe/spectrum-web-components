@@ -75,7 +75,7 @@ module.exports = {
                     }
                 );
                 await page.screenshot({
-                    path: `${baselineDir}/${type}/${stories[i]}___${color}__${scale}.png`,
+                    path: `${baselineDir}/${type}/${stories[i]}__${color}__${scale}.png`,
                 });
             }
         }

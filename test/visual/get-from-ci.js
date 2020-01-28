@@ -13,29 +13,31 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 
 const token = process.argv.slice(2)[0];
-const build = process.argv.slice(2)[1] || 'latest';
+const builds = process.argv.slice(3) || ['latest'];
 
 (function() {
-    fetch(
-        `https://circleci.com/api/v1.1/project/github/adobe/spectrum-web-components/${build}/artifacts?circle-token=${token}`
-    )
-        .then((resp) => resp.json())
-        .then((data) => {
-            data.map((asset) => {
-                if (asset.url.search('diff') === -1) {
-                    fetch(`${asset.url}?circle-token=${token}`)
-                        .then((resp) => {
-                            const path =
-                                './' +
-                                asset.path.replace(
-                                    'home/circleci/project/test/visual/screenshots-current/ci',
-                                    'test/visual/screenshots-baseline/ci'
-                                );
-                            const dest = fs.createWriteStream(path);
-                            resp.body.pipe(dest);
-                        })
-                        .catch((error) => console.log(error));
-                }
-            });
-        });
+    builds.map((build) =>
+        fetch(
+            `https://circleci.com/api/v1.1/project/github/adobe/spectrum-web-components/${build}/artifacts?circle-token=${token}`
+        )
+            .then((resp) => resp.json())
+            .then((data) => {
+                data.map((asset) => {
+                    if (asset.url.search('diff') === -1) {
+                        fetch(`${asset.url}?circle-token=${token}`)
+                            .then((resp) => {
+                                const path =
+                                    './' +
+                                    asset.path.replace(
+                                        'home/circleci/project/test/visual/screenshots-current/ci',
+                                        'test/visual/screenshots-baseline/ci'
+                                    );
+                                const dest = fs.createWriteStream(path);
+                                resp.body.pipe(dest);
+                            })
+                            .catch((error) => console.log(error));
+                    }
+                });
+            })
+    );
 })();

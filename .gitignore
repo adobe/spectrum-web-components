@@ -43,6 +43,7 @@ TESTS.xml
 /test/benchmark/**/*.d.ts
 /test/visual/screenshots-current/**/*.png
 /test/visual/**/local/
+/test/visual/screenshots-baseline/ci/userDataDir
 !test/visual/**/*.js
 
 package-lock.json
