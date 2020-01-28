@@ -60,6 +60,9 @@ module.exports = {
                     userDataDir: `${baselineDir}/${type}/userDataDir`,
                 });
                 page = await browser.newPage();
+                // prevent hover based inaccuracies in screenshots by
+                // moving the mouse off of the screen before loading tests
+                await page.mouse.move(-5, -5);
             });
 
             afterEach(() => browser.close());
@@ -81,7 +84,6 @@ module.exports = {
             await page.goto(`http://127.0.0.1:4444/iframe.html?id=${test}`, {
                 waitUntil: 'networkidle0',
             });
-            await page.mouse.move(5, 5);
             await page.screenshot({
                 path: `${currentDir}/${type}/${test}.png`,
             });
@@ -132,7 +134,7 @@ module.exports = {
                         diff.data,
                         img1.width,
                         img1.height,
-                        { threshold: 0.2 }
+                        { threshold: 0 }
                     );
                     const percentDiff =
                         (numDiffPixels / (img1.width * img1.height)) * 100;
