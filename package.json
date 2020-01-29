@@ -132,7 +132,7 @@
         "eslint-plugin-prettier": "^3.0.1",
         "eslint-plugin-spectrum-web-components": "file:./linters/eslint",
         "express": "^4.16.4",
-        "extract-loader": "^3.1.0",
+        "extract-loader": "^4.0.3",
         "fs-extra": "^8.1.0",
         "gh-pages": "^2.1.1",
         "gulp": "^4.0.0",
