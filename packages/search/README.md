@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 The `<sp-search />` element delivers a single input field with a "reset" button as well as a mangifying glass icon with which to power search interactions.
 

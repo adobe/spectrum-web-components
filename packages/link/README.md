@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-link** allow users to navigate to a different location. They can be presented in-line inside a paragraph or as a standalone text.
 
@@ -21,7 +21,7 @@ This is an <sp-link href="#">example link</sp-link>.
 
 ## Variants
 
-### Standard Links
+### Standard links
 
 Standard links can follow any of the character styles defined in Spectrum. Therefore, they can be displayed in various font sizes and weights. Standard links appear blue, in order to stand out from the rest of the text and be recognized as interactive.
 
@@ -30,7 +30,7 @@ Standard links can follow any of the character styles defined in Spectrum. There
 This is a <sp-link href="#">standard link</sp-link>.
 ```
 
-### Quiet Links
+### Quiet links
 
 Quiet links appear with an underline and use the default text color. The subdued appearance is optimal for use in content lower in your application’s hierarchy such as links in a footer.
 
@@ -39,7 +39,7 @@ Quiet links appear with an underline and use the default text color. The subdued
 This is a <sp-link quiet href="#">quiet link</sp-link>.
 ```
 
-### Links Over Backgrounds
+### Links over backgrounds
 
 When a link needs to be placed on top of a colored background or a visual, use the over background link. This link uses a white opaque color instead of a blue color and stands out from the rest of the text with the addition of an underline.
 

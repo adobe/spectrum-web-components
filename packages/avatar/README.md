@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-avatar** is a great way to feature a visual representation of a user.
 

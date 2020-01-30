@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-status-light** is a great way to convey semantic meaning, such as statuses and categories.
 

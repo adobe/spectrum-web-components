@@ -42,3 +42,7 @@ article {
 .spectrum-Table {
     width: 100%;
 }
+
+.spectrum-Table-body {
+    --spectrum-table-row-background-color: var(--spectrum-global-color-gray-75);
+}

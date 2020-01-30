@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-banner** is an additional label an existing component may have. Banners cannot be interacted with. Banners in Spectrum have three variations for different uses as well as the ability to place it overlaid in the top-right corner of a container.
 
@@ -23,7 +23,7 @@ yarn add @spectrum-web-components/banner
 
 ## Variants
 
-### Info Banners
+### Info banners
 
 Banners intended for providing information. This is the default banner variant.
 
@@ -34,7 +34,7 @@ Banners intended for providing information. This is the default banner variant.
 </sp-banner>
 ```
 
-### Warning Banners
+### Warning banners
 
 Banners intended to provided a warning with a brief description. Less severe than an error banner.
 
@@ -45,7 +45,7 @@ Banners intended to provided a warning with a brief description. Less severe tha
 </sp-banner>
 ```
 
-### Error Banners
+### Error banners
 
 Banners intended to indicate an error as occurred, with a brief description of the issue. More severe than a warning banner.
 
@@ -56,7 +56,7 @@ Banners intended to indicate an error as occurred, with a brief description of t
 </sp-banner>
 ```
 
-## Corner Placement
+## Corner placement
 
 In addition to the variant, banners can be placed in the top-right corner of its container by giving them a corner prop. Note that the position of the containing element needs to be either relative or absolute
 

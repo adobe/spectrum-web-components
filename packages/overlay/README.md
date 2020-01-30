@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 To ensure that content the requires it (modals, menus, etc) can escape overflow rules, the z-index, et al, Spectrum Web Components provides an overlay system that is made up of three interrelated elements, `<overlay-trigger>`, `<active-overlay>`, and `<sp-theme>`. DOM that should be overlaid on _hover_ (`[slot="hover-content"]`) and _click_ (`[slot="click-content"]`) are outlined in the light DOM content of an `<overlay-trigger>`. Said content will be overlayed onto the DOM via an `<active-overlay>` element that will be appended to the `<body>`. Content delivered in this way will acquire CSS Custom Properties for `color` and `size` from the trigger's nearest ancestor `<sp-theme>`.
 
