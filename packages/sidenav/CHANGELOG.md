@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.0...@spectrum-web-components/sidenav@0.3.1) (2020-01-30)
+
+### Bug Fixes
+
+-   fix expanding sidenav item that has no value ([b28cdac](https://github.com/adobe/spectrum-web-components/commit/b28cdac))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.2.2...@spectrum-web-components/sidenav@0.3.0) (2020-01-06)
 
 ### Features

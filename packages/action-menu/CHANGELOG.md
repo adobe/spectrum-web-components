@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.3.5...@spectrum-web-components/action-menu@0.3.6) (2020-01-30)
+
+### Bug Fixes
+
+-   **action-menu:** spectrum adherence update ([6eb1860](https://github.com/adobe/spectrum-web-components/commit/6eb1860))
+
 ## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.3.4...@spectrum-web-components/action-menu@0.3.5) (2020-01-06)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

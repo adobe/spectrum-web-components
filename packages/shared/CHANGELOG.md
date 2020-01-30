@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.4.0...@spectrum-web-components/shared@0.4.1) (2020-01-30)
+
+### Bug Fixes
+
+-   **shared:** prevent focusing focusable root on second click ([0fb5006](https://github.com/adobe/spectrum-web-components/commit/0fb5006))
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.3.3...@spectrum-web-components/shared@0.4.0) (2020-01-06)
 
 ### Features

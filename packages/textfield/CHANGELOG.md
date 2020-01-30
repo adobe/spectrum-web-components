@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.2.4...@spectrum-web-components/textfield@0.3.0) (2020-01-30)
+
+### Features
+
+-   pass through autocomplete attribute to inputs ([5416510](https://github.com/adobe/spectrum-web-components/commit/5416510))
+
 ## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.2.3...@spectrum-web-components/textfield@0.2.4) (2020-01-06)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield
