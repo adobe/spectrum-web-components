@@ -31,7 +31,9 @@ a:hover {
         var(--spectrum-global-color-blue-600)
     );
 }
-a:focus-visible {
+a:focus-visible,
+:host([over-background]) a:focus-visible,
+:host([quiet]) a:focus-visible {
     /* .spectrum-Link.focus-ring */
     text-decoration: underline;
     -webkit-text-decoration-style: double;
