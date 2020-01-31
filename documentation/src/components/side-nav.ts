@@ -15,9 +15,11 @@ import {
     CSSResultArray,
     property,
     PropertyValues,
+    TemplateResult,
 } from 'lit-element';
-import { ComponentDocs } from '../../components';
 import { AppRouter } from '../router';
+import './side-nav-search';
+import { search, Result } from './search-index';
 import { SidenavSelectDetail } from '../../../packages/sidenav';
 import sideNavStyles from './side-nav.css';
 import './adobe-logo';
@@ -30,9 +32,8 @@ class SideNav extends LitElement {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    private get components(): string[] {
-        return Array.from(ComponentDocs.keys());
-    }
+    @property({ type: Array })
+    private components: Result[] = [];
 
     private handleSelect(
         event: CustomEvent<SidenavSelectDetail>,
@@ -56,7 +57,17 @@ class SideNav extends LitElement {
         this.open = !this.open;
     }
 
-    render() {
+    async firstUpdated(): Promise<void> {
+        const docs = await search('*');
+        const components = docs.find((item) => item.name === 'components');
+        if (components) {
+            this.components = components.results;
+            components.results.sort((a, b) => (a.name < b.name ? -1 : 1));
+        }
+        console.log(docs);
+    }
+
+    render(): TemplateResult {
         return html`
             <div class="scrim" @click=${this.toggle}></div>
             <aside>
@@ -71,6 +82,7 @@ class SideNav extends LitElement {
                             </div>
                         </a>
                     </div>
+                    <docs-search></docs-search>
                 </div>
                 <div id="navigation">
                     <sp-sidenav manage-tab-index variant="multilevel">
@@ -80,11 +92,11 @@ class SideNav extends LitElement {
                             @sidenav-select=${this.handleComponentSelect}
                         >
                             ${this.components.map(
-                                (name) =>
+                                (item) =>
                                     html`
                                         <sp-sidenav-item
-                                            value="${name}"
-                                            label="${name}"
+                                            value="${item.name}"
+                                            label="${item.label}"
                                         ></sp-sidenav-item>
                                     `
                             )}
@@ -120,4 +132,5 @@ class SideNav extends LitElement {
         }
     }
 }
+
 customElements.define('docs-side-nav', SideNav);
