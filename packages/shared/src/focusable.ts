@@ -90,11 +90,6 @@ export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
     }
 
     protected manageFocusIn(): void {
-        this.addEventListener('mousedown', (event) => {
-            if (event.composedPath()[0] !== this.focusElement) {
-                event.preventDefault();
-            }
-        });
         this.addEventListener('focusin', (event) => {
             if (event.composedPath()[0] === this) {
                 this.handleFocus();
