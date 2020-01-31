@@ -14,6 +14,8 @@ yarn-error.log
 .tsbuildinfo
 .rush
 
+documentation/components/searchIndex.json
+
 coverage
 documentation/custom-elements.json
 documentation/api-docs

@@ -35,7 +35,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    z-index: 2;
+    z-index: 1000;
     position: absolute;
     display: inline-block;
     pointer-events: none;

@@ -1,0 +1,12 @@
+:host {
+    display: block;
+    margin-top: 24px;
+}
+
+#search-field {
+    display: block;
+}
+
+#search-container sp-popover {
+    display: none;
+}
