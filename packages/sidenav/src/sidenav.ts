@@ -99,7 +99,8 @@ export class SideNav extends Focusable {
 
     private focusItemByOffset(direction: number): void {
         const items = [...this.querySelectorAll('sp-sidenav-item')];
-        const focused = items.indexOf(document.activeElement as SideNavItem);
+        const focused = items.indexOf((this.getRootNode() as Document)
+            .activeElement as SideNavItem);
         let next = focused;
         next = (items.length + next + direction) % items.length;
         while (this.isDisabledChild(items[next])) {

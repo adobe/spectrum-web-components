@@ -14,6 +14,8 @@ import '../';
 import { SideNav, SideNavItem } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
+import { TemplateResult } from 'lit-html';
+import { LitElement } from 'lit-element';
 
 const keyboardEvent = (code: string, eventDetails = {}): KeyboardEvent => {
     return new KeyboardEvent('keydown', {
@@ -149,7 +151,6 @@ describe('Sidenav', () => {
 
         expect(el.value).to.equal('Section 2a');
     });
-
     it('manage tab index', async () => {
         const el = await fixture<SideNav>(
             html`
@@ -221,6 +222,93 @@ describe('Sidenav', () => {
 
         el.dispatchEvent(shiftTabEvent);
         const outsideFocused = document.activeElement as HTMLElement;
+
+        expect(typeof outsideFocused).not.to.equal(SideNavItem);
+    });
+    it('manage tab index through shadow DOM', async () => {
+        class SideNavTestEl extends LitElement {
+            protected render(): TemplateResult {
+                return html`
+                    <sp-sidenav manage-tab-index>
+                        <sp-sidenav-heading label="CATEGORY 1">
+                            <sp-sidenav-item
+                                value="Section 0"
+                                label="Section 0"
+                                disabled
+                            ></sp-sidenav-item>
+                            <sp-sidenav-item
+                                value="Section 1"
+                                label="Section 1"
+                            ></sp-sidenav-item>
+                            <sp-sidenav-item
+                                value="Section 2"
+                                label="Section 2"
+                                disabled
+                            ></sp-sidenav-item>
+                            <sp-sidenav-item
+                                value="Section 3"
+                                label="Section 3"
+                            >
+                                <sp-sidenav-item
+                                    value="Section 3a"
+                                    label="Section 3a"
+                                ></sp-sidenav-item>
+                            </sp-sidenav-item>
+                        </sp-sidenav-heading>
+                    </sp-sidenav>
+                `;
+            }
+        }
+        customElements.define('sidenav-test-el', SideNavTestEl);
+        const el = await fixture<SideNav>(html`
+            <sidenav-test-el></sidenav-test-el>
+        `);
+
+        await elementUpdated(el);
+        const rootNode = el.shadowRoot as ShadowRoot;
+        const sidenavEl = rootNode.querySelector('sp-sidenav') as SideNav;
+
+        await elementUpdated(sidenavEl);
+        expect(sidenavEl.value).to.be.undefined;
+
+        sidenavEl.focus();
+        let focused = rootNode.activeElement as SideNavItem;
+        const root = focused.shadowRoot ? focused.shadowRoot : focused;
+        const clickEl = root.querySelector('a') as HTMLAnchorElement;
+        clickEl.click();
+
+        await elementUpdated(el);
+
+        expect(sidenavEl.value).to.equal('Section 1');
+
+        sidenavEl.dispatchEvent(arrowDownEvent);
+        sidenavEl.dispatchEvent(arrowDownEvent);
+        sidenavEl.dispatchEvent(arrowDownEvent);
+        focused = rootNode.activeElement as SideNavItem;
+        expect(focused.expanded).to.be.false;
+        focused.click();
+
+        await elementUpdated(el);
+
+        expect(focused.expanded).to.be.true;
+
+        sidenavEl.dispatchEvent(arrowUpEvent);
+        sidenavEl.dispatchEvent(arrowUpEvent);
+        focused = rootNode.activeElement as SideNavItem;
+        focused.click();
+
+        await elementUpdated(el);
+
+        expect(sidenavEl.value).to.equal('Section 3a');
+
+        document.body.focus();
+
+        sidenavEl.focus();
+        focused = rootNode.activeElement as SideNavItem;
+        expect(focused.selected).to.be.true;
+
+        sidenavEl.dispatchEvent(shiftTabEvent);
+        const outsideFocused = rootNode.activeElement as HTMLElement;
 
         expect(typeof outsideFocused).not.to.equal(SideNavItem);
     });
