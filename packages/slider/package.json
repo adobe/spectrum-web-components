@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -41,7 +41,7 @@
         "@spectrum-css/slider": "^2.0.2"
     },
     "dependencies": {
-        "@spectrum-web-components/shared": "^0.4.1",
+        "@spectrum-web-components/shared": "^0.4.2",
         "tslib": "^1.10.0"
     }
 }

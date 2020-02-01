@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.2.7",
+    "version": "0.2.8",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -41,7 +41,7 @@
         "@spectrum-css/toggle": "^2.0.4"
     },
     "dependencies": {
-        "@spectrum-web-components/checkbox": "^0.2.7",
+        "@spectrum-web-components/checkbox": "^0.2.8",
         "tslib": "^1.10.0"
     }
 }
