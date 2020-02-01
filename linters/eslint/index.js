@@ -25,5 +25,26 @@ module.exports = {
                 };
             },
         },
+        'document-active-element': {
+            create: function(context) {
+                function preventDocumentActiveElement(node) {
+                    if (
+                        node.object.name === 'document' &&
+                        node.property.name === 'activeElement'
+                    ) {
+                        context.report({
+                            node,
+                            message: `"document.activeElement" can be incorrect across shadow boundaries`,
+                            data: {
+                                identifier: node.name,
+                            },
+                        });
+                    }
+                }
+                return {
+                    MemberExpression: preventDocumentActiveElement,
+                };
+            },
+        },
     },
 };

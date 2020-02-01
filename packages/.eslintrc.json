@@ -17,6 +17,7 @@
             "error",
             ["e", "ev", "evt", "err"]
         ],
+        "spectrum-web-components/document-active-element": ["error"],
         "notice/notice": [
             "error",
             {
@@ -26,7 +27,17 @@
         ],
         "@typescript-eslint/explicit-function-return-type": [
             1,
-            { "allowExpressions": true }
+            {
+                "allowExpressions": true
+            }
         ]
-    }
+    },
+    "overrides": [
+        {
+            "files": ["*.test.ts"],
+            "rules": {
+                "spectrum-web-components/document-active-element": ["off"]
+            }
+        }
+    ]
 }
