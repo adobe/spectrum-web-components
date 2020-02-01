@@ -129,7 +129,8 @@ export class TabList extends Focusable {
             return;
         }
         event.preventDefault();
-        const currentFocusedTab = document.activeElement as Tab;
+        const currentFocusedTab = (this.getRootNode() as Document)
+            .activeElement as Tab;
         let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
         currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
         this.tabs[
