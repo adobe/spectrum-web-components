@@ -67,11 +67,10 @@
         "test:prune-snapshots": "yarn test:build && karma start --prune-snapshots",
         "test:compatibility": "yarn test:build && karma start --compatibility all --auto-watch=true --single-run=false",
         "test:bench": "node test/benchmark/cli.js",
-        "test:visual:baseline:ci": "node test/visual/get-from-ci.js",
-        "test:visual:baseline:local": "mocha test/visual/screenshots-baseline/local.js --timeout=500000",
         "test:visual:clean": "rm test/visual/screenshots-current/**/*.png",
-        "test:visual:ci": "mocha test/visual/ci.js --timeout=40000",
-        "test:visual:local": "mocha test/visual/local.js --timeout=40000"
+        "test:visual:baseline:local": "mocha test/visual/screenshots-baseline/local.js --timeout=500000",
+        "test:visual:local": "mocha test/visual/local.js --timeout=40000",
+        "test:visual:ci": "mocha test/visual/ci.js --timeout=40000"
     },
     "husky": {
         "hooks": {
@@ -205,6 +204,7 @@
         "webpack-cli": "^3.3.0",
         "webpack-dev-server": "^3.10.1",
         "webpack-merge": "^4.2.1",
-        "webpackbar": "^4.0.0"
+        "webpackbar": "^4.0.0",
+        "yargs": "^15.1.0"
     }
 }

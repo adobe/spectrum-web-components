@@ -18,7 +18,7 @@ const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
 const stories = require('../stories');
 
 module.exports = {
-    buildScreenshots(type) {
+    buildScreenshots(type, color = 'light', scale = 'medium') {
         describe('🎁 regenerate screenshots', function() {
             let polyserve, browser, page;
 
@@ -69,13 +69,13 @@ module.exports = {
 
             for (let i = 0; i < stories.length; i++) {
                 await page.goto(
-                    `http://127.0.0.1:4444/iframe.html?id=${stories[i]}`,
+                    `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}`,
                     {
-                        waitUntil: 'networkidle2',
+                        waitUntil: 'networkidle0',
                     }
                 );
                 await page.screenshot({
-                    path: `${baselineDir}/${type}/${stories[i]}.png`,
+                    path: `${baselineDir}/${type}/${stories[i]}__${color}__${scale}.png`,
                 });
             }
         }
