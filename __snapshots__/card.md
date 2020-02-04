@@ -30,7 +30,9 @@
 <div id="body">
     <div id="header">
         <div id="title">
-            Card Title
+            <slot name="title">
+                Card Title
+            </slot>
         </div>
     </div>
     <div id="content">
@@ -49,7 +51,9 @@
 <div id="body">
     <div id="header">
         <div id="title">
-            Card Title
+            <slot name="title">
+                Card Title
+            </slot>
         </div>
         <div id="subtitle">
             JPG
