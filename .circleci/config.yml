@@ -43,6 +43,7 @@ commands:
                 type: string
         steps:
             - restore_cache:
+                  name: Restore Golden Images Cache
                   keys:
                       - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-b9e157e40b4274683707eccf7f8d400ed4c719bc
                       - v1-golden-images-master-<< parameters.regression_color >>-<< parameters.regression_scale >>-
@@ -52,12 +53,12 @@ commands:
                   command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci && exit 1
             - save_cache:
                   when: on_fail
-                  name: Force Update Regression Cache
+                  name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline/ci
                   key: v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ .Revision }}
             - save_cache:
-                  name: Build Branch Cache
+                  name: Build Golden Images Branch Cache
                   paths:
                       - test/visual/screenshots-baseline/ci
                   key: v1-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ epoch }}
