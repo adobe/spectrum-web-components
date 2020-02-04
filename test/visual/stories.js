@@ -36,6 +36,7 @@ module.exports = [
     'card--default',
     'card--gallery',
     'card--quiet',
+    'card--slotted-title',
     'checkbox--default',
     'checkbox--checked',
     'checkbox--indeterminate',

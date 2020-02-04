@@ -25,6 +25,18 @@ yarn add @spectrum-web-components/card
 </sp-card>
 ```
 
+## Title
+
+The default application of a title for an `sp-card` is to leverage the `title` attribute. When HTML based title content is desired, the `title` slot is also available for deliverin this content.
+
+```html demo
+<sp-card subtitle="JPG">
+    <h1 slot="title">Card Title</h1>
+    <img slot="cover-photo" src="https://picsum.photos/200/300" />
+    <div slot="footer">Footer</div>
+</sp-card>
+```
+
 ## Variants
 
 There are multiple card variants to choose from in Spectrum. The `variant`
