@@ -44,6 +44,8 @@ function computeArrowRotateStylesFn(ref: ModifierArguments<{}>): undefined {
     }
 
     ref.state.styles.arrow.transform += ` rotate(${rotation}deg)`;
+    // Manage Spectrum CSS usage of negative left margin for centering.
+    ref.state.styles.arrow.marginLeft = '0';
 
     return;
 }
