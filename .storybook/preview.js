@@ -10,6 +10,14 @@ import {
 } from '@open-wc/demoing-storybook';
 import '@spectrum-web-components/theme';
 
+// While https://github.com/open-wc/open-wc/issues/1210 and
+// go https://github.com/popperjs/popper-core/issues/933 persist
+// without an acceptable outcome, this allows the built storybook
+// to function with `process.env.NODE_ENV`... :/
+window.process = window.process || {};
+window.process.env = window.process.env || {};
+window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
+
 async function run() {
     const customElements = await (await fetch(
         new URL('../custom-elements.json', import.meta.url)
