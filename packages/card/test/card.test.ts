@@ -59,4 +59,56 @@ describe('card', () => {
 
         expect(el).shadowDom.to.equalSnapshot();
     });
+    it('displays the `title` attribute as `#title`', async () => {
+        const testTitle = 'This is a test title';
+        const el = await fixture<Card>(
+            html`
+                <sp-card title=${testTitle} subtitle="JPG">
+                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <div slot="footer">Footer</div>
+                </sp-card>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const titleEl = root.querySelector('#title');
+
+        expect(titleEl, 'did not find title element').to.not.be.null;
+        expect((titleEl as HTMLDivElement).textContent).to.contain(
+            testTitle,
+            'the title renders in the element'
+        );
+    });
+    it('displays the slotted content as `#title`', async () => {
+        const testTitle = 'This is a test title';
+        const el = await fixture<Card>(
+            html`
+                <sp-card subtitle="JPG">
+                    <h1 slot="title">${testTitle}</h1>
+                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <div slot="footer">Footer</div>
+                </sp-card>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const titleSlot = root.querySelector(
+            '[name="title"]'
+        ) as HTMLSlotElement;
+
+        expect(titleSlot, 'did not find slot element').to.not.be.null;
+        const nodes = titleSlot.assignedNodes();
+        const h1Element = nodes.find(
+            (node) => (node as HTMLElement).tagName === 'H1'
+        );
+        expect(h1Element, 'did not find H1 element').to.not.be.null;
+        expect((h1Element as HTMLHeadingElement).textContent).to.contain(
+            testTitle,
+            'the slotted content renders in the element'
+        );
+    });
 });

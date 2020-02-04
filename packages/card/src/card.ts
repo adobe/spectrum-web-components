@@ -22,6 +22,7 @@ import cardStyles from './card.css.js';
 
 /**
  * @slot preview - This is the preview image for Gallery Cards
+ * @slot title - HTML content to be listed as the title
  * @slot cover-photo - This is the cover photo for Default and Quiet Cards
  * @slot description - A description of the card
  * @slot footer - Footer text
@@ -40,12 +41,22 @@ export class Card extends LitElement {
     @property()
     public subtitle = '';
 
+    protected get renderTitle(): TemplateResult {
+        return html`
+            <div id="title">
+                <slot name="title">
+                    ${this.title}
+                </slot>
+            </div>
+        `;
+    }
+
     protected renderGallery(): TemplateResult {
         return html`
             <slot name="preview"></slot>
             <div id="body">
                 <div id="header">
-                    <div id="title">${this.title}</div>
+                    ${this.renderTitle}
                     <div id="subtitle">${this.subtitle}</div>
                     <slot name="description"></slot>
                 </div>
@@ -57,7 +68,9 @@ export class Card extends LitElement {
         return html`
             <slot name="preview"></slot>
             <div id="body">
-                <div id="header"><div id="title">${this.title}</div></div>
+                <div id="header">
+                    ${this.renderTitle}
+                </div>
                 <div id="content">
                     <div id="subtitle">${this.subtitle}</div>
                     <slot name="description"></slot>
@@ -71,7 +84,7 @@ export class Card extends LitElement {
             <slot name="cover-photo" id="cover-photo"></slot>
             <div id="body">
                 <div id="header">
-                    <div id="title">${this.title}</div>
+                    ${this.renderTitle}
                 </div>
                 <div id="content">
                     <div id="subtitle">${this.subtitle}</div>
