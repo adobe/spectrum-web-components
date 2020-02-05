@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.2.0...@spectrum-web-components/overlay@0.2.1) (2020-02-05)
+
+### Bug Fixes
+
+-   **overlay:** override SpectrumCSS tip rules and process usage in popper ([aad3dec](https://github.com/adobe/spectrum-web-components/commit/aad3dec))
+
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.1.0...@spectrum-web-components/overlay@0.2.0) (2020-01-30)
 
 ### Features

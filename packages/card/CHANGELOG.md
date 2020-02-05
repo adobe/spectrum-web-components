@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.2.3...@spectrum-web-components/card@0.3.0) (2020-02-05)
+
+### Features
+
+-   allow slotted title for card ([aaf7157](https://github.com/adobe/spectrum-web-components/commit/aaf7157))
+
 ## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.2.2...@spectrum-web-components/card@0.2.3) (2020-01-30)
 
 **Note:** Version bump only for package @spectrum-web-components/card
