@@ -99,7 +99,7 @@ self.__precacheManifest = [
   },
   {
     "url": "iframe.html",
-    "revision": "4384eb1506bbe12d2afdd67ab4edf185"
+    "revision": "f19b6c8fe12abba1e513efe8a4f06263"
   },
   {
     "url": "illustrated-message.stories-ac1a622d.js",
@@ -142,6 +142,10 @@ self.__precacheManifest = [
     "revision": "1eb6063f6d9ee6eba63334726ca759e0"
   },
   {
+    "url": "index-d19d6838.js",
+    "revision": "6ebaa6e046f643e676df154fae677810"
+  },
+  {
     "url": "index-da10f6c3.js",
     "revision": "9d4245e646bf5320f33a21003c7d06b1"
   },
@@ -166,8 +170,8 @@ self.__precacheManifest = [
     "revision": "fc29a281b95c188081dee5499c11a46a"
   },
   {
-    "url": "inline-entry.0-02904cbe.js",
-    "revision": "dcac6f8b293ed282c6d05d6cd7ef6631"
+    "url": "inline-entry.0-de7cd571.js",
+    "revision": "6f47201b370712da5e980cf0589475ad"
   },
   {
     "url": "legacy/action-button.stories-ce25b2fd.js",
@@ -270,6 +274,10 @@ self.__precacheManifest = [
     "revision": "6a539d4670c0652fb2bce715511d712d"
   },
   {
+    "url": "legacy/index-777892dd.js",
+    "revision": "a08e4a2126d56f363d8c541c24b3b00e"
+  },
+  {
     "url": "legacy/index-bd1d4802.js",
     "revision": "acf6cdfee384c7c07e11c779451e4b74"
   },
@@ -302,8 +310,8 @@ self.__precacheManifest = [
     "revision": "ab3fedf770f04f14968519e696d65f82"
   },
   {
-    "url": "legacy/inline-entry.0-5834a612.js",
-    "revision": "52a62d266bc1fe37d291cfe23c3c7cc7"
+    "url": "legacy/inline-entry.0-ee1d7156.js",
+    "revision": "a20d8ce1456477d5a1337854cd5d618f"
   },
   {
     "url": "legacy/link.stories-1c7425ac.js",
@@ -342,8 +350,8 @@ self.__precacheManifest = [
     "revision": "7a2ed581070426bf6d58967bcc8805cb"
   },
   {
-    "url": "legacy/sidenav.stories-f11ed843.js",
-    "revision": "984ba5b3993bc9489e9f859d94753bfa"
+    "url": "legacy/sidenav.stories-c54e475a.js",
+    "revision": "0e93172c7f1d264e38a49bf058cf76ea"
   },
   {
     "url": "legacy/slider.stories-80229f48.js",
@@ -366,8 +374,8 @@ self.__precacheManifest = [
     "revision": "1b1a7cd0383528f689c80a1d55b178bf"
   },
   {
-    "url": "legacy/tabs.stories-1a8b3e2c.js",
-    "revision": "dca0561b1d7e958df1f8f76512cdfa1d"
+    "url": "legacy/tabs.stories-9f07a48b.js",
+    "revision": "82bd8d9e09c7891b5b57c9002f93d6f6"
   },
   {
     "url": "legacy/textarea.stories-dd71cf59.js",
@@ -458,8 +466,8 @@ self.__precacheManifest = [
     "revision": "288063245a0024b939ccee8adeb1a46b"
   },
   {
-    "url": "sidenav.stories-ef46fb3b.js",
-    "revision": "f9c21fba5a804ee54260a266ffb366e0"
+    "url": "sidenav.stories-d67bcdb4.js",
+    "revision": "635148ed25cfc2c4a6a85f9a34d1a6c5"
   },
   {
     "url": "slider.stories-f35bc279.js",
@@ -482,8 +490,8 @@ self.__precacheManifest = [
     "revision": "3ff6f28e8b0edfe061509dadb4c84d10"
   },
   {
-    "url": "tabs.stories-0dc596a8.js",
-    "revision": "fecca35e394a07b2cd15ee56a6b9c211"
+    "url": "tabs.stories-9c6c3bfe.js",
+    "revision": "2dfb661d75c2cebd16536e952c651fa8"
   },
   {
     "url": "textarea.stories-4ce9c46d.js",
