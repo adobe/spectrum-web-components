@@ -18,7 +18,7 @@ import {
     PropertyValues,
 } from 'lit-element';
 import { Tab } from '@spectrum-web-components/tab';
-import { Focusable } from '@spectrum-web-components/shared';
+import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 
 import tabStyles from './tab-list.css.js';
 
@@ -129,8 +129,7 @@ export class TabList extends Focusable {
             return;
         }
         event.preventDefault();
-        const currentFocusedTab = (this.getRootNode() as Document)
-            .activeElement as Tab;
+        const currentFocusedTab = getActiveElement(this) as Tab;
         let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
         currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
         this.tabs[
