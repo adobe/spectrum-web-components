@@ -27,7 +27,7 @@ yarn add @spectrum-web-components/card
 
 ## Title
 
-The default application of a title for an `sp-card` is to leverage the `title` attribute. When HTML based title content is desired, the `title` slot is also available for deliverin this content.
+By default, the title for an `sp-card` is applied via the `title` attribute, which is restricted to string content only. When HTML content is desired, a slot named `title` available for applying the title.
 
 ```html demo
 <sp-card subtitle="JPG">
