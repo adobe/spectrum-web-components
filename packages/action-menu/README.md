@@ -17,26 +17,26 @@ yarn add @spectrum-web-components/action-menu
 <!-- prettier-ignore -->
 ```html
 <sp-action-menu>
-    More Actions
+    More actions
     <sp-menu slot="options">
         <sp-menu-item>
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-action-menu>
@@ -50,26 +50,26 @@ The visible label that is be provided via the default `<slot>` interface can be 
 
 <!-- prettier-ignore -->
 ```html
-<sp-action-menu label="More Actions">
+<sp-action-menu label="More actions">
     <sp-menu slot="options" style="min-width: 125px">
         <sp-menu-item>
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-action-menu>
@@ -83,28 +83,28 @@ A custom icon can be supplied via the `icon` slot in order to replace the defaul
 
 <!-- prettier-ignore -->
 ```html
-<sp-action-menu label="More Actions">
+<sp-action-menu label="More actions">
     <sp-icon slot="icon" size="xxs" name="ui:ChevronDownSmall"></sp-icon>
-    Actions Under the Arrow
+    Actions under the arrow
     <sp-menu slot="options">
         <sp-menu-item>
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-action-menu>

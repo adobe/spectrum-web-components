@@ -50,7 +50,7 @@ When using `[variant="fixed"]`, the `<sp-actionbar>` will display by default at 
 <sp-button
     onclick="javascript:this.previousElementSibling.open = !this.previousElementSibling.open;"
 >
-    Toggle Fixed Actionbar
+    Toggle fixed actionbar
 </sp-button>
 ```
 
@@ -76,7 +76,7 @@ When using `[variant="sticky"]`, be sure you've spent some time touching up on [
     <sp-button
         onclick="javascript:this.previousElementSibling.previousElementSibling.open = !this.previousElementSibling.previousElementSibling.open;"
     >
-        Toggle Sticky Actionbar
+        Toggle sticky actionbar
     </sp-button>
 </section>
 ```

@@ -26,7 +26,7 @@ yarn add @spectrum-web-components/toast
 <sp-toast>
     This is important information that you should read, soon.
     <sp-button slot="action" variant="overBackground" quiet>
-        Do Something
+        Do something
     </sp-button>
 </sp-toast>
 ```
@@ -37,7 +37,7 @@ yarn add @spectrum-web-components/toast
 <sp-toast style="width: 300px">
     This is important information that you should read, soon.
     <sp-button slot="action" variant="overBackground" quiet>
-        Do Something
+        Do something
     </sp-button>
 </sp-toast>
 ```
