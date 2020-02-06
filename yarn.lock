@@ -2889,20 +2889,20 @@
   resolved "https://registry.yarnpkg.com/@open-wc/semantic-dom-diff/-/semantic-dom-diff-0.13.21.tgz#718b9ec5f9a98935fc775e577ad094ae8d8b7dea"
   integrity sha512-BONpjHcGX2zFa9mfnwBCLEmlDsOHzT+j6Qt1yfK3MzFXFtAykfzFjAgaxPetu0YbBlCfXuMlfxI4vlRGCGMvFg==
 
-"@open-wc/semantic-dom-diff@^0.15.5":
-  version "0.15.5"
-  resolved "https://registry.yarnpkg.com/@open-wc/semantic-dom-diff/-/semantic-dom-diff-0.15.5.tgz#5530a45eea1982706abf72c702828df0e0a61739"
-  integrity sha512-cODcMLSKRuyAQVa1I+NNjj5A+j5o2qhTW00ztcoEg+bkeutvFqWsB8YG0HS/NhP+wJKe/nOcmt4i2T6KwCTNLw==
+"@open-wc/semantic-dom-diff@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@open-wc/semantic-dom-diff/-/semantic-dom-diff-0.17.0.tgz#a536a59591a86958b5ad5607fd262ceeab99a59b"
+  integrity sha512-kznQMFf43C1Zr6y9hRvjlRBUPsd0vANbiIPfzavpMz9umCFTVbmjI5aPxuQW8OL9m40smlxYfgKfYAPFm4DKPw==
 
 "@open-wc/storybook-prebuilt@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@open-wc/storybook-prebuilt/-/storybook-prebuilt-0.4.0.tgz#a8ac47d86e50559ddf17f217df2504a098cd85b8"
   integrity sha512-39Kfm3bsHPZioWIvQBuc05EvFakvqotVloe2lq0JPXD0iWxOWvWb4h8UKSvFdJY9RAv1p06OFhyEjpuhrZB9Jw==
 
-"@open-wc/testing-helpers@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@open-wc/testing-helpers/-/testing-helpers-1.5.0.tgz#8f3ef0900c2418443450f50c30297ed70f811bf6"
-  integrity sha512-ykm6vk46YqKHdhOhrGuMVayClImU7EnisoQAzCmu2jClU/8FnNHA/ZPBzLssZy/w1ykcrGhB+8QCz7x9kHBHdQ==
+"@open-wc/testing-helpers@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@open-wc/testing-helpers/-/testing-helpers-1.5.1.tgz#c2d0ec2497a5a6565bffbbb5b877dc69a663c108"
+  integrity sha512-CGLonS+dwcydBCQF3cQflGvQCaCinEXVqLm1smQuf/FOZ51Ou7Sr5aV/RB3XTCu4VaL8YniKeOc8Xr3RnL/3IQ==
 
 "@open-wc/testing-karma@^3.2.30":
   version "3.2.30"
@@ -2921,14 +2921,14 @@
     karma-source-map-support "^1.3.0"
     mocha "^6.2.2"
 
-"@open-wc/testing@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-2.5.0.tgz#b9f0dce6fd0f9aa55ef2383cf6875801cf988191"
-  integrity sha512-giqTHQgQ3eQmX7AUsrC71IzZAtOsnki2OxYgrUQoqtL1bJ3fvsQqL6RxuB16C6nCMJgzQhEIJWr2AMjylUBZxw==
+"@open-wc/testing@^2.5.2":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-2.5.2.tgz#f67e3b7f271111d5f5f669f155d3468cceb22ef4"
+  integrity sha512-lEizFfywBqpGkojI5PZiqQOAyiFwAec02I2IUl3OIVl+aCwr99GFKBF/+WH3iJpXRPbNzMasiuxLGSSFfDw5zQ==
   dependencies:
     "@open-wc/chai-dom-equals" "^0.12.36"
-    "@open-wc/semantic-dom-diff" "^0.15.5"
-    "@open-wc/testing-helpers" "^1.5.0"
+    "@open-wc/semantic-dom-diff" "^0.17.0"
+    "@open-wc/testing-helpers" "^1.5.1"
     "@types/chai" "^4.1.7"
     "@types/chai-dom" "^0.0.8"
     "@types/mocha" "^5.0.0"
@@ -6847,7 +6847,7 @@ compare-func@^1.3.1:
     array-ify "^1.0.0"
     dot-prop "^3.0.0"
 
-compare-versions@^3.4.0:
+compare-versions@^3.4.0, compare-versions@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-3.5.1.tgz#26e1f5cf0d48a77eced5046b9f67b6b61075a393"
   integrity sha512-9fGPIB7C6AyM18CJJBHt5EnCZDG3oiTJYy0NjfIAGjKpzv0tkxWko7TNQHF5ymqm7IH03tqmeuBxtvD+Izh6mg==
@@ -9512,6 +9512,13 @@ find-up@^4.0.0, find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+find-versions@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/find-versions/-/find-versions-3.2.0.tgz#10297f98030a786829681690545ef659ed1d254e"
+  integrity sha512-P8WRou2S+oe222TOCHitLy8zj+SIsVJh52VP4lvXkaFVnOFFdoWv1H1Jjvel1aI6NCFOAaeAVm8qrI0odiLcww==
+  dependencies:
+    semver-regex "^2.0.0"
+
 findup-sync@3.0.0, findup-sync@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/findup-sync/-/findup-sync-3.0.0.tgz#17b108f9ee512dfb7a5c7f3c8b27ea9e1a9c08d1"
@@ -11006,15 +11013,16 @@ humanize-url@^1.0.0:
     normalize-url "^1.0.0"
     strip-url-auth "^1.0.0"
 
-husky@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-4.0.6.tgz#b64206220ab940f091cb5f1c75672453eb39fc9f"
-  integrity sha512-OxsXXQXu/FYauV5GGhNpyN1yhQPQoDFUJwzHoshYc3wO//gC0PB9YNYLgBxKckfEce0FGEbzb498UecR3jNdZw==
+husky@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-4.2.1.tgz#b09f1bd9129e6c323cc515dc17081d0615e2d7c1"
+  integrity sha512-Qa0lRreeIf4Tl92sSs42ER6qc3hzoyQPPorzOrFWfPEVbdi6LuvJEqWKPk905fOWIR76iBpp7ECZNIwk+a8xuQ==
   dependencies:
     chalk "^3.0.0"
     ci-info "^2.0.0"
+    compare-versions "^3.5.1"
     cosmiconfig "^6.0.0"
-    get-stdin "^7.0.0"
+    find-versions "^3.2.0"
     opencollective-postinstall "^2.0.2"
     pkg-dir "^4.2.0"
     please-upgrade-node "^3.2.0"
@@ -16694,7 +16702,7 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer@^2.0.0:
+puppeteer@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-2.0.0.tgz#0612992e29ec418e0a62c8bebe61af1a64d7ec01"
   integrity sha512-t3MmTWzQxPRP71teU6l0jX47PHXlc4Z52sQv4LJQSZLq1ttkKS2yGM3gaI57uQwZkNaoGd0+HPPMELZkcyhlqA==
@@ -18050,6 +18058,11 @@ semver-greatest-satisfied-range@^1.1.0:
   integrity sha1-E+jCZYq5aRywzXEJMkAoDTb3els=
   dependencies:
     sver-compat "^1.5.0"
+
+semver-regex@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/semver-regex/-/semver-regex-2.0.0.tgz#a93c2c5844539a770233379107b38c7b4ac9d338"
+  integrity sha512-mUdIBBvdn0PLOeP3TEkMH7HHeUP3GjsXCwKarjv/kGmUFOYg1VqEemKhoQpWMu6X2I8kHeuVdGibLGkVK+/5Qw==
 
 "semver@2 || 3 || 4":
   version "4.3.6"
@@ -20973,10 +20986,10 @@ webpack-dev-middleware@^3.7.2:
     range-parser "^1.2.1"
     webpack-log "^2.0.0"
 
-webpack-dev-server@^3.10.1:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-3.10.1.tgz#1ff3e5cccf8e0897aa3f5909c654e623f69b1c0e"
-  integrity sha512-AGG4+XrrXn4rbZUueyNrQgO4KGnol+0wm3MPdqGLmmA+NofZl3blZQKxZ9BND6RDNuvAK9OMYClhjOSnxpWRoA==
+webpack-dev-server@^3.10.3:
+  version "3.10.3"
+  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-3.10.3.tgz#f35945036813e57ef582c2420ef7b470e14d3af0"
+  integrity sha512-e4nWev8YzEVNdOMcNzNeCN947sWJNd43E5XvsJzbAL08kGc2frm1tQ32hTJslRS+H65LCb/AaUCYU7fjHCpDeQ==
   dependencies:
     ansi-html "0.0.7"
     bonjour "^3.5.0"
