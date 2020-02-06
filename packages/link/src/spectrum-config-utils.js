@@ -26,10 +26,12 @@ module.exports.mangleSpecificity = (selector) => {
         const quietSelector = parser.selector();
         const overResult = result.clone();
         const quietResult = result.clone();
+        const overHost = parser.pseudo({ value: ':host' });
+        const quietHost = parser.pseudo({ value: ':host' });
         overHost.append(parser.attribute({ attribute: 'over-background' }));
         quietHost.append(parser.attribute({ attribute: 'quiet' }));
-        overSelector.append(parser.pseudo({ value: ':host' }));
-        quietSelector.append(parser.pseudo({ value: ':host' }));
+        overSelector.append(overHost);
+        quietSelector.append(quietHost);
         overSelector.append(parser.combinator({ value: ' ' }));
         quietSelector.append(parser.combinator({ value: ' ' }));
         overSelector.append(overResult);
