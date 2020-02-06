@@ -39,7 +39,7 @@ const webpackDevServer = () => {
     );
 };
 
-const webpackBuild = async () => {
+const webpackBuild = (baseUrl) => async () => {
     const config = merge(webpackConfig, {
         mode: 'production',
         output: {
@@ -61,7 +61,7 @@ const webpackBuild = async () => {
     });
     indexHtml = indexHtml.replace(
         '<base href="/">',
-        `<base href="${BASE_URL}">`
+        `<base href="${baseUrl}">`
     );
     return fs.writeFile(indexPath, indexHtml, {
         encoding: 'utf8',
@@ -69,7 +69,8 @@ const webpackBuild = async () => {
 };
 
 module.exports = {
-    docsCompile: webpackBuild,
+    docsBuildProduction: webpackBuild(BASE_URL),
+    docsBuildStaging: webpackBuild('/'),
     docsWatchCompile: webpackDevServer,
     webpackBuild,
 };

@@ -13,7 +13,11 @@ const gulp = require('gulp');
 
 // import the tasks
 const { buildCSS, watchBuildCSS } = require('./tasks/build-css');
-const { docsCompile, docsWatchCompile } = require('./tasks/documentation');
+const {
+    docsBuildProduction,
+    docsBuildStaging,
+    docsWatchCompile,
+} = require('./tasks/documentation');
 
 // default is to compile, build and copy
 const defaultTasks = gulp.series(buildCSS);
@@ -23,5 +27,6 @@ const watchTasks = gulp.parallel(watchBuildCSS);
 exports.default = defaultTasks;
 exports.css = buildCSS;
 exports.watch = watchTasks;
-exports.docsCompile = docsCompile;
+exports.docsBuildProduction = docsBuildProduction;
+exports.docsBuildStaging = docsBuildStaging;
 exports.docsWatchCompile = docsWatchCompile;

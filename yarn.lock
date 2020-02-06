@@ -2921,10 +2921,10 @@
     karma-source-map-support "^1.3.0"
     mocha "^6.2.2"
 
-"@open-wc/testing@^2.5.2":
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-2.5.2.tgz#f67e3b7f271111d5f5f669f155d3468cceb22ef4"
-  integrity sha512-lEizFfywBqpGkojI5PZiqQOAyiFwAec02I2IUl3OIVl+aCwr99GFKBF/+WH3iJpXRPbNzMasiuxLGSSFfDw5zQ==
+"@open-wc/testing@^2.5.3":
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-2.5.3.tgz#8befa46ed99999650e1bb036ca4fe06fab50f3e1"
+  integrity sha512-DEBuAP43+6/AhlQZdqSfpkA5TKqG8O+/RJ37NQohiLQ/pe+JbDt0rYiGxbwpweLiXQt+CSyJBmnqx35wT4PJ+Q==
   dependencies:
     "@open-wc/chai-dom-equals" "^0.12.36"
     "@open-wc/semantic-dom-diff" "^0.17.0"

@@ -38,6 +38,12 @@ yarn docs:start
 
 By default the resulting site will be available at [http://localhost:8080](http://localhost:8080).
 
+In the case that you'd like to serve and test a static build of the documentation from the root director of a server (`localhost` or otherwise), use:
+
+```bash
+yarn docs:build
+```
+
 # Storybook
 
 You can run [Storybook](https://storybook.js.org) through the command:
