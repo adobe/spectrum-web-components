@@ -36,7 +36,7 @@ class HomeElement extends LayoutElement {
             <section id="features">
                 <div class="feature">
                     <h2 class="spectrum-Heading4">
-                        Standards Based
+                        Standards based
                     </h2>
                     <p class="spectrum-Body3">
                         <sp-link
@@ -51,7 +51,7 @@ class HomeElement extends LayoutElement {
                 </div>
                 <div class="feature">
                     <h2 class="spectrum-Heading4">
-                        Light Weight
+                        Light weight
                     </h2>
                     <p class="spectrum-Body3">
                         Spectrum Web Components are implemented using the
@@ -66,7 +66,7 @@ class HomeElement extends LayoutElement {
                 </div>
                 <div class="feature">
                     <h2 class="spectrum-Heading4">
-                        Framework Agnostic
+                        Framework agnostic
                     </h2>
                     <p class="spectrum-Body3">
                         You can use web components with any framework, since
@@ -76,7 +76,7 @@ class HomeElement extends LayoutElement {
             </section>
             <section id="example">
                 <h2 class="spectrum-Heading">
-                    Sample Element Usage
+                    Sample element usage
                 </h2>
                 <code-example class="language-html">
                     &lt;sp-button variant='cta' href='/components/button'&gt;Use

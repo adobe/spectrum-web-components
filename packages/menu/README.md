@@ -21,19 +21,19 @@ yarn add @spectrum-web-components/menu
         Deselect
     </sp-menu-item>
     <sp-menu-item>
-        Select Inverse
+        Select inverse
     </sp-menu-item>
     <sp-menu-item>
         Feather...
     </sp-menu-item>
     <sp-menu-item>
-        Select and Mask...
+        Select and mask...
     </sp-menu-item>
     <sp-menu-item>
-        Save Selection
+        Save selection
     </sp-menu-item>
     <sp-menu-item disabled>
-        Make Work Path
+        Make work path
     </sp-menu-item>
 </sp-menu>
 ```
@@ -45,19 +45,19 @@ yarn add @spectrum-web-components/menu
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-popover>

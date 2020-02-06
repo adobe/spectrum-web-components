@@ -31,7 +31,7 @@ yarn add @spectrum-web-components/overlay
 </style>
 <overlay-trigger id="trigger" placement="bottom" offset="6">
     <sp-button variant="primary" slot="trigger">
-        Bottom Popover
+        Bottopopover
     </sp-button>
     <sp-popover dialog slot="click-content" direction="bottom" tip open>
         <div class="options-popover-content">
@@ -42,7 +42,7 @@ yarn add @spectrum-web-components/overlay
                 max="20"
                 label="Awesomeness"
             ></sp-slider>
-            <sp-button>Press Me</sp-button>
+            <sp-button>Press me</sp-button>
         </div>
     </sp-popover>
     <sp-tooltip slot="hover-content" delayed open>

@@ -32,7 +32,7 @@ yarn add @spectrum-web-components/radio
 Standard radio buttons are the default style for radio buttons. The blue color provides a visual prominence that is optimal for forms, settings, etc. where the radio buttons need to be noticed.
 
 ```html
-<sp-radio>Standard Radio Button</sp-radio>
+<sp-radio>Standard radio button</sp-radio>
 ```
 
 ### Quiet radio
@@ -43,7 +43,7 @@ application panels where all visual elements are monochrome in order to direct
 focus to the content.
 
 ```html
-<sp-radio quiet>Quiet Radio Button</sp-radio>
+<sp-radio quiet>Quiet radio button</sp-radio>
 ```
 
 ## States
@@ -57,7 +57,7 @@ radio, and also prevents clicks from activating it.
 When the radio is selected. Can be deselected only by selecting another radio in the group or by manually setting checked property
 
 ```html
-<sp-radio checked>Checked Radio Button</sp-radio>
+<sp-radio checked>Checked radio button</sp-radio>
 ```
 
 ### Invalid
@@ -65,7 +65,7 @@ When the radio is selected. Can be deselected only by selecting another radio in
 Indicates some error state related to the radio button. Can still be checked.
 
 ```html
-<sp-radio invalid>Invalid Radio Button</sp-radio>
+<sp-radio invalid>Invalid radio button</sp-radio>
 ```
 
 ### Disabled
@@ -73,7 +73,7 @@ Indicates some error state related to the radio button. Can still be checked.
 When the radio button is no longer interactable. The button cannot be checked.
 
 ```html
-<sp-radio disabled>Disabled Radio Button</sp-radio>
+<sp-radio disabled>Disabled radio button</sp-radio>
 ```
 
 ### Handling events

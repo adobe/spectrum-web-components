@@ -16,7 +16,7 @@ yarn add @spectrum-web-components/banner
 
 ```html
 <sp-banner>
-    <div slot="header">Header Text</div>
+    <div slot="header">Header text</div>
     <div slot="content">Content of the banner</div>
 </sp-banner>
 ```

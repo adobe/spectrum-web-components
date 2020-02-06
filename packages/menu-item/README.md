@@ -22,13 +22,13 @@ Menus are a collection of `<sp-menu-items />` that can be modified to be `disabl
 ```html
 <sp-menu>
     <sp-menu-item>
-        Active Menu Item
+        Active menu item
     </sp-menu-item>
     <sp-menu-item disabled>
-        Disabled Menu Item
+        Disabled menu item
     </sp-menu-item>
     <sp-menu-item selected>
-        Selected Menu Item
+        Selected menu item
     </sp-menu-item>
 </sp-menu>
 ```
@@ -42,21 +42,21 @@ The content of a menu can be organized by either adding `<sp-menu-divider />` el
 <sp-popover open style="position: relative">
     <sp-menu>
         <sp-menu-item>
-            Menu Item 1a
+            Menu item 1a
         </sp-menu-item>
         <sp-menu-item>
-            Menu Item 2a
-        </sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>
-            Menu Item 3a
-        </sp-menu-item>
-        <sp-menu-item>
-            Menu Item 1b
+            Menu item 2a
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Menu Item 2b
+            Menu item 3a
+        </sp-menu-item>
+        <sp-menu-item>
+            Menu item 1b
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>
+            Menu item 2b
         </sp-menu-item>
     </sp-menu>
 </sp-popover>
