@@ -49,7 +49,7 @@ governing permissions and limitations under the License.
 }
 
 header {
-    height: 48px;
+    min-height: var(--spectrum-global-dimension-size-600);
     border-bottom: 1px solid var(--spectrum-global-color-gray-200);
     display: flex;
     flex-direction: row;
@@ -60,6 +60,17 @@ header {
     left: 0px;
     padding-left: 8px;
     z-index: 10;
+
+    --spectrum-actionbutton-height: var(--spectrum-global-dimension-size-500);
+    --spectrum-actionbutton-min-width: var(
+        --spectrum-global-dimension-size-500
+    );
+    --spectrum-alias-workflow-icon-size: 22px;
+}
+
+header svg {
+    stroke: transparent;
+    height: 100%;
 }
 
 @media screen and (min-width: 961px) {
