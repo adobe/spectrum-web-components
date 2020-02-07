@@ -1,0 +1,85 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+#actions {
+    /* .spectrum-QuickActions */
+    visibility: hidden;
+    opacity: 0;
+    transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        visibility 0ms linear
+            var(--spectrum-global-animation-duration-100, 0.13s);
+    pointer-events: none; /* .spectrum-QuickActions */
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(
+            --spectrum-quickactions-padding-y,
+            var(--spectrum-global-dimension-size-50)
+        )
+        var(
+            --spectrum-quickactions-padding-x,
+            var(--spectrum-global-dimension-size-50)
+        );
+    height: var(
+        --spectrum-quickactions-height,
+        var(--spectrum-global-dimension-size-500)
+    );
+    border-radius: var(
+        --spectrum-quickactions-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    ); /* .spectrum-QuickActions */
+    background-color: var(
+        --spectrum-quickactions-background-color,
+        var(--spectrum-alias-background-color-quickactions)
+    );
+}
+:host([opened]) #actions {
+    /* .spectrum-QuickActions.is-open */
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0ms;
+    pointer-events: auto;
+}
+:host([enter-from='left'][opened]) #actions {
+    /* .spectrum-QuickActions--left.is-open */
+    transform: translateX(
+        var(
+            --spectrum-dropdown-flyout-menu-offset-y,
+            var(--spectrum-global-dimension-size-75)
+        )
+    );
+}
+:host([enter-from='right'][opened]) #actions {
+    /* .spectrum-QuickActions--right.is-open */
+    transform: translateX(
+        calc(
+            -1 * var(--spectrum-dropdown-flyout-menu-offset-y, var(--spectrum-global-dimension-size-75))
+        )
+    );
+}
+slot[name='action'] + ::slotted([slot='action']) {
+    /* .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
+    margin-left: var(
+        --spectrum-quickactions-icon-button-gap-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+#overlay {
+    /* .spectrum-QuickActions-overlay */
+    background-color: var(
+        --spectrum-quickactions-overlay-color,
+        var(--spectrum-alias-background-color-quickactions-overlay)
+    );
+}

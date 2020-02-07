@@ -66,6 +66,7 @@
         "@spectrum-web-components/menu-item": "^0.5.4",
         "@spectrum-web-components/overlay": "^0.3.8",
         "@spectrum-web-components/popover": "^0.3.10",
+        "@spectrum-web-components/quick-actions": "^0.0.1",
         "@spectrum-web-components/radio": "^0.2.12",
         "@spectrum-web-components/radio-group": "^0.1.18",
         "@spectrum-web-components/rule": "^0.1.1",
