@@ -16,6 +16,7 @@
         "styles"
     ],
     "sideEffects": [
+        ".storybook/preview.js",
         "./lib/*/index.js",
         "./src/*/index.ts",
         "./styles/*.css",
@@ -96,7 +97,7 @@
         "@commitlint/config-conventional": "^8.3.4",
         "@commitlint/config-lerna-scopes": "^8.3.4",
         "@open-wc/building-webpack": "^2.10.9",
-        "@open-wc/demoing-storybook": "^1.8.3",
+        "@open-wc/demoing-storybook": "^1.10.1",
         "@open-wc/polyfills-loader": "^0.3.3",
         "@open-wc/testing": "^2.5.3",
         "@open-wc/testing-karma": "^3.2.30",
