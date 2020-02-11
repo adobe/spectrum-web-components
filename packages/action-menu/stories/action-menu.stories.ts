@@ -9,7 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action, boolean, text } from '@open-wc/demoing-storybook';
+import {
+    html,
+    action,
+    boolean,
+    number,
+    text,
+} from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-html';
 
 import '../';
@@ -23,14 +29,12 @@ export default {
     title: 'Action menu',
 };
 
-export const iconOnly = (): TemplateResult => html`
-    <style>
-        sp-menu {
-            min-width: 125px;
-        }
-    </style>
-    ${ActionMenuMarkup()}
-`;
+export const iconOnly = (): TemplateResult => {
+    const menuWidth = number('Menu Width', 125, {}, 'Component');
+    return html`
+        ${ActionMenuMarkup({ menuWidth })}
+    `;
+};
 
 export const Default = (): TemplateResult => {
     const ariaLabel = text('Arial Label', 'More Actions', 'Component');

@@ -37,22 +37,23 @@
 <button aria-haspopup="true" id="button" tabindex="0">
     <slot name="icon"></slot>
     <div hidden="" id="label">
-        <slot id="slot"></slot>
+        <slot id="slot" name="label"></slot>
     </div>
 </button>
-<sp-popover direction="bottom" id="popover" placement="none">
-    <slot name="options">
+<sp-popover id="popover" open="" placement="none">
+    <sp-menu role="menu">
         <sp-menu-item
             aria-disabled="true"
             data-js-focus-visible=""
             disabled=""
             role="menuitem"
-            tabindex="-1"
+            tabindex="0"
         >
             There are no options currently available.
         </sp-menu-item>
-    </slot>
+    </sp-menu>
 </sp-popover>
+<slot hidden=""></slot>
 ```
 
 #### `loads - [label]`
@@ -92,20 +93,21 @@
 <button aria-haspopup="true" aria-label="More Actions" id="button" tabindex="0">
     <slot name="icon"></slot>
     <div hidden="" id="label">
-        <slot id="slot"></slot>
+        <slot id="slot" name="label"></slot>
     </div>
 </button>
-<sp-popover direction="bottom" id="popover" placement="none">
-    <slot name="options">
+<sp-popover id="popover" open="" placement="none">
+    <sp-menu role="menu">
         <sp-menu-item
             aria-disabled="true"
             data-js-focus-visible=""
             disabled=""
             role="menuitem"
-            tabindex="-1"
+            tabindex="0"
         >
             There are no options currently available.
         </sp-menu-item>
-    </slot>
+    </sp-menu>
 </sp-popover>
+<slot hidden=""></slot>
 ```

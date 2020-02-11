@@ -10,41 +10,51 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 export const ActionMenuMarkup = ({
     ariaLabel = 'More Actions',
     changeHandler = (() => undefined) as ((event: Event) => void),
     disabled = false,
     visibleLabel = '',
+    menuWidth = undefined as number | undefined,
 } = {}): TemplateResult => {
+    console.warn(menuWidth);
     return html`
         <sp-action-menu
             label=${ariaLabel}
             ?disabled=${disabled}
             @change="${changeHandler}"
+            style=${ifDefined(
+                menuWidth
+                    ? `--spectrum-dropdown-menu-width: ${menuWidth}px`
+                    : menuWidth
+            )}
         >
-            ${visibleLabel}
-            <sp-menu slot="options">
-                <sp-menu-item>
-                    Deselect
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select Inverse
-                </sp-menu-item>
-                <sp-menu-item>
-                    Feather...
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select and Mask...
-                </sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>
-                    Save Selection
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Make Work Path
-                </sp-menu-item>
-            </sp-menu>
+            ${visibleLabel
+                ? html`
+                      <span slot="label">${visibleLabel}</span>
+                  `
+                : html``}
+            <sp-menu-item>
+                Deselect
+            </sp-menu-item>
+            <sp-menu-item>
+                Select Inverse
+            </sp-menu-item>
+            <sp-menu-item>
+                Feather...
+            </sp-menu-item>
+            <sp-menu-item>
+                Select and Mask...
+            </sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>
+                Save Selection
+            </sp-menu-item>
+            <sp-menu-item disabled>
+                Make Work Path
+            </sp-menu-item>
         </sp-action-menu>
     `;
 };

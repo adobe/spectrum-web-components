@@ -9,17 +9,19 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-@import './spectrum-dropdown.css';
+import { html, TemplateResult } from 'lit-html';
 
-sp-popover {
-    display: none;
-}
+import '../';
 
-#label ~ .dropdown {
-    /* .spectrum-Icon + .spectrum-Dropdown-icon
-        with specificity bump to counteract #label ~ .dropdown elsewhere */
-    margin-left: var(
-        --spectrum-dropdown-icon-gap,
-        var(--spectrum-global-dimension-size-100)
-    );
-}
+export default {
+    component: 'sp-menu-item',
+    title: 'Menu Item',
+};
+
+export const Default = (): TemplateResult => {
+    return html`
+        <sp-menu-item>
+            Menu Item
+        </sp-menu-item>
+    `;
+};

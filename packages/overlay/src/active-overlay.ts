@@ -260,9 +260,11 @@ export class ActiveOverlay extends LitElement {
             );
         }
 
+        const parentElement = element.parentElement || element.getRootNode();
+
         /* istanbul ignore else */
-        if (element.parentElement) {
-            element.parentElement.replaceChild(this.placeholder, element);
+        if (parentElement) {
+            parentElement.replaceChild(this.placeholder, element);
         }
 
         this.overlayContent = element;
@@ -287,11 +289,20 @@ export class ActiveOverlay extends LitElement {
         }
 
         /* istanbul ignore else */
-        if (this.placeholder && this.placeholder.parentElement) {
-            this.placeholder.parentElement.replaceChild(
-                this.overlayContent,
-                this.placeholder
-            );
+        if (this.placeholder) {
+            const parentElement =
+                this.placeholder.parentElement ||
+                this.placeholder.getRootNode();
+            /* istanbul ignore else */
+            if (parentElement) {
+                parentElement.replaceChild(
+                    this.overlayContent,
+                    this.placeholder
+                );
+                this.overlayContent.dispatchEvent(
+                    new Event('sp-overlay-closed')
+                );
+            }
         }
 
         if (this.originalPlacement) {

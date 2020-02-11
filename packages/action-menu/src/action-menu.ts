@@ -60,6 +60,7 @@ export class ActionMenu extends ObserveSlotText(DropdownBase) {
                 </slot>
                 <div id="label" ?hidden=${!this.hasLabel}>
                     <slot
+                        name="label"
                         id="slot"
                         @slotchange=${this.manageObservedSlot}
                     ></slot>
