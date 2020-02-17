@@ -36,8 +36,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         color var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
     text-decoration: none;
-    font-family: adobe-clean-ux, adobe-clean, Source Sans Pro, -apple-system,
-        BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    font-family: var(
+        --spectrum-alias-body-text-font-family,
+        var(--spectrum-global-font-family-base)
+    );
     line-height: 1.3;
     cursor: pointer; /* .spectrum-ActionButton,
    * .spectrum-Tool */
