@@ -87,7 +87,7 @@ class SearchComponent extends LitElement {
                                                 this.closePopover();
                                             }}
                                         >
-                                            ${result.name}
+                                            ${result.label}
                                         </sp-menu-item>
                                     `
                                 )}
