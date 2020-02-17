@@ -34,10 +34,15 @@ async function main() {
     const documents = [];
 
     // Components
-    for await (const path of globby.stream(
-        `${projectDir}/packages/*/README.md`
-    )) {
-        const componentName = /([^/]+)\/README.md$/.exec(path)[1];
+    for await (const path of globby.stream(`${projectDir}/packages/*/*.md`)) {
+        let componentName = /([^/]+)\/([a-zA-Z-]+)\.md$/.exec(path)[1];
+        const fileName = /([a-zA-Z-]+)\.md$/.exec(path)[0];
+        if (fileName === 'CHANGELOG.md') {
+            continue;
+        }
+        if (fileName !== 'README.md') {
+            componentName = fileName.replace('.md', '');
+        }
         const body = await fs.readFile(path, { encoding: 'utf8' });
         documents.push({
             title: nameToTitle(componentName),
