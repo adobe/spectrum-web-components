@@ -80,7 +80,7 @@ const webpackBuild = (baseUrl) => async () => {
 module.exports = {
     docsBuildProduction: gulp.series(buildSearchIndex, webpackBuild(BASE_URL)),
     docsBuildStaging: gulp.series(buildSearchIndex, webpackBuild('/')),
-    docsWatchCompile: webpackDevServer,
+    docsWatchCompile: gulp.series(buildSearchIndex, webpackDevServer),
     webpackBuild,
     buildSearchIndex,
 };
