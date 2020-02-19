@@ -23,14 +23,11 @@ export default {
     title: 'Action menu',
 };
 
-export const iconOnly = (): TemplateResult => html`
-    <style>
-        sp-menu {
-            min-width: 125px;
-        }
-    </style>
-    ${ActionMenuMarkup()}
-`;
+export const iconOnly = (): TemplateResult => {
+    return html`
+        ${ActionMenuMarkup()}
+    `;
+};
 
 export const Default = (): TemplateResult => {
     const ariaLabel = text('Arial Label', 'More Actions', 'Component');

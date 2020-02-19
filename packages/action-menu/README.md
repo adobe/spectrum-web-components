@@ -17,8 +17,8 @@ yarn add @spectrum-web-components/action-menu
 <!-- prettier-ignore -->
 ```html
 <sp-action-menu>
-    More actions
-    <sp-menu slot="options">
+    <span slot="label">More Actions</span>
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
@@ -50,8 +50,8 @@ The visible label that is be provided via the default `<slot>` interface can be 
 
 <!-- prettier-ignore -->
 ```html
-<sp-action-menu label="More actions">
-    <sp-menu slot="options" style="min-width: 125px">
+<sp-action-menu label="More Actions">
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
@@ -85,8 +85,8 @@ A custom icon can be supplied via the `icon` slot in order to replace the defaul
 ```html
 <sp-action-menu label="More actions">
     <sp-icon slot="icon" size="xxs" name="ui:ChevronDownSmall"></sp-icon>
-    Actions under the arrow
-    <sp-menu slot="options">
+    <span slot="label">Actions Under the Arrow</span>
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>

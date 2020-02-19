@@ -15,6 +15,7 @@ import { Dropdown } from '../';
 import '../../menu';
 import '../../menu-item';
 import { MenuItem } from '../../menu-item';
+import { Popover } from '../../popover';
 import {
     fixture,
     elementUpdated,
@@ -22,6 +23,7 @@ import {
     expect,
     nextFrame,
 } from '@open-wc/testing';
+import { waitUntil } from '@open-wc/testing-helpers';
 import { waitForPredicate } from '../../../test/testing-helpers';
 import '../../shared/lib/focus-visible.js';
 import { spy } from 'sinon';
@@ -36,12 +38,17 @@ const keyboardEvent = (code: string): KeyboardEvent =>
 const arrowDownEvent = keyboardEvent('ArrowDown');
 const arrowUpEvent = keyboardEvent('ArrowUp');
 
+type testableDropdown = {
+    popover: Popover;
+};
+
 const dropdownFixture = async (): Promise<Dropdown> =>
     await fixture<Dropdown>(
         html`
-            <sp-dropdown>
-                Select a Country with a very long label, too long in fact
-                <sp-menu slot="options">
+            <sp-dropdown
+                label="Select a Country with a very long label, too long in fact"
+            >
+                <sp-menu>
                     <sp-menu-item>
                         Deselect
                     </sp-menu-item>
@@ -69,8 +76,8 @@ const dropdownFixture = async (): Promise<Dropdown> =>
 describe('Dropdown', () => {
     it('loads', async () => {
         const el = await dropdownFixture();
-
         await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
+
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el).lightDom.to.equalSnapshot();
@@ -78,6 +85,7 @@ describe('Dropdown', () => {
     });
     it('renders invalid', async () => {
         const el = await dropdownFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -90,6 +98,7 @@ describe('Dropdown', () => {
     });
     it('closes when becoming disabled', async () => {
         const el = await dropdownFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -105,6 +114,7 @@ describe('Dropdown', () => {
     });
     it('selects', async () => {
         const el = await dropdownFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -129,6 +139,7 @@ describe('Dropdown', () => {
     });
     it('re-selects', async () => {
         const el = await dropdownFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -170,6 +181,7 @@ describe('Dropdown', () => {
     });
     it('can have selection prevented', async () => {
         const el = await dropdownFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -198,6 +210,7 @@ describe('Dropdown', () => {
     });
     it('opens on ArrowDown', async () => {
         const el = await dropdownFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -232,6 +245,7 @@ describe('Dropdown', () => {
     });
     it('loads', async () => {
         const el = await dropdownFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -240,8 +254,10 @@ describe('Dropdown', () => {
     });
     it('refocuses on list when open', async () => {
         const el = await dropdownFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
         el.open = true;
         await elementUpdated(el);
@@ -249,10 +265,9 @@ describe('Dropdown', () => {
         el.blur();
         await elementUpdated(el);
 
-        const firstItem = el.querySelector(
-            'sp-menu-item:nth-of-type(1)'
-        ) as MenuItem;
+        expect(el.open).to.be.true;
         el.focus();
+        await elementUpdated(el);
         await waitForPredicate(() => document.activeElement === firstItem);
         expect(el.open).to.be.true;
         expect(document.activeElement === firstItem).to.be.true;
@@ -264,60 +279,11 @@ describe('Dropdown', () => {
         const handleSelectedFocus = (): void => focusSelectedSpy();
         const el = await fixture<Dropdown>(
             html`
-                <sp-dropdown value="inverse">
-                    Select a Country with a very long label, too long in fact
-                    <sp-menu slot="options">
-                        <sp-menu-item
-                            value="deselect"
-                            @focus=${handleFirstFocus}
-                        >
-                            Deselect Text
-                        </sp-menu-item>
-                        <sp-menu-item
-                            value="inverse"
-                            @focus=${handleSelectedFocus}
-                        >
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
-                    </sp-menu>
-                </sp-dropdown>
-            `
-        );
-
-        await elementUpdated(el);
-
-        expect(el.value).to.equal('inverse');
-        expect(el.selectedItemText).to.equal('Select Inverse');
-
-        const button = el.button as HTMLButtonElement;
-        button.click();
-
-        await elementUpdated(el);
-        await nextFrame();
-
-        expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
-        expect(focusSelectedSpy.calledOnce, 'focus selected element').to.be
-            .true;
-    });
-    it('resets value when item not available', async () => {
-        const el = await fixture<Dropdown>(
-            html`
-                <sp-dropdown value="missing">
-                    Select a Country with a very long label, too long in fact
-                    <sp-menu slot="options">
+                <sp-dropdown
+                    value="inverse"
+                    label="Select a Country with a very long label, too long in fact"
+                >
+                    <sp-menu>
                         <sp-menu-item value="deselect">
                             Deselect Text
                         </sp-menu-item>
@@ -343,8 +309,109 @@ describe('Dropdown', () => {
         );
 
         await elementUpdated(el);
+        await waitUntil(() => el.selectedItemText === 'Select Inverse');
+
+        const firstItem = el.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+        const secondItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
+        firstItem.addEventListener('focus', handleFirstFocus);
+        secondItem.addEventListener('focus', handleSelectedFocus);
+
+        expect(el.value).to.equal('inverse');
+        expect(el.selectedItemText).to.equal('Select Inverse');
+
+        const button = el.button as HTMLButtonElement;
+        button.click();
+
+        await elementUpdated(el);
+        await nextFrame();
+
+        expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
+        expect(focusSelectedSpy.calledOnce, 'focus selected element').to.be
+            .true;
+    });
+    it('resets value when item not available', async () => {
+        const el = await fixture<Dropdown>(
+            html`
+                <sp-dropdown
+                    value="missing"
+                    label="Select a Country with a very long label, too long in fact"
+                >
+                    <sp-menu>
+                        <sp-menu-item value="deselect">
+                            Deselect Text
+                        </sp-menu-item>
+                        <sp-menu-item value="inverse">
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-dropdown>
+            `
+        );
+
+        await elementUpdated(el);
+        await waitUntil(() => el.value === '');
 
         expect(el.value).to.equal('');
         expect(el.selectedItemText).to.equal('');
+    });
+
+    it('resets value when item not available', async () => {
+        const mouseenterSpy = spy();
+        const handleMouseenter = (): void => mouseenterSpy();
+        const el = await fixture<Dropdown>(
+            html`
+                <sp-dropdown
+                    value="missing"
+                    label="Select a Country with a very long label, too long in fact"
+                >
+                    <sp-menu>
+                        <sp-menu-item
+                            value="deselect"
+                            @mouseenter=${handleMouseenter}
+                        >
+                            Deselect Text
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-dropdown>
+            `
+        );
+
+        await elementUpdated(el);
+        await waitUntil(() => el.value === '');
+
+        el.open = true;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        const hoverEl = ((el as unknown) as testableDropdown).popover.querySelector(
+            'sp-menu-item'
+        ) as MenuItem;
+        hoverEl.dispatchEvent(new MouseEvent('mouseenter'));
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        el.open = false;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+        expect(mouseenterSpy.calledOnce).to.be.true;
     });
 });

@@ -37,10 +37,11 @@ import {
     MenuItemQueryRoleEventDetail,
 } from '@spectrum-web-components/menu-item';
 import '@spectrum-web-components/popover';
+import { Overlay, Placement } from '@spectrum-web-components/overlay';
 
 /**
- * @slot default - The placeholder content for the dropdown
- * @slot options - The menu with options that will display when the dropdown is open
+ * @slot label - The placeholder content for the dropdown
+ * @slot {"sp-menu"} - The menu of options that will display when the dropdown is open
  */
 export class DropdownBase extends Focusable {
     public static get styles(): CSSResultArray {
@@ -68,7 +69,10 @@ export class DropdownBase extends Focusable {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    public optionsMenu: Menu | null = null;
+    public optionsMenu?: Menu;
+
+    @property()
+    public placement: Placement = 'bottom-start';
 
     @property({ type: Boolean, reflect: true })
     public quiet = false;
@@ -79,14 +83,18 @@ export class DropdownBase extends Focusable {
     @property({ type: String })
     public selectedItemText = '';
 
+    private closeOverlay?: () => void;
+
+    @query('sp-popover')
+    private popover?: HTMLElement;
+
     protected listRole = 'listbox';
     protected itemRole = 'option';
+    private placeholder?: Comment;
 
     public constructor() {
         super();
-        this.onClick = this.onClick.bind(this);
         this.onKeydown = this.onKeydown.bind(this);
-        this.addEventListener('click', this.onClick);
 
         this.addEventListener(
             'sp-menu-item-query-role',
@@ -109,14 +117,10 @@ export class DropdownBase extends Focusable {
         if (typeof this.button === 'undefined') {
             return this;
         }
-        return this.button;
-    }
-
-    public onOptionsChange(): void {
-        this.optionsMenu = this.querySelector('sp-menu');
-        if (this.value) {
-            this.requestUpdate('value');
+        if (this.open && this.optionsMenu) {
+            return this.optionsMenu;
         }
+        return this.button;
     }
 
     public onButtonBlur(): void {
@@ -132,10 +136,6 @@ export class DropdownBase extends Focusable {
     }
 
     public onButtonFocus(): void {
-        if (this.open) {
-            this.requestUpdate('open');
-            return;
-        }
         /* istanbul ignore if */
         if (typeof this.button === 'undefined') {
             return;
@@ -144,14 +144,12 @@ export class DropdownBase extends Focusable {
     }
 
     public onClick(event: Event): void {
-        const path = event.composedPath();
-        const target = path.find((el) => {
-            if (!(el instanceof Element) || this.optionsMenu === null) {
-                return false;
+        const target = event.target as MenuItem;
+        /* istanbul ignore if */
+        if (!target || target.disabled) {
+            if (target) {
+                this.focus();
             }
-            return el.getAttribute('role') === this.optionsMenu.childRole;
-        }) as MenuItem;
-        if (!target) {
             return;
         }
         this.setValueFromItem(target);
@@ -162,7 +160,7 @@ export class DropdownBase extends Focusable {
             return;
         }
         /* istanbul ignore if */
-        if (this.optionsMenu === null) {
+        if (!this.optionsMenu) {
             return;
         }
         this.open = true;
@@ -182,7 +180,11 @@ export class DropdownBase extends Focusable {
             this.value = oldValue;
             return;
         }
-        const selectedItem = this.querySelector('[selected]') as MenuItem;
+        const parentElement = item.parentElement as Element;
+        const selectedItem = parentElement.querySelector(
+            '[selected]'
+        ) as MenuItem;
+        /* istanbul ignore if */
         if (selectedItem) {
             selectedItem.selected = false;
         }
@@ -195,6 +197,68 @@ export class DropdownBase extends Focusable {
         this.open = !this.open;
     }
 
+    public close(): void {
+        this.open = false;
+    }
+
+    private onOverlayClosed(): void {
+        this.close();
+        /* istanbul ignore else */
+        if (this.optionsMenu && this.placeholder) {
+            const parentElement =
+                this.placeholder.parentElement ||
+                this.placeholder.getRootNode();
+
+            /* istanbul ignore else */
+            if (parentElement) {
+                parentElement.replaceChild(this.optionsMenu, this.placeholder);
+            }
+        }
+
+        delete this.placeholder;
+    }
+
+    private openMenu(): void {
+        /* istanbul ignore if */
+        if (
+            !this.popover ||
+            !this.button ||
+            !this.optionsMenu ||
+            this.optionsMenu.children.length === 0
+        )
+            return;
+
+        this.placeholder = document.createComment(
+            'placeholder for optionsMenu'
+        );
+
+        const parentElement =
+            this.optionsMenu.parentElement || this.optionsMenu.getRootNode();
+
+        /* istanbul ignore else */
+        if (parentElement) {
+            parentElement.replaceChild(this.placeholder, this.optionsMenu);
+        }
+
+        this.popover.append(this.optionsMenu);
+
+        // only use `this.offsetWidth` when Standard variant
+        const menuWidth = !this.quiet && `${this.offsetWidth}px`;
+        if (menuWidth) {
+            this.popover.style.setProperty('width', menuWidth);
+        }
+        this.closeOverlay = Overlay.open(this.button, 'click', this.popover, {
+            placement: this.placement,
+        });
+    }
+
+    private closeMenu(): void {
+        if (this.closeOverlay) {
+            this.closeOverlay();
+            delete this.closeOverlay;
+        }
+    }
+
     protected get buttonContent(): TemplateResult[] {
         return [
             html`
@@ -205,7 +269,7 @@ export class DropdownBase extends Focusable {
                     ${this.value
                         ? this.selectedItemText
                         : html`
-                              <slot></slot>
+                              <slot name="label">${this.label}</slot>
                           `}
                 </div>
                 ${this.invalid
@@ -240,14 +304,19 @@ export class DropdownBase extends Focusable {
             >
                 ${this.buttonContent}
             </button>
-            <sp-popover direction="bottom" id="popover" ?open=${this.open}>
-                <slot name="options" @slotchange=${this.onOptionsChange}>
-                    <sp-menu-item disabled>
-                        There are no options currently available.
-                    </sp-menu-item>
-                </slot>
-            </sp-popover>
+            <sp-popover
+                open
+                id="popover"
+                @click=${this.onClick}
+                @sp-overlay-closed=${this.onOverlayClosed}
+            ></sp-popover>
         `;
+    }
+
+    protected firstUpdated(changedProperties: PropertyValues): void {
+        super.firstUpdated(changedProperties);
+
+        this.optionsMenu = this.querySelector('sp-menu') as Menu;
     }
 
     protected updated(changedProperties: PropertyValues): void {
@@ -278,21 +347,32 @@ export class DropdownBase extends Focusable {
         if (changedProperties.has('disabled') && this.disabled) {
             this.open = false;
         }
-        if (changedProperties.has('open') && this.open) {
-            requestAnimationFrame(() => {
-                /* istanbul ignore if */
-                if (this.optionsMenu === null) {
-                    return;
-                }
-                /* Trick :focus-visible polyfill into thinking keyboard based focus */
-                this.dispatchEvent(
-                    new KeyboardEvent('keydown', {
-                        code: 'Tab',
-                    })
-                );
-                this.optionsMenu.focus();
-            });
+        if (changedProperties.has('open')) {
+            if (this.open) {
+                this.openMenu();
+                requestAnimationFrame(() => {
+                    /* istanbul ignore if */
+                    if (!this.optionsMenu) {
+                        return;
+                    }
+                    /* Trick :focus-visible polyfill into thinking keyboard based focus */
+                    this.dispatchEvent(
+                        new KeyboardEvent('keydown', {
+                            code: 'Tab',
+                        })
+                    );
+                    this.optionsMenu.focus();
+                });
+            } else {
+                this.closeMenu();
+            }
         }
+    }
+
+    public disconnectedCallback(): void {
+        this.open = false;
+
+        super.disconnectedCallback();
     }
 }
 
