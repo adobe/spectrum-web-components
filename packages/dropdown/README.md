@@ -16,9 +16,10 @@ yarn add @spectrum-web-components/dropdown
 
 <!-- prettier-ignore -->
 ```html
-<sp-dropdown>
-    Select a country with a very long label, too long in fact
-    <sp-menu slot="options" role="listbox">
+<sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
+>
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
@@ -49,10 +50,10 @@ yarn add @spectrum-web-components/dropdown
 <!-- prettier-ignore -->
 ```html
 <sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
     invalid
 >
-    Select a country with a very long label, too long in fact
-    <sp-menu slot="options" role="listbox">
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
@@ -81,10 +82,10 @@ yarn add @spectrum-web-components/dropdown
 <!-- prettier-ignore -->
 ```html
 <sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
     disabled
 >
-    Select a country with a very long label, too long in fact
-    <sp-menu slot="options" role="listbox">
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>

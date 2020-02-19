@@ -12,6 +12,7 @@
         { "path": "../icons" },
         { "path": "../menu" },
         { "path": "../menu-item" },
+        { "path": "../overlay" },
         { "path": "../popover" },
         { "path": "../shared" }
     ]
