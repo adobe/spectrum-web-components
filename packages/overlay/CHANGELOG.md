@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.2.1...@spectrum-web-components/overlay@0.3.0) (2020-02-24)
+
+### Features
+
+-   **dropdown:** open menu UI with overlay system ([9811eeb](https://github.com/adobe/spectrum-web-components/commit/9811eeb))
+
 ## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.2.0...@spectrum-web-components/overlay@0.2.1) (2020-02-05)
 
 ### Bug Fixes

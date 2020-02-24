@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.3.8",
+    "version": "0.4.0",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -38,9 +38,9 @@
         "lit-html": "^1.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/dropdown": "^0.3.8",
+        "@spectrum-web-components/dropdown": "^0.4.0",
         "@spectrum-web-components/menu": "^0.2.3",
-        "@spectrum-web-components/menu-item": "^0.3.8",
+        "@spectrum-web-components/menu-item": "^0.4.0",
         "@spectrum-web-components/shared": "^0.4.3",
         "tslib": "^1.10.0"
     }
