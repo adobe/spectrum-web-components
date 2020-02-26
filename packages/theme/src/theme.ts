@@ -226,3 +226,14 @@ export class Theme extends HTMLElement {
 }
 
 Theme.registerThemeFragment('core', 'core', coreStyles);
+
+/* istanbul ignore else */
+if (!customElements.get('sp-theme')) {
+    customElements.define('sp-theme', Theme);
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-theme': Theme;
+    }
+}

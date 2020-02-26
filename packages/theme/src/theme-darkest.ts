@@ -9,11 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './theme.js';
 
-import './theme-dark.js';
-import './theme-darkest.js';
-import './theme-light.js';
-import './theme-lightest.js';
-import './scale-medium.js';
-import './scale-large.js';
+import darkStyles from './theme-darkest.css.js';
+import { Theme } from './theme';
+
+Theme.registerThemeFragment('darkest', 'color', darkStyles);

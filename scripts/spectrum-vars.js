@@ -95,7 +95,8 @@ const themes = [
     'lightest',
     'light',
     'dark',
-    /*'darkest', 'lightest', 'middark', 'midlight'*/
+    'darkest',
+    /*'middark', 'midlight'*/
 ];
 const scales = ['medium', 'large'];
 const cores = ['global'];

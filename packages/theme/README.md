@@ -15,6 +15,42 @@ npm install @spectrum-web-components/themes
 yarn add @spectrum-web-components/themes
 ```
 
+## Quick start
+
+The default import of this packages `import '@spectrum-web-components/themes';` will get you started using the `<sp-theme>` wrapper element, and includes all four (4) color options (`lightest`, `light`, `dark`, and `darkest`) and both (2) scale options (`medium` and `large`). Having all of these options available together is the easiest way to get a handle on the theming possibilities offered by the package and empower you to prototype and test various deliveries of your application. However, reserving the download and parse time for all of the variants may not be required for all applications. See "Advanced usage" below for instructions on tuning the performance of an application that leverages this package.
+
+## Advanced usage
+
+Once you've moved beyond the prototype phases of an application, it is likely that you will only use one combinatin of `color` and `scale` in your application, and even when you don't you will likely benefit from lazily loading variants that you don't leverage by default. For single combination applications or to power a _default_ theme, the following imports can be used to ensure only the code your application requires is loaded:
+
+```js
+// Power a site using <sp-theme color="darkest" scale="large">
+import '@spectrum-web-components/themes/lib/theme-darkest.js';
+import '@spectrum-web-components/themes/lib/scale-large.js';
+
+import '@spectrum-web-components/themes/lib/theme.js';
+```
+
+When subsequent theme variants are needed you can ensure those are lazily loaded by leveraging dynamic imports via something like the following:
+
+```js
+const themeElement = document.querySelector('sp-theme');
+
+const updateTheme = async (color, scale) => {
+    Promise.all([
+        import(`@spectrum-web-components/themes/lib/theme-${color}.js`),
+        import(`@spectrum-web-components/themes/lib/scale-${scale}.js`),
+    ]).then(() => {
+        themeElement.color = color;
+        themeElement.scale = scale;
+    });
+};
+
+updateTheme('light', 'medium');
+```
+
+When bundling your application, be sure to consult the documentation of your bundler for the correct way to ensure proper packaging of the sort of programattic dependancy graph that this will create.
+
 ## Light theme
 
 ```html demo
