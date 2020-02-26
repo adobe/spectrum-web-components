@@ -25,6 +25,7 @@ const colorOptions = {
     Lightest: 'lightest',
     Light: 'light',
     Dark: 'dark',
+    Darkest: 'darkest',
 };
 let defaultColor = colorOptions.Light;
 const scaleOptions = {

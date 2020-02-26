@@ -148,6 +148,24 @@ jobs:
                   regression_color: dark
                   regression_scale: large
 
+    visual-darkest-medium:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: darkest
+                  regression_scale: medium
+
+    visual-darkest-large:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: darkest
+                  regression_scale: large
+
     publish-docs:
         executor: node
 
@@ -178,6 +196,12 @@ workflows:
                   requires:
                       - build
             - visual-dark-large:
+                  requires:
+                      - build
+            - visual-darkest-medium:
+                  requires:
+                      - build
+            - visual-darkest-large:
                   requires:
                       - build
             - publish-docs:
