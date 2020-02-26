@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bundle: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p><code>@spectrum-web-components/bundle</code> is a master dependancy that allows a project to import any and all of the the Spectrum Web Components. While it is a great approach to prototyping, the fact that is versions all of the Spectrum Web Components packages collectively means that depending on it can leave you with a lot of package udpates to manage at any one version change. For a more predicatable upgrade process we suggest that you depend upon individual packages directly, but hope you find this bundle productive when initially trying to get into the act of developing with Spectrum Web Components!</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/bundle
+
+# or
+
+yarn add @spectrum-web-components/bundle
+</code></pre>
+
+      </main>
+    </div>
+  </body>
+</html>

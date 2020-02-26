@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p><strong>sp-checkbox</strong> allow users to select multiple items from a list of independent
+options, or to mark an individual option as selected.</p>
+<p>Should I use a checkbox or a switch? Use a switch when activating something
+instead of selecting.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/checkbox
+
+# or
+
+yarn add @spectrum-web-components/checkbox
+</code></pre>
+<h3>Example</h3>
+<p><sp-icons-medium></sp-icons-medium></p>
+<pre><code class="language-html">&lt;sp-checkbox&gt;Web component&lt;/sp-checkbox&gt;
+</code></pre>
+<h3>Standard checkboxes</h3>
+<p>Standard checkboxes are the default style for checkboxes. The blue color
+provides a visual prominence that is optimal for forms, settings, lists or grids
+of assets, etc. where the checkboxes need to be noticed.</p>
+<pre><code class="language-html">&lt;sp-checkbox checked&gt;Web component&lt;/sp-checkbox&gt;
+</code></pre>
+<h3>Quiet checkboxes</h3>
+<p>Quiet checkboxes are a secondary style for checkboxes. The gray color provides a
+less prominent style than the standard checkboxes. They are optimal for
+application panels where all visual elements are monochrome in order to direct
+focus to the content.</p>
+<pre><code class="language-html">&lt;sp-checkbox quiet&gt;Web component&lt;/sp-checkbox&gt;
+</code></pre>
+<h3>States</h3>
+<p>In addition to the variant, sp-checkboxes have a number of attributes for
+controlling their visual state. All checkbox variants support the <code>disabled</code>,
+<code>indeterminate</code>, <code>invalid</code> attributes, which applies a disabled style to the
+checkbox, and also prevents clicks from activating it.</p>
+<pre><code class="language-html">&lt;div&gt;checked:&lt;/div&gt;
+&lt;sp-checkbox checked&gt;Web component&lt;/sp-checkbox&gt;
+
+&lt;div&gt;indeterminate:&lt;/div&gt;
+&lt;sp-checkbox indeterminate&gt;Web component&lt;/sp-checkbox&gt;
+
+&lt;div&gt;invalid:&lt;/div&gt;
+&lt;sp-checkbox invalid&gt;Web component&lt;/sp-checkbox&gt;
+
+&lt;div&gt;disabled:&lt;/div&gt;
+&lt;sp-checkbox disabled&gt;Web component&lt;/sp-checkbox&gt;
+</code></pre>
+<h3>Handling events</h3>
+<p>Event handlers for clicks and other user actions can be registered on an <code>sp-checkbox</code> just as a normal <code>&lt;input type=&quot;checkbox&quot;&gt;</code> element.</p>
+<pre><code class="language-html">&lt;sp-checkbox id=&quot;checkbox-example&quot; onclick=&quot;javascript:alert('Click')&quot;&gt;
+    Web component
+&lt;/sp-checkbox&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>Checkboxes are accessible by default, rendered in HTML using the <code>&lt;input type=&quot;checkbox&quot;&gt;</code> element. When the checkbox is set as <code>indeterminate</code> or
+<code>invalid</code>, the appropriate ARIA state attribute will automatically be applied.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

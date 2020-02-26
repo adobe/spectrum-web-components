@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>An <strong>sp-switch</strong> is used to turn an option on or off. Switches allow users to select the state of a single option at a time. Use a switch rather than a checkbox when activating (or deactivating) an option, instead of selecting.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/switch
+
+# or
+
+yarn add @spectrum-web-components/switch
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-switch label=&quot;Switch&quot; onclick=&quot;javascript:alert('Click')&quot;&gt;Switch&lt;/sp-switch&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Standard switches</h3>
+<p>Standard switches are the default style for switches. The blue color provides a
+visual prominence that is optimal for forms, settings, etc. where the switches
+need to be noticed.</p>
+<pre><code class="language-html">&lt;sp-switch checked&gt;Web component&lt;/sp-switch&gt;
+</code></pre>
+<h3>Quiet switches</h3>
+<p>Quiet switches are a secondary style for switches. The gray color provides a
+less prominent style than the standard switches. They are optimal for
+application panels where all visual elements are monochrome in order to direct
+focus to the content.</p>
+<pre><code class="language-html">&lt;sp-switch checked quiet&gt;Web component&lt;/sp-switch&gt;
+</code></pre>
+<h2>State</h2>
+<h3>Checked (controlled)</h3>
+<pre><code class="language-html">&lt;sp-switch checked&gt;Checked true&lt;/sp-switch&gt;
+</code></pre>
+<h3>Disabled</h3>
+<pre><code class="language-html">&lt;sp-switch disabled&gt;Disabled switch&lt;/sp-switch&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>Switch are accessible by default, rendered in HTML using the <code>&lt;input type=&quot;checkbox&quot;&gt;</code> element with the appropriate accessibility role, <code>switch</code>. When the Switch is <code>checked</code> or <code>invalid</code>, the appropriate ARIA state attribute will automatically be applied.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

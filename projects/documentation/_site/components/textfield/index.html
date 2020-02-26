@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Textfield: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p><code>sp-textfield</code> components are text boxes that allow users to input custom text entries with a keyboard. Various decorations can be displayed around the field to communicate the entry requirements.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/textfield
+
+# or
+
+yarn add @spectrum-web-components/textfield
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-textfield placeholder=&quot;Enter your name&quot;&gt;&lt;/sp-textfield&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Valid</h3>
+<p>Dictate the validity state of the text entry with the <code>valid</code> attribute.</p>
+<pre><code class="language-html">&lt;sp-textfield placeholder=&quot;Enter your name&quot; valid&gt;&lt;/sp-textfield&gt;
+</code></pre>
+<h3>Invalid</h3>
+<p>Dictate the invalidity state of the text entry with the <code>invalid</code> attribute.</p>
+<pre><code class="language-html">&lt;sp-textfield placeholder=&quot;Enter your name&quot; invalid&gt;&lt;/sp-textfield&gt;
+</code></pre>
+<h3>Quiet</h3>
+<p>The quiet style works best when a clear layout (vertical stack, table, grid) makes it easy to parse. Too many quiet components in a small space can be hard to read.</p>
+<pre><code class="language-html">&lt;sp-textfield placeholder=&quot;Enter your name&quot; quiet&gt;&lt;/sp-textfield&gt;
+</code></pre>
+
+      </main>
+    </div>
+  </body>
+</html>

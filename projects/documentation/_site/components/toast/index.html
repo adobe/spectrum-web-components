@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toast: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p><code>sp-toast</code>s display brief, temporary notifications. They are noticeable but do not disrupt the user experience and do not require an action to be taken.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/toast
+
+# or
+
+yarn add @spectrum-web-components/toast
+</code></pre>
+<h2>Example</h2>
+<h3>Default</h3>
+<pre><code class="language-html">&lt;sp-toast&gt;This is important information that you should read, soon.&lt;/sp-toast&gt;
+</code></pre>
+<h3>With actions</h3>
+<pre><code class="language-html">&lt;sp-toast&gt;
+    This is important information that you should read, soon.
+    &lt;sp-button slot=&quot;action&quot; variant=&quot;overBackground&quot; quiet&gt;
+        Do something
+    &lt;/sp-button&gt;
+&lt;/sp-toast&gt;
+</code></pre>
+<h3>Wrapping</h3>
+<pre><code class="language-html">&lt;sp-toast style=&quot;width: 300px&quot;&gt;
+    This is important information that you should read, soon.
+    &lt;sp-button slot=&quot;action&quot; variant=&quot;overBackground&quot; quiet&gt;
+        Do something
+    &lt;/sp-button&gt;
+&lt;/sp-toast&gt;
+</code></pre>
+<h3>Variants</h3>
+<h4>Negative</h4>
+<pre><code class="language-html">&lt;sp-toast variant=&quot;negative&quot;&gt;
+    This is negative information that you should read, soon.
+&lt;/sp-toast&gt;
+</code></pre>
+<h4>Positive</h4>
+<pre><code class="language-html">&lt;sp-toast variant=&quot;positive&quot;&gt;
+    This is positive information that you should read, soon.
+&lt;/sp-toast&gt;
+</code></pre>
+<h4>Info</h4>
+<pre><code class="language-html">&lt;sp-toast variant=&quot;info&quot;&gt;This is information that you should read.&lt;/sp-toast&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>An <code>&lt;sp-toast&gt;</code> element is by default rendered with a <code>role</code> of <code>alert</code>. When rendering the <code>&lt;sp-toast&gt;</code> to a page, it should be place in a container with a <code>role</code> of <code>region</code>.</p>
+
+      </main>
+    </div>
+  </body>
+</html>
