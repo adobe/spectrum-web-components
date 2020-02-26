@@ -1,14 +1,14 @@
 import { html, CSSResultArray } from 'lit-element';
-import { LayoutElement } from './layout';
+import { RouteComponent } from './route-component';
 import componentStyles from './markdown.css';
 import homeStyles from './home.css';
 
-class HomeElement extends LayoutElement {
+class HomeElement extends RouteComponent {
     public static get styles(): CSSResultArray {
-        return [super.styles, componentStyles, homeStyles];
+        return [componentStyles, homeStyles];
     }
 
-    renderContent() {
+    render() {
         return html`
             <section id="hero">
                 <div class="spectrum-Article">
@@ -79,7 +79,7 @@ class HomeElement extends LayoutElement {
                     Sample element usage
                 </h2>
                 <code-example class="language-html">
-                    &lt;sp-button variant='cta' href='/components/button'&gt;Use
+                    &lt;sp-button variant='cta' href='components/button'&gt;Use
                     Spectrum Web Component buttons&lt;/sp-button&gt;
                 </code-example>
             </section>

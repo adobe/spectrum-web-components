@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, CSSResultArray, TemplateResult } from 'lit-element';
-import { LayoutElement } from './layout';
+import '@spectrum-web-components/bundle';
+import { RouteComponent } from './route-component';
 import componentStyles from './markdown.css';
 import { AppRouter } from '../router';
 import { TabList } from '../../../packages/tab-list';
@@ -95,7 +96,7 @@ function buildTable(
     `;
 }
 
-class ComponentElement extends LayoutElement {
+class ComponentElement extends RouteComponent {
     public location?: {
         baseUrl: string;
         params: {
@@ -108,7 +109,7 @@ class ComponentElement extends LayoutElement {
     private docsLoaded = false;
 
     public static get styles(): CSSResultArray {
-        return [super.styles, componentStyles];
+        return [componentStyles];
     }
 
     public get componentName(): string {
@@ -151,7 +152,7 @@ class ComponentElement extends LayoutElement {
         return this.docsLoaded;
     }
 
-    renderContent() {
+    render() {
         let result;
         if (this.location && this.location.params) {
             const APIdocs = docs.tags.find(
@@ -190,7 +191,7 @@ class ComponentElement extends LayoutElement {
                 </article>
             `;
         }
-        return result || super.renderContent();
+        return result || html``;
     }
 
     protected renderDocs(tag: TagType): TemplateResult {

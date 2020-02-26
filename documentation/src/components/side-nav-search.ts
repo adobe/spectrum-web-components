@@ -19,8 +19,15 @@ import {
     query,
 } from 'lit-element';
 import sideNavSearchMenuStyles from './side-nav-search.css';
-import { Search } from '../../../packages/search';
-import { Overlay } from '../../../packages/overlay';
+import { Search } from '@spectrum-web-components/search';
+import { Overlay } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/search';
+import '@spectrum-web-components/overlay';
+import '@spectrum-web-components/popover';
+import '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu-group';
+import '@spectrum-web-components/menu-item';
+import '@spectrum-web-components/illustrated-message';
 import { AppRouter } from '../router';
 import { search, ResultGroup } from './search-index';
 

@@ -21,6 +21,7 @@ declare module '@vaadin/router' {
     export interface Route {
         path: string;
         component: string;
+        action(): Promise<void>;
     }
 
     export class Router {

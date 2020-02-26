@@ -17,10 +17,11 @@ import {
     PropertyValues,
     TemplateResult,
 } from 'lit-element';
+import '@spectrum-web-components/sidenav';
+import { SidenavSelectDetail } from '@spectrum-web-components/sidenav';
 import { AppRouter } from '../router';
 import './side-nav-search';
 import { search, Result } from './search-index';
-import { SidenavSelectDetail } from '../../../packages/sidenav';
 import sideNavStyles from './side-nav.css';
 import './adobe-logo';
 
@@ -64,7 +65,6 @@ class SideNav extends LitElement {
             this.components = components.results;
             components.results.sort((a, b) => (a.name < b.name ? -1 : 1));
         }
-        console.log(docs);
     }
 
     render(): TemplateResult {

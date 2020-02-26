@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { Router, Route, RouterOptions } from '@vaadin/router';
+import { Page } from './components/page';
 
 const githubUrl = 'https://opensource.adobe.com/spectrum-web-components/';
 const baseUrl =
@@ -35,6 +36,8 @@ class DocumentationRouter extends Router {
     }
 
     public go(pathname: string): boolean {
+        const docs = document.querySelector('docs-page') as Page;
+        docs.resetScroll();
         return Router.go(pathname);
     }
 
@@ -45,11 +48,31 @@ class DocumentationRouter extends Router {
     }
 }
 
-export const AppRouter = new DocumentationRouter(document.body, {
+const docs = document.querySelector('docs-page') as Node;
+
+export const AppRouter = new DocumentationRouter(docs, {
     baseUrl: baseUrl,
 });
 AppRouter.setRoutes([
-    { path: '/', component: 'docs-home' },
-    { path: '/components/:component/:tab?', component: 'docs-component' },
-    { path: '/guides/:guide', component: 'docs-guide' },
+    {
+        path: '/',
+        component: 'docs-home',
+        action: async () => {
+            await import('./components/home');
+        },
+    },
+    {
+        path: '/components/:component/:tab?',
+        component: 'docs-component',
+        action: async () => {
+            await import('./components/component');
+        },
+    },
+    {
+        path: '/guides/:guide',
+        component: 'docs-guide',
+        action: async () => {
+            await import('./components/guide');
+        },
+    },
 ]);
