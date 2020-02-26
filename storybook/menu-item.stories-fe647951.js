@@ -1,2 +1,0 @@
-import"./lit-element-089a5717.js";import{q as e}from"./storybook-preview-9aba481c.js";import"./tslib.es6-d9c764b6.js";import"./if-defined-f9b5fa5b.js";import"./index-16f3b7d2.js";import"./focusable-f84f80fc.js";import"./iconset-svg-7745673b.js";import"./index-71d657ab.js";import"./observe-slot-text-5194cee4.js";import"./index-41afc42f.js";var t=()=>e` <sp-menu-item> Menu Item </sp-menu-item> `,i=["Default"];export default{component:"sp-menu-item",title:"Menu Item"};export{t as Default,i as __namedExportsOrder};
-//# sourceMappingURL=menu-item.stories-fe647951.js.map
