@@ -2,7 +2,7 @@
 
 The following is an annotated example that serves to document the format
 of the spectrum-config.js file. A higher-level explanation may be found
-[here](/guides/adding-component).
+<sp-link href="adding-component">here</sp-link>.
 
 ## Annotated Sample
 

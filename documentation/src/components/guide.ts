@@ -10,12 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, CSSResultArray } from 'lit-element';
+import '@spectrum-web-components/link';
 import './layout';
 import { GuideDocs } from '../../guides';
-import { LayoutElement } from './layout';
+import { RouteComponent } from './route-component';
 import componentStyles from './markdown.css';
 
-class GuideElement extends LayoutElement {
+class GuideElement extends RouteComponent {
     location?: {
         baseUrl: string;
         params: {
@@ -25,7 +26,7 @@ class GuideElement extends LayoutElement {
     };
 
     public static get styles(): CSSResultArray {
-        return [super.styles, componentStyles];
+        return [componentStyles];
     }
 
     public get componentName(): string {
@@ -35,7 +36,7 @@ class GuideElement extends LayoutElement {
         return '';
     }
 
-    renderContent() {
+    render() {
         let result;
         if (this.location && this.location.params) {
             result = html`
@@ -44,7 +45,7 @@ class GuideElement extends LayoutElement {
                 </article>
             `;
         }
-        return result || super.renderContent();
+        return result || html``;
     }
 }
 customElements.define('docs-guide', GuideElement);

@@ -17,6 +17,7 @@ import {
     TemplateResult,
     CSSResultArray,
     property,
+    css,
 } from 'lit-element';
 import * as Prism from 'prismjs';
 import { toHtmlTemplateString } from '../utils/templates';
@@ -50,7 +51,22 @@ export class DarkCode extends Code {
 @customElement('light-code')
 export class LightCode extends Code {
     public static get styles(): CSSResultArray {
-        return [LightThemeStyles];
+        return [
+            LightThemeStyles,
+            css`
+                .token.attr-name,
+                .token.builtin,
+                .token.char,
+                .token.inserted,
+                .token.selector,
+                .token.string {
+                    color: #567f01;
+                }
+                .token.punctuation {
+                    color: #737373;
+                }
+            `,
+        ];
     }
 }
 
