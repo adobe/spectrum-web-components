@@ -26,6 +26,11 @@ module.exports = {
                     selector: '.is-invalid',
                     name: 'invalid',
                 },
+                {
+                    type: 'boolean',
+                    selector: '.spectrum-FieldButton--quiet',
+                    name: 'quiet',
+                },
             ],
             classes: [
                 {

@@ -103,7 +103,7 @@ describe('Dropdown', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        el.open = true;
+        el.click();
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
