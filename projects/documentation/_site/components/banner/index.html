@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>An <strong>sp-banner</strong> is an additional label an existing component may have. Banners cannot be interacted with. Banners in Spectrum have three variations for different uses as well as the ability to place it overlaid in the top-right corner of a container.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/banner
+
+# or
+
+yarn add @spectrum-web-components/banner
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-banner&gt;
+    &lt;div slot=&quot;header&quot;&gt;Header text&lt;/div&gt;
+    &lt;div slot=&quot;content&quot;&gt;Content of the banner&lt;/div&gt;
+&lt;/sp-banner&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Info banners</h3>
+<p>Banners intended for providing information. This is the default banner variant.</p>
+<pre><code class="language-html">&lt;sp-banner type=&quot;info&quot;&gt;
+    &lt;div slot=&quot;header&quot;&gt;This is an info banner&lt;/div&gt;
+    &lt;div slot=&quot;content&quot;&gt;Description here&lt;/div&gt;
+&lt;/sp-banner&gt;
+</code></pre>
+<h3>Warning banners</h3>
+<p>Banners intended to provided a warning with a brief description. Less severe than an error banner.</p>
+<pre><code class="language-html">&lt;sp-banner type=&quot;warning&quot;&gt;
+    &lt;div slot=&quot;header&quot;&gt;This is a warning banner&lt;/div&gt;
+    &lt;div slot=&quot;content&quot;&gt;Be careful!&lt;/div&gt;
+&lt;/sp-banner&gt;
+</code></pre>
+<h3>Error banners</h3>
+<p>Banners intended to indicate an error as occurred, with a brief description of the issue. More severe than a warning banner.</p>
+<pre><code class="language-html">&lt;sp-banner type=&quot;error&quot;&gt;
+    &lt;div slot=&quot;header&quot;&gt;This is an error banner&lt;/div&gt;
+    &lt;div slot=&quot;content&quot;&gt;Something bad happened&lt;/div&gt;
+&lt;/sp-banner&gt;
+</code></pre>
+<h2>Corner placement</h2>
+<p>In addition to the variant, banners can be placed in the top-right corner of its container by giving them a corner prop. Note that the position of the containing element needs to be either relative or absolute</p>
+<pre><code class="language-html">&lt;div
+    style=&quot;width: 300px; height: 100px; background-color: #ba598b; position: relative;&quot;
+&gt;
+    &lt;sp-banner type=&quot;warning&quot; corner&gt;
+        &lt;div slot=&quot;header&quot;&gt;This banner is in a corner&lt;/div&gt;
+        &lt;div slot=&quot;content&quot;&gt;Neat!&lt;/div&gt;
+    &lt;/sp-banner&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>A Banner does not have a default semantic role communicated to assistive technology, but it does accept id, role and other aria- props that can be added to to improve accessibility depending on context.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

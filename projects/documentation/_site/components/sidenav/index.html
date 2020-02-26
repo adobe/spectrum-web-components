@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidenav: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>Side navigation allows users to locate information and features within the UI.
+It can be used for either hierarchical or flat navigation, and gives the ability
+to group navigable items categorically. Side navigation is an opportunity to
+prioritize content or features based on your users’ needs in a way that
+maintains clear, persistent visibility. Use side navigation within the context
+of larger elements and mechanisms within the app frame.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/sidenav
+
+# or
+
+yarn add @spectrum-web-components/sidenav
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-sidenav defaultValue=&quot;Docs&quot;&gt;
+    &lt;sp-sidenav-item
+        value=&quot;Docs&quot;
+        label=&quot;Docs&quot;
+        href=&quot;/components/SideNav&quot;
+    &gt;&lt;/sp-sidenav-item&gt;
+    &lt;sp-sidenav-item
+        value=&quot;Guides&quot;
+        label=&quot;Guides&quot;
+        href=&quot;/guides/getting_started&quot;
+    &gt;&lt;/sp-sidenav-item&gt;
+    &lt;sp-sidenav-item
+        value=&quot;Community&quot;
+        label=&quot;Community&quot;
+        href=&quot;/community&quot;
+    &gt;&lt;/sp-sidenav-item&gt;
+    &lt;sp-sidenav-item
+        value=&quot;Storybook&quot;
+        label=&quot;Storybook&quot;
+        href=&quot;/storybook&quot;
+        target=&quot;_blank&quot;
+    &gt;&lt;/sp-sidenav-item&gt;
+    &lt;sp-sidenav-item
+        value=&quot;Releases&quot;
+        label=&quot;Releases&quot;
+        href=&quot;http://git.corp.adobe.com/React/react-spectrum/releases&quot;
+        target=&quot;_blank&quot;
+        disabled
+    &gt;&lt;/sp-sidenav-item&gt;
+    &lt;sp-sidenav-item
+        value=&quot;GitHub&quot;
+        label=&quot;GitHub&quot;
+        href=&quot;http://git.corp.adobe.com/React/react-spectrum&quot;
+        target=&quot;_blank&quot;
+    &gt;&lt;/sp-sidenav-item&gt;
+&lt;/sp-sidenav&gt;
+</code></pre>
+<h2>Multi-level</h2>
+<p>Use this variation when you have multiple layers of hierarchical navigation. The
+headers are styled differently and possess the same interactive behavior as a
+treeview; clicking the header opens and collapses the children navigation items.
+In the instances where a top-level navigation item has no children, clicking
+will send the user to the location of the item.</p>
+<pre><code class="language-html">&lt;sp-sidenav variant=&quot;multilevel&quot; defaultValue=&quot;Layout&quot;&gt;
+    &lt;sp-sidenav-item value=&quot;Guidelines&quot; label=&quot;Guidelines&quot;&gt;&lt;/sp-sidenav-item&gt;
+    &lt;sp-sidenav-item value=&quot;Styles&quot; label=&quot;Styles&quot;&gt;
+        &lt;sp-sidenav-item value=&quot;Color&quot; label=&quot;Color&quot;&gt;&lt;/sp-sidenav-item&gt;
+        &lt;sp-sidenav-item value=&quot;Grid&quot; label=&quot;Grid&quot;&gt;
+            &lt;sp-sidenav-item value=&quot;Layout&quot; label=&quot;Layout&quot;&gt;&lt;/sp-sidenav-item&gt;
+            &lt;sp-sidenav-item value=&quot;Responsive&quot; label=&quot;Responsive&quot;&gt;&lt;/sp-sidenav-item&gt;
+        &lt;/sp-sidenav-item&gt;
+        &lt;sp-sidenav-item value=&quot;Typography&quot; label=&quot;Typography&quot;&gt;&lt;/sp-sidenav-item&gt;
+    &lt;/sp-sidenav-item&gt;
+    &lt;sp-sidenav-item value=&quot;Elements&quot; label=&quot;Elements&quot;&gt;&lt;/sp-sidenav-item&gt;
+    &lt;sp-sidenav-item value=&quot;Patterns&quot; label=&quot;Patterns&quot;&gt;&lt;/sp-sidenav-item&gt;
+&lt;/sp-sidenav-itm&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>When the <code>manage-tab-index</code> attribute is set on an <code>sp-sidenav</code> element then it will presents its child <code>sp-sidenav-item</code> children with a single tab-stop. This will leave items beyond the selected item, or first when there is no focusable selected item, will be accessibile via the up and down arrow keys.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Item: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>An <code>&lt;sp-menu /&gt;</code> is used for creating a menu list. The various elements inside a menu are given as <code>&lt;sp-menu-group/&gt;</code>, <code>&lt;sp-menu-item /&gt;</code>, or <code>&lt;sp-menu-divider /&gt;</code>.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/menu-item
+
+# or
+
+yarn add @spectrum-web-components/menu-item
+</code></pre>
+<h2>Variants</h2>
+<h3>Menu items</h3>
+<p>Menus are a collection of <code>&lt;sp-menu-items /&gt;</code> that can be modified to be <code>disabled</code> or <code>selected</code>.</p>
+<!-- prettier-ignore -->
+<pre><code class="language-html">&lt;sp-menu&gt;
+    &lt;sp-menu-item&gt;
+        Active menu item
+    &lt;/sp-menu-item&gt;
+    &lt;sp-menu-item disabled&gt;
+        Disabled menu item
+    &lt;/sp-menu-item&gt;
+    &lt;sp-menu-item selected&gt;
+        Selected menu item
+    &lt;/sp-menu-item&gt;
+&lt;/sp-menu&gt;
+</code></pre>
+<h3>Organization</h3>
+<p>The content of a menu can be organized by either adding <code>&lt;sp-menu-divider /&gt;</code> elements to a flat list.</p>
+<!-- prettier-ignore -->
+<pre><code class="language-html">&lt;sp-popover open style=&quot;position: relative&quot;&gt;
+    &lt;sp-menu&gt;
+        &lt;sp-menu-item&gt;
+            Menu item 1a
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Menu item 2a
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-divider&gt;&lt;/sp-menu-divider&gt;
+        &lt;sp-menu-item&gt;
+            Menu item 3a
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Menu item 1b
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-divider&gt;&lt;/sp-menu-divider&gt;
+        &lt;sp-menu-item&gt;
+            Menu item 2b
+        &lt;/sp-menu-item&gt;
+    &lt;/sp-menu&gt;
+&lt;/sp-popover&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p><code>&lt;sp-menu /&gt;</code>, <code>&lt;sp-menu-group /&gt;</code>, and <code>&lt;sp-menu-item /&gt;</code> each deliver a different part of the wai-aria &quot;menu&quot; pattern and support the <code>menu</code>, <code>group</code>, and <code>menuitem</code> roles respectively. To support ease of keyboard navigation, only the first active <em>or</em> first selected <code>&lt;sp-menu-item /&gt;</code> can be accessed in the tab order. Once the focus has entered the menu the up and down arrow keys can be used to access the rest of the menu.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

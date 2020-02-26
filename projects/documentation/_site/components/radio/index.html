@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p><strong>sp-radio</strong> and <strong>sp-radio-group</strong> allow users to select a single option from a list of mutually exclusive options. All possible options are exposed up front for users to compare.</p>
+<p><strong>sp-radio-group</strong> holds a list of <strong>sp-radio</strong> elements, and is responsible for deselecting radio buttons when a new one is selected, which in turn makes it responsible for keeping track of which one is selected. <strong>sp-radio</strong> is responsible for handling user interactions and for visually reflecting if it is the one that is checked or not.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/radio
+
+# or
+
+yarn add @spectrum-web-components/radio
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-html">&lt;sp-radio-group selected=&quot;first&quot; name=&quot;example&quot;&gt;
+    &lt;sp-radio value=&quot;first&quot;&gt;Option 1&lt;/sp-radio&gt;
+    &lt;sp-radio value=&quot;second&quot;&gt;Option 2&lt;/sp-radio&gt;
+    &lt;sp-radio value=&quot;third&quot;&gt;Option 3&lt;/sp-radio&gt;
+    &lt;sp-radio value=&quot;fourth&quot;&gt;Option 4&lt;/sp-radio&gt;
+&lt;/sp-radio-group&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Standard radio</h3>
+<p>Standard radio buttons are the default style for radio buttons. The blue color provides a visual prominence that is optimal for forms, settings, etc. where the radio buttons need to be noticed.</p>
+<pre><code class="language-html">&lt;sp-radio&gt;Standard radio button&lt;/sp-radio&gt;
+</code></pre>
+<h3>Quiet radio</h3>
+<p>Quiet radio buttons are a secondary style for radio buttons. The gray color provides a
+less prominent style than the standard radioes. They are optimal for
+application panels where all visual elements are monochrome in order to direct
+focus to the content.</p>
+<pre><code class="language-html">&lt;sp-radio quiet&gt;Quiet radio button&lt;/sp-radio&gt;
+</code></pre>
+<h2>States</h2>
+<p>In addition to the variant, <strong>sp-radio</strong> buttons have a number of attributes for
+controlling their visual state. All radio variants support the <code>disabled</code> and <code>invalid</code> attributes. Invalid which applies a disabled style to the
+radio, and also prevents clicks from activating it.</p>
+<h3>Checked</h3>
+<p>When the radio is selected. Can be deselected only by selecting another radio in the group or by manually setting checked property</p>
+<pre><code class="language-html">&lt;sp-radio checked&gt;Checked radio button&lt;/sp-radio&gt;
+</code></pre>
+<h3>Invalid</h3>
+<p>Indicates some error state related to the radio button. Can still be checked.</p>
+<pre><code class="language-html">&lt;sp-radio invalid&gt;Invalid radio button&lt;/sp-radio&gt;
+</code></pre>
+<h3>Disabled</h3>
+<p>When the radio button is no longer interactable. The button cannot be checked.</p>
+<pre><code class="language-html">&lt;sp-radio disabled&gt;Disabled radio button&lt;/sp-radio&gt;
+</code></pre>
+<h3>Handling events</h3>
+<p>Event handlers for clicks and other user actions can be registered on an <code>sp-radio</code> just as a normal <code>&lt;input type=&quot;radio&quot;&gt;</code> element.</p>
+<pre><code class="language-html">&lt;sp-radio id=&quot;radio-example&quot; onclick=&quot;javascript:alert('Click')&quot;&gt;
+    Web component
+&lt;/sp-radio&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>Radio buttons are accessible by default, rendered in HTML using the <code>&lt;input type=&quot;radio&quot;&gt;</code> element. Tabbing into a group of radio buttons places the focus on the first radio button selected. If none of the radio buttons are selected, the focus is set on the first one in the group. Space selects the radio button in focus (if not already selected). Using the arrow keys moves focus and selection to the previous or next radio button in the group (last becomes first, and first becomes last). The new radio button in focus gets selected even if the previous one was not.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

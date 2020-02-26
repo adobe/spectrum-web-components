@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>The <code>&lt;sp-tab&gt;</code> component is intended to be the child of an <code>&lt;sp-tab-list&gt;</code> element and accepts both a <code>label</code> attribute and a <code>[slot=&quot;icon&quot;]</code> child to define its contents. Those contents can be further customized with the <code>vertical</code> attribute which stacks them in the UI rather than listing them in a row.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/tab
+
+# or
+
+yarn add @spectrum-web-components/tab
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-tab-list selected=&quot;1&quot;&gt;
+    &lt;sp-tab label=&quot;Tab 1&quot; value=&quot;1&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 2&quot; value=&quot;2&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 3&quot; value=&quot;3&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 4&quot; value=&quot;4&quot;&gt;&lt;/sp-tab&gt;
+&lt;/sp-tab-list&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Icon</h3>
+<pre><code class="language-html">&lt;sp-icons-medium&gt;&lt;/sp-icons-medium&gt;
+&lt;sp-tab label=&quot;Tab 1&quot; value=&quot;1&quot;&gt;
+    &lt;sp-icon slot=&quot;icon&quot; size=&quot;m&quot; name=&quot;ui:CheckmarkSmall&quot;&gt;&lt;/sp-icon&gt;
+&lt;/sp-tab&gt;
+</code></pre>
+<h3>Vertical w/ icon</h3>
+<pre><code class="language-html">&lt;sp-tab label=&quot;Tab 1&quot; value=&quot;1&quot; vertical&gt;
+    &lt;sp-icon slot=&quot;icon&quot; size=&quot;m&quot; name=&quot;ui:CheckmarkSmall&quot;&gt;&lt;/sp-icon&gt;
+&lt;/sp-tab&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>By default, an <code>&lt;sp-tab&gt;</code> element has <code>[tabindex=&quot;-1&quot;]</code> so that it can be focused programmatically. When an <code>&lt;sp-tab&gt;</code> element is <code>[selected]</code> or isthe first <code>&lt;sp-tab&gt;</code> in an <code>&lt;sp-tab-list&gt;</code> element with no <code>selected</code> value, it will be given <code>[tabindex=&quot;0&quot;]</code>.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

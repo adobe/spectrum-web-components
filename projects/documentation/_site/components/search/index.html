@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>The <code>&lt;sp-search /&gt;</code> element delivers a single input field with a &quot;reset&quot; button as well as a mangifying glass icon with which to power search interactions.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/search
+
+# or
+
+yarn add @spectrum-web-components/search
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-search&gt;&lt;/sp-search&gt;
+&lt;sp-search disabled&gt;&lt;/sp-search&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Quiet</h3>
+<pre><code class="language-html">&lt;sp-search quiet&gt;&lt;/sp-search&gt;
+&lt;sp-search quiet disabled&gt;&lt;/sp-search&gt;
+</code></pre>
+<h2>Events</h2>
+<p>The <code>submit</code> event fires when the <code>&lt;sp-search /&gt;</code> is submitted. This is a non-<code>composed</code> event inline with what you would expect a <sp-link href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event"><code>&lt;form /&gt;</code></sp-link>{:target=&quot;_blank&quot;} to fire. If you choose to prevent the default of this event, the default action for the underlying <code>&lt;form /&gt;</code> element will also be prevented, which will allow you to handle the search action in javascript.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

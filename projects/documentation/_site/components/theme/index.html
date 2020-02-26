@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>An <strong>sp-theme</strong> sets the rendering theme for all child components.
+The Spectrum design system supports four color themes and two different
+scales. <code>spectrum-web-components</code> currently supports three of the four
+color themes (dark, light and lightest) and one one of the scales (medium).</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/themes
+
+# or
+
+yarn add @spectrum-web-components/themes
+</code></pre>
+<h2>Light theme</h2>
+<pre><code class="language-html">&lt;style type=&quot;text/css&quot;&gt;
+    #example {
+        width: 500px;
+        padding: 3em;
+        background-color: var(--spectrum-global-color-gray-100);
+        color: var(--spectrum-global-color-gray-800);
+    }
+
+    #buttons {
+        margin-top: 2em;
+    }
+&lt;/style&gt;
+&lt;sp-theme color=&quot;light&quot;&gt;
+    &lt;div id=&quot;example&quot;&gt;
+        &lt;div&gt;
+            &lt;sp-slider
+                value=&quot;5&quot;
+                step=&quot;1&quot;
+                min=&quot;1&quot;
+                max=&quot;11&quot;
+                label=&quot;Volume&quot;
+                id=&quot;volume-slider&quot;
+            &gt;&lt;/sp-slider&gt;
+        &lt;/div&gt;
+        &lt;div&gt;&lt;sp-switch&gt;Overdrive&lt;/sp-switch&gt;&lt;/div&gt;
+        &lt;div id=&quot;buttons&quot;&gt;
+            &lt;sp-button variant=&quot;primary&quot;&gt;Cancel&lt;/sp-button&gt;
+            &lt;sp-button variant=&quot;cta&quot;&gt;Continue&lt;/sp-button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/sp-theme&gt;
+</code></pre>
+<h2>Dark theme</h2>
+<pre><code class="language-html">&lt;style type=&quot;text/css&quot;&gt;
+    #example {
+        width: 500px;
+        padding: 3em;
+        background-color: var(--spectrum-global-color-gray-100);
+        color: var(--spectrum-global-color-gray-800);
+    }
+
+    #buttons {
+        margin-top: 2em;
+    }
+&lt;/style&gt;
+&lt;sp-theme color=&quot;dark&quot;&gt;
+    &lt;div id=&quot;example&quot;&gt;
+        &lt;div&gt;
+            &lt;sp-slider
+                value=&quot;5&quot;
+                step=&quot;1&quot;
+                min=&quot;1&quot;
+                max=&quot;11&quot;
+                label=&quot;Volume&quot;
+                id=&quot;volume-slider&quot;
+            &gt;&lt;/sp-slider&gt;
+        &lt;/div&gt;
+        &lt;div&gt;&lt;sp-switch&gt;Overdrive&lt;/sp-switch&gt;&lt;/div&gt;
+        &lt;div id=&quot;buttons&quot;&gt;
+            &lt;sp-button variant=&quot;primary&quot;&gt;Cancel&lt;/sp-button&gt;
+            &lt;sp-button variant=&quot;cta&quot;&gt;Continue&lt;/sp-button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/sp-theme&gt;
+</code></pre>
+<h2>Embedding themes</h2>
+<p>There are a few cases where it is necessary to embed one theme within another.
+For example, if you have an application that is using a dark theme that is
+previewing or editing content that will be displayed in a light theme.</p>
+<pre><code class="language-html">&lt;style type=&quot;text/css&quot;&gt;
+    #outer {
+        width: 500px;
+        padding: 3em;
+        background-color: var(--spectrum-global-color-gray-100);
+        color: var(--spectrum-global-color-gray-800);
+    }
+
+    #inner {
+        margin-top: 2em;
+        padding: 2em;
+        background-color: var(--spectrum-global-color-gray-100);
+        color: var(--spectrum-global-color-gray-800);
+    }
+
+    #buttons {
+        margin-top: 2em;
+    }
+&lt;/style&gt;
+&lt;sp-theme color=&quot;dark&quot;&gt;
+    &lt;div id=&quot;outer&quot;&gt;
+        &lt;div&gt;
+            &lt;sp-slider
+                value=&quot;5&quot;
+                step=&quot;1&quot;
+                min=&quot;1&quot;
+                max=&quot;11&quot;
+                label=&quot;Volume&quot;
+                id=&quot;volume-slider&quot;
+            &gt;&lt;/sp-slider&gt;
+        &lt;/div&gt;
+        &lt;div&gt;&lt;sp-switch&gt;Overdrive&lt;/sp-switch&gt;&lt;/div&gt;
+        &lt;div id=&quot;buttons&quot;&gt;
+            &lt;sp-button variant=&quot;primary&quot;&gt;Cancel&lt;/sp-button&gt;
+            &lt;sp-button variant=&quot;cta&quot;&gt;Continue&lt;/sp-button&gt;
+        &lt;/div&gt;
+        &lt;sp-theme color=&quot;light&quot;&gt;
+            &lt;div id=&quot;inner&quot;&gt;
+                &lt;div&gt;
+                    &lt;sp-slider
+                        value=&quot;5&quot;
+                        step=&quot;1&quot;
+                        min=&quot;1&quot;
+                        max=&quot;11&quot;
+                        label=&quot;Volume&quot;
+                        id=&quot;volume-slider&quot;
+                    &gt;&lt;/sp-slider&gt;
+                &lt;/div&gt;
+                &lt;div&gt;&lt;sp-switch&gt;Overdrive&lt;/sp-switch&gt;&lt;/div&gt;
+                &lt;div id=&quot;buttons&quot;&gt;
+                    &lt;sp-button variant=&quot;primary&quot;&gt;Cancel&lt;/sp-button&gt;
+                    &lt;sp-button variant=&quot;cta&quot;&gt;Continue&lt;/sp-button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/sp-theme&gt;
+    &lt;/div&gt;
+&lt;/sp-theme&gt;
+</code></pre>
+
+      </main>
+    </div>
+  </body>
+</html>

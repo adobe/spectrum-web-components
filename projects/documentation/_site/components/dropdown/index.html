@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>An <code>&lt;sp-dropdown /&gt;</code> is an alternative to HTML's <code>select</code> element. Use an <code>&lt;sp-menu&gt;</code> element to outline the options that will be made available to the user when interacting with the <code>sp-dropdown</code> element.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/dropdown
+
+# or
+
+yarn add @spectrum-web-components/dropdown
+</code></pre>
+<h2>Example</h2>
+<!-- prettier-ignore -->
+<pre><code class="language-html">&lt;sp-dropdown
+    label=&quot;Select a Country with a very long label, too long in fact&quot;
+&gt;
+    &lt;sp-menu&gt;
+        &lt;sp-menu-item&gt;
+            Deselect
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Select inverse
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Feather...
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Select and mask...
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-divider&gt;&lt;/sp-menu-divider&gt;
+        &lt;sp-menu-item&gt;
+            Save selection
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item disabled&gt;
+            Make work path
+        &lt;/sp-menu-item&gt;
+    &lt;/sp-menu&gt;
+&lt;/sp-dropdown&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Invalid</h3>
+<!-- prettier-ignore -->
+<pre><code class="language-html">&lt;sp-dropdown
+    label=&quot;Select a Country with a very long label, too long in fact&quot;
+    invalid
+&gt;
+    &lt;sp-menu&gt;
+        &lt;sp-menu-item&gt;
+            Deselect
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Select inverse
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Feather...
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Select and mask...
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-divider&gt;&lt;/sp-menu-divider&gt;
+        &lt;sp-menu-item&gt;
+            Save selection
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item disabled&gt;
+            Make work path
+        &lt;/sp-menu-item&gt;
+    &lt;/sp-menu&gt;
+&lt;/sp-dropdown&gt;
+</code></pre>
+<h3>Disabled</h3>
+<!-- prettier-ignore -->
+<pre><code class="language-html">&lt;sp-dropdown
+    label=&quot;Select a Country with a very long label, too long in fact&quot;
+    disabled
+&gt;
+    &lt;sp-menu&gt;
+        &lt;sp-menu-item&gt;
+            Deselect
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Select inverse
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Feather...
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item&gt;
+            Select and mask...
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-divider&gt;&lt;/sp-menu-divider&gt;
+        &lt;sp-menu-item&gt;
+            Save selection
+        &lt;/sp-menu-item&gt;
+        &lt;sp-menu-item disabled&gt;
+            Make work path
+        &lt;/sp-menu-item&gt;
+    &lt;/sp-menu&gt;
+&lt;/sp-dropdown&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>An <code>sp-dropdown</code> parent will ensure that the wrapped <code>sp-menu</code> features a role of <code>listbox</code> and contains children with the role <code>option</code>. Upon focusing the <code>sp-dropdown</code> using <code>ArrowDown</code> will also open the menu while throwing focus into first selected (or unselected when none are selected) menu item for easy selecting of a new value.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

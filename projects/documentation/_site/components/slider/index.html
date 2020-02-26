@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p><strong>sp-slider</strong> allows users to quickly select a value within a range. They should be used when the upper and lower bounds to the range are invariable.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/slider
+
+# or
+
+yarn add @spectrum-web-components/slider
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-html">&lt;sp-slider&gt;&lt;/sp-slider&gt;
+</code></pre>
+<h3>Variants</h3>
+<h4>Filled</h4>
+<pre><code class="language-html">&lt;sp-slider variant=&quot;filled&quot;&gt;&lt;/sp-slider&gt;
+</code></pre>
+<h4>Ramp</h4>
+<pre><code class="language-html">&lt;sp-slider variant=&quot;ramp&quot;&gt;&lt;/sp-slider&gt;
+</code></pre>
+<h4>Tick</h4>
+<pre><code class="language-html">&lt;sp-slider variant=&quot;tick&quot; tick-step=&quot;4&quot;&gt;&lt;/sp-slider&gt;
+</code></pre>
+<h4>Tick w/ labels</h4>
+<pre><code class="language-html">&lt;sp-slider variant=&quot;tick&quot; tick-step=&quot;5&quot; tick-labels&gt;&lt;/sp-slider&gt;
+</code></pre>
+
+      </main>
+    </div>
+  </body>
+</html>
