@@ -4,9 +4,7 @@
 
 ```html
 <nav>
-    <ul>
-        <slot></slot>
-    </ul>
+    <slot></slot>
 </nav>
 ```
 
