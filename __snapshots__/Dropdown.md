@@ -3,8 +3,7 @@
 #### `loads`
 
 ```html
-Select a Country with a very long label, too long in fact
-<sp-menu role="listbox" slot="options">
+<sp-menu role="listbox">
     <sp-menu-item data-js-focus-visible="" role="option" tabindex="0">
         Deselect
     </sp-menu-item>
@@ -40,9 +39,16 @@ Select a Country with a very long label, too long in fact
 
 ```html
 <sp-icons-medium style="display: none;"></sp-icons-medium>
-<button aria-haspopup="true" id="button" tabindex="0">
+<button
+    aria-haspopup="true"
+    aria-label="Select a Country with a very long label, too long in fact"
+    id="button"
+    tabindex="0"
+>
     <div class="placeholder" id="label">
-        <slot></slot>
+        <slot name="label">
+            Select a Country with a very long label, too long in fact
+        </slot>
     </div>
     <sp-icon
         class="chevron-down-medium dropdown icon"
@@ -50,26 +56,13 @@ Select a Country with a very long label, too long in fact
         size="s"
     ></sp-icon>
 </button>
-<sp-popover direction="bottom" id="popover">
-    <slot name="options">
-        <sp-menu-item
-            aria-disabled="true"
-            data-js-focus-visible=""
-            disabled=""
-            role="option"
-            tabindex="-1"
-        >
-            There are no options currently available.
-        </sp-menu-item>
-    </slot>
-</sp-popover>
+<sp-popover id="popover" open="" placement="none"></sp-popover>
 ```
 
 #### `renders invalid`
 
 ```html
-Select a Country with a very long label, too long in fact
-<sp-menu role="listbox" slot="options">
+<sp-menu role="listbox">
     <sp-menu-item data-js-focus-visible="" role="option" tabindex="0">
         Deselect
     </sp-menu-item>
@@ -105,9 +98,16 @@ Select a Country with a very long label, too long in fact
 
 ```html
 <sp-icons-medium style="display: none;"></sp-icons-medium>
-<button aria-haspopup="true" id="button" tabindex="0">
+<button
+    aria-haspopup="true"
+    aria-label="Select a Country with a very long label, too long in fact"
+    id="button"
+    tabindex="0"
+>
     <div class="placeholder" id="label">
-        <slot></slot>
+        <slot name="label">
+            Select a Country with a very long label, too long in fact
+        </slot>
     </div>
     <sp-icon class="alert-small icon" name="ui:AlertSmall" size="s"></sp-icon>
     <sp-icon
@@ -116,17 +116,5 @@ Select a Country with a very long label, too long in fact
         size="s"
     ></sp-icon>
 </button>
-<sp-popover direction="bottom" id="popover">
-    <slot name="options">
-        <sp-menu-item
-            aria-disabled="true"
-            data-js-focus-visible=""
-            disabled=""
-            role="option"
-            tabindex="-1"
-        >
-            There are no options currently available.
-        </sp-menu-item>
-    </slot>
-</sp-popover>
+<sp-popover id="popover" open="" placement="none"></sp-popover>
 ```
