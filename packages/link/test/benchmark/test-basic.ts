@@ -15,5 +15,5 @@ import { html } from 'lit-html';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 
 measureFixtureCreation(html`
-    <sp-link href="test_url">Default Link</sp-link>
+    <sp-link href="test_url" download="somefile.txt">Default Link</sp-link>
 `);

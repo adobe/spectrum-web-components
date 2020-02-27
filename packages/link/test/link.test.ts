@@ -18,7 +18,9 @@ describe('Link', () => {
     it('loads', async () => {
         const el = await fixture<Link>(
             html`
-                <sp-link href="test_url">Default Link</sp-link>
+                <sp-link href="test_url" download="somefile.txt">
+                    Default Link
+                </sp-link>
             `
         );
 
@@ -27,7 +29,7 @@ describe('Link', () => {
         expect(el.textContent).to.include('Default Link');
         // make sure href is being passed to <a>
         expect(el).shadowDom.to.equal(
-            `<a href="test_url" id="anchor" tabindex="0"><slot></slot></a>`
+            `<a href="test_url" download="somefile.txt" id="anchor" tabindex="0"><slot></slot></a>`
         );
     });
 });
