@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 `<sp-icon>` renders an icon to the page. By default the `name` attribute will pair with separately registered icon sets to deliver the icons. When not present, `<sp-icon>` will subsequently check for its `src` attribute which could populate the icon via an image, and then fallback to any slotted content for an element based icon.
 
@@ -37,7 +37,7 @@ Icons are available in various sizes in Spectrum ranging from `xxs` to `xxl`, `m
 <sp-icon size="xxl" name="ui:Magnifier"></sp-icon>
 ```
 
-## Color Icon
+## Color icon
 
 Icons apply their color as `currentColor` so change the `color` property of the element for customization.
 
@@ -45,7 +45,7 @@ Icons apply their color as `currentColor` so change the `color` property of the 
 <sp-icon name="ui:Magnifier" style="color: red;"></sp-icon>
 ```
 
-## Image Icon
+## Image icon
 
 An image icon can be supplied via the `src` attribute. Remember that you cannot style the contents of an image via CSS, so use graphics that are appropriately prepared for including in your applications design requirements.
 
@@ -80,7 +80,7 @@ An image icon can be supplied via the `src` attribute. Remember that you cannot 
 ></sp-icon>
 ```
 
-## Element Icon
+## Element icon
 
 Icons can also be supplied as HTML elements to be applied via the default `<slot>`.
 

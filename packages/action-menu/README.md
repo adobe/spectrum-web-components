@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An `<sp-action-menu />` is simply an action button with a Popover. Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with the `sp-action-menu` element.
 
@@ -17,26 +17,26 @@ yarn add @spectrum-web-components/action-menu
 <!-- prettier-ignore -->
 ```html
 <sp-action-menu>
-    More Actions
-    <sp-menu slot="options">
+    <span slot="label">More Actions</span>
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-action-menu>
@@ -44,38 +44,38 @@ yarn add @spectrum-web-components/action-menu
 
 ## Variants
 
-### No Visible Label
+### No visible label
 
 The visible label that is be provided via the default `<slot>` interface can be ommitted in preference of an icon only interface. In this context be sure that the `<sp-action-menu>` remains accessible to screen readers by applying the `label` attribute. This will apply an `aria-label` attribute of the same value to the `<botton>` element that toggles the menu list.
 
 <!-- prettier-ignore -->
 ```html
 <sp-action-menu label="More Actions">
-    <sp-menu slot="options">
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-action-menu>
 ```
 
-### Alternate Icon
+### Alternate icon
 
 A custom icon can be supplied via the `icon` slot in order to replace the default meatballs icon.
 
@@ -83,28 +83,28 @@ A custom icon can be supplied via the `icon` slot in order to replace the defaul
 
 <!-- prettier-ignore -->
 ```html
-<sp-action-menu label="More Actions">
+<sp-action-menu label="More actions">
     <sp-icon slot="icon" size="xxs" name="ui:ChevronDownSmall"></sp-icon>
-    Actions Under the Arrow
-    <sp-menu slot="options">
+    <span slot="label">Actions Under the Arrow</span>
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-action-menu>

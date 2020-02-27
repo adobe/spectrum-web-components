@@ -11,7 +11,3 @@ governing permissions and limitations under the License.
 */
 
 @import '@spectrum-web-components/styles/theme-light.css';
-
-:host {
-    display: block;
-}

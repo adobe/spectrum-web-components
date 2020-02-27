@@ -1,6 +1,6 @@
 version: 2.1
 executors:
-    node8:
+    node:
         docker:
             - image: circleci/node:10.16.0-browsers
         environment:
@@ -35,10 +35,39 @@ commands:
             - run:
                   name: prepare test git user
                   command: git config --global user.email "circleci@example.com" && git config --global user.name "CircleCi Build"
+    run-regressions:
+        parameters:
+            regression_color:
+                type: string
+            regression_scale:
+                type: string
+        steps:
+            - restore_cache:
+                  name: Restore Golden Images Cache
+                  keys:
+                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-5e0d0a3b649f0a88345048785ad3ba64663b3606
+                      - v1-golden-images-master-<< parameters.regression_color >>-<< parameters.regression_scale >>-
+            - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >>
+            - run:
+                  when: on_fail
+                  command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci && exit 1
+            - save_cache:
+                  when: on_fail
+                  name: Build Golden Images Revision Cache
+                  paths:
+                      - test/visual/screenshots-baseline/ci
+                  key: v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ .Revision }}
+            - save_cache:
+                  name: Build Golden Images Branch Cache
+                  paths:
+                      - test/visual/screenshots-baseline/ci
+                  key: v1-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ epoch }}
+            - store_artifacts:
+                  path: test/visual/screenshots-current
 
 jobs:
     build:
-        executor: node8
+        executor: node
 
         steps:
             - setup
@@ -65,17 +94,62 @@ jobs:
                       - project/node_modules
                       - project/documentation/dist
 
-    visual-testing:
-        executor: node8
+    visual-lightest-medium:
+        executor: node
 
         steps:
             - downstream
-            - run: yarn test:visual:ci
-            - store_artifacts:
-                  path: test/visual/screenshots-current
+            - run-regressions:
+                  regression_color: lightest
+                  regression_scale: medium
+
+    visual-lightest-large:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: lightest
+                  regression_scale: large
+
+    visual-light-medium:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: light
+                  regression_scale: medium
+
+    visual-light-large:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: light
+                  regression_scale: large
+
+    visual-dark-medium:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: dark
+                  regression_scale: medium
+
+    visual-dark-large:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: dark
+                  regression_scale: large
 
     publish-docs:
-        executor: node8
+        executor: node
 
         steps:
             - downstream
@@ -88,7 +162,22 @@ workflows:
     build:
         jobs:
             - build
-            - visual-testing:
+            - visual-lightest-medium:
+                  requires:
+                      - build
+            - visual-lightest-large:
+                  requires:
+                      - build
+            - visual-light-medium:
+                  requires:
+                      - build
+            - visual-light-large:
+                  requires:
+                      - build
+            - visual-dark-medium:
+                  requires:
+                      - build
+            - visual-dark-large:
                   requires:
                       - build
             - publish-docs:

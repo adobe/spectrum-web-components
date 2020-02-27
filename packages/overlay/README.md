@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 To ensure that content the requires it (modals, menus, etc) can escape overflow rules, the z-index, et al, Spectrum Web Components provides an overlay system that is made up of three interrelated elements, `<overlay-trigger>`, `<active-overlay>`, and `<sp-theme>`. DOM that should be overlaid on _hover_ (`[slot="hover-content"]`) and _click_ (`[slot="click-content"]`) are outlined in the light DOM content of an `<overlay-trigger>`. Said content will be overlayed onto the DOM via an `<active-overlay>` element that will be appended to the `<body>`. Content delivered in this way will acquire CSS Custom Properties for `color` and `size` from the trigger's nearest ancestor `<sp-theme>`.
 
@@ -31,7 +31,7 @@ yarn add @spectrum-web-components/overlay
 </style>
 <overlay-trigger id="trigger" placement="bottom" offset="6">
     <sp-button variant="primary" slot="trigger">
-        Bottom Popover
+        Bottopopover
     </sp-button>
     <sp-popover dialog slot="click-content" direction="bottom" tip open>
         <div class="options-popover-content">
@@ -42,11 +42,11 @@ yarn add @spectrum-web-components/overlay
                 max="20"
                 label="Awesomeness"
             ></sp-slider>
-            <sp-button>Press Me</sp-button>
+            <sp-button>Press me</sp-button>
         </div>
     </sp-popover>
-    <div slot="hover-content" class="tooltip" delay="100">
+    <sp-tooltip slot="hover-content" delayed open>
         Tooltip
-    </div>
+    </sp-tooltip>
 </overlay-trigger>
 ```

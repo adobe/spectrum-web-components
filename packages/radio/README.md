@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 **sp-radio** and **sp-radio-group** allow users to select a single option from a list of mutually exclusive options. All possible options are exposed up front for users to compare.
 
@@ -27,15 +27,15 @@ yarn add @spectrum-web-components/radio
 
 ## Variants
 
-### Standard Radio
+### Standard radio
 
 Standard radio buttons are the default style for radio buttons. The blue color provides a visual prominence that is optimal for forms, settings, etc. where the radio buttons need to be noticed.
 
 ```html
-<sp-radio>Standard Radio Button</sp-radio>
+<sp-radio>Standard radio button</sp-radio>
 ```
 
-### Quiet Radio
+### Quiet radio
 
 Quiet radio buttons are a secondary style for radio buttons. The gray color provides a
 less prominent style than the standard radioes. They are optimal for
@@ -43,7 +43,7 @@ application panels where all visual elements are monochrome in order to direct
 focus to the content.
 
 ```html
-<sp-radio quiet>Quiet Radio Button</sp-radio>
+<sp-radio quiet>Quiet radio button</sp-radio>
 ```
 
 ## States
@@ -57,7 +57,7 @@ radio, and also prevents clicks from activating it.
 When the radio is selected. Can be deselected only by selecting another radio in the group or by manually setting checked property
 
 ```html
-<sp-radio checked>Checked Radio Button</sp-radio>
+<sp-radio checked>Checked radio button</sp-radio>
 ```
 
 ### Invalid
@@ -65,7 +65,7 @@ When the radio is selected. Can be deselected only by selecting another radio in
 Indicates some error state related to the radio button. Can still be checked.
 
 ```html
-<sp-radio invalid>Invalid Radio Button</sp-radio>
+<sp-radio invalid>Invalid radio button</sp-radio>
 ```
 
 ### Disabled
@@ -73,10 +73,10 @@ Indicates some error state related to the radio button. Can still be checked.
 When the radio button is no longer interactable. The button cannot be checked.
 
 ```html
-<sp-radio disabled>Disabled Radio Button</sp-radio>
+<sp-radio disabled>Disabled radio button</sp-radio>
 ```
 
-### Handling Events
+### Handling events
 
 Event handlers for clicks and other user actions can be registered on an `sp-radio` just as a normal `<input type="radio">` element.
 

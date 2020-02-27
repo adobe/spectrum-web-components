@@ -10,6 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+const { mangleSpecificity } = require('./spectrum-config-utils');
+
 module.exports = {
     spectrum: 'link',
     components: [
@@ -31,6 +33,7 @@ module.exports = {
                 },
             ],
             exclude: [/\.is-disabled/, /\.spectrum-Link--subtle/],
+            selectorTransforms: [mangleSpecificity],
         },
     ],
 };

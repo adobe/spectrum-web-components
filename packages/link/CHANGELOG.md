@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.7...@spectrum-web-components/link@0.2.8) (2020-02-24)
+
+### Bug Fixes
+
+-   **link:** correct custom CSS processing configuration ([2a24d5a](https://github.com/adobe/spectrum-web-components/commit/2a24d5a))
+-   **link:** process Spectrum CSS without overwriting specificity ([9eb3d5c](https://github.com/adobe/spectrum-web-components/commit/9eb3d5c))
+
+## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.6...@spectrum-web-components/link@0.2.7) (2020-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.5...@spectrum-web-components/link@0.2.6) (2020-02-01)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.4...@spectrum-web-components/link@0.2.5) (2020-01-30)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
 ## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.3...@spectrum-web-components/link@0.2.4) (2020-01-06)
 
 ### Bug Fixes

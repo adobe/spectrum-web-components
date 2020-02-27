@@ -18,7 +18,7 @@ import {
     PropertyValues,
 } from 'lit-element';
 import { Tab } from '@spectrum-web-components/tab';
-import { Focusable } from '@spectrum-web-components/shared';
+import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 
 import tabStyles from './tab-list.css.js';
 
@@ -110,11 +110,15 @@ export class TabList extends Focusable {
         }
     }
 
+    private isListeningToKeyboard = false;
+
     public startListeningToKeyboard = (): void => {
         this.addEventListener('keydown', this.handleKeydown);
+        this.isListeningToKeyboard = true;
     };
 
     public stopListeningToKeyboard = (): void => {
+        this.isListeningToKeyboard = false;
         this.removeEventListener('keydown', this.handleKeydown);
     };
 
@@ -125,7 +129,7 @@ export class TabList extends Focusable {
             return;
         }
         event.preventDefault();
-        const currentFocusedTab = document.activeElement as Tab;
+        const currentFocusedTab = getActiveElement(this) as Tab;
         let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
         currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
         this.tabs[
@@ -136,6 +140,15 @@ export class TabList extends Focusable {
     private onClick(event: Event): void {
         const target = event.target as HTMLElement;
         this.selectTarget(target);
+        if (this.isListeningToKeyboard) {
+            /* Trick :focus-visible polyfill into thinking keyboard based focus */
+            this.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    code: 'Tab',
+                })
+            );
+            target.focus();
+        }
     }
 
     private onKeyDown(event: KeyboardEvent): void {

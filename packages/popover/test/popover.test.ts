@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import '../';
 import { Popover } from '../';
-import { fixture, html, expect } from '@open-wc/testing';
+import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
+import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
 
 describe('popover', () => {
     let popover!: Popover;
@@ -19,7 +20,7 @@ describe('popover', () => {
     beforeEach(async () => {
         popover = await fixture<Popover>(
             html`
-                <sp-popover variant="dialog" direction="top" open>
+                <sp-popover variant="dialog" placement="top" open>
                     <div id="title">
                         Popover Title
                     </div>
@@ -53,5 +54,43 @@ describe('popover', () => {
         expect(tip).to.not.equal(undefined);
 
         return true;
+    });
+
+    it('answers tip query', async () => {
+        const el = await fixture<Popover>(
+            html`
+                <sp-popover variant="dialog" placement="top" tip open>
+                    <div id="title">
+                        Popover Title
+                    </div>
+                    <div id="content">
+                        Cupcake ipsum dolor sit amet jelly beans. Chocolate
+                        jelly caramels. Icing soufflé chupa chups donut
+                        cheesecake. Jelly-o chocolate cake sweet roll cake
+                        danish candy biscuit halvah
+                    </div>
+                </sp-popover>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const overlayDetailQuery: OverlayDisplayQueryDetail = {};
+        const queryOverlayDetailEvent = new CustomEvent<
+            OverlayDisplayQueryDetail
+        >('sp-overlay-query', {
+            bubbles: true,
+            composed: true,
+            detail: overlayDetailQuery,
+            cancelable: true,
+        });
+        el.dispatchEvent(queryOverlayDetailEvent);
+
+        expect(overlayDetailQuery.overlayContentTipElement).to.exist;
+        if (overlayDetailQuery.overlayContentTipElement) {
+            expect(overlayDetailQuery.overlayContentTipElement.id).to.equal(
+                'tip'
+            );
+        }
     });
 });

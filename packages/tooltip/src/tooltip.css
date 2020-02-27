@@ -18,3 +18,20 @@ governing permissions and limitations under the License.
     border-left-color: transparent;
     border-bottom-color: transparent;
 }
+
+:host([data-popper-placement]) {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+:host([data-popper-placement='left']) #tip,
+:host([data-popper-placement='right']) #tip {
+    margin-top: 0;
+}
+
+:host([data-popper-placement*='top']) #tip,
+:host([data-popper-placement*='bottom']) #tip {
+    margin-left: 0;
+}

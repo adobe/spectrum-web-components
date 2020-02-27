@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-button** represents an action a user can take. sp-buttons can be clicked
 or tapped to perform an action or to navigate to another page. sp-buttons in
@@ -85,13 +85,13 @@ attribute prevents focus and disallows `click` events.
 <sp-button variant="primary" disabled>Disabled</sp-button>
 ```
 
-## Handling Events
+## Handling events
 
 Events handlers for clicks and other user actions can be registered on a
 `spectrum-button` just as on a normal HTML `button` element.
 
 ```html
-<sp-button onclick="alert('spectrum-button clicked!')">Click me!</sp-button>
+<sp-button onclick="alert('spectrum-button clicked!')">Click me</sp-button>
 ```
 
 ### Autofocus

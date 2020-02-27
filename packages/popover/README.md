@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-popover** is used to display transient content (menus, options, additional actions etc.) and appears when clicking/tapping on a source (tools, buttons, etc.) It stands out via its visual style (stroke and drop shadow) and floats on top of the rest of the interface. This component does not implement the actual overlay behavior and interactions. This is handled in the `Overlay Root` and `Overlay Trigger`.
 
@@ -20,7 +20,7 @@ yarn add @spectrum-web-components/popover
 >
     <sp-popover variant="dialog" open>
         <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
-            Popover Title
+            Popover title
         </div>
         <div style="font-size: 14px">
             Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
@@ -33,9 +33,9 @@ yarn add @spectrum-web-components/popover
 
 ## Variants
 
-### Default with No Tip
+### Default with no tip
 
-Default popover with no tip and no direction. Popovers will fill up the space of they're containing
+Default popover with no tip and no placement. Popovers will fill up the space of they're containing
 element by default. The default popover has no padding by default
 
 ```html
@@ -47,7 +47,7 @@ element by default. The default popover has no padding by default
             <div
                 style="padding-bottom: 30px; font-size: 18px; font-weight: 700"
             >
-                Popover Title
+                Popover title
             </div>
             <div style="font-size: 14px">
                 Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly
@@ -59,7 +59,7 @@ element by default. The default popover has no padding by default
 </div>
 ```
 
-### Dialog Popovers
+### Dialog popovers
 
 Popovers with padding, ideal for dialogs.
 
@@ -69,7 +69,7 @@ Popovers with padding, ideal for dialogs.
 >
     <sp-popover variant="dialog" open>
         <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
-            Popover Title
+            Popover title
         </div>
         <div style="font-size: 14px">
             Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
@@ -80,32 +80,15 @@ Popovers with padding, ideal for dialogs.
 </div>
 ```
 
-### Popover with Tip
+### Popover with tip
 
 ```html
 <div
     style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
 >
-    <sp-popover variant="dialog" direction="bottom" tip open>
+    <sp-popover variant="dialog" placement="bottom" tip open>
         <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
-            Popover Title
-        </div>
-        <div style="font-size: 14px">
-            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
-            sweet roll cake danish candy biscuit halvah
-        </div>
-    </sp-popover>
-</div>
-```
-
-```html
-<div
-    style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
->
-    <sp-popover variant="dialog" direction="top" tip open>
-        <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
-            Popover Title
+            Popover title
         </div>
         <div style="font-size: 14px">
             Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
@@ -120,9 +103,9 @@ Popovers with padding, ideal for dialogs.
 <div
     style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
 >
-    <sp-popover variant="dialog" direction="left" tip open>
+    <sp-popover variant="dialog" placement="top" tip open>
         <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
-            Popover Title
+            Popover title
         </div>
         <div style="font-size: 14px">
             Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
@@ -137,9 +120,26 @@ Popovers with padding, ideal for dialogs.
 <div
     style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
 >
-    <sp-popover variant="dialog" direction="right" tip open>
+    <sp-popover variant="dialog" placement="left" tip open>
         <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
-            Popover Title
+            Popover title
+        </div>
+        <div style="font-size: 14px">
+            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
+            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
+            sweet roll cake danish candy biscuit halvah
+        </div>
+    </sp-popover>
+</div>
+```
+
+```html
+<div
+    style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
+>
+    <sp-popover variant="dialog" placement="right" tip open>
+        <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
+            Popover title
         </div>
         <div style="font-size: 14px">
             Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.

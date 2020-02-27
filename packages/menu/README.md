@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An `<sp-menu />` is used for creating a menu list. The various elements inside a menu are given as `<sp-menu-group/>`, `<sp-menu-item />`, or `<sp-menu-divider />`. Often a `<sp-menu />` element will appear in a `<sp-popover />` element so that it displays as a togglig menu.
 
@@ -21,19 +21,19 @@ yarn add @spectrum-web-components/menu
         Deselect
     </sp-menu-item>
     <sp-menu-item>
-        Select Inverse
+        Select inverse
     </sp-menu-item>
     <sp-menu-item>
         Feather...
     </sp-menu-item>
     <sp-menu-item>
-        Select and Mask...
+        Select and mask...
     </sp-menu-item>
     <sp-menu-item>
-        Save Selection
+        Save selection
     </sp-menu-item>
     <sp-menu-item disabled>
-        Make Work Path
+        Make work path
     </sp-menu-item>
 </sp-menu>
 ```
@@ -45,19 +45,19 @@ yarn add @spectrum-web-components/menu
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-popover>

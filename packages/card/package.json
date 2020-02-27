@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.2.2",
+    "version": "0.3.0",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -38,7 +38,7 @@
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/card": "^2.0.2"
+        "@spectrum-css/card": "^2.0.4"
     },
     "dependencies": {
         "tslib": "^1.10.0"

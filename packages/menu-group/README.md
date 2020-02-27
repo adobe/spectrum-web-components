@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An `<sp-menu />` is used for creating a menu list. The various elements inside a menu are given as `<sp-menu-group/>`, `<sp-menu-item />`, or `<sp-menu-divider />`.
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.3.2...@spectrum-web-components/tab@0.3.3) (2020-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/tab
+
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.3.1...@spectrum-web-components/tab@0.3.2) (2020-02-01)
+
+**Note:** Version bump only for package @spectrum-web-components/tab
+
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.3.0...@spectrum-web-components/tab@0.3.1) (2020-01-30)
+
+**Note:** Version bump only for package @spectrum-web-components/tab
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.2.3...@spectrum-web-components/tab@0.3.0) (2020-01-06)
 
 ### Features

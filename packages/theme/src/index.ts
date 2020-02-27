@@ -15,6 +15,7 @@ import './theme-dark.js';
 import './theme-light.js';
 import './theme-lightest.js';
 import './scale-medium.js';
+import './scale-large.js';
 import { Theme } from './theme.js';
 
 /* istanbul ignore else */

@@ -64,9 +64,7 @@ describe('Radio Group', () => {
                         <sp-radio value="first" checked>Option 1</sp-radio>
                         <sp-radio value="second">Option 2</sp-radio>
                     </sp-radio-group>
-                    <sp-radio-group
-                        id="test-integer-value"
-                        selected="5">
+                    <sp-radio-group id="test-integer-value" selected="5">
                         <sp-radio value="5" checked>Option 5</sp-radio>
                         <sp-radio value="7">Option 7</sp-radio>
                     </sp-radio-group>

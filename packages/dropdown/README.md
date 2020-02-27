@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An `<sp-dropdown />` is an alternative to HTML's `select` element. Use an `<sp-menu>` element to outline the options that will be made available to the user when interacting with the `sp-dropdown` element.
 
@@ -16,27 +16,28 @@ yarn add @spectrum-web-components/dropdown
 
 <!-- prettier-ignore -->
 ```html
-<sp-dropdown>
-    Select a Country with a very long label, too long in fact
-    <sp-menu slot="options" role="listbox">
+<sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
+>
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-dropdown>
@@ -49,28 +50,28 @@ yarn add @spectrum-web-components/dropdown
 <!-- prettier-ignore -->
 ```html
 <sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
     invalid
 >
-    Select a Country with a very long label, too long in fact
-    <sp-menu slot="options" role="listbox">
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-dropdown>
@@ -81,28 +82,28 @@ yarn add @spectrum-web-components/dropdown
 <!-- prettier-ignore -->
 ```html
 <sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
     disabled
 >
-    Select a Country with a very long label, too long in fact
-    <sp-menu slot="options" role="listbox">
+    <sp-menu>
         <sp-menu-item>
             Deselect
         </sp-menu-item>
         <sp-menu-item>
-            Select Inverse
+            Select inverse
         </sp-menu-item>
         <sp-menu-item>
             Feather...
         </sp-menu-item>
         <sp-menu-item>
-            Select and Mask...
+            Select and mask...
         </sp-menu-item>
         <sp-menu-divider></sp-menu-divider>
         <sp-menu-item>
-            Save Selection
+            Save selection
         </sp-menu-item>
         <sp-menu-item disabled>
-            Make Work Path
+            Make work path
         </sp-menu-item>
     </sp-menu>
 </sp-dropdown>

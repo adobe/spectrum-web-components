@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-card** represents a rectangular card that contains
 a variety of text and image layouts. Cards are typically used
@@ -19,7 +19,19 @@ yarn add @spectrum-web-components/card
 ## Example
 
 ```html demo
-<sp-card title="Card Title" subtitle="JPG">
+<sp-card title="Card title" subtitle="JPG">
+    <img slot="cover-photo" src="https://picsum.photos/200/300" />
+    <div slot="footer">Footer</div>
+</sp-card>
+```
+
+## Title
+
+By default, the title for an `sp-card` is applied via the `title` attribute, which is restricted to string content only. When HTML content is desired, a slot named `title` available for applying the title.
+
+```html demo
+<sp-card subtitle="JPG">
+    <h1 slot="title">Card title</h1>
     <img slot="cover-photo" src="https://picsum.photos/200/300" />
     <div slot="footer">Footer</div>
 </sp-card>
@@ -35,7 +47,7 @@ attribute controls the main variant of the card.
 Normal cards can contain a title, a subtitle, a cover photo, and a footer.
 
 ```html
-<sp-card title="Card Title" subtitle="JPG">
+<sp-card title="Card title" subtitle="JPG">
     <img slot="cover-photo" src="https://picsum.photos/200/300" />
     <div slot="footer">Footer</div>
 </sp-card>
@@ -47,7 +59,7 @@ Quiet cards can contain a title, a subtitle, a cover photo, a description, and a
 
 ```html
 <div style="width: 208px; height: 264px">
-    <sp-card variant="quiet" title="Card Title" subtitle="JPG">
+    <sp-card variant="quiet" title="Card title" subtitle="JPG">
         <img slot="preview" src="https://picsum.photos/200/300" />
         <div slot="description">10/15/18</div>
         <div slot="footer">Footer</div>
@@ -61,7 +73,7 @@ Gallery cards can contain a title, a subtitle, an image preview, a description, 
 
 ```html
 <div style="width: 532px; height: 224px">
-    <sp-card variant="gallery" title="Card Title" subtitle="JPG">
+    <sp-card variant="gallery" title="Card title" subtitle="JPG">
         <img
             slot="preview"
             src="https://picsum.photos/532/192"

@@ -13,6 +13,7 @@ import { html, TemplateResult } from 'lit-html';
 
 import '../';
 import { landscape, portrait } from './images';
+import '../../textfield';
 
 export default {
     component: 'sp-card',
@@ -53,6 +54,23 @@ export const Quiet = (): TemplateResult => {
             <sp-card variant="quiet" title="Card Title" subtitle="JPG">
                 <img slot="preview" src=${portrait} alt="Demo Image" />
                 <div slot="description">10/15/18</div>
+                <div slot="footer">Footer</div>
+            </sp-card>
+        </div>
+    `;
+};
+
+export const SlottedTitle = (): TemplateResult => {
+    return html`
+        <div
+            style="color: var(--spectrum-global-color-gray-800); --spectrum-card-body-header-height: auto;"
+        >
+            <sp-card subtitle="JPG">
+                <sp-textfield
+                    slot="title"
+                    placeholder="Enter Title"
+                ></sp-textfield>
+                <img slot="cover-photo" src=${portrait} alt="Demo Image" />
                 <div slot="footer">Footer</div>
             </sp-card>
         </div>

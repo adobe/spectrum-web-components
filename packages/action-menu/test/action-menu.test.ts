@@ -18,36 +18,38 @@ import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
 import '../../shared/lib/focus-visible.js';
 
+const actionMenuFixture = async (): Promise<ActionMenu> =>
+    await fixture<ActionMenu>(
+        html`
+            <sp-action-menu>
+                <sp-menu>
+                    <sp-menu-item>
+                        Deselect
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Select Inverse
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Feather...
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Select and Mask...
+                    </sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>
+                        Save Selection
+                    </sp-menu-item>
+                    <sp-menu-item disabled>
+                        Make Work Path
+                    </sp-menu-item>
+                </sp-menu>
+            </sp-action-menu>
+        `
+    );
+
 describe('Action menu', () => {
     it('loads', async () => {
-        const el = await fixture<ActionMenu>(
-            html`
-                <sp-action-menu>
-                    <sp-menu slot="options" role="listbox">
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
-                    </sp-menu>
-                </sp-action-menu>
-            `
-        );
-
+        const el = await actionMenuFixture();
         await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
 
@@ -59,7 +61,7 @@ describe('Action menu', () => {
         const el = await fixture<ActionMenu>(
             html`
                 <sp-action-menu label="More Actions">
-                    <sp-menu slot="options" role="listbox">
+                    <sp-menu>
                         <sp-menu-item>
                             Deselect
                         </sp-menu-item>
@@ -92,34 +94,8 @@ describe('Action menu', () => {
         expect(el).shadowDom.to.equalSnapshot();
     });
     it('stays `quiet`', async () => {
-        const el = await fixture<ActionMenu>(
-            html`
-                <sp-action-menu>
-                    <sp-menu slot="options" role="listbox">
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
-                    </sp-menu>
-                </sp-action-menu>
-            `
-        );
-
+        const el = await actionMenuFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
 
         expect(el.quiet).to.be.true;
@@ -130,33 +106,8 @@ describe('Action menu', () => {
         expect(el.quiet).to.be.true;
     });
     it('stay `valid`', async () => {
-        const el = await fixture<ActionMenu>(
-            html`
-                <sp-action-menu>
-                    <sp-menu slot="options" role="listbox">
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
-                    </sp-menu>
-                </sp-action-menu>
-            `
-        );
+        const el = await actionMenuFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -166,5 +117,16 @@ describe('Action menu', () => {
         await elementUpdated(el);
 
         expect(el.invalid).to.be.false;
+    });
+    it('opens unmeasured', async () => {
+        const el = await actionMenuFixture();
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
+
+        await elementUpdated(el);
+        const button = el.button as HTMLButtonElement;
+
+        button.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
     });
 });

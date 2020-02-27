@@ -38,6 +38,12 @@ yarn docs:start
 
 By default the resulting site will be available at [http://localhost:8080](http://localhost:8080).
 
+In the case that you'd like to serve and test a static build of the documentation from the root director of a server (`localhost` or otherwise), use:
+
+```bash
+yarn docs:build
+```
+
 # Storybook
 
 You can run [Storybook](https://storybook.js.org) through the command:
@@ -76,9 +82,9 @@ To create a baseline, and then later compare the current state of the repo to it
 
 ```bash
 yarn storybook:build # creates the test assets
-yarn test:visual:baseline:local
+yarn test:visual:baseline:local --color=light --scale=medium
 # ...
-yarn test:visual:local
+yarn test:visual:local --color=light --scale=medium
 ```
 
 These tests are run against the built Storybook artifacts, so be sure to run `yarn storybook:build` first.
@@ -89,13 +95,18 @@ Visual testing is run against the stories in Storybook, and stories added there 
 
 #### Keeping CI Assets Up-to-date
 
-When making additions to the collection of components/stories that are tested visually, the "golden" (or baseline) screenshots which are tests in CI will fall out of sync. If you are not expecting this, the first step if to confirm whether the same failures happen locally (before and after your changes) via the commands above. Once you've collected local regression results, compare those results to the in the [Artifacts](https://circleci.com/docs/2.0/artifacts/) tab of the CircleCI build that would be failing in this case. The changes _should_ be the same in both locations, and the `*diff.png` files that the testing process creates will support your in analysing those changes. When you are comfortable with adopting the changes in the results, the following command will download the updated "golden" screenshots into your local repo:
+If you find the `visual-*` jobs failing on CircleCI for reasons that you expect (you've updated the Spectrum CSS dependencies, you've added new tests, etc.) then you will need to update the golden images cache key before your build will pass. Said update is a two-step process that allows you to update the golden images for your branch without disrupting other work going on in the repo while also preparing for the reality that CircleCI caches are only guaranteed for up to 30 days, but if you've already run a failing build, you're half way there!
+
+Your failing branch will have created a new cache with a key of `v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ .Revision }}`. In `.circleci/config.yml`, you will use that to update the cache that is restored at the beginning of the `run-regressions`, at least for the next 30 days. Using the revision number outlined in the `Build Golden Images Revision Cache` step of your failing build, update the first cache key listed in the `Restore Golden Images Cache` steps that appears as follows:
 
 ```
-yarn test:visual:baseline:ci ${circleToken} ${buildNumber}
+- restore_cache:
+    name: Restore Golden Images Cache
+    keys:
+        - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-${REVISION_NUMBER}
 ```
 
-A `circleToken` can be created via [these instructions](https://circleci.com/docs/2.0/managing-api-tokens/), and the `buildNumber` can be acquired via the CircleCI UI.
+With this update, your branch should now be able to pass the visual regression tests by loading the golden images from the new cache. The fact that this revision based cache will expire after 30 days is overcome by the fallback key of `v1-golden-images-master-<< parameters.regression_color >>-<< parameters.regression_scale >>-` which will address the latest cache created by the `master` branch whenever the specifically requested revision cache is not available.
 
 ## Benchmarking
 

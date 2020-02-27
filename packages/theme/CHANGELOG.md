@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.1.1...@spectrum-web-components/theme@0.2.0) (2020-01-30)
+
+### Bug Fixes
+
+-   **theme:** include "large" scale ([67577e7](https://github.com/adobe/spectrum-web-components/commit/67577e7))
+
+### Features
+
+-   rework overlays to use popper ([e17d1bb](https://github.com/adobe/spectrum-web-components/commit/e17d1bb))
+
 ## 0.1.1 (2020-01-06)
 
 ### Bug Fixes

@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 Spectrum Web Components are a [`LitElement`](https://lit-element.polymer-project.org) powered web component library of patterns built ontop of the [Spectrum CSS](https://opensource.adobe.com/spectrum-css) specification. Styles for these components are made available (and in some cases customizable) via CSS Custom Properties, e.g. `var(--spectrum-global-color-static-black)`. In this package you will find the various CSS Custom Properties that power the various color and size themese defined by Spectrum CSS.
 
@@ -14,7 +14,7 @@ npm install @spectrum-web-components/styles
 yarn add @spectrum-web-components/styles
 ```
 
-## Theme Packages
+## Theme packages
 
 ```
 @import '@spectrum-web-components/styles/all-medium-dark.css';
@@ -52,7 +52,7 @@ This file brings together the globals variables and font settings with the "Ligh
 
 This file brings together the globals variables and font settings with the "Lightest" color set and "Large" scale system specification.
 
-## Color Sets
+## Color sets
 
 ### Dark
 

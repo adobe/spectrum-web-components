@@ -25,6 +25,15 @@ const srcPath = path.join(projectDir, 'src');
 
 const BASE_URL = 'https://opensource.adobe.com/spectrum-web-components/';
 
+const buildSearchIndex = () => {
+    return exec(
+        `node "${path.join(
+            projectDir,
+            'documentation/scripts/buildSearchIndex.js'
+        )}"`
+    );
+};
+
 const webpackDevServer = () => {
     const config = Object.assign(webpackConfig, { mode: 'development' });
     const compiler = webpack(config);
@@ -39,7 +48,7 @@ const webpackDevServer = () => {
     );
 };
 
-const webpackBuild = async () => {
+const webpackBuild = (baseUrl) => async () => {
     const config = merge(webpackConfig, {
         mode: 'production',
         output: {
@@ -61,7 +70,7 @@ const webpackBuild = async () => {
     });
     indexHtml = indexHtml.replace(
         '<base href="/">',
-        `<base href="${BASE_URL}">`
+        `<base href="${baseUrl}">`
     );
     return fs.writeFile(indexPath, indexHtml, {
         encoding: 'utf8',
@@ -69,7 +78,9 @@ const webpackBuild = async () => {
 };
 
 module.exports = {
-    docsCompile: webpackBuild,
+    docsBuildProduction: gulp.series(buildSearchIndex, webpackBuild(BASE_URL)),
+    docsBuildStaging: gulp.series(buildSearchIndex, webpackBuild('/')),
     docsWatchCompile: webpackDevServer,
     webpackBuild,
+    buildSearchIndex,
 };

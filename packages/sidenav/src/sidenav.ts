@@ -19,7 +19,7 @@ import {
 } from 'lit-element';
 
 import sidenavStyles from './sidenav.css.js';
-import { Focusable } from '@spectrum-web-components/shared';
+import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 import { SideNavItem } from './sidenav-item.js';
 import { SideNavHeading } from './sidenav-heading.js';
 
@@ -99,7 +99,7 @@ export class SideNav extends Focusable {
 
     private focusItemByOffset(direction: number): void {
         const items = [...this.querySelectorAll('sp-sidenav-item')];
-        const focused = items.indexOf(document.activeElement as SideNavItem);
+        const focused = items.indexOf(getActiveElement(this) as SideNavItem);
         let next = focused;
         next = (items.length + next + direction) % items.length;
         while (this.isDisabledChild(items[next])) {

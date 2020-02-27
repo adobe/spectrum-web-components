@@ -25,6 +25,9 @@ module.exports = (config) => {
             ],
             esm: {
                 nodeResolve: true,
+                babelConfig: {
+                    plugins: ['transform-node-env-inline'],
+                },
             },
             browsers: ['FirefoxHeadlessCustom'],
             customLaunchers: {
@@ -37,15 +40,20 @@ module.exports = (config) => {
                     },
                 },
             },
-            browserDisconnectTolerance: 2,
-            browserNoActivityTimeout: 60000,
+            // our ci uses a 2 core 4 gb ram instance to run tests
+            // higher concurrency reduces reliability of browser timeout
+            // without a significant effect on testing speed
+            concurrency: 1,
+            // this timeout is primarily significant during browser startup
+            // after browser startup we shouldn't be coming close to this limit
+            browserNoActivityTimeout: 30000, // default value from karma
             coverageIstanbulReporter: {
                 thresholds: {
                     global: {
-                        statements: 96,
-                        branches: 90,
+                        statements: 97,
+                        branches: 91,
                         functions: 97,
-                        lines: 96,
+                        lines: 97,
                     },
                 },
             },

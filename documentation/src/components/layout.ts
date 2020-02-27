@@ -48,8 +48,8 @@ export class LayoutElement extends RouteComponent {
                             focusable="false"
                             aria-hidden="true"
                             role="img"
-                            width="18"
-                            height="18"
+                            width="22"
+                            height="22"
                             fill="currentColor"
                         >
                             <rect

@@ -10,56 +10,34 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { createPopper, Instance } from './popper';
 import {
     Placement,
     OverlayOpenDetail,
     TriggerInteractions,
-} from './overlay.js';
-import calculatePosition, { PositionResult } from './calculate-position.js';
-import { Size, Color } from '@spectrum-web-components/theme';
+} from './overlay-types.js';
+import { Scale, Color } from '@spectrum-web-components/theme';
 import {
     html,
     LitElement,
     TemplateResult,
     CSSResultArray,
     property,
+    PropertyValues,
 } from 'lit-element';
 import styles from './active-overlay.css.js';
 
-interface CalculatePositionOptions {
-    containerPadding: number;
-    crossOffset: number;
-    flip: boolean;
-    offset: number;
+export interface PositionResult {
+    arrowOffsetLeft: number;
+    arrowOffsetTop: number;
+    maxHeight: number;
     placement: string;
+    positionLeft: number;
+    positionTop: number;
 }
-
-class Deferred<T> {
-    private resolveFn?: (value: T) => void;
-
-    public promise: Promise<T> = new Promise(
-        (resolve: (value: T) => void) => (this.resolveFn = resolve)
-    );
-
-    public resolve(value: T): void {
-        /* istanbul ignore else */
-        if (this.resolveFn) {
-            this.resolveFn(value);
-        }
-    }
-}
-
-const defaultOptions: CalculatePositionOptions = {
-    containerPadding: 10,
-    crossOffset: 0,
-    flip: true,
-    offset: 0,
-    placement: 'left',
-};
-
-const FadeOutAnimation = 'spOverlayFadeOut';
 
 type OverlayStateType = 'idle' | 'active' | 'visible' | 'hiding';
+type ContentAnimation = 'spOverlayFadeIn' | 'spOverlayFadeOut';
 
 const stateMachine: {
     initial: OverlayStateType;
@@ -111,10 +89,12 @@ const stateTransition = (
 
 export class ActiveOverlay extends LitElement {
     public overlayContent?: HTMLElement;
+    public overlayContentTip?: HTMLElement;
     public trigger?: HTMLElement;
 
     private placeholder?: Comment;
-    private root?: HTMLElement;
+    private popper?: Instance;
+    private originalSlot: string | null = null;
 
     @property()
     public _state = stateTransition();
@@ -134,58 +114,124 @@ export class ActiveOverlay extends LitElement {
         }
     }
 
+    @property({ reflect: true, type: Boolean })
+    public animating = false;
+
     @property({ reflect: true })
-    public placement: Placement = 'bottom';
+    public placement?: Placement;
     @property({ attribute: false })
     public color?: Color;
     @property({ attribute: false })
-    public size?: Size;
+    public scale?: Scale;
+
+    private originalPlacement?: Placement;
+
+    /**
+     * @prop Used by the popper library to indicate where the overlay was
+     *       actually rendered. Popper may switch which side an overlay
+     *       is rendered on to fit it on the screen
+     */
+    @property({ attribute: 'data-popper-placement' })
+    public dataPopperPlacement?: Placement;
 
     private get hasTheme(): boolean {
-        return !!this.color || !!this.size;
+        return !!this.color || !!this.scale;
     }
 
     public offset = 6;
-    private position?: PositionResult;
     public interaction: TriggerInteractions = 'hover';
     private positionAnimationFrame = 0;
 
     private timeout?: number;
-    private hiddenDeferred?: Deferred<void>;
 
     public static get styles(): CSSResultArray {
         return [styles];
     }
 
-    private open(openEvent: CustomEvent<OverlayOpenDetail>): void {
-        this.extractEventDetail(openEvent);
-        this.stealOverlayContent(openEvent.detail.content);
+    public firstUpdated(changedProperties: PropertyValues): void {
+        super.firstUpdated(changedProperties);
 
         /* istanbul ignore if */
         if (!this.overlayContent) return;
 
+        this.stealOverlayContent(this.overlayContent);
+
+        /* istanbul ignore if */
+        if (!this.overlayContent || !this.trigger || !this.shadowRoot) return;
+
+        /* istanbul ignore else */
+        if (this.placement && this.placement !== 'none') {
+            this.popper = createPopper(this.trigger, this, {
+                placement: this.placement,
+                modifiers: [
+                    {
+                        name: 'arrow',
+                        options: {
+                            element: this.overlayContentTip,
+                        },
+                    },
+                    {
+                        name: 'offset',
+                        options: {
+                            offset: [0, this.offset],
+                        },
+                    },
+                ],
+            });
+        }
+
         this.state = 'active';
 
-        this.timeout = window.setTimeout(() => {
+        document.addEventListener('sp-update-overlays', () => {
+            this.updateOverlayPosition();
             this.state = 'visible';
-            delete this.timeout;
-        }, openEvent.detail.delay);
-
-        this.hiddenDeferred = new Deferred<void>();
-        this.addEventListener('animationend', this.onAnimationEnd);
-        this.hiddenDeferred.promise.then(() => {
-            this.removeEventListener('animationend', this.onAnimationEnd);
         });
+
+        this.updateOverlayPosition().then(() =>
+            this.applyContentAnimation('spOverlayFadeIn')
+        );
     }
 
-    private extractEventDetail(event: CustomEvent<OverlayOpenDetail>): void {
-        this.overlayContent = event.detail.content;
-        this.trigger = event.detail.trigger;
-        this.placement = event.detail.placement;
-        this.offset = event.detail.offset;
-        this.interaction = event.detail.interaction;
-        this.color = event.detail.theme.color;
-        this.size = event.detail.theme.size;
+    private updateOverlayPopperPlacement(): void {
+        if (!this.overlayContent) return;
+
+        if (this.dataPopperPlacement) {
+            // Copy this attribute to the actual overlay node so that it can use
+            // the attribute for styling shadow DOM elements based on the side
+            // that popper has chosen for it
+            this.overlayContent.setAttribute(
+                'placement',
+                this.dataPopperPlacement
+            );
+        } else if (this.originalPlacement) {
+            this.overlayContent.setAttribute(
+                'placement',
+                this.originalPlacement
+            );
+        } else {
+            this.overlayContent.removeAttribute('placement');
+        }
+    }
+
+    public updated(changedProperties: PropertyValues): void {
+        if (changedProperties.has('dataPopperPlacement')) {
+            this.updateOverlayPopperPlacement();
+        }
+    }
+
+    private open(openDetail: OverlayOpenDetail): void {
+        this.extractDetail(openDetail);
+    }
+
+    private extractDetail(detail: OverlayOpenDetail): void {
+        this.overlayContent = detail.content;
+        this.overlayContentTip = detail.contentTip;
+        this.trigger = detail.trigger;
+        this.placement = detail.placement;
+        this.offset = detail.offset;
+        this.interaction = detail.interaction;
+        this.color = detail.theme.color;
+        this.scale = detail.theme.scale;
     }
 
     public dispose(): void {
@@ -194,6 +240,11 @@ export class ActiveOverlay extends LitElement {
         if (this.timeout) {
             clearTimeout(this.timeout);
             delete this.timeout;
+        }
+
+        if (this.popper) {
+            this.popper.destroy();
+            this.popper = undefined;
         }
 
         this.returnOverlayContent();
@@ -209,88 +260,75 @@ export class ActiveOverlay extends LitElement {
             );
         }
 
+        const parentElement = element.parentElement || element.getRootNode();
+
         /* istanbul ignore else */
-        if (element.parentElement) {
-            element.parentElement.replaceChild(this.placeholder, element);
+        if (parentElement) {
+            parentElement.replaceChild(this.placeholder, element);
         }
 
         this.overlayContent = element;
+        this.originalSlot = this.overlayContent.getAttribute('slot');
         this.overlayContent.setAttribute('slot', 'overlay');
         this.appendChild(this.overlayContent);
+
+        this.originalPlacement = this.overlayContent.getAttribute(
+            'placement'
+        ) as Placement;
     }
 
     private returnOverlayContent(): void {
         /* istanbul ignore if */
         if (!this.overlayContent) return;
 
-        this.overlayContent.removeAttribute('slot');
+        if (this.originalSlot) {
+            this.overlayContent.setAttribute('slot', this.originalSlot);
+            delete this.originalSlot;
+        } else {
+            this.overlayContent.removeAttribute('slot');
+        }
 
         /* istanbul ignore else */
-        if (this.placeholder && this.placeholder.parentElement) {
-            this.placeholder.parentElement.replaceChild(
-                this.overlayContent,
-                this.placeholder
-            );
+        if (this.placeholder) {
+            const parentElement =
+                this.placeholder.parentElement ||
+                this.placeholder.getRootNode();
+            /* istanbul ignore else */
+            if (parentElement) {
+                parentElement.replaceChild(
+                    this.overlayContent,
+                    this.placeholder
+                );
+                this.overlayContent.dispatchEvent(
+                    new Event('sp-overlay-closed')
+                );
+            }
         }
+
+        if (this.originalPlacement) {
+            this.overlayContent.setAttribute(
+                'placement',
+                this.originalPlacement
+            );
+            delete this.originalPlacement;
+        }
+
         delete this.placeholder;
     }
 
-    private get hasSlotenOverlayContent(): boolean {
-        return !!(
-            this.overlayContent && this.overlayContent.parentElement === this
-        );
-    }
-
-    public updateOverlayPosition(): void {
-        if (
-            !this.trigger ||
-            !this.overlayContent ||
-            !this.hasSlotenOverlayContent ||
-            !this.root ||
-            !this.isConnected
-        ) {
-            return;
-        }
-
-        const options: CalculatePositionOptions = {
-            containerPadding: 0,
-            crossOffset: 0,
-            flip: false,
-            offset: this.offset,
-            placement: this.placement,
-        };
-
-        const positionOptions = { ...defaultOptions, ...options };
-
-        this.position = calculatePosition(
-            positionOptions.placement,
-            this.overlayContent,
-            this.trigger,
-            this.root,
-            positionOptions.containerPadding,
-            positionOptions.flip,
-            this.root,
-            positionOptions.offset,
-            positionOptions.crossOffset
-        );
-
-        this.style.setProperty('left', `${this.position.positionLeft}px`);
-        this.style.setProperty('top', `${this.position.positionTop}px`);
-    }
-
-    public async hide(): Promise<void> {
-        this.state = 'hiding';
-        /* istanbul ignore else */
-        if (this.hiddenDeferred) {
-            return this.hiddenDeferred.promise;
+    public async updateOverlayPosition(): Promise<void> {
+        if (this.popper) {
+            await this.popper.update();
         }
     }
 
-    private onAnimationEnd = (event: AnimationEvent): void => {
-        if (this.hiddenDeferred && event.animationName === FadeOutAnimation) {
-            this.hiddenDeferred.resolve();
+    public async hide(animated = true): Promise<void> {
+        if (animated) {
+            this.state = 'hiding';
+            await this.applyContentAnimation('spOverlayFadeOut');
         }
-    };
+        this.state = 'idle';
+    }
 
     private schedulePositionUpdate(): void {
         // Edge needs a little time to update the DOM before computing the layout
@@ -309,12 +347,40 @@ export class ActiveOverlay extends LitElement {
         this.schedulePositionUpdate();
     }
 
+    public applyContentAnimation(
+        animation: ContentAnimation
+    ): Promise<boolean> {
+        return new Promise((resolve, reject): void => {
+            /* istanbul ignore if */
+            if (!this.shadowRoot) {
+                reject();
+                return;
+            }
+
+            const contents = this.shadowRoot.querySelector(
+                '#contents'
+            ) as HTMLElement;
+            const doneHandler = (event: AnimationEvent): void => {
+                if (animation !== event.animationName) return;
+                contents.removeEventListener('animationend', doneHandler);
+                contents.removeEventListener('animationcancel', doneHandler);
+                this.animating = false;
+                resolve(event.type === 'animationcancel');
+            };
+            contents.addEventListener('animationend', doneHandler);
+            contents.addEventListener('animationcancel', doneHandler);
+
+            contents.style.animationName = animation;
+            this.animating = true;
+        });
+    }
+
     public renderTheme(content: TemplateResult): TemplateResult {
         import('@spectrum-web-components/theme');
         const color = this.color as Color;
-        const size = this.size as Size;
+        const scale = this.scale as Scale;
         return html`
-            <sp-theme .color=${color} .size=${size}>
+            <sp-theme .color=${color} .scale=${scale}>
                 ${content}
             </sp-theme>
         `;
@@ -322,21 +388,19 @@ export class ActiveOverlay extends LitElement {
 
     public render(): TemplateResult {
         const content = html`
-            <slot @slotchange=${this.onSlotChange} name="overlay"></slot>
+            <div id="contents">
+                <slot @slotchange=${this.onSlotChange} name="overlay"></slot>
+            </div>
         `;
         return this.hasTheme ? this.renderTheme(content) : content;
     }
 
-    public static create(
-        openEvent: CustomEvent<OverlayOpenDetail>,
-        root: HTMLElement
-    ): ActiveOverlay {
+    public static create(details: OverlayOpenDetail): ActiveOverlay {
         const overlay = new ActiveOverlay();
 
         /* istanbul ignore else */
-        if (openEvent.detail.content) {
-            overlay.root = root;
-            overlay.open(openEvent);
+        if (details.content) {
+            overlay.open(details);
         }
 
         return overlay;

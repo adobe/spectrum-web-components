@@ -22,8 +22,10 @@ const stories = require('./stories');
 const currentDir = `${process.cwd()}/test/visual/screenshots-current`;
 const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
 
+const PixelDiffThreshold = 0;
+
 module.exports = {
-    checkScreenshots(type) {
+    checkScreenshots(type, color = 'light', scale = 'medium') {
         describe('👀 page screenshots are correct', function() {
             let polyserve, browser, page;
 
@@ -44,6 +46,14 @@ module.exports = {
                 if (!fs.existsSync(`${currentDir}/${type}`)) {
                     fs.mkdirSync(`${currentDir}/${type}`);
                 }
+                // Create the baseline directory if needed.
+                if (!fs.existsSync(baselineDir)) {
+                    fs.mkdirSync(baselineDir);
+                }
+                // And it's subdirectories.
+                if (!fs.existsSync(`${baselineDir}/${type}`)) {
+                    fs.mkdirSync(`${baselineDir}/${type}`);
+                }
 
                 if (fs.existsSync(`${baselineDir}/${type}/userDataDir`)) {
                     rimraf.sync(`${baselineDir}/${type}/userDataDir`);
@@ -58,6 +68,9 @@ module.exports = {
                     userDataDir: `${baselineDir}/${type}/userDataDir`,
                 });
                 page = await browser.newPage();
+                // prevent hover based inaccuracies in screenshots by
+                // moving the mouse off of the screen before loading tests
+                await page.mouse.move(-5, -5);
             });
 
             afterEach(() => browser.close());
@@ -68,7 +81,7 @@ module.exports = {
                 });
 
                 for (let i = 0; i < stories.length; i++) {
-                    it(stories[i], async function() {
+                    it(`${stories[i]}__${color}__${scale}`, async function() {
                         return takeAndCompareScreenshot(page, stories[i]);
                     });
                 }
@@ -76,11 +89,14 @@ module.exports = {
         });
 
         async function takeAndCompareScreenshot(page, test) {
-            await page.goto(`http://127.0.0.1:4444/iframe.html?id=${test}`, {
-                waitUntil: 'networkidle2',
-            });
+            await page.goto(
+                `http://127.0.0.1:4444/iframe.html?id=${test}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}`,
+                {
+                    waitUntil: 'networkidle0',
+                }
+            );
             await page.screenshot({
-                path: `${currentDir}/${type}/${test}.png`,
+                path: `${currentDir}/${type}/${test}__${color}__${scale}.png`,
             });
             return compareScreenshots(test);
         }
@@ -96,11 +112,15 @@ module.exports = {
                 //     console.log('\n\n')
                 //   });
                 const img1 = fs
-                    .createReadStream(`${currentDir}/${type}/${view}.png`)
+                    .createReadStream(
+                        `${currentDir}/${type}/${view}__${color}__${scale}.png`
+                    )
                     .pipe(new PNG())
                     .on('parsed', doneReading);
                 const img2 = fs
-                    .createReadStream(`${baselineDir}/${type}/${view}.png`)
+                    .createReadStream(
+                        `${baselineDir}/${type}/${view}__${color}__${scale}.png`
+                    )
                     .pipe(new PNG())
                     .on('parsed', doneReading);
 
@@ -129,32 +149,30 @@ module.exports = {
                         diff.data,
                         img1.width,
                         img1.height,
-                        { threshold: 0.2 }
+                        { threshold: 0 }
                     );
                     const percentDiff =
                         (numDiffPixels / (img1.width * img1.height)) * 100;
 
                     const stats = fs.statSync(
-                        `${currentDir}/${type}/${view}.png`
+                        `${currentDir}/${type}/${view}__${color}__${scale}.png`
                     );
                     const fileSizeInBytes = stats.size;
                     console.log(
-                        `📸 ${view}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
+                        `📸 ${view}__${color}__${scale}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
                     );
 
-                    if (numDiffPixels > 10) {
+                    if (numDiffPixels > PixelDiffThreshold) {
                         diff.pack().pipe(
                             fs.createWriteStream(
-                                `${currentDir}/${view}-diff.png`
+                                `${currentDir}/${view}__${color}__${scale}-diff.png`
                             )
                         );
                     }
-                    // A number of comparisons come out to 10 inexplicable pixes EVERY time,
-                    // so let them have their stupid 10 pixels!
                     expect(
                         numDiffPixels,
                         'number of different pixels'
-                    ).be.lessThan(11);
+                    ).to.equal(PixelDiffThreshold);
                     resolve();
                 }
             });

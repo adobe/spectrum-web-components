@@ -14,7 +14,7 @@ import coreStyles from './theme.css';
 import { CSSResult, supportsAdoptingStyleSheets } from 'lit-element';
 
 export const DefaultColor = 'light';
-export const DefaultSize = 'medium';
+export const DefaultScale = 'medium';
 
 declare global {
     interface Window {
@@ -39,15 +39,15 @@ declare global {
     }
 }
 
-type FragmentType = 'color' | 'size' | 'core';
+type FragmentType = 'color' | 'scale' | 'core';
 type FragmentMap = Map<string, { kind: FragmentType; styles: CSSResult }>;
 export type Color = 'light' | 'lightest' | 'dark' | 'darkest';
-export type Size = 'medium' | 'large';
-type FragmentName = Color | Size | 'core';
+export type Scale = 'medium' | 'large';
+type FragmentName = Color | Scale | 'core';
 
 export interface ThemeData {
     color?: Color;
-    size?: Size;
+    scale?: Scale;
 }
 
 export class Theme extends HTMLElement {
@@ -61,7 +61,7 @@ export class Theme extends HTMLElement {
     private static templateElement?: HTMLTemplateElement;
 
     static get observedAttributes(): string[] {
-        return ['color', 'size'];
+        return ['color', 'scale'];
     }
 
     get color(): Color {
@@ -79,26 +79,26 @@ export class Theme extends HTMLElement {
         this.setAttribute('color', newValue);
     }
 
-    get size(): Size {
-        const size = this.getAttribute('size');
-        if (!size) return DefaultSize;
+    get scale(): Scale {
+        const scale = this.getAttribute('scale');
+        if (!scale) return DefaultScale;
 
-        const sizeFragment = Theme.themeFragments.get(size);
-        if (sizeFragment && sizeFragment.kind === 'size') {
-            return size as Size;
+        const scaleFragment = Theme.themeFragments.get(scale);
+        if (scaleFragment && scaleFragment.kind === 'scale') {
+            return scale as Scale;
         }
-        return DefaultSize;
+        return DefaultScale;
     }
 
-    set size(newValue: Size) {
-        this.setAttribute('size', newValue);
+    set scale(newValue: Scale) {
+        this.setAttribute('scale', newValue);
     }
 
     private get styles(): CSSResult[] {
         return [
             coreStyles,
             Theme.themeFragment(this.color).styles,
-            Theme.themeFragment(this.size).styles,
+            Theme.themeFragment(this.scale).styles,
         ];
     }
 
@@ -118,7 +118,7 @@ export class Theme extends HTMLElement {
             this.shadowRoot.appendChild(node);
         }
         this.adoptStyles();
-        this.addEventListener('query-theme', this
+        this.addEventListener('sp-query-theme', this
             .onQueryTheme as EventListener);
     }
 
@@ -129,7 +129,7 @@ export class Theme extends HTMLElement {
         event.preventDefault();
         const { detail: theme } = event;
         theme.color = this.color;
-        theme.size = this.size;
+        theme.scale = this.scale;
     }
 
     protected connectedCallback(): void {

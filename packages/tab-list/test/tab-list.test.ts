@@ -14,6 +14,8 @@ import { TabList } from '../';
 import '../../tab';
 import { Tab } from '../../tab';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { LitElement } from 'lit-element';
+import { TemplateResult } from 'lit-html';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
     new KeyboardEvent('keydown', {
@@ -287,6 +289,76 @@ describe('TabList', () => {
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
+    });
+
+    it('accepts keyboard based selection through shadow DOM', async () => {
+        class TabTestEl extends LitElement {
+            protected render(): TemplateResult {
+                return html`
+                    <sp-tab-list selected="Unknown">
+                        <sp-tab label="Tab 1" value="first">
+                            <sp-icon
+                                slot="icon"
+                                size="s"
+                                name="ui:CheckmarkSmall"
+                            ></sp-icon>
+                        </sp-tab>
+                        <sp-tab label="Tab 2" value="second">
+                            <sp-icon
+                                slot="icon"
+                                size="s"
+                                name="ui:CheckmarkSmall"
+                            ></sp-icon>
+                        </sp-tab>
+                    </sp-tab-list>
+                `;
+            }
+        }
+        customElements.define('tab-test-el', TabTestEl);
+        const el = await fixture<TabList>(
+            html`
+                <tab-test-el></tab-test-el>
+            `
+        );
+
+        await elementUpdated(el);
+        const rootNode = el.shadowRoot as ShadowRoot;
+        const tabsEl = rootNode.querySelector('sp-tab-list') as TabList;
+
+        await elementUpdated(tabsEl);
+        expect(tabsEl.selected).to.be.equal('');
+
+        const firstTab = tabsEl.querySelector('[value="first"]') as Tab;
+        const secondTab = tabsEl.querySelector('[value="second"]') as Tab;
+        firstTab.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+        firstTab.focus();
+
+        await elementUpdated(el);
+        let activeElement = rootNode.activeElement as Tab;
+        expect(activeElement === firstTab, 'Focus first tab').to.be.true;
+
+        firstTab.dispatchEvent(arrowLeftEvent);
+        firstTab.dispatchEvent(arrowUpEvent);
+
+        await elementUpdated(el);
+        activeElement = rootNode.activeElement as Tab;
+        expect(activeElement === secondTab, 'Focus second tab').to.be.true;
+
+        secondTab.dispatchEvent(enterEvent);
+
+        await elementUpdated(el);
+        expect(tabsEl.selected).to.be.equal('second');
+
+        secondTab.dispatchEvent(arrowRightEvent);
+
+        await elementUpdated(el);
+        activeElement = rootNode.activeElement as Tab;
+        expect(activeElement === firstTab, 'Focus first tab').to.be.true;
+
+        firstTab.dispatchEvent(spaceEvent);
+
+        await elementUpdated(el);
+        expect(tabsEl.selected).to.be.equal('first');
     });
     it('accepts keyboard based selection - [direction="vertical"]', async () => {
         const el = await fixture<TabList>(html`

@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An `<sp-circleloader>` shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent determinate or indeterminate progress.
 
@@ -28,7 +28,7 @@ An `<sp-circleloader>` is used to visually show the progression of a system oper
 </div>
 ```
 
-### Over Background
+### Over background
 
 When a loader needs to be placed on top of a colored background, use the over background loader as signified by `[over-background]`. This loader uses a white opaque color no matter the background. Make sure the background offers enough contrast for the loader to be legible.
 

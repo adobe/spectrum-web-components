@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 An **sp-illustrated-message** displays an illustration icon and a message, usually in an empty state or on an error page. It is also used inside a DropZone.
 
@@ -35,7 +35,7 @@ yarn add @spectrum-web-components/illustrated-message
 
 ## Variants
 
-### CTA Variant
+### CTA variant
 
 In this variant, the description text is not italisized.
 

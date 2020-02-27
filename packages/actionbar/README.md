@@ -1,4 +1,4 @@
-## Overview
+## Description
 
 A `<sp-actionbar>` delivers a floating action bar that is a convenient way to deliver stateful actions in cases like selection mode. `<sp-actionbar>` can be deployed in two variants beyond the default: `[varient="fixed"]`, to position the element in relation to the page, and `[variant=sticky]`, to position the content in relation to content that may scroll.
 
@@ -50,7 +50,7 @@ When using `[variant="fixed"]`, the `<sp-actionbar>` will display by default at 
 <sp-button
     onclick="javascript:this.previousElementSibling.open = !this.previousElementSibling.open;"
 >
-    Toggle Fixed Actionbar
+    Toggle fixed actionbar
 </sp-button>
 ```
 
@@ -76,7 +76,7 @@ When using `[variant="sticky"]`, be sure you've spent some time touching up on [
     <sp-button
         onclick="javascript:this.previousElementSibling.previousElementSibling.open = !this.previousElementSibling.previousElementSibling.open;"
     >
-        Toggle Sticky Actionbar
+        Toggle sticky actionbar
     </sp-button>
 </section>
 ```

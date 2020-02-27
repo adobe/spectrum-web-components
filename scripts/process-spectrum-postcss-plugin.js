@@ -662,12 +662,13 @@ class ComponentConfig {
                             throw new Error(message);
                         }
                     }
+                    const operator = attribute.wildcard ? '*=' : '=';
                     return {
                         name,
                         selector,
                         node: nodeFromSelector(selector),
                         shadowNode: nodeFromSelector(
-                            `[${attribute.name}="${name}"]`
+                            `[${attribute.name}${operator}"${name}"]`
                         ),
                     };
                 });

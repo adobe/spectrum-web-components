@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.4.2...@spectrum-web-components/shared@0.4.3) (2020-02-05)
+
+**Note:** Version bump only for package @spectrum-web-components/shared
+
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.4.1...@spectrum-web-components/shared@0.4.2) (2020-02-01)
+
+### Bug Fixes
+
+-   **shared:** fixes search input - fixes [#463](https://github.com/adobe/spectrum-web-components/issues/463) ([6833944](https://github.com/adobe/spectrum-web-components/commit/6833944))
+-   **shared:** removes mousedown event handling in focusable ([4e90d4c](https://github.com/adobe/spectrum-web-components/commit/4e90d4c))
+
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.4.0...@spectrum-web-components/shared@0.4.1) (2020-01-30)
+
+### Bug Fixes
+
+-   **shared:** prevent focusing focusable root on second click ([0fb5006](https://github.com/adobe/spectrum-web-components/commit/0fb5006))
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.3.3...@spectrum-web-components/shared@0.4.0) (2020-01-06)
 
 ### Features
