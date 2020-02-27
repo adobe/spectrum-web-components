@@ -48,6 +48,9 @@ export class Link extends Focusable {
     public href: string | undefined = undefined;
 
     @property({ reflect: true })
+    public download: string | undefined = undefined;
+
+    @property({ reflect: true })
     public target?: '_blank' | '_parent' | '_self' | '_top';
 
     protected render(): TemplateResult {
@@ -56,6 +59,7 @@ export class Link extends Focusable {
             `<a
                 id="anchor"
                 href=${ifDefined(this.href)}
+                download=${ifDefined(this.href)}
                 target=${ifDefined(this.target)}
             ><slot></slot></a>
         `;
