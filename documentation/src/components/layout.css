@@ -96,6 +96,11 @@ header svg {
     }
 }
 
+/**
+ * TODO: Remove this manual copy of the Spectrum Field Label styles 
+ * once https://github.com/adobe/spectrum-web-components/issues/475
+ * has been addressed and this element is natively part of the library
+ **/
 label {
     /* .spectrum-FieldLabel,
    * .spectrum-Form-itemLabel */

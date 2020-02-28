@@ -63,6 +63,9 @@ export class LayoutElement extends LitElement {
         this.scale = (event.target as Dropdown).value as Scale;
     }
 
+    // TODO: remove this manual link relationship when
+    // https://github.com/adobe/spectrum-web-components/issues/475
+    // has been completed and links are natively part of the library
     private onClickLabel(event: { target: HTMLElement }) {
         const { target } = event;
         if (!target) return;
