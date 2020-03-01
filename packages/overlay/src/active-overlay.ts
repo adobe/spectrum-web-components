@@ -36,7 +36,13 @@ export interface PositionResult {
     positionTop: number;
 }
 
-type OverlayStateType = 'idle' | 'active' | 'visible' | 'hiding';
+type OverlayStateType =
+    | 'idle'
+    | 'active'
+    | 'visible'
+    | 'hiding'
+    | 'dispose'
+    | 'disposed';
 type ContentAnimation = 'spOverlayFadeIn' | 'spOverlayFadeOut';
 
 const stateMachine: {
@@ -71,8 +77,16 @@ const stateMachine: {
         },
         hiding: {
             on: {
-                idle: 'idle',
+                dispose: 'dispose',
             },
+        },
+        dispose: {
+            on: {
+                disposed: 'disposed',
+            },
+        },
+        disposed: {
+            on: {},
         },
     },
 };
@@ -107,10 +121,14 @@ export class ActiveOverlay extends LitElement {
             return;
         }
         this._state = nextState;
-        if (this.state === 'idle') {
-            this.removeAttribute('state');
-        } else {
+        if (
+            this.state === 'active' ||
+            this.state === 'visible' ||
+            this.state === 'hiding'
+        ) {
             this.setAttribute('state', this.state);
+        } else {
+            this.removeAttribute('state');
         }
     }
 
@@ -193,6 +211,7 @@ export class ActiveOverlay extends LitElement {
     }
 
     private updateOverlayPopperPlacement(): void {
+        /* istanbul ignore if */
         if (!this.overlayContent) return;
 
         if (this.dataPopperPlacement) {
@@ -235,19 +254,23 @@ export class ActiveOverlay extends LitElement {
     }
 
     public dispose(): void {
-        this.state = 'idle';
+        /* istanbul ignore if */
+        if (this.state !== 'dispose') return;
 
+        /* istanbul ignore if */
         if (this.timeout) {
             clearTimeout(this.timeout);
             delete this.timeout;
         }
 
+        /* istanbul ignore else */
         if (this.popper) {
             this.popper.destroy();
             this.popper = undefined;
         }
 
         this.returnOverlayContent();
+        this.state = 'disposed';
     }
 
     private stealOverlayContent(element: HTMLElement): void {
@@ -323,11 +346,11 @@ export class ActiveOverlay extends LitElement {
     }
 
     public async hide(animated = true): Promise<void> {
+        this.state = 'hiding';
         if (animated) {
-            this.state = 'hiding';
             await this.applyContentAnimation('spOverlayFadeOut');
         }
-        this.state = 'idle';
+        this.state = 'dispose';
     }
 
     private schedulePositionUpdate(): void {
