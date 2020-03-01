@@ -190,7 +190,7 @@
         "prettier": "^1.16.4",
         "pretty-quick": "^2.0.1",
         "prismjs": "^1.15.0",
-        "puppeteer": "2.0.0",
+        "puppeteer": "2.1.1",
         "raw-loader": "^4.0.0",
         "re-template-tag": "^2.0.1",
         "rimraf": "^3.0.0",
