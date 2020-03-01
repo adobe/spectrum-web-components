@@ -59,12 +59,6 @@ export class OverlayStack {
         window.addEventListener('resize', this.handleResize);
     }
 
-    private isOverlayActive(overlayContent: HTMLElement): boolean {
-        return !!this.overlays.find((item) =>
-            overlayContent.isSameNode(item.overlayContent as HTMLElement)
-        );
-    }
-
     private isClickOverlayActiveForTrigger(trigger: HTMLElement): boolean {
         return this.overlays.some(
             (item) =>
@@ -74,8 +68,9 @@ export class OverlayStack {
     }
 
     public async openOverlay(details: OverlayOpenDetail): Promise<boolean> {
-        /* istanbul ignore if */
-        if (this.isOverlayActive(details.content)) return false;
+        if (this.findOverlayForContent(details.content)) {
+            return false;
+        }
 
         if (details.delayed) {
             const promise = this.overlayTimer.openTimer(details.content);
@@ -151,6 +146,8 @@ export class OverlayStack {
     ): Promise<void> {
         if (overlay) {
             await overlay.hide(animated);
+            if (overlay.state != 'dispose') return;
+
             overlay.remove();
             overlay.dispose();
 
