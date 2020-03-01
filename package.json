@@ -195,7 +195,7 @@
         "re-template-tag": "^2.0.1",
         "rimraf": "^3.0.0",
         "serve-index": "^1.9.1",
-        "sinon": "^8.0.0",
+        "sinon": "^9.0.0",
         "style-loader": "^1.0.0",
         "stylelint": "^13.2.0",
         "stylelint-config-prettier": "^8.0.0",
