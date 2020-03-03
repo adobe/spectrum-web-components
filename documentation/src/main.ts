@@ -13,7 +13,4 @@ governing permissions and limitations under the License.
 import polyfill from 'element-closest';
 
 polyfill(window);
-import('./components');
-import('./main.css');
-import('./router');
-import('./utils/spectrum');
+import('./app');

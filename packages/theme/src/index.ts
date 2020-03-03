@@ -12,19 +12,8 @@ governing permissions and limitations under the License.
 export * from './theme.js';
 
 import './theme-dark.js';
+import './theme-darkest.js';
 import './theme-light.js';
 import './theme-lightest.js';
 import './scale-medium.js';
 import './scale-large.js';
-import { Theme } from './theme.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-theme')) {
-    customElements.define('sp-theme', Theme);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-theme': Theme;
-    }
-}

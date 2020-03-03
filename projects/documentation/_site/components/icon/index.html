@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p><code>&lt;sp-icon&gt;</code> renders an icon to the page. By default the <code>name</code> attribute will pair with separately registered icon sets to deliver the icons. When not present, <code>&lt;sp-icon&gt;</code> will subsequently check for its <code>src</code> attribute which could populate the icon via an image, and then fallback to any slotted content for an element based icon.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/icon
+
+# or
+
+yarn add @spectrum-web-components/icon
+</code></pre>
+<h2>Example</h2>
+<p>Names icons on this page are provided by the <sp-link href="/components/icons"><code>&lt;sp-icons-medium&gt;</code> icon set</sp-link>. Learn how to create your own via <sp-link href="/components/iconset"><code>sp-iconset</code></sp-link>.</p>
+<pre><code class="language-html">&lt;sp-icons-medium&gt;&lt;/sp-icons-medium&gt;
+&lt;sp-icon name=&quot;ui:Magnifier&quot;&gt;&lt;/sp-icon&gt;
+</code></pre>
+<h2>Variants</h2>
+<p>Icons are available in various sizes in Spectrum ranging from <code>xxs</code> to <code>xxl</code>, <code>m</code> being the default. We can specify the size via <code>size</code> attribute.</p>
+<h3>Size variants</h3>
+<pre><code class="language-html">&lt;sp-icon size=&quot;xxs&quot; name=&quot;ui:Magnifier&quot;&gt;&lt;/sp-icon&gt;
+&lt;sp-icon size=&quot;xs&quot; name=&quot;ui:Magnifier&quot;&gt;&lt;/sp-icon&gt;
+&lt;sp-icon size=&quot;s&quot; name=&quot;ui:Magnifier&quot;&gt;&lt;/sp-icon&gt;
+&lt;sp-icon size=&quot;m&quot; name=&quot;ui:Magnifier&quot;&gt;&lt;/sp-icon&gt;
+&lt;sp-icon size=&quot;l&quot; name=&quot;ui:Magnifier&quot;&gt;&lt;/sp-icon&gt;
+&lt;sp-icon size=&quot;xl&quot; name=&quot;ui:Magnifier&quot;&gt;&lt;/sp-icon&gt;
+&lt;sp-icon size=&quot;xxl&quot; name=&quot;ui:Magnifier&quot;&gt;&lt;/sp-icon&gt;
+</code></pre>
+<h2>Color icon</h2>
+<p>Icons apply their color as <code>currentColor</code> so change the <code>color</code> property of the element for customization.</p>
+<pre><code class="language-html">&lt;sp-icon name=&quot;ui:Magnifier&quot; style=&quot;color: red;&quot;&gt;&lt;/sp-icon&gt;
+</code></pre>
+<h2>Image icon</h2>
+<p>An image icon can be supplied via the <code>src</code> attribute. Remember that you cannot style the contents of an image via CSS, so use graphics that are appropriately prepared for including in your applications design requirements.</p>
+<pre><code class="language-html">&lt;sp-icon
+    size=&quot;xxs&quot;
+    src=&quot;https://spectrum.corp.adobe.com/static/icons/workflow_22/Smock_FullScreen_22_N.svg&quot;
+&gt;&lt;/sp-icon&gt;
+&lt;sp-icon
+    size=&quot;xs&quot;
+    src=&quot;https://spectrum.corp.adobe.com/static/icons/workflow_22/Smock_FullScreen_22_N.svg&quot;
+&gt;&lt;/sp-icon&gt;
+&lt;sp-icon
+    size=&quot;s&quot;
+    src=&quot;https://spectrum.corp.adobe.com/static/icons/workflow_22/Smock_FullScreen_22_N.svg&quot;
+&gt;&lt;/sp-icon&gt;
+&lt;sp-icon
+    size=&quot;m&quot;
+    src=&quot;https://spectrum.corp.adobe.com/static/icons/workflow_22/Smock_FullScreen_22_N.svg&quot;
+&gt;&lt;/sp-icon&gt;
+&lt;sp-icon
+    size=&quot;l&quot;
+    src=&quot;https://spectrum.corp.adobe.com/static/icons/workflow_22/Smock_FullScreen_22_N.svg&quot;
+&gt;&lt;/sp-icon&gt;
+&lt;sp-icon
+    size=&quot;xl&quot;
+    src=&quot;https://spectrum.corp.adobe.com/static/icons/workflow_22/Smock_FullScreen_22_N.svg&quot;
+&gt;&lt;/sp-icon&gt;
+&lt;sp-icon
+    size=&quot;xxl&quot;
+    src=&quot;https://spectrum.corp.adobe.com/static/icons/workflow_22/Smock_FullScreen_22_N.svg&quot;
+&gt;&lt;/sp-icon&gt;
+</code></pre>
+<h2>Element icon</h2>
+<p>Icons can also be supplied as HTML elements to be applied via the default <code>&lt;slot&gt;</code>.</p>
+<pre><code class="language-html">&lt;sp-icon size=&quot;xxs&quot;&gt;
+    &lt;svg
+        xmlns=&quot;http://www.w3.org/2000/svg&quot;
+        viewBox=&quot;0 0 22 22&quot;
+        role=&quot;img&quot;
+        fill=&quot;currentColor&quot;
+        height=&quot;18&quot;
+        width=&quot;18&quot;
+        aria-hidden=&quot;true&quot;
+    &gt;
+        &lt;path
+            d=&quot;M19.75,10.04h-15l5.97-5.97a.483.483,0,0,0,0-.7l-.35-.36a.513.513,0,0,0-.71,0L2.24,10.44a.513.513,0,0,0,0,.71l7.39,7.84a.513.513,0,0,0,.71,0l.35-.35a.513.513,0,0,0,0-.71L4.76,11.5H19.75a.25.25,0,0,0,.25-.25v-.96A.25.25,0,0,0,19.75,10.04Z&quot;
+        &gt;&lt;/path&gt;
+    &lt;/svg&gt;
+&lt;/sp-icon&gt;
+&lt;sp-icon&gt;
+    &lt;svg
+        xmlns=&quot;http://www.w3.org/2000/svg&quot;
+        viewBox=&quot;0 0 22 22&quot;
+        role=&quot;img&quot;
+        fill=&quot;currentColor&quot;
+        height=&quot;18&quot;
+        width=&quot;18&quot;
+        aria-hidden=&quot;true&quot;
+    &gt;
+        &lt;path
+            d=&quot;M19.75,10.04h-15l5.97-5.97a.483.483,0,0,0,0-.7l-.35-.36a.513.513,0,0,0-.71,0L2.24,10.44a.513.513,0,0,0,0,.71l7.39,7.84a.513.513,0,0,0,.71,0l.35-.35a.513.513,0,0,0,0-.71L4.76,11.5H19.75a.25.25,0,0,0,.25-.25v-.96A.25.25,0,0,0,19.75,10.04Z&quot;
+        &gt;&lt;/path&gt;
+    &lt;/svg&gt;
+&lt;/sp-icon&gt;
+&lt;sp-icon size=&quot;xxl&quot;&gt;
+    &lt;svg
+        xmlns=&quot;http://www.w3.org/2000/svg&quot;
+        viewBox=&quot;0 0 22 22&quot;
+        role=&quot;img&quot;
+        fill=&quot;currentColor&quot;
+        height=&quot;18&quot;
+        width=&quot;18&quot;
+        aria-hidden=&quot;true&quot;
+    &gt;
+        &lt;path
+            d=&quot;M19.75,10.04h-15l5.97-5.97a.483.483,0,0,0,0-.7l-.35-.36a.513.513,0,0,0-.71,0L2.24,10.44a.513.513,0,0,0,0,.71l7.39,7.84a.513.513,0,0,0,.71,0l.35-.35a.513.513,0,0,0,0-.71L4.76,11.5H19.75a.25.25,0,0,0,.25-.25v-.96A.25.25,0,0,0,19.75,10.04Z&quot;
+        &gt;&lt;/path&gt;
+    &lt;/svg&gt;
+&lt;/sp-icon&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p><code>aria-hidden</code> is set to true by default for Icons. The <code>label</code> attribute suppresses this and adds the label text as the aria-label of the icon.</p>
+<pre><code class="language-html">&lt;sp-icon name=&quot;ui:Magnifier&quot; label=&quot;Magnify&quot;&gt;&lt;/sp-icon&gt;
+</code></pre>
+
+      </main>
+    </div>
+  </body>
+</html>

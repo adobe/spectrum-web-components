@@ -30,9 +30,6 @@ commands:
             - attach_workspace:
                   at: ~/
             - run:
-                  name: Installing Dependencies
-                  command: yarn --ignore-scripts
-            - run:
                   name: prepare test git user
                   command: git config --global user.email "circleci@example.com" && git config --global user.name "CircleCi Build"
     run-regressions:
@@ -45,7 +42,7 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-5e0d0a3b649f0a88345048785ad3ba64663b3606
+                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-903d4d173b10b6e4c865bde4b02488f324e31322
                       - v1-golden-images-master-<< parameters.regression_color >>-<< parameters.regression_scale >>-
             - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >>
             - run:
@@ -92,6 +89,7 @@ jobs:
                   root: ~/
                   paths:
                       - project/node_modules
+                      - project/packages/*/node_modules
                       - project/documentation/dist
 
     visual-lightest-medium:
@@ -148,6 +146,24 @@ jobs:
                   regression_color: dark
                   regression_scale: large
 
+    visual-darkest-medium:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: darkest
+                  regression_scale: medium
+
+    visual-darkest-large:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: darkest
+                  regression_scale: large
+
     publish-docs:
         executor: node
 
@@ -178,6 +194,12 @@ workflows:
                   requires:
                       - build
             - visual-dark-large:
+                  requires:
+                      - build
+            - visual-darkest-medium:
+                  requires:
+                      - build
+            - visual-darkest-large:
                   requires:
                       - build
             - publish-docs:

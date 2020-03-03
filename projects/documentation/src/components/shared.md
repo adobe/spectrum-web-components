@@ -1,0 +1,79 @@
+---
+layout: layout.njk
+title: 'Shared: Spectrum Web Components'
+---
+## Description
+
+Shared mixins, tools, etc. that support developing Spectrum Web Components.
+
+### Installation
+
+```
+npm install @spectrum-web-components/shared
+
+# or
+
+yarn add @spectrum-web-components/shared
+```
+
+### Focusable
+
+The `Focusable` subclass of `LitElement` adds some helpers method and lifecycle coverage in order to support passing focus to a container element inside of a custom element. The Focusable base class handles tabindex setting into shadowed elements automatically and is based heavily on the aybolit delegate-focus-mixin at https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
+
+```js
+import { Focusable } from '@spectrum-web-components/shared/lib/focusable';
+import { html } from 'lit-element';
+
+class FocusableButton extends Focusable {
+    public static get styles(): CSSResultArray {
+        return [...super.styles];
+    }
+    public get focusElement(): HTMLElement {
+        /* istanbul ignore if */
+        if (!this.shadowRoot) {
+            return this;
+        }
+        return this.shadowRoot.querySelector('#button') as HTMLElement;
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            <button
+                id="button"
+            >
+                Focus for this button is being managed by the focusable base class.
+            </button>
+        `;
+    }
+}
+```
+
+### ObserverSlotText
+
+When working with `<slot>`s and their `slotchange` event, you will have the opportunity to capture when the nodes and/or elements in your element are added or removed. However, if the `textContent` of a text node changes, you will not receive the `slotchange` event because the slot hasn't actually received new nodes and/or elements in the exchange. When working with a lit-html binding `<your-element>${text}</your-element>` that means you will not receive a `slotchange` event when the value of `text` goes from `text = ''` to `text = 'something'` or the other way. In these cases the `ObserveSlotText` can be leverages to apply a mutation observe onto your element that tracks `characterData` mutations so that you can resspond as desired.
+
+```js
+import { ObserveSlotText } from '@spectrum-web-components/shared/lib/oberve-slot-text';
+import { LitElement, html } from 'lit-element';
+
+class ObserveSlotTextElement extends ObserveSlotText(LitElement, '#observing-slot') {
+    protected render(): TemplateResult {
+        return html`
+            <button
+                id="button"
+            >
+                <slot
+                    id="observing-slot"
+                    @slotchange=${this.manageObservedSlot}
+                ></slot>
+            </button>
+        `;
+    }
+    protected updated(): void {
+        console.log(this.slotHasContent); // => true when <observing-slot-text-element>Text</observing-slot-text-element>
+    }
+}
+
+customElements.define('observing-slot-text-element', ObserveSlotTextElement);
+```
+

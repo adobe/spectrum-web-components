@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actionbar: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>A <code>&lt;sp-actionbar&gt;</code> delivers a floating action bar that is a convenient way to deliver stateful actions in cases like selection mode. <code>&lt;sp-actionbar&gt;</code> can be deployed in two variants beyond the default: <code>[varient=&quot;fixed&quot;]</code>, to position the element in relation to the page, and <code>[variant=sticky]</code>, to position the content in relation to content that may scroll.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/actionbar
+
+# or
+
+yarn add @spectrum-web-components/actionbar
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-actionbar open&gt;
+    &lt;sp-checkbox indeterminate&gt;228 Selected&lt;/sp-checkbox&gt;
+    &lt;div class=&quot;spectrum-ButtonGroup&quot;&gt;
+        &lt;sp-action-button quiet&gt;
+            &lt;svg slot=&quot;icon&quot; id=&quot;spectrum-icon-18-Edit&quot; viewBox=&quot;0 0 36 36&quot;&gt;
+                &lt;path
+                    d=&quot;M33.567 8.2L27.8 2.432a1.215 1.215 0 0 0-.866-.353H26.9a1.371 1.371 0 0 0-.927.406L5.084 23.372a.99.99 0 0 0-.251.422L2.055 33.1c-.114.377.459.851.783.851a.251.251 0 0 0 .062-.007c.276-.063 7.866-2.344 9.311-2.778a.972.972 0 0 0 .414-.249l20.888-20.889a1.372 1.372 0 0 0 .4-.883 1.221 1.221 0 0 0-.346-.945zM11.4 29.316c-2.161.649-4.862 1.465-6.729 2.022l2.009-6.73z&quot;
+                &gt;&lt;/path&gt;
+            &lt;/svg&gt;
+        &lt;/sp-action-button&gt;
+        &lt;sp-action-button quiet&gt;
+            &lt;svg slot=&quot;icon&quot; id=&quot;spectrum-icon-18-More&quot; viewBox=&quot;0 0 36 36&quot;&gt;
+                &lt;circle cx=&quot;17.8&quot; cy=&quot;18.2&quot; r=&quot;3.4&quot;&gt;&lt;/circle&gt;
+                &lt;circle cx=&quot;29.5&quot; cy=&quot;18.2&quot; r=&quot;3.4&quot;&gt;&lt;/circle&gt;
+                &lt;circle cx=&quot;6.1&quot; cy=&quot;18.2&quot; r=&quot;3.4&quot;&gt;&lt;/circle&gt;
+            &lt;/svg&gt;
+        &lt;/sp-action-button&gt;
+    &lt;/div&gt;
+&lt;/sp-actionbar&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Fixed</h3>
+<p>When using <code>[variant=&quot;fixed&quot;]</code>, the <code>&lt;sp-actionbar&gt;</code> will display by default at the bottom left of the window and can be customized via CSS from the outside.</p>
+<pre><code class="language-html">&lt;h4&gt;Look down and to the left when toggling.&lt;/h4&gt;
+&lt;sp-actionbar variant=&quot;fixed&quot;&gt;
+    &lt;sp-checkbox indeterminate&gt;228 Selected&lt;/sp-checkbox&gt;
+&lt;/sp-actionbar&gt;
+&lt;sp-button
+    onclick=&quot;javascript:this.previousElementSibling.open = !this.previousElementSibling.open;&quot;
+&gt;
+    Toggle fixed actionbar
+&lt;/sp-button&gt;
+</code></pre>
+<h3>Sticky</h3>
+<p>When using <code>[variant=&quot;sticky&quot;]</code>, be sure you've spent some time touching up on <sp-link href="https://medium.com/@elad/css-position-sticky-how-it-really-works-54cd01dc2d46">how <code>sticky</code> really works</sp-link> to ensure the most successful delivery of your content.</p>
+<pre><code class="language-html">&lt;section style=&quot;position: relative; max-height: 6em; overflow: auto;&quot;&gt;
+    &lt;h4&gt;Scroll down for toggle button&lt;/h4&gt;
+    &lt;sp-actionbar variant=&quot;sticky&quot; style=&quot;top: 0;&quot;&gt;
+        &lt;sp-checkbox indeterminate&gt;228 Selected&lt;/sp-checkbox&gt;
+    &lt;/sp-actionbar&gt;
+    &lt;p&gt;
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+    &lt;/p&gt;
+    &lt;sp-button
+        onclick=&quot;javascript:this.previousElementSibling.previousElementSibling.open = !this.previousElementSibling.previousElementSibling.open;&quot;
+    &gt;
+        Toggle sticky actionbar
+    &lt;/sp-button&gt;
+&lt;/section&gt;
+</code></pre>
+
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Light: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>An <strong>sp-status-light</strong> is a great way to convey semantic meaning, such as statuses and categories.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/status-light
+
+# or
+
+yarn add @spectrum-web-components/status-light
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-status-light variant=&quot;positive&quot;&gt;approved&lt;/sp-status-light&gt;
+</code></pre>
+<h3>Variants</h3>
+<p>There are many variants to choose from in Spectrum. The <code>variant</code>
+attribute controls the main variant of the status light, and <code>neutral</code> being the default. Following are the supported variants:</p>
+<ul>
+<li>positive</li>
+<li>negative</li>
+<li>notice</li>
+<li>info</li>
+<li>neutral</li>
+<li>yellow</li>
+<li>fuchsia</li>
+<li>indigo</li>
+<li>seafoam</li>
+<li>chartreuse</li>
+<li>magenta</li>
+<li>celery</li>
+<li>purple</li>
+</ul>
+
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Textarea: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p><code>sp-textfield[multiline]</code> components are text areas that allow users to input custom multiline text entries with a keyboard. Various decorations can be displayed around the field to communicate the entry requirements.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/textfield
+
+# or
+
+yarn add @spectrum-web-components/textfield
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-textfield placeholder=&quot;Enter your name&quot; multiline&gt;&lt;/sp-textfield&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Valid</h3>
+<p>Dictate the validity state of the text entry with the <code>valid</code> attribute.</p>
+<pre><code class="language-html">&lt;sp-textfield placeholder=&quot;Enter your name&quot; valid multiline&gt;&lt;/sp-textfield&gt;
+</code></pre>
+<h3>Invalid</h3>
+<p>Dictate the invalidity state of the text entry with the <code>invalid</code> attribute.</p>
+<pre><code class="language-html">&lt;sp-textfield placeholder=&quot;Enter your name&quot; invalid multiline&gt;&lt;/sp-textfield&gt;
+</code></pre>
+<h3>Quiet</h3>
+<p>The quiet style works best when a clear layout (vertical stack, table, grid) makes it easy to parse. Too many quiet components in a small space can be hard to read.</p>
+<pre><code class="language-html">&lt;sp-textfield placeholder=&quot;Enter your name&quot; quiet multiline&gt;&lt;/sp-textfield&gt;
+</code></pre>
+<h3>Grows</h3>
+<p>By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the <code>grows</code> attribute the text area will grow to accomidate the full content of the element.</p>
+<pre><code class="language-html">&lt;sp-textfield
+    multiline
+    placeholder=&quot;Enter your name&quot;
+    value=&quot;By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element.&quot;
+&gt;&lt;/sp-textfield&gt;
+&lt;sp-textfield
+    multiline
+    grows
+    placeholder=&quot;Enter your name&quot;
+    value=&quot;By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element.&quot;
+&gt;&lt;/sp-textfield&gt;
+</code></pre>
+
+      </main>
+    </div>
+  </body>
+</html>

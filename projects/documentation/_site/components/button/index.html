@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>An <strong>sp-button</strong> represents an action a user can take. sp-buttons can be clicked
+or tapped to perform an action or to navigate to another page. sp-buttons in
+Spectrum have several variations for different uses and multiple levels of
+loudness for various attention-getting needs.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/button
+
+# or
+
+yarn add @spectrum-web-components/button
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-button&gt;Hello world&lt;/sp-button&gt;
+</code></pre>
+<h2>Variants</h2>
+<p>There are many button variants to choose from in Spectrum. The <code>variant</code>
+attribute controls the main variant of the button, and a few other boolean
+attributes can be combined to apply sub-variants, e.g. <code>quiet</code>.</p>
+<h3>Normal</h3>
+<pre><code class="language-html">&lt;sp-button variant=&quot;cta&quot;&gt;CTA&lt;/sp-button&gt;
+&lt;sp-button variant=&quot;primary&quot;&gt;Primary&lt;/sp-button&gt;
+&lt;sp-button variant=&quot;secondary&quot;&gt;Secondary&lt;/sp-button&gt;
+&lt;sp-button variant=&quot;negative&quot;&gt;Negative&lt;/sp-button&gt;
+</code></pre>
+<h3>Quiet</h3>
+<pre><code class="language-html">&lt;sp-button quiet variant=&quot;primary&quot;&gt;Quiet Primary&lt;/sp-button&gt;
+&lt;sp-button quiet variant=&quot;secondary&quot;&gt;Quiet Secondary&lt;/sp-button&gt;
+&lt;sp-button quiet variant=&quot;negative&quot;&gt;Quiet Negative&lt;/sp-button&gt;
+</code></pre>
+<h2>Content</h2>
+<p><strong>sp-buttons</strong> can have a label, or a label with an icon. An icon is provided by
+placing an icon component to the <code>icon</code> slot. The icon may be an <code>sp-icon</code> or an
+SVG.</p>
+<pre><code class="language-html">&lt;sp-icons-medium&gt;&lt;/sp-icons-medium&gt;
+&lt;sp-button variant=&quot;primary&quot;&gt;Label only&lt;/sp-button&gt;
+&lt;sp-button variant=&quot;primary&quot;&gt;
+    &lt;sp-icon slot=&quot;icon&quot; size=&quot;s&quot; name=&quot;ui:HelpMedium&quot;&gt;&lt;/sp-icon&gt;
+    Icon + Label
+&lt;/sp-button&gt;
+&lt;sp-button variant=&quot;primary&quot;&gt;
+    &lt;svg
+        slot=&quot;icon&quot;
+        viewBox=&quot;0 0 36 36&quot;
+        focusable=&quot;false&quot;
+        aria-hidden=&quot;true&quot;
+        role=&quot;img&quot;
+    &gt;
+        &lt;path
+            d=&quot;M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z&quot;
+        &gt;&lt;/path&gt;
+    &lt;/svg&gt;
+    SVG Icon + Label
+&lt;/sp-button&gt;
+</code></pre>
+<h2>States</h2>
+<p>In addition to the variant, <strong>sp-buttons</strong> have a disabled state visual state
+which can be applied by adding the attribute <code>disabled</code>. All spectrum-button
+variants support the In addition to affectng the visual state, the <code>disabled</code>
+attribute prevents focus and disallows <code>click</code> events.</p>
+<pre><code class="language-html">&lt;sp-button variant=&quot;primary&quot;&gt;Normal&lt;/sp-button&gt;
+&lt;sp-button variant=&quot;primary&quot; disabled&gt;Disabled&lt;/sp-button&gt;
+</code></pre>
+<h2>Handling events</h2>
+<p>Events handlers for clicks and other user actions can be registered on a
+<code>spectrum-button</code> just as on a normal HTML <code>button</code> element.</p>
+<pre><code class="language-html">&lt;sp-button onclick=&quot;alert('spectrum-button clicked!')&quot;&gt;Click me&lt;/sp-button&gt;
+</code></pre>
+<h3>Autofocus</h3>
+<p>The <code>autofocus</code> attribute sets focus to the <strong>sp-button</strong> when the component
+mounts. This is useful for setting focus to a specific sp-button when a
+popover or dialog opens.</p>
+<pre><code class="language-html">&lt;sp-button autofocus&gt;Confirm&lt;/sp-button&gt;
+</code></pre>
+
+      </main>
+    </div>
+  </body>
+</html>

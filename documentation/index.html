@@ -8,9 +8,11 @@
             content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
         <base href="/" />
-
-        <!-- For Adobe Clean font support -->
-        <link rel="stylesheet" href="https://use.typekit.net/evk7lzt.css" />
+        <meta
+            name="description"
+            content="Spectrum Web Components provide interface components as custom elements to help teams work more efficiently and to make applications more consistent."
+        />
+        <link rel="preconnect" href="https://use.typekit.net" />
 
         <!-- Use this to test Adobe Clean UX support (SpectrumCSS dependency) -->
         <!-- NOTE: you'll need to rebuild storybook to test this locally.
@@ -60,12 +62,9 @@
             // https://bugs.chromium.org/p/chromium/issues/detail?id=946975
             delete Document.prototype.adoptedStyleSheets;
         </script>
-        <script
-            src="https://use.typekit.net/ruf7eed.js"
-            type="text/javascript"
-            async=""
-        ></script>
         <script type="module" src="./src/main.ts"></script>
     </head>
-    <body></body>
+    <body>
+        <docs-page></docs-page>
+    </body>
 </html>

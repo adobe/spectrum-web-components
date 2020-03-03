@@ -10,21 +10,68 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, CSSResultArray, property } from 'lit-element';
+import {
+    html,
+    CSSResultArray,
+    property,
+    LitElement,
+    PropertyValues,
+} from 'lit-element';
 import './side-nav';
 import layoutStyles from './layout.css';
-import { RouteComponent } from './route-component';
+import '@spectrum-web-components/theme';
+import { Color, Scale } from '@spectrum-web-components/theme';
+import { Dropdown } from '@spectrum-web-components/dropdown';
+import '@spectrum-web-components/dropdown';
+import '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu-item';
 
-export class LayoutElement extends RouteComponent {
+const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
+const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
+const COLOR_LIGHT = 'light';
+const SCALE_MEDIUM = 'medium';
+const DEFAULT_COLOR = (window.localStorage
+    ? localStorage.getItem(SWC_THEME_COLOR_KEY) || COLOR_LIGHT
+    : COLOR_LIGHT) as Color;
+const DEFAULT_SCALE = (window.localStorage
+    ? localStorage.getItem(SWC_THEME_SCALE_KEY) || SCALE_MEDIUM
+    : SCALE_MEDIUM) as Scale;
+
+export class LayoutElement extends LitElement {
     public static get styles(): CSSResultArray {
         return [layoutStyles];
     }
 
+    @property({ attribute: false })
+    public color: Color = DEFAULT_COLOR;
+
     @property({ type: Boolean })
     public open = false;
 
+    @property({ attribute: false })
+    public scale: Scale = DEFAULT_SCALE;
+
     toggleNav() {
         this.open = !this.open;
+    }
+
+    private updateColor(event: Event) {
+        this.color = (event.target as Dropdown).value as Color;
+    }
+
+    private updateScale(event: Event) {
+        this.scale = (event.target as Dropdown).value as Scale;
+    }
+
+    // TODO: remove this manual link relationship when
+    // https://github.com/adobe/spectrum-web-components/issues/475
+    // has been completed and links are natively part of the library
+    private onClickLabel(event: { target: HTMLElement }) {
+        const { target } = event;
+        if (!target) return;
+        const next = target.nextElementSibling as Dropdown;
+        if (!next || next.open) return;
+        next.click();
     }
 
     renderContent() {
@@ -35,11 +82,11 @@ export class LayoutElement extends RouteComponent {
 
     render() {
         return html`
-            <sp-theme color="light" scale="medium" id="app">
+            <sp-theme color=${this.color} scale=${this.scale} id="app">
                 <header>
                     <sp-action-button
                         quiet
-                        aria-label="Open Navigation"
+                        label="Open Navigation"
                         @click=${this.toggleNav}
                     >
                         <svg
@@ -88,12 +135,62 @@ export class LayoutElement extends RouteComponent {
                     ></docs-side-nav>
                     <main id="layout-content" ?inert=${this.open} role="main">
                         <div id="page">
+                            <div class="manage-theme">
+                                <label @click=${this.onClickLabel}>Theme</label>
+                                <sp-dropdown
+                                    placement="bottom"
+                                    quiet
+                                    value=${this.color}
+                                    @change=${this.updateColor}
+                                >
+                                    <sp-menu>
+                                        <sp-menu-item value="lightest">
+                                            Lightest
+                                        </sp-menu-item>
+                                        <sp-menu-item value="light">
+                                            Light
+                                        </sp-menu-item>
+                                        <sp-menu-item value="dark">
+                                            Dark
+                                        </sp-menu-item>
+                                        <sp-menu-item value="darkest">
+                                            Darkest
+                                        </sp-menu-item>
+                                    </sp-menu>
+                                </sp-dropdown>
+                                <label @click=${this.onClickLabel}>Scale</label>
+                                <sp-dropdown
+                                    label="Scale"
+                                    placement="bottom"
+                                    quiet
+                                    value=${this.scale}
+                                    @change=${this.updateScale}
+                                >
+                                    <sp-menu>
+                                        <sp-menu-item value="medium">
+                                            Medium
+                                        </sp-menu-item>
+                                        <sp-menu-item value="large">
+                                            Large
+                                        </sp-menu-item>
+                                    </sp-menu>
+                                </sp-dropdown>
+                            </div>
                             ${this.renderContent()}
                         </div>
                     </main>
                 </div>
             </sp-theme>
         `;
+    }
+
+    updated(changes: PropertyValues) {
+        if (changes.has('color') && window.localStorage) {
+            localStorage.setItem(SWC_THEME_COLOR_KEY, this.color);
+        }
+        if (changes.has('scale') && window.localStorage) {
+            localStorage.setItem(SWC_THEME_SCALE_KEY, this.scale);
+        }
     }
 
     connectedCallback() {

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>An <strong>sp-avatar</strong> is a great way to feature a visual representation of a user.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/avatar
+
+# or
+
+yarn add @spectrum-web-components/avatar
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-avatar label=&quot;Dog the User&quot; src=&quot;https://placedog.net/500/500&quot;&gt;&lt;/sp-avatar&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>The <code>label</code> attribute of the <code>&lt;sp-avatar&gt;</code> will be passed into the <code>&lt;img&gt;</code> element as the <code>alt</code> tag for use in defining a textual representation of the image displayed.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

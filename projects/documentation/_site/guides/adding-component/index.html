@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding a New Component</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h1>Adding a New Component</h1>
+<p>This guide explains how to contribute the implementation of a Spectrum control
+to <sp-link href="https://github.com/adobe/spectrum-web-components">spectrum-web-components</sp-link>.</p>
+<p>The components in spectrum-web-components are based on the CSS definitions in
+<sp-link href="https://github.com/adobe/spectrum-css">spectrum-css</sp-link>. Typically, component
+implementations contain very little code. The CSS from the <code>spectrum-css</code>
+project typically specifies all of the presentation details.</p>
+<h2>What is a web component?</h2>
+<hr>
+<p>According to <sp-link href="https://www.webcomponents.org/introduction">webcomponents.org</sp-link>,
+web components are:</p>
+<blockquote>
+<p>... a set of web platform APIs that allow you to create new custom, reusable,
+encapsulated HTML tags to use in web pages and web apps. Custom components and
+widgets build on the Web Component standards, will work across modern
+browsers, and can be used with any JavaScript library or framework that works
+with HTML.</p>
+</blockquote>
+<p>In order to add a new component to this library, you will need to develop a
+working knowledge of the following technologies:</p>
+<ul>
+<li><sp-link href="https://github.com/adobe/spectrum-css">Spectrum CSS</sp-link>: A CSS implementation of the Spectrum design language</li>
+<li><sp-link href="https://developers.google.com/web/fundamentals/web-components/customelements">Web Components</sp-link>: Standards based method for adding new HTML tags to a browser</li>
+<li><sp-link href="https://developers.google.com/web/fundamentals/web-components/shadowdom">Shadow DOM</sp-link>: The part of the Web Component spec that allows for encapsulation of component styles and child nodes</li>
+<li><sp-link href="https://lit-element.polymer-project.org/guide">lit-element</sp-link>: A simple base class for creating fast, lightweight web components</li>
+<li><sp-link href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties">CSS custom properties</sp-link>: CSS variables that can be used throughout a document</li>
+<li><sp-link href="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html">Typescript</sp-link>: A typesafe variant of JavaScript</li>
+</ul>
+<h2>Setting up the styling</h2>
+<hr>
+<p>The most complicated part of implementing a Spectrum web component is getting
+the styles set up correctly. The <sp-link href="https://developers.google.com/web/fundamentals/web-components/shadowdom">shadow
+DOM</sp-link> is
+the heart of a web component. It isolates the component from the styles and DOM
+of the containing page. While this offers many benefits, it also means that we
+must structure our CSS very differently.</p>
+<p>The CSS from the <sp-link href="https://github.com/adobe/spectrum-css">spectrum-css</sp-link> project
+is intended to be installed globally on a web page. Using it in the context of a
+web component requires that we modify it. To facilitate that, this project comes
+with a <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/scripts/process-spectrum-postcss-plugin.js">config-driven processor</sp-link> that can transform the Spectrum CSS into a format
+that can be consumed in a web component.</p>
+<p>The first step is to create a directory and a <code>spectrum-config.js</code> file for your
+new component. This config file contains information about the structure of
+the web component in relation to the Spectrum CSS classes.</p>
+<p>Below is a fragment of the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-config.js"><code>spectrum-config.js</code> file for <code>sp-button</code></sp-link>.</p>
+<pre><code class="language-javascript">module.exports = {
+    spectrum: 'button',
+    components: [
+        {
+            name: 'button',
+            host: {
+                selector: '.spectrum-Button',
+                shadowSelector: '#button',
+            },
+            focus: '#button',
+            attributes: [
+                {
+                    type: 'boolean',
+                    selector: '.spectrum-Button--quiet',
+                },
+                {
+                    type: 'boolean',
+                    selector: ':disabled',
+                },
+                {
+                    type: 'enum',
+                    name: 'variant',
+                    values: [
+                        '.spectrum-Button--cta',
+                        '.spectrum-Button--primary',
+                        '.spectrum-Button--secondary',
+                        {
+                            name: 'negative',
+                            selector: '.spectrum-Button--warning',
+                        },
+                        '.spectrum-Button--overBackground',
+                        '.spectrum-Button--secondary',
+                    ],
+                },
+            ],
+            ids: ['.spectrum-Button-label'],
+            slots: [
+                {
+                    name: 'icon',
+                    selector: '.spectrum-Icon',
+                },
+            ],
+            exclude: [/\.is-disabled/],
+        },
+    ],
+};
+</code></pre>
+<p>If we wanted to create a button component using this config file, the steps would be as
+follows:</p>
+<ol>
+<li>Make the directory <sp-link href="https://github.com/adobe/spectrum-web-components/tree/master/src/button"><code>src/components/button</code></sp-link></li>
+<li>In that new directory, create a <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-config.js"><code>spectrum-config.js</code></sp-link>
+file with the above contents</li>
+<li>Run the command <code>npm run process-spectrum</code> to create the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-button.css">CSS file</sp-link></li>
+</ol>
+<p>When you do the above, the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/scripts/process-spectrum-postcss-plugin.js">config-driven processor</sp-link>
+will look in the <sp-link href="https://github.com/adobe/spectrum-css"><code>spectrum-css</code></sp-link> project
+for the <sp-link href="https://unpkg.com/@adobe/spectrum-css@2.13.0/dist/components/button/index-vars.css">matching CSS file</sp-link>.
+It will parse that file and restructure the CSS as per the configuration
+instructions.</p>
+<h2>Structure of a Spectrum Web Component</h2>
+<hr>
+<p>If you look at an <code>sp-button</code> in the Chrome developer tools, you will see a DOM
+structure that looks like this.</p>
+<style>
+    .indented { 
+        padding-left: 50pt; 
+        padding-right: 50pt; 
+    }
+
+    .dom-example {
+        background-color: var(--spectrum-global-color-gray-50);
+        max-width: 100%;
+        line-height: 1.3em;
+        padding: 0.75rem 1.5rem;
+        box-shadow: 0 0 18px rgba(0, 0, 0, 0.15);
+        margin: 1rem -4px 2rem;
+        border-radius: 6px;
+        overflow: auto hidden;
+        white-space: pre;
+    }
+
+    .flip {
+        display: inline-block;
+        transform: scale(-1, 1);
+    }
+</style>
+<div class='dom-example'>
+&#x25BC;&lt;sp-button tabindex="0" variant="cta"&gt;
+    &#x25BC; #shadow-root (open)
+        &#x25BC; &lt;button id="button" tabindex="0"&gt;
+            &#x25BC; &lt;div id="label&gt;
+                &#x25BC; &lt;slot&gt;
+                    <div class='flip'>&crarr;</div> #text
+                &lt;/slot&gt;
+            &lt;/div&gt;
+        &lt;/button&gt;
+    &#34;Click Me&#34;
+&lt;/sp-button&gt;
+</div>
+<p>If anything here looks unfamiliar, it is probably a good time to do some reading
+about <sp-link href="https://developers.google.com/web/fundamentals/web-components/customelements">web components</sp-link>.</p>
+<p>You can compare this markup with the <sp-link href="http://opensource.adobe.com/spectrum-css/2.13.0/docs/#button---cta">reference markup in the <code>spectrum-css</code> documentation</sp-link></p>
+<h3>Host Class Mapping</h3>
+<p>We need to determine what the main CSS class is for our component in the
+original <code>spectrum-css</code>. In the case of <code>sp-button</code>, we can see that the
+top-level class is <code>.Spectrum-Button</code>. We then need to determine where we want
+that CSS to be applied. In many cases, you will want that CSS to be applied to
+the actual web component via the <code>:host</code> selector. That is the default behaviour
+of the conversion script. In this case, we wanted to preserve all of the default
+behaviour of the <code>button</code> element in HTML. So, we want the main CSS to be
+applied to our <code>&lt;button&gt;</code> instead. If you look at the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-config.js#L18-L21"><code>host</code> definition in
+<code>spectrum-config.js</code></sp-link>
+you can see that we have supplied a <code>shadowSelector</code> option. That tells the
+script to move all of the CSS for <code>.Spectrum-Button</code> to the <code>#button</code> element in
+the shadow DOM.</p>
+<pre><code class="language-javascript">    host: {
+        selector: '.spectrum-Button',
+        shadowSelector: '#button',
+    },
+</code></pre>
+<h3>Shadow DOM Structure</h3>
+<p>The next step is to fill out the remaining structure of the shadow DOM portion
+of the component. Note that, in the shadow DOM, we are using ids instead of long
+class names. We can do that because the namespace of each instance of our web
+component has it's own DOM scope. So, there can never be an id name collision.</p>
+<p>Typically, you will reference the <sp-link href="http://opensource.adobe.com/spectrum-css/2.13.0/docs/#checkbox">sample code from the
+<code>spectrum-css</code></sp-link>
+documentation and <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/checkbox/checkbox.ts#L30-L48">recreate that structure in the shadow DOM of your
+component</sp-link>.</p>
+<p>In the case of <code>sp-checkbox</code>, we turn this sample DOM code:</p>
+<pre><code class="language-markup">&lt;label class=&quot;spectrum-Checkbox&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; class=&quot;spectrum-Checkbox-input&quot; id=&quot;checkbox-0&quot;&gt;
+  &lt;span class=&quot;spectrum-Checkbox-box&quot;&gt;
+    &lt;svg class=&quot;spectrum-Icon spectrum-UIIcon-CheckmarkSmall spectrum-Checkbox-checkmark&quot; focusable=&quot;false&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;use xlink:href=&quot;#spectrum-css-icon-CheckmarkSmall&quot; /&gt;
+    &lt;/svg&gt;
+    &lt;svg class=&quot;spectrum-Icon spectrum-UIIcon-DashSmall spectrum-Checkbox-partialCheckmark&quot; focusable=&quot;false&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;use xlink:href=&quot;#spectrum-css-icon-DashSmall&quot; /&gt;
+    &lt;/svg&gt;
+  &lt;/span&gt;
+  &lt;span class=&quot;spectrum-Checkbox-label&quot;&gt;Checkbox&lt;/span&gt;
+&lt;/label&gt;
+</code></pre>
+<p>into this code in our component's render method (actually implementation is
+slightly different):</p>
+<pre><code class="language-javascript">return html`
+        &lt;label id=&quot;root&quot;&gt;
+            &lt;input
+                id=&quot;input&quot;
+                type=&quot;checkbox&quot;
+                ?checked=${this.checked}
+                @change=${this.handleChange}
+            &lt;span id=&quot;box&quot;&gt;
+                &lt;sp-icon
+                    id=&quot;checkmark&quot;
+                    size=&quot;s&quot;
+                    name=&quot;ui:CheckmarkSmall&quot;
+                    aria-hidden=&quot;true&quot;
+                &gt;&lt;/sp-icon&gt;
+                &lt;sp-icon
+                    id=&quot;partialCheckmark&quot;
+                    size=&quot;s&quot;
+                    name=&quot;ui:DashSmall&quot;
+                    aria-hidden=&quot;true&quot;
+                &gt;&lt;/sp-icon&gt;
+            &lt;/span&gt;
+            &lt;span id=&quot;label&quot;&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/span&gt;
+        &lt;/label&gt;
+    `;
+</code></pre>
+<p>You will notice that many of the <code>spectrum-css</code> classes are mapped to ids in the
+web component. For example, <code>.spectrum-Checkbox-input</code> and
+<code>.spectrum-Checkbox-box</code> become <code>#input</code> and <code>#box</code>. Those transformations are
+described in the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/checkbox/spectrum-config.js#L43-L64"><code>ids</code> section of the <code>spectrum-config.js</code>
+file</sp-link>.</p>
+<pre><code class="language-javascript">    ids: [
+        {
+            selector: '.spectrum-Checkbox-input',
+            name: 'input',
+        },
+        {
+            selector: '.spectrum-Checkbox-box',
+            name: 'box',
+        },
+        {
+            selector: '.spectrum-Checkbox-checkmark',
+            name: 'checkmark',
+        },
+        {
+            selector: '.spectrum-Checkbox-partialCheckmark',
+            name: 'partialCheckmark',
+        },
+        {
+            selector: '.spectrum-Checkbox-label',
+            name: 'label',
+        },
+    ],
+</code></pre>
+<h3>Properties and Attributes</h3>
+<p>Most of our controls have options that affect how they are rendered. For
+example, Spectrum supports a number of different kinds of buttons (e.g primary,
+secondary or call-to-action). <code>spectrum-css</code> supports these visual styles using
+CSS classes. In web components, we typically support these options using
+attributes/properties on the component. For example, here is a call-to-action
+style button.</p>
+<pre><code class="language-html">&lt;sp-button variant=&quot;cta&quot;&gt;CTA&lt;/sp-button&gt;
+</code></pre>
+<p>We could conditionally add CSS classes to the elements of the shadow DOM during
+rendering, but it is much easier to just let the attributes on the DOM node
+drive the styling directly. In order to facilitate that, the
+<sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-config.js#L23-L47"><code>spectrum-config.js</code> file lets you specify how to map the various
+<code>spectrum-css</code> classes to CSS that is based on the attributes on the <code>:host</code> of
+the web
+component</sp-link>.</p>
+<pre><code class="language-javascript">    attributes: [
+        {
+            type: 'boolean',
+            selector: '.spectrum-Button--quiet',
+        },
+        {
+            type: 'boolean',
+            selector: ':disabled',
+        },
+        {
+            type: 'enum',
+            name: 'variant',
+            values: [
+                '.spectrum-Button--cta',
+                '.spectrum-Button--primary',
+                '.spectrum-Button--secondary',
+                {
+                    name: 'negative',
+                    selector: '.spectrum-Button--warning',
+                },
+                '.spectrum-Button--overBackground',
+                '.spectrum-Button--secondary',
+            ],
+        },
+    ],
+</code></pre>
+<p>We support two different kinds of attributes, booleans and enums. Booleans are
+turned on or off by the presence or absence of the attribute. Enum attributes
+must be set to one of the allowed values. The <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-button.css#L204-L212">CSS generated will reference the
+attributes on the <code>host:</code> element
+directly</sp-link>.</p>
+<h3>Class to Class Mapping</h3>
+<p>In some cases, you will need to retain the <code>spectrum-css</code> classes as classes. An
+example of that is when you need to apply CSS rules to multiple items in the
+shadow DOM. In that case, we simply map class names to shorter classnames. There
+is an <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/slider/spectrum-config.js#L91-L96">example of remapping classes in the slider
+component</sp-link>.</p>
+<pre><code class="language-javacript">    classes: [
+        {
+            selector: '.spectrum-Slider-track',
+            name: 'track',
+        },
+    ],
+</code></pre>
+<h3>Slots</h3>
+<p><sp-link href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot">Slot tags</sp-link> are
+how we host our child content (light DOM) in our component's shadow DOM. The
+<code>spectrum-css</code> for a component sometimes contains rules for laying out the child
+content. There is a <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-config.js#L49-L54"><code>slots</code>
+section</sp-link>
+in the <code>spectrum-config.js</code> file for mapping those rules to the slotted content.</p>
+<pre><code class="language-javascript">    slots: [
+        {
+            name: 'icon',
+            selector: '.spectrum-Icon',
+        },
+    ],
+</code></pre>
+<p>The above section tells our CSS processor to map CSS for the <code>.spectrum-Icon</code>
+class to the content that is being hosted in the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-button.css#L148-L158">slot with the name
+<code>icon</code></sp-link>.</p>
+<h2>Coding the Component</h2>
+<hr>
+<p>All of the <code>spectrum-web-components</code> are written using the
+<sp-link href="https://lit-element.polymer-project.org/guide">lit-element</sp-link> framework and
+<sp-link href="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html">Typescript</sp-link>.
+Your best bet is to look at <sp-link href="https://github.com/adobe/spectrum-web-components/tree/master/src">similar
+components</sp-link>
+and match the style.</p>
+<p>We have a working specification for the APIs for each of the Spectrum components.
+If you file an issue for the component that you want to implement, we can provide
+the necessary specifications for it.</p>
+<h3>Documenting the component</h3>
+<p>Each component should have a page in the documentation system. The pages are
+written in <sp-link href="https://www.markdownguide.org/cheat-sheet">Markdown</sp-link>. See one of
+the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/documentation/components/button.md">existing pages</sp-link> for an example.</p>
+<p>To run the local documentation server, use the command:</p>
+<pre><code>npm run docs:start
+</code></pre>
+<p>The documentation automatically extracts the properties and attributes from the
+source code. You should document your component using the <sp-link href="https://github.com/runem/web-component-analyzer#-how-to-document-your-components-using-jsdoc">appropriate jsdoc
+tags</sp-link>.
+See
+<sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/button.ts">button.ts</sp-link>
+for an example.</p>
+<h3>Working with Storybook</h3>
+<p>We use <sp-link href="https://storybook.js.org/">Storybook</sp-link> for developing our components.
+This gives us a rapid way to test our components in various configurations. The
+best way to start is to copy <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/stories/button.stories.ts">one of the existing
+stories</sp-link>.</p>
+<p>To run Storybook, use the command:</p>
+<pre><code>npm run storybook
+</code></pre>
+
+      </main>
+    </div>
+  </body>
+</html>

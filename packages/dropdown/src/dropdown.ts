@@ -123,6 +123,10 @@ export class DropdownBase extends Focusable {
         return this.button;
     }
 
+    public click(): void {
+        this.focusElement.click();
+    }
+
     public onButtonBlur(): void {
         /* istanbul ignore if */
         if (typeof this.button === 'undefined') {

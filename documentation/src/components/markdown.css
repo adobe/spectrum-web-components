@@ -23,6 +23,11 @@ governing permissions and limitations under the License.
     margin-bottom: 2rem;
 }
 
+#title-header h1,
+#hero h1 {
+    margin: var(--spectrum-global-dimension-size-100) 0;
+}
+
 .spectrum-Body4 code {
     color: var(--spectrum-global-color-blue-700);
 }

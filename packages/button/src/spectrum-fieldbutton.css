@@ -36,8 +36,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         color var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
     text-decoration: none;
-    font-family: adobe-clean-ux, adobe-clean, Source Sans Pro, -apple-system,
-        BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    font-family: var(
+        --spectrum-alias-body-text-font-family,
+        var(--spectrum-global-font-family-base)
+    );
     line-height: 1.3;
     cursor: pointer; /* .spectrum-FieldButton */
     height: var(
@@ -138,7 +140,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-size-thin)
     );
 }
-.spectrum-FieldButton--quiet {
+:host([quiet]) #button {
     /* .spectrum-FieldButton--quiet */
     margin: 0;
     padding: 0;
@@ -294,7 +296,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-disabled)
     );
 }
-.spectrum-FieldButton--quiet:hover {
+:host([quiet]) #button:hover {
     /* .spectrum-FieldButton--quiet:hover */
     background-color: var(
         --spectrum-fieldbutton-quiet-background-color-hover,
@@ -305,8 +307,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
-.spectrum-FieldButton--quiet:focus-visible,
-.spectrum-FieldButton--quiet.is-focused {
+:host([quiet]) #button:focus-visible,
+:host([quiet]) #button.is-focused {
     /* .spectrum-FieldButton--quiet.focus-ring,
    * .spectrum-FieldButton--quiet.is-focused */
     background-color: var(
@@ -319,8 +321,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-alias-border-color-focus)
         );
 }
-.spectrum-FieldButton--quiet:focus-visible.is-placeholder,
-.spectrum-FieldButton--quiet.is-focused.is-placeholder {
+:host([quiet]) #button:focus-visible.is-placeholder,
+:host([quiet]) #button.is-focused.is-placeholder {
     /* .spectrum-FieldButton--quiet.focus-ring.is-placeholder,
    * .spectrum-FieldButton--quiet.is-focused.is-placeholder */
     color: var(
@@ -328,8 +330,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-placeholder-text-color-hover)
     );
 }
-.spectrum-FieldButton--quiet.is-selected,
-.spectrum-FieldButton--quiet:active {
+:host([quiet]) #button.is-selected,
+:host([quiet]) #button:active {
     /* .spectrum-FieldButton--quiet.is-selected,
    * .spectrum-FieldButton--quiet:active */
     background-color: var(
@@ -341,10 +343,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-color-transparent)
     );
 }
-.spectrum-FieldButton--quiet.is-selected:focus-visible,
-.spectrum-FieldButton--quiet.is-selected.is-focused,
-.spectrum-FieldButton--quiet:active:focus-visible,
-.spectrum-FieldButton--quiet:active.is-focused {
+:host([quiet]) #button.is-selected:focus-visible,
+:host([quiet]) #button.is-selected.is-focused,
+:host([quiet]) #button:active:focus-visible,
+:host([quiet]) #button:active.is-focused {
     /* .spectrum-FieldButton--quiet.is-selected.focus-ring,
    * .spectrum-FieldButton--quiet.is-selected.is-focused,
    * .spectrum-FieldButton--quiet:active.focus-ring,
@@ -359,8 +361,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-alias-border-color-focus)
         );
 }
-:host([invalid]) .spectrum-FieldButton--quiet:focus-visible,
-:host([invalid]) .spectrum-FieldButton--quiet.is-focused {
+:host([quiet][invalid]) #button:focus-visible,
+:host([quiet][invalid]) #button.is-focused {
     /* .spectrum-FieldButton--quiet.is-invalid.focus-ring,
    * .spectrum-FieldButton--quiet.is-invalid.is-focused */
     box-shadow: 0 2px 0 0
@@ -369,8 +371,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-alias-border-color-focus)
         );
 }
-.spectrum-FieldButton--quiet.is-disabled,
-.spectrum-FieldButton--quiet:disabled {
+:host([quiet]) #button.is-disabled,
+:host([quiet]) #button:disabled {
     /* .spectrum-FieldButton--quiet.is-disabled,
    * .spectrum-FieldButton--quiet:disabled */
     background-color: var(
@@ -382,8 +384,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-disabled)
     );
 }
-.spectrum-FieldButton--quiet.is-disabled:focus-visible,
-.spectrum-FieldButton--quiet:disabled:focus-visible {
+:host([quiet]) #button.is-disabled:focus-visible,
+:host([quiet]) #button:disabled:focus-visible {
     /* .spectrum-FieldButton--quiet.is-disabled.focus-ring,
    * .spectrum-FieldButton--quiet:disabled.focus-ring */
     box-shadow: none;

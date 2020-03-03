@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circleloader: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>An <code>&lt;sp-circleloader&gt;</code> shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent determinate or indeterminate progress.</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/circleloader
+
+# or
+
+yarn add @spectrum-web-components/circleloader
+</code></pre>
+<h2>Variants</h2>
+<h3>Default</h3>
+<p>An <code>&lt;sp-circleloader&gt;</code> is used to visually show the progression of a system operation such as downloading, uploading, processing, etc.</p>
+<pre><code class="language-html">&lt;div
+    style=&quot;width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;&quot;
+&gt;
+    &lt;sp-circleloader progress=&quot;71&quot; size=&quot;small&quot;&gt;&lt;/sp-circleloader&gt;
+    &lt;sp-circleloader progress=&quot;22&quot;&gt;&lt;/sp-circleloader&gt;
+    &lt;sp-circleloader progress=&quot;86&quot; size=&quot;large&quot;&gt;&lt;/sp-circleloader&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Over background</h3>
+<p>When a loader needs to be placed on top of a colored background, use the over background loader as signified by <code>[over-background]</code>. This loader uses a white opaque color no matter the background. Make sure the background offers enough contrast for the loader to be legible.</p>
+<pre><code class="language-html">&lt;div
+    style=&quot;width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;  background-color: rgba(0,0,0,0.4);&quot;
+&gt;
+    &lt;sp-circleloader
+        progress=&quot;42&quot;
+        over-background
+        size=&quot;small&quot;
+    &gt;&lt;/sp-circleloader&gt;
+    &lt;sp-circleloader progress=&quot;7&quot; over-background&gt;&lt;/sp-circleloader&gt;
+    &lt;sp-circleloader
+        progress=&quot;68&quot;
+        over-background
+        size=&quot;large&quot;
+    &gt;&lt;/sp-circleloader&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Indeterminate</h3>
+<p>A circle loader can be either determinate or indeterminate as signified by <code>[indeterminate]</code>. By default, loaders are determinate. Use a determinate loader when progress can be calculated against a specific goal (e.g., downloading a file of a known size). Use an indeterminate loader when progress is happening but the time or effort to completion can’t be determined (e.g., attempting to reconnect to a server).</p>
+<pre><code class="language-html">&lt;div
+    style=&quot;width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;&quot;
+&gt;
+    &lt;sp-circleloader indeterminate size=&quot;small&quot;&gt;&lt;/sp-circleloader&gt;
+    &lt;sp-circleloader indeterminate&gt;&lt;/sp-circleloader&gt;
+    &lt;sp-circleloader indeterminate size=&quot;large&quot;&gt;&lt;/sp-circleloader&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Size</h3>
+<p>Circle loaders come in 3 sizes: small (<code>[size=&quot;small&quot;]</code>), medium (default), or large (<code>[size=&quot;large&quot;]</code>). These are available to fit various contexts. For example, the small loader can be used in place of an icon or in tight spaces, while the large one can be used for full-page loading.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

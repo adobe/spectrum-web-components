@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab List: Spectrum Web Components</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #body {
+        display: grid;
+        grid-template-columns: 256px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="body">
+      <docs-side-nav></docs-side-nav>
+      <main id="layout-content" role="main">
+        <h2>Description</h2>
+<p>The <code>&lt;sp-tab-list&gt;</code> component contains set of tab-item elements. This is typically used as the interface for controlling a set of layered sections of content that display one panel of content at a time</p>
+<h3>Installation</h3>
+<pre><code>npm install @spectrum-web-components/tab-list
+
+# or
+
+yarn add @spectrum-web-components/tab-list
+</code></pre>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;sp-tab-list selected=&quot;1&quot;&gt;
+    &lt;sp-tab label=&quot;Tab 1&quot; value=&quot;1&quot; tabindex=&quot;1&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 2&quot; value=&quot;2&quot; tabindex=&quot;2&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 3&quot; value=&quot;3&quot; tabindex=&quot;3&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 4&quot; value=&quot;4&quot; tabindex=&quot;4&quot;&gt;&lt;/sp-tab&gt;
+&lt;/sp-tab-list&gt;
+</code></pre>
+<h3>Vertical</h3>
+<pre><code class="language-html">&lt;sp-tab-list selected=&quot;1&quot; direction=&quot;vertical&quot;&gt;
+    &lt;sp-tab label=&quot;Tab 1&quot; value=&quot;1&quot; tabindex=&quot;1&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 2&quot; value=&quot;2&quot; tabindex=&quot;2&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 3&quot; value=&quot;3&quot; tabindex=&quot;3&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 4&quot; value=&quot;4&quot; tabindex=&quot;4&quot;&gt;&lt;/sp-tab&gt;
+&lt;/sp-tab-list&gt;
+</code></pre>
+<h2>Variants</h2>
+<h3>Quiet</h3>
+<pre><code class="language-html">&lt;sp-tab-list selected=&quot;1&quot; quiet&gt;
+    &lt;sp-tab label=&quot;Tab 1&quot; value=&quot;1&quot; tabindex=&quot;1&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 2&quot; value=&quot;2&quot; tabindex=&quot;2&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 3&quot; value=&quot;3&quot; tabindex=&quot;3&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 4&quot; value=&quot;4&quot; tabindex=&quot;4&quot;&gt;&lt;/sp-tab&gt;
+&lt;/sp-tab-list&gt;
+</code></pre>
+<h3>Compact</h3>
+<pre><code class="language-html">&lt;sp-tab-list selected=&quot;1&quot; compact&gt;
+    &lt;sp-tab label=&quot;Tab 1&quot; value=&quot;1&quot; tabindex=&quot;1&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 2&quot; value=&quot;2&quot; tabindex=&quot;2&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 3&quot; value=&quot;3&quot; tabindex=&quot;3&quot;&gt;&lt;/sp-tab&gt;
+    &lt;sp-tab label=&quot;Tab 4&quot; value=&quot;4&quot; tabindex=&quot;4&quot;&gt;&lt;/sp-tab&gt;
+&lt;/sp-tab-list&gt;
+</code></pre>
+<h2>With icons</h2>
+<pre><code class="language-html">&lt;div&gt;
+    &lt;sp-icons-medium&gt;&lt;/sp-icons-medium&gt;
+    &lt;sp-tab-list selected=&quot;1&quot; direction=&quot;horizontal&quot;&gt;
+        &lt;sp-tab label=&quot;Tab 1&quot; value=&quot;1&quot; tabindex=&quot;1&quot;&gt;
+            &lt;sp-icon slot=&quot;icon&quot; size=&quot;m&quot; name=&quot;ui:CheckmarkSmall&quot;&gt;&lt;/sp-icon&gt;
+        &lt;/sp-tab&gt;
+        &lt;sp-tab label=&quot;Tab 2&quot; value=&quot;2&quot; tabindex=&quot;2&quot;&gt;
+            &lt;sp-icon slot=&quot;icon&quot; size=&quot;m&quot; name=&quot;ui:CrossSmall&quot;&gt;&lt;/sp-icon&gt;
+        &lt;/sp-tab&gt;
+        &lt;sp-tab label=&quot;Tab 3&quot; value=&quot;3&quot; tabindex=&quot;3&quot;&gt;
+            &lt;sp-icon slot=&quot;icon&quot; size=&quot;m&quot; name=&quot;ui:ChevronDownSmall&quot;&gt;&lt;/sp-icon&gt;
+        &lt;/sp-tab&gt;
+        &lt;sp-tab label=&quot;Tab 4&quot; value=&quot;4&quot; tabindex=&quot;4&quot;&gt;
+            &lt;sp-icon slot=&quot;icon&quot; size=&quot;m&quot; name=&quot;ui:HelpSmall&quot;&gt;&lt;/sp-icon&gt;
+        &lt;/sp-tab&gt;
+    &lt;/sp-tab-list&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Accessibility</h2>
+<p>When an <code>&lt;sp-tab-list&gt;</code> has a <code>selected</code> value, the <code>&lt;sp-tab&gt;</code> child of that <code>value</code> will be given <code>[tabindex=&quot;0&quot;]</code> and will receive initial focus when tabbing into the <code>&lt;sp-tab-list&gt;</code> element. When no <code>selected</code> value is present, the first <code>&lt;sp-tab&gt;</code> child will be treated in this way. When focus is currently within the <code>&lt;sp-tab-list&gt;</code> element, the left and right arrows will move that focus back and forth through the available <code>&lt;sp-tab&gt;</code> children.</p>
+
+      </main>
+    </div>
+  </body>
+</html>

@@ -78,8 +78,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     vertical-align: top;
     margin: 0;
     overflow: visible;
-    font-family: adobe-clean-ux, adobe-clean, Source Sans Pro, -apple-system,
-        BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+    font-family: var(
+        --spectrum-alias-body-text-font-family,
+        var(--spectrum-global-font-family-base)
+    );
     font-size: var(
         --spectrum-textfield-text-size,
         var(--spectrum-alias-font-size-default)
@@ -194,6 +196,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-icon-alert-medium-width,
             var(--spectrum-global-dimension-size-225)
         );
+    background-position: calc(
+            100% -
+                var(
+                    --spectrum-textfield-padding-x,
+                    var(--spectrum-global-dimension-size-150)
+                ) +
+                var(
+                    --spectrum-textfield-border-size,
+                    var(--spectrum-alias-border-size-thin)
+                )
+        )
+        calc(
+            var(
+                    --spectrum-textfield-height,
+                    var(--spectrum-alias-single-line-height)
+                ) / 2 -
+                var(
+                    --spectrum-icon-alert-medium-height,
+                    var(--spectrum-global-dimension-size-225)
+                ) / 2 -
+                var(
+                    --spectrum-textfield-quiet-border-size,
+                    var(--spectrum-alias-border-size-thin)
+                )
+        );
     padding-right: calc(
         var(
                 --spectrum-textfield-padding-x,
@@ -213,12 +240,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
-:host([invalid]) #input,
-:host([valid]) #input,
-#input:invalid {
-    /* .spectrum-Textfield.is-invalid,
-   * .spectrum-Textfield.is-valid,
-   * .spectrum-Textfield:invalid */
+:host([valid]) #input {
+    /* .spectrum-Textfield.is-valid */
+    background-size: var(--spectrum-icon-checkmark-medium-width)
+        var(--spectrum-icon-checkmark-medium-width);
     background-position: calc(
             100% -
                 var(
@@ -230,12 +255,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                     var(--spectrum-alias-border-size-thin)
                 )
         )
-        50%;
-}
-:host([valid]) #input {
-    /* .spectrum-Textfield.is-valid */
-    background-size: var(--spectrum-icon-checkmark-medium-width)
-        var(--spectrum-icon-checkmark-medium-width);
+        calc(
+            var(
+                    --spectrum-textfield-height,
+                    var(--spectrum-alias-single-line-height)
+                ) / 2 - var(--spectrum-icon-checkmark-medium-height) / 2
+        );
     padding-right: calc(
         var(
                 --spectrum-textfield-padding-x,
@@ -297,27 +322,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 )
         );
     overflow: auto;
-}
-:host([multiline][invalid]) #input,
-:host([multiline][valid]) #input,
-:host([multiline]) #input:invalid {
-    /* .spectrum-Textfield--multiline.is-invalid,
-   * .spectrum-Textfield--multiline.is-valid,
-   * .spectrum-Textfield--multiline:invalid */
-    background-position: calc(
-            100% -
-                var(
-                    --spectrum-textfield-icon-size,
-                    var(--spectrum-global-dimension-size-225)
-                ) / 2
-        )
-        calc(
-            100% -
-                var(
-                    --spectrum-textfield-icon-size,
-                    var(--spectrum-global-dimension-size-225)
-                ) / 2
-        );
 }
 :host([quiet]) #input {
     /* .spectrum-Textfield--quiet */

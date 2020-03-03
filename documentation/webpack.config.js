@@ -119,7 +119,6 @@ module.exports = merge(openWcConfig, {
                                 __dirname,
                                 '../documentation/tsconfig.json'
                             ),
-                            onlyCompileBundledFiles: true,
                         },
                     },
                 ],

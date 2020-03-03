@@ -73,14 +73,13 @@ aside {
 }
 
 #navigation {
-    width: 256px;
+    width: var(--spectrum-global-dimension-size-2400);
     padding: 0 24px 24px 24px;
     flex: 1;
     flex-grow: 1;
     overflow: auto;
     overflow-x: hidden;
     overflow-y: auto;
-    box-sizing: border-box;
 }
 
 docs-spectrum-logo {
