@@ -38,7 +38,7 @@
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/popover": "^2.0.4"
+        "@spectrum-css/popover": "^2.0.6"
     },
     "dependencies": {
         "@spectrum-web-components/overlay": "^0.3.0",

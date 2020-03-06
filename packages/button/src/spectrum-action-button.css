@@ -17,6 +17,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-FieldButton,
    * .spectrum-LogicButton,
    * .spectrum-Tool */
+    position: relative;
     display: inline-flex;
     box-sizing: border-box;
     align-items: center;
@@ -282,7 +283,6 @@ slot[name='icon'] + #label {
         --spectrum-actionbutton-border-color-hover,
         var(--spectrum-alias-border-color-hover)
     );
-    box-shadow: none;
     color: var(
         --spectrum-actionbutton-text-color-hover,
         var(--spectrum-alias-text-color-hover)
@@ -315,7 +315,8 @@ slot[name='icon'] + #label {
         --spectrum-actionbutton-border-color-key-focus,
         var(--spectrum-alias-border-color-focus)
     );
-    box-shadow: 0 0 0 1px
+    box-shadow: 0 0 0
+        var(--spectrum-button-primary-border-size-increase-key-focus, 1px)
         var(
             --spectrum-actionbutton-border-color-key-focus,
             var(--spectrum-alias-border-color-focus)
@@ -352,7 +353,6 @@ slot[name='icon'] + #label {
         --spectrum-actionbutton-border-color-down,
         var(--spectrum-global-color-gray-400)
     );
-    box-shadow: none;
     color: var(
         --spectrum-actionbutton-text-color-down,
         var(--spectrum-alias-text-color-down)
@@ -511,7 +511,6 @@ slot[name='icon'] + #label {
         --spectrum-actionbutton-quiet-text-color-hover,
         var(--spectrum-alias-text-color-hover)
     );
-    box-shadow: none;
 }
 :host([quiet]) #button:focus-visible {
     /* .spectrum-ActionButton--quiet.focus-ring,
@@ -549,7 +548,6 @@ slot[name='icon'] + #label {
         --spectrum-actionbutton-quiet-text-color-down,
         var(--spectrum-alias-text-color-down)
     );
-    box-shadow: none;
 }
 :host([quiet][disabled]) #button {
     /* .spectrum-ActionButton--quiet.is-disabled,

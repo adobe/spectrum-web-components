@@ -19,7 +19,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: var(--spectrum-global-dimension-size-75) 0;
+    padding: calc(var(--spectrum-global-dimension-size-65) - 1px) 0
+        calc(var(--spectrum-global-dimension-size-65) + 1px) 0;
     box-sizing: border-box;
     font-size: var(
         --spectrum-statuslight-text-size,
@@ -28,7 +29,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-weight: var(
         --spectrum-statuslight-text-font-weight,
         var(--spectrum-alias-body-text-font-weight)
-    ); /* .spectrum-StatusLight */
+    );
+    line-height: 1.44; /* .spectrum-StatusLight */
     color: var(
         --spectrum-statuslight-text-color,
         var(--spectrum-alias-text-color)
@@ -49,11 +51,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-100)
     );
     border-radius: 50%;
-    margin: var(--spectrum-global-dimension-size-75)
+    margin: calc(var(--spectrum-global-dimension-size-65) + 1px)
+        var(
+            --spectrum-statuslight-text-gap,
+            var(--spectrum-global-dimension-size-150)
+        )
+        calc(var(--spectrum-global-dimension-size-65) - 1px)
         var(
             --spectrum-statuslight-text-gap,
             var(--spectrum-global-dimension-size-150)
         );
+    -ms-high-contrast-adjust: none;
+    forced-color-adjust: none;
 }
 :host([variant='neutral']) #root {
     /* .spectrum-StatusLight--neutral */
