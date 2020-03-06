@@ -117,12 +117,36 @@ slot[name='icon'] + #label,
         --spectrum-selectlist-thumbnail-image-padding-x,
         var(--spectrum-global-dimension-size-100)
     );
+    width: calc(
+        100% - var(--spectrum-icon-checkmark-medium-width) -
+            var(
+                --spectrum-selectlist-option-icon-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            ) -
+            var(
+                --spectrum-selectlist-thumbnail-image-padding-x,
+                var(--spectrum-global-dimension-size-100)
+            ) -
+            var(
+                --spectrum-alias-workflow-icon-size,
+                var(--spectrum-global-dimension-size-225)
+            )
+    );
 }
 #label {
     /* .spectrum-Menu-itemLabel */
     flex: 1 1 auto;
     line-height: 1.3;
-    word-break: break-all;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    width: calc(
+        100% - var(--spectrum-icon-checkmark-medium-width) -
+            var(
+                --spectrum-selectlist-option-icon-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
 }
 .spectrum-Menu-itemLabel--wrapping {
     /* .spectrum-Menu-itemLabel--wrapping */

@@ -353,8 +353,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     );
     background: var(
-        --spectrum-alias-background-color-default,
-        var(--spectrum-global-color-gray-100)
+        --spectrum-slider-handle-background-color,
+        var(--spectrum-alias-background-color-transparent)
     );
 }
 :host([dragging]) #handle,
@@ -364,10 +364,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle.is-focused,
    * .spectrum-Slider-handle:active */
-    border-width: var(
-        --spectrum-slider-handle-border-size-down,
-        var(--spectrum-global-dimension-size-75)
-    );
     cursor: ns-resize;
     cursor: -webkit-grabbing;
     cursor: grabbing;
@@ -382,6 +378,58 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Slider-handle.is-tophandle,
    * .spectrum-Slider-handle:active */
     z-index: 3;
+}
+#handle:before {
+    /* .spectrum-Dial-handle:before,
+   * .spectrum-Slider-handle:before */
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transition: box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-out,
+        width var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
+        height var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
+    width: var(
+        --spectrum-slider-handle-width,
+        var(--spectrum-global-dimension-size-200)
+    );
+    height: var(
+        --spectrum-slider-handle-height,
+        var(--spectrum-global-dimension-size-200)
+    );
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+}
+:host([handle-highlight]) #handle:before {
+    /* .spectrum-Slider-handle.is-focused:before */
+    width: calc(
+        var(
+                --spectrum-slider-handle-width,
+                var(--spectrum-global-dimension-size-200)
+            ) +
+            var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * 2
+    );
+    height: calc(
+        var(
+                --spectrum-slider-handle-height,
+                var(--spectrum-global-dimension-size-200)
+            ) +
+            var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * 2
+    ); /* .spectrum-Slider-handle.is-focused:before */
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
 }
 #input {
     /* .spectrum-Dial-input,
@@ -697,6 +745,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
+:host([handle-highlight]) #handle {
+    /* .spectrum-Slider-handle.is-focused */
+    border-color: var(--spectrum-global-color-gray-800);
+}
 :host([dragging]) #handle,
 #handle:active {
     /* .spectrum-Dial-handle:active,
@@ -716,17 +768,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-alias-background-color-default,
             var(--spectrum-global-color-gray-100)
         );
-}
-:host([handle-highlight]) #handle {
-    /* .spectrum-Slider-handle.is-focused */
-    border-color: var(
-        --spectrum-slider-handle-border-color-key-focus,
-        var(--spectrum-alias-border-color-focus)
-    );
-    background: var(
-        --spectrum-slider-handle-background-color-key-focus,
-        var(--spectrum-alias-border-color-focus)
-    );
 }
 :host([dragging]) #handle {
     /* .spectrum-Slider-handle.is-dragged */

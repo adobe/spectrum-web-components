@@ -196,6 +196,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     left: 50%;
     margin-left: -12px;
 }
+:host([dialog]) .spectrum-Dialog-typeIcon {
+    /* .spectrum-Popover.spectrum-Popover--dialog .spectrum-Dialog-typeIcon */
+    margin-left: var(--spectrum-global-dimension-size-200);
+}
 .spectrum-Dialog-footer,
 .spectrum-Dialog-header,
 .spectrum-Dialog-wrapper {

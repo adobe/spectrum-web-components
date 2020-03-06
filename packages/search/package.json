@@ -38,7 +38,7 @@
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/search": "^2.0.2"
+        "@spectrum-css/search": "^2.0.6"
     },
     "dependencies": {
         "@spectrum-web-components/button": "^0.4.5",

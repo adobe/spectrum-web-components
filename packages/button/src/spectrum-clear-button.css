@@ -17,6 +17,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-FieldButton,
    * .spectrum-LogicButton,
    * .spectrum-Tool */
+    position: relative;
     display: inline-flex;
     box-sizing: border-box;
     align-items: center;
@@ -104,6 +105,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     max-height: 100%;
     flex-shrink: 0;
 }
+:host([variant='overBackground']) #button:focus-visible:after {
+    /* .spectrum-ClearButton--overBackground.focus-ring:after */
+    margin: calc(
+        var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * -1
+    ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring:after,
+   * .spectrum-ClearButton--overBackground.focus-ring:after */
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-button-over-background-border-color-key-focus,
+            var(--spectrum-global-color-static-white)
+        );
+}
 .spectrum-ClearButton--small {
     /* .spectrum-ClearButton--small */
     width: var(
@@ -177,8 +197,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
+:host([variant='overBackground']) #button:focus-visible,
 :host([variant='overBackground']) #button:hover {
-    /* .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
+    /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
+   * .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
+   * .spectrum-ClearButton--overBackground.focus-ring,
    * .spectrum-ClearButton--overBackground:hover */
     background-color: var(
         --spectrum-button-quiet-over-background-background-color-hover,
@@ -196,20 +219,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='overBackground']) #button:focus-visible {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-ClearButton--overBackground.focus-ring */
-    background-color: var(
-        --spectrum-button-quiet-over-background-background-color-key-focus,
-        var(--spectrum-global-color-static-white)
-    );
-    border-color: var(
-        --spectrum-button-quiet-over-background-border-color-key-focus,
-        var(--spectrum-global-color-static-white)
-    );
-    color: inherit;
-    box-shadow: 0 0 0 1px
-        var(
-            --spectrum-button-quiet-over-background-border-color-key-focus,
-            var(--spectrum-global-color-static-white)
-        );
+    box-shadow: none;
 }
 :host([variant='overBackground']) #button:active {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:active,
@@ -226,7 +236,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-button-quiet-over-background-text-color-down,
         var(--spectrum-global-color-static-white)
     );
-    box-shadow: none;
 }
 :host([variant='overBackground']) #button.is-disabled,
 :host([variant='overBackground']) #button:disabled {
