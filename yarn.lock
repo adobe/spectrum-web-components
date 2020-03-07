@@ -13515,10 +13515,10 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
-lit-analyzer@^1.1.9:
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/lit-analyzer/-/lit-analyzer-1.1.9.tgz#703d775bbe744fb31d5f1a0f6ad94923dafe44cd"
-  integrity sha512-ISV6pgvffybnVPrO5uoRKo7Dw2wtLvvxCbCYsLDyA70s05/hj6mRScLxltTC6SHSOqORmXnoSY4sPFuz0A/F6w==
+lit-analyzer@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/lit-analyzer/-/lit-analyzer-1.1.10.tgz#cad736d0d54956a1680c8afa54402380ff7a4b3a"
+  integrity sha512-Wm1kYvwGDc6/AOeXKDMVoluU72ZOb/A0t/m0KeJU181NAA2I28lqIuCb6EmAJ7LpwikwMbtps5fWVehOpmuu1A==
   dependencies:
     chalk "^2.4.2"
     didyoumean2 "2.0.4"
