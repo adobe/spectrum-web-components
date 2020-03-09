@@ -14,6 +14,7 @@ import { Search } from '../';
 import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
 import '../../shared/lib/focus-visible.js';
+import { spy } from 'sinon';
 
 describe('Search', () => {
     it('loads', async () => {
@@ -48,6 +49,47 @@ describe('Search', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal('');
+    });
+    it('can be cleared', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const handleInput = (event: Event): void => {
+            const target = event.target as HTMLInputElement;
+            inputSpy(target.value);
+        };
+        const handleChange = (event: Event): void => {
+            const target = event.target as HTMLInputElement;
+            changeSpy(target.value);
+        };
+        const el = await litFixture<Search>(
+            html`
+                <sp-search
+                    value="Test"
+                    @change=${handleChange}
+                    @input=${handleInput}
+                ></sp-search>
+            `
+        );
+
+        await elementUpdated(el);
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
+
+        expect(el.value).to.equal('Test');
+        expect(el).shadowDom.to.equalSnapshot();
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const clearButton = root.querySelector('#button') as HTMLButtonElement;
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        clearButton.click();
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('');
+        expect(inputSpy.calledOnce, 'one input').to.be.true;
+        expect(inputSpy.calledWith(''), 'was blank').to.be.true;
+        expect(changeSpy.calledOnce, 'one change').to.be.true;
+        expect(changeSpy.calledWith(''), 'was blank').to.be.true;
     });
     it('cannot be multiline', async () => {
         const el = await litFixture<Search>(
