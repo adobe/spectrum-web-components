@@ -109,6 +109,14 @@ describe('Overlay Trigger', () => {
         await elementUpdated(testDiv);
     });
 
+    afterEach(async () => {
+        let activeOverlay = document.querySelector('active-overlay');
+        while (activeOverlay !== null) {
+            activeOverlay.remove();
+            activeOverlay = document.querySelector('active-overlay');
+        }
+    });
+
     it('loads', async () => {
         const popover = testDiv.querySelector('sp-popover');
         if (!(popover instanceof Popover))
