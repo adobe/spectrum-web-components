@@ -64,13 +64,29 @@ export class Search extends Textfield {
         }
     }
 
-    public reset(): void {
+    public async reset(): Promise<void> {
         /* istanbul ignore if */
         if (!this.form) {
             return;
         }
         this.value = '';
         this.form.reset();
+        await this.updateComplete;
+        this.focusElement.dispatchEvent(
+            new InputEvent('input', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        // The native `change` event on an `input` element is not composed,
+        // so this synthetic replication of a `change` event must not be
+        // either as the `Textfield` baseclass should only need to handle
+        // the native variant of this interaction.
+        this.focusElement.dispatchEvent(
+            new InputEvent('change', {
+                bubbles: true,
+            })
+        );
     }
 
     protected render(): TemplateResult {
