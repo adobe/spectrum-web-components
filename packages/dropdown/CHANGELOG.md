@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.4.0...@spectrum-web-components/dropdown@0.4.1) (2020-03-11)
+
+### Bug Fixes
+
+-   **dropdown:** correctly support "quiet" variant ([2a51a2b](https://github.com/adobe/spectrum-web-components/commit/2a51a2b))
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.3.8...@spectrum-web-components/dropdown@0.4.0) (2020-02-24)
 
 ### Features

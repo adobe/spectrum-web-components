@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.8...@spectrum-web-components/link@0.3.0) (2020-03-11)
+
+### Features
+
+-   **link:** add download attribute to <sp-link> ([fb02104](https://github.com/adobe/spectrum-web-components/commit/fb02104))
+-   **link:** add download attribute to <sp-link> ([fefb28e](https://github.com/adobe/spectrum-web-components/commit/fefb28e))
+-   **link:** add download attribute to <sp-link> ([16894ba](https://github.com/adobe/spectrum-web-components/commit/16894ba))
+-   **link:** add download attribute to <sp-link> ([0763504](https://github.com/adobe/spectrum-web-components/commit/0763504))
+
 ## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.7...@spectrum-web-components/link@0.2.8) (2020-02-24)
 
 ### Bug Fixes

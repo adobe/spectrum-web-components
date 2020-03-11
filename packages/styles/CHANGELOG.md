@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.4.3...@spectrum-web-components/styles@0.5.0) (2020-03-11)
+
+### Features
+
+-   add "darkest" theme styles ([fe38025](https://github.com/adobe/spectrum-web-components/commit/fe38025))
+
 ## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.4.2...@spectrum-web-components/styles@0.4.3) (2020-01-06)
 
 **Note:** Version bump only for package @spectrum-web-components/styles

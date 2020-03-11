@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.4.5...@spectrum-web-components/button@0.4.6) (2020-03-11)
+
+### Bug Fixes
+
+-   **dropdown:** correctly support "quiet" variant ([2a51a2b](https://github.com/adobe/spectrum-web-components/commit/2a51a2b))
+
 ## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.4.4...@spectrum-web-components/button@0.4.5) (2020-02-05)
 
 **Note:** Version bump only for package @spectrum-web-components/button

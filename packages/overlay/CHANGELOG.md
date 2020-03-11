@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.0...@spectrum-web-components/overlay@0.3.1) (2020-03-11)
+
+### Bug Fixes
+
+-   **overlay:** extend state machine to manage disposal process ([f0f26af](https://github.com/adobe/spectrum-web-components/commit/f0f26af))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.2.1...@spectrum-web-components/overlay@0.3.0) (2020-02-24)
 
 ### Features

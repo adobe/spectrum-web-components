@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.2.9...@spectrum-web-components/switch@0.2.10) (2020-03-11)
+
+**Note:** Version bump only for package @spectrum-web-components/switch
+
 ## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.2.8...@spectrum-web-components/switch@0.2.9) (2020-02-05)
 
 **Note:** Version bump only for package @spectrum-web-components/switch

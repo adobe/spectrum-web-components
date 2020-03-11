@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/illustrated-message@0.1.7...@spectrum-web-components/illustrated-message@0.1.8) (2020-03-11)
+
+**Note:** Version bump only for package @spectrum-web-components/illustrated-message
+
 ## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/illustrated-message@0.1.6...@spectrum-web-components/illustrated-message@0.1.7) (2020-01-06)
 
 **Note:** Version bump only for package @spectrum-web-components/illustrated-message

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.2.8...@spectrum-web-components/search@0.2.9) (2020-03-11)
+
+### Bug Fixes
+
+-   **search:** ensure "reset" surfaces "input" and "change" events ([d8204a9](https://github.com/adobe/spectrum-web-components/commit/d8204a9))
+
 ## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.2.7...@spectrum-web-components/search@0.2.8) (2020-02-05)
 
 **Note:** Version bump only for package @spectrum-web-components/search
