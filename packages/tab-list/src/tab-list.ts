@@ -24,6 +24,7 @@ import tabStyles from './tab-list.css.js';
 
 const availableArrowsByDirection = {
     vertical: ['ArrowUp', 'ArrowDown'],
+    ['vertical-right']: ['ArrowUp', 'ArrowDown'],
     horizontal: ['ArrowLeft', 'ArrowRight'],
 };
 
@@ -38,7 +39,8 @@ export class TabList extends Focusable {
         return [tabStyles];
     }
     @property({ reflect: true })
-    public direction: 'vertical' | 'horizontal' = 'horizontal';
+    public direction: 'vertical' | 'vertical-right' | 'horizontal' =
+        'horizontal';
 
     @property()
     public selectionIndicatorStyle = '';
@@ -102,10 +104,10 @@ export class TabList extends Focusable {
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('direction')) {
-            if (this.direction === 'vertical') {
-                this.setAttribute('aria-orientation', 'vertical');
-            } else {
+            if (this.direction === 'horizontal') {
                 this.removeAttribute('aria-orientation');
+            } else {
+                this.setAttribute('aria-orientation', 'vertical');
             }
         }
     }
