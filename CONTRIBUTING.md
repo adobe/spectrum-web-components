@@ -33,6 +33,14 @@ for more information on sending pull requests.
 Lastly, please follow the [pull request template](PULL_REQUEST_TEMPLATE.md) when
 submitting a pull request!
 
+## Commitlint
+
+We use [Commitlint](https://github.com/conventional-changelog/commitlint/#what-is-commitlint) to help manage the semantic versions across the various packages in this library. Please be sure that you take this into concideration when submitting PRs to this repositiory. Generally, your commits should look like the following:
+
+```
+type(scope?): subject #scope is optional, but should reference the package you are updating
+```
+
 ## From Contributor To Committer
 
 We love contributions from our community! If you'd like to go a step beyond contributor
