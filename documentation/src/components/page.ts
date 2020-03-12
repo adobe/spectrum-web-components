@@ -33,6 +33,7 @@ export class Page extends LayoutElement {
         if (!this.contentElement) return;
 
         this.contentElement.scroll(0, 0);
+        this.open = false;
     }
 }
 
