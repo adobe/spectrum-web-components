@@ -55,6 +55,10 @@ export class LayoutElement extends LitElement {
         this.open = !this.open;
     }
 
+    closeNav() {
+        this.open = false;
+    }
+
     private updateColor(event: Event) {
         this.color = (event.target as Dropdown).value as Color;
     }
@@ -131,7 +135,7 @@ export class LayoutElement extends LitElement {
                         id="side-nav"
                         ?inert=${!this.open}
                         ?open=${this.open}
-                        @close=${this.toggleNav}
+                        @close=${this.closeNav}
                     ></docs-side-nav>
                     <main id="layout-content" ?inert=${this.open} role="main">
                         <div id="page">
