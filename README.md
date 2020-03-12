@@ -11,6 +11,7 @@ It will not support older browsers and will only target modern ever-green browse
 -   NodeJS >= 10.15
 -   Typescript
 -   Browsers with Custom Elements V1 and Shadow DOM support, e.g. Chrome, Firefox, Safari, Edge (79+)
+    -   Or appropriate [polyfills](https://github.com/webcomponents/webcomponentsjs) in older browsers.
 
 # Getting Started
 
