@@ -8,11 +8,11 @@ color themes (dark, light and lightest) and one one of the scales (medium).
 ### Installation
 
 ```
-npm install @spectrum-web-components/themes
+npm install @spectrum-web-components/theme
 
 # or
 
-yarn add @spectrum-web-components/themes
+yarn add @spectrum-web-components/theme
 ```
 
 ## Quick start
@@ -25,10 +25,10 @@ Once you've moved beyond the prototype phases of an application, it is likely th
 
 ```js
 // Power a site using <sp-theme color="darkest" scale="large">
-import '@spectrum-web-components/themes/lib/theme-darkest.js';
-import '@spectrum-web-components/themes/lib/scale-large.js';
+import '@spectrum-web-components/theme/lib/theme-darkest.js';
+import '@spectrum-web-components/theme/lib/scale-large.js';
 
-import '@spectrum-web-components/themes/lib/theme.js';
+import '@spectrum-web-components/theme/lib/theme.js';
 ```
 
 When subsequent theme variants are needed you can ensure those are lazily loaded by leveraging dynamic imports via something like the following:
@@ -38,8 +38,8 @@ const themeElement = document.querySelector('sp-theme');
 
 const updateTheme = async (color, scale) => {
     Promise.all([
-        import(`@spectrum-web-components/themes/lib/theme-${color}.js`),
-        import(`@spectrum-web-components/themes/lib/scale-${scale}.js`),
+        import(`@spectrum-web-components/theme/lib/theme-${color}.js`),
+        import(`@spectrum-web-components/theme/lib/scale-${scale}.js`),
     ]).then(() => {
         themeElement.color = color;
         themeElement.scale = scale;
