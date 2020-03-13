@@ -399,7 +399,6 @@ export class ActiveOverlay extends LitElement {
     }
 
     public renderTheme(content: TemplateResult): TemplateResult {
-        import('@spectrum-web-components/theme');
         const color = this.color as Color;
         const scale = this.scale as Scale;
         return html`
