@@ -40,6 +40,15 @@ governing permissions and limitations under the License.
     );
 }
 
+/*
+ * While https://github.com/adobe/spectrum-css/issues/641 goes unaddressed,
+ * then we'll need to place this at `top: 0;` ourselves.
+ */
+:host([direction='vertical-right']) #selectionIndicator,
+:host([direction='vertical']) #selectionIndicator {
+    top: 0;
+}
+
 /* 
  * Since #tab is the shadowSelector for tab-item, the default line-height
  * declaration in #tab overrides the compact line-height declared in
