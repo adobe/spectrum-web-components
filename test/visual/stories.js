@@ -112,6 +112,8 @@ module.exports = [
     'tabs--default',
     'tabs--autofocus',
     'tabs--vertical',
+    'tabs--vertical-sized',
+    'tabs--vertical-right',
     'tabs--icons',
     'tabs--icons-ii',
     'tabs--quiet',
