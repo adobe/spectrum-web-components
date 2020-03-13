@@ -13,9 +13,6 @@ governing permissions and limitations under the License.
 import coreStyles from './theme.css';
 import { CSSResult, supportsAdoptingStyleSheets } from 'lit-element';
 
-export const DefaultColor = 'light';
-export const DefaultScale = 'medium';
-
 declare global {
     interface Window {
         ShadyCSS: {
@@ -40,7 +37,7 @@ declare global {
 }
 
 type FragmentType = 'color' | 'scale' | 'core';
-type FragmentMap = Map<string, { kind: FragmentType; styles: CSSResult }>;
+type FragmentMap = Map<string, { name: string; styles: CSSResult }>;
 export type Color = 'light' | 'lightest' | 'dark' | 'darkest';
 export type Scale = 'medium' | 'large';
 type FragmentName = Color | Scale | 'core';
@@ -51,12 +48,9 @@ export interface ThemeData {
 }
 
 export class Theme extends HTMLElement {
-    private static themeFragments: FragmentMap = new Map();
-    private static defaultFragments: Set<FragmentName> = new Set([
-        'core',
-        'light',
-        'medium',
-    ]);
+    private hasAdoptedStyles = false;
+    private static themeFragmentsByKind: Map<string, FragmentMap> = new Map();
+    private static defaultFragments: Set<FragmentName> = new Set(['core']);
 
     private static templateElement?: HTMLTemplateElement;
 
@@ -65,14 +59,7 @@ export class Theme extends HTMLElement {
     }
 
     get color(): Color {
-        const color = this.getAttribute('color');
-        if (!color) return DefaultColor;
-
-        const colorFragment = Theme.themeFragments.get(color);
-        if (colorFragment && colorFragment.kind === 'color') {
-            return color as Color;
-        }
-        return DefaultColor;
+        return this.getFragementNameByKind('color') as Color;
     }
 
     set color(newValue: Color) {
@@ -80,26 +67,63 @@ export class Theme extends HTMLElement {
     }
 
     get scale(): Scale {
-        const scale = this.getAttribute('scale');
-        if (!scale) return DefaultScale;
-
-        const scaleFragment = Theme.themeFragments.get(scale);
-        if (scaleFragment && scaleFragment.kind === 'scale') {
-            return scale as Scale;
-        }
-        return DefaultScale;
+        return this.getFragementNameByKind('scale') as Scale;
     }
 
     set scale(newValue: Scale) {
         this.setAttribute('scale', newValue);
     }
 
+    private getFragementNameByKind(kind: string): string {
+        const kindFragments = Theme.themeFragmentsByKind.get(
+            kind
+        ) as FragmentMap;
+        /* istanbul ignore if */
+        if (!kindFragments) {
+            throw new Error(`Unknown theme fragment kind '${kind}'`);
+            /* istanbul ignore if */
+        } else if (kindFragments.size === 0) {
+            throw new Error(`No theme fragments of kind '${kind}'`);
+        }
+        const name = this.getAttribute(kind);
+        if (name) {
+            const fragment = kindFragments.get(name);
+            if (fragment) {
+                return name;
+            }
+        }
+        const defaultFragment = kindFragments.get('default');
+        /* istanbul ignore else */
+        if (defaultFragment) {
+            return defaultFragment.name;
+        }
+        throw new Error(
+            `Incorrectly configured theme fragments of kind '${kind}'`
+        );
+    }
+
     private get styles(): CSSResult[] {
-        return [
-            coreStyles,
-            Theme.themeFragment(this.color).styles,
-            Theme.themeFragment(this.scale).styles,
-        ];
+        const themeKinds = [...Theme.themeFragmentsByKind.keys()];
+        const styles = themeKinds.reduce(
+            (acc, kind) => {
+                const kindFragments = Theme.themeFragmentsByKind.get(
+                    kind
+                ) as FragmentMap;
+                const defaultStyles = kindFragments.get('default');
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                const { [kind]: name } = this;
+                const currentStyles = kindFragments.get(name);
+                if (currentStyles) {
+                    acc.push(currentStyles.styles);
+                } else if (defaultStyles) {
+                    acc.push(defaultStyles.styles);
+                }
+                return acc;
+            },
+            [] as CSSResult[]
+        );
+        return [coreStyles, ...styles];
     }
 
     private static get template(): HTMLTemplateElement {
@@ -113,6 +137,7 @@ export class Theme extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        /* istanbul ignore else */
         if (this.shadowRoot) {
             const node = document.importNode(Theme.template.content, true);
             this.shadowRoot.appendChild(node);
@@ -133,8 +158,13 @@ export class Theme extends HTMLElement {
     }
 
     protected connectedCallback(): void {
+        /* istanbul ignore if */
+        if (!this.hasAdoptedStyles) {
+            this.adoptStyles();
+        }
         // Note, first update/render handles styleElement so we only call this if
         // connected after first update.
+        /* istanbul ignore if */
         if (window.ShadyCSS !== undefined) {
             window.ShadyCSS.styleElement(this);
         }
@@ -158,15 +188,18 @@ export class Theme extends HTMLElement {
             // for those, we load in all style fragments and then switch using a
             // host selector (e.g. :host([color='dark']))
             const fragmentCSS: string[] = [];
-            for (const [name, { kind, styles }] of Theme.themeFragments) {
-                let cssText = styles.cssText;
-                if (!Theme.defaultFragments.has(name as FragmentName)) {
-                    cssText = cssText.replace(
-                        ':host',
-                        `:host([${kind}='${name}'])`
-                    );
+            for (const [kind, fragments] of Theme.themeFragmentsByKind) {
+                for (const [name, { styles }] of fragments) {
+                    if (name === 'default') continue;
+                    let cssText = styles.cssText;
+                    if (!Theme.defaultFragments.has(name as FragmentName)) {
+                        cssText = cssText.replace(
+                            ':host',
+                            `:host([${kind}='${name}'])`
+                        );
+                    }
+                    fragmentCSS.push(cssText);
                 }
-                fragmentCSS.push(cssText);
             }
             window.ShadyCSS.ScopingShim.prepareAdoptedCssText(
                 fragmentCSS,
@@ -176,26 +209,25 @@ export class Theme extends HTMLElement {
         } else if (supportsAdoptingStyleSheets && this.shadowRoot) {
             const styleSheets = [];
             for (const style of styles) {
-                if (style.styleSheet) {
-                    styleSheets.push(style.styleSheet);
-                }
+                styleSheets.push(style.styleSheet as CSSStyleSheet);
             }
             this.shadowRoot.adoptedStyleSheets = styleSheets;
-        } else {
-            if (this.shadowRoot) {
-                const styleNodes = this.shadowRoot.querySelectorAll('style');
-                if (styleNodes) {
-                    styleNodes.forEach((element) => element.remove());
-                }
-                styles.forEach((s) => {
-                    const style = document.createElement('style');
-                    style.textContent = s.cssText;
-                    if (this.shadowRoot) {
-                        this.shadowRoot.appendChild(style);
-                    }
-                });
+        } else if (this.shadowRoot) {
+            const styleNodes = this.shadowRoot.querySelectorAll('style');
+            if (styleNodes) {
+                styleNodes.forEach((element) => element.remove());
             }
+            styles.forEach((s) => {
+                /* istanbul ignore if */
+                if (!this.shadowRoot) {
+                    return;
+                }
+                const style = document.createElement('style');
+                style.textContent = s.cssText;
+                this.shadowRoot.appendChild(style);
+            });
         }
+        this.hasAdoptedStyles = true;
     }
 
     protected attributeChangedCallback(): void {
@@ -211,17 +243,18 @@ export class Theme extends HTMLElement {
         kind: FragmentType,
         styles: CSSResult
     ): void {
-        this.themeFragments.set(name, { kind, styles });
-    }
-
-    static themeFragment(
-        name: FragmentName
-    ): { kind: FragmentType; styles: CSSResult } {
-        const fragment = this.themeFragments.get(name);
-        if (!fragment) {
-            throw new Error(`Unknown theme fragment '${name}'`);
+        if (!this.themeFragmentsByKind.has(kind)) {
+            this.themeFragmentsByKind.set(kind, new Map());
+            (this.themeFragmentsByKind.get(kind) as FragmentMap).set(
+                'default',
+                { name, styles }
+            );
+            Theme.defaultFragments.add(name);
         }
-        return fragment;
+        (this.themeFragmentsByKind.get(kind) as FragmentMap).set(name, {
+            name,
+            styles,
+        });
     }
 }
 
