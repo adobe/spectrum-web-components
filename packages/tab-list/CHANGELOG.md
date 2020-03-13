@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.3.4...@spectrum-web-components/tab-list@0.3.5) (2020-03-13)
+
+### Bug Fixes
+
+-   **tab-list:** position the indicator correctly when sized ([e956758](https://github.com/adobe/spectrum-web-components/commit/e956758))
+
 ## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.3.3...@spectrum-web-components/tab-list@0.3.4) (2020-03-11)
 
 ### Bug Fixes
