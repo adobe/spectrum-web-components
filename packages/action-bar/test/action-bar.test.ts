@@ -15,6 +15,7 @@ import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 import '../sp-action-bar.js';
 import { ActionBar } from '..';
 import { Default } from '../stories/action-bar.stories.js';
+import { getByLabelText } from 'testing-library__dom';
 
 describe('ActionBar', () => {
     it('loads', async () => {
@@ -25,6 +26,8 @@ describe('ActionBar', () => {
         expect(el).to.not.be.undefined;
 
         await expect(el).to.be.accessible();
+        const input = getByLabelText(el, 'Edit');
+        expect(input).to.not.be.undefined;
     });
 
     it('accepts variants', async () => {

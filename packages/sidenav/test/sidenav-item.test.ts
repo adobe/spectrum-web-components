@@ -14,6 +14,7 @@ import '../sp-sidenav.js';
 import '../sp-sidenav-item.js';
 import { SideNavItem } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { getByText, queryByText } from 'testing-library__dom';
 
 describe('Sidenav Item', () => {
     it('can exist disabled and with no parent', async () => {
@@ -69,29 +70,31 @@ describe('Sidenav Item', () => {
 
         await elementUpdated(el);
 
-        expect(el.shadowRoot).to.exist;
-        if (!el.shadowRoot) return;
-
-        let slot: HTMLSlotElement | null = el.shadowRoot.querySelector(
-            'slot:not([name])'
-        );
-        expect(slot).not.to.exist;
+        let section1 = queryByText(el, 'Section 1');
+        let section2 = queryByText(el, 'Section 2');
 
         expect(el.expanded).to.be.false;
+        expect(section1, 'section 1: closed initial').to.be.null;
+        expect(section2, 'section 2: closed initial').to.be.null;
 
         el.click();
-
         await elementUpdated(el);
 
         expect(el.expanded).to.be.true;
+        section1 = getByText(el, 'Section 1');
+        section2 = getByText(el, 'Section 2');
+        expect(section1, 'section 1: opened').to.not.be.null;
+        expect(section2, 'section 2: opened').to.not.be.null;
 
-        slot = el.shadowRoot.querySelector(
-            'slot:not([name])'
-        ) as HTMLSlotElement;
-        expect(slot).to.exist;
-        if (!slot) return;
+        el.click();
+        await elementUpdated(el);
 
-        expect(slot.assignedElements().length).to.equal(2);
+        section1 = queryByText(el, 'Section 1');
+        section2 = queryByText(el, 'Section 2');
+
+        expect(el.expanded).to.be.false;
+        expect(section1, 'section 1: closed').to.be.null;
+        expect(section2, 'section 2: closed').to.be.null;
     });
 
     it('populated `aria-current`', async () => {

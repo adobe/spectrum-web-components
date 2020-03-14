@@ -57,6 +57,7 @@ export default {
             'packages/styles/**',
             'test/**',
             'node_modules/**',
+            'projects/**',
         ],
         threshold: {
             statements: 98,

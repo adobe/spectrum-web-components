@@ -36,7 +36,7 @@
         "docs:start": "yarn docs:analyze && run-p watch:css build:watch \"docs:ts -w\" docs:start:watch",
         "docs:start:watch": "node ./tasks/watch-documentation.js",
         "docs:ts": "tsc --build documentation/tsconfig.json",
-        "get-ready": "yarn build:clear-cache && run-p process-icons process-spectrum && yarn build:clean",
+        "get-ready": "yarn build:clear-cache && run-p process-icons process-spectrum testing-library && yarn build:clean",
         "icons": "node ./scripts/process-icons.js && pretty-quick --pattern \"packages/**/*.svg.ts\"",
         "icons:ui": "lerna run --scope @spectrum-web-components/icons-ui build",
         "icons:workflow": "lerna run --scope @spectrum-web-components/icons-workflow build",
@@ -83,6 +83,7 @@
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
         "test:watch": "yarn test:watch:focus unit",
         "test:watch:focus": "yarn test:build && run-p watch:css \"test:build -w\" \"test:start --watch --group {1}\" --",
+        "testing-library": "cd projects/testing-library__dom && yarn build",
         "watch:css": "node ./tasks/watch-css.js"
     },
     "peerDependencies": {
@@ -220,6 +221,7 @@
         "yargs": "^17.0.1"
     },
     "resolutions": {
+        "@web/**/rollup": "2.51.0",
         "cssnano/**/postcss-calc": "7.0.0"
     },
     "customElements": "documentation/custom-elements.json",
