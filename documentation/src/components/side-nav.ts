@@ -19,11 +19,11 @@ import {
 } from 'lit-element';
 import '@spectrum-web-components/sidenav';
 import { SidenavSelectDetail } from '@spectrum-web-components/sidenav';
-import { AppRouter } from '../router';
-import './side-nav-search';
-import { search, Result } from './search-index';
+import { AppRouter } from '../router.js';
+import './side-nav-search.js';
+import { search, Result } from './search-index.js';
 import sideNavStyles from './side-nav.css';
-import './adobe-logo';
+import './adobe-logo.js';
 
 class SideNav extends LitElement {
     public static get styles(): CSSResultArray {

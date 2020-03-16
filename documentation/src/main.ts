@@ -13,4 +13,4 @@ governing permissions and limitations under the License.
 import polyfill from 'element-closest';
 
 polyfill(window);
-import('./app');
+import('./app.js');

@@ -10,5 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import './main.css';
-import './components';
-import './router';
+import './components/page.js';
+import './router.js';

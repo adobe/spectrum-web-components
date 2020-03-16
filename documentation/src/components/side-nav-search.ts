@@ -28,8 +28,8 @@ import '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu-group';
 import '@spectrum-web-components/menu-item';
 import '@spectrum-web-components/illustrated-message';
-import { AppRouter } from '../router';
-import { search, ResultGroup } from './search-index';
+import { AppRouter } from '../router.js';
+import { search, ResultGroup } from './search-index.js';
 
 class SearchComponent extends LitElement {
     private closeOverlay?: () => void;

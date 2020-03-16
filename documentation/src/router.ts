@@ -58,21 +58,21 @@ AppRouter.setRoutes([
         path: '/',
         component: 'docs-home',
         action: async () => {
-            await import('./components/home');
+            await import('./components/home.js');
         },
     },
     {
         path: '/components/:component/:tab?',
         component: 'docs-component',
         action: async () => {
-            await import('./components/component');
+            await import('./components/component.js');
         },
     },
     {
         path: '/guides/:guide',
         component: 'docs-guide',
         action: async () => {
-            await import('./components/guide');
+            await import('./components/guide.js');
         },
     },
 ]);

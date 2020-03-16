@@ -1,9 +1,10 @@
 {
-    "extends": "./tsconfig.json",
+    "extends": "../tsconfig.json",
     "compilerOptions": {
         "declaration": false,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "skipLibCheck": true
     },
-    "include": ["./documentation/**/*.ts", "./documentation/src/global.d.ts"],
+    "include": ["./**/*.ts", "./src/global.d.ts"],
     "exclude": []
 }

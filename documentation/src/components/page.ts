@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult, query } from 'lit-element';
-import { LayoutElement } from './layout';
+import { LayoutElement } from './layout.js';
 
 export class Page extends LayoutElement {
     @query('#layout-content')

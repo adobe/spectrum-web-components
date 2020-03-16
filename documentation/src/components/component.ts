@@ -11,10 +11,12 @@ governing permissions and limitations under the License.
 */
 import { html, CSSResultArray, TemplateResult } from 'lit-element';
 import '@spectrum-web-components/bundle';
-import { RouteComponent } from './route-component';
+import { RouteComponent } from './route-component.js';
 import componentStyles from './markdown.css';
-import { AppRouter } from '../router';
-import { TabList } from '../../../packages/tab-list';
+import { AppRouter } from '../router.js';
+import '@spectrum-web-components/tab';
+import '@spectrum-web-components/tab-list';
+import { TabList } from '@spectrum-web-components/tab-list';
 import docs from '../../custom-elements.json';
 
 let ComponentDocs: Map<string, TemplateResult>;

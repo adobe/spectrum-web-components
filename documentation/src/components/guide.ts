@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, CSSResultArray } from 'lit-element';
 import '@spectrum-web-components/link';
-import './layout';
-import { GuideDocs } from '../../guides';
-import { RouteComponent } from './route-component';
+import './layout.js';
+import { GuideDocs } from '../../guides/index.js';
+import { RouteComponent } from './route-component.js';
 import componentStyles from './markdown.css';
 
 class GuideElement extends RouteComponent {

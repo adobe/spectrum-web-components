@@ -13,6 +13,12 @@
         "**/test/benchmark/**/*.js.map": true,
         "test/testing-helpers.js": true,
         "test/testing-helpers.d.ts": true,
-        "test/testing-helpers.js.map": true
+        "test/testing-helpers.js.map": true,
+        "documentation/components/**/*.js": true,
+        "documentation/components/**/*.js.map": true,
+        "documentation/guides/**/*.js": true,
+        "documentation/guides/**/*.js.map": true,
+        "documentation/src/**/*.js": true,
+        "documentation/src/**/*.js.map": true
     }
 }
