@@ -17,7 +17,7 @@ import {
     LitElement,
     PropertyValues,
 } from 'lit-element';
-import './side-nav';
+import './side-nav.js';
 import layoutStyles from './layout.css';
 import '@spectrum-web-components/theme';
 import { Color, Scale } from '@spectrum-web-components/theme';
@@ -28,11 +28,13 @@ import '@spectrum-web-components/menu-item';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
-const COLOR_LIGHT = 'light';
+const COLOR_FALLBACK = matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
 const SCALE_MEDIUM = 'medium';
 const DEFAULT_COLOR = (window.localStorage
-    ? localStorage.getItem(SWC_THEME_COLOR_KEY) || COLOR_LIGHT
-    : COLOR_LIGHT) as Color;
+    ? localStorage.getItem(SWC_THEME_COLOR_KEY) || COLOR_FALLBACK
+    : COLOR_FALLBACK) as Color;
 const DEFAULT_SCALE = (window.localStorage
     ? localStorage.getItem(SWC_THEME_SCALE_KEY) || SCALE_MEDIUM
     : SCALE_MEDIUM) as Scale;

@@ -21,7 +21,6 @@ const webpackConfig = require('../documentation/webpack.config');
 const merge = require('webpack-merge');
 
 const projectDir = path.dirname(__dirname);
-const srcPath = path.join(projectDir, 'src');
 
 const BASE_URL = 'https://opensource.adobe.com/spectrum-web-components/';
 
@@ -49,15 +48,8 @@ const webpackDevServer = () => {
 };
 
 const webpackBuild = (baseUrl) => async () => {
-    const config = merge(webpackConfig, {
-        mode: 'production',
-        output: {
-            filename: '[name].[hash].bundle.js',
-            chunkFilename: '[name].[hash].js',
-        },
-    });
     await new Promise((resolve, reject) => {
-        webpack(config, (errors, stats) => {
+        webpack(webpackConfig, (errors, stats) => {
             if (errors) {
                 console.log('Webpack', errors);
             }

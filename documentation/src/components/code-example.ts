@@ -20,7 +20,7 @@ import {
     css,
 } from 'lit-element';
 import * as Prism from 'prismjs';
-import { toHtmlTemplateString } from '../utils/templates';
+import { toHtmlTemplateString } from '../utils/templates.js';
 import DarkThemeStyles from 'prismjs/themes/prism-okaidia.css';
 import LightThemeStyles from 'prismjs/themes/prism.css';
 import Styles from './code-example.css';

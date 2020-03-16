@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 const path = require('path');
 const merge = require('webpack-merge');
-const createDefaultConfig = require('@open-wc/building-webpack/modern-config');
+const { createDefaultConfig } = require('@open-wc/building-webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 const WebpackBar = require('webpackbar');
@@ -43,13 +43,20 @@ const babelLoader = openWcConfig.module.rules.find(
 module.exports = merge(openWcConfig, {
     output: {
         path: path.join(__dirname, 'dist'),
+        filename: '[name].[hash].bundle.js',
+        chunkFilename: '[name].[hash].js',
     },
     resolve: {
-        extensions: ['.js', '.ts', '.json'],
+        extensions: ['.js', '.json'],
     },
     devServer: {
         historyApiFallback: true,
         stats: 'errors-warnings',
+        compress: true,
+    },
+    stats: {
+        optimizationBailout: true,
+        maxModules: Infinity,
     },
     module: {
         rules: [
@@ -104,21 +111,6 @@ module.exports = merge(openWcConfig, {
                                     ],
                                 }),
                             ],
-                        },
-                    },
-                ],
-            },
-            {
-                test: /\.ts$/,
-                use: [
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            context: path.dirname(__dirname),
-                            configFile: path.resolve(
-                                __dirname,
-                                '../documentation/tsconfig.json'
-                            ),
                         },
                     },
                 ],

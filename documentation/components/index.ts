@@ -1,4 +1,4 @@
-import { toHtmlTemplateString } from '../src/utils/templates';
+import { toHtmlTemplateString } from '../src/utils/templates.js';
 import { TemplateResult } from 'lit-element';
 
 const componentDocs = require.context(
