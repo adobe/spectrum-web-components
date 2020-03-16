@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.3.0...@spectrum-web-components/theme@0.3.1) (2020-03-16)
+
+### Bug Fixes
+
+-   **theme:** make typescript happy ([a9aa377](https://github.com/adobe/spectrum-web-components/commit/a9aa377))
+-   **theme:** track default theme values dynamically ([a0c306c](https://github.com/adobe/spectrum-web-components/commit/a0c306c))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.2.0...@spectrum-web-components/theme@0.3.0) (2020-03-11)
 
 ### Features
