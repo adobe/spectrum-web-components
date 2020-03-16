@@ -47,9 +47,16 @@ export interface ThemeData {
     scale?: Scale;
 }
 
-export class Theme extends HTMLElement {
+type ThemeKindProvider = {
+    [P in FragmentType]: string;
+};
+
+export class Theme extends HTMLElement implements ThemeKindProvider {
     private hasAdoptedStyles = false;
-    private static themeFragmentsByKind: Map<string, FragmentMap> = new Map();
+    private static themeFragmentsByKind: Map<
+        FragmentType,
+        FragmentMap
+    > = new Map();
     private static defaultFragments: Set<FragmentName> = new Set(['core']);
 
     private static templateElement?: HTMLTemplateElement;
@@ -58,8 +65,12 @@ export class Theme extends HTMLElement {
         return ['color', 'scale'];
     }
 
+    get core(): 'core' {
+        return 'core';
+    }
+
     get color(): Color {
-        return this.getFragementNameByKind('color') as Color;
+        return this.getFragmentNameByKind('color') as Color;
     }
 
     set color(newValue: Color) {
@@ -67,14 +78,14 @@ export class Theme extends HTMLElement {
     }
 
     get scale(): Scale {
-        return this.getFragementNameByKind('scale') as Scale;
+        return this.getFragmentNameByKind('scale') as Scale;
     }
 
     set scale(newValue: Scale) {
         this.setAttribute('scale', newValue);
     }
 
-    private getFragementNameByKind(kind: string): string {
+    private getFragmentNameByKind(kind: FragmentType): string {
         const kindFragments = Theme.themeFragmentsByKind.get(
             kind
         ) as FragmentMap;
@@ -103,15 +114,15 @@ export class Theme extends HTMLElement {
     }
 
     private get styles(): CSSResult[] {
-        const themeKinds = [...Theme.themeFragmentsByKind.keys()];
+        const themeKinds: FragmentType[] = [
+            ...Theme.themeFragmentsByKind.keys(),
+        ];
         const styles = themeKinds.reduce(
             (acc, kind) => {
                 const kindFragments = Theme.themeFragmentsByKind.get(
                     kind
                 ) as FragmentMap;
                 const defaultStyles = kindFragments.get('default');
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
                 const { [kind]: name } = this;
                 const currentStyles = kindFragments.get(name);
                 if (currentStyles) {
@@ -243,18 +254,14 @@ export class Theme extends HTMLElement {
         kind: FragmentType,
         styles: CSSResult
     ): void {
-        if (!this.themeFragmentsByKind.has(kind)) {
-            this.themeFragmentsByKind.set(kind, new Map());
-            (this.themeFragmentsByKind.get(kind) as FragmentMap).set(
-                'default',
-                { name, styles }
-            );
+        const fragmentMap = this.themeFragmentsByKind.get(kind) || new Map();
+        if (fragmentMap.size === 0) {
+            this.themeFragmentsByKind.set(kind, fragmentMap);
+            // we're adding our first fragment for this kind, set as default
+            fragmentMap.set('default', { name, styles });
             Theme.defaultFragments.add(name);
         }
-        (this.themeFragmentsByKind.get(kind) as FragmentMap).set(name, {
-            name,
-            styles,
-        });
+        fragmentMap.set(name, { name, styles });
     }
 }
 
