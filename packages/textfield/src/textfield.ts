@@ -43,6 +43,9 @@ export class Textfield extends Focusable {
         ];
     }
 
+    @property({ attribute: 'allowed-keys' })
+    allowedKeys = '';
+
     @query('#input')
     private inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
@@ -86,6 +89,20 @@ export class Textfield extends Focusable {
     }
 
     protected onInput(): void {
+        if (this.allowedKeys && this.inputElement.value) {
+            const regExp = new RegExp(`^[${this.allowedKeys}]*$`);
+            if (!regExp.test(this.inputElement.value)) {
+                const selectionStart = this.inputElement
+                    .selectionStart as number;
+                const nextSelectStart = selectionStart - 1;
+                this.inputElement.value = this.value;
+                this.inputElement.setSelectionRange(
+                    nextSelectStart,
+                    nextSelectStart
+                );
+                return;
+            }
+        }
         this.value = this.inputElement.value;
     }
 
@@ -164,13 +181,16 @@ export class Textfield extends Focusable {
     }
 
     protected updated(changedProperties: PropertyValues): void {
-        if (changedProperties.has('value')) {
+        if (
+            changedProperties.has('value') ||
+            (changedProperties.has('required') && this.required)
+        ) {
             this.checkValidity();
         }
     }
 
     public checkValidity(): boolean {
-        if (this.value && (this.pattern || this.required)) {
+        if (this.required || (this.value && this.pattern)) {
             let validity = this.inputElement.checkValidity();
             if ((this.disabled || this.multiline) && this.pattern) {
                 const regex = new RegExp(this.pattern);
