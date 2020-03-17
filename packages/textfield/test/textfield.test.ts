@@ -200,7 +200,6 @@ describe('Textfield', () => {
         const testSource = eventSource as Textfield;
         expect(testSource.isSameNode(el)).to.be.true;
     });
-
     it('passes through `autocomplete` attribute', async () => {
         let el = await litFixture<Textfield>(
             html`
@@ -225,5 +224,53 @@ describe('Textfield', () => {
         if (input) {
             expect(input.getAttribute('autocomplete')).to.not.exist;
         }
+    });
+    it('tests on `required` changes', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield value=""></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        expect(el.invalid).to.be.false;
+
+        el.required = true;
+        await elementUpdated(el);
+        expect(el.invalid).to.be.true;
+    });
+    it('manages `allowed-keys`', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield allowed-keys="asdf"></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        expect(el.value).to.equal('');
+
+        const inputElement = (el.shadowRoot
+            ? el.shadowRoot.querySelector('#input')
+            : el.querySelector('#input')) as HTMLInputElement;
+
+        inputElement.value = 'asdf';
+        inputElement.dispatchEvent(new InputEvent('input'));
+
+        await elementUpdated(el);
+        expect(el.value).to.equal('asdf');
+
+        inputElement.value = `asdff`;
+        inputElement.setSelectionRange(1, 1);
+        inputElement.dispatchEvent(new InputEvent('input'));
+
+        await elementUpdated(el);
+        expect(el.value).to.equal('asdff');
+        expect(inputElement.selectionStart).to.equal(1);
+
+        inputElement.value = `asdoff`;
+        inputElement.setSelectionRange(4, 4);
+        inputElement.dispatchEvent(new InputEvent('input'));
+
+        await elementUpdated(el);
+        expect(el.value).to.equal('asdff');
+        expect(inputElement.selectionStart).to.equal(3);
     });
 });
