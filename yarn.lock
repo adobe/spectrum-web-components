@@ -13835,17 +13835,24 @@ lit-analyzer@^1.1.10:
     vscode-html-languageservice "2.1.12"
     web-component-analyzer "~0.1.17"
 
-lit-element@^2.0.0, lit-element@^2.0.1, lit-element@^2.2.1:
+lit-element@^2.0.0, lit-element@^2.0.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/lit-element/-/lit-element-2.2.1.tgz#79c94d8cfdc2d73b245656e37991bd1e4811d96f"
   integrity sha512-ipDcgQ1EpW6Va2Z6dWm79jYdimVepO5GL0eYkZrFvdr0OD/1N260Q9DH+K5HXHFrRoC7dOg+ZpED2XE0TgGdXw==
   dependencies:
     lit-html "^1.0.0"
 
-lit-html@^1.0.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-1.1.2.tgz#2e3560a7075210243649c888ad738eaf0daa8374"
-  integrity sha512-FFlUMKHKi+qG1x1iHNZ1hrtc/zHmfYTyrSvs3/wBTvaNtpZjOZGWzU7efGYVpgp6KvWeKF6ql9/KsCq6Z/mEDA==
+lit-element@^2.2.1:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/lit-element/-/lit-element-2.3.0.tgz#a78d98e3c17afdfcfa3ab8335e839ac69f5c204e"
+  integrity sha512-t3ask/FPcNTIixniBjTrkCeNPWOxyEQxWkSNuSqBYARoyg7/EjNT8uNrbgUwKt0GALwN417GI9eHQY1BgXpLUA==
+  dependencies:
+    lit-html "^1.1.1"
+
+lit-html@^1.0.0, lit-html@^1.1.1:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-1.2.0.tgz#4d1a458d70354bd034b4a24fb0d229a4cbc7e0ee"
+  integrity sha512-PC/oZsNhTiH4/JHIWMtAFePkKYbflmTi1ZHA/FRDKuw/HARINK/MNHWuHuQ8pXKXOIgBzdHZEDApm/7SGZQXgA==
 
 load-json-file@^1.0.0:
   version "1.1.0"
