@@ -31,47 +31,47 @@ self.__precacheManifest = [
   },
   {
     "url": "iframe.html",
-    "revision": "34fc08afbb375bc10ef466513957fc40"
+    "revision": "5bde2c939c41218a9af38f1bd3d865e9"
   },
   {
     "url": "index.html",
-    "revision": "a37421eae8600cb92817a3ca0ea436f5"
+    "revision": "3d682dc110ef4cd0d071721659666edd"
   },
   {
-    "url": "inline-entry.0-70da4c51.js",
-    "revision": "e4191706f62b953dc45c078f4e572aec"
+    "url": "inline-entry.0-73eedab9.js",
+    "revision": "90a64e3eab38a019c8669513dc1fb57b"
+  },
+  {
+    "url": "inline-entry.0-b7a50ea0.js",
+    "revision": "c5daf03b6925b897c765352f7f1efaed"
   },
   {
     "url": "legacy/focus-visible-9f6cb534.js",
     "revision": "ba0787c1522ac0c565eb7dd54b0f48c0"
   },
   {
-    "url": "legacy/inline-entry.0-0b60a1be.js",
-    "revision": "f14b3b58eca2b7c1825a8b778f2c20ae"
+    "url": "legacy/inline-entry.0-7fb3b0e2.js",
+    "revision": "17def4feacf605bdfac4e0d107d1f742"
+  },
+  {
+    "url": "legacy/inline-entry.0-890cc4d6.js",
+    "revision": "8d3230b194ac21ec5d60bc61f50de472"
   },
   {
     "url": "legacy/lit-html-7827e195.js",
     "revision": "22d8c058068c38c8de632bef245cf7c3"
   },
   {
-    "url": "legacy/manager-048dc424.js",
-    "revision": "4565329816e5847f7968f2913f7e8619"
+    "url": "legacy/storybook-2f9513ae.js",
+    "revision": "1677be802b58fb32d4402b43d38edb6f"
   },
   {
-    "url": "legacy/storybook-044aca22.js",
-    "revision": "e184f17bc09dab262c1a4318e5a7c070"
-  },
-  {
-    "url": "legacy/storybook-b9a36b2f.js",
-    "revision": "e68b9ff4841dbe0806eb7ee81fe92c6b"
+    "url": "legacy/storybook-9dc97b03.js",
+    "revision": "4ce411166d788b9bf9b568cd6cf62990"
   },
   {
     "url": "lit-html-426aeb1f.js",
     "revision": "e694e26ce2f2cadb00285d2d60ee4a73"
-  },
-  {
-    "url": "manager-129abf2a.js",
-    "revision": "d5dc4781fa2915dbccf0846b5d229629"
   },
   {
     "url": "polyfills/core-js.577a5602a7262d6256830802d4aaab43.js",
@@ -86,12 +86,12 @@ self.__precacheManifest = [
     "revision": "ed55766050be285197b8f511eacedb62"
   },
   {
-    "url": "polyfills/fetch.e0fa1d30ce1c9b23c0898a2e34c3fe3b.js",
-    "revision": "16a2d81480a8b178ad740f425229fe34"
+    "url": "polyfills/fetch.191258a74d74243758f52065f3d0962a.js",
+    "revision": "fcdc4efda1fe1b52f814e36273ff745d"
   },
   {
-    "url": "polyfills/regenerator-runtime.323cb013cc2a9c88ff67ee256cbf5942.js",
-    "revision": "076165f8bec91d0f16c0b51615ef95a4"
+    "url": "polyfills/regenerator-runtime.92d44da139046113cb3739b173605787.js",
+    "revision": "3aa324bcf8f59cd0eebf46796948aafa"
   },
   {
     "url": "polyfills/systemjs.6dfbfd8f2c3e558918ed74d133a6757a.js",
@@ -102,12 +102,12 @@ self.__precacheManifest = [
     "revision": "b1db7cb76380495a55ff4f65a9648f0e"
   },
   {
-    "url": "storybook-35ea0fcf.js",
-    "revision": "2087ff1313fea3c39ce9d1a0bd6d59b9"
+    "url": "storybook-1813304e.js",
+    "revision": "951ff74227d06dd68756d4b26e786227"
   },
   {
-    "url": "storybook-e9c4024a.js",
-    "revision": "1ea61c650dd06ed23f115e84d713fb20"
+    "url": "storybook-41472cde.js",
+    "revision": "a9b332b8e8bb8da5a15e62f479523de1"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
