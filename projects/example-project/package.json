@@ -14,7 +14,7 @@
     "dependencies": {
         "@spectrum-web-components/button": "^0.4.6",
         "@spectrum-web-components/styles": "^0.5.0",
-        "lit-element": "^2.0.0",
+        "lit-element": "^2.2.1",
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
