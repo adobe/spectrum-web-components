@@ -193,7 +193,7 @@
         "posthtml-loader": "^1.0.1",
         "posthtml-match-helper": "^1.0.1",
         "posthtml-transform": "^1.0.6",
-        "prettier": "^1.16.4",
+        "prettier": "^2.0.0",
         "pretty-quick": "^2.0.1",
         "prismjs": "^1.15.0",
         "puppeteer": "2.1.1",
