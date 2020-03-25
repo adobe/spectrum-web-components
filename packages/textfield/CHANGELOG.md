@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.3.3...@spectrum-web-components/textfield@0.3.4) (2020-03-25)
+
+### Bug Fixes
+
+-   **textfield:** update validation path, add "allowed-keys" ([ae9f85d](https://github.com/adobe/spectrum-web-components/commit/ae9f85d))
+
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.3.2...@spectrum-web-components/textfield@0.3.3) (2020-03-11)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield
