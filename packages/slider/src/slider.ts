@@ -40,12 +40,16 @@ export class Slider extends Focusable {
 
     public set value(value: number) {
         const oldValue = this.value;
+        if (this.input) {
+            this.input.value = String(value);
+        }
+        const newValue = this.input ? parseFloat(this.input.value) : value;
 
-        if (value === oldValue) {
+        if (newValue === oldValue) {
             return;
         }
 
-        this._value = value;
+        this._value = newValue;
         this.requestUpdate('value', oldValue);
     }
 
@@ -123,6 +127,7 @@ export class Slider extends Focusable {
 
     private supportsPointerEvent = 'setPointerCapture' in this;
     private currentMouseEvent?: MouseEvent;
+    private boundingClientRect?: DOMRect;
 
     public get focusElement(): HTMLElement {
         return this.input ? this.input : this;
@@ -139,7 +144,6 @@ export class Slider extends Focusable {
 
     protected updated(changedProperties: PropertyValues): void {
         if (changedProperties.has('value')) {
-            this.value = this.clampValue(this.value);
             if (this.dragging) {
                 this.dispatchInputEvent();
             }
@@ -299,6 +303,7 @@ export class Slider extends Focusable {
         if (this.disabled) {
             return;
         }
+        this.boundingClientRect = this.getBoundingClientRect();
         this.focus();
         this.dragging = true;
         this.handle.setPointerCapture(event.pointerId);
@@ -311,6 +316,7 @@ export class Slider extends Focusable {
         if (this.disabled) {
             return;
         }
+        this.boundingClientRect = this.getBoundingClientRect();
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
         this.focus();
@@ -373,6 +379,7 @@ export class Slider extends Focusable {
         if (event.target === this.handle || this.disabled) {
             return;
         }
+        this.boundingClientRect = this.getBoundingClientRect();
         this.dragging = true;
         this.handle.setPointerCapture(event.pointerId);
 
@@ -388,6 +395,7 @@ export class Slider extends Focusable {
         }
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
+        this.boundingClientRect = this.getBoundingClientRect();
         this.dragging = true;
         this.currentMouseEvent = event;
         this._trackMouseEvent();
@@ -398,8 +406,7 @@ export class Slider extends Focusable {
      */
     private onInputChange(): void {
         const inputValue = parseFloat(this.input.value);
-        this.value = this.clampValue(inputValue);
-        this.input.value = this.value.toString();
+        this.value = inputValue;
 
         this.dispatchChangeEvent();
     }
@@ -418,30 +425,18 @@ export class Slider extends Focusable {
      * @return: Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(event: PointerEvent | MouseEvent): number {
-        const rect = this.getBoundingClientRect();
+        if (!this.boundingClientRect) {
+            return this.value;
+        }
+        const rect = this.boundingClientRect;
         const minOffset = rect.left;
         const offset = event.clientX;
         const size = rect.width;
 
         const percent = (offset - minOffset) / size;
-        let value = this.min + (this.max - this.min) * percent;
-
-        value = this.clampValue(value);
-
-        if (this.step) {
-            value = Math.round(value / this.step) * this.step;
-        }
+        const value = this.min + (this.max - this.min) * percent;
 
         return value;
-    }
-
-    /**
-     * @param: value to be clamped
-     * @return: the original value if in range, this.max if over, and this.min if under
-     */
-    private clampValue(value: number): number {
-        const reducedValue = Math.min(value, this.max);
-        return Math.max(reducedValue, this.min);
     }
 
     private dispatchInputEvent(): void {
