@@ -62,7 +62,7 @@ const writeProcessedCSSToFile = (dstPath, contents) => {
 };
 
 const processCSS = (srcPath, dstPath, identifier) => {
-    fs.readFile(srcPath, 'utf8', function(error, data) {
+    fs.readFile(srcPath, 'utf8', function (error, data) {
         if (error) {
             return console.log(error);
         }
