@@ -70,16 +70,16 @@ function processComponents() {
         console.log(chalk.bold.green('Processing Spectrum Components'));
 
         Walker(componentRoot)
-            .on('file', function(filePath, stat) {
+            .on('file', function (filePath, stat) {
                 const parsedPath = path.parse(filePath);
                 if (parsedPath.base === 'spectrum-config.js') {
                     promises.push(processComponent(parsedPath.dir));
                 }
             })
-            .on('error', function(error, entry, stat) {
+            .on('error', function (error, entry, stat) {
                 reject(error);
             })
-            .on('end', function() {
+            .on('end', function () {
                 resolve(Promise.all(promises));
             });
     }).then((result) => {

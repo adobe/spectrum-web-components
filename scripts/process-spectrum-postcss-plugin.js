@@ -506,10 +506,7 @@ class SpectrumProcessor {
             let licenseText = fs.readFileSync(licencePath, {
                 encoding: 'utf8',
             });
-            licenseText = licenseText
-                .split('\n')
-                .slice(1, -2)
-                .join('\n');
+            licenseText = licenseText.split('\n').slice(1, -2).join('\n');
             this._headerText = `\n${licenseText}\n\nTHIS FILE IS MACHINE GENERATED. DO NOT EDIT`;
         }
         return this._headerText;
