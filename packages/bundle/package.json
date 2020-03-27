@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.7.8",
+    "version": "0.7.9",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -62,7 +62,7 @@
         "@spectrum-web-components/radio-group": "^0.1.14",
         "@spectrum-web-components/search": "^0.2.10",
         "@spectrum-web-components/sidenav": "^0.3.4",
-        "@spectrum-web-components/slider": "^0.4.4",
+        "@spectrum-web-components/slider": "^0.4.5",
         "@spectrum-web-components/status-light": "^0.2.3",
         "@spectrum-web-components/switch": "^0.2.10",
         "@spectrum-web-components/tab": "^0.3.5",

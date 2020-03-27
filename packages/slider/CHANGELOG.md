@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.4.4...@spectrum-web-components/slider@0.4.5) (2020-03-27)
+
+### Bug Fixes
+
+-   **slider:** use internal "input" for value sanitation ([dd588c9](https://github.com/adobe/spectrum-web-components/commit/dd588c9))
+
 ## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.4.3...@spectrum-web-components/slider@0.4.4) (2020-03-11)
 
 **Note:** Version bump only for package @spectrum-web-components/slider
