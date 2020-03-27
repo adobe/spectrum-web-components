@@ -217,20 +217,21 @@ export class TabList extends Focusable {
             return;
         }
         await selectedElement.updateComplete;
-        const bounds = selectedElement.getBoundingClientRect();
+        const tabBoundingClientRect = selectedElement.getBoundingClientRect();
+        const parentBoundingClientRect = this.getBoundingClientRect();
 
         if (this.direction === 'horizontal') {
-            const width = bounds.width;
-            const parentOffset = this.getBoundingClientRect().left;
-            const offset = bounds.left - parentOffset;
+            const width = tabBoundingClientRect.width;
+            const offset =
+                tabBoundingClientRect.left - parentBoundingClientRect.left;
 
-            this.selectionIndicatorStyle = `width: ${width}px; transform: translateX(${offset}px)`;
+            this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
         } else {
-            const height = bounds.height;
-            const parentOffset = this.getBoundingClientRect().top;
-            const offset = bounds.top - parentOffset;
+            const height = tabBoundingClientRect.height;
+            const offset =
+                tabBoundingClientRect.top - parentBoundingClientRect.top;
 
-            this.selectionIndicatorStyle = `height: ${height}px; transform: translateY(${offset}px)`;
+            this.selectionIndicatorStyle = `transform: translateY(${offset}px) scaleY(${height});`;
         }
     }
 }

@@ -23,6 +23,10 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([direction='horizontal']) #selectionIndicator {
+    width: 1px;
+}
+
 /* Original selector from spectrum-css:
  * .spectrum-Tabs--horizontal .spectrum-Tabs-item + *:not(.spectrum-Tabs-selectionIndicator)
  *
@@ -47,6 +51,7 @@ governing permissions and limitations under the License.
 :host([direction='vertical-right']) #selectionIndicator,
 :host([direction='vertical']) #selectionIndicator {
     top: 0;
+    height: 1px;
 }
 
 /* 
