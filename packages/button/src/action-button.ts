@@ -10,21 +10,46 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, property } from 'lit-element';
+import { CSSResultArray, property, PropertyValues } from 'lit-element';
 import { ButtonBase } from './button-base.js';
 import buttonStyles from './action-button.css.js';
 
 export class ActionButton extends ButtonBase {
-    @property({ type: Boolean, reflect: true })
-    public quiet = false;
-
-    @property({ type: Boolean, reflect: true })
-    public selected = false;
+    public static get styles(): CSSResultArray {
+        return [...super.styles, buttonStyles];
+    }
 
     @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
     public holdAffordance = false;
 
-    public static get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles];
+    @property({ type: Boolean, reflect: true })
+    public selected = false;
+
+    @property({ type: Boolean, reflect: true })
+    public toggles = false;
+
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
+
+    constructor() {
+        super();
+        this.addEventListener('click', this.onClick);
+    }
+
+    private onClick = (): void => {
+        if (!this.toggles) {
+            return;
+        }
+        this.selected = !this.selected;
+    };
+
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (this.toggles && changes.has('selected')) {
+            this.focusElement.setAttribute(
+                'aria-pressed',
+                this.selected ? 'true' : 'false'
+            );
+        }
     }
 }
