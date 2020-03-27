@@ -15,9 +15,10 @@ import { TemplateResult } from 'lit-html';
 import '../';
 
 interface Properties {
-    quiet: boolean;
-    disabled: boolean;
-    selected: boolean;
+    quiet?: boolean;
+    disabled?: boolean;
+    selected?: boolean;
+    toggles?: boolean;
 }
 
 function renderButton(properties: Properties): TemplateResult {
@@ -26,6 +27,7 @@ function renderButton(properties: Properties): TemplateResult {
             .quiet="${!!properties.quiet}"
             .disabled=${!!properties.disabled}
             .selected=${!!properties.selected}
+            .toggles=${!!properties.toggles}
             @click=${action(`Action`)}
         >
             Action
@@ -54,6 +56,12 @@ export const Default = (): TemplateResult => {
         quiet: false,
         disabled: false,
         selected: false,
+    });
+};
+
+export const toggles = (): TemplateResult => {
+    return renderButtonsSelected({
+        toggles: true,
     });
 };
 

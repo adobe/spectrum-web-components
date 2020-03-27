@@ -52,3 +52,13 @@ yarn add @spectrum-web-components/button
     </svg>
 </sp-action-button>
 ```
+
+## Toggles
+
+With the application of the `toggles` attribute, the button will self manage its `selected` property on `click`:
+
+```html demo
+<sp-action-button toggles>
+    Toggle button
+</sp-action-button>
+```
