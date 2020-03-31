@@ -17,6 +17,7 @@ const {
     docsBuildProduction,
     docsBuildStaging,
     docsWatchCompile,
+    buildSearchIndex,
 } = require('./tasks/documentation');
 
 // default is to compile, build and copy
@@ -30,3 +31,4 @@ exports.watch = watchTasks;
 exports.docsBuildProduction = docsBuildProduction;
 exports.docsBuildStaging = docsBuildStaging;
 exports.docsWatchCompile = docsWatchCompile;
+exports.buildSearchIndex = buildSearchIndex;
