@@ -36,3 +36,9 @@ attribute controls the main variant of the status light, and `neutral` being the
 -   magenta
 -   celery
 -   purple
+
+### Disabled
+
+```html
+<sp-status-light variant="positive" disabled>disabled</sp-status-light>
+```

@@ -11,3 +11,14 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-status-light.css';
+
+/* Force cascade position of [disabled] styling */
+:host([disabled]) #root:before,
+#root[disabled]:before {
+    /* .spectrum-StatusLight.is-disabled:before,
+   * .spectrum-StatusLight[disabled]:before */
+    background-color: var(
+        --spectrum-statuslight-dot-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+}

@@ -29,6 +29,12 @@ export class StatusLight extends LitElement {
     }
 
     /**
+     * A status light in a disabled state shows that a status exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that a status may become available later.
+     */
+    @property({ type: Boolean, reflect: true })
+    public disabled = false;
+
+    /**
      * The visual variant to apply to this status light.
      */
     @property({ reflect: true })
@@ -45,7 +51,7 @@ export class StatusLight extends LitElement {
         | 'chartreuse'
         | 'magenta'
         | 'celery'
-        | 'purple' = 'neutral';
+        | 'purple' = 'info';
 
     protected render(): TemplateResult {
         return html`
