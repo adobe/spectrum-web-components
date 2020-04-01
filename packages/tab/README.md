@@ -30,7 +30,7 @@ yarn add @spectrum-web-components/tab
 ```html
 <sp-icons-medium></sp-icons-medium>
 <sp-tab label="Tab 1" value="1">
-    <sp-icon slot="icon" size="m" name="ui:CheckmarkSmall"></sp-icon>
+    <sp-icon slot="icon" size="s" name="ui:CheckmarkSmall"></sp-icon>
 </sp-tab>
 ```
 
@@ -38,7 +38,7 @@ yarn add @spectrum-web-components/tab
 
 ```html
 <sp-tab label="Tab 1" value="1" vertical>
-    <sp-icon slot="icon" size="m" name="ui:CheckmarkSmall"></sp-icon>
+    <sp-icon slot="icon" size="s" name="ui:CheckmarkSmall"></sp-icon>
 </sp-tab>
 ```
 
