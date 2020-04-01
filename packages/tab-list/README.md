@@ -65,16 +65,16 @@ yarn add @spectrum-web-components/tab-list
     <sp-icons-medium></sp-icons-medium>
     <sp-tab-list selected="1" direction="horizontal">
         <sp-tab label="Tab 1" value="1" tabindex="1">
-            <sp-icon slot="icon" size="m" name="ui:CheckmarkSmall"></sp-icon>
+            <sp-icon slot="icon" size="s" name="ui:CheckmarkSmall"></sp-icon>
         </sp-tab>
         <sp-tab label="Tab 2" value="2" tabindex="2">
-            <sp-icon slot="icon" size="m" name="ui:CrossSmall"></sp-icon>
+            <sp-icon slot="icon" size="s" name="ui:CrossSmall"></sp-icon>
         </sp-tab>
         <sp-tab label="Tab 3" value="3" tabindex="3">
-            <sp-icon slot="icon" size="m" name="ui:ChevronDownSmall"></sp-icon>
+            <sp-icon slot="icon" size="s" name="ui:ChevronDownSmall"></sp-icon>
         </sp-tab>
         <sp-tab label="Tab 4" value="4" tabindex="4">
-            <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
+            <sp-icon slot="icon" size="s" name="ui:HelpSmall"></sp-icon>
         </sp-tab>
     </sp-tab-list>
 </div>

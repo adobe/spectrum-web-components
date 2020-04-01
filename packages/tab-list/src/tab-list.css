@@ -12,17 +12,7 @@ governing permissions and limitations under the License.
 
 @import './spectrum-tab-list.css';
 
-/* 
- * The shorthand border declaration in :host([direction='horizontal']) was overiding
- * the border-bottom-color declared in :host 
- */
-:host([direction='horizontal']) {
-    border-bottom-color: var(
-        --spectrum-tabs-rule-color,
-        var(--spectrum-global-color-gray-200)
-    );
-}
-
+/* Power scale based indicator transitions */
 :host([direction='horizontal']) #selectionIndicator {
     width: 1px;
 }
@@ -156,5 +146,16 @@ governing permissions and limitations under the License.
     background-color: var(
         --spectrum-tabs-quiet-selection-indicator-color,
         var(--spectrum-global-color-gray-900)
+    );
+}
+
+/* 
+ * The shorthand border declaration in :host([direction='horizontal']) was overiding
+ * the border-bottom-color declared in :host 
+ */
+:host([direction='horizontal']:not([quiet])) {
+    border-bottom-color: var(
+        --spectrum-tabs-rule-color,
+        var(--spectrum-global-color-gray-200)
     );
 }
