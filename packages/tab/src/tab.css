@@ -20,8 +20,8 @@ governing permissions and limitations under the License.
     height: auto;
 }
 
-:host([vertical])::before {
-    /* .spectrum-Tabs--vertical .spectrum-Tabs-item::before */
+:host([vertical]):before {
+    /* .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
     left: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
     right: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
 
