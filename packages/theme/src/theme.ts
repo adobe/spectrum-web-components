@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -117,23 +117,20 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         const themeKinds: FragmentType[] = [
             ...Theme.themeFragmentsByKind.keys(),
         ];
-        const styles = themeKinds.reduce(
-            (acc, kind) => {
-                const kindFragments = Theme.themeFragmentsByKind.get(
-                    kind
-                ) as FragmentMap;
-                const defaultStyles = kindFragments.get('default');
-                const { [kind]: name } = this;
-                const currentStyles = kindFragments.get(name);
-                if (currentStyles) {
-                    acc.push(currentStyles.styles);
-                } else if (defaultStyles) {
-                    acc.push(defaultStyles.styles);
-                }
-                return acc;
-            },
-            [] as CSSResult[]
-        );
+        const styles = themeKinds.reduce((acc, kind) => {
+            const kindFragments = Theme.themeFragmentsByKind.get(
+                kind
+            ) as FragmentMap;
+            const defaultStyles = kindFragments.get('default');
+            const { [kind]: name } = this;
+            const currentStyles = kindFragments.get(name);
+            if (currentStyles) {
+                acc.push(currentStyles.styles);
+            } else if (defaultStyles) {
+                acc.push(defaultStyles.styles);
+            }
+            return acc;
+        }, [] as CSSResult[]);
         return [coreStyles, ...styles];
     }
 
@@ -154,8 +151,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.shadowRoot.appendChild(node);
         }
         this.adoptStyles();
-        this.addEventListener('sp-query-theme', this
-            .onQueryTheme as EventListener);
+        this.addEventListener(
+            'sp-query-theme',
+            this.onQueryTheme as EventListener
+        );
     }
 
     private onQueryTheme(event: CustomEvent<ThemeData>): void {

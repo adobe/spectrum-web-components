@@ -1,6 +1,6 @@
 'use strict';
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,20 +12,20 @@ governing permissions and limitations under the License.
 */
 var __extends =
     (this && this.__extends) ||
-    (function() {
-        var extendStatics = function(d, b) {
+    (function () {
+        var extendStatics = function (d, b) {
             extendStatics =
                 Object.setPrototypeOf ||
                 ({ __proto__: [] } instanceof Array &&
-                    function(d, b) {
+                    function (d, b) {
                         d.__proto__ = b;
                     }) ||
-                function(d, b) {
+                function (d, b) {
                     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
                 };
             return extendStatics(d, b);
         };
-        return function(d, b) {
+        return function (d, b) {
             extendStatics(d, b);
             function __() {
                 this.constructor = d;
@@ -39,7 +39,7 @@ var __extends =
 Object.defineProperty(exports, '__esModule', { value: true });
 var fs = require('fs');
 var Lint = require('tslint');
-var Rule = /** @class */ (function(_super) {
+var Rule = /** @class */ (function (_super) {
     __extends(Rule, _super);
     function Rule(options) {
         var _this = _super.call(this, options) || this;
@@ -62,7 +62,7 @@ var Rule = /** @class */ (function(_super) {
             .trim();
         return _this;
     }
-    Rule.prototype.apply = function(sourceFile) {
+    Rule.prototype.apply = function (sourceFile) {
         return this.applyWithWalker(
             new NoFileWithoutCopyrightHeader(
                 sourceFile,
@@ -75,14 +75,14 @@ var Rule = /** @class */ (function(_super) {
     return Rule;
 })(Lint.Rules.AbstractRule);
 exports.Rule = Rule;
-var NoFileWithoutCopyrightHeader = /** @class */ (function(_super) {
+var NoFileWithoutCopyrightHeader = /** @class */ (function (_super) {
     __extends(NoFileWithoutCopyrightHeader, _super);
     function NoFileWithoutCopyrightHeader(sourceFile, options, templateString) {
         var _this = _super.call(this, sourceFile, options) || this;
         _this.templateString = templateString;
         return _this;
     }
-    NoFileWithoutCopyrightHeader.prototype.visitSourceFile = function(
+    NoFileWithoutCopyrightHeader.prototype.visitSourceFile = function (
         sourceFile
     ) {
         if (sourceFile && sourceFile.fileName) {
