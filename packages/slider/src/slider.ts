@@ -144,9 +144,7 @@ export class Slider extends Focusable {
 
     protected updated(changedProperties: PropertyValues): void {
         if (changedProperties.has('value')) {
-            if (this.dragging) {
-                this.dispatchInputEvent();
-            }
+            this.dispatchInputEvent();
         }
     }
 
@@ -383,6 +381,14 @@ export class Slider extends Focusable {
         this.dragging = true;
         this.handle.setPointerCapture(event.pointerId);
 
+        /**
+         * Dispatch a synthetic pointerdown event to ensure that pointerdown
+         * handlers attached to the slider are invoked before input handlers
+         */
+        event.stopPropagation();
+        const syntheticPointerEvent = new PointerEvent('pointerdown', event);
+        this.dispatchEvent(syntheticPointerEvent);
+
         this.value = this.calculateHandlePosition(event);
     }
 
@@ -440,6 +446,9 @@ export class Slider extends Focusable {
     }
 
     private dispatchInputEvent(): void {
+        if (!this.dragging) {
+            return;
+        }
         const inputEvent = new Event('input', {
             bubbles: true,
             composed: true,
@@ -476,8 +485,9 @@ export class Slider extends Focusable {
     private get trackRightStyle(): string {
         const width = `width: ${(1 - this.trackProgress) * 100}%;`;
         const halfHandleWidth = `var(--spectrum-slider-handle-width, var(--spectrum-global-dimension-size-200)) / 2`;
-        const offset = `left: calc(${this.trackProgress *
-            100}% + ${halfHandleWidth})`;
+        const offset = `left: calc(${
+            this.trackProgress * 100
+        }% + ${halfHandleWidth})`;
 
         return width + offset;
     }
