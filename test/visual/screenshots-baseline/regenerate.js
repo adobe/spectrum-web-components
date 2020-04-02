@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,10 +19,10 @@ const stories = require('../stories');
 
 module.exports = {
     buildScreenshots(type, color = 'light', scale = 'medium') {
-        describe('🎁 regenerate screenshots', function() {
+        describe('🎁 regenerate screenshots', function () {
             let polyserve, browser, page;
 
-            before(async function() {
+            before(async function () {
                 polyserve = await startServer({
                     port: 4444,
                     root: path.join(
@@ -48,7 +48,7 @@ module.exports = {
 
             after((done) => polyserve.close(done));
 
-            beforeEach(async function() {
+            beforeEach(async function () {
                 browser = await puppeteer.launch({
                     userDataDir: `${baselineDir}/${type}/userDataDir`,
                 });
@@ -57,7 +57,7 @@ module.exports = {
 
             afterEach(() => browser.close());
 
-            it('did it', async function() {
+            it('did it', async function () {
                 return generateBaselineScreenshots(page);
             });
         });

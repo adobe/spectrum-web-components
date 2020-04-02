@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -115,14 +115,11 @@ export abstract class IconsetSVG extends Iconset {
 
     protected updateSVG(nodes: SVGElement[]): void {
         // iterate over the nodes that were passed in, and find all the top level symbols
-        const symbols = nodes.reduce(
-            (prev, svgNode) => {
-                const containedSymbols = svgNode.querySelectorAll('symbol');
-                prev.push(...containedSymbols);
-                return prev;
-            },
-            [] as SVGSymbolElement[]
-        );
+        const symbols = nodes.reduce((prev, svgNode) => {
+            const containedSymbols = svgNode.querySelectorAll('symbol');
+            prev.push(...containedSymbols);
+            return prev;
+        }, [] as SVGSymbolElement[]);
         symbols.forEach((symbol) => {
             this.iconMap.set(this.getSanitizedIconName(symbol.id), symbol);
         });
