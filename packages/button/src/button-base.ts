@@ -12,26 +12,14 @@ governing permissions and limitations under the License.
 
 import { property, html, TemplateResult, CSSResultArray } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { LikeAnchor } from '@spectrum-web-components/shared/lib/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/lib/observe-slot-text';
 
-export class ButtonBase extends ObserveSlotText(Focusable) {
+export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {
     public static get styles(): CSSResultArray {
         return [...super.styles];
     }
-
-    /**
-     * Supplies an address that the browser will navigate to when this button is
-     * clicked
-     */
-    @property()
-    public href?: string;
-
-    @property()
-    public label?: string;
-
-    @property()
-    public target?: '_blank' | '_parent' | '_self' | '_top';
 
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;
@@ -75,16 +63,10 @@ export class ButtonBase extends ObserveSlotText(Focusable) {
 
     protected render(): TemplateResult {
         return this.href && this.href.length > 0
-            ? html`
-                  <a
-                      href="${this.href}"
-                      id="button"
-                      target=${ifDefined(this.target)}
-                      aria-label=${ifDefined(this.label)}
-                  >
-                      ${this.buttonContent}
-                  </a>
-              `
+            ? this.renderAnchor({
+                  id: 'button',
+                  anchorContent: this.buttonContent,
+              })
             : html`
                   <button id="button" aria-label=${ifDefined(this.label)}>
                       ${this.buttonContent}

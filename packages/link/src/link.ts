@@ -10,14 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    html,
-    property,
-    CSSResultArray,
-    TemplateResult,
-    query,
-} from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { CSSResultArray, TemplateResult, query } from 'lit-element';
+import { LikeAnchor } from '@spectrum-web-components/shared/lib/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 
 import linkStyles from './link.css.js';
@@ -28,7 +22,7 @@ import linkStyles from './link.css.js';
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
  */
-export class Link extends Focusable {
+export class Link extends LikeAnchor(Focusable) {
     public static get styles(): CSSResultArray {
         return [...super.styles, linkStyles];
     }
@@ -44,23 +38,7 @@ export class Link extends Focusable {
         return this.anchorElement;
     }
 
-    @property({ reflect: true })
-    public href: string | undefined = undefined;
-
-    @property({ reflect: true })
-    public download: string | undefined = undefined;
-
-    @property({ reflect: true })
-    public target?: '_blank' | '_parent' | '_self' | '_top';
-
     protected render(): TemplateResult {
-        // prettier-ignore
-        return html
-            `<a
-                id="anchor"
-                href=${ifDefined(this.href)}
-                download=${ifDefined(this.download)}
-                target=${ifDefined(this.target)}
-            ><slot></slot></a>`;
+        return this.renderAnchor({ id: 'anchor' });
     }
 }

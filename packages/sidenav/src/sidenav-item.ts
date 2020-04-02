@@ -17,6 +17,7 @@ import {
     property,
     PropertyValues,
 } from 'lit-element';
+import { LikeAnchor } from '@spectrum-web-components/shared/lib/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
@@ -24,7 +25,7 @@ import { SidenavSelectDetail, SideNav } from './sidenav.js';
 
 import sidenavItemStyles from './sidenav-item.css.js';
 
-export class SideNavItem extends Focusable {
+export class SideNavItem extends LikeAnchor(Focusable) {
     public static get styles(): CSSResultArray {
         return [sidenavItemStyles];
     }
@@ -43,15 +44,6 @@ export class SideNavItem extends Focusable {
 
     @property({ type: Boolean, reflect: true })
     public expanded = false;
-
-    @property()
-    public href: string | undefined = undefined;
-
-    @property()
-    public target?: '_blank' | '_parent' | '_self' | '_top';
-
-    @property()
-    public label = '';
 
     protected get parentSideNav(): SideNav | undefined {
         return this.closest('sp-sidenav') as SideNav | undefined;
@@ -129,6 +121,7 @@ export class SideNavItem extends Focusable {
                 tabindex=${this.manageTabIndex ? tabIndexForSelectedState : '0'}
                 href=${this.href || '#'}
                 target=${ifDefined(this.target)}
+                download=${ifDefined(this.download)}
                 data-level="${this.depth}"
                 @click="${this.handleClick}"
                 id="itemLink"
