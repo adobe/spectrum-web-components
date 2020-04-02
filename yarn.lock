@@ -2601,6 +2601,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/circleloader/-/circleloader-2.0.5.tgz#7d4d248d1cf1257819b1ecc9b04e1a851f0ca459"
   integrity sha512-LrQn+S7ZwTUfOLi3wDuZQDoh3doQK/oIqMxcIrmSD/A4QAKKsetbv+GVjCYelci+EJrYLG9P4215eOftsooVNA==
 
+"@spectrum-css/coachmark@^2.0.0":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-2.0.5.tgz#a8d175c2398146ec9ce8e2e6ce31795774b03267"
+  integrity sha512-jINN4U+XSVnfD0AbHGJ8I3kZYkb/EnR3smdMYZIwAOMQTuh7e86fH8iseErtqy4sfyLxGE6XG0Y8slAX7R0eYw==
+
 "@spectrum-css/commons@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-2.1.0.tgz#d50726a31631e10fad0d697ac7c0a918b005ec6f"

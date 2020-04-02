@@ -1,0 +1,226 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+@keyframes pulse {
+    0% {
+        -webkit-transform: scale(
+            var(--spectrum-coachmark-animation-indicator-keyframe-0-scale, 1)
+        );
+        opacity: var(
+            --spectrum-coachmark-animation-indicator-keyframe-0-opacity,
+            0
+        );
+    }
+    50% {
+        -webkit-transform: scale(
+            var(--spectrum-coachmark-animation-indicator-keyframe-50-scale, 1.5)
+        );
+        opacity: var(
+            --spectrum-coachmark-animation-indicator-keyframe-50-opacity,
+            1
+        );
+    }
+    to {
+        -webkit-transform: scale(
+            var(--spectrum-coachmark-animation-indicator-keyframe-100-scale, 2)
+        );
+        opacity: var(
+            --spectrum-coachmark-animation-indicator-keyframe-100-opacity,
+            0
+        );
+    }
+}
+@keyframes pulse--quiet {
+    0% {
+        -webkit-transform: scale(
+            var(
+                --spectrum-coachmark-quiet-animation-indicator-keyframe-0-scale,
+                0.8
+            )
+        );
+        opacity: var(
+            --spectrum-coachmark-animation-indicator-keyframe-0-opacity,
+            0
+        );
+    }
+    50% {
+        -webkit-transform: scale(
+            var(--spectrum-coachmark-animation-indicator-keyframe-50-scale, 1.5)
+        );
+        opacity: var(
+            --spectrum-coachmark-animation-indicator-keyframe-50-opacity,
+            1
+        );
+    }
+    to {
+        -webkit-transform: scale(
+            var(--spectrum-coachmark-animation-indicator-keyframe-100-scale, 2)
+        );
+        opacity: var(
+            --spectrum-coachmark-animation-indicator-keyframe-100-opacity,
+            0
+        );
+    }
+}
+:host {
+    /* .spectrum-CoachMarkIndicator */
+    position: relative;
+    margin: var(
+        --spectrum-coachmark-indicator-gap,
+        var(--spectrum-global-dimension-size-75)
+    ); /* .spectrum-CoachMarkIndicator */
+    min-width: calc(
+        var(
+                --spectrum-coachmark-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-200)
+            ) * 3
+    );
+    min-height: calc(
+        var(
+                --spectrum-coachmark-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-200)
+            ) * 3
+    );
+}
+.ring {
+    /* .spectrum-CoachMarkIndicator-ring */
+    display: block;
+    position: absolute;
+    border-style: solid;
+    border-width: var(
+        --spectrum-coachmark-indicator-ring-border-size,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    border-radius: 50%; /* .spectrum-CoachMarkIndicator-ring */
+    top: calc(
+        var(
+                --spectrum-coachmark-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-200)
+            ) * 0.75
+    );
+    left: calc(
+        var(
+                --spectrum-coachmark-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-200)
+            ) * 0.75
+    );
+    width: var(
+        --spectrum-coachmark-indicator-ring-diameter,
+        var(--spectrum-global-dimension-size-200)
+    );
+    height: var(
+        --spectrum-coachmark-indicator-ring-diameter,
+        var(--spectrum-global-dimension-size-200)
+    );
+    animation: pulse
+        var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) linear
+        infinite; /* .spectrum-CoachMarkIndicator-ring */
+    border-color: var(
+        --spectrum-coachmark-indicator-ring-default-color,
+        var(--spectrum-alias-focus-color)
+    );
+}
+.ring:nth-child(2) {
+    /* .spectrum-CoachMarkIndicator-ring:nth-child(2) */
+    animation-delay: calc(
+        var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
+            var(
+                --spectrum-coachmark-animation-inticator-ring-center-delay-multiple,
+                -0.66
+            )
+    );
+}
+.ring:nth-child(3) {
+    /* .spectrum-CoachMarkIndicator-ring:nth-child(3) */
+    animation-delay: calc(
+        var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
+            var(
+                --spectrum-coachmark-animation-inticator-ring-outer-delay-multiple,
+                -1
+            )
+    );
+}
+.ring:first-child {
+    /* .spectrum-CoachMarkIndicator-ring:first-child */
+    animation-delay: calc(
+        var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
+            var(
+                --spectrum-coachmark-animation-inticator-ring-inner-delay-multiple,
+                -0.5
+            )
+    );
+}
+:host([quiet]) {
+    /* .spectrum-CoachMarkIndicator--quiet */
+    min-width: calc(
+        var(
+                --spectrum-coachmark-quiet-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-100)
+            ) * 2.75
+    );
+    min-height: calc(
+        var(
+                --spectrum-coachmark-quiet-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-100)
+            ) * 2.75
+    );
+}
+:host([quiet]) .ring {
+    /* .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring */
+    top: calc(
+        var(
+                --spectrum-coachmark-quiet-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-100)
+            ) * 0.75
+    );
+    left: calc(
+        var(
+                --spectrum-coachmark-quiet-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-100)
+            ) * 0.75
+    );
+    width: var(
+        --spectrum-coachmark-quiet-indicator-ring-diameter,
+        var(--spectrum-global-dimension-size-100)
+    );
+    height: var(
+        --spectrum-coachmark-quiet-indicator-ring-diameter,
+        var(--spectrum-global-dimension-size-100)
+    );
+    animation: pulse--quiet
+        var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) linear
+        infinite;
+}
+:host([quiet]) .ring:first-child {
+    /* .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring:first-child */
+    animation-delay: calc(
+        var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
+            var(
+                --spectrum-coachmark-quiet-animation-inticator-ring-inner-delay-multiple,
+                -0.33
+            )
+    );
+}
+:host([variant='light']) .ring {
+    /* .spectrum-CoachMarkIndicator--light .spectrum-CoachMarkIndicator-ring */
+    border-color: var(
+        --spectrum-coachmark-indicator-ring-low-contrast-color,
+        var(--spectrum-global-color-gray-50)
+    );
+}
+:host([variant='dark']) .ring {
+    /* .spectrum-CoachMarkIndicator--dark .spectrum-CoachMarkIndicator-ring */
+    border-color: var(
+        --spectrum-coachmark-indicator-ring-high-contrast-color,
+        var(--spectrum-global-color-gray-900)
+    );
+}
