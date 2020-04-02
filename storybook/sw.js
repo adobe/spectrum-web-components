@@ -31,15 +31,15 @@ self.__precacheManifest = [
   },
   {
     "url": "iframe.html",
-    "revision": "816ea49b78a21a17580a0c25d4598a7c"
+    "revision": "99bb82c1170260763509994ce3d0a90a"
   },
   {
     "url": "index.html",
     "revision": "6c23d3f1ce992d6fe7224330cfbdbe0d"
   },
   {
-    "url": "inline-entry.0-42acfcc6.js",
-    "revision": "ba7cbd0b73b59fc399082b73a4e57b1f"
+    "url": "inline-entry.0-29f1a004.js",
+    "revision": "35fed60dac5a0ef24d597876ecdf8858"
   },
   {
     "url": "inline-entry.0-e9f55b88.js",
@@ -50,12 +50,12 @@ self.__precacheManifest = [
     "revision": "fe43681c50e1766060f9e69f5e9ecb2b"
   },
   {
-    "url": "legacy/inline-entry.0-1372f2b2.js",
-    "revision": "8e3fea7466048047e3a0770d3b283146"
-  },
-  {
     "url": "legacy/inline-entry.0-5010400e.js",
     "revision": "70bfc9cc1ae236ecaa9cc636d2206fb3"
+  },
+  {
+    "url": "legacy/inline-entry.0-75fb356b.js",
+    "revision": "f027a73828f20c3ee9ca841b2d562ff2"
   },
   {
     "url": "legacy/lit-html-14d333ae.js",
