@@ -15,6 +15,7 @@
         { "path": "../card" },
         { "path": "../checkbox" },
         { "path": "../circleloader" },
+        { "path": "../coachmark" },
         { "path": "../dropdown" },
         { "path": "../dropzone" },
         { "path": "../icon" },

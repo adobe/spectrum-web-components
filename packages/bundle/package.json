@@ -46,6 +46,7 @@
         "@spectrum-web-components/card": "^0.3.1",
         "@spectrum-web-components/checkbox": "^0.2.10",
         "@spectrum-web-components/circleloader": "^0.1.3",
+        "@spectrum-web-components/coachmark": "^0.0.1",
         "@spectrum-web-components/dropdown": "^0.4.2",
         "@spectrum-web-components/dropzone": "^0.2.4",
         "@spectrum-web-components/icon": "^0.4.4",
