@@ -79,7 +79,8 @@
         "test:visual:clean": "rm test/visual/screenshots-current/**/*.png",
         "test:visual:baseline:local": "mocha test/visual/screenshots-baseline/local.js --timeout=500000",
         "test:visual:local": "mocha test/visual/local.js --timeout=40000",
-        "test:visual:ci": "mocha test/visual/ci.js --timeout=40000"
+        "test:visual:ci": "mocha test/visual/ci.js --timeout=40000",
+        "new-package": "cd projects/templates && plop"
     },
     "husky": {
         "hooks": {
