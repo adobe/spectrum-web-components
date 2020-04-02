@@ -401,6 +401,11 @@ class SpectrumProcessor {
             ],
         });
 
+        root.walkAtRules((atRule) => {
+            if (atRule.name === 'keyframes') {
+                this.result.root.append(atRule);
+            }
+        });
         root.walkRules((rule) => this.processRule(rule, result));
     }
 
