@@ -2,6 +2,8 @@ import { html, CSSResultArray } from 'lit-element';
 import { RouteComponent } from './route-component';
 import componentStyles from './markdown.css';
 import homeStyles from './home.css';
+import '@spectrum-web-components/button';
+import '@spectrum-web-components/link';
 
 class HomeElement extends RouteComponent {
     public static get styles(): CSSResultArray {
@@ -9,6 +11,7 @@ class HomeElement extends RouteComponent {
     }
 
     render() {
+        // prettier-ignore
         return html`
             <section id="hero">
                 <div class="spectrum-Article">
@@ -17,11 +20,9 @@ class HomeElement extends RouteComponent {
                     </h1>
                 </div>
                 <p class="spectrum-Body3">
-                    The Spectrum Web Components project is an implementation of
-                    <sp-link href="https://spectrum.adobe.com/">
-                        Spectrum, Adobe’s design system
-                    </sp-link>
-                    . It's designed to work with any web framework — or even
+                    The Spectrum Web Components project is an implementation of <sp-link
+                    href="https://spectrum.adobe.com/">Spectrum, Adobe’s design system</sp-link
+                    >. It's designed to work with any web framework — or even
                     without one.
                 </p>
                 <div id="hero-buttons">

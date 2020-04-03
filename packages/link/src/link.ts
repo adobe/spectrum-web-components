@@ -61,7 +61,6 @@ export class Link extends Focusable {
                 href=${ifDefined(this.href)}
                 download=${ifDefined(this.download)}
                 target=${ifDefined(this.target)}
-            ><slot></slot></a>
-        `;
+            ><slot></slot></a>`;
     }
 }
