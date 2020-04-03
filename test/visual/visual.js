@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -26,10 +26,10 @@ const PixelDiffThreshold = 0;
 
 module.exports = {
     checkScreenshots(type, color = 'light', scale = 'medium') {
-        describe('👀 page screenshots are correct', function() {
+        describe('👀 page screenshots are correct', function () {
             let polyserve, browser, page;
 
-            before(async function() {
+            before(async function () {
                 polyserve = await startServer({
                     port: 4444,
                     root: path.join(
@@ -63,7 +63,7 @@ module.exports = {
 
             after((done) => polyserve.close(done));
 
-            beforeEach(async function() {
+            beforeEach(async function () {
                 browser = await puppeteer.launch({
                     userDataDir: `${baselineDir}/${type}/userDataDir`,
                 });
@@ -75,13 +75,13 @@ module.exports = {
 
             afterEach(() => browser.close());
 
-            describe('default view', function() {
-                beforeEach(async function() {
+            describe('default view', function () {
+                beforeEach(async function () {
                     return page.setViewport({ width: 800, height: 600 });
                 });
 
                 for (let i = 0; i < stories.length; i++) {
-                    it(`${stories[i]}__${color}__${scale}`, async function() {
+                    it(`${stories[i]}__${color}__${scale}`, async function () {
                         return takeAndCompareScreenshot(page, stories[i]);
                     });
                 }
