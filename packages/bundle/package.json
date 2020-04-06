@@ -51,6 +51,7 @@
         "@spectrum-web-components/dropzone": "^0.2.4",
         "@spectrum-web-components/icon": "^0.4.4",
         "@spectrum-web-components/icons": "^0.2.3",
+        "@spectrum-web-components/icons-workflow": "^0.0.1",
         "@spectrum-web-components/iconset": "^0.1.7",
         "@spectrum-web-components/illustrated-message": "^0.1.8",
         "@spectrum-web-components/link": "^0.3.0",

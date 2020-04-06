@@ -22,6 +22,8 @@ export * from '@spectrum-web-components/dropdown';
 export * from '@spectrum-web-components/dropzone';
 export * from '@spectrum-web-components/icon';
 export * from '@spectrum-web-components/icons';
+import * as WorkflowIcons from '@spectrum-web-components/icons-workflow';
+export { WorkflowIcons };
 export * from '@spectrum-web-components/illustrated-message';
 export * from '@spectrum-web-components/link';
 export * from '@spectrum-web-components/menu';
