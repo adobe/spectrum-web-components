@@ -26,7 +26,7 @@ export const listMedium = (): TemplateResult => html`
 `;
 
 listMedium.story = {
-    name: 'List - Medium',
+    name: 'UI Icons - Medium',
 };
 
 export const listLarge = (): TemplateResult => html`
@@ -36,5 +36,5 @@ export const listLarge = (): TemplateResult => html`
 `;
 
 listLarge.story = {
-    name: 'List - Large',
+    name: 'UI Icons - Large',
 };
