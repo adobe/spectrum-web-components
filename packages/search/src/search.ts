@@ -28,10 +28,6 @@ import '@spectrum-web-components/icons';
 import searchStyles from './search.css.js';
 import magnifierStyles from '@spectrum-web-components/icon/lib/spectrum-icon-magnifier.css.js';
 
-/**
- * @slot icon - The icon that appears on the left of the label
- */
-
 export class Search extends Textfield {
     public static get styles(): CSSResultArray {
         return [...super.styles, searchStyles, magnifierStyles];
