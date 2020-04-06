@@ -29,10 +29,6 @@ import alertSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-al
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { nothing } from 'lit-html';
 
-/**
- * @slot icon - The icon that appears on the left of the label
- */
-
 export class Textfield extends Focusable {
     public static get styles(): CSSResultArray {
         return [
