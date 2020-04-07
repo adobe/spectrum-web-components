@@ -75,8 +75,11 @@ export class TabList extends Focusable {
     }
 
     protected manageAutoFocus(): void {
-        const tabs = [...this.querySelectorAll('[role="tab"]')] as Tab[];
-        const tabUpdateCompletes = tabs.map((tab) => tab.updateComplete);
+        const tabs = [...this.children] as Tab[];
+        const tabUpdateCompletes = tabs.map((tab) => {
+            if (typeof tab.updateComplete !== 'undefined')
+                return tab.updateComplete;
+        });
         Promise.all(tabUpdateCompletes).then(() => super.manageAutoFocus());
     }
 
@@ -97,8 +100,8 @@ export class TabList extends Focusable {
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'tablist');
+        this.addEventListener('mousedown', this.manageFocusinType);
         this.addEventListener('focusin', this.startListeningToKeyboard);
-        this.addEventListener('focusout', this.stopListeningToKeyboard);
     }
 
     protected updated(changes: PropertyValues): void {
@@ -112,16 +115,34 @@ export class TabList extends Focusable {
         }
     }
 
-    private isListeningToKeyboard = false;
+    /**
+     * This will force apply the focus visible styling.
+     * It should always do so when this styling is already applied.
+     */
+    public shouldApplyFocusVisible = false;
+
+    private manageFocusinType = (): void => {
+        if (this.shouldApplyFocusVisible) {
+            return;
+        }
+
+        const handleFocusin = (): void => {
+            this.shouldApplyFocusVisible = false;
+            this.removeEventListener('focusin', handleFocusin);
+        };
+        this.addEventListener('focusin', handleFocusin);
+    };
 
     public startListeningToKeyboard = (): void => {
         this.addEventListener('keydown', this.handleKeydown);
-        this.isListeningToKeyboard = true;
-    };
+        this.shouldApplyFocusVisible = true;
 
-    public stopListeningToKeyboard = (): void => {
-        this.isListeningToKeyboard = false;
-        this.removeEventListener('keydown', this.handleKeydown);
+        const stopListeningToKeyboard = (): void => {
+            this.removeEventListener('keydown', this.handleKeydown);
+            this.shouldApplyFocusVisible = false;
+            this.removeEventListener('focusout', stopListeningToKeyboard);
+        };
+        this.addEventListener('focusout', stopListeningToKeyboard);
     };
 
     public handleKeydown(event: KeyboardEvent): void {
@@ -142,7 +163,7 @@ export class TabList extends Focusable {
     private onClick(event: Event): void {
         const target = event.target as HTMLElement;
         this.selectTarget(target);
-        if (this.isListeningToKeyboard) {
+        if (this.shouldApplyFocusVisible) {
             /* Trick :focus-visible polyfill into thinking keyboard based focus */
             this.dispatchEvent(
                 new KeyboardEvent('keydown', {
@@ -211,12 +232,16 @@ export class TabList extends Focusable {
         this.updateSelectionIndicator();
     }
 
-    private async updateSelectionIndicator(): Promise<void> {
+    private updateSelectionIndicator = async (): Promise<void> => {
         const selectedElement = this.querySelector('[selected]') as Tab;
         if (!selectedElement) {
             return;
         }
-        await selectedElement.updateComplete;
+        await Promise.all([
+            await selectedElement.updateComplete,
+            await ((document as unknown) as { fonts: { ready: Promise<void> } })
+                .fonts.ready,
+        ]);
         const tabBoundingClientRect = selectedElement.getBoundingClientRect();
         const parentBoundingClientRect = this.getBoundingClientRect();
 
@@ -233,5 +258,41 @@ export class TabList extends Focusable {
 
             this.selectionIndicatorStyle = `transform: translateY(${offset}px) scaleY(${height});`;
         }
+    };
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        /* istanbul ignore else */
+        if ('fonts' in document) {
+            ((document as unknown) as {
+                fonts: {
+                    addEventListener: (
+                        name: string,
+                        callback: () => void
+                    ) => void;
+                };
+            }).fonts.addEventListener(
+                'loadingdone',
+                this.updateSelectionIndicator
+            );
+        }
+    }
+
+    public disconnectedCallback(): void {
+        /* istanbul ignore else */
+        if ('fonts' in document) {
+            ((document as unknown) as {
+                fonts: {
+                    removeEventListener: (
+                        name: string,
+                        callback: () => void
+                    ) => void;
+                };
+            }).fonts.removeEventListener(
+                'loadingdone',
+                this.updateSelectionIndicator
+            );
+        }
+        super.disconnectedCallback();
     }
 }
