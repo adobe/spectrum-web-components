@@ -13,9 +13,11 @@ import '../';
 import { TabList } from '../';
 import '../../tab';
 import { Tab } from '../../tab';
+import '../../icon';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { LitElement } from 'lit-element';
 import { TemplateResult } from 'lit-html';
+import { waitForPredicate } from '../../../test/testing-helpers';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
     new KeyboardEvent('keydown', {
@@ -87,6 +89,24 @@ describe('TabList', () => {
         expect(secondTab.selected).to.be.false;
         expect(thirdTab.selected).to.be.true;
         expect(tabList.selected).to.equal(thirdTab.value);
+    });
+
+    it('autofocuses', async () => {
+        const tabList = await fixture<TabList>(
+            html`
+                <sp-tab-list selected="second" autofocus>
+                    <sp-tab label="Tab 1" value="first"></sp-tab>
+                    <sp-tab label="Tab 2" value="second"></sp-tab>
+                    <sp-tab label="Tab 3" value="third"></sp-tab>
+                </sp-tab-list>
+            `
+        );
+
+        await elementUpdated(tabList);
+
+        const autoElement = tabList.querySelector('[label="Tab 2"]') as Tab;
+
+        expect(document.activeElement).to.equal(autoElement);
     });
 
     it('forces only one tab to be selected', async () => {
@@ -289,6 +309,87 @@ describe('TabList', () => {
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
+    });
+
+    it('manages the focus ring between `click` and tab `focus`', async () => {
+        const tabList = await createTabList();
+        const otherThing = document.createElement('button');
+        document.body.append(otherThing);
+
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
+        await elementUpdated(tabList);
+        const tab1 = tabList.querySelector('sp-tab:nth-child(1)') as Tab;
+        const tab2 = tabList.querySelector('sp-tab:nth-child(2)') as Tab;
+        const tab3 = tabList.querySelector('sp-tab:nth-child(3)') as Tab;
+        expect(tab1.classList.contains('focus-visible')).to.be.false;
+        expect(tab2.classList.contains('focus-visible')).to.be.false;
+        expect(tab3.classList.contains('focus-visible')).to.be.false;
+
+        tab1.dispatchEvent(
+            new KeyboardEvent('keydown', {
+                code: 'Tab',
+            })
+        );
+        tab1.focus();
+        await elementUpdated(tab1);
+        expect(document.activeElement, 'first tab is focused').to.equal(tab1);
+        expect(
+            tab1.classList.contains('focus-visible'),
+            '`focus()` sets the ring'
+        ).to.be.true;
+
+        tab2.dispatchEvent(
+            new MouseEvent('mousedown', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        tab2.focus();
+        tab2.click();
+        await elementUpdated(tab2);
+        expect(document.activeElement, 'second tab is focused').to.equal(tab2);
+        expect(
+            tab2.classList.contains('focus-visible'),
+            '`click()` should persist'
+        ).to.be.true;
+
+        tab2.dispatchEvent(
+            new FocusEvent('focusout', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        otherThing.focus();
+        await elementUpdated(tab2);
+        expect(
+            document.activeElement,
+            'second tab is not focused'
+        ).to.not.equal(tab2);
+        expect(
+            tab2.classList.contains('focus-visible'),
+            '`blur()` clears the ring'
+        ).to.be.false;
+
+        tab3.dispatchEvent(
+            new MouseEvent('mousedown', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        tab3.focus();
+        tab3.dispatchEvent(
+            new FocusEvent('click', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await elementUpdated(tab3);
+        expect(document.activeElement, 'third tab is focused').to.equal(tab3);
+        expect(
+            tab3.classList.contains('focus-visible'),
+            '`click()` does not set the ring'
+        ).to.be.false;
+        otherThing.remove();
     });
 
     it('accepts keyboard based selection through shadow DOM', async () => {
