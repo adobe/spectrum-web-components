@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.3.5...@spectrum-web-components/tab-list@0.3.6) (2020-04-07)
+
+### Bug Fixes
+
+-   **tab-list:** correct specificity collision ([622887e](https://github.com/adobe/spectrum-web-components/commit/622887eb596b7d193e077a3db8865cdfea557845))
+-   **tab-list:** transition indicator "width" as well as position ([b26ab76](https://github.com/adobe/spectrum-web-components/commit/b26ab765e3eabdf1dc56a09e3a9f38e30d6ddbcc))
+
 ## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.3.4...@spectrum-web-components/tab-list@0.3.5) (2020-03-13)
 
 ### Bug Fixes

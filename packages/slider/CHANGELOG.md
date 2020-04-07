@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.4.5...@spectrum-web-components/slider@0.4.6) (2020-04-07)
+
+### Bug Fixes
+
+-   **slider:** dispatch synthetic pointerdown event ([7dc74af](https://github.com/adobe/spectrum-web-components/commit/7dc74afdda380184906cceadf4eb528b6106792c))
+
 ## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.4.4...@spectrum-web-components/slider@0.4.5) (2020-03-27)
 
 ### Bug Fixes

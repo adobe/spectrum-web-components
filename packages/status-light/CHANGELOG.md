@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.2.3...@spectrum-web-components/status-light@0.2.4) (2020-04-07)
+
+### Bug Fixes
+
+-   **status-light:** extend docs and styling for [disabled](<[3d9fd16](https://github.com/adobe/spectrum-web-components/commit/3d9fd16256dea767183bdfb3cedd431427c15c7f)>)
+
 ## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.2.2...@spectrum-web-components/status-light@0.2.3) (2020-03-11)
 
 **Note:** Version bump only for package @spectrum-web-components/status-light

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.7.9...@spectrum-web-components/bundle@0.8.0) (2020-04-07)
+
+### Features
+
+-   **coachmark:** add coachmark pattern ([f53ae70](https://github.com/adobe/spectrum-web-components/commit/f53ae70e6f49f73c71480809021e21d2ff9bcd85))
+-   **icons-workflow:** add workflow icons package ([6b09287](https://github.com/adobe/spectrum-web-components/commit/6b09287d5c169205f0cc332b2158d57e7ef4a4b7))
+
 ## [0.7.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.7.8...@spectrum-web-components/bundle@0.7.9) (2020-03-27)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle

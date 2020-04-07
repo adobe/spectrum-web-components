@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.3.5...@spectrum-web-components/tab@0.3.6) (2020-04-07)
+
+### Bug Fixes
+
+-   **tab-list:** correct specificity collision ([622887e](https://github.com/adobe/spectrum-web-components/commit/622887eb596b7d193e077a3db8865cdfea557845))
+
 ## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.3.4...@spectrum-web-components/tab@0.3.5) (2020-03-13)
 
 ### Bug Fixes

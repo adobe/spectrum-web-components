@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.5.0...@spectrum-web-components/styles@0.5.1) (2020-04-07)
+
+### Bug Fixes
+
+-   **link:** correct white space in template/docs site ([a48bd06](https://github.com/adobe/spectrum-web-components/commit/a48bd06a177ed5f6ec52d44676f61f313bc90022))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.4.3...@spectrum-web-components/styles@0.5.0) (2020-03-11)
 
 ### Features
