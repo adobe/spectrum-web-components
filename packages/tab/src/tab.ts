@@ -54,9 +54,13 @@ export class Tab extends FocusVisiblePolyfillMixin(LitElement) {
                       <slot name="icon"></slot>
                   `
                 : html``}
-            <label id="itemLabel">
-                ${this.label}
-            </label>
+            ${this.label
+                ? html`
+                      <label id="itemLabel">
+                          ${this.label}
+                      </label>
+                  `
+                : html``}
         `;
     }
 
