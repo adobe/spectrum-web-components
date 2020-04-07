@@ -115,6 +115,7 @@ module.exports = [
     'tabs--vertical-sized',
     'tabs--vertical-right',
     'tabs--icons',
+    'tabs--icons-only',
     'tabs--icons-ii',
     'tabs--quiet',
     'tabs--compact',

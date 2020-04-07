@@ -24,10 +24,10 @@ export default {
 export const Default = (): TemplateResult => {
     return html`
         <sp-tab-list selected="1">
-            <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2"></sp-tab>
             <sp-tab label="Tab 3" value="3"></sp-tab>
             <sp-tab label="Tab 4" value="4"></sp-tab>
+            <sp-tab label="Really Long Name" value="1" selected></sp-tab>
         </sp-tab-list>
     `;
 };
@@ -131,6 +131,56 @@ export const Icons = (): TemplateResult => {
             </sp-tab>
             <sp-tab
                 label="Tab 4"
+                value="4"
+                ?vertical=${tabType === directions.vertical}
+            >
+                <sp-icon slot="icon" size="s" name="ui:HelpSmall"></sp-icon>
+            </sp-tab>
+        </sp-tab-list>
+    `;
+};
+
+export const IconsOnly = (): TemplateResult => {
+    const directions = {
+        horizontal: 'horizontal',
+        vertical: 'vertical',
+    };
+    const type = radios('List Type', directions, directions.horizontal);
+    const tabType = radios('Tab Type', directions, directions.horizontal);
+    return html`
+        <sp-icons-medium></sp-icons-medium>
+        <sp-tab-list selected="1" direction="${type}">
+            <sp-tab
+                aria-label="Tab 1"
+                value="1"
+                ?vertical=${tabType === directions.vertical}
+            >
+                <sp-icon
+                    slot="icon"
+                    size="s"
+                    name="ui:CheckmarkSmall"
+                ></sp-icon>
+            </sp-tab>
+            <sp-tab
+                aria-label="Tab 2"
+                value="2"
+                ?vertical=${tabType === directions.vertical}
+            >
+                <sp-icon slot="icon" size="s" name="ui:CrossSmall"></sp-icon>
+            </sp-tab>
+            <sp-tab
+                aria-label="Tab 3"
+                value="3"
+                ?vertical=${tabType === directions.vertical}
+            >
+                <sp-icon
+                    slot="icon"
+                    size="s"
+                    name="ui:ChevronDownSmall"
+                ></sp-icon>
+            </sp-tab>
+            <sp-tab
+                aria-label="Tab 4"
                 value="4"
                 ?vertical=${tabType === directions.vertical}
             >
