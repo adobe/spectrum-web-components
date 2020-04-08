@@ -131,7 +131,7 @@
         "babel-plugin-bundled-import-meta": "^0.3.2",
         "babel-plugin-transform-node-env-inline": "^0.4.3",
         "browser-sync": "^2.26.7",
-        "chalk": "^3.0.0",
+        "chalk": "^4.0.0",
         "common-tags": "^1.8.0",
         "connect-browser-sync": "^2.1.0",
         "css-loader": "^3.4.0",
