@@ -31,15 +31,15 @@ self.__precacheManifest = [
   },
   {
     "url": "iframe.html",
-    "revision": "0a6d1a18d5089e58ca42ff7c2463923e"
+    "revision": "9d7aeceaaa9415ac5c0699d724b43af4"
   },
   {
     "url": "index.html",
     "revision": "6c23d3f1ce992d6fe7224330cfbdbe0d"
   },
   {
-    "url": "inline-entry.0-beff2ac6.js",
-    "revision": "2ea20ef24182c7b3d466d45740b998bc"
+    "url": "inline-entry.0-50a96bfb.js",
+    "revision": "0f5505c54230f26ba30283e4a7e4b6d2"
   },
   {
     "url": "inline-entry.0-e9f55b88.js",
@@ -50,12 +50,12 @@ self.__precacheManifest = [
     "revision": "fe43681c50e1766060f9e69f5e9ecb2b"
   },
   {
-    "url": "legacy/inline-entry.0-5010400e.js",
-    "revision": "70bfc9cc1ae236ecaa9cc636d2206fb3"
+    "url": "legacy/inline-entry.0-028cabc6.js",
+    "revision": "5c9c92464c939904c6c505e053a6f7c1"
   },
   {
-    "url": "legacy/inline-entry.0-ed289a41.js",
-    "revision": "7a3f57bfea0ece7981c75848f7764741"
+    "url": "legacy/inline-entry.0-5010400e.js",
+    "revision": "70bfc9cc1ae236ecaa9cc636d2206fb3"
   },
   {
     "url": "legacy/lit-html-14d333ae.js",
