@@ -25,6 +25,9 @@
         "custom-elements.json",
         "*.css"
     ],
+    "sideEffects": [
+        "./*.css"
+    ],
     "scripts": {
         "test": "karma start --coverage"
     },

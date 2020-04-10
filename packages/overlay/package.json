@@ -28,6 +28,12 @@
         "/lib/",
         "/src/"
     ],
+    "sideEffects": [
+        "./lib/index.js",
+        "./src/index.ts",
+        "./stories/overlay-story-components.js",
+        "./stories/overlay-story-components.ts"
+    ],
     "scripts": {
         "test": "karma start --coverage"
     },
