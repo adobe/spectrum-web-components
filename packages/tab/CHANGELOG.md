@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.3.6...@spectrum-web-components/tab@0.3.7) (2020-04-10)
+
+### Bug Fixes
+
+-   **tab:** allow icon only, expand visual regression suite ([a167550](https://github.com/adobe/spectrum-web-components/commit/a167550ed8c4324f68d03b35b1cc41ed510958f5))
+
 ## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.3.5...@spectrum-web-components/tab@0.3.6) (2020-04-07)
 
 ### Bug Fixes

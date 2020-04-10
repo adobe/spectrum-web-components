@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.2.4",
+    "version": "0.2.5",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -36,7 +36,7 @@
         "@spectrum-css/toast": "^2.0.2"
     },
     "dependencies": {
-        "@spectrum-web-components/button": "^0.4.7",
+        "@spectrum-web-components/button": "^0.4.8",
         "@spectrum-web-components/icon": "^0.4.5",
         "@spectrum-web-components/icons": "^0.3.0",
         "tslib": "^1.10.0"

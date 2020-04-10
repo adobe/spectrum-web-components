@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.2.11...@spectrum-web-components/search@0.2.12) (2020-04-10)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
 ## [0.2.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.2.10...@spectrum-web-components/search@0.2.11) (2020-04-07)
 
 **Note:** Version bump only for package @spectrum-web-components/search
