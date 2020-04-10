@@ -4,6 +4,9 @@ The `<sp-tab-list>` component contains set of tab-item elements. This is typical
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tab-list?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tab-list)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tab-list?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tab-list)
+
 ```
 npm install @spectrum-web-components/tab-list
 

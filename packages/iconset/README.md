@@ -4,6 +4,9 @@ Extend either the `Iconset` or `IconsetSVG` exports of this package to supply yo
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/iconset?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/iconset)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/iconset?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/iconset)
+
 ```
 npm install @spectrum-web-components/iconset
 

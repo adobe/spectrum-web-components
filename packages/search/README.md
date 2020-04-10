@@ -4,6 +4,9 @@ The `<sp-search />` element delivers a single input field with a "reset" button 
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/search?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/search)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/search?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/search)
+
 ```
 npm install @spectrum-web-components/search
 

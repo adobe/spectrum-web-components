@@ -4,6 +4,9 @@ A `<sp-actionbar>` delivers a floating action bar that is a convenient way to de
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/actionbar?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/actionbar)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/actionbar?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/actionbar)
+
 ```
 npm install @spectrum-web-components/actionbar
 

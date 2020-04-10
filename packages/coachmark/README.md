@@ -4,6 +4,9 @@ An `<sp-coachmark>` element can be used to bring added attention to specific par
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/coachmark?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/coachmark)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/coachmark?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/coachmark)
+
 ```
 npm install @spectrum-web-components/coachmark
 
