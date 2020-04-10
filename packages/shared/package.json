@@ -28,6 +28,7 @@
         "/lib/",
         "/src/"
     ],
+    "sideEffects": false,
     "scripts": {
         "test": "karma start --coverage"
     },

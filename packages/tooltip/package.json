@@ -28,6 +28,10 @@
         "/lib/",
         "/src/"
     ],
+    "sideEffects": [
+        "./lib/index.js",
+        "./src/index.ts"
+    ],
     "author": "",
     "license": "Apache-2.0",
     "peerDependencies": {

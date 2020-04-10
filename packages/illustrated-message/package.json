@@ -28,6 +28,10 @@
         "/lib/",
         "/src/"
     ],
+    "sideEffects": [
+        "./lib/index.js",
+        "./src/index.ts"
+    ],
     "scripts": {},
     "author": "",
     "license": "Apache-2.0",

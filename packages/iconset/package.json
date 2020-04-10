@@ -28,6 +28,12 @@
         "/lib/",
         "/src/"
     ],
+    "sideEffects": [
+        "./lib/index.js",
+        "./src/index.ts",
+        "./lib/icons-demo.js",
+        "./src/icons-demo.ts"
+    ],
     "scripts": {},
     "author": "",
     "license": "Apache-2.0",

@@ -28,6 +28,10 @@
         "/lib/",
         "/src/"
     ],
+    "sideEffects": [
+        "./lib/*.js",
+        "./src/*.ts"
+    ],
     "scripts": {
         "test": "karma start --coverage"
     },
