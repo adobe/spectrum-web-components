@@ -16,10 +16,21 @@ yarn add @spectrum-web-components/popover
 
 ```html
 <div
-    style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
+    style="
+        color: var(--spectrum-global-color-gray-800);
+        height: 200px;
+        position: relative;
+        width: 320px;
+    "
 >
-    <sp-popover variant="dialog" open>
-        <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
+    <sp-popover dialog open>
+        <div
+            style="
+            font-size: 18px;
+            font-weight: 700;
+            padding-bottom: 30px;
+        "
+        >
             Popover title
         </div>
         <div style="font-size: 14px">
@@ -40,12 +51,21 @@ element by default. The default popover has no padding by default
 
 ```html
 <div
-    style="color: var(--spectrum-global-color-gray-800); width: 320px; height: 200px"
+    style="
+        color: var(--spectrum-global-color-gray-800);
+        height: 200px;
+        position: relative;
+        width: 320px;
+    "
 >
     <sp-popover variant="default" open style="max-width: 320px">
         <div style="font-size: 14px; padding: 10px">
             <div
-                style="padding-bottom: 30px; font-size: 18px; font-weight: 700"
+                style="
+                font-size: 18px;
+                font-weight: 700;
+                padding-bottom: 30px;
+            "
             >
                 Popover title
             </div>
@@ -65,10 +85,21 @@ Popovers with padding, ideal for dialogs.
 
 ```html
 <div
-    style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
+    style="
+        color: var(--spectrum-global-color-gray-800);
+        height: 200px;
+        position: relative;
+        width: 320px;
+    "
 >
-    <sp-popover variant="dialog" open>
-        <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
+    <sp-popover dialog open>
+        <div
+            style="
+            font-size: 18px;
+            font-weight: 700;
+            padding-bottom: 30px;
+        "
+        >
             Popover title
         </div>
         <div style="font-size: 14px">
@@ -84,10 +115,21 @@ Popovers with padding, ideal for dialogs.
 
 ```html
 <div
-    style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
+    style="
+        color: var(--spectrum-global-color-gray-800);
+        height: 200px;
+        position: relative;
+        width: 320px;
+    "
 >
-    <sp-popover variant="dialog" placement="bottom" tip open>
-        <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
+    <sp-popover dialog placement="bottom" tip open>
+        <div
+            style="
+            font-size: 18px;
+            font-weight: 700;
+            padding-bottom: 30px;
+        "
+        >
             Popover title
         </div>
         <div style="font-size: 14px">
@@ -101,10 +143,21 @@ Popovers with padding, ideal for dialogs.
 
 ```html
 <div
-    style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
+    style="
+        color: var(--spectrum-global-color-gray-800);
+        height: 200px;
+        position: relative;
+        width: 320px;
+    "
 >
-    <sp-popover variant="dialog" placement="top" tip open>
-        <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
+    <sp-popover dialog placement="top" tip open>
+        <div
+            style="
+            font-size: 18px;
+            font-weight: 700;
+            padding-bottom: 30px;
+        "
+        >
             Popover title
         </div>
         <div style="font-size: 14px">
@@ -118,10 +171,21 @@ Popovers with padding, ideal for dialogs.
 
 ```html
 <div
-    style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
+    style="
+        color: var(--spectrum-global-color-gray-800);
+        height: 200px;
+        position: relative;
+        width: 320px;
+    "
 >
-    <sp-popover variant="dialog" placement="left" tip open>
-        <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
+    <sp-popover dialog placement="left" tip open>
+        <div
+            style="
+            font-size: 18px;
+            font-weight: 700;
+            padding-bottom: 30px;
+        "
+        >
             Popover title
         </div>
         <div style="font-size: 14px">
@@ -135,10 +199,21 @@ Popovers with padding, ideal for dialogs.
 
 ```html
 <div
-    style="color: var(--spectrum-global-color-gray-800); position: relative; width: 320px; height: 200px"
+    style="
+        color: var(--spectrum-global-color-gray-800);
+        height: 200px;
+        position: relative;
+        width: 320px;
+    "
 >
-    <sp-popover variant="dialog" placement="right" tip open>
-        <div style="padding-bottom: 30px; font-size: 18px; font-weight: 700">
+    <sp-popover dialog placement="right" tip open>
+        <div
+            style="
+            font-size: 18px;
+            font-weight: 700;
+            padding-bottom: 30px;
+        "
+        >
             Popover title
         </div>
         <div style="font-size: 14px">
