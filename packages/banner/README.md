@@ -4,6 +4,9 @@ An **sp-banner** is an additional label an existing component may have. Banners 
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/banner?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/banner)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/banner?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/banner)
+
 ```
 npm install @spectrum-web-components/banner
 

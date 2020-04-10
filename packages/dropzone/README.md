@@ -6,6 +6,9 @@ DropZones should be used with an IllustratedMessage component as a child if the 
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dropzone?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dropzone)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dropzone?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dropzone)
+
 ```
 npm install @spectrum-web-components/dropzone
 

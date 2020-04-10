@@ -4,6 +4,9 @@ An **sp-switch** is used to turn an option on or off. Switches allow users to se
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/switch?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/switch)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/switch?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/switch)
+
 ```
 npm install @spectrum-web-components/switch
 

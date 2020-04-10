@@ -4,6 +4,9 @@ The `<sp-tab>` component is intended to be the child of an `<sp-tab-list>` eleme
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tab?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tab)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tab?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tab)
+
 ```
 npm install @spectrum-web-components/tab
 

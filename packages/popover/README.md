@@ -4,6 +4,9 @@ An **sp-popover** is used to display transient content (menus, options, addition
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/popover?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/popover)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/popover?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/popover)
+
 ```
 npm install @spectrum-web-components/popover
 

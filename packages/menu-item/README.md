@@ -4,6 +4,9 @@ An `<sp-menu />` is used for creating a menu list. The various elements inside a
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/menu-item?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/menu-item)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/menu-item?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/menu-item)
+
 ```
 npm install @spectrum-web-components/menu-item
 
