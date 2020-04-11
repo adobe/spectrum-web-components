@@ -18,7 +18,11 @@
         "documentation/components/**/*.js.map": true,
         "documentation/guides/**/*.js": true,
         "documentation/guides/**/*.js.map": true,
-        "documentation/src/**/*.js": true,
-        "documentation/src/**/*.js.map": true
+        "documentation/src/*.js": true,
+        "documentation/src/*.js.map": true,
+        "documentation/src/components/*.js": true,
+        "documentation/src/components/*.js.map": true,
+        "documentation/src/utils/templates.js": true,
+        "documentation/src/utils/templates.js.map": true
     }
 }

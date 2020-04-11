@@ -85,11 +85,12 @@ class SideNav extends LitElement {
                     <docs-search></docs-search>
                 </div>
                 <div id="navigation">
-                    <sp-sidenav manage-tab-index variant="multilevel">
+                    <sp-sidenav manage-tab-index>
                         <sp-sidenav-item
                             label="Components"
                             expanded
                             @sidenav-select=${this.handleComponentSelect}
+                            multilevel
                         >
                             ${this.components.map(
                                 (item) =>
@@ -105,6 +106,7 @@ class SideNav extends LitElement {
                             label="Contributing"
                             expanded
                             @sidenav-select=${this.handleGuideSelect}
+                            multilevel
                         >
                             <sp-sidenav-item
                                 value="adding-component"
@@ -119,6 +121,12 @@ class SideNav extends LitElement {
                             class="spectrum-web"
                             label="Spectrum"
                             href="https://spectrum.adobe.com/"
+                            target="_blank"
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item
+                            label="Spectrum CSS"
+                            href="https://opensource.adobe.com/spectrum-css/"
+                            target="_blank"
                         ></sp-sidenav-item>
                     </sp-sidenav>
                 </div>

@@ -17,7 +17,7 @@ const matchHelper = require('posthtml-match-helper');
 
 const transformations = [
     {
-        selector: 'p,ul',
+        selector: 'p,ul,ol',
         classes: ['spectrum-Body3'],
     },
     {
