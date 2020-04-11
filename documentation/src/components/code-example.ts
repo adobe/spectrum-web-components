@@ -91,7 +91,10 @@ export class CodeExample extends LitElement {
     }
 
     public get showDemo() {
-        return this.classList.contains('language-html');
+        return (
+            this.classList.contains('language-html') ||
+            this.classList.contains('language-html-live')
+        );
     }
 
     private get highlightedCode(): TemplateResult {
@@ -112,20 +115,29 @@ export class CodeExample extends LitElement {
     }
 
     private get renderedCode(): TemplateResult {
+        if (this.classList.contains('language-html-live')) {
+            const demo = document.createElement('div');
+            demo.slot = 'demo';
+            demo.innerHTML = this.code;
+            this.append(demo);
+        }
         return toHtmlTemplateString(this.code);
     }
 
     protected render(): TemplateResult {
+        const { highlightedCode, renderedCode } = this;
         return html`
             ${this.showDemo
                 ? html`
                       <div id="demo">
-                          ${this.renderedCode}
+                          <slot name="demo">
+                              ${renderedCode}
+                          </slot>
                       </div>
                   `
                 : undefined}
             <div id="markup">
-                ${this.highlightedCode}
+                ${highlightedCode}
             </div>
         `;
     }
