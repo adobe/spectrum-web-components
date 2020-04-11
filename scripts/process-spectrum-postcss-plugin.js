@@ -42,7 +42,7 @@ class SpectrumProcessor {
         astTransforms.push((selector, rule) => {
             let exclude = false;
             selector.walkCombinators((combinator, index) => {
-                if (/[>+~]|\|\|/.test(combinator.value)) {
+                if (/[+~]|\|\|/.test(combinator.value)) {
                     const previous = combinator.prev();
                     if (this.component.isRootSpectrumClass(previous)) {
                         this.warn(
