@@ -20,7 +20,11 @@ import {
 } from 'lit-element';
 import '@spectrum-web-components/button';
 import '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons';
+import {
+    AlertSmallIcon,
+    InfoSmallIcon,
+    SuccessSmallIcon,
+} from '@spectrum-web-components/icons-ui';
 
 import toastStyles from './toast.css.js';
 
@@ -102,33 +106,30 @@ export class Toast extends LitElement {
 
     private renderIcon(variant: string): TemplateResult {
         let label = '';
-        let name = '';
+        let icon;
         switch (variant) {
             case 'info':
                 label = 'Information';
-                name = 'ui:InfoSmall';
+                icon = InfoSmallIcon;
                 break;
             case 'negative':
             case 'error': // deprecated
             case 'warning': // deprecated
                 label = 'Error';
-                name = 'ui:AlertSmall';
+                icon = AlertSmallIcon;
                 break;
             case 'positive':
             case 'success': // deprecated
                 label = 'Success';
-                name = 'ui:SuccessSmall';
+                icon = SuccessSmallIcon;
                 break;
             default:
                 return html``;
         }
         return html`
-            <sp-icon
-                class="type"
-                label=${label}
-                name=${name}
-                size="s"
-            ></sp-icon>
+            <sp-icon class="type" label=${label} size="s">
+                ${icon({ hidden: true })}
+            </sp-icon>
         `;
     }
 
@@ -177,7 +178,6 @@ export class Toast extends LitElement {
 
     protected render(): TemplateResult {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             ${this.renderIcon(this.variant)}
             <div class="body">
                 <div class="content">

@@ -5,5 +5,10 @@
         "outDir": "./lib",
         "rootDir": "./src"
     },
-    "include": ["src/*.ts"]
+    "include": ["src/*.ts"],
+    "references": [
+        { "path": "../button" },
+        { "path": "../icon" },
+        { "path": "../icons-ui" }
+    ]
 }

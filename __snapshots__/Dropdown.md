@@ -38,7 +38,6 @@
 ```
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
 <button
     aria-haspopup="true"
     aria-label="Select a Country with a very long label, too long in fact"
@@ -50,11 +49,7 @@
             Select a Country with a very long label, too long in fact
         </slot>
     </div>
-    <sp-icon
-        class="chevron-down-medium dropdown icon"
-        name="ui:ChevronDownMedium"
-        size="s"
-    ></sp-icon>
+    <sp-icon class="chevron-down-medium dropdown icon" size="s"></sp-icon>
 </button>
 <sp-popover id="popover" open="" placement="none"></sp-popover>
 ```
@@ -97,7 +92,6 @@
 ```
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
 <button
     aria-haspopup="true"
     aria-label="Select a Country with a very long label, too long in fact"
@@ -109,12 +103,8 @@
             Select a Country with a very long label, too long in fact
         </slot>
     </div>
-    <sp-icon class="alert-small icon" name="ui:AlertSmall" size="s"></sp-icon>
-    <sp-icon
-        class="chevron-down-medium dropdown icon"
-        name="ui:ChevronDownMedium"
-        size="s"
-    ></sp-icon>
+    <sp-icon class="alert-small icon" size="s"></sp-icon>
+    <sp-icon class="chevron-down-medium dropdown icon" size="s"></sp-icon>
 </button>
 <sp-popover id="popover" open="" placement="none"></sp-popover>
 ```

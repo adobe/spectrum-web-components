@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
 
 import '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons';
+import { CheckmarkMediumIcon } from '@spectrum-web-components/icons-ui';
 import { ActionButton } from '@spectrum-web-components/button';
 
 import menuItemStyles from './menu-item.css.js';
@@ -62,14 +62,14 @@ export class MenuItem extends ActionButton {
         const content = super.buttonContent;
         if (this.selected) {
             content.push(html`
-                <sp-icons-medium></sp-icons-medium>
                 <sp-icon
                     id="selected"
-                    name="ui:CheckmarkMedium"
                     size="s"
                     slot="icon"
                     class="checkmark-medium"
-                ></sp-icon>
+                >
+                    ${CheckmarkMediumIcon({ hidden: true })}
+                </sp-icon>
             `);
         }
         return content;

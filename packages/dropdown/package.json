@@ -47,7 +47,7 @@
     "dependencies": {
         "@spectrum-web-components/button": "^0.4.8",
         "@spectrum-web-components/icon": "^0.4.5",
-        "@spectrum-web-components/icons": "^0.3.0",
+        "@spectrum-web-components/icons-ui": "^0.0.1",
         "@spectrum-web-components/menu": "^0.2.5",
         "@spectrum-web-components/menu-item": "^0.4.3",
         "@spectrum-web-components/overlay": "^0.3.4",
