@@ -23,7 +23,7 @@ import { ifDefined } from 'lit-html/directives/if-defined';
 import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/button';
 import '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons';
+import { MagnifierIcon } from '@spectrum-web-components/icons-ui';
 
 import searchStyles from './search.css.js';
 import magnifierStyles from '@spectrum-web-components/icon/lib/spectrum-icon-magnifier.css.js';
@@ -87,7 +87,6 @@ export class Search extends Textfield {
 
     protected render(): TemplateResult {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <form
                 action=${ifDefined(this.action)}
                 id="form"
@@ -95,12 +94,9 @@ export class Search extends Textfield {
                 @submit=${this.handleSubmit}
             >
                 ${super.render()}
-                <sp-icon
-                    id="icon"
-                    class="icon magnifier"
-                    size="s"
-                    name="ui:Magnifier"
-                ></sp-icon>
+                <sp-icon id="icon" class="icon magnifier" size="s">
+                    ${MagnifierIcon({ hidden: true })}
+                </sp-icon>
                 ${this.value
                     ? html`
                           <sp-clear-button

@@ -8,7 +8,7 @@
     "include": ["src/*.ts"],
     "references": [
         { "path": "../icon" },
-        { "path": "../icons" },
+        { "path": "../icons-ui" },
         { "path": "../shared" }
     ]
 }

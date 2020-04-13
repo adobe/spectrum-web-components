@@ -33,7 +33,6 @@
 ```
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
 <button aria-haspopup="true" id="button" tabindex="0">
     <slot name="icon"></slot>
     <div hidden="" id="label">
@@ -76,7 +75,6 @@
 ```
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
 <button aria-haspopup="true" aria-label="More Actions" id="button" tabindex="0">
     <slot name="icon"></slot>
     <div hidden="" id="label">

@@ -2633,7 +2633,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-2.1.1.tgz#6e3313b34a1aa5bd875f297f8152b47f92fb6fdb"
   integrity sha512-VuUDzQH/htrLzW/TsqBbK8KNIUyARM2oP7NWnamMDB2mRs7OWoVN8NLW44s3Z2atcmJQ0kjUHQWPTCwWsAxMDg==
 
-"@spectrum-css/icon@^2.0.5":
+"@spectrum-css/icon@^2.0.5", "@spectrum-css/icon@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-2.1.0.tgz#99c772516413f7c1063635ac9d7e7472f8c18a4e"
   integrity sha512-VrNyqo8lfTf1sdSRW1MlUvh4hqc0uxeNWn5xtMBVRuQPkceAyHySfv6k6Stk3oLsfHf0+UMOHP/xPOb9lVgt0Q==
@@ -16768,6 +16768,11 @@ prettier@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.2.tgz#1ba8f3eb92231e769b7fcd7cb73ae1b6b74ade08"
   integrity sha512-5xJQIPT8BraI7ZnaDwSbu5zLrB6vvi8hVV58yHQ+QK64qrY40dULy0HSRlQ2/2IdzeBpjhDkqdcFBnFeDEMVdg==
+
+prettier@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.4.tgz#2d1bae173e355996ee355ec9830a7a1ee05457ef"
+  integrity sha512-SVJIQ51spzFDvh4fIbCLvciiDMCrRhlN3mbZvv/+ycjvmF5E73bKdGfU8QDLNmjYJf+lsGnDBC4UUnvTe5OO0w==
 
 pretty-bytes@^4.0.2:
   version "4.0.2"

@@ -9,7 +9,7 @@
     "references": [
         { "path": "../button" },
         { "path": "../icon" },
-        { "path": "../icons" },
+        { "path": "../icons-ui" },
         { "path": "../menu" },
         { "path": "../menu-item" },
         { "path": "../overlay" },

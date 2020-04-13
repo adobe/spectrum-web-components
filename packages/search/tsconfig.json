@@ -9,7 +9,7 @@
     "references": [
         { "path": "../button" },
         { "path": "../icon" },
-        { "path": "../icons" },
+        { "path": "../icons-ui" },
         { "path": "../textfield" }
     ]
 }

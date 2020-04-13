@@ -29,7 +29,10 @@ import chevronDownMediumStyles from '@spectrum-web-components/icon/lib/spectrum-
 
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 import '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons';
+import {
+    AlertSmallIcon,
+    ChevronDownMediumIcon,
+} from '@spectrum-web-components/icons-ui';
 import { Menu, MenuQueryRoleEventDetail } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu-item';
 import {
@@ -278,25 +281,20 @@ export class DropdownBase extends Focusable {
                 </div>
                 ${this.invalid
                     ? html`
-                          <sp-icon
-                              class="icon alert-small"
-                              name="ui:AlertSmall"
-                              size="s"
-                          ></sp-icon>
+                          <sp-icon class="icon alert-small" size="s">
+                              ${AlertSmallIcon({ hidden: true })}
+                          </sp-icon>
                       `
                     : nothing}
-                <sp-icon
-                    class="icon dropdown chevron-down-medium"
-                    name="ui:ChevronDownMedium"
-                    size="s"
-                ></sp-icon>
+                <sp-icon class="icon dropdown chevron-down-medium" size="s">
+                    ${ChevronDownMediumIcon({ hidden: true })}
+                </sp-icon>
             `,
         ];
     }
 
     protected render(): TemplateResult {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <button
                 aria-haspopup="true"
                 aria-label=${ifDefined(this.label || undefined)}

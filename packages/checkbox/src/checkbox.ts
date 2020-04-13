@@ -13,7 +13,10 @@ governing permissions and limitations under the License.
 import { CSSResultArray, TemplateResult, html, property } from 'lit-element';
 import { CheckboxBase } from './checkbox-base.js';
 import '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons';
+import {
+    CheckmarkSmallIcon,
+    DashSmallIcon,
+} from '@spectrum-web-components/icons-ui';
 import checkboxStyles from './checkbox.css.js';
 import checkmarkSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-checkmark-small.css.js';
 import dashSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-dash-small.css.js';
@@ -36,24 +39,15 @@ export class Checkbox extends CheckboxBase {
 
     protected render(): TemplateResult {
         return html`
-            <sp-icons-medium></sp-icons-medium>
             <label id="root">
                 ${super.render()}
                 <span id="box">
-                    <sp-icon
-                        id="checkmark"
-                        size="s"
-                        name="ui:CheckmarkSmall"
-                        aria-hidden="true"
-                        class="checkmark-small"
-                    ></sp-icon>
-                    <sp-icon
-                        id="partialCheckmark"
-                        size="s"
-                        name="ui:DashSmall"
-                        aria-hidden="true"
-                        class="dash-small"
-                    ></sp-icon>
+                    <sp-icon id="checkmark" size="s" class="checkmark-small">
+                        ${CheckmarkSmallIcon({ hidden: true })}
+                    </sp-icon>
+                    <sp-icon id="partialCheckmark" size="s" class="dash-small">
+                        ${DashSmallIcon({ hidden: true })}
+                    </sp-icon>
                 </span>
                 <span id="label"><slot></slot></span>
             </label>

@@ -23,7 +23,7 @@ export default {
     title: 'Icons',
 };
 
-export const Workflow = (): TemplateResult => {
+export const ui = (): TemplateResult => {
     const iconTemplates: {
         template: typeof html;
         name: string;
@@ -66,6 +66,6 @@ export const Workflow = (): TemplateResult => {
     `;
 };
 
-Workflow.story = {
-    name: 'Workflow Icons',
+ui.story = {
+    name: 'UI Icons',
 };

@@ -3,7 +3,6 @@
 #### `loads`
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
 <div class="body">
     <div class="content">
         <slot></slot>
@@ -23,8 +22,7 @@
 #### `loads - [variant="negative"]`
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
-<sp-icon class="type" label="Error" name="ui:AlertSmall" size="s"></sp-icon>
+<sp-icon class="type" label="Error" size="s"></sp-icon>
 <div class="body">
     <div class="content">
         <slot></slot>
@@ -44,8 +42,7 @@
 #### `loads - [variant="positive"]`
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
-<sp-icon class="type" label="Success" name="ui:SuccessSmall" size="s"></sp-icon>
+<sp-icon class="type" label="Success" size="s"></sp-icon>
 <div class="body">
     <div class="content">
         <slot></slot>
@@ -65,13 +62,7 @@
 #### `loads - [variant="info"]`
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
-<sp-icon
-    class="type"
-    label="Information"
-    name="ui:InfoSmall"
-    size="s"
-></sp-icon>
+<sp-icon class="type" label="Information" size="s"></sp-icon>
 <div class="body">
     <div class="content">
         <slot></slot>
@@ -91,8 +82,7 @@
 #### `loads - [variant="error"]`
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
-<sp-icon class="type" label="Error" name="ui:AlertSmall" size="s"></sp-icon>
+<sp-icon class="type" label="Error" size="s"></sp-icon>
 <div class="body">
     <div class="content">
         <slot></slot>
@@ -112,8 +102,7 @@
 #### `loads - [variant="warning"]`
 
 ```html
-<sp-icons-medium style="display: none;"></sp-icons-medium>
-<sp-icon class="type" label="Error" name="ui:AlertSmall" size="s"></sp-icon>
+<sp-icon class="type" label="Error" size="s"></sp-icon>
 <div class="body">
     <div class="content">
         <slot></slot>

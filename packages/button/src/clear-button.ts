@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { CSSResultArray, TemplateResult, html, property } from 'lit-element';
 import { ButtonBase } from './button-base.js';
 import buttonStyles from './clear-button.css.js';
+import { CrossLargeIcon } from '@spectrum-web-components/icons-ui';
 import crossMediumStyles from '@spectrum-web-components/icon/lib/spectrum-icon-cross-medium.css.js';
 
 export class ClearButton extends ButtonBase {
@@ -29,13 +30,9 @@ export class ClearButton extends ButtonBase {
     protected get buttonContent(): TemplateResult[] {
         return [
             html`
-                <sp-icons-medium></sp-icons-medium>
-                <sp-icon
-                    slot="icon"
-                    class="icon cross-medium"
-                    size="s"
-                    name="ui:CrossLarge"
-                ></sp-icon>
+                <sp-icon slot="icon" class="icon cross-medium" size="s">
+                    ${CrossLargeIcon({ hidden: true })}
+                </sp-icon>
             `,
         ];
     }
