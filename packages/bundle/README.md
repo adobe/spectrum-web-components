@@ -15,9 +15,27 @@ npm install @spectrum-web-components/bundle
 yarn add @spectrum-web-components/bundle
 ```
 
-### Icons - Workflow
+### Icons
 
-While this bundle directly re-exports the majority of functionality as they would be exported from their own packages, `@spectrum-web-components/icons-workflow` is renamed to `IconsWorkflow` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@spectrum-web-components/bundle` like the following:
+While this bundle directly re-exports the majority of functionality as they would be exported from their own packages, icon packages that export template literals are handled a little different. Due to the large number of exports that they feature, each of these packages are namespaced when included in the bundle.
+
+#### UI
+
+`@spectrum-web-components/icons-ui` is renamed to `UIIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@spectrum-web-components/bundle` like the following:
+
+```
+import { UIIcons } from '@spectrum-web-components/bundle';
+
+console.log(UIIcons.AsteriskIcon());
+
+/***
+TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: DefaultTemplateProcessor, constructor: Object}
+***/
+```
+
+#### Workflow
+
+`@spectrum-web-components/icons-workflow` is namespaced to `WorkflowIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@spectrum-web-components/bundle` like the following:
 
 ```
 import { IconsWorkflow } from '@spectrum-web-components/bundle';

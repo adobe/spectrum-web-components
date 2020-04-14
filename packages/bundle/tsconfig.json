@@ -20,6 +20,7 @@
         { "path": "../dropzone" },
         { "path": "../icon" },
         { "path": "../icons" },
+        { "path": "../icons-ui" },
         { "path": "../icons-workflow" },
         { "path": "../iconset" },
         { "path": "../illustrated-message" },
