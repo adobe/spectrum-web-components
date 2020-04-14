@@ -184,7 +184,7 @@
         "polymer-webpack-loader": "^2.0.3",
         "polyserve": "^0.27.0",
         "postcss": "^7.0.27",
-        "postcss-focus-visible": "^4.0.0",
+        "postcss-focus-visible": "^5.0.0",
         "postcss-import": "^12.0.1",
         "postcss-inherit": "^4.1.0",
         "postcss-loader": "^3.0.0",
