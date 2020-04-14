@@ -21,7 +21,10 @@ import {
 
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 import '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons';
+import {
+    AlertSmallIcon,
+    CheckmarkSmallIcon,
+} from '@spectrum-web-components/icons-ui';
 
 import textfieldStyles from './textfield.css.js';
 import checkmarkSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-checkmark-small.css.js';
@@ -114,21 +117,15 @@ export class Textfield extends Focusable {
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
-                <sp-icons-large></sp-icons-large>
-                <sp-icon
-                    id="invalid"
-                    name="ui:AlertSmall"
-                    class="alert-small"
-                ></sp-icon>
+                <sp-icon id="invalid" class="alert-small">
+                    ${AlertSmallIcon({ hidden: true })}
+                </sp-icon>
             `;
         } else if (this.valid) {
             return html`
-                <sp-icons-large></sp-icons-large>
-                <sp-icon
-                    id="valid"
-                    name="ui:CheckmarkSmall"
-                    class="checkmark-small"
-                ></sp-icon>
+                <sp-icon id="valid" class="checkmark-small">
+                    ${CheckmarkSmallIcon({ hidden: true })}
+                </sp-icon>
             `;
         }
         return nothing;
