@@ -1,15 +1,18 @@
 ## Description
 
-[Spectrum Workflow Icons](https://spectrum.adobe.com/page/icons/) delivered in a flexible template tag so that they can be leveraged across various frameworks. The default export of this package pre-applies the `html` template tag from `lit-html` for ease of use in the Spectrum Web Components library. Please remember to consult Spectrum's [Iconography Guidelines](https://spectrum.adobe.com/page/iconography/) when planning how to leverage these icons in the visual delivery of your application. For technical information on using these iconos in projects powered by various javascript frameworks, check out the "Extended use cases" sectino below.
+[Spectrum UI Icons](https://spectrum.adobe.com/page/icons/) delivered in a flexible template tag so that they can be leveraged across various frameworks. The default export of this package pre-applies the `html` template tag from `lit-html` for ease of use in the Spectrum Web Components library. Please remember to consult Spectrum's [Iconography Guidelines](https://spectrum.adobe.com/page/iconography/) when planning how to leverage these icons in the visual delivery of your application. For technical information on using these iconos in projects powered by various javascript frameworks, check out the "Extended use cases" sectino below.
 
 ### Installation
 
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/icons-ui?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/icons-ui)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/icons-ui?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/icons-ui)
+
 ```
-npm install @spectrum-web-components/icons-workflow
+npm install @spectrum-web-components/icons-ui
 
 # or
 
-yarn add @spectrum-web-components/icons-workflow
+yarn add @spectrum-web-components/icons-ui
 ```
 
 ### Usage
@@ -19,13 +22,13 @@ With the default exports of the packages prepared with the `html` template tag f
 ```js
 import { LitElement, html } from 'lit-element';
 import '@spectrum-web-components/icon';
-import { CircleIcon } from '@spectrum-web-components/icons-workflow';
+import { AsteriskIcon } from '@spectrum-web-components/icons-ui';
 
 class ElementWithIcon extends LitElement {
     protected render(): TemplateResult {
         return html`
             <sp-icon slot="icon">
-                ${CircleIcon()}
+                ${AsteriskIcon()}
             </sp-icon>
         `
     }
@@ -50,9 +53,9 @@ Every icons can be customized via the following options:
 The default exports of this package are pre-wrapped via `setCustomTemplateLiteralTag` in the `html` template tag from `lit-html`, and work liek the following::
 
 ```js
-import { CircleIcon } from '@spectrum-web-components/icons-workflow';
+import { AsteriskIcon } from '@spectrum-web-components/icons-ui';
 
-console.log(CircleIcon());
+console.log(AsteriskIcon());
 
 /***
 TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: DefaultTemplateProcessor, constructor: Object}
@@ -62,9 +65,9 @@ TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: De
 When working in the context of other frameworks, it is possible to import the icons with a generic template tag as follows:
 
 ```js
-import { CircleIcon } from '@spectrum-web-components/icons-workflow/lib/icons.js';
+import { AsteriskIcon } from '@spectrum-web-components/icons-ui/lib/icons.js';
 
-console.log(CircleIcon());
+console.log(AsteriskIcon());
 
 /***
 <svg
@@ -86,9 +89,9 @@ What's more, if you're already working with a specific parser in your project, y
 
 ```js
 import {
-    CircleIcon,
+    AsteriskIcon,
     setCustomTemplateLiteralTag,
-} from '@spectrum-web-components/icons-workflow/lib/icons.js';
+} from '@spectrum-web-components/icons-ui/lib/icons.js';
 import htm from 'htm';
 import { h } from 'preact';
 
@@ -96,11 +99,11 @@ const hPreact = htm.bind(h);
 
 setCustomTemplateLiteralTag(hPreact);
 
-console.log(CircleIcon());
+console.log(AsteriskIcon());
 
 /***
 VNode {nodeName: "svg", children: Array[1], attributes: Object, key: undefined, constructor: Object}
 ***/
 ```
 
-In this way the icons exported by `@spectrum-web-components/icons-workflow` can be leveraged in projects powered by the the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!
+In this way the icons exported by `@spectrum-web-components/icons-ui` can be leveraged in projects powered by the the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!
