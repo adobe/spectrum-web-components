@@ -42,8 +42,6 @@ describe('Checkbox', () => {
         testFixture = await fixture<HTMLDivElement>(
             html`
                 <div>
-                    <sp-icons-medium></sp-icons-medium>
-
                     <div id="test-checkbox">
                         <sp-checkbox id="checkbox0" tabindex="5">
                             Component
