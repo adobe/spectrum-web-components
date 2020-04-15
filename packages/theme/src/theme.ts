@@ -61,6 +61,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     private static templateElement?: HTMLTemplateElement;
 
+    private static instances: Set<Theme> = new Set();
+
     static get observedAttributes(): string[] {
         return ['color', 'scale'];
     }
@@ -131,7 +133,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             }
             return acc;
         }, [] as CSSResult[]);
-        return [coreStyles, ...styles];
+        return [...styles];
     }
 
     private static get template(): HTMLTemplateElement {
@@ -168,20 +170,34 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     protected connectedCallback(): void {
-        /* istanbul ignore if */
-        if (!this.hasAdoptedStyles) {
-            this.adoptStyles();
-        }
+        this.shouldAdoptStyles();
         // Note, first update/render handles styleElement so we only call this if
         // connected after first update.
         /* istanbul ignore if */
         if (window.ShadyCSS !== undefined) {
             window.ShadyCSS.styleElement(this);
         }
+        // Add `this` to the instances array.
+        if (!Theme.instances.has(this)) {
+            Theme.instances.add(this);
+        }
+    }
+
+    protected disconnectedCallback(): void {
+        // Remove `this` to the instances array.
+        Theme.instances.delete(this);
+    }
+
+    private shouldAdoptStyles(): void {
+        /* istanbul ignore if */
+        if (!this.hasAdoptedStyles) {
+            this.adoptStyles();
+        }
     }
 
     protected adoptStyles(): void {
         const styles = this.styles; // No test coverage on Edge
+        if (styles.length < 3) return;
 
         // There are three separate cases here based on Shadow DOM support.
         // (1) shadowRoot polyfilled: use ShadyCSS
@@ -241,6 +257,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     protected attributeChangedCallback(): void {
+        this.hasAdoptedStyles = false;
         if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
             window.ShadyCSS.styleElement(this);
         } else {
@@ -261,6 +278,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             Theme.defaultFragments.add(name);
         }
         fragmentMap.set(name, { name, styles });
+        Theme.instances.forEach((instance) => instance.shouldAdoptStyles());
     }
 }
 
