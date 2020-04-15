@@ -36,10 +36,6 @@ governing permissions and limitations under the License.
     margin-bottom: 28px;
 }
 
-hr.spectrum-Rule {
-    margin-bottom: 33px;
-}
-
 article {
     margin-bottom: 3em;
 }
@@ -50,4 +46,8 @@ article {
 
 .spectrum-Table-body {
     --spectrum-table-row-background-color: var(--spectrum-global-color-gray-75);
+}
+
+.headerContainer {
+    margin-bottom: var(--spectrum-global-dimension-size-400);
 }

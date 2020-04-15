@@ -47,7 +47,32 @@ const transformations = [
     },
     {
         selector: 'h2',
-        classes: ['spectrum-Heading2--quiet'],
+        fn: (node) => {
+            if (
+                node.attrs &&
+                node.attrs.class &&
+                /spectrum-Heading2/.test(node.attrs.class)
+            ) {
+                return node;
+            }
+            return {
+                tag: 'div',
+                attrs: {
+                    class: 'headerContainer',
+                },
+                content: [
+                    {
+                        tag: 'h1',
+                        attrs: { class: 'spectrum-Heading2' },
+                        content: node.content,
+                    },
+                    {
+                        tag: 'sp-rule',
+                        attrs: { size: 'large' },
+                    },
+                ],
+            };
+        },
     },
     {
         selector: 'h3',
