@@ -38,6 +38,7 @@ export class TabList extends Focusable {
     public static get styles(): CSSResultArray {
         return [tabStyles];
     }
+
     @property({ reflect: true })
     public direction: 'vertical' | 'vertical-right' | 'horizontal' =
         'horizontal';
@@ -235,6 +236,7 @@ export class TabList extends Focusable {
     private updateSelectionIndicator = async (): Promise<void> => {
         const selectedElement = this.querySelector('[selected]') as Tab;
         if (!selectedElement) {
+            this.selectionIndicatorStyle = `transform: translateX(0px) scaleX(0) scaleY(0);`;
             return;
         }
         await Promise.all([
@@ -262,6 +264,7 @@ export class TabList extends Focusable {
 
     public connectedCallback(): void {
         super.connectedCallback();
+        window.addEventListener('resize', this.updateSelectionIndicator);
         /* istanbul ignore else */
         if ('fonts' in document) {
             ((document as unknown) as {
@@ -279,6 +282,7 @@ export class TabList extends Focusable {
     }
 
     public disconnectedCallback(): void {
+        window.removeEventListener('resize', this.updateSelectionIndicator);
         /* istanbul ignore else */
         if ('fonts' in document) {
             ((document as unknown) as {
