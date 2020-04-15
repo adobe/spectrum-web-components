@@ -4,6 +4,7 @@ import componentStyles from './markdown.css';
 import homeStyles from './home.css';
 import '@spectrum-web-components/button';
 import '@spectrum-web-components/link';
+import '@spectrum-web-components/rule';
 
 class HomeElement extends RouteComponent {
     public static get styles(): CSSResultArray {
@@ -75,10 +76,13 @@ class HomeElement extends RouteComponent {
                     </p>
                 </div>
             </section>
-            <section id="example">
-                <h2 class="spectrum-Heading">
-                    Sample element usage
-                </h2>
+            <section id="example" class="spectrum-Typography">
+                <div class="headerContainer">
+                    <h2 class="spectrum-Heading2">
+                        Sample element usage
+                    </h2>
+                    <sp-rule size="large"></sp-rule>
+                </div>
                 <code-example class="language-html">
                     &lt;sp-button variant='cta' href='components/button'&gt;Use
                     Spectrum Web Component buttons&lt;/sp-button&gt;

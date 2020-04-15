@@ -32,6 +32,7 @@
         { "path": "../overlay" },
         { "path": "../radio" },
         { "path": "../radio-group" },
+        { "path": "../rule" },
         { "path": "../search" },
         { "path": "../sidenav" },
         { "path": "../slider" },
