@@ -344,39 +344,50 @@ class SpectrumProcessor {
 
         const startsWithHost = re`^${this.component.hostSelector}`;
         const selectorTransform = this.selectorTransform;
+        let skipAll = false;
 
-        for (let selector of rule.selectors) {
-            if (!startsWithHost.test(selector)) {
-                // This selector does not match the component we are
-                // working on. Check to see if it matches an id
-                let skip = true;
-                if (this.component.ids) {
-                    for (const id of this.component.ids) {
-                        const idSelector = id.selector || id;
-                        if (re`^${idSelector}(?![-\w])`.test(selector)) {
-                            skip = false;
+        if (this.component.excludeSourceSelector) {
+            for (const regex of this.component.excludeSourceSelector) {
+                if (regex.test(rule.selector)) {
+                    skipAll = true;
+                    break;
+                }
+            }
+        }
+        if (!skipAll) {
+            for (let selector of rule.selectors) {
+                if (!startsWithHost.test(selector)) {
+                    // This selector does not match the component we are
+                    // working on. Check to see if it matches an id
+                    let skip = true;
+                    if (this.component.ids) {
+                        for (const id of this.component.ids) {
+                            const idSelector = id.selector || id;
+                            if (re`^${idSelector}(?![-\w])`.test(selector)) {
+                                skip = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (skip) continue;
+                }
+
+                // Check exclusions
+                if (this.component.exclude) {
+                    let skip = false;
+                    for (const regex of this.component.exclude) {
+                        if (regex.test(selector)) {
+                            skip = true;
                             break;
                         }
                     }
+                    if (skip) continue;
                 }
-                if (skip) continue;
-            }
 
-            // Check exclusions
-            if (this.component.exclude) {
-                let skip = false;
-                for (const regex of this.component.exclude) {
-                    if (regex.test(selector)) {
-                        skip = true;
-                        break;
-                    }
+                const transformed = selectorTransform(selector, rule);
+                if (transformed) {
+                    result.push(transformed);
                 }
-                if (skip) continue;
-            }
-
-            const transformed = selectorTransform(selector, rule);
-            if (transformed) {
-                result.push(transformed);
             }
         }
 

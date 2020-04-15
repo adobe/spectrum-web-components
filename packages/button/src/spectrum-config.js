@@ -14,6 +14,21 @@ module.exports = {
     spectrum: 'button',
     components: [
         {
+            name: 'button-base',
+            host: {
+                selector: '.spectrum-Button',
+                shadowSelector: '#button',
+            },
+            focus: '#button',
+            slots: [
+                {
+                    name: 'icon',
+                    selector: '.spectrum-Icon',
+                },
+            ],
+            excludeSourceSelector: [/^(?!(.*),(.*),(.*),(.*),(.*),(.*))/],
+        },
+        {
             name: 'fieldbutton',
             host: {
                 selector: '.spectrum-FieldButton',
@@ -37,6 +52,9 @@ module.exports = {
                     selector: '.spectrum-Icon',
                     name: 'icon',
                 },
+            ],
+            excludeSourceSelector: [
+                /^([^\s]*),([^\s]*),([^\s]*),([^\s]*),([^\s]*),([^\s]*)$/,
             ],
         },
         {
@@ -79,6 +97,7 @@ module.exports = {
                 },
             ],
             exclude: [/\.is-disabled/],
+            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
         },
         {
             name: 'action-button',
@@ -115,6 +134,7 @@ module.exports = {
                 },
             ],
             exclude: [/\.is-disabled/],
+            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
         },
         {
             name: 'clear-button',
@@ -140,6 +160,7 @@ module.exports = {
                     ],
                 },
             ],
+            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
         },
     ],
 };
