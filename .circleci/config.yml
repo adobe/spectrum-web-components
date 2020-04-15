@@ -42,11 +42,7 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-<<<<<<< HEAD
-                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-2f4e2d334e9b2dc2bd8b3415e3ab66022cbb7af0
-=======
-                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-fc273cb7681bbcf9711b73279b1fe88e6308443b
->>>>>>> feat(rule): add Spectrum rule pattern and apply to docs
+                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-0d08f643d3845ab9dd94c51aca82509c6fd0d4d5
                       - v1-golden-images-master-<< parameters.regression_color >>-<< parameters.regression_scale >>-
             - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >>
             - run:
