@@ -22,6 +22,7 @@ import { nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import dropdownStyles from './dropdown.css.js';
+import buttonBaseStyles from '@spectrum-web-components/button/lib/button-base.css.js';
 import actionButtonStyles from '@spectrum-web-components/button/lib/action-button.css.js';
 import fieldButtonStyles from '@spectrum-web-components/button/lib/field-button.css.js';
 import alertSmallStyles from '@spectrum-web-components/icon/lib/spectrum-icon-alert-small.css.js';
@@ -50,6 +51,7 @@ export class DropdownBase extends Focusable {
     public static get styles(): CSSResultArray {
         return [
             ...super.styles,
+            buttonBaseStyles,
             actionButtonStyles,
             dropdownStyles,
             alertSmallStyles,

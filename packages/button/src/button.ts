@@ -19,6 +19,9 @@ import buttonStyles from './button.css.js';
  * @element sp-button
  */
 export class Button extends ButtonBase {
+    public static get styles(): CSSResultArray {
+        return [...super.styles, buttonStyles];
+    }
     /**
      * The visual variant to apply to this button.
      */
@@ -41,8 +44,4 @@ export class Button extends ButtonBase {
      */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
-
-    public static get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles];
-    }
 }

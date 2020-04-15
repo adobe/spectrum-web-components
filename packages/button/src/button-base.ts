@@ -15,10 +15,11 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/lib/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/lib/focusable.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/lib/observe-slot-text';
+import buttonStyles from './button-base.css.js';
 
 export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {
     public static get styles(): CSSResultArray {
-        return [...super.styles];
+        return [...super.styles, buttonStyles];
     }
 
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
