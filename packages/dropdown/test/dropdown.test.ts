@@ -22,8 +22,8 @@ import {
     html,
     expect,
     nextFrame,
+    waitUntil,
 } from '@open-wc/testing';
-import { waitUntil } from '@open-wc/testing-helpers';
 import { waitForPredicate } from '../../../test/testing-helpers';
 import '../../shared/lib/focus-visible.js';
 import { spy } from 'sinon';
