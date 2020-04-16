@@ -103,7 +103,7 @@ variantNegative.story = {
 export const variantOverbackground = (): TemplateResult => {
     return html`
         <div
-            style='background-color: rgb(15, 121, 125); color: rgb(15, 121, 125); padding: 15px 20px; display: "inline-block"'
+            style="background-color: rgb(15, 121, 125); color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block"
         >
             ${renderButtonPair({
                 variant: 'overBackground',
@@ -149,7 +149,7 @@ attributeQuietVariantNegative.story = {
 export const attributeQuietVariantOverbackground = (): TemplateResult => {
     return html`
         <div
-            style='background-color: rgb(15, 121, 125); color: rgb(15, 121, 125); padding: 15px 20px; display: "inline-block"'
+            style="background-color: rgb(15, 121, 125); color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block"
         >
             ${renderButtonPair({
                 variant: 'overBackground',
