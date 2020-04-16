@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 const puppeteer = require('puppeteer');
 var rimraf = require('rimraf');
-const { startServer } = require('polyserve');
+const { createConfig, startServer } = require('es-dev-server');
 const path = require('path');
 const fs = require('fs');
 const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
@@ -20,17 +20,21 @@ const stories = require('../stories');
 module.exports = {
     buildScreenshots(type, color = 'light', scale = 'medium') {
         describe('🎁 regenerate screenshots', function () {
-            let polyserve, browser, page;
+            let server, browser, page;
 
             before(async function () {
-                polyserve = await startServer({
+                const config = createConfig({
                     port: 4444,
-                    root: path.join(
-                        __dirname,
-                        '../../../documentation/dist/storybook'
+                    nodeResolve: true,
+                    appIndex: 'index.hml',
+                    rootDir: path.resolve(
+                        process.cwd(),
+                        'documentation',
+                        'dist',
+                        'storybook'
                     ),
-                    moduleResolution: 'node',
                 });
+                ({ server } = await startServer(config));
                 // Create the test directory if needed.
                 if (!fs.existsSync(baselineDir)) {
                     fs.mkdirSync(baselineDir);
@@ -46,16 +50,17 @@ module.exports = {
                 fs.mkdirSync(`${baselineDir}/${type}/userDataDir`);
             });
 
-            after((done) => polyserve.close(done));
+            after(() => {
+                browser.close();
+                server.close();
+            });
 
-            beforeEach(async function () {
+            before(async function () {
                 browser = await puppeteer.launch({
                     userDataDir: `${baselineDir}/${type}/userDataDir`,
                 });
                 page = await browser.newPage();
             });
-
-            afterEach(() => browser.close());
 
             it('did it', async function () {
                 return generateBaselineScreenshots(page);
@@ -71,8 +76,11 @@ module.exports = {
                 await page.goto(
                     `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}`,
                     {
-                        waitUntil: 'networkidle0',
+                        waitUntil: ['load', 'networkidle0'],
                     }
+                );
+                await page.waitForFunction(
+                    '!!document.querySelector("sp-theme").shadowRoot'
                 );
                 await page.screenshot({
                     path: `${baselineDir}/${type}/${stories[i]}__${color}__${scale}.png`,
