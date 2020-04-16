@@ -28,6 +28,14 @@ const availableArrowsByDirection = {
     horizontal: ['ArrowLeft', 'ArrowRight'],
 };
 
+declare global {
+    interface Document {
+        fonts?: {
+            ready: Promise<void>,
+        }
+    }
+}
+
 /**
  * @slot - Child tab elements
  * @attr {Boolean} quiet - The tab-list border is a lot smaller
@@ -240,9 +248,8 @@ export class TabList extends Focusable {
             return;
         }
         await Promise.all([
-            await selectedElement.updateComplete,
-            await ((document as unknown) as { fonts: { ready: Promise<void> } })
-                .fonts.ready,
+            selectedElement.updateComplete,
+            document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
         const tabBoundingClientRect = selectedElement.getBoundingClientRect();
         const parentBoundingClientRect = this.getBoundingClientRect();
