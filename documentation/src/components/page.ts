@@ -32,7 +32,7 @@ export class Page extends LayoutElement {
     public resetScroll() {
         if (!this.contentElement) return;
 
-        this.contentElement.scroll(0, 0);
+        this.contentElement.scrollTop = 0;
         this.open = false;
     }
 }
