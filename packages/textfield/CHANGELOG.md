@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.3.6...@spectrum-web-components/textfield@0.3.7) (2020-04-16)
+
+### Bug Fixes
+
+-   **textfield:** remove use of sp-icons-\* ([9a5c213](https://github.com/adobe/spectrum-web-components/commit/9a5c213a886146709601a2878484529c315d9f51))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
 ## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.3.5...@spectrum-web-components/textfield@0.3.6) (2020-04-10)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield

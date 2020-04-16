@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.1.16",
+    "version": "0.1.17",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -42,7 +42,7 @@
         "lit-html": "^1.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/radio": "^0.2.10",
+        "@spectrum-web-components/radio": "^0.2.11",
         "tslib": "^1.10.0"
     }
 }

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.3.2...@spectrum-web-components/theme@0.4.0) (2020-04-16)
+
+### Bug Fixes
+
+-   ensure themes are registered before adopting ([a7ffb84](https://github.com/adobe/spectrum-web-components/commit/a7ffb8420c7fdb045b837ea733694e1f48192578))
+
+### Features
+
+-   **rule:** add Spectrum rule pattern and apply to docs ([f4c52ae](https://github.com/adobe/spectrum-web-components/commit/f4c52ae34eeae80f8edb57828ad93f32f33f713e))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
 ## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.3.1...@spectrum-web-components/theme@0.3.2) (2020-04-07)
 
 **Note:** Version bump only for package @spectrum-web-components/theme
