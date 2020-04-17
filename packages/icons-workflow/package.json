@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -38,12 +38,12 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/iconset": "^0.1.8",
+        "@spectrum-web-components/iconset": "^0.1.9",
         "tslib": "^1.10.0"
     },
     "devDependencies": {
         "@adobe/spectrum-css-workflow-icons": "^1.0.0",
-        "@spectrum-web-components/icon": "^0.4.5",
+        "@spectrum-web-components/icon": "^0.4.6",
         "@spectrum-web-components/iconset": "^0.1.7",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",

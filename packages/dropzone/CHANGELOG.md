@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.2.5...@spectrum-web-components/dropzone@0.2.6) (2020-04-16)
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
 ## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.2.4...@spectrum-web-components/dropzone@0.2.5) (2020-04-07)
 
 **Note:** Version bump only for package @spectrum-web-components/dropzone

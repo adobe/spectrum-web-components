@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.12...@spectrum-web-components/checkbox@0.3.0) (2020-04-16)
+
+### Bug Fixes
+
+-   **textfield:** remove use of sp-icons-\* ([9a5c213](https://github.com/adobe/spectrum-web-components/commit/9a5c213a886146709601a2878484529c315d9f51))
+
+### Features
+
+-   add and use icons-ui package ([d9c3ab2](https://github.com/adobe/spectrum-web-components/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
 ## [0.2.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.11...@spectrum-web-components/checkbox@0.2.12) (2020-04-10)
 
 **Note:** Version bump only for package @spectrum-web-components/checkbox

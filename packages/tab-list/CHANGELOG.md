@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.3.7...@spectrum-web-components/tab-list@0.3.8) (2020-04-16)
+
+### Bug Fixes
+
+-   **tab-list:** hide indicator without selection, listen to resize events ([feadf3c](https://github.com/adobe/spectrum-web-components/commit/feadf3cbaf5bde7a743c0ae5b8fd3b090bcd9eca))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
 ## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.3.6...@spectrum-web-components/tab-list@0.3.7) (2020-04-10)
 
 ### Bug Fixes

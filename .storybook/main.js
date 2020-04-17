@@ -6,6 +6,11 @@ module.exports = {
         nodeResolve: true,
         open: true,
     },
+    addons: [
+        'storybook-prebuilt/addon-actions/register.js',
+        'storybook-prebuilt/addon-knobs/register.js',
+        'storybook-prebuilt/addon-a11y/register.js',
+    ],
 
     // Rollup build output directory (build-storybook only)
     outputDir: '../documentation/dist/storybook',

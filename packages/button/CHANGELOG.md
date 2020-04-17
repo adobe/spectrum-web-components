@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.4.8...@spectrum-web-components/button@0.5.0) (2020-04-16)
+
+### Bug Fixes
+
+-   **button:** add excludeSourceSelector to reduce duplication of styles ([683e88e](https://github.com/adobe/spectrum-web-components/commit/683e88e8ac659e789c20d77bf0af602a305b54f9))
+
+### Features
+
+-   add and use icons-ui package ([d9c3ab2](https://github.com/adobe/spectrum-web-components/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
 ## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.4.7...@spectrum-web-components/button@0.4.8) (2020-04-10)
 
 **Note:** Version bump only for package @spectrum-web-components/button

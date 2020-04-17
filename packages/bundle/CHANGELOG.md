@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.8.1...@spectrum-web-components/bundle@0.9.0) (2020-04-16)
+
+### Features
+
+-   **rule:** add Spectrum rule pattern and apply to docs ([f4c52ae](https://github.com/adobe/spectrum-web-components/commit/f4c52ae34eeae80f8edb57828ad93f32f33f713e))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
 ## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.8.0...@spectrum-web-components/bundle@0.8.1) (2020-04-10)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle
