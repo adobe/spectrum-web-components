@@ -10,13 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-#switch::after {
+#switch::before {
     /* This rule includes all of the transitions from spectrum-css except the
      * one for the transform attribute, which causes issue in Edge.
      */
-    transition: background var(--spectrum-global-animation-duration-100, 130ms)
-            ease-in-out,
-        border var(--spectrum-global-animation-duration-100, 130ms) ease-in-out,
-        box-shadow var(--spectrum-global-animation-duration-100, 130ms)
-            ease-in-out;
+     transition:
+        background var(--spectrum-global-animation-duration-100,.13s) ease-in-out,
+        border var(--spectrum-global-animation-duration-100,.13s) ease-in-out,
+        box-shadow var(--spectrum-global-animation-duration-100,.13s) ease-in-out;
 }
