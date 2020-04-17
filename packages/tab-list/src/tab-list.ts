@@ -28,6 +28,14 @@ const availableArrowsByDirection = {
     horizontal: ['ArrowLeft', 'ArrowRight'],
 };
 
+declare global {
+    interface Document {
+        fonts?: {
+            ready: Promise<void>,
+        }
+    }
+}
+
 /**
  * @slot - Child tab elements
  * @attr {Boolean} quiet - The tab-list border is a lot smaller
@@ -75,6 +83,15 @@ export class TabList extends Focusable {
             this.querySelector('sp-tab')) as Tab;
     }
 
+    constructor() {
+        super()
+
+        // These can be added as @click and @keydown handlers on the
+        // slot once we no longer need web component polyfills
+        this.addEventListener('click', this.onClick);
+        this.addEventListener('keydown', this.onKeyDown);
+    }
+
     protected manageAutoFocus(): void {
         const tabs = [...this.children] as Tab[];
         const tabUpdateCompletes = tabs.map((tab) => {
@@ -87,8 +104,6 @@ export class TabList extends Focusable {
     protected render(): TemplateResult {
         return html`
             <slot
-                @click=${this.onClick}
-                @keydown=${this.onKeyDown}
                 @slotchange=${this.onSlotChange}
             ></slot>
             <div
@@ -161,7 +176,7 @@ export class TabList extends Focusable {
         ].focus();
     }
 
-    private onClick(event: Event): void {
+    private onClick = (event: Event): void => {
         const target = event.target as HTMLElement;
         this.selectTarget(target);
         if (this.shouldApplyFocusVisible) {
@@ -175,7 +190,7 @@ export class TabList extends Focusable {
         }
     }
 
-    private onKeyDown(event: KeyboardEvent): void {
+    private onKeyDown = (event: KeyboardEvent): void => {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             const target = event.target as HTMLElement;
@@ -240,9 +255,8 @@ export class TabList extends Focusable {
             return;
         }
         await Promise.all([
-            await selectedElement.updateComplete,
-            await ((document as unknown) as { fonts: { ready: Promise<void> } })
-                .fonts.ready,
+            selectedElement.updateComplete,
+            document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
         const tabBoundingClientRect = selectedElement.getBoundingClientRect();
         const parentBoundingClientRect = this.getBoundingClientRect();

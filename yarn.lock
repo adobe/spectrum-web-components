@@ -3989,7 +3989,7 @@
   resolved "https://registry.yarnpkg.com/@webcomponents/webcomponents-platform/-/webcomponents-platform-1.0.1.tgz#4e7ae8b40bcade06f5fdfa73fdb0211d90908866"
   integrity sha512-7Ua2c3FvqAuiC2++gIoStG9r0B5sxleq8B7o0XKuIM052amWPTaCka0UMvnQRRJEsdGgRGIUv6sLkOyfhcr1dw==
 
-"@webcomponents/webcomponentsjs@^2.2.0", "@webcomponents/webcomponentsjs@^2.4.0":
+"@webcomponents/webcomponentsjs@^2.4.0", "@webcomponents/webcomponentsjs@^2.4.3":
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.4.3.tgz#384f4f6d54563ba465fb4df21fe89e78a76fc530"
   integrity sha512-cV4+sAmshf8ysU2USutrSRYQkJzEYKHsRCGa0CkMElGpG5747VHtkfsW3NdVIBV/m2MDKXTDydT4lkrysH7IFA==

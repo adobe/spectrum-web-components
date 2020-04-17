@@ -127,7 +127,7 @@
         "@typescript-eslint/eslint-plugin": "^2.24.0",
         "@typescript-eslint/parser": "^2.24.0",
         "@vaadin/router": "^1.2.0",
-        "@webcomponents/webcomponentsjs": "^2.2.0",
+        "@webcomponents/webcomponentsjs": "^2.4.3",
         "babel-loader": "^8.0.5",
         "babel-plugin-bundled-import-meta": "^0.3.2",
         "babel-plugin-transform-node-env-inline": "^0.4.3",
