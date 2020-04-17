@@ -20,7 +20,7 @@ export class Switch extends CheckboxBase {
         /* istanbul ignore if */
         if (window.hasOwnProperty('ShadyDOM')) {
             // Override some styles if we are using the web component polyfill
-            return [switchStyles, legacyStyles];
+            return [...super.styles, switchStyles, legacyStyles];
         }
         return [...super.styles, switchStyles];
     }
