@@ -109,7 +109,7 @@
         "@open-wc/building-webpack": "^2.13.12",
         "@open-wc/demoing-storybook": "^2.0.2",
         "@open-wc/polyfills-loader": "^0.3.3",
-        "@open-wc/testing": "^2.5.11",
+        "@open-wc/testing": "^3.0.0",
         "@open-wc/testing-karma": "^3.3.12",
         "@spectrum-css/rule": "^2.0.6",
         "@spectrum-css/table": "^2.0.6",
