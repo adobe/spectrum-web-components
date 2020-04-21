@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.2.13...@spectrum-web-components/switch@0.2.14) (2020-04-21)
+
+### Bug Fixes
+
+-   workaround bug in Edge with switches ([7014a2c](https://github.com/adobe/spectrum-web-components/commit/7014a2cced96a704589a85f4c23f5b3d5519fb3b))
+
 ## [0.2.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.2.12...@spectrum-web-components/switch@0.2.13) (2020-04-16)
 
 ### Performance Improvements

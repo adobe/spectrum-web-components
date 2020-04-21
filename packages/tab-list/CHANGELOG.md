@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.3.8...@spectrum-web-components/tab-list@0.3.9) (2020-04-21)
+
+### Bug Fixes
+
+-   make sp-tab-list work in Edge ([948559a](https://github.com/adobe/spectrum-web-components/commit/948559a189448a2dde452ab367d9cbe8f337fccf))
+
 ## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab-list@0.3.7...@spectrum-web-components/tab-list@0.3.8) (2020-04-16)
 
 ### Bug Fixes
