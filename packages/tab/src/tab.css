@@ -17,13 +17,30 @@ governing permissions and limitations under the License.
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: auto;
+    height: var(--spectrum-tabs-vertical-item-height, auto) !important;
+
+    --sp-tab-vertial-margin-y: calc(
+        (
+                var(
+                        --spectrum-tabs-vertical-item-height,
+                        var(--spectrum-global-dimension-size-550)
+                    ) -
+                    var(
+                        --spectrum-tabs-focus-ring-height,
+                        var(--spectrum-alias-single-line-height)
+                    )
+            ) / 2
+    );
 }
 
 :host([vertical]):before {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
-    left: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
-    right: calc(-1 * var(--spectrum-tabs-focus-ring-size, 2px));
+    left: calc(
+        -1 * var(--spectrum-tabs-focus-ring-size, var(--spectrum-alias-border-size-thick))
+    );
+    right: calc(
+        -1 * var(--spectrum-tabs-focus-ring-size, var(--spectrum-alias-border-size-thick))
+    );
 
     /* Custom */
     height: auto;
@@ -33,13 +50,19 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) ::slotted([slot='icon']) {
-    flex-shrink: 0;
+    margin-top: var(--sp-tab-vertial-margin-y);
+    height: auto;
 }
 
 :host([vertical]) #itemLabel {
-    font-size: 13px;
-    padding: 8px 0;
-    font-weight: 400;
+    font-size: var(
+        --spectrum-tabs-text-size,
+        var(--spectrum-alias-font-size-default)
+    );
+    font-weight: var(
+        --spectrum-tabs-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
     line-height: 1;
-    margin: 0;
+    margin: var(--sp-tab-vertial-margin-y) 0;
 }
