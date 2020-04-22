@@ -270,29 +270,48 @@ class SpectrumProcessor {
 
                 attributeFound = true;
             });
-            if (attributeFound && !this.component.spectrumClassIsHost) {
-                // The CSS for the spectrum root class is not on the :host
-                // element. Apply these CSS rules to the element that correlates
-                // with the spectrum root class. Add that selector (e.g. #button)
-                // if it isn't already there
-                if (result.length === 1) {
-                    result.append(parser.combinator({ value: ' ' }));
-                    result.append(
-                        this.component.hostShadowSelectorNode.clone()
-                    );
-                } else if (
-                    result.length === 3 &&
-                    result.at(1).type === 'combinator'
-                ) {
-                    // If there is only a pseudo selector following the :host,
-                    // then we need to prepend the root selector to the pseudo
-                    // node (e.g ":host([quiet]) :hover" -> ":host([quiet]) #button:hover")
-                    const lastNode = result.at(2);
-                    if (lastNode.type === 'pseudo') {
-                        result.insertBefore(
-                            lastNode,
+            if (attributeFound) {
+                if (this.component.spectrumClassIsHost) {
+                    if (
+                        result.length >= 3 &&
+                        result.at(1).type === 'combinator'
+                    ) {
+                        // If there is only a pseudo selector following the :host,
+                        // then we need to append the pseudo to the root
+                        // node (e.g ":host([quiet]) :hover" -> ":host([quiet]:hover)")
+                        const lastNode = result.at(2);
+                        if (
+                            lastNode.type === 'pseudo' &&
+                            lastNode.value !== '::slotted'
+                        ) {
+                            lastNode.remove();
+                            addNodeToHost(result, lastNode);
+                        }
+                    }
+                } else {
+                    // The CSS for the spectrum root class is not on the :host
+                    // element. Apply these CSS rules to the element that correlates
+                    // with the spectrum root class. Add that selector (e.g. #button)
+                    // if it isn't already there
+                    if (result.length === 1) {
+                        result.append(parser.combinator({ value: ' ' }));
+                        result.append(
                             this.component.hostShadowSelectorNode.clone()
                         );
+                    } else if (
+                        result.length === 3 &&
+                        result.at(1).type === 'combinator'
+                    ) {
+                        // If there is only a pseudo selector following the :host,
+                        // then we need to prepend the root selector to the pseudo
+                        // node (e.g ":host([quiet]) :hover" -> ":host([quiet]) #button:hover")
+                        const lastNode = result.at(2);
+                        if (lastNode.type === 'pseudo') {
+                            result.insertBefore(
+                                lastNode,
+                                this.component.hostShadowSelectorNode.clone()
+                            );
+                        }
                     }
                 }
             }
