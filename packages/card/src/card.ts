@@ -16,7 +16,9 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
+    PropertyValues,
 } from 'lit-element';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/lib/focus-visible.js';
 
 import cardStyles from './card.css.js';
 
@@ -27,13 +29,16 @@ import cardStyles from './card.css.js';
  * @slot description - A description of the card
  * @slot footer - Footer text
  */
-export class Card extends LitElement {
-    @property({ reflect: true })
-    public variant: 'default' | 'gallery' | 'quiet' = 'default';
-
+export class Card extends FocusVisiblePolyfillMixin(LitElement) {
     public static get styles(): CSSResultArray {
         return [cardStyles];
     }
+
+    @property({ reflect: true })
+    public variant: 'default' | 'gallery' | 'quiet' = 'default';
+
+    @property({ type: Boolean, reflect: true })
+    public selected = false;
 
     @property()
     public title = '';
@@ -51,9 +56,17 @@ export class Card extends LitElement {
         `;
     }
 
+    protected get renderPreviewImage(): TemplateResult {
+        return html`
+            <div id="preview">
+                <slot name="preview"></slot>
+            </div>
+        `;
+    }
+
     protected renderGallery(): TemplateResult {
         return html`
-            <slot name="preview"></slot>
+            ${this.renderPreviewImage}
             <div id="body">
                 <div id="header">
                     ${this.renderTitle}
@@ -66,7 +79,7 @@ export class Card extends LitElement {
 
     protected renderQuiet(): TemplateResult {
         return html`
-            <slot name="preview"></slot>
+            ${this.renderPreviewImage}
             <div id="body">
                 <div id="header">
                     ${this.renderTitle}
@@ -81,7 +94,9 @@ export class Card extends LitElement {
 
     protected renderDefault(): TemplateResult {
         return html`
-            <slot name="cover-photo" id="cover-photo"></slot>
+            <div id="cover-photo">
+                <slot name="cover-photo"></slot>
+            </div>
             <div id="body">
                 <div id="header">
                     ${this.renderTitle}
@@ -103,5 +118,11 @@ export class Card extends LitElement {
             default:
                 return this.renderDefault();
         }
+    }
+
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
+        this.setAttribute('role', 'figure');
+        this.tabIndex = 0;
     }
 }

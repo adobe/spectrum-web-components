@@ -3,7 +3,9 @@
 #### `loads`
 
 ```html
-<slot id="cover-photo" name="cover-photo"></slot>
+<div id="cover-photo">
+    <slot name="cover-photo"></slot>
+</div>
 <div id="body">
     <div id="header">
         <div id="title">
@@ -26,7 +28,9 @@
 #### `loads - [quiet]`
 
 ```html
-<slot name="preview"></slot>
+<div id="preview">
+    <slot name="preview"></slot>
+</div>
 <div id="body">
     <div id="header">
         <div id="title">
@@ -47,7 +51,9 @@
 #### `loads - [gallery]`
 
 ```html
-<slot name="preview"></slot>
+<div id="preview">
+    <slot name="preview"></slot>
+</div>
 <div id="body">
     <div id="header">
         <div id="title">

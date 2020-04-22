@@ -38,20 +38,12 @@ module.exports = {
             ],
             slots: [
                 {
-                    name: 'cover-photo',
-                    selector: '.spectrum-Card-coverPhoto',
-                },
-                {
                     name: 'footer',
                     selector: '.spectrum-Card-footer',
                 },
                 {
                     name: 'description',
                     selector: '.spectrum-Card-description',
-                },
-                {
-                    name: 'preview',
-                    selector: '.spectrum-Card-preview',
                 },
             ],
             ids: [
@@ -86,6 +78,14 @@ module.exports = {
                 {
                     selector: '.spectrum-Card-actions',
                     name: 'actions',
+                },
+                {
+                    name: 'cover-photo',
+                    selector: '.spectrum-Card-coverPhoto',
+                },
+                {
+                    name: 'preview',
+                    selector: '.spectrum-Card-preview',
                 },
             ],
         },
