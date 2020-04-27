@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, TemplateResult, html } from 'lit-element';
+import {
+    CSSResultArray,
+    TemplateResult,
+    html,
+    PropertyValues,
+} from 'lit-element';
 import { CheckboxBase } from '@spectrum-web-components/checkbox/lib/checkbox-base.js';
 import switchStyles from './switch.css.js';
 import legacyStyles from './switch-legacy.css.js';
@@ -31,5 +36,10 @@ export class Switch extends CheckboxBase {
             <span id="switch"></span>
             <label id="label" for="input"><slot></slot></label>
         `;
+    }
+
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
+        this.inputElement.setAttribute('role', 'switch');
     }
 }
