@@ -3,9 +3,14 @@
 #### `loads`
 
 ```html
-<slot name="icon"></slot>
+<slot name="icon">
+</slot>
 <span id="label">
-    <slot></slot>
+  <slot>
+  </slot>
 </span>
-<span id="tip"></span>
+<span id="tip">
+</span>
+
 ```
+

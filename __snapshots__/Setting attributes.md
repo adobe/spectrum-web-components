@@ -3,5 +3,8 @@
 #### `loads`
 
 ```html
-<slot></slot>
+<slot>
+</slot>
+
 ```
+
