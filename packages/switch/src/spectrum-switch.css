@@ -320,14 +320,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     );
 }
-:host(:hover[quiet][checked]) #input:enabled + #switch {
+:host([quiet][checked]:hover) #input:enabled + #switch {
     /* .spectrum-ToggleSwitch--quiet:hover .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch */
     background-color: var(
         --spectrum-switch-quiet-track-color-selected-hover,
         var(--spectrum-global-color-gray-800)
     );
 }
-:host(:hover[quiet][checked]) #input:enabled + #switch:before {
+:host([quiet][checked]:hover) #input:enabled + #switch:before {
     /* .spectrum-ToggleSwitch--quiet:hover .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch:before */
     border-color: var(
         --spectrum-switch-quiet-handle-border-color-selected-hover,
