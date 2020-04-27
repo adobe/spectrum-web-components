@@ -43,10 +43,6 @@ export class Checkbox extends CheckboxBase {
         ];
     }
 
-    protected get ariaCheckedState(): 'true' | 'false' | 'mixed' {
-        return this.indeterminate ? 'mixed' : super.ariaCheckedState;
-    }
-
     protected render(): TemplateResult {
         return html`
             <label id="root">
@@ -64,13 +60,20 @@ export class Checkbox extends CheckboxBase {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
         if (changes.has('invalid')) {
             if (this.invalid) {
                 this.inputElement.setAttribute('aria-invalid', 'true');
             } else {
                 this.inputElement.removeAttribute('aria-invalid');
+            }
+        }
+        if (changes.has('indeterminate')) {
+            if (this.indeterminate) {
+                this.inputElement.setAttribute('aria-checked', 'mixed');
+            } else {
+                this.inputElement.removeAttribute('aria-checked');
             }
         }
     }

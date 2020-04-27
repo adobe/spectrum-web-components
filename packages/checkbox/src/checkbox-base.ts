@@ -52,16 +52,11 @@ export class CheckboxBase extends Focusable {
         this.dispatchEvent(changeEvent);
     }
 
-    protected get ariaCheckedState(): 'true' | 'false' | 'mixed' {
-        return this.checked ? 'true' : 'false';
-    }
-
     protected render(): TemplateResult {
         return html`
             <input
                 id="input"
                 type="checkbox"
-                aria-checked=${this.ariaCheckedState}
                 .checked=${this.checked}
                 @change=${this.handleChange}
             />
