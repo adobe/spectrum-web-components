@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, TemplateResult, html, property } from 'lit-element';
+import {
+    CSSResultArray,
+    TemplateResult,
+    html,
+    property,
+    PropertyValues,
+} from 'lit-element';
 import { CheckboxBase } from './checkbox-base.js';
 import '@spectrum-web-components/icon';
 import {
@@ -37,6 +43,10 @@ export class Checkbox extends CheckboxBase {
         ];
     }
 
+    protected get ariaCheckedState(): 'true' | 'false' | 'mixed' {
+        return this.indeterminate ? 'mixed' : super.ariaCheckedState;
+    }
+
     protected render(): TemplateResult {
         return html`
             <label id="root">
@@ -52,5 +62,16 @@ export class Checkbox extends CheckboxBase {
                 <span id="label"><slot></slot></span>
             </label>
         `;
+    }
+
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
+        if (changes.has('invalid')) {
+            if (this.invalid) {
+                this.inputElement.setAttribute('aria-invalid', 'true');
+            } else {
+                this.inputElement.removeAttribute('aria-invalid');
+            }
+        }
     }
 }
