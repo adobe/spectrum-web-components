@@ -142,7 +142,7 @@
         "eslint": "^6.8.0",
         "eslint-config-prettier": "^6.7.0",
         "eslint-formatter-pretty": "^3.0.1",
-        "eslint-plugin-notice": "^0.8.9",
+        "eslint-plugin-notice": "^0.9.10",
         "eslint-plugin-prettier": "^3.0.1",
         "eslint-plugin-spectrum-web-components": "file:./linters/eslint",
         "express": "^4.16.4",
