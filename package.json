@@ -191,7 +191,7 @@
         "postcss-preset-env": "^6.7.0",
         "postcss-reporter": "^6.0.1",
         "postcss-selector-parser": "^6.0.2",
-        "posthtml": "^0.12.2",
+        "posthtml": "^0.13.0",
         "posthtml-attrs-parser": "^0.1.1",
         "posthtml-loader": "^1.0.2",
         "posthtml-match-helper": "^1.0.1",
