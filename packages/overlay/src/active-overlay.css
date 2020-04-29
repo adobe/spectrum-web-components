@@ -41,6 +41,11 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
+sp-theme,
+#contents {
+    height: 100%;
+}
+
 #contents {
     display: inline-block;
     pointer-events: none;
@@ -70,10 +75,10 @@ governing permissions and limitations under the License.
     --sp-overlay-from: translateX(var(--spectrum-global-dimension-size-75));
 }
 
-::slotted(*) {
-    position: relative;
-}
-
 :host([animating]) ::slotted(*) {
     pointer-events: none;
+}
+
+#contents ::slotted(*) {
+    position: relative;
 }

@@ -43,7 +43,7 @@ export const Dialog = (): TemplateResult => {
     const placement = radios('Placement', placements, placements.bottom);
     return html`
         <div
-            style="color: var(--spectrum-global-color-gray-800); position: relative"
+            style="color: var(--spectrum-global-color-gray-800); position: relative; display: contents"
         >
             <sp-popover
                 variant="dialog"
