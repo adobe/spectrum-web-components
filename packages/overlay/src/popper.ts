@@ -25,6 +25,8 @@ import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
 import offset from '@popperjs/core/lib/modifiers/offset';
 import { computeArrowRotateStyles } from './popper-arrow-rotate';
+import maxSize from 'popper-max-size-modifier';
+import { applyMaxSize } from './apply-max-size.js';
 
 export const createPopper = popperGenerator({
     defaultModifiers: [
@@ -37,4 +39,4 @@ export const createPopper = popperGenerator({
     ],
 });
 
-export { Instance, Placement };
+export { Instance, Placement, maxSize, applyMaxSize };

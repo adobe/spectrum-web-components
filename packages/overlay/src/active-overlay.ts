@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { createPopper, Instance } from './popper';
+import { createPopper, Instance, maxSize, applyMaxSize } from './popper';
 import {
     Placement,
     OverlayOpenDetail,
@@ -182,6 +182,8 @@ export class ActiveOverlay extends LitElement {
             this.popper = createPopper(this.trigger, this, {
                 placement: this.placement,
                 modifiers: [
+                    maxSize,
+                    applyMaxSize,
                     {
                         name: 'arrow',
                         options: {
