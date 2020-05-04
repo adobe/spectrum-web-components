@@ -101,7 +101,9 @@ module.exports = {
                 }
             );
             await page.waitForFunction(
-                '!!document.querySelector("sp-theme").shadowRoot'
+                () =>
+                    document.querySelector('sp-theme') &&
+                    document.querySelector('sp-theme').shadowRoot
             );
             await page.screenshot({
                 path: `${currentDir}/${type}/${test}__${color}__${scale}.png`,

@@ -126,6 +126,8 @@ module.exports = [
     'tabs--quiet',
     'tabs--compact',
     'tabs--quiet-compact',
+    'tags--default',
+    'tags--deletable',
     'textarea--default',
     'textfield--default',
     'theme--default',

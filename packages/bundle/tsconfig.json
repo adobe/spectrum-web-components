@@ -40,6 +40,7 @@
         { "path": "../switch" },
         { "path": "../tab" },
         { "path": "../tab-list" },
+        { "path": "../tags" },
         { "path": "../textfield" },
         { "path": "../theme" },
         { "path": "../toast" },

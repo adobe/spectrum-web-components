@@ -74,6 +74,7 @@
         "@spectrum-web-components/switch": "^0.2.14",
         "@spectrum-web-components/tab": "^0.3.8",
         "@spectrum-web-components/tab-list": "^0.3.9",
+        "@spectrum-web-components/tags": "^0.0.1",
         "@spectrum-web-components/textfield": "^0.3.7",
         "@spectrum-web-components/theme": "^0.4.0",
         "@spectrum-web-components/toast": "^0.3.1",
