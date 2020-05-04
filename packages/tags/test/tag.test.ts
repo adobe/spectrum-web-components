@@ -1,0 +1,130 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+import { html } from 'lit-element';
+import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { spy } from 'sinon';
+
+import '..';
+import { Tag } from '..';
+import { ClearButton } from '@spectrum-web-components/button';
+
+const keyboardEvent = (code: string): KeyboardEvent =>
+    new KeyboardEvent('keydown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        code,
+        key: code,
+    });
+const deleteEvent = keyboardEvent('Delete');
+const spaceEvent = keyboardEvent('Space');
+const backspaceEvent = keyboardEvent('Backspace');
+const enterEvent = keyboardEvent('Enter');
+
+describe('Tag', () => {
+    it('loads default tags accessibly', async () => {
+        const el = await fixture<Tag>(
+            html`
+                <sp-tag>Tag 1</sp-tag>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el).to.be.accessible();
+        expect(el.hasAttribute('role')).to.be.true;
+    });
+    it('dispatches `delete` events on click', async () => {
+        const deleteSpy = spy();
+        const handleDelete = (): void => deleteSpy();
+        const el = await fixture<Tag>(
+            html`
+                <sp-tag @delete=${handleDelete} deletable>Tag 1</sp-tag>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(deleteSpy.called).to.be.false;
+
+        const root: HTMLElement | DocumentFragment = el.shadowRoot
+            ? el.shadowRoot
+            : el;
+        const deleteButton = root.querySelector(
+            'sp-clear-button'
+        ) as ClearButton;
+        deleteButton.click();
+
+        await elementUpdated(el);
+
+        expect(deleteSpy.called).to.be.true;
+        expect(deleteSpy.callCount).to.equal(1);
+    });
+    it('dispatches `delete` events on keyboard input', async () => {
+        const deleteSpy = spy();
+        const handleDelete = (): void => deleteSpy();
+        let expectedEventCount = 0;
+        const el = await fixture<Tag>(
+            html`
+                <sp-tag @delete=${handleDelete}>Tag 1</sp-tag>
+            `
+        );
+        const testKeyboardEvent = async (
+            event: KeyboardEvent
+        ): Promise<void> => {
+            expectedEventCount += 1;
+
+            el.dispatchEvent(event);
+            await elementUpdated(el);
+
+            expect(deleteSpy.called).to.be.true;
+            expect(
+                deleteSpy.callCount,
+                `Accepts "${event.code}" key input`
+            ).to.equal(expectedEventCount);
+        };
+
+        await elementUpdated(el);
+
+        expect(deleteSpy.called).to.be.false;
+
+        el.dispatchEvent(new FocusEvent('focusin'));
+        await elementUpdated(el);
+
+        el.dispatchEvent(deleteEvent);
+        await elementUpdated(el);
+
+        expect(deleteSpy.called).to.be.false;
+
+        el.deletable = true;
+        await elementUpdated(el);
+
+        el.dispatchEvent(enterEvent);
+        await elementUpdated(el);
+
+        expect(deleteSpy.called).to.be.false;
+
+        testKeyboardEvent(deleteEvent);
+        testKeyboardEvent(spaceEvent);
+        testKeyboardEvent(backspaceEvent);
+
+        el.dispatchEvent(new FocusEvent('focusout'));
+        await elementUpdated(el);
+
+        el.dispatchEvent(deleteEvent);
+        expect(
+            deleteSpy.callCount,
+            'Does not respond after `focusout`'
+        ).to.equal(expectedEventCount);
+    });
+});

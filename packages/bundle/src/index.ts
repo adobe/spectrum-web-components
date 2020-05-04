@@ -43,6 +43,7 @@ export * from '@spectrum-web-components/status-light';
 export * from '@spectrum-web-components/switch';
 export * from '@spectrum-web-components/tab';
 export * from '@spectrum-web-components/tab-list';
+export * from '@spectrum-web-components/tags';
 export * from '@spectrum-web-components/textfield';
 export * from '@spectrum-web-components/theme';
 export * from '@spectrum-web-components/toast';
