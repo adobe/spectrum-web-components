@@ -145,6 +145,11 @@ module.exports = {
             focus: '#button',
             attributes: [
                 {
+                    selector: '.spectrum-ClearButton--small',
+                    type: 'boolean',
+                    name: 'small',
+                },
+                {
                     type: 'enum',
                     name: 'variant',
                     values: [
