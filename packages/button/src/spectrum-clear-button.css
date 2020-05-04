@@ -52,7 +52,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color)
     );
 }
-.spectrum-ClearButton--small {
+#button > .spectrum-Icon {
+    /* .spectrum-ClearButton>.spectrum-Icon */
+    margin: 0 auto; /* .spectrum-ClearButton>.spectrum-Icon */
+    margin: 0;
+}
+:host([small]) #button {
     /* .spectrum-ClearButton--small */
     width: var(
         --spectrum-clearbutton-small-width,
