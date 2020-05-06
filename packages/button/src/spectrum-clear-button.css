@@ -52,7 +52,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color)
     );
 }
-#button > .spectrum-Icon {
+#button > .icon {
     /* .spectrum-ClearButton>.spectrum-Icon */
     margin: 0 auto; /* .spectrum-ClearButton>.spectrum-Icon */
     margin: 0;

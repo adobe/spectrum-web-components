@@ -2,10 +2,6 @@
 
 `sp-tags` and `sp-tag` elements allow users to categorize content. They can represent keywords or people, and are grouped to describe an item or a search request.
 
-## To do:
-
-Keyboard interactions
-
 ### Installation
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tags?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tags)
