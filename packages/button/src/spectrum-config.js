@@ -165,6 +165,12 @@ module.exports = {
                     ],
                 },
             ],
+            classes: [
+                {
+                    name: 'icon',
+                    selector: '.spectrum-Icon',
+                },
+            ],
             excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
         },
     ],
