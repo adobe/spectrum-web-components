@@ -22,7 +22,6 @@
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
-    "type": "module",
     "files": [
         "custom-elements.json",
         "/lib/",

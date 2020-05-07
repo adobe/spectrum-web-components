@@ -25,7 +25,6 @@
     ],
     "main": "lib/index.js",
     "module": "lib/index.js",
-    "type": "module",
     "browser": "lib/index.js",
     "engines": {
         "node": ">=10.18.1",
