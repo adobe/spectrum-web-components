@@ -63,6 +63,12 @@ export class Textfield extends Focusable {
     @property({ type: Boolean, reflect: true })
     public grows = false;
 
+    @property({ type: Number })
+    public maxlength?: number;
+
+    @property({ type: Number })
+    public minlength?: number;
+
     @property({ type: Boolean, reflect: true })
     public multiline = false;
 
@@ -143,6 +149,8 @@ export class Textfield extends Focusable {
                 <textarea
                     aria-label=${this.label || this.placeholder}
                     id="input"
+                    maxlength=${ifDefined(this.maxlength)}
+                    minlength=${ifDefined(this.minlength)}
                     pattern=${ifDefined(this.pattern)}
                     placeholder=${this.placeholder}
                     .value=${this.value}
@@ -160,6 +168,8 @@ export class Textfield extends Focusable {
             <input
                 aria-label=${this.label || this.placeholder}
                 id="input"
+                maxlength=${ifDefined(this.maxlength)}
+                minlength=${ifDefined(this.minlength)}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${this.value}
@@ -183,22 +193,15 @@ export class Textfield extends Focusable {
     }
 
     public checkValidity(): boolean {
+        let validity = this.inputElement.checkValidity();
         if (this.required || (this.value && this.pattern)) {
-            let validity = this.inputElement.checkValidity();
             if ((this.disabled || this.multiline) && this.pattern) {
                 const regex = new RegExp(this.pattern);
                 validity = regex.test(this.value);
             }
-            if (validity) {
-                this.valid = true;
-                this.invalid = false;
-            } else {
-                this.valid = false;
-                this.invalid = true;
-            }
-
-            return this.valid;
+            this.valid = validity;
+            this.invalid = !validity;
         }
-        return true;
+        return validity;
     }
 }
