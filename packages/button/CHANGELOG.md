@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.5.1...@spectrum-web-components/button@0.5.2) (2020-05-08)
+
+### Bug Fixes
+
+-   **button:** clean up clear button for reuse across elements ([4c71eb1](https://github.com/adobe/spectrum-web-components/commit/4c71eb12112283ec31a40de38fdb79195ac52fd5))
+-   remove errant readme content, correct icon selector ([3dd1fb1](https://github.com/adobe/spectrum-web-components/commit/3dd1fb1ebd5ce5171345a6c2d4aac08e2d49a5b8))
+
 ## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.5.0...@spectrum-web-components/button@0.5.1) (2020-04-21)
 
 **Note:** Version bump only for package @spectrum-web-components/button

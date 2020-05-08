@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.3.0...@spectrum-web-components/checkbox@0.3.1) (2020-05-08)
+
+### Bug Fixes
+
+-   ensure aria attributes based on state ([6369ff3](https://github.com/adobe/spectrum-web-components/commit/6369ff3f35b2ed26777bdbd16bae3b3acd816bf6))
+-   ensure aria attributes based on state ([6ee43de](https://github.com/adobe/spectrum-web-components/commit/6ee43de23254f612759cc258705dfe6eed30c418))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.12...@spectrum-web-components/checkbox@0.3.0) (2020-04-16)
 
 ### Bug Fixes

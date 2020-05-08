@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.3.7...@spectrum-web-components/textfield@0.3.8) (2020-05-08)
+
+### Bug Fixes
+
+-   **textfield:** add maxlength and minlength attributes ([5326649](https://github.com/adobe/spectrum-web-components/commit/5326649daac788e922a4493b9172cc20518b8abb))
+
 ## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.3.6...@spectrum-web-components/textfield@0.3.7) (2020-04-16)
 
 ### Bug Fixes

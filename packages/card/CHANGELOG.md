@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.3.3...@spectrum-web-components/card@0.3.4) (2020-05-08)
+
+### Bug Fixes
+
+-   **card:** correctly apply :focus-visible styling to variants ([d7c7539](https://github.com/adobe/spectrum-web-components/commit/d7c7539727d70f22243bd50bdaf8fbe0d0bbbb80))
+
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.3.2...@spectrum-web-components/card@0.3.3) (2020-04-16)
 
 ### Performance Improvements

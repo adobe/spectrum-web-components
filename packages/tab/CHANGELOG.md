@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.3.8...@spectrum-web-components/tab@0.3.9) (2020-05-08)
+
+### Bug Fixes
+
+-   **tab:** use Spectrum CSS relative values for overrides ([f2e22f8](https://github.com/adobe/spectrum-web-components/commit/f2e22f8954c583159b96e32185a307da36578172))
+
 ## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tab@0.3.7...@spectrum-web-components/tab@0.3.8) (2020-04-16)
 
 ### Performance Improvements

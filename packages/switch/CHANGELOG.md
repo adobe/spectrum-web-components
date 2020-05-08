@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.2.14...@spectrum-web-components/switch@0.2.15) (2020-05-08)
+
+### Bug Fixes
+
+-   **switch:** process CSS correction ([292fff1](https://github.com/adobe/spectrum-web-components/commit/292fff19a14225f579e5e8b4717b7db3a33895c4))
+-   ensure aria attributes based on state ([6ee43de](https://github.com/adobe/spectrum-web-components/commit/6ee43de23254f612759cc258705dfe6eed30c418))
+
 ## [0.2.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.2.13...@spectrum-web-components/switch@0.2.14) (2020-04-21)
 
 ### Bug Fixes

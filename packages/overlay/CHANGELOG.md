@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.5...@spectrum-web-components/overlay@0.3.6) (2020-05-08)
+
+### Bug Fixes
+
+-   constrain overlay to available window size ([9729b55](https://github.com/adobe/spectrum-web-components/commit/9729b55ef5246662aa50cbc8037bcaeb2f4ac74a))
+
 ## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.4...@spectrum-web-components/overlay@0.3.5) (2020-04-16)
 
 ### Performance Improvements

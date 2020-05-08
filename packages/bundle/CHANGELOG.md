@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.9.1...@spectrum-web-components/bundle@0.10.0) (2020-05-08)
+
+### Features
+
+-   **tags:** add tags pattern ([ae91865](https://github.com/adobe/spectrum-web-components/commit/ae91865642bab3f330174ec5dd27977f73ed7b9c))
+
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.9.0...@spectrum-web-components/bundle@0.9.1) (2020-04-21)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle
