@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.5.2",
+    "version": "0.5.3",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -50,8 +50,8 @@
         "@spectrum-web-components/icons-ui": "^0.1.1",
         "@spectrum-web-components/menu": "^0.2.6",
         "@spectrum-web-components/menu-item": "^0.5.2",
-        "@spectrum-web-components/overlay": "^0.3.6",
-        "@spectrum-web-components/popover": "^0.3.8",
+        "@spectrum-web-components/overlay": "^0.3.7",
+        "@spectrum-web-components/popover": "^0.3.9",
         "@spectrum-web-components/shared": "^0.4.6",
         "tslib": "^1.10.0"
     }

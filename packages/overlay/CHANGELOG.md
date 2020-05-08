@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.6...@spectrum-web-components/overlay@0.3.7) (2020-05-08)
+
+### Bug Fixes
+
+-   **dropdown:** correct conditional check ([a3a790f](https://github.com/adobe/spectrum-web-components/commit/a3a790f6c3f5f8f0837d619ca57c1090ab14e638))
+
 ## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.5...@spectrum-web-components/overlay@0.3.6) (2020-05-08)
 
 ### Bug Fixes
