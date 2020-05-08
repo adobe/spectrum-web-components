@@ -51,7 +51,7 @@ export const applyMaxSize = {
             );
         }
         const actualHeight = appliedSizeDefaults.get(state.elements.popper);
-        const constrainHeight = maxHeight > actualHeight;
+        const constrainHeight = maxHeight < actualHeight;
         const appliedHeight = constrainHeight ? `${maxHeight}px` : '';
         state.styles.popper.maxHeight = appliedHeight;
         state.styles.popper.height = appliedHeight;
