@@ -249,11 +249,15 @@ class ComponentElement extends RouteComponent {
                 ? buildTable(
                       'Events',
                       tag.events,
-                      ['Name'],
+                      ['Name', 'Description'],
                       [
                           (property) =>
                               html`
                                   <code>${property.name}</code>
+                              `,
+                          (property) =>
+                              html`
+                                  <code>${property.description || ''}</code>
                               `,
                       ]
                   )

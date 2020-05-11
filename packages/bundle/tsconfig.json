@@ -16,6 +16,7 @@
         { "path": "../checkbox" },
         { "path": "../circleloader" },
         { "path": "../coachmark" },
+        { "path": "../dialog" },
         { "path": "../dropdown" },
         { "path": "../dropzone" },
         { "path": "../icon" },
@@ -44,6 +45,7 @@
         { "path": "../textfield" },
         { "path": "../theme" },
         { "path": "../toast" },
-        { "path": "../tooltip" }
+        { "path": "../tooltip" },
+        { "path": "../underlay" }
     ]
 }

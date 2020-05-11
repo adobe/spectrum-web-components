@@ -14,6 +14,13 @@ import { CSSResultArray, property } from 'lit-element';
 import { ButtonBase } from './button-base.js';
 import buttonStyles from './button.css.js';
 
+export type ButtonVariants =
+    | 'cta'
+    | 'overBackground'
+    | 'primary'
+    | 'secondary'
+    | 'negative';
+
 /**
  * A Spectrum button control.
  * @element sp-button
@@ -26,12 +33,7 @@ export class Button extends ButtonBase {
      * The visual variant to apply to this button.
      */
     @property({ reflect: true })
-    public variant:
-        | 'cta'
-        | 'overBackground'
-        | 'primary'
-        | 'secondary'
-        | 'negative' = 'cta';
+    public variant: ButtonVariants = 'cta';
 
     /**
      * There is a warning in place for this control

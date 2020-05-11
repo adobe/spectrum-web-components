@@ -45,6 +45,7 @@
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "build:clear-cache": "rm -rf packages/*/lib && rm -rf packages/*/tsconfig.tsbuildinfo",
         "watch": "gulp watch",
+        "prestorybook": "wca analyze 'packages/*/src/index.ts' --format json --outFile custom-elements.json",
         "storybook": "yarn storybook:stories:build && run-p watch build:watch storybook:stories:watch storybook:start",
         "storybook:start": "start-storybook",
         "storybook:stories:build": "tsc --build .storybook/tsconfig.json",
