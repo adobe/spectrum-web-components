@@ -17,7 +17,6 @@ yarn-error.log
 documentation/components/searchIndex.json
 
 coverage
-documentation/custom-elements.json
 documentation/api-docs
 documentation/dist
 test/**/*.js
@@ -48,3 +47,4 @@ TESTS.xml
 !test/visual/**/*.js
 
 package-lock.json
+custom-elements.json

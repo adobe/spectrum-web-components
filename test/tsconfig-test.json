@@ -5,6 +5,11 @@
         "outDir": "../",
         "types": ["mocha", "chai", "sinon", "karma-chai", "webpack-env", "node"]
     },
-    "include": ["../packages/**/test/*.ts", "./testing-helpers.ts"],
+    "include": [
+        "../packages/**/test/*.ts",
+        "../packages/dialog/stories/*.ts",
+        "./testing-helpers.ts",
+        "../global.d.ts"
+    ],
     "exclude": ["../packages/**/node_modules/**/*"]
 }
