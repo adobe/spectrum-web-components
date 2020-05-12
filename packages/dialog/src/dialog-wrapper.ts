@@ -73,6 +73,9 @@ export class DialogWrapper extends LitElement {
     public headline = '';
 
     @property({ type: Boolean })
+    public responsive = false;
+
+    @property({ type: Boolean })
     public underlay = false;
 
     private dismiss(): void {

@@ -318,6 +318,22 @@ class SpectrumProcessor {
             return result;
         });
 
+        // Map classes to descendent attributes
+        // e.g. ".spectrum-Dialog .spectrum-Button--cta" -> "[variant='cta']"
+        astTransforms.push((selector, rule) => {
+            const result = selector.clone();
+            let attributeFound = false;
+            result.walk((node) => {
+                const attribute = this.component.descendantAttributeForNode(
+                    node
+                );
+                if (!attribute) return;
+
+                node.replaceWith(attribute.shadowNode.clone());
+            });
+            return result;
+        });
+
         // Custom transformations provided in the component's config
         if (this.component.selectorTransforms) {
             for (const transform of this.component.selectorTransforms) {
@@ -618,6 +634,26 @@ class ComponentConfig {
     }
 
     /**
+     * Return the descendant attribute config or attribute values config for the given
+     * node, if there is one
+     * @param {Node} node The AST node that may represent an attribute
+     */
+    descendantAttributeForNode(node) {
+        for (const attribute of this.descendantAttributes) {
+            if (attribute.node && compareNodes(attribute.node, node)) {
+                return attribute;
+            }
+            if (attribute.type === 'enum') {
+                for (const value of attribute.values) {
+                    if (compareNodes(value.node, node)) {
+                        return value;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Convert the configuration into a predicable format and flush it
      * out with some extra computed data that we will need
      */
@@ -660,6 +696,55 @@ class ComponentConfig {
         // Normalize the items that will map to attributes on our web component
         this.attributes = this.attributes || [];
         this.attributes.forEach((attribute) => {
+            if (!attribute.name) {
+                const expr = re`/(?:${this.hostSelector}--?|:)(.*)$/`;
+                const match = expr.exec(attribute.selector);
+                if (match) {
+                    attribute.name = match[1];
+                } else {
+                    const message = `Unable to determine name for attribute ${attribute.selector}`;
+                    throw new Error(message);
+                }
+            }
+            let regex;
+            if (attribute.type === 'boolean') {
+                attribute.shadowSelector = `[${attribute.name}]`;
+                attribute.regex = re`(?:${attribute.selector}|${attribute.shadowSelector})`;
+                attribute.node = nodeFromSelector(attribute.selector);
+                attribute.shadowNode = nodeFromSelector(
+                    attribute.shadowSelector
+                );
+            } else if (attribute.type === 'enum') {
+                attribute.values = attribute.values.map((value) => {
+                    const selector = value.selector || value;
+                    let name = value.name;
+                    const basePortion = attribute.root
+                        ? re`/${attribute.root}?(.*)$/`
+                        : hostPortion;
+                    if (!name) {
+                        const match = basePortion.exec(selector);
+                        if (match) {
+                            name = match[1];
+                        } else {
+                            const message = `Unable to determine name for value ${value}`;
+                            throw new Error(message);
+                        }
+                    }
+                    const operator = attribute.wildcard ? '*=' : '=';
+                    return {
+                        name,
+                        selector,
+                        node: nodeFromSelector(selector),
+                        shadowNode: nodeFromSelector(
+                            `[${attribute.name}${operator}"${name}"]`
+                        ),
+                    };
+                });
+            }
+        });
+
+        this.descendantAttributes = this.descendantAttributes || [];
+        this.descendantAttributes.forEach((attribute) => {
             if (!attribute.name) {
                 const expr = re`/(?:${this.hostSelector}--?|:)(.*)$/`;
                 const match = expr.exec(attribute.selector);
