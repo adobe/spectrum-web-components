@@ -25,12 +25,21 @@ module.exports = {
                     name: 'open',
                 },
                 {
-                    type: 'enum',
-                    name: 'mode',
-                    values: [
-                        '.spectrum-Dialog--fullscreen',
-                        '.spectrum-Dialog--fullscreenTakeover',
-                    ],
+                    type: 'boolean',
+                    selector: '.spectrum-Dialog--responsive',
+                    name: 'responsive',
+                },
+            ],
+            descendantAttributes: [
+                {
+                    type: 'boolean',
+                    name: 'mode="fullscreen"',
+                    selector: '.spectrum-Dialog--fullscreen',
+                },
+                {
+                    type: 'boolean',
+                    name: 'mode="fullscreen"',
+                    selector: '.spectrum-Dialog--fullscreenTakeover',
                 },
             ],
             classes: [

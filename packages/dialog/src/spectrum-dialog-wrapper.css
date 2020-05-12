@@ -31,7 +31,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Dialog-wrapper.is-open */
     visibility: visible;
 }
-.dialog:not(.spectrum-Dialog--fullscreen):not(.spectrum-Dialog--fullscreenTakeover) {
+.dialog:not([mode='fullscreen']):not([mode='fullscreen']) {
     /* .spectrum-Dialog-wrapper .spectrum-Dialog:not(.spectrum-Dialog--fullscreen):not(.spectrum-Dialog--fullscreenTakeover) */
     pointer-events: auto;
     position: relative;
@@ -45,12 +45,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     margin-top: -2vh;
 }
-:host([open])
-    .dialog:not(.spectrum-Dialog--fullscreen):not(.spectrum-Dialog--fullscreenTakeover) {
+:host([open]) .dialog:not([mode='fullscreen']):not([mode='fullscreen']) {
     /* .spectrum-Dialog-wrapper .spectrum-Dialog:not(.spectrum-Dialog--fullscreen):not(.spectrum-Dialog--fullscreenTakeover).is-open */
     transform: translateY(0);
 }
-.spectrum-Dialog--responsive {
+:host([responsive]) {
     /* .spectrum-Dialog-wrapper .spectrum-Dialog--responsive */
     margin-top: 0;
 }
