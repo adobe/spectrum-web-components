@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.10.1...@spectrum-web-components/bundle@0.11.0) (2020-05-12)
+
+### Features
+
+-   add dialog, dialog-wrapped, and underlay elements ([3df9050](https://github.com/adobe/spectrum-web-components/commit/3df9050f65bd3a95f9b986aa728cfc1a2eaee432))
+
 ## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.10.0...@spectrum-web-components/bundle@0.10.1) (2020-05-08)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle
