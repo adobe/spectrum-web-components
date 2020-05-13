@@ -46,6 +46,6 @@
         "@spectrum-web-components/menu": "^0.2.6",
         "@spectrum-web-components/menu-item": "^0.5.3",
         "@spectrum-web-components/shared": "^0.4.6",
-        "tslib": "^1.10.0"
+        "tslib": "^2.0.0"
     }
 }
