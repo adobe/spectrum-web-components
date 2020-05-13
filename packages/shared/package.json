@@ -40,6 +40,6 @@
     },
     "dependencies": {
         "focus-visible": "^5.0.2",
-        "tslib": "^1.10.0"
+        "tslib": "^2.0.0"
     }
 }
