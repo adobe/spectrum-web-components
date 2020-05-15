@@ -1,9 +1,6 @@
 ## Description
 
-An **sp-theme** sets the rendering theme for all child components.
-The Spectrum design system supports four color themes and two different
-scales. `spectrum-web-components` currently supports three of the four
-color themes (dark, light and lightest) and one one of the scales (medium).
+**sp-theme** sets the rendering theme for all child components, and also sets a number of default sizes & colors for any child content. The Spectrum design system provides four color themes and two different scales to support desktop & mobile UI.
 
 ### Installation
 
@@ -106,6 +103,44 @@ When bundling your application, be sure to consult the documentation of your bun
     }
 </style>
 <sp-theme color="dark">
+    <div id="example">
+        <div>
+            <sp-slider
+                value="5"
+                step="1"
+                min="1"
+                max="11"
+                label="Volume"
+                id="volume-slider"
+            ></sp-slider>
+        </div>
+        <div><sp-switch>Overdrive</sp-switch></div>
+        <div id="buttons">
+            <sp-button variant="primary">Cancel</sp-button>
+            <sp-button variant="cta">Continue</sp-button>
+        </div>
+    </div>
+</sp-theme>
+```
+
+## Large scale
+
+The large scale of **sp-theme** will switch to using Spectrum's larger mobile [Platform Scale](https://spectrum.adobe.com/page/platform-scale/)
+
+```html demo
+<style type="text/css">
+    #example {
+        width: 500px;
+        padding: 3em;
+        background-color: var(--spectrum-global-color-gray-100);
+        color: var(--spectrum-global-color-gray-800);
+    }
+
+    #buttons {
+        margin-top: 2em;
+    }
+</style>
+<sp-theme color="darkest" scale="large">
     <div id="example">
         <div>
             <sp-slider
