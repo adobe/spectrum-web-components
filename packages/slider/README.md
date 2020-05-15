@@ -15,34 +15,66 @@ npm install @spectrum-web-components/slider
 yarn add @spectrum-web-components/slider
 ```
 
-### Example
+### Variants
+
+#### Standard
 
 ```html
 <sp-slider></sp-slider>
+<sp-slider disabled></sp-slider>
 ```
 
-### Variants
+#### With Label
+
+```html
+<sp-slider label="Slider Label"></sp-slider>
+<sp-slider label="Slider Label - Disabled" disabled></sp-slider>
+```
 
 #### Filled
 
 ```html
-<sp-slider variant="filled"></sp-slider>
-```
-
-#### Ramp
-
-```html
-<sp-slider variant="ramp"></sp-slider>
+<sp-slider label="Slider Label" variant="filled"></sp-slider>
+<sp-slider
+    label="Slider Label - Disabled"
+    variant="filled"
+    disabled
+></sp-slider>
 ```
 
 #### Tick
 
 ```html
-<sp-slider variant="tick" tick-step="4"></sp-slider>
+<sp-slider label="Slider Label" variant="tick" tick-step="5"></sp-slider>
+<sp-slider
+    label="Slider Label - Disabled"
+    variant="tick"
+    tick-step="5"
+    disabled
+></sp-slider>
 ```
 
-#### Tick w/ labels
+#### Tick with Labels
 
 ```html
-<sp-slider variant="tick" tick-step="5" tick-labels></sp-slider>
+<sp-slider
+    label="Slider Label"
+    variant="tick"
+    tick-step="5"
+    tick-labels
+></sp-slider>
+<sp-slider
+    label="Slider Label - Disabled"
+    variant="tick"
+    tick-step="5"
+    tick-labels
+    disabled
+></sp-slider>
+```
+
+#### Ramp
+
+```html
+<sp-slider label="Slider Label" variant="ramp"></sp-slider>
+<sp-slider label="Slider Label - Disabled" variant="ramp" disabled></sp-slider>
 ```
