@@ -56,7 +56,7 @@ When bundling your application, be sure to consult the documentation of your bun
 ```html demo
 <style type="text/css">
     #example {
-        width: 500px;
+        max-width: 500px;
         padding: 3em;
         background-color: var(--spectrum-global-color-gray-100);
         color: var(--spectrum-global-color-gray-800);
@@ -92,7 +92,7 @@ When bundling your application, be sure to consult the documentation of your bun
 ```html demo
 <style type="text/css">
     #example {
-        width: 500px;
+        max-width: 500px;
         padding: 3em;
         background-color: var(--spectrum-global-color-gray-100);
         color: var(--spectrum-global-color-gray-800);
@@ -130,7 +130,7 @@ The large scale of **sp-theme** will switch to using Spectrum's larger mobile [P
 ```html demo
 <style type="text/css">
     #example {
-        width: 500px;
+        max-width: 500px;
         padding: 3em;
         background-color: var(--spectrum-global-color-gray-100);
         color: var(--spectrum-global-color-gray-800);
@@ -170,7 +170,7 @@ previewing or editing content that will be displayed in a light theme.
 ```html
 <style type="text/css">
     #outer {
-        width: 500px;
+        max-width: 500px;
         padding: 3em;
         background-color: var(--spectrum-global-color-gray-100);
         color: var(--spectrum-global-color-gray-800);
