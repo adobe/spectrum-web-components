@@ -33,6 +33,8 @@ governing permissions and limitations under the License.
     --spectrum-global-animation-linear: cubic-bezier(0, 0, 1, 1);
 
     /* spectrum-colorGlobals.css */
+    --spectrum-global-color-status: Verified;
+    --spectrum-global-color-version: 5.1;
     --spectrum-global-color-static-black: rgb(0, 0, 0);
     --spectrum-global-color-static-white: rgb(255, 255, 255);
     --spectrum-global-color-static-blue: rgb(20, 115, 230);
@@ -53,6 +55,7 @@ governing permissions and limitations under the License.
     --spectrum-global-color-static-blue-500: rgb(38, 128, 235);
     --spectrum-global-color-static-blue-600: rgb(20, 115, 230);
     --spectrum-global-color-static-blue-700: rgb(13, 102, 208);
+    --spectrum-global-color-static-blue-800: rgb(9, 90, 186);
     --spectrum-global-color-static-red-400: rgb(236, 91, 98);
     --spectrum-global-color-static-red-500: rgb(227, 72, 80);
     --spectrum-global-color-static-red-600: rgb(215, 55, 63);
@@ -114,6 +117,7 @@ governing permissions and limitations under the License.
     --spectrum-global-color-opacity-80: 0.8;
     --spectrum-global-color-opacity-60: 0.6;
     --spectrum-global-color-opacity-50: 0.5;
+    --spectrum-global-color-opacity-42: 0.42;
     --spectrum-global-color-opacity-40: 0.4;
     --spectrum-global-color-opacity-30: 0.3;
     --spectrum-global-color-opacity-25: 0.25;
@@ -125,30 +129,6 @@ governing permissions and limitations under the License.
     --spectrum-global-color-opacity-6: 0.06;
     --spectrum-global-color-opacity-5: 0.05;
     --spectrum-global-color-opacity-4: 0.04;
-    --spectrum-global-color-sequential-cerulean: [ '#E9FFF1', '#C8F1E4',
-        '#A5E3D7', '#82D5CA', '#68C5C1', '#54B4BA', '#3FA2B2', '#2991AC',
-        '#2280A2', '#1F6D98', '#1D5C8D', '#1A4B83', '#1A3979', '#1A266F',
-        '#191264', '#180057' ];
-    --spectrum-global-color-sequential-forest: [ '#FFFFDF', '#E2F6BA', '#C4EB95',
-        '#A4E16D', '#8DD366', '#77C460', '#5FB65A', '#48A754', '#36984F',
-        '#2C894D', '#237A4A', '#196B47', '#105C45', '#094D41', '#033F3E',
-        '#00313A' ];
-    --spectrum-global-color-sequential-rose: [ '#FFF4DD', '#FFDDD7', '#FFC5D2',
-        '#FEAECB', '#FA96C4', '#F57EBD', '#EF64B5', '#E846AD', '#D238A1',
-        '#BB2E96', '#A3248C', '#8A1B83', '#71167C', '#560F74', '#370B6E',
-        '#000968' ];
-    --spectrum-global-color-diverging-orange-yellow-seafoam: [ '#580000',
-        '#79260B', '#9C4511', '#BD651A', '#DD8629', '#F5AD52', '#FED693',
-        '#FFFFE0', '#BBE4D1', '#76C7BE', '#3EA8A6', '#208288', '#076769',
-        '#00494B', '#002C2D' ];
-    --spectrum-global-color-diverging-red-yellow-blue: [ '#4A001E', '#751232',
-        '#A52747', '#C65154', '#E47961', '#F0A882', '#FAD4AC', '#FFFFE0',
-        '#BCE2CF', '#89C0C4', '#579EB9', '#397AA8', '#1C5796', '#163771',
-        '#10194D' ];
-    --spectrum-global-color-diverging-red-blue: [ '#4A001E', '#731331',
-        '#9F2945', '#CC415A', '#E06E85', '#ED9AB0', '#F8C3D9', '#FAF0FF',
-        '#C6D0F2', '#92B2DE', '#5D94CB', '#2F74B3', '#265191', '#163670',
-        '#0B194C' ];
 
     /* spectrum-colorSemantics.css */
     --spectrum-semantic-negative-color-background: var(
@@ -156,6 +136,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-semantic-negative-color-default: var(
         --spectrum-global-color-red-500
+    );
+    --spectrum-semantic-negative-color-state-hover: var(
+        --spectrum-global-color-red-600
     );
     --spectrum-semantic-negative-color-dark: var(
         --spectrum-global-color-red-600
@@ -278,7 +261,7 @@ governing permissions and limitations under the License.
         --spectrum-global-color-static-blue-700
     );
     --spectrum-semantic-cta-color-background-down: var(
-        --spectrum-global-color-static-blue-700
+        --spectrum-global-color-static-blue-800
     );
     --spectrum-semantic-cta-color-background-key-focus: var(
         --spectrum-global-color-static-blue-600
@@ -316,7 +299,9 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-static-size-100: 8px;
     --spectrum-global-dimension-static-size-115: 9px;
     --spectrum-global-dimension-static-size-125: 10px;
+    --spectrum-global-dimension-static-size-130: 11px;
     --spectrum-global-dimension-static-size-150: 12px;
+    --spectrum-global-dimension-static-size-160: 13px;
     --spectrum-global-dimension-static-size-175: 14px;
     --spectrum-global-dimension-static-size-200: 16px;
     --spectrum-global-dimension-static-size-225: 18px;
@@ -948,10 +933,16 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-title-text-color: var(--spectrum-global-color-gray-900);
     --spectrum-alias-heading-text-color: var(--spectrum-global-color-gray-900);
-    --spectrum-alias-border-color: var(--spectrum-global-color-gray-300);
-    --spectrum-alias-border-color-hover: var(--spectrum-global-color-gray-400);
+    --spectrum-alias-border-color: var(--spectrum-global-color-gray-400);
+    --spectrum-alias-border-color-hover: var(--spectrum-global-color-gray-500);
+    --spectrum-alias-border-color-down: var(--spectrum-global-color-gray-500);
     --spectrum-alias-border-color-focus: var(--spectrum-global-color-blue-400);
-    --spectrum-alias-border-color-down: var(--spectrum-global-color-blue-500);
+    --spectrum-alias-border-color-mouse-focus: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-alias-border-color-disabled: var(
+        --spectrum-global-color-gray-200
+    );
     --spectrum-alias-border-color-extralight: var(
         --spectrum-global-color-gray-100
     );
@@ -963,7 +954,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-border-color-translucent-darker: rgba(0, 0, 0, 0.1);
     --spectrum-alias-focus-color: var(--spectrum-global-color-blue-400);
     --spectrum-alias-focus-ring-color: var(--spectrum-alias-focus-color);
-    --spectrum-alias-focus-ring-gap-color: var(--spectrum-global-color-gray-75);
     --spectrum-alias-track-color-default: var(--spectrum-global-color-gray-300);
     --spectrum-alias-track-color-disabled: var(
         --spectrum-global-color-gray-300
@@ -994,6 +984,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-toolbar-background-color: var(
         --spectrum-global-color-gray-100
     );
+    --spectrum-alias-colorhandle-outer-border-color: rgba(0, 0, 0, 0.42);
     --spectrum-alias-categorical-color-1: var(
         --spectrum-global-color-static-seafoam-200
     );

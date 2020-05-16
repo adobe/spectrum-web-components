@@ -319,6 +319,9 @@ governing permissions and limitations under the License.
     --spectrum-colorhandle-loupe-margin: var(
         --spectrum-global-dimension-static-size-125
     );
+    --spectrum-colorloupe-colorhandle-gap: var(
+        --spectrum-global-dimension-static-size-125
+    );
     --spectrum-colorslider-touch-hit-y: var(
         --spectrum-global-dimension-size-150
     );
@@ -481,6 +484,45 @@ governing permissions and limitations under the License.
     --spectrum-icon-triplegripper-width: var(
         --spectrum-global-dimension-size-125
     );
+    --spectrum-listitem-option-icon-size: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-listitem-option-icon-margin-top: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-listitem-option-height: var(
+        --spectrum-global-dimension-static-size-400
+    );
+    --spectrum-listitem-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-listitem-thumbnail-option-icon-margin-top: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-listitem-thumbnail-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-selectlist-thumbnail-small-option-icon-margin-top: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-selectlist-thumbnail-small-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-selectlist-option-icon-size: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-selectlist-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-selectlist-option-icon-margin-top: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-selectlist-option-height: var(
+        --spectrum-global-dimension-static-size-400
+    );
+    --spectrum-selectlist-thumbnail-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-125
+    );
     --spectrum-loader-bar-large-border-radius: 3px;
     --spectrum-loader-bar-large-over-background-border-radius: 3px;
     --spectrum-loader-bar-small-border-radius: var(
@@ -502,6 +544,48 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-25
     );
     --spectrum-pagination-page-button-line-height: 26px;
+    --spectrum-picker-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-picker-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-picker-quiet-min-width: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-picker-quiet-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-400
+    );
+    --spectrum-picker-thumbnail-small-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-picker-thumbnail-small-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-progressbar-large-border-radius: 3px;
+    --spectrum-progressbar-large-indeterminate-border-radius: 3px;
+    --spectrum-progressbar-large-over-background-border-radius: 3px;
+    --spectrum-progressbar-small-border-radius: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-progressbar-small-indeterminate-border-radius: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-progressbar-small-over-background-border-radius: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-progresscircle-medium-border-size: 3px;
+    --spectrum-progresscircle-medium-over-background-border-size: 3px;
+    --spectrum-progresscircle-small-border-size: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-progresscircle-small-indeterminate-border-size: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-progresscircle-small-over-background-border-size: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-progresscircle-medium-indeterminate-border-size: 3px;
     --spectrum-radio-text-gap-key-focus: var(
         --spectrum-global-dimension-static-size-115
     );
@@ -583,24 +667,6 @@ governing permissions and limitations under the License.
     --spectrum-search-quiet-icon-frame: var(
         --spectrum-global-dimension-static-size-400
     );
-    --spectrum-selectlist-option-icon-size: var(
-        --spectrum-global-dimension-static-size-150
-    );
-    --spectrum-selectlist-option-icon-padding-y: var(
-        --spectrum-global-dimension-static-size-125
-    );
-    --spectrum-selectlist-option-icon-margin-top: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-selectlist-option-height: var(
-        --spectrum-global-dimension-static-size-400
-    );
-    --spectrum-selectlist-thumbnail-option-icon-padding-y: var(
-        --spectrum-global-dimension-static-size-125
-    );
-    --spectrum-selectlist-thumbnail-small-option-icon-padding-y: var(
-        --spectrum-global-dimension-static-size-125
-    );
     --spectrum-sidenav-item-touch-hit-bottom: var(
         --spectrum-global-dimension-static-size-25
     );
@@ -634,6 +700,9 @@ governing permissions and limitations under the License.
     --spectrum-slider-fill-handle-touch-hit-y: var(
         --spectrum-global-dimension-static-size-200
     );
+    --spectrum-switch-focus-ring-border-radius-key-focus: var(
+        --spectrum-global-dimension-static-size-130
+    );
     --spectrum-switch-text-gap-key-focus: var(
         --spectrum-global-dimension-static-size-115
     );
@@ -651,6 +720,9 @@ governing permissions and limitations under the License.
     --spectrum-switch-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-switch-emphasized-focus-ring-border-radius-key-focus: var(
+        --spectrum-global-dimension-static-size-130
+    );
     --spectrum-switch-emphasized-text-gap-key-focus: var(
         --spectrum-global-dimension-static-size-115
     );
@@ -667,6 +739,9 @@ governing permissions and limitations under the License.
     --spectrum-switch-emphasized-handle-border-radius: 7px;
     --spectrum-switch-emphasized-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-switch-quiet-focus-ring-border-radius-key-focus: var(
+        --spectrum-global-dimension-static-size-130
     );
     --spectrum-switch-quiet-text-gap-key-focus: var(
         --spectrum-global-dimension-static-size-115

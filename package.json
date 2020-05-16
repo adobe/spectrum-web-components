@@ -111,7 +111,6 @@
         "@open-wc/polyfills-loader": "^0.3.3",
         "@open-wc/testing": "^2.5.16",
         "@open-wc/testing-karma": "^3.3.28",
-        "@spectrum-css/rule": "^2.0.6",
         "@spectrum-css/table": "^2.0.6",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",

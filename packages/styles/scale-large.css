@@ -42,12 +42,12 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-size-675: 68px;
     --spectrum-global-dimension-size-700: 70px;
     --spectrum-global-dimension-size-800: 80px;
-    --spectrum-global-dimension-size-900: 112px;
+    --spectrum-global-dimension-size-900: 90px;
     --spectrum-global-dimension-size-1000: 100px;
     --spectrum-global-dimension-size-1200: 120px;
     --spectrum-global-dimension-size-1250: 125px;
     --spectrum-global-dimension-size-1600: 160px;
-    --spectrum-global-dimension-size-1700: 212px;
+    --spectrum-global-dimension-size-1700: 170px;
     --spectrum-global-dimension-size-2000: 200px;
     --spectrum-global-dimension-size-2400: 240px;
     --spectrum-global-dimension-size-3000: 300px;
@@ -297,6 +297,9 @@ governing permissions and limitations under the License.
     --spectrum-colorhandle-loupe-margin: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-colorloupe-colorhandle-gap: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-colorslider-touch-hit-y: var(
         --spectrum-global-dimension-size-85
     );
@@ -429,6 +432,45 @@ governing permissions and limitations under the License.
     --spectrum-icon-skip-right-width: 10px;
     --spectrum-icon-skip-right-height: 12px;
     --spectrum-icon-triplegripper-width: 12px;
+    --spectrum-listitem-option-icon-size: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-listitem-option-icon-margin-top: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-listitem-option-height: var(
+        --spectrum-global-dimension-static-size-600
+    );
+    --spectrum-listitem-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-listitem-thumbnail-option-icon-margin-top: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-listitem-thumbnail-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-selectlist-thumbnail-small-option-icon-margin-top: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-selectlist-thumbnail-small-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-selectlist-option-icon-size: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-selectlist-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-selectlist-option-icon-margin-top: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-selectlist-option-height: var(
+        --spectrum-global-dimension-static-size-600
+    );
+    --spectrum-selectlist-thumbnail-option-icon-padding-y: var(
+        --spectrum-global-dimension-static-size-200
+    );
     --spectrum-loader-bar-large-border-radius: 4px;
     --spectrum-loader-bar-large-over-background-border-radius: 4px;
     --spectrum-loader-bar-small-border-radius: 3px;
@@ -444,6 +486,42 @@ governing permissions and limitations under the License.
     --spectrum-meter-large-border-radius: 4px;
     --spectrum-meter-small-border-radius: 3px;
     --spectrum-pagination-page-button-line-height: 32px;
+    --spectrum-picker-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-picker-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-picker-quiet-min-width: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-picker-quiet-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-picker-thumbnail-small-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-picker-thumbnail-small-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-progressbar-large-border-radius: 4px;
+    --spectrum-progressbar-large-indeterminate-border-radius: 4px;
+    --spectrum-progressbar-large-over-background-border-radius: 4px;
+    --spectrum-progressbar-small-border-radius: 3px;
+    --spectrum-progressbar-small-indeterminate-border-radius: 3px;
+    --spectrum-progressbar-small-over-background-border-radius: 3px;
+    --spectrum-progresscircle-medium-border-size: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-progresscircle-medium-over-background-border-size: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-progresscircle-small-border-size: 3px;
+    --spectrum-progresscircle-small-indeterminate-border-size: 3px;
+    --spectrum-progresscircle-small-over-background-border-size: 3px;
+    --spectrum-progresscircle-medium-indeterminate-border-size: var(
+        --spectrum-global-dimension-static-size-50
+    );
     --spectrum-radio-text-gap-key-focus: var(
         --spectrum-global-dimension-static-size-150
     );
@@ -531,24 +609,6 @@ governing permissions and limitations under the License.
     --spectrum-search-quiet-icon-frame: var(
         --spectrum-global-dimension-static-size-500
     );
-    --spectrum-selectlist-option-icon-size: var(
-        --spectrum-global-dimension-static-size-200
-    );
-    --spectrum-selectlist-option-icon-padding-y: var(
-        --spectrum-global-dimension-static-size-200
-    );
-    --spectrum-selectlist-option-icon-margin-top: var(
-        --spectrum-global-dimension-static-size-50
-    );
-    --spectrum-selectlist-option-height: var(
-        --spectrum-global-dimension-static-size-600
-    );
-    --spectrum-selectlist-thumbnail-option-icon-padding-y: var(
-        --spectrum-global-dimension-static-size-200
-    );
-    --spectrum-selectlist-thumbnail-small-option-icon-padding-y: var(
-        --spectrum-global-dimension-static-size-200
-    );
     --spectrum-sidenav-item-touch-hit-bottom: 3px;
     --spectrum-sidenav-multilevel-item-touch-hit-bottom: 3px;
     --spectrum-slider-track-touch-hit-y: var(
@@ -578,6 +638,9 @@ governing permissions and limitations under the License.
     --spectrum-slider-fill-handle-touch-hit-y: var(
         --spectrum-global-dimension-static-size-175
     );
+    --spectrum-switch-focus-ring-border-radius-key-focus: var(
+        --spectrum-global-dimension-static-size-160
+    );
     --spectrum-switch-text-gap-key-focus: var(
         --spectrum-global-dimension-static-size-150
     );
@@ -597,6 +660,9 @@ governing permissions and limitations under the License.
     --spectrum-switch-touch-hit-y: var(
         --spectrum-global-dimension-static-size-50
     );
+    --spectrum-switch-emphasized-focus-ring-border-radius-key-focus: var(
+        --spectrum-global-dimension-static-size-160
+    );
     --spectrum-switch-emphasized-text-gap-key-focus: var(
         --spectrum-global-dimension-static-size-150
     );
@@ -615,6 +681,9 @@ governing permissions and limitations under the License.
     --spectrum-switch-emphasized-handle-border-radius: 9px;
     --spectrum-switch-emphasized-touch-hit-y: var(
         --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-switch-quiet-focus-ring-border-radius-key-focus: var(
+        --spectrum-global-dimension-static-size-160
     );
     --spectrum-switch-quiet-text-gap-key-focus: var(
         --spectrum-global-dimension-static-size-150

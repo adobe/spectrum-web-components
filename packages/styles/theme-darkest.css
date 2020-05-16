@@ -13,6 +13,8 @@ governing permissions and limitations under the License.
 /* stylelint-disable */
 :root,
 :host {
+    --spectrum-global-color-status: Verified;
+    --spectrum-global-color-version: 5.1;
     --spectrum-global-color-celery-400: rgb(61, 167, 78);
     --spectrum-global-color-celery-500: rgb(68, 181, 86);
     --spectrum-global-color-celery-600: rgb(75, 195, 95);

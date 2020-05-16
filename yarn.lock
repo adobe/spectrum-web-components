@@ -2464,7 +2464,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-2.1.0.tgz#7432d0a9d8e7bdf5e1970c787ec97faf87062df7"
   integrity sha512-FuCnFu8qOZ1IK/vboWv/SBxEy88qmhAj0BWKi5c1KVrYpujPpxJ03QzBy2dd9we3Yh28XOObbnda+6qXVVzyWg==
 
-"@spectrum-css/rule@^2.0.0", "@spectrum-css/rule@^2.0.6":
+"@spectrum-css/rule@^2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@spectrum-css/rule/-/rule-2.0.6.tgz#1b9743d218af250918313f4f631b74ccf69c5638"
   integrity sha512-JwZyE/RvsCXUXmGD/SxrSMhoJHUILcYN9b2mLFL2wjiTfyiNsQe7epAkotqLHjr3UO2X8tf6SYLVwev/uZP81A==
@@ -2526,20 +2526,20 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-2.0.5.tgz#498b90c3102e775a71acd23584b8578a0b020b84"
   integrity sha512-AmPTbrm54TPzB7hHi0H31EbP0Q0DzZxprQ3xEtWy6ps6TCThIS2GkAOEKg3MdMQxcGu/QwQM9TrgBdALNQp/XA==
 
-"@spectrum-css/typography@^2.1.1":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-2.1.2.tgz#93da02803e0750f256e6050752acff909664dae2"
-  integrity sha512-WErhTndmEchICZqKqsUUbnXtBth+2kVydXBhp3FEK7/8ittWhkOeL/VtZOQzeLkyEyO4ZxuM/MXulKISKcuYXw==
+"@spectrum-css/typography@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-2.1.3.tgz#4d7bcf2f75e8d785bdbae098ef0121b73894f3c5"
+  integrity sha512-73lu0Le1zt+etNTS+kJsn+0TJzpy8aiTT6TCkVuJyUY9yxLcKXdV7mYRaz4U7jEYn39MKpndGFXkA7Qq0u16dw==
 
 "@spectrum-css/underlay@^2.0.0", "@spectrum-css/underlay@^2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-2.0.6.tgz#daffc597a63b4b1c0d4d5b17b711ae9befd1c5a5"
   integrity sha512-Qh50ouZOLPHjZnbYGOv+WvPxF7rcCyy5g9t+8Il72PY6jwVoptqKgD9/06jwmp0YOiql2g5kELDK/C43mHvpgg==
 
-"@spectrum-css/vars@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-2.2.0.tgz#f266d62146cf60d560d9fb68f1cf3c96441229c1"
-  integrity sha512-cYGvOlgfKpx1tGT822l7/SZTzonbIJIj/mJUWJkzMjBYt3z/swx2t1vupWoPZMTt1FBlgMhR1C6Fup7w/68qzA==
+"@spectrum-css/vars@^2.2.0", "@spectrum-css/vars@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-2.3.0.tgz#0ce716fb5ee65f4af9e2d2a7aaae55e8ba4d4c8f"
+  integrity sha512-k4YwFbv9+7QzBrc3ezvGuHxI3nDTG/6qJsAmhYS1vEyxpxjKmRfiz59P+fqT12PQNjxeNYHyVz1kRgaLA6gw2w==
 
 "@szmarczak/http-timer@^4.0.0":
   version "4.0.5"

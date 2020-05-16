@@ -39,7 +39,7 @@
     },
     "devDependencies": {
         "@spectrum-css/commons": "^2.1.0",
-        "@spectrum-css/typography": "^2.1.1",
-        "@spectrum-css/vars": "^2.2.0"
+        "@spectrum-css/typography": "^2.1.3",
+        "@spectrum-css/vars": "^2.3.0"
     }
 }
