@@ -10,17 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './{{ name }}.js';
-
-import { {{ className name }} } from './{{ name }}.js';
-
-/* istanbul ignore else */
-if (!customElements.get('{{> tagnamePartial }}')) {
-    customElements.define('{{> tagnamePartial }}', {{ className name }});
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        '{{> tagnamePartial }}': {{ className name }};
-    }
-}
+export * from './{{className name}}.js';
