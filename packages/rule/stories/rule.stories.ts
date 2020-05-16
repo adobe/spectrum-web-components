@@ -13,10 +13,10 @@ governing permissions and limitations under the License.
 import { html, select } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-element';
 
-import '../';
+import '../sp-rule.js';
 import './typography-decorator.js';
-import '@spectrum-web-components/button';
-import '@spectrum-web-components/icon';
+import '@spectrum-web-components/button/sp-action-button.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import {
     AlignLeftIcon,
     AlignRightIcon,

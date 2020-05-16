@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../';
+import '../sp-circleloader.js';
 import { html, number, boolean } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-html';
 

@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, action, boolean } from '@open-wc/demoing-storybook';
 
-import '../';
+import '../sp-sidenav.js';
+import '../sp-sidenav-item.js';
+import '../sp-sidenav-heading.js';
 import { TemplateResult } from 'lit-html';
 
 export default {

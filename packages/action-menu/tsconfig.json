@@ -2,10 +2,10 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "composite": true,
-        "outDir": "./lib",
-        "rootDir": "./src"
+        "rootDir": "./"
     },
-    "include": ["src/*.ts"],
+    "include": ["*.ts", "src/*.ts"],
+    "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
         { "path": "../dropdown" },
         { "path": "../icons-workflow" },

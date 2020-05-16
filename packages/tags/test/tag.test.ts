@@ -14,7 +14,8 @@ import { html } from 'lit-element';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 import { spy } from 'sinon';
 
-import '..';
+import '../sp-tag.js';
+import '../sp-tags.js';
 import { Tag } from '..';
 import { ClearButton } from '@spectrum-web-components/button';
 

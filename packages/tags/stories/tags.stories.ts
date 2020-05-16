@@ -12,11 +12,12 @@ governing permissions and limitations under the License.
 import { html, action } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-html';
 
-import '../';
-import '@spectrum-web-components/avatar';
+import '../sp-tag.js';
+import '../sp-tags.js';
+import '@spectrum-web-components/avatar/sp-avatar.js';
 import { avatar } from '@spectrum-web-components/avatar/stories/images';
-import '@spectrum-web-components/icon';
-import '@spectrum-web-components/icons';
+import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
 
 export default {
     title: 'Tags',

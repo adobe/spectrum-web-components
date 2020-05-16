@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 import { html, boolean, action } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-element';
 
-import '../';
-import '../../icon';
-import '../../icons';
+import '../sp-button.js';
+import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
 
 interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';

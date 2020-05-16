@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../';
+import '../sp-popover.js';
 import { Popover } from '../';
 import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';

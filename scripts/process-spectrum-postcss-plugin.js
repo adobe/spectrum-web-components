@@ -407,7 +407,6 @@ class SpectrumProcessor {
                     if (skip) continue;
                 }
                 this.component.complexSelectors.map((complexSelector) => {
-                    console.log(selector, complexSelector);
                     selector = selector.replace(
                         complexSelector.selector,
                         complexSelector.replacement
@@ -863,7 +862,6 @@ class ComponentConfig {
  */
 function nodeFromSelector(selector) {
     const ast = astProcessor.astSync(selector);
-    console.assert(ast.length === 1);
     return ast.first.first;
 }
 

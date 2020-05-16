@@ -10,13 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../../';
+import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@spectrum-web-components/radio/sp-radio.js';
 import { html } from 'lit-html';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 
 measureFixtureCreation(html`
-    <sp-radio value="first" checked>Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third" autofocus>Option 3</sp-radio>
-    <sp-radio value="fourth" disabled>Option 4</sp-radio>
+    <sp-radio-group id="test-default">
+        <sp-radio value="first" checked>Option 1</sp-radio>
+        <sp-radio value="second">Option 2</sp-radio>
+        <sp-radio value="third">Option 3</sp-radio>
+    </sp-radio-group>
 `);

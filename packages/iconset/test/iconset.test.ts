@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import { waitForPredicate } from '../../../test/testing-helpers';
-import '../../icons/lib/index.js';
-import '../../icon/lib/index.js';
-import { IconsMedium } from '../../icons/lib/index.js';
-import { Icon } from '../../icon/lib/index.js';
-import { IconsetRegistry } from '../lib/iconset-registry.js';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
+import '@spectrum-web-components/icon/sp-icon.js';
+import { IconsMedium } from '@spectrum-web-components/icons';
+import { Icon } from '@spectrum-web-components/icon';
+import { IconsetRegistry } from '../src/iconset-registry.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Iconset', () => {

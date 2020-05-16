@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
-import '../../menu';
-import '../../menu-item';
+import '../sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export const ActionMenuMarkup = ({
     ariaLabel = 'More Actions',

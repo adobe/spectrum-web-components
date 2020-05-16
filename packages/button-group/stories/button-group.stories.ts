@@ -12,9 +12,10 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from 'lit-html';
 
-import '..';
-import '@spectrum-web-components/button';
-import '@spectrum-web-components/icon';
+import '../sp-button-group.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/button/sp-action-button.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import {
     PropertiesIcon,
     InfoIcon,

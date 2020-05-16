@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
-import '../../radio-group';
+import '../sp-radio.js';
+import '../sp-radio-group.js';
 
 export default {
     component: 'sp-radio',

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../';
+import '../sp-checkbox.js';
 import { Checkbox } from '../';
 import {
     fixture,
@@ -20,7 +20,7 @@ import {
     expect,
 } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
-import '../../shared/lib/focus-visible.js';
+import '@spectrum-web-components/shared/src/focus-visible.js';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
@@ -110,7 +110,7 @@ describe('Checkbox', () => {
     it('is `invalid` checkbox accessibly', async () => {
         const el = await fixture<Checkbox>(
             html`
-                <sp-checkbox invalid>Checked</sp-checkbox>
+                <sp-checkbox invalid>Invalid Checked</sp-checkbox>
             `
         );
 

@@ -14,4 +14,4 @@ governing permissions and limitations under the License.
 import './styles.css';
 
 // import the components we'll use in this page
-import '@spectrum-web-components/button';
+import '@spectrum-web-components/button/sp-button';

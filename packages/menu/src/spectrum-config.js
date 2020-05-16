@@ -14,6 +14,13 @@ module.exports = {
     spectrum: 'menu',
     components: [
         {
+            name: 'menu-sectionHeading',
+            host: {
+                selector: '.spectrum-Menu-sectionHeading',
+                shadowSelector: '.header',
+            },
+        },
+        {
             name: 'menu',
             host: {
                 selector: '.spectrum-Menu',
@@ -24,6 +31,54 @@ module.exports = {
                 /\.spectrum-Menu-sectionHeading/,
                 /\.spectrum-Menu-checkmark/,
                 /\.spectrum-Menu-chevron/,
+            ],
+        },
+        {
+            name: 'menu-item',
+            host: {
+                selector: '.spectrum-Menu-item',
+                shadowSelector: '#button',
+            },
+            attributes: [
+                {
+                    type: 'boolean',
+                    selector: '.is-disabled',
+                    name: 'disabled',
+                },
+                {
+                    type: 'boolean',
+                    selector: '.is-selected',
+                    name: 'selected',
+                },
+            ],
+            ids: [
+                {
+                    selector: '.spectrum-Menu-itemLabel',
+                    name: 'label',
+                },
+                {
+                    selector: '.spectrum-Menu-checkmark',
+                    name: 'selected',
+                },
+            ],
+            slots: [
+                {
+                    name: 'icon',
+                    selector: '.spectrum-Icon',
+                },
+            ],
+        },
+        {
+            name: 'menu-divider',
+            host: {
+                selector: '.spectrum-Menu-divider',
+            },
+            attributes: [
+                {
+                    type: 'boolean',
+                    selector: '.spectrum-Menu-divider',
+                    name: 'divider',
+                },
             ],
         },
     ],

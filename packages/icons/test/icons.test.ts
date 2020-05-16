@@ -8,9 +8,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../';
+import '../sp-icons-large.js';
+import '../sp-icons-medium.js';
 import { IconsMedium, IconsLarge } from '../';
-import IconsetSVG from '../lib/icons-large.svg';
+import IconsetSVG from '../src/icons-large.svg';
 import { elementUpdated, fixture, html, expect } from '@open-wc/testing';
 
 describe('icons', () => {

@@ -10,7 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../';
+import '../sp-sidenav.js';
+import '../sp-sidenav-item.js';
+import '../sp-sidenav-heading.js';
 import { SideNav, SideNavItem } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { TemplateResult } from 'lit-html';
@@ -51,6 +53,22 @@ describe('Sidenav', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('does not accept focus when empty', async () => {
+        const el = await fixture<SideNav>(
+            html`
+                <sp-sidenav></sp-sidenav>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
     });
     it('sets manageTabIndex on new children', async () => {
         const el = await fixture<SideNav>(

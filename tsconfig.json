@@ -17,5 +17,5 @@
         "allowSyntheticDefaultImports": true,
         "baseUrl": "./packages"
     },
-    "include": ["./global.d.ts", "./packages/*/src/**/*.ts"]
+    "include": ["./global.d.ts"]
 }

@@ -9,17 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './dropzone.js';
-
-import { Dropzone } from './dropzone.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-dropzone')) {
-    customElements.define('sp-dropzone', Dropzone);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-dropzone': Dropzone;
-    }
-}
+export * from './Dropzone.js';

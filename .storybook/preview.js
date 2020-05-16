@@ -8,7 +8,8 @@ import {
     html,
     select,
 } from '@open-wc/demoing-storybook';
-import '@spectrum-web-components/theme';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
 
 // While https://github.com/open-wc/open-wc/issues/1210 and
 // go https://github.com/popperjs/popper-core/issues/933 persist
@@ -59,9 +60,9 @@ addParameters({
 });
 
 async function run() {
-    const customElements = await (await fetch(
-        new URL('../custom-elements.json', import.meta.url)
-    )).json();
+    const customElements = await (
+        await fetch(new URL('../custom-elements.json', import.meta.url))
+    ).json();
     setCustomElements(customElements);
 }
 

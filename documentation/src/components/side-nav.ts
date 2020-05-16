@@ -17,7 +17,8 @@ import {
     PropertyValues,
     TemplateResult,
 } from 'lit-element';
-import '@spectrum-web-components/sidenav';
+import '@spectrum-web-components/sidenav/sp-sidenav.js';
+import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import { SidenavSelectDetail } from '@spectrum-web-components/sidenav';
 import { AppRouter } from '../router.js';
 import './side-nav-search.js';

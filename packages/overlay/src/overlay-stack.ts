@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ActiveOverlay } from './active-overlay.js';
+import { ActiveOverlay } from './ActiveOverlay.js';
 import { OverlayOpenDetail } from './overlay-types';
 import { OverlayTimer } from './overlay-timer';
 
@@ -80,25 +80,23 @@ export class OverlayStack {
             }
         }
 
-        return new Promise((resolve) => {
-            requestAnimationFrame(() => {
-                if (details.interaction === 'click') {
-                    this.closeAllHoverOverlays();
-                } else if (
-                    details.interaction === 'hover' &&
-                    this.isClickOverlayActiveForTrigger(details.trigger)
-                ) {
-                    // Don't show a hover popover if the click popover is already active
-                    resolve(true);
-                    return;
-                }
+        if (details.interaction === 'click') {
+            this.closeAllHoverOverlays();
+        } else if (
+            details.interaction === 'hover' &&
+            this.isClickOverlayActiveForTrigger(details.trigger)
+        ) {
+            // Don't show a hover popover if the click popover is already active
+            return true;
+        }
 
-                const activeOverlay = ActiveOverlay.create(details);
-                this.overlays.push(activeOverlay);
-                document.body.appendChild(activeOverlay);
-                resolve(false);
-            });
-        });
+        await import('../active-overlay.js');
+        const activeOverlay = ActiveOverlay.create(details);
+        this.overlays.push(activeOverlay);
+        document.body.appendChild(activeOverlay);
+        await activeOverlay.updateComplete;
+
+        return false;
     }
 
     public closeOverlay(content: HTMLElement): void {

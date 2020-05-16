@@ -13,14 +13,25 @@ governing permissions and limitations under the License.
 import { html } from 'lit-element';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
-import '..';
-import { Rule } from '..';
+import '../sp-rule.js';
+import { Rule } from '../';
 
 describe('Rule', () => {
     it('loads default rule accessibly', async () => {
         const el = await fixture<Rule>(
             html`
                 <sp-rule></sp-rule>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads [vertical] rule accessibly', async () => {
+        const el = await fixture<Rule>(
+            html`
+                <sp-rule vertical></sp-rule>
             `
         );
 

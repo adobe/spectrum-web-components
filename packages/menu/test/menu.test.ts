@@ -9,17 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../';
-import { Menu } from '../';
-import '../../menu-item';
-import { MenuItem } from '../../menu-item';
-import '../../menu-group';
+import '../sp-menu.js';
+import '../sp-menu-item.js';
+import '../sp-menu-group.js';
+import { Menu, MenuItem } from '../';
 import {
     fixture,
     elementUpdated,
     nextFrame,
     html,
     expect,
+    waitUntil,
 } from '@open-wc/testing';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
@@ -42,13 +42,27 @@ describe('Menu', () => {
             `
         );
 
+        const anchor = el.querySelector('a') as HTMLAnchorElement;
+        await waitUntil(
+            () => !!window.applyFocusVisiblePolyfill,
+            'loaded polyfill'
+        );
         await elementUpdated(el);
+        expect(document.activeElement === el, 'self not focused, 1').to.be
+            .false;
+        expect(document.activeElement === anchor, 'child not focused, 1').to.be
+            .false;
 
         el.focus();
-        expect(document.activeElement === document.body, 'self').to.be.true;
+        await elementUpdated(el);
+        expect(document.activeElement === el, 'self not focused, 2').to.be
+            .false;
+        expect(document.activeElement === anchor, 'child not focused, 2').to.be
+            .false;
 
-        const anchor = el.querySelector('a') as HTMLAnchorElement;
         anchor.focus();
+        expect(document.activeElement === el, 'self not focused, 3').to.be
+            .false;
         expect(document.activeElement === anchor, 'anchor').to.be.true;
     });
     it('renders w/ menu items', async () => {

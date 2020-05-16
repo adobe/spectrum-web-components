@@ -9,17 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './tooltip.js';
-
-import { Tooltip } from './tooltip.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-tooltip')) {
-    customElements.define('sp-tooltip', Tooltip);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tooltip': Tooltip;
-    }
-}
+export * from './Tooltip.js';

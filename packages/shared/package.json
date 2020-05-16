@@ -20,12 +20,14 @@
     ],
     "version": "0.4.7",
     "description": "",
-    "main": "lib/index.js",
-    "module": "lib/index.js",
+    "main": "src/index.js",
+    "module": "src/index.js",
     "type": "module",
     "files": [
         "custom-elements.json",
-        "/lib/",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
         "/src/"
     ],
     "sideEffects": false,
@@ -34,12 +36,10 @@
     },
     "author": "",
     "license": "Apache-2.0",
-    "peerDependencies": {
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0"
-    },
     "dependencies": {
         "focus-visible": "^5.0.2",
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0",
         "tslib": "^2.0.0"
     }
 }

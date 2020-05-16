@@ -19,9 +19,13 @@ import {
     CSSResultArray,
 } from 'lit-element';
 
-import { Placement } from '../';
-import { Radio } from '../../radio';
-import { Overlay } from '../';
+import { Overlay, Placement } from '../';
+import { Radio } from '@spectrum-web-components/radio';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;

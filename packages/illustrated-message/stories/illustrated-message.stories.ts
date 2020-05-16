@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
-import { illustration } from '../../dropzone/test/test-svg';
+import '../sp-illustrated-message.js';
+import { illustration } from '@spectrum-web-components/dropzone/test/test-svg.js';
 
 export default {
     component: 'sp-illustrated-message',

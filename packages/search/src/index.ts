@@ -9,17 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './search.js';
-
-import { Search } from './search.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-search')) {
-    customElements.define('sp-search', Search);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-search': Search;
-    }
-}
+export * from './Search.js';

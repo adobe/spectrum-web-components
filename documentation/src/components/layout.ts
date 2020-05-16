@@ -19,12 +19,14 @@ import {
 } from 'lit-element';
 import './side-nav.js';
 import layoutStyles from './layout.css';
-import '@spectrum-web-components/theme';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
 import { Dropdown } from '@spectrum-web-components/dropdown';
-import '@spectrum-web-components/dropdown';
-import '@spectrum-web-components/menu';
-import '@spectrum-web-components/menu-item';
+import '@spectrum-web-components/dropdown/sp-dropdown.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/button/sp-action-button.js';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';

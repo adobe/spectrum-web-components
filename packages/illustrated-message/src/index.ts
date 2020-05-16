@@ -9,17 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './illustrated-message.js';
-
-import { IllustratedMessage } from './illustrated-message.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-illustrated-message')) {
-    customElements.define('sp-illustrated-message', IllustratedMessage);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-illustrated-message': IllustratedMessage;
-    }
-}
+export * from './IllustratedMessage.js';

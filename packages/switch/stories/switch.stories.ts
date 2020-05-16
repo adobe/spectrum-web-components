@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, action } from '@open-wc/demoing-storybook';
 
-import '../';
+import '../sp-switch.js';
 import { TemplateResult } from 'lit-html';
 
 export default {

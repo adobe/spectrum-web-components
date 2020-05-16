@@ -21,13 +21,12 @@ import {
 import sideNavSearchMenuStyles from './side-nav-search.css';
 import { Search } from '@spectrum-web-components/search';
 import { Overlay } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/search';
-import '@spectrum-web-components/overlay';
-import '@spectrum-web-components/popover';
-import '@spectrum-web-components/menu';
-import '@spectrum-web-components/menu-group';
-import '@spectrum-web-components/menu-item';
-import '@spectrum-web-components/illustrated-message';
+import '@spectrum-web-components/search/sp-search.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import { AppRouter } from '../router.js';
 import { search, ResultGroup } from './search-index.js';
 
@@ -51,10 +50,10 @@ class SearchComponent extends LitElement {
         }
     }
 
-    private openPopover() {
+    private async openPopover() {
         if (!this.popover) return;
 
-        this.closeOverlay = Overlay.open(this, 'click', this.popover, {
+        this.closeOverlay = await Overlay.open(this, 'click', this.popover, {
             placement: 'bottom',
         });
     }

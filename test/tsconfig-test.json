@@ -6,12 +6,14 @@
         "types": ["mocha", "chai", "sinon", "karma-chai", "webpack-env", "node"]
     },
     "include": [
-        "../packages/**/test/*.ts",
-        "../packages/actionbar/stories/*.ts",
-        "../packages/button-group/stories/*.ts",
-        "../packages/dialog/stories/*.ts",
+        "../packages/**/*.ts",
+        "../packages/*/stories/*.ts",
         "./testing-helpers.ts",
         "../global.d.ts"
     ],
-    "exclude": ["../packages/**/node_modules/**/*"]
+    "exclude": [
+        "../packages/*/lib/**/*",
+        "../packages/**/node_modules/**/*",
+        "../packages/*/test/benchmark/*.ts"
+    ]
 }

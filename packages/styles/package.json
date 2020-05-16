@@ -33,10 +33,6 @@
     },
     "author": "",
     "license": "Apache-2.0",
-    "peerDependencies": {
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0"
-    },
     "devDependencies": {
         "@spectrum-css/commons": "^2.1.0",
         "@spectrum-css/typography": "^2.1.3",

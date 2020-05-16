@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, CSSResultArray, TemplateResult } from 'lit-element';
-import '@spectrum-web-components/bundle';
+import '@spectrum-web-components/bundle/elements.js';
 import { RouteComponent } from './route-component.js';
 import componentStyles from './markdown.css';
 import { AppRouter } from '../router.js';
-import '@spectrum-web-components/tab';
-import '@spectrum-web-components/tab-list';
-import { TabList } from '@spectrum-web-components/tab-list';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import { Tabs } from '@spectrum-web-components/tabs';
 import docs from '../../custom-elements.json';
 
 let ComponentDocs: Map<string, TemplateResult>;
@@ -130,7 +130,7 @@ class ComponentElement extends RouteComponent {
     public handleTabChange(event: Event) {
         if (!this.location || !event.target) return;
 
-        const target = event.target as TabList;
+        const target = event.target as Tabs;
         const selected = target.selected as TabValue;
         AppRouter.changeParams({
             component: this.location.params.component,
@@ -173,7 +173,7 @@ class ComponentElement extends RouteComponent {
                     </div>
                     ${APIdocs && componentDocs
                         ? html`
-                              <sp-tab-list
+                              <sp-tabs
                                   selected="${this.tab}"
                                   @change="${this.handleTabChange}"
                                   direction="horizontal"
@@ -183,7 +183,7 @@ class ComponentElement extends RouteComponent {
                                       label="Examples"
                                   ></sp-tab>
                                   <sp-tab value="api" label="API"></sp-tab>
-                              </sp-tab-list>
+                              </sp-tabs>
                           `
                         : html``}
                     ${componentDocs && this.tab === TabValue.Examples

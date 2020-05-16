@@ -9,17 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './status-light.js';
-
-import { StatusLight } from './status-light.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-status-light')) {
-    customElements.define('sp-status-light', StatusLight);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-status-light': StatusLight;
-    }
-}
+export * from './StatusLight.js';

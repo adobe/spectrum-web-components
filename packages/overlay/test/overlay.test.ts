@@ -9,18 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../';
-import '../../button';
-import '../../popover';
-import { Popover } from '../../popover';
-import '../../theme';
-import { Overlay } from '../../overlay';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import { Popover } from '@spectrum-web-components/popover';
+import { Overlay } from '../';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
 import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
+    let openOverlays: (() => void)[] = [];
 
     beforeEach(async () => {
         testDiv = await fixture<HTMLDivElement>(
@@ -74,6 +73,11 @@ describe('Overlays', () => {
         await elementUpdated(testDiv);
     });
 
+    afterEach(() => {
+        openOverlays.map((close) => close());
+        openOverlays = [];
+    });
+
     it('opens a popover', async () => {
         const button = testDiv.querySelector('#first-button') as HTMLElement;
         const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
@@ -87,11 +91,13 @@ describe('Overlays', () => {
 
         expect(button).to.exist;
 
-        Overlay.open(button, 'click', outerPopover, {
-            delayed: false,
-            placement: 'top',
-            offset: 10,
-        });
+        openOverlays.push(
+            await Overlay.open(button, 'click', outerPopover, {
+                delayed: false,
+                placement: 'top',
+                offset: 10,
+            })
+        );
 
         // Wait for the DOM node to be stolen and reparented into the overlay
         await waitForPredicate(
@@ -124,11 +130,13 @@ describe('Overlays', () => {
         expect(isVisible(hoverOverlay)).to.be.false;
         expect(isVisible(clickOverlay)).to.be.false;
 
-        Overlay.open(button, 'hover', hoverOverlay, {
-            delayed: false,
-            placement: 'top',
-            offset: 10,
-        });
+        openOverlays.push(
+            await Overlay.open(button, 'hover', hoverOverlay, {
+                delayed: false,
+                placement: 'top',
+                offset: 10,
+            })
+        );
 
         // Wait for the DOM node to be stolen and reparented into the overlay
         await waitForPredicate(
@@ -148,11 +156,13 @@ describe('Overlays', () => {
         expect(isVisible(hoverOverlay)).to.be.true;
 
         // Opening click overlay should close the hover overlay
-        Overlay.open(button, 'click', clickOverlay, {
-            delayed: false,
-            placement: 'bottom',
-            offset: 10,
-        });
+        openOverlays.push(
+            await Overlay.open(button, 'click', clickOverlay, {
+                delayed: false,
+                placement: 'bottom',
+                offset: 10,
+            })
+        );
 
         // Wait for the DOM node to be stolen and reparented into the overlay
         await waitForPredicate(
@@ -186,11 +196,13 @@ describe('Overlays', () => {
         expect(isVisible(customOverlay)).to.be.false;
         expect(isVisible(clickOverlay)).to.be.false;
 
-        Overlay.open(button, 'custom', customOverlay, {
-            delayed: false,
-            placement: 'top',
-            offset: 10,
-        });
+        openOverlays.push(
+            await Overlay.open(button, 'custom', customOverlay, {
+                delayed: false,
+                placement: 'top',
+                offset: 10,
+            })
+        );
 
         // Wait for the DOM node to be stolen and reparented into the overlay
         await waitForPredicate(
@@ -210,11 +222,13 @@ describe('Overlays', () => {
         expect(isVisible(customOverlay)).to.be.true;
 
         // Opening click overlay should close the hover overlay
-        Overlay.open(button, 'click', clickOverlay, {
-            delayed: false,
-            placement: 'bottom',
-            offset: 10,
-        });
+        openOverlays.push(
+            await Overlay.open(button, 'click', clickOverlay, {
+                delayed: false,
+                placement: 'bottom',
+                offset: 10,
+            })
+        );
 
         // Wait for the DOM node to be stolen and reparented into the overlay
         await waitForPredicate(

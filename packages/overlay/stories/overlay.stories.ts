@@ -12,14 +12,16 @@ import { html, number, select, radios } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-element';
 
 import { Placement } from '../';
-import '../../button';
-import '../../popover';
-import '../../slider';
-import '../../radio';
-import '../../radio-group';
-import '../../tooltip';
-import '../../theme';
-import { Color } from '../../theme';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import { Color } from '@spectrum-web-components/theme';
 
 import './overlay-story-components';
 

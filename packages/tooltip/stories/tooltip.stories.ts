@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, boolean, select, text } from '@open-wc/demoing-storybook';
 
-import '../';
-import '../../icon';
-import '../../iconset';
+import '../sp-tooltip.js';
+import '@spectrum-web-components/icon/sp-icon';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { TemplateResult } from 'lit-html';
 
 const tipOptions = ['top', 'bottom', 'left', 'right'];

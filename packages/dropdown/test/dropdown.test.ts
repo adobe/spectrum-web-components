@@ -10,11 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../';
+import '../sp-dropdown.js';
 import { Dropdown } from '../';
-import '../../menu';
-import '../../menu-item';
-import { MenuItem } from '../../menu-item';
+import '@spectrum-web-components/overlay/active-overlay.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
     fixture,
     elementUpdated,
@@ -22,8 +24,7 @@ import {
     expect,
     waitUntil,
 } from '@open-wc/testing';
-import { waitForPredicate } from '../../../test/testing-helpers';
-import '../../shared/lib/focus-visible.js';
+import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
@@ -36,41 +37,50 @@ const keyboardEvent = (code: string): KeyboardEvent =>
 const arrowDownEvent = keyboardEvent('ArrowDown');
 const arrowUpEvent = keyboardEvent('ArrowUp');
 
-const dropdownFixture = async (): Promise<Dropdown> => {
-    const el = await fixture<Dropdown>(
-        html`
-            <sp-dropdown
-                label="Select a Country with a very long label, too long in fact"
-            >
-                <sp-menu>
-                    <sp-menu-item>
-                        Deselect
-                    </sp-menu-item>
-                    <sp-menu-item value="option-2">
-                        Select Inverse
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Feather...
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Select and Mask...
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Save Selection
-                    </sp-menu-item>
-                    <sp-menu-item disabled>
-                        Make Work Path
-                    </sp-menu-item>
-                </sp-menu>
-            </sp-dropdown>
-        `
-    );
-    await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
-    return el;
-};
-
 describe('Dropdown', () => {
+    const dropdownFixture = async (): Promise<Dropdown> => {
+        const el = await fixture<Dropdown>(
+            html`
+                <sp-dropdown
+                    label="Select a Country with a very long label, too long in fact"
+                >
+                    <sp-menu>
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item value="option-2">
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-dropdown>
+            `
+        );
+
+        await waitUntil(
+            () => !!window.applyFocusVisiblePolyfill,
+            'polyfill loaded'
+        );
+        return el;
+    };
+
+    afterEach(async () => {
+        const overlays = document.querySelectorAll('active-overlay');
+        overlays.forEach((overlay) => overlay.remove());
+    });
+
     it('loads accessibly', async () => {
         const el = await dropdownFixture();
 
@@ -256,6 +266,10 @@ describe('Dropdown', () => {
 
         el.open = true;
         await elementUpdated(el);
+        await waitUntil(
+            () => document.activeElement === firstItem,
+            'first item focused'
+        );
 
         el.blur();
         await elementUpdated(el);
@@ -263,7 +277,10 @@ describe('Dropdown', () => {
         expect(el.open).to.be.true;
         el.focus();
         await elementUpdated(el);
-        await waitForPredicate(() => document.activeElement === firstItem);
+        await waitUntil(
+            () => document.activeElement === firstItem,
+            'first item refocused'
+        );
         expect(el.open).to.be.true;
         expect(document.activeElement === firstItem).to.be.true;
     });
@@ -304,8 +321,12 @@ describe('Dropdown', () => {
         );
 
         await elementUpdated(el);
-        await waitUntil(() => el.selectedItemText === 'Select Inverse');
+        await waitUntil(
+            () => el.selectedItemText === 'Select Inverse',
+            `Selected Item Text: ${el.selectedItemText}`
+        );
 
+        const menu = el.querySelector('sp-menu') as Menu;
         const firstItem = el.querySelector(
             'sp-menu-item:nth-of-type(1)'
         ) as MenuItem;
@@ -322,11 +343,16 @@ describe('Dropdown', () => {
         const button = el.button as HTMLButtonElement;
         button.click();
 
-        await elementUpdated(el);
+        await elementUpdated(menu);
+        await waitUntil(
+            () => document.activeElement === secondItem,
+            'second item focused'
+        );
 
         expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
-        expect(focusSelectedSpy.calledOnce, 'focus selected element').to.be
-            .true;
+        expect(focusSelectedSpy.called, 'focused selected element').to.be.true;
+        expect(focusSelectedSpy.calledOnce, 'focused selected element once').to
+            .be.true;
     });
     it('resets value when item not available', async () => {
         const el = await fixture<Dropdown>(

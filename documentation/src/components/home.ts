@@ -2,9 +2,9 @@ import { html, CSSResultArray } from 'lit-element';
 import { RouteComponent } from './route-component';
 import componentStyles from './markdown.css';
 import homeStyles from './home.css';
-import '@spectrum-web-components/button';
-import '@spectrum-web-components/link';
-import '@spectrum-web-components/rule';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/link/sp-link.js';
+import '@spectrum-web-components/rule/sp-rule.js';
 
 class HomeElement extends RouteComponent {
     public static get styles(): CSSResultArray {
