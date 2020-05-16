@@ -125,27 +125,6 @@ describe('Search', () => {
         expect(el.focusElement.placeholder).to.equal(testString);
         expect(el.focusElement.getAttribute('aria-label')).to.equal(testString);
     });
-    it('submits', async () => {
-        const el = await litFixture<Search>(
-            html`
-                <sp-search action="#"></sp-search>
-            `
-        );
-
-        await elementUpdated(el);
-        const searchForm = (el.shadowRoot
-            ? el.shadowRoot.querySelector('form')
-            : el.querySelector('form')) as HTMLFormElement;
-
-        const submitEvent = new Event('submit', {
-            cancelable: true,
-            bubbles: false,
-            composed: false,
-        });
-        searchForm.dispatchEvent(submitEvent);
-
-        expect(submitEvent.defaultPrevented).to.be.false;
-    });
     it('can have default prevented', async () => {
         const el = await litFixture<Search>(
             html`
