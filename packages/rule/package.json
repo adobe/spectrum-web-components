@@ -38,7 +38,7 @@
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/rule": "^2.0.0"
+        "@spectrum-css/rule": "^2.0.6"
     },
     "dependencies": {
         "tslib": "^2.0.0"
