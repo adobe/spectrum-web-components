@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
-import '../';
+import '../sp-actionbar.js';
 import { Actionbar } from '../';
 import { Default } from '../stories/actionbar.stories';
 

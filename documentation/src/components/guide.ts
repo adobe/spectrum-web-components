@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, CSSResultArray } from 'lit-element';
-import '@spectrum-web-components/link';
+import '@spectrum-web-components/link/sp-link.js';
 import './layout.js';
 import { GuideDocs } from '../../guides/index.js';
 import { RouteComponent } from './route-component.js';

@@ -10,17 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './button-group.js';
-
-import { ButtonGroup } from './button-group.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-button-group')) {
-    customElements.define('sp-button-group', ButtonGroup);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-button-group': ButtonGroup;
-    }
-}
+export * from './ButtonGroup.js';

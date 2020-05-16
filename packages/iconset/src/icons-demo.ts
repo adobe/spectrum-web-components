@@ -19,6 +19,7 @@ import {
     property,
     customElement,
 } from 'lit-element';
+import '@spectrum-web-components/icon/sp-icon.js';
 
 @customElement('icons-demo')
 export class IconsDemo extends LitElement {

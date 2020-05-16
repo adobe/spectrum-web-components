@@ -12,10 +12,9 @@ governing permissions and limitations under the License.
 import { html, action, boolean, text } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-html';
 
-import '../';
 import { ActionMenu } from '../';
-import '../../menu';
-import '../../menu-item';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import { ActionMenuMarkup } from './';
 
 export default {

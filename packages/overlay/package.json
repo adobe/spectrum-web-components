@@ -20,17 +20,21 @@
     ],
     "version": "0.3.8",
     "description": "",
-    "main": "lib/index.js",
-    "module": "lib/index.js",
+    "main": "src/index.js",
+    "module": "src/index.js",
     "type": "module",
     "files": [
         "custom-elements.json",
-        "/lib/",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
         "/src/"
     ],
     "sideEffects": [
-        "./lib/index.js",
-        "./src/index.ts",
+        "./active-overlay.js",
+        "./active-overlay.ts",
+        "./overlay-trigger.js",
+        "./overlay-trigger.ts",
         "./stories/overlay-story-components.js",
         "./stories/overlay-story-components.ts"
     ],
@@ -39,13 +43,11 @@
     },
     "author": "",
     "license": "Apache-2.0",
-    "peerDependencies": {
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0"
-    },
     "dependencies": {
         "@popperjs/core": "^2.2.2",
         "@spectrum-web-components/theme": "^0.4.1",
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0",
         "popper-max-size-modifier": "^0.2.0",
         "tslib": "^2.0.0"
     }

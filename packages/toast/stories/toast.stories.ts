@@ -12,8 +12,9 @@ governing permissions and limitations under the License.
 import { html, select, boolean, text } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-html';
 
-import '../';
+import '../sp-toast.js';
 import { toastVariants } from '../';
+import '@spectrum-web-components/button/sp-button.js';
 
 const toast = ({
     variant = '',
@@ -41,7 +42,7 @@ export const Default = (): TemplateResult => {
     return toast({ variant, disappearing, open, content });
 };
 
-const variantDemo = (variant): TemplateResult => {
+const variantDemo = (variant: string): TemplateResult => {
     const content = text('Content', 'This is a toast message.', 'Component');
     const disappearing = boolean('Disappearing', false, 'Component');
     const open = boolean('Open', true, 'Component');

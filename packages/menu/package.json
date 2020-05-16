@@ -20,31 +20,37 @@
     ],
     "version": "0.2.7",
     "description": "",
-    "main": "lib/index.js",
-    "module": "lib/index.js",
+    "main": "src/index.js",
+    "module": "src/index.js",
     "type": "module",
     "files": [
         "custom-elements.json",
-        "/lib/",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
         "/src/"
     ],
     "sideEffects": [
-        "./lib/index.js",
-        "./src/index.ts"
+        "./sp-menu.js",
+        "./sp-menu.ts",
+        "./sp-menu-divider.js",
+        "./sp-menu-divider.ts",
+        "./sp-menu-group.js",
+        "./sp-menu-group.ts",
+        "./sp-menu-item.js",
+        "./sp-menu-item.ts"
     ],
     "scripts": {
         "test": "karma start --coverage"
     },
     "author": "",
     "license": "Apache-2.0",
-    "peerDependencies": {
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0"
-    },
     "devDependencies": {
         "@spectrum-css/menu": "^2.1.5"
     },
     "dependencies": {
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0",
         "tslib": "^2.0.0"
     }
 }

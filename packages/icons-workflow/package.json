@@ -36,10 +36,6 @@
     },
     "author": "",
     "license": "Apache-2.0",
-    "dependencies": {
-        "@spectrum-web-components/iconset": "^0.1.11",
-        "tslib": "^2.0.0"
-    },
     "devDependencies": {
         "@adobe/spectrum-css-workflow-icons": "^1.0.0",
         "@spectrum-web-components/icon": "^0.4.8",
@@ -53,8 +49,10 @@
         "path": "^0.12.7",
         "prettier": "^2.0.5"
     },
-    "peerDependencies": {
+    "dependencies": {
+        "@spectrum-web-components/iconset": "^0.1.11",
         "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0"
+        "lit-html": "^1.0.0",
+        "tslib": "^2.0.0"
     }
 }

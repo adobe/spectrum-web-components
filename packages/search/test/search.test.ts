@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../';
+import '../sp-search.js';
 import { Search } from '../';
 import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
-import '../../shared/lib/focus-visible.js';
+import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
 
 describe('Search', () => {

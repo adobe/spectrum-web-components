@@ -11,9 +11,10 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
+import '../sp-icon.js';
 import { back } from './images';
-import './../../icons';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
+import '@spectrum-web-components/icons/sp-icons-large.js';
 
 const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'];
 

@@ -10,17 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './rule.js';
-
-import { Rule } from './rule.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-rule')) {
-    customElements.define('sp-rule', Rule);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-rule': Rule;
-    }
-}
+export * from './Rule.js';

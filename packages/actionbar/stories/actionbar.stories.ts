@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 import { TemplateResult } from 'lit-html';
 
-import '../';
+import '../sp-actionbar.js';
 import { html } from '@open-wc/demoing-storybook';
-import '@spectrum-web-components/checkbox';
-import '@spectrum-web-components/button';
-import '@spectrum-web-components/button-group';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+import '@spectrum-web-components/button/sp-action-button.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
 import { EditIcon, MoreIcon } from '@spectrum-web-components/icons-workflow';
 
 export default {

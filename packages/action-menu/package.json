@@ -20,33 +20,32 @@
     ],
     "version": "0.4.10",
     "description": "",
-    "main": "lib/index.js",
-    "module": "lib/index.js",
+    "main": "src/index.js",
+    "module": "src/index.js",
     "type": "module",
     "files": [
         "custom-elements.json",
-        "/lib/",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
         "/src/"
     ],
     "sideEffects": [
-        "./lib/index.js",
-        "./src/index.ts"
+        "./sp-action-menu.js",
+        "./sp-action-menu.ts"
     ],
     "scripts": {
         "test": "karma start --coverage"
     },
     "author": "",
     "license": "Apache-2.0",
-    "peerDependencies": {
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0"
-    },
     "dependencies": {
         "@spectrum-web-components/dropdown": "^0.5.5",
         "@spectrum-web-components/icons-workflow": "^0.2.2",
         "@spectrum-web-components/menu": "^0.2.7",
-        "@spectrum-web-components/menu-item": "^0.5.4",
         "@spectrum-web-components/shared": "^0.4.7",
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0",
         "tslib": "^2.0.0"
     }
 }

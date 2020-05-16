@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../../';
-import '@spectrum-web-components/button';
+import '@spectrum-web-components/button-group/sp-button-group.js';
+import '@spectrum-web-components/button/sp-button.js';
 import { html } from 'lit-html';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 

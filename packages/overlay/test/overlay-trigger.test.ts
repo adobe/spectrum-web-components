@@ -9,13 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../';
-import { OverlayTrigger } from '../lib/index.js';
-import '../../button';
-import '../../popover';
-import { Popover } from '../../popover';
-import '../../theme';
-
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
 import {
     fixture,
@@ -24,9 +17,16 @@ import {
     expect,
     nextFrame,
     elementUpdated,
+    waitUntil,
 } from '@open-wc/testing';
-import { Button } from '../../button';
-import { ActiveOverlay } from '../lib/active-overlay';
+
+import '../overlay-trigger.js';
+import { OverlayTrigger, ActiveOverlay } from '../';
+import '@spectrum-web-components/button/sp-button.js';
+import { Button } from '@spectrum-web-components/button';
+import '@spectrum-web-components/popover/sp-popover.js';
+import { Popover } from '@spectrum-web-components/popover';
+import '@spectrum-web-components/theme/sp-theme.js';
 
 function pressEscape(): void {
     const up = new KeyboardEvent('keyup', {
@@ -366,9 +366,10 @@ describe('Overlay Trigger', () => {
         const mouseEnter = new MouseEvent('mouseenter');
         triggerShadowDiv.dispatchEvent(mouseEnter);
 
-        // Wait for the DOM node to be put back in its original place
-        await waitForPredicate(
-            () => !(hoverContent.parentElement instanceof OverlayTrigger)
+        // Wait for the DOM node to be stolen from its original place
+        await waitUntil(
+            () => !(hoverContent.parentElement instanceof OverlayTrigger),
+            'hoverContent stolen'
         );
 
         expect(isVisible(hoverContent)).to.be.true;
@@ -377,8 +378,9 @@ describe('Overlay Trigger', () => {
         triggerShadowDiv.dispatchEvent(mouseLeave);
 
         // Wait for the DOM node to be put back in its original place
-        await waitForPredicate(
-            () => hoverContent.parentElement instanceof OverlayTrigger
+        await waitUntil(
+            () => hoverContent.parentElement instanceof OverlayTrigger,
+            'hoverContent returned'
         );
 
         expect(isVisible(hoverContent)).to.be.false;
@@ -404,17 +406,18 @@ describe('Overlay Trigger', () => {
         expect(outerButton).to.exist;
         expect(hoverContent).to.exist;
 
-        expect(isVisible(hoverContent)).to.be.false;
+        expect(isVisible(hoverContent), 'hoverContent should not be visible').to
+            .be.false;
 
         const mouseEnter = new MouseEvent('mouseenter');
         const mouseLeave = new MouseEvent('mouseleave');
         triggerShadowDiv.dispatchEvent(mouseEnter);
         triggerShadowDiv.dispatchEvent(mouseLeave);
 
-        await nextFrame();
-        await nextFrame();
-
-        expect(isVisible(hoverContent)).to.be.false;
+        await waitUntil(
+            () => isVisible(hoverContent) === false,
+            'hoverContent should still not be visible'
+        );
     });
     it('acquires a `color` and `size` from `sp-theme`', async () => {
         const el = await fixture<HTMLDivElement>(html`

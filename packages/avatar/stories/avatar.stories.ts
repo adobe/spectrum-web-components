@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { html, text } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-html';
 
-import '../';
+import '../sp-avatar.js';
 import { avatar } from './images';
 
 export default {

@@ -13,10 +13,7 @@ governing permissions and limitations under the License.
 
 import { {{ className name }} } from './src/{{className name}}.js';
 
-/* istanbul ignore else */
-if (!customElements.get('{{> tagnamePartial }}')) {
-    customElements.define('{{> tagnamePartial }}', {{ className name }});
-}
+customElements.define('{{> tagnamePartial }}', {{ className name }});
 
 declare global {
     interface HTMLElementTagNameMap {

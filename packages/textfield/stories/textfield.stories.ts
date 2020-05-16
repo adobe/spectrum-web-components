@@ -15,7 +15,7 @@ import {
     withWebComponentsKnobs,
 } from '@open-wc/demoing-storybook';
 
-import '../';
+import '../sp-textfield.js';
 import { TemplateResult } from 'lit-html';
 
 export default {

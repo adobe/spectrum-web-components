@@ -11,10 +11,11 @@ governing permissions and limitations under the License.
 */
 import { html, radios } from '@open-wc/demoing-storybook';
 
-import '../';
-import '../../button';
-import '../../switch';
-import '../../slider';
+import '../sp-theme.js';
+import '../src/themes.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/switch/sp-switch.js';
+import '@spectrum-web-components/slider/sp-slider.js';
 import { TemplateResult } from 'lit-html';
 
 export default {

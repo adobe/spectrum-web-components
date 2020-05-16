@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 import { html, boolean, text, radios } from '@open-wc/demoing-storybook';
 
-import '../';
+import '../sp-popover.js';
 import { TemplateResult } from 'lit-html';
 
 export default {

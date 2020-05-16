@@ -13,15 +13,17 @@ governing permissions and limitations under the License.
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 import { spy } from 'sinon';
 
-import '..';
-import { Dialog, DialogWrapper } from '..';
+import '../sp-dialog-wrapper.js';
+import { Dialog, DialogWrapper } from '../';
 import { Button } from '@spectrum-web-components/button';
 import {
     wrapperLabeledHero,
     wrapperDismissible,
     wrapperButtons,
     wrapperFullscreen,
+    wrapperButtonsUnderlay,
 } from '../stories/dialog-wrapper.stories.js';
+import { Underlay } from '@spectrum-web-components/underlay';
 
 describe('Dialog Wrapper', () => {
     it('loads wrapped dialog accessibly', async () => {
@@ -44,6 +46,24 @@ describe('Dialog Wrapper', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('loads with underlay and no headline accessibly', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        await elementUpdated(el);
+        el.headline = '';
+        await elementUpdated(el);
+        expect(el).to.be.accessible();
+    });
+    it('dismisses via clicking the underlay', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        el.dismissible = true;
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const underlay = root.querySelector('sp-underlay') as Underlay;
+        underlay.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.false;
     });
     it('dismisses', async () => {
         const el = await fixture<DialogWrapper>(wrapperDismissible());

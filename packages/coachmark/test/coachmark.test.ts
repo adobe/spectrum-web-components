@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 import { html } from 'lit-element';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
-import '..';
-import { Coachmark } from '..';
+import '../sp-coachmark.js';
+import { Coachmark } from '../';
 
 describe('Coachmark', () => {
     it('loads default coachmark accessibly', async () => {

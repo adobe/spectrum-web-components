@@ -2,16 +2,15 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "composite": true,
-        "outDir": "./lib",
-        "rootDir": "./src"
+        "rootDir": "./"
     },
-    "include": ["src/*.ts"],
+    "include": ["*.ts", "src/*.ts"],
+    "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
         { "path": "../button" },
         { "path": "../icon" },
         { "path": "../icons-ui" },
         { "path": "../menu" },
-        { "path": "../menu-item" },
         { "path": "../overlay" },
         { "path": "../popover" },
         { "path": "../shared" }

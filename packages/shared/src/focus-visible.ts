@@ -34,6 +34,8 @@ type MixableBaseClass = HTMLElement & OptionalLifecycleCallbacks;
 
 type EndPolyfillCoordinationCallback = () => void;
 
+import 'focus-visible';
+
 /**
  * This mixin function is designed to be applied to a class that inherits
  * from HTMLElement. It makes it easy for a custom element to coordinate with

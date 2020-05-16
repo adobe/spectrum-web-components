@@ -13,9 +13,9 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from 'lit-html';
 import { action, boolean } from '@open-wc/demoing-storybook';
 
-import '@spectrum-web-components/button';
+import '@spectrum-web-components/button/sp-button.js';
 
-import '../';
+import '../sp-dialog-wrapper.js';
 import { landscape } from './images';
 
 export default {

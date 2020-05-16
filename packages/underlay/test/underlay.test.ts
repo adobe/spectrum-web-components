@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 import { html } from 'lit-element';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
-import '..';
-import { Underlay } from '..';
+import '../sp-underlay.js';
+import { Underlay } from '../';
 
 describe('Underlay', () => {
     it('loads default underlay accessibly', async () => {

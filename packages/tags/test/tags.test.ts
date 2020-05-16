@@ -13,7 +13,8 @@ governing permissions and limitations under the License.
 import { html } from 'lit-element';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
-import '..';
+import '../sp-tag.js';
+import '../sp-tags.js';
 import { Tags, Tag } from '..';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
@@ -51,6 +52,22 @@ describe('Tags', () => {
         await expect(el).to.be.accessible();
         expect(el.hasAttribute('role')).to.be.true;
         expect(el.hasAttribute('aria-label')).to.be.true;
+    });
+    it('does not accept focus when empty', async () => {
+        const el = await fixture<Tags>(
+            html`
+                <sp-tags></sp-tags>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
     });
     it('loads default tags with `role` and `aria-label` from the outside', async () => {
         const el = await fixture<Tags>(

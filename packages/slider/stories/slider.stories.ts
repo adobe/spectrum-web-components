@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, action, text, number } from '@open-wc/demoing-storybook';
 
-import '../';
+import '../sp-slider.js';
 import { Slider } from '../';
 import { TemplateResult } from 'lit-html';
 

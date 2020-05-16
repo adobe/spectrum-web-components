@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../lib/theme.js';
-import { Theme, ThemeFragmentMap } from '../lib/theme.js';
-import coreStyles from '../lib/theme.css';
-import lightStyles from '../lib/theme-light.css.js';
-import lightestStyles from '../lib/theme-lightest.css.js';
-import darkStyles from '../lib/theme-dark.css.js';
-import darkestStyles from '../lib/theme-darkest.css.js';
-import largeStyles from '../lib/scale-large.css.js';
-import mediumStyles from '../lib/scale-medium.css.js';
+import '../sp-theme.js';
+import { Theme, ThemeFragmentMap } from '../';
+import coreStyles from '../src/theme.css.js';
+import lightStyles from '../src/theme-light.css.js';
+import lightestStyles from '../src/theme-lightest.css.js';
+import darkStyles from '../src/theme-dark.css.js';
+import darkestStyles from '../src/theme-darkest.css.js';
+import largeStyles from '../src/scale-large.css.js';
+import mediumStyles from '../src/scale-medium.css.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 type TestableTheme = {

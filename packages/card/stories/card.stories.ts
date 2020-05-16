@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
+import '../sp-card.js';
 import { landscape, portrait } from './images';
-import '../../textfield';
+import '@spectrum-web-components/textfield/sp-textfield.js';
 
 export default {
     component: 'sp-card',

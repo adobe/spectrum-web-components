@@ -20,27 +20,29 @@
     ],
     "version": "0.7.0",
     "description": "",
-    "main": "lib/index.js",
-    "module": "lib/index.js",
+    "main": "src/index.js",
+    "module": "src/index.js",
     "type": "module",
     "files": [
         "custom-elements.json",
-        "/lib/",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
         "/src/"
     ],
     "sideEffects": [
-        "./lib/index.js",
-        "./src/index.ts"
+        "./sp-action-button.js",
+        "./sp-action-button.ts",
+        "./sp-button.js",
+        "./sp-button.ts",
+        "./sp-clear-button.js",
+        "./sp-clear-button.ts"
     ],
     "scripts": {
         "test": "karma start --coverage"
     },
     "author": "",
     "license": "Apache-2.0",
-    "peerDependencies": {
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0"
-    },
     "devDependencies": {
         "@spectrum-css/button": "^2.2.0"
     },
@@ -48,6 +50,8 @@
         "@spectrum-web-components/icon": "^0.4.8",
         "@spectrum-web-components/icons-ui": "^0.1.2",
         "@spectrum-web-components/shared": "^0.4.7",
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0",
         "tslib": "^2.0.0"
     }
 }

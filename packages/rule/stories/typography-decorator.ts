@@ -19,7 +19,7 @@ import {
     customElement,
 } from 'lit-element';
 
-import styles from '@spectrum-web-components/theme/lib/typography.css.js';
+import styles from '@spectrum-web-components/theme/src/typography.css.js';
 
 /**
  * @element typography-decorator

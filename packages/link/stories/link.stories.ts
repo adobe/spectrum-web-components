@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
+import '../sp-link.js';
 
 export default {
     component: 'sp-link',

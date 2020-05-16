@@ -10,24 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './tags.js';
-export * from './tag.js';
-
-import { Tags } from './tags.js';
-import { Tag } from './tag.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-tags')) {
-    customElements.define('sp-tags', Tags);
-}
-/* istanbul ignore else */
-if (!customElements.get('sp-tag')) {
-    customElements.define('sp-tag', Tag);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tags': Tags;
-        'sp-tag': Tag;
-    }
-}
+export * from './Tags.js';
+export * from './Tag.js';

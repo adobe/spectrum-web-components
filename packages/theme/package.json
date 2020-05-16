@@ -20,29 +20,35 @@
     ],
     "version": "0.4.1",
     "description": "",
-    "main": "lib/index.js",
-    "module": "lib/index.js",
+    "main": "src/index.js",
+    "module": "src/index.js",
     "type": "module",
     "files": [
         "custom-elements.json",
-        "/lib/",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
         "/src/"
     ],
     "sideEffects": [
-        "./lib/*.js",
-        "./src/*.ts"
+        "./sp-theme.js",
+        "./sp-theme.ts",
+        "./theme-*.js",
+        "./theme-*.ts",
+        "./scale-*.js",
+        "./scale-*.ts",
+        "./src/themes.js",
+        "./src/themes.ts"
     ],
     "scripts": {
         "test": "karma start --coverage"
     },
     "author": "",
     "license": "ISC",
-    "peerDependencies": {
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0"
-    },
     "dependencies": {
         "@spectrum-web-components/styles": "^0.5.3",
+        "lit-element": "^2.1.0",
+        "lit-html": "^1.0.0",
         "tslib": "^2.0.0"
     }
 }

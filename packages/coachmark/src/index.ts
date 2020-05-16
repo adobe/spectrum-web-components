@@ -9,18 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-export * from './coachmark.js';
-
-import { Coachmark } from './coachmark.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-coachmark')) {
-    customElements.define('sp-coachmark', Coachmark);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-coachmark': Coachmark;
-    }
-}
+export * from './Coachmark.js';

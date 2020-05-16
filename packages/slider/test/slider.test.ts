@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../';
+import '../sp-slider.js';
 import { Slider } from '../';
 import {
     fixture,
@@ -610,5 +610,22 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(input.getAttribute('aria-valuetext')).to.equal('100%');
+    });
+    it('uses fallback ariaValueText', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider value="50" min="0" max="100"></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+        ((el as unknown) as {
+            getAriaValueText: boolean;
+        }).getAriaValueText = false;
+
+        const input = el.focusElement as HTMLInputElement;
+        await elementUpdated(el);
+
+        expect(input.getAttribute('aria-valuetext')).to.equal('50');
     });
 });

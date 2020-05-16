@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
-import '..';
+import '../sp-dialog.js';
 import { Dialog } from '..';
 import {
     small,

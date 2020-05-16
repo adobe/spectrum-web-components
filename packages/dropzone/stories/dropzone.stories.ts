@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
+import '../sp-dropzone.js';
 import { illustration } from '../test/test-svg';
-import './../../illustrated-message/lib';
-import './../../link/lib';
+import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+import '@spectrum-web-components/link/sp-link.js';
 
 export default {
     component: 'sp-dropzone',

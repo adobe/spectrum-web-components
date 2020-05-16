@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 import { html, action } from '@open-wc/demoing-storybook';
 
-import '../';
+import '../sp-dropdown.js';
 import { Dropdown } from '../';
-import '../../menu';
-import '../../menu-item';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import { TemplateResult } from 'lit-html';
 
 export default {

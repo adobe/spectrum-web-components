@@ -9,18 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-export * from './underlay.js';
-
-import { Underlay } from './underlay.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-underlay')) {
-    customElements.define('sp-underlay', Underlay);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-underlay': Underlay;
-    }
-}
+export * from './Underlay.js';

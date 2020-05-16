@@ -9,17 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './link.js';
-
-import { Link } from './link.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-link')) {
-    customElements.define('sp-link', Link);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-link': Link;
-    }
-}
+export * from './Link.js';

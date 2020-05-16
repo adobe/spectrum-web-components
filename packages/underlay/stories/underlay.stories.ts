@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
+import '../sp-underlay.js';
 
 export default {
     title: 'Underlay',

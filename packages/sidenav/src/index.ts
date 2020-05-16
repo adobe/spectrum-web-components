@@ -9,33 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { SideNav } from './sidenav.js';
-import { SideNavItem } from './sidenav-item.js';
-import { SideNavHeading } from './sidenav-heading.js';
-
-export * from './sidenav.js';
-export * from './sidenav-item.js';
-export * from './sidenav-heading.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-sidenav')) {
-    customElements.define('sp-sidenav', SideNav);
-}
-
-/* istanbul ignore else */
-if (!customElements.get('sp-sidenav-item')) {
-    customElements.define('sp-sidenav-item', SideNavItem);
-}
-
-/* istanbul ignore else */
-if (!customElements.get('sp-sidenav-heading')) {
-    customElements.define('sp-sidenav-heading', SideNavHeading);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-sidenav': SideNav;
-        'sp-sidenav-item': SideNavItem;
-        'sp-sidenav-heading': SideNavHeading;
-    }
-}
+export * from './Sidenav.js';
+export * from './SidenavItem.js';
+export * from './SidenavHeading.js';

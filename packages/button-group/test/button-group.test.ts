@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
-import '..';
+import '../sp-button-group.js';
 import { ButtonGroup } from '..';
 import {
     buttons,

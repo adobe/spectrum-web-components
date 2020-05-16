@@ -13,6 +13,7 @@ import { html, action } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-html';
 
 import '../';
+import '../sp-action-button.js';
 
 interface Properties {
     quiet?: boolean;

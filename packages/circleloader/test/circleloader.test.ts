@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../';
+import '../sp-circleloader.js';
 import { CircleLoader } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
@@ -38,5 +38,30 @@ describe('Circle Loader', () => {
         expect(el).shadowDom.to.equalSnapshot();
 
         await expect(el).to.be.accessible();
+    });
+    it('accepts user `role`', async () => {
+        const el = await fixture<CircleLoader>(html`
+            <sp-circleloader role="progressbar"></sp-circleloader>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('role')).to.equal('progressbar');
+    });
+    it('returns to indeterminate', async () => {
+        const el = await fixture<CircleLoader>(html`
+            <sp-circleloader progress="50"></sp-circleloader>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('50');
+
+        el.indeterminate = true;
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.false;
     });
 });

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../lib/focusable';
-import { Focusable } from '../lib/focusable';
+import '../src/focusable';
+import { Focusable } from '../src/focusable';
 import { html } from 'lit-element';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 

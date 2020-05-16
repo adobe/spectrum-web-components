@@ -1,29 +1,10 @@
 {
     "files.exclude": {
-        "packages/*/src/**/*.css.ts": true,
+        "**/*.css.ts": { "when": "$(basename)" },
         "packages/*/src/spectrum-vars.json": true,
-        "packages/**/*.stories.d.ts": true,
-        "packages/**/stories/*.js": true,
-        "packages/**/stories/*.d.ts": true,
-        "packages/**/stories/*.js.map": true,
-        "packages/**/*.test.js": true,
-        "packages/**/*.test.d.ts": true,
-        "packages/**/*.test.js.map": true,
-        "**/test/benchmark/**/*.js": true,
-        "**/test/benchmark/**/*.d.ts": true,
-        "**/test/benchmark/**/*.js.map": true,
-        "test/testing-helpers.js": true,
-        "test/testing-helpers.d.ts": true,
-        "test/testing-helpers.js.map": true,
-        "documentation/components/**/*.js": true,
-        "documentation/components/**/*.js.map": true,
-        "documentation/guides/**/*.js": true,
-        "documentation/guides/**/*.js.map": true,
-        "documentation/src/*.js": true,
-        "documentation/src/*.js.map": true,
-        "documentation/src/components/*.js": true,
-        "documentation/src/components/*.js.map": true,
-        "documentation/src/utils/templates.js": true,
-        "documentation/src/utils/templates.js.map": true
+        "packages/*/sp-*.d.ts": true,
+        "packages/*/*/*.d.ts": true,
+        "**/*.js.map": true,
+        "**/*.js": { "when": "$(basename).ts" }
     }
 }

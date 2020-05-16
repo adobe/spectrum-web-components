@@ -9,17 +9,4 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './circleloader.js';
-
-import { CircleLoader } from './circleloader.js';
-
-/* istanbul ignore else */
-if (!customElements.get('sp-circleloader')) {
-    customElements.define('sp-circleloader', CircleLoader);
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-circleloader': CircleLoader;
-    }
-}
+export * from './CircleLoader.js';

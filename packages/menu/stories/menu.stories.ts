@@ -11,13 +11,14 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit-html';
 
-import '../';
-import '../../popover';
-import '../../menu';
-import '../../menu-item';
-import '../../menu-group';
-import '../../icon';
-import '../../icons';
+import '../sp-menu.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
 
 export default {
     component: 'sp-menu',
