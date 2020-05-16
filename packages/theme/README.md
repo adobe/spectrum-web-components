@@ -1,6 +1,6 @@
 ## Description
 
-**sp-theme** sets the rendering theme for all child components, and also sets a number of default sizes & colors for any child content. The Spectrum design system provides four color themes and two different scales to support desktop & mobile UI.
+`sp-theme` sets the rendering theme for all child components, and also sets a number of default sizes & colors for any child content. The Spectrum design system provides four color themes (`lightest`, `light`, `dark`, and `darkest`) and two different scales (`medium` and `large`) to support desktop & mobile UI.
 
 ### Installation
 
@@ -131,7 +131,7 @@ The large scale of **sp-theme** will switch to using Spectrum's larger mobile [P
 <style type="text/css">
     #example {
         max-width: 500px;
-        padding: 3em;
+        padding: 1em;
         background-color: var(--spectrum-global-color-gray-100);
         color: var(--spectrum-global-color-gray-800);
     }
@@ -171,14 +171,14 @@ previewing or editing content that will be displayed in a light theme.
 <style type="text/css">
     #outer {
         max-width: 500px;
-        padding: 3em;
+        padding: 1em;
         background-color: var(--spectrum-global-color-gray-100);
         color: var(--spectrum-global-color-gray-800);
     }
 
     #inner {
         margin-top: 2em;
-        padding: 2em;
+        padding: 1em;
         background-color: var(--spectrum-global-color-gray-100);
         color: var(--spectrum-global-color-gray-800);
     }
