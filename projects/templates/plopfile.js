@@ -36,8 +36,13 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: '../../packages/{{name}}/src/{{name}}.ts',
+                path: '../../packages/{{name}}/src/{{className name}}.ts',
                 templateFile: 'plop-templates/component.ts.hbs',
+            },
+            {
+                type: 'add',
+                path: '../../packages/{{name}}/{{> tagnamePartial }}.ts',
+                templateFile: 'plop-templates/component-registration.ts.hbs',
             },
             {
                 type: 'add',

@@ -1,3 +1,4 @@
+
 /*
 Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -10,15 +11,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from 'lit-html';
+import { {{ className name }} } from './src/{{className name}}.js';
 
-import '../{{> tagnamePartial }}.js';
+/* istanbul ignore else */
+if (!customElements.get('{{> tagnamePartial }}')) {
+    customElements.define('{{> tagnamePartial }}', {{ className name }});
+}
 
-export default {
-    title: '{{displayName name}}',
-    component: '{{> tagnamePartial}}',
-};
-
-export const Default = (): TemplateResult => {
-    return html`<{{> tagnamePartial}}></{{> tagnamePartial}}>`;
-};
+declare global {
+    interface HTMLElementTagNameMap {
+        '{{> tagnamePartial }}': {{ className name }};
+    }
+}
