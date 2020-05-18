@@ -55,6 +55,12 @@ governing permissions and limitations under the License.
     margin-right: auto;
 }
 
+@media screen and (max-width: 768px) {
+    #body #layout-content #page {
+        padding: 40px 16px 24px 16px;
+    }
+}
+
 header {
     min-height: var(--spectrum-global-dimension-size-600);
     border-bottom: 1px solid var(--spectrum-global-color-gray-200);
