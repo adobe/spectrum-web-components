@@ -47,6 +47,6 @@
         "@popperjs/core": "^2.2.2",
         "@spectrum-web-components/theme": "^0.4.0",
         "popper-max-size-modifier": "^0.2.0",
-        "tslib": "^1.10.0"
+        "tslib": "^2.0.0"
     }
 }

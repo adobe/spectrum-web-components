@@ -43,6 +43,6 @@
     },
     "dependencies": {
         "@spectrum-web-components/overlay": "^0.3.7",
-        "tslib": "^1.10.0"
+        "tslib": "^2.0.0"
     }
 }

@@ -37,7 +37,6 @@ module.exports = (config) => {
                     flags: ['-headless'],
                     prefs: {
                         'toolkit.telemetry.reportingpolicy.firstRun': false,
-                        'extensions.enabledScopes': 0,
                     },
                 },
             },
@@ -47,7 +46,7 @@ module.exports = (config) => {
             concurrency: 1,
             // this timeout is primarily significant during browser startup
             // after browser startup we shouldn't be coming close to this limit
-            browserNoActivityTimeout: 30000, // default value from karma
+            browserNoActivityTimeout: 50000, // default value from karma
             coverageIstanbulReporter: {
                 thresholds: {
                     global: {
