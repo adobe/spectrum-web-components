@@ -81,6 +81,6 @@
         "@spectrum-web-components/toast": "^0.3.3",
         "@spectrum-web-components/tooltip": "^0.3.9",
         "@spectrum-web-components/underlay": "^0.1.0",
-        "tslib": "^1.10.0"
+        "tslib": "^2.0.0"
     }
 }

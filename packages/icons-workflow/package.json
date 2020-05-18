@@ -38,7 +38,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@spectrum-web-components/iconset": "^0.1.10",
-        "tslib": "^1.10.0"
+        "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@adobe/spectrum-css-workflow-icons": "^1.0.0",

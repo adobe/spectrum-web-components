@@ -49,6 +49,6 @@
         "@spectrum-web-components/icon": "^0.4.7",
         "@spectrum-web-components/icons-ui": "^0.1.1",
         "@spectrum-web-components/textfield": "^0.3.8",
-        "tslib": "^1.10.0"
+        "tslib": "^2.0.0"
     }
 }
