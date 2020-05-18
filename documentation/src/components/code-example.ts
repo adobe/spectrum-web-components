@@ -129,7 +129,7 @@ export class CodeExample extends LitElement {
         return html`
             ${this.showDemo
                 ? html`
-                      <div id="demo">
+                      <div class="demo-example">
                           <slot name="demo">
                               ${renderedCode}
                           </slot>

@@ -19,11 +19,19 @@ governing permissions and limitations under the License.
     width: 100%;
 }
 
-#demo {
+.demo-example {
     flex: 1;
-    padding: 3rem 4rem;
+    padding: var(--spectrum-global-dimension-size-400)
+        var(--spectrum-global-dimension-size-500);
     border-radius: 6px 6px 0 0;
     background: var(--spectrum-global-color-gray-100);
+}
+
+@media (max-width: 768px) {
+    .demo-example {
+        padding: var(--spectrum-global-dimension-size-200)
+            var(--spectrum-global-dimension-size-200);
+    }
 }
 
 #markup {
