@@ -123,7 +123,7 @@
         "@types/sinon": "^9.0.0",
         "@types/webpack": "^4.4.26",
         "@types/webpack-env": "^1.13.9",
-        "@typescript-eslint/eslint-plugin": "^2.33.0",
+        "@typescript-eslint/eslint-plugin": "^3.0.0",
         "@typescript-eslint/parser": "^2.33.0",
         "@vaadin/router": "^1.2.0",
         "@webcomponents/webcomponentsjs": "^2.4.3",
