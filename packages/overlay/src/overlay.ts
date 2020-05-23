@@ -72,7 +72,9 @@ export class Overlay {
     ): () => void {
         const overlay = new Overlay(owner, interaction, overlayElement);
         overlay.open(options);
-        return () => overlay.close();
+        return (): void => {
+            overlay.close();
+        };
     }
 
     public static update(): void {

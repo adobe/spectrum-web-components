@@ -15,7 +15,7 @@ const observedSlotElement = Symbol('observedSlotElement');
 const slotElementObserver = Symbol('slotElementObserver');
 const startObserving = Symbol('startObserving');
 
-type Constructor<T = object> = {
+type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     new (...args: any[]): T;
     prototype: T;

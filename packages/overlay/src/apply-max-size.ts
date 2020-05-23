@@ -42,7 +42,7 @@ export const applyMaxSize = {
                 };
             };
         };
-    }) {
+    }): void {
         const { height: maxHeight } = state.modifiersData.maxSize;
         if (!appliedSizeDefaults.has(state.elements.popper)) {
             appliedSizeDefaults.set(

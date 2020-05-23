@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { UpdatingElement, property, TemplateResult, html } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-type Constructor<T = object> = {
+type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     new (...args: any[]): T;
     prototype: T;

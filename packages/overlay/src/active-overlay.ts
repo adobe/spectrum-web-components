@@ -115,7 +115,7 @@ export class ActiveOverlay extends LitElement {
     public get state(): OverlayStateType {
         return this._state;
     }
-    public set state(state) {
+    public set state(state: OverlayStateType) {
         const nextState = stateTransition(this.state, state);
         if (nextState === this.state) {
             return;
