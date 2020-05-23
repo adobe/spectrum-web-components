@@ -446,6 +446,80 @@
             ]
         },
         {
+            "name": "sp-card",
+            "path": "./packages/card/src/index.ts",
+            "attributes": [
+                {
+                    "name": "variant",
+                    "type": "\"default\" | \"gallery\" | \"quiet\"",
+                    "default": "\"default\""
+                },
+                {
+                    "name": "selected",
+                    "type": "boolean",
+                    "default": "false"
+                },
+                {
+                    "name": "title",
+                    "type": "string",
+                    "default": "\"\""
+                },
+                {
+                    "name": "subtitle",
+                    "type": "string",
+                    "default": "\"\""
+                }
+            ],
+            "properties": [
+                {
+                    "name": "variant",
+                    "attribute": "variant",
+                    "type": "\"default\" | \"gallery\" | \"quiet\"",
+                    "default": "\"default\""
+                },
+                {
+                    "name": "selected",
+                    "attribute": "selected",
+                    "type": "boolean",
+                    "default": "false"
+                },
+                {
+                    "name": "title",
+                    "attribute": "title",
+                    "type": "string",
+                    "default": "\"\""
+                },
+                {
+                    "name": "subtitle",
+                    "attribute": "subtitle",
+                    "type": "string",
+                    "default": "\"\""
+                }
+            ],
+            "slots": [
+                {
+                    "name": "preview",
+                    "description": "This is the preview image for Gallery Cards"
+                },
+                {
+                    "name": "title",
+                    "description": "HTML content to be listed as the title"
+                },
+                {
+                    "name": "cover-photo",
+                    "description": "This is the cover photo for Default and Quiet Cards"
+                },
+                {
+                    "name": "description",
+                    "description": "A description of the card"
+                },
+                {
+                    "name": "footer",
+                    "description": "Footer text"
+                }
+            ]
+        },
+        {
             "name": "sp-checkbox",
             "path": "./packages/checkbox/src/index.ts",
             "attributes": [
@@ -518,80 +592,6 @@
             "events": [
                 {
                     "name": "change"
-                }
-            ]
-        },
-        {
-            "name": "sp-card",
-            "path": "./packages/card/src/index.ts",
-            "attributes": [
-                {
-                    "name": "variant",
-                    "type": "\"default\" | \"gallery\" | \"quiet\"",
-                    "default": "\"default\""
-                },
-                {
-                    "name": "selected",
-                    "type": "boolean",
-                    "default": "false"
-                },
-                {
-                    "name": "title",
-                    "type": "string",
-                    "default": "\"\""
-                },
-                {
-                    "name": "subtitle",
-                    "type": "string",
-                    "default": "\"\""
-                }
-            ],
-            "properties": [
-                {
-                    "name": "variant",
-                    "attribute": "variant",
-                    "type": "\"default\" | \"gallery\" | \"quiet\"",
-                    "default": "\"default\""
-                },
-                {
-                    "name": "selected",
-                    "attribute": "selected",
-                    "type": "boolean",
-                    "default": "false"
-                },
-                {
-                    "name": "title",
-                    "attribute": "title",
-                    "type": "string",
-                    "default": "\"\""
-                },
-                {
-                    "name": "subtitle",
-                    "attribute": "subtitle",
-                    "type": "string",
-                    "default": "\"\""
-                }
-            ],
-            "slots": [
-                {
-                    "name": "preview",
-                    "description": "This is the preview image for Gallery Cards"
-                },
-                {
-                    "name": "title",
-                    "description": "HTML content to be listed as the title"
-                },
-                {
-                    "name": "cover-photo",
-                    "description": "This is the cover photo for Default and Quiet Cards"
-                },
-                {
-                    "name": "description",
-                    "description": "A description of the card"
-                },
-                {
-                    "name": "footer",
-                    "description": "Footer text"
                 }
             ]
         },
@@ -816,6 +816,11 @@
                     "default": "\"\""
                 },
                 {
+                    "name": "responsive",
+                    "type": "boolean",
+                    "default": "false"
+                },
+                {
                     "name": "underlay",
                     "type": "boolean",
                     "default": "false"
@@ -891,6 +896,12 @@
                     "attribute": "headline",
                     "type": "string",
                     "default": "\"\""
+                },
+                {
+                    "name": "responsive",
+                    "attribute": "responsive",
+                    "type": "boolean",
+                    "default": "false"
                 },
                 {
                     "name": "underlay",
