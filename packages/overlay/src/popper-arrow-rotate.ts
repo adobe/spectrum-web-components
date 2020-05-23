@@ -15,7 +15,9 @@ import { ModifierArguments, Modifier } from '@popperjs/core/lib/types';
 // Spectrum elements that have arrows (tips) use a transform to rotate them.
 // Popper overwrites those values, so we have to put them back
 
-function computeArrowRotateStylesFn(ref: ModifierArguments<{}>): undefined {
+function computeArrowRotateStylesFn(
+    ref: ModifierArguments<Record<string, unknown>>
+): undefined {
     if (!ref.state.styles || !ref.state.styles.arrow) return;
 
     let rotation: number;
@@ -50,7 +52,7 @@ function computeArrowRotateStylesFn(ref: ModifierArguments<{}>): undefined {
     return;
 }
 
-export const computeArrowRotateStyles: Modifier<{}> = {
+export const computeArrowRotateStyles: Modifier<Record<string, unknown>> = {
     name: 'computeArrowRotateStyles',
     enabled: true,
     phase: 'beforeWrite',

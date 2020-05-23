@@ -22,7 +22,7 @@ export default {
 
 export const Default = (): TemplateResult => html`
     <sp-search
-        @submit=${(event: Event) => {
+        @submit=${(event: Event): void => {
             event.preventDefault();
             const search = event.target as Search;
             action(`Search: ${search.value}`)();
@@ -34,7 +34,7 @@ export const Default = (): TemplateResult => html`
 export const Quiet = (): TemplateResult => html`
     <sp-search
         quiet
-        @submit=${(event: Event) => {
+        @submit=${(event: Event): void => {
             event.preventDefault();
             const search = event.target as Search;
             action(`Search: ${search.value}`)();

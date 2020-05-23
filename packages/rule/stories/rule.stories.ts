@@ -25,7 +25,7 @@ import {
 export default {
     title: 'Rule',
     decorators: [
-        (story): TemplateResult => html`
+        (story: () => TemplateResult): TemplateResult => html`
             <typography-decorator .story=${story()}></typography-decorator>
         `,
     ],

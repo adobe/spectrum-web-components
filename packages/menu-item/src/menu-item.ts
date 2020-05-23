@@ -42,7 +42,7 @@ export class MenuItem extends ActionButton {
     public get value(): string {
         return this._value || this.itemText;
     }
-    public set value(value) {
+    public set value(value: string) {
         if (value === this.value) {
             return;
         }

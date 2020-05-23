@@ -25,7 +25,7 @@ export default {
 export const Default = (): TemplateResult => {
     return html`
         <sp-dropdown
-            @change="${(event: Event) => {
+            @change="${(event: Event): void => {
                 const dropdown = event.target as Dropdown;
                 action(`Change: ${dropdown.value}`)();
             }}"
@@ -72,7 +72,7 @@ export const Open = (): TemplateResult => {
             <sp-dropdown
                 label="Open dropdown"
                 open
-                @change="${(event: Event) => {
+                @change="${(event: Event): void => {
                     const dropdown = event.target as Dropdown;
                     action(`Change: ${dropdown.value}`)();
                 }}"
@@ -106,7 +106,7 @@ export const Open = (): TemplateResult => {
         <fieldset>
             <sp-dropdown
                 label="Dropdown that displays below the options"
-                @change="${(event: Event) => {
+                @change="${(event: Event): void => {
                     const dropdown = event.target as Dropdown;
                     action(`Change: ${dropdown.value}`)();
                 }}"
@@ -127,7 +127,7 @@ export const Open = (): TemplateResult => {
 export const initialValue = (): TemplateResult => {
     return html`
         <sp-dropdown
-            @change="${(event: Event) => {
+            @change="${(event: Event): void => {
                 const dropdown = event.target as Dropdown;
                 action(`Change: ${dropdown.value}`)();
             }}"
