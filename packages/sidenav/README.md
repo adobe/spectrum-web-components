@@ -72,9 +72,9 @@ will send the user to the location of the item.
 ```html
 <sp-sidenav variant="multilevel" defaultValue="Layout">
     <sp-sidenav-item value="Guidelines" label="Guidelines"></sp-sidenav-item>
-    <sp-sidenav-item value="Styles" label="Styles">
+    <sp-sidenav-item value="Styles" label="Styles" expanded>
         <sp-sidenav-item value="Color" label="Color"></sp-sidenav-item>
-        <sp-sidenav-item value="Grid" label="Grid">
+        <sp-sidenav-item value="Grid" label="Grid" expanded>
             <sp-sidenav-item value="Layout" label="Layout"></sp-sidenav-item>
             <sp-sidenav-item value="Responsive" label="Responsive"></sp-sidenav-item>
         </sp-sidenav-item>
@@ -83,6 +83,40 @@ will send the user to the location of the item.
     <sp-sidenav-item value="Elements" label="Elements"></sp-sidenav-item>
     <sp-sidenav-item value="Patterns" label="Patterns"></sp-sidenav-item>
 </sp-sidenav-itm>
+```
+
+## Icon
+
+```html
+<sp-icons-medium></sp-icons-medium>
+<sp-sidenav>
+    <sp-sidenav-item value="Section Title 1" label="Section Title 1">
+        <sp-icon slot="icon" size="s" name="ui:Star"></sp-icon>
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Section Title 2" label="Section Title 2">
+        <sp-icon slot="icon" size="s" name="ui:Star"></sp-icon>
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Section Title 3" label="Section Title 3">
+        <sp-icon slot="icon" size="s" name="ui:Star"></sp-icon>
+    </sp-sidenav-item>
+</sp-sidenav>
+```
+
+## Heading
+
+```html
+<sp-sidenav variant="multilevel">
+    <sp-sidenav-item value="Section 1" label="Section 1"></sp-sidenav-item>
+    <sp-sidenav-item value="Section 2" label="Section 2"></sp-sidenav-item>
+    <sp-sidenav-heading label="Category 1">
+        <sp-sidenav-item value="Section 3" label="Section 3"></sp-sidenav-item>
+        <sp-sidenav-item value="Section 4" label="Section 4"></sp-sidenav-item>
+    </sp-sidenav-heading>
+    <sp-sidenav-heading label="Category 2">
+        <sp-sidenav-item value="Section 5" label="Section 5"></sp-sidenav-item>
+        <sp-sidenav-item value="Section 6" label="Section 6"></sp-sidenav-item>
+    </sp-sidenav-heading>
+</sp-sidenav>
 ```
 
 ## Accessibility
