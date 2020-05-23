@@ -98,7 +98,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-color-focus)
     );
 }
-#itemLink .spectrum-SideNav-itemIcon {
+#itemLink ::slotted([slot='icon']) {
     /* .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
     margin-right: var(
         --spectrum-sidenav-icon-gap,

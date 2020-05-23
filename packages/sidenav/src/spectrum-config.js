@@ -55,6 +55,12 @@ module.exports = {
                     name: 'list',
                 },
             ],
+            slots: [
+                {
+                    name: 'icon',
+                    selector: '.spectrum-SideNav-itemIcon',
+                },
+            ],
         },
         {
             name: 'sidenav-heading',

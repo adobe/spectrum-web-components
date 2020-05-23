@@ -126,6 +126,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 @click="${this.handleClick}"
                 id="itemLink"
             >
+                <slot name="icon"></slot>
                 ${this.label}
             </a>
             ${this.expanded
