@@ -16,13 +16,13 @@ governing permissions and limitations under the License.
 
     --spectrum-web-component-sidenav-font-weight: var(
         --spectrum-sidenav-item-font-weight,
-        400
+        var(--spectrum-global-font-weight-regular)
     );
 }
 
 :host([variant='multilevel']) {
     --spectrum-web-component-sidenav-font-weight: var(
         --spectrum-sidenav-multilevel-main-item-font-weight,
-        700
+        var(--spectrum-global-font-weight-bold)
     );
 }
