@@ -46,6 +46,7 @@ export class Tags extends FocusVisiblePolyfillMixin(LitElement) {
     }
 
     public focus(): void {
+        /* istanbul ignore if */
         if (!this.tags.length) {
             return;
         }

@@ -21,7 +21,9 @@ import {
     wrapperDismissible,
     wrapperButtons,
     wrapperFullscreen,
+    wrapperButtonsUnderlay,
 } from '../stories/dialog-wrapper.stories.js';
+import { Underlay } from '@spectrum-web-components/underlay';
 
 describe('Dialog Wrapper', () => {
     it('loads wrapped dialog accessibly', async () => {
@@ -45,6 +47,24 @@ describe('Dialog Wrapper', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('loads with underlay and no headline accessibly', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        await elementUpdated(el);
+        el.headline = '';
+        await elementUpdated(el);
+        expect(el).to.be.accessible();
+    });
+    it('dismisses via clicking the underlay', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        el.dismissible = true;
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const underlay = root.querySelector('sp-underlay') as Underlay;
+        underlay.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.false;
+    });
     it('dismisses', async () => {
         const el = await fixture<DialogWrapper>(wrapperDismissible());
 
@@ -53,7 +73,11 @@ describe('Dialog Wrapper', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const dialog = root.querySelector('sp-dialog') as Dialog;
-        dialog.dispatchEvent(new Event('close'));
+        const dialogRoot = dialog.shadowRoot ? dialog.shadowRoot : dialog;
+        const dismissButton = dialogRoot.querySelector(
+            '.close-button'
+        ) as HTMLButtonElement;
+        dismissButton.click();
 
         await elementUpdated(el);
         expect(el.open).to.be.false;

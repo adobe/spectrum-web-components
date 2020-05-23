@@ -34,7 +34,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     public value: string | undefined = undefined;
 
     @property({ type: Boolean, attribute: false })
-    public manageTabIndex = false;
+    public unmanagedTabIndex = false;
 
     @property({ type: Boolean, reflect: true })
     public selected = false;
@@ -118,13 +118,18 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         const tabIndexForSelectedState = this.selected ? '0' : '-1';
         return html`
             <a
-                tabindex=${this.manageTabIndex ? tabIndexForSelectedState : '0'}
+                tabindex=${this.unmanagedTabIndex
+                    ? '0'
+                    : tabIndexForSelectedState}
                 href=${this.href || '#'}
                 target=${ifDefined(this.target)}
                 download=${ifDefined(this.download)}
                 data-level="${this.depth}"
                 @click="${this.handleClick}"
                 id="itemLink"
+                aria-current=${ifDefined(
+                    this.selected && this.href ? 'page' : undefined
+                )}
             >
                 <slot name="icon"></slot>
                 ${this.label}
@@ -139,9 +144,11 @@ export class SideNavItem extends LikeAnchor(Focusable) {
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (changes.has('selected') || changes.has('manageTabIndex')) {
+        if (changes.has('selected') || changes.has('unmanagedTabIndex')) {
             const tabIndexForSelectedState = this.selected ? 0 : -1;
-            this.tabIndex = this.manageTabIndex ? tabIndexForSelectedState : 0;
+            this.tabIndex = this.unmanagedTabIndex
+                ? 0
+                : tabIndexForSelectedState;
         }
     }
 
@@ -152,8 +159,6 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 cancelable: true,
             })
         );
-        if (manageTabIndex) {
-            this.manageTabIndex = true;
-        }
+        this.unmanagedTabIndex = !manageTabIndex;
     }
 }

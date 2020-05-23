@@ -58,48 +58,6 @@ module.exports = {
             ],
         },
         {
-            name: 'button',
-            host: {
-                selector: '.spectrum-Button',
-                shadowSelector: '#button',
-            },
-            focus: '#button',
-            attributes: [
-                {
-                    type: 'boolean',
-                    selector: '.spectrum-Button--quiet',
-                },
-                {
-                    type: 'boolean',
-                    selector: ':disabled',
-                },
-                {
-                    type: 'enum',
-                    name: 'variant',
-                    values: [
-                        '.spectrum-Button--cta',
-                        '.spectrum-Button--primary',
-                        '.spectrum-Button--secondary',
-                        {
-                            name: 'negative',
-                            selector: '.spectrum-Button--warning',
-                        },
-                        '.spectrum-Button--overBackground',
-                        '.spectrum-Button--secondary',
-                    ],
-                },
-            ],
-            ids: ['.spectrum-Button-label'],
-            slots: [
-                {
-                    name: 'icon',
-                    selector: '.spectrum-Icon',
-                },
-            ],
-            exclude: [/\.is-disabled/],
-            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
-        },
-        {
             name: 'action-button',
             host: {
                 selector: '.spectrum-ActionButton',
@@ -171,6 +129,48 @@ module.exports = {
                     selector: '.spectrum-Icon',
                 },
             ],
+            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
+        },
+        {
+            name: 'button',
+            host: {
+                selector: '.spectrum-Button',
+                shadowSelector: '#button',
+            },
+            focus: '#button',
+            attributes: [
+                {
+                    type: 'boolean',
+                    selector: '.spectrum-Button--quiet',
+                },
+                {
+                    type: 'boolean',
+                    selector: ':disabled',
+                },
+                {
+                    type: 'enum',
+                    name: 'variant',
+                    values: [
+                        '.spectrum-Button--cta',
+                        '.spectrum-Button--primary',
+                        '.spectrum-Button--secondary',
+                        {
+                            name: 'negative',
+                            selector: '.spectrum-Button--warning',
+                        },
+                        '.spectrum-Button--overBackground',
+                        '.spectrum-Button--secondary',
+                    ],
+                },
+            ],
+            ids: ['.spectrum-Button-label'],
+            slots: [
+                {
+                    name: 'icon',
+                    selector: '.spectrum-Icon',
+                },
+            ],
+            exclude: [/\.is-disabled/],
             excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
         },
     ],

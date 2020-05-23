@@ -22,9 +22,9 @@ async function main() {
         let customElementJsonString = fs.readFileSync(inputCEJPath, 'utf8');
         const customElementJson = JSON.parse(customElementJsonString);
         customElementJson.tags.map((tag) => {
-            const varsPath = tag.path
-                .replace('./../', '')
-                .replace('index.ts', 'spectrum-vars.json');
+            const varsPath = (
+                'packages' + tag.path.split('packages')[1]
+            ).replace(/\/[a-zA-Z\-]*\.ts/, '/spectrum-vars.json');
             try {
                 const vars = fs.readFileSync(varsPath, 'utf8');
                 const properties = JSON.parse(vars)['custom-properties'];

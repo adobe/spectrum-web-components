@@ -59,15 +59,15 @@ export class Tooltip extends LitElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener('sp-overlay-query', this.onOverlyQuery);
+        this.addEventListener('sp-overlay-query', this.onOverlayQuery);
     }
 
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        this.removeEventListener('sp-overlay-query', this.onOverlyQuery);
+        this.removeEventListener('sp-overlay-query', this.onOverlayQuery);
     }
 
-    public onOverlyQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
+    public onOverlayQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
         /* istanbul ignore if */
         if (!event.target || !this.shadowRoot) return;
 

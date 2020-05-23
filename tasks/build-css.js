@@ -23,9 +23,7 @@ const wrap = require('gulp-wrap');
 const merge = require('merge2');
 const tap = require('gulp-tap');
 
-const stripIndent = require('common-tags').stripIndents;
-
-const srcPath = path.resolve(path.join(__dirname, '..'));
+const srcPath = path.resolve(path.join(__dirname, '..', 'packages'));
 
 function whichDst(file, t) {
     const dirname = path.dirname(file.path);
@@ -38,9 +36,6 @@ function whichDst(file, t) {
 const configPath = path.resolve(path.join(__dirname, '..', 'config'));
 
 const { postCSSPlugins, wrapCSSResult } = require('../scripts/css-processing');
-
-const ts = require('gulp-typescript');
-const tsProject = ts.createProject('tsconfig.json');
 
 const buildCSS = () => {
     const tsResult = merge([

@@ -31,8 +31,8 @@ const availableArrowsByDirection = {
 declare global {
     interface Document {
         fonts?: {
-            ready: Promise<void>,
-        }
+            ready: Promise<void>;
+        };
     }
 }
 
@@ -84,7 +84,7 @@ export class TabList extends Focusable {
     }
 
     constructor() {
-        super()
+        super();
 
         // These can be added as @click and @keydown handlers on the
         // slot once we no longer need web component polyfills
@@ -103,9 +103,7 @@ export class TabList extends Focusable {
 
     protected render(): TemplateResult {
         return html`
-            <slot
-                @slotchange=${this.onSlotChange}
-            ></slot>
+            <slot @slotchange=${this.onSlotChange}></slot>
             <div
                 id="selectionIndicator"
                 style=${this.selectionIndicatorStyle}
@@ -135,7 +133,7 @@ export class TabList extends Focusable {
      * This will force apply the focus visible styling.
      * It should always do so when this styling is already applied.
      */
-    public shouldApplyFocusVisible = false;
+    private shouldApplyFocusVisible = false;
 
     private manageFocusinType = (): void => {
         if (this.shouldApplyFocusVisible) {
@@ -188,7 +186,7 @@ export class TabList extends Focusable {
             );
             target.focus();
         }
-    }
+    };
 
     private onKeyDown = (event: KeyboardEvent): void => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -199,7 +197,7 @@ export class TabList extends Focusable {
                 this.selectTarget(target);
             }
         }
-    }
+    };
 
     private selectTarget(target: HTMLElement): void {
         const value = target.getAttribute('value');

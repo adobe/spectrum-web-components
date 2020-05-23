@@ -41,7 +41,7 @@ Dictate the invalidity state of the text entry with the `invalid` attribute.
 
 ### Quiet
 
-The quiet style works best when a clear layout (vertical stack, table, grid) makes it easy to parse. Too many quiet components in a small space can be hard to read.
+The quiet style works best when a clear layout (vertical stack, table, grid) assists in a user's ability to parse the element. Too many quiet components in a small space can be hard to read.
 
 ```html
 <sp-textfield placeholder="Enter your name" quiet></sp-textfield>

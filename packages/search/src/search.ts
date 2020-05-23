@@ -21,7 +21,7 @@ import {
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 import { Textfield } from '@spectrum-web-components/textfield';
-import '@spectrum-web-components/button';
+import '@spectrum-web-components/button/lib/sp-clear-button.js';
 import '@spectrum-web-components/icon';
 import { MagnifierIcon } from '@spectrum-web-components/icons-ui';
 

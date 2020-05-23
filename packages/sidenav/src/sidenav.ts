@@ -147,7 +147,9 @@ export class SideNav extends Focusable {
         super.updated(changes);
         if (changes.has('manageTabIndex')) {
             const items = [...this.querySelectorAll('sp-sidenav-item')];
-            items.map((item) => (item.manageTabIndex = this.manageTabIndex));
+            items.map(
+                (item) => (item.unmanagedTabIndex = !this.manageTabIndex)
+            );
             if (this.manageTabIndex) {
                 this.removeEventListener(
                     'manage-tab-index',

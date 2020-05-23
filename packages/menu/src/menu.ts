@@ -11,14 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
+import { MenuItem } from '@spectrum-web-components/menu-item';
 
 import menuStyles from './menu.css.js';
-
-interface MenuItem extends HTMLElement {
-    disabled: boolean;
-    selected: boolean;
-    tabIndex: number;
-}
 
 export interface MenuQueryRoleEventDetail {
     role: string;
@@ -66,7 +61,6 @@ export class Menu extends LitElement {
         if (this.menuItems.length === 0) {
             return;
         }
-
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
         this.focusedItemIndex = this.focusInItemIndex;
         focusInItem.focus();

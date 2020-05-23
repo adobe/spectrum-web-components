@@ -35,7 +35,7 @@ yarn add @spectrum-web-components/dialog
         const dialogWrapper = this.previousElementSibling;
         dialogWrapper.hidden = false;
         dialogWrapper.open = true;
-        const handleEvent = ({type}) => {
+        function handleEvent({type}) {
             alert(`Handling '${type}' event.`);
             dialogWrapper.open = false;
             dialogWrapper.removeEventListener('close', handleEvent);
@@ -68,7 +68,7 @@ yarn add @spectrum-web-components/dialog
         const dialogWrapper = this.previousElementSibling;
         dialogWrapper.hidden = false;
         dialogWrapper.open = true;
-        const handleEvent = ({type}) => {
+        function handleEvent({type}) {
             alert(`Handling '${type}' event.`);
             dialogWrapper.open = false;
             dialogWrapper.removeEventListener('confirm', handleEvent);

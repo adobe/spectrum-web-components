@@ -103,9 +103,9 @@ const stateTransition = (
 };
 
 export class ActiveOverlay extends LitElement {
-    public overlayContent?: HTMLElement;
+    public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;
-    public trigger?: HTMLElement;
+    public trigger!: HTMLElement;
 
     private placeholder?: Comment;
     private popper?: Instance;

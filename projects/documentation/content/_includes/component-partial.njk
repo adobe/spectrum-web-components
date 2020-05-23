@@ -1,0 +1,19 @@
+---
+layout: layout.njk
+---
+<docs-page class="spectrum-Typography">
+    <div id="title-header" class="spectrum-Article">
+      <h1 class="spectrum-Heading1--display spectrum-Heading1--quiet">sp-{{ componentName }}</h1>
+    </div>
+    {{ content | safe }}
+    <div class="parts">
+    {% for part in collections[componentName] %}
+      <div class="section {{ part.data.partType }}">
+        {{ part.templateContent | safe }}
+      </div>
+    {% endfor %}
+    </div>
+    {% include "partials/sidenav.njk" %}
+</docs-page>
+<script type="module" src="../../../src/index.js"></script>
+<script type="module" src="../../../src/components.js"></script>

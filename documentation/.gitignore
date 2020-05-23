@@ -1,9 +1,0 @@
-node_modules
-report
-dist
-components/**/*.js
-guides/**/*.js
-src/**/*.js
-components/**/*.js.map
-guides/**/*.js.map
-src/**/*.js.map

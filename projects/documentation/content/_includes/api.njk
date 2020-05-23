@@ -1,0 +1,14 @@
+---
+layout: component-partial.njk
+---
+<sp-tab-list
+    selected="api"
+    direction="horizontal"
+>
+    <sp-tab
+        value="examples"
+        label="Examples"
+    ></sp-tab>
+    <sp-tab value="api" label="API"></sp-tab>
+</sp-tab-list>
+{{ content | safe }}

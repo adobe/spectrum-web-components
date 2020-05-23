@@ -1,0 +1,18 @@
+// eleventy build directory
+_site
+
+// extraced component docs
+content/components
+custom-elements.json
+
+// typescript build artifacts
+src/*.js
+src/*.js.map
+src/components/*.js
+src/components/*.js.map
+src/util/tempaltes.js
+src/util/tempaltes.js.map
+
+// rollup build directory and artifacts
+dist/
+stats.html

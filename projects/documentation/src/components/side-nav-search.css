@@ -1,0 +1,13 @@
+:host {
+    display: block;
+    margin-top: 12px;
+}
+
+sp-search {
+    width: 100%;
+    --spectrum-alias-single-line-width: 100%;
+}
+
+#search-container sp-popover {
+    display: none;
+}

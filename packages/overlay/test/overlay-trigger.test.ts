@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import '../';
 import { OverlayTrigger } from '../lib/index.js';
-import '../../button';
+import '@spectrum-web-components/button/lib/sp-button.js';
 import '../../popover';
 import { Popover } from '../../popover';
 import '../../theme';
@@ -404,17 +404,23 @@ describe('Overlay Trigger', () => {
         expect(outerButton).to.exist;
         expect(hoverContent).to.exist;
 
-        expect(isVisible(hoverContent)).to.be.false;
+        expect(isVisible(hoverContent), 'start').to.be.false;
 
         const mouseEnter = new MouseEvent('mouseenter');
         const mouseLeave = new MouseEvent('mouseleave');
         triggerShadowDiv.dispatchEvent(mouseEnter);
+
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        expect(isVisible(hoverContent), 'open').to.be.true;
+
         triggerShadowDiv.dispatchEvent(mouseLeave);
 
-        await nextFrame();
-        await nextFrame();
+        await waitForPredicate(() => !isVisible(hoverContent));
 
-        expect(isVisible(hoverContent)).to.be.false;
+        expect(isVisible(hoverContent), 'closed').to.be.false;
     });
     it('acquires a `color` and `size` from `sp-theme`', async () => {
         const el = await fixture<HTMLDivElement>(html`

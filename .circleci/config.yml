@@ -90,7 +90,7 @@ jobs:
                   paths:
                       - project/node_modules
                       - project/packages/*/node_modules
-                      - project/documentation/dist
+                      - project/projects/documentation/dist
 
     visual-lightest-medium:
         executor: node
@@ -169,9 +169,8 @@ jobs:
 
         steps:
             - downstream
-            - run: cp documentation/404.html documentation/dist/
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
-            - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site"
+            - run: yarn gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site"
 
 workflows:
     version: 2

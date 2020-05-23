@@ -14,7 +14,7 @@ module.exports = {
     ],
 
     // Rollup build output directory (build-storybook only)
-    outputDir: '../documentation/dist/storybook',
+    outputDir: '../projects/documentation/dist/storybook',
     // Configuration for rollup (build-storybook only)
     rollup: (config) => {
         return config;

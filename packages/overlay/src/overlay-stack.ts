@@ -95,9 +95,24 @@ export class OverlayStack {
 
                 const activeOverlay = ActiveOverlay.create(details);
                 this.overlays.push(activeOverlay);
+                this.addOverlayEventListeners(activeOverlay);
                 document.body.appendChild(activeOverlay);
                 resolve(false);
             });
+        });
+    }
+
+    public addOverlayEventListeners(activeOverlay: ActiveOverlay): void {
+        activeOverlay.addEventListener('keydown', (event: KeyboardEvent) => {
+            const { code } = event;
+            if (code === 'Tab') {
+                event.stopPropagation();
+                this.closeOverlay(activeOverlay.overlayContent);
+                activeOverlay.trigger.focus();
+                activeOverlay.trigger.dispatchEvent(
+                    new KeyboardEvent('keydown', event)
+                );
+            }
         });
     }
 
@@ -171,7 +186,9 @@ export class OverlayStack {
 
     private handleKeyUp = (event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
+            const overlay = this.topOverlay as ActiveOverlay;
             this.closeTopOverlay();
+            overlay && overlay.trigger.focus();
         }
     };
 

@@ -45,6 +45,7 @@
         "@spectrum-css/menu": "^2.1.5"
     },
     "dependencies": {
+        "@spectrum-web-components/menu-item": "^0.5.3",
         "tslib": "^2.0.0"
     }
 }

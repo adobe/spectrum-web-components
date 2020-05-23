@@ -64,6 +64,10 @@ async function processComponent(componentPath) {
                 componentPath,
                 `spectrum-vars.json`
             );
+            console.log(
+                outputJsonPath,
+                `@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`
+            );
             const outputCss = await postcss([
                 ...(packageCss ? postCSSPlugins() : []),
                 postcssSpectrumPlugin({ component }),

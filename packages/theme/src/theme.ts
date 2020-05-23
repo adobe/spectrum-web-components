@@ -300,10 +300,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
 Theme.registerThemeFragment('core', 'core', coreStyles);
 
-/* istanbul ignore else */
-if (!customElements.get('sp-theme')) {
-    customElements.define('sp-theme', Theme);
-}
+// /* istanbul ignore else */
+// if (!customElements.get('sp-theme')) {
+//     customElements.define('sp-theme', Theme);
+// }
 
 declare global {
     interface HTMLElementTagNameMap {

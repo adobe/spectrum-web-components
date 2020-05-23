@@ -30,7 +30,10 @@ yarn add @spectrum-web-components/rule
 ```html-live
 <h3 class="spectrum-Heading--subtitle2">Medium</h3>
 <sp-rule size="medium"></sp-rule>
-<p class="spectrum-Body">Divide subsections, or divide different groups of elements (between panels, rails, etc.)</p>
+<p class="spectrum-Body">
+    Divide subsections, or divide different groups of elements (between panels,
+    rails, etc.)
+</p>
 ```
 
 ### Small
@@ -38,12 +41,16 @@ yarn add @spectrum-web-components/rule
 ```html-live
 <h4 class="spectrum-Heading--subtitle3">Small</h4>
 <sp-rule size="small"></sp-rule>
-<p class="spectrum-Body">Divide like-elements (tables, tool groups, elements within a panel, etc.)</p>
+<p class="spectrum-Body">
+    Divide like-elements (tables, tool groups, elements within a panel, etc.)
+</p>
 ```
 
 ### Vertical, Small
 
 When a vertical Rule is used inside of a flex container, use `align-self: stretch; height: auto;` on the Rule.
+
+<sp-icons-medium></sp-icons-medium>
 
 ```html-live
 <div style="height: 32px; display: flex;">

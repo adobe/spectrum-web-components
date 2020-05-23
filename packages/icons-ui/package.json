@@ -27,6 +27,10 @@
         "/lib/",
         "/src/"
     ],
+    "sideEffects": [
+        "./lib/index.js",
+        "./src/index.ts"
+    ],
     "scripts": {
         "build": "node ./bin/build @spectrum-css/icon/medium"
     },

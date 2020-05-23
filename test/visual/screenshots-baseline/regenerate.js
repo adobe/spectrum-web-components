@@ -29,6 +29,7 @@ module.exports = {
                     appIndex: 'index.hml',
                     rootDir: path.resolve(
                         process.cwd(),
+                        'projects',
                         'documentation',
                         'dist',
                         'storybook'

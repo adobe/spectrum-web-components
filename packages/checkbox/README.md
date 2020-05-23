@@ -71,7 +71,7 @@ checkbox, and also prevents clicks from activating it.
 
 ### Handling events
 
-Event handlers for clicks and other user actions can be registered on an `sp-checkbox` just as a normal `<input type="checkbox">` element.
+Event handlers for clicks and other user actions can be registered on an `sp-checkbox` as a normal `<input type="checkbox">` element.
 
 ```html
 <sp-checkbox id="checkbox-example" onclick="javascript:alert('Click')">

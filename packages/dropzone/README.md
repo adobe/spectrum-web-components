@@ -1,6 +1,6 @@
 ## Description
 
-A **sp-dropzone** is an area on the screen into which an object can be dragged and dropped to accomplish a task. For example, a DropZone might be used in an upload workflow to enable the user to simply drop a file from their operating system into the DropZone, which is a more efficient and intuitive action, rather than utilize the standard "Choose File" dialog.
+A **sp-dropzone** is an area on the screen into which an object can be dragged and dropped to accomplish a task. For example, a DropZone might be used in an upload workflow to enable the user to drag and drop a file from their operating system into the DropZone, which is a more efficient and intuitive action, rather than utilize the standard "Choose File" dialog.
 
 DropZones should be used with an IllustratedMessage component as a child if the drop zone is empty, otherwise the existing content should be passed as a child.
 

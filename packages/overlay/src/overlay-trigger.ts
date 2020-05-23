@@ -146,10 +146,6 @@ export class OverlayTrigger extends LitElement {
             this.closeClickOverlay();
             delete this.closeClickOverlay;
         }
-        if (this.closeHoverOverlay) {
-            this.closeHoverOverlay();
-            delete this.closeHoverOverlay;
-        }
         super.disconnectedCallback();
     }
 }

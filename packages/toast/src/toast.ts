@@ -18,7 +18,7 @@ import {
     property,
     PropertyValues,
 } from 'lit-element';
-import '@spectrum-web-components/button';
+import '@spectrum-web-components/button/lib/sp-clear-button.js';
 import '@spectrum-web-components/icon';
 import {
     AlertSmallIcon,

@@ -1,0 +1,8 @@
+{% extends 'layout.njk'%}
+{% block content %}
+<docs-page class="spectrum-Typography">
+    {{ content | safe }}
+    {% include "partials/sidenav.njk" %}
+</docs-page>
+<script type="module" src="./src/index.js"></script>
+{% endblock %}

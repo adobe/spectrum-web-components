@@ -167,6 +167,7 @@ export class DropdownBase extends Focusable {
         if (event.code !== 'ArrowDown') {
             return;
         }
+        event.preventDefault();
         /* istanbul ignore if */
         if (!this.optionsMenu) {
             return;

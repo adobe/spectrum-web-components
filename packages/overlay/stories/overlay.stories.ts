@@ -12,7 +12,7 @@ import { html, number, select, radios } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-element';
 
 import { Placement } from '../';
-import '../../button';
+import '@spectrum-web-components/button/lib/sp-button.js';
 import '../../popover';
 import '../../slider';
 import '../../radio';

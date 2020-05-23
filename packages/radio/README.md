@@ -81,7 +81,7 @@ When the radio button is no longer interactable. The button cannot be checked.
 
 ### Handling events
 
-Event handlers for clicks and other user actions can be registered on an `sp-radio` just as a normal `<input type="radio">` element.
+Event handlers for clicks and other user actions can be registered on an `sp-radio` similar to a normal `<input type="radio">` element.
 
 ```html
 <sp-radio id="radio-example" onclick="javascript:alert('Click')">

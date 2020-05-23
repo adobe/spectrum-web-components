@@ -1,0 +1,22 @@
+---
+layout: component.njk
+---
+<sp-tab-list
+    selected="examples"
+    direction="horizontal"
+>
+    <sp-tab
+        value="examples"
+        label="Examples"
+    ></sp-tab>
+    {% set hasAPI = false %}
+    {% for component in collections['component-api'] %}
+        {% if component.data.componentName === componentName %}
+            {% set hasAPI = true %}
+        {% endif %}
+    {% endfor %}
+    {% if hasAPI === true %}
+        <sp-tab value="api" label="API"></sp-tab>
+    {% endif %}
+</sp-tab-list>
+{{ content | safe }}

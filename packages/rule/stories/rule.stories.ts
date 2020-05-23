@@ -15,7 +15,7 @@ import { TemplateResult } from 'lit-element';
 
 import '../';
 import './typography-decorator.js';
-import '@spectrum-web-components/button';
+import '@spectrum-web-components/button/lib/sp-action-button.js';
 import '@spectrum-web-components/icon';
 import {
     AlignLeftIcon,
