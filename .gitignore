@@ -17,6 +17,7 @@ yarn-error.log
 documentation/components/searchIndex.json
 
 coverage
+custom-elements.json
 documentation/api-docs
 documentation/dist
 test/**/*.js
