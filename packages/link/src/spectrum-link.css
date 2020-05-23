@@ -14,20 +14,13 @@ a {
     /* .spectrum-Link */
     background-color: initial;
     -webkit-text-decoration-skip: objects;
-    text-decoration: none;
+    text-decoration: underline;
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-in-out;
-    outline: none; /* .spectrum-Link */
+    outline: none;
+    cursor: pointer; /* .spectrum-Link */
     color: var(
         --spectrum-link-text-color,
-        var(--spectrum-global-color-blue-600)
-    );
-}
-a:hover {
-    /* .spectrum-Link:hover */
-    text-decoration: underline; /* .spectrum-Link:hover */
-    color: var(
-        --spectrum-link-text-color-hover,
         var(--spectrum-global-color-blue-600)
     );
 }
@@ -43,12 +36,20 @@ a:focus-visible {
         var(--spectrum-alias-text-color-key-focus)
     );
 }
-:host([over-background]) a,
 :host([quiet]) a {
-    /* .spectrum-Link--overBackground,
-   * .spectrum-Link--quiet,
-   * .spectrum-Link--subtle */
+    /* .spectrum-Link--quiet */
+    text-decoration: none;
+}
+:host([quiet]) a:hover {
+    /* .spectrum-Link--quiet:hover */
     text-decoration: underline;
+}
+a:hover {
+    /* .spectrum-Link:hover */
+    color: var(
+        --spectrum-link-text-color-hover,
+        var(--spectrum-global-color-blue-600)
+    );
 }
 a:active {
     /* .spectrum-Link:active */
@@ -57,18 +58,14 @@ a:active {
         var(--spectrum-global-color-blue-700)
     );
 }
-:host([quiet]) a,
-:host([quiet]) a:active,
-:host([quiet]) a:focus,
-:host([quiet]) a:hover {
-    /* .spectrum-Link--quiet,
-   * .spectrum-Link--quiet:active,
-   * .spectrum-Link--quiet:focus,
-   * .spectrum-Link--quiet:hover,
-   * .spectrum-Link--subtle,
-   * .spectrum-Link--subtle:active,
-   * .spectrum-Link--subtle:focus,
-   * .spectrum-Link--subtle:hover */
+.spectrum-Link--secondary,
+.spectrum-Link--secondary:active,
+.spectrum-Link--secondary:focus,
+.spectrum-Link--secondary:hover {
+    /* .spectrum-Link--secondary,
+   * .spectrum-Link--secondary:active,
+   * .spectrum-Link--secondary:focus,
+   * .spectrum-Link--secondary:hover */
     color: inherit;
 }
 :host([over-background]) a {

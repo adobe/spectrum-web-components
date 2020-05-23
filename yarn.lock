@@ -2444,10 +2444,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-2.1.1.tgz#d616b447eb9724b679c978115d38083e65548d35"
   integrity sha512-rINCfMa8oTBmyBE0oggjKuX5LcfrOoUDkhnpexFxFGBibhBvmj75m2d1h7tSoPkKJnQ53NnNC/k60VspA7NeGw==
 
-"@spectrum-css/link@^2.0.5":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/link/-/link-2.0.6.tgz#e7316580804d1b62fc3a7544bded07d8f499e309"
-  integrity sha512-vXs5JyDTxc/zk+Kuj8UTIg2NqkSWkVwg71TbL3o5K90c5xvmDIX1B/j8eFj7WPJiwsYSDJJKiBvXlTvpWrTgqA==
+"@spectrum-css/link@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/link/-/link-3.0.0.tgz#544821b3eafec7e89b86254bb42e3d01024095e4"
+  integrity sha512-TPWFopMTGWxxO4+Ush9L0dowI+tWRyxdWG8Gqy7/Q9c3emdJ7SA3hCQV9MRBoRRQHlx9lKFPfjZJ+/ErbTW++A==
 
 "@spectrum-css/menu@^2.1.5":
   version "2.1.5"
