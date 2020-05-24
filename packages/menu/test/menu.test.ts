@@ -13,6 +13,7 @@ import '../';
 import { Menu } from '../';
 import '../../menu-item';
 import { MenuItem } from '../../menu-item';
+import '../../menu-group';
 import {
     fixture,
     elementUpdated,
@@ -39,18 +40,18 @@ describe('Menu', () => {
     it('renders empty', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu><a href="#">Test</a></sp-menu>
+                <sp-menu tabindex="0"><a href="#">Test</a></sp-menu>
             `
         );
 
         await elementUpdated(el);
 
         el.focus();
-        expect(document.activeElement === document.body).to.be.true;
+        expect(document.activeElement === document.body, 'self').to.be.true;
 
         const anchor = el.querySelector('a') as HTMLAnchorElement;
         anchor.focus();
-        expect(document.activeElement === anchor).to.be.true;
+        expect(document.activeElement === anchor, 'anchor').to.be.true;
     });
     it('renders w/ menu items', async () => {
         const el = await fixture<Menu>(
@@ -160,6 +161,54 @@ describe('Menu', () => {
         expect(document.activeElement === secondToLastItem).to.be.true;
     });
 
+    it('handle focus and late descendent additions', async () => {
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu>
+                    <sp-menu-group>
+                        <span slot="header">Options</span>
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                    </sp-menu-group>
+                </sp-menu>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const firstItem = el.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+
+        el.focus();
+
+        expect(document.activeElement === firstItem).to.be.true;
+
+        firstItem.blur();
+
+        const group = el.querySelector('sp-menu-group') as HTMLElement;
+        const prependedItem = document.createElement('sp-menu-item');
+        prependedItem.innerHTML = 'Prepended Item';
+        const appendedItem = document.createElement('sp-menu-item');
+        prependedItem.innerHTML = 'Appended Item';
+        group.prepend(prependedItem);
+        group.append(appendedItem);
+
+        await elementUpdated(el);
+
+        expect(document.activeElement === firstItem).to.be.false;
+        expect(document.activeElement === prependedItem).to.be.false;
+
+        el.focus();
+
+        expect(document.activeElement === prependedItem).to.be.true;
+
+        el.dispatchEvent(arrowUpEvent);
+
+        expect(document.activeElement === appendedItem).to.be.true;
+    });
+
     it('cleans up when tabbing away', async () => {
         const el = await fixture<Menu>(
             html`
@@ -190,10 +239,10 @@ describe('Menu', () => {
         ) as MenuItem;
 
         el.focus();
-        expect(document.activeElement === firstItem).to.be.true;
+        expect(document.activeElement === firstItem, 'first').to.be.true;
         el.dispatchEvent(arrowDownEvent);
         el.dispatchEvent(arrowDownEvent);
-        expect(document.activeElement === thirdItem).to.be.true;
+        expect(document.activeElement === thirdItem, 'third').to.be.true;
         // imitate tabbing away
         el.dispatchEvent(tabEvent);
         el.dispatchEvent(
@@ -207,6 +256,6 @@ describe('Menu', () => {
         el.startListeningToKeyboard();
         // focus management should start again from the first item.
         el.dispatchEvent(arrowDownEvent);
-        expect(document.activeElement === secondItem).to.be.true;
+        expect(document.activeElement === secondItem, 'second').to.be.true;
     });
 });

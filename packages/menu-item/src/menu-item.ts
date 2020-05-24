@@ -54,6 +54,13 @@ export class MenuItem extends ActionButton {
         }
     }
 
+    /**
+     * Hide this getter from web-component-analyzer until
+     * https://github.com/runem/web-component-analyzer/issues/131
+     * has been addressed.
+     *
+     * @private
+     */
     public get itemText(): string {
         return (this.textContent || /* istanbul ignore next */ '').trim();
     }

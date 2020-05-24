@@ -38,6 +38,13 @@ export class Menu extends LitElement {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
+    /**
+     * Hide this getter from web-component-analyzer until
+     * https://github.com/runem/web-component-analyzer/issues/131
+     * has been addressed.
+     *
+     * @private
+     */
     public get childRole(): string {
         return this.getAttribute('role') === 'menu' ? 'menuitem' : 'option';
     }
@@ -68,11 +75,13 @@ export class Menu extends LitElement {
     private onClick(event: Event): void {
         const path = event.composedPath();
         const target = path.find((el) => {
+            /* istanbul ignore if */
             if (!(el instanceof Element)) {
                 return false;
             }
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
+        /* istanbul ignore if */
         if (!target) {
             return;
         }
@@ -125,6 +134,10 @@ export class Menu extends LitElement {
             'focusout',
             () => {
                 requestAnimationFrame(() => {
+                    /* istanbul ignore if */
+                    if (this.menuItems.length === 0) {
+                        return;
+                    }
                     if (this.querySelector('[selected]')) {
                         const itemToBlur = this.menuItems[
                             this.focusInItemIndex
@@ -149,11 +162,12 @@ export class Menu extends LitElement {
             index -= 1;
             item = this.menuItems[index] as MenuItem;
         }
+        index = Math.max(index, 0);
         this.focusedItemIndex = index;
         this.focusInItemIndex = index;
     }
 
-    public handleSlotchange(): void {
+    private prepItems = (): void => {
         this.menuItems = [
             ...this.querySelectorAll(`[role="${this.childRole}"]`),
         ];
@@ -163,11 +177,11 @@ export class Menu extends LitElement {
         this.updateSelectedItemIndex();
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
         focusInItem.tabIndex = 0;
-    }
+    };
 
     public render(): TemplateResult {
         return html`
-            <slot @slotchange=${this.handleSlotchange}></slot>
+            <slot></slot>
         `;
     }
 
@@ -184,7 +198,22 @@ export class Menu extends LitElement {
             this.dispatchEvent(queryRoleEvent);
             this.setAttribute('role', queryRoleEvent.detail.role || 'menu');
         }
+        if (!this.observer) {
+            this.observer = new MutationObserver(this.prepItems);
+        }
+        this.observer.observe(this, { childList: true, subtree: true });
+        this.updateComplete.then(() => this.prepItems());
     }
+
+    public disconnectedCallback(): void {
+        /* istanbul ignore else */
+        if (this.observer) {
+            this.observer.disconnect();
+        }
+        super.disconnectedCallback();
+    }
+
+    private observer?: MutationObserver;
 }
 
 declare global {
