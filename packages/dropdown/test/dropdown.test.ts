@@ -15,13 +15,11 @@ import { Dropdown } from '../';
 import '../../menu';
 import '../../menu-item';
 import { MenuItem } from '../../menu-item';
-import { Popover } from '../../popover';
 import {
     fixture,
     elementUpdated,
     html,
     expect,
-    nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
@@ -38,12 +36,8 @@ const keyboardEvent = (code: string): KeyboardEvent =>
 const arrowDownEvent = keyboardEvent('ArrowDown');
 const arrowUpEvent = keyboardEvent('ArrowUp');
 
-type testableDropdown = {
-    popover: Popover;
-};
-
-const dropdownFixture = async (): Promise<Dropdown> =>
-    await fixture<Dropdown>(
+const dropdownFixture = async (): Promise<Dropdown> => {
+    const el = await fixture<Dropdown>(
         html`
             <sp-dropdown
                 label="Select a Country with a very long label, too long in fact"
@@ -72,11 +66,13 @@ const dropdownFixture = async (): Promise<Dropdown> =>
             </sp-dropdown>
         `
     );
+    await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
+    return el;
+};
 
 describe('Dropdown', () => {
     it('loads', async () => {
         const el = await dropdownFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -85,7 +81,6 @@ describe('Dropdown', () => {
     });
     it('renders invalid', async () => {
         const el = await dropdownFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -98,7 +93,6 @@ describe('Dropdown', () => {
     });
     it('closes when becoming disabled', async () => {
         const el = await dropdownFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -114,7 +108,6 @@ describe('Dropdown', () => {
     });
     it('selects', async () => {
         const el = await dropdownFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -139,7 +132,6 @@ describe('Dropdown', () => {
     });
     it('re-selects', async () => {
         const el = await dropdownFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -181,7 +173,6 @@ describe('Dropdown', () => {
     });
     it('can have selection prevented', async () => {
         const el = await dropdownFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -210,7 +201,6 @@ describe('Dropdown', () => {
     });
     it('opens on ArrowDown', async () => {
         const el = await dropdownFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -245,7 +235,6 @@ describe('Dropdown', () => {
     });
     it('loads', async () => {
         const el = await dropdownFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -254,7 +243,6 @@ describe('Dropdown', () => {
     });
     it('refocuses on list when open', async () => {
         const el = await dropdownFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
@@ -328,7 +316,6 @@ describe('Dropdown', () => {
         button.click();
 
         await elementUpdated(el);
-        await nextFrame();
 
         expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
         expect(focusSelectedSpy.calledOnce, 'focus selected element').to.be
@@ -397,13 +384,12 @@ describe('Dropdown', () => {
         await elementUpdated(el);
         await waitUntil(() => el.value === '');
 
+        const hoverEl = el.querySelector('sp-menu-item') as MenuItem;
+
         el.open = true;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
-        const hoverEl = ((el as unknown) as testableDropdown).popover.querySelector(
-            'sp-menu-item'
-        ) as MenuItem;
         hoverEl.dispatchEvent(new MouseEvent('mouseenter'));
         await elementUpdated(el);
 
