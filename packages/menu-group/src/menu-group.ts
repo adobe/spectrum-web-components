@@ -17,6 +17,9 @@ import menuGroupStyles from './menu-group.css.js';
 /**
  * Spectrum Menu Group Component
  * @element sp-menu-group
+ *
+ * @slot header - headline of the menu group
+ * @slot - menu items to be listed in the group
  */
 export class MenuGroup extends LitElement {
     public static get styles(): CSSResultArray {
