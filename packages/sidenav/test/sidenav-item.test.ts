@@ -92,4 +92,41 @@ describe('Sidenav Item', () => {
 
         expect(slot.assignedElements().length).to.equal(2);
     });
+
+    it('populated `aria-current`', async () => {
+        const el = await fixture<SideNavItem>(
+            html`
+                <sp-sidenav value="Section 2">
+                    <sp-sidenav-item
+                        href="https://opensource.adobe.com/spectrum-web-components/"
+                        label="Section 1"
+                        value="Section 1"
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item
+                        href=${window.location.href}
+                        label="Section 2"
+                        value="Section 2"
+                        selected
+                    ></sp-sidenav-item>
+                </sp-sidenav>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const currentItem = el.querySelector(
+            'sp-sidenav-item:nth-child(2)'
+        ) as SideNavItem;
+        const otherItem = el.querySelector(
+            'sp-sidenav-item:nth-child(1)'
+        ) as SideNavItem;
+
+        await elementUpdated(currentItem);
+        await elementUpdated(otherItem);
+
+        expect(currentItem.focusElement.hasAttribute('aria-current'), 'current')
+            .to.be.true;
+        expect(otherItem.focusElement.hasAttribute('aria-current'), 'other').to
+            .be.false;
+    });
 });

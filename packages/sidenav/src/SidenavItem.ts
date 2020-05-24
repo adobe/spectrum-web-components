@@ -125,6 +125,9 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 data-level="${this.depth}"
                 @click="${this.handleClick}"
                 id="itemLink"
+                aria-current=${ifDefined(
+                    this.selected && this.href ? 'page' : undefined
+                )}
             >
                 <slot name="icon"></slot>
                 ${this.label}

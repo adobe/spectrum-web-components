@@ -109,8 +109,14 @@ export const levelsAndDisabled = (): TemplateResult => {
 
 export const Hrefs = (): TemplateResult => {
     return html`
-        <sp-sidenav @sidenav-select=${action('select')}>
+        <sp-sidenav @sidenav-select=${action('select')} value="current">
             <sp-sidenav-heading label="GITHUB">
+                <sp-sidenav-item
+                    href=${window.location.href}
+                    label="Current"
+                    value="current"
+                    selected
+                ></sp-sidenav-item>
                 <sp-sidenav-item
                     href="https://github.com/adobe/spectrum-web-components"
                     label="Code"
