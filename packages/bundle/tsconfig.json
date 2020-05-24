@@ -12,6 +12,7 @@
         { "path": "../avatar" },
         { "path": "../banner" },
         { "path": "../button" },
+        { "path": "../button-group" },
         { "path": "../card" },
         { "path": "../checkbox" },
         { "path": "../circleloader" },

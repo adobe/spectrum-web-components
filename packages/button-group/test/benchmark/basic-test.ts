@@ -10,17 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-action-button.css';
+import '../../';
+import '@spectrum-web-components/button';
+import { html } from 'lit-html';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 
-:host(.spectrum-Dropdown-trigger) #button {
-    text-align: left;
-}
-
-::slotted([slot='icon']) {
-    flex-shrink: 0;
-}
-
-#label {
-    flex-grow: var(--spectrum-actionbutton-label-flex-grow);
-    text-align: var(--spectrum-actionbutton-label-text-align);
-}
+measureFixtureCreation(html`
+    <sp-button-group>
+        <sp-button>Button 1</sp-button>
+        <sp-button>Longer Button 2</sp-button>
+        <sp-button>Short 3</sp-button>
+    </sp-button-group>
+`);

@@ -14,6 +14,7 @@ export * from '@spectrum-web-components/actionbar';
 export * from '@spectrum-web-components/avatar';
 export * from '@spectrum-web-components/banner';
 export * from '@spectrum-web-components/button';
+export * from '@spectrum-web-components/button-group';
 export * from '@spectrum-web-components/card';
 export * from '@spectrum-web-components/checkbox';
 export * from '@spectrum-web-components/circleloader';
