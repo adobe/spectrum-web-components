@@ -10,17 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-action-button.css';
+export * from './button-group.js';
 
-:host(.spectrum-Dropdown-trigger) #button {
-    text-align: left;
+import { ButtonGroup } from './button-group.js';
+
+/* istanbul ignore else */
+if (!customElements.get('sp-button-group')) {
+    customElements.define('sp-button-group', ButtonGroup);
 }
 
-::slotted([slot='icon']) {
-    flex-shrink: 0;
-}
-
-#label {
-    flex-grow: var(--spectrum-actionbutton-label-flex-grow);
-    text-align: var(--spectrum-actionbutton-label-text-align);
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-button-group': ButtonGroup;
+    }
 }

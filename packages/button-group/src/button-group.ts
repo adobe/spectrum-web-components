@@ -10,17 +10,30 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-action-button.css';
+import {
+    html,
+    LitElement,
+    CSSResultArray,
+    TemplateResult,
+    property,
+} from 'lit-element';
 
-:host(.spectrum-Dropdown-trigger) #button {
-    text-align: left;
-}
+import styles from './button-group.css.js';
 
-::slotted([slot='icon']) {
-    flex-shrink: 0;
-}
+/**
+ * @element sp-button-group
+ */
+export class ButtonGroup extends LitElement {
+    public static get styles(): CSSResultArray {
+        return [styles];
+    }
 
-#label {
-    flex-grow: var(--spectrum-actionbutton-label-flex-grow);
-    text-align: var(--spectrum-actionbutton-label-text-align);
+    @property({ type: Boolean, reflect: true })
+    public vertical = false;
+
+    protected render(): TemplateResult {
+        return html`
+            <slot></slot>
+        `;
+    }
 }

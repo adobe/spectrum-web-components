@@ -47,6 +47,7 @@
         "@spectrum-web-components/avatar": "^0.2.5",
         "@spectrum-web-components/banner": "^0.2.5",
         "@spectrum-web-components/button": "^0.6.0",
+        "@spectrum-web-components/button-group": "^0.0.1",
         "@spectrum-web-components/card": "^0.3.4",
         "@spectrum-web-components/checkbox": "^0.3.1",
         "@spectrum-web-components/circleloader": "^0.1.5",
