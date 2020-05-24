@@ -40,8 +40,7 @@ import {
     MenuItem,
     MenuItemQueryRoleEventDetail,
 } from '@spectrum-web-components/menu-item';
-import '@spectrum-web-components/popover';
-import { Overlay, Placement } from '@spectrum-web-components/overlay';
+import { Placement } from '@spectrum-web-components/overlay';
 
 /**
  * @slot label - The placeholder content for the dropdown
@@ -227,15 +226,17 @@ export class DropdownBase extends Focusable {
         delete this.placeholder;
     }
 
-    private openMenu(): void {
+    private async openMenu(): Promise<void> {
         /* istanbul ignore if */
         if (
             !this.popover ||
             !this.button ||
             !this.optionsMenu ||
             this.optionsMenu.children.length === 0
-        )
+        ) {
+            this.menuStateResolver();
             return;
+        }
 
         this.placeholder = document.createComment(
             'placeholder for optionsMenu'
@@ -256,8 +257,29 @@ export class DropdownBase extends Focusable {
         if (menuWidth) {
             this.popover.style.setProperty('width', menuWidth);
         }
+        const Overlay = await Promise.all([
+            import('@spectrum-web-components/overlay'),
+            import('@spectrum-web-components/popover'),
+        ]).then(
+            ([module]) =>
+                (module as typeof import('@spectrum-web-components/overlay'))
+                    .Overlay
+        );
         this.closeOverlay = Overlay.open(this.button, 'click', this.popover, {
             placement: this.placement,
+        });
+        requestAnimationFrame(() => {
+            /* istanbul ignore else */
+            if (this.optionsMenu) {
+                /* Trick :focus-visible polyfill into thinking keyboard based focus */
+                this.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        code: 'Tab',
+                    })
+                );
+                this.optionsMenu.focus();
+            }
+            this.menuStateResolver();
         });
     }
 
@@ -266,6 +288,8 @@ export class DropdownBase extends Focusable {
             this.closeOverlay();
             delete this.closeOverlay;
         }
+
+        this.menuStateResolver();
     }
 
     protected get buttonContent(): TemplateResult[] {
@@ -352,25 +376,23 @@ export class DropdownBase extends Focusable {
             this.open = false;
         }
         if (changedProperties.has('open')) {
+            this.menuStatePromise = new Promise(
+                (res) => (this.menuStateResolver = res)
+            );
             if (this.open) {
                 this.openMenu();
-                requestAnimationFrame(() => {
-                    /* istanbul ignore if */
-                    if (!this.optionsMenu) {
-                        return;
-                    }
-                    /* Trick :focus-visible polyfill into thinking keyboard based focus */
-                    this.dispatchEvent(
-                        new KeyboardEvent('keydown', {
-                            code: 'Tab',
-                        })
-                    );
-                    this.optionsMenu.focus();
-                });
             } else {
                 this.closeMenu();
             }
         }
+    }
+
+    private menuStatePromise = Promise.resolve();
+    private menuStateResolver!: () => void;
+
+    protected async _getUpdateComplete(): Promise<void> {
+        await super._getUpdateComplete();
+        await this.menuStatePromise;
     }
 
     public disconnectedCallback(): void {
