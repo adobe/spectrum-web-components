@@ -406,6 +406,13 @@ class SpectrumProcessor {
                     }
                     if (skip) continue;
                 }
+                this.component.complexSelectors.map((complexSelector) => {
+                    console.log(selector, complexSelector);
+                    selector = selector.replace(
+                        complexSelector.selector,
+                        complexSelector.replacement
+                    );
+                });
 
                 // Check exclusions
                 if (this.component.exclude) {
@@ -797,15 +804,24 @@ class ComponentConfig {
         this.slots = this.slots.map((slot) => {
             let selector = slot.selector || slot;
             let name = slot.name;
+            let contents = slot.contents;
             let shadowSlotSelector;
             let shadowSlottedSelector;
             if (!name) {
                 // If no name is specified, fallback to default slot
                 shadowSlotSelector = 'slot';
-                shadowSlottedSelector = `::slotted(*)`;
+                if (contents) {
+                    shadowSlottedSelector = `::slotted(${contents})`;
+                } else {
+                    shadowSlottedSelector = `::slotted(*)`;
+                }
             } else {
                 shadowSlotSelector = `slot[name="${name}"]`;
-                shadowSlottedSelector = `::slotted([slot='${name}'])`;
+                if (contents) {
+                    shadowSlottedSelector = `::slotted(${contents}[slot='${name}'])`;
+                } else {
+                    shadowSlottedSelector = `::slotted([slot='${name}'])`;
+                }
             }
             return {
                 name,
@@ -831,6 +847,8 @@ class ComponentConfig {
                 return [selector.slice(1), name];
             })
         );
+
+        this.complexSelectors = this.complexSelectors || [];
     }
 }
 
