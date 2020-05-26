@@ -10,6 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import 'focus-visible';
+
 declare global {
     interface Window {
         applyFocusVisiblePolyfill?: (scope: Document | ShadowRoot) => void;
@@ -110,7 +112,6 @@ export const FocusVisiblePolyfillMixin = <
         // document:
         connectedCallback(): void {
             super.connectedCallback && super.connectedCallback();
-            import('focus-visible');
             if (this[$endPolyfillCoordination] == null) {
                 this[$endPolyfillCoordination] = coordinateWithPolyfill(this);
             }
