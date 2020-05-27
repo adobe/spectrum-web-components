@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "packages/*/src/**/*.css.ts": true,
+        "packages/*/src/spectrum-vars.json": true,
         "packages/**/*.stories.d.ts": true,
         "packages/**/stories/*.js": true,
         "packages/**/stories/*.d.ts": true,

@@ -27,7 +27,6 @@ enum TabValue {
 }
 
 interface JsDocTagParsed {
-    tag: string;
     name?: string;
     attribute?: string;
     type?: string;
@@ -39,7 +38,7 @@ interface JsDocTagParsed {
 type ParsedTagArray = JsDocTagParsed[];
 
 type TagType = {
-    description: string;
+    description?: string;
     properties?: ParsedTagArray;
     slots?: ParsedTagArray;
     events?: ParsedTagArray;
@@ -266,7 +265,7 @@ class ComponentElement extends RouteComponent {
                 ? buildTable(
                       'CSS Custom Properties',
                       tag.cssProperties,
-                      ['Name', 'Type', 'Default'],
+                      ['Name', 'Default'],
                       [
                           (property) =>
                               html`
@@ -274,16 +273,7 @@ class ComponentElement extends RouteComponent {
                               `,
                           (property) =>
                               html`
-                                  <code>${property.type || ''}</code>
-                              `,
-                          (property) =>
-                              html`
-                                  <code>
-                                      ${(property.default || '""').slice(
-                                          1,
-                                          (property.default || '""').length - 1
-                                      )}
-                                  </code>
+                                  <code>${property.default || '""'}</code>
                               `,
                       ]
                   )

@@ -25,6 +25,7 @@ test/**/*.js.map
 test/**/*.d.ts
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
+packages/**/spectrum-vars.json
 packages/*/stories/**/*.js
 packages/*/stories/**/*.js.map
 packages/*/stories/**/*.d.ts
