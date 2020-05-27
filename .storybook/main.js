@@ -7,6 +7,7 @@ module.exports = {
         open: true,
     },
     addons: [
+        'storybook-prebuilt/addon-docs/register.js',
         'storybook-prebuilt/addon-actions/register.js',
         'storybook-prebuilt/addon-knobs/register.js',
         'storybook-prebuilt/addon-a11y/register.js',

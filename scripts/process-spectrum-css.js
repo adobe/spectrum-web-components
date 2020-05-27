@@ -20,6 +20,7 @@ const postcss = require('postcss');
 const { postCSSPlugins } = require('./css-processing');
 const postcssSpectrumPlugin = require('./process-spectrum-postcss-plugin');
 const reporter = require('postcss-reporter');
+const postcssCustomProperties = require('postcss-custom-properties');
 
 const componentRoot = path.resolve(__dirname, '../packages');
 
@@ -42,12 +43,26 @@ async function processComponent(componentPath) {
         process.exit(1);
     }
     const inputCss = await fs.readFile(inputCssPath);
+    let inputCustomProperties = await fs.readFile(
+        require.resolve(
+            `@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`
+        ),
+        'utf8'
+    );
+    inputCustomProperties = inputCustomProperties.replace(
+        /(.|\n)*\{/,
+        ':root{'
+    );
     console.log(chalk.bold.green(`- ${spectrumConfig.spectrum}`));
     return Promise.all(
         spectrumConfig.components.map(async (component) => {
             const outputCssPath = path.join(
                 componentPath,
                 `spectrum-${component.name}.css`
+            );
+            const outputJsonPath = path.join(
+                componentPath,
+                `spectrum-vars.json`
             );
             const outputCss = await postcss([
                 ...(packageCss ? postCSSPlugins() : []),
@@ -57,7 +72,19 @@ async function processComponent(componentPath) {
                 from: inputCssPath,
                 to: outputCssPath,
             });
+            await postcssCustomProperties.process(
+                inputCustomProperties,
+                {
+                    from: require.resolve(
+                        `@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`
+                    ),
+                },
+                {
+                    exportTo: [outputJsonPath],
+                }
+            );
             console.log(chalk.bold.green(`  o ${component.name}`));
+            // await fs.writeFile(outputJsonPath, outputJson, { encoding: 'utf8' });
             return fs.writeFile(outputCssPath, outputCss, { encoding: 'utf8' });
         })
     );
