@@ -28,40 +28,33 @@ module.exports = {
             slots: [
                 {
                     contents: 'sp-action-button',
-                    // The spectrum-css selector who's rules we wish to apply
                     selector: '.spectrum-ActionButton',
                 },
                 {
                     contents: 'sp-button',
-                    // The spectrum-css selector who's rules we wish to apply
                     selector: '.spectrum-Button',
                 },
                 {
                     contents: 'sp-tool',
-                    // The spectrum-css selector who's rules we wish to apply
                     selector: '.spectrum-Tool',
                 },
                 {
                     contents: 'sp-rule[vertical]',
-                    // The spectrum-css selector who's rules we wish to apply
                     selector: '.spectrum-Rule--vertical',
                 },
             ],
             complexSelectors: [
                 {
                     replacement: '::slotted(sp-button:not(:first-of-type))',
-                    // The spectrum-css selector who's rules we wish to apply
                     selector: '.spectrum-Button+.spectrum-Button',
                 },
                 {
                     replacement: '::slotted(sp-tool:not(:first-of-type))',
-                    // The spectrum-css selector who's rules we wish to apply
                     selector: '.spectrum-Tool+.spectrum-Tool',
                 },
                 {
                     replacement:
                         '::slotted(sp-action-button:not(:first-of-type))',
-                    // The spectrum-css selector who's rules we wish to apply
                     selector: '.spectrum-ActionButton+.spectrum-ActionButton',
                 },
             ],
