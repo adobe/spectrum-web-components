@@ -25,6 +25,7 @@ import {
     property,
     PropertyValues,
 } from 'lit-element';
+import { ifDefined } from 'lit-html/directives/if-defined';
 import styles from './active-overlay.css.js';
 
 export interface PositionResult {
@@ -401,10 +402,9 @@ export class ActiveOverlay extends LitElement {
     }
 
     public renderTheme(content: TemplateResult): TemplateResult {
-        const color = this.color as Color;
-        const scale = this.scale as Scale;
+        const { color, scale } = this;
         return html`
-            <sp-theme .color=${color} .scale=${scale}>
+            <sp-theme color=${ifDefined(color)} scale=${ifDefined(scale)}>
                 ${content}
             </sp-theme>
         `;
