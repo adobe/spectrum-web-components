@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import coreStyles from './theme.css';
 import { CSSResult, supportsAdoptingStyleSheets } from 'lit-element';
+
+import coreStyles from './theme.css';
 
 declare global {
     interface Window {
@@ -37,9 +38,13 @@ declare global {
 }
 
 type FragmentType = 'color' | 'scale' | 'core';
+type SettableFragmentTypes = 'color' | 'scale';
 type FragmentMap = Map<string, { name: string; styles: CSSResult }>;
+export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
 export type Color = 'light' | 'lightest' | 'dark' | 'darkest';
 export type Scale = 'medium' | 'large';
+const ScaleValues = ['medium', 'large'];
+const ColorValues = ['light', 'lightest', 'dark', 'darkest'];
 type FragmentName = Color | Scale | 'core';
 
 export interface ThemeData {
@@ -48,71 +53,95 @@ export interface ThemeData {
 }
 
 type ThemeKindProvider = {
-    [P in FragmentType]: string;
+    [P in SettableFragmentTypes]: Color | Scale | '';
 };
 
 export class Theme extends HTMLElement implements ThemeKindProvider {
     private hasAdoptedStyles = false;
-    private static themeFragmentsByKind: Map<
-        FragmentType,
-        FragmentMap
-    > = new Map();
+    private static themeFragmentsByKind: ThemeFragmentMap = new Map();
     private static defaultFragments: Set<FragmentName> = new Set(['core']);
-
     private static templateElement?: HTMLTemplateElement;
-
     private static instances: Set<Theme> = new Set();
 
     static get observedAttributes(): string[] {
         return ['color', 'scale'];
     }
 
+    protected attributeChangedCallback(
+        attrName: SettableFragmentTypes,
+        old: string | null,
+        value: string | null
+    ): void {
+        if (attrName === 'color') {
+            this.color = value as Color;
+        } else if (attrName === 'scale') {
+            this.scale = value as Scale;
+        }
+    }
+
+    private requestUpdate(): void {
+        this.hasAdoptedStyles = false;
+        if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
+            window.ShadyCSS.styleElement(this);
+        } else {
+            this.shouldAdoptStyles();
+        }
+    }
+
+    public shadowRoot!: ShadowRoot;
+
     get core(): 'core' {
         return 'core';
     }
 
-    get color(): Color {
-        return this.getFragmentNameByKind('color') as Color;
+    private _color: Color | '' = '';
+
+    get color(): Color | '' {
+        const themeFragments = Theme.themeFragmentsByKind.get('color');
+        const { name } =
+            (themeFragments && themeFragments.get('default')) || {};
+        return this._color || (name as Color) || '';
     }
 
-    set color(newValue: Color) {
-        this.setAttribute('color', newValue);
-    }
-
-    get scale(): Scale {
-        return this.getFragmentNameByKind('scale') as Scale;
-    }
-
-    set scale(newValue: Scale) {
-        this.setAttribute('scale', newValue);
-    }
-
-    private getFragmentNameByKind(kind: FragmentType): string {
-        const kindFragments = Theme.themeFragmentsByKind.get(
-            kind
-        ) as FragmentMap;
-        /* istanbul ignore if */
-        if (!kindFragments) {
-            throw new Error(`Unknown theme fragment kind '${kind}'`);
-            /* istanbul ignore if */
-        } else if (kindFragments.size === 0) {
-            throw new Error(`No theme fragments of kind '${kind}'`);
+    set color(newValue: Color | '') {
+        if (newValue === this._color) return;
+        const color =
+            !!newValue && ColorValues.includes(newValue)
+                ? newValue
+                : this.color;
+        if (color) {
+            this.setAttribute('color', color);
+        } else {
+            this.removeAttribute('color');
         }
-        const name = this.getAttribute(kind);
-        if (name) {
-            const fragment = kindFragments.get(name);
-            if (fragment) {
-                return name;
-            }
+        if (color === this._color) return;
+        this._color = color;
+        this.requestUpdate();
+    }
+
+    private _scale: Scale | '' = '';
+
+    get scale(): Scale | '' {
+        const themeFragments = Theme.themeFragmentsByKind.get('scale');
+        const { name } =
+            (themeFragments && themeFragments.get('default')) || {};
+        return this._scale || (name as Scale) || '';
+    }
+
+    set scale(newValue: Scale | '') {
+        if (newValue === this._scale) return;
+        const scale =
+            !!newValue && ScaleValues.includes(newValue)
+                ? newValue
+                : this.scale;
+        if (scale) {
+            this.setAttribute('scale', scale);
+        } else {
+            this.removeAttribute('scale');
         }
-        const defaultFragment = kindFragments.get('default');
-        /* istanbul ignore else */
-        if (defaultFragment) {
-            return defaultFragment.name;
-        }
-        throw new Error(
-            `Incorrectly configured theme fragments of kind '${kind}'`
-        );
+        if (scale === this._scale) return;
+        this._scale = scale;
+        this.requestUpdate();
     }
 
     private get styles(): CSSResult[] {
@@ -123,13 +152,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             const kindFragments = Theme.themeFragmentsByKind.get(
                 kind
             ) as FragmentMap;
-            const defaultStyles = kindFragments.get('default');
             const { [kind]: name } = this;
             const currentStyles = kindFragments.get(name);
             if (currentStyles) {
                 acc.push(currentStyles.styles);
-            } else if (defaultStyles) {
-                acc.push(defaultStyles.styles);
             }
             return acc;
         }, [] as CSSResult[]);
@@ -147,12 +173,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        /* istanbul ignore else */
-        if (this.shadowRoot) {
-            const node = document.importNode(Theme.template.content, true);
-            this.shadowRoot.appendChild(node);
-        }
-        this.adoptStyles();
+        const node = document.importNode(Theme.template.content, true);
+        this.shadowRoot.appendChild(node);
+        this.shouldAdoptStyles();
         this.addEventListener(
             'sp-query-theme',
             this.onQueryTheme as EventListener
@@ -165,8 +188,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         event.preventDefault();
         const { detail: theme } = event;
-        theme.color = this.color;
-        theme.scale = this.scale;
+        theme.color = this.color || undefined;
+        theme.scale = this.scale || undefined;
     }
 
     protected connectedCallback(): void {
@@ -178,9 +201,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             window.ShadyCSS.styleElement(this);
         }
         // Add `this` to the instances array.
-        if (!Theme.instances.has(this)) {
-            Theme.instances.add(this);
-        }
+        Theme.instances.add(this);
     }
 
     protected disconnectedCallback(): void {
@@ -195,9 +216,14 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
     }
 
+    private get expectedFragments(): number {
+        // color, scale and core
+        return 3;
+    }
+
     protected adoptStyles(): void {
         const styles = this.styles; // No test coverage on Edge
-        if (styles.length < 3) return;
+        if (styles.length < this.expectedFragments) return;
 
         // There are three separate cases here based on Shadow DOM support.
         // (1) shadowRoot polyfilled: use ShadyCSS
@@ -232,22 +258,16 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 this.localName
             );
             window.ShadyCSS.prepareTemplate(Theme.template, this.localName);
-        } else if (supportsAdoptingStyleSheets && this.shadowRoot) {
+        } else if (supportsAdoptingStyleSheets) {
             const styleSheets = [];
             for (const style of styles) {
                 styleSheets.push(style.styleSheet as CSSStyleSheet);
             }
             this.shadowRoot.adoptedStyleSheets = styleSheets;
-        } else if (this.shadowRoot) {
+        } else {
             const styleNodes = this.shadowRoot.querySelectorAll('style');
-            if (styleNodes) {
-                styleNodes.forEach((element) => element.remove());
-            }
+            styleNodes.forEach((element) => element.remove());
             styles.forEach((s) => {
-                /* istanbul ignore if */
-                if (!this.shadowRoot) {
-                    return;
-                }
                 const style = document.createElement('style');
                 style.textContent = s.cssText;
                 this.shadowRoot.appendChild(style);
@@ -256,23 +276,14 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         this.hasAdoptedStyles = true;
     }
 
-    protected attributeChangedCallback(): void {
-        this.hasAdoptedStyles = false;
-        if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
-            window.ShadyCSS.styleElement(this);
-        } else {
-            this.adoptStyles();
-        }
-    }
-
     static registerThemeFragment(
         name: FragmentName,
         kind: FragmentType,
         styles: CSSResult
     ): void {
-        const fragmentMap = this.themeFragmentsByKind.get(kind) || new Map();
+        const fragmentMap = Theme.themeFragmentsByKind.get(kind) || new Map();
         if (fragmentMap.size === 0) {
-            this.themeFragmentsByKind.set(kind, fragmentMap);
+            Theme.themeFragmentsByKind.set(kind, fragmentMap);
             // we're adding our first fragment for this kind, set as default
             fragmentMap.set('default', { name, styles });
             Theme.defaultFragments.add(name);

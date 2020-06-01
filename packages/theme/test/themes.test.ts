@@ -14,6 +14,14 @@ import '../';
 import { Theme } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
+type TestableTheme = {
+    hasAdoptedStyles: boolean;
+};
+
+type TestableThemeConstructor = {
+    instances: Set<Theme>;
+};
+
 describe('Themes', () => {
     it('loads - light', async () => {
         const el = await fixture<Theme>(
@@ -50,6 +58,26 @@ describe('Themes', () => {
 
         expect(el).to.exist;
         expect(el).shadowDom.to.exist;
+    });
+    it('adds an instance only once', async () => {
+        const el = await fixture<Theme>(
+            html`
+                <sp-theme></sp-theme>
+            `
+        );
+
+        await elementUpdated(el);
+        const testableTheme = (Theme as unknown) as TestableThemeConstructor;
+        expect(testableTheme.instances.has(el), 'first').to.be.true;
+        expect(testableTheme.instances.size).to.equal(1);
+
+        el.remove();
+        expect(testableTheme.instances.has(el), 'second').to.be.false;
+        expect(testableTheme.instances.size).to.equal(0);
+
+        document.body.append(el);
+        expect(testableTheme.instances.has(el), 'third').to.be.true;
+        expect(testableTheme.instances.size).to.equal(1);
     });
 });
 
@@ -95,15 +123,34 @@ describe('Setting attributes', () => {
 
         expect(el).to.not.be.undefined;
         expect(el).shadowDom.to.equalSnapshot();
+        expect(
+            ((el as unknown) as TestableTheme).hasAdoptedStyles,
+            'Color with default'
+        ).to.be.true;
+
+        // Invalid initial value falls back to default
+        el.setAttribute('scale', 'fish');
+        expect(el.getAttribute('scale')).to.equal('medium');
+        expect(
+            ((el as unknown) as TestableTheme).hasAdoptedStyles,
+            'Color with default, afer invalid scale'
+        ).to.be.true;
 
         el.color = 'dark';
         el.scale = 'medium';
         expect(el.getAttribute('color')).to.equal('dark');
         expect(el.getAttribute('scale')).to.equal('medium');
+        expect(
+            ((el as unknown) as TestableTheme).hasAdoptedStyles,
+            'Both as properties'
+        ).to.be.true;
 
-        // Invalid value
+        // Invalid second + value fallsback to previous
         el.setAttribute('color', 'fish');
-        expect(el.getAttribute('color')).to.equal('fish');
-        expect(el.color).to.equal('light');
+        expect(el.getAttribute('color')).to.equal('dark');
+        expect(
+            ((el as unknown) as TestableTheme).hasAdoptedStyles,
+            'Both after invalid value fallback'
+        ).to.be.true;
     });
 });
