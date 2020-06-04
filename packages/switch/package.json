@@ -45,7 +45,15 @@
         "@spectrum-css/toggle": "^2.1.0"
     },
     "dependencies": {
+        "@open-wc/lit-helpers": "^0.3.10",
+        "@react-aria/switch": "^3.0.0-rc.2",
+        "@react-aria/toggle": "^3.0.0-rc.2",
+        "@react-stately/toggle": "^3.0.0-rc.2",
+        "@react-types/checkbox": "^3.0.0-rc.2",
         "@spectrum-web-components/checkbox": "^0.3.1",
+        "es-dev-commonjs-transformer": "^0.1.1",
+        "haunted": "^4.7.0",
+        "react": "npm:haunted",
         "tslib": "^2.0.0"
     }
 }
