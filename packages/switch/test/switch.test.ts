@@ -15,15 +15,26 @@ import { Switch } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Switch', () => {
-    it('loads', async () => {
+    it('loads default switch accessibly', async () => {
         const el = await fixture<Switch>(
             html`
-                <sp-switch></sp-switch>
+                <sp-switch>Not Checked</sp-switch>
             `
         );
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
+    });
+    it('loads `checked` switch accessibly', async () => {
+        const el = await fixture<Switch>(
+            html`
+                <sp-switch checked>Checked</sp-switch>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
     });
 });

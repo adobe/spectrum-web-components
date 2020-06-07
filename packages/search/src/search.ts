@@ -28,6 +28,8 @@ import { MagnifierIcon } from '@spectrum-web-components/icons-ui';
 import searchStyles from './search.css.js';
 import magnifierStyles from '@spectrum-web-components/icon/lib/spectrum-icon-magnifier.css.js';
 
+const stopPropagation = (event: Event): void => event.stopPropagation();
+
 export class Search extends Textfield {
     public static get styles(): CSSResultArray {
         return [...super.styles, searchStyles, magnifierStyles];
@@ -58,6 +60,14 @@ export class Search extends Textfield {
         if (!applyDefault) {
             event.preventDefault();
         }
+    }
+
+    private handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
+        if (!this.value || code !== 'Escape') {
+            return;
+        }
+        this.reset();
     }
 
     public async reset(): Promise<void> {
@@ -92,6 +102,7 @@ export class Search extends Textfield {
                 id="form"
                 method=${ifDefined(this.method)}
                 @submit=${this.handleSubmit}
+                @keydown=${this.handleKeydown}
             >
                 ${super.render()}
                 <sp-icon id="icon" class="icon magnifier" size="s">
@@ -102,7 +113,9 @@ export class Search extends Textfield {
                           <sp-clear-button
                               id="button"
                               label="Reset"
+                              tabindex="-1"
                               @click=${this.reset}
+                              @keydown=${stopPropagation}
                           ></sp-clear-button>
                       `
                     : html``}

@@ -17,7 +17,7 @@ import '../../shared/lib/focus-visible.js';
 import { spy } from 'sinon';
 
 describe('Search', () => {
-    it('loads', async () => {
+    it('loads accessibly', async () => {
         const el = await litFixture<Search>(
             html`
                 <sp-search></sp-search>
@@ -25,9 +25,8 @@ describe('Search', () => {
         );
 
         await elementUpdated(el);
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('can be cleared', async () => {
         const el = await litFixture<Search>(

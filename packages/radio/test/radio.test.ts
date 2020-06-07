@@ -57,6 +57,10 @@ describe('Radio', () => {
         expect(textNode.textContent).to.equal('Option 1');
     });
 
+    it('loads accessibly', async () => {
+        await expect(testDiv).to.be.accessible();
+    });
+
     it('respects checked attribute', () => {
         const el1 = document.querySelector('[value=first]') as Radio;
         const el2 = testDiv.querySelector('[value=second]') as Radio;

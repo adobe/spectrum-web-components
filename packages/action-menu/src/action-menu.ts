@@ -19,6 +19,7 @@ import {
 } from 'lit-element';
 import { DropdownBase } from '@spectrum-web-components/dropdown';
 import { ObserveSlotText } from '@spectrum-web-components/shared/lib/observe-slot-text';
+import { MoreIcon } from '@spectrum-web-components/icons-workflow';
 import actionMenuStyles from './action-menu.css.js';
 
 /**
@@ -45,18 +46,7 @@ export class ActionMenu extends ObserveSlotText(DropdownBase) {
         return [
             html`
                 <slot name="icon">
-                    <svg
-                        slot="icon"
-                        viewBox="0 0 36 36"
-                        class="icon"
-                        focusable="false"
-                        aria-hidden="true"
-                        fill="currentColor"
-                    >
-                        <circle cx="17.8" cy="18.2" r="3.4"></circle>
-                        <circle cx="29.5" cy="18.2" r="3.4"></circle>
-                        <circle cx="6.1" cy="18.2" r="3.4"></circle>
-                    </svg>
+                    ${MoreIcon({ hidden: this.hasLabel })}
                 </slot>
                 <div id="label" ?hidden=${!this.hasLabel}>
                     <slot

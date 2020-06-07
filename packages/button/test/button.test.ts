@@ -40,18 +40,18 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('loads default w/ element content', async () => {
         const el = await fixture<Button>(
             html`
-                <sp-button><svg></svg></sp-button>
+                <sp-button label="Button"><svg></svg></sp-button>
             `
         );
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('loads default w/ an icon', async () => {
         const el = await fixture<Button>(
@@ -66,12 +66,12 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('loads default only icon', async () => {
         const el = await fixture<Button>(
             html`
-                <sp-button>
+                <sp-button label="Button">
                     <svg slot="icon"></svg>
                 </sp-button>
             `
@@ -79,7 +79,7 @@ describe('Button', () => {
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('allows label to be toggled', async () => {
         const testNode = document.createTextNode('Button');
@@ -123,7 +123,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('loads with href', async () => {
         const el = await fixture<Button>(

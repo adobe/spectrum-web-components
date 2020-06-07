@@ -8,6 +8,7 @@
     for="input"
     id="label"
   >
+    Slider
   </label>
   <div
     aria-labelledby="label"
@@ -33,7 +34,7 @@
   >
     <input
       aria-disabled="false"
-      aria-label=""
+      aria-labelledby="label"
       aria-valuemax="20"
       aria-valuemin="0"
       aria-valuenow="10"
@@ -65,6 +66,7 @@
     for="input"
     id="label"
   >
+    Color Slider
   </label>
   <div
     aria-labelledby="label"
@@ -85,7 +87,7 @@
   >
     <input
       aria-disabled="false"
-      aria-label=""
+      aria-labelledby="label"
       aria-valuemax="20"
       aria-valuemin="0"
       aria-valuenow="10"
@@ -110,6 +112,7 @@
     for="input"
     id="label"
   >
+    Ticked Slider
   </label>
   <div
     aria-labelledby="label"
@@ -1142,7 +1145,7 @@
   >
     <input
       aria-disabled="false"
-      aria-label=""
+      aria-labelledby="label"
       aria-valuemax="100"
       aria-valuemin="-100"
       aria-valuenow="0"

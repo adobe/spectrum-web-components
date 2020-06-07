@@ -23,6 +23,29 @@ export default {
     component: 'sp-dialog-wrapper',
 };
 
+export const wrapperLabeledHero = (): TemplateResult => {
+    const noTransitions = boolean('No Transitions', false, 'Testing');
+    return html`
+        <sp-dialog-wrapper
+            ?no-transitions=${noTransitions}
+            open
+            hero=${landscape}
+            hero-label="Hero Image Alt Text"
+            dismissible
+            headline="Wrapped Dialog w/ Hero Image"
+            @close=${action('close')}
+        >
+            Content of the dialog
+        </sp-dialog-wrapper>
+        <sp-button
+            onClick="this.previousElementSibling.open = !this.previousElementSibling.open"
+            variant="primary"
+        >
+            Toggle Dialog
+        </sp-button>
+    `;
+};
+
 export const wrapperDismissible = (): TemplateResult => {
     const noTransitions = boolean('No Transitions', false, 'Testing');
     return html`

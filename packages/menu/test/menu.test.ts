@@ -21,8 +21,6 @@ import {
     html,
     expect,
 } from '@open-wc/testing';
-import { waitForPredicate } from '../../../test/testing-helpers';
-import '../../shared/lib/focus-visible.js';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
     new KeyboardEvent('keydown', {
@@ -80,10 +78,9 @@ describe('Menu', () => {
             `
         );
 
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
 
-        expect(el).lightDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
 
     it('renders w/ selected', async () => {
@@ -104,7 +101,8 @@ describe('Menu', () => {
         );
 
         await elementUpdated(el);
-        expect(el).to.not.be.undefined;
+
+        await expect(el).to.be.accessible();
     });
 
     it('handle focus and keyboard input', async () => {

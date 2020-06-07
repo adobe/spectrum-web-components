@@ -12,21 +12,25 @@ governing permissions and limitations under the License.
 
 import '../';
 import { MenuItem } from '../';
+import '@spectrum-web-components/menu';
+import { Menu } from '@spectrum-web-components/menu';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Menu item', () => {
     it('renders', async () => {
-        const el = await fixture<MenuItem>(
+        const el = await fixture<Menu>(
             html`
-                <sp-menu-item selected>
-                    Selected
-                </sp-menu-item>
+                <sp-menu>
+                    <sp-menu-item selected>
+                        Selected
+                    </sp-menu-item>
+                </sp-menu>
             `
         );
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('value attribute', async () => {
         const el = await fixture<MenuItem>(

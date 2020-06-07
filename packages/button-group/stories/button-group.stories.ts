@@ -74,17 +74,17 @@ export const actionButtonsIcons = (): TemplateResult => {
 export const actionButtonsIconsOnly = (): TemplateResult => {
     return html`
         <sp-button-group>
-            <sp-action-button quiet>
+            <sp-action-button quiet label="Properties">
                 <sp-icon slot="icon" size="s">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet>
+            <sp-action-button quiet label="Info">
                 <sp-icon slot="icon" size="s">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet>
+            <sp-action-button quiet label="View All Tags">
                 <sp-icon slot="icon" size="s">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>
@@ -141,17 +141,17 @@ export const actionButtonsVerticalIcons = (): TemplateResult => {
 export const actionButtonsVerticalIconsOnly = (): TemplateResult => {
     return html`
         <sp-button-group vertical>
-            <sp-action-button quiet>
+            <sp-action-button quiet label="Properties">
                 <sp-icon slot="icon" size="s">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet>
+            <sp-action-button quiet label="Info">
                 <sp-icon slot="icon" size="s">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet>
+            <sp-action-button quiet label="View All Tags">
                 <sp-icon slot="icon" size="s">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>

@@ -11,9 +11,23 @@ governing permissions and limitations under the License.
 */
 import '../';
 import { Tab } from '../';
+import '@spectrum-web-components/tab-list';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Tab', () => {
+    it('loads default tab accessibly', async () => {
+        const el = await fixture<Tab>(
+            html`
+                <sp-tab-list>
+                    <sp-tab label="Tab 1" value="first"></sp-tab>
+                </sp-tab-list>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
     it('Updates label', async () => {
         const el = await fixture<Tab>(
             html`

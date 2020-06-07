@@ -31,55 +31,55 @@ describe('Buttongroup', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads default button-group accessibly with sp-action-button', async () => {
         const el = await fixture<ButtonGroup>(actionButtons());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads default button-group accessibly with sp-action-button and icons', async () => {
         const el = await fixture<ButtonGroup>(actionButtonsIcons());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads default button-group accessibly with sp-action-button, icons only', async () => {
         const el = await fixture<ButtonGroup>(actionButtonsIconsOnly());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads default button-group[vertial] accessibly with sp-button', async () => {
         const el = await fixture<ButtonGroup>(buttonsVertical());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads default button-group[vertial] accessibly with sp-action-button', async () => {
         const el = await fixture<ButtonGroup>(actionButtonsVertical());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads default button-group[vertial] accessibly with sp-action-button and icons', async () => {
         const el = await fixture<ButtonGroup>(actionButtonsVerticalIcons());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads default button-group[vertial] accessibly with sp-action-button, icons only', async () => {
         const el = await fixture<ButtonGroup>(actionButtonsVerticalIconsOnly());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
 });

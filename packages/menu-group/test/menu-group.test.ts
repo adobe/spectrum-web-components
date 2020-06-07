@@ -79,5 +79,7 @@ describe('Menu group', () => {
         expect(firstLabelledById).to.not.be.null;
         expect(secondLabelledById).to.not.be.null;
         expect(firstLabelledById).to.not.equal(secondLabelledById);
+
+        await expect(el).to.be.accessible();
     });
 });

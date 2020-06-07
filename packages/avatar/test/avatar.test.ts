@@ -13,6 +13,20 @@ import { Avatar } from '../';
 import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 
 describe('Avatar', () => {
+    it('loads accessibly', async () => {
+        const el = await fixture<Avatar>(
+            html`
+                <sp-avatar
+                    label="Shantanu Narayen"
+                    src="https://placedog.net/500/500"
+                ></sp-avatar>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
     it('loads with everything set', async () => {
         const el = await fixture<Avatar>(
             html`

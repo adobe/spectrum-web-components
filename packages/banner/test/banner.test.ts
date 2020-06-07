@@ -44,6 +44,10 @@ describe('banner', () => {
         );
     });
 
+    it('loads accessibly', async () => {
+        await expect(testDiv).to.be.accessible();
+    });
+
     it('loads info', () => {
         const el = testDiv.querySelector('sp-banner[type=info]') as Banner;
 

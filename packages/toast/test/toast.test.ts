@@ -21,7 +21,6 @@ import {
 } from '@open-wc/testing';
 import { ClearButton } from '@spectrum-web-components/button';
 import { waitForPredicate } from '../../../test/testing-helpers';
-import '../../shared/lib/focus-visible.js';
 
 interface TestableToast {
     _timeout: number;
@@ -37,9 +36,8 @@ describe('Toast', () => {
         );
 
         await elementUpdated(el);
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     toastVariants.map((variant) => {
         it(`loads - [variant="${variant}"]`, async () => {
@@ -52,9 +50,8 @@ describe('Toast', () => {
             );
 
             await elementUpdated(el);
-            await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
-            expect(el).shadowDom.to.equalSnapshot();
+            await expect(el).to.be.accessible();
         });
     });
     it('loads - timeout', async () => {

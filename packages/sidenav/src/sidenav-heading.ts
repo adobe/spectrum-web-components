@@ -32,9 +32,9 @@ export class SideNavHeading extends LitElement {
     protected render(): TemplateResult {
         return html`
             <h2 id="heading">${this.label}</h2>
-            <ul id="list" aria-labelledby="heading">
+            <div id="list" aria-labelledby="heading">
                 <slot></slot>
-            </ul>
+            </div>
         `;
     }
 }

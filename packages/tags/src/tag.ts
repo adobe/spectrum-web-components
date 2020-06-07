@@ -86,6 +86,7 @@ export class Tag extends LitElement {
                       <sp-clear-button
                           class="clear-button"
                           ?disabled=${this.disabled}
+                          label="Remove"
                           small
                           tabindex="-1"
                           @click=${this.delete}

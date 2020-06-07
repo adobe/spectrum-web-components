@@ -7,6 +7,7 @@
     },
     "include": [
         "../packages/**/test/*.ts",
+        "../packages/actionbar/stories/*.ts",
         "../packages/button-group/stories/*.ts",
         "../packages/dialog/stories/*.ts",
         "./testing-helpers.ts",

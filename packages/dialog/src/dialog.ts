@@ -102,7 +102,7 @@ export class Dialog extends LitElement {
                       `
                     : html``}
             </div>
-            <div class="content">
+            <div class="content" tabindex="0">
                 <slot></slot>
             </div>
             ${!this.mode || this.hasFooter

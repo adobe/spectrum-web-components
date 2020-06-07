@@ -26,6 +26,6 @@ describe('Underlay', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
 });

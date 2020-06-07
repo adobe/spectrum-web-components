@@ -43,6 +43,7 @@
     },
     "dependencies": {
         "@spectrum-web-components/dropdown": "^0.5.5",
+        "@spectrum-web-components/icons-workflow": "^0.2.2",
         "@spectrum-web-components/menu": "^0.2.7",
         "@spectrum-web-components/menu-item": "^0.5.4",
         "@spectrum-web-components/shared": "^0.4.7",

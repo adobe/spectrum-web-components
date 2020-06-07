@@ -48,7 +48,7 @@ export const imageIcon = (): TemplateResult => {
     return html`
         ${sizes.map(
             (size) => html`
-                <sp-icon size=${size} src=${back}></sp-icon>
+                <sp-icon label="Back" size=${size} src=${back}></sp-icon>
             `
         )}
     `;
