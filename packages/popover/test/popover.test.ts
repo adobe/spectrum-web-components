@@ -33,13 +33,14 @@ describe('popover', () => {
                 </sp-popover>
             `
         );
+        await elementUpdated(popover);
     });
 
     it('loads', async () => {
         expect(popover).to.not.equal(undefined);
         expect(popover.textContent).to.include('Popover Title');
 
-        return true;
+        await expect(popover).to.be.accessible();
     });
     it('tip exists only when tip attribute is true', async () => {
         if (!popover.shadowRoot) throw new Error('No shadowRoot');
@@ -52,8 +53,6 @@ describe('popover', () => {
 
         tip = popover.shadowRoot.querySelector('tip') as HTMLElement;
         expect(tip).to.not.equal(undefined);
-
-        return true;
     });
 
     it('answers tip query', async () => {

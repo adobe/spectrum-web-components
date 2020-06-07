@@ -19,7 +19,11 @@ describe('card', () => {
         const el = await fixture<Card>(
             html`
                 <sp-card title="Card Title" subtitle="JPG">
-                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <img
+                        slot="preview"
+                        src="https://picsum.photos/532/192"
+                        alt="Slotted Preview"
+                    />
                     <div slot="footer">Footer</div>
                 </sp-card>
             `
@@ -27,13 +31,17 @@ describe('card', () => {
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('loads - [quiet]', async () => {
         const el = await fixture<Card>(
             html`
                 <sp-card variant="quiet" title="Card Title" subtitle="JPG">
-                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <img
+                        slot="preview"
+                        src="https://picsum.photos/532/192"
+                        alt="Slotted Preview"
+                    />
                     <div slot="description">10/15/18</div>
                     <div slot="footer">Footer</div>
                 </sp-card>
@@ -42,13 +50,17 @@ describe('card', () => {
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('loads - [gallery]', async () => {
         const el = await fixture<Card>(
             html`
                 <sp-card variant="gallery" title="Card Title" subtitle="JPG">
-                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <img
+                        slot="preview"
+                        src="https://picsum.photos/532/192"
+                        alt="Slotted Preview"
+                    />
                     <div slot="description">10/15/18</div>
                     <div slot="footer">Footer</div>
                 </sp-card>
@@ -57,14 +69,18 @@ describe('card', () => {
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('displays the `title` attribute as `#title`', async () => {
         const testTitle = 'This is a test title';
         const el = await fixture<Card>(
             html`
                 <sp-card title=${testTitle} subtitle="JPG">
-                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <img
+                        slot="preview"
+                        src="https://picsum.photos/532/192"
+                        alt="Slotted Preview"
+                    />
                     <div slot="footer">Footer</div>
                 </sp-card>
             `
@@ -87,7 +103,11 @@ describe('card', () => {
             html`
                 <sp-card subtitle="JPG">
                     <h1 slot="title">${testTitle}</h1>
-                    <img slot="preview" src="https://picsum.photos/532/192" />
+                    <img
+                        slot="preview"
+                        src="https://picsum.photos/532/192"
+                        alt="Slotted Preview"
+                    />
                     <div slot="footer">Footer</div>
                 </sp-card>
             `

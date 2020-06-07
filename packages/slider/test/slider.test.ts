@@ -28,18 +28,19 @@ describe('Slider', () => {
     it('loads', async () => {
         const el = await fixture<Slider>(
             html`
-                <sp-slider></sp-slider>
+                <sp-slider label="Slider"></sp-slider>
             `
         );
 
         await elementUpdated(el);
 
+        await expect(el).to.be.accessible();
         expect(el).shadowDom.to.equalSnapshot();
     });
     it('loads - [variant="color"]', async () => {
         const el = await fixture<Slider>(
             html`
-                <sp-slider variant="color"></sp-slider>
+                <sp-slider label="Color Slider" variant="color"></sp-slider>
             `
         );
 
@@ -51,6 +52,7 @@ describe('Slider', () => {
         const el = await fixture<Slider>(
             html`
                 <sp-slider
+                    label="Ticked Slider"
                     min="-100"
                     max="100"
                     value="0"
@@ -62,6 +64,7 @@ describe('Slider', () => {
 
         await elementUpdated(el);
 
+        await expect(el).to.be.accessible();
         expect(el).shadowDom.to.equalSnapshot();
     });
     it('receives value from the outside', async () => {

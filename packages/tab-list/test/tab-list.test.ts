@@ -46,13 +46,15 @@ const createTabList = async (): Promise<TabList> =>
     );
 
 describe('TabList', () => {
-    it('loads', async () => {
+    it('loads accessibly', async () => {
         const tabList = await createTabList();
 
         const tabs = tabList.querySelectorAll('sp-tab');
 
         expect(tabList).to.exist;
         expect(tabs.length).to.equal(3);
+
+        await expect(tabList).to.be.accessible();
     });
 
     it('reflects selected tab with selected property', async () => {

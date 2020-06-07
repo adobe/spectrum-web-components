@@ -27,28 +27,28 @@ describe('Dialog', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads `[size=alert]` dialog accessibly', async () => {
         const el = await fixture<Dialog>(alertError());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads `[dismissible]` dialog accessibly', async () => {
         const el = await fixture<Dialog>(dismissible());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads `[mode=fullscreen]` dialog accessibly', async () => {
         const el = await fixture<Dialog>(fullscreen());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads dialog without footer accessibly', async () => {
         const el = await fixture<Dialog>(html`
@@ -60,7 +60,7 @@ describe('Dialog', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('closes', async () => {
         const el = await fixture<Dialog>(dismissible());

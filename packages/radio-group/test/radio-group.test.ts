@@ -43,7 +43,7 @@ describe('Radio Group', () => {
                         <sp-radio value="first" checked>Option 1</sp-radio>
                         <sp-radio value="second" disabled>Option 2</sp-radio>
                     </sp-radio-group>
-                    <sp-radio-group id="test-multiple-checked">
+                    <sp-radio-group id="test-all-checked">
                         <sp-radio value="first" checked>Option 1</sp-radio>
                         <sp-radio value="second" checked>Option 2</sp-radio>
                     </sp-radio-group>
@@ -81,6 +81,10 @@ describe('Radio Group', () => {
 
         expect(radioGroup).to.exist;
         expect(radioChildren.length).to.equal(3);
+    });
+
+    it('loads accessibly', async () => {
+        await expect(testDiv).to.be.accessible();
     });
 
     it('reflects checked radio with selected property', async () => {

@@ -17,6 +17,7 @@ import '..';
 import { Dialog, DialogWrapper } from '..';
 import { Button } from '@spectrum-web-components/button';
 import {
+    wrapperLabeledHero,
     wrapperDismissible,
     wrapperButtons,
     wrapperFullscreen,
@@ -28,14 +29,21 @@ describe('Dialog Wrapper', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
+    });
+    it('loads labeled hero dialog accessibly', async () => {
+        const el = await fixture<DialogWrapper>(wrapperLabeledHero());
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
     });
     it('loads fullscreen wrapped dialog accessibly', async () => {
         const el = await fixture<DialogWrapper>(wrapperFullscreen());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('dismisses', async () => {
         const el = await fixture<DialogWrapper>(wrapperDismissible());

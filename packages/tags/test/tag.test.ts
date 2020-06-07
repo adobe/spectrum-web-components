@@ -35,14 +35,18 @@ describe('Tag', () => {
     it('loads default tags accessibly', async () => {
         const el = await fixture<Tag>(
             html`
-                <sp-tag>Tag 1</sp-tag>
+                <sp-tags>
+                    <sp-tag>Tag 1</sp-tag>
+                    <sp-tag invalid>Tag 2</sp-tag>
+                    <sp-tag disabled>Tag 3</sp-tag>
+                    <sp-tag deletable>Tag 4</sp-tag>
+                </sp-tags>
             `
         );
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
-        expect(el.hasAttribute('role')).to.be.true;
+        await expect(el).to.be.accessible();
     });
     it('dispatches `delete` events on click', async () => {
         const deleteSpy = spy();

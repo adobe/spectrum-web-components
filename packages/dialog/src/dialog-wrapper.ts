@@ -54,6 +54,9 @@ export class DialogWrapper extends LitElement {
     @property()
     public hero = '';
 
+    @property({ attribute: 'hero-label' })
+    public heroLabel = '';
+
     @property({ type: Boolean, reflect: true, attribute: 'no-divider' })
     public noDivider = false;
 
@@ -138,7 +141,16 @@ export class DialogWrapper extends LitElement {
             >
                 ${this.hero
                     ? html`
-                          <img src="${this.hero}" slot="hero" />
+                          <img
+                              src="${this.hero}"
+                              slot="hero"
+                              aria-hidden=${ifDefined(
+                                  this.heroLabel ? undefined : 'true'
+                              )}
+                              alt=${ifDefined(
+                                  this.heroLabel ? this.heroLabel : undefined
+                              )}
+                          />
                       `
                     : html``}
                 ${this.headline

@@ -24,6 +24,8 @@ describe('Circle Loader', () => {
         expect(el).to.not.be.undefined;
         expect(el).lightDom.to.equalSnapshot();
         expect(el).shadowDom.to.equalSnapshot();
+
+        await expect(el).to.be.accessible();
     });
     it('loads - [indeterminate]', async () => {
         const el = await fixture<CircleLoader>(html`
@@ -34,5 +36,7 @@ describe('Circle Loader', () => {
         expect(el).to.not.be.undefined;
         expect(el).lightDom.to.equalSnapshot();
         expect(el).shadowDom.to.equalSnapshot();
+
+        await expect(el).to.be.accessible();
     });
 });

@@ -14,6 +14,31 @@ import { Textfield } from '../';
 import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
 
 describe('Textfield', () => {
+    it('loads default textfield accessibly', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield placeholder="Enter Your Name"></sp-textfield>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads multiline textfield accessibly', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your name"
+                    multiline
+                ></sp-textfield>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
     it('loads', async () => {
         const testPlaceholder = 'Enter your name';
         const el = await litFixture<Textfield>(

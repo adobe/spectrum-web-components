@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import '../';
 import { SideNav, SideNavItem } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
-import { waitForPredicate } from '../../../test/testing-helpers';
 import { TemplateResult } from 'lit-html';
 import { LitElement } from 'lit-element';
 
@@ -50,10 +49,8 @@ describe('Sidenav', () => {
         );
 
         await elementUpdated(el);
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
-        expect(el).shadowDom.to.equalSnapshot();
-        expect(el).lightDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('sets manageTabIndex on new children', async () => {
         const el = await fixture<SideNav>(

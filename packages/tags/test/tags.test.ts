@@ -48,7 +48,7 @@ describe('Tags', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
         expect(el.hasAttribute('role')).to.be.true;
         expect(el.hasAttribute('aria-label')).to.be.true;
     });
@@ -65,7 +65,7 @@ describe('Tags', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
         expect(el.hasAttribute('role')).to.be.true;
         expect(el.hasAttribute('aria-label')).to.be.true;
     });

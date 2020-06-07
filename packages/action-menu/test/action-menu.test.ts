@@ -12,11 +12,9 @@ governing permissions and limitations under the License.
 
 import '../';
 import { ActionMenu } from '../';
-import '../../menu/lib/index.js';
-import '../../menu-item/lib/index.js';
+import '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu-item';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
-import { waitForPredicate } from '../../../test/testing-helpers';
-import '../../shared/lib/focus-visible.js';
 
 const actionMenuFixture = async (): Promise<ActionMenu> =>
     await fixture<ActionMenu>(
@@ -50,12 +48,11 @@ const actionMenuFixture = async (): Promise<ActionMenu> =>
 describe('Action menu', () => {
     it('loads', async () => {
         const el = await actionMenuFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
 
         expect(el).to.not.be.undefined;
-        expect(el).lightDom.to.equalSnapshot();
-        expect(el).shadowDom.to.equalSnapshot();
+
+        await expect(el).to.be.accessible();
     });
     it('loads - [label]', async () => {
         const el = await fixture<ActionMenu>(
@@ -86,16 +83,12 @@ describe('Action menu', () => {
             `
         );
 
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
 
-        expect(el).to.not.be.undefined;
-        expect(el).lightDom.to.equalSnapshot();
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('stays `quiet`', async () => {
         const el = await actionMenuFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
         await elementUpdated(el);
 
         expect(el.quiet).to.be.true;
@@ -107,7 +100,6 @@ describe('Action menu', () => {
     });
     it('stay `valid`', async () => {
         const el = await actionMenuFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
 
@@ -120,7 +112,6 @@ describe('Action menu', () => {
     });
     it('opens unmeasured', async () => {
         const el = await actionMenuFixture();
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         await elementUpdated(el);
         const button = el.button as HTMLButtonElement;

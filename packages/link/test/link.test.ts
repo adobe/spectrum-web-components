@@ -27,14 +27,12 @@ describe('Link', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Default Link');
-        // make sure href is being passed to <a>
-        expect(el).shadowDom.to.equal(
-            `<a href="test_url" id="anchor" tabindex="0"><slot></slot></a>`
-        );
+
+        await expect(el).to.be.accessible();
     });
 
     it('loads[download]', async () => {
-        const dlel = await fixture<Link>(
+        const el = await fixture<Link>(
             html`
                 <sp-link href="test_url" download="somefile.txt">
                     Default Link
@@ -42,12 +40,10 @@ describe('Link', () => {
             `
         );
 
-        await elementUpdated(dlel);
-        expect(dlel).to.not.be.undefined;
-        expect(dlel.textContent).to.include('Default Link');
-        // make sure href is being passed to <a>
-        expect(dlel).shadowDom.to.equal(
-            `<a href="test_url" download="somefile.txt" id="anchor" tabindex="0"><slot></slot></a>`
-        );
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.textContent).to.include('Default Link');
+
+        await expect(el).to.be.accessible();
     });
 });

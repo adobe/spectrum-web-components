@@ -26,7 +26,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('toggles', async () => {
         const el = await fixture<ActionButton>(

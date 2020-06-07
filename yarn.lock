@@ -2153,10 +2153,10 @@
     whatwg-fetch "^3.0.0"
     whatwg-url "^7.0.0"
 
-"@open-wc/building-webpack@^2.13.31":
-  version "2.13.31"
-  resolved "https://registry.yarnpkg.com/@open-wc/building-webpack/-/building-webpack-2.13.31.tgz#346c814c1ada2b40a0dca7b5b098b57deca93080"
-  integrity sha512-7EhYaUSbRh8QO2yGVH+FZ2sl6gnICCLL+PUgNjz+9vIWrHQOktcdpFKX61AsdOB/J+sLi152Og7OhWoO+mbJ8g==
+"@open-wc/building-webpack@^2.13.33":
+  version "2.13.33"
+  resolved "https://registry.yarnpkg.com/@open-wc/building-webpack/-/building-webpack-2.13.33.tgz#c66412bcf23142080c540881d0f4c00f7cf7c158"
+  integrity sha512-SyO9wZXaMp1urD+dJGrfPh92UP4UETab4NLiqZvDZbQ48Cqxrj2ZoNdZR1sfOGDhs6n5etRqF88TjCBRbQSw0g==
   dependencies:
     "@babel/core" "^7.9.0"
     "@babel/plugin-proposal-nullish-coalescing-operator" "^7.8.3"
@@ -2171,7 +2171,7 @@
     babel-plugin-template-html-minifier "^4.0.0"
     clean-webpack-plugin "^2.0.0"
     copy-webpack-plugin "^5.0.1"
-    es-dev-server "^1.53.0"
+    es-dev-server "^1.54.1"
     terser-webpack-plugin "^2.3.0"
     webpack-merge "^4.1.5"
     workbox-webpack-plugin "^4.3.1"
@@ -2189,10 +2189,10 @@
   resolved "https://registry.yarnpkg.com/@open-wc/dedupe-mixin/-/dedupe-mixin-1.2.17.tgz#50fb903fc8785639487d7987caae45d7bba08ec7"
   integrity sha512-9A3WohqNxEloJa4y1DuBL5zH12cNRNW1vsrkiaLMnOGuQdhibs2XY1oliudsKpvIeNjDXRVRPUdIIzn65BypCw==
 
-"@open-wc/demoing-storybook@^2.3.3":
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/@open-wc/demoing-storybook/-/demoing-storybook-2.3.3.tgz#90f2f316444079063226c914edd04b528f423b4c"
-  integrity sha512-TuXZIJJCoOUsSCdEG2OCSLzbDenNf7LwiG850DcgpVHz/6hAdmmPwh6UOyFxp+4Tevjizv9o1y1bk1S2M6Kr6w==
+"@open-wc/demoing-storybook@^2.3.6":
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/@open-wc/demoing-storybook/-/demoing-storybook-2.3.6.tgz#339b18a88c128a4fe7906841556cde73786a53cb"
+  integrity sha512-Y/uUaNsm8xRjVGPHhoQK+xxAWN3HfHJdGsXn7cedKP987psdZCiww7HjiBH1Nbo1by1AMyK96Mk1bhU8VqiYmw==
   dependencies:
     "@babel/core" "^7.9.0"
     "@babel/generator" "^7.9.6"
@@ -2202,15 +2202,15 @@
     "@babel/plugin-transform-react-jsx" "^7.9.1"
     "@babel/preset-env" "^7.9.0"
     "@mdx-js/mdx" "^1.5.1"
-    "@open-wc/rollup-plugin-html" "^1.0.5"
-    "@open-wc/rollup-plugin-polyfills-loader" "^1.0.6"
+    "@open-wc/rollup-plugin-html" "^1.1.0"
+    "@open-wc/rollup-plugin-polyfills-loader" "^1.0.7"
     "@rollup/plugin-node-resolve" "^7.1.1"
     babel-plugin-bundled-import-meta "^0.3.2"
     babel-plugin-template-html-minifier "^4.0.0"
     command-line-args "^5.0.2"
     command-line-usage "^6.1.0"
     deepmerge "^4.2.2"
-    es-dev-server "^1.53.0"
+    es-dev-server "^1.54.1"
     es-module-lexer "^0.3.13"
     fs-extra "^8.1.0"
     glob "^7.1.3"
@@ -2224,16 +2224,16 @@
     storybook-addon-markdown-docs "^0.4.0"
     storybook-prebuilt "^1.5.0"
 
-"@open-wc/karma-esm@^2.16.11":
-  version "2.16.11"
-  resolved "https://registry.yarnpkg.com/@open-wc/karma-esm/-/karma-esm-2.16.11.tgz#65261aa9ae9c9f9645d065de41d038a7d0679855"
-  integrity sha512-CIipVFMZlfoV1Ts+bfqYjSmivZRcUmiPFNSjfkykqsU0eZVe85U8HKHz+wUVolTf9rgHLxvi0QKdOF1Hc5AHjA==
+"@open-wc/karma-esm@^2.16.13":
+  version "2.16.13"
+  resolved "https://registry.yarnpkg.com/@open-wc/karma-esm/-/karma-esm-2.16.13.tgz#8ad8fd6c97fb011eceb18b76c647f39f323094d7"
+  integrity sha512-utThmd4pQcD8lp/J0wq/hgmdQtAFN08rB9p8aV7rwg2pBYsnjZkCpylAmqKYz40QEIFIVo6iHHfKvdSJndX6dg==
   dependencies:
     "@open-wc/building-utils" "^2.18.0"
     babel-plugin-istanbul "^5.1.4"
     chokidar "^3.0.0"
     deepmerge "^4.2.2"
-    es-dev-server "^1.53.0"
+    es-dev-server "^1.54.1"
     minimatch "^3.0.4"
     node-fetch "^2.6.0"
     polyfills-loader "^1.6.1"
@@ -2252,24 +2252,25 @@
     "@webcomponents/template" "^1.4.0"
     "@webcomponents/webcomponents-platform" "^1.0.0"
 
-"@open-wc/rollup-plugin-html@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@open-wc/rollup-plugin-html/-/rollup-plugin-html-1.0.5.tgz#81efa681f3c6a12e5813639ada018a250a999b46"
-  integrity sha512-EAFiybd7LgckbkktCIMBSj81NkI4EmXYNc7S4rl+9Y3sLtDXvXy1Xf6x0diOSqids8lATW+k3p/H8vOQUvvccA==
+"@open-wc/rollup-plugin-html@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@open-wc/rollup-plugin-html/-/rollup-plugin-html-1.1.0.tgz#3aeecc5c4c17562112a3d1fcea964d7bb3853101"
+  integrity sha512-0VukjFUtC3Ro+kZcQMQqlE9B+FjOTXKJP1ek2jjT1HqeoG5NCHrgGCFe/fLc4G1TDDM5fIuKZ/xcus4TtICWTA==
   dependencies:
     "@open-wc/building-utils" "^2.18.0"
     "@types/html-minifier" "^3.5.3"
     fs-extra "^8.1.0"
+    glob "^7.1.3"
     html-minifier "^4.0.0"
     parse5 "^5.1.1"
     terser "^4.6.7"
 
-"@open-wc/rollup-plugin-polyfills-loader@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@open-wc/rollup-plugin-polyfills-loader/-/rollup-plugin-polyfills-loader-1.0.6.tgz#23a31a50a4ea395813c61434c857442ad63192e7"
-  integrity sha512-CjR+UgQe2YX+DQBHtphG8hI8xeSAtUacDgbSuYCu0VF1u6wLdtW+zPHQHnog1PqI/yl8er97RwgCYqMhxqpoBQ==
+"@open-wc/rollup-plugin-polyfills-loader@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@open-wc/rollup-plugin-polyfills-loader/-/rollup-plugin-polyfills-loader-1.0.7.tgz#443f3d314c1a3cc3534d02a8579ed878255e60ca"
+  integrity sha512-ax7jcXWUZaBDO7g3deRvtGNKPHoB9MzHqNAbSqkIY9R1D8cSluzN4LMHdWs0tWKfZzIRJljNvM/1glQqthlJ9A==
   dependencies:
-    "@open-wc/rollup-plugin-html" "^1.0.5"
+    "@open-wc/rollup-plugin-html" "^1.1.0"
     polyfills-loader "^1.6.1"
 
 "@open-wc/scoped-elements@^1.1.1":
@@ -2301,12 +2302,12 @@
     lit-element "^2.2.1"
     lit-html "^1.0.0"
 
-"@open-wc/testing-karma@^3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@open-wc/testing-karma/-/testing-karma-3.4.0.tgz#1332ba3c6b00db989bd876610dd5cb2fe3488081"
-  integrity sha512-DIhnpzVTujeFk2SCTPvYhuia9hKcuDugx2pvi3GqiyiSEzqxKBb8Uv/1v2OO78dEgc4DA2soGGybQ87fN0E55Q==
+"@open-wc/testing-karma@^3.4.2":
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@open-wc/testing-karma/-/testing-karma-3.4.2.tgz#f10936cd757091228a85d144f0d203f36f27bbf9"
+  integrity sha512-hXbNwGvUwA0OkWIE3UPr/paSwPQuYw0RAkweTaeh1DpqRDlPbd4mvMv4lt+5Ssi4eYioGeXSCpwi6a2WCDqvxQ==
   dependencies:
-    "@open-wc/karma-esm" "^2.16.11"
+    "@open-wc/karma-esm" "^2.16.13"
     "@types/karma" "^5.0.0"
     "@types/karma-coverage-istanbul-reporter" "^2.1.0"
     "@types/karma-mocha" "^1.3.0"
@@ -7698,10 +7699,10 @@ es-abstract@^1.17.0-next.1, es-abstract@^1.17.2, es-abstract@^1.17.5:
     string.prototype.trimleft "^2.1.1"
     string.prototype.trimright "^2.1.1"
 
-es-dev-server@^1.53.0:
-  version "1.53.0"
-  resolved "https://registry.yarnpkg.com/es-dev-server/-/es-dev-server-1.53.0.tgz#ad2eaadd4a5b79b815be32bde81864734c4bfe32"
-  integrity sha512-LoYYLSxqTqf7GkBv6q4vTGGGyyPSVaZUF/jZNogiGdrR8siVYIb9giFvYd7+UnpNGROmGPmkReEF5wCyuvIXMA==
+es-dev-server@^1.54.1:
+  version "1.54.1"
+  resolved "https://registry.yarnpkg.com/es-dev-server/-/es-dev-server-1.54.1.tgz#4378ab5c4c511a5d5495e3276786014fc4d6b450"
+  integrity sha512-fHjHcXtT7XLZurLQhWZVNKHWJ3Nm+EC/H87ajmbxoIcawdayioMJmeigvQmh7JJSpleENe7YS+05n5abJwOIgg==
   dependencies:
     "@babel/core" "^7.9.0"
     "@babel/plugin-proposal-dynamic-import" "^7.8.3"

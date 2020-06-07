@@ -6,5 +6,9 @@
         "rootDir": "./src"
     },
     "include": ["src/*.ts"],
-    "references": [{ "path": "../dropdown" }, { "path": "../shared" }]
+    "references": [
+        { "path": "../dropdown" },
+        { "path": "../icons-workflow" },
+        { "path": "../shared" }
+    ]
 }

@@ -83,6 +83,30 @@ describe('Checkbox', () => {
         expect(content).to.equal('Component');
     });
 
+    it('loads default checkbox accessibly', async () => {
+        const el = await fixture<Checkbox>(
+            html`
+                <sp-checkbox>Not Checked</sp-checkbox>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+
+    it('loads `checked` checkbox accessibly', async () => {
+        const el = await fixture<Checkbox>(
+            html`
+                <sp-checkbox checked>Checked</sp-checkbox>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+
     it('autofocuses', async () => {
         const autoElement = testFixture.querySelector(
             'sp-checkbox[autofocus]'

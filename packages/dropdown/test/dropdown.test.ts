@@ -71,15 +71,14 @@ const dropdownFixture = async (): Promise<Dropdown> => {
 };
 
 describe('Dropdown', () => {
-    it('loads', async () => {
+    it('loads accessibly', async () => {
         const el = await dropdownFixture();
 
         await elementUpdated(el);
-        expect(el).to.not.be.undefined;
-        expect(el).lightDom.to.equalSnapshot();
-        expect(el).shadowDom.to.equalSnapshot();
+
+        await expect(el).to.be.accessible();
     });
-    it('renders invalid', async () => {
+    it('renders invalid accessibly', async () => {
         const el = await dropdownFixture();
 
         await elementUpdated(el);
@@ -87,9 +86,17 @@ describe('Dropdown', () => {
         el.invalid = true;
         await elementUpdated(el);
 
-        expect(el).to.not.be.undefined;
-        expect(el).lightDom.to.equalSnapshot();
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
+    });
+    it('renders selection accessibly', async () => {
+        const el = await dropdownFixture();
+
+        await elementUpdated(el);
+
+        el.value = 'option-2';
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
     });
     it('closes when becoming disabled', async () => {
         const el = await dropdownFixture();

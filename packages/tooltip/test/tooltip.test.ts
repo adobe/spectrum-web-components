@@ -25,7 +25,7 @@ describe('Tooltip', () => {
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('accepts variants', async () => {
         const el = await fixture<Tooltip>(
