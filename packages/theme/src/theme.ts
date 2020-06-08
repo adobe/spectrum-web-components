@@ -72,6 +72,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         old: string | null,
         value: string | null
     ): void {
+        if (old === value) {
+            return;
+        }
         if (attrName === 'color') {
             this.color = value as Color;
         } else if (attrName === 'scale') {
@@ -109,14 +112,15 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             !!newValue && ColorValues.includes(newValue)
                 ? newValue
                 : this.color;
+        if (color !== this._color) {
+            this._color = color;
+            this.requestUpdate();
+        }
         if (color) {
             this.setAttribute('color', color);
         } else {
             this.removeAttribute('color');
         }
-        if (color === this._color) return;
-        this._color = color;
-        this.requestUpdate();
     }
 
     private _scale: Scale | '' = '';
@@ -134,14 +138,15 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             !!newValue && ScaleValues.includes(newValue)
                 ? newValue
                 : this.scale;
+        if (scale !== this._scale) {
+            this._scale = scale;
+            this.requestUpdate();
+        }
         if (scale) {
             this.setAttribute('scale', scale);
         } else {
             this.removeAttribute('scale');
         }
-        if (scale === this._scale) return;
-        this._scale = scale;
-        this.requestUpdate();
     }
 
     private get styles(): CSSResult[] {
