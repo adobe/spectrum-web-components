@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio-group@0.1.17...@spectrum-web-components/radio-group@0.1.18) (2020-06-08)
+
+**Note:** Version bump only for package @spectrum-web-components/radio-group
+
 ## [0.1.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio-group@0.1.16...@spectrum-web-components/radio-group@0.1.17) (2020-04-16)
 
 ### Performance Improvements

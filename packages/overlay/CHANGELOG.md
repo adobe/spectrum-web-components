@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.7...@spectrum-web-components/overlay@0.3.8) (2020-06-08)
+
+### Bug Fixes
+
+-   **overlay:** ensure undefined data is not passed into theme ([3e2e1ca](https://github.com/adobe/spectrum-web-components/commit/3e2e1caa4c37eedf6e569b5124c9e59f207bb92f))
+
 ## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.6...@spectrum-web-components/overlay@0.3.7) (2020-05-08)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.2.6...@spectrum-web-components/menu@0.2.7) (2020-06-08)
+
+### Bug Fixes
+
+-   **menu:** support menu item list change in deep decendents ([b2b47f3](https://github.com/adobe/spectrum-web-components/commit/b2b47f305cab9720d29b4214b3330b95f33a56d3))
+
 ## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.2.5...@spectrum-web-components/menu@0.2.6) (2020-04-16)
 
 ### Performance Improvements

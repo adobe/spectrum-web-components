@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.3.7",
+    "version": "0.3.8",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -45,7 +45,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.2.2",
-        "@spectrum-web-components/theme": "^0.4.0",
+        "@spectrum-web-components/theme": "^0.4.1",
         "popper-max-size-modifier": "^0.2.0",
         "tslib": "^2.0.0"
     }

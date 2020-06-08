@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.7...@spectrum-web-components/sidenav@0.3.8) (2020-06-08)
+
+### Bug Fixes
+
+-   **sidenav:** add support for icons and document icons/headlines ([9ddb363](https://github.com/adobe/spectrum-web-components/commit/9ddb3630020b2ea669411b73fc4ecc9cee917014))
+-   **sidenav:** tighten Spectrum adherence and sharpen docs delivery ([d4c70cd](https://github.com/adobe/spectrum-web-components/commit/d4c70cd73b506cec103ef47bd2ec6f6bacebf9c7))
+
 ## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.6...@spectrum-web-components/sidenav@0.3.7) (2020-04-16)
 
 ### Performance Improvements

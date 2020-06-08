@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.4.0...@spectrum-web-components/theme@0.4.1) (2020-06-08)
+
+### Bug Fixes
+
+-   **theme:** prevent property sets attribute set property stack overflow ([28d8a07](https://github.com/adobe/spectrum-web-components/commit/28d8a07a9f614cfd59787bb248cf99bd45042806))
+-   **theme:** support lazily loading theme fragments ([3c3b634](https://github.com/adobe/spectrum-web-components/commit/3c3b634a21d2cdce43b841c301932a505c140a58))
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.3.2...@spectrum-web-components/theme@0.4.0) (2020-04-16)
 
 ### Bug Fixes

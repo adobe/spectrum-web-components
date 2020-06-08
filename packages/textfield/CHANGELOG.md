@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.3.8...@spectrum-web-components/textfield@0.3.9) (2020-06-08)
+
+**Note:** Version bump only for package @spectrum-web-components/textfield
+
 ## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.3.7...@spectrum-web-components/textfield@0.3.8) (2020-05-08)
 
 ### Bug Fixes
