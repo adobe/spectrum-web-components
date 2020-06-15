@@ -107,6 +107,18 @@ describe('Checkbox', () => {
         await expect(el).to.be.accessible();
     });
 
+    it('is `invalid` checkbox accessibly', async () => {
+        const el = await fixture<Checkbox>(
+            html`
+                <sp-checkbox invalid>Checked</sp-checkbox>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+
     it('autofocuses', async () => {
         const autoElement = testFixture.querySelector(
             'sp-checkbox[autofocus]'
