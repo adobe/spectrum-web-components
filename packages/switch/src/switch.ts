@@ -41,9 +41,14 @@ export class Switch extends CheckboxBase {
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.inputElement.setAttribute('role', 'switch');
-        this.inputElement.setAttribute(
-            'aria-checked',
-            this.checked ? 'true' : 'false'
-        );
+    }
+
+    protected updated(changes: PropertyValues): void {
+        if (changes.has('checked')) {
+            this.inputElement.setAttribute(
+                'aria-checked',
+                this.checked ? 'true' : 'false'
+            );
+        }
     }
 }
