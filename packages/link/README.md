@@ -48,7 +48,7 @@ When a link needs to be placed on top of a colored background or a visual, use t
 
 ```html
 <div
-    style="background-color: rgb(255, 160, 175); padding: 15px 20px; display: inline-block;"
+    style="background-color: #0f797d; padding: 15px 20px; display: inline-block;"
 >
     <p style="color: rgb(240, 240, 240);">
         This

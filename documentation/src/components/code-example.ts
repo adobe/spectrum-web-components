@@ -18,6 +18,7 @@ import {
     CSSResultArray,
     property,
     css,
+    query,
 } from 'lit-element';
 import * as Prism from 'prismjs';
 import { toHtmlTemplateString } from '../utils/templates.js';
@@ -65,6 +66,9 @@ export class LightCode extends Code {
                 .token.punctuation {
                     color: #737373;
                 }
+                .language-css .token.function {
+                    color: inherit;
+                }
             `,
         ];
     }
@@ -72,6 +76,12 @@ export class LightCode extends Code {
 
 @customElement('code-example')
 export class CodeExample extends LitElement {
+    @query('#markup')
+    private markup?: HTMLDivElement;
+
+    @query('.demo-example')
+    private demo?: HTMLDivElement;
+
     @property()
     protected codeTheme: 'dark' | 'light' = 'light';
 
@@ -140,5 +150,39 @@ export class CodeExample extends LitElement {
                 ${highlightedCode}
             </div>
         `;
+    }
+
+    private shouldManageTabOrderForScrolling = (): void => {
+        [this.markup, this.demo].map((el) => {
+            if (!el) return;
+            const { offsetWidth, scrollWidth } = el;
+            if (offsetWidth < scrollWidth) {
+                el.tabIndex = 0;
+            } else {
+                el.removeAttribute('tabindex');
+            }
+        });
+    };
+
+    protected updated(): void {
+        requestAnimationFrame(() => {
+            this.shouldManageTabOrderForScrolling();
+        });
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        window.addEventListener(
+            'resize',
+            this.shouldManageTabOrderForScrolling
+        );
+    }
+
+    public disconnectedCallback(): void {
+        window.removeEventListener(
+            'resize',
+            this.shouldManageTabOrderForScrolling
+        );
+        super.disconnectedCallback();
     }
 }
