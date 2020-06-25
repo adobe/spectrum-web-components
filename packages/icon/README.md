@@ -2,17 +2,25 @@
 
 `<sp-icon>` renders an icon to the page. By default the `name` attribute will pair with separately registered icon sets to deliver the icons. When not present, `<sp-icon>` will subsequently check for its `src` attribute which could populate the icon via an image, and then fallback to any slotted content for an element based icon.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/icon?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/icon)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/icon?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/icon)
 
 ```
-npm install @spectrum-web-components/icon
-
-# or
-
 yarn add @spectrum-web-components/icon
+```
+
+Import the side effectful registration of `<sp-icon>` via:
+
+```
+import '@spectrum-web-components/icon/sp-icon.js';
+```
+
+When looking to leverage the `Icon` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Icon } from '@spectrum-web-components/icon';
 ```
 
 ## Example

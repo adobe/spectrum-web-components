@@ -1,22 +1,30 @@
 ## Description
 
-**sp-checkbox** allow users to select multiple items from a list of independent
+`<sp-checkbox>` allow users to select multiple items from a list of independent
 options, or to mark an individual option as selected.
 
 Should I use a checkbox or a switch? Use a switch when activating something
 instead of selecting.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/checkbox?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/checkbox)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/checkbox?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/checkbox)
 
 ```
-npm install @spectrum-web-components/checkbox
-
-# or
-
 yarn add @spectrum-web-components/checkbox
+```
+
+Import the side effectful registration of `<sp-checkbox>` via:
+
+```
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+```
+
+When looking to leverage the `Checkbox` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Checkbox } from '@spectrum-web-components/checkbox';
 ```
 
 ### Example

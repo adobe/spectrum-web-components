@@ -1,18 +1,26 @@
 ## Description
 
-An **sp-switch** is used to turn an option on or off. Switches allow users to select the state of a single option at a time. Use a switch rather than a checkbox when activating (or deactivating) an option, instead of selecting.
+An `<sp-switch>` is used to turn an option on or off. Switches allow users to select the state of a single option at a time. Use a switch rather than a checkbox when activating (or deactivating) an option, instead of selecting.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/switch?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/switch)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/switch?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/switch)
 
 ```
-npm install @spectrum-web-components/switch
-
-# or
-
 yarn add @spectrum-web-components/switch
+```
+
+Import the side effectful registration of `<sp-switch>` via:
+
+```
+import '@spectrum-web-components/switch/sp-switch.js';
+```
+
+When looking to leverage the `Switch` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Switch } from '@spectrum-web-components/switch';
 ```
 
 ## Example

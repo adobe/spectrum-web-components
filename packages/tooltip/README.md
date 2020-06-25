@@ -2,17 +2,25 @@
 
 `sp-tooltip` allow users to get contextual help or information about specific components when hovering or focusing on them.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tooltip?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tooltip)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tooltip?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tooltip)
 
 ```
-npm install @spectrum-web-components/tooltip
-
-# or
-
 yarn add @spectrum-web-components/tooltip
+```
+
+Import the side effectful registration of `<sp-tooltip>` via:
+
+```
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+```
+
+When looking to leverage the `Tooltip` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Tooltip } from '@spectrum-web-components/tooltip';
 ```
 
 ### Example

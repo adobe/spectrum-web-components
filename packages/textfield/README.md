@@ -2,17 +2,25 @@
 
 `sp-textfield` components are text boxes that allow users to input custom text entries with a keyboard. Various decorations can be displayed around the field to communicate the entry requirements.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/textfield?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/textfield)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/textfield?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/textfield)
 
 ```
-npm install @spectrum-web-components/textfield
-
-# or
-
 yarn add @spectrum-web-components/textfield
+```
+
+Import the side effectful registration of `<sp-textfield>` via:
+
+```
+import '@spectrum-web-components/textfield/sp-textfield.js';
+```
+
+When looking to leverage the `Textfield` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Textfield } from '@spectrum-web-components/textfield';
 ```
 
 ## Example

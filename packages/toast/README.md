@@ -2,17 +2,25 @@
 
 `sp-toast`s display brief, temporary notifications. They are noticeable but do not disrupt the user experience and do not require an action to be taken.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/toast?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/toast)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/toast?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/toast)
 
 ```
-npm install @spectrum-web-components/toast
-
-# or
-
 yarn add @spectrum-web-components/toast
+```
+
+Import the side effectful registration of `<sp-toast>` via:
+
+```
+import '@spectrum-web-components/toast/sp-toast.js';
+```
+
+When looking to leverage the `Toast` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Toast } from '@spectrum-web-components/toast';
 ```
 
 ## Example

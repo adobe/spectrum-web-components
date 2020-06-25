@@ -1,18 +1,26 @@
 ## Description
 
-An **sp-popover** is used to display transient content (menus, options, additional actions etc.) and appears when clicking/tapping on a source (tools, buttons, etc.) It stands out via its visual style (stroke and drop shadow) and floats on top of the rest of the interface. This component does not implement the actual overlay behavior and interactions. This is handled in the `Overlay Root` and `Overlay Trigger`.
+An `<sp-popover>` is used to display transient content (menus, options, additional actions etc.) and appears when clicking/tapping on a source (tools, buttons, etc.) It stands out via its visual style (stroke and drop shadow) and floats on top of the rest of the interface. This component does not implement the actual overlay behavior and interactions. This is handled by the [`Overlay`](overlay) system.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/popover?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/popover)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/popover?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/popover)
 
 ```
-npm install @spectrum-web-components/popover
-
-# or
-
 yarn add @spectrum-web-components/popover
+```
+
+Import the side effectful registration of `<sp-popover>` via:
+
+```
+import '@spectrum-web-components/popover/sp-popover.js';
+```
+
+When looking to leverage the `Popover` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Popover } from '@spectrum-web-components/popover';
 ```
 
 ## Example

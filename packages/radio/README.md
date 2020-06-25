@@ -1,20 +1,32 @@
 ## Description
 
-**sp-radio** and **sp-radio-group** allow users to select a single option from a list of mutually exclusive options. All possible options are exposed up front for users to compare.
+`<sp-radio>` and `<sp-radio-group>` allow users to select a single option from a list of mutually exclusive options. All possible options are exposed up front for users to compare.
 
-**sp-radio-group** holds a list of **sp-radio** elements, and is responsible for deselecting radio buttons when a new one is selected, which in turn makes it responsible for keeping track of which one is selected. **sp-radio** is responsible for handling user interactions and for visually reflecting if it is the one that is checked or not.
+`<sp-radio-group>` holds a list of `<sp-radio>` elements, and is responsible for deselecting radio buttons when a new one is selected, which in turn makes it responsible for keeping track of which one is selected. `<sp-radio>` is responsible for handling user interactions and for visually reflecting if it is the one that is checked or not.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/radio?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/radio)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/radio?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/radio)
 
 ```
-npm install @spectrum-web-components/radio
-
-# or
-
 yarn add @spectrum-web-components/radio
+```
+
+Import the side effectful registration of `<sp-radio>` or `<sp-radio-group>` via:
+
+```
+import '@spectrum-web-components/radio/sp-radio.js';
+import '@spectrum-web-components/radio/sp-radio-group.js';
+```
+
+When looking to leverage the `Radio` or `RadioGroup` base classes as a type and/or for extension purposes, do so via:
+
+```
+import {
+    Radio,
+    RadioGroup
+} from '@spectrum-web-components/radio';
 ```
 
 ### Example
@@ -51,7 +63,7 @@ focus to the content.
 
 ## States
 
-In addition to the variant, **sp-radio** buttons have a number of attributes for
+In addition to the variant, `<sp-radio>` buttons have a number of attributes for
 controlling their visual state. All radio variants support the `disabled` and `invalid` attributes. Invalid which applies a disabled style to the
 radio, and also prevents clicks from activating it.
 

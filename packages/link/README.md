@@ -1,18 +1,26 @@
 ## Description
 
-An **sp-link** allow users to navigate to a different location. They can be presented in-line inside a paragraph or as a standalone text.
+An `<sp-link>` allow users to navigate to a different location. They can be presented in-line inside a paragraph or as a standalone text.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/link?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/link)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/link?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/link)
 
 ```
-npm install @spectrum-web-components/link
-
-# or
-
 yarn add @spectrum-web-components/link
+```
+
+Import the side effectful registration of `<sp-link>` via:
+
+```
+import '@spectrum-web-components/link/sp-link.js';
+```
+
+When looking to leverage the `Link` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Link } from '@spectrum-web-components/link';
 ```
 
 ## Example

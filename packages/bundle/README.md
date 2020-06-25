@@ -2,17 +2,25 @@
 
 `@spectrum-web-components/bundle` is a master dependancy that allows a project to import any and all of the the Spectrum Web Components. While it is a great approach to prototyping, the fact that is versions all of the Spectrum Web Components packages collectively means that depending on it can leave you with a lot of package udpates to manage at any one version change. For a more predicatable upgrade process we suggest that you depend upon individual packages directly, but hope you find this bundle productive when initially trying to get into the act of developing with Spectrum Web Components!
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/bundle?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/bundle)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/bundle?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/bundle)
 
 ```
-npm install @spectrum-web-components/bundle
+yarn add @spectrum-web-components/banner
+```
 
-# or
+Import the side effectful registrations of the bundled components:
 
-yarn add @spectrum-web-components/bundle
+```
+import '@spectrum-web-components/banner/elements.js';
+```
+
+When looking to leverage their base classes as a type and/or for extension purposes, do so via:
+
+```
+import { Banner } from '@spectrum-web-components/bundle';
 ```
 
 ### Icons

@@ -2,17 +2,25 @@
 
 `sp-rule` bring clarity to a layout by grouping and dividing content in close proximity. They can also be used to establish rhythm and hierarchy.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/rule?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/rule)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/rule?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/rule)
 
 ```
-npm install @spectrum-web-components/rule
-
-# or
-
 yarn add @spectrum-web-components/rule
+```
+
+Import the side effectful registration of `<sp-rule>` via:
+
+```
+import '@spectrum-web-components/rule/sp-rule.js';
+```
+
+When looking to leverage the `Rule` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Rule } from '@spectrum-web-components/rule';
 ```
 
 ## Examples

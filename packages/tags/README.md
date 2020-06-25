@@ -2,17 +2,29 @@
 
 `sp-tags` and `sp-tag` elements allow users to categorize content. They can represent keywords or people, and are grouped to describe an item or a search request.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tags?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tags)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tags?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tags)
 
 ```
-npm install @spectrum-web-components/tags
-
-# or
-
 yarn add @spectrum-web-components/tags
+```
+
+Import the side effectful registration of `<sp-tags>` or `<sp-tag>` via:
+
+```
+import '@spectrum-web-components/tags/sp-tags.js';
+import '@spectrum-web-components/tags/sp-tag.js';
+```
+
+When looking to leverage the `Tags` or `Tag` base classes as a type and/or for extension purposes, do so via:
+
+```
+import {
+    Tags,
+    Tag
+} from '@spectrum-web-components/tags';
 ```
 
 ## Example

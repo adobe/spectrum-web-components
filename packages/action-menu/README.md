@@ -1,18 +1,26 @@
 ## Description
 
-An `<sp-action-menu />` is simply an action button with a Popover. Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with the `sp-action-menu` element.
+An `<sp-action-menu>` is simply an action button with a Popover. Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with the `sp-action-menu` element.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/action-menu?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/action-menu)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/action-menu?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/action-menu)
 
 ```
-npm install @spectrum-web-components/action-menu
-
-# or
-
 yarn add @spectrum-web-components/action-menu
+```
+
+Import the side effectful registration of `<sp-action-menu>` via:
+
+```
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+```
+
+When looking to leverage the `ActionMenu` base class as a type and/or for extension purposes, do so via:
+
+```
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 ```
 
 ## Example

@@ -1,18 +1,34 @@
 ## Description
 
-An `<sp-menu />` is used for creating a menu list. The various elements inside a menu are given as `<sp-menu-group/>`, `<sp-menu-item />`, or `<sp-menu-divider />`. Often a `<sp-menu />` element will appear in a `<sp-popover />` element so that it displays as a togglig menu.
+An `<sp-menu>` is used for creating a menu list. The various elements inside a menu are given as `<sp-menu-group>`, `<sp-menu-item>`, or `<sp-menu-divider>`. Often a `<sp-menu>` element will appear in a `<sp-popover>` element so that it displays as a togglig menu.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/menu?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/menu)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/menu?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/menu)
 
 ```
-npm install @spectrum-web-components/menu
-
-# or
-
 yarn add @spectrum-web-components/menu
+```
+
+Import the side effectful registration of `<sp-menu>`, `<sp-menu-group>`, `<sp-menu-item>`, or `<sp-menu-divider>` individually as follows:
+
+```
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+```
+
+When looking to leverage the `Menu`, `MenuGroup`, `MenuItem`, or `MenuDivider` base classes as a type and/or for extension purposes, do so via:
+
+```
+import {
+    Menu,
+    MenuGroup,
+    MenuItem,
+    MenuDivider
+} from '@spectrum-web-components/menu';
 ```
 
 ## Example
@@ -68,4 +84,4 @@ yarn add @spectrum-web-components/menu
 
 ## Accessibility
 
-`<sp-menu />`, `<sp-menu-group />`, and `<sp-menu-item />` each deliver a different part of the wai-aria "menu" pattern and support the `menu`, `group`, and `menuitem` roles respectively. To support ease of keyboard navigation, only the first active _or_ first selected `<sp-menu-item />` can be accessed in the tab order. Once the focus has entered the menu the up and down arrow keys can be used to access the rest of the menu.
+`<sp-menu>`, `<sp-menu-group>`, and `<sp-menu-item>` each deliver a different part of the wai-aria "menu" pattern and support the `menu`, `group`, and `menuitem` roles respectively. To support ease of keyboard navigation, only the first active _or_ first selected `<sp-menu-item>` can be accessed in the tab order. Once the focus has entered the menu the up and down arrow keys can be used to access the rest of the menu.
