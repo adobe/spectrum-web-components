@@ -1,22 +1,30 @@
 ## Description
 
-An **sp-card** represents a rectangular card that contains
+An `<sp-card>` represents a rectangular card that contains
 a variety of text and image layouts. Cards are typically used
 to encapsulate units of a data set, such as a gallery of
 image/caption pairs.
 Spectrum has several card variations for different uses.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/card?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/card)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/card?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/card)
 
 ```
-npm install @spectrum-web-components/card
-
-# or
-
 yarn add @spectrum-web-components/card
+```
+
+Import the side effectful registration of `<sp-card>` via:
+
+```
+import '@spectrum-web-components/card/sp-card.js';
+```
+
+When looking to leverage the `Card` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Card } from '@spectrum-web-components/card';
 ```
 
 ## Example

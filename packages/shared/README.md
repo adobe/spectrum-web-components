@@ -2,17 +2,25 @@
 
 Shared mixins, tools, etc. that support developing Spectrum Web Components.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/shared?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/shared)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/shared?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/shared)
 
 ```
 npm install @spectrum-web-components/shared
+```
 
-# or
+Individual base classes and mixins can be imported as follows:
 
-yarn add @spectrum-web-components/shared
+```
+import {
+    Focusable,
+    FocusVisiblePolyfillMixin,
+    getActiveElement,
+    LikeAnchor,
+    ObserveSlotText
+} from '@spectrum-web-components/shared';
 ```
 
 ### Focusable
@@ -46,6 +54,18 @@ class FocusableButton extends Focusable {
     }
 }
 ```
+
+### FocusVisiblePolyfillMixin
+
+Use this mixin if you would like to leverage `:focus-visible` based selectors in your CSS. [Learn more about the polyfill that powers this.](https://www.npmjs.com/package/focus-visible)
+
+### getActiveElement
+
+Use this helper to find an `activeElement` in your component. [Learn more about tracking active elements over shadow DOM boundaries.](https://dev.to/open-wc/mind-the-document-activeelement-2o9a)
+
+### LikeAnchor
+
+Mix `download`, `label`, `href`, and `target` properties into your element to allow it to act more like an `HTMLAnchorElement`.
 
 ### ObserverSlotText
 

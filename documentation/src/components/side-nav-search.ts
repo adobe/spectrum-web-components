@@ -71,7 +71,7 @@ class SearchComponent extends LitElement {
             return;
         }
 
-        const searchParam = `${value.trim()} ${value.trim()}*`;
+        const searchParam = `${value.trim()}*`;
         this.results = await search(searchParam);
 
         this.openPopover();

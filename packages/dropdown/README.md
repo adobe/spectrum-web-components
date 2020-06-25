@@ -1,18 +1,26 @@
 ## Description
 
-An `<sp-dropdown />` is an alternative to HTML's `select` element. Use an `<sp-menu>` element to outline the options that will be made available to the user when interacting with the `sp-dropdown` element.
+An `<sp-dropdown>` is an alternative to HTML's `select` element. Use an `<sp-menu>` element to outline the options that will be made available to the user when interacting with the `sp-dropdown` element.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dropdown?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dropdown)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dropdown?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dropdown)
 
 ```
-npm install @spectrum-web-components/dropdown
-
-# or
-
 yarn add @spectrum-web-components/dropdown
+```
+
+Import the side effectful registration of `<sp-dropdown>` via:
+
+```
+import '@spectrum-web-components/dropdown/sp-dropdown.js';
+```
+
+When looking to leverage the `Dropdown` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Dropdown } from '@spectrum-web-components/dropdown';
 ```
 
 ## Example

@@ -2,17 +2,25 @@
 
 An `<sp-circleloader>` shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent determinate or indeterminate progress.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/circleloader?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/circleloader)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/circleloader?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/circleloader)
 
 ```
-npm install @spectrum-web-components/circleloader
-
-# or
-
 yarn add @spectrum-web-components/circleloader
+```
+
+Import the side effectful registration of `<sp-circleloader>` via:
+
+```
+import '@spectrum-web-components/circleloader/sp-circleloader.js';
+```
+
+When looking to leverage the `Circleloader` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Circleloader } from '@spectrum-web-components/circleloader';
 ```
 
 ## Variants

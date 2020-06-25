@@ -2,20 +2,14 @@
 
 [Spectrum UI Icons](https://spectrum.adobe.com/page/icons/) delivered in a flexible template tag so that they can be leveraged across various frameworks. The default export of this package pre-applies the `html` template tag from `lit-html` for ease of use in the Spectrum Web Components library. Please remember to consult Spectrum's [Iconography Guidelines](https://spectrum.adobe.com/page/iconography/) when planning how to leverage these icons in the visual delivery of your application. For technical information on using these iconos in projects powered by various javascript frameworks, check out the "Extended use cases" sectino below.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/icons-ui?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/icons-ui)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/icons-ui?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/icons-ui)
 
 ```
-npm install @spectrum-web-components/icons-ui
-
-# or
-
 yarn add @spectrum-web-components/icons-ui
 ```
-
-### Usage
 
 With the default exports of the packages prepared with the `html` template tag from `lit-html`, the default value of an icon export will be as follows:
 

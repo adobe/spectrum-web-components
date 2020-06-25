@@ -1,20 +1,28 @@
 ## Description
 
-A **sp-dropzone** is an area on the screen into which an object can be dragged and dropped to accomplish a task. For example, a DropZone might be used in an upload workflow to enable the user to simply drop a file from their operating system into the DropZone, which is a more efficient and intuitive action, rather than utilize the standard "Choose File" dialog.
+A `<sp-dropzone>` is an area on the screen into which an object can be dragged and dropped to accomplish a task. For example, a DropZone might be used in an upload workflow to enable the user to simply drop a file from their operating system into the DropZone, which is a more efficient and intuitive action, rather than utilize the standard "Choose File" dialog.
 
 DropZones should be used with an IllustratedMessage component as a child if the drop zone is empty, otherwise the existing content should be passed as a child.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dropzone?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dropzone)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dropzone?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dropzone)
 
 ```
-npm install @spectrum-web-components/dropzone
-
-# or
-
 yarn add @spectrum-web-components/dropzone
+```
+
+Import the side effectful registration of `<sp-dropzone>` via:
+
+```
+import '@spectrum-web-components/dropzone/sp-dropzone.js';
+```
+
+When looking to leverage the `Dropzone` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Dropzone } from '@spectrum-web-components/dropzone';
 ```
 
 ## Example

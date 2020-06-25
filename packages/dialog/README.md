@@ -2,17 +2,25 @@
 
 `sp-dialog` displays important information that users need to acknowledge. They appear over the interface and block further interactions. When used directly the `sp-dialog` element surfaces a `slot` based API for deep customization of the content to be included in the overlay.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dialog?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dialog)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dialog?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dialog)
 
 ```
-npm install @spectrum-web-components/dialog
-
-# or
-
 yarn add @spectrum-web-components/dialog
+```
+
+Import the side effectful registration of `<sp-dialog>` via:
+
+```
+import '@spectrum-web-components/dialog/sp-dialog.js';
+```
+
+When looking to leverage the `Dialog` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Dialog } from '@spectrum-web-components/dialog';
 ```
 
 ## Examples

@@ -1,18 +1,26 @@
 ## Description
 
-An **sp-illustrated-message** displays an illustration icon and a message, usually in an empty state or on an error page. It is also used inside a DropZone.
+An `<sp-illustrated-message>` displays an illustration icon and a message, usually in an empty state or on an error page. It is also used inside a DropZone.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/illustrated-message?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/illustrated-message)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/illustrated-message?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/illustrated-message)
 
 ```
-npm install @spectrum-web-components/illustrated-message
-
-# or
-
 yarn add @spectrum-web-components/illustrated-message
+```
+
+Import the side effectful registration of `<sp-illustrated-message>` via:
+
+```
+import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+```
+
+When looking to leverage the `IllustratedMessage` base class as a type and/or for extension purposes, do so via:
+
+```
+import { IllustratedMessage } from '@spectrum-web-components/illustrated-message';
 ```
 
 ## Example

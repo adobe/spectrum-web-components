@@ -2,17 +2,25 @@
 
 A `<sp-actionbar>` delivers a floating action bar that is a convenient way to deliver stateful actions in cases like selection mode. `<sp-actionbar>` can be deployed in two variants beyond the default: `[varient="fixed"]`, to position the element in relation to the page, and `[variant=sticky]`, to position the content in relation to content that may scroll.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/actionbar?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/actionbar)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/actionbar?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/actionbar)
 
 ```
-npm install @spectrum-web-components/actionbar
-
-# or
-
 yarn add @spectrum-web-components/actionbar
+```
+
+Import the side effectful registration of `<sp-actionbar>` via:
+
+```
+import '@spectrum-web-components/actionbar/sp-actionbar.js';
+```
+
+When looking to leverage the `Actionbar` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Actionbar } from '@spectrum-web-components/actionbar';
 ```
 
 ## Example

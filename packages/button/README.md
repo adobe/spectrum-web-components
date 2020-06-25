@@ -1,21 +1,30 @@
 ## Description
 
-An **sp-button** represents an action a user can take. sp-buttons can be clicked
+An `<sp-button>` represents an action a user can take. sp-buttons can be clicked
 or tapped to perform an action or to navigate to another page. sp-buttons in
 Spectrum have several variations for different uses and multiple levels of
 loudness for various attention-getting needs.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/button?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/button)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/button)
 
 ```
-npm install @spectrum-web-components/button
-
-# or
-
 yarn add @spectrum-web-components/button
+```
+
+Import the side effectful registration of `<sp-button>` or `<sp-clear-button>` as follows:
+
+```
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/button/sp-clear-button.js';
+```
+
+When looking to leverage the `Button` or `ClearButton` base classes as a type and/or for extension purposes, do so via:
+
+```
+import { Button, ClearButton } from '@spectrum-web-components/button';
 ```
 
 ## Example
@@ -49,7 +58,7 @@ attributes can be combined to apply sub-variants, e.g. `quiet`.
 
 ## Content
 
-**sp-buttons** can have a label, or a label with an icon. An icon is provided by
+`<sp-buttons>` can have a label, or a label with an icon. An icon is provided by
 placing an icon component to the `icon` slot. The icon may be an `sp-icon` or an
 SVG.
 
@@ -78,7 +87,7 @@ SVG.
 
 ## States
 
-In addition to the variant, **sp-buttons** have a disabled state visual state
+In addition to the variant, `<sp-buttons>` have a disabled state visual state
 which can be applied by adding the attribute `disabled`. All spectrum-button
 variants support the In addition to affectng the visual state, the `disabled`
 attribute prevents focus and disallows `click` events.
@@ -99,7 +108,7 @@ Events handlers for clicks and other user actions can be registered on a
 
 ### Autofocus
 
-The `autofocus` attribute sets focus to the **sp-button** when the component
+The `autofocus` attribute sets focus to the `<sp-button>` when the component
 mounts. This is useful for setting focus to a specific sp-button when a
 popover or dialog opens.
 

@@ -4,17 +4,13 @@ Spectrum Web Components are a [`LitElement`](https://lit-element.polymer-project
 
 The easiest way to consume these values is via the `<sp-theme>` element, however in some case it can be useful to have direct access to the files outlining the CSS Custom Properties ontop of which the rest of the component system is built.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/styles?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/styles)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/styles?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/styles)
 
 ```
 npm install @spectrum-web-components/styles
-
-# or
-
-yarn add @spectrum-web-components/styles
 ```
 
 ## Theme packages

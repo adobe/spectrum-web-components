@@ -2,17 +2,25 @@
 
 `sp-dialog-wrapper` supplies an attribute based interface for the managed custmization of an `sp-dialog` element and the light DOM supplied to it. This is paired it with an `underlay` attribute that opts-in to the use of an `sp-underlay` element between your page content and the `sp-dialog` that opens over it.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dialog?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dialog)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dialog?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dialog)
 
 ```
-npm install @spectrum-web-components/dialog
-
-# or
-
 yarn add @spectrum-web-components/dialog
+```
+
+Import the side effectful registration of `<sp-dialog-wrapper>` via:
+
+```
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
+```
+
+When looking to leverage the `DialogWrapper` base class as a type and/or for extension purposes, do so via:
+
+```
+import { DialogWrapper } from '@spectrum-web-components/dialog';
 ```
 
 ## Example

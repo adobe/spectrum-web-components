@@ -43,7 +43,8 @@ async function main() {
         if (fileName !== 'README.md') {
             componentName = fileName.replace('.md', '');
         }
-        const body = await fs.readFile(path, { encoding: 'utf8' });
+        const content = await fs.readFile(path, { encoding: 'utf8' });
+        const body = content.replace(/```((.|\s)*?)```/g, '');
         documents.push({
             title: nameToTitle(componentName),
             body,

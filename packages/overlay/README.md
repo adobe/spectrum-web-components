@@ -4,17 +4,29 @@ To ensure that content the requires it (modals, menus, etc) can escape overflow 
 
 Note: Cascading styles not applied via `<sp-theme>` are not currently projected along with the overlay content. To ensure that any additionoal styles for the overlaid content are applied, use the `style` attribute directly or encapsulate this content in a custom element that applies its styles via shadow DOM.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/overlay?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/overlay)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/overlay?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/overlay)
 
 ```
-npm install @spectrum-web-components/overlay
-
-# or
-
 yarn add @spectrum-web-components/overlay
+```
+
+Import the side effectful registration of `<active-overlay>` or `<overlay-trigger>` via:
+
+```
+import '@spectrum-web-components/overlay/active-overlay.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+```
+
+When looking to leverage the `ActiveOverlay` or `OverlayTrigger` base class as a type and/or for extension purposes, do so via:
+
+```
+import {
+    ActiveOverlay,
+    OverlayTrigger
+} from '@spectrum-web-components/overlay';
 ```
 
 ## Example
