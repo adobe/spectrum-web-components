@@ -27,15 +27,20 @@ import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/theme/sp-theme.js';
+import { Theme } from '@spectrum-web-components/theme';
 
-function pressEscape(): void {
+function pressKey(code: string): void {
     const up = new KeyboardEvent('keyup', {
         bubbles: true,
         cancelable: true,
-        key: 'Escape',
+        key: code,
+        code,
     });
     document.dispatchEvent(up);
 }
+
+const pressEscape = (): void => pressKey('Escape');
+const pressSpace = (): void => pressKey('Space');
 
 describe('Overlay Trigger', () => {
     let testDiv!: HTMLDivElement;
@@ -49,10 +54,6 @@ describe('Overlay Trigger', () => {
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                        }
-
-                        overlay-trigger {
-                            flex: none;
                         }
                     </style>
                     <overlay-trigger id="trigger" placement="top">
@@ -111,9 +112,21 @@ describe('Overlay Trigger', () => {
 
     afterEach(async () => {
         let activeOverlay = document.querySelector('active-overlay');
-        while (activeOverlay !== null) {
+        while (activeOverlay) {
             activeOverlay.remove();
             activeOverlay = document.querySelector('active-overlay');
+        }
+        const outerTrigger = testDiv.querySelector(
+            '#trigger'
+        ) as OverlayTrigger;
+        if (outerTrigger) {
+            outerTrigger.removeAttribute('type');
+        }
+        const innerTrigger = testDiv.querySelector(
+            '#inner-trigger'
+        ) as OverlayTrigger;
+        if (innerTrigger) {
+            innerTrigger.removeAttribute('type');
         }
     });
 
@@ -130,6 +143,84 @@ describe('Overlay Trigger', () => {
     it('opens a popover', async () => {
         const button = testDiv.querySelector('#outer-button') as HTMLElement;
         const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+
+        expect(isVisible(outerPopover)).to.be.false;
+
+        expect(button).to.exist;
+        button.click();
+
+        // Wait for the DOM node to be stolen and reparented into the overlay
+        await waitForPredicate(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger)
+        );
+
+        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+            OverlayTrigger
+        );
+        expect(isVisible(outerPopover)).to.be.true;
+    });
+
+    it('resizes a popover', async () => {
+        const button = testDiv.querySelector('#outer-button') as HTMLElement;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+
+        expect(isVisible(outerPopover)).to.be.false;
+
+        expect(button).to.exist;
+        button.click();
+
+        // Wait for the DOM node to be stolen and reparented into the overlay
+        await waitForPredicate(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger)
+        );
+
+        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+            OverlayTrigger
+        );
+        expect(isVisible(outerPopover)).to.be.true;
+
+        window.dispatchEvent(new Event('resize'));
+        window.dispatchEvent(new Event('resize'));
+
+        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+            OverlayTrigger
+        );
+        expect(isVisible(outerPopover)).to.be.true;
+    });
+
+    it('opens a popover - [type="inline"]', async () => {
+        const button = testDiv.querySelector('#outer-button') as HTMLElement;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+        const outerTrigger = testDiv.querySelector(
+            '#trigger'
+        ) as OverlayTrigger;
+        outerTrigger.type = 'inline';
+        await elementUpdated(outerTrigger);
+
+        expect(isVisible(outerPopover)).to.be.false;
+
+        expect(button).to.exist;
+        button.click();
+
+        // Wait for the DOM node to be stolen and reparented into the overlay
+        await waitForPredicate(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger)
+        );
+
+        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+            OverlayTrigger
+        );
+        expect(isVisible(outerPopover)).to.be.true;
+    });
+
+    it('opens a popover - [type="modal"]', async () => {
+        const button = testDiv.querySelector('#outer-button') as HTMLElement;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+        const outerTrigger = testDiv.querySelector(
+            '#trigger'
+        ) as OverlayTrigger;
+        outerTrigger.type = 'modal';
+        await elementUpdated(outerTrigger);
 
         expect(isVisible(outerPopover)).to.be.false;
 
@@ -188,16 +279,62 @@ describe('Overlay Trigger', () => {
         const trigger = testDiv.querySelector('#trigger') as OverlayTrigger;
         const root = trigger.shadowRoot ? trigger.shadowRoot : trigger;
         const triggerZone = root.querySelector('#trigger') as HTMLDivElement;
-        const styles = getComputedStyle(triggerZone);
+        const button = testDiv.querySelector('#outer-button') as Button;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
 
         expect(trigger.disabled).to.be.false;
-        expect(styles.pointerEvents).to.equal('auto');
+        button.click();
+        await waitUntil(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger),
+            'outer hoverConent stolen and reparented into the overlay'
+        );
+        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+            OverlayTrigger
+        );
+        button.click();
+        await waitUntil(
+            () => outerPopover.parentElement instanceof OverlayTrigger,
+            'outter hoverConent returned to OverlayTrigger'
+        );
+        expect(outerPopover.parentElement).to.be.an.instanceOf(OverlayTrigger);
 
         trigger.disabled = true;
         await elementUpdated(trigger);
 
         expect(trigger.disabled).to.be.true;
-        expect(styles.pointerEvents).to.equal('none');
+        expect(trigger.hasAttribute('disabled')).to.be.true;
+        button.click();
+        await waitUntil(
+            () => outerPopover.parentElement instanceof OverlayTrigger,
+            'outter hoverConent never left'
+        );
+        expect(outerPopover.parentElement).to.be.an.instanceOf(OverlayTrigger);
+        triggerZone.dispatchEvent(new Event('mouseenter'));
+        await waitUntil(
+            () => outerPopover.parentElement instanceof OverlayTrigger,
+            'outter hoverConent never left'
+        );
+        expect(outerPopover.parentElement).to.be.an.instanceOf(OverlayTrigger);
+
+        trigger.disabled = false;
+        await elementUpdated(trigger);
+
+        expect(trigger.disabled).to.be.false;
+        expect(trigger.hasAttribute('disabled')).to.be.false;
+        button.click();
+        await waitUntil(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger),
+            'outer hoverConent stolen and reparented into the overlay'
+        );
+        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+            OverlayTrigger
+        );
+        button.click();
+        await waitUntil(
+            () => outerPopover.parentElement instanceof OverlayTrigger,
+            'outter hoverConent returned to OverlayTrigger'
+        );
+        expect(outerPopover.parentElement).to.be.an.instanceOf(OverlayTrigger);
     });
 
     it('opens a nested popover', async () => {
@@ -211,9 +348,9 @@ describe('Overlay Trigger', () => {
         expect(button).to.exist;
         button.click();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(outerPopover.parentElement instanceof OverlayTrigger)
+        await waitUntil(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger),
+            'outer hoverConent stolen and reparented into the overlay'
         );
 
         expect(outerPopover.parentElement).to.not.be.an.instanceOf(
@@ -228,13 +365,68 @@ describe('Overlay Trigger', () => {
 
         innerButton.click();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(innerPopover.parentElement instanceof OverlayTrigger)
+        await waitUntil(
+            () => !(innerPopover.parentElement instanceof OverlayTrigger),
+            'inner hoverConent stolen and reparented into the overlay'
         );
 
         expect(isVisible(outerPopover)).to.be.true;
         expect(isVisible(innerPopover)).to.be.true;
+    });
+
+    it('focus previous "modal" when closing nested "modal"', async () => {
+        const button = testDiv.querySelector('#outer-button') as HTMLElement;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+        const innerPopover = testDiv.querySelector('#inner-popover') as Popover;
+        const outerTrigger = testDiv.querySelector(
+            '#trigger'
+        ) as OverlayTrigger;
+        const innerTrigger = testDiv.querySelector(
+            '#inner-trigger'
+        ) as OverlayTrigger;
+
+        outerTrigger.type = 'modal';
+        innerTrigger.type = 'modal';
+
+        expect(isVisible(outerPopover)).to.be.false;
+        expect(isVisible(innerPopover)).to.be.false;
+
+        expect(button).to.exist;
+        button.click();
+
+        await waitUntil(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger),
+            'outer hoverConent stolen and reparented into the overlay'
+        );
+
+        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+            OverlayTrigger
+        );
+        expect(isVisible(outerPopover)).to.be.true;
+        expect(isVisible(innerPopover)).to.be.false;
+
+        const innerButton = document.querySelector(
+            '#inner-button'
+        ) as HTMLElement;
+
+        innerButton.click();
+
+        await waitUntil(
+            () => !(innerPopover.parentElement instanceof OverlayTrigger),
+            'inner hoverConent stolen and reparented into the overlay'
+        );
+
+        expect(isVisible(outerPopover)).to.be.true;
+        expect(isVisible(innerPopover)).to.be.true;
+
+        pressEscape();
+
+        await waitUntil(
+            () => innerPopover.parentElement instanceof OverlayTrigger,
+            'inner hoverConent returned to OverlayTrigger'
+        );
+
+        expect(document.activeElement === outerPopover).to.be.true;
     });
 
     it('escape closes an open popover', async () => {
@@ -260,6 +452,11 @@ describe('Overlay Trigger', () => {
         await waitForPredicate(
             () => !(innerPopover.parentElement instanceof OverlayTrigger)
         );
+
+        expect(isVisible(outerPopover)).to.be.true;
+        expect(isVisible(innerPopover)).to.be.true;
+
+        pressSpace();
 
         expect(isVisible(outerPopover)).to.be.true;
         expect(isVisible(innerPopover)).to.be.true;
@@ -420,7 +617,7 @@ describe('Overlay Trigger', () => {
         );
     });
     it('acquires a `color` and `size` from `sp-theme`', async () => {
-        const el = await fixture<HTMLDivElement>(html`
+        const el = await fixture<Theme>(html`
             <sp-theme color="dark">
                 <sp-theme color="light">
                     <overlay-trigger id="trigger" placement="top">

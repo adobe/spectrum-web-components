@@ -13,7 +13,12 @@ governing permissions and limitations under the License.
 import { ThemeData } from '@spectrum-web-components/theme';
 import { Placement as PopperPlacement } from './popper';
 
-export type TriggerInteractions = 'click' | 'hover' | 'custom';
+export type TriggerInteractions =
+    | 'click'
+    | 'hover'
+    | 'custom'
+    | 'inline'
+    | 'modal';
 
 export interface OverlayOpenDetail {
     content: HTMLElement;
@@ -21,6 +26,7 @@ export interface OverlayOpenDetail {
     delayed: boolean;
     offset: number;
     placement?: Placement;
+    receivesFocus?: 'auto';
     trigger: HTMLElement;
     interaction: TriggerInteractions;
     theme: ThemeData;

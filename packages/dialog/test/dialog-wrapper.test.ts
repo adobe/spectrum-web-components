@@ -15,7 +15,8 @@ import { spy } from 'sinon';
 
 import '../sp-dialog-wrapper.js';
 import { Dialog, DialogWrapper } from '../';
-import { Button } from '@spectrum-web-components/button';
+import { Button, ActionButton } from '@spectrum-web-components/button';
+import { Underlay } from '@spectrum-web-components/underlay';
 import {
     wrapperLabeledHero,
     wrapperDismissible,
@@ -23,7 +24,6 @@ import {
     wrapperFullscreen,
     wrapperButtonsUnderlay,
 } from '../stories/dialog-wrapper.stories.js';
-import { Underlay } from '@spectrum-web-components/underlay';
 
 describe('Dialog Wrapper', () => {
     it('loads wrapped dialog accessibly', async () => {
@@ -77,6 +77,50 @@ describe('Dialog Wrapper', () => {
 
         await elementUpdated(el);
         expect(el.open).to.be.false;
+    });
+    it('manages entry focus - dismissible', async () => {
+        const el = await fixture<DialogWrapper>(wrapperDismissible());
+
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        expect(document.activeElement, 'no focused').to.not.equal(el);
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const dialog = root.querySelector('sp-dialog') as Dialog;
+        const dialogRoot = dialog.shadowRoot ? dialog.shadowRoot : dialog;
+        const dismissButton = dialogRoot.querySelector(
+            '.close-button'
+        ) as ActionButton;
+
+        el.focus();
+        await elementUpdated(el);
+        expect(document.activeElement, 'focused generally').to.equal(el);
+        expect(
+            (dismissButton.getRootNode() as Document).activeElement,
+            'focused specifically'
+        ).to.equal(dismissButton);
+
+        dismissButton.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.false;
+    });
+    it('manages entry focus - buttons', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtons());
+
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        expect(document.activeElement, 'no focused').to.not.equal(el);
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const button = root.querySelector('sp-button') as Button;
+
+        el.focus();
+        await elementUpdated(el);
+        expect(document.activeElement, 'focused generally').to.equal(el);
+        expect(
+            (button.getRootNode() as Document).activeElement,
+            'focused specifically'
+        ).to.equal(button);
     });
     it('dispatches `confirm`, `cancel` and `secondary`', async () => {
         const confirmSpy = spy();

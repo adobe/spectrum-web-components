@@ -34,6 +34,7 @@
         "storybook:start": "start-storybook",
         "storybook:stories:build": "tsc --build .storybook/tsconfig.json",
         "storybook:stories:watch": "tsc --build .storybook/tsconfig.json -w",
+        "prestorybook:build": "yarn prestorybook",
         "storybook:build": "yarn storybook:stories:build && build-storybook",
         "docs:analyze": "wca analyze 'packages/**/sp-*.ts' --format json --outFile documentation/custom-elements.json",
         "postdocs:analyze": "node ./scripts/add-custom-properties.js --src='documentation/custom-elements.json'",

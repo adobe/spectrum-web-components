@@ -55,6 +55,17 @@ export const Default = (): TemplateResult => {
                 </sp-menu-item>
             </sp-menu>
         </sp-dropdown>
+        <p>
+            This is some text.
+        </p>
+        <p>
+            This is some text.
+        </p>
+        <p>
+            This is a
+            <a href="#">link</a>
+            .
+        </p>
     `;
 };
 

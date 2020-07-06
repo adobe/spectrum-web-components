@@ -3,7 +3,10 @@
 #### `loads`
 
 ```html
-<sp-menu role="listbox">
+<sp-menu
+  role="listbox"
+  tabindex="0"
+>
   <sp-menu-item
     data-js-focus-visible=""
     role="option"

@@ -17,10 +17,11 @@ import {
     TemplateResult,
     CSSResult,
     CSSResultArray,
+    query,
 } from 'lit-element';
 
 import { Overlay, Placement } from '../';
-import { Radio } from '@spectrum-web-components/radio';
+import { RadioGroup } from '@spectrum-web-components/radio';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/radio/sp-radio.js';
@@ -187,6 +188,9 @@ class RecursivePopover extends LitElement {
     @property({ type: Number })
     private depth = 0;
 
+    @query('[slot="trigger"]')
+    private trigger!: Button;
+
     public static get styles(): CSSResultArray {
         return [
             css`
@@ -195,7 +199,8 @@ class RecursivePopover extends LitElement {
                     text-align: center;
                 }
 
-                sp-button {
+                overlay-trigger {
+                    display: inline-flex;
                     margin-top: 11px;
                 }
             `,
@@ -206,37 +211,84 @@ class RecursivePopover extends LitElement {
         super();
         this.placement = 'right';
         this.depth = 0;
+        this.addEventListener('keydown', (event: KeyboardEvent) => {
+            const { code } = event;
+            if (code === 'Enter') {
+                console.log('ho', event.composedPath());
+                this.trigger.click();
+            }
+        });
+    }
+
+    public focus(): void {
+        if (this.shadowRoot) {
+            const firstFocusable = this.shadowRoot.querySelector(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            ) as LitElement;
+            if (firstFocusable) {
+                if (firstFocusable.updateComplete) {
+                    firstFocusable.updateComplete.then(() =>
+                        firstFocusable.focus()
+                    );
+                } else {
+                    firstFocusable.focus();
+                }
+                this.removeAttribute('tabindex');
+            }
+        } else {
+            super.focus();
+        }
     }
 
     public onRadioChange(event: Event): void {
-        const target = event.target as Radio;
-        this.placement = target.value as Placement;
+        const target = event.target as RadioGroup;
+        this.placement = target.selected as Placement;
+    }
+
+    private captureEnter(event: KeyboardEvent): void {
+        const { code } = event;
+        if (code === 'Enter') {
+            event.stopPropagation();
+        }
     }
 
     public render(): TemplateResult {
         return html`
-            <sp-radio-group selected="${this.placement}" name="group-example">
-                <sp-radio @change=${this.onRadioChange} value="top">
+            <sp-radio-group
+                @change=${this.onRadioChange}
+                selected="${this.placement}"
+                name="group-example"
+            >
+                <sp-radio value="top">
                     Top
                 </sp-radio>
-                <sp-radio @change=${this.onRadioChange} value="right">
+                <sp-radio value="right">
                     Right
                 </sp-radio>
-                <sp-radio @change=${this.onRadioChange} value="bottom">
+                <sp-radio value="bottom">
                     Bottom
                 </sp-radio>
-                <sp-radio @change=${this.onRadioChange} value="left">
+                <sp-radio value="left">
                     Left
                 </sp-radio>
             </sp-radio-group>
-            <overlay-trigger placement="${this.placement}">
-                <sp-button slot="trigger" variant="cta">Open Popover</sp-button>
+            <overlay-trigger placement="${this.placement}" type="modal">
+                <sp-button
+                    slot="trigger"
+                    variant="cta"
+                    @keydown=${this.captureEnter}
+                >
+                    Open Popover
+                </sp-button>
                 <sp-popover
                     dialog
                     slot="click-content"
                     direction="${this.placement}"
                     tip
                     open
+                    @focus=${({ target }) => {
+                        target.children[0].focus();
+                    }}
                 >
                     ${this.depth < MAX_DEPTH
                         ? html`
@@ -251,6 +303,14 @@ class RecursivePopover extends LitElement {
                 </sp-popover>
             </overlay-trigger>
         `;
+    }
+
+    protected firstUpdated(): void {
+        if (this.tabIndex !== -1) {
+            this.tabIndex = 0;
+        } else {
+            this.removeAttribute('tabindex');
+        }
     }
 }
 customElements.define('recursive-popover', RecursivePopover);

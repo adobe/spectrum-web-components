@@ -13,6 +13,8 @@ import { TemplateResult } from 'lit-element';
 
 import { Placement } from '../';
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
+import { DialogWrapper } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/slider/sp-slider.js';
@@ -152,6 +154,85 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const inline = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="inline">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-overlay open slot="click-content">
+                <sp-button
+                    @click=${(event: Event & { target: HTMLElement }): void => {
+                        event.target.dispatchEvent(closeEvent);
+                    }}
+                >
+                    Close
+                </sp-button>
+            </sp-overlay>
+        </overlay-trigger>
+        <p>
+            This is some text.
+        </p>
+        <p>
+            This is some text.
+        </p>
+        <p>
+            This is a
+            <a href="#">link</a>
+            .
+        </p>
+    `;
+};
+
+export const modal = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="modal" placement="none">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-dialog-wrapper
+                tabindex="0"
+                underlay
+                open
+                slot="click-content"
+                headline="Wrapped Dialog w/ Hero Image"
+                style="width: 100vw; height: 100vh;"
+                confirm-label="Keep Both"
+                secondary-label="Replace"
+                cancel-label="Cancel"
+                footer="Content for footer"
+                @confirm=${(event: Event & { target: DialogWrapper }): void => {
+                    event.target.dispatchEvent(closeEvent);
+                }}
+                @secondary=${(
+                    event: Event & { target: DialogWrapper }
+                ): void => {
+                    event.target.dispatchEvent(closeEvent);
+                }}
+                @cancel=${(event: Event & { target: DialogWrapper }): void => {
+                    event.target.dispatchEvent(closeEvent);
+                }}
+                @sp-overlay-closed=${(
+                    event: Event & { target: DialogWrapper }
+                ): void => {
+                    event.target.open = true;
+                }}
+            >
+                Content of the dialog
+            </sp-dialog-wrapper>
+        </overlay-trigger>
+        <p>
+            This is some text.
+        </p>
+        <p>
+            This is some text.
+        </p>
+        <p>
+            This is a
+            <a href="#">link</a>
+            .
+        </p>
+    `;
+};
+
 export const deepNesting = (): TemplateResult => {
     const colorOptions = {
         Light: 'light',
@@ -168,6 +249,7 @@ export const deepNesting = (): TemplateResult => {
         <sp-theme color=${outter}>
             <sp-theme color=${color}>
                 <recursive-popover
+                    tabindex="-1"
                     style="
                         background-color: var(--spectrum-global-color-gray-100);
                         color: var(--spectrum-global-color-gray-800);

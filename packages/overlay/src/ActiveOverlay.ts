@@ -103,9 +103,9 @@ const stateTransition = (
 };
 
 export class ActiveOverlay extends LitElement {
-    public overlayContent?: HTMLElement;
+    public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;
-    public trigger?: HTMLElement;
+    public trigger!: HTMLElement;
 
     private placeholder?: Comment;
     private popper?: Instance;
@@ -141,8 +141,11 @@ export class ActiveOverlay extends LitElement {
     @property({ attribute: false })
     public color?: Color;
     @property({ attribute: false })
+    public receivesFocus?: 'auto';
+    @property({ attribute: false })
     public scale?: Scale;
 
+    public tabbingAway = false;
     private originalPlacement?: Placement;
 
     /**
@@ -152,6 +155,18 @@ export class ActiveOverlay extends LitElement {
      */
     @property({ attribute: 'data-popper-placement' })
     public dataPopperPlacement?: Placement;
+
+    public focus(): void {
+        const firstFocusable = this.querySelector(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        ) as HTMLElement;
+        if (firstFocusable) {
+            firstFocusable.focus();
+            this.removeAttribute('tabindex');
+        } else {
+            super.focus();
+        }
+    }
 
     private get hasTheme(): boolean {
         return !!this.color || !!this.scale;
@@ -208,9 +223,17 @@ export class ActiveOverlay extends LitElement {
             this.state = 'visible';
         });
 
-        this.updateOverlayPosition().then(() =>
-            this.applyContentAnimation('spOverlayFadeIn')
-        );
+        this.tabIndex = 0;
+        if (this.interaction === 'modal') {
+            this.slot = 'open';
+        }
+        this.updateOverlayPosition()
+            .then(() => this.applyContentAnimation('spOverlayFadeIn'))
+            .then(() => {
+                if (this.receivesFocus) {
+                    this.focus();
+                }
+            });
     }
 
     private updateOverlayPopperPlacement(): void {
@@ -254,6 +277,7 @@ export class ActiveOverlay extends LitElement {
         this.interaction = detail.interaction;
         this.color = detail.theme.color;
         this.scale = detail.theme.scale;
+        this.receivesFocus = detail.receivesFocus;
     }
 
     public dispose(): void {

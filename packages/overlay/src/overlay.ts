@@ -22,6 +22,7 @@ type OverlayOptions = {
     delayed?: boolean;
     placement?: Placement;
     offset?: number;
+    receivesFocus?: 'auto';
 };
 
 /**
@@ -99,6 +100,7 @@ export class Overlay {
         delayed,
         offset = 0,
         placement = 'top',
+        receivesFocus,
     }: OverlayOptions): Promise<boolean> {
         /* istanbul ignore if */
         if (this.isOpen) return true;
@@ -140,6 +142,7 @@ export class Overlay {
             trigger: this.owner,
             interaction: this.interaction,
             theme: queryThemeDetail,
+            receivesFocus,
             ...overlayDetailQuery,
         });
         this.isOpen = true;
