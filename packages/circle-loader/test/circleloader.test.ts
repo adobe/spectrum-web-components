@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-circleloader.js';
+import '../sp-circle-loader.js';
 import { CircleLoader } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Circle Loader', () => {
     it('loads', async () => {
         const el = await fixture<CircleLoader>(html`
-            <sp-circleloader></sp-circleloader>
+            <sp-circle-loader></sp-circle-loader>
         `);
 
         await elementUpdated(el);
@@ -29,7 +29,7 @@ describe('Circle Loader', () => {
     });
     it('loads - [indeterminate]', async () => {
         const el = await fixture<CircleLoader>(html`
-            <sp-circleloader indeterminate></sp-circleloader>
+            <sp-circle-loader indeterminate></sp-circle-loader>
         `);
 
         await elementUpdated(el);
@@ -41,7 +41,7 @@ describe('Circle Loader', () => {
     });
     it('accepts user `role`', async () => {
         const el = await fixture<CircleLoader>(html`
-            <sp-circleloader role="progressbar"></sp-circleloader>
+            <sp-circle-loader role="progressbar"></sp-circle-loader>
         `);
 
         await elementUpdated(el);
@@ -50,7 +50,7 @@ describe('Circle Loader', () => {
     });
     it('returns to indeterminate', async () => {
         const el = await fixture<CircleLoader>(html`
-            <sp-circleloader progress="50"></sp-circleloader>
+            <sp-circle-loader progress="50"></sp-circle-loader>
         `);
 
         await elementUpdated(el);

@@ -2445,6 +2445,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-2.0.5.tgz#c7105efaec10b07e31d7fb3cd216a0d43c928c0b"
   integrity sha512-c2dDkAWR7YOTUIa7lMyaVX0RdXWCs9NxL6BqujkJpRpPLhHHWSfaERdLO5CMqNDWnijh5vOUZK8ixDN+Hw3mOg==
 
+"@spectrum-css/barloader@^2.0.0":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/barloader/-/barloader-2.0.5.tgz#7f846b6bbecd45af56710640a423797271d70b3f"
+  integrity sha512-dZ4KvWwCqkbRrA5Fiy9lzOzTaNrD75GOQtZj110Ov6R2TQMz+G2ukDahDoye0sCj0TtqczbBM4UhE5itd+Tj4g==
+
 "@spectrum-css/button@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-2.2.0.tgz#7372e8b107f3ba645a69f3994b84a6753c47ddea"

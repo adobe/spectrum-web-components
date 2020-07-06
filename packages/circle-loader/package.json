@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/circleloader",
+    "name": "@spectrum-web-components/circle-loader",
     "publishConfig": {
         "access": "public"
     },
@@ -31,8 +31,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-circleloader.js",
-        "./sp-circleloader.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "karma start --coverage"
