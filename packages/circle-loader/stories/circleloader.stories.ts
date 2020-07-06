@@ -9,12 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-circleloader.js';
+import '../sp-circle-loader.js';
 import { html, number, boolean } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-html';
 
 export default {
-    component: 'sp-circleloader',
+    component: 'sp-circle-loader',
     title: 'Circle Loader',
 };
 
@@ -35,20 +35,20 @@ export const Default = (): TemplateResult => {
         <div
             style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
         >
-            <sp-circleloader
+            <sp-circle-loader
                 progress=${progress}
                 size="small"
                 ?indeterminate=${indeterminate}
-            ></sp-circleloader>
-            <sp-circleloader
+            ></sp-circle-loader>
+            <sp-circle-loader
                 progress=${progress}
                 ?indeterminate=${indeterminate}
-            ></sp-circleloader>
-            <sp-circleloader
+            ></sp-circle-loader>
+            <sp-circle-loader
                 progress=${progress}
                 size="large"
                 ?indeterminate=${indeterminate}
-            ></sp-circleloader>
+            ></sp-circle-loader>
         </div>
     `;
 };
@@ -70,23 +70,23 @@ export const overBackground = (): TemplateResult => {
         <div
             style="width: 250px; height: 150px; background-color: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: space-around;"
         >
-            <sp-circleloader
+            <sp-circle-loader
                 progress=${progress}
                 over-background
                 size="small"
                 ?indeterminate=${indeterminate}
-            ></sp-circleloader>
-            <sp-circleloader
+            ></sp-circle-loader>
+            <sp-circle-loader
                 progress=${progress}
                 over-background
                 ?indeterminate=${indeterminate}
-            ></sp-circleloader>
-            <sp-circleloader
+            ></sp-circle-loader>
+            <sp-circle-loader
                 progress=${progress}
                 over-background
                 size="large"
                 ?indeterminate=${indeterminate}
-            ></sp-circleloader>
+            ></sp-circle-loader>
         </div>
     `;
 };
