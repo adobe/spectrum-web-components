@@ -1,41 +1,41 @@
 ## Description
 
-An `<sp-circleloader>` shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent determinate or indeterminate progress.
+An `<sp-circle-loader>` shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent determinate or indeterminate progress.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/circleloader?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/circleloader)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/circleloader?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/circleloader)
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/circle-loader?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/circle-loader)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/circle-loader?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/circle-loader)
 
 ```
-yarn add @spectrum-web-components/circleloader
+yarn add @spectrum-web-components/circle-loader
 ```
 
-Import the side effectful registration of `<sp-circleloader>` via:
+Import the side effectful registration of `<sp-circle-loader>` via:
 
 ```
-import '@spectrum-web-components/circleloader/sp-circleloader.js';
+import '@spectrum-web-components/circle-loader/sp-circle-loader.js';
 ```
 
-When looking to leverage the `Circleloader` base class as a type and/or for extension purposes, do so via:
+When looking to leverage the `CircleLoader` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Circleloader } from '@spectrum-web-components/circleloader';
+import { CircleLoader } from '@spectrum-web-components/circle-loader';
 ```
 
 ## Variants
 
 ### Default
 
-An `<sp-circleloader>` is used to visually show the progression of a system operation such as downloading, uploading, processing, etc.
+An `<sp-circle-loader>` is used to visually show the progression of a system operation such as downloading, uploading, processing, etc.
 
 ```html
 <div
     style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
 >
-    <sp-circleloader progress="71" size="small"></sp-circleloader>
-    <sp-circleloader progress="22"></sp-circleloader>
-    <sp-circleloader progress="86" size="large"></sp-circleloader>
+    <sp-circle-loader progress="71" size="small"></sp-circle-loader>
+    <sp-circle-loader progress="22"></sp-circle-loader>
+    <sp-circle-loader progress="86" size="large"></sp-circle-loader>
 </div>
 ```
 
@@ -47,17 +47,17 @@ When a loader needs to be placed on top of a colored background, use the over ba
 <div
     style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;  background-color: rgba(0,0,0,0.4);"
 >
-    <sp-circleloader
+    <sp-circle-loader
         progress="42"
         over-background
         size="small"
-    ></sp-circleloader>
-    <sp-circleloader progress="7" over-background></sp-circleloader>
-    <sp-circleloader
+    ></sp-circle-loader>
+    <sp-circle-loader progress="7" over-background></sp-circle-loader>
+    <sp-circle-loader
         progress="68"
         over-background
         size="large"
-    ></sp-circleloader>
+    ></sp-circle-loader>
 </div>
 ```
 
@@ -69,9 +69,9 @@ A circle loader can be either determinate or indeterminate as signified by `[ind
 <div
     style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
 >
-    <sp-circleloader indeterminate size="small"></sp-circleloader>
-    <sp-circleloader indeterminate></sp-circleloader>
-    <sp-circleloader indeterminate size="large"></sp-circleloader>
+    <sp-circle-loader indeterminate size="small"></sp-circle-loader>
+    <sp-circle-loader indeterminate></sp-circle-loader>
+    <sp-circle-loader indeterminate size="large"></sp-circle-loader>
 </div>
 ```
 

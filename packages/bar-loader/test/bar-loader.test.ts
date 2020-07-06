@@ -42,14 +42,14 @@ describe('BarLoader', () => {
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('0');
 
-        el.value = 50;
+        el.progress = 50;
 
         await elementUpdated(el);
 
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('50');
 
-        el.value = 100;
+        el.progress = 100;
 
         await elementUpdated(el);
 
@@ -79,7 +79,7 @@ describe('BarLoader', () => {
     });
     it('returns to indeterminate', async () => {
         const el = await fixture<BarLoader>(html`
-            <sp-bar-loader value="50"></sp-bar-loader>
+            <sp-bar-loader progress="50"></sp-bar-loader>
         `);
 
         await elementUpdated(el);
