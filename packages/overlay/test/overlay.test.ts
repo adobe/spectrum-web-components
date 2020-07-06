@@ -10,12 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/button/sp-button.js';
+import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
-import { Overlay } from '../';
+import { Overlay, Placement } from '../';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
-import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
+import {
+    fixture,
+    html,
+    expect,
+    elementUpdated,
+    waitUntil,
+} from '@open-wc/testing';
 
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
@@ -30,6 +37,10 @@ describe('Overlays', () => {
                             display: flex;
                             align-items: center;
                             justify-content: center;
+                        }
+
+                        #top {
+                            margin: 100px;
                         }
 
                         sp-button {
@@ -78,7 +89,67 @@ describe('Overlays', () => {
         openOverlays = [];
     });
 
-    it('opens a popover', async () => {
+    [
+        'bottom',
+        'bottom-start',
+        'bottom-end',
+        'top',
+        'top-start',
+        'top-end',
+        'left',
+        'left-start',
+        'left-end',
+        'right',
+        'right-start',
+        'right-end',
+        'none',
+    ].map((direction) => {
+        const placement = direction as Placement;
+        it(`opens a popover - ${placement}`, async () => {
+            const button = testDiv.querySelector(
+                '#first-button'
+            ) as HTMLElement;
+            const outerPopover = testDiv.querySelector(
+                '#outer-popover'
+            ) as Popover;
+
+            expect(outerPopover.parentElement).to.exist;
+            if (outerPopover.parentElement) {
+                expect(outerPopover.parentElement.id).to.equal(
+                    'overlay-content'
+                );
+            }
+
+            expect(isVisible(outerPopover)).to.be.false;
+
+            expect(button).to.exist;
+
+            Overlay.open(button, 'click', outerPopover, {
+                delayed: false,
+                placement,
+                offset: 10,
+            });
+
+            // Wait for the DOM node to be stolen and reparented into the overlay
+            await waitForPredicate(
+                () =>
+                    !!(
+                        outerPopover.parentElement &&
+                        outerPopover.parentElement.id !== 'overlay-content'
+                    )
+            );
+
+            expect(outerPopover.parentElement).to.exist;
+            if (outerPopover.parentElement) {
+                expect(outerPopover.parentElement.id).not.to.equal(
+                    'overlay-content'
+                );
+            }
+            expect(isVisible(outerPopover)).to.be.true;
+        });
+    });
+
+    it(`updates a popover`, async () => {
         const button = testDiv.querySelector('#first-button') as HTMLElement;
         const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
 
@@ -94,7 +165,6 @@ describe('Overlays', () => {
         openOverlays.push(
             await Overlay.open(button, 'click', outerPopover, {
                 delayed: false,
-                placement: 'top',
                 offset: 10,
             })
         );
@@ -106,6 +176,41 @@ describe('Overlays', () => {
                     outerPopover.parentElement &&
                     outerPopover.parentElement.id !== 'overlay-content'
                 )
+        );
+
+        expect(isVisible(outerPopover)).to.be.true;
+
+        Overlay.update();
+
+        expect(isVisible(outerPopover)).to.be.true;
+    });
+
+    it(`opens a popover w/ delay`, async () => {
+        const button = testDiv.querySelector('#first-button') as HTMLElement;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+
+        expect(outerPopover.parentElement).to.exist;
+        if (outerPopover.parentElement) {
+            expect(outerPopover.parentElement.id).to.equal('overlay-content');
+        }
+
+        expect(isVisible(outerPopover)).to.be.false;
+
+        expect(button).to.exist;
+
+        await Overlay.open(button, 'click', outerPopover, {
+            delayed: true,
+            offset: 10,
+        });
+
+        // Wait for the DOM node to be stolen and reparented into the overlay
+        await waitUntil(
+            () =>
+                !!(
+                    outerPopover.parentElement &&
+                    outerPopover.parentElement.id !== 'overlay-content'
+                ),
+            'overlay opened'
         );
 
         expect(outerPopover.parentElement).to.exist;
@@ -241,5 +346,37 @@ describe('Overlays', () => {
 
         expect(isVisible(customOverlay)).to.be.true;
         expect(isVisible(clickOverlay)).to.be.true;
+    });
+
+    it('closes via events', async () => {
+        const el = await fixture<HTMLDivElement>(html`
+            <div id="root">
+                <sp-dialog dismissible></sp-dialog>
+            </div>
+        `);
+
+        const dialog = el.querySelector('sp-dialog') as Dialog;
+
+        Overlay.open(el, 'click', dialog, {
+            delayed: false,
+            placement: 'bottom',
+            offset: 10,
+        });
+
+        await waitUntil(
+            () =>
+                !!dialog.parentElement &&
+                dialog.parentElement.tagName === 'ACTIVE-OVERLAY',
+            'content is stolen'
+        );
+
+        dialog.close();
+
+        await waitUntil(
+            () =>
+                !!dialog.parentElement &&
+                dialog.parentElement.tagName !== 'ACTIVE-OVERLAY',
+            'content is returned'
+        );
     });
 });

@@ -185,6 +185,10 @@ export class Menu extends LitElement {
         `;
     }
 
+    protected firstUpdated(): void {
+        this.tabIndex = 0;
+    }
+
     public connectedCallback(): void {
         super.connectedCallback();
         if (!this.hasAttribute('role')) {

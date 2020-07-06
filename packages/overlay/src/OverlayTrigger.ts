@@ -41,6 +41,9 @@ export class OverlayTrigger extends LitElement {
     @property({ reflect: true })
     public placement: Placement = 'bottom';
 
+    @property()
+    public type?: 'inline' | 'modal';
+
     @property({ type: Number, reflect: true })
     public offset = 6;
 
@@ -55,9 +58,9 @@ export class OverlayTrigger extends LitElement {
         return html`
             <div
                 id="trigger"
-                @click=${this.onTriggerClick}
-                @mouseenter=${this.onTriggerMouseEnter}
-                @mouseleave=${this.onTriggerMouseLeave}
+                @click=${this.onTrigger}
+                @mouseenter=${this.onTrigger}
+                @mouseleave=${this.onTrigger}
             >
                 <slot
                     @slotchange=${this.onTargetSlotChange}
@@ -77,16 +80,37 @@ export class OverlayTrigger extends LitElement {
         `;
     }
 
+    private onTrigger(event: Event): void {
+        if (this.disabled) {
+            return;
+        }
+        switch (event.type) {
+            case 'click':
+                this.onTriggerClick();
+                return;
+            case 'mouseenter':
+                this.onTriggerMouseEnter();
+                return;
+            case 'mouseleave':
+                this.onTriggerMouseLeave();
+                return;
+        }
+    }
+
     public async onTriggerClick(): Promise<void> {
         /* istanbul ignore else */
         if (this.targetContent && this.clickContent) {
+            if (this.type === 'modal') {
+                this.clickContent.tabIndex = 0;
+            }
             this.closeClickOverlay = await Overlay.open(
                 this.targetContent,
-                'click',
+                this.type ? this.type : 'click',
                 this.clickContent,
                 {
                     offset: this.offset,
                     placement: this.placement,
+                    receivesFocus: this.type ? 'auto' : undefined,
                 }
             );
         }
@@ -156,7 +180,6 @@ export class OverlayTrigger extends LitElement {
             this.closeClickOverlay();
             delete this.closeClickOverlay;
         }
-
         super.disconnectedCallback();
     }
 }

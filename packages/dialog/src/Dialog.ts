@@ -16,6 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
+    query,
 } from 'lit-element';
 
 import '@spectrum-web-components/button/sp-action-button.js';
@@ -39,6 +40,9 @@ export class Dialog extends LitElement {
         return [styles, alertMediumStyles, crossLargeStyles];
     }
 
+    @query('.content')
+    private contentElement!: HTMLDivElement;
+
     @property({ type: Boolean, reflect: true })
     public error = false;
 
@@ -56,6 +60,29 @@ export class Dialog extends LitElement {
 
     @property({ type: String, reflect: true })
     public size?: 'small' | 'medium' | 'large' | 'alert';
+
+    public focus(): void {
+        /* istanbul ignore else */
+        if (this.shadowRoot) {
+            const firstFocusable = this.shadowRoot.querySelector(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            ) as LitElement;
+            /* istanbul ignore else */
+            if (firstFocusable) {
+                /* istanbul ignore else */
+                if (firstFocusable.updateComplete) {
+                    firstFocusable.updateComplete.then(() =>
+                        firstFocusable.focus()
+                    );
+                } else {
+                    firstFocusable.focus();
+                }
+                this.removeAttribute('tabindex');
+            }
+        } else {
+            super.focus();
+        }
+    }
 
     public close(): void {
         this.open = false;
@@ -102,8 +129,8 @@ export class Dialog extends LitElement {
                       `
                     : html``}
             </div>
-            <div class="content" tabindex="0">
-                <slot></slot>
+            <div class="content">
+                <slot @slotchange=${this.onContentSlotChange}></slot>
             </div>
             ${!this.mode || this.hasFooter
                 ? html`
@@ -118,5 +145,34 @@ export class Dialog extends LitElement {
                   `
                 : html``}
         `;
+    }
+
+    private shouldManageTabOrderForScrolling = (): void => {
+        const { offsetHeight, scrollHeight } = this.contentElement;
+        if (offsetHeight < scrollHeight) {
+            this.contentElement.tabIndex = 0;
+        } else {
+            this.contentElement.removeAttribute('tabindex');
+        }
+    };
+
+    protected onContentSlotChange(): void {
+        this.shouldManageTabOrderForScrolling();
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        window.addEventListener(
+            'resize',
+            this.shouldManageTabOrderForScrolling
+        );
+    }
+
+    public disconnectedCallback(): void {
+        window.removeEventListener(
+            'resize',
+            this.shouldManageTabOrderForScrolling
+        );
+        super.disconnectedCallback();
     }
 }

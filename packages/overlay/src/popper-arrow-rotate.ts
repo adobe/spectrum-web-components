@@ -18,6 +18,7 @@ import { ModifierArguments, Modifier } from '@popperjs/core/lib/types';
 function computeArrowRotateStylesFn(
     ref: ModifierArguments<Record<string, unknown>>
 ): undefined {
+    /* istanbul ignore if */
     if (!ref.state.styles || !ref.state.styles.arrow) return;
 
     let rotation: number;
@@ -41,6 +42,7 @@ function computeArrowRotateStylesFn(
         case 'right-end':
             rotation = 90;
             break;
+        /* istanbul ignore next */
         default:
             return;
     }
@@ -48,6 +50,8 @@ function computeArrowRotateStylesFn(
     ref.state.styles.arrow.transform += ` rotate(${rotation}deg)`;
     // Manage Spectrum CSS usage of negative left margin for centering.
     ref.state.styles.arrow.marginLeft = '0';
+    // Manage Spectrum CSS usage of negative top margin for centering.
+    ref.state.styles.arrow.marginTop = '0';
 
     return;
 }

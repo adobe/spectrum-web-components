@@ -36,6 +36,7 @@ const keyboardEvent = (code: string): KeyboardEvent =>
     });
 const arrowDownEvent = keyboardEvent('ArrowDown');
 const arrowUpEvent = keyboardEvent('ArrowUp');
+const tabEvent = keyboardEvent('Tab');
 
 describe('Dropdown', () => {
     const dropdownFixture = async (): Promise<Dropdown> => {
@@ -283,6 +284,34 @@ describe('Dropdown', () => {
         );
         expect(el.open).to.be.true;
         expect(document.activeElement === firstItem).to.be.true;
+    });
+    it('allows tabing to close', async () => {
+        const el = await dropdownFixture();
+
+        await elementUpdated(el);
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
+        el.open = true;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        el.focus();
+        await elementUpdated(el);
+        await waitUntil(() => document.activeElement === firstItem);
+        await waitUntil(
+            () => document.activeElement === firstItem,
+            'first item refocused'
+        );
+        expect(el.open).to.be.true;
+        expect(document.activeElement === firstItem).to.be.true;
+
+        firstItem.dispatchEvent(tabEvent);
+        await elementUpdated(el);
+        await waitUntil(() => !el.open);
+
+        expect(el.open, 'closes').to.be.false;
+        expect(document.activeElement === firstItem, 'focuses something else')
+            .to.be.false;
     });
     it('displays selected item text by default', async () => {
         const focusSelectedSpy = spy();

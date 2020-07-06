@@ -76,18 +76,21 @@ describe('Icon', () => {
         expect(icon.getAttribute('aria-label')).to.equal('Magnify');
     });
 
-    it('does not error when name is missing', () => {
-        const el = document.createElement('sp-icon');
+    it('does not error when name is missing', async () => {
+        const el = await fixture<Icon>(
+            html`
+                <sp-icon></sp-icon>
+            `
+        );
 
-        document.body.appendChild(el);
         return elementUpdated(el);
     });
 
-    it('does not error with unknown set', () => {
-        const el = document.createElement('sp-icon');
-        el.name = 'unknown-icon';
+    it('does not error with unknown set', async () => {
+        const el = await fixture<Icon>(html`
+            <sp-icon name="unknown-icon"></sp-icon>
+        `);
 
-        document.body.appendChild(el);
         return elementUpdated(el);
     });
 
@@ -103,5 +106,6 @@ describe('Icon', () => {
                 throw error;
             }).to.throw();
         }
+        el.remove();
     });
 });

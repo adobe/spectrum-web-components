@@ -32,10 +32,67 @@ export class OverlayStack {
 
     public constructor() {
         this.addEventListeners();
+        this.initTabTrapping();
+    }
+
+    private tabTrapper!: HTMLElement;
+    private overlayHolder!: HTMLElement;
+
+    private initTabTrapping(): void {
+        this.document.body.attachShadow({ mode: 'open' });
+        /* istanbul ignore if */
+        if (!this.document.body.shadowRoot) {
+            return;
+        }
+        const root = this.document.body.shadowRoot;
+        root.innerHTML = `
+            <div id="actual"><slot></slot></div>
+            <style>
+            #actual {
+                position: relative;
+                z-index: 0;
+            }
+            #holder {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-flow: column;
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
+                position: fixed;
+            }
+            #holder[hidden] {
+                display: none !important;
+            }
+            #actual[tabindex="-1"] {
+                pointer-events: none;  /* just in case? */
+            }
+            </style>
+            <div id="holder" hidden><slot name="open"></slot></div>
+        `;
+        this.tabTrapper = root.querySelector('#actual') as HTMLElement;
+        this.overlayHolder = root.querySelector('#holder') as HTMLElement;
+        this.tabTrapper.attachShadow({ mode: 'open' });
+        /* istanbul ignore else */
+        if (this.tabTrapper.shadowRoot) {
+            this.tabTrapper.shadowRoot.innerHTML = '<slot></slot>';
+        }
+    }
+
+    private startTabTrapping(): void {
+        this.tabTrapper.tabIndex = -1;
+        this.overlayHolder.hidden = false;
+    }
+
+    private stopTabTrapping(): void {
+        this.tabTrapper.removeAttribute('tabindex');
+        this.overlayHolder.hidden = true;
     }
 
     private get document(): Document {
-        return this.root.ownerDocument || document;
+        return this.root.ownerDocument /* istanbul ignore next */ || document;
     }
 
     private get topOverlay(): ActiveOverlay | undefined {
@@ -71,6 +128,9 @@ export class OverlayStack {
         if (this.findOverlayForContent(details.content)) {
             return false;
         }
+        if (details.interaction === 'modal') {
+            this.startTabTrapping();
+        }
 
         if (details.delayed) {
             const promise = this.overlayTimer.openTimer(details.content);
@@ -94,9 +154,38 @@ export class OverlayStack {
         const activeOverlay = ActiveOverlay.create(details);
         this.overlays.push(activeOverlay);
         document.body.appendChild(activeOverlay);
-        await activeOverlay.updateComplete;
+        let updateComplete = await activeOverlay.updateComplete;
+        while (updateComplete === false) {
+            updateComplete = await activeOverlay.updateComplete;
+        }
+
+        activeOverlay.addEventListener('close', () => {
+            this.hideAndCloseOverlay(activeOverlay);
+        });
+        if (details.interaction === 'inline') {
+            this.addOverlayEventListeners(activeOverlay);
+        }
+        if (details.receivesFocus === 'auto') {
+            activeOverlay.focus();
+        }
 
         return false;
+    }
+
+    public addOverlayEventListeners(activeOverlay: ActiveOverlay): void {
+        activeOverlay.addEventListener('keydown', (event: KeyboardEvent) => {
+            const { code } = event;
+            /* istanbul ignore if */
+            if (code !== 'Tab') return;
+
+            event.stopPropagation();
+            this.closeOverlay(activeOverlay.overlayContent);
+            activeOverlay.tabbingAway = true;
+            activeOverlay.trigger.focus();
+            activeOverlay.trigger.dispatchEvent(
+                new KeyboardEvent('keydown', event)
+            );
+        });
     }
 
     public closeOverlay(content: HTMLElement): void {
@@ -120,6 +209,7 @@ export class OverlayStack {
             return;
         }
 
+        /* istanbul ignore else */
         if (event.target instanceof Node) {
             const path = event.composedPath();
             if (path.indexOf(topOverlay.overlayContent) >= 0) {
@@ -140,7 +230,7 @@ export class OverlayStack {
 
     private async hideAndCloseOverlay(
         overlay?: ActiveOverlay,
-        animated = true
+        animated?: boolean
     ): Promise<void> {
         if (overlay) {
             await overlay.hide(animated);
@@ -153,6 +243,21 @@ export class OverlayStack {
             /* istanbul ignore else */
             if (index >= 0) {
                 this.overlays.splice(index, 1);
+            }
+            if (this.overlays.length) {
+                const topOverlay = this.overlays[this.overlays.length - 1];
+                if (topOverlay.interaction === 'modal') {
+                    topOverlay.focus();
+                }
+            } else {
+                this.stopTabTrapping();
+                if (
+                    overlay.interaction === 'modal' ||
+                    (overlay.interaction === 'inline' && !overlay.tabbingAway)
+                ) {
+                    overlay.tabbingAway = false;
+                    overlay.trigger.focus();
+                }
             }
         }
     }

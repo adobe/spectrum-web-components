@@ -169,12 +169,14 @@ export class DropdownBase extends Focusable {
         if (event.code !== 'ArrowDown') {
             return;
         }
+        event.preventDefault();
         /* istanbul ignore if */
         if (!this.optionsMenu) {
             return;
         }
         this.open = true;
     }
+
     public setValueFromItem(item: MenuItem): void {
         const oldSelectedItemText = this.selectedItemText;
         const oldValue = this.value;
@@ -200,7 +202,6 @@ export class DropdownBase extends Focusable {
         }
         item.selected = true;
         this.open = false;
-        this.focus();
     }
 
     public toggle(): void {
@@ -261,25 +262,14 @@ export class DropdownBase extends Focusable {
         }
         this.closeOverlay = await Overlay.open(
             this.button,
-            'click',
+            'inline',
             this.popover,
             {
                 placement: this.placement,
+                receivesFocus: 'auto',
             }
         );
-        requestAnimationFrame(() => {
-            /* istanbul ignore else */
-            if (this.optionsMenu) {
-                /* Trick :focus-visible polyfill into thinking keyboard based focus */
-                this.dispatchEvent(
-                    new KeyboardEvent('keydown', {
-                        code: 'Tab',
-                    })
-                );
-                this.optionsMenu.focus();
-            }
-            this.menuStateResolver();
-        });
+        this.menuStateResolver();
     }
 
     private closeMenu(): void {
