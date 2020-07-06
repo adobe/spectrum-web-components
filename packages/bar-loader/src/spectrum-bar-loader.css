@@ -1,0 +1,231 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+@keyframes indeterminate-loop {
+    0% {
+        transform: translate(0);
+    }
+    to {
+        transform: translate(
+            calc(
+                var(
+                        --spectrum-barloader-large-width,
+                        var(--spectrum-global-dimension-size-2400)
+                    ) +
+                    var(
+                        --spectrum-barloader-large-indeterminate-fill-width,
+                        var(--spectrum-global-dimension-size-1700)
+                    )
+            )
+        );
+    }
+}
+:host {
+    /* .spectrum-BarLoader */
+    position: relative;
+    display: inline-flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: top;
+}
+:host,
+.track {
+    /* .spectrum-BarLoader,
+   * .spectrum-BarLoader-track */
+    width: var(
+        --spectrum-barloader-large-width,
+        var(--spectrum-global-dimension-size-2400)
+    );
+}
+.track {
+    /* .spectrum-BarLoader-track */
+    overflow: hidden;
+    border-radius: var(--spectrum-barloader-large-border-radius);
+    z-index: 1; /* .spectrum-BarLoader .spectrum-BarLoader-track */
+    background-color: var(
+        --spectrum-barloader-large-track-color,
+        var(--spectrum-alias-track-color-default)
+    );
+}
+.fill,
+.track {
+    /* .spectrum-BarLoader-fill,
+   * .spectrum-BarLoader-track */
+    height: var(
+        --spectrum-barloader-large-height,
+        var(--spectrum-global-dimension-size-75)
+    );
+}
+.fill {
+    /* .spectrum-BarLoader-fill */
+    border: none;
+    transition: width 1s; /* .spectrum-BarLoader .spectrum-BarLoader-fill */
+    background: var(
+        --spectrum-barloader-large-track-fill-color,
+        var(--spectrum-global-color-blue-500)
+    );
+}
+.label,
+.percentage {
+    /* .spectrum-BarLoader-label,
+   * .spectrum-BarLoader-percentage */
+    font-size: var(
+        --spectrum-fieldlabel-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    font-weight: var(
+        --spectrum-fieldlabel-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    line-height: var(
+        --spectrum-fieldlabel-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
+    text-align: left;
+    margin-bottom: var(
+        --spectrum-barloader-large-label-gap-y,
+        var(--spectrum-global-dimension-size-115)
+    );
+}
+.label {
+    /* .spectrum-BarLoader-label */
+    flex: 1 1 0%;
+}
+.percentage {
+    /* .spectrum-BarLoader-percentage */
+    align-self: flex-start;
+    margin-left: var(
+        --spectrum-barloader-small-label-gap-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+}
+:host([side-label]) {
+    /* .spectrum-BarLoader--sideLabel */
+    display: inline-flex;
+    flex-flow: row;
+    justify-content: space-between;
+    width: auto;
+}
+:host([side-label]) .label {
+    /* .spectrum-BarLoader--sideLabel .spectrum-BarLoader-label */
+    margin-right: var(
+        --spectrum-barloader-large-label-gap-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+    margin-bottom: 0;
+}
+:host([side-label]) .percentage {
+    /* .spectrum-BarLoader--sideLabel .spectrum-BarLoader-percentage */
+    order: 3;
+    text-align: right;
+    margin-left: var(
+        --spectrum-barloader-large-label-gap-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+    margin-bottom: 0;
+}
+:host([small]) {
+    /* .spectrum-BarLoader--small */
+    min-width: var(
+        --spectrum-barloader-small-width,
+        var(--spectrum-global-dimension-size-2400)
+    );
+}
+:host([small]) .fill,
+:host([small]) .track {
+    /* .spectrum-BarLoader--small .spectrum-BarLoader-fill,
+   * .spectrum-BarLoader--small .spectrum-BarLoader-track */
+    height: var(
+        --spectrum-barloader-small-height,
+        var(--spectrum-global-dimension-size-50)
+    );
+}
+:host([small]) .track {
+    /* .spectrum-BarLoader--small .spectrum-BarLoader-track */
+    border-radius: var(--spectrum-barloader-small-border-radius);
+}
+:host([indeterminate]) .fill {
+    /* .spectrum-BarLoader--indeterminate .spectrum-BarLoader-fill */
+    width: var(
+        --spectrum-barloader-large-indeterminate-fill-width,
+        var(--spectrum-global-dimension-size-1700)
+    );
+    position: relative;
+    animation: indeterminate-loop
+        var(
+            --spectrum-barloader-large-indeterminate-duration,
+            var(--spectrum-global-animation-duration-2000)
+        )
+        infinite;
+    animation-timing-function: var(
+        --spectrum-barloader-large-indeterminate-animation-ease,
+        var(--spectrum-global-animation-ease-in-out)
+    );
+    left: calc(
+        -1 * var(--spectrum-barloader-large-indeterminate-fill-width, var(--spectrum-global-dimension-size-1700))
+    );
+    will-change: transform;
+}
+:host([over-background]) .fill {
+    /* .spectrum-BarLoader.spectrum-BarLoader--overBackground .spectrum-BarLoader-fill */
+    background: var(
+        --spectrum-barloader-large-over-background-track-fill-color,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([over-background]) .label,
+:host([over-background]) .percentage {
+    /* .spectrum-BarLoader.spectrum-BarLoader--overBackground .spectrum-BarLoader-label,
+   * .spectrum-BarLoader.spectrum-BarLoader--overBackground .spectrum-BarLoader-percentage */
+    color: var(
+        --spectrum-barloader-large-over-background-track-fill-color,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([over-background]) .track {
+    /* .spectrum-BarLoader.spectrum-BarLoader--overBackground .spectrum-BarLoader-track */
+    background-color: var(
+        --spectrum-barloader-large-over-background-track-color,
+        var(--spectrum-alias-track-color-over-background)
+    );
+}
+:host([positive]) .fill {
+    /* .spectrum-BarLoader.is-positive .spectrum-BarLoader-fill */
+    background: var(
+        --spectrum-meter-large-track-color-positive,
+        var(--spectrum-semantic-positive-color-status)
+    );
+}
+:host([warning]) .fill {
+    /* .spectrum-BarLoader.is-warning .spectrum-BarLoader-fill */
+    background: var(
+        --spectrum-meter-large-track-color-warning,
+        var(--spectrum-semantic-notice-color-status)
+    );
+}
+:host([critical]) .fill {
+    /* .spectrum-BarLoader.is-critical .spectrum-BarLoader-fill */
+    background: var(
+        --spectrum-meter-large-track-color-critical,
+        var(--spectrum-semantic-negative-color-status)
+    );
+}
+.label,
+.percentage {
+    /* .spectrum-BarLoader-label,
+   * .spectrum-BarLoader-percentage */
+    color: var(
+        --spectrum-fieldlabel-text-color,
+        var(--spectrum-alias-label-text-color)
+    );
+}
