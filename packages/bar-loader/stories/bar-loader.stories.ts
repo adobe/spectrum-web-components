@@ -21,19 +21,19 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-bar-loader value="50"></sp-bar-loader>
+        <sp-bar-loader progress="50"></sp-bar-loader>
     `;
 };
 
 export const label = (): TemplateResult => {
     return html`
-        <sp-bar-loader label="Loading" value="50"></sp-bar-loader>
+        <sp-bar-loader label="Loading" progress="50"></sp-bar-loader>
     `;
 };
 
 export const labelSmall = (): TemplateResult => {
     return html`
-        <sp-bar-loader label="Loading" value="50" small></sp-bar-loader>
+        <sp-bar-loader label="Loading" progress="50" small></sp-bar-loader>
     `;
 };
 
@@ -45,7 +45,7 @@ export const indeterminate = (): TemplateResult => {
 
 export const sideLabel = (): TemplateResult => {
     return html`
-        <sp-bar-loader side-label label="Loading" value="50"></sp-bar-loader>
+        <sp-bar-loader side-label label="Loading" progress="50"></sp-bar-loader>
     `;
 };
 
@@ -65,7 +65,7 @@ const makeOverBackground = (story: TemplateResult): TemplateResult => html`
 
 export const overBackground = (): TemplateResult => {
     return makeOverBackground(html`
-        <sp-bar-loader value="50" over-background></sp-bar-loader>
+        <sp-bar-loader progress="50" over-background></sp-bar-loader>
     `);
 };
 
@@ -73,7 +73,7 @@ export const overBackgroundLabel = (): TemplateResult => {
     return makeOverBackground(html`
         <sp-bar-loader
             label="Loading"
-            value="50"
+            progress="50"
             over-background
         ></sp-bar-loader>
     `);
@@ -93,7 +93,7 @@ export const overBackgroundSideLabel = (): TemplateResult => {
     return makeOverBackground(html`
         <sp-bar-loader
             label="Loading"
-            value="50"
+            progress="50"
             over-background
             side-label
         ></sp-bar-loader>

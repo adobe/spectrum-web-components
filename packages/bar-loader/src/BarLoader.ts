@@ -45,7 +45,7 @@ export class BarLoader extends LitElement {
     public small = false;
 
     @property({ type: Number })
-    public value = 0;
+    public progress = 0;
 
     protected render(): TemplateResult {
         return html`
@@ -55,14 +55,14 @@ export class BarLoader extends LitElement {
                       ${this.indeterminate
                           ? html``
                           : html`
-                                <div class="percentage">${this.value}%</div>
+                                <div class="percentage">${this.progress}%</div>
                             `}
                   `
                 : html``}
             <div class="track">
                 <div
                     class="fill"
-                    style="transform: scaleX(calc(${this.value} / 100));"
+                    style="transform: scaleX(calc(${this.progress} / 100));"
                 ></div>
             </div>
         `;
@@ -86,8 +86,8 @@ export class BarLoader extends LitElement {
                 this.setAttribute('aria-valuemax', '100');
             }
         }
-        if (!this.indeterminate && changes.has('value')) {
-            this.setAttribute('aria-valuenow', '' + this.value);
+        if (!this.indeterminate && changes.has('progress')) {
+            this.setAttribute('aria-valuenow', '' + this.progress);
         } else if (this.hasAttribute('aria-valuenow')) {
             this.removeAttribute('aria-valuenow');
         }
