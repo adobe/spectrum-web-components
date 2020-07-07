@@ -48,6 +48,26 @@ describe('Tag', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('[disabled] manages [aria-disabled]', async () => {
+        const el = await fixture<Tag>(
+            html`
+                <sp-tags>
+                    <sp-tag>Tag 1</sp-tag>
+                    <sp-tag invalid>Tag 2</sp-tag>
+                    <sp-tag disabled>Tag 3</sp-tag>
+                    <sp-tag deletable>Tag 4</sp-tag>
+                </sp-tags>
+            `
+        );
+        const notDisabled = el.querySelector('sp-tag') as Tag;
+        const disabled = el.querySelector('[disabled]') as Tag;
+
+        await elementUpdated(disabled);
+
+        expect(notDisabled.hasAttribute('aria-disabled')).to.be.false;
+        expect(disabled.hasAttribute('aria-disabled')).to.be.true;
+        expect(disabled.getAttribute('aria-disabled')).to.equal('true');
+    });
     it('dispatches `delete` events on click', async () => {
         const deleteSpy = spy();
         const handleDelete = (): void => deleteSpy();
