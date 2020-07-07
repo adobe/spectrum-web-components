@@ -80,10 +80,30 @@ export class SideNav extends Focusable {
 
     private startListeningToKeyboard = (): void => {
         this.addEventListener('keydown', this.handleKeydown);
+        /* istanbul ignore else */
+        if (this.value) {
+            const selected = this.querySelector(
+                `[value="${this.value}"]`
+            ) as SideNavItem;
+            /* istanbul ignore else */
+            if (selected) {
+                selected.tabIndex = -1;
+            }
+        }
     };
 
     private stopListeningToKeyboard = (): void => {
         this.removeEventListener('keydown', this.handleKeydown);
+        /* istanbul ignore else */
+        if (this.value) {
+            const selected = this.querySelector(
+                `[value="${this.value}"]`
+            ) as SideNavItem;
+            /* istanbul ignore else */
+            if (selected) {
+                selected.tabIndex = 0;
+            }
+        }
     };
 
     private handleKeydown(event: KeyboardEvent): void {
@@ -141,6 +161,10 @@ export class SideNav extends Focusable {
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.tabIndex = 0;
+        const selectedChild = this.querySelector('[selected]') as SideNavItem;
+        if (selectedChild) {
+            this.value = selectedChild.value;
+        }
     }
 
     protected updated(changes: PropertyValues): void {
