@@ -47,11 +47,11 @@ When a vertical Rule is used inside of a flex container, use `align-self: stretc
 
 ```html-live
 <div style="height: 32px; display: flex;">
-    <sp-action-button quiet>
+    <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
     <sp-rule size="small" vertical></sp-rule>
-    <sp-action-button quiet>
+    <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
 </div>
@@ -61,11 +61,11 @@ When a vertical Rule is used inside of a flex container, use `align-self: stretc
 
 ```html-live
 <div style="height: 32px; display: flex;">
-    <sp-action-button quiet>
+    <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
     <sp-rule size="medium" vertical></sp-rule>
-    <sp-action-button quiet>
+    <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
 </div>

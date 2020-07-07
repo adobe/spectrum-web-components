@@ -48,13 +48,13 @@ yarn add @spectrum-web-components/button-group
 </sp-button-group>
 <br />
 <sp-button-group>
-    <sp-action-button quiet>
+    <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
-    <sp-action-button quiet>
+    <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
-    <sp-action-button quiet>
+    <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
 </sp-button-group>
@@ -94,13 +94,13 @@ yarn add @spectrum-web-components/button-group
     </sp-button-group>
 
     <sp-button-group vertical>
-        <sp-action-button quiet>
+        <sp-action-button quiet label="Zoom in">
             <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
         </sp-action-button>
-        <sp-action-button quiet>
+        <sp-action-button quiet label="Zoom in">
             <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
         </sp-action-button>
-        <sp-action-button quiet>
+        <sp-action-button quiet label="Zoom in">
             <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
         </sp-action-button>
     </sp-button-group>
