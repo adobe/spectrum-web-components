@@ -109,4 +109,15 @@ export class Tag extends LitElement {
                 : '-1'
         );
     }
+
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabled');
+            }
+        }
+    }
 }
