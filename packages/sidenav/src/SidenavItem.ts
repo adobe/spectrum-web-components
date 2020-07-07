@@ -87,19 +87,23 @@ export class SideNavItem extends LikeAnchor(Focusable) {
             if (this.hasChildren) {
                 this.expanded = !this.expanded;
             } else if (this.value) {
-                const selectDetail: SidenavSelectDetail = {
-                    value: this.value,
-                };
-
-                const selectionEvent = new CustomEvent('sidenav-select', {
-                    bubbles: true,
-                    composed: true,
-                    detail: selectDetail,
-                });
-
-                this.dispatchEvent(selectionEvent);
+                this.announceSelected(this.value);
             }
         }
+    }
+
+    private announceSelected(value: string): void {
+        const selectDetail: SidenavSelectDetail = {
+            value,
+        };
+
+        const selectionEvent = new CustomEvent('sidenav-select', {
+            bubbles: true,
+            composed: true,
+            detail: selectDetail,
+        });
+
+        this.dispatchEvent(selectionEvent);
     }
 
     public click(): void {

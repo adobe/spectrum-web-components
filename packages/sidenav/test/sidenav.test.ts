@@ -14,7 +14,13 @@ import '../sp-sidenav.js';
 import '../sp-sidenav-item.js';
 import '../sp-sidenav-heading.js';
 import { SideNav, SideNavItem } from '../';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    html,
+    expect,
+    waitUntil,
+} from '@open-wc/testing';
 import { TemplateResult } from 'lit-html';
 import { LitElement } from 'lit-element';
 
@@ -165,6 +171,67 @@ describe('Sidenav', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 2a');
+    });
+    it('prevents [tabindex=0] while `focusin`', async () => {
+        const el = await fixture<SideNav>(
+            html`
+                <sp-sidenav manage-tab-index>
+                    <sp-sidenav-heading label="CATEGORY 1">
+                        <sp-sidenav-item
+                            value="Section 0"
+                            label="Section 0"
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item
+                            value="Section 1"
+                            label="Section 1"
+                            selected
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item
+                            value="Section 2"
+                            label="Section 2"
+                            disabled
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item value="Section 3" label="Section 3">
+                            <sp-sidenav-item
+                                value="Section 3a"
+                                label="Section 3a"
+                            ></sp-sidenav-item>
+                        </sp-sidenav-item>
+                    </sp-sidenav-heading>
+                </sp-sidenav>
+            `
+        );
+        const selected = el.querySelector('[value="Section 1"]') as SideNavItem;
+        const toBeSelected = el.querySelector(
+            '[value="Section 0"]'
+        ) as SideNavItem;
+
+        await elementUpdated(el);
+        await waitUntil(() => el.value === 'Section 1', 'wait for selection');
+
+        expect(el.value).to.equal('Section 1');
+        expect(selected.tabIndex).to.equal(0);
+
+        el.dispatchEvent(new Event('focusin'));
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('Section 1');
+        expect(selected.tabIndex).to.equal(-1);
+
+        el.dispatchEvent(new Event('focusout'));
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('Section 1');
+        expect(selected.tabIndex).to.equal(0);
+
+        toBeSelected.click();
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('Section 0');
+        expect(toBeSelected.tabIndex).to.equal(0);
     });
     it('manage tab index', async () => {
         const el = await fixture<SideNav>(
