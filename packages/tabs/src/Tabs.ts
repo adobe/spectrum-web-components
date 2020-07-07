@@ -54,9 +54,6 @@ export class Tabs extends Focusable {
     @property()
     public selectionIndicatorStyle = '';
 
-    @property({ type: String, reflect: true })
-    public value = '';
-
     @property({ reflect: true })
     public get selected(): string {
         return this._selected;
@@ -116,6 +113,10 @@ export class Tabs extends Focusable {
         this.setAttribute('role', 'tablist');
         this.addEventListener('mousedown', this.manageFocusinType);
         this.addEventListener('focusin', this.startListeningToKeyboard);
+        const selectedChild = this.querySelector('[selected]') as Tab;
+        if (selectedChild) {
+            this.selectTarget(selectedChild);
+        }
     }
 
     protected updated(changes: PropertyValues): void {
@@ -150,10 +151,20 @@ export class Tabs extends Focusable {
     public startListeningToKeyboard = (): void => {
         this.addEventListener('keydown', this.handleKeydown);
         this.shouldApplyFocusVisible = true;
+        const selected = this.querySelector('[selected]') as Tab;
+        /* istanbul ignore else */
+        if (selected) {
+            selected.tabIndex = -1;
+        }
 
         const stopListeningToKeyboard = (): void => {
             this.removeEventListener('keydown', this.handleKeydown);
             this.shouldApplyFocusVisible = false;
+            const selected = this.querySelector('[selected]') as Tab;
+            /* istanbul ignore else */
+            if (selected) {
+                selected.tabIndex = 0;
+            }
             this.removeEventListener('focusout', stopListeningToKeyboard);
         };
         this.addEventListener('focusout', stopListeningToKeyboard);

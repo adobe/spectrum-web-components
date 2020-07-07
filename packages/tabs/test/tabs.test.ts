@@ -13,7 +13,13 @@ import '../sp-tabs.js';
 import '../sp-tab.js';
 import { Tabs, Tab } from '../';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    html,
+    expect,
+    waitUntil,
+} from '@open-wc/testing';
 import { LitElement } from 'lit-element';
 import { TemplateResult } from 'lit-html';
 import { waitForPredicate } from '../../../test/testing-helpers';
@@ -255,6 +261,56 @@ describe('Tabs', () => {
         secondTab.click();
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
+    });
+    it('prevents [tabindex=0] while `focusin`', async () => {
+        const el = await fixture<Tabs>(html`
+            <sp-tabs>
+                <sp-tab label="Tab 1" value="first" selected>
+                    <sp-icon
+                        slot="icon"
+                        size="s"
+                        name="ui:CheckmarkSmall"
+                    ></sp-icon>
+                </sp-tab>
+                <sp-tab label="Tab 2" value="second">
+                    <sp-icon
+                        slot="icon"
+                        size="s"
+                        name="ui:CheckmarkSmall"
+                    ></sp-icon>
+                </sp-tab>
+            </sp-tabs>
+        `);
+
+        const selected = el.querySelector('[value="first"]') as Tab;
+        const toBeSelected = el.querySelector('[value="second"]') as Tab;
+
+        await elementUpdated(el);
+        await waitUntil(() => el.selected === 'first', 'wait for selection');
+
+        expect(el.selected).to.equal('first');
+        expect(selected.tabIndex).to.equal(0);
+
+        el.dispatchEvent(new Event('focusin'));
+
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('first');
+        expect(selected.tabIndex).to.equal(-1);
+
+        el.dispatchEvent(new Event('focusout'));
+
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('first');
+        expect(selected.tabIndex).to.equal(0);
+
+        toBeSelected.click();
+
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('second');
+        expect(toBeSelected.tabIndex).to.equal(0);
     });
     it('accepts keyboard based selection', async () => {
         const el = await fixture<Tabs>(html`
