@@ -35,7 +35,7 @@ yarn add @spectrum-web-components/dropzone
         </svg>
     </sp-illustrated-message>
 
-    <div style="color: grey">
+    <div>
         <div>
             <label for="file-input">
                 <sp-link>Select a File</sp-link>
@@ -76,7 +76,7 @@ yarn add @spectrum-web-components/dropzone
         </svg>
     </sp-illustrated-message>
 
-    <div style="color: grey">
+    <div>
         <div>
             <label for="file-input">
                 <sp-link>Select a File</sp-link>
