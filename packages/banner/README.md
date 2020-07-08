@@ -37,17 +37,6 @@ Banners intended for providing information. This is the default banner variant.
 </sp-banner>
 ```
 
-### Warning banners
-
-Banners intended to provided a warning with a brief description. Less severe than an error banner.
-
-```html
-<sp-banner type="warning">
-    <div slot="header">This is a warning banner</div>
-    <div slot="content">Be careful!</div>
-</sp-banner>
-```
-
 ### Error banners
 
 Banners intended to indicate an error as occurred, with a brief description of the issue. More severe than a warning banner.
@@ -67,7 +56,7 @@ In addition to the variant, banners can be placed in the top-right corner of its
 <div
     style="width: 300px; height: 100px; background-color: #ba598b; position: relative;"
 >
-    <sp-banner type="warning" corner>
+    <sp-banner corner>
         <div slot="header">This banner is in a corner</div>
         <div slot="content">Neat!</div>
     </sp-banner>
