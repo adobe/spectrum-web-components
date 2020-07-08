@@ -27,4 +27,21 @@ describe('Status Light', () => {
             : (el.querySelector('#root') as HTMLImageElement);
         expect(rootEl).to.not.be.undefined;
     });
+    it('[disabled] manages [aria-disabled]', async () => {
+        const el = await fixture<StatusLight>(
+            html`
+                <sp-status-light variant="positive"></sp-status-light>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-disabled')).to.be.false;
+
+        el.disabled = true;
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-disabled')).to.be.true;
+        expect(el.getAttribute('aria-disabled')).to.equal('true');
+    });
 });

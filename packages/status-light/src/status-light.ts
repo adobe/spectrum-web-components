@@ -16,6 +16,7 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
+    PropertyValues,
 } from 'lit-element';
 import statusLightStyles from './status-light.css.js';
 
@@ -59,5 +60,16 @@ export class StatusLight extends LitElement {
                 <slot></slot>
             </div>
         `;
+    }
+
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabled');
+            }
+        }
     }
 }
