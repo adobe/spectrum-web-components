@@ -119,6 +119,11 @@ class SideNav extends LitElement {
                             ></sp-sidenav-item>
                         </sp-sidenav-item>
                         <sp-sidenav-item
+                            label="Playground"
+                            href="storybook/"
+                            multilevel
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item
                             class="spectrum-web"
                             label="Spectrum"
                             href="https://spectrum.adobe.com/"
