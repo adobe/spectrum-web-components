@@ -31,8 +31,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./lib/index.js",
-        "./src/index.ts"
+        "./elements.js",
+        "./elements.ts"
     ],
     "scripts": {
         "test": "karma start --coverage"
