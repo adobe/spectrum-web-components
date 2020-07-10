@@ -12,48 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-textfield.css';
 
-:host {
-    position: relative;
-    display: inline-flex;
-    vertical-align: top;
-}
-
-#input:invalid,
-:host([invalid]) #input {
-    background-image: none;
-}
-
-#invalid,
-#valid {
-    position: absolute;
-    top: 50%;
-    right: calc(
-        var(
-                --spectrum-textfield-padding-x,
-                var(--spectrum-global-dimension-size-150)
-            ) - 3px
-    );
-    transform: translateY(-50%);
-}
-
-#valid {
-    color: var(
-        --spectrum-alert-success-icon-color,
-        var(--spectrum-global-color-green-600)
-    );
-}
-
-#invalid {
-    color: var(
-        --spectrum-alert-error-border-color,
-        var(--spectrum-global-color-red-400)
-    );
-}
-
-:host([valid]) #input {
-    background-image: none;
-}
-
 :host([grows]) #input {
     position: absolute;
     top: 0;
@@ -92,14 +50,4 @@ governing permissions and limitations under the License.
     padding-right: var(--spectrum-textfield-quiet-padding-x, 0);
     border-right-width: 0;
     border-left-width: 0;
-}
-
-:host([quiet]) #invalid,
-:host([quiet]) #valid {
-    right: -2px;
-}
-
-:host([multiline]) #invalid,
-:host([multiline]) #valid {
-    top: calc(100% - 12px);
 }
