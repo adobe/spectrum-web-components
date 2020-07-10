@@ -17,8 +17,23 @@ module.exports = {
             name: 'textfield',
             host: {
                 selector: '.spectrum-Textfield',
-                shadowSelector: '#input',
             },
+            ids: [
+                {
+                    selector: '.spectrum-Textfield-input',
+                    name: 'input',
+                },
+            ],
+            classes: [
+                {
+                    selector: '.spectrum-Textfield-validationIcon',
+                    name: 'icon',
+                },
+                {
+                    selector: '.spectrum-Textfield-icon',
+                    name: 'icon-workflow',
+                },
+            ],
             attributes: [
                 {
                     type: 'boolean',
@@ -42,8 +57,13 @@ module.exports = {
                 },
                 {
                     type: 'boolean',
-                    selector: 'spectrum-Textfield--quiet',
+                    selector: '.spectrum-Textfield--quiet',
                     name: 'quiet',
+                },
+                {
+                    type: 'boolean',
+                    selector: '.is-disabled',
+                    name: 'disabled',
                 },
             ],
         },

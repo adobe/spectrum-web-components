@@ -17,7 +17,7 @@ import {
     query,
     TemplateResult,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icon/sp-icon.js';
@@ -123,13 +123,13 @@ export class Textfield extends Focusable {
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
-                <sp-icon id="invalid" class="alert-small">
+                <sp-icon id="invalid" class="icon alert-small">
                     ${AlertSmallIcon({ hidden: true })}
                 </sp-icon>
             `;
         } else if (this.valid) {
             return html`
-                <sp-icon id="valid" class="checkmark-small">
+                <sp-icon id="valid" class="icon checkmark-small">
                     ${CheckmarkSmallIcon({ hidden: true })}
                 </sp-icon>
             `;
@@ -137,39 +137,35 @@ export class Textfield extends Focusable {
         return nothing;
     }
 
-    protected render(): TemplateResult {
-        if (this.multiline) {
-            return html`
-                ${this.grows
-                    ? html`
-                          <div id="sizer">${this.value}</div>
-                      `
-                    : nothing}
-                <!-- @ts-ignore -->
-                <textarea
-                    aria-label=${this.label || this.placeholder}
-                    id="input"
-                    maxlength=${ifDefined(this.maxlength)}
-                    minlength=${ifDefined(this.minlength)}
-                    pattern=${ifDefined(this.pattern)}
-                    placeholder=${this.placeholder}
-                    .value=${this.value}
-                    @change=${this.onChange}
-                    @input=${this.onInput}
-                    ?disabled=${this.disabled}
-                    ?required=${this.required}
-                    autocomplete=${ifDefined(this.autocomplete)}
-                ></textarea>
-                ${this.renderStateIcons()}
-            `;
-        }
+    private get renderMultiline(): TemplateResult {
+        return html`
+            ${this.grows
+                ? html`
+                      <div id="sizer">${this.value}</div>
+                  `
+                : nothing}
+            <!-- @ts-ignore -->
+            <textarea
+                aria-label=${this.label || this.placeholder}
+                id="input"
+                pattern=${ifDefined(this.pattern)}
+                placeholder=${this.placeholder}
+                .value=${this.value}
+                @change=${this.onChange}
+                @input=${this.onInput}
+                ?disabled=${this.disabled}
+                ?required=${this.required}
+                autocomplete=${ifDefined(this.autocomplete)}
+            ></textarea>
+        `;
+    }
+
+    private get renderInput(): TemplateResult {
         return html`
             <!-- @ts-ignore -->
             <input
                 aria-label=${this.label || this.placeholder}
                 id="input"
-                maxlength=${ifDefined(this.maxlength)}
-                minlength=${ifDefined(this.minlength)}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${this.value}
@@ -179,7 +175,13 @@ export class Textfield extends Focusable {
                 ?required=${this.required}
                 autocomplete=${ifDefined(this.autocomplete)}
             />
+        `;
+    }
+
+    protected render(): TemplateResult {
+        return html`
             ${this.renderStateIcons()}
+            ${this.multiline ? this.renderMultiline : this.renderInput}
         `;
     }
 
