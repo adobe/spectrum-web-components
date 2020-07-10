@@ -3474,10 +3474,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tags/-/tags-2.0.5.tgz#13b1e4fc5f17e1f70f98959221c215cbc631a84d"
   integrity sha512-dMba2Bw9oJlOI2JM6CH+sfDQANRh7/J6XYw4PpRlVwNUvL5v6T8Z+8KN6YozE4a3FT3WDKNu9Vg9hF+5fs3rvg==
 
-"@spectrum-css/textfield@^2.0.5":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-2.0.6.tgz#2e796ee1d0c5732bf089e4168662b8940cefc9f1"
-  integrity sha512-lbr9HuXGOjmZ6K0MmODA3u7DRaaVk1P2aqqJkKy6xIY9u2nRKg/nna3TANJRqVnYMvRAdsWiH2vTWTBkRrCsGg==
+"@spectrum-css/textfield@^3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-3.0.0-beta.3.tgz#251763260fedd38e256c8a225809b0ecdc70f68f"
+  integrity sha512-ihTZKLfnUxBnlSGRH4xdSMwd23EkpunC69uUvVB2LGGw1QAcmUcBNdS9xz7PPSWFw4qkCRXzVVX9tLC/2fQFbQ==
 
 "@spectrum-css/toast@^2.0.2":
   version "2.0.5"
