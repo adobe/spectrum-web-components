@@ -262,7 +262,7 @@ export class DropdownBase extends Focusable {
         }
         this.closeOverlay = await Overlay.open(
             this.button,
-            'inline',
+            'replace',
             this.popover,
             {
                 placement: this.placement,

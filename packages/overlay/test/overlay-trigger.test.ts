@@ -21,7 +21,7 @@ import {
 } from '@open-wc/testing';
 
 import '../overlay-trigger.js';
-import { OverlayTrigger, ActiveOverlay } from '../';
+import { OverlayTrigger, ActiveOverlay, TriggerInteractions } from '../';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -71,6 +71,7 @@ describe('Overlay Trigger', () => {
                             direction="bottom"
                             tip
                             open
+                            tabindex="0"
                         >
                             <div class="options-popover-content">
                                 <overlay-trigger
@@ -87,6 +88,7 @@ describe('Overlay Trigger', () => {
                                         direction="bottom"
                                         tip
                                         open
+                                        tabindex="0"
                                     >
                                         <div class="options-popover-content">
                                             Another Popover
@@ -188,54 +190,38 @@ describe('Overlay Trigger', () => {
         expect(isVisible(outerPopover)).to.be.true;
     });
 
-    it('opens a popover - [type="inline"]', async () => {
-        const button = testDiv.querySelector('#outer-button') as HTMLElement;
-        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
-        const outerTrigger = testDiv.querySelector(
-            '#trigger'
-        ) as OverlayTrigger;
-        outerTrigger.type = 'inline';
-        await elementUpdated(outerTrigger);
+    ['inline', 'modal', 'replace'].map((type: string) => {
+        it(`opens a popover - [type="${type}"]`, async () => {
+            const button = testDiv.querySelector(
+                '#outer-button'
+            ) as HTMLElement;
+            const outerPopover = testDiv.querySelector(
+                '#outer-popover'
+            ) as Popover;
+            const outerTrigger = testDiv.querySelector(
+                '#trigger'
+            ) as OverlayTrigger;
+            outerTrigger.type = type as Extract<
+                TriggerInteractions,
+                'inline' | 'modal' | 'replace'
+            >;
+            await elementUpdated(outerTrigger);
 
-        expect(isVisible(outerPopover)).to.be.false;
+            expect(isVisible(outerPopover)).to.be.false;
 
-        expect(button).to.exist;
-        button.click();
+            expect(button).to.exist;
+            button.click();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(outerPopover.parentElement instanceof OverlayTrigger)
-        );
+            // Wait for the DOM node to be stolen and reparented into the overlay
+            await waitForPredicate(
+                () => !(outerPopover.parentElement instanceof OverlayTrigger)
+            );
 
-        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
-            OverlayTrigger
-        );
-        expect(isVisible(outerPopover)).to.be.true;
-    });
-
-    it('opens a popover - [type="modal"]', async () => {
-        const button = testDiv.querySelector('#outer-button') as HTMLElement;
-        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
-        const outerTrigger = testDiv.querySelector(
-            '#trigger'
-        ) as OverlayTrigger;
-        outerTrigger.type = 'modal';
-        await elementUpdated(outerTrigger);
-
-        expect(isVisible(outerPopover)).to.be.false;
-
-        expect(button).to.exist;
-        button.click();
-
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(outerPopover.parentElement instanceof OverlayTrigger)
-        );
-
-        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
-            OverlayTrigger
-        );
-        expect(isVisible(outerPopover)).to.be.true;
+            expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+                OverlayTrigger
+            );
+            expect(isVisible(outerPopover)).to.be.true;
+        });
     });
 
     it('does not open a hover popover when a click popover is open', async () => {
@@ -388,8 +374,10 @@ describe('Overlay Trigger', () => {
         outerTrigger.type = 'modal';
         innerTrigger.type = 'modal';
 
-        expect(isVisible(outerPopover)).to.be.false;
-        expect(isVisible(innerPopover)).to.be.false;
+        expect(isVisible(outerPopover), 'outer popover starts closed').to.be
+            .false;
+        expect(isVisible(innerPopover), 'inner popover starts closed').to.be
+            .false;
 
         expect(button).to.exist;
         button.click();
@@ -402,8 +390,9 @@ describe('Overlay Trigger', () => {
         expect(outerPopover.parentElement).to.not.be.an.instanceOf(
             OverlayTrigger
         );
-        expect(isVisible(outerPopover)).to.be.true;
-        expect(isVisible(innerPopover)).to.be.false;
+        expect(isVisible(outerPopover), 'outer popover opens').to.be.true;
+        expect(isVisible(innerPopover), 'inner popover stays closed').to.be
+            .false;
 
         const innerButton = document.querySelector(
             '#inner-button'
@@ -416,8 +405,8 @@ describe('Overlay Trigger', () => {
             'inner hoverConent stolen and reparented into the overlay'
         );
 
-        expect(isVisible(outerPopover)).to.be.true;
-        expect(isVisible(innerPopover)).to.be.true;
+        expect(isVisible(outerPopover), 'outer popover stays open').to.be.true;
+        expect(isVisible(innerPopover), 'inner popover opens').to.be.true;
 
         pressEscape();
 
@@ -426,7 +415,10 @@ describe('Overlay Trigger', () => {
             'inner hoverConent returned to OverlayTrigger'
         );
 
-        expect(document.activeElement === outerPopover).to.be.true;
+        expect(
+            document.activeElement === outerPopover,
+            'outer popover recieved focus'
+        ).to.be.true;
     });
 
     it('escape closes an open popover', async () => {

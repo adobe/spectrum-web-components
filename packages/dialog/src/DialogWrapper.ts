@@ -25,7 +25,7 @@ import '@spectrum-web-components/button/sp-button.js';
 
 import '../sp-dialog.js';
 import styles from './dialog-wrapper.css.js';
-import { Dialog } from './dialog.js';
+import { Dialog } from './Dialog.js';
 
 /**
  * @element sp-dialog-wrapper

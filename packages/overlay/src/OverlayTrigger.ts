@@ -20,7 +20,7 @@ import {
 
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
-import { Placement } from './overlay-types';
+import { Placement, TriggerInteractions } from './overlay-types';
 import { Overlay } from './overlay.js';
 
 /**
@@ -42,7 +42,7 @@ export class OverlayTrigger extends LitElement {
     public placement: Placement = 'bottom';
 
     @property()
-    public type?: 'inline' | 'modal';
+    public type?: Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'>;
 
     @property({ type: Number, reflect: true })
     public offset = 6;
@@ -101,7 +101,12 @@ export class OverlayTrigger extends LitElement {
         /* istanbul ignore else */
         if (this.targetContent && this.clickContent) {
             if (this.type === 'modal') {
-                this.clickContent.tabIndex = 0;
+                const firstFocusable = this.querySelector(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                ) as HTMLElement;
+                if (!firstFocusable) {
+                    this.clickContent.tabIndex = 0;
+                }
             }
             this.closeClickOverlay = await Overlay.open(
                 this.targetContent,
@@ -110,7 +115,10 @@ export class OverlayTrigger extends LitElement {
                 {
                     offset: this.offset,
                     placement: this.placement,
-                    receivesFocus: this.type ? 'auto' : undefined,
+                    receivesFocus:
+                        this.type && this.type !== 'inline'
+                            ? 'auto'
+                            : undefined,
                 }
             );
         }

@@ -183,6 +183,35 @@ export const inline = (): TemplateResult => {
     `;
 };
 
+export const replace = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="replace">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-overlay open slot="click-content">
+                <sp-button
+                    @click=${(event: Event & { target: HTMLElement }): void => {
+                        event.target.dispatchEvent(closeEvent);
+                    }}
+                >
+                    Close
+                </sp-button>
+            </sp-overlay>
+        </overlay-trigger>
+        <p>
+            This is some text.
+        </p>
+        <p>
+            This is some text.
+        </p>
+        <p>
+            This is a
+            <a href="#">link</a>
+            .
+        </p>
+    `;
+};
+
 export const modal = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
@@ -249,7 +278,7 @@ export const deepNesting = (): TemplateResult => {
         <sp-theme color=${outter}>
             <sp-theme color=${color}>
                 <recursive-popover
-                    tabindex="-1"
+                    tabindex=""
                     style="
                         background-color: var(--spectrum-global-color-gray-100);
                         color: var(--spectrum-global-color-gray-800);

@@ -35,16 +35,21 @@ export class OverlayStack {
         this.initTabTrapping();
     }
 
+    private canTabTrap = true;
     private tabTrapper!: HTMLElement;
     private overlayHolder!: HTMLElement;
 
     private initTabTrapping(): void {
+        if (this.document.body.shadowRoot) {
+            this.canTabTrap = false;
+            return;
+        }
         this.document.body.attachShadow({ mode: 'open' });
         /* istanbul ignore if */
         if (!this.document.body.shadowRoot) {
             return;
         }
-        const root = this.document.body.shadowRoot;
+        const root = this.document.body.shadowRoot as ShadowRoot;
         root.innerHTML = `
             <div id="actual"><slot></slot></div>
             <style>
@@ -82,11 +87,17 @@ export class OverlayStack {
     }
 
     private startTabTrapping(): void {
+        if (!this.canTabTrap) {
+            return;
+        }
         this.tabTrapper.tabIndex = -1;
         this.overlayHolder.hidden = false;
     }
 
     private stopTabTrapping(): void {
+        if (!this.canTabTrap) {
+            return;
+        }
         this.tabTrapper.removeAttribute('tabindex');
         this.overlayHolder.hidden = true;
     }
@@ -150,6 +161,11 @@ export class OverlayStack {
             return true;
         }
 
+        if (this.overlays.length) {
+            const topOverlay = this.overlays[this.overlays.length - 1];
+            topOverlay.obscure();
+        }
+
         await import('../active-overlay.js');
         const activeOverlay = ActiveOverlay.create(details);
         this.overlays.push(activeOverlay);
@@ -159,12 +175,7 @@ export class OverlayStack {
             updateComplete = await activeOverlay.updateComplete;
         }
 
-        activeOverlay.addEventListener('close', () => {
-            this.hideAndCloseOverlay(activeOverlay);
-        });
-        if (details.interaction === 'inline') {
-            this.addOverlayEventListeners(activeOverlay);
-        }
+        this.addOverlayEventListeners(activeOverlay);
         if (details.receivesFocus === 'auto') {
             activeOverlay.focus();
         }
@@ -173,6 +184,20 @@ export class OverlayStack {
     }
 
     public addOverlayEventListeners(activeOverlay: ActiveOverlay): void {
+        activeOverlay.addEventListener('close', () => {
+            this.hideAndCloseOverlay(activeOverlay);
+        });
+        switch (activeOverlay.interaction) {
+            case 'replace':
+                this.addReplaceOverlayEventListeners(activeOverlay);
+                break;
+            case 'inline':
+                this.addInlineOverlayEventListeners(activeOverlay);
+                break;
+        }
+    }
+
+    public addReplaceOverlayEventListeners(activeOverlay: ActiveOverlay): void {
         activeOverlay.addEventListener('keydown', (event: KeyboardEvent) => {
             const { code } = event;
             /* istanbul ignore if */
@@ -185,6 +210,41 @@ export class OverlayStack {
             activeOverlay.trigger.dispatchEvent(
                 new KeyboardEvent('keydown', event)
             );
+        });
+    }
+
+    public addInlineOverlayEventListeners(activeOverlay: ActiveOverlay): void {
+        /* istanbul ignore else */
+        if (!activeOverlay.returnFocusElement) {
+            activeOverlay.returnFocusElement = document.createElement('span');
+            activeOverlay.returnFocusElement.tabIndex = -1;
+            if (activeOverlay.trigger.hasAttribute('slot')) {
+                activeOverlay.returnFocusElement.slot =
+                    activeOverlay.trigger.slot;
+            }
+            activeOverlay.trigger.insertAdjacentElement(
+                'afterend',
+                activeOverlay.returnFocusElement
+            );
+        }
+        activeOverlay.trigger.addEventListener(
+            'keydown',
+            activeOverlay.handleInlineTriggerKeydown
+        );
+        activeOverlay.addEventListener('keydown', (event: KeyboardEvent) => {
+            const { code, shiftKey } = event;
+            /* istanbul ignore if */
+            if (code !== 'Tab') return;
+
+            activeOverlay.tabbingAway = true;
+            if (shiftKey && activeOverlay.returnFocusElement) {
+                activeOverlay.returnFocusElement.focus();
+                return;
+            }
+
+            event.stopPropagation();
+            this.closeOverlay(activeOverlay.overlayContent);
+            activeOverlay.trigger.focus();
         });
     }
 
@@ -246,18 +306,23 @@ export class OverlayStack {
             }
             if (this.overlays.length) {
                 const topOverlay = this.overlays[this.overlays.length - 1];
+                topOverlay.feature();
                 if (topOverlay.interaction === 'modal') {
                     topOverlay.focus();
+                } else {
+                    this.stopTabTrapping();
                 }
             } else {
                 this.stopTabTrapping();
                 if (
                     overlay.interaction === 'modal' ||
-                    (overlay.interaction === 'inline' && !overlay.tabbingAway)
+                    ((overlay.interaction === 'replace' ||
+                        overlay.interaction === 'inline') &&
+                        !overlay.tabbingAway)
                 ) {
-                    overlay.tabbingAway = false;
                     overlay.trigger.focus();
                 }
+                overlay.tabbingAway = false;
             }
         }
     }
