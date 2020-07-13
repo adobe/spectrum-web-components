@@ -17,6 +17,7 @@ export type TriggerInteractions =
     | 'click'
     | 'hover'
     | 'custom'
+    | 'replace'
     | 'inline'
     | 'modal';
 

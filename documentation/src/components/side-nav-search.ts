@@ -29,12 +29,19 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import { AppRouter } from '../router.js';
 import { search, ResultGroup } from './search-index.js';
+import { Menu } from '@spectrum-web-components/menu';
+import { Popover } from '@spectrum-web-components/popover';
 
 class SearchComponent extends LitElement {
     private closeOverlay?: () => void;
 
+    private searchResultsPopover: Popover | null = null;
+
     @query('sp-popover')
-    private popover!: HTMLElement;
+    private popover!: Popover;
+
+    @query('sp-search')
+    private searchField!: HTMLElement;
 
     public static get styles(): CSSResultArray {
         return [sideNavSearchMenuStyles];
@@ -43,17 +50,39 @@ class SearchComponent extends LitElement {
     @property({ type: Array })
     public results: ResultGroup[] = [];
 
-    private handleSearchInput(event: InputEvent) {
+    public focus(): void {
+        this.searchField.focus();
+    }
+
+    private handleSearchInput(event: Event) {
         if (event.target) {
             const searchField = event.target as Search;
             this.updateSearchResults(searchField.value);
         }
     }
 
+    private handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
+        if (code !== 'Tab') {
+            this.handleSearchInput(event);
+        }
+        if (code !== 'ArrowDown' || !this.searchResultsPopover) {
+            return;
+        }
+
+        const popoverMenu = this.searchResultsPopover.querySelector(
+            'sp-menu'
+        ) as Menu;
+        popoverMenu.focus();
+    }
+
     private async openPopover() {
         if (!this.popover) return;
 
-        this.closeOverlay = await Overlay.open(this, 'click', this.popover, {
+        this.searchResultsPopover = this.popover;
+
+        this.closeOverlay = await Overlay.open(this, 'inline', this.popover, {
+            offset: 0,
             placement: 'bottom',
         });
     }
@@ -119,6 +148,7 @@ class SearchComponent extends LitElement {
                     <sp-search
                         @input=${this.handleSearchInput}
                         @change=${this.handleSearchInput}
+                        @keydown=${this.handleKeydown}
                         autocomplete="off"
                     ></sp-search>
                 </div>

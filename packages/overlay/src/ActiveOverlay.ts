@@ -106,6 +106,7 @@ export class ActiveOverlay extends LitElement {
     public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;
     public trigger!: HTMLElement;
+    public returnFocusElement?: HTMLSpanElement;
 
     private placeholder?: Comment;
     private popper?: Instance;
@@ -160,6 +161,7 @@ export class ActiveOverlay extends LitElement {
         const firstFocusable = this.querySelector(
             'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         ) as HTMLElement;
+        /* istanbul ignore else */
         if (firstFocusable) {
             firstFocusable.focus();
             this.removeAttribute('tabindex');
@@ -180,6 +182,19 @@ export class ActiveOverlay extends LitElement {
 
     public static get styles(): CSSResultArray {
         return [styles];
+    }
+
+    public feature(): void {
+        this.tabIndex = 0;
+        if (this.interaction === 'modal') {
+            this.slot = 'open';
+        }
+    }
+
+    public obscure(): void {
+        if (this.interaction === 'modal') {
+            this.removeAttribute('slot');
+        }
     }
 
     public firstUpdated(changedProperties: PropertyValues): void {
@@ -223,10 +238,7 @@ export class ActiveOverlay extends LitElement {
             this.state = 'visible';
         });
 
-        this.tabIndex = 0;
-        if (this.interaction === 'modal') {
-            this.slot = 'open';
-        }
+        this.feature();
         this.updateOverlayPosition()
             .then(() => this.applyContentAnimation('spOverlayFadeIn'))
             .then(() => {
@@ -294,6 +306,14 @@ export class ActiveOverlay extends LitElement {
         if (this.popper) {
             this.popper.destroy();
             this.popper = undefined;
+        }
+
+        if (this.returnFocusElement) {
+            this.returnFocusElement.remove();
+            this.trigger.removeEventListener(
+                'keydown',
+                this.handleInlineTriggerKeydown
+            );
         }
 
         this.returnOverlayContent();
@@ -391,6 +411,21 @@ export class ActiveOverlay extends LitElement {
     private onSlotChange(): void {
         this.schedulePositionUpdate();
     }
+
+    public handleInlineTriggerKeydown = (event: KeyboardEvent): void => {
+        const { code, shiftKey } = event;
+        /* istanbul ignore if */
+        if (code !== 'Tab') return;
+        if (shiftKey) {
+            this.tabbingAway = true;
+            this.dispatchEvent(new Event('close'));
+            return;
+        }
+
+        event.stopPropagation();
+        event.preventDefault();
+        this.focus();
+    };
 
     public connectedCallback(): void {
         super.connectedCallback();

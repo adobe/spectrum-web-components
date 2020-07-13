@@ -23,6 +23,7 @@ import {
 import { Overlay, Placement } from '../';
 import { RadioGroup } from '@spectrum-web-components/radio';
 import '@spectrum-web-components/button/sp-button.js';
+import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
@@ -191,6 +192,10 @@ class RecursivePopover extends LitElement {
     @query('[slot="trigger"]')
     private trigger!: Button;
 
+    protected isShiftTabbing = false;
+
+    public shadowRoot!: ShadowRoot;
+
     public static get styles(): CSSResultArray {
         return [
             css`
@@ -214,30 +219,36 @@ class RecursivePopover extends LitElement {
         this.addEventListener('keydown', (event: KeyboardEvent) => {
             const { code } = event;
             if (code === 'Enter') {
-                console.log('ho', event.composedPath());
                 this.trigger.click();
             }
         });
+        this.addEventListener('focusin', this.handleFocusin);
+    }
+
+    private handleFocusin(): void {
+        console.log('focusin');
+        this.focus();
     }
 
     public focus(): void {
-        if (this.shadowRoot) {
-            const firstFocusable = this.shadowRoot.querySelector(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            ) as LitElement;
-            if (firstFocusable) {
-                if (firstFocusable.updateComplete) {
-                    firstFocusable.updateComplete.then(() =>
-                        firstFocusable.focus()
-                    );
-                } else {
-                    firstFocusable.focus();
-                }
-                this.removeAttribute('tabindex');
-            }
-        } else {
-            super.focus();
+        console.log('focus');
+        if (this.shadowRoot.activeElement !== null) {
+            return;
         }
+        const firstFocusable = this.shadowRoot.querySelector(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        ) as LitElement;
+        if (firstFocusable) {
+            if (firstFocusable.updateComplete) {
+                firstFocusable.updateComplete.then(() =>
+                    firstFocusable.focus()
+                );
+            } else {
+                firstFocusable.focus();
+            }
+            return;
+        }
+        super.focus();
     }
 
     public onRadioChange(event: Event): void {
@@ -286,15 +297,13 @@ class RecursivePopover extends LitElement {
                     direction="${this.placement}"
                     tip
                     open
-                    @focus=${({ target }) => {
-                        target.children[0].focus();
-                    }}
                 >
                     ${this.depth < MAX_DEPTH
                         ? html`
                               <recursive-popover
                                   position="${this.placement}"
                                   depth="${this.depth + 1}"
+                                  tabindex=""
                               ></recursive-popover>
                           `
                         : html`
@@ -303,14 +312,6 @@ class RecursivePopover extends LitElement {
                 </sp-popover>
             </overlay-trigger>
         `;
-    }
-
-    protected firstUpdated(): void {
-        if (this.tabIndex !== -1) {
-            this.tabIndex = 0;
-        } else {
-            this.removeAttribute('tabindex');
-        }
     }
 }
 customElements.define('recursive-popover', RecursivePopover);
