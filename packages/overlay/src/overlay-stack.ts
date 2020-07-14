@@ -40,6 +40,7 @@ export class OverlayStack {
     private overlayHolder!: HTMLElement;
 
     private initTabTrapping(): void {
+        /* istanbul ignore if */
         if (this.document.body.shadowRoot) {
             this.canTabTrap = false;
             return;
@@ -87,6 +88,7 @@ export class OverlayStack {
     }
 
     private startTabTrapping(): void {
+        /* istanbul ignore if */
         if (!this.canTabTrap) {
             return;
         }
@@ -95,6 +97,7 @@ export class OverlayStack {
     }
 
     private stopTabTrapping(): void {
+        /* istanbul ignore if */
         if (!this.canTabTrap) {
             return;
         }

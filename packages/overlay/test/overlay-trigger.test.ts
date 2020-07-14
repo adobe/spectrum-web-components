@@ -601,6 +601,7 @@ describe('Overlay Trigger', () => {
         const mouseEnter = new MouseEvent('mouseenter');
         const mouseLeave = new MouseEvent('mouseleave');
         triggerShadowDiv.dispatchEvent(mouseEnter);
+        await nextFrame();
         triggerShadowDiv.dispatchEvent(mouseLeave);
 
         await waitUntil(
