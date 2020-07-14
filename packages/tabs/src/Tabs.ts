@@ -157,7 +157,6 @@ export class Tabs extends Focusable {
         this.addEventListener('keydown', this.handleKeydown);
         this.shouldApplyFocusVisible = true;
         const selected = this.querySelector('[selected]') as Tab;
-        /* istanbul ignore else */
         if (selected) {
             selected.tabIndex = -1;
         }
@@ -166,7 +165,6 @@ export class Tabs extends Focusable {
             this.removeEventListener('keydown', this.handleKeydown);
             this.shouldApplyFocusVisible = false;
             const selected = this.querySelector('[selected]') as Tab;
-            /* istanbul ignore else */
             if (selected) {
                 selected.tabIndex = 0;
             }
@@ -208,7 +206,6 @@ export class Tabs extends Focusable {
         if (event.code === 'Enter' || event.code === 'Space') {
             event.preventDefault();
             const target = event.target as HTMLElement;
-            /* istanbul ignore else */
             if (target) {
                 this.selectTarget(target);
             }
@@ -293,7 +290,6 @@ export class Tabs extends Focusable {
     public connectedCallback(): void {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
-        /* istanbul ignore else */
         if ('fonts' in document) {
             ((document as unknown) as {
                 fonts: {
@@ -311,7 +307,6 @@ export class Tabs extends Focusable {
 
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
-        /* istanbul ignore else */
         if ('fonts' in document) {
             ((document as unknown) as {
                 fonts: {

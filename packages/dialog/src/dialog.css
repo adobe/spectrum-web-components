@@ -18,3 +18,11 @@ governing permissions and limitations under the License.
         var(--spectrum-global-dimension-static-size-200)
     );
 }
+
+.content {
+    overflow: hidden;
+}
+
+.content[tabindex] {
+    overflow: auto;
+}

@@ -136,7 +136,7 @@ export class DropdownBase extends Focusable {
     }
 
     public get focusElement(): HTMLElement {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (typeof this.button === 'undefined') {
             return this;
         }
@@ -151,7 +151,7 @@ export class DropdownBase extends Focusable {
     }
 
     public onButtonBlur(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (typeof this.button === 'undefined') {
             return;
         }
@@ -163,7 +163,7 @@ export class DropdownBase extends Focusable {
     }
 
     public onButtonFocus(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (typeof this.button === 'undefined') {
             return;
         }
@@ -172,7 +172,7 @@ export class DropdownBase extends Focusable {
 
     public onClick(event: Event): void {
         const target = event.target as MenuItem;
-        /* istanbul ignore if */
+        /* c8 ignore 6 */
         if (!target || target.disabled) {
             if (target) {
                 this.focus();
@@ -189,7 +189,7 @@ export class DropdownBase extends Focusable {
             return;
         }
         event.preventDefault();
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.optionsMenu) {
             return;
         }
@@ -218,7 +218,7 @@ export class DropdownBase extends Focusable {
         const selectedItem = parentElement.querySelector(
             '[selected]'
         ) as MenuItem;
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (selectedItem) {
             selectedItem.selected = false;
         }
@@ -235,13 +235,11 @@ export class DropdownBase extends Focusable {
 
     private onOverlayClosed(): void {
         this.close();
-        /* istanbul ignore else */
         if (this.optionsMenu && this.placeholder) {
             const parentElement =
                 this.placeholder.parentElement ||
                 this.placeholder.getRootNode();
 
-            /* istanbul ignore else */
             if (parentElement) {
                 parentElement.replaceChild(this.optionsMenu, this.placeholder);
             }
@@ -253,7 +251,7 @@ export class DropdownBase extends Focusable {
     }
 
     private async openMenu(): Promise<void> {
-        /* istanbul ignore if */
+        /* c8 ignore next 9 */
         if (
             !this.popover ||
             !this.button ||
@@ -271,7 +269,6 @@ export class DropdownBase extends Focusable {
         const parentElement =
             this.optionsMenu.parentElement || this.optionsMenu.getRootNode();
 
-        /* istanbul ignore else */
         if (parentElement) {
             parentElement.replaceChild(this.placeholder, this.optionsMenu);
         }

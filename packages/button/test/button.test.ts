@@ -126,8 +126,6 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('With Href');
-        // make sure href is being passed to <a>
-        expect(el).shadowDom.to.equalSnapshot();
     });
     it('loads with href and target', async () => {
         const el = await fixture<Button>(
@@ -141,8 +139,6 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('With Target');
-        // make sure href is being passed to <a>
-        expect(el).shadowDom.to.equalSnapshot();
     });
     it('targets `el.focusElement` on `focusin`', async () => {
         let focusedCount = 0;

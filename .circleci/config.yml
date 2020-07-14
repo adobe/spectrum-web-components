@@ -2,37 +2,47 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: circleci/node:12.18.3-buster-browsers
+            - image: mcr.microsoft.com/playwright:bionic
         environment:
             NODE_ENV: development
-            NPM_CONFIG_PREFIX: ~/.npm-global
-            CHROME_BIN: /usr/bin/google-chrome
-            FIREFOX_BIN: /usr/local/bin/firefox
+            YARN_VERSION: 1.17.3
 commands:
     setup:
         steps:
             - checkout
+            - run:
+                  name: Prepare Yarn Path
+                  command: echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+            - run:
+                  command: npm version
+            - run:
+                  name: Install Yarn
+                  command: |
+                      curl --retry 10 --retry-max-time 30 -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
             - restore_cache:
                   keys:
-                      - v1-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
                   name: Installing Dependencies
                   command: yarn
             - save_cache:
                   paths:
                       - node_modules
-                  key: v1-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - run:
-                  name: prepare test git user
-                  command: git config --global user.email "circleci@example.com" && git config --global user.name "CircleCi Build"
+                  key: v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
     downstream:
         steps:
             - checkout
+            - run:
+                  name: Prepare Yarn Path
+                  command: echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+            - run:
+                  command: npm version
+            - run:
+                  name: Install Yarn
+                  command: |
+                      curl --retry 10 --retry-max-time 30 -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
             - attach_workspace:
                   at: ~/
-            - run:
-                  name: prepare test git user
-                  command: git config --global user.email "circleci@example.com" && git config --global user.name "CircleCi Build"
     run-regressions:
         parameters:
             regression_color:

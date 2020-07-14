@@ -95,10 +95,9 @@ export class Overlay {
         placement = 'top',
         receivesFocus,
     }: OverlayOptions): Promise<boolean> {
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (this.isOpen) return true;
 
-        /* istanbul ignore else */
         if (delayed === undefined) {
             delayed = this.overlayElement.hasAttribute('delayed');
         }

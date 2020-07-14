@@ -18,7 +18,7 @@ import { ModifierArguments, Modifier } from '@popperjs/core/lib/types';
 function computeArrowRotateStylesFn(
     ref: ModifierArguments<Record<string, unknown>>
 ): undefined {
-    /* istanbul ignore if */
+    /* c8 ignore next */
     if (!ref.state.styles || !ref.state.styles.arrow) return;
 
     let rotation: number;
@@ -42,7 +42,7 @@ function computeArrowRotateStylesFn(
         case 'right-end':
             rotation = 90;
             break;
-        /* istanbul ignore next */
+        /* c8 ignore next 2 */
         default:
             return;
     }

@@ -87,17 +87,23 @@ describe('Dropzone', () => {
 
         expect(el.isDragged).to.be.false;
 
-        const dataTransfer = new DataTransfer();
-        const dragOverEvent = new DragEvent('dragover', {
-            dataTransfer,
-        });
+        let dataTransfer: DataTransfer | boolean = false;
+        try {
+            // Safari doesn't like this...
+            dataTransfer = new DataTransfer();
+        } catch (error) {}
+        if (dataTransfer) {
+            const dragOverEvent = new DragEvent('dragover', {
+                dataTransfer,
+            });
 
-        el.dispatchEvent(dragOverEvent);
+            el.dispatchEvent(dragOverEvent);
 
-        expect(el.isDragged).to.be.true;
-        // We should be able to make the following test here:
-        // expect(dataTransfer.dropEffect).to.equal(el.dropEffect);
-        // However, Chrome doesn't like it in the context of a test...
+            expect(el.isDragged).to.be.true;
+            // We should be able to make the following test here:
+            // expect(dataTransfer.dropEffect).to.equal(el.dropEffect);
+            // However, Chrome doesn't like it in the context of a test...
+        }
     });
     it('allows `dragover` events to be canceled', async () => {
         const canceledDrag = (event: DragEvent): void => {
@@ -116,16 +122,22 @@ describe('Dropzone', () => {
 
         expect(el.isDragged).to.be.false;
 
-        const dataTransfer = new DataTransfer();
-        const dragOverEvent = new DragEvent('dragover', {
-            dataTransfer,
-        });
+        let dataTransfer: DataTransfer | boolean = false;
+        try {
+            // Safari doesn't like this...
+            dataTransfer = new DataTransfer();
+        } catch (error) {}
+        if (dataTransfer) {
+            const dragOverEvent = new DragEvent('dragover', {
+                dataTransfer,
+            });
 
-        el.dispatchEvent(dragOverEvent);
+            el.dispatchEvent(dragOverEvent);
 
-        expect(el.isDragged).to.be.false;
-        expect(dataTransfer.dropEffect).to.not.equal(el.dropEffect);
-        expect(dataTransfer.dropEffect).to.equal('none');
+            expect(el.isDragged).to.be.false;
+            expect(dataTransfer.dropEffect).to.not.equal(el.dropEffect);
+            expect(dataTransfer.dropEffect).to.equal('none');
+        }
     });
     it('manages `dragleave` events via debounce', async () => {
         let dragLeftCount = 0;

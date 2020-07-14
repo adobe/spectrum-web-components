@@ -41,6 +41,9 @@
         "./sp-toast.js",
         "./sp-toast.ts"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {

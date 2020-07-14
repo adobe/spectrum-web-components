@@ -26,8 +26,6 @@ describe('BarLoader', () => {
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
-        expect(el).lightDom.to.equalSnapshot();
-        expect(el).shadowDom.to.equalSnapshot();
 
         await expect(el).to.be.accessible();
     });
@@ -63,8 +61,6 @@ describe('BarLoader', () => {
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
-        expect(el).lightDom.to.equalSnapshot();
-        expect(el).shadowDom.to.equalSnapshot();
 
         await expect(el).to.be.accessible();
     });

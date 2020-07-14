@@ -1,0 +1,41 @@
+const { playwrightLauncher } = require('@web/test-runner-playwright');
+
+module.exports = {
+    files: ['packages/*/test/*.test.js'],
+    nodeResolve: true,
+    concurrency: 5,
+    coverage: true,
+    coverageConfig: {
+        report: true,
+        reportDir: 'coverage',
+        exclude: [
+            'packages/*/stories/*',
+            'packages/icons-ui/**',
+            'packages/icons-workflow/**',
+            'test/**',
+        ],
+        threshold: {
+            statements: 98,
+            branches: 95,
+            functions: 97,
+            lines: 98,
+        },
+    },
+    testRunnerHtml: (testRunnerImport) => `
+        <html>
+        <head></head>
+        <body>
+            <script type="module">
+            import '${testRunnerImport}';
+            window.process = window.process || {};
+            window.process.env = window.process.env || {};
+            window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
+            </script>
+        </body>
+        </html>
+    `,
+    browsers: [
+        playwrightLauncher({ product: 'chromium' }),
+        playwrightLauncher({ product: 'webkit' }),
+    ],
+};

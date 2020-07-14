@@ -98,7 +98,6 @@ export class Tag extends LitElement {
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        /* istanbul ignore else */
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'listitem');
         }

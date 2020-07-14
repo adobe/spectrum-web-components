@@ -36,7 +36,7 @@ class FocusableButton extends Focusable {
         return [...super.styles];
     }
     public get focusElement(): HTMLElement {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.shadowRoot) {
             return this;
         }

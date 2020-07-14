@@ -22,7 +22,7 @@ import legacyStyles from './switch-legacy.css.js';
 
 export class Switch extends CheckboxBase {
     public static get styles(): CSSResultArray {
-        /* istanbul ignore if */
+        /* c8 ignore next 4 */
         if (window.hasOwnProperty('ShadyDOM')) {
             // Override some styles if we are using the web component polyfill
             return [...super.styles, switchStyles, legacyStyles];

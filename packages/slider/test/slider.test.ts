@@ -35,7 +35,6 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
-        expect(el).shadowDom.to.equalSnapshot();
     });
     it('loads - [variant="color"]', async () => {
         const el = await fixture<Slider>(
@@ -46,7 +45,7 @@ describe('Slider', () => {
 
         await elementUpdated(el);
 
-        expect(el).shadowDom.to.equalSnapshot();
+        await expect(el).to.be.accessible();
     });
     it('loads - [variant="tick"]', async () => {
         const el = await fixture<Slider>(
@@ -65,7 +64,6 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
-        expect(el).shadowDom.to.equalSnapshot();
     });
     it('receives value from the outside', async () => {
         const el = await fixture<Slider>(

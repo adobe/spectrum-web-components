@@ -50,7 +50,6 @@ export class Tags extends FocusVisiblePolyfillMixin(LitElement) {
             return;
         }
         const firstTagNonDisabled = this.tags.find((tag) => !tag.disabled);
-        /* istanbul ignore else */
         if (firstTagNonDisabled) {
             firstTagNonDisabled.focus();
         }
@@ -73,12 +72,12 @@ export class Tags extends FocusVisiblePolyfillMixin(LitElement) {
         const { code } = event;
         const activeElement = (this.getRootNode() as Document)
             .activeElement as Tag;
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!activeElement) {
             return;
         }
         let nextIndex = this.tags.indexOf(activeElement);
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (nextIndex === -1) {
             return;
         }
@@ -150,7 +149,6 @@ export class Tags extends FocusVisiblePolyfillMixin(LitElement) {
 
     private handleFocusout = (): void => {
         const firstTagNonDisabled = this.tags.find((tag) => !tag.disabled);
-        /* istanbul ignore else */
         if (firstTagNonDisabled) {
             firstTagNonDisabled.tabIndex = 0;
         }
