@@ -62,7 +62,7 @@ export class MenuItem extends ActionButton {
      * @private
      */
     public get itemText(): string {
-        return (this.textContent || /* istanbul ignore next */ '').trim();
+        return (this.textContent || /* c8 ignore next */ '').trim();
     }
 
     protected get buttonContent(): TemplateResult[] {

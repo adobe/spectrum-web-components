@@ -31,7 +31,7 @@ export class Link extends LikeAnchor(Focusable) {
     anchorElement?: HTMLAnchorElement;
 
     public get focusElement(): HTMLElement {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.shadowRoot || !this.anchorElement) {
             return this;
         }

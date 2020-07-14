@@ -72,11 +72,11 @@ export class Tooltip extends LitElement {
     }
 
     public onOverlyQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (!event.target || !this.shadowRoot) return;
 
         const target = event.target as Node;
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (!target.isSameNode(this)) return;
 
         const tipElement = this.shadowRoot.querySelector('#tip') as HTMLElement;

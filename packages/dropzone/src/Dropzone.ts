@@ -39,7 +39,6 @@ export class Dropzone extends LitElement {
         return this._dropEffect;
     }
     public set dropEffect(value: DropEffects) {
-        /* istanbul ignore else */
         if (['copy', 'move', 'link', 'none'].includes(value)) {
             this._dropEffect = value;
         }

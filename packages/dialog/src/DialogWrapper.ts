@@ -89,17 +89,16 @@ export class DialogWrapper extends LitElement {
     private dialog!: Dialog;
 
     public focus(): void {
-        /* istanbul ignore else */
         if (this.shadowRoot) {
             const firstFocusable = this.shadowRoot.querySelector(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             ) as LitElement;
             if (firstFocusable) {
-                /* istanbul ignore else */
                 if (firstFocusable.updateComplete) {
                     firstFocusable.updateComplete.then(() =>
                         firstFocusable.focus()
                     );
+                    /* c8 ignore next 3 */
                 } else {
                     firstFocusable.focus();
                 }
@@ -107,6 +106,7 @@ export class DialogWrapper extends LitElement {
             } else {
                 this.dialog.focus();
             }
+            /* c8 ignore next 3 */
         } else {
             super.focus();
         }

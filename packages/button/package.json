@@ -42,15 +42,11 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-action-button.js",
-        "./sp-action-button.ts",
-        "./sp-button.js",
-        "./sp-button.ts",
-        "./sp-clear-button.js",
-        "./sp-clear-button.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
-        "test": "karma start --coverage"
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "author": "",
     "license": "Apache-2.0",

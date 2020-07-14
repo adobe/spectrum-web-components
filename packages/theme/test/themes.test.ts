@@ -123,7 +123,6 @@ describe('Setting attributes', () => {
         await elementUpdated(el);
 
         expect(el).to.not.be.undefined;
-        expect(el).shadowDom.to.equalSnapshot();
         expect(
             ((el as unknown) as TestableTheme).hasAdoptedStyles,
             'Color with default'

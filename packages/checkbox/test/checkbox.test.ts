@@ -178,6 +178,7 @@ describe('Checkbox', () => {
         HTMLElement.prototype.focus.apply(el);
         el.focusElement.dispatchEvent(new CustomEvent('focusout'));
         await nextFrame();
+        await nextFrame();
         expect(
             document.activeElement,
             'based on repeated click external'

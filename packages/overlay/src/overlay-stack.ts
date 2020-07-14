@@ -41,13 +41,13 @@ export class OverlayStack {
     private overlayHolder!: HTMLElement;
 
     private initTabTrapping(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next 4 */
         if (this.document.body.shadowRoot) {
             this.canTabTrap = false;
             return;
         }
         this.document.body.attachShadow({ mode: 'open' });
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.document.body.shadowRoot) {
             return;
         }
@@ -84,14 +84,12 @@ export class OverlayStack {
         this.tabTrapper = root.querySelector('#actual') as HTMLElement;
         this.overlayHolder = root.querySelector('#holder') as HTMLElement;
         this.tabTrapper.attachShadow({ mode: 'open' });
-        /* istanbul ignore else */
         if (this.tabTrapper.shadowRoot) {
             this.tabTrapper.shadowRoot.innerHTML = '<slot></slot>';
         }
     }
 
     private startTabTrapping(): void {
-        /* istanbul ignore if */
         if (!this.canTabTrap) {
             return;
         }
@@ -100,7 +98,7 @@ export class OverlayStack {
     }
 
     private stopTabTrapping(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.canTabTrap) {
             return;
         }
@@ -109,7 +107,7 @@ export class OverlayStack {
     }
 
     private get document(): Document {
-        return this.root.ownerDocument /* istanbul ignore next */ || document;
+        return this.root.ownerDocument /* c8 ignore next */ || document;
     }
 
     private get topOverlay(): ActiveOverlay | undefined {
@@ -211,7 +209,7 @@ export class OverlayStack {
     public addReplaceOverlayEventListeners(activeOverlay: ActiveOverlay): void {
         activeOverlay.addEventListener('keydown', (event: KeyboardEvent) => {
             const { code } = event;
-            /* istanbul ignore if */
+            /* c8 ignore next */
             if (code !== 'Tab') return;
 
             event.stopPropagation();
@@ -225,7 +223,6 @@ export class OverlayStack {
     }
 
     public addInlineOverlayEventListeners(activeOverlay: ActiveOverlay): void {
-        /* istanbul ignore else */
         if (!activeOverlay.returnFocusElement) {
             activeOverlay.returnFocusElement = document.createElement('span');
             activeOverlay.returnFocusElement.tabIndex = -1;
@@ -244,7 +241,7 @@ export class OverlayStack {
         );
         activeOverlay.addEventListener('keydown', (event: KeyboardEvent) => {
             const { code, shiftKey } = event;
-            /* istanbul ignore if */
+            /* c8 ignore next */
             if (code !== 'Tab') return;
 
             activeOverlay.tabbingAway = true;
@@ -280,7 +277,6 @@ export class OverlayStack {
             return;
         }
 
-        /* istanbul ignore else */
         if (event.target instanceof Node) {
             const path = event.composedPath();
             if (path.indexOf(topOverlay.overlayContent) >= 0) {
@@ -308,7 +304,6 @@ export class OverlayStack {
             if (overlay.state != 'dispose') return;
 
             const index = this.overlays.indexOf(overlay);
-            /* istanbul ignore else */
             if (index >= 0) {
                 this.overlays.splice(index, 1);
             }

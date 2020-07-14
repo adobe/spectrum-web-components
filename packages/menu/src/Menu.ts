@@ -75,13 +75,13 @@ export class Menu extends LitElement {
     private onClick(event: Event): void {
         const path = event.composedPath();
         const target = path.find((el) => {
-            /* istanbul ignore if */
+            /* c8 ignore next 3 */
             if (!(el instanceof Element)) {
                 return false;
             }
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!target) {
             return;
         }
@@ -134,7 +134,7 @@ export class Menu extends LitElement {
             'focusout',
             () => {
                 requestAnimationFrame(() => {
-                    /* istanbul ignore if */
+                    /* c8 ignore next 3 */
                     if (this.menuItems.length === 0) {
                         return;
                     }
@@ -210,7 +210,6 @@ export class Menu extends LitElement {
     }
 
     public disconnectedCallback(): void {
-        /* istanbul ignore else */
         if (this.observer) {
             this.observer.disconnect();
         }

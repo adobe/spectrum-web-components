@@ -231,22 +231,25 @@ describe('Overlay Trigger', () => {
             '#hover-content'
         ) as HTMLDivElement;
 
-        expect(isVisible(outerPopover)).to.be.false;
-        expect(isVisible(hoverContent)).to.be.false;
+        expect(isVisible(outerPopover), 'outer popover not visible').to.be
+            .false;
+        expect(isVisible(hoverContent), 'hover popover not visible').to.be
+            .false;
 
         expect(button).to.exist;
         button.click();
 
         // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
+        await waitUntil(
             () => !(outerPopover.parentElement instanceof OverlayTrigger)
         );
 
         expect(outerPopover.parentElement).to.not.be.an.instanceOf(
             OverlayTrigger
         );
-        expect(isVisible(outerPopover)).to.be.true;
-        expect(isVisible(hoverContent)).to.be.false;
+        expect(isVisible(outerPopover), 'outer popover visible').to.be.true;
+        expect(isVisible(hoverContent), 'hover popover still not visible').to.be
+            .false;
 
         button.dispatchEvent(
             new Event('mouseenter', {
@@ -256,9 +259,15 @@ describe('Overlay Trigger', () => {
         );
 
         await nextFrame();
+        await waitUntil(
+            () => hoverContent.parentElement instanceof OverlayTrigger,
+            'hover should not open'
+        );
 
-        expect(isVisible(outerPopover)).to.be.true;
-        expect(isVisible(hoverContent)).to.be.false;
+        expect(isVisible(outerPopover), 'outer popover visible again').to.be
+            .true;
+        expect(isVisible(hoverContent), 'hover popover not visible again').to.be
+            .false;
     });
 
     it('does not open a popover when [disabled]', async () => {

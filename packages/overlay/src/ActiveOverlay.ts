@@ -97,7 +97,7 @@ const stateTransition = (
     event?: string
 ): OverlayStateType => {
     if (!state) return stateMachine.initial;
-    /* istanbul ignore if */
+    /* c8 ignore next */
     if (!event) return state;
     return stateMachine.states[state].on[event] || state;
 };
@@ -161,10 +161,10 @@ export class ActiveOverlay extends LitElement {
         const firstFocusable = this.querySelector(
             'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         ) as HTMLElement;
-        /* istanbul ignore else */
         if (firstFocusable) {
             firstFocusable.focus();
             this.removeAttribute('tabindex');
+            /* c8 ignore next 3 */
         } else {
             super.focus();
         }
@@ -207,15 +207,14 @@ export class ActiveOverlay extends LitElement {
     public firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
 
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (!this.overlayContent) return;
 
         this.stealOverlayContent(this.overlayContent);
 
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (!this.overlayContent || !this.trigger || !this.shadowRoot) return;
 
-        /* istanbul ignore else */
         if (this.placement && this.placement !== 'none') {
             this.popper = createPopper(this.trigger, this, {
                 placement: this.placement,
@@ -256,7 +255,7 @@ export class ActiveOverlay extends LitElement {
     }
 
     private updateOverlayPopperPlacement(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (!this.overlayContent) return;
 
         if (this.dataPopperPlacement) {
@@ -300,16 +299,15 @@ export class ActiveOverlay extends LitElement {
     }
 
     public dispose(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (this.state !== 'dispose') return;
 
-        /* istanbul ignore if */
+        /* c8 ignore next 4 */
         if (this.timeout) {
             clearTimeout(this.timeout);
             delete this.timeout;
         }
 
-        /* istanbul ignore else */
         if (this.popper) {
             this.popper.destroy();
             this.popper = undefined;
@@ -333,9 +331,8 @@ export class ActiveOverlay extends LitElement {
     }
 
     private stealOverlayContent(element: HTMLElement): void {
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (this.placeholder || !element) return;
-        /* istanbul ignore else */
         if (!this.placeholder) {
             this.placeholder = document.createComment(
                 'placeholder for ' + element.nodeName
@@ -344,7 +341,6 @@ export class ActiveOverlay extends LitElement {
 
         const parentElement = element.parentElement || element.getRootNode();
 
-        /* istanbul ignore else */
         if (parentElement) {
             parentElement.replaceChild(this.placeholder, element);
         }
@@ -364,7 +360,7 @@ export class ActiveOverlay extends LitElement {
     private willNotifyClosed = false;
 
     private returnOverlayContent(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (!this.overlayContent) return;
 
         if (this.originalSlot) {
@@ -374,12 +370,10 @@ export class ActiveOverlay extends LitElement {
             this.overlayContent.removeAttribute('slot');
         }
 
-        /* istanbul ignore else */
         if (this.placeholder) {
             const parentElement =
                 this.placeholder.parentElement ||
                 this.placeholder.getRootNode();
-            /* istanbul ignore else */
             if (parentElement) {
                 parentElement.replaceChild(
                     this.overlayContent,
@@ -428,7 +422,7 @@ export class ActiveOverlay extends LitElement {
 
     public handleInlineTriggerKeydown = (event: KeyboardEvent): void => {
         const { code, shiftKey } = event;
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (code !== 'Tab') return;
         if (shiftKey) {
             this.tabbingAway = true;
@@ -450,7 +444,7 @@ export class ActiveOverlay extends LitElement {
         animation: ContentAnimation
     ): Promise<boolean> {
         return new Promise((resolve, reject): void => {
-            /* istanbul ignore if */
+            /* c8 ignore next 4 */
             if (!this.shadowRoot) {
                 reject();
                 return;
@@ -495,7 +489,6 @@ export class ActiveOverlay extends LitElement {
     public static create(details: OverlayOpenDetail): ActiveOverlay {
         const overlay = new ActiveOverlay();
 
-        /* istanbul ignore else */
         if (details.content) {
             overlay.open(details);
         }

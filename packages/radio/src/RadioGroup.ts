@@ -56,7 +56,6 @@ export class RadioGroup extends LitElement {
             }
             return !button.disabled;
         });
-        /* istanbul ignore else */
         if (firstButtonNonDisabled) {
             firstButtonNonDisabled.focus();
         }
@@ -81,12 +80,12 @@ export class RadioGroup extends LitElement {
         const { code } = event;
         const activeElement = (this.getRootNode() as Document)
             .activeElement as Radio;
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!activeElement) {
             return;
         }
         let nextIndex = this.buttons.indexOf(activeElement);
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (nextIndex === -1) {
             return;
         }
@@ -171,7 +170,6 @@ export class RadioGroup extends LitElement {
             }
             return !button.disabled;
         });
-        /* istanbul ignore else */
         if (firstButtonNonDisabled) {
             firstButtonNonDisabled.tabIndex = 0;
         }

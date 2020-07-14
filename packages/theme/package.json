@@ -60,7 +60,7 @@
         "./src/themes.ts"
     ],
     "scripts": {
-        "test": "karma start --coverage"
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "author": "",
     "license": "ISC",

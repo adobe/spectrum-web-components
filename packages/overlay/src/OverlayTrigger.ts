@@ -123,7 +123,6 @@ export class OverlayTrigger extends LitElement {
     }
 
     public async onTriggerClick(): Promise<void> {
-        /* istanbul ignore else */
         if (this.targetContent && this.clickContent) {
             if (this.type === 'modal') {
                 const firstFocusable = this.querySelector(
@@ -146,7 +145,6 @@ export class OverlayTrigger extends LitElement {
     private hoverOverlayReady = Promise.resolve();
 
     public async onTriggerMouseEnter(): Promise<void> {
-        /* istanbul ignore else */
         if (this.targetContent && this.hoverContent) {
             let overlayReady: () => void = () => {
                 return;
@@ -167,7 +165,6 @@ export class OverlayTrigger extends LitElement {
 
     public async onTriggerMouseLeave(): Promise<void> {
         await this.hoverOverlayReady;
-        /* istanbul ignore else */
         if (this.closeHoverOverlay) {
             this.closeHoverOverlay();
             delete this.closeHoverOverlay;
@@ -190,7 +187,7 @@ export class OverlayTrigger extends LitElement {
     }
 
     private extractSlotContentFromEvent(event: Event): HTMLElement | undefined {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!event.target) {
             return;
         }
@@ -200,7 +197,6 @@ export class OverlayTrigger extends LitElement {
     }
 
     public disconnectedCallback(): void {
-        /* istanbul ignore else */
         if (this.closeClickOverlay) {
             this.closeClickOverlay();
             delete this.closeClickOverlay;

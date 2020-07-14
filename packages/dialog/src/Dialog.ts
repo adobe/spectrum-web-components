@@ -62,23 +62,22 @@ export class Dialog extends LitElement {
     public size?: 'small' | 'medium' | 'large' | 'alert';
 
     public focus(): void {
-        /* istanbul ignore else */
         if (this.shadowRoot) {
             const firstFocusable = this.shadowRoot.querySelector(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             ) as LitElement;
-            /* istanbul ignore else */
             if (firstFocusable) {
-                /* istanbul ignore else */
                 if (firstFocusable.updateComplete) {
                     firstFocusable.updateComplete.then(() =>
                         firstFocusable.focus()
                     );
+                    /* c8 ignore next 3 */
                 } else {
                     firstFocusable.focus();
                 }
                 this.removeAttribute('tabindex');
             }
+            /* c8 ignore next 3 */
         } else {
             super.focus();
         }

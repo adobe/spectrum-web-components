@@ -75,7 +75,6 @@ export function ObserveSlotText<T extends Constructor<UpdatingElement>>(
                     mutationsList: Array<MutationRecord>
                 ): void => {
                     for (const mutation of mutationsList) {
-                        /* istanbul ignore else */
                         if (mutation.type === 'characterData') {
                             this.manageObservedSlot();
                         }
@@ -92,7 +91,6 @@ export function ObserveSlotText<T extends Constructor<UpdatingElement>>(
         }
 
         public disconnectedCallback(): void {
-            /* istanbul ignore else */
             if (this[slotElementObserver]) {
                 this[slotElementObserver].disconnect();
             }

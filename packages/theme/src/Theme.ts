@@ -201,7 +201,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         this.shouldAdoptStyles();
         // Note, first update/render handles styleElement so we only call this if
         // connected after first update.
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (window.ShadyCSS !== undefined) {
             window.ShadyCSS.styleElement(this);
         }
@@ -215,7 +215,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     private shouldAdoptStyles(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.hasAdoptedStyles) {
             this.adoptStyles();
         }
@@ -235,7 +235,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         // (2) shadowRoot.adoptedStyleSheets available: use it.
         // (3) shadowRoot.adoptedStyleSheets polyfilled: append styles after
         // rendering
-        /* istanbul ignore if */ if (
+        /* c8 ignore next */ if (
             window.ShadyCSS !== undefined &&
             !window.ShadyCSS.nativeShadow &&
             window.ShadyCSS.ScopingShim

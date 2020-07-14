@@ -3,7 +3,7 @@
     "compilerOptions": {
         "composite": true,
         "outDir": "../",
-        "types": ["mocha", "chai", "sinon", "karma-chai", "webpack-env", "node"]
+        "types": ["mocha", "chai", "sinon", "webpack-env", "node"]
     },
     "include": [
         "../packages/**/*.ts",

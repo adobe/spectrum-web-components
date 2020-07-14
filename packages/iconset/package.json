@@ -40,7 +40,9 @@
         "./src/icons-demo.js",
         "./src/icons-demo.ts"
     ],
-    "scripts": {},
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {

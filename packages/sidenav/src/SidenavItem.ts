@@ -111,7 +111,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     }
 
     public get focusElement(): HTMLElement {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.shadowRoot) {
             return this;
         }

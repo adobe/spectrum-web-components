@@ -71,7 +71,7 @@ export class Search extends Textfield {
     }
 
     public async reset(): Promise<void> {
-        /* istanbul ignore if */
+        /* c8 ignore next */
         if (!this.form) {
             return;
         }

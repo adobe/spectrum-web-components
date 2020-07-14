@@ -73,7 +73,7 @@ There are downstream issues that can arise from multiple packages in this mono-r
 
 ### Unit Tests
 
-Unit tests are implemented using the Karma test runner with Chai, Mocha and Sinon frameworks. These tests can be executed with:
+Unit tests are run with Web Test Runner in Playwright using the Chai, Mocha and Sinon helper libraries. These tests can be executed with:
 
 ```
 yarn test
