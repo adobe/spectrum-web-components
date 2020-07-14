@@ -49,8 +49,11 @@ sp-theme,
 #contents {
     display: inline-block;
     pointer-events: none;
-    animation-duration: var(--spectrum-global-animation-duration-200);
-    animation-timing-function: var(--spectrum-global-animation-ease-out);
+    animation-duration: var(--spectrum-global-animation-duration-200, 160ms);
+    animation-timing-function: var(
+        --spectrum-global-animation-ease-out,
+        ease-out
+    );
     opacity: 1;
     visibility: visible;
 }

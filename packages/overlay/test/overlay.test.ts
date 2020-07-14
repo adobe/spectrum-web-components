@@ -24,6 +24,17 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 
+const keyboardEvent = (code: string, shiftKey = false): KeyboardEvent =>
+    new KeyboardEvent('keydown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        code,
+        shiftKey,
+    });
+const tabEvent = keyboardEvent('Tab');
+const shiftTabEvent = keyboardEvent('Tab', true);
+
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
     let openOverlays: (() => void)[] = [];
@@ -124,11 +135,13 @@ describe('Overlays', () => {
 
             expect(button).to.exist;
 
-            Overlay.open(button, 'click', outerPopover, {
-                delayed: false,
-                placement,
-                offset: 10,
-            });
+            openOverlays.push(
+                await Overlay.open(button, 'click', outerPopover, {
+                    delayed: false,
+                    placement,
+                    offset: 10,
+                })
+            );
 
             // Wait for the DOM node to be stolen and reparented into the overlay
             await waitForPredicate(
@@ -198,10 +211,12 @@ describe('Overlays', () => {
 
         expect(button).to.exist;
 
-        await Overlay.open(button, 'click', outerPopover, {
-            delayed: true,
-            offset: 10,
-        });
+        openOverlays.push(
+            await Overlay.open(button, 'click', outerPopover, {
+                delayed: true,
+                offset: 10,
+            })
+        );
 
         // Wait for the DOM node to be stolen and reparented into the overlay
         await waitUntil(
@@ -357,11 +372,13 @@ describe('Overlays', () => {
 
         const dialog = el.querySelector('sp-dialog') as Dialog;
 
-        Overlay.open(el, 'click', dialog, {
-            delayed: false,
-            placement: 'bottom',
-            offset: 10,
-        });
+        openOverlays.push(
+            await Overlay.open(el, 'click', dialog, {
+                delayed: false,
+                placement: 'bottom',
+                offset: 10,
+            })
+        );
 
         await waitUntil(
             () =>
@@ -377,6 +394,94 @@ describe('Overlays', () => {
                 !!dialog.parentElement &&
                 dialog.parentElement.tagName !== 'ACTIVE-OVERLAY',
             'content is returned'
+        );
+    });
+
+    it('closes an inline overlay when tabbing past the content', async () => {
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <button class="trigger">Trigger</button>
+                <div class="content">
+                    <input />
+                </div>
+            </div>
+        `);
+
+        const trigger = el.querySelector('.trigger') as HTMLElement;
+        const content = el.querySelector('.content') as HTMLElement;
+
+        openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
+
+        await waitUntil(
+            () => !!el.querySelector('span[tabindex="-1"]'),
+            'returnFocusElement available'
+        );
+
+        const overlays = document.querySelectorAll('active-overlay');
+        const overlay = overlays[0];
+
+        expect(overlay).to.not.be.undefined;
+
+        trigger.dispatchEvent(tabEvent);
+
+        await waitUntil(
+            () => !!el.querySelector('span[tabindex="-1"]'),
+            'returnFocusElement persists on forward tab'
+        );
+
+        content.dispatchEvent(shiftTabEvent);
+
+        expect(document.activeElement === overlay.returnFocusElement).to.be
+            .true;
+
+        content.dispatchEvent(tabEvent);
+
+        await waitUntil(
+            () => el.querySelector('span[tabindex="-1"]') === null,
+            'returnFocusElement no longer available'
+        );
+    });
+
+    it('closes an inline overlay when tabbing before the trigger', async () => {
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <button class="trigger">Trigger</button>
+                <div class="content">
+                    <label>
+                        Content in an inline overlay.
+                        <input />
+                    </label>
+                </div>
+            </div>
+        `);
+
+        const trigger = el.querySelector('.trigger') as HTMLElement;
+        const content = el.querySelector('.content') as HTMLElement;
+
+        openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
+
+        await waitUntil(
+            () => !!el.querySelector('span[tabindex="-1"]'),
+            'returnFocusElement available'
+        );
+
+        const overlays = document.querySelectorAll('active-overlay');
+        const overlay = overlays[0];
+
+        await elementUpdated(overlay);
+
+        trigger.dispatchEvent(tabEvent);
+
+        await waitUntil(
+            () => !!el.querySelector('span[tabindex="-1"]'),
+            'returnFocusElement persists on forward tab'
+        );
+
+        trigger.dispatchEvent(shiftTabEvent);
+
+        await waitUntil(
+            () => el.querySelector('span[tabindex="-1"]') === null,
+            'returnFocusElement no longer available'
         );
     });
 });
