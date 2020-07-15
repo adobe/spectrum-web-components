@@ -21,6 +21,10 @@ governing permissions and limitations under the License.
     outline-width: 0;
 }
 
+.track {
+    width: 100%;
+}
+
 /* 
  * Placeholder gradient for color variant with alpha on. In the long run, the gradient
  * should be produced programatically 
