@@ -164,6 +164,7 @@ module.exports = [
     'sidenav--levels-and-disabled',
     'sidenav--hrefs',
     'slider--default',
+    'slider--gradient',
     'slider--disabled',
     'slider--color',
     'slider--color-with-alpha',

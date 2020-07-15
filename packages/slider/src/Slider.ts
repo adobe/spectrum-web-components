@@ -172,7 +172,7 @@ export class Slider extends Focusable {
             <div
                 class="track"
                 id="track-left"
-                style=${this.trackLeftStyle}
+                style=${this.trackStartClipPath}
                 role="presentation"
             ></div>
         `;
@@ -186,7 +186,7 @@ export class Slider extends Focusable {
             <div
                 class="track"
                 id="track-right"
-                style=${this.trackRightStyle}
+                style=${this.trackEndClipPath}
                 role="presentation"
             ></div>
         `;
@@ -274,16 +274,14 @@ export class Slider extends Focusable {
 
     private renderTrack(): TemplateResult {
         return html`
-            <div id="controls"
+            <div
+                id="controls"
                 @pointerdown=${this.onTrackPointerDown}
                 @mousedown=${this.onTrackMouseDown}
             >
-                ${this.renderTrackLeft()}
-                ${this.renderRamp()}
-                ${this.renderTicks()}
-                ${this.renderHandle()}
+                ${this.renderTrackLeft()} ${this.renderRamp()}
+                ${this.renderTicks()} ${this.renderHandle()}
                 ${this.renderTrackRight()}
-                </div>
             </div>
         `;
     }
@@ -478,18 +476,62 @@ export class Slider extends Focusable {
         return progress / range;
     }
 
-    private get trackLeftStyle(): string {
-        return `width: ${this.trackProgress * 100}%`;
+    private get trackStartClipPath(): string {
+        return this.isLTR ? this.trackLeftClipPath : this.trackRightClipPath;
     }
 
-    private get trackRightStyle(): string {
-        const width = `width: ${(1 - this.trackProgress) * 100}%;`;
-        const halfHandleWidth = `var(--spectrum-slider-handle-width, var(--spectrum-global-dimension-size-200)) / 2`;
-        const offset = `${this.isLTR ? 'left' : 'right'}: calc(${
-            this.trackProgress * 100
-        }% + ${halfHandleWidth})`;
+    private get trackEndClipPath(): string {
+        return this.isLTR ? this.trackRightClipPath : this.trackLeftClipPath;
+    }
 
-        return width + offset;
+    /**
+     * The track that appears on the left, regardless of text direction.
+     */
+    private get trackLeftClipPath(): string {
+        const movingX = `calc(
+            ${
+                this.isLTR
+                    ? this.trackProgress * 100
+                    : 100 - this.trackProgress * 100
+            }% -
+            var(
+                --spectrum-slider-handle-gap,
+                var(
+                    --spectrum-alias-border-size-thicker
+                )
+            )
+        )`;
+        return `clip-path: polygon(
+            0 0,
+            ${movingX} 0,
+            ${movingX} 100%,
+            0 100%
+        );`;
+    }
+
+    /**
+     * The track that appears on the right, regardless of text direction.
+     */
+    private get trackRightClipPath(): string {
+        const movingX = `calc(
+            ${
+                this.isLTR
+                    ? this.trackProgress * 100
+                    : 100 - this.trackProgress * 100
+            }% +
+            var(
+                --spectrum-slider-handle-gap,
+                var(
+                    --spectrum-alias-border-size-thicker
+                )
+            )
+        )`;
+        return `clip-path: polygon(
+            ${movingX} 0,
+            100% 0,
+            100% 100%,
+            ${movingX} 100%
+        );`;
     }
 
     private get handleStyle(): string {
