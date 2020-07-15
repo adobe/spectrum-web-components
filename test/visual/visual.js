@@ -30,18 +30,6 @@ module.exports = {
             let server, browser, page;
 
             before(async function () {
-                const config = createConfig({
-                    port: 4444,
-                    nodeResolve: true,
-                    appIndex: 'index.hml',
-                    rootDir: path.resolve(
-                        process.cwd(),
-                        'documentation',
-                        'dist',
-                        'storybook'
-                    ),
-                });
-                ({ server } = await startServer(config));
                 // Create the test directory if needed.
                 if (!fs.existsSync(currentDir)) {
                     fs.mkdirSync(currentDir);
@@ -67,7 +55,6 @@ module.exports = {
 
             after(() => {
                 browser.close();
-                server.close();
             });
 
             before(async function () {
@@ -82,7 +69,23 @@ module.exports = {
 
             describe('default view', function () {
                 beforeEach(async function () {
+                    const config = createConfig({
+                        port: 4444,
+                        nodeResolve: true,
+                        appIndex: 'index.hml',
+                        rootDir: path.resolve(
+                            process.cwd(),
+                            'documentation',
+                            'dist',
+                            'storybook'
+                        ),
+                    });
+                    ({ server } = await startServer(config));
                     return page.setViewport({ width: 800, height: 600 });
+                });
+
+                afterEach(() => {
+                    server.close();
                 });
 
                 for (let i = 0; i < stories.length; i++) {
