@@ -20,11 +20,11 @@ import {
 } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import circleloaderStyles from './circleloader.css.js';
+import circleLoaderStyles from './circle-loader.css.js';
 
 export class CircleLoader extends LitElement {
     public static get styles(): CSSResultArray {
-        return [circleloaderStyles];
+        return [circleLoaderStyles];
     }
 
     @property({ type: Boolean, reflect: true })
