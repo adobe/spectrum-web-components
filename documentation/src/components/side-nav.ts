@@ -120,7 +120,7 @@ class SideNav extends LitElement {
                         </sp-sidenav-item>
                         <sp-sidenav-item
                             label="Playground"
-                            href="storybook/"
+                            href="storybook/index.html"
                             multilevel
                         ></sp-sidenav-item>
                         <sp-sidenav-item
