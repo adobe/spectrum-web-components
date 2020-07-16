@@ -75,9 +75,12 @@ export class Tabs extends Focusable {
 
     private tabs: Tab[] = [];
 
-    public get focusElement(): Tab {
-        return (this.querySelector('[tabindex="0"]') ||
-            this.querySelector('sp-tab')) as Tab;
+    public get focusElement(): Tab | Tabs {
+        const focusElement = this.tabs.find((tab) => tab.selected);
+        if (focusElement) {
+            return focusElement;
+        }
+        return this.tabs[0] || this;
     }
 
     constructor() {
@@ -188,7 +191,7 @@ export class Tabs extends Focusable {
     private onClick = (event: Event): void => {
         const target = event.target as HTMLElement;
         this.selectTarget(target);
-        if (this.shouldApplyFocusVisible) {
+        if (this.shouldApplyFocusVisible && event.composedPath()[0] !== this) {
             /* Trick :focus-visible polyfill into thinking keyboard based focus */
             this.dispatchEvent(
                 new KeyboardEvent('keydown', {

@@ -93,20 +93,34 @@ export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
         this.manageShiftTab();
     }
 
-    private refocusTimeout = 0;
-
     protected manageFocusIn(): void {
         this.addEventListener('focusin', (event) => {
+            // only throw focus when `focusin` occurs directly on the `:host()`
             if (event.composedPath()[0] === this) {
                 this.handleFocus();
             }
+            // when focus has been thrown do not reapply `focusout` listeners
+            if (event.relatedTarget === this) {
+                return;
+            }
+            let doTimeout = true;
             const innerHandler = (): void => {
-                this.refocusTimeout = setTimeout(() => {
-                    this.focus();
+                setTimeout(() => {
+                    // Typically this would be done via `clearTimeout()`.
+                    // However, there are moment when the asyncrony of native
+                    // DOM events causes the `outerHandler` to run before the
+                    // value returned from `setTimeout` can be cached, which
+                    // prevents the following call to be prevented. In ALL
+                    // cases the `outerHandler` will run before the callback
+                    // for the `setTimeout` which leads to the use of this
+                    // technique instead.
+                    if (doTimeout) {
+                        this.focus();
+                    }
                 });
             };
             const outerHandler = (): void => {
-                clearTimeout(this.refocusTimeout);
+                doTimeout = false;
                 this.focusElement.removeEventListener('focusout', innerHandler);
                 this.removeEventListener('focusout', outerHandler);
             };
