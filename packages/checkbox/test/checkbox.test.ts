@@ -18,6 +18,7 @@ import {
     triggerBlurFor,
     html,
     expect,
+    nextFrame,
 } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers';
 import '@spectrum-web-components/shared/src/focus-visible.js';
@@ -130,6 +131,60 @@ describe('Checkbox', () => {
         await triggerBlurFor(autoElement);
 
         expect(document.activeElement).to.not.equal(autoElement);
+    });
+
+    it('`click()`ing host clicks `focusElement`', async () => {
+        const el = await fixture<Checkbox>(
+            html`
+                <sp-checkbox checked autofocus>Checked</sp-checkbox>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.checked, 'checked initially').to.be.true;
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.checked, 'unchecked').to.be.false;
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.checked, 'checked again').to.be.true;
+    });
+
+    it('focus is not relenquished to host on second click', async () => {
+        const el = await fixture<Checkbox>(
+            html`
+                <sp-checkbox checked>Checked</sp-checkbox>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const root = el.shadowRoot ? el.shadowRoot : document;
+        expect(
+            document.activeElement,
+            'based on autofocus external'
+        ).to.not.equal(el);
+        expect(root.activeElement, 'based on autofocus internal').to.not.equal(
+            el.focusElement
+        );
+
+        // emulate the events that occur during a "second click" on the `:host()`
+        el.dispatchEvent(new CustomEvent('focusin'));
+        HTMLElement.prototype.focus.apply(el);
+        el.focusElement.dispatchEvent(new CustomEvent('focusout'));
+        await nextFrame();
+        expect(
+            document.activeElement,
+            'based on repeated click external'
+        ).to.equal(el);
+        expect(root.activeElement, 'based on repeated click internal').to.equal(
+            el.focusElement
+        );
     });
 
     it('respects checked attribute', () => {

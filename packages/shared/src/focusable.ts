@@ -70,6 +70,10 @@ export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
         this.focusElement.blur();
     }
 
+    public click(): void {
+        this.focusElement.click();
+    }
+
     protected manageAutoFocus(): void {
         if (this.autofocus) {
             /* Trick :focus-visible polyfill into thinking keyboard based focus */
@@ -89,11 +93,25 @@ export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
         this.manageShiftTab();
     }
 
+    private refocusTimeout = 0;
+
     protected manageFocusIn(): void {
         this.addEventListener('focusin', (event) => {
             if (event.composedPath()[0] === this) {
                 this.handleFocus();
             }
+            const innerHandler = (): void => {
+                this.refocusTimeout = setTimeout(() => {
+                    this.focus();
+                });
+            };
+            const outerHandler = (): void => {
+                clearTimeout(this.refocusTimeout);
+                this.focusElement.removeEventListener('focusout', innerHandler);
+                this.removeEventListener('focusout', outerHandler);
+            };
+            this.focusElement.addEventListener('focusout', innerHandler);
+            this.addEventListener('focusout', outerHandler);
         });
     }
 
