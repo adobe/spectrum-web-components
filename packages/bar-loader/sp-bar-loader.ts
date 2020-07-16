@@ -12,10 +12,7 @@ governing permissions and limitations under the License.
 
 import { BarLoader } from './src/BarLoader.js';
 
-/* istanbul ignore else */
-if (!customElements.get('sp-bar-loader')) {
-    customElements.define('sp-bar-loader', BarLoader);
-}
+customElements.define('sp-bar-loader', BarLoader);
 
 declare global {
     interface HTMLElementTagNameMap {

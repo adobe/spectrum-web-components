@@ -13,7 +13,7 @@ module.exports = {
     spectrum: 'circleloader',
     components: [
         {
-            name: 'circleloader',
+            name: 'circle-loader',
             host: '.spectrum-CircleLoader',
             attributes: [
                 {
