@@ -23,6 +23,19 @@
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
+    "exports": {
+        "./src/": "./src/",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./sp-menu": "./sp-menu.js",
+        "./sp-menu.js": "./sp-menu.js",
+        "./sp-menu-divider": "./sp-menu-divider.js",
+        "./sp-menu-divider.js": "./sp-menu-divider.js",
+        "./sp-menu-group": "./sp-menu-group.js",
+        "./sp-menu-group.js": "./sp-menu-group.js",
+        "./sp-menu-item": "./sp-menu-item.js",
+        "./sp-menu-item.js": "./sp-menu-item.js"
+    },
     "files": [
         "custom-elements.json",
         "*.d.ts",
