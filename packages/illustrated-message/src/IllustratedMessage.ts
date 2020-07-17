@@ -40,8 +40,8 @@ export class IllustratedMessage extends LitElement {
     protected render(): TemplateResult {
         return html`
             <div id="illustration"><slot></slot></div>
-            <div id="heading">${this.heading}</div>
-            <div id="description">${this.description}</div>
+            <h2 id="heading">${this.heading}</h2>
+            <p id="description">${this.description}</p>
         `;
     }
 }
