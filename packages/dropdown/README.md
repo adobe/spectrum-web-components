@@ -25,10 +25,37 @@ import { Dropdown } from '@spectrum-web-components/dropdown';
 
 ## Example
 
-<!-- prettier-ignore -->
 ```html
+<p><strong>Standard:</strong></p>
+<sp-dropdown label="Select a Country with a very long label, too long in fact">
+    <sp-menu>
+        <sp-menu-item>
+            Deselect
+        </sp-menu-item>
+        <sp-menu-item>
+            Select inverse
+        </sp-menu-item>
+        <sp-menu-item>
+            Feather...
+        </sp-menu-item>
+        <sp-menu-item>
+            Select and mask...
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>
+            Save selection
+        </sp-menu-item>
+        <sp-menu-item disabled>
+            Make work path
+        </sp-menu-item>
+    </sp-menu>
+</sp-dropdown>
+<br />
+<br />
+<p><strong>Quiet:</strong></p>
 <sp-dropdown
     label="Select a Country with a very long label, too long in fact"
+    quiet
 >
     <sp-menu>
         <sp-menu-item>
@@ -54,15 +81,45 @@ import { Dropdown } from '@spectrum-web-components/dropdown';
 </sp-dropdown>
 ```
 
-## Variants
+## States
 
 ### Invalid
 
-<!-- prettier-ignore -->
 ```html
+<p><strong>Standard:</strong></p>
 <sp-dropdown
     label="Select a Country with a very long label, too long in fact"
     invalid
+>
+    <sp-menu>
+        <sp-menu-item>
+            Deselect
+        </sp-menu-item>
+        <sp-menu-item>
+            Select inverse
+        </sp-menu-item>
+        <sp-menu-item>
+            Feather...
+        </sp-menu-item>
+        <sp-menu-item>
+            Select and mask...
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>
+            Save selection
+        </sp-menu-item>
+        <sp-menu-item disabled>
+            Make work path
+        </sp-menu-item>
+    </sp-menu>
+</sp-dropdown>
+<br />
+<br />
+<p><strong>Quiet:</strong></p>
+<sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
+    invalid
+    quiet
 >
     <sp-menu>
         <sp-menu-item>
@@ -90,11 +147,41 @@ import { Dropdown } from '@spectrum-web-components/dropdown';
 
 ### Disabled
 
-<!-- prettier-ignore -->
 ```html
+<p><strong>Standard:</strong></p>
 <sp-dropdown
     label="Select a Country with a very long label, too long in fact"
     disabled
+>
+    <sp-menu>
+        <sp-menu-item>
+            Deselect
+        </sp-menu-item>
+        <sp-menu-item>
+            Select inverse
+        </sp-menu-item>
+        <sp-menu-item>
+            Feather...
+        </sp-menu-item>
+        <sp-menu-item>
+            Select and mask...
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>
+            Save selection
+        </sp-menu-item>
+        <sp-menu-item disabled>
+            Make work path
+        </sp-menu-item>
+    </sp-menu>
+</sp-dropdown>
+<br />
+<br />
+<p><strong>Quiet:</strong></p>
+<sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
+    disabled
+    quiet
 >
     <sp-menu>
         <sp-menu-item>
