@@ -35,6 +35,36 @@ governing permissions and limitations under the License.
     text-transform: var(--spectrum-heading-quiet-2-text-transform, none);
     margin-top: 0;
     margin-bottom: 0;
+    color: var(
+        --spectrum-heading-page-title-text-color,
+        var(--spectrum-global-color-gray-700)
+    );
+}
+
+#description {
+    font-size: var(
+        --spectrum-body-4-text-size,
+        var(--spectrum-alias-font-size-default)
+    );
+    font-weight: var(
+        --spectrum-body-4-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-body-4-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    letter-spacing: var(
+        --spectrum-body-4-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-body-4-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0;
+    color: var(
+        --spectrum-body-secondary-text-color,
+        var(--spectrum-global-color-gray-700)
+    );
 }
 
 /* Ensure that SVGs with viewBox attributes size correctly. */
