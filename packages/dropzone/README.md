@@ -28,7 +28,7 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
 ## Example
 
 ```html
-<sp-dropzone id="dropzone" tabindex="1" style="width: 400px; height: 200px">
+<sp-dropzone id="dropzone-1" tabindex="1" style="width: 400px; height: 200px">
     <sp-illustrated-message heading="Drag and Drop Your File">
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -45,8 +45,8 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
 
     <div>
         <div>
-            <label for="file-input">
-                <sp-link>Select a File</sp-link>
+            <label for="file-input" onclick="this.nextElementSibling.click()">
+                <sp-link href="javascript:;">Select a File</sp-link>
                 from your computer
             </label>
             <input type="file" id="file-input" style="display: none" />
@@ -86,8 +86,8 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
 
     <div>
         <div>
-            <label for="file-input">
-                <sp-link>Select a File</sp-link>
+            <label for="file-input" onclick="this.nextElementSibling.click()">
+                <sp-link href="javascript:;">Select a File</sp-link>
                 from your computer
             </label>
             <input type="file" id="file-input" style="display: none" />
