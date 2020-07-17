@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/circleloader/sp-circle-loader.js';
+import '@spectrum-web-components/circle-loader/sp-circle-loader.js';
 import { html } from 'lit-html';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 
 measureFixtureCreation(html`
-    <sp-circleloader indeterminate></sp-circleloader>
+    <sp-circle-loader indeterminate></sp-circle-loader>
 `);
