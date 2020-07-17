@@ -23,6 +23,13 @@
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
+    "exports": {
+        "./src/": "./src/",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./elements": "./elements.js",
+        "./elements.js": "./elements.js"
+    },
     "files": [
         "custom-elements.json",
         "*.d.ts",

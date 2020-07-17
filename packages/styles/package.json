@@ -21,6 +21,9 @@
     "version": "0.5.3",
     "description": "",
     "style": "all-medium-lightest.css",
+    "exports": {
+        "./": "./"
+    },
     "files": [
         "custom-elements.json",
         "*.css"

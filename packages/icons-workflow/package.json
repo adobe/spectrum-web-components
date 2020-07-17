@@ -22,6 +22,11 @@
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
+    "exports": {
+        "./lib/": "./lib/",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json"
+    },
     "files": [
         "custom-elements.json",
         "/lib/",

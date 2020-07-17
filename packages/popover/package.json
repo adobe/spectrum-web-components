@@ -23,6 +23,13 @@
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
+    "exports": {
+        "./src/": "./src/",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./sp-popover": "./sp-popover.js",
+        "./sp-popover.js": "./sp-popover.js"
+    },
     "files": [
         "custom-elements.json",
         "*.d.ts",

@@ -23,6 +23,13 @@
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
+    "exports": {
+        "./src/": "./src/",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./sp-illustrated-message": "./sp-illustrated-message.js",
+        "./sp-illustrated-message.js": "./sp-illustrated-message.js"
+    },
     "files": [
         "custom-elements.json",
         "*.d.ts",
