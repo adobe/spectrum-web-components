@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.2.12...@spectrum-web-components/radio@0.3.0) (2020-07-17)
+
+### Features
+
+-   **overlay:** manage focus throwing and tab trapping ([27a0b53](https://github.com/adobe/spectrum-web-components/commit/27a0b53ea94d19bb18b7d3f89763b06dc1b42b59))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+
 ## [0.2.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.2.11...@spectrum-web-components/radio@0.2.12) (2020-06-08)
 
 **Note:** Version bump only for package @spectrum-web-components/radio

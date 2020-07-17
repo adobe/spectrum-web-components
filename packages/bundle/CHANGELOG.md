@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.12.0...@spectrum-web-components/bundle@0.13.0) (2020-07-17)
+
+### Bug Fixes
+
+-   include element is bundle side effects ([ce320f8](https://github.com/adobe/spectrum-web-components/commit/ce320f859d43c08954b6d5c3f628db9319c11307))
+
+### Features
+
+-   **bar-loader:** add bar-loader pattern ([eff18e7](https://github.com/adobe/spectrum-web-components/commit/eff18e7c506feefa28e85df4b82b322ffb675de1))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+
 # [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.11.0...@spectrum-web-components/bundle@0.12.0) (2020-06-08)
 
 ### Features

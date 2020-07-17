@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.2.16...@spectrum-web-components/switch@0.3.0) (2020-07-17)
+
+### Bug Fixes
+
+-   **switch:** track aria-checked ([1980046](https://github.com/adobe/spectrum-web-components/commit/1980046ab0f791bfe1e147c855f43ddf2d2a424e))
+
+### Features
+
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+
 ## [0.2.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.2.15...@spectrum-web-components/switch@0.2.16) (2020-06-08)
 
 **Note:** Version bump only for package @spectrum-web-components/switch

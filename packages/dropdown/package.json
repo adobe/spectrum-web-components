@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.5.5",
+    "version": "0.6.0",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
@@ -50,13 +50,13 @@
         "@spectrum-css/dropdown": "^2.1.5"
     },
     "dependencies": {
-        "@spectrum-web-components/button": "^0.7.0",
-        "@spectrum-web-components/icon": "^0.4.8",
-        "@spectrum-web-components/icons-ui": "^0.1.2",
-        "@spectrum-web-components/menu": "^0.2.7",
-        "@spectrum-web-components/overlay": "^0.3.8",
-        "@spectrum-web-components/popover": "^0.3.10",
-        "@spectrum-web-components/shared": "^0.4.7",
+        "@spectrum-web-components/button": "^0.8.0",
+        "@spectrum-web-components/icon": "^0.5.0",
+        "@spectrum-web-components/icons-ui": "^0.2.0",
+        "@spectrum-web-components/menu": "^0.3.0",
+        "@spectrum-web-components/overlay": "^0.4.0",
+        "@spectrum-web-components/popover": "^0.4.0",
+        "@spectrum-web-components/shared": "^0.5.0",
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",
         "tslib": "^2.0.0"

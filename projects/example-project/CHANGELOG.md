@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.14](https://github.com/adobe/spectrum-web-components/compare/example-project@1.0.13...example-project@1.0.14) (2020-07-17)
+
+**Note:** Version bump only for package example-project
+
 ## [1.0.13](https://github.com/adobe/spectrum-web-components/compare/example-project@1.0.12...example-project@1.0.13) (2020-06-08)
 
 **Note:** Version bump only for package example-project

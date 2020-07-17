@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.4.1...@spectrum-web-components/theme@0.5.0) (2020-07-17)
+
+### Features
+
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+
 ## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.4.0...@spectrum-web-components/theme@0.4.1) (2020-06-08)
 
 ### Bug Fixes

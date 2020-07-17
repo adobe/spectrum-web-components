@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.4.8...@spectrum-web-components/icon@0.5.0) (2020-07-17)
+
+### Features
+
+-   **overlay:** manage focus throwing and tab trapping ([27a0b53](https://github.com/adobe/spectrum-web-components/commit/27a0b53ea94d19bb18b7d3f89763b06dc1b42b59))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+
 ## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.4.7...@spectrum-web-components/icon@0.4.8) (2020-06-08)
 
 **Note:** Version bump only for package @spectrum-web-components/icon

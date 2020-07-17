@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.8...@spectrum-web-components/sidenav@0.4.0) (2020-07-17)
+
+### Bug Fixes
+
+-   **sidenav:** add aria-current when using href with sidenav-item ([9172639](https://github.com/adobe/spectrum-web-components/commit/9172639f54cad57111d3ced348a747e8ea5a285a))
+-   **sidenav:** manage tabindex when interacting with keyboard ([ea977cf](https://github.com/adobe/spectrum-web-components/commit/ea977cf1ceac9b74fb1789bf8f72bfe1d3c72b03))
+
+### Features
+
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+
 ## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.7...@spectrum-web-components/sidenav@0.3.8) (2020-06-08)
 
 ### Bug Fixes
