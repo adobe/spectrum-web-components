@@ -77,6 +77,10 @@ export class DropdownBase extends Focusable {
 
     public optionsMenu?: Menu;
 
+    /**
+     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"}
+     * @attr
+     */
     @property()
     public placement: Placement = 'bottom-start';
 

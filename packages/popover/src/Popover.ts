@@ -35,6 +35,10 @@ export class Popover extends LitElement {
         return [popoverStyles];
     }
 
+    /**
+     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"}
+     * @attr
+     */
     @property({ reflect: true })
     public placement: Placement = 'none';
 
