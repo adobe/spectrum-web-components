@@ -6,12 +6,12 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/circleloader"
+        "directory": "packages/circle-loader"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/circleloader",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/circle-loader",
     "keywords": [
         "spectrum css",
         "web components",
