@@ -41,6 +41,17 @@ governing permissions and limitations under the License.
     );
 }
 
+/* 
+    @TODO: Implement spectrum typography components (ex: specturm-heading, spectrum-body)
+
+    The following block maps to the .spectrum-Body--secondary selector 
+    in spectrum-css/dist/components/typography
+
+    The css in that folder defines multiple typography classes, such as
+    .spectrum-Heading and .spectrum-Body
+
+    These components need to be implemented in another pass
+*/
 #description {
     font-size: var(
         --spectrum-body-4-text-size,
