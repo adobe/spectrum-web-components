@@ -26,15 +26,17 @@ import { ActionButton } from '@spectrum-web-components/buton';
 ## Example
 
 ```html demo
-<sp-action-button>
-    Do action
-</sp-action-button>
-<sp-action-button selected>
-    Do action
-</sp-action-button>
-<sp-action-button disabled>
-    Do action
-</sp-action-button>
+<sp-button-group>
+    <sp-action-button>
+        Do action
+    </sp-action-button>
+    <sp-action-button selected>
+        Do action
+    </sp-action-button>
+    <sp-action-button disabled>
+        Do action
+    </sp-action-button>
+</sp-button-group>
 ```
 
 ## Variants
