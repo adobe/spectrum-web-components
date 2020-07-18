@@ -1,6 +1,6 @@
 ## Description
 
-An `<sp-dropdown>` is an alternative to HTML's `select` element. Use an `<sp-menu>` element to outline the options that will be made available to the user when interacting with the `sp-dropdown` element.
+An `<sp-dropdown>` parent will ensure that the wrapped `<sp-menu>` features a role of `listbox` and contains children with the role `option`. Upon focusing the `<sp-dropdown>` using `ArrowDown` will also open the menu while throwing focus into first selected (or unselected when none are selected) menu item to assist in selecting of a new value.
 
 ### Usage
 
@@ -209,4 +209,4 @@ import { Dropdown } from '@spectrum-web-components/dropdown';
 
 ## Accessibility
 
-An `sp-dropdown` parent will ensure that the wrapped `sp-menu` features a role of `listbox` and contains children with the role `option`. Upon focusing the `sp-dropdown` using `ArrowDown` will also open the menu while throwing focus into first selected (or unselected when none are selected) menu item for easy selecting of a new value.
+An `sp-dropdown` parent will ensure that the wrapped `sp-menu` features a role of `listbox` and contains children with the role `option`. Upon focusing the `sp-dropdown` using `ArrowDown` will also open the menu while throwing focus into first selected (or unselected when none are selected) menu item to facilitate selecting of a new value.

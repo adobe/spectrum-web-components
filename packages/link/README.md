@@ -68,11 +68,10 @@ When a link needs to be placed on top of a colored background or a visual, use t
 
 ### Download attribute
 
-The download attribute on an `html<a>` tag prompts a user to download a link as opposed to navigating to it. This attribute has
-simply been carried forward to `html<sp-link>` to function the same.
+The download attribute on an `<a>` tag prompts a user to download a link as opposed to navigating to it. This attribute has been carried forward to `<sp-link>` to function the same.
 
 While it functions this way without assigning a value, actually assigning the value allows custom naming of the download link in accordance
-with normal `html<a>` [rules](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a) defined by the browser.
+with standard `<a>` [rules](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a) defined by the browser.
 
 <!-- prettier-ignore -->
 ```html

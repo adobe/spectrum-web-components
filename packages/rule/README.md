@@ -38,7 +38,10 @@ import { Rule } from '@spectrum-web-components/rule';
 ```html-live
 <h3 class="spectrum-Heading--subtitle2">Medium</h3>
 <sp-rule size="medium"></sp-rule>
-<p class="spectrum-Body">Divide subsections, or divide different groups of elements (between panels, rails, etc.)</p>
+<p class="spectrum-Body">
+    Divide subsections, or divide different groups of elements (between panels,
+    rails, etc.)
+</p>
 ```
 
 ### Small
@@ -46,7 +49,9 @@ import { Rule } from '@spectrum-web-components/rule';
 ```html-live
 <h4 class="spectrum-Heading--subtitle3">Small</h4>
 <sp-rule size="small"></sp-rule>
-<p class="spectrum-Body">Divide like-elements (tables, tool groups, elements within a panel, etc.)</p>
+<p class="spectrum-Body">
+    Divide like-elements (tables, tool groups, elements within a panel, etc.)
+</p>
 ```
 
 ### Vertical, Small
@@ -54,6 +59,7 @@ import { Rule } from '@spectrum-web-components/rule';
 When a vertical Rule is used inside of a flex container, use `align-self: stretch; height: auto;` on the Rule.
 
 ```html-live
+<sp-icons-medium></sp-icons-medium>
 <div style="height: 32px; display: flex;">
     <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>

@@ -43,7 +43,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
         const dialogWrapper = this.previousElementSibling;
         dialogWrapper.hidden = false;
         dialogWrapper.open = true;
-        const handleEvent = ({type}) => {
+        function handleEvent({type}) {
             alert(`Handling '${type}' event.`);
             dialogWrapper.open = false;
             dialogWrapper.removeEventListener('close', handleEvent);
@@ -76,7 +76,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
         const dialogWrapper = this.previousElementSibling;
         dialogWrapper.hidden = false;
         dialogWrapper.open = true;
-        const handleEvent = ({type}) => {
+        function handleEvent({type}) {
             alert(`Handling '${type}' event.`);
             dialogWrapper.open = false;
             dialogWrapper.removeEventListener('confirm', handleEvent);
