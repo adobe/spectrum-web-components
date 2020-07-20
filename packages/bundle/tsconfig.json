@@ -9,6 +9,7 @@
     "references": [
         { "path": "../action-menu" },
         { "path": "../actionbar" },
+        { "path": "../asset" },
         { "path": "../avatar" },
         { "path": "../banner" },
         { "path": "../bar-loader" },

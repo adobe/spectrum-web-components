@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/actionbar/sp-actionbar.js';
+import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import '@spectrum-web-components/banner/sp-banner.js';
 import '@spectrum-web-components/bar-loader/sp-bar-loader.js';

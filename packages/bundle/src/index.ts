@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 export * from '@spectrum-web-components/action-menu';
 export * from '@spectrum-web-components/actionbar';
 export * from '@spectrum-web-components/avatar';
+export * from '@spectrum-web-components/asset';
 export * from '@spectrum-web-components/banner';
 export * from '@spectrum-web-components/bar-loader';
 export * from '@spectrum-web-components/button';
