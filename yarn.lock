@@ -2447,6 +2447,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-2.1.5.tgz#20cb0e6346e5d11f8002c9be9185057df7ecf13c"
   integrity sha512-1De319CZMR9PYvN2JiUZQrxds89q8uj1jpTnu57fbnjF6u3fAx7O+PjF/0FArfTai/+K7DSDjmW/TK08GPkKkA==
 
+"@spectrum-css/asset@^3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/asset/-/asset-3.0.0-beta.2.tgz#9cf43a1fcf02312da9e45a2849a38d83fe05b262"
+  integrity sha512-Vr5MlLUozF93BxIcxpj7Z6ob1B6MrOn/kZzsV0XPPq1DAI4F06glKLtGP1INrD2JndW2YWvuooaa6iWw8Bd0IQ==
+
 "@spectrum-css/avatar@^2.0.5":
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/@spectrum-css/avatar/-/avatar-2.0.5.tgz#4e4e7cf273ed6b5925b4a8cad05946114790030a"

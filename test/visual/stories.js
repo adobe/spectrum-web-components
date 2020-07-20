@@ -12,6 +12,9 @@ governing permissions and limitations under the License.
 module.exports = [
     'action-menu--default',
     'actionbar--default',
+    'asset--default',
+    'asset--file',
+    'asset--folder',
     'avatar--default',
     'banner--default',
     'banner--banner-types',
