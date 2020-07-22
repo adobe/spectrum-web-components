@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/illustrated-message@0.2.0...@spectrum-web-components/illustrated-message@0.2.1) (2020-07-22)
+
+### Bug Fixes
+
+-   **illustrated-message:** use accessibile tagnames ([e47b469](https://github.com/adobe/spectrum-web-components/commit/e47b469b5e1b9465b7bf0c4574f0ccb57acbb4f7))
+
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/illustrated-message@0.1.11...@spectrum-web-components/illustrated-message@0.2.0) (2020-07-17)
 
 ### Features

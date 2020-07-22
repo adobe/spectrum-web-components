@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.5.0...@spectrum-web-components/shared@0.5.1) (2020-07-22)
+
+### Bug Fixes
+
+-   **shared:** prevent focusable returning focus to host ([745f7b0](https://github.com/adobe/spectrum-web-components/commit/745f7b0d23c14efd937e4a0be4d488c5d0865f34))
+-   **tabs:** correct entry focus element ([64407d3](https://github.com/adobe/spectrum-web-components/commit/64407d37fd09d3d598253a66c3b342882d51a826))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.4.7...@spectrum-web-components/shared@0.5.0) (2020-07-17)
 
 ### Features

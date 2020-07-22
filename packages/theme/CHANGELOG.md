@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.5.0...@spectrum-web-components/theme@0.5.1) (2020-07-22)
+
+### Bug Fixes
+
+-   **theme:** Use correct filename in exports field ([d5da506](https://github.com/adobe/spectrum-web-components/commit/d5da506e5d4125a39492df2b1682d7129b89ca07))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.4.1...@spectrum-web-components/theme@0.5.0) (2020-07-17)
 
 ### Features

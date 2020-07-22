@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.4.0...@spectrum-web-components/textfield@0.4.1) (2020-07-22)
+
+### Bug Fixes
+
+-   **textfield:** Use correct filename in exports field ([637b166](https://github.com/adobe/spectrum-web-components/commit/637b166420e3a0fa41980bfbb24129df77ff4efd))
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.3.9...@spectrum-web-components/textfield@0.4.0) (2020-07-17)
 
 ### Features

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.1.0...@spectrum-web-components/tabs@0.1.1) (2020-07-22)
+
+### Bug Fixes
+
+-   **tabs:** correct entry focus element ([64407d3](https://github.com/adobe/spectrum-web-components/commit/64407d37fd09d3d598253a66c3b342882d51a826))
+
 # 0.1.0 (2020-07-17)
 
 ### Bug Fixes

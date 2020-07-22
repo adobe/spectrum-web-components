@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.8.0...@spectrum-web-components/button@0.8.1) (2020-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
 # [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.7.0...@spectrum-web-components/button@0.8.0) (2020-07-17)
 
 ### Features

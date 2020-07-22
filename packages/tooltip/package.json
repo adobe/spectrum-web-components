@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.4.0",
+    "version": "0.4.1",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
@@ -47,7 +47,7 @@
         "@spectrum-css/tooltip": "^2.0.5"
     },
     "dependencies": {
-        "@spectrum-web-components/overlay": "^0.4.0",
+        "@spectrum-web-components/overlay": "^0.4.1",
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",
         "tslib": "^2.0.0"
