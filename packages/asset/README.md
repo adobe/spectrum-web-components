@@ -32,5 +32,5 @@ yarn add @spectrum-web-components/asset
 ### Folder
 
 ```html
-<sp-asset variant="file"></sp-asset>
+<sp-asset variant="folder"></sp-asset>
 ```
