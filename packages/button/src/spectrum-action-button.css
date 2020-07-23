@@ -10,9 +10,46 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-#button {
-    /* .spectrum-ActionButton,
-   * .spectrum-Tool */
+.button[dir='ltr'] .spectrum-Button slot[name='icon'] + .spectrum-Button-label {
+    /* [dir=ltr] .spectrum-Button .spectrum-Icon+.spectrum-Button-label */
+    margin-left: var(
+        --spectrum-button-primary-text-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+.button[dir='rtl'] .spectrum-Button slot[name='icon'] + .spectrum-Button-label {
+    /* [dir=rtl] .spectrum-Button .spectrum-Icon+.spectrum-Button-label */
+    margin-right: var(
+        --spectrum-button-primary-text-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+.button[dir='ltr']
+    .spectrum-Button
+    .spectrum-Button-label
+    + ::slotted([slot='icon']) {
+    /* [dir=ltr] .spectrum-Button .spectrum-Button-label+.spectrum-Icon */
+    margin-left: calc(
+        var(
+                --spectrum-button-primary-text-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) / 2
+    );
+}
+.button[dir='rtl']
+    .spectrum-Button
+    .spectrum-Button-label
+    + ::slotted([slot='icon']) {
+    /* [dir=rtl] .spectrum-Button .spectrum-Button-label+.spectrum-Icon */
+    margin-right: calc(
+        var(
+                --spectrum-button-primary-text-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) / 2
+    );
+}
+.button {
+    /* .spectrum-ActionButton */
     position: relative;
     height: var(
         --spectrum-actionbutton-height,
@@ -48,8 +85,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-weight: var(
         --spectrum-actionbutton-text-font-weight,
         var(--spectrum-alias-body-text-font-weight)
-    ); /* .spectrum-ActionButton,
-   * .spectrum-Tool */
+    ); /* .spectrum-ActionButton */
     background-color: var(
         --spectrum-actionbutton-background-color,
         var(--spectrum-global-color-gray-75)
@@ -63,13 +99,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color)
     );
 }
-slot[name='icon'] + #label {
-    /* .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label,
-   * .spectrum-Tool .spectrum-Icon+.spectrum-ActionButton-label */
+:host([dir='ltr']) .button slot[name='icon'] + #label {
+    /* [dir=ltr] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
     padding-left: var(
         --spectrum-actionbutton-icon-padding-x,
         var(--spectrum-global-dimension-size-85)
-    );
+    ); /* [dir=ltr] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
     padding-right: calc(
         var(
                 --spectrum-actionbutton-text-padding-x,
@@ -81,17 +116,25 @@ slot[name='icon'] + #label {
             )
     );
 }
-.spectrum-Icon--sizeS:only-child {
-    /* .spectrum-ActionButton .spectrum-Icon--sizeS:only-child,
-   * .spectrum-Tool .spectrum-Icon--sizeS:only-child */
-    position: absolute;
-    top: calc(
-        50% -
+:host([dir='rtl']) .button slot[name='icon'] + #label {
+    /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
+    padding-right: var(
+        --spectrum-actionbutton-icon-padding-x,
+        var(--spectrum-global-dimension-size-85)
+    ); /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
+    padding-left: calc(
+        var(
+                --spectrum-actionbutton-text-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            ) -
             var(
-                --spectrum-actionbutton-icon-size,
-                var(--spectrum-alias-workflow-icon-size)
-            ) / 2
+                --spectrum-actionbutton-icon-padding-x,
+                var(--spectrum-global-dimension-size-85)
+            )
     );
+}
+:host([dir='ltr']) .button .spectrum-Icon--sizeS:only-child {
+    /* [dir=ltr] .spectrum-ActionButton .spectrum-Icon--sizeS:only-child */
     left: calc(
         50% -
             var(
@@ -100,9 +143,29 @@ slot[name='icon'] + #label {
             ) / 2
     );
 }
+:host([dir='rtl']) .button .spectrum-Icon--sizeS:only-child {
+    /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon--sizeS:only-child */
+    right: calc(
+        50% -
+            var(
+                --spectrum-actionbutton-icon-size,
+                var(--spectrum-alias-workflow-icon-size)
+            ) / 2
+    );
+}
+.spectrum-Icon--sizeS:only-child {
+    /* .spectrum-ActionButton .spectrum-Icon--sizeS:only-child */
+    position: absolute;
+    top: calc(
+        50% -
+            var(
+                --spectrum-actionbutton-icon-size,
+                var(--spectrum-alias-workflow-icon-size)
+            ) / 2
+    );
+}
 #label:only-child {
-    /* .spectrum-ActionButton .spectrum-ActionButton-label:only-child,
-   * .spectrum-Tool .spectrum-ActionButton-label:only-child */
+    /* .spectrum-ActionButton .spectrum-ActionButton-label:only-child */
     padding: 0
         calc(
             var(
@@ -115,18 +178,28 @@ slot[name='icon'] + #label {
                 )
         );
 }
-#hold-affordance {
-    /* .spectrum-ActionButton-hold */
-    position: absolute;
+.button[dir='ltr'] #hold-affordance {
+    /* [dir=ltr] .spectrum-ActionButton-hold */
     right: var(
         --spectrum-actionbutton-hold-icon-padding-right,
         var(--spectrum-global-dimension-size-40)
     );
+}
+.button[dir='rtl'] #hold-affordance {
+    /* [dir=rtl] .spectrum-ActionButton-hold */
+    left: var(
+        --spectrum-actionbutton-hold-icon-padding-right,
+        var(--spectrum-global-dimension-size-40)
+    );
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+#hold-affordance {
+    /* .spectrum-ActionButton-hold */
+    position: absolute;
     bottom: var(
         --spectrum-actionbutton-hold-icon-padding-bottom,
         var(--spectrum-global-dimension-size-40)
-    ); /* .spectrum-ActionButton .spectrum-ActionButton-hold,
-   * .spectrum-Tool .spectrum-ActionButton-hold */
+    ); /* .spectrum-ActionButton .spectrum-ActionButton-hold */
     color: var(
         --spectrum-actionbutton-hold-icon-color,
         var(--spectrum-alias-icon-color)
@@ -137,8 +210,7 @@ slot[name='icon'] + #label {
    * .spectrum-Button-label */
     align-self: center;
     justify-self: center;
-    text-align: center;
-    width: 100%; /* .spectrum-ActionButton-label */
+    text-align: center; /* .spectrum-ActionButton-label */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -148,9 +220,8 @@ slot[name='icon'] + #label {
    * .spectrum-Button-label:empty */
     display: none;
 }
-:host([quiet]) #button {
-    /* .spectrum-ActionButton--quiet,
-   * .spectrum-Tool */
+:host([quiet]) .button {
+    /* .spectrum-ActionButton--quiet */
     border-width: var(
         --spectrum-actionbutton-quiet-border-size,
         var(--spectrum-alias-border-size-thin)
@@ -166,8 +237,7 @@ slot[name='icon'] + #label {
     font-weight: var(
         --spectrum-actionbutton-quiet-text-font-weight,
         var(--spectrum-alias-body-text-font-weight)
-    ); /* .spectrum-ActionButton--quiet,
-   * .spectrum-Tool */
+    ); /* .spectrum-ActionButton--quiet */
     background-color: var(
         --spectrum-actionbutton-quiet-background-color,
         var(--spectrum-alias-background-color-transparent)
@@ -182,16 +252,14 @@ slot[name='icon'] + #label {
     );
 }
 ::slotted([slot='icon']) {
-    /* .spectrum-ActionButton .spectrum-Icon,
-   * .spectrum-Tool .spectrum-Icon */
+    /* .spectrum-ActionButton .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color,
         var(--spectrum-alias-icon-color)
     );
 }
-#button:hover {
-    /* .spectrum-ActionButton:hover,
-   * .spectrum-Tool:hover */
+.button:hover {
+    /* .spectrum-ActionButton:hover */
     background-color: var(
         --spectrum-actionbutton-background-color-hover,
         var(--spectrum-global-color-gray-50)
@@ -205,25 +273,22 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color-hover)
     );
 }
-#button:hover ::slotted([slot='icon']) {
-    /* .spectrum-ActionButton:hover .spectrum-Icon,
-   * .spectrum-Tool:hover .spectrum-Icon */
+.button:hover ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton:hover .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-hover,
         var(--spectrum-alias-icon-color-hover)
     );
 }
-#button:hover #hold-affordance {
-    /* .spectrum-ActionButton:hover .spectrum-ActionButton-hold,
-   * .spectrum-Tool:hover .spectrum-ActionButton-hold */
+.button:hover #hold-affordance {
+    /* .spectrum-ActionButton:hover .spectrum-ActionButton-hold */
     color: var(
         --spectrum-actionbutton-hold-icon-color-hover,
         var(--spectrum-alias-icon-color-hover)
     );
 }
-#button:focus-visible {
-    /* .spectrum-ActionButton.focus-ring,
-   * .spectrum-Tool.focus-ring */
+.button:focus-visible {
+    /* .spectrum-ActionButton.focus-ring */
     background-color: var(
         --spectrum-actionbutton-background-color-key-focus,
         var(--spectrum-global-color-gray-50)
@@ -243,82 +308,75 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color-hover)
     );
 }
-#button:focus-visible ::slotted([slot='icon']) {
-    /* .spectrum-ActionButton.focus-ring .spectrum-Icon,
-   * .spectrum-Tool.focus-ring .spectrum-Icon */
+.button:focus-visible ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton.focus-ring .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-key-focus,
         var(--spectrum-alias-icon-color-focus)
     );
 }
-#button:focus-visible #hold-affordance {
-    /* .spectrum-ActionButton.focus-ring .spectrum-ActionButton-hold,
-   * .spectrum-Tool.focus-ring .spectrum-ActionButton-hold */
+.button:focus-visible #hold-affordance {
+    /* .spectrum-ActionButton.focus-ring .spectrum-ActionButton-hold */
     color: var(
         --spectrum-actionbutton-hold-icon-color-key-focus,
         var(--spectrum-alias-icon-color-hover)
     );
 }
-#button:active {
-    /* .spectrum-ActionButton:active,
-   * .spectrum-Tool:active */
+.button:active {
+    /* .spectrum-ActionButton:active */
     background-color: var(
         --spectrum-actionbutton-background-color-down,
         var(--spectrum-global-color-gray-200)
     );
     border-color: var(
         --spectrum-actionbutton-border-color-down,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-alias-border-color-down)
     );
     color: var(
         --spectrum-actionbutton-text-color-down,
         var(--spectrum-alias-text-color-down)
     );
 }
-#button:active #hold-affordance {
-    /* .spectrum-ActionButton:active .spectrum-ActionButton-hold,
-   * .spectrum-Tool:active .spectrum-ActionButton-hold */
+.button:active #hold-affordance {
+    /* .spectrum-ActionButton:active .spectrum-ActionButton-hold */
     color: var(
         --spectrum-actionbutton-hold-icon-color-down,
         var(--spectrum-alias-icon-color-down)
     );
 }
-:host([disabled]) #button {
+:host([disabled]) .button {
     /* .spectrum-ActionButton.is-disabled,
-   * .spectrum-ActionButton:disabled,
-   * .spectrum-Tool:disabled */
+   * .spectrum-ActionButton:disabled */
     background-color: var(
         --spectrum-actionbutton-background-color-disabled,
         var(--spectrum-global-color-gray-200)
     );
     border-color: var(
         --spectrum-actionbutton-border-color-disabled,
-        var(--spectrum-global-color-gray-200)
+        var(--spectrum-alias-border-color-disabled)
     );
     color: var(
         --spectrum-actionbutton-text-color-disabled,
         var(--spectrum-alias-text-color-disabled)
     );
 }
-:host([disabled]) #button ::slotted([slot='icon']) {
+:host([disabled]) .button ::slotted([slot='icon']) {
     /* .spectrum-ActionButton.is-disabled .spectrum-Icon,
-   * .spectrum-ActionButton:disabled .spectrum-Icon,
-   * .spectrum-Tool:disabled .spectrum-Icon */
+   * .spectrum-ActionButton:disabled .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-disabled,
         var(--spectrum-alias-icon-color-disabled)
     );
 }
-:host([disabled]) #button #hold-affordance {
+:host([disabled]) .button #hold-affordance {
     /* .spectrum-ActionButton.is-disabled .spectrum-ActionButton-hold,
-   * .spectrum-ActionButton:disabled .spectrum-ActionButton-hold,
-   * .spectrum-Tool:disabled .spectrum-ActionButton-hold */
+   * .spectrum-ActionButton:disabled .spectrum-ActionButton-hold */
     color: var(
         --spectrum-actionbutton-hold-icon-color-disabled,
         var(--spectrum-alias-icon-color-disabled)
     );
 }
-:host([selected]) #button {
+:host([selected]) .button {
     /* .spectrum-ActionButton.is-selected */
     background-color: var(
         --spectrum-actionbutton-background-color-selected,
@@ -326,21 +384,21 @@ slot[name='icon'] + #label {
     );
     border-color: var(
         --spectrum-actionbutton-border-color-selected,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-border-color)
     );
     color: var(
         --spectrum-actionbutton-text-color-selected,
         var(--spectrum-alias-text-color)
     );
 }
-:host([selected]) #button ::slotted([slot='icon']) {
+:host([selected]) .button ::slotted([slot='icon']) {
     /* .spectrum-ActionButton.is-selected .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-selected,
         var(--spectrum-alias-icon-color)
     );
 }
-:host([selected]) #button:focus-visible {
+:host([selected]) .button:focus-visible {
     /* .spectrum-ActionButton.is-selected.focus-ring */
     background-color: var(
         --spectrum-actionbutton-background-color-selected-key-focus,
@@ -355,14 +413,14 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color-hover)
     );
 }
-:host([selected]) #button:focus-visible ::slotted([slot='icon']) {
+:host([selected]) .button:focus-visible ::slotted([slot='icon']) {
     /* .spectrum-ActionButton.is-selected.focus-ring .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-selected-key-focus,
         var(--spectrum-alias-icon-color-hover)
     );
 }
-:host([selected]) #button:hover {
+:host([selected]) .button:hover {
     /* .spectrum-ActionButton.is-selected:hover */
     background-color: var(
         --spectrum-actionbutton-background-color-selected-hover,
@@ -370,21 +428,21 @@ slot[name='icon'] + #label {
     );
     border-color: var(
         --spectrum-actionbutton-border-color-selected-hover,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-alias-border-color-hover)
     );
     color: var(
         --spectrum-actionbutton-text-color-selected-hover,
         var(--spectrum-alias-text-color-hover)
     );
 }
-:host([selected]) #button:hover ::slotted([slot='icon']) {
+:host([selected]) .button:hover ::slotted([slot='icon']) {
     /* .spectrum-ActionButton.is-selected:hover .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-selected-hover,
         var(--spectrum-alias-icon-color-hover)
     );
 }
-:host([selected]) #button:active {
+:host([selected]) .button:active {
     /* .spectrum-ActionButton.is-selected:active */
     background-color: var(
         --spectrum-actionbutton-background-color-selected-down,
@@ -392,21 +450,21 @@ slot[name='icon'] + #label {
     );
     border-color: var(
         --spectrum-actionbutton-border-color-selected-down,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-alias-border-color-down)
     );
     color: var(
         --spectrum-actionbutton-text-color-selected-down,
         var(--spectrum-alias-text-color-down)
     );
 }
-:host([selected]) #button:active ::slotted([slot='icon']) {
+:host([selected]) .button:active ::slotted([slot='icon']) {
     /* .spectrum-ActionButton.is-selected:active .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color-selected-down,
         var(--spectrum-alias-icon-color-down)
     );
 }
-:host([selected][disabled]) #button {
+:host([selected][disabled]) .button {
     /* .spectrum-ActionButton.is-selected.is-disabled,
    * .spectrum-ActionButton.is-selected:disabled */
     background-color: var(
@@ -415,14 +473,14 @@ slot[name='icon'] + #label {
     );
     border-color: var(
         --spectrum-actionbutton-border-color-selected-disabled,
-        var(--spectrum-global-color-gray-200)
+        var(--spectrum-alias-border-color-disabled)
     );
     color: var(
         --spectrum-actionbutton-text-color-selected-disabled,
         var(--spectrum-alias-text-color-disabled)
     );
 }
-:host([selected][disabled]) #button ::slotted([slot='icon']) {
+:host([selected][disabled]) .button ::slotted([slot='icon']) {
     /* .spectrum-ActionButton.is-selected.is-disabled .spectrum-Icon,
    * .spectrum-ActionButton.is-selected:disabled .spectrum-Icon */
     color: var(
@@ -430,9 +488,323 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-icon-color-disabled)
     );
 }
-:host([quiet]) #button:hover {
-    /* .spectrum-ActionButton--quiet:hover,
-   * .spectrum-Tool:hover */
+.spectrum-ActionButton--emphasized {
+    /* .spectrum-ActionButton--emphasized */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color,
+        var(--spectrum-global-color-gray-75)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color,
+        var(--spectrum-alias-border-color)
+    );
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color,
+        var(--spectrum-alias-text-color)
+    );
+}
+.spectrum-ActionButton--emphasized ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton--emphasized .spectrum-Icon */
+    color: var(
+        --spectrum-actionbutton-emphasized-icon-color,
+        var(--spectrum-alias-icon-color)
+    );
+}
+.spectrum-ActionButton--emphasized #hold-affordance {
+    /* .spectrum-ActionButton--emphasized .spectrum-ActionButton-hold */
+    color: var(
+        --spectrum-actionbutton-emphasized-hold-icon-color,
+        var(--spectrum-alias-icon-color)
+    );
+}
+:host([selected]) .spectrum-ActionButton--emphasized #hold-affordance {
+    /* .spectrum-ActionButton--emphasized.is-selected .spectrum-ActionButton-hold */
+    color: var(
+        --spectrum-actionbutton-emphasized-hold-icon-color-selected,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([selected]) .spectrum-ActionButton--emphasized:hover #hold-affordance {
+    /* .spectrum-ActionButton--emphasized.is-selected:hover .spectrum-ActionButton-hold */
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-selected-hover,
+        var(--spectrum-global-color-static-white)
+    );
+}
+.spectrum-ActionButton--emphasized:hover {
+    /* .spectrum-ActionButton--emphasized:hover */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color-hover,
+        var(--spectrum-global-color-gray-50)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color-hover,
+        var(--spectrum-alias-border-color-hover)
+    );
+    box-shadow: none;
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-hover,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
+.spectrum-ActionButton--emphasized:hover ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton--emphasized:hover .spectrum-Icon */
+    color: var(
+        --spectrum-actionbutton-emphasized-icon-color-hover,
+        var(--spectrum-alias-icon-color-hover)
+    );
+}
+.spectrum-ActionButton--emphasized:hover #hold-affordance {
+    /* .spectrum-ActionButton--emphasized:hover .spectrum-ActionButton-hold */
+    color: var(
+        --spectrum-actionbutton-emphasized-hold-icon-color-hover,
+        var(--spectrum-alias-icon-color-hover)
+    );
+}
+.spectrum-ActionButton--emphasized:focus-visible {
+    /* .spectrum-ActionButton--emphasized.focus-ring */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color-key-focus,
+        var(--spectrum-global-color-gray-50)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    );
+    box-shadow: 0 0 0
+        var(--spectrum-button-primary-border-size-increase-key-focus, 1px)
+        var(
+            --spectrum-actionbutton-border-color-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
+.spectrum-ActionButton--emphasized:focus-visible ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton--emphasized.focus-ring .spectrum-Icon */
+    color: var(
+        --spectrum-actionbutton-emphasized-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-focus)
+    );
+}
+.spectrum-ActionButton--emphasized:focus-visible #hold-affordance {
+    /* .spectrum-ActionButton--emphasized.focus-ring .spectrum-ActionButton-hold */
+    color: var(
+        --spectrum-actionbutton-emphasized-hold-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-hover)
+    );
+}
+.spectrum-ActionButton--emphasized.is-active {
+    /* .spectrum-ActionButton--emphasized.is-active */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color-down,
+        var(--spectrum-global-color-gray-200)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color-down,
+        var(--spectrum-alias-border-color-down)
+    );
+    box-shadow: none;
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-down,
+        var(--spectrum-alias-text-color-down)
+    );
+}
+.spectrum-ActionButton--emphasized.is-active #hold-affordance {
+    /* .spectrum-ActionButton--emphasized.is-active .spectrum-ActionButton-hold */
+    color: var(
+        --spectrum-actionbutton-emphasized-hold-icon-color-down,
+        var(--spectrum-alias-icon-color-down)
+    );
+}
+:host([disabled]) .spectrum-ActionButton--emphasized {
+    /* .spectrum-ActionButton--emphasized.is-disabled,
+   * .spectrum-ActionButton--emphasized:disabled */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color-disabled,
+        var(--spectrum-global-color-gray-200)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color-disabled,
+        var(--spectrum-alias-border-color-disabled)
+    );
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    );
+}
+:host([disabled]) .spectrum-ActionButton--emphasized ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton--emphasized.is-disabled .spectrum-Icon,
+   * .spectrum-ActionButton--emphasized:disabled .spectrum-Icon */
+    color: var(
+        --spectrum-actionbutton-emphasized-icon-color-disabled,
+        var(--spectrum-alias-icon-color-disabled)
+    );
+}
+:host([disabled]) .spectrum-ActionButton--emphasized #hold-affordance {
+    /* .spectrum-ActionButton--emphasized.is-disabled .spectrum-ActionButton-hold,
+   * .spectrum-ActionButton--emphasized:disabled .spectrum-ActionButton-hold */
+    color: var(
+        --spectrum-actionbutton-emphasized-hold-icon-color-disabled,
+        var(--spectrum-alias-icon-color-disabled)
+    );
+}
+:host([selected]) .spectrum-ActionButton--emphasized,
+:host([quiet][selected]) .spectrum-ActionButton--emphasized {
+    /* .spectrum-ActionButton--emphasized.is-selected,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color-selected,
+        var(--spectrum-semantic-cta-color-background-default)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color-selected,
+        var(--spectrum-semantic-cta-color-background-default)
+    );
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-selected,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([selected]) .spectrum-ActionButton--emphasized ::slotted([slot='icon']),
+:host([quiet][selected])
+    .spectrum-ActionButton--emphasized
+    ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton--emphasized.is-selected .spectrum-Icon,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected .spectrum-Icon */
+    color: var(
+        --spectrum-actionbutton-emphasized-icon-color-selected,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([selected]) .spectrum-ActionButton--emphasized:focus-visible,
+:host([quiet][selected]) .spectrum-ActionButton--emphasized:focus-visible {
+    /* .spectrum-ActionButton--emphasized.is-selected.focus-ring,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.focus-ring */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color-selected-key-focus,
+        var(--spectrum-semantic-cta-color-background-key-focus)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color-selected-key-focus,
+        var(--spectrum-semantic-cta-color-background-key-focus)
+    );
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-selected-key-focus,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([selected])
+    .spectrum-ActionButton--emphasized:focus-visible
+    ::slotted([slot='icon']),
+:host([quiet][selected])
+    .spectrum-ActionButton--emphasized:focus-visible
+    ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton--emphasized.is-selected.focus-ring .spectrum-Icon,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.focus-ring .spectrum-Icon */
+    color: var(
+        --spectrum-actionbutton-emphasized-icon-color-selected-key-focus,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([selected]) .spectrum-ActionButton--emphasized:hover,
+:host([quiet][selected]) .spectrum-ActionButton--emphasized:hover {
+    /* .spectrum-ActionButton--emphasized.is-selected:hover,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected:hover */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color-selected-hover,
+        var(--spectrum-semantic-cta-color-background-hover)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color-selected-hover,
+        var(--spectrum-semantic-cta-color-background-hover)
+    );
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-selected-hover,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([selected])
+    .spectrum-ActionButton--emphasized:hover
+    ::slotted([slot='icon']),
+:host([quiet][selected])
+    .spectrum-ActionButton--emphasized:hover
+    ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton--emphasized.is-selected:hover .spectrum-Icon,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected:hover .spectrum-Icon */
+    color: var(
+        --spectrum-actionbutton-emphasized-icon-color-selected-hover,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([selected]) .spectrum-ActionButton--emphasized.is-active,
+:host([quiet][selected]) .spectrum-ActionButton--emphasized.is-active {
+    /* .spectrum-ActionButton--emphasized.is-selected.is-active,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.is-active */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color-selected-down,
+        var(--spectrum-semantic-cta-color-background-down)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color-selected-down,
+        var(--spectrum-semantic-cta-color-background-down)
+    );
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-selected-down,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([selected])
+    .spectrum-ActionButton--emphasized.is-active
+    ::slotted([slot='icon']),
+:host([quiet][selected])
+    .spectrum-ActionButton--emphasized.is-active
+    ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton--emphasized.is-selected.is-active .spectrum-Icon,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.is-active .spectrum-Icon */
+    color: var(
+        --spectrum-actionbutton-emphasized-icon-color-selected-down,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([selected][disabled]) .spectrum-ActionButton--emphasized,
+:host([quiet][selected][disabled]) .spectrum-ActionButton--emphasized {
+    /* .spectrum-ActionButton--emphasized.is-selected.is-disabled,
+   * .spectrum-ActionButton--emphasized.is-selected:disabled,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.is-disabled,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected:disabled */
+    background-color: var(
+        --spectrum-actionbutton-emphasized-background-color-selected-disabled,
+        var(--spectrum-global-color-gray-200)
+    );
+    border-color: var(
+        --spectrum-actionbutton-emphasized-border-color-selected-disabled,
+        var(--spectrum-alias-border-color-disabled)
+    );
+    color: var(
+        --spectrum-actionbutton-emphasized-text-color-selected-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    );
+}
+:host([selected][disabled])
+    .spectrum-ActionButton--emphasized
+    ::slotted([slot='icon']),
+:host([quiet][selected][disabled])
+    .spectrum-ActionButton--emphasized
+    ::slotted([slot='icon']) {
+    /* .spectrum-ActionButton--emphasized.is-selected.is-disabled .spectrum-Icon,
+   * .spectrum-ActionButton--emphasized.is-selected:disabled .spectrum-Icon,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.is-disabled .spectrum-Icon,
+   * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected:disabled .spectrum-Icon */
+    color: var(
+        --spectrum-actionbutton-emphasized-icon-color-selected-disabled,
+        var(--spectrum-alias-icon-color-disabled)
+    );
+}
+:host([quiet]) .button:hover {
+    /* .spectrum-ActionButton--quiet:hover */
     background-color: var(
         --spectrum-actionbutton-quiet-background-color-hover,
         var(--spectrum-alias-background-color-transparent)
@@ -446,9 +818,8 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color-hover)
     );
 }
-:host([quiet]) #button:focus-visible {
-    /* .spectrum-ActionButton--quiet.focus-ring,
-   * .spectrum-Tool.focus-ring */
+:host([quiet]) .button:focus-visible {
+    /* .spectrum-ActionButton--quiet.focus-ring */
     background-color: var(
         --spectrum-actionbutton-quiet-background-color-key-focus,
         var(--spectrum-alias-background-color-transparent)
@@ -467,9 +838,8 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color-hover)
     );
 }
-:host([quiet]) #button:active {
-    /* .spectrum-ActionButton--quiet:active,
-   * .spectrum-Tool:active */
+:host([quiet]) .button:active {
+    /* .spectrum-ActionButton--quiet:active */
     background-color: var(
         --spectrum-actionbutton-quiet-background-color-down,
         var(--spectrum-global-color-gray-300)
@@ -483,10 +853,9 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color-down)
     );
 }
-:host([quiet][disabled]) #button {
+:host([quiet][disabled]) .button {
     /* .spectrum-ActionButton--quiet.is-disabled,
-   * .spectrum-ActionButton--quiet:disabled,
-   * .spectrum-Tool:disabled */
+   * .spectrum-ActionButton--quiet:disabled */
     background-color: var(
         --spectrum-actionbutton-quiet-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
@@ -500,7 +869,7 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color-disabled)
     );
 }
-:host([quiet][selected]) #button {
+:host([quiet][selected]) .button {
     /* .spectrum-ActionButton--quiet.is-selected */
     background-color: var(
         --spectrum-actionbutton-quiet-background-color-selected,
@@ -508,14 +877,14 @@ slot[name='icon'] + #label {
     );
     border-color: var(
         --spectrum-actionbutton-quiet-border-color-selected,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-border-color)
     );
     color: var(
         --spectrum-actionbutton-quiet-text-color-selected,
         var(--spectrum-alias-text-color)
     );
 }
-:host([quiet][selected]) #button:focus-visible {
+:host([quiet][selected]) .button:focus-visible {
     /* .spectrum-ActionButton--quiet.is-selected.focus-ring */
     background-color: var(
         --spectrum-actionbutton-quiet-background-color-selected-key-focus,
@@ -530,7 +899,7 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color-hover)
     );
 }
-:host([quiet][selected]) #button:hover {
+:host([quiet][selected]) .button:hover {
     /* .spectrum-ActionButton--quiet.is-selected:hover */
     background-color: var(
         --spectrum-actionbutton-quiet-background-color-selected-hover,
@@ -538,14 +907,14 @@ slot[name='icon'] + #label {
     );
     border-color: var(
         --spectrum-actionbutton-quiet-border-color-selected-hover,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-border-color-hover)
     );
     color: var(
         --spectrum-actionbutton-quiet-text-color-selected-hover,
         var(--spectrum-alias-text-color-hover)
     );
 }
-:host([quiet][selected]) #button:active {
+:host([quiet][selected]) .button:active {
     /* .spectrum-ActionButton--quiet.is-selected:active */
     background-color: var(
         --spectrum-actionbutton-quiet-background-color-selected-down,
@@ -553,14 +922,14 @@ slot[name='icon'] + #label {
     );
     border-color: var(
         --spectrum-actionbutton-quiet-border-color-selected-down,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-border-color-down)
     );
     color: var(
         --spectrum-actionbutton-quiet-text-color-selected-down,
         var(--spectrum-alias-text-color-down)
     );
 }
-:host([quiet][selected][disabled]) #button {
+:host([quiet][selected][disabled]) .button {
     /* .spectrum-ActionButton--quiet.is-selected.is-disabled,
    * .spectrum-ActionButton--quiet.is-selected:disabled */
     background-color: var(
@@ -569,7 +938,7 @@ slot[name='icon'] + #label {
     );
     border-color: var(
         --spectrum-actionbutton-quiet-border-color-selected-disabled,
-        var(--spectrum-global-color-gray-200)
+        var(--spectrum-alias-border-color-disabled)
     );
     color: var(
         --spectrum-actionbutton-quiet-text-color-selected-disabled,

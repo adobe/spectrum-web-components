@@ -85,6 +85,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
     vertical-align: top;
 }
+:host([direction='horizontal']) slot + :not(#selectionIndicator) {
+    /* .spectrum-Tabs--horizontal .spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator) */
+    margin-left: var(
+        --spectrum-tabs-item-gap,
+        var(--spectrum-global-dimension-size-300)
+    );
+}
 :host([direction='horizontal']) #selectionIndicator {
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-selectionIndicator */
     position: absolute;
@@ -159,6 +166,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-bottom: var(
         --spectrum-tabs-vertical-item-gap,
         var(--spectrum-global-dimension-size-50)
+    );
+}
+:host([direction='vertical']) ::slotted(*):before {
+    /* .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+    left: calc(
+        -1 * var(--spectrum-tabs-focus-ring-size, var(--spectrum-alias-border-size-thick))
+    );
+    right: calc(
+        -1 * var(--spectrum-tabs-focus-ring-size, var(--spectrum-alias-border-size-thick))
+    );
+    margin-top: calc(
+        var(
+                --spectrum-tabs-focus-ring-height,
+                var(--spectrum-alias-single-line-height)
+            ) / -2
     );
 }
 :host([direction='vertical'][compact]) ::slotted(*) {
