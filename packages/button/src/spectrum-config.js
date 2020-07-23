@@ -17,24 +17,24 @@ const config = {
             name: 'button-base',
             host: {
                 selector: '.spectrum-Button',
-                shadowSelector: '#button',
+                shadowSelector: '.button',
             },
-            focus: '#button',
+            focus: '.button',
             slots: [
                 {
                     name: 'icon',
                     selector: '.spectrum-Icon',
                 },
             ],
-            excludeSourceSelector: [/^(?!(.*),(.*),(.*),(.*),(.*),(.*))/],
+            excludeSourceSelector: [/^(?!(.*),(.*),(.*),(.*),(.*))/],
         },
         {
             name: 'fieldbutton',
             host: {
                 selector: '.spectrum-FieldButton',
-                shadowSelector: '#button',
+                shadowSelector: '.button',
             },
-            focus: '#button',
+            focus: '.button',
             attributes: [
                 {
                     type: 'boolean',
@@ -54,16 +54,16 @@ const config = {
                 },
             ],
             excludeSourceSelector: [
-                /^([^\s]*),([^\s]*),([^\s]*),([^\s]*),([^\s]*),([^\s]*)$/,
+                /^([^\s]*),([^\s]*),([^\s]*),([^\s]*),([^\s]*)$/,
             ],
         },
         {
             name: 'button',
             host: {
                 selector: '.spectrum-Button',
-                shadowSelector: '#button',
+                shadowSelector: '.button',
             },
-            focus: '#button',
+            focus: '.button',
             attributes: [
                 {
                     type: 'boolean',
@@ -97,14 +97,15 @@ const config = {
                 },
             ],
             exclude: [/\.is-disabled/],
-            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
+            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
         },
         {
             name: 'action-button',
             host: {
                 selector: '.spectrum-ActionButton',
-                shadowSelector: '#button',
+                shadowSelector: '.button',
             },
+            focus: '.button',
             attributes: [
                 {
                     type: 'boolean',
@@ -134,15 +135,15 @@ const config = {
                 },
             ],
             exclude: [/\.is-disabled/],
-            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
+            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
         },
         {
             name: 'clear-button',
             host: {
                 selector: '.spectrum-ClearButton',
-                shadowSelector: '#button',
+                shadowSelector: '.button',
             },
-            focus: '#button',
+            focus: '.button',
             attributes: [
                 {
                     selector: '.spectrum-ClearButton--small',
@@ -171,7 +172,7 @@ const config = {
                     selector: '.spectrum-Icon',
                 },
             ],
-            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*),(.*)$/],
+            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
         },
     ],
 };
