@@ -251,7 +251,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-font-size-50)
     );
 }
-#subtitle + slot[name='description']:before {
+#subtitle + ::slotted([slot='description']):before {
     /* .spectrum-Card-subtitle+.spectrum-Card-description:before */
     content: '•';
     padding-right: var(

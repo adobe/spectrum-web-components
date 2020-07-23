@@ -90,6 +90,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     align-items: flex-start; /* .spectrum-Toast-buttons */
     border-left-color: hsla(0, 0%, 100%, 0.2);
 }
+.buttons slot[name='action'] + ::slotted([slot='action']),
+.buttons slot[name='action'] + .spectrum-ClearButton,
 .buttons .spectrum-ClearButton + ::slotted([slot='action']),
 .buttons .spectrum-ClearButton + .spectrum-ClearButton {
     /* .spectrum-Toast-buttons .spectrum-Button+.spectrum-Button,
