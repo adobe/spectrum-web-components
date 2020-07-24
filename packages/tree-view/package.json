@@ -1,0 +1,60 @@
+{
+    "name": "@spectrum-web-components/tree-view",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/tree-view"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/tree-view",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.0.1",
+    "description": "",
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "types": "src/index.d.ts",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js",
+        "./src/*": "./src/*",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./sp-tree-view": "./sp-tree-view.js",
+        "./sp-tree-view.js": "./sp-tree-view.js",
+        "./sp-tree-view-item": "./sp-tree-view-item.js",
+        "./sp-tree-view-item.js": "./sp-tree-view-item.js"
+    },
+    "files": [
+        "custom-elements.json",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/"
+    ],
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ],
+    "author": "",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "@spectrum-css/treeview": "^3.0.0"
+    },
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.4.1",
+        "@spectrum-web-components/icons-ui": "^0.6.1",
+        "@spectrum-web-components/shared": "^0.11.1",
+        "@spectrum-web-components/thumbnail": "^0.1.1",
+        "tslib": "^2.0.0"
+    }
+}
