@@ -1,0 +1,106 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    /* .spectrum-TreeView */
+    --spectrum-treeview-item-min-height: var(
+        --spectrum-global-dimension-size-400
+    );
+    --spectrum-treeview-item-padding-y: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-treeview-item-icon-margin-right: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-treeview-item-affordance-width: var(
+        --spectrum-global-dimension-size-400
+    );
+    --spectrum-treeview-item-indentation: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-treeview-heading-font-weight: var(
+        --spectrum-global-font-weight-bold,
+        700
+    );
+    --spectrum-treeview-item-hover-offset: var(
+        --spectrum-global-dimension-size-25
+    );
+    --spectrum-treeview-item-border-size-selected: var(
+        --spectrum-alias-border-size-thin,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-treeview-item-height-layers: var(
+        --spectrum-global-dimension-size-550
+    );
+    display: block;
+    position: relative;
+    padding: 0;
+    list-style: none;
+    outline: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+:host([dir='ltr']) ::slotted(sp-tree-view) {
+    /* [dir=ltr] .spectrum-TreeView .spectrum-TreeView */
+    padding-left: var(--spectrum-treeview-item-indentation);
+}
+:host([dir='rtl']) ::slotted(sp-tree-view) {
+    /* [dir=rtl] .spectrum-TreeView .spectrum-TreeView */
+    padding-right: var(--spectrum-treeview-item-indentation);
+}
+sp-tree-view {
+    /* .spectrum-TreeView .spectrum-TreeView */
+    position: static;
+    height: 0;
+    visibility: hidden;
+}
+:host {
+    /* .spectrum-TreeView */
+    --spectrum-treeview-item-background-color-selected: var(
+        --spectrum-alias-highlight-selected
+    );
+    --spectrum-treeview-item-background-color-quiet-selected: var(
+        --spectrum-alias-highlight-hover
+    );
+    --spectrum-treeview-item-icon-color: var(
+        --spectrum-alias-icon-color,
+        var(--spectrum-global-color-gray-700)
+    );
+    --spectrum-treeview-item-icon-color-hover: var(
+        --spectrum-alias-icon-color-hover,
+        var(--spectrum-global-color-gray-900)
+    );
+    --spectrum-treeview-item-icon-color-focus: var(
+        --spectrum-alias-icon-color-focus,
+        var(--spectrum-global-color-gray-900)
+    );
+    --spectrum-treeview-item-icon-color-selected: var(
+        --spectrum-alias-icon-color-selected-neutral,
+        var(--spectrum-global-color-gray-900)
+    );
+    --spectrum-treeview-item-icon-color-disabled: var(
+        --spectrum-alias-icon-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+    --spectrum-treeview-item-text-color-focus: var(
+        --spectrum-alias-text-color-down,
+        var(--spectrum-global-color-gray-900)
+    );
+    --spectrum-treeview-item-text-color-selected: var(
+        --spectrum-alias-text-color-selected-neutral,
+        var(--spectrum-global-color-gray-900)
+    );
+    --spectrum-treeview-item-text-color-disabled: var(
+        --spectrum-alias-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    );
+}

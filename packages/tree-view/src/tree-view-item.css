@@ -1,0 +1,48 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+@import './spectrum-tree-view-item.css';
+@import './spectrum-tree-view-item-link.css';
+
+:host {
+    display: list-item;
+    list-style: none;
+}
+
+::slotted(sp-tree-view) {
+    /* .spectrum-TreeView .spectrum-TreeView */
+    position: static;
+    height: 0;
+    visibility: hidden;
+}
+
+:host([dir='ltr']) ::slotted(sp-tree-view) {
+    /* [dir=ltr] .spectrum-TreeView .spectrum-TreeView */
+    padding-left: var(--spectrum-global-dimension-size-200);
+}
+:host([dir='rtl']) ::slotted(sp-tree-view) {
+    /* [dir=rtl] .spectrum-TreeView .spectrum-TreeView */
+    padding-right: var(--spectrum-global-dimension-size-200);
+}
+
+:host([disabled]) {
+    pointer-events: none;
+}
+
+:host([disabled]) #indicator {
+    pointer-events: none !important;
+}
+
+.link:before {
+    border-radius: var(--spectrum-treeview-item-border-radius);
+    border-width: var(--spectrum-treeview-item-border-size);
+}
