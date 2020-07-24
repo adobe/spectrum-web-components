@@ -378,7 +378,7 @@ class SpectrumProcessor {
         const result = [];
 
         const startsWithHost = re`^${this.component.hostSelector}`;
-        const hasHost = re`${this.component.hostSelector}(?![-])`;
+        const hasHost = re`${this.component.hostSelector}(?![a-zA-Z\-])`;
         const startsWithDir = new RegExp(/\[dir\=/);
         const selectorTransform = this.selectorTransform;
         let skipAll = false;

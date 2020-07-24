@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/actionbar/sp-actionbar.js';
 import '@spectrum-web-components/asset/sp-asset.js';
