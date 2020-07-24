@@ -119,7 +119,11 @@ moreCta.story = {
 export const moreCtaOpen = (options = {}): TemplateResult => {
     return html`
         <div>
+<<<<<<< HEAD
             <sp-split-button type="more" open>
+=======
+            <sp-split-button open>
+>>>>>>> feat(split-button): add split-button pattern
                 ${menu(options)}
             </sp-split-button>
         </div>
