@@ -9,7 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './Button.js';
-export * from './ActionButton.js';
-export * from './ClearButton.js';
-export * from './ButtonBase.js';
+
+import { SplitButton } from './src/SplitButton.js';
+
+customElements.define('sp-split-button', SplitButton);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-split-button': SplitButton;
+    }
+}
