@@ -94,7 +94,7 @@ export class SplitButton extends DropdownBase {
     }
 
     protected manageShiftTab(): void {
-        this.addEventListener('keydown', (event) => {
+        this.addEventListener('keydown', (event: KeyboardEvent) => {
             const target = event.composedPath()[0];
             if (
                 target &&
