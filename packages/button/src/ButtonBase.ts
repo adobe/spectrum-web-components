@@ -14,7 +14,7 @@ import { property, html, TemplateResult, CSSResultArray } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text';
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import buttonStyles from './button-base.css.js';
 
 export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {

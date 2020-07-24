@@ -16,7 +16,7 @@ import { action, boolean } from '@open-wc/demoing-storybook';
 import '@spectrum-web-components/button/sp-button.js';
 
 import '../sp-dialog-wrapper.js';
-import { landscape } from './images';
+import { landscape } from './images.js';
 
 export default {
     title: 'Dialog Wrapped',
@@ -46,8 +46,15 @@ export const wrapperLabeledHero = (): TemplateResult => {
     `;
 };
 
-export const wrapperDismissible = (): TemplateResult => {
+export const wrapperDismissible = ({
+    actionTracking = true,
+} = {}): TemplateResult => {
     const noTransitions = boolean('No Transitions', false, 'Testing');
+    const announceAction = actionTracking
+        ? action
+        : () => {
+              return;
+          };
     return html`
         <sp-dialog-wrapper
             ?no-transitions=${noTransitions}
@@ -55,7 +62,7 @@ export const wrapperDismissible = (): TemplateResult => {
             hero=${landscape}
             dismissible
             headline="Wrapped Dialog w/ Hero Image"
-            @close=${action('close')}
+            @close=${announceAction('close')}
         >
             Content of the dialog
         </sp-dialog-wrapper>
@@ -91,8 +98,15 @@ export const wrapperDismissibleUnderlay = (): TemplateResult => {
     `;
 };
 
-export const wrapperButtons = (): TemplateResult => {
+export const wrapperButtons = ({
+    actionTracking = true,
+} = {}): TemplateResult => {
     const noTransitions = boolean('No Transitions', false, 'Testing');
+    const announceAction = actionTracking
+        ? action
+        : () => {
+              return;
+          };
     return html`
         <sp-dialog-wrapper
             ?no-transitions=${noTransitions}
@@ -103,9 +117,9 @@ export const wrapperButtons = (): TemplateResult => {
             secondary-label="Replace"
             cancel-label="Cancel"
             footer="Content for footer"
-            @confirm=${action('confirm')}
-            @secondary=${action('secondary')}
-            @cancel=${action('cancel')}
+            @confirm=${announceAction('confirm')}
+            @secondary=${announceAction('secondary')}
+            @cancel=${announceAction('cancel')}
         >
             Content of the dialog
         </sp-dialog-wrapper>

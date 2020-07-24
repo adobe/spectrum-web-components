@@ -8,8 +8,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-avatar.js';
-import { Avatar } from '../';
+import '@spectrum-web-components/avatar/sp-avatar.js';
+import { Avatar } from '@spectrum-web-components/avatar';
 import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 
 describe('Avatar', () => {

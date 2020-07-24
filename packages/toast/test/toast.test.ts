@@ -20,7 +20,7 @@ import {
     nextFrame,
 } from '@open-wc/testing';
 import { ClearButton } from '@spectrum-web-components/button';
-import { waitForPredicate } from '../../../test/testing-helpers';
+import { waitForPredicate } from '../../../test/testing-helpers.js';
 
 interface TestableToast {
     _timeout: number;

@@ -22,7 +22,7 @@ import {
 import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 
 import iconStyles from './icon.css.js';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export class Icon extends LitElement {
     public static is = 'sp-icon';

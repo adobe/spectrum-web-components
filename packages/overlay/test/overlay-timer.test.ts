@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { useFakeTimers, SinonFakeTimers } from 'sinon';
-import { OverlayTimer } from '../src/overlay-timer';
+import { OverlayTimer } from '../src/overlay-timer.js';
 import { expect } from '@open-wc/testing';
 
 describe('Overlays timer', () => {

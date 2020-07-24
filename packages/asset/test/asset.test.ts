@@ -22,20 +22,20 @@ describe('Asset', () => {
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads [variant="file"] accessibly', async () => {
         const el = await fixture<Asset>(File());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
     it('loads [variant="folder"] accessibly', async () => {
         const el = await fixture<Asset>(Folder());
 
         await elementUpdated(el);
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
 });

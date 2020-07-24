@@ -20,11 +20,11 @@ import {
 import { Instance } from '@popperjs/core/lib/types';
 import { Placement } from '@popperjs/core/lib/enums';
 
-import flip from '@popperjs/core/lib/modifiers/flip';
-import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
-import arrow from '@popperjs/core/lib/modifiers/arrow';
-import offset from '@popperjs/core/lib/modifiers/offset';
-import { computeArrowRotateStyles } from './popper-arrow-rotate';
+import flip from '@popperjs/core/lib/modifiers/flip.js';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
+import arrow from '@popperjs/core/lib/modifiers/arrow.js';
+import offset from '@popperjs/core/lib/modifiers/offset.js';
+import { computeArrowRotateStyles } from './popper-arrow-rotate.js';
 import maxSize from 'popper-max-size-modifier';
 import { applyMaxSize } from './apply-max-size.js';
 

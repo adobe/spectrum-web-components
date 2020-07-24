@@ -10,12 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { Overlay, Placement } from '../';
 
-import { waitForPredicate, isVisible } from '../../../test/testing-helpers';
+import { waitForPredicate, isVisible } from '../../../test/testing-helpers.js';
 import {
     fixture,
     html,

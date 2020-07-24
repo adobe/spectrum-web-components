@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { createPopper, Instance, maxSize, applyMaxSize } from './popper';
+import { createPopper, Instance, maxSize, applyMaxSize } from './popper.js';
 import {
     Placement,
     OverlayOpenDetail,
@@ -25,7 +25,7 @@ import {
     property,
     PropertyValues,
 } from 'lit-element';
-import { ifDefined } from 'lit-html/directives/if-defined';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 import styles from './active-overlay.css.js';
 
 export interface PositionResult {

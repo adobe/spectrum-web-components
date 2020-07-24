@@ -14,7 +14,7 @@ import { html, TemplateResult } from 'lit-html';
 import { boolean } from '@open-wc/demoing-storybook';
 
 import '../sp-dialog.js';
-import { landscape } from './images';
+import { landscape } from './images.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 export default {

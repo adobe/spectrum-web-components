@@ -22,7 +22,7 @@ import {
 } from '@open-wc/testing';
 import { LitElement } from 'lit-element';
 import { TemplateResult } from 'lit-html';
-import { waitForPredicate } from '../../../test/testing-helpers';
+import { waitForPredicate } from '../../../test/testing-helpers.js';
 
 const keyboardEvent = (code: string): KeyboardEvent =>
     new KeyboardEvent('keydown', {
