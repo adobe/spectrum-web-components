@@ -12,13 +12,8 @@ governing permissions and limitations under the License.
 
 import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
 
+import { MenuItem } from './MenuItem.js';
 import menuStyles from './menu.css.js';
-
-interface MenuItem extends HTMLElement {
-    disabled: boolean;
-    selected: boolean;
-    tabIndex: number;
-}
 
 export interface MenuQueryRoleEventDetail {
     role: string;
@@ -34,7 +29,7 @@ export class Menu extends LitElement {
         return [menuStyles];
     }
 
-    public menuItems = [] as Element[];
+    public menuItems = [] as MenuItem[];
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
@@ -170,7 +165,7 @@ export class Menu extends LitElement {
     private prepItems = (): void => {
         this.menuItems = [
             ...this.querySelectorAll(`[role="${this.childRole}"]`),
-        ];
+        ] as MenuItem[];
         if (!this.menuItems || this.menuItems.length === 0) {
             return;
         }

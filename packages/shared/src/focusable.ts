@@ -104,7 +104,14 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 return;
             }
             let doTimeout = true;
-            const innerHandler = (): void => {
+            const innerHandler = (event: FocusEvent): void => {
+                if (
+                    event.relatedTarget &&
+                    this.shadowRoot &&
+                    this.shadowRoot.contains(event.relatedTarget as Node)
+                ) {
+                    return;
+                }
                 setTimeout(() => {
                     // Typically this would be done via `clearTimeout()`.
                     // However, there are moment when the asyncrony of native

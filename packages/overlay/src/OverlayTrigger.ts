@@ -27,6 +27,7 @@ import { Overlay } from './overlay.js';
  * A overlay trigger component for displaying overlays relative to other content.
  * @element overlay-trigger
  *
+ * @slot trigger - The content that will trigger the various overlays
  * @slot hover-content - The content that will be displayed on hover
  * @slot click-content - The content that will be displayed on click
  */
@@ -57,6 +58,10 @@ export class OverlayTrigger extends LitElement {
     private clickContent?: HTMLElement;
     private hoverContent?: HTMLElement;
     private targetContent?: HTMLElement;
+
+    public overloadTarget(target: HTMLElement): void {
+        this.targetContent = target;
+    }
 
     protected render(): TemplateResult {
         return html`
@@ -182,7 +187,7 @@ export class OverlayTrigger extends LitElement {
             return;
         }
         const slot = event.target as HTMLSlotElement;
-        const nodes = slot.assignedNodes();
+        const nodes = slot.assignedNodes({ flatten: true });
         return nodes.find((node) => node instanceof HTMLElement) as HTMLElement;
     }
 

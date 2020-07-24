@@ -4,6 +4,7 @@
 
 ```html
 <a
+  class="button"
   href="test_url"
   id="button"
   tabindex="0"
@@ -20,6 +21,7 @@
 
 ```html
 <a
+  class="button"
   href="test_url"
   id="button"
   tabindex="0"

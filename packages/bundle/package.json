@@ -77,6 +77,7 @@
         "@spectrum-web-components/search": "^0.4.3",
         "@spectrum-web-components/sidenav": "^0.4.2",
         "@spectrum-web-components/slider": "^0.5.3",
+        "@spectrum-web-components/split-button": "^0.0.1",
         "@spectrum-web-components/status-light": "^0.3.0",
         "@spectrum-web-components/switch": "^0.3.3",
         "@spectrum-web-components/tabs": "^0.1.2",

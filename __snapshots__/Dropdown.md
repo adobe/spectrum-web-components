@@ -68,6 +68,7 @@
 <button
   aria-haspopup="true"
   aria-label="Select a Country with a very long label, too long in fact"
+  class="button"
   id="button"
   tabindex="0"
 >
