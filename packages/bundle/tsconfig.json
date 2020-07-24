@@ -38,6 +38,7 @@
         { "path": "../search" },
         { "path": "../sidenav" },
         { "path": "../slider" },
+        { "path": "../split-button" },
         { "path": "../status-light" },
         { "path": "../switch" },
         { "path": "../tabs" },

@@ -2472,10 +2472,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/barloader/-/barloader-2.0.5.tgz#7f846b6bbecd45af56710640a423797271d70b3f"
   integrity sha512-dZ4KvWwCqkbRrA5Fiy9lzOzTaNrD75GOQtZj110Ov6R2TQMz+G2ukDahDoye0sCj0TtqczbBM4UhE5itd+Tj4g==
 
-"@spectrum-css/button@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-2.2.0.tgz#7372e8b107f3ba645a69f3994b84a6753c47ddea"
-  integrity sha512-1dccGF47Xf8uKEThnAjwXMsOE5PPMDrWK1S1x6ZWWXHJ1kQAkx7ZtekLYLvh588/IuEHUcPW3M4r9gvUuGXR5g==
+"@spectrum-css/button@^3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-3.0.0-beta.3.tgz#52ceb42f76fef170f7cd3010df56c1247a80e6b2"
+  integrity sha512-C9g1ZJrq0fGs9Vu5z/Ft+Cr/plnSWtsk8rK394yAyOrQQym0zajiTvIMJLDlu764ah6k/4PkyPXmN+28/8vJSw==
 
 "@spectrum-css/buttongroup@^2.0.0":
   version "2.2.1"
@@ -2573,6 +2573,11 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-2.1.0.tgz#2bc83c522b07c5ce5b57ba267021fb24984d2a0b"
   integrity sha512-oROCNx6HMY5nPPXBmH515dDpE/45hssaUleIC/HtgdOdwHiNdbGVFV3IK5xpPgYPCAzNlrB9BRsL8DSz2nDUQw==
+
+"@spectrum-css/splitbutton@^3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-3.0.0-beta.3.tgz#22fc6ea20cd5848c67a3a470952a2351915ad77c"
+  integrity sha512-W+7mV1G6xeoGI6N6rd4C7BgyaSiVZsR66XUGICgR9SWA52yoNyjkX99ouQf/uHMy0O6oM++Nl1XzZSzoEm3mGw==
 
 "@spectrum-css/statuslight@^2.0.6":
   version "2.0.6"
