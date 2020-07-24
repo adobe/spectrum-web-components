@@ -37,6 +37,14 @@ export class Tag extends LitElement {
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    private get hasIcon(): boolean {
+        return !!this.querySelector('[slot="icon"]');
+    }
+
+    private get hasAvatar(): boolean {
+        return !!this.querySelector('[slot="avatar"]');
+    }
+
     constructor() {
         super();
         this.addEventListener('focusin', this.handleFocusin);
@@ -77,9 +85,23 @@ export class Tag extends LitElement {
     }
 
     protected render(): TemplateResult {
+        const slots = [];
+        if (this.hasAvatar) {
+            slots.push(
+                html`
+                    <slot name="avatar"></slot>
+                `
+            );
+        }
+        if (this.hasIcon) {
+            slots.push(
+                html`
+                    <slot name="icon"></slot>
+                `
+            );
+        }
         return html`
-            <slot name="avatar"></slot>
-            <slot name="icon"></slot>
+            ${slots}
             <span class="label"><slot></slot></span>
             ${this.deletable
                 ? html`
