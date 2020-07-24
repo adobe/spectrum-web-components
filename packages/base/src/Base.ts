@@ -22,11 +22,6 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
-// export interface SlotTextObservingInterface {
-//     slotHasContent: boolean;
-//     manageObservedSlot(): void;
-// }
-
 export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
     constructor: T
 ): T & Constructor<UpdatingElement> {
