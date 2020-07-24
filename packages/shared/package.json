@@ -42,6 +42,7 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
+        "@spectrum-web-components/base": "^0.0.1",
         "focus-visible": "^5.0.2",
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",

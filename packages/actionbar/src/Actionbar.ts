@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
     property,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import actionbarStyles from './actionbar.css.js';
 
@@ -25,7 +25,7 @@ export const actionbarVariants = ['sticky', 'fixed'];
 /**
  * Actionbar component
  */
-export class Actionbar extends LitElement {
+export class Actionbar extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [actionbarStyles];
     }

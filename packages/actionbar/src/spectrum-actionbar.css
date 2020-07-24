@@ -34,10 +34,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     opacity: 1;
 }
+:host([dir='ltr'][variant='sticky']) {
+    /* [dir=ltr] .spectrum-ActionBar--sticky */
+    left: 0;
+}
+:host([dir='ltr'][variant='sticky']),
+:host([dir='rtl'][variant='sticky']) {
+    /* [dir=ltr] .spectrum-ActionBar--sticky,
+   * [dir=rtl] .spectrum-ActionBar--sticky */
+    right: 0;
+}
+:host([dir='rtl'][variant='sticky']) {
+    /* [dir=rtl] .spectrum-ActionBar--sticky */
+    left: 0;
+}
 :host([variant='sticky']) {
     /* .spectrum-ActionBar--sticky */
-    left: 0;
-    right: 0;
     position: -webkit-sticky;
     position: sticky;
 }
