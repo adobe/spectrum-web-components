@@ -3315,10 +3315,10 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@spectrum-css/actionbar@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-2.1.5.tgz#20cb0e6346e5d11f8002c9be9185057df7ecf13c"
-  integrity sha512-1De319CZMR9PYvN2JiUZQrxds89q8uj1jpTnu57fbnjF6u3fAx7O+PjF/0FArfTai/+K7DSDjmW/TK08GPkKkA==
+"@spectrum-css/actionbar@^3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-3.0.0-beta.3.tgz#6438b1097a56b53fdaa71e2623053b1eac8549f2"
+  integrity sha512-I8temHdEfT1pRgk2I3hx5Db83E/WEx+qfQgAqdwvjP9OpWfgz2SU8/rIcmuFBv19hQyQF1ot+Q4l4EjftE824A==
 
 "@spectrum-css/asset@^3.0.0-beta.2":
   version "3.0.0-beta.2"
@@ -3355,10 +3355,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-2.0.6.tgz#e6b69978e8551875d1dab037faba74011a365736"
   integrity sha512-5dnQYNpePLSnxK2gtljXhOom8iCkV9meGdgHCKBZk6bRVhKe2sjX5ljwd0o2BdZYjp9CdrEAzkPTQTvBax1G2Q==
 
-"@spectrum-css/checkbox@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-2.1.0.tgz#a981a01ff618993e5bfa71d367cdc36d4f11e0df"
-  integrity sha512-par9qG6+3hxNrPzg1mx46OZHsViSKlOKJIGoa8L2kTS5XLVWCTl7XH+QE55X/QPcUrmItX72terrJr0FZu9pjw==
+"@spectrum-css/checkbox@^3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-3.0.0-beta.3.tgz#7789ba8be60b1edb3db99e8e5c94e7122366ab9c"
+  integrity sha512-z+BZzGr2/l4g3uZ/Yn/u7gSfKXSLi3MMTKOfSxDBIGbL+3GBVXCMw5iBSrouepAomWCH82nRYl1mqSKWod6pLQ==
 
 "@spectrum-css/circleloader@^2.0.5":
   version "2.0.5"
