@@ -195,7 +195,8 @@ class SpectrumProcessor {
                 if (!slot) return;
                 const isLastNode = index === result.length - 1;
                 const isSiblingSelector =
-                    !isLastNode && node.next().value === '+';
+                    !isLastNode &&
+                    (node.next().value === '+' || node.next().value === '~');
 
                 if (isSiblingSelector && !isLastNode) {
                     // If a sibling selector is used, and the slot is not the last
