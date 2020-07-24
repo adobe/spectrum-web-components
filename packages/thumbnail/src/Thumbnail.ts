@@ -40,6 +40,9 @@ export class Thumbnail extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true })
     public cover = false;
 
+    @property({ type: Boolean, reflect: true })
+    public selected = false;
+
     protected render(): TemplateResult {
         return html`
             ${this.background

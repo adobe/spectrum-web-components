@@ -4078,6 +4078,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-1.0.25.tgz#aaaf0ce66accbeccc112e6420fc65509d8e7e27c"
   integrity sha512-oPd/oM3Og/ggS+Kyzpl6truSjxpKMpMgHkcvbiT+h3BeNJMqE5tpiPsO/34O8+9VsolLEI0MtVnnuQ7lENfDlA==
 
+"@spectrum-css/treeview@^6.0.18":
+  version "6.0.18"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/treeview/-/treeview-6.0.18.tgz#21e7fe75b1c9fa90e4f7db3f2be8c8f592d67354"
+  integrity sha512-cytJXRU/KxVPOTvR0XDvZDvC6BY67Suv1CY4mkcF9msH1utDF0We8GTcFeUsgqQBCk91olIt1pMsbwaVAvmq4w==
+
 "@spectrum-css/typography@^4.0.18":
   version "4.0.18"
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-4.0.18.tgz#ab9a68815afb42860726007198d47f9298c6bb4c"

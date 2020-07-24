@@ -78,6 +78,7 @@
         { "path": "packages/toast" },
         { "path": "packages/tooltip" },
         { "path": "packages/top-nav" },
+        { "path": "packages/tree-view" },
         { "path": "packages/tray" },
         { "path": "packages/underlay" },
         { "path": "tools/grid" },

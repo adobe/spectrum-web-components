@@ -1,0 +1,401 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    overflow: hidden; /* .spectrum-TreeView-item */
+}
+:host([dir='ltr'][open]) > .link > #indicator {
+    transform: rotate(
+        90deg
+    ); /* [dir=ltr] .spectrum-TreeView-item.is-open>.spectrum-TreeView-itemLink>.spectrum-TreeView-itemIndicator */
+}
+:host([dir='rtl'][open]) > .link > #indicator {
+    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg); /* [dir=rtl] .spectrum-TreeView-item.is-open>.spectrum-TreeView-itemLink>.spectrum-TreeView-itemIndicator */
+}
+:host([open]) > ::slotted([slot='children']) {
+    height: auto; /* .spectrum-TreeView-item.is-open>.spectrum-TreeView */
+    visibility: visible;
+}
+:host([drop-target]) .link:before {
+    border-width: var(
+        --spectrum-treeview-item-border-size
+    ); /* .spectrum-TreeView-item.is-drop-target .spectrum-TreeView-itemLink:before */
+}
+:host([selected]) .link:not(.focus-visible):before {
+    border-width: var(
+        --spectrum-treeview-item-border-size-selected
+    ); /* .spectrum-TreeView-item.is-selected .spectrum-TreeView-itemLink:not(.focus-ring):before */
+}
+:host([selected]) .link:not(:focus-visible):before {
+    border-width: var(
+        --spectrum-treeview-item-border-size-selected
+    ); /* .spectrum-TreeView-item.is-selected .spectrum-TreeView-itemLink:not(.focus-ring):before */
+}
+.link {
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex; /* .spectrum-TreeView-itemLink */
+    flex-direction: row;
+    min-height: var(--spectrum-treeview-item-min-height);
+    outline: none;
+    overflow: hidden;
+    padding: var(--spectrum-treeview-item-text-padding-top)
+        var(--spectrum-treeview-item-affordance-size)
+        var(--spectrum-treeview-item-text-padding-bottom);
+    text-decoration: none;
+    white-space: nowrap;
+}
+:host([dir='ltr']) .link ::slotted([slot='icon']) {
+    margin-right: var(
+        --spectrum-treeview-s-item-icon-gap,
+        var(--spectrum-global-dimension-size-85)
+    ); /* [dir=ltr] .spectrum-TreeView-itemLink .spectrum-TreeView-itemIcon */
+}
+:host([dir='rtl']) .link ::slotted([slot='icon']) {
+    margin-left: var(
+        --spectrum-treeview-s-item-icon-gap,
+        var(--spectrum-global-dimension-size-85)
+    ); /* [dir=rtl] .spectrum-TreeView-itemLink .spectrum-TreeView-itemIcon */
+}
+.link ::slotted([slot='icon']) {
+    vertical-align: top; /* .spectrum-TreeView-itemLink .spectrum-TreeView-itemIcon */
+}
+:host([dir='ltr']) .link:before {
+    left: var(
+        --spectrum-treeview-item-border-size
+    ); /* [dir=ltr] .spectrum-TreeView-itemLink:before */
+}
+:host([dir='rtl']) .link:before {
+    right: var(
+        --spectrum-treeview-item-border-size
+    ); /* [dir=rtl] .spectrum-TreeView-itemLink:before */
+}
+:host([dir='ltr']) .link:before {
+    right: 0; /* [dir=ltr] .spectrum-TreeView-itemLink:before */
+}
+:host([dir='rtl']) .link:before {
+    left: 0; /* [dir=rtl] .spectrum-TreeView-itemLink:before */
+}
+.link:before {
+    background-color: transparent;
+    border-bottom: var(--spectrum-treeview-item-border-size) solid transparent;
+    border-left: 0 solid transparent;
+    border-right: 0 solid transparent;
+    border-top: var(--spectrum-treeview-item-border-size) solid transparent;
+    color: transparent;
+    content: '\\00a0'; /* .spectrum-TreeView-itemLink:before */
+    height: calc(
+        var(--spectrum-treeview-item-min-height) -
+            var(--spectrum-treeview-item-hover-offset) * 2
+    );
+    padding-bottom: calc(
+        var(--spectrum-treeview-item-text-padding-bottom) -
+            var(--spectrum-treeview-item-border-size)
+    );
+    padding-top: calc(
+        var(--spectrum-treeview-item-text-padding-top) -
+            var(--spectrum-treeview-item-border-size)
+    );
+    position: absolute;
+}
+.link.focus-visible:before {
+    border-width: var(
+        --spectrum-treeview-item-border-size
+    ); /* .spectrum-TreeView-itemLink.focus-ring:before */
+}
+.link:focus-visible:before {
+    border-width: var(
+        --spectrum-treeview-item-border-size
+    ); /* .spectrum-TreeView-itemLink.focus-ring:before */
+}
+:host([dir='ltr']) ::slotted([slot='thumbnail']) {
+    margin-right: var(
+        --spectrum-treeview-s-item-icon-gap,
+        var(--spectrum-global-dimension-size-85)
+    ); /* [dir=ltr] .spectrum-TreeView--thumbnail .spectrum-TreeView-itemThumbnail */
+}
+:host([dir='rtl']) ::slotted([slot='thumbnail']) {
+    margin-left: var(
+        --spectrum-treeview-s-item-icon-gap,
+        var(--spectrum-global-dimension-size-85)
+    ); /* [dir=rtl] .spectrum-TreeView--thumbnail .spectrum-TreeView-itemThumbnail */
+}
+:host([dir='ltr']) #indicator {
+    float: left; /* [dir=ltr] .spectrum-TreeView-itemIndicator */
+}
+:host([dir='rtl']) #indicator {
+    float: right; /* [dir=rtl] .spectrum-TreeView-itemIndicator */
+}
+:host([dir='ltr']) #indicator {
+    left: var(
+        --spectrum-global-dimension-size-125
+    ); /* [dir=ltr] .spectrum-TreeView-itemIndicator */
+}
+:host([dir='rtl']) #indicator {
+    right: var(
+        --spectrum-global-dimension-size-125
+    ); /* [dir=rtl] .spectrum-TreeView-itemIndicator */
+}
+:host([dir='ltr']) #indicator {
+    margin-left: calc(
+        var(--spectrum-global-dimension-size-500) * -1
+    ); /* [dir=ltr] .spectrum-TreeView-itemIndicator */
+}
+:host([dir='rtl']) #indicator {
+    margin-right: calc(
+        var(--spectrum-global-dimension-size-500) * -1
+    ); /* [dir=rtl] .spectrum-TreeView-itemIndicator */
+}
+:host([dir='ltr']) #indicator {
+    margin-right: var(
+        --spectrum-global-dimension-size-85
+    ); /* [dir=ltr] .spectrum-TreeView-itemIndicator */
+}
+:host([dir='rtl']) #indicator {
+    margin-left: var(
+        --spectrum-global-dimension-size-85
+    ); /* [dir=rtl] .spectrum-TreeView-itemIndicator */
+}
+:host([dir='rtl']) #indicator {
+    transform: matrix(
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0
+    ); /* [dir=rtl] .spectrum-TreeView-itemIndicator */
+}
+#indicator {
+    box-sizing: content-box;
+    display: block; /* .spectrum-TreeView-itemIndicator */
+    margin-bottom: calc(var(--spectrum-global-dimension-size-125) * -1);
+    padding: var(--spectrum-global-dimension-size-125)
+        var(--spectrum-global-dimension-size-150);
+    pointer-events: all;
+    position: relative;
+    top: calc(var(--spectrum-global-dimension-size-65) * -1);
+    transition: transform ease
+        var(--spectrum-global-animation-duration-100, 0.13s);
+    z-index: 1;
+}
+:host([dir='ltr'][indent='1']) {
+    padding-left: var(
+        --spectrum-treeview-item-indentation
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent1 */
+}
+:host([dir='rtl'][indent='1']) {
+    padding-right: var(
+        --spectrum-treeview-item-indentation
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent1 */
+}
+:host([dir='ltr'][indent='2']) {
+    padding-left: calc(
+        var(--spectrum-treeview-item-indentation) * 2
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent2 */
+}
+:host([dir='rtl'][indent='2']) {
+    padding-right: calc(
+        var(--spectrum-treeview-item-indentation) * 2
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent2 */
+}
+:host([dir='ltr'][indent='3']) {
+    padding-left: calc(
+        var(--spectrum-treeview-item-indentation) * 3
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent3 */
+}
+:host([dir='rtl'][indent='3']) {
+    padding-right: calc(
+        var(--spectrum-treeview-item-indentation) * 3
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent3 */
+}
+:host([dir='ltr'][indent='4']) {
+    padding-left: calc(
+        var(--spectrum-treeview-item-indentation) * 4
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent4 */
+}
+:host([dir='rtl'][indent='4']) {
+    padding-right: calc(
+        var(--spectrum-treeview-item-indentation) * 4
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent4 */
+}
+:host([dir='ltr'][indent='5']) {
+    padding-left: calc(
+        var(--spectrum-treeview-item-indentation) * 5
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent5 */
+}
+:host([dir='rtl'][indent='5']) {
+    padding-right: calc(
+        var(--spectrum-treeview-item-indentation) * 5
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent5 */
+}
+:host([dir='ltr'][indent='6']) {
+    padding-left: calc(
+        var(--spectrum-treeview-item-indentation) * 6
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent6 */
+}
+:host([dir='rtl'][indent='6']) {
+    padding-right: calc(
+        var(--spectrum-treeview-item-indentation) * 6
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent6 */
+}
+:host([dir='ltr'][indent='7']) {
+    padding-left: calc(
+        var(--spectrum-treeview-item-indentation) * 7
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent7 */
+}
+:host([dir='rtl'][indent='7']) {
+    padding-right: calc(
+        var(--spectrum-treeview-item-indentation) * 7
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent7 */
+}
+:host([dir='ltr'][indent='8']) {
+    padding-left: calc(
+        var(--spectrum-treeview-item-indentation) * 8
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent8 */
+}
+:host([dir='rtl'][indent='8']) {
+    padding-right: calc(
+        var(--spectrum-treeview-item-indentation) * 8
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent8 */
+}
+:host([dir='ltr'][indent='9']) {
+    padding-left: calc(
+        var(--spectrum-treeview-item-indentation) * 9
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent9 */
+}
+:host([dir='rtl'][indent='9']) {
+    padding-right: calc(
+        var(--spectrum-treeview-item-indentation) * 9
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent9 */
+}
+:host([dir='ltr'][indent='10']) {
+    padding-left: calc(
+        var(--spectrum-treeview-item-indentation) * 10
+    ); /* [dir=ltr] .spectrum-TreeView-item--indent10 */
+}
+:host([dir='rtl'][indent='10']) {
+    padding-right: calc(
+        var(--spectrum-treeview-item-indentation) * 10
+    ); /* [dir=rtl] .spectrum-TreeView-item--indent10 */
+}
+:host([disabled]) > .link {
+    color: var(
+        --spectrum-treeview-m-item-text-color-disabled,
+        var(--spectrum-alias-component-text-color-disabled)
+    ); /* .spectrum-TreeView-item.is-disabled>.spectrum-TreeView-itemLink */
+}
+:host([disabled]) > .link .spectrum-Icon {
+    color: var(
+        --spectrum-treeview-item-icon-color-disabled
+    ); /* .spectrum-TreeView-item.is-disabled>.spectrum-TreeView-itemLink .spectrum-Icon */
+}
+:host([selected]) > .link {
+    color: var(
+        --spectrum-treeview-m-item-text-color-selected
+    ); /* .spectrum-TreeView-item.is-selected>.spectrum-TreeView-itemLink */
+}
+:host([selected]) > .link:before {
+    background-color: var(
+        --spectrum-treeview-item-background-color-selected
+    ); /* .spectrum-TreeView-item.is-selected>.spectrum-TreeView-itemLink:before */
+    border-color: var(
+        --spectrum-treeview-m-item-border-color-key-focus,
+        var(--spectrum-alias-border-color-key-focus)
+    );
+}
+:host([selected]) > .link ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-treeview-item-icon-color-selected
+    ); /* .spectrum-TreeView-item.is-selected>.spectrum-TreeView-itemLink .spectrum-TreeView-itemIcon */
+}
+:host([drop-target]) > .link:before {
+    background-color: var(
+        --spectrum-alias-highlight-selected
+    ); /* .spectrum-TreeView-item.is-drop-target>.spectrum-TreeView-itemLink:before */
+    border-color: var(
+        --spectrum-treeview-m-item-border-color-key-focus,
+        var(--spectrum-alias-border-color-key-focus)
+    );
+}
+::slotted([slot='icon']) {
+    color: var(
+        --spectrum-treeview-item-icon-color
+    ); /* .spectrum-TreeView-itemIcon */
+}
+.link {
+    color: var(
+        --spectrum-treeview-m-item-text-color,
+        var(--spectrum-alias-component-text-color-default)
+    ); /* .spectrum-TreeView-itemLink */
+}
+.link:hover {
+    color: var(
+        --spectrum-treeview-m-item-text-color-hover,
+        var(--spectrum-alias-component-text-color-hover)
+    ); /* .spectrum-TreeView-itemLink:hover */
+}
+.link:hover:before {
+    background-color: var(
+        --spectrum-treeview-m-item-background-color-hover,
+        var(--spectrum-global-color-gray-200)
+    ); /* .spectrum-TreeView-itemLink:hover:before */
+}
+.link:hover ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-treeview-item-icon-color-hover
+    ); /* .spectrum-TreeView-itemLink:hover .spectrum-TreeView-itemIcon */
+}
+.link.focus-visible {
+    color: var(
+        --spectrum-treeview-m-item-text-color-mouse-focus,
+        var(--spectrum-alias-component-text-color-mouse-focus)
+    ); /* .spectrum-TreeView-itemLink.focus-ring */
+}
+.link:focus-visible {
+    color: var(
+        --spectrum-treeview-m-item-text-color-mouse-focus,
+        var(--spectrum-alias-component-text-color-mouse-focus)
+    ); /* .spectrum-TreeView-itemLink.focus-ring */
+}
+.link.focus-visible:before {
+    background-color: var(
+        --spectrum-treeview-m-item-background-color-key-focus,
+        var(--spectrum-global-color-gray-200)
+    ); /* .spectrum-TreeView-itemLink.focus-ring:before */
+    border-color: var(
+        --spectrum-treeview-m-item-border-color-key-focus,
+        var(--spectrum-alias-border-color-key-focus)
+    );
+}
+.link:focus-visible:before {
+    background-color: var(
+        --spectrum-treeview-m-item-background-color-key-focus,
+        var(--spectrum-global-color-gray-200)
+    ); /* .spectrum-TreeView-itemLink.focus-ring:before */
+    border-color: var(
+        --spectrum-treeview-m-item-border-color-key-focus,
+        var(--spectrum-alias-border-color-key-focus)
+    );
+}
+.link.focus-visible ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-treeview-item-icon-color-focus
+    ); /* .spectrum-TreeView-itemLink.focus-ring .spectrum-TreeView-itemIcon */
+}
+.link:focus-visible ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-treeview-item-icon-color-focus
+    ); /* .spectrum-TreeView-itemLink.focus-ring .spectrum-TreeView-itemIcon */
+}
