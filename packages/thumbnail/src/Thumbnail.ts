@@ -60,6 +60,9 @@ export class Thumbnail extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public layer = false;
 
+    @property({ type: Boolean, reflect: true })
+    public selected = false;
+
     @property({ type: String, reflect: true })
     public get size(): ThumbnailSize {
         return this._size;

@@ -1,0 +1,92 @@
+{
+    "name": "@spectrum-web-components/tree-view",
+    "version": "0.0.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/tree-view"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/tree-view",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/TreeView.js": {
+            "development": "./src/TreeView.dev.js",
+            "default": "./src/TreeView.js"
+        },
+        "./src/TreeViewHeading.js": {
+            "development": "./src/TreeViewHeading.dev.js",
+            "default": "./src/TreeViewHeading.js"
+        },
+        "./src/TreeViewItem.js": {
+            "development": "./src/TreeViewItem.dev.js",
+            "default": "./src/TreeViewItem.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/tree-view-heading.css.js": "./src/tree-view-heading.css.js",
+        "./src/tree-view-item.css.js": "./src/tree-view-item.css.js",
+        "./src/tree-view-label.css.js": "./src/tree-view-label.css.js",
+        "./src/tree-view.css.js": "./src/tree-view.css.js",
+        "./src/~spectrum-config.js": {
+            "development": "./src/~spectrum-config.dev.js",
+            "default": "./src/~spectrum-config.js"
+        },
+        "./sp-tree-view-heading.js": {
+            "development": "./sp-tree-view-heading.dev.js",
+            "default": "./sp-tree-view-heading.js"
+        },
+        "./sp-tree-view-item.js": {
+            "development": "./sp-tree-view-item.dev.js",
+            "default": "./sp-tree-view-item.js"
+        },
+        "./sp-tree-view.js": {
+            "development": "./sp-tree-view.dev.js",
+            "default": "./sp-tree-view.js"
+        }
+    },
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.40.5",
+        "@spectrum-web-components/icons-ui": "^0.40.5",
+        "@spectrum-web-components/shared": "^0.40.5",
+        "@spectrum-web-components/thumbnail": "^0.40.5"
+    },
+    "devDependencies": {
+        "@spectrum-css/treeview": "^6.0.18"
+    },
+    "types": "src/index.d.ts",
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ]
+}

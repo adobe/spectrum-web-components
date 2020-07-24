@@ -1,0 +1,6 @@
+{
+    "./src/*": "./src/*.js",
+    "./sp-tree-view-heading.js": "./sp-tree-view-heading.js",
+    "./sp-tree-view-item.js": "./sp-tree-view-item.js",
+    "./sp-tree-view.js": "./sp-tree-view.js"
+}

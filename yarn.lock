@@ -6946,6 +6946,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.2.0.tgz#f253ef79e8eb8e1e2b7ed721fced9c49d090ab2a"
   integrity sha512-FkEt08iKJNsI2Mfi0JYJ0r4k2YqpUNRWYy/xDPSveyMNbBNlypIBxswwcHXQTcT1E/awVxcm3hlrbAEV/BloDQ==
 
+"@spectrum-css/treeview@^6.0.18":
+  version "6.0.18"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/treeview/-/treeview-6.0.18.tgz#21e7fe75b1c9fa90e4f7db3f2be8c8f592d67354"
+  integrity sha512-cytJXRU/KxVPOTvR0XDvZDvC6BY67Suv1CY4mkcF9msH1utDF0We8GTcFeUsgqQBCk91olIt1pMsbwaVAvmq4w==
+
 "@spectrum-css/typography@^5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.1.0.tgz#640ceb7837fa41dde58c8dd1c5a9e4d81edaec61"
@@ -10768,7 +10773,12 @@ avvio@^8.2.0:
     debug "^4.0.0"
     fastq "^1.6.1"
 
-axe-core@^4.2.0, axe-core@^4.3.3:
+axe-core@^4.2.0:
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.8.3.tgz#205df863dd9917d5979e9435dab4d47692759051"
+  integrity sha512-d5ZQHPSPkF9Tw+yfyDcRoUOc4g/8UloJJe5J8m4L5+c7AtDdjDLRxew/knnI4CxvtdxEUVgWz4x3OIQUIFiMfw==
+
+axe-core@^4.3.3:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.7.2.tgz#040a7342b20765cb18bb50b628394c21bccc17a0"
   integrity sha512-zIURGIS1E1Q4pcrMjp+nnEh+16G56eG/MUllJH8yEvw7asDo7Ac9uhC9KIH5jzpITueEZolfYglnCGIuSBz39g==
