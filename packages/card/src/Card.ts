@@ -19,6 +19,7 @@ import {
     PropertyValues,
 } from 'lit-element';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+import '@spectrum-web-components/asset/sp-asset.js';
 
 import cardStyles from './card.css.js';
 
@@ -58,9 +59,9 @@ export class Card extends FocusVisiblePolyfillMixin(LitElement) {
 
     protected get renderPreviewImage(): TemplateResult {
         return html`
-            <div id="preview">
+            <sp-asset id="preview">
                 <slot name="preview"></slot>
-            </div>
+            </sp-asset>
         `;
     }
 
@@ -94,9 +95,9 @@ export class Card extends FocusVisiblePolyfillMixin(LitElement) {
 
     protected renderDefault(): TemplateResult {
         return html`
-            <div id="cover-photo">
+            <sp-asset id="cover-photo">
                 <slot name="cover-photo"></slot>
-            </div>
+            </sp-asset>
             <div id="body">
                 <div id="header">
                     ${this.renderTitle}
