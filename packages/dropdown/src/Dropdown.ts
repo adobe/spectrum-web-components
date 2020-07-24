@@ -74,7 +74,11 @@ export class DropdownBase extends Focusable {
     };
 
     @query('#button')
-    public button?: HTMLButtonElement;
+    public button!: HTMLButtonElement;
+
+    public get target(): HTMLButtonElement | this {
+        return this.button;
+    }
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
@@ -136,10 +140,6 @@ export class DropdownBase extends Focusable {
     }
 
     public get focusElement(): HTMLElement {
-        /* c8 ignore next 3 */
-        if (typeof this.button === 'undefined') {
-            return this;
-        }
         if (this.open && this.optionsMenu) {
             return this.optionsMenu;
         }
@@ -151,11 +151,10 @@ export class DropdownBase extends Focusable {
     }
 
     public onButtonBlur(): void {
-        /* c8 ignore next 3 */
-        if (typeof this.button === 'undefined') {
-            return;
-        }
-        this.button.removeEventListener('keydown', this.onKeydown);
+        (this.target as HTMLButtonElement).removeEventListener(
+            'keydown',
+            this.onKeydown
+        );
     }
 
     protected onButtonClick(): void {
@@ -163,11 +162,10 @@ export class DropdownBase extends Focusable {
     }
 
     public onButtonFocus(): void {
-        /* c8 ignore next 3 */
-        if (typeof this.button === 'undefined') {
-            return;
-        }
-        this.button.addEventListener('keydown', this.onKeydown);
+        (this.target as HTMLButtonElement).addEventListener(
+            'keydown',
+            this.onKeydown
+        );
     }
 
     public onClick(event: Event): void {
@@ -184,7 +182,7 @@ export class DropdownBase extends Focusable {
         }
     }
 
-    public onKeydown(event: KeyboardEvent): void {
+    public onKeydown = (event: KeyboardEvent): void => {
         if (event.code !== 'ArrowDown') {
             return;
         }
@@ -194,7 +192,7 @@ export class DropdownBase extends Focusable {
             return;
         }
         this.open = true;
-    }
+    };
 
     public async setValueFromItem(item: MenuItem): Promise<void> {
         const oldSelectedItemText = this.selectedItemText;
@@ -233,7 +231,7 @@ export class DropdownBase extends Focusable {
         this.open = false;
     }
 
-    private onOverlayClosed(): void {
+    protected onOverlayClosed(): void {
         this.close();
         if (this.optionsMenu && this.placeholder) {
             const parentElement =
@@ -254,7 +252,6 @@ export class DropdownBase extends Focusable {
         /* c8 ignore next 9 */
         if (
             !this.popover ||
-            !this.button ||
             !this.optionsMenu ||
             this.optionsMenu.children.length === 0
         ) {
@@ -274,12 +271,7 @@ export class DropdownBase extends Focusable {
         }
 
         this.popover.append(this.optionsMenu);
-
-        // only use `this.offsetWidth` when Standard variant
-        const menuWidth = !this.quiet && `${this.offsetWidth}px`;
-        if (menuWidth) {
-            this.popover.style.setProperty('width', menuWidth);
-        }
+        this.sizePopover(this.popover);
         const { button, popover } = this;
         this.closeOverlay = await Dropdown.openOverlay(
             button,
@@ -291,6 +283,14 @@ export class DropdownBase extends Focusable {
             }
         );
         this.menuStateResolver();
+    }
+
+    protected sizePopover(popover: HTMLElement): void {
+        // only use `this.offsetWidth` when Standard variant
+        const menuWidth = !this.quiet && `${this.offsetWidth}px`;
+        if (menuWidth) {
+            popover.style.setProperty('width', menuWidth);
+        }
     }
 
     private closeMenu(): void {
@@ -333,6 +333,7 @@ export class DropdownBase extends Focusable {
                 aria-haspopup="true"
                 aria-label=${ifDefined(this.label || undefined)}
                 id="button"
+                class="button"
                 @blur=${this.onButtonBlur}
                 @click=${this.onButtonClick}
                 @focus=${this.onButtonFocus}
@@ -358,27 +359,7 @@ export class DropdownBase extends Focusable {
     protected updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
         if (changedProperties.has('value') && this.optionsMenu) {
-            const items = [
-                ...this.optionsMenu.querySelectorAll(
-                    `[role=${this.optionsMenu.childRole}]`
-                ),
-            ] as MenuItem[];
-            let selectedItem: MenuItem | undefined;
-            items.map((item) => {
-                if (this.value === item.value && !item.disabled) {
-                    selectedItem = item;
-                } else {
-                    item.selected = false;
-                }
-            });
-            if (selectedItem) {
-                selectedItem.selected = true;
-                this.selectedItemText = selectedItem.itemText;
-            } else {
-                this.value = '';
-                this.selectedItemText = '';
-            }
-            this.optionsMenu.updateSelectedItemIndex();
+            this.manageSelection();
         }
         if (changedProperties.has('disabled') && this.disabled) {
             this.open = false;
@@ -395,6 +376,35 @@ export class DropdownBase extends Focusable {
             } else {
                 this.closeMenu();
             }
+        }
+    }
+
+    private async manageSelection(): Promise<void> {
+        if (!this.optionsMenu) {
+            return;
+        }
+        if (this.optionsMenu.menuItems.length) {
+            let selectedItem: MenuItem | undefined;
+            this.optionsMenu.menuItems.map((item) => {
+                if (this.value === item.value && !item.disabled) {
+                    selectedItem = item;
+                } else {
+                    item.selected = false;
+                }
+            });
+            if (selectedItem) {
+                selectedItem.selected = true;
+                this.selectedItemText = selectedItem.itemText;
+            } else {
+                this.value = '';
+                this.selectedItemText = '';
+            }
+            this.optionsMenu.updateSelectedItemIndex();
+            return;
+        }
+        await this.optionsMenu.updateComplete;
+        if (this.optionsMenu.menuItems.length) {
+            this.manageSelection();
         }
     }
 
