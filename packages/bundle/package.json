@@ -47,6 +47,7 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
+        "@spectrum-web-components/accordion": "^0.0.1",
         "@spectrum-web-components/action-menu": "^0.5.6",
         "@spectrum-web-components/actionbar": "^0.3.0",
         "@spectrum-web-components/asset": "^0.1.0",
