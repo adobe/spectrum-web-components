@@ -108,6 +108,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
+:host > slot[name='avatar'] ~ .label,
+:host > slot[name='icon'] ~ .label {
+    /* .spectrum-Tags-item>.spectrum-Avatar~.spectrum-Tags-itemLabel,
+   * .spectrum-Tags-item>.spectrum-Icon~.spectrum-Tags-itemLabel */
+    margin-right: calc(
+        var(
+                --spectrum-tag-avatar-padding-x,
+                var(--spectrum-global-dimension-size-100)
+            ) -
+            var(
+                --spectrum-tag-padding-x,
+                var(--spectrum-global-dimension-size-125)
+            )
+    );
+}
 .clear-button {
     /* .spectrum-Tags-item .spectrum-ClearButton */
     margin-right: calc(

@@ -14,6 +14,8 @@ import { TemplateResult } from 'lit-html';
 import { html, action } from '@open-wc/demoing-storybook';
 
 import '../sp-split-button.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {
     title: 'Split Button',
@@ -117,7 +119,7 @@ moreCta.story = {
 export const moreCtaOpen = (options = {}): TemplateResult => {
     return html`
         <div>
-            <sp-split-button open>
+            <sp-split-button type="more" open>
                 ${menu(options)}
             </sp-split-button>
         </div>
