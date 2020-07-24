@@ -16,7 +16,7 @@ import {
     Placement,
     OverlayDisplayQueryDetail,
 } from './overlay-types';
-import { OverlayStack } from './overlay-stack';
+import { OverlayStack } from './overlay-stack.js';
 
 type OverlayOptions = {
     delayed?: boolean;

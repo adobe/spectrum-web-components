@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import '../sp-dropzone.js';
 import { Dropzone } from '../';
-import { illustration } from './test-svg';
-import { waitForPredicate } from '../../../test/testing-helpers';
+import { illustration } from './test-svg.js';
+import { waitForPredicate } from '../../../test/testing-helpers.js';
 import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 
 describe('Dropzone', () => {

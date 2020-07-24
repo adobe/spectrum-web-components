@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { ActiveOverlay } from './ActiveOverlay.js';
 import { OverlayOpenDetail } from './overlay-types';
-import { OverlayTimer } from './overlay-timer';
+import { OverlayTimer } from './overlay-timer.js';
 
 function isLeftClick(event: MouseEvent): boolean {
     return event.button === 0;

@@ -11,6 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import darkStyles from './src/theme-darkest.css.js';
-import { Theme } from './src/Theme';
+import { Theme } from './src/Theme.js';
 
 Theme.registerThemeFragment('darkest', 'color', darkStyles);

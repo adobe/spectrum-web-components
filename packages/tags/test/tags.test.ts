@@ -86,7 +86,7 @@ describe('Tags', () => {
         expect(el.hasAttribute('role')).to.be.true;
         expect(el.hasAttribute('aria-label')).to.be.true;
     });
-    it('loads accepts keyboard events while focused', async () => {
+    it('accepts keyboard events while focused', async () => {
         const el = await fixture<Tags>(
             html`
                 <sp-tags>
@@ -143,7 +143,7 @@ describe('Tags', () => {
 
         tag1.blur();
     });
-    it('loads accepts keyboard events while focused', async () => {
+    it('will no focus [disabled] children', async () => {
         const el = await fixture<Tags>(
             html`
                 <sp-tags>

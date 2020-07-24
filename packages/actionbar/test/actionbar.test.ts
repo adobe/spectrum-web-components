@@ -13,7 +13,7 @@ import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 import '../sp-actionbar.js';
 import { Actionbar } from '../';
-import { Default } from '../stories/actionbar.stories';
+import { Default } from '../stories/actionbar.stories.js';
 
 describe('Actionbar', () => {
     it('loads', async () => {

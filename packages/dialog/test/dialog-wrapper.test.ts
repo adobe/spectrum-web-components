@@ -66,7 +66,9 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
     });
     it('dismisses', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissible());
+        const el = await fixture<DialogWrapper>(
+            wrapperDismissible({ actionTracking: false })
+        );
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -129,7 +131,9 @@ describe('Dialog Wrapper', () => {
         const handleConfirm = (): void => confirmSpy();
         const handleCancel = (): void => cancelSpy();
         const handleSecondary = (): void => secondarySpy();
-        const el = await fixture<DialogWrapper>(wrapperButtons());
+        const el = await fixture<DialogWrapper>(
+            wrapperButtons({ actionTracking: false })
+        );
         el.addEventListener('confirm', handleConfirm);
         el.addEventListener('cancel', handleCancel);
         el.addEventListener('secondary', handleSecondary);

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { waitForPredicate } from '../../../test/testing-helpers';
+import { waitForPredicate } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import { IconsMedium } from '@spectrum-web-components/icons';

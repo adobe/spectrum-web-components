@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import '../sp-menu.js';
 import '../sp-menu-item.js';
 import { MenuItem } from '../';
 import '@spectrum-web-components/menu';

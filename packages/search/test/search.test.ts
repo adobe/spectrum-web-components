@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import '../sp-search.js';
 import { Search } from '../';
 import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
-import { waitForPredicate } from '../../../test/testing-helpers';
+import { waitForPredicate } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
 

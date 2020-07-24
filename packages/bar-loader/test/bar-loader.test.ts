@@ -29,7 +29,7 @@ describe('BarLoader', () => {
         expect(el).lightDom.to.equalSnapshot();
         expect(el).shadowDom.to.equalSnapshot();
 
-        expect(el).to.be.accessible();
+        await expect(el).to.be.accessible();
     });
 
     it('accepts a changing progress', async () => {
