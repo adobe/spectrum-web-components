@@ -74,11 +74,7 @@ describe('Checkbox', () => {
         await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         expect(el).to.not.equal(undefined);
-        expect(el).dom.to.equal(`
-            <sp-checkbox data-js-focus-visible="" id="checkbox0" tabindex="5">
-                Component
-            </sp-checkbox>
-        `);
+        expect(el).dom.to.equalSnapshot();
         const textNode = labelNodeForCheckbox(el);
         const content = (textNode.textContent || '').trim();
         expect(content).to.equal('Component');
