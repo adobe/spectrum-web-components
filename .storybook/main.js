@@ -60,6 +60,7 @@ module.exports = {
         '../packages/toast/stories/*.stories.js',
         '../packages/tooltip/stories/*.stories.js',
         '../packages/top-nav/stories/*.stories.js',
+        '../packages/tree-view/stories/*.stories.js',
         '../packages/underlay/stories/*.stories.js',
     ],
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2019 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,43 +12,27 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
-    SizedMixin,
+    SpectrumElement,
 } from '@spectrum-web-components/base';
 
-import styles from './thumbnail.css.js';
+import treeViewHeadingStyles from './tree-view-heading.css.js';
+import treeViewLabelStyles from './tree-view-label.css.js';
 
 /**
- * @element sp-thumbnail
+ * @slot icon - The icon that appears on the left of the label
+ * @slot - The label
  */
-export class Thumbnail extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm', 'l', 'xl', 'xxl'],
-    noDefaultSize: true,
-}) {
+
+export class TreeViewHeading extends SpectrumElement {
     public static get styles(): CSSResultArray {
-        return [styles];
+        return [treeViewHeadingStyles, treeViewLabelStyles];
     }
-
-    @property({ type: String, reflect: true })
-    public background?: string;
-
-    @property({ type: Boolean, reflect: true })
-    public selected = false;
 
     protected render(): TemplateResult {
         return html`
-            ${this.background
-                ? html`
-                      <div
-                          class="background"
-                          style="background: ${this.background}"
-                      ></div>
-                  `
-                : html``}
-            <slot></slot>
+            <span id="label"><slot></slot></span>
         `;
     }
 }

@@ -3426,6 +3426,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-3.0.3.tgz#26b8ca3b3d30e29630244d85eb4fc11d0c841281"
   integrity sha512-ztRF7WW1FzyNavXBRc+80z67UoOrY9wl3cMYsVD3MpDnyxdzP8cjza1pCcolKBaFqRTcQKkxKw3GWtGICRKR5A==
 
+"@spectrum-css/treeview@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/treeview/-/treeview-3.0.0.tgz#906608cfa4122cbe6c563a604348ef72ab78d043"
+  integrity sha512-W5OwVrXYNfv9b3lTSdIDxWyxGEsjED0OS/tIuNnYLePv+l/zOoxgHHq+WkNuRTl5kInYhYkZ4poqqDjFZBk/zA==
+
 "@spectrum-css/typography@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-3.0.2.tgz#ea3ca0a60e18064527819d48c8c4364cab4fcd38"
