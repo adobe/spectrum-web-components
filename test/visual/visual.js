@@ -78,7 +78,7 @@ module.exports = {
                     const config = createConfig({
                         port: 4444,
                         nodeResolve: true,
-                        appIndex: 'index.hml',
+                        appIndex: 'index.html',
                         rootDir: path.resolve(
                             process.cwd(),
                             'documentation',
