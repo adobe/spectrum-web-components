@@ -49,6 +49,7 @@ import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/split-button/sp-split-button.js';
 import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
