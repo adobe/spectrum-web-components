@@ -378,6 +378,8 @@ class SpectrumProcessor {
         const result = [];
 
         const startsWithHost = re`^${this.component.hostSelector}`;
+        const hasHost = re`${this.component.hostSelector}(?![-])`;
+        const startsWithDir = new RegExp(/\[dir\=/);
         const selectorTransform = this.selectorTransform;
         let skipAll = false;
 
@@ -391,6 +393,23 @@ class SpectrumProcessor {
         }
         if (!skipAll) {
             for (let selector of rule.selectors) {
+                if (startsWithDir.test(selector)) {
+                    if (!hasHost.test(selector)) {
+                        selector = `${this.component.hostSelector}${selector}`;
+                    } else if (selector.search(/\[dir\=ltr\]/) > -1) {
+                        selector = selector.replace('[dir=ltr] ', '');
+                        selector = selector.replace(
+                            hasHost,
+                            `${this.component.hostSelector}[dir=ltr]`
+                        );
+                    } else if (selector.search(/\[dir\=rtl\]/) > -1) {
+                        selector = selector.replace('[dir=rtl] ', '');
+                        selector = selector.replace(
+                            hasHost,
+                            `${this.component.hostSelector}[dir=rtl]`
+                        );
+                    }
+                }
                 if (!startsWithHost.test(selector)) {
                     // This selector does not match the component we are
                     // working on. Check to see if it matches an id
