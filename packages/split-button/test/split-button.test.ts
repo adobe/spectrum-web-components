@@ -78,6 +78,7 @@ describe('Splitbutton', () => {
         expect(((el as unknown) as TestableSplitButton).isShiftTabbing).to.be
             .true;
         await nextFrame();
+        await nextFrame();
 
         trigger.focus();
 
