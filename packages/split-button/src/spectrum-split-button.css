@@ -1,0 +1,462 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    /* .spectrum-SplitButton */
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    vertical-align: top;
+}
+:host([dir='ltr'].spectrum-Button) + {
+    /* [dir=ltr] .spectrum-Button+.spectrum-SplitButton */
+    margin-left: var(--spectrum-global-dimension-size-150);
+}
+:host([dir='rtl'].spectrum-Button) + {
+    /* [dir=rtl] .spectrum-Button+.spectrum-SplitButton */
+    margin-right: var(--spectrum-global-dimension-size-150);
+}
+:host([dir='ltr']) #button {
+    /* [dir=ltr] .spectrum-SplitButton-action */
+    margin-left: 0; /* [dir=ltr] .spectrum-SplitButton-action */
+    border-top-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton-action */
+    border-top-right-radius: 0; /* [dir=ltr] .spectrum-SplitButton-action */
+    border-bottom-right-radius: 0; /* [dir=ltr] .spectrum-SplitButton-action */
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='rtl']) #button {
+    /* [dir=rtl] .spectrum-SplitButton-action */
+    margin-right: 0; /* [dir=rtl] .spectrum-SplitButton-action */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton-action */
+    border-top-left-radius: 0; /* [dir=rtl] .spectrum-SplitButton-action */
+    border-bottom-left-radius: 0; /* [dir=rtl] .spectrum-SplitButton-action */
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='ltr'][variant='cta']) #button {
+    /* [dir=ltr] .spectrum-SplitButton-action.spectrum-Button--cta */
+    margin-right: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+:host([dir='rtl'][variant='cta']) #button {
+    /* [dir=rtl] .spectrum-SplitButton-action.spectrum-Button--cta */
+    margin-left: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+:host([dir='ltr']) #button:after {
+    /* [dir=ltr] .spectrum-SplitButton-action:after */
+    border-top-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=ltr] .spectrum-SplitButton-action:after */
+    border-bottom-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='rtl']) #button:after {
+    /* [dir=rtl] .spectrum-SplitButton-action:after */
+    border-top-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=rtl] .spectrum-SplitButton-action:after */
+    border-bottom-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='ltr']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton-trigger */
+    margin-left: 0; /* [dir=ltr] .spectrum-SplitButton-trigger */
+    border-top-left-radius: 0; /* [dir=ltr] .spectrum-SplitButton-trigger */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton-trigger */
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton-trigger */
+    border-bottom-left-radius: 0; /* [dir=ltr] .spectrum-SplitButton-trigger */
+    border-left-width: 0; /* [dir=ltr] .spectrum-SplitButton-trigger */
+    padding-left: calc(
+        var(
+                --spectrum-button-primary-padding-x,
+                var(--spectrum-global-dimension-size-200)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) * 4
+    ); /* [dir=ltr] .spectrum-SplitButton-trigger */
+    padding-right: calc(
+        var(--spectrum-global-dimension-size-150) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    );
+}
+:host([dir='rtl']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton-trigger */
+    margin-right: 0; /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-top-right-radius: 0; /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-top-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-bottom-right-radius: 0; /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-right-width: 0; /* [dir=rtl] .spectrum-SplitButton-trigger */
+    padding-right: calc(
+        var(
+                --spectrum-button-primary-padding-x,
+                var(--spectrum-global-dimension-size-200)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) * 4
+    ); /* [dir=rtl] .spectrum-SplitButton-trigger */
+    padding-left: calc(
+        var(--spectrum-global-dimension-size-150) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    );
+}
+.trigger {
+    /* .spectrum-SplitButton-trigger */
+    min-width: 0;
+}
+:host([dir='ltr'][variant='cta']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    border-left-width: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+:host([dir='rtl'][variant='cta']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    border-right-width: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+.trigger:focus-visible {
+    /* .spectrum-SplitButton-trigger.focus-ring */
+    box-shadow: none;
+}
+:host([dir='ltr']) .trigger:after {
+    /* [dir=ltr] .spectrum-SplitButton-trigger:after */
+    border-top-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=ltr] .spectrum-SplitButton-trigger:after */
+    border-bottom-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='rtl']) .trigger:after {
+    /* [dir=rtl] .spectrum-SplitButton-trigger:after */
+    border-top-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=rtl] .spectrum-SplitButton-trigger:after */
+    border-bottom-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+.icon {
+    /* .spectrum-SplitButton-icon */
+    display: block;
+    margin-top: 1px;
+}
+#button,
+.trigger {
+    /* .spectrum-SplitButton-action,
+   * .spectrum-SplitButton-trigger */
+    position: relative;
+}
+#button:focus,
+.trigger:focus {
+    /* .spectrum-SplitButton-action:focus,
+   * .spectrum-SplitButton-trigger:focus */
+    z-index: 1;
+}
+:host([dir='ltr']) #button .label + .spectrum-Icon {
+    /* [dir=ltr] .spectrum-SplitButton-action .spectrum-Button-label+.spectrum-Icon */
+    margin-left: var(--spectrum-global-dimension-size-150);
+}
+:host([dir='rtl']) #button .label + .spectrum-Icon {
+    /* [dir=rtl] .spectrum-SplitButton-action .spectrum-Button-label+.spectrum-Icon */
+    margin-right: var(--spectrum-global-dimension-size-150);
+}
+:host([dir='ltr'][left]) #button {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-top-left-radius: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-bottom-left-radius: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    margin-right: 0;
+}
+:host([dir='rtl'][left]) #button {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-top-right-radius: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-top-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-bottom-right-radius: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    margin-right: 0;
+}
+:host([dir='ltr'][left]) #button,
+:host([dir='rtl'][left]) #button {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action,
+   * [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    margin-left: 0;
+}
+:host([dir='ltr'][left][variant='cta']) #button {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    padding-left: calc(
+        var(
+                --spectrum-button-primary-padding-x,
+                var(--spectrum-global-dimension-size-200)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    margin-left: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+:host([dir='rtl'][left][variant='cta']) #button {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    padding-right: calc(
+        var(
+                --spectrum-button-primary-padding-x,
+                var(--spectrum-global-dimension-size-200)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    margin-right: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+:host([dir='ltr'][left]) #button:after {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-top-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-bottom-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='rtl'][left]) #button:after {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-top-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-top-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-bottom-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='ltr'][left]) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    margin-right: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-top-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-top-right-radius: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-bottom-right-radius: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-left-width: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-right-width: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    padding-right: calc(
+        var(
+                --spectrum-button-primary-padding-x,
+                var(--spectrum-global-dimension-size-200)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) * 4
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    padding-left: calc(
+        var(--spectrum-global-dimension-size-150) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    );
+}
+:host([dir='rtl'][left]) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    margin-left: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-top-left-radius: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-bottom-left-radius: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-right-width: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-left-width: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    padding-left: calc(
+        var(
+                --spectrum-button-primary-padding-x,
+                var(--spectrum-global-dimension-size-200)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) * 4
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    padding-right: calc(
+        var(--spectrum-global-dimension-size-150) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    );
+}
+:host([dir='ltr'][left][variant='cta']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    border-right-width: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+:host([dir='rtl'][left][variant='cta']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    border-left-width: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+:host([dir='ltr'][left]) .trigger:after {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-top-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-top-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-bottom-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='rtl'][left]) .trigger:after {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-top-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-bottom-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}

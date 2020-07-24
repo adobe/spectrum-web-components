@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { property, html, TemplateResult, CSSResultArray } from 'lit-element';
+import {
+    property,
+    html,
+    TemplateResult,
+    CSSResultArray,
+    query,
+} from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -33,12 +39,15 @@ export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {
         return this.slotHasContent;
     }
 
+    @query('.button')
+    private buttonElement!: HTMLButtonElement;
+
     public get focusElement(): HTMLElement {
         /* c8 ignore next 3 */
         if (!this.shadowRoot) {
             return this;
         }
-        return this.shadowRoot.querySelector('#button') as HTMLElement;
+        return this.buttonElement;
     }
 
     protected get buttonContent(): TemplateResult[] {
@@ -66,10 +75,15 @@ export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {
         return this.href && this.href.length > 0
             ? this.renderAnchor({
                   id: 'button',
+                  className: 'button',
                   anchorContent: this.buttonContent,
               })
             : html`
-                  <button id="button" aria-label=${ifDefined(this.label)}>
+                  <button
+                      id="button"
+                      class="button"
+                      aria-label=${ifDefined(this.label)}
+                  >
                       ${this.buttonContent}
                   </button>
               `;
