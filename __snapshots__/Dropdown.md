@@ -9,6 +9,7 @@
 >
   <sp-menu-item
     data-js-focus-visible=""
+    dir="ltr"
     role="option"
     tabindex="0"
   >
@@ -16,6 +17,7 @@
   </sp-menu-item>
   <sp-menu-item
     data-js-focus-visible=""
+    dir="ltr"
     role="option"
     tabindex="-1"
     value="option-2"
@@ -24,6 +26,7 @@
   </sp-menu-item>
   <sp-menu-item
     data-js-focus-visible=""
+    dir="ltr"
     role="option"
     tabindex="-1"
   >
@@ -31,6 +34,7 @@
   </sp-menu-item>
   <sp-menu-item
     data-js-focus-visible=""
+    dir="ltr"
     role="option"
     tabindex="-1"
   >
@@ -40,6 +44,7 @@
   </sp-menu-divider>
   <sp-menu-item
     data-js-focus-visible=""
+    dir="ltr"
     role="option"
     tabindex="-1"
   >
@@ -48,6 +53,7 @@
   <sp-menu-item
     aria-disabled="true"
     data-js-focus-visible=""
+    dir="ltr"
     disabled=""
     role="option"
     tabindex="-1"

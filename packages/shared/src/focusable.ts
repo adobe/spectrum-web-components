@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    LitElement,
+    SpectrumElement,
     property,
     CSSResultArray,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import focusableStyles from './focusable.css.js';
 
 import { FocusVisiblePolyfillMixin } from './focus-visible.js';
@@ -27,7 +27,7 @@ type DisableableElement = HTMLElement & { disabled?: boolean };
  * This implementation is based heavily on the aybolit delegate-focus-mixin at
  * https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
  */
-export class Focusable extends FocusVisiblePolyfillMixin(LitElement) {
+export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [focusableStyles];
     }

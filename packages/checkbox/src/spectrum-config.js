@@ -17,7 +17,6 @@ module.exports = {
             name: 'checkbox',
             host: {
                 selector: '.spectrum-Checkbox',
-                shadowSelector: '#root',
             },
             focus: '#input',
             attributes: [
