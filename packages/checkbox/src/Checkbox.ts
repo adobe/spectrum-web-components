@@ -45,18 +45,16 @@ export class Checkbox extends CheckboxBase {
 
     protected render(): TemplateResult {
         return html`
-            <label id="root">
-                ${super.render()}
-                <span id="box">
-                    <sp-icon id="checkmark" size="s" class="checkmark-small">
-                        ${CheckmarkSmallIcon({ hidden: true })}
-                    </sp-icon>
-                    <sp-icon id="partialCheckmark" size="s" class="dash-small">
-                        ${DashSmallIcon({ hidden: true })}
-                    </sp-icon>
-                </span>
-                <span id="label"><slot></slot></span>
-            </label>
+            ${super.render()}
+            <span id="box">
+                <sp-icon id="checkmark" size="s" class="checkmark-small">
+                    ${CheckmarkSmallIcon({ hidden: true })}
+                </sp-icon>
+                <sp-icon id="partialCheckmark" size="s" class="dash-small">
+                    ${DashSmallIcon({ hidden: true })}
+                </sp-icon>
+            </span>
+            <label id="label"><slot></slot></label>
         `;
     }
 

@@ -17,6 +17,7 @@
   </sp-icon>
   <sp-clear-button
     data-js-focus-visible=""
+    dir="ltr"
     id="button"
     label="Reset"
     tabindex="-1"
