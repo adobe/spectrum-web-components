@@ -1,0 +1,254 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([dir='ltr']) #indicator {
+    /* [dir=ltr] .spectrum-Accordion-itemIndicator */
+    left: var(--spectrum-accordion-icon-spacing, 16px);
+}
+:host([dir='rtl']) #indicator {
+    /* [dir=rtl] .spectrum-Accordion-itemIndicator */
+    right: var(--spectrum-accordion-icon-spacing, 16px);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+#indicator {
+    /* .spectrum-Accordion-itemIndicator */
+    display: block;
+    position: absolute;
+    top: calc(
+        (
+                var(--spectrum-accordion-item-height, 40px) -
+                    var(
+                        --spectrum-accordion-item-border-size,
+                        var(--spectrum-alias-border-size-thin)
+                    )
+            ) / 2 - 5px
+    );
+    transition: transform ease
+        var(--spectrum-global-animation-duration-100, 0.13s); /* .spectrum-Accordion-itemIndicator */
+    color: var(
+        --spectrum-accordion-icon-color,
+        var(--spectrum-global-color-gray-600)
+    );
+}
+:host {
+    /* .spectrum-Accordion-item */
+    z-index: inherit;
+    position: relative;
+    display: list-item;
+    margin: 0;
+    border-bottom: var(
+            --spectrum-accordion-item-border-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid transparent; /* .spectrum-Accordion-item */
+    border-color: var(
+        --spectrum-accordion-border-color,
+        var(--spectrum-global-color-gray-300)
+    );
+}
+:host(:first-of-type) {
+    /* .spectrum-Accordion-item:first-of-type */
+    border-top: var(
+            --spectrum-accordion-item-border-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid transparent;
+}
+#heading {
+    /* .spectrum-Accordion-itemHeading */
+    margin: 0;
+}
+:host([dir='ltr']) #header {
+    /* [dir=ltr] .spectrum-Accordion-itemHeader */
+    padding-left: calc(var(--spectrum-accordion-item-padding, 16px) * 2 + 2px);
+    padding-right: var(
+        --spectrum-accordion-item-padding,
+        16px
+    ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
+    text-align: left;
+}
+:host([dir='rtl']) #header {
+    /* [dir=rtl] .spectrum-Accordion-itemHeader */
+    padding-right: calc(var(--spectrum-accordion-item-padding, 16px) * 2 + 2px);
+    padding-left: var(
+        --spectrum-accordion-item-padding,
+        16px
+    ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
+    text-align: right;
+}
+#header {
+    /* .spectrum-Accordion-itemHeader */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    padding-top: var(--spectrum-global-dimension-size-150);
+    padding-bottom: var(--spectrum-global-dimension-size-150);
+    margin: 0;
+    min-height: calc(
+        var(--spectrum-accordion-item-height, 40px) -
+            var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    );
+    font-size: var(
+        --spectrum-accordion-item-title-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: calc(
+        var(
+                --spectrum-accordion-item-title-tracking,
+                var(--spectrum-global-font-letter-spacing-medium)
+            ) / 100
+    );
+    text-overflow: ellipsis;
+    cursor: pointer;
+    font-weight: 500;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: inherit;
+    border: 0;
+    font-family: inherit;
+    width: 100%; /* .spectrum-Accordion-itemHeader */
+    color: var(
+        --spectrum-accordion-text-color,
+        var(--spectrum-global-color-gray-700)
+    );
+}
+#header:focus {
+    /* .spectrum-Accordion-itemHeader:focus */
+    outline: none;
+}
+:host([dir='ltr']) #header:focus:after {
+    /* [dir=ltr] .spectrum-Accordion-itemHeader:focus:after */
+    left: 0;
+}
+:host([dir='rtl']) #header:focus:after {
+    /* [dir=rtl] .spectrum-Accordion-itemHeader:focus:after */
+    right: 0;
+}
+#header:focus:after {
+    /* .spectrum-Accordion-itemHeader:focus:after */
+    content: '';
+    position: absolute;
+    top: calc(
+        -1 * var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin))
+    );
+    bottom: calc(
+        -1 * var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin))
+    );
+    width: var(--spectrum-accordion-item-border-size-key-focus, 2px);
+}
+#content {
+    /* .spectrum-Accordion-itemContent */
+    padding-top: 0;
+    padding-bottom: var(
+        --spectrum-accordion-item-content-padding,
+        var(--spectrum-global-dimension-size-200)
+    );
+    padding-left: var(
+        --spectrum-accordion-item-content-padding,
+        var(--spectrum-global-dimension-size-200)
+    );
+    padding-right: var(
+        --spectrum-accordion-item-content-padding,
+        var(--spectrum-global-dimension-size-200)
+    );
+    display: none;
+}
+:host([dir='ltr'][open]) > #heading > #indicator {
+    /* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */
+    transform: rotate(90deg);
+}
+:host([dir='rtl'][open]) > #heading > #indicator {
+    /* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */
+    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg);
+}
+:host([dir='ltr'][open]) > #indicator {
+    /* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */
+    transform: rotate(90deg);
+}
+:host([dir='rtl'][open]) > #indicator {
+    /* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */
+    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg);
+}
+:host([open]) > #header:after {
+    /* .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeader:after */
+    height: calc(
+        var(--spectrum-accordion-item-height, 40px) -
+            var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    );
+}
+:host([open]) > #content {
+    /* .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemContent */
+    display: block;
+}
+:host([disabled]) #header {
+    /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader */
+    cursor: default;
+}
+#header:hover {
+    /* .spectrum-Accordion-itemHeader:hover */
+    color: var(
+        --spectrum-accordion-text-color-hover,
+        var(--spectrum-global-color-gray-900)
+    );
+    background-color: var(
+        --spectrum-accordion-background-color-hover,
+        var(--spectrum-global-color-gray-200)
+    );
+}
+#header:hover + #indicator {
+    /* .spectrum-Accordion-itemHeader:hover+.spectrum-Accordion-itemIndicator */
+    color: var(
+        --spectrum-accordion-icon-color-hover,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+#header:focus-visible:after {
+    /* .spectrum-Accordion-itemHeader.focus-ring:after */
+    background-color: var(
+        --spectrum-accordion-border-left-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    );
+}
+:host([open]) #header:hover {
+    /* .spectrum-Accordion-item.is-open .spectrum-Accordion-itemHeader:hover */
+    background-color: initial;
+}
+:host([disabled]) #header,
+:host([disabled]) #header:focus-visible,
+:host([disabled]) #header:hover {
+    /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader,
+   * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader.focus-ring,
+   * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader:hover */
+    color: var(
+        --spectrum-accordion-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    );
+    background-color: initial;
+}
+:host([disabled]) #header + #indicator {
+    /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader+.spectrum-Accordion-itemIndicator */
+    color: var(
+        --spectrum-accordion-icon-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+}
