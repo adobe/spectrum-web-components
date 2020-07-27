@@ -22,6 +22,7 @@ export interface LikeAnchorInterface {
     download?: string;
     label?: string;
     href?: string;
+    rel?: string;
     target?: '_blank' | '_parent' | '_self' | '_top';
     renderAnchor(options: {
         id: string;
@@ -45,6 +46,9 @@ export function LikeAnchor<T extends Constructor<UpdatingElement>>(
         @property({ reflect: true })
         public target?: '_blank' | '_parent' | '_self' | '_top';
 
+        @property({ reflect: true })
+        public rel?: string;
+
         public renderAnchor({
             id,
             // prettier-ignore
@@ -61,6 +65,7 @@ export function LikeAnchor<T extends Constructor<UpdatingElement>>(
                     download=${ifDefined(this.download)}
                     target=${ifDefined(this.target)}
                     aria-label=${ifDefined(this.label)}
+                    rel=${ifDefined(this.rel)}
                 >${anchorContent}</a>`;
         }
     }
