@@ -58,7 +58,7 @@ describe('Link', () => {
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
-        expect(el.getAttribute('rel')).to.eq('external'));
+        expect(el.getAttribute('rel')).to.eq('external');
 
         await expect(el).to.be.accessible();
     });
