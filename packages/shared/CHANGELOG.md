@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.5.1...@spectrum-web-components/shared@0.6.0) (2020-07-27)
+
+### Bug Fixes
+
+-   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
+
+### Features
+
+-   **link:** support rel attribute ([df4b5a8](https://github.com/adobe/spectrum-web-components/commit/df4b5a831aa35f5992b183cbba3cad18eb3dbb53))
+
 ## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.5.0...@spectrum-web-components/shared@0.5.1) (2020-07-22)
 
 ### Bug Fixes

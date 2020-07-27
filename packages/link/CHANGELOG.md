@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.4.1...@spectrum-web-components/link@0.5.0) (2020-07-27)
+
+### Bug Fixes
+
+-   **link:** test inner anchor attribute by accessing via focusElement ([f4e97a1](https://github.com/adobe/spectrum-web-components/commit/f4e97a1a4958a979a391d5bb330bc67289e354c0))
+
+### Features
+
+-   **link:** support rel attribute ([df4b5a8](https://github.com/adobe/spectrum-web-components/commit/df4b5a831aa35f5992b183cbba3cad18eb3dbb53))
+
 ## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.4.0...@spectrum-web-components/link@0.4.1) (2020-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/link
