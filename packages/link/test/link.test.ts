@@ -46,4 +46,20 @@ describe('Link', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('loads[rel]', async () => {
+        const el = await fixture<Link>(
+            html`
+                <sp-link href="test_url" rel="external">
+                    Default Link
+                </sp-link>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.getAttribute('rel')).to.eq('external'));
+
+        await expect(el).to.be.accessible();
+    });
 });
