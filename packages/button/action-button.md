@@ -8,19 +8,19 @@ An `<sp-action-button>` represents an action a user can take.
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/button)
 
 ```
-yarn add @spectrum-web-components/buton
+yarn add @spectrum-web-components/button
 ```
 
-Import the side effectful registration of `<sp-action-buton>` via:
+Import the side effectful registration of `<sp-action-button>` via:
 
 ```
-import '@spectrum-web-components/buton/sp-action-buton.js';
+import '@spectrum-web-components/button/sp-action-button.js';
 ```
 
 When looking to leverage the `ActionButton` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ActionButton } from '@spectrum-web-components/buton';
+import { ActionButton } from '@spectrum-web-components/button';
 ```
 
 ## Example
