@@ -24,7 +24,7 @@ async function main() {
         customElementJson.tags.map((tag) => {
             const varsPath = tag.path
                 .replace('./../', '')
-                .replace('index.ts', 'spectrum-vars.json');
+                .replace(/sp-[a-z-]*\.d\.ts/, 'src/spectrum-vars.json');
             try {
                 const vars = fs.readFileSync(varsPath, 'utf8');
                 const properties = JSON.parse(vars)['custom-properties'];

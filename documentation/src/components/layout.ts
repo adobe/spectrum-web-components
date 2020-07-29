@@ -41,6 +41,8 @@ const DEFAULT_SCALE = (window.localStorage
     ? localStorage.getItem(SWC_THEME_SCALE_KEY) || SCALE_MEDIUM
     : SCALE_MEDIUM) as Scale;
 
+const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
+
 export class LayoutElement extends LitElement {
     public static get styles(): CSSResultArray {
         return [layoutStyles];
@@ -52,8 +54,15 @@ export class LayoutElement extends LitElement {
     @property({ type: Boolean })
     public open = false;
 
+    @property({ type: Boolean, attribute: false })
+    private isNarrow = isNarrowMediaQuery.matches;
+
     @property({ attribute: false })
     public scale: Scale = DEFAULT_SCALE;
+
+    handleMatchMediaChange = (event: MediaQueryListEvent) => {
+        this.isNarrow = event.matches;
+    };
 
     toggleNav() {
         this.open = !this.open;
@@ -137,11 +146,15 @@ export class LayoutElement extends LitElement {
                 <div id="body">
                     <docs-side-nav
                         id="side-nav"
-                        ?inert=${!this.open}
+                        ?inert=${this.isNarrow && !this.open}
                         ?open=${this.open}
                         @close=${this.closeNav}
                     ></docs-side-nav>
-                    <main id="layout-content" ?inert=${this.open} role="main">
+                    <main
+                        id="layout-content"
+                        ?inert=${this.isNarrow && this.open}
+                        role="main"
+                    >
                         <div id="page">
                             <div class="manage-theme">
                                 <label @click=${this.onClickLabel}>Theme</label>
@@ -204,5 +217,16 @@ export class LayoutElement extends LitElement {
     connectedCallback() {
         super.connectedCallback();
         import('./code-example');
+        isNarrowMediaQuery.addEventListener(
+            'change',
+            this.handleMatchMediaChange
+        );
+    }
+
+    disconnectedCallback() {
+        isNarrowMediaQuery.removeEventListener(
+            'change',
+            this.handleMatchMediaChange
+        );
     }
 }
