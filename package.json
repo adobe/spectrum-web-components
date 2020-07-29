@@ -45,7 +45,7 @@
         "postdocs:build": "cp documentation/favicon.ico documentation/dist",
         "docs:ci": "yarn docs:analyze && yarn docs:ts && run-p docs:build:production storybook:build",
         "docs:build:production": "gulp docsBuildProduction",
-        "postdocs:ci": "cp documentation/favicon.ico documentation/dist",
+        "postdocs:ci": "cp documentation/favicon.ico documentation/dist && cp documentation/custom-elements.json documentation/dist/storybook",
         "docs:start": "yarn docs:analyze && run-p 'docs:ts -w' docs:start:watch",
         "docs:start:watch": "gulp docsWatchCompile",
         "docs:review": "alex packages/**/*.md",
