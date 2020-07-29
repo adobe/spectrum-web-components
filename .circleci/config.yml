@@ -170,7 +170,7 @@ jobs:
         steps:
             - downstream
             - run: cp documentation/404.html documentation/dist/
-            - run: cp documentation/dist/custom-elements.json documentation/dist/storybook/custom-elements.json
+            - run: touch documentation/dist/.nojekyll
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
             - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site"
 
