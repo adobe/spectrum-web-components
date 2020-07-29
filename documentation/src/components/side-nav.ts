@@ -19,7 +19,10 @@ import {
 } from 'lit-element';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
-import { SidenavSelectDetail } from '@spectrum-web-components/sidenav';
+import {
+    SidenavSelectDetail,
+    SideNavItem,
+} from '@spectrum-web-components/sidenav';
 import { AppRouter } from '../router.js';
 import './side-nav-search.js';
 import { search, Result } from './search-index.js';
@@ -30,6 +33,8 @@ class SideNav extends LitElement {
     public static get styles(): CSSResultArray {
         return [sideNavStyles];
     }
+
+    public shadowRoot!: ShadowRoot;
 
     @property({ type: Boolean, reflect: true })
     public open = false;
@@ -60,6 +65,12 @@ class SideNav extends LitElement {
     }
 
     async firstUpdated(): Promise<void> {
+        const playgroundItem = this.shadowRoot.querySelector(
+            'sp-sidenav-item[label="Playground"]'
+        ) as SideNavItem;
+        playgroundItem.updateComplete.then(() =>
+            playgroundItem.focusElement.setAttribute('router-ignore', '')
+        );
         const docs = await search('*');
         const components = docs.find((item) => item.name === 'components');
         if (components) {
