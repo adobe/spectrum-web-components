@@ -2634,6 +2634,16 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-2.3.0.tgz#0ce716fb5ee65f4af9e2d2a7aaae55e8ba4d4c8f"
   integrity sha512-k4YwFbv9+7QzBrc3ezvGuHxI3nDTG/6qJsAmhYS1vEyxpxjKmRfiz59P+fqT12PQNjxeNYHyVz1kRgaLA6gw2w==
 
+"@spectrum-web-components/shared@^0.5.0":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-web-components/shared/-/shared-0.5.1.tgz#de0dad1a3b734837628b71bfb2b2cb47c5750c4f"
+  integrity sha512-vG38fn8RVdnVGgJGDC62twqZ3h2RLtYdoyw72olzUWXwP/zfBvi7ArmnvLcd37A4LspNcQfrZXGCtjLt9hF9vg==
+  dependencies:
+    focus-visible "^5.0.2"
+    lit-element "^2.1.0"
+    lit-html "^1.0.0"
+    tslib "^2.0.0"
+
 "@stylelint/postcss-css-in-js@^0.37.1":
   version "0.37.1"
   resolved "https://registry.yarnpkg.com/@stylelint/postcss-css-in-js/-/postcss-css-in-js-0.37.1.tgz#41e5e7660f73d88227610e18c6ebb262d56ac125"
