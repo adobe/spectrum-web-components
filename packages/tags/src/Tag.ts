@@ -85,7 +85,7 @@ export class Tag extends LitElement {
     }
 
     protected render(): TemplateResult {
-        const slots = [];
+        const slots: TemplateResult[] = [];
         if (this.hasAvatar) {
             slots.push(
                 html`
