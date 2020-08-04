@@ -56,6 +56,7 @@ export class OverlayStack {
             <style>
             #actual {
                 position: relative;
+                height: 100%;
                 z-index: 0;
             }
             #holder {
