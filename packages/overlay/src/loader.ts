@@ -10,8 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-// import our stylesheets
-import './styles.css';
+import { TriggerInteractions, OverlayOptions } from './overlay-types';
 
-// import the components we'll use in this page
-import '@spectrum-web-components/button/sp-button';
+export const openOverlay = async (
+    target: HTMLElement,
+    interaction: TriggerInteractions,
+    content: HTMLElement,
+    options: OverlayOptions
+): Promise<() => void> => {
+    const { Overlay } = await import('./overlay.js');
+    return await Overlay.open(target, interaction, content, options);
+};

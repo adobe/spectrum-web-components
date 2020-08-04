@@ -13,17 +13,10 @@ governing permissions and limitations under the License.
 import { ThemeData } from '@spectrum-web-components/theme';
 import {
     TriggerInteractions,
-    Placement,
     OverlayDisplayQueryDetail,
+    OverlayOptions,
 } from './overlay-types';
 import { OverlayStack } from './overlay-stack.js';
-
-type OverlayOptions = {
-    delayed?: boolean;
-    placement?: Placement;
-    offset?: number;
-    receivesFocus?: 'auto';
-};
 
 /**
  * This class allows access to the overlay system which allows a client to
