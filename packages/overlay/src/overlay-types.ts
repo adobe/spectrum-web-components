@@ -45,6 +45,13 @@ export interface OverlayDisplayQueryDetail {
 
 export type Placement = PopperPlacement | 'none';
 
+export type OverlayOptions = {
+    delayed?: boolean;
+    placement?: Placement;
+    offset?: number;
+    receivesFocus?: 'auto';
+};
+
 declare global {
     interface GlobalEventHandlersEventMap {
         'sp-overlay-query': CustomEvent<OverlayDisplayQueryDetail>;

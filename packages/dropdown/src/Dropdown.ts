@@ -41,8 +41,7 @@ import {
     MenuQueryRoleEventDetail,
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import { Placement, Overlay } from '@spectrum-web-components/overlay';
+import { Placement, openOverlay } from '@spectrum-web-components/overlay';
 
 /**
  * @slot label - The placeholder content for the dropdown
@@ -264,15 +263,11 @@ export class DropdownBase extends Focusable {
         if (menuWidth) {
             this.popover.style.setProperty('width', menuWidth);
         }
-        this.closeOverlay = await Overlay.open(
-            this.button,
-            'replace',
-            this.popover,
-            {
-                placement: this.placement,
-                receivesFocus: 'auto',
-            }
-        );
+        const { button, popover } = this;
+        this.closeOverlay = await openOverlay(button, 'inline', popover, {
+            placement: this.placement,
+            receivesFocus: 'auto',
+        });
         this.menuStateResolver();
     }
 

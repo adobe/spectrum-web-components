@@ -18,10 +18,9 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import overlayTriggerStyles from './overlay-trigger.css.js';
-
 import { Placement, TriggerInteractions } from './overlay-types';
-import { Overlay } from './overlay.js';
+import { openOverlay } from './loader.js';
+import overlayTriggerStyles from './overlay-trigger.css.js';
 
 /**
  * A overlay trigger component for displaying overlays relative to other content.
@@ -84,6 +83,19 @@ export class OverlayTrigger extends LitElement {
         `;
     }
 
+    private async openOverlay(
+        target: HTMLElement,
+        content: HTMLElement,
+        interaction: TriggerInteractions
+    ): Promise<() => void> {
+        return await openOverlay(target, interaction, content, {
+            offset: this.offset,
+            placement: this.placement,
+            receivesFocus:
+                this.type && this.type !== 'inline' ? 'auto' : undefined,
+        });
+    }
+
     private onTrigger(event: Event): void {
         if (this.disabled) {
             return;
@@ -112,18 +124,11 @@ export class OverlayTrigger extends LitElement {
                     this.clickContent.tabIndex = 0;
                 }
             }
-            this.closeClickOverlay = await Overlay.open(
-                this.targetContent,
-                this.type ? this.type : 'click',
-                this.clickContent,
-                {
-                    offset: this.offset,
-                    placement: this.placement,
-                    receivesFocus:
-                        this.type && this.type !== 'inline'
-                            ? 'auto'
-                            : undefined,
-                }
+            const { targetContent, clickContent } = this;
+            this.closeClickOverlay = await this.openOverlay(
+                targetContent,
+                clickContent,
+                this.type ? this.type : 'click'
             );
         }
     }
@@ -139,14 +144,11 @@ export class OverlayTrigger extends LitElement {
             this.hoverOverlayReady = new Promise((res) => {
                 overlayReady = res;
             });
-            this.closeHoverOverlay = await Overlay.open(
-                this.targetContent,
-                'hover',
-                this.hoverContent,
-                {
-                    offset: this.offset,
-                    placement: this.placement,
-                }
+            const { targetContent, hoverContent } = this;
+            this.closeHoverOverlay = await this.openOverlay(
+                targetContent,
+                hoverContent,
+                'hover'
             );
             overlayReady();
         }
