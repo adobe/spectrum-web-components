@@ -126,6 +126,20 @@ const shared = (env) => {
             host: '0.0.0.0',
             disableHostCheck: true,
         },
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    vendor: {
+                        // Work around to "trick" webpack to see local packages as "node_modules".
+                        test: /[\\/](node_modules|packages)[\\/]/,
+                        name: 'vendor',
+                        // "async" will ensure the dynamic imports mark the boundary between chunks
+                        // "all" will allow webpack to make decisions about chunk breaking for itself
+                        chunks: 'async',
+                    },
+                },
+            },
+        },
     };
 };
 
