@@ -1,7 +1,5 @@
 # spectrum-web-components
 
-
-
 Spectrum Web Components is a future-looking project to develop Adobe Spectrum design language based around web components, ES-Modules, and modern browser standards.
 
 It will not support older browsers and will only target modern ever-green browsers that fully implement the Custom Elements V1 specification, e.g. Chrome, Firefox, Safari. Polyfills will be avoided as much as possible.
@@ -77,7 +75,7 @@ During development you may wish to use `yarn test:watch` to automatically build 
 
 ### Screenshot Testing
 
-Visual regressions are tracked via screenshot testing powered by Puppeteer. There are _two_ types of visual testing built into this library: those that should only be run in CircleCI to power the continuous integreation workflow and those that can be run on your local machine. Due to the font metrics not being identical, it is difficult to rely on screenshot based testing across OSes, so if you'd like to leverage these tests to manage changes you are making, be sure to create a local baseline before you start to develop.
+Visual regressions are tracked via screenshot testing powered by Puppeteer. There are _two_ types of visual testing built into this library: those that should only be run in CircleCI to power the continuous integration workflow and those that can be run on your local machine. Due to the font metrics not being identical, it is difficult to rely on screenshot based testing across OSes, so if you'd like to leverage these tests to manage changes you are making, be sure to create a local baseline before you start to develop.
 
 To create a baseline, and then later compare the current state of the repo to it, use the following commands:
 
