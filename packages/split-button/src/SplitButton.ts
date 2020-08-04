@@ -16,6 +16,7 @@ import {
     property,
     html,
     PropertyValues,
+    query,
 } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
@@ -38,6 +39,9 @@ export class SplitButton extends DropdownBase {
         return [buttonBaseStyles, buttonStyles, styles, ChevronDownMediumStyle];
     }
 
+    @property({ type: Boolean, reflect: true })
+    public left = false;
+
     /**
      * The visual variant to apply to this button.
      */
@@ -51,8 +55,23 @@ export class SplitButton extends DropdownBase {
     @property({ type: String })
     public type: 'field' | 'more' = 'field';
 
+    @query('.trigger')
+    private trigger!: HTMLButtonElement;
+
     protected listRole = 'menu';
     protected itemRole = 'menuitem';
+
+    public focus(): void {
+        if (this.disabled) {
+            return;
+        }
+        if (this.left) {
+            this.trigger.focus();
+            return;
+        }
+
+        super.focus();
+    }
 
     protected sizePopover(popover: HTMLElement): void {
         popover.style.setProperty('min-width', `${this.offsetWidth}px`);
@@ -77,7 +96,7 @@ export class SplitButton extends DropdownBase {
             const target = event.composedPath()[0];
             if (
                 target &&
-                target === this.focusElement &&
+                target === (this.left ? this.trigger : this.focusElement) &&
                 !event.defaultPrevented &&
                 event.shiftKey &&
                 event.code === 'Tab'
@@ -103,34 +122,44 @@ export class SplitButton extends DropdownBase {
     }
 
     protected render(): TemplateResult {
-        return html`
-            <button
-                aria-haspopup="true"
-                aria-label=${ifDefined(this.label || undefined)}
-                id="button"
-                class="button ${this.variant}"
-                @click=${this.passClick}
-                ?disabled=${this.disabled}
-            >
-                ${this.buttonContent}
-            </button>
-            <button
-                class="button trigger ${this.variant}"
-                @blur=${this.onButtonBlur}
-                @click=${this.onButtonClick}
-                @focus=${this.onButtonFocus}
-                ?disabled=${this.disabled}
-            >
-                <sp-icon
-                    class="icon ${this.type === 'field'
-                        ? 'chevron-down-medium'
-                        : 'more-medium'}"
+        const buttons: TemplateResult[] = [
+            html`
+                <button
+                    aria-haspopup="true"
+                    aria-label=${ifDefined(this.label || undefined)}
+                    id="button"
+                    class="button ${this.variant}"
+                    @click=${this.passClick}
+                    ?disabled=${this.disabled}
                 >
-                    ${this.type === 'field'
-                        ? ChevronDownMediumIcon({ hidden: true })
-                        : MoreIcon({ hidden: true })}
-                </sp-icon>
-            </button>
+                    ${this.buttonContent}
+                </button>
+            `,
+            html`
+                <button
+                    class="button trigger ${this.variant}"
+                    @blur=${this.onButtonBlur}
+                    @click=${this.onButtonClick}
+                    @focus=${this.onButtonFocus}
+                    ?disabled=${this.disabled}
+                >
+                    <sp-icon
+                        class="icon ${this.type === 'field'
+                            ? 'chevron-down-medium'
+                            : 'more-medium'}"
+                    >
+                        ${this.type === 'field'
+                            ? ChevronDownMediumIcon({ hidden: true })
+                            : MoreIcon({ hidden: true })}
+                    </sp-icon>
+                </button>
+            `,
+        ];
+        if (this.left) {
+            buttons.reverse();
+        }
+        return html`
+            ${buttons}
             <sp-popover
                 open
                 id="popover"
