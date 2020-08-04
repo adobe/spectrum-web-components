@@ -12,10 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-split-button.css';
 
-:host([left]) {
-    flex-direction: row-reverse;
-}
-
 sp-popover {
     display: none;
 }
