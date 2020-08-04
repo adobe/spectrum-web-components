@@ -3558,10 +3558,10 @@
   dependencies:
     "@spectrum-css/vars" "^2.2.0"
 
-"@spectrum-css/search@^2.0.6":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/search/-/search-2.0.6.tgz#ef3c22c21493e793208e87029c50e9a05b90923f"
-  integrity sha512-BAOwdhm56PIyIuGRm4zABLVzmnJyW9Dg3mBr8e6utNimEtmGyDcoh+cu2nWb+B0NMJVa4I1iA/sAw/n3DR7j/g==
+"@spectrum-css/search@^3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/search/-/search-3.0.0-beta.4.tgz#4e39f4966c346778c452fe03fe9597e2bcb310b1"
+  integrity sha512-s1jJ675+3H64+flXTcVacvdMaavTXEZ0qBRBCbKVk/1iH8iCoMMWjJjQlr5tWZZsilpnzU2QUaB8D3MSa5HU7g==
 
 "@spectrum-css/sidenav@^2.0.5":
   version "2.0.5"
