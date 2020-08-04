@@ -104,10 +104,10 @@ export class Search extends Textfield {
                 @submit=${this.handleSubmit}
                 @keydown=${this.handleKeydown}
             >
-                ${super.render()}
-                <sp-icon id="icon" class="icon magnifier" size="s">
+                <sp-icon class="icon magnifier icon-workflow" size="s">
                     ${MagnifierIcon({ hidden: true })}
                 </sp-icon>
+                ${super.render()}
                 ${this.value
                     ? html`
                           <sp-clear-button

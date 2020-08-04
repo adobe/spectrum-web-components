@@ -32,21 +32,17 @@ const config = {
                     name: 'input',
                 },
                 {
-                    selector: '.spectrum-Search-icon',
-                    name: 'icon',
-                },
-                {
-                    selector: '.spectrum-ClearButton',
-                    name: 'button',
-                },
-                {
-                    selector: '.spectrum-Search-clear',
+                    selector: '.spectrum-Search-clearButton',
                     name: 'button',
                 },
             ],
             classes: [
                 {
                     selector: '.spectrum-Icon',
+                    name: 'icon',
+                },
+                {
+                    selector: '.spectrum-Search-icon',
                     name: 'icon',
                 },
             ],
