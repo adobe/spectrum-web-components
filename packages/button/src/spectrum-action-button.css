@@ -10,21 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.button[dir='ltr'] .spectrum-Button slot[name='icon'] + .spectrum-Button-label {
+:host([dir='ltr']) .spectrum-Button slot[name='icon'] + .spectrum-Button-label {
     /* [dir=ltr] .spectrum-Button .spectrum-Icon+.spectrum-Button-label */
     margin-left: var(
         --spectrum-button-primary-text-gap,
         var(--spectrum-global-dimension-size-100)
     );
 }
-.button[dir='rtl'] .spectrum-Button slot[name='icon'] + .spectrum-Button-label {
+:host([dir='rtl']) .spectrum-Button slot[name='icon'] + .spectrum-Button-label {
     /* [dir=rtl] .spectrum-Button .spectrum-Icon+.spectrum-Button-label */
     margin-right: var(
         --spectrum-button-primary-text-gap,
         var(--spectrum-global-dimension-size-100)
     );
 }
-.button[dir='ltr']
+:host([dir='ltr'])
     .spectrum-Button
     .spectrum-Button-label
     + ::slotted([slot='icon']) {
@@ -36,7 +36,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2
     );
 }
-.button[dir='rtl']
+:host([dir='rtl'])
     .spectrum-Button
     .spectrum-Button-label
     + ::slotted([slot='icon']) {
@@ -178,14 +178,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 )
         );
 }
-.button[dir='ltr'] #hold-affordance {
+:host([dir='ltr']) #hold-affordance {
     /* [dir=ltr] .spectrum-ActionButton-hold */
     right: var(
         --spectrum-actionbutton-hold-icon-padding-right,
         var(--spectrum-global-dimension-size-40)
     );
 }
-.button[dir='rtl'] #hold-affordance {
+:host([dir='rtl']) #hold-affordance {
     /* [dir=rtl] .spectrum-ActionButton-hold */
     left: var(
         --spectrum-actionbutton-hold-icon-padding-right,

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/actionbar/sp-actionbar.js';
 import '@spectrum-web-components/asset/sp-asset.js';
