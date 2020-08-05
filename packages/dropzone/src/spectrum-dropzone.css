@@ -68,7 +68,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Dropzone:focus .spectrum-IllustratedMessage-illustration */
     color: var(--spectrum-global-color-static-gray-500, #bcbcbc);
 }
-:host(:focus:focus-visible[dragged]) ::slotted(*) {
+:host(:focus[dragged]:focus-visible) ::slotted(*) {
     /* .spectrum-Dropzone:focus.is-dragged.focus-ring .spectrum-IllustratedMessage-illustration */
     color: var(--spectrum-global-color-blue-400);
 }

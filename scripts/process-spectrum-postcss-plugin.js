@@ -202,7 +202,7 @@ class SpectrumProcessor {
                     // If a sibling selector is used, and the slot is not the last
                     // element in the combinator, we will need to refer to the slot itself
                     replaceNode(node, slot.shadowSlotNode);
-                } else if (!isLastNode && node.next().value.search(':') !== 0) {
+                } else if (!isLastNode && node.next().value[0] !== ':') {
                     // If there are selectors after ::slotted() the rule is invalid CSS, let's remove it.
                     // The browser would do this anyways, and then merged selectors in CSS minification output
                     // e.g. `.valid .selector, ::slotted(.invalid) .selector {}` would be lost.
@@ -214,7 +214,19 @@ class SpectrumProcessor {
                         }
                     );
                 } else {
+                    const { parent } = node;
                     replaceNode(node, slot.shadowSlottedNode);
+                    if (!isLastNode) {
+                        const newNode = parent.nodes[parent.nodes.length - 2];
+                        const next = newNode.next();
+                        if (next.value.match(/child/)) {
+                            next.remove();
+                            newNode.nodes[0].insertAfter(
+                                newNode.nodes[0].nodes[0],
+                                next
+                            );
+                        }
+                    }
                 }
             });
             return isInvalidSelector ? null : result;
@@ -243,6 +255,15 @@ class SpectrumProcessor {
             result.walk((node) => {
                 const attribute = this.component.attributeForNode(node);
                 if (!attribute) return;
+
+                if (
+                    node.parent &&
+                    node.parent.parent &&
+                    node.parent.parent.type === 'pseudo'
+                ) {
+                    node.replaceWith(attribute.shadowNode.clone());
+                    return;
+                }
 
                 const prev = node.prev();
                 const next = node.next();
@@ -402,40 +423,32 @@ class SpectrumProcessor {
         if (!skipAll) {
             for (let selector of rule.selectors) {
                 let shouldStartWithHost = true;
-                //[dir=ltr] .spectrum-Button .spectrum-Button-label+.spectrum-Icon
                 if (startsWithDir.test(selector)) {
-                    // If [dir] but no `${hostSelector}` prepend one to the `[dir]`
-                    if (!hasHost.test(selector)) {
-                        selector = `${this.component.hostSelector}${selector}`;
-                    } else {
-                        const mutateSelector = (dir) => {
-                            selector = selector.replace(`[dir=${dir}] `, '');
-                            if (
-                                this.component.hostShadowSelector !== ':host' &&
-                                hasHost.test
-                            ) {
+                    const mutateSelector = (dir) => {
+                        selector = selector.replace(`[dir=${dir}] `, '');
+                        if (this.component.hostShadowSelector !== ':host') {
+                            if (!hasHost.test(selector)) {
+                                selector = `:host([dir=${dir}]) ${selector}`;
+                            } else {
                                 selector = `:host([dir=${dir}]) ${selector}`;
                                 selector = selector.replace(
                                     hasHost,
                                     this.component.hostShadowSelector
                                 );
-                                shouldStartWithHost = false;
-                                // If the host selector is in the first selector, make sure it is moved to the front of it...
-                            } else if (hasHost.test(selector.split(' ')[0])) {
-                                selector = selector.replace(hasHost, '');
-                                selector = `${this.component.hostSelector}[dir=${dir}]${selector}`;
-                            } else {
-                                selector = selector.replace(
-                                    hasHost,
-                                    `${this.component.hostSelector}[dir=${dir}]`
-                                );
                             }
-                        };
-                        if (selector.search(/\[dir\=ltr\]/) > -1) {
-                            mutateSelector('ltr');
+                            shouldStartWithHost = false;
+                            // If the host selector is in the first selector, make sure it is moved to the front of it...
+                        } else if (hasHost.test(selector.split(' ')[0])) {
+                            selector = selector.replace(hasHost, '');
+                            selector = `${this.component.hostSelector}[dir=${dir}]${selector}`;
                         } else {
-                            mutateSelector('rtl');
+                            selector = `${this.component.hostSelector}[dir=${dir}] ${selector}`;
                         }
+                    };
+                    if (selector.search(/\[dir\=ltr\]/) > -1) {
+                        mutateSelector('ltr');
+                    } else {
+                        mutateSelector('rtl');
                     }
                 }
                 if (
