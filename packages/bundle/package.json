@@ -48,6 +48,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@spectrum-web-components/accordion": "^0.0.1",
+        "@spectrum-web-components/action-group": "^0.0.1",
         "@spectrum-web-components/action-menu": "^0.5.7",
         "@spectrum-web-components/actionbar": "^0.3.1",
         "@spectrum-web-components/asset": "^0.1.1",
@@ -77,6 +78,7 @@
         "@spectrum-web-components/search": "^0.4.4",
         "@spectrum-web-components/sidenav": "^0.4.3",
         "@spectrum-web-components/slider": "^0.5.4",
+        "@spectrum-web-components/split-button": "^0.0.1",
         "@spectrum-web-components/status-light": "^0.3.1",
         "@spectrum-web-components/switch": "^0.3.4",
         "@spectrum-web-components/tabs": "^0.1.3",
