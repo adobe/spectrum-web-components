@@ -334,14 +334,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
-:host(:active[quiet][checked]) #input:enabled + #switch {
+:host([quiet]:active[checked]) #input:enabled + #switch {
     /* .spectrum-ToggleSwitch.spectrum-ToggleSwitch--quiet:active .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch */
     background-color: var(
         --spectrum-switch-quiet-track-color-selected-down,
         var(--spectrum-global-color-gray-900)
     );
 }
-:host(:active[quiet][checked]) #input:enabled + #switch:before {
+:host([quiet]:active[checked]) #input:enabled + #switch:before {
     /* .spectrum-ToggleSwitch.spectrum-ToggleSwitch--quiet:active .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch:before */
     border-color: var(
         --spectrum-switch-quiet-handle-border-color-selected-down,
