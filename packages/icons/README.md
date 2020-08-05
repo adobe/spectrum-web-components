@@ -14,12 +14,12 @@ yarn add @spectrum-web-components/icons
 Import the side effectful registration of `<sp-icons-medium>` or `<sp-icons-large>` via:
 
 ```
-import '@spectrum-web-components/banner/sp-icons-medium.js';
-import '@spectrum-web-components/banner/sp-icons-large.js';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
+import '@spectrum-web-components/icons/sp-icons-large.js';
 ```
 
 When looking to leverage the `IconsMedium` or `IconsLarge` base classes as a type and/or for extension purposes, do so via:
 
 ```
-import { IconsMedium, IconsLarge } from '@spectrum-web-components/banner';
+import { IconsMedium, IconsLarge } from '@spectrum-web-components/icons';
 ```
