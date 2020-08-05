@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.4.2...@spectrum-web-components/overlay@0.4.3) (2020-08-05)
+
+### Bug Fixes
+
+-   use height: 100% to avoid layout breaks ([1498129](https://github.com/adobe/spectrum-web-components/commit/14981291e6d860a8fde7e1746a4a03af4df1e572))
+
 ## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.4.1...@spectrum-web-components/overlay@0.4.2) (2020-07-24)
 
 ### Bug Fixes
