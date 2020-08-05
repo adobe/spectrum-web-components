@@ -129,7 +129,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2
     );
 }
-.button[dir='ltr']
+:host([dir='ltr'])
     .spectrum-ActionButton
     slot[name='icon']
     + .spectrum-ActionButton-label {
@@ -149,7 +149,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
-.button[dir='rtl']
+:host([dir='rtl'])
     .spectrum-ActionButton
     slot[name='icon']
     + .spectrum-ActionButton-label {
@@ -169,7 +169,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
-.button[dir='ltr'] .spectrum-ActionButton .spectrum-Icon--sizeS:only-child {
+:host([dir='ltr']) .spectrum-ActionButton .spectrum-Icon--sizeS:only-child {
     /* [dir=ltr] .spectrum-ActionButton .spectrum-Icon--sizeS:only-child */
     left: calc(
         50% -
@@ -179,7 +179,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2
     );
 }
-.button[dir='rtl'] .spectrum-ActionButton .spectrum-Icon--sizeS:only-child {
+:host([dir='rtl']) .spectrum-ActionButton .spectrum-Icon--sizeS:only-child {
     /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon--sizeS:only-child */
     right: calc(
         50% -
@@ -189,14 +189,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2
     );
 }
-.button[dir='ltr'] .spectrum-ActionButton-hold {
+:host([dir='ltr']) .spectrum-ActionButton-hold {
     /* [dir=ltr] .spectrum-ActionButton-hold */
     right: var(
         --spectrum-actionbutton-hold-icon-padding-right,
         var(--spectrum-global-dimension-size-40)
     );
 }
-.button[dir='rtl'] .spectrum-ActionButton-hold {
+:host([dir='rtl']) .spectrum-ActionButton-hold {
     /* [dir=rtl] .spectrum-ActionButton-hold */
     left: var(
         --spectrum-actionbutton-hold-icon-padding-right,
