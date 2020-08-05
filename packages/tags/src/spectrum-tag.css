@@ -220,7 +220,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-red-500)
     );
 }
-:host(:hover[invalid]) {
+:host([invalid]:hover) {
     /* .spectrum-Tags-item.is-invalid:hover */
     color: var(
         --spectrum-tag-text-color-error-hover,
@@ -231,14 +231,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-red-600)
     );
 }
-:host(:hover[invalid]) .clear-button {
+:host([invalid]:hover) .clear-button {
     /* .spectrum-Tags-item.is-invalid:hover .spectrum-ClearButton */
     color: var(
         --spectrum-tag-icon-color-error-hover,
         var(--spectrum-global-color-red-600)
     );
 }
-:host(:focus-visible[invalid]) {
+:host([invalid]:focus-visible) {
     /* .spectrum-Tags-item.is-invalid.focus-ring */
     color: var(
         --spectrum-tag-text-color-error-key-focus,
@@ -254,7 +254,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-alias-border-color-focus)
         );
 }
-:host(:focus-visible[invalid]) .clear-button {
+:host([invalid]:focus-visible) .clear-button {
     /* .spectrum-Tags-item.is-invalid.focus-ring .spectrum-ClearButton */
     color: var(
         --spectrum-tag-icon-color-error-key-focus,
