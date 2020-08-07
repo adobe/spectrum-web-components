@@ -9,6 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './IconsLarge.js';
-export * from './IconsMedium.js';
-export * from './IconsWorkflow.js';
+import { IconsWorkflow } from './src/IconsWorkflow.js';
+
+customElements.define('sp-icons-workflow', IconsWorkflow);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-icons-workflow': IconsWorkflow;
+    }
+}

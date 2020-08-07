@@ -11,15 +11,16 @@ The `<sp-icons-medium>` and `<sp-icons-large>` elements that are included in thi
 yarn add @spectrum-web-components/icons
 ```
 
-Import the side effectful registration of `<sp-icons-medium>` or `<sp-icons-large>` via:
+Import the side effectful registration of `<sp-icons-medium>`, `<sp-icons-large>` or `<sp-icons-workflow>` via:
 
 ```
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '@spectrum-web-components/icons/sp-icons-large.js';
+import '@spectrum-web-components/icons/sp-icons-workflow.js';
 ```
 
-When looking to leverage the `IconsMedium` or `IconsLarge` base classes as a type and/or for extension purposes, do so via:
+When looking to leverage the `IconsMedium`, `IconsLarge` or `IconsWorkflow` base classes as a type and/or for extension purposes, do so via:
 
 ```
-import { IconsMedium, IconsLarge } from '@spectrum-web-components/icons';
+import { IconsMedium, IconsLarge, IconsWorkflow } from '@spectrum-web-components/icons';
 ```
