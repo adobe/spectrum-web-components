@@ -37,6 +37,7 @@ export * from '@spectrum-web-components/link';
 export * from '@spectrum-web-components/menu';
 export * from '@spectrum-web-components/overlay';
 export * from '@spectrum-web-components/popover';
+export * from '@spectrum-web-components/quick-actions';
 export * from '@spectrum-web-components/radio';
 export * from '@spectrum-web-components/rule';
 export * from '@spectrum-web-components/search';
