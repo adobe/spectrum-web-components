@@ -12,31 +12,44 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     property,
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 
+// import { MoreIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import cardStyles from './card.css.js';
+import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 /**
+ * @element sp-card
+ *
+ * @fires change - Announces a change in the `selected` property of a card
  * @slot preview - This is the preview image for Gallery Cards
- * @slot title - HTML content to be listed as the title
  * @slot cover-photo - This is the cover photo for Default and Quiet Cards
+ * @slot title - HTML content to be listed as the title
+ * @slot subtitle - HTML content to be listed as the subtitle
  * @slot description - A description of the card
+ * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot footer - Footer text
  */
-export class Card extends FocusVisiblePolyfillMixin(LitElement) {
+export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [cardStyles];
     }
 
+    @property()
+    public asset?: 'file' | 'folder';
+
     @property({ reflect: true })
-    public variant: 'default' | 'gallery' | 'quiet' = 'default';
+    public variant: 'standard' | 'gallery' | 'quiet' = 'standard';
 
     @property({ type: Boolean, reflect: true })
     public selected = false;
@@ -44,12 +57,83 @@ export class Card extends FocusVisiblePolyfillMixin(LitElement) {
     @property()
     public title = '';
 
+    @property({ type: Boolean, reflect: true })
+    public horizontal = false;
+
+    @property({ type: Boolean, reflect: true })
+    public small = false;
+
+    @property({ type: Boolean, reflect: true })
+    public focused = false;
+
+    @property({ type: Boolean, reflect: true })
+    public toggles = false;
+
     @property()
     public subtitle = '';
 
+    public constructor() {
+        super();
+        this.addEventListener('focusin', this.handleFocusin);
+        this.shadowRoot.addEventListener('focusin', this.handleFocusin);
+        this.addEventListener('focusout', this.handleFocusout);
+    }
+
+    private handleFocusin = (event: Event): void => {
+        this.focused = true;
+        const target = event.composedPath()[0];
+        if (target !== this) {
+            this.removeEventListener('keydown', this.handleKeydown);
+            return;
+        }
+        this.addEventListener('keydown', this.handleKeydown);
+    };
+
+    private handleFocusout(event: Event): void {
+        this.focused = false;
+        const target = event.composedPath()[0];
+        if (target === this) {
+            this.removeEventListener('keydown', this.handleKeydown);
+        }
+    }
+
+    private handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
+        /* istanbul ignore else */
+        if (code === 'Space') {
+            this.toggleSelected();
+        }
+    }
+
+    private handleSelectedChange(event: Event & { target: Checkbox }): void {
+        const { target } = event;
+        this.selected = target.checked;
+    }
+
+    public toggleSelected(): void {
+        if (!this.toggles) {
+            this.dispatchEvent(
+                new Event('click', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            return;
+        }
+        this.selected = !this.selected;
+        const applyDefault = this.dispatchEvent(
+            new Event('change', {
+                cancelable: true,
+            })
+        );
+        if (!applyDefault) {
+            this.selected = !this.selected;
+        }
+    }
+
     protected get renderTitle(): TemplateResult {
         return html`
-            <div id="title">
+            <div class="title">
                 <slot name="title">
                     ${this.title}
                 </slot>
@@ -59,71 +143,102 @@ export class Card extends FocusVisiblePolyfillMixin(LitElement) {
 
     protected get renderPreviewImage(): TemplateResult {
         return html`
-            <sp-asset id="preview">
+            <sp-asset id="preview" variant=${ifDefined(this.asset)}>
                 <slot name="preview"></slot>
             </sp-asset>
         `;
     }
 
-    protected renderGallery(): TemplateResult {
-        return html`
-            ${this.renderPreviewImage}
-            <div id="body">
-                <div id="header">
-                    ${this.renderTitle}
-                    <div id="subtitle">${this.subtitle}</div>
-                    <slot name="description"></slot>
-                </div>
-            </div>
-        `;
-    }
-
-    protected renderQuiet(): TemplateResult {
-        return html`
-            ${this.renderPreviewImage}
-            <div id="body">
-                <div id="header">
-                    ${this.renderTitle}
-                </div>
-                <div id="content">
-                    <div id="subtitle">${this.subtitle}</div>
-                    <slot name="description"></slot>
-                </div>
-            </div>
-        `;
-    }
-
-    protected renderDefault(): TemplateResult {
-        return html`
-            <sp-asset id="cover-photo">
-                <slot name="cover-photo"></slot>
-            </sp-asset>
-            <div id="body">
-                <div id="header">
-                    ${this.renderTitle}
-                </div>
-                <div id="content">
-                    <div id="subtitle">${this.subtitle}</div>
-                </div>
-            </div>
-            <div id="footer"><slot name="footer"></slot></div>
-        `;
-    }
-
-    protected render(): TemplateResult {
-        switch (this.variant) {
-            case 'gallery':
-                return this.renderGallery();
-            case 'quiet':
-                return this.renderQuiet();
-            default:
-                return this.renderDefault();
+    private renderImage(): TemplateResult {
+        if (this.horizontal) {
+            return this.renderPreviewImage;
         }
+        if (this.variant === 'standard') {
+            return html`
+                <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
+                    <slot name="cover-photo"></slot>
+                </sp-asset>
+            `;
+        }
+        return this.renderPreviewImage;
+    }
+
+    /**
+     * sp-asset
+     * sp-quick-actions
+     * sp-checkbox
+     *
+     */
+    protected render(): TemplateResult {
+        return html`
+            ${this.toggles
+                ? html`
+                      <sp-quick-actions
+                          class="spectrum-QuickActions quickActions"
+                      >
+                          <sp-checkbox
+                              tabindex="-1"
+                              class="checkbox"
+                              @change=${this.handleSelectedChange}
+                              ?checked=${this.selected}
+                          ></sp-checkbox>
+                      </sp-quick-actions>
+                  `
+                : html``}
+            ${this.variant === 'quiet' && this.small
+                ? html`
+                      <sp-quick-actions class="spectrum-QuickActions actions">
+                          <slot name="actions"></slot>
+                      </sp-quick-actions>
+                  `
+                : html``}
+            ${this.renderImage()}
+            <div class="body">
+                <div class="header">
+                    ${this.renderTitle}
+                    ${this.variant === 'gallery'
+                        ? html`
+                              <div class="subtitle">
+                                  <slot name="subtitle">
+                                      ${this.subtitle}
+                                  </slot>
+                              </div>
+                              <slot name="description"></slot>
+                          `
+                        : html``}
+                    ${this.variant !== 'quiet' || !this.small
+                        ? html`
+                              <div class="actionButton">
+                                  <slot name="actions"></slot>
+                              </div>
+                          `
+                        : html``}
+                </div>
+                ${this.variant !== 'gallery'
+                    ? html`
+                          <div class="content">
+                              <div class="subtitle">
+                                  <slot name="subtitle">
+                                      ${this.subtitle}
+                                  </slot>
+                              </div>
+                              <slot name="description"></slot>
+                          </div>
+                      `
+                    : html``}
+            </div>
+            ${this.variant === 'standard'
+                ? html`
+                      <slot name="footer"></slot>
+                  `
+                : html``}
+        `;
     }
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'figure');
         this.tabIndex = 0;
+        this.dir = 'ltr';
     }
 }

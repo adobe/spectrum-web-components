@@ -14,6 +14,20 @@ import '../sp-card.js';
 import { Card } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
+import { Default, smallHorizontal } from '../stories/card.stories.js';
+import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
+import { spy } from 'sinon';
+
+const keyboardEvent = (code: string, shiftKey = false): KeyboardEvent =>
+    new KeyboardEvent('keydown', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        code,
+        shiftKey,
+    });
+const spaceEvent = keyboardEvent('Space');
+
 describe('card', () => {
     it('loads', async () => {
         const el = await fixture<Card>(
@@ -71,7 +85,97 @@ describe('card', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('displays the `title` attribute as `#title`', async () => {
+    it('loads - [horizontal]', async () => {
+        const el = await fixture<Card>(smallHorizontal());
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('converts `Space` to `click` event', async () => {
+        const clickSpy = spy();
+        const handleClick = (): void => clickSpy();
+        const test = await fixture<HTMLDivElement>(Default());
+        const el = test.querySelector('sp-card') as Card;
+        el.addEventListener('click', handleClick);
+
+        await elementUpdated(el);
+        expect(el.focused, 'default focused').to.be.false;
+
+        el.dispatchEvent(new Event('focusin'));
+        await elementUpdated(el);
+        expect(el.focused, 'first time focused').to.be.true;
+
+        el.dispatchEvent(spaceEvent);
+        await elementUpdated(el);
+        expect(el.focused, 'still focused').to.be.true;
+        expect(clickSpy.called).to.be.true;
+        expect(clickSpy.calledOnce).to.be.true;
+    });
+    it('can be `toggles`', async () => {
+        const test = await fixture<HTMLDivElement>(Default());
+        const el = test.querySelector('sp-card') as Card;
+        el.toggles = true;
+
+        await elementUpdated(el);
+
+        const checkbox = el.shadowRoot.querySelector('sp-checkbox') as Checkbox;
+        expect(el.focused, 'default focused').to.be.false;
+        expect(el.selected, 'default selected').to.be.false;
+
+        el.dispatchEvent(new Event('focusin'));
+
+        await elementUpdated(el);
+        expect(el.focused, 'first time focused').to.be.true;
+        expect(el.selected, 'still not selected').to.be.false;
+
+        el.dispatchEvent(spaceEvent);
+
+        await elementUpdated(el);
+        expect(el.focused, 'still focused').to.be.true;
+        expect(el.selected, 'first selected').to.be.true;
+
+        el.addEventListener('change', (event: Event) => event.preventDefault());
+        el.dispatchEvent(spaceEvent);
+
+        await elementUpdated(el);
+        expect(el.focused, 'still focused after default prevented').to.be.true;
+        expect(el.selected, 'first selected after default prevented').to.be
+            .true;
+
+        checkbox.dispatchEvent(
+            new Event('focusin', {
+                composed: true,
+                bubbles: true,
+            })
+        );
+        checkbox.focus();
+
+        await elementUpdated(el);
+        expect(el.focused, 'still focused, again').to.be.true;
+        expect(el.selected, 'still selected').to.be.true;
+
+        el.dispatchEvent(new Event('focusin'));
+
+        await elementUpdated(el);
+        expect(el.focused, 'focused, again').to.be.true;
+        expect(el.selected, 'still selected, again').to.be.true;
+
+        el.dispatchEvent(new Event('focusout'));
+
+        await elementUpdated(el);
+        expect(el.focused, 'still not focused, again').to.be.false;
+        expect(el.selected, 'still selected, again 2').to.be.true;
+
+        el.dispatchEvent(new Event('focusout'));
+
+        checkbox.click();
+
+        await elementUpdated(el);
+        expect(el.focused, 'still not focused, again 2').to.be.false;
+        expect(el.selected, 'still selected, again 3').to.be.false;
+    });
+    it('displays the `title` attribute as `.title`', async () => {
         const testTitle = 'This is a test title';
         const el = await fixture<Card>(
             html`
@@ -89,7 +193,7 @@ describe('card', () => {
         await elementUpdated(el);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
-        const titleEl = root.querySelector('#title');
+        const titleEl = root.querySelector('.title');
 
         expect(titleEl, 'did not find title element').to.not.be.null;
         expect((titleEl as HTMLDivElement).textContent).to.contain(
@@ -97,7 +201,7 @@ describe('card', () => {
             'the title renders in the element'
         );
     });
-    it('displays the slotted content as `#title`', async () => {
+    it('displays the slotted content as `.title`', async () => {
         const testTitle = 'This is a test title';
         const el = await fixture<Card>(
             html`
