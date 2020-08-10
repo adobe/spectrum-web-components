@@ -564,7 +564,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-down)
     );
 }
-:host(:hover[invalid]) #input {
+:host([invalid]:hover) #input {
     /* .spectrum-Textfield.is-invalid:hover .spectrum-Textfield-input */
     border-color: var(
         --spectrum-textfield-border-color-error-hover,
@@ -631,7 +631,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #input [disabled],
 :host([disabled]) #input,
-:host(:hover[disabled]) #input {
+:host([disabled]:hover) #input {
     /* .spectrum-Textfield-input [disabled],
    * .spectrum-Textfield.is-disabled .spectrum-Textfield-input,
    * .spectrum-Textfield.is-disabled:hover .spectrum-Textfield-input */
@@ -654,7 +654,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #input [disabled]::placeholder,
 :host([disabled]) #input::placeholder,
-:host(:hover[disabled]) #input::placeholder {
+:host([disabled]:hover) #input::placeholder {
     /* .spectrum-Textfield-input [disabled]::placeholder,
    * .spectrum-Textfield.is-disabled .spectrum-Textfield-input::placeholder,
    * .spectrum-Textfield.is-disabled:hover .spectrum-Textfield-input::placeholder */
