@@ -15,7 +15,10 @@ import './styles.css';
 
 // import the components we'll use in this page
 import '@spectrum-web-components/button/sp-button';
+// use the following import to chunk your build at the async boundary infront of the Overlay package
 import '@spectrum-web-components/dropdown/sp-dropdown';
+// use the following import to chunk your build as defaulted in the Rollup config.
+// import '@spectrum-web-components/dropdown/sync/sp-dropdown';
 import '@spectrum-web-components/menu/sp-menu';
 import '@spectrum-web-components/menu/sp-menu-item';
 
@@ -26,12 +29,3 @@ import '@spectrum-web-components/menu/sp-menu-item';
 window.process = window.process || {};
 window.process.env = window.process.env || {};
 window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
-
-/**
- * Uncomment this following line to allow rollup to include dynamically
- * imported code whereever it thinks it should best be bundled. In particular,
- * @open-wc/building-rollup currently uses a babel feature that will still split
- * this into more than a single bundle.
- * https://github.com/open-wc/open-wc/issues/1625#issuecomment-632158102
- **/
-// export { Overlay } from '@spectrum-web-components/overlay';

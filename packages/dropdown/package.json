@@ -28,7 +28,9 @@
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json",
         "./sp-dropdown": "./sp-dropdown.js",
-        "./sp-dropdown.js": "./sp-dropdown.js"
+        "./sp-dropdown.js": "./sp-dropdown.js",
+        "./sync/sp-dropdown": "./sync/sp-dropdown.js",
+        "./sync/sp-dropdown.js": "./sync/sp-dropdown.js"
     },
     "files": [
         "custom-elements.json",
@@ -39,7 +41,9 @@
     ],
     "sideEffects": [
         "./sp-dropdown.js",
-        "./sp-dropdown.ts"
+        "./sp-dropdown.ts",
+        "./sync/sp-dropdown.js",
+        "./sync/sp-dropdown.ts"
     ],
     "scripts": {
         "test": "karma start --coverage"

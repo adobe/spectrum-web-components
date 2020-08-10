@@ -17,6 +17,12 @@ Import the side effectful registration of `<sp-dropdown>` via:
 import '@spectrum-web-components/dropdown/sp-dropdown.js';
 ```
 
+The default of `<sp-dropdown>` will load dependencies in `@spectrum-web-components/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-dropdown>` as follows:
+
+```
+import '@spectrum-web-components/dropdown/sync/sp-dropdown.js';
+```
+
 When looking to leverage the `Dropdown` base class as a type and/or for extension purposes, do so via:
 
 ```
