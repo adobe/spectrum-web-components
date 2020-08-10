@@ -10,11 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-// import our stylesheets
-import './styles.css';
+import { Dropdown } from '../src/Dropdown.js';
+import {
+    Overlay,
+    OverlayOptions,
+    TriggerInteractions,
+} from '@spectrum-web-components/overlay';
+import '../sp-dropdown.js';
 
-// import the components we'll use in this page
-import '@spectrum-web-components/button/sp-button';
-import '@spectrum-web-components/dropdown/sp-dropdown';
-import '@spectrum-web-components/menu/sp-menu';
-import '@spectrum-web-components/menu/sp-menu-item';
+Dropdown.openOverlay = async (
+    target: HTMLElement,
+    interaction: TriggerInteractions,
+    content: HTMLElement,
+    options: OverlayOptions
+): Promise<() => void> => {
+    return await Overlay.open(target, interaction, content, options);
+};
