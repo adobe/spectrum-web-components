@@ -5,5 +5,10 @@
         "rootDir": "./"
     },
     "include": ["*.ts", "src/*.ts"],
-    "exclude": ["test/*.ts", "stories/*.ts"]
+    "exclude": ["test/*.ts", "stories/*.ts"],
+    "references": [
+        { "path": "../base" },
+        { "path": "../icons-workflow" },
+        { "path": "../shared" }
+    ]
 }

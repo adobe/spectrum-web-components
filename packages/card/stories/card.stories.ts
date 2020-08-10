@@ -13,7 +13,11 @@ import { html, TemplateResult } from 'lit-html';
 
 import '../sp-card.js';
 import { landscape, portrait } from './images';
+import { FileTxtIcon } from '@spectrum-web-components/icons-workflow';
 import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {
     component: 'sp-card',
@@ -31,6 +35,48 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const actions = (): TemplateResult => {
+    return html`
+        <div style="color: var(--spectrum-global-color-gray-800)">
+            <sp-card title="Card Title" subtitle="JPG">
+                <img slot="cover-photo" src=${portrait} alt="Demo Image" />
+                <div slot="footer">Footer</div>
+                <sp-action-menu slot="actions" placement="bottom-end">
+                    <sp-menu>
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
+            </sp-card>
+        </div>
+    `;
+};
+
+export const empty = (): TemplateResult => {
+    return html`
+        <div style="color: var(--spectrum-global-color-gray-800)">
+            <sp-card></sp-card>
+        </div>
+    `;
+};
+
 export const Gallery = (): TemplateResult => {
     return html`
         <div style="width: 532px; height: 224px">
@@ -42,7 +88,6 @@ export const Gallery = (): TemplateResult => {
                     alt="Demo Image"
                 />
                 <div slot="description">10/15/18</div>
-                <div slot="footer">Footer</div>
             </sp-card>
         </div>
     `;
@@ -52,9 +97,135 @@ export const Quiet = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
             <sp-card variant="quiet" title="Card Title" subtitle="JPG">
-                <img slot="preview" src=${portrait} alt="Demo Image" />
+                <img src=${portrait} alt="Demo Image" slot="preview" />
                 <div slot="description">10/15/18</div>
+            </sp-card>
+        </div>
+    `;
+};
+
+export const quietFile = (): TemplateResult => {
+    return html`
+        <div style="width: 208px; height: 264px">
+            <sp-card variant="quiet" subtitle="JPG" asset="file">
+                <img src=${portrait} alt="Demo Image" slot="preview" />
+                <div slot="title">File Name</div>
+                <div slot="description">10/15/18</div>
+            </sp-card>
+        </div>
+    `;
+};
+
+export const quietFolder = (): TemplateResult => {
+    return html`
+        <div style="width: 208px; height: 264px">
+            <sp-card variant="quiet" subtitle="JPG" asset="folder">
+                <img src=${portrait} alt="Demo Image" slot="preview" />
+                <div slot="title">Folder Name</div>
+                <div slot="description">10/15/18</div>
+            </sp-card>
+        </div>
+    `;
+};
+
+export const quietActions = (): TemplateResult => {
+    return html`
+        <div style="width: 208px; height: 264px">
+            <sp-card variant="quiet" title="Card Title" subtitle="JPG">
+                <img src=${portrait} alt="Demo Image" slot="preview" />
+                <div slot="description">10/15/18</div>
+                <sp-action-menu slot="actions" placement="bottom-end">
+                    <sp-menu>
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
+            </sp-card>
+        </div>
+    `;
+};
+
+quietActions.story = {
+    name: 'Quiet w/ Actions',
+};
+
+export const small = (): TemplateResult => {
+    return html`
+        <div style="width: 208px; height: 264px">
+            <sp-card small title="Card Title" subtitle="JPG">
+                <img
+                    slot="cover-photo"
+                    src=${portrait}
+                    alt="Demo Image"
+                    style="width: 110px"
+                />
                 <div slot="footer">Footer</div>
+            </sp-card>
+        </div>
+    `;
+};
+
+export const smallHorizontal = (): TemplateResult => {
+    return html`
+        <div
+            style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color));"
+        >
+            <sp-card small horizontal title="Card Title" subtitle="JPG">
+                <sp-icon slot="preview" style="width: 36px; height: 36px;">
+                    ${FileTxtIcon({ hidden: false })}
+                </sp-icon>
+            </sp-card>
+        </div>
+        .
+    `;
+};
+
+export const smallQuiet = (): TemplateResult => {
+    return html`
+        <div style="width: 115px">
+            <sp-card small title="Card Title" subtitle="JPG" variant="quiet">
+                <img src=${portrait} alt="Demo Image" slot="preview" />
+                <div slot="footer">Footer</div>
+                <sp-action-menu slot="actions" placement="bottom-end">
+                    <sp-menu>
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
             </sp-card>
         </div>
     `;
@@ -62,16 +233,53 @@ export const Quiet = (): TemplateResult => {
 
 export const SlottedTitle = (): TemplateResult => {
     return html`
+        <style>
+            .slotted-textfield-title {
+                width: 100%;
+            }
+        </style>
         <div
-            style="color: var(--spectrum-global-color-gray-800); --spectrum-card-body-header-height: auto;"
+            style="
+            color: var(--spectrum-global-color-gray-800);
+            width: 318px;
+            --spectrum-card-title-width: 100%;
+            --spectrum-card-title-padding-right: 0;
+            --spectrum-card-body-header-height: auto;
+            --spectrum-alias-single-line-width: 100%;
+        "
         >
-            <sp-card subtitle="JPG">
-                <sp-textfield
-                    slot="title"
-                    placeholder="Enter Title"
-                ></sp-textfield>
+            <sp-card>
                 <img slot="cover-photo" src=${portrait} alt="Demo Image" />
-                <div slot="footer">Footer</div>
+                <sp-textfield
+                    class="slotted-textfield-title"
+                    slot="title"
+                    value="Apr 23 Project"
+                    quiet
+                ></sp-textfield>
+                <div slot="subtitle">LAST MODIFIED ON 6/17/2020, 3:37 PM</div>
+                <sp-action-menu slot="actions" placement="bottom-end">
+                    <sp-menu>
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
             </sp-card>
         </div>
     `;
