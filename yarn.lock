@@ -3486,10 +3486,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-2.2.1.tgz#b27f10b1110fda553d301e5ae194dc340f622a7c"
   integrity sha512-9yMsNuvF9LQVSMOJlkwi2cWY0vAj1Z/ic3xoTcKkm8WTTJHv7lHVwU+XF0L2XpmnYNsMVICLB5YhCzjTu5GEsg==
 
-"@spectrum-css/card@^2.0.6":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-2.0.6.tgz#e6b69978e8551875d1dab037faba74011a365736"
-  integrity sha512-5dnQYNpePLSnxK2gtljXhOom8iCkV9meGdgHCKBZk6bRVhKe2sjX5ljwd0o2BdZYjp9CdrEAzkPTQTvBax1G2Q==
+"@spectrum-css/card@^3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-3.0.0-beta.2.tgz#fae862651b7e689ea985f87380957df49e3ed41a"
+  integrity sha512-Hc2V1YXAbPTbdcqdfs6fSzKJUs83DDYT0H5lfkFNZKkDXT+qrEcWwTQLr2bHlGabvVgu8mkBoChpvVhtKsx3Ug==
 
 "@spectrum-css/checkbox@^3.0.0-beta.3":
   version "3.0.0-beta.3"
@@ -3550,6 +3550,11 @@
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-2.0.6.tgz#b7eb8e202d7f3f7736fcdcdbc2e9df5f1738a9c0"
   integrity sha512-rLs4przzevttfJ732Jdkjc/1SWny7QVlu1waxPh4o+wVcdA78e61BgrwHLDj5xYNkKo3D2qauSuwKXuwCmHnYA==
+
+"@spectrum-css/quickaction@^3.0.0-beta.3":
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.0.0-beta.3.tgz#cd85a2bc0b7dd272382423dbeff7a7ef4afc5352"
+  integrity sha512-tTTX5ne+zEjicL0/d6tXtzYf1b/TDrBE6rr3az3e4g3Y3yprORUT2CyTi/P0MsJMO5AhWCU3kxlFQ1MzGpVVFw==
 
 "@spectrum-css/radio@^2.1.0":
   version "2.1.0"

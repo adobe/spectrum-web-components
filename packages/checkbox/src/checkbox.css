@@ -16,3 +16,7 @@ governing permissions and limitations under the License.
     display: inline-flex;
     vertical-align: top;
 }
+
+:host(:empty) label {
+    display: none;
+}
