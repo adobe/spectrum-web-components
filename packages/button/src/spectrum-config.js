@@ -53,6 +53,7 @@ module.exports = {
                     name: 'icon',
                 },
             ],
+            exclude: [/\.spectrum-ActionButton/, /\.spectrum-Button/],
             excludeSourceSelector: [
                 /^([^\s]*),([^\s]*),([^\s]*),([^\s]*),([^\s]*)$/,
             ],
@@ -96,7 +97,7 @@ module.exports = {
                     selector: '.spectrum-Icon',
                 },
             ],
-            exclude: [/\.is-disabled/],
+            exclude: [/\.is-disabled/, /\.spectrum-ActionButton/],
             excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
         },
         {
@@ -134,7 +135,7 @@ module.exports = {
                     selector: '.spectrum-Icon',
                 },
             ],
-            exclude: [/\.is-disabled/],
+            exclude: [/\.is-disabled/, /\.spectrum-Button/],
             excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
         },
         {
@@ -172,6 +173,7 @@ module.exports = {
                     selector: '.spectrum-Icon',
                 },
             ],
+            exclude: [/\.spectrum-ActionButton/, /\.spectrum-Button/],
             excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
         },
     ],
