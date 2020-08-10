@@ -40,3 +40,19 @@ slot[name='description'] {
 :host(:not([variant='gallery'])) #preview ::slotted(*) {
     height: 100%;
 }
+
+:host([horizontal]) #preview {
+    width: auto;
+}
+
+sp-quick-actions {
+    z-index: 1;
+}
+
+/**
+ * Allow that the title element will take specified use of the available width whether 
+ * "actions" are supplied to the element or not.
+ **/
+.title {
+    width: var(--spectrum-card-title-width);
+}

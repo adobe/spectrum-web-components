@@ -10,6 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+:host([quiet]) {
+    min-width: 0;
+}
+
 #button {
     width: auto;
 }

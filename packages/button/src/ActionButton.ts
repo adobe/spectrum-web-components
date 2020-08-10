@@ -14,6 +14,11 @@ import { CSSResultArray, property, PropertyValues } from 'lit-element';
 import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './action-button.css.js';
 
+/**
+ * @element sp-card
+ *
+ * @fires change - Announces a change in the `selected` property of an action button
+ */
 export class ActionButton extends ButtonBase {
     public static get styles(): CSSResultArray {
         return [...super.styles, buttonStyles];
@@ -41,6 +46,14 @@ export class ActionButton extends ButtonBase {
             return;
         }
         this.selected = !this.selected;
+        const applyDefault = this.dispatchEvent(
+            new Event('change', {
+                cancelable: true,
+            })
+        );
+        if (!applyDefault) {
+            this.selected = !this.selected;
+        }
     };
 
     protected updated(changes: PropertyValues): void {

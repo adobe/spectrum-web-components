@@ -16,48 +16,14 @@ module.exports = {
         {
             name: 'card',
             host: '.spectrum-Card',
-            attributes: [
-                {
-                    type: 'boolean',
-                    selector: '.is-selected',
-                    name: 'selected',
-                },
-                {
-                    type: 'boolean',
-                    selector: '.is-drop-target',
-                    name: 'drop-target',
-                },
-                {
-                    type: 'enum',
-                    name: 'variant',
-                    values: [
-                        '.spectrum-Card--quiet',
-                        '.spectrum-Card--gallery',
-                    ],
-                },
-            ],
-            slots: [
-                {
-                    name: 'footer',
-                    selector: '.spectrum-Card-footer',
-                },
-                {
-                    name: 'description',
-                    selector: '.spectrum-Card-description',
-                },
-            ],
-            ids: [
-                {
-                    selector: '.spectrum-Card-header',
-                    name: 'header',
-                },
-                {
-                    selector: '.spectrum-Card-content',
-                    name: 'content',
-                },
+            classes: [
                 {
                     selector: '.spectrum-Card-body',
                     name: 'body',
+                },
+                {
+                    selector: '.spectrum-Card-header',
+                    name: 'header',
                 },
                 {
                     selector: '.spectrum-Card-title',
@@ -68,24 +34,79 @@ module.exports = {
                     name: 'subtitle',
                 },
                 {
-                    selector: '.spectrum-Card-action-button',
-                    name: 'action-button',
+                    selector: '.spectrum-Card-content',
+                    name: 'content',
                 },
                 {
-                    selector: '.spectrum-Card-quick-actions',
-                    name: 'quick-actions',
+                    selector: '.spectrum-Card-quickActions',
+                    name: 'quickActions',
                 },
                 {
                     selector: '.spectrum-Card-actions',
                     name: 'actions',
                 },
                 {
+                    selector: '.spectrum-Card-actionButton',
+                    name: 'actionButton',
+                },
+                {
+                    selector: '.spectrum-Checkbox',
+                    name: 'checkbox',
+                },
+            ],
+            attributes: [
+                {
+                    type: 'enum',
+                    name: 'variant',
+                    values: [
+                        '.spectrum-Card--quiet',
+                        '.spectrum-Card--gallery',
+                    ],
+                },
+                {
+                    type: 'boolean',
+                    name: 'focused',
+                    selector: '.is-focused',
+                },
+                {
+                    type: 'boolean',
+                    name: 'selected',
+                    selector: '.is-selected',
+                },
+                {
+                    type: 'boolean',
+                    name: 'drop-target',
+                    selector: '.is-drop-target',
+                },
+                {
+                    type: 'boolean',
+                    name: 'small',
+                    selector: '.spectrum-Card--small',
+                },
+                {
+                    type: 'boolean',
+                    name: 'horizontal',
+                    selector: '.spectrum-Card--horizontal',
+                },
+            ],
+            ids: [
+                {
                     name: 'cover-photo',
                     selector: '.spectrum-Card-coverPhoto',
                 },
                 {
-                    name: 'preview',
                     selector: '.spectrum-Card-preview',
+                    name: 'preview',
+                },
+            ],
+            slots: [
+                {
+                    name: 'footer',
+                    selector: '.spectrum-Card-footer',
+                },
+                {
+                    name: 'description',
+                    selector: '.spectrum-Card-description',
                 },
             ],
         },

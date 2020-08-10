@@ -43,14 +43,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card:focus */
     outline: none;
 }
-:host(.is-focused) #actions,
-:host(.is-focused) .spectrum-Card-quickActions,
-:host([selected]) #actions,
-:host([selected]) .spectrum-Card-quickActions,
-:host(:focus) #actions,
-:host(:focus) .spectrum-Card-quickActions,
-:host(:hover) #actions,
-:host(:hover) .spectrum-Card-quickActions {
+:host([focused]) .actions,
+:host([focused]) .quickActions,
+:host([selected]) .actions,
+:host([selected]) .quickActions,
+:host(:focus) .actions,
+:host(:focus) .quickActions,
+:host(:hover) .actions,
+:host(:hover) .quickActions {
     /* .spectrum-Card.is-focused .spectrum-Card-actions,
    * .spectrum-Card.is-focused .spectrum-Card-quickActions,
    * .spectrum-Card.is-selected .spectrum-Card-actions,
@@ -63,34 +63,50 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     opacity: 1;
     pointer-events: all;
 }
-#actions {
-    /* .spectrum-Card-actions */
+:host([dir='ltr']) .actions {
+    /* [dir=ltr] .spectrum-Card-actions */
     right: var(
         --spectrum-card-actions-margin,
         var(--spectrum-global-dimension-size-125)
     );
-    top: var(
+}
+:host([dir='rtl']) .actions {
+    /* [dir=rtl] .spectrum-Card-actions */
+    left: var(
         --spectrum-card-actions-margin,
         var(--spectrum-global-dimension-size-125)
     );
 }
-#actions,
-.spectrum-Card-quickActions {
-    /* .spectrum-Card-actions,
-   * .spectrum-Card-quickActions */
+.actions {
+    /* .spectrum-Card-actions */
     position: absolute;
+    top: var(
+        --spectrum-card-actions-margin,
+        var(--spectrum-global-dimension-size-125)
+    );
     height: var(
         --spectrum-quickactions-height,
         var(--spectrum-global-dimension-size-500)
     );
     visibility: hidden;
 }
-.spectrum-Card-quickActions {
-    /* .spectrum-Card-quickActions */
+:host([dir='ltr']) .quickActions {
+    /* [dir=ltr] .spectrum-Card-quickActions */
     left: var(
         --spectrum-card-checkbox-margin,
         var(--spectrum-global-dimension-size-200)
     );
+}
+:host([dir='rtl']) .quickActions {
+    /* [dir=rtl] .spectrum-Card-quickActions */
+    right: var(
+        --spectrum-card-checkbox-margin,
+        var(--spectrum-global-dimension-size-200)
+    );
+}
+.quickActions {
+    /* .spectrum-Card-quickActions */
+    position: absolute;
     top: var(
         --spectrum-card-checkbox-margin,
         var(--spectrum-global-dimension-size-200)
@@ -99,9 +115,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-quickactions-height,
         var(--spectrum-global-dimension-size-500)
     );
+    height: var(
+        --spectrum-quickactions-height,
+        var(--spectrum-global-dimension-size-500)
+    );
+    visibility: hidden;
 }
-.spectrum-Card-quickActions .spectrum-Checkbox {
-    /* .spectrum-Card-quickActions .spectrum-Checkbox */
+:host([dir='ltr']) .quickActions .checkbox,
+:host([dir='rtl']) .quickActions .checkbox {
+    /* [dir=ltr] .spectrum-Card-quickActions .spectrum-Checkbox,
+   * [dir=rtl] .spectrum-Card-quickActions .spectrum-Checkbox */
     margin: 0;
 }
 #cover-photo {
@@ -119,19 +142,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-alias-border-size-thin)
         )
         solid transparent;
-    border-radius: calc(
-            var(
-                    --spectrum-card-border-radius,
-                    var(--spectrum-alias-border-radius-regular)
-                ) - 1px
-        )
-        calc(
-            var(
-                    --spectrum-card-border-radius,
-                    var(--spectrum-alias-border-radius-regular)
-                ) - 1px
-        )
-        0 0;
+    border-top-left-radius: calc(
+        var(
+                --spectrum-card-border-radius,
+                var(--spectrum-alias-border-radius-regular)
+            ) - 1px
+    );
+    border-top-right-radius: calc(
+        var(
+                --spectrum-card-border-radius,
+                var(--spectrum-alias-border-radius-regular)
+            ) - 1px
+    );
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
     background-size: cover;
     background-position: 50%; /* .spectrum-Card-coverPhoto */
     background-color: var(
@@ -143,55 +167,71 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-200)
     );
 }
-#body {
-    /* .spectrum-Card-body */
-    padding: var(
-            --spectrum-card-body-padding-top,
-            var(--spectrum-global-dimension-size-250)
-        )
-        var(
-            --spectrum-card-body-padding-right,
-            var(--spectrum-global-dimension-size-300)
-        )
-        var(
-            --spectrum-card-body-padding-bottom,
-            var(--spectrum-global-dimension-size-250)
-        )
-        var(
-            --spectrum-card-body-padding-left,
-            var(--spectrum-global-dimension-size-300)
-        );
+:host([dir='ltr']) .body {
+    /* [dir=ltr] .spectrum-Card-body */
+    padding-right: var(
+        --spectrum-card-body-padding-right,
+        var(--spectrum-global-dimension-size-300)
+    ); /* [dir=ltr] .spectrum-Card-body */
+    padding-left: var(
+        --spectrum-card-body-padding-left,
+        var(--spectrum-global-dimension-size-300)
+    );
 }
-#body:last-child {
+:host([dir='rtl']) .body {
+    /* [dir=rtl] .spectrum-Card-body */
+    padding-left: var(
+        --spectrum-card-body-padding-right,
+        var(--spectrum-global-dimension-size-300)
+    ); /* [dir=rtl] .spectrum-Card-body */
+    padding-right: var(
+        --spectrum-card-body-padding-left,
+        var(--spectrum-global-dimension-size-300)
+    );
+}
+.body {
+    /* .spectrum-Card-body */
+    padding-top: var(
+        --spectrum-card-body-padding-top,
+        var(--spectrum-global-dimension-size-250)
+    );
+    padding-bottom: var(
+        --spectrum-card-body-padding-bottom,
+        var(--spectrum-global-dimension-size-250)
+    );
+}
+.body:last-child {
     /* .spectrum-Card-body:last-child */
-    border-radius: 0 0
-        var(
-            --spectrum-card-border-radius,
-            var(--spectrum-alias-border-radius-regular)
-        )
-        var(
-            --spectrum-card-border-radius,
-            var(--spectrum-alias-border-radius-regular)
-        );
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: var(
+        --spectrum-card-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    border-bottom-left-radius: var(
+        --spectrum-card-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
 }
 #preview {
     /* .spectrum-Card-preview */
     overflow: hidden;
-    border-radius: calc(
-            var(
-                    --spectrum-card-border-radius,
-                    var(--spectrum-alias-border-radius-regular)
-                ) - 1px
-        )
-        calc(
-            var(
-                    --spectrum-card-border-radius,
-                    var(--spectrum-alias-border-radius-regular)
-                ) - 1px
-        )
-        0 0;
+    border-top-left-radius: calc(
+        var(
+                --spectrum-card-border-radius,
+                var(--spectrum-alias-border-radius-regular)
+            ) - 1px
+    );
+    border-top-right-radius: calc(
+        var(
+                --spectrum-card-border-radius,
+                var(--spectrum-alias-border-radius-regular)
+            ) - 1px
+    );
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
-#header {
+.header {
     /* .spectrum-Card-header */
     height: var(
         --spectrum-card-body-header-height,
@@ -200,7 +240,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: flex;
     align-items: baseline;
 }
-#content {
+.content {
     /* .spectrum-Card-content */
     display: flex;
     height: var(
@@ -212,7 +252,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-75)
     );
 }
-#title {
+:host([dir='ltr']) .title {
+    /* [dir=ltr] .spectrum-Card-title */
+    padding-right: var(
+        --spectrum-card-title-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+:host([dir='rtl']) .title {
+    /* [dir=rtl] .spectrum-Card-title */
+    padding-left: var(
+        --spectrum-card-title-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+.title {
     /* .spectrum-Card-title */
     font-size: var(
         --spectrum-card-title-text-size,
@@ -220,30 +274,36 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    padding-right: var(
-        --spectrum-card-title-padding-right,
-        var(--spectrum-global-dimension-size-100)
-    ); /* .spectrum-Card .spectrum-Card-title */
+    text-overflow: ellipsis; /* .spectrum-Card .spectrum-Card-title */
     color: var(
         --spectrum-alias-text-color,
         var(--spectrum-global-color-gray-800)
     );
 }
-#subtitle {
+:host([dir='ltr']) .subtitle {
+    /* [dir=ltr] .spectrum-Card-subtitle */
+    padding-right: var(
+        --spectrum-card-subtitle-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+:host([dir='rtl']) .subtitle {
+    /* [dir=rtl] .spectrum-Card-subtitle */
+    padding-left: var(
+        --spectrum-card-subtitle-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+.subtitle {
     /* .spectrum-Card-subtitle */
     letter-spacing: var(
         --spectrum-card-subtitle-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: uppercase;
-    padding-right: var(
-        --spectrum-card-subtitle-padding-right,
-        var(--spectrum-global-dimension-size-100)
-    );
 }
 ::slotted([slot='description']),
-#subtitle {
+.subtitle {
     /* .spectrum-Card-description,
    * .spectrum-Card-subtitle */
     font-size: var(
@@ -251,12 +311,44 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-font-size-50)
     );
 }
-#subtitle + ::slotted([slot='description']):before {
-    /* .spectrum-Card-subtitle+.spectrum-Card-description:before */
-    content: '•';
+:host([dir='ltr']) .subtitle + ::slotted([slot='description']):before {
+    /* [dir=ltr] .spectrum-Card-subtitle+.spectrum-Card-description:before */
     padding-right: var(
         --spectrum-card-subtitle-padding-right,
         var(--spectrum-global-dimension-size-100)
+    );
+}
+:host([dir='rtl']) .subtitle + ::slotted([slot='description']):before {
+    /* [dir=rtl] .spectrum-Card-subtitle+.spectrum-Card-description:before */
+    padding-left: var(
+        --spectrum-card-subtitle-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+.subtitle + ::slotted([slot='description']):before {
+    /* .spectrum-Card-subtitle+.spectrum-Card-description:before */
+    content: '•';
+}
+:host([dir='ltr']) ::slotted([slot='footer']) {
+    /* [dir=ltr] .spectrum-Card-footer */
+    margin-right: var(
+        --spectrum-card-body-padding-right,
+        var(--spectrum-global-dimension-size-300)
+    ); /* [dir=ltr] .spectrum-Card-footer */
+    margin-left: var(
+        --spectrum-card-body-padding-left,
+        var(--spectrum-global-dimension-size-300)
+    );
+}
+:host([dir='rtl']) ::slotted([slot='footer']) {
+    /* [dir=rtl] .spectrum-Card-footer */
+    margin-left: var(
+        --spectrum-card-body-padding-right,
+        var(--spectrum-global-dimension-size-300)
+    ); /* [dir=rtl] .spectrum-Card-footer */
+    margin-right: var(
+        --spectrum-card-body-padding-left,
+        var(--spectrum-global-dimension-size-300)
     );
 }
 ::slotted([slot='footer']) {
@@ -265,17 +357,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-card-footer-padding-top,
         var(--spectrum-global-dimension-size-175)
     );
-    margin-right: var(
-        --spectrum-card-body-padding-right,
-        var(--spectrum-global-dimension-size-300)
-    );
     padding-bottom: var(
         --spectrum-card-body-padding-bottom,
         var(--spectrum-global-dimension-size-250)
-    );
-    margin-left: var(
-        --spectrum-card-body-padding-left,
-        var(--spectrum-global-dimension-size-300)
     );
     border-top: var(
             --spectrum-card-footer-border-top-size,
@@ -287,7 +371,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-200)
     );
 }
-.spectrum-Card-actionButton {
+.actionButton {
     /* .spectrum-Card-actionButton */
     flex: 1;
     align-self: center;
@@ -336,6 +420,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-animation-duration-100, 0.13s);
     overflow: visible;
 }
+:host([dir='ltr'][variant='gallery']) #preview:before,
+:host([dir='ltr'][variant='quiet']) #preview:before {
+    /* [dir=ltr] .spectrum-Card--gallery .spectrum-Card-preview:before,
+   * [dir=ltr] .spectrum-Card--quiet .spectrum-Card-preview:before */
+    left: 0;
+}
+:host([dir='rtl'][variant='gallery']) #preview:before,
+:host([dir='rtl'][variant='quiet']) #preview:before {
+    /* [dir=rtl] .spectrum-Card--gallery .spectrum-Card-preview:before,
+   * [dir=rtl] .spectrum-Card--quiet .spectrum-Card-preview:before */
+    right: 0;
+}
 :host([variant='gallery']) #preview:before,
 :host([variant='quiet']) #preview:before {
     /* .spectrum-Card--gallery .spectrum-Card-preview:before,
@@ -343,7 +439,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -360,8 +455,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--quiet.is-drop-target .spectrum-Card-preview */
     transition: none;
 }
-:host([variant='gallery']) #header,
-:host([variant='quiet']) #header {
+:host([variant='gallery']) .header,
+:host([variant='quiet']) .header {
     /* .spectrum-Card--gallery .spectrum-Card-header,
    * .spectrum-Card--quiet .spectrum-Card-header */
     height: var(
@@ -373,31 +468,41 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-175)
     );
 }
-:host([variant='gallery']) #body,
-:host([variant='quiet']) #body {
+:host([variant='gallery']) .body,
+:host([variant='quiet']) .body {
     /* .spectrum-Card--gallery .spectrum-Card-body,
    * .spectrum-Card--quiet .spectrum-Card-body */
     padding: 0;
 }
-.spectrum-Card--small {
+:host([small]) {
     /* .spectrum-Card--small */
     min-width: var(
         --spectrum-card-quiet-small-min-size,
         var(--spectrum-global-dimension-size-900)
     );
 }
-.spectrum-Card--small .spectrum-Card-quickActions {
-    /* .spectrum-Card--small .spectrum-Card-quickActions */
+:host([dir='ltr'][small]) .quickActions {
+    /* [dir=ltr] .spectrum-Card--small .spectrum-Card-quickActions */
     left: var(
         --spectrum-card-quiet-small-checkbox-margin,
         var(--spectrum-global-dimension-size-125)
     );
+}
+:host([dir='rtl'][small]) .quickActions {
+    /* [dir=rtl] .spectrum-Card--small .spectrum-Card-quickActions */
+    right: var(
+        --spectrum-card-quiet-small-checkbox-margin,
+        var(--spectrum-global-dimension-size-125)
+    );
+}
+:host([small]) .quickActions {
+    /* .spectrum-Card--small .spectrum-Card-quickActions */
     top: var(
         --spectrum-card-quiet-small-checkbox-margin,
         var(--spectrum-global-dimension-size-125)
     );
 }
-.spectrum-Card--small #preview {
+:host([small]) #preview {
     /* .spectrum-Card--small .spectrum-Card-preview */
     padding: var(
         --spectrum-card-quiet-small-preview-padding,
@@ -408,7 +513,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-900)
     );
 }
-.spectrum-Card--small #header {
+:host([small]) .header {
     /* .spectrum-Card--small .spectrum-Card-header */
     margin-top: var(
         --spectrum-card-quiet-small-body-margin-top,
@@ -419,38 +524,60 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-150)
     );
 }
-.spectrum-Card--small #title {
+:host([small]) .title {
     /* .spectrum-Card--small .spectrum-Card-title */
     font-size: var(
         --spectrum-card-quiet-small-title-text-size,
         var(--spectrum-global-dimension-font-size-100)
     );
 }
-.spectrum-Card--horizontal {
+:host([horizontal]) {
     /* .spectrum-Card--horizontal */
     flex-direction: row;
 }
-.spectrum-Card--horizontal #preview {
+:host([dir='ltr'][horizontal]) #preview {
+    /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-top-left-radius: var(
+        --spectrum-card-quiet-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    ); /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-top-right-radius: 0; /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-bottom-left-radius: var(
+        --spectrum-card-quiet-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    ); /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-bottom-right-radius: 0; /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-right: var(
+            --spectrum-card-border-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid transparent;
+}
+:host([dir='rtl'][horizontal]) #preview {
+    /* [dir=rtl] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-top-right-radius: var(
+        --spectrum-card-quiet-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    ); /* [dir=rtl] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-top-left-radius: 0; /* [dir=rtl] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-bottom-right-radius: var(
+        --spectrum-card-quiet-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    ); /* [dir=rtl] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-bottom-left-radius: 0; /* [dir=rtl] .spectrum-Card--horizontal .spectrum-Card-preview */
+    border-left: var(
+            --spectrum-card-border-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid transparent;
+}
+:host([horizontal]) #preview {
     /* .spectrum-Card--horizontal .spectrum-Card-preview */
     flex-shrink: 0;
     min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(
-            --spectrum-card-quiet-border-radius,
-            var(--spectrum-alias-border-radius-regular)
-        )
-        0 0
-        var(
-            --spectrum-card-quiet-border-radius,
-            var(--spectrum-alias-border-radius-regular)
-        );
-    border-right: var(
-            --spectrum-card-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        solid transparent;
     padding: var(
         --spectrum-global-dimension-size-175
     ); /* .spectrum-Card--horizontal .spectrum-Card-preview */
@@ -463,24 +590,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-200)
     );
 }
-.spectrum-Card--horizontal #content,
-.spectrum-Card--horizontal #header {
+:host([horizontal]) .content,
+:host([horizontal]) .header {
     /* .spectrum-Card--horizontal .spectrum-Card-content,
    * .spectrum-Card--horizontal .spectrum-Card-header */
     margin-top: 0;
     height: auto;
 }
-.spectrum-Card--horizontal #title {
-    /* .spectrum-Card--horizontal .spectrum-Card-title */
+:host([dir='ltr'][horizontal]) .title {
+    /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-title */
     padding-right: 0;
 }
-.spectrum-Card--horizontal #body {
+:host([dir='rtl'][horizontal]) .title {
+    /* [dir=rtl] .spectrum-Card--horizontal .spectrum-Card-title */
+    padding-left: 0;
+}
+:host([horizontal]) .body {
     /* .spectrum-Card--horizontal .spectrum-Card-body */
     flex-shrink: 0;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 0 var(--spectrum-global-dimension-size-200);
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: var(--spectrum-global-dimension-size-200);
+    padding-right: var(--spectrum-global-dimension-size-200);
 }
 :host([variant='gallery']) {
     /* .spectrum-Card--gallery */
@@ -519,7 +653,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     background-color: var(--spectrum-alias-highlight-selected);
 }
 ::slotted([slot='description']),
-#subtitle {
+.subtitle {
     /* .spectrum-Card-description,
    * .spectrum-Card .spectrum-Card-subtitle */
     color: var(
@@ -651,8 +785,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-500)
     );
 }
-:host([variant='gallery']) #title,
-:host([variant='quiet']) #title {
+:host([variant='gallery']) .title,
+:host([variant='quiet']) .title {
     /* .spectrum-Card--gallery .spectrum-Card-title,
    * .spectrum-Card--quiet .spectrum-Card-title */
     color: var(
@@ -660,8 +794,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([variant='gallery']) #subtitle,
-:host([variant='quiet']) #subtitle {
+:host([variant='gallery']) .subtitle,
+:host([variant='quiet']) .subtitle {
     /* .spectrum-Card--gallery .spectrum-Card-subtitle,
    * .spectrum-Card--quiet .spectrum-Card-subtitle */
     color: var(
@@ -669,7 +803,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     );
 }
-.spectrum-Card--horizontal:hover #preview {
+:host([horizontal]:hover) #preview {
     /* .spectrum-Card--horizontal:hover .spectrum-Card-preview */
     border-color: var(
         --spectrum-card-border-color-hover,
