@@ -10,44 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr']) .spectrum-Button slot[name='icon'] + .spectrum-Button-label {
-    /* [dir=ltr] .spectrum-Button .spectrum-Icon+.spectrum-Button-label */
-    margin-left: var(
-        --spectrum-button-primary-text-gap,
-        var(--spectrum-global-dimension-size-100)
-    );
-}
-:host([dir='rtl']) .spectrum-Button slot[name='icon'] + .spectrum-Button-label {
-    /* [dir=rtl] .spectrum-Button .spectrum-Icon+.spectrum-Button-label */
-    margin-right: var(
-        --spectrum-button-primary-text-gap,
-        var(--spectrum-global-dimension-size-100)
-    );
-}
-:host([dir='ltr'])
-    .spectrum-Button
-    .spectrum-Button-label
-    + ::slotted([slot='icon']) {
-    /* [dir=ltr] .spectrum-Button .spectrum-Button-label+.spectrum-Icon */
-    margin-left: calc(
-        var(
-                --spectrum-button-primary-text-gap,
-                var(--spectrum-global-dimension-size-100)
-            ) / 2
-    );
-}
-:host([dir='rtl'])
-    .spectrum-Button
-    .spectrum-Button-label
-    + ::slotted([slot='icon']) {
-    /* [dir=rtl] .spectrum-Button .spectrum-Button-label+.spectrum-Icon */
-    margin-right: calc(
-        var(
-                --spectrum-button-primary-text-gap,
-                var(--spectrum-global-dimension-size-100)
-            ) / 2
-    );
-}
 .button {
     /* .spectrum-ActionButton */
     position: relative;
