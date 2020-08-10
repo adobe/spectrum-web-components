@@ -45,15 +45,9 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-<<<<<<< HEAD
                       - v1-golden-images-74d8b22776c676d82ea76ded7a0876e691fd8cef-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
                       - v1-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
-=======
-                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-4033d8ca1790a8eb0c7d6513e2e65d8d8de9e755
-                      - v1-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-
-            - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >>
->>>>>>> ci: update golden images cache
             - run:
                   when: on_fail
                   command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci && exit 1
