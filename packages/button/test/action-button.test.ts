@@ -48,5 +48,13 @@ describe('Button', () => {
         expect(el.toggles).to.be.true;
         expect(el.selected).to.be.true;
         expect(button.getAttribute('aria-pressed')).to.equal('true');
+
+        el.addEventListener('change', (event: Event) => event.preventDefault());
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.toggles).to.be.true;
+        expect(el.selected).to.be.true;
+        expect(button.getAttribute('aria-pressed')).to.equal('true');
     });
 });
