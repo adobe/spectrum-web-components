@@ -22,9 +22,13 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
+export interface SpectrumInterface {
+    shadowRoot: ShadowRoot;
+}
+
 export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
     constructor: T
-): T & Constructor<UpdatingElement> {
+): T & Constructor<SpectrumInterface> {
     return class SlotTextObservingElement extends constructor {
         public shadowRoot!: ShadowRoot;
 

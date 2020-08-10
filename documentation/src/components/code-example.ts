@@ -26,6 +26,7 @@ import DarkThemeStyles from 'prismjs/themes/prism-okaidia.css';
 import LightThemeStyles from 'prismjs/themes/prism.css';
 import Styles from './code-example.css';
 import { stripIndent } from 'common-tags';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 
 class Code extends LitElement {
     @property()
@@ -75,7 +76,7 @@ export class LightCode extends Code {
 }
 
 @customElement('code-example')
-export class CodeExample extends LitElement {
+export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
     @query('#markup')
     private markup?: HTMLDivElement;
 
