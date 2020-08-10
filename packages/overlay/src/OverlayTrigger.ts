@@ -18,7 +18,11 @@ import {
     TemplateResult,
 } from 'lit-element';
 
-import { Placement, TriggerInteractions } from './overlay-types';
+import {
+    Placement,
+    TriggerInteractions,
+    OverlayOptions,
+} from './overlay-types';
 import { openOverlay } from './loader.js';
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
@@ -83,17 +87,22 @@ export class OverlayTrigger extends LitElement {
         `;
     }
 
-    private async openOverlay(
+    public static openOverlay = async (
         target: HTMLElement,
+        interaction: TriggerInteractions,
         content: HTMLElement,
-        interaction: TriggerInteractions
-    ): Promise<() => void> {
-        return await openOverlay(target, interaction, content, {
+        options: OverlayOptions
+    ): Promise<() => void> => {
+        return await openOverlay(target, interaction, content, options);
+    };
+
+    private get overlayOptions(): OverlayOptions {
+        return {
             offset: this.offset,
             placement: this.placement,
             receivesFocus:
                 this.type && this.type !== 'inline' ? 'auto' : undefined,
-        });
+        };
     }
 
     private onTrigger(event: Event): void {
@@ -125,10 +134,11 @@ export class OverlayTrigger extends LitElement {
                 }
             }
             const { targetContent, clickContent } = this;
-            this.closeClickOverlay = await this.openOverlay(
+            this.closeClickOverlay = await OverlayTrigger.openOverlay(
                 targetContent,
+                this.type ? this.type : 'click',
                 clickContent,
-                this.type ? this.type : 'click'
+                this.overlayOptions
             );
         }
     }
@@ -145,10 +155,11 @@ export class OverlayTrigger extends LitElement {
                 overlayReady = res;
             });
             const { targetContent, hoverContent } = this;
-            this.closeHoverOverlay = await this.openOverlay(
+            this.closeHoverOverlay = await OverlayTrigger.openOverlay(
                 targetContent,
+                'hover',
                 hoverContent,
-                'hover'
+                this.overlayOptions
             );
             overlayReady();
         }

@@ -30,7 +30,9 @@
         "./active-overlay": "./active-overlay.js",
         "./active-overlay.js": "./active-overlay.js",
         "./overlay-trigger": "./overlay-trigger.js",
-        "./overlay-trigger.js": "./overlay-trigger.js"
+        "./overlay-trigger.js": "./overlay-trigger.js",
+        "./sync/overlay-trigger": "./sync/overlay-trigger.js",
+        "./sync/overlay-trigger.js": "./sync/overlay-trigger.js"
     },
     "files": [
         "custom-elements.json",
@@ -44,6 +46,8 @@
         "./active-overlay.ts",
         "./overlay-trigger.js",
         "./overlay-trigger.ts",
+        "./sync/overlay-trigger.js",
+        "./sync/overlay-trigger.ts",
         "./stories/overlay-story-components.js",
         "./stories/overlay-story-components.ts"
     ],
