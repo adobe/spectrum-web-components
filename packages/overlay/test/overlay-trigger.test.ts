@@ -433,16 +433,16 @@ describe('Overlay Trigger', () => {
 
         outerButton.click();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(outerPopover.parentElement instanceof OverlayTrigger)
+        await waitUntil(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger),
+            'outer content stolen and reparented'
         );
 
         innerButton.click();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(innerPopover.parentElement instanceof OverlayTrigger)
+        await waitUntil(
+            () => !(innerPopover.parentElement instanceof OverlayTrigger),
+            'inner content stolen and reparented'
         );
 
         expect(isVisible(outerPopover)).to.be.true;
@@ -455,9 +455,9 @@ describe('Overlay Trigger', () => {
 
         pressEscape();
 
-        // Wait for the DOM node to be put back in its original place
-        await waitForPredicate(
-            () => innerPopover.parentElement instanceof OverlayTrigger
+        await waitUntil(
+            () => innerPopover.parentElement instanceof OverlayTrigger,
+            'inner content returned'
         );
 
         expect(isVisible(outerPopover)).to.be.true;
@@ -465,9 +465,9 @@ describe('Overlay Trigger', () => {
 
         pressEscape();
 
-        // Wait for the DOM node to be put back in its original place
-        await waitForPredicate(
-            () => outerPopover.parentElement instanceof OverlayTrigger
+        await waitUntil(
+            () => outerPopover.parentElement instanceof OverlayTrigger,
+            'outer content returned'
         );
 
         expect(isVisible(outerPopover)).to.be.false;
@@ -486,16 +486,16 @@ describe('Overlay Trigger', () => {
 
         outerButton.click();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(outerPopover.parentElement instanceof OverlayTrigger)
+        await waitUntil(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger),
+            'outer content stolen and reparented'
         );
 
         innerButton.click();
 
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () => !(innerPopover.parentElement instanceof OverlayTrigger)
+        await waitUntil(
+            () => !(innerPopover.parentElement instanceof OverlayTrigger),
+            'inner content stolen and reparented'
         );
 
         expect(isVisible(outerPopover)).to.be.true;
@@ -512,8 +512,9 @@ describe('Overlay Trigger', () => {
         document.body.click();
 
         // Wait for the DOM node to be put back in its original place
-        await waitForPredicate(
-            () => innerPopover.parentElement instanceof OverlayTrigger
+        await waitUntil(
+            () => innerPopover.parentElement instanceof OverlayTrigger,
+            'outer content returned'
         );
 
         expect(isVisible(outerPopover)).to.be.true;
@@ -522,8 +523,9 @@ describe('Overlay Trigger', () => {
         document.body.click();
 
         // Wait for the DOM node to be put back in its original place
-        await waitForPredicate(
-            () => outerPopover.parentElement instanceof OverlayTrigger
+        await waitUntil(
+            () => outerPopover.parentElement instanceof OverlayTrigger,
+            'inner content returned'
         );
 
         expect(isVisible(outerPopover)).to.be.false;

@@ -173,19 +173,22 @@ export class OverlayStack {
         }
 
         const activeOverlay = ActiveOverlay.create(details);
-        this.overlays.push(activeOverlay);
         document.body.appendChild(activeOverlay);
-        let updateComplete = await activeOverlay.updateComplete;
-        while (updateComplete === false) {
-            updateComplete = await activeOverlay.updateComplete;
-        }
 
-        this.addOverlayEventListeners(activeOverlay);
-        if (details.receivesFocus === 'auto') {
-            activeOverlay.focus();
-        }
-
-        return false;
+        /**
+         * The following work to make the new overlay the "top" of the stack
+         * has to happen AFTER the current call stack completes in case there
+         * is work there in to remove the previous "top" overlay.
+         */
+        return Promise.resolve().then(async () => {
+            this.overlays.push(activeOverlay);
+            await activeOverlay.updateComplete;
+            this.addOverlayEventListeners(activeOverlay);
+            if (details.receivesFocus === 'auto') {
+                activeOverlay.focus();
+            }
+            return false;
+        });
     }
 
     public addOverlayEventListeners(activeOverlay: ActiveOverlay): void {

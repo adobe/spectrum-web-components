@@ -184,6 +184,13 @@ export class ActiveOverlay extends LitElement {
         return [styles];
     }
 
+    public constructor() {
+        super();
+        this.stealOverlayContentPromise = new Promise(
+            (res) => (this.stealOverlayContentResolver = res)
+        );
+    }
+
     public feature(): void {
         this.tabIndex = 0;
         if (this.interaction === 'modal') {
@@ -345,6 +352,8 @@ export class ActiveOverlay extends LitElement {
         this.originalPlacement = this.overlayContent.getAttribute(
             'placement'
         ) as Placement;
+
+        this.stealOverlayContentResolver();
     }
 
     private returnOverlayContent(): void {
@@ -487,5 +496,13 @@ export class ActiveOverlay extends LitElement {
         }
 
         return overlay;
+    }
+
+    private stealOverlayContentPromise = Promise.resolve();
+    private stealOverlayContentResolver!: () => void;
+
+    protected async _getUpdateComplete(): Promise<void> {
+        await super._getUpdateComplete();
+        await this.stealOverlayContentPromise;
     }
 }
