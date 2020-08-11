@@ -10,39 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { ModifierArguments, Modifier } from '@popperjs/core/lib/types';
+
 const appliedSizeDefaults = new WeakMap();
 
-export const applyMaxSize = {
+export const applyMaxSize: Modifier<'applyMaxSize', Record<string, unknown>> = {
     name: 'applyMaxSize',
     enabled: true,
     phase: 'beforeWrite',
     requires: ['maxSize'],
-    fn({
-        state,
-    }: {
-        state: {
-            modifiersData: {
-                maxSize: {
-                    height: number;
-                };
-            };
-            elements: {
-                popper: HTMLElement;
-            };
-            rects: {
-                popper: {
-                    height: number;
-                };
-            };
-            styles: {
-                popper: {
-                    maxHeight: string;
-                    height: string;
-                    overflow: string;
-                };
-            };
-        };
-    }): void {
+    fn({ state }: ModifierArguments<Record<string, unknown>>): void {
         const { height: maxHeight } = state.modifiersData.maxSize;
         if (!appliedSizeDefaults.has(state.elements.popper)) {
             appliedSizeDefaults.set(
