@@ -56,7 +56,10 @@ function computeArrowRotateStylesFn(
     return;
 }
 
-export const computeArrowRotateStyles: Modifier<Record<string, unknown>> = {
+export const computeArrowRotateStyles: Modifier<
+    'computeArrowRotateStyles',
+    Record<string, unknown>
+> = {
     name: 'computeArrowRotateStyles',
     enabled: true,
     phase: 'beforeWrite',
