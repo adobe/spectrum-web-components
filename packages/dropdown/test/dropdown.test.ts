@@ -124,6 +124,47 @@ describe('Dropdown', () => {
 
         expect(el.open).to.be.false;
     });
+    it('closes when clicking away', async () => {
+        const el = await dropdownFixture();
+        el.id = 'closing';
+        const other = document.createElement('div');
+        document.body.append(other);
+
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        other.click();
+        await waitUntil(() => !el.open, 'closed');
+
+        other.remove();
+    });
+    it('toggles between dropdowns', async () => {
+        const el2 = await dropdownFixture();
+        const el1 = await dropdownFixture();
+
+        el1.id = 'away';
+        el2.id = 'other';
+
+        await Promise.all([elementUpdated(el1), elementUpdated(el2)]);
+
+        expect(el1.open, 'closed 1').to.be.false;
+        expect(el2.open, 'closed 1').to.be.false;
+        el1.click();
+        await Promise.all([elementUpdated(el1), elementUpdated(el2)]);
+        await waitUntil(() => el1.open && !el2.open, '1 open, 2 closed');
+
+        el2.click();
+        await Promise.all([elementUpdated(el1), elementUpdated(el2)]);
+        await waitUntil(() => !el1.open && el2.open, '1 closed, 2 open');
+
+        el1.click();
+        await Promise.all([elementUpdated(el1), elementUpdated(el2)]);
+        await waitUntil(() => el1.open && !el2.open, '1 open, 2 closed: again');
+    });
     it('selects', async () => {
         const el = await dropdownFixture();
 
