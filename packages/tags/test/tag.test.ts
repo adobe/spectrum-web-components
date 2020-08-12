@@ -18,19 +18,12 @@ import '../sp-tag.js';
 import '../sp-tags.js';
 import { Tag } from '..';
 import { ClearButton } from '@spectrum-web-components/button';
-
-const keyboardEvent = (code: string): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-        key: code,
-    });
-const deleteEvent = keyboardEvent('Delete');
-const spaceEvent = keyboardEvent('Space');
-const backspaceEvent = keyboardEvent('Backspace');
-const enterEvent = keyboardEvent('Enter');
+import {
+    deleteEvent,
+    spaceEvent,
+    backspaceEvent,
+    enterEvent,
+} from '../../../test/testing-helpers.js';
 
 describe('Tag', () => {
     it('loads default tags accessibly', async () => {

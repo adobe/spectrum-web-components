@@ -348,7 +348,7 @@ export class OverlayStack {
     };
 
     private handleKeyUp = (event: KeyboardEvent): void => {
-        if (event.key === 'Escape') {
+        if (event.code === 'Escape') {
             const overlay = this.topOverlay as ActiveOverlay;
             this.closeTopOverlay();
             overlay && overlay.trigger.focus();

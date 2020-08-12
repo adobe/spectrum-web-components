@@ -16,24 +16,17 @@ import { fixture, elementUpdated, expect } from '@open-wc/testing';
 import '../sp-tag.js';
 import '../sp-tags.js';
 import { Tags, Tag } from '..';
-
-const keyboardEvent = (code: string): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-        key: code,
-    });
-const arrowUpEvent = keyboardEvent('ArrowUp');
-const arrowDownEvent = keyboardEvent('ArrowDown');
-const arrowLeftEvent = keyboardEvent('ArrowLeft');
-const arrowRightEvent = keyboardEvent('ArrowRight');
-const endEvent = keyboardEvent('End');
-const homeEvent = keyboardEvent('Home');
-const pageUpEvent = keyboardEvent('PageUp');
-const pageDownEvent = keyboardEvent('PageDown');
-const enterEvent = keyboardEvent('Enter');
+import {
+    arrowUpEvent,
+    arrowDownEvent,
+    arrowLeftEvent,
+    arrowRightEvent,
+    endEvent,
+    homeEvent,
+    pageUpEvent,
+    pageDownEvent,
+    enterEvent,
+} from '../../../test/testing-helpers.js';
 
 describe('Tags', () => {
     it('loads default tags accessibly', async () => {

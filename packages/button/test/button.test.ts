@@ -14,16 +14,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import { html } from 'lit-element';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
-
-const keyboardEvent = (code: string, shiftKey: boolean): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-        shiftKey,
-    });
-const shiftTabEvent = keyboardEvent('Tab', true);
+import { shiftTabEvent } from '../../../test/testing-helpers.js';
 
 type TestableButtonType = {
     hasLabel: boolean;

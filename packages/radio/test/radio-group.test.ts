@@ -15,24 +15,17 @@ import { RadioGroup } from '../';
 import '@spectrum-web-components/radio/sp-radio.js';
 import { Radio } from '@spectrum-web-components/radio';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
-
-const keyboardEvent = (code: string): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-        key: code,
-    });
-const arrowUpEvent = keyboardEvent('ArrowUp');
-const arrowDownEvent = keyboardEvent('ArrowDown');
-const arrowLeftEvent = keyboardEvent('ArrowLeft');
-const arrowRightEvent = keyboardEvent('ArrowRight');
-const endEvent = keyboardEvent('End');
-const homeEvent = keyboardEvent('Home');
-const pageUpEvent = keyboardEvent('PageUp');
-const pageDownEvent = keyboardEvent('PageDown');
-const enterEvent = keyboardEvent('Enter');
+import {
+    arrowUpEvent,
+    arrowDownEvent,
+    arrowLeftEvent,
+    arrowRightEvent,
+    endEvent,
+    homeEvent,
+    pageUpEvent,
+    pageDownEvent,
+    enterEvent,
+} from '../../../test/testing-helpers.js';
 
 describe('Radio Group - focus control', () => {
     it('does not accept focus when empty', async () => {
@@ -312,7 +305,7 @@ describe('Radio Group', () => {
 
         expect(radioGroup.selected).to.equal('');
     });
-    
+
     it('can have selection prevented', async () => {
         const el = testDiv.querySelector(
             'sp-radio-group#test-default'
