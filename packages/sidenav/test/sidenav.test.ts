@@ -15,6 +15,11 @@ import '../sp-sidenav-item.js';
 import '../sp-sidenav-heading.js';
 import { SideNav, SideNavItem } from '../';
 import {
+    arrowDownEvent,
+    arrowUpEvent,
+    shiftTabEvent,
+} from '../../../test/testing-helpers.js';
+import {
     fixture,
     elementUpdated,
     html,
@@ -23,19 +28,6 @@ import {
 } from '@open-wc/testing';
 import { TemplateResult } from 'lit-html';
 import { LitElement } from 'lit-element';
-
-const keyboardEvent = (code: string, eventDetails = {}): KeyboardEvent => {
-    return new KeyboardEvent('keydown', {
-        ...eventDetails,
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-    });
-};
-const arrowDownEvent = keyboardEvent('ArrowDown');
-const arrowUpEvent = keyboardEvent('ArrowUp');
-const shiftTabEvent = keyboardEvent('Tab', { shiftKey: true });
 
 describe('Sidenav', () => {
     it('loads', async () => {

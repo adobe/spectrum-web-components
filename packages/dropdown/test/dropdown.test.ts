@@ -26,17 +26,11 @@ import {
 } from '@open-wc/testing';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
-
-const keyboardEvent = (code: string): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-    });
-const arrowDownEvent = keyboardEvent('ArrowDown');
-const arrowUpEvent = keyboardEvent('ArrowUp');
-const tabEvent = keyboardEvent('Tab');
+import {
+    arrowDownEvent,
+    arrowUpEvent,
+    tabEvent,
+} from '../../../test/testing-helpers.js';
 
 describe('Dropdown', () => {
     const dropdownFixture = async (): Promise<Dropdown> => {

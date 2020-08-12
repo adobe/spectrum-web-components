@@ -24,17 +24,7 @@ import {
     elementUpdated,
     waitUntil,
 } from '@open-wc/testing';
-
-const keyboardEvent = (code: string, shiftKey = false): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-        shiftKey,
-    });
-const tabEvent = keyboardEvent('Tab');
-const shiftTabEvent = keyboardEvent('Tab', true);
+import { tabEvent, shiftTabEvent } from '../../../test/testing-helpers.js';
 
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;

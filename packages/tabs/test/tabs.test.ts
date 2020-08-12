@@ -23,21 +23,14 @@ import {
 import { LitElement } from 'lit-element';
 import { TemplateResult } from 'lit-html';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
-
-const keyboardEvent = (code: string): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-        key: code,
-    });
-const enterEvent = keyboardEvent('Enter');
-const spaceEvent = keyboardEvent(' ');
-const arrowRightEvent = keyboardEvent('ArrowRight');
-const arrowLeftEvent = keyboardEvent('ArrowLeft');
-const arrowUpEvent = keyboardEvent('ArrowUp');
-const arrowDownEvent = keyboardEvent('ArrowDown');
+import {
+    enterEvent,
+    spaceEvent,
+    arrowRightEvent,
+    arrowLeftEvent,
+    arrowUpEvent,
+    arrowDownEvent,
+} from '../../../test/testing-helpers.js';
 
 const createTabs = async (): Promise<Tabs> =>
     await fixture<Tabs>(

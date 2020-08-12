@@ -21,18 +21,12 @@ import {
     expect,
     waitUntil,
 } from '@open-wc/testing';
-
-const keyboardEvent = (code: string): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-    });
-const arrowUpEvent = keyboardEvent('ArrowUp');
-const arrowDownEvent = keyboardEvent('ArrowDown');
-const tabEvent = keyboardEvent('Tab');
-const tEvent = keyboardEvent('t');
+import {
+    arrowUpEvent,
+    arrowDownEvent,
+    tabEvent,
+    tEvent,
+} from '../../../test/testing-helpers.js';
 
 describe('Menu', () => {
     it('renders empty', async () => {

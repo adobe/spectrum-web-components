@@ -32,3 +32,29 @@ export function waitForPredicate(
 export function isVisible(element: HTMLElement) {
     return !!element.offsetParent;
 }
+
+const keyboardEvent = (code: string, eventDetails = {}): KeyboardEvent => {
+    return new KeyboardEvent('keydown', {
+        ...eventDetails,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        code,
+        key: code,
+    });
+};
+export const shiftTabEvent = keyboardEvent('Tab', { shiftKey: true });
+export const enterEvent = keyboardEvent('Enter');
+export const arrowRightEvent = keyboardEvent('ArrowRight');
+export const arrowLeftEvent = keyboardEvent('ArrowLeft');
+export const arrowUpEvent = keyboardEvent('ArrowUp');
+export const arrowDownEvent = keyboardEvent('ArrowDown');
+export const deleteEvent = keyboardEvent('Delete');
+export const spaceEvent = keyboardEvent('Space');
+export const backspaceEvent = keyboardEvent('Backspace');
+export const endEvent = keyboardEvent('End');
+export const homeEvent = keyboardEvent('Home');
+export const pageUpEvent = keyboardEvent('PageUp');
+export const pageDownEvent = keyboardEvent('PageDown');
+export const tabEvent = keyboardEvent('Tab');
+export const tEvent = keyboardEvent('t');
