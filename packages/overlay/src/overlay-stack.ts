@@ -180,15 +180,17 @@ export class OverlayStack {
          * has to happen AFTER the current call stack completes in case there
          * is work there in to remove the previous "top" overlay.
          */
-        return Promise.resolve().then(async () => {
-            this.overlays.push(activeOverlay);
-            await activeOverlay.updateComplete;
-            this.addOverlayEventListeners(activeOverlay);
-            if (details.receivesFocus === 'auto') {
-                activeOverlay.focus();
+        return new Promise((res) => requestAnimationFrame(res)).then(
+            async () => {
+                this.overlays.push(activeOverlay);
+                await activeOverlay.updateComplete;
+                this.addOverlayEventListeners(activeOverlay);
+                if (details.receivesFocus === 'auto') {
+                    activeOverlay.focus();
+                }
+                return false;
             }
-            return false;
-        });
+        );
     }
 
     public addOverlayEventListeners(activeOverlay: ActiveOverlay): void {

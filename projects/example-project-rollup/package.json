@@ -9,7 +9,6 @@
     "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
     "lint:prettier": "prettier \"**/*.js\" \"**/*.ts\" --check --ignore-path .gitignore",
     "format:prettier": "prettier \"**/*.js\" \"**/*.ts\" --write --ignore-path .gitignore",
-    "lint": "echo 'Fake linting..'",
     "format": "npm run format:eslint && npm run format:prettier",
     "build": "rimraf dist && yarn build:tsc && rollup -c rollup.config.js",
     "postbuild": "mv dist/*.css dist/styles.css",
@@ -25,8 +24,6 @@
     "@typescript-eslint/parser": "^2.20.0",
     "prettier": "^2.0.4",
     "eslint-config-prettier": "^6.11.0",
-    "husky": "^1.0.0",
-    "lint-staged": "^10.0.0",
     "@open-wc/building-rollup": "^1.6.3",
     "rimraf": "^2.6.3",
     "rollup": "^2.3.4",
@@ -38,12 +35,6 @@
     "rollup-plugin-visualizer": "^4.0.4",
     "rollup-plugin-styles": "^3.10.0",
     "rollup-plugin-commonjs": "^10.1.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@open-wc/eslint-config",
-      "eslint-config-prettier"
-    ]
   },
   "prettier": {
     "singleQuote": true,
