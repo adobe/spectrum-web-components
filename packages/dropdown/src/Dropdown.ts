@@ -236,6 +236,8 @@ export class DropdownBase extends Focusable {
         if (this.optionsMenu && this.placeholder) {
             const parentElement =
                 this.placeholder.parentElement ||
+                /* istanbul ignore next */
+
                 this.placeholder.getRootNode();
 
             if (parentElement) {
@@ -264,7 +266,8 @@ export class DropdownBase extends Focusable {
         );
 
         const parentElement =
-            this.optionsMenu.parentElement || this.optionsMenu.getRootNode();
+            this.optionsMenu.parentElement ||
+            /* istanbul ignore next */ this.optionsMenu.getRootNode();
 
         if (parentElement) {
             parentElement.replaceChild(this.placeholder, this.optionsMenu);
@@ -380,6 +383,7 @@ export class DropdownBase extends Focusable {
     }
 
     private async manageSelection(): Promise<void> {
+        /* istanbul ignore if */
         if (!this.optionsMenu) {
             return;
         }
@@ -403,6 +407,7 @@ export class DropdownBase extends Focusable {
             return;
         }
         await this.optionsMenu.updateComplete;
+        /* istanbul ignore else */
         if (this.optionsMenu.menuItems.length) {
             this.manageSelection();
         }
