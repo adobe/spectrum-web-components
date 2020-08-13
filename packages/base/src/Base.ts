@@ -37,6 +37,9 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
         @property({ reflect: true })
         public dir: 'ltr' | 'rtl' = 'ltr';
 
+        /**
+         * @private
+         */
         public get isDefaultDir(): boolean {
             return this.dir === 'ltr';
         }

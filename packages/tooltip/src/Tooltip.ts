@@ -16,6 +16,7 @@ import {
     TemplateResult,
     SpectrumElement,
     property,
+    query,
 } from '@spectrum-web-components/base';
 import {
     OverlayDisplayQueryDetail,
@@ -40,6 +41,9 @@ export class Tooltip extends SpectrumElement {
      */
     @property({ reflect: true })
     public placement: Placement = 'top';
+
+    @query('#tip')
+    private tipElement!: HTMLSpanElement;
 
     /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
     private _variant = '';
@@ -73,16 +77,13 @@ export class Tooltip extends SpectrumElement {
 
     public onOverlyQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
         /* istanbul ignore if */
-        if (!event.target || !this.shadowRoot) return;
+        if (!event.target) return;
 
         const target = event.target as Node;
         /* istanbul ignore if */
         if (!target.isSameNode(this)) return;
 
-        const tipElement = this.shadowRoot.querySelector('#tip') as HTMLElement;
-        if (tipElement) {
-            event.detail.overlayContentTipElement = tipElement;
-        }
+        event.detail.overlayContentTipElement = this.tipElement;
     }
 
     render(): TemplateResult {
