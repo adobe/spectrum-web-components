@@ -57,11 +57,38 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Tabs-item .spectrum-Icon */
     color: var(--spectrum-tabs-icon-color, var(--spectrum-alias-icon-color));
 }
-slot[name='icon'] + #itemLabel {
-    /* .spectrum-Tabs-item .spectrum-Icon+.spectrum-Tabs-itemLabel */
+:host([dir='ltr']) slot[name='icon'] + #itemLabel {
+    /* [dir=ltr] .spectrum-Tabs-item .spectrum-Icon+.spectrum-Tabs-itemLabel */
     margin-left: calc(
         var(--spectrum-tabs-icon-gap, var(--spectrum-global-dimension-size-100)) -
             var(--spectrum-global-dimension-size-40)
+    );
+}
+:host([dir='rtl']) slot[name='icon'] + #itemLabel {
+    /* [dir=rtl] .spectrum-Tabs-item .spectrum-Icon+.spectrum-Tabs-itemLabel */
+    margin-right: calc(
+        var(--spectrum-tabs-icon-gap, var(--spectrum-global-dimension-size-100)) -
+            var(--spectrum-global-dimension-size-40)
+    );
+}
+:host([dir='ltr']):before {
+    /* [dir=ltr] .spectrum-Tabs-item:before */
+    left: calc(
+        -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
+    );
+}
+:host([dir='ltr']):before,
+:host([dir='rtl']):before {
+    /* [dir=ltr] .spectrum-Tabs-item:before,
+   * [dir=rtl] .spectrum-Tabs-item:before */
+    right: calc(
+        -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
+    );
+}
+:host([dir='rtl']):before {
+    /* [dir=rtl] .spectrum-Tabs-item:before */
+    left: calc(
+        -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
     );
 }
 :host:before {
@@ -84,12 +111,6 @@ slot[name='icon'] + #itemLabel {
                 var(--spectrum-alias-border-size-thick)
             ) / 2
     );
-    left: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
-    );
-    right: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
-    );
     border: var(
             --spectrum-tabs-focus-ring-size,
             var(--spectrum-alias-border-size-thick)
@@ -111,6 +132,7 @@ slot[name='icon'] + #itemLabel {
         --spectrum-tabs-text-font-weight,
         var(--spectrum-alias-body-text-font-weight)
     );
+    text-decoration: none;
 }
 #itemLabel:empty {
     /* .spectrum-Tabs-itemLabel:empty */

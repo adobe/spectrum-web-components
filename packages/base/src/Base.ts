@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement } from 'lit-element';
+import { LitElement, property } from 'lit-element';
 
 export * from 'lit-element';
 
@@ -24,21 +24,31 @@ type Constructor<T = Record<string, unknown>> = {
 
 export interface SpectrumInterface {
     shadowRoot: ShadowRoot;
+    isDefaultDir: boolean;
+    dir: 'ltr' | 'rtl';
 }
 
 export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
-    return class SlotTextObservingElement extends constructor {
+    class SlotTextObservingElement extends constructor {
         public shadowRoot!: ShadowRoot;
+
+        @property({ reflect: true })
+        public dir: 'ltr' | 'rtl' = 'ltr';
+
+        public get isDefaultDir(): boolean {
+            return this.dir === 'ltr';
+        }
 
         public connectedCallback(): void {
             if (!this.hasAttribute('dir')) {
-                this.dir = document.dir || 'ltr';
+                this.dir = document.dir === 'rtl' ? document.dir : 'ltr';
             }
             super.connectedCallback();
         }
-    };
+    }
+    return SlotTextObservingElement;
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {}

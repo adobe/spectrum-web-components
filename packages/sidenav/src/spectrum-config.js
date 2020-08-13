@@ -27,6 +27,7 @@ module.exports = {
                 /^\.spectrum-SideNav-(item|heading)/,
                 // We cannot do global matches like this with shadow DOM
                 /^\.spectrum-SideNav--multiLevel\s\.spectrum-SideNav/,
+                /\.spectrum-SideNav\s\.spectrum-SideNav/,
             ],
         },
         {

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, LitElement } from 'lit-element';
+import { CSSResultArray, SpectrumElement } from '@spectrum-web-components/base';
 
 import menuDividerStyles from './menu-divider.css.js';
 
@@ -19,7 +19,7 @@ import menuDividerStyles from './menu-divider.css.js';
  * @element sp-menu-divider
  *
  */
-export class MenuDivider extends LitElement {
+export class MenuDivider extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [menuDividerStyles];
     }

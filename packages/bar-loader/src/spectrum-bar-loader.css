@@ -10,21 +10,36 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@keyframes indeterminate-loop {
+@keyframes indeterminate-loop-ltr {
     0% {
-        transform: translate(0);
+        transform: translate(
+            calc(
+                -1 * var(--spectrum-barloader-large-indeterminate-fill-width, var(--spectrum-global-dimension-size-1700))
+            )
+        );
+    }
+    to {
+        transform: translate(
+            var(
+                --spectrum-barloader-large-width,
+                var(--spectrum-global-dimension-size-2400)
+            )
+        );
+    }
+}
+@keyframes indeterminate-loop-rtl {
+    0% {
+        transform: translate(
+            var(
+                --spectrum-barloader-large-width,
+                var(--spectrum-global-dimension-size-2400)
+            )
+        );
     }
     to {
         transform: translate(
             calc(
-                var(
-                        --spectrum-barloader-large-width,
-                        var(--spectrum-global-dimension-size-2400)
-                    ) +
-                    var(
-                        --spectrum-barloader-large-indeterminate-fill-width,
-                        var(--spectrum-global-dimension-size-1700)
-                    )
+                -1 * var(--spectrum-barloader-large-width, var(--spectrum-global-dimension-size-2400))
             )
         );
     }
@@ -75,6 +90,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-500)
     );
 }
+:host([dir='ltr']) .label,
+:host([dir='ltr']) .percentage {
+    /* [dir=ltr] .spectrum-BarLoader-label,
+   * [dir=ltr] .spectrum-BarLoader-percentage */
+    text-align: left;
+}
+:host([dir='rtl']) .label,
+:host([dir='rtl']) .percentage {
+    /* [dir=rtl] .spectrum-BarLoader-label,
+   * [dir=rtl] .spectrum-BarLoader-percentage */
+    text-align: right;
+}
 .label,
 .percentage {
     /* .spectrum-BarLoader-label,
@@ -91,7 +118,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-fieldlabel-text-line-height,
         var(--spectrum-global-font-line-height-small)
     );
-    text-align: left;
     margin-bottom: var(
         --spectrum-barloader-large-label-gap-y,
         var(--spectrum-global-dimension-size-115)
@@ -101,13 +127,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-BarLoader-label */
     flex: 1 1 0%;
 }
-.percentage {
-    /* .spectrum-BarLoader-percentage */
-    align-self: flex-start;
+:host([dir='ltr']) .percentage {
+    /* [dir=ltr] .spectrum-BarLoader-percentage */
     margin-left: var(
         --spectrum-barloader-small-label-gap-x,
         var(--spectrum-global-dimension-size-150)
     );
+}
+:host([dir='rtl']) .percentage {
+    /* [dir=rtl] .spectrum-BarLoader-percentage */
+    margin-right: var(
+        --spectrum-barloader-small-label-gap-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+}
+.percentage {
+    /* .spectrum-BarLoader-percentage */
+    align-self: flex-start;
 }
 :host([side-label]) {
     /* .spectrum-BarLoader--sideLabel */
@@ -116,22 +152,43 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     justify-content: space-between;
     width: auto;
 }
-:host([side-label]) .label {
-    /* .spectrum-BarLoader--sideLabel .spectrum-BarLoader-label */
+:host([dir='ltr'][side-label]) .label {
+    /* [dir=ltr] .spectrum-BarLoader--sideLabel .spectrum-BarLoader-label */
     margin-right: var(
         --spectrum-barloader-large-label-gap-x,
         var(--spectrum-global-dimension-size-150)
     );
-    margin-bottom: 0;
 }
-:host([side-label]) .percentage {
-    /* .spectrum-BarLoader--sideLabel .spectrum-BarLoader-percentage */
-    order: 3;
-    text-align: right;
+:host([dir='rtl'][side-label]) .label {
+    /* [dir=rtl] .spectrum-BarLoader--sideLabel .spectrum-BarLoader-label */
     margin-left: var(
         --spectrum-barloader-large-label-gap-x,
         var(--spectrum-global-dimension-size-150)
     );
+}
+:host([side-label]) .label {
+    /* .spectrum-BarLoader--sideLabel .spectrum-BarLoader-label */
+    margin-bottom: 0;
+}
+:host([dir='ltr'][side-label]) .percentage {
+    /* [dir=ltr] .spectrum-BarLoader--sideLabel .spectrum-BarLoader-percentage */
+    text-align: right; /* [dir=ltr] .spectrum-BarLoader--sideLabel .spectrum-BarLoader-percentage */
+    margin-left: var(
+        --spectrum-barloader-large-label-gap-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+}
+:host([dir='rtl'][side-label]) .percentage {
+    /* [dir=rtl] .spectrum-BarLoader--sideLabel .spectrum-BarLoader-percentage */
+    text-align: left; /* [dir=rtl] .spectrum-BarLoader--sideLabel .spectrum-BarLoader-percentage */
+    margin-right: var(
+        --spectrum-barloader-large-label-gap-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+}
+:host([side-label]) .percentage {
+    /* .spectrum-BarLoader--sideLabel .spectrum-BarLoader-percentage */
+    order: 3;
     margin-bottom: 0;
 }
 :host([small]) {
@@ -161,20 +218,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-1700)
     );
     position: relative;
-    animation: indeterminate-loop
+    animation-timing-function: var(
+        --spectrum-barloader-large-indeterminate-animation-ease,
+        var(--spectrum-global-animation-ease-in-out)
+    );
+    will-change: transform;
+}
+:host([dir='ltr'][indeterminate]) .fill {
+    /* [dir=ltr] .spectrum-BarLoader--indeterminate .spectrum-BarLoader-fill */
+    animation: indeterminate-loop-ltr
         var(
             --spectrum-barloader-large-indeterminate-duration,
             var(--spectrum-global-animation-duration-2000)
         )
         infinite;
-    animation-timing-function: var(
-        --spectrum-barloader-large-indeterminate-animation-ease,
-        var(--spectrum-global-animation-ease-in-out)
-    );
-    left: calc(
-        -1 * var(--spectrum-barloader-large-indeterminate-fill-width, var(--spectrum-global-dimension-size-1700))
-    );
-    will-change: transform;
+}
+:host([dir='rtl'][indeterminate]) .fill {
+    /* [dir=rtl] .spectrum-BarLoader--indeterminate .spectrum-BarLoader-fill */
+    animation: indeterminate-loop-rtl
+        var(
+            --spectrum-barloader-large-indeterminate-duration,
+            var(--spectrum-global-animation-duration-2000)
+        )
+        infinite;
 }
 :host([over-background]) .fill {
     /* .spectrum-BarLoader.spectrum-BarLoader--overBackground .spectrum-BarLoader-fill */

@@ -10,6 +10,28 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([dir='ltr']) {
+    /* [dir=ltr] .spectrum-Toast */
+    padding-right: var(
+        --spectrum-toast-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=ltr] .spectrum-Toast */
+    padding-left: var(
+        --spectrum-toast-padding-left,
+        var(--spectrum-global-dimension-size-200)
+    );
+}
+:host([dir='rtl']) {
+    /* [dir=rtl] .spectrum-Toast */
+    padding-left: var(
+        --spectrum-toast-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=rtl] .spectrum-Toast */
+    padding-right: var(
+        --spectrum-toast-padding-left,
+        var(--spectrum-global-dimension-size-200)
+    );
+}
 :host {
     /* .spectrum-Toast */
     box-sizing: border-box;
@@ -20,22 +42,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-toast-border-radius,
         var(--spectrum-global-dimension-static-size-50)
     );
-    padding: var(
-            --spectrum-toast-padding-y,
-            var(--spectrum-global-dimension-size-100)
-        )
-        var(
-            --spectrum-toast-padding-right,
-            var(--spectrum-global-dimension-size-100)
-        )
-        var(
-            --spectrum-toast-padding-y,
-            var(--spectrum-global-dimension-size-100)
-        )
-        var(
-            --spectrum-toast-padding-left,
-            var(--spectrum-global-dimension-size-200)
-        );
+    padding-top: var(
+        --spectrum-toast-padding-y,
+        var(--spectrum-global-dimension-size-100)
+    );
+    padding-bottom: var(
+        --spectrum-toast-padding-y,
+        var(--spectrum-global-dimension-size-100)
+    );
     font-size: var(
         --spectrum-toast-text-size,
         var(--spectrum-alias-font-size-default)
@@ -54,30 +68,59 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-gray-700)
     );
 }
+:host([dir='ltr']) .type {
+    /* [dir=ltr] .spectrum-Toast-typeIcon */
+    margin-right: var(
+        --spectrum-toast-icon-padding-right,
+        var(--spectrum-global-dimension-size-150)
+    ); /* [dir=ltr] .spectrum-Toast-typeIcon */
+    margin-left: 0;
+}
+:host([dir='rtl']) .type {
+    /* [dir=rtl] .spectrum-Toast-typeIcon */
+    margin-left: var(
+        --spectrum-toast-icon-padding-right,
+        var(--spectrum-global-dimension-size-150)
+    ); /* [dir=rtl] .spectrum-Toast-typeIcon */
+    margin-right: 0;
+}
 .type {
     /* .spectrum-Toast-typeIcon */
     flex-shrink: 0;
     flex-grow: 0;
-    margin: var(--spectrum-global-dimension-size-85)
-        var(
-            --spectrum-toast-icon-padding-right,
-            var(--spectrum-global-dimension-size-150)
-        )
-        var(--spectrum-global-dimension-size-85) 0; /* .spectrum-Toast-typeIcon */
+    margin-top: var(--spectrum-global-dimension-size-85);
+    margin-bottom: var(
+        --spectrum-global-dimension-size-85
+    ); /* .spectrum-Toast-typeIcon */
     color: #fff;
+}
+:host([dir='ltr']) .content {
+    /* [dir=ltr] .spectrum-Toast-content */
+    padding-right: var(
+        --spectrum-toast-content-padding-right,
+        var(--spectrum-global-dimension-size-200)
+    ); /* [dir=ltr] .spectrum-Toast-content */
+    padding-left: 0; /* [dir=ltr] .spectrum-Toast-content */
+    text-align: left;
+}
+:host([dir='rtl']) .content {
+    /* [dir=rtl] .spectrum-Toast-content */
+    padding-left: var(
+        --spectrum-toast-content-padding-right,
+        var(--spectrum-global-dimension-size-200)
+    ); /* [dir=rtl] .spectrum-Toast-content */
+    padding-right: 0; /* [dir=rtl] .spectrum-Toast-content */
+    text-align: right;
 }
 .content {
     /* .spectrum-Toast-content */
     flex: 1 1 auto;
     display: inline-block;
     box-sizing: border-box;
-    padding: var(--spectrum-global-dimension-size-65)
-        var(
-            --spectrum-toast-content-padding-right,
-            var(--spectrum-global-dimension-size-200)
-        )
-        var(--spectrum-global-dimension-size-65) 0;
-    text-align: left; /* .spectrum-Toast-content */
+    padding-top: var(--spectrum-global-dimension-size-65);
+    padding-bottom: var(
+        --spectrum-global-dimension-size-65
+    ); /* .spectrum-Toast-content */
     color: var(
         --spectrum-toast-text-color,
         var(--spectrum-global-color-static-white)
@@ -87,18 +130,30 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Toast-buttons */
     display: flex;
     flex: 0 0 auto;
-    align-items: flex-start; /* .spectrum-Toast-buttons */
-    border-left-color: hsla(0, 0%, 100%, 0.2);
+    align-items: flex-start;
 }
-.buttons slot[name='action'] + ::slotted([slot='action']),
-.buttons slot[name='action'] + .spectrum-ClearButton,
-.buttons .spectrum-ClearButton + ::slotted([slot='action']),
-.buttons .spectrum-ClearButton + .spectrum-ClearButton {
-    /* .spectrum-Toast-buttons .spectrum-Button+.spectrum-Button,
-   * .spectrum-Toast-buttons .spectrum-Button+.spectrum-ClearButton,
-   * .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-Button,
-   * .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */
+:host([dir='ltr']) .buttons slot[name='action'] + ::slotted([slot='action']),
+:host([dir='ltr']) .buttons slot[name='action'] + .spectrum-ClearButton,
+:host([dir='ltr']) .buttons .spectrum-ClearButton + ::slotted([slot='action']),
+:host([dir='ltr']) .buttons .spectrum-ClearButton + .spectrum-ClearButton {
+    /* [dir=ltr] .spectrum-Toast-buttons .spectrum-Button+.spectrum-Button,
+   * [dir=ltr] .spectrum-Toast-buttons .spectrum-Button+.spectrum-ClearButton,
+   * [dir=ltr] .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-Button,
+   * [dir=ltr] .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */
     margin-left: var(
+        --spectrum-toast-button-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+:host([dir='rtl']) .buttons slot[name='action'] + ::slotted([slot='action']),
+:host([dir='rtl']) .buttons slot[name='action'] + .spectrum-ClearButton,
+:host([dir='rtl']) .buttons .spectrum-ClearButton + ::slotted([slot='action']),
+:host([dir='rtl']) .buttons .spectrum-ClearButton + .spectrum-ClearButton {
+    /* [dir=rtl] .spectrum-Toast-buttons .spectrum-Button+.spectrum-Button,
+   * [dir=rtl] .spectrum-Toast-buttons .spectrum-Button+.spectrum-ClearButton,
+   * [dir=rtl] .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-Button,
+   * [dir=rtl] .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */
+    margin-right: var(
         --spectrum-toast-button-gap,
         var(--spectrum-global-dimension-size-100)
     );
@@ -108,19 +163,41 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex: 1 1 auto;
     align-self: center;
 }
-.body ::slotted([slot='action']) {
-    /* .spectrum-Toast-body .spectrum-Button */
-    float: right;
+:host([dir='ltr']) .body ::slotted([slot='action']) {
+    /* [dir=ltr] .spectrum-Toast-body .spectrum-Button */
+    float: right; /* [dir=ltr] .spectrum-Toast-body .spectrum-Button */
     margin-right: var(--spectrum-global-dimension-size-130);
 }
-.body + .buttons {
-    /* .spectrum-Toast-body+.spectrum-Toast-buttons */
+:host([dir='rtl']) .body ::slotted([slot='action']) {
+    /* [dir=rtl] .spectrum-Toast-body .spectrum-Button */
+    float: left; /* [dir=rtl] .spectrum-Toast-body .spectrum-Button */
+    margin-left: var(--spectrum-global-dimension-size-130);
+}
+:host([dir='ltr']) .body + .buttons {
+    /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */
     padding-left: var(
         --spectrum-toast-padding-right,
         var(--spectrum-global-dimension-size-100)
-    );
-    border-left-width: 1px;
+    ); /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */
+    border-left-width: 1px; /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */
     border-left-style: solid;
+}
+:host([dir='rtl']) .body + .buttons {
+    /* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */
+    padding-right: var(
+        --spectrum-toast-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */
+    border-right-width: 1px; /* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */
+    border-right-style: solid;
+}
+:host([dir='ltr']) .buttons {
+    /* [dir=ltr] .spectrum-Toast-buttons */
+    border-left-color: hsla(0, 0%, 100%, 0.2);
+}
+:host([dir='rtl']) .buttons {
+    /* [dir=rtl] .spectrum-Toast-buttons */
+    border-right-color: hsla(0, 0%, 100%, 0.2);
 }
 :host([variant='warning']) {
     /* .spectrum-Toast--warning */

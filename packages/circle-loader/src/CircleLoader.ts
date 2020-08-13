@@ -15,14 +15,14 @@ import {
     TemplateResult,
     html,
     property,
-    LitElement,
+    SpectrumElement,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import circleLoaderStyles from './circle-loader.css.js';
 
-export class CircleLoader extends LitElement {
+export class CircleLoader extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [circleLoaderStyles];
     }

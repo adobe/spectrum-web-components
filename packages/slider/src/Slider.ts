@@ -17,7 +17,7 @@ import {
     TemplateResult,
     query,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import spectrumSliderStyles from './spectrum-slider.css.js';
 import sliderStyles from './slider.css.js';
@@ -442,7 +442,7 @@ export class Slider extends Focusable {
         const percent = (offset - minOffset) / size;
         const value = this.min + (this.max - this.min) * percent;
 
-        return value;
+        return this.isDefaultDir ? value : 100 - value;
     }
 
     private dispatchInputEvent(): void {
@@ -485,7 +485,7 @@ export class Slider extends Focusable {
     private get trackRightStyle(): string {
         const width = `width: ${(1 - this.trackProgress) * 100}%;`;
         const halfHandleWidth = `var(--spectrum-slider-handle-width, var(--spectrum-global-dimension-size-200)) / 2`;
-        const offset = `left: calc(${
+        const offset = `${this.isDefaultDir ? 'left' : 'right'}: calc(${
             this.trackProgress * 100
         }% + ${halfHandleWidth})`;
 
@@ -493,6 +493,8 @@ export class Slider extends Focusable {
     }
 
     private get handleStyle(): string {
-        return `left: ${this.trackProgress * 100}%`;
+        return `${this.isDefaultDir ? 'left' : 'right'}: ${
+            this.trackProgress * 100
+        }%`;
     }
 }

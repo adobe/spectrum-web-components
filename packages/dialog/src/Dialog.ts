@@ -12,12 +12,12 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
     property,
     query,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-action-button.js';
 import alertMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-medium.css.js';
@@ -35,7 +35,7 @@ import styles from './dialog.css.js';
  *
  * @fires close - Announces that the dialog has been closed.
  */
-export class Dialog extends LitElement {
+export class Dialog extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles, alertMediumStyles, crossLargeStyles];
     }
@@ -66,7 +66,7 @@ export class Dialog extends LitElement {
         if (this.shadowRoot) {
             const firstFocusable = this.shadowRoot.querySelector(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            ) as LitElement;
+            ) as SpectrumElement;
             /* istanbul ignore else */
             if (firstFocusable) {
                 /* istanbul ignore else */

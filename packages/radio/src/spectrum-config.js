@@ -17,7 +17,6 @@ module.exports = {
             name: 'radio',
             host: {
                 selector: '.spectrum-Radio',
-                shadowSelector: '#root',
             },
             focus: '#input',
             attributes: [

@@ -27,35 +27,15 @@ module.exports = {
             ],
             slots: [
                 {
-                    contents: 'sp-action-button',
-                    selector: '.spectrum-ActionButton',
-                },
-                {
-                    contents: 'sp-button',
-                    selector: '.spectrum-Button',
-                },
-                {
-                    contents: 'sp-tool',
-                    selector: '.spectrum-Tool',
-                },
-                {
-                    contents: 'sp-rule[vertical]',
-                    selector: '.spectrum-Rule--vertical',
+                    contents: '',
+                    selector: '.spectrum-ButtonGroup-item',
                 },
             ],
             complexSelectors: [
                 {
-                    replacement: '::slotted(sp-button:not(:first-of-type))',
-                    selector: '.spectrum-Button+.spectrum-Button',
-                },
-                {
-                    replacement: '::slotted(sp-tool:not(:first-of-type))',
-                    selector: '.spectrum-Tool+.spectrum-Tool',
-                },
-                {
-                    replacement:
-                        '::slotted(sp-action-button:not(:first-of-type))',
-                    selector: '.spectrum-ActionButton+.spectrum-ActionButton',
+                    replacement: '::slotted(*:not(:first-of-type))',
+                    selector:
+                        '.spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item',
                 },
             ],
             exclude: [/\.spectrum-ActionButton-label/],
