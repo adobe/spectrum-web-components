@@ -175,9 +175,12 @@ export class Tabs extends Focusable {
 
     public handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
-        const availableArrows = availableArrowsByDirection[this.direction];
+        const availableArrows = [...availableArrowsByDirection[this.direction]];
         if (!availableArrows.includes(code)) {
             return;
+        }
+        if (!this.isDefaultDir && this.direction === 'horizontal') {
+            availableArrows.reverse();
         }
         event.preventDefault();
         const currentFocusedTab = getActiveElement(this) as Tab;
