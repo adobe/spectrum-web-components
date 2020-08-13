@@ -66,6 +66,54 @@ describe('card', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('loads - [quiet][small]', async () => {
+        const el = await fixture<Card>(
+            html`
+                <sp-card
+                    small
+                    title="Card Title"
+                    subtitle="JPG"
+                    variant="quiet"
+                    style="width: 115px;"
+                >
+                    <img
+                        src="https://picsum.photos/300/400"
+                        alt="Demo Image"
+                        slot="preview"
+                    />
+                    <div slot="footer">Footer</div>
+                    <sp-action-menu slot="actions" placement="bottom-end">
+                        <sp-menu>
+                            <sp-menu-item>
+                                Deselect
+                            </sp-menu-item>
+                            <sp-menu-item>
+                                Select Inverse
+                            </sp-menu-item>
+                            <sp-menu-item>
+                                Feather...
+                            </sp-menu-item>
+                            <sp-menu-item>
+                                Select and Mask...
+                            </sp-menu-item>
+                            <sp-menu-divider></sp-menu-divider>
+                            <sp-menu-item>
+                                Save Selection
+                            </sp-menu-item>
+                            <sp-menu-item disabled>
+                                Make Work Path
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-action-menu>
+                </sp-card>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
     it('loads - [gallery]', async () => {
         const el = await fixture<Card>(
             html`
