@@ -56,7 +56,7 @@
         "lint:versions": "node ./scripts/lint-versions.js",
         "precustom-element-json": "rm packages/*/custom-elements.json",
         "custom-element-json": "lerna exec --ignore @spectrum-web-components/styles -- wca analyze '*.d.ts' --format json --outFile custom-elements.json",
-        "postcustom-element-json": "lerna exec --ignore '{@spectrum-web-components/{bundle,,icons-ui,icons-workflow,iconset,shared,styles},example-project,swc-templates}' -- test -f custom-elements.json",
+        "postcustom-element-json": "lerna exec --ignore '{@spectrum-web-components/{bundle,,icons-ui,icons-workflow,iconset,shared,styles},example-project-rollup,example-project-webpack,swc-templates}' -- test -f custom-elements.json",
         "prelerna-publish": "yarn get-ready && yarn custom-element-json",
         "lerna-publish": "lerna publish --message 'chore: release new versions'",
         "test": "yarn build && yarn test:ci",
