@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.5.0...@spectrum-web-components/overlay@0.5.1) (2020-08-13)
+
+### Bug Fixes
+
+-   include sync builds in publication configuration ([e731673](https://github.com/adobe/spectrum-web-components/commit/e731673e7d171af667fc87c5b6e521450143e8fe))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.4.3...@spectrum-web-components/overlay@0.5.0) (2020-08-13)
 
 ### Bug Fixes
