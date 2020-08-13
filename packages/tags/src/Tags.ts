@@ -85,33 +85,32 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
             list: T[],
             index: number
         ): T => list[(list.length + index) % list.length];
+        const tagFromDelta = (delta: number): void => {
+            nextIndex += delta;
+            while (circularIndexedElement(this.tags, nextIndex).disabled) {
+                nextIndex += delta;
+            }
+        };
         switch (code) {
             case 'ArrowUp':
-            case 'ArrowLeft': {
-                nextIndex -= 1;
-                while (circularIndexedElement(this.tags, nextIndex).disabled) {
-                    nextIndex -= 1;
-                }
+                tagFromDelta(-1);
                 break;
-            }
+            case 'ArrowLeft':
+                tagFromDelta(this.isDefaultDir ? -1 : 1);
+                break;
             case 'ArrowRight':
+                tagFromDelta(this.isDefaultDir ? 1 : -1);
+                break;
             case 'ArrowDown':
-                nextIndex += 1;
-                while (circularIndexedElement(this.tags, nextIndex).disabled) {
-                    nextIndex += 1;
-                }
+                tagFromDelta(1);
                 break;
             case 'End':
-                nextIndex = this.tags.length - 1;
-                while (circularIndexedElement(this.tags, nextIndex).disabled) {
-                    nextIndex -= 1;
-                }
+                nextIndex = this.tags.length;
+                tagFromDelta(-1);
                 break;
             case 'Home':
-                nextIndex = 0;
-                while (circularIndexedElement(this.tags, nextIndex).disabled) {
-                    nextIndex += 1;
-                }
+                nextIndex = -1;
+                tagFromDelta(1);
                 break;
             case 'PageUp':
             case 'PageDown':

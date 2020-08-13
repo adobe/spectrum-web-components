@@ -93,41 +93,32 @@ export class RadioGroup extends SpectrumElement {
             list: T[],
             index: number
         ): T => list[(list.length + index) % list.length];
+        const buttonFromDelta = (delta: number): void => {
+            nextIndex += delta;
+            while (circularIndexedElement(this.buttons, nextIndex).disabled) {
+                nextIndex += delta;
+            }
+        };
         switch (code) {
             case 'ArrowUp':
-            case 'ArrowLeft': {
-                nextIndex -= 1;
-                while (
-                    circularIndexedElement(this.buttons, nextIndex).disabled
-                ) {
-                    nextIndex -= 1;
-                }
+                buttonFromDelta(-1);
                 break;
-            }
+            case 'ArrowLeft':
+                buttonFromDelta(this.isDefaultDir ? -1 : 1);
+                break;
             case 'ArrowRight':
+                buttonFromDelta(this.isDefaultDir ? 1 : -1);
+                break;
             case 'ArrowDown':
-                nextIndex += 1;
-                while (
-                    circularIndexedElement(this.buttons, nextIndex).disabled
-                ) {
-                    nextIndex += 1;
-                }
+                buttonFromDelta(1);
                 break;
             case 'End':
-                nextIndex = this.buttons.length - 1;
-                while (
-                    circularIndexedElement(this.buttons, nextIndex).disabled
-                ) {
-                    nextIndex -= 1;
-                }
+                nextIndex = this.buttons.length;
+                buttonFromDelta(-1);
                 break;
             case 'Home':
-                nextIndex = 0;
-                while (
-                    circularIndexedElement(this.buttons, nextIndex).disabled
-                ) {
-                    nextIndex += 1;
-                }
+                nextIndex = -1;
+                buttonFromDelta(1);
                 break;
             case 'PageUp':
             case 'PageDown':
