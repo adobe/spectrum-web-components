@@ -12,11 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-tabs.css';
 
-/* Power scale based indicator transitions */
-:host([direction='horizontal']) #selectionIndicator {
-    width: 1px;
-}
-
 /*
  * While https://github.com/adobe/spectrum-css/issues/641 goes unaddressed,
  * then we'll need to place this at `top: 0;` ourselves.
@@ -45,6 +40,16 @@ governing permissions and limitations under the License.
         --spectrum-tabs-rule-color,
         var(--spectrum-global-color-gray-200)
     );
+}
+
+/*
+ * Power scale based indicator transitions
+ * Enforce left centric positioning to allow for shared position scripting.
+ */
+:host([dir][direction='horizontal']) #selectionIndicator {
+    width: 1px;
+    left: 0;
+    right: auto;
 }
 
 /*
