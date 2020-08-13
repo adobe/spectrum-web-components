@@ -37,7 +37,8 @@
         "*.d.ts",
         "*.js",
         "*.js.map",
-        "/src/"
+        "/src/",
+        "/sync/"
     ],
     "sideEffects": [
         "./sp-dropdown.js",
