@@ -12,12 +12,12 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     property,
     CSSResultArray,
     TemplateResult,
     queryAssignedNodes,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import radioGroupStyles from './radio-group.css.js';
 import { Radio } from '@spectrum-web-components/radio';
@@ -27,7 +27,7 @@ import { Radio } from '@spectrum-web-components/radio';
  *
  * @attr column - arranges radio buttons vertically
  */
-export class RadioGroup extends LitElement {
+export class RadioGroup extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [radioGroupStyles];
     }

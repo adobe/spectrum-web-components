@@ -17,23 +17,6 @@ governing permissions and limitations under the License.
     width: 1px;
 }
 
-/* Original selector from spectrum-css:
- * .spectrum-Tabs--horizontal .spectrum-Tabs-item + *:not(.spectrum-Tabs-selectionIndicator)
- *
- * The original selector matches all elements (excluding the selectionIndicactor) that are adjacent to a tab-item.
- * We can't follow this approach because complex selectors are restricted in ::slotted pseudo elements.
- * The following would not work -- :host([direction='horizontal']) ::slotted(sp-tab-item + *:not(.spectrum-Tabs-selectionIndicator))
- *
- * This revision matches all tabs except for the first, which achieves the same effect.
- */
-
-:host([direction='horizontal']) ::slotted(sp-tab:not(:first-child)) {
-    margin-left: var(
-        --spectrum-tabs-item-gap,
-        var(--spectrum-global-dimension-size-300)
-    );
-}
-
 /*
  * While https://github.com/adobe/spectrum-css/issues/641 goes unaddressed,
  * then we'll need to place this at `top: 0;` ourselves.
@@ -53,13 +36,24 @@ governing permissions and limitations under the License.
     --spectrum-tabs-height: var(--spectrum-tabs-quiet-compact-height);
 }
 
+/* 
+ * The shorthand border declaration in :host([direction='horizontal']) was overiding
+ * the border-bottom-color declared in :host 
+ */
+:host([direction='horizontal']:not([quiet])) {
+    border-bottom-color: var(
+        --spectrum-tabs-rule-color,
+        var(--spectrum-global-color-gray-200)
+    );
+}
+
 /*
  * The following manually add the `vertical-right` direction to sp-tab-list
  * It can be removed after https://github.com/adobe/spectrum-css/issues/637 is resolved
  * In the interim, if there are ever Visual Regression failures to the 'Vertical' tabs story
  * then it is likely that this CSS will need to be updated with changes in @spectrum-css/tabs
  */
-:host([direction='vertical-right']) {
+:host([dir='ltr'][direction='vertical-right']) {
     /* .spectrum-Tabs--vertical */
     display: inline-flex;
     flex-direction: column;
@@ -75,7 +69,23 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-gray-200)
     );
 }
-:host([direction='vertical-right']) ::slotted(*) {
+:host([dir='rtl'][direction='vertical-right']) {
+    /* .spectrum-Tabs--vertical */
+    display: inline-flex;
+    flex-direction: column;
+    padding: 0;
+    border-left: var(
+            --spectrum-tabs-vertical-rule-width,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid; /* .spectrum-Tabs--vertical */
+
+    border-left-color: var(
+        --spectrum-tabs-vertical-rule-color,
+        var(--spectrum-global-color-gray-200)
+    );
+}
+:host([dir='ltr'][direction='vertical-right']) ::slotted(*) {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-item */
     height: var(
         --spectrum-tabs-vertical-item-height,
@@ -87,6 +97,32 @@ governing permissions and limitations under the License.
             var(--spectrum-global-dimension-size-100)
         );
     margin-right: calc(
+        var(
+                --spectrum-tabs-vertical-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) -
+            var(
+                --spectrum-tabs-focus-ring-padding-x,
+                var(--spectrum-global-dimension-size-100)
+            )
+    );
+    margin-bottom: var(
+        --spectrum-tabs-vertical-item-gap,
+        var(--spectrum-global-dimension-size-50)
+    );
+}
+:host([dir='rtl'][direction='vertical-right']) ::slotted(*) {
+    /* .spectrum-Tabs--vertical .spectrum-Tabs-item */
+    height: var(
+        --spectrum-tabs-vertical-item-height,
+        var(--spectrum-global-dimension-size-550)
+    );
+    padding: 0
+        var(
+            --spectrum-tabs-focus-ring-padding-x,
+            var(--spectrum-global-dimension-size-100)
+        );
+    margin-left: calc(
         var(
                 --spectrum-tabs-vertical-item-margin-left,
                 var(--spectrum-global-dimension-size-150)
@@ -118,7 +154,7 @@ governing permissions and limitations under the License.
         var(--spectrum-global-dimension-size-400)
     );
 }
-:host([direction='vertical-right']) #selectionIndicator {
+:host([dir='ltr'][direction='vertical-right']) #selectionIndicator {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     position: absolute;
     left: auto;
@@ -130,11 +166,32 @@ governing permissions and limitations under the License.
         -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
     );
 }
-:host([direction='vertical-right'][compact]),
-:host([direction='vertical-right'][quiet]) {
+:host([dir='rtl'][direction='vertical-right']) #selectionIndicator {
+    /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+    position: absolute;
+    right: auto;
+    width: var(
+        --spectrum-tabs-vertical-rule-width,
+        var(--spectrum-alias-border-size-thick)
+    );
+    left: calc(
+        -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
+    );
+}
+:host([dir='ltr'][direction='vertical-right'][compact]),
+:host([dir='ltr'][direction='vertical-right'][quiet]) {
     /* .spectrum-Tabs--vertical.spectrum-Tabs--compact,
    * .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
     border-right-color: var(
+        --spectrum-tabs-quiet-vertical-rule-color,
+        var(--spectrum-alias-border-color-transparent)
+    );
+}
+:host([dir='rtl'][direction='vertical-right'][compact]),
+:host([dir='rtl'][direction='vertical-right'][quiet]) {
+    /* .spectrum-Tabs--vertical.spectrum-Tabs--compact,
+   * .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
+    border-left-color: var(
         --spectrum-tabs-quiet-vertical-rule-color,
         var(--spectrum-alias-border-color-transparent)
     );
@@ -146,16 +203,5 @@ governing permissions and limitations under the License.
     background-color: var(
         --spectrum-tabs-quiet-selection-indicator-color,
         var(--spectrum-global-color-gray-900)
-    );
-}
-
-/* 
- * The shorthand border declaration in :host([direction='horizontal']) was overiding
- * the border-bottom-color declared in :host 
- */
-:host([direction='horizontal']:not([quiet])) {
-    border-bottom-color: var(
-        --spectrum-tabs-rule-color,
-        var(--spectrum-global-color-gray-200)
     );
 }

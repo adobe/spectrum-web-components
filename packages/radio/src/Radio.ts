@@ -16,7 +16,7 @@ import {
     query,
     CSSResultArray,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import radioStyles from './radio.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -66,18 +66,17 @@ export class Radio extends Focusable {
 
     protected render(): TemplateResult {
         return html`
-            <label id="root">
-                <input
-                    id="input"
-                    type="radio"
-                    name=${this.name}
-                    value=${this.value}
-                    .checked=${this.checked}
-                    @change=${this.handleChange}
-                />
-                <span id="button"></span>
-                <span id="label"><slot></slot></span>
-            </label>
+            <input
+                id="input"
+                aria-labelledby="label"
+                type="radio"
+                name=${this.name}
+                value=${this.value}
+                .checked=${this.checked}
+                @change=${this.handleChange}
+            />
+            <span id="button"></span>
+            <label id="label"><slot></slot></label>
         `;
     }
 }

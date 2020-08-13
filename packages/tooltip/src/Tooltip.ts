@@ -14,9 +14,9 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
-    LitElement,
+    SpectrumElement,
     property,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import {
     OverlayDisplayQueryDetail,
     Placement,
@@ -29,7 +29,7 @@ import tooltipStyles from './tooltip.css.js';
  * @slot - The label
  */
 
-export class Tooltip extends LitElement {
+export class Tooltip extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [tooltipStyles];
     }

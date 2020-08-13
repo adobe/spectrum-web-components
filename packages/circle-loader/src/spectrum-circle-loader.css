@@ -419,11 +419,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-track-color-default)
     );
 }
+:host([dir='ltr']) .fills {
+    /* [dir=ltr] .spectrum-CircleLoader-fills */
+    left: 0;
+}
+:host([dir='rtl']) .fills {
+    /* [dir=rtl] .spectrum-CircleLoader-fills */
+    right: 0;
+}
 .fills {
     /* .spectrum-CircleLoader-fills */
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
 }

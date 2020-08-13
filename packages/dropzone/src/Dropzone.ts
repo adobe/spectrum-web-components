@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     property,
     CSSResultArray,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import dropzoneStyles from './dropzone.css.js';
 
@@ -27,7 +27,7 @@ export type DropEffects = 'copy' | 'move' | 'link' | 'none';
 /**
  * @slot default - This is the illustrated message slot
  */
-export class Dropzone extends LitElement {
+export class Dropzone extends SpectrumElement {
     public static readonly is = 'sp-dropzone';
 
     public static get styles(): CSSResultArray {

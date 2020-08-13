@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, property, CSSResultArray, TemplateResult } from 'lit-element';
+import {
+    html,
+    property,
+    CSSResultArray,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/icon/sp-icon.js';
 import { CheckmarkMediumIcon } from '@spectrum-web-components/icons-ui';

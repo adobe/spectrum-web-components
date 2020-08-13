@@ -14,11 +14,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Menu */
     display: inline-block;
     box-sizing: border-box;
-    margin: var(
-            --spectrum-popover-padding-y,
-            var(--spectrum-global-dimension-size-50)
-        )
-        0;
+    margin-top: var(
+        --spectrum-popover-padding-y,
+        var(--spectrum-global-dimension-size-50)
+    );
+    margin-bottom: var(
+        --spectrum-popover-padding-y,
+        var(--spectrum-global-dimension-size-50)
+    );
+    margin-left: 0;
+    margin-right: 0;
     padding: 0;
     list-style-type: none;
     overflow: auto; /* .spectrum-Menu .spectrum-Menu */

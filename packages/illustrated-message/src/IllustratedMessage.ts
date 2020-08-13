@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     property,
     CSSResultArray,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import messageStyles from './illustrated-message.css.js';
 
@@ -24,7 +24,7 @@ import messageStyles from './illustrated-message.css.js';
  * @slot - The SVG that represents the illustration
  */
 
-export class IllustratedMessage extends LitElement {
+export class IllustratedMessage extends SpectrumElement {
     public static readonly is = 'sp-illustrated-message';
 
     public static get styles(): CSSResultArray {

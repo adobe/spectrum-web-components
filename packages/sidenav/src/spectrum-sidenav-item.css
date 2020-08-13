@@ -19,11 +19,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-SideNav-item */
     list-style-type: none;
-    margin: var(
-            --spectrum-sidenav-item-gap,
-            var(--spectrum-global-dimension-size-50)
-        )
-        0;
+    margin-top: var(
+        --spectrum-sidenav-item-gap,
+        var(--spectrum-global-dimension-size-50)
+    );
+    margin-bottom: var(
+        --spectrum-sidenav-item-gap,
+        var(--spectrum-global-dimension-size-50)
+    );
+    margin-left: 0;
+    margin-right: 0;
 }
 #itemLink {
     /* .spectrum-SideNav-itemLink */
@@ -76,15 +81,32 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-SideNav-itemLink:focus */
     outline: none;
 }
+:host([dir='ltr']) #itemLink:focus-visible:before {
+    /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
+    left: 0;
+}
+:host([dir='ltr']) #itemLink:focus-visible:before,
+:host([dir='rtl']) #itemLink:focus-visible:before {
+    /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before,
+   * [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
+    right: 0;
+}
+:host([dir='rtl']) #itemLink:focus-visible:before {
+    /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
+    left: 0;
+}
 #itemLink:focus-visible:before {
     /* .spectrum-SideNav-itemLink.focus-ring:before */
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
     bottom: 0;
-    border: var(
+    border-top: var(
+            --spectrum-tabs-focus-ring-size,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid transparent;
+    border-bottom: var(
             --spectrum-tabs-focus-ring-size,
             var(--spectrum-alias-border-size-thick)
         )
@@ -98,11 +120,84 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-color-focus)
     );
 }
-#itemLink ::slotted([slot='icon']) {
-    /* .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
+:host([dir='ltr']) #itemLink ::slotted([slot='icon']) {
+    /* [dir=ltr] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
     margin-right: var(
         --spectrum-sidenav-icon-gap,
         var(--spectrum-global-dimension-size-100)
+    );
+}
+:host([dir='rtl']) #itemLink ::slotted([slot='icon']) {
+    /* [dir=rtl] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
+    margin-left: var(
+        --spectrum-sidenav-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+:host([dir='ltr']) .spectrum-SideNav-heading {
+    /* [dir=ltr] .spectrum-SideNav-heading */
+    margin-right: 0;
+}
+:host([dir='ltr']) .spectrum-SideNav-heading,
+:host([dir='rtl']) .spectrum-SideNav-heading {
+    /* [dir=ltr] .spectrum-SideNav-heading,
+   * [dir=rtl] .spectrum-SideNav-heading */
+    margin-left: 0;
+}
+:host([dir='rtl']) .spectrum-SideNav-heading {
+    /* [dir=rtl] .spectrum-SideNav-heading */
+    margin-right: 0;
+}
+:host([dir='ltr']) .spectrum-SideNav--multiLevel #list #itemLink {
+    /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level1,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
+}
+:host([dir='rtl']) .spectrum-SideNav--multiLevel #list #itemLink {
+    /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
+    padding-right: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level1,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
+}
+:host([dir='ltr']) .spectrum-SideNav--multiLevel #list #list #itemLink {
+    /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level2,
+                var(--spectrum-global-dimension-size-300)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
+}
+:host([dir='rtl']) .spectrum-SideNav--multiLevel #list #list #itemLink {
+    /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
+    padding-right: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level2,
+                var(--spectrum-global-dimension-size-300)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
     );
 }
 :host([selected]) > #itemLink {

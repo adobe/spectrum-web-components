@@ -12,16 +12,16 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     property,
     CSSResultArray,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import sidenavItemStyles from './sidenav-item.css.js';
 import sidenavHeadingStyles from './sidenav-heading.css.js';
 
-export class SideNavHeading extends LitElement {
+export class SideNavHeading extends SpectrumElement {
     @property({ reflect: true })
     public label = '';
 
