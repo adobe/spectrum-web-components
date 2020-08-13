@@ -112,7 +112,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: none; /* .spectrum-Dialog-closeButton */
     position: absolute;
     top: calc(-1 * var(--spectrum-global-dimension-size-350));
-    right: calc(-1 * var(--spectrum-global-dimension-size-350));
 }
 :host([size='small']) {
     /* .spectrum-Dialog--small */
@@ -126,19 +125,46 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Dialog--large */
     width: 640px;
 }
-::slotted([slot='hero']) {
-    /* .spectrum-Dialog-hero */
-    height: var(--spectrum-global-dimension-size-1600);
-    margin: calc(-1 * var(--spectrum-dialog-padding))
-        calc(-1 * var(--spectrum-dialog-padding)) var(--spectrum-dialog-padding);
+:host([dir='ltr']) ::slotted([slot='hero']) {
+    /* [dir=ltr] .spectrum-Dialog-hero */
+    margin-left: calc(
+        -1 * var(--spectrum-dialog-padding)
+    ); /* [dir=ltr] .spectrum-Dialog-hero */
     border-top-left-radius: var(
         --spectrum-dialog-border-radius,
         var(--spectrum-global-dimension-size-50)
     );
+}
+:host([dir='ltr']) ::slotted([slot='hero']),
+:host([dir='rtl']) ::slotted([slot='hero']) {
+    /* [dir=ltr] .spectrum-Dialog-hero,
+   * [dir=rtl] .spectrum-Dialog-hero */
+    margin-right: calc(-1 * var(--spectrum-dialog-padding));
+}
+:host([dir='rtl']) ::slotted([slot='hero']) {
+    /* [dir=rtl] .spectrum-Dialog-hero */
+    margin-left: calc(
+        -1 * var(--spectrum-dialog-padding)
+    ); /* [dir=rtl] .spectrum-Dialog-hero */
+    border-top-left-radius: var(
+        --spectrum-dialog-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
+}
+:host([dir='ltr']) ::slotted([slot='hero']),
+:host([dir='rtl']) ::slotted([slot='hero']) {
+    /* [dir=ltr] .spectrum-Dialog-hero,
+   * [dir=rtl] .spectrum-Dialog-hero */
     border-top-right-radius: var(
         --spectrum-dialog-border-radius,
         var(--spectrum-global-dimension-size-50)
     );
+}
+::slotted([slot='hero']) {
+    /* .spectrum-Dialog-hero */
+    height: var(--spectrum-global-dimension-size-1600);
+    margin-top: calc(-1 * var(--spectrum-dialog-padding));
+    margin-bottom: var(--spectrum-dialog-padding);
     background-size: cover;
     background-position: 50%;
 }
@@ -150,15 +176,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-sizing: border-box;
     width: 100%;
     flex-shrink: 0;
-    border-radius: var(
-            --spectrum-dialog-border-radius,
-            var(--spectrum-global-dimension-size-50)
-        )
-        var(
-            --spectrum-dialog-border-radius,
-            var(--spectrum-global-dimension-size-50)
-        )
-        0 0;
+    border-top-left-radius: var(
+        --spectrum-dialog-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
+    border-top-right-radius: var(
+        --spectrum-dialog-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
     outline: none;
     padding-bottom: calc(
         var(
@@ -212,13 +239,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Dialog--dismissible .spectrum-Dialog-closeButton */
     display: initial;
 }
-.type-icon {
-    /* .spectrum-Dialog-typeIcon */
-    display: block;
+:host([dir='ltr']) .close-button {
+    /* [dir=ltr] .spectrum-Dialog-closeButton */
+    right: calc(-1 * var(--spectrum-global-dimension-size-350));
+}
+:host([dir='rtl']) .close-button {
+    /* [dir=rtl] .spectrum-Dialog-closeButton */
+    left: calc(-1 * var(--spectrum-global-dimension-size-350));
+}
+:host([dir='ltr']) .type-icon {
+    /* [dir=ltr] .spectrum-Dialog-typeIcon */
     margin-left: var(
         --spectrum-dialog-icon-margin-left,
         var(--spectrum-global-dimension-static-size-300)
     );
+}
+:host([dir='rtl']) .type-icon {
+    /* [dir=rtl] .spectrum-Dialog-typeIcon */
+    margin-right: var(
+        --spectrum-dialog-icon-margin-left,
+        var(--spectrum-global-dimension-static-size-300)
+    );
+}
+.type-icon {
+    /* .spectrum-Dialog-typeIcon */
+    display: block;
     flex-shrink: 0;
     align-self: flex-start; /* .spectrum-Dialog-typeIcon */
     color: var(
@@ -251,15 +296,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 .footer {
     /* .spectrum-Dialog-footer */
-    border-radius: 0 0
-        var(
-            --spectrum-dialog-border-radius,
-            var(--spectrum-global-dimension-size-50)
-        )
-        var(
-            --spectrum-dialog-border-radius,
-            var(--spectrum-global-dimension-size-50)
-        );
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: var(
+        --spectrum-dialog-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
+    border-bottom-left-radius: var(
+        --spectrum-dialog-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
     padding-top: calc(
         var(--spectrum-global-dimension-size-450) -
             var(--spectrum-global-dimension-size-200) / 2
@@ -307,10 +353,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([mode='fullscreen']) {
     /* .spectrum-Dialog--fullscreen */
-    left: 32px;
     top: 32px;
     right: 32px;
     bottom: 32px;
+    left: 32px;
     transform: translateY(
         var(
             --spectrum-dialog-entry-animation-distance,
@@ -353,10 +399,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([mode='fullscreenTakeover']) {
     /* .spectrum-Dialog--fullscreenTakeover */
     position: fixed;
-    left: 0;
-    right: 0;
     top: 0;
+    right: 0;
     bottom: 0;
+    left: 0;
     box-sizing: border-box;
     border: none;
     border-radius: 0;
@@ -380,7 +426,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Dialog--error .spectrum-Dialog-title */
     color: var(
         --spectrum-dialog-error-title-text-color,
-        var(--spectrum-semantic-negative-color-text-small)
+        var(--spectrum-global-color-gray-900)
     );
 }
 :host([error]) .type-icon {

@@ -12,12 +12,12 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
     property,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-clear-button.js';
 
@@ -26,7 +26,7 @@ import styles from './tag.css.js';
 /**
  * @element sp-tags
  */
-export class Tag extends LitElement {
+export class Tag extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles];
     }

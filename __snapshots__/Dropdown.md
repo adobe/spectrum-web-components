@@ -4,6 +4,7 @@
 
 ```html
 <sp-menu
+  dir="ltr"
   role="listbox"
   tabindex="0"
 >
@@ -40,7 +41,10 @@
   >
     Select and Mask...
   </sp-menu-item>
-  <sp-menu-divider role="separator">
+  <sp-menu-divider
+    dir="ltr"
+    role="separator"
+  >
   </sp-menu-divider>
   <sp-menu-item
     data-js-focus-visible=""
@@ -87,6 +91,7 @@
   </sp-icon>
 </button>
 <sp-popover
+  dir="ltr"
   id="popover"
   open=""
   placement="none"

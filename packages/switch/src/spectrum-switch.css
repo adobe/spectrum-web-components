@@ -10,6 +10,24 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([dir='ltr']) {
+    /* [dir=ltr] .spectrum-ToggleSwitch */
+    margin-right: calc(
+        var(
+                --spectrum-switch-cursor-hit-x,
+                var(--spectrum-global-dimension-size-100)
+            ) * 2
+    );
+}
+:host([dir='rtl']) {
+    /* [dir=rtl] .spectrum-ToggleSwitch */
+    margin-left: calc(
+        var(
+                --spectrum-switch-cursor-hit-x,
+                var(--spectrum-global-dimension-size-100)
+            ) * 2
+    );
+}
 :host {
     /* .spectrum-ToggleSwitch */
     display: inline-flex;
@@ -20,13 +38,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-400)
     );
     max-width: 100%;
-    margin-right: calc(
-        var(
-                --spectrum-switch-cursor-hit-x,
-                var(--spectrum-global-dimension-size-100)
-            ) * 2
-    );
     vertical-align: top;
+}
+:host([dir='ltr']) #input {
+    /* [dir=ltr] .spectrum-ToggleSwitch-input */
+    left: 0;
+}
+:host([dir='rtl']) #input {
+    /* [dir=rtl] .spectrum-ToggleSwitch-input */
+    right: 0;
 }
 #input {
     /* .spectrum-ToggleSwitch-input */
@@ -37,25 +57,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     width: 100%;
     height: 100%;
     top: 0;
-    left: 0;
     opacity: 0.0001;
     z-index: 1;
     cursor: pointer;
 }
-:host([checked]) #input + #switch:before {
-    /* .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch:before */
+:host([dir='ltr'][checked]) #input + #switch:before {
+    /* [dir=ltr] .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch:before */
     transform: translateX(
         calc(
-            var(--spectrum-switch-track-width) -
+            100% -
                 var(
-                    --spectrum-switch-handle-size,
-                    var(--spectrum-global-dimension-size-175)
+                    --spectrum-switch-handle-border-size,
+                    var(--spectrum-alias-border-size-thick)
                 )
         )
-    ); /* .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch:before */
-    border-color: var(
-        --spectrum-switch-emphasized-handle-border-color-selected,
-        var(--spectrum-global-color-blue-500)
+    );
+}
+:host([dir='rtl'][checked]) #input + #switch:before {
+    /* [dir=rtl] .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch:before */
+    transform: translateX(
+        calc(
+            -100% + var(--spectrum-switch-handle-border-size, var(--spectrum-alias-border-size-thick))
+        )
     );
 }
 :host([disabled]) #input,
@@ -75,12 +98,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #label {
     /* .spectrum-ToggleSwitch-label */
-    margin: 0
-        var(
-            --spectrum-switch-text-gap,
-            var(--spectrum-global-dimension-size-125)
-        );
+    margin-left: var(
+        --spectrum-switch-text-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    margin-right: var(
+        --spectrum-switch-text-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
     margin-top: var(--spectrum-global-dimension-size-65);
+    margin-bottom: 0;
     font-size: var(
         --spectrum-switch-text-size,
         var(--spectrum-alias-font-size-default)
@@ -89,25 +116,52 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: color var(--spectrum-global-animation-duration-200, 0.16s)
         ease-in-out;
 }
+:host([dir='ltr']) #switch {
+    /* [dir=ltr] .spectrum-ToggleSwitch-switch */
+    left: 0;
+}
+:host([dir='ltr']) #switch,
+:host([dir='rtl']) #switch {
+    /* [dir=ltr] .spectrum-ToggleSwitch-switch,
+   * [dir=rtl] .spectrum-ToggleSwitch-switch */
+    right: 0;
+}
+:host([dir='rtl']) #switch {
+    /* [dir=rtl] .spectrum-ToggleSwitch-switch */
+    left: 0;
+}
 #switch {
     /* .spectrum-ToggleSwitch-switch */
     display: inline-block;
     box-sizing: border-box;
     position: relative;
     width: var(--spectrum-switch-track-width);
-    margin: calc(
-            (
+    margin-top: calc(
+        (
+                var(
+                        --spectrum-switch-height,
+                        var(--spectrum-global-dimension-size-400)
+                    ) -
                     var(
-                            --spectrum-switch-height,
-                            var(--spectrum-global-dimension-size-400)
-                        ) -
-                        var(
-                            --spectrum-switch-track-height,
-                            var(--spectrum-global-dimension-size-175)
-                        )
-                ) / 2
-        )
-        0;
+                        --spectrum-switch-track-height,
+                        var(--spectrum-global-dimension-size-175)
+                    )
+            ) / 2
+    );
+    margin-bottom: calc(
+        (
+                var(
+                        --spectrum-switch-height,
+                        var(--spectrum-global-dimension-size-400)
+                    ) -
+                    var(
+                        --spectrum-switch-track-height,
+                        var(--spectrum-global-dimension-size-175)
+                    )
+            ) / 2
+    );
+    margin-left: 0;
+    margin-right: 0;
     flex-grow: 0;
     flex-shrink: 0;
     vertical-align: middle;
@@ -118,8 +172,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-switch-track-height,
         var(--spectrum-global-dimension-size-175)
     );
-    left: 0;
-    right: 0;
     border-radius: calc(
         var(
                 --spectrum-switch-track-height,
@@ -136,7 +188,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: block;
     position: absolute;
     content: '';
-    box-sizing: border-box;
+    box-sizing: border-box; /* .spectrum-ToggleSwitch-switch:before */
     transition: background var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         border var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
@@ -153,7 +205,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-175)
     );
     top: 0;
-    left: 0;
     border-width: var(
         --spectrum-switch-handle-border-size,
         var(--spectrum-alias-border-size-thick)
@@ -168,6 +219,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-switch-emphasized-handle-border-color,
         var(--spectrum-global-color-gray-600)
     );
+}
+:host([dir='ltr']) #switch:before {
+    /* [dir=ltr] .spectrum-ToggleSwitch-switch:before */
+    left: 0;
+}
+:host([dir='rtl']) #switch:before {
+    /* [dir=rtl] .spectrum-ToggleSwitch-switch:before */
+    right: 0;
+}
+:host([dir='ltr']) #switch:after {
+    /* [dir=ltr] .spectrum-ToggleSwitch-switch:after */
+    left: 0;
+}
+:host([dir='ltr']) #switch:after,
+:host([dir='rtl']) #switch:after {
+    /* [dir=ltr] .spectrum-ToggleSwitch-switch:after,
+   * [dir=rtl] .spectrum-ToggleSwitch-switch:after */
+    right: 0;
+}
+:host([dir='rtl']) #switch:after {
+    /* [dir=rtl] .spectrum-ToggleSwitch-switch:after */
+    left: 0;
 }
 #switch:after {
     /* .spectrum-ToggleSwitch-switch:after */
@@ -184,8 +257,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     content: '';
     display: block;
     position: absolute;
-    left: 0;
-    right: 0;
     bottom: 0;
     top: 0;
     margin: 0;
@@ -204,6 +275,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch */
     background-color: var(
         --spectrum-switch-emphasized-track-color-selected,
+        var(--spectrum-global-color-blue-500)
+    );
+}
+:host([checked]) #input + #switch:before {
+    /* .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch:before */
+    border-color: var(
+        --spectrum-switch-emphasized-handle-border-color-selected,
         var(--spectrum-global-color-blue-500)
     );
 }

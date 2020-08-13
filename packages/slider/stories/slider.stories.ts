@@ -9,11 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action, text, number } from '@open-wc/demoing-storybook';
+import { html, action, text, number, select } from '@open-wc/demoing-storybook';
 
 import '../sp-slider.js';
 import { Slider } from '../';
 import { TemplateResult } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export default {
     component: 'sp-slider',
@@ -25,9 +26,20 @@ export const Default = (): TemplateResult => {
         const target = event.target as Slider;
         action(event.type)(target.value);
     };
+    const dir = select(
+        'Text direction',
+        {
+            None: 'none',
+            'Left to right': 'ltr',
+            'Right to left': 'rtl',
+        },
+        'ltr',
+        'Element'
+    );
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
+                dir=${ifDefined(dir === 'none' ? undefined : dir)}
                 label="Opacity"
                 max="100"
                 min="0"

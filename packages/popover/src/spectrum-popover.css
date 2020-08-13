@@ -112,6 +112,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
+:host([dir='ltr']) #tip:after {
+    /* [dir=ltr] .spectrum-Popover-tip:after */
+    left: -1px;
+}
+:host([dir='rtl']) #tip:after {
+    /* [dir=rtl] .spectrum-Popover-tip:after */
+    right: -1px;
+}
 #tip:after {
     /* .spectrum-Popover-tip:after */
     content: '';
@@ -130,8 +138,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-style: solid;
     position: absolute;
     transform: rotate(45deg);
-    top: -18px;
-    left: -1px; /* .spectrum-Popover .spectrum-Popover-tip:after */
+    top: -18px; /* .spectrum-Popover .spectrum-Popover-tip:after */
     background-color: var(
         --spectrum-popover-background-color,
         var(--spectrum-global-color-gray-50)
@@ -147,22 +154,44 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     min-width: 270px;
     padding: 30px 29px;
 }
-:host([placement*='left'][tip]) {
-    /* .spectrum-Popover--left.spectrum-Popover--withTip */
+:host([dir='ltr'][placement*='left'][tip]) {
+    /* [dir=ltr] .spectrum-Popover--left.spectrum-Popover--withTip */
     margin-right: 13px;
+}
+:host([dir='rtl'][placement*='left'][tip]) {
+    /* [dir=rtl] .spectrum-Popover--left.spectrum-Popover--withTip */
+    margin-left: 13px;
+}
+:host([dir='ltr'][placement*='left']) #tip {
+    /* [dir=ltr] .spectrum-Popover--left .spectrum-Popover-tip */
+    right: -16px;
+}
+:host([dir='rtl'][placement*='left']) #tip {
+    /* [dir=rtl] .spectrum-Popover--left .spectrum-Popover-tip */
+    left: -16px;
 }
 :host([placement*='left']) #tip {
     /* .spectrum-Popover--left .spectrum-Popover-tip */
-    right: -16px;
     transform: rotate(-90deg);
 }
-:host([placement*='right'][tip]) {
-    /* .spectrum-Popover--right.spectrum-Popover--withTip */
+:host([dir='ltr'][placement*='right'][tip]) {
+    /* [dir=ltr] .spectrum-Popover--right.spectrum-Popover--withTip */
     margin-left: 13px;
+}
+:host([dir='rtl'][placement*='right'][tip]) {
+    /* [dir=rtl] .spectrum-Popover--right.spectrum-Popover--withTip */
+    margin-right: 13px;
+}
+:host([dir='ltr'][placement*='right']) #tip {
+    /* [dir=ltr] .spectrum-Popover--right .spectrum-Popover-tip */
+    left: -16px;
+}
+:host([dir='rtl'][placement*='right']) #tip {
+    /* [dir=rtl] .spectrum-Popover--right .spectrum-Popover-tip */
+    right: -16px;
 }
 :host([placement*='right']) #tip {
     /* .spectrum-Popover--right .spectrum-Popover-tip */
-    left: -16px;
     transform: rotate(90deg);
 }
 :host([placement*='left']) #tip,
@@ -189,16 +218,37 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Popover--top .spectrum-Popover-tip */
     bottom: -11px;
 }
-:host([placement*='bottom']) #tip,
-:host([placement*='top']) #tip {
-    /* .spectrum-Popover--bottom .spectrum-Popover-tip,
-   * .spectrum-Popover--top .spectrum-Popover-tip */
+:host([dir='ltr'][placement*='bottom']) #tip,
+:host([dir='ltr'][placement*='top']) #tip {
+    /* [dir=ltr] .spectrum-Popover--bottom .spectrum-Popover-tip,
+   * [dir=ltr] .spectrum-Popover--top .spectrum-Popover-tip */
     left: 50%;
+}
+:host([dir='rtl'][placement*='bottom']) #tip,
+:host([dir='rtl'][placement*='top']) #tip {
+    /* [dir=rtl] .spectrum-Popover--bottom .spectrum-Popover-tip,
+   * [dir=rtl] .spectrum-Popover--top .spectrum-Popover-tip */
+    right: 50%;
+}
+:host([dir='ltr'][placement*='bottom']) #tip,
+:host([dir='ltr'][placement*='top']) #tip {
+    /* [dir=ltr] .spectrum-Popover--bottom .spectrum-Popover-tip,
+   * [dir=ltr] .spectrum-Popover--top .spectrum-Popover-tip */
     margin-left: -12px;
 }
-:host([dialog]) .spectrum-Dialog-typeIcon {
-    /* .spectrum-Popover.spectrum-Popover--dialog .spectrum-Dialog-typeIcon */
+:host([dir='rtl'][placement*='bottom']) #tip,
+:host([dir='rtl'][placement*='top']) #tip {
+    /* [dir=rtl] .spectrum-Popover--bottom .spectrum-Popover-tip,
+   * [dir=rtl] .spectrum-Popover--top .spectrum-Popover-tip */
+    margin-right: -12px;
+}
+:host([dir='ltr'][dialog]) .spectrum-Dialog-typeIcon {
+    /* [dir=ltr] .spectrum-Popover.spectrum-Popover--dialog .spectrum-Dialog-typeIcon */
     margin-left: var(--spectrum-global-dimension-size-200);
+}
+:host([dir='rtl'][dialog]) .spectrum-Dialog-typeIcon {
+    /* [dir=rtl] .spectrum-Popover.spectrum-Popover--dialog .spectrum-Dialog-typeIcon */
+    margin-right: var(--spectrum-global-dimension-size-200);
 }
 .spectrum-Dialog-footer,
 .spectrum-Dialog-header,

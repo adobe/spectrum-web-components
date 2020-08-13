@@ -12,18 +12,18 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
     property,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import styles from './rule.css.js';
 
 /**
  * @element sp-rule
  */
-export class Rule extends LitElement {
+export class Rule extends SpectrumElement {
     public static styles: CSSResultArray = [styles];
 
     @property({ type: Boolean, reflect: true })

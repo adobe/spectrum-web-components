@@ -12,12 +12,12 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     TemplateResult,
     property,
     CSSResultArray,
     query,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import '@spectrum-web-components/underlay/sp-underlay.js';
@@ -35,7 +35,7 @@ import { Dialog } from './Dialog.js';
  * @fires confirm - Announces that the "confirm" button has been clicked.
  * @fires close - Announces that the dialog has been closed.
  */
-export class DialogWrapper extends LitElement {
+export class DialogWrapper extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles];
     }
@@ -93,7 +93,7 @@ export class DialogWrapper extends LitElement {
         if (this.shadowRoot) {
             const firstFocusable = this.shadowRoot.querySelector(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            ) as LitElement;
+            ) as SpectrumElement;
             if (firstFocusable) {
                 /* istanbul ignore else */
                 if (firstFocusable.updateComplete) {

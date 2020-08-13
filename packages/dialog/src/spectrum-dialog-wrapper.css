@@ -10,11 +10,46 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([dir='ltr']) .spectrum-Dialog-hero {
+    /* [dir=ltr] .spectrum-Dialog-hero */
+    margin-left: calc(
+        -1 * var(--spectrum-dialog-padding)
+    ); /* [dir=ltr] .spectrum-Dialog-hero */
+    border-top-left-radius: var(
+        --spectrum-dialog-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
+}
+:host([dir='ltr']) .spectrum-Dialog-hero,
+:host([dir='rtl']) .spectrum-Dialog-hero {
+    /* [dir=ltr] .spectrum-Dialog-hero,
+   * [dir=rtl] .spectrum-Dialog-hero */
+    margin-right: calc(-1 * var(--spectrum-dialog-padding));
+}
+:host([dir='rtl']) .spectrum-Dialog-hero {
+    /* [dir=rtl] .spectrum-Dialog-hero */
+    margin-left: calc(
+        -1 * var(--spectrum-dialog-padding)
+    ); /* [dir=rtl] .spectrum-Dialog-hero */
+    border-top-left-radius: var(
+        --spectrum-dialog-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
+}
+:host([dir='ltr']) .spectrum-Dialog-hero,
+:host([dir='rtl']) .spectrum-Dialog-hero {
+    /* [dir=ltr] .spectrum-Dialog-hero,
+   * [dir=rtl] .spectrum-Dialog-hero */
+    border-top-right-radius: var(
+        --spectrum-dialog-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
+}
 :host {
     /* .spectrum-Dialog-wrapper */
     position: fixed;
     left: 0;
-    top: 0;
+    right: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,4 +87,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([responsive]) {
     /* .spectrum-Dialog-wrapper .spectrum-Dialog--responsive */
     margin-top: 0;
+}
+:host([dir='ltr']) .spectrum-Dialog-closeButton {
+    /* [dir=ltr] .spectrum-Dialog-closeButton */
+    right: calc(-1 * var(--spectrum-global-dimension-size-350));
+}
+:host([dir='rtl']) .spectrum-Dialog-closeButton {
+    /* [dir=rtl] .spectrum-Dialog-closeButton */
+    left: calc(-1 * var(--spectrum-global-dimension-size-350));
+}
+:host([dir='ltr']) .spectrum-Dialog-typeIcon {
+    /* [dir=ltr] .spectrum-Dialog-typeIcon */
+    margin-left: var(
+        --spectrum-dialog-icon-margin-left,
+        var(--spectrum-global-dimension-static-size-300)
+    );
+}
+:host([dir='rtl']) .spectrum-Dialog-typeIcon {
+    /* [dir=rtl] .spectrum-Dialog-typeIcon */
+    margin-right: var(
+        --spectrum-dialog-icon-margin-left,
+        var(--spectrum-global-dimension-static-size-300)
+    );
 }
