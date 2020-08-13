@@ -16,7 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { Tab } from './Tab.js';
 import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 

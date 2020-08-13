@@ -17,7 +17,6 @@ const config = {
             name: 'radio',
             host: {
                 selector: '.spectrum-Radio',
-                shadowSelector: '#root',
             },
             focus: '#input',
             attributes: [

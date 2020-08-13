@@ -54,7 +54,7 @@ governing permissions and limitations under the License.
     height: auto;
 }
 
-:host([vertical]) #itemLabel {
+:host([dir][vertical]) slot[name='icon'] + #itemLabel {
     font-size: var(
         --spectrum-tabs-text-size,
         var(--spectrum-alias-font-size-default)

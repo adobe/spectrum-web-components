@@ -98,7 +98,7 @@
         "@open-wc/polyfills-loader": "^0.3.3",
         "@open-wc/testing": "^2.5.17",
         "@open-wc/testing-karma": "^3.4.2",
-        "@spectrum-css/table": "^2.0.6",
+        "@spectrum-css/table": "^3.0.0-beta.3",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",
         "@types/command-line-usage": "^5.0.1",

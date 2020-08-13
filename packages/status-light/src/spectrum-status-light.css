@@ -19,8 +19,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: calc(var(--spectrum-global-dimension-size-65) - 1px) 0
-        calc(var(--spectrum-global-dimension-size-65) + 1px) 0;
+    padding-top: calc(var(--spectrum-global-dimension-size-65) - 1px);
+    padding-bottom: calc(var(--spectrum-global-dimension-size-65) + 1px);
+    padding-left: 0;
+    padding-right: 0;
     box-sizing: border-box;
     font-size: var(
         --spectrum-statuslight-text-size,
@@ -56,11 +58,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-statuslight-text-gap,
             var(--spectrum-global-dimension-size-150)
         )
-        calc(var(--spectrum-global-dimension-size-65) - 1px)
-        var(
-            --spectrum-statuslight-text-gap,
-            var(--spectrum-global-dimension-size-150)
-        );
+        calc(var(--spectrum-global-dimension-size-65) - 1px);
     -ms-high-contrast-adjust: none;
     forced-color-adjust: none;
 }

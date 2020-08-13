@@ -15,9 +15,9 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
-    LitElement,
+    SpectrumElement,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
 import tabItemStyles from './tab.css.js';
@@ -26,7 +26,7 @@ import tabItemStyles from './tab.css.js';
  * @slot icon - The icon that appears on the left of the label
  */
 
-export class Tab extends FocusVisiblePolyfillMixin(LitElement) {
+export class Tab extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [tabItemStyles];
     }

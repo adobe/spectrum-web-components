@@ -12,18 +12,18 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
     property,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import styles from './underlay.css.js';
 
 /**
  * @element sp-underlay
  */
-export class Underlay extends LitElement {
+export class Underlay extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles];
     }

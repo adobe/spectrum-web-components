@@ -47,7 +47,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/icon": "^2.0.5"
+        "@spectrum-css/icon": "^2.1.1"
     },
     "dependencies": {
         "@spectrum-web-components/iconset": "^0.2.0",

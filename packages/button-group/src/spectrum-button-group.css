@@ -14,38 +14,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ButtonGroup */
     display: flex;
 }
-::slotted(sp-action-button),
-::slotted(sp-button),
-::slotted(sp-tool) {
-    /* .spectrum-ButtonGroup .spectrum-ActionButton,
-   * .spectrum-ButtonGroup .spectrum-Button,
-   * .spectrum-ButtonGroup .spectrum-Tool */
+::slotted(*) {
+    /* .spectrum-ButtonGroup .spectrum-ButtonGroup-item */
     flex-shrink: 0;
 }
-:host > ::slotted(sp-rule[vertical]) {
-    /* .spectrum-ButtonGroup>.spectrum-Rule--vertical */
-    height: auto;
-    align-self: stretch;
-}
-::slotted(sp-button:not(:first-of-type)) {
-    /* .spectrum-ButtonGroup .spectrum-Button+.spectrum-Button */
+:host([dir='ltr']) ::slotted(*:not(:first-of-type)) {
+    /* [dir=ltr] .spectrum-ButtonGroup .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
     margin-left: var(
         --spectrum-buttongroup-button-gap-x,
         var(--spectrum-global-dimension-static-size-200)
     );
 }
-::slotted(sp-action-button:not(:first-of-type)) {
-    /* .spectrum-ButtonGroup .spectrum-ActionButton+.spectrum-ActionButton */
-    margin-left: var(
-        --spectrum-actionbuttongroup-text-button-gap-x,
-        var(--spectrum-global-dimension-size-100)
-    );
-}
-::slotted(sp-tool:not(:first-of-type)) {
-    /* .spectrum-ButtonGroup .spectrum-Tool+.spectrum-Tool */
-    margin-left: var(
-        --spectrum-toolgroup-text-button-gap-x,
-        var(--spectrum-global-dimension-size-100)
+:host([dir='rtl']) ::slotted(*:not(:first-of-type)) {
+    /* [dir=rtl] .spectrum-ButtonGroup .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
+    margin-right: var(
+        --spectrum-buttongroup-button-gap-x,
+        var(--spectrum-global-dimension-static-size-200)
     );
 }
 :host([vertical]) {
@@ -53,27 +37,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: inline-flex;
     flex-direction: column;
 }
-:host([vertical]) ::slotted(sp-button:not(:first-of-type)) {
-    /* .spectrum-ButtonGroup--vertical .spectrum-Button+.spectrum-Button */
+:host([dir='ltr'][vertical]) ::slotted(*:not(:first-of-type)) {
+    /* [dir=ltr] .spectrum-ButtonGroup--vertical .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
+    margin-left: 0;
+}
+:host([dir='rtl'][vertical]) ::slotted(*:not(:first-of-type)) {
+    /* [dir=rtl] .spectrum-ButtonGroup--vertical .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
+    margin-right: 0;
+}
+:host([vertical]) ::slotted(*:not(:first-of-type)) {
+    /* .spectrum-ButtonGroup--vertical .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
     margin-top: var(
         --spectrum-buttongroup-button-gap-y,
         var(--spectrum-global-dimension-static-size-200)
     );
-    margin-left: 0;
-}
-:host([vertical]) ::slotted(sp-action-button:not(:first-of-type)) {
-    /* .spectrum-ButtonGroup--vertical .spectrum-ActionButton+.spectrum-ActionButton */
-    margin-top: var(
-        --spectrum-actionbuttongroup-text-button-gap-y,
-        var(--spectrum-global-dimension-size-100)
-    );
-    margin-left: 0;
-}
-:host([vertical]) ::slotted(sp-tool:not(:first-of-type)) {
-    /* .spectrum-ButtonGroup--vertical .spectrum-Tool+.spectrum-Tool */
-    margin-top: var(
-        --spectrum-toolgroup-text-button-gap-y,
-        var(--spectrum-global-dimension-size-100)
-    );
-    margin-left: 0;
 }
