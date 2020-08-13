@@ -75,7 +75,10 @@ describe('BarLoader', () => {
     });
     it('returns to indeterminate', async () => {
         const el = await fixture<BarLoader>(html`
-            <sp-bar-loader progress="50"></sp-bar-loader>
+            <sp-bar-loader
+                progress="50"
+                label="Sometimes indeterminate"
+            ></sp-bar-loader>
         `);
 
         await elementUpdated(el);

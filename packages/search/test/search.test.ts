@@ -88,6 +88,53 @@ describe('Search', () => {
         expect(changeSpy.calledOnce, 'one change').to.be.true;
         expect(changeSpy.calledWith(''), 'was blank').to.be.true;
     });
+    it('can be cleared via "Escape"', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const handleInput = (event: Event): void => {
+            const target = event.target as HTMLInputElement;
+            inputSpy(target.value);
+        };
+        const handleChange = (event: Event): void => {
+            const target = event.target as HTMLInputElement;
+            changeSpy(target.value);
+        };
+        const el = await litFixture<Search>(
+            html`
+                <sp-search
+                    value="Test"
+                    @change=${handleChange}
+                    @input=${handleInput}
+                ></sp-search>
+            `
+        );
+
+        await elementUpdated(el);
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
+
+        expect(el.value).to.equal('Test');
+        expect(el).shadowDom.to.equalSnapshot();
+
+        inputSpy.resetHistory();
+        changeSpy.resetHistory();
+        el.focusElement.dispatchEvent(
+            new KeyboardEvent('keydown', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                key: 'Escape',
+                code: 'Escape',
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('');
+        expect(inputSpy.calledOnce, 'one input').to.be.true;
+        expect(inputSpy.calledWith(''), 'was blank').to.be.true;
+        expect(changeSpy.calledOnce, 'one change').to.be.true;
+        expect(changeSpy.calledWith(''), 'was blank').to.be.true;
+    });
     it('cannot be multiline', async () => {
         const el = await litFixture<Search>(
             html`
