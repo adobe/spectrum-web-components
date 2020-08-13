@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
     property,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { nothing } from 'lit-html';
 
 import {
@@ -30,7 +30,7 @@ import popoverStyles from './popover.css.js';
  * @attr {Boolean} dialog - Adds some padding to the popover
  */
 
-export class Popover extends LitElement {
+export class Popover extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [popoverStyles];
     }

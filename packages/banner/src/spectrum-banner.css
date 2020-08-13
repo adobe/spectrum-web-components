@@ -42,11 +42,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Banner-header */
     font-weight: 700;
 }
+:host([dir='ltr'][corner]) {
+    /* [dir=ltr] .spectrum-Banner--corner */
+    right: -10px;
+}
+:host([dir='rtl'][corner]) {
+    /* [dir=rtl] .spectrum-Banner--corner */
+    left: -10px;
+}
 :host([corner]) {
     /* .spectrum-Banner--corner */
     position: absolute;
     top: -10px;
-    right: -10px;
 }
 :host([type='info']) {
     /* .spectrum-Banner--info */

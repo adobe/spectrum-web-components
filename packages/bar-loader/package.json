@@ -51,9 +51,10 @@
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/barloader": "^2.0.0"
+        "@spectrum-css/barloader": "^3.0.0-beta.2"
     },
     "dependencies": {
+        "@spectrum-web-components/base": "^0.0.1",
         "tslib": "^2.0.0"
     }
 }

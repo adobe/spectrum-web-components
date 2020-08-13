@@ -16,3 +16,45 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin: 0;
     padding: 0;
 }
+:host([dir='ltr']) .spectrum-SideNav-itemLink:focus-visible:before {
+    /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
+    left: 0;
+}
+:host([dir='ltr']) .spectrum-SideNav-itemLink:focus-visible:before,
+:host([dir='rtl']) .spectrum-SideNav-itemLink:focus-visible:before {
+    /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before,
+   * [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
+    right: 0;
+}
+:host([dir='rtl']) .spectrum-SideNav-itemLink:focus-visible:before {
+    /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
+    left: 0;
+}
+:host([dir='ltr']) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon {
+    /* [dir=ltr] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
+    margin-right: var(
+        --spectrum-sidenav-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+:host([dir='rtl']) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon {
+    /* [dir=rtl] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
+    margin-left: var(
+        --spectrum-sidenav-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+:host([dir='ltr']) .spectrum-SideNav-heading {
+    /* [dir=ltr] .spectrum-SideNav-heading */
+    margin-right: 0;
+}
+:host([dir='ltr']) .spectrum-SideNav-heading,
+:host([dir='rtl']) .spectrum-SideNav-heading {
+    /* [dir=ltr] .spectrum-SideNav-heading,
+   * [dir=rtl] .spectrum-SideNav-heading */
+    margin-left: 0;
+}
+:host([dir='rtl']) .spectrum-SideNav-heading {
+    /* [dir=rtl] .spectrum-SideNav-heading */
+    margin-right: 0;
+}

@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
+import {
+    html,
+    SpectrumElement,
+    CSSResultArray,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 
 import { MenuItem } from './MenuItem.js';
 import menuStyles from './menu.css.js';
@@ -24,7 +29,7 @@ export interface MenuQueryRoleEventDetail {
  * @element sp-menu
  *
  */
-export class Menu extends LitElement {
+export class Menu extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [menuStyles];
     }

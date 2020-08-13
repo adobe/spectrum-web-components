@@ -45,6 +45,13 @@ const config = {
                     selector: '.spectrum-Tabs-item',
                 },
             ],
+            complexSelectors: [
+                {
+                    replacement: '::slotted(sp-tab:not(:first-child))',
+                    selector:
+                        '.spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator)',
+                },
+            ],
             exclude: [/^\.spectrum-Tabs-item/],
         },
         {
@@ -78,6 +85,7 @@ const config = {
                     selector: '.spectrum-Icon',
                 },
             ],
+            exclude: [/.spectrum-Tabs(?!-item)/],
         },
     ],
 };

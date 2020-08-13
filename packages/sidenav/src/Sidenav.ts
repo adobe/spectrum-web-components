@@ -16,7 +16,7 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import sidenavStyles from './sidenav.css.js';
 import { Focusable, getActiveElement } from '@spectrum-web-components/shared';

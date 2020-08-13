@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     property,
     CSSResultArray,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import bannerStyles from './banner.css.js';
 
@@ -29,7 +29,7 @@ import bannerStyles from './banner.css.js';
  * @slot header - Primary message of the banner.
  * @slot content - Secondary message of the banner. Used to provide a description.
  */
-export class Banner extends LitElement {
+export class Banner extends SpectrumElement {
     @property({ reflect: true, type: String })
     public type: 'info' | 'warning' | 'error' = 'info';
 

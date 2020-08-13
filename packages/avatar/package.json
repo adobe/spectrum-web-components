@@ -47,7 +47,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/avatar": "^2.0.5"
+        "@spectrum-css/avatar": "^3.0.0-beta.2"
     },
     "dependencies": {
         "lit-element": "^2.1.0",

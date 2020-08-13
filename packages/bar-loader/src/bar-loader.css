@@ -16,3 +16,7 @@ governing permissions and limitations under the License.
     width: 100%;
     transform-origin: left;
 }
+
+:host([dir='rtl']) .fill {
+    transform-origin: right;
+}

@@ -16,21 +16,53 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: relative;
     z-index: 0;
     margin: 0;
-    padding: 0
-        var(
-            --spectrum-tabs-focus-ring-padding-x,
-            var(--spectrum-global-dimension-size-100)
-        );
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: var(
+        --spectrum-tabs-focus-ring-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+    padding-right: var(
+        --spectrum-tabs-focus-ring-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
     vertical-align: top; /* .spectrum-Tabs */
     border-bottom-color: var(
         --spectrum-tabs-rule-color,
         var(--spectrum-global-color-gray-200)
     );
 }
+:host([dir='ltr']) ::slotted(*):before {
+    /* [dir=ltr] .spectrum-Tabs-item:before */
+    left: calc(
+        -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
+    );
+}
+:host([dir='ltr']) ::slotted(*):before,
+:host([dir='rtl']) ::slotted(*):before {
+    /* [dir=ltr] .spectrum-Tabs-item:before,
+   * [dir=rtl] .spectrum-Tabs-item:before */
+    right: calc(
+        -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
+    );
+}
+:host([dir='rtl']) ::slotted(*):before {
+    /* [dir=rtl] .spectrum-Tabs-item:before */
+    left: calc(
+        -1 * var(--spectrum-tabs-focus-ring-padding-x, var(--spectrum-global-dimension-size-100))
+    );
+}
+:host([dir='ltr']) #selectionIndicator {
+    /* [dir=ltr] .spectrum-Tabs-selectionIndicator */
+    left: 0;
+}
+:host([dir='rtl']) #selectionIndicator {
+    /* [dir=rtl] .spectrum-Tabs-selectionIndicator */
+    right: 0;
+}
 #selectionIndicator {
     /* .spectrum-Tabs-selectionIndicator */
     position: absolute;
-    left: 0;
     z-index: 0;
     transition: transform
         var(
@@ -85,9 +117,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
     vertical-align: top;
 }
-:host([direction='horizontal']) slot + :not(#selectionIndicator) {
-    /* .spectrum-Tabs--horizontal .spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator) */
+:host([dir='ltr'][direction='horizontal']) ::slotted(sp-tab:not(:first-child)) {
+    /* [dir=ltr] .spectrum-Tabs--horizontal .spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator) */
     margin-left: var(
+        --spectrum-tabs-item-gap,
+        var(--spectrum-global-dimension-size-300)
+    );
+}
+:host([dir='rtl'][direction='horizontal']) ::slotted(sp-tab:not(:first-child)) {
+    /* [dir=rtl] .spectrum-Tabs--horizontal .spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator) */
+    margin-right: var(
         --spectrum-tabs-item-gap,
         var(--spectrum-global-dimension-size-300)
     );
@@ -127,32 +166,38 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-color-transparent)
     );
 }
-:host([direction='vertical']) {
-    /* .spectrum-Tabs--vertical */
-    display: inline-flex;
-    flex-direction: column;
-    padding: 0;
+:host([dir='ltr'][direction='vertical']) {
+    /* [dir=ltr] .spectrum-Tabs--vertical */
     border-left: var(
             --spectrum-tabs-vertical-rule-width,
             var(--spectrum-alias-border-size-thick)
         )
-        solid; /* .spectrum-Tabs--vertical */
+        solid; /* [dir=ltr] .spectrum-Tabs--vertical */
     border-left-color: var(
         --spectrum-tabs-vertical-rule-color,
         var(--spectrum-global-color-gray-200)
     );
 }
-:host([direction='vertical']) ::slotted(*) {
-    /* .spectrum-Tabs--vertical .spectrum-Tabs-item */
-    height: var(
-        --spectrum-tabs-vertical-item-height,
-        var(--spectrum-global-dimension-size-550)
+:host([dir='rtl'][direction='vertical']) {
+    /* [dir=rtl] .spectrum-Tabs--vertical */
+    border-right: var(
+            --spectrum-tabs-vertical-rule-width,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid; /* [dir=rtl] .spectrum-Tabs--vertical */
+    border-right-color: var(
+        --spectrum-tabs-vertical-rule-color,
+        var(--spectrum-global-color-gray-200)
     );
-    padding: 0
-        var(
-            --spectrum-tabs-focus-ring-padding-x,
-            var(--spectrum-global-dimension-size-100)
-        );
+}
+:host([direction='vertical']) {
+    /* .spectrum-Tabs--vertical */
+    display: inline-flex;
+    flex-direction: column;
+    padding: 0;
+}
+:host([dir='ltr'][direction='vertical']) ::slotted(*) {
+    /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item */
     margin-left: calc(
         var(
                 --spectrum-tabs-vertical-item-margin-left,
@@ -163,19 +208,63 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-100)
             )
     );
+}
+:host([dir='rtl'][direction='vertical']) ::slotted(*) {
+    /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item */
+    margin-right: calc(
+        var(
+                --spectrum-tabs-vertical-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) -
+            var(
+                --spectrum-tabs-focus-ring-padding-x,
+                var(--spectrum-global-dimension-size-100)
+            )
+    );
+}
+:host([direction='vertical']) ::slotted(*) {
+    /* .spectrum-Tabs--vertical .spectrum-Tabs-item */
+    height: var(
+        --spectrum-tabs-vertical-item-height,
+        var(--spectrum-global-dimension-size-550)
+    );
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: var(
+        --spectrum-tabs-focus-ring-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+    padding-right: var(
+        --spectrum-tabs-focus-ring-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
     margin-bottom: var(
         --spectrum-tabs-vertical-item-gap,
         var(--spectrum-global-dimension-size-50)
     );
 }
-:host([direction='vertical']) ::slotted(*):before {
-    /* .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+:host([dir='ltr'][direction='vertical']) ::slotted(*):before {
+    /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
     left: calc(
         -1 * var(--spectrum-tabs-focus-ring-size, var(--spectrum-alias-border-size-thick))
     );
+}
+:host([dir='ltr'][direction='vertical']) ::slotted(*):before,
+:host([dir='rtl'][direction='vertical']) ::slotted(*):before {
+    /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before,
+   * [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
     right: calc(
         -1 * var(--spectrum-tabs-focus-ring-size, var(--spectrum-alias-border-size-thick))
     );
+}
+:host([dir='rtl'][direction='vertical']) ::slotted(*):before {
+    /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+    left: calc(
+        -1 * var(--spectrum-tabs-focus-ring-size, var(--spectrum-alias-border-size-thick))
+    );
+}
+:host([direction='vertical']) ::slotted(*):before {
+    /* .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
     margin-top: calc(
         var(
                 --spectrum-tabs-focus-ring-height,
@@ -199,16 +288,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-400)
     );
 }
+:host([dir='ltr'][direction='vertical']) #selectionIndicator {
+    /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+    left: 0; /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+    left: calc(
+        -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
+    );
+}
+:host([dir='rtl'][direction='vertical']) #selectionIndicator {
+    /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+    right: 0; /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+    right: calc(
+        -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
+    );
+}
 :host([direction='vertical']) #selectionIndicator {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     position: absolute;
-    left: 0;
     width: var(
         --spectrum-tabs-vertical-rule-width,
         var(--spectrum-alias-border-size-thick)
-    );
-    left: calc(
-        -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
     );
 }
 :host([quiet]) #selectionIndicator {
@@ -218,11 +317,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([direction='vertical'][compact]),
-:host([direction='vertical'][quiet]) {
-    /* .spectrum-Tabs--vertical.spectrum-Tabs--compact,
-   * .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
+:host([dir='ltr'][direction='vertical'][compact]),
+:host([dir='ltr'][direction='vertical'][quiet]) {
+    /* [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--compact,
+   * [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
     border-left-color: var(
+        --spectrum-tabs-quiet-vertical-rule-color,
+        var(--spectrum-alias-border-color-transparent)
+    );
+}
+:host([dir='rtl'][direction='vertical'][compact]),
+:host([dir='rtl'][direction='vertical'][quiet]) {
+    /* [dir=rtl] .spectrum-Tabs--vertical.spectrum-Tabs--compact,
+   * [dir=rtl] .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
+    border-right-color: var(
         --spectrum-tabs-quiet-vertical-rule-color,
         var(--spectrum-alias-border-color-transparent)
     );

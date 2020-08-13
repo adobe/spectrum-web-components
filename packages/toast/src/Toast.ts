@@ -14,10 +14,10 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
-    LitElement,
+    SpectrumElement,
     property,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import {
@@ -48,7 +48,7 @@ export type ToastVariants =
  * @slot - The toast content
  */
 
-export class Toast extends LitElement {
+export class Toast extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [toastStyles];
     }

@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement, CSSResultArray, TemplateResult } from 'lit-element';
+import {
+    html,
+    SpectrumElement,
+    CSSResultArray,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 
 import menuGroupStyles from './menu-group.css.js';
 
@@ -21,7 +26,7 @@ import menuGroupStyles from './menu-group.css.js';
  * @slot header - headline of the menu group
  * @slot - menu items to be listed in the group
  */
-export class MenuGroup extends LitElement {
+export class MenuGroup extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [menuGroupStyles];
     }
