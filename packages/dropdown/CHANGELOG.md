@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.6.4...@spectrum-web-components/dropdown@0.7.0) (2020-08-13)
+
+### Bug Fixes
+
+-   **overlay:** ensure overlay addition occurs after closing previous ([7d2b102](https://github.com/adobe/spectrum-web-components/commit/7d2b102f30731513639582fed8ed0e1b46d569cf))
+
+### Features
+
+-   **overlay:** move entire package behind dynamic import by default ([9b0a74d](https://github.com/adobe/spectrum-web-components/commit/9b0a74de1f32ccd8cde6cabe4c06f990064f11ae))
+
 ## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.6.3...@spectrum-web-components/dropdown@0.6.4) (2020-08-05)
 
 **Note:** Version bump only for package @spectrum-web-components/dropdown

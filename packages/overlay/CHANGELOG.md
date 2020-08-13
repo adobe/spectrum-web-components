@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.4.3...@spectrum-web-components/overlay@0.5.0) (2020-08-13)
+
+### Bug Fixes
+
+-   **overlay:** enforce the full frame ([63628e9](https://github.com/adobe/spectrum-web-components/commit/63628e93de2daec632025f2659a86ff18e487a8e))
+-   **overlay:** ensure overlay addition occurs after closing previous ([7d2b102](https://github.com/adobe/spectrum-web-components/commit/7d2b102f30731513639582fed8ed0e1b46d569cf))
+
+### Features
+
+-   **overlay:** move entire package behind dynamic import by default ([9b0a74d](https://github.com/adobe/spectrum-web-components/commit/9b0a74de1f32ccd8cde6cabe4c06f990064f11ae))
+
 ## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.4.2...@spectrum-web-components/overlay@0.4.3) (2020-08-05)
 
 ### Bug Fixes

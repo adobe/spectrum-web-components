@@ -1,7 +1,7 @@
 {
   "name": "example-project-rollup",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An example project that uses the web components and gives an example of how to bundle them minimally with rollup.",
   "main": "index.js",
   "scripts": {
@@ -18,23 +18,23 @@
     "tsc:watch": "tsc --watch"
   },
   "devDependencies": {
-    "eslint": "^6.1.0",
+    "@open-wc/building-rollup": "^1.6.3",
     "@open-wc/eslint-config": "^2.1.0",
+    "@types/node": "13.11.1",
     "@typescript-eslint/eslint-plugin": "^2.20.0",
     "@typescript-eslint/parser": "^2.20.0",
-    "prettier": "^2.0.4",
+    "concurrently": "^5.1.0",
+    "es-dev-server": "^1.5.0",
+    "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.11.0",
-    "@open-wc/building-rollup": "^1.6.3",
+    "prettier": "^2.0.4",
     "rimraf": "^2.6.3",
     "rollup": "^2.3.4",
-    "@types/node": "13.11.1",
-    "es-dev-server": "^1.5.0",
-    "typescript": "^3.9.7",
-    "concurrently": "^5.1.0",
-    "tslib": "^1.11.0",
-    "rollup-plugin-visualizer": "^4.0.4",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-styles": "^3.10.0",
-    "rollup-plugin-commonjs": "^10.1.0"
+    "rollup-plugin-visualizer": "^4.0.4",
+    "tslib": "^1.11.0",
+    "typescript": "^3.9.7"
   },
   "prettier": {
     "singleQuote": true,
@@ -44,8 +44,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@spectrum-web-components/button": "^0.8.3",
-    "@spectrum-web-components/dropdown": "^0.6.3",
-    "@spectrum-web-components/menu": "^0.3.0",
+    "@spectrum-web-components/dropdown": "^0.7.0",
+    "@spectrum-web-components/menu": "^0.3.1",
     "@spectrum-web-components/styles": "^0.6.0"
   }
 }

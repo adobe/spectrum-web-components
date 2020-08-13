@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.3.0...@spectrum-web-components/menu@0.3.1) (2020-08-13)
+
+### Bug Fixes
+
+-   **menu:** include all direct dependencies ([aa7327f](https://github.com/adobe/spectrum-web-components/commit/aa7327f748b829fa6f6eec2412ac104e9dbeff76))
+-   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.2.7...@spectrum-web-components/menu@0.3.0) (2020-07-17)
 
 ### Features
