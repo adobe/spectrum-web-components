@@ -65,6 +65,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@spectrum-web-components/base": "^0.0.1",
         "@spectrum-web-components/styles": "^0.6.0",
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",

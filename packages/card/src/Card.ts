@@ -239,6 +239,5 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
         super.firstUpdated(changes);
         this.setAttribute('role', 'figure');
         this.tabIndex = 0;
-        this.dir = 'ltr';
     }
 }

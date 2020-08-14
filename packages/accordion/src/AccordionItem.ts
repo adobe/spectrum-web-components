@@ -43,10 +43,6 @@ export class AccordionItem extends Focusable {
     public disabled = false;
 
     public get focusElement(): HTMLElement {
-        /* istanbul ignore if */
-        if (!this.shadowRoot) {
-            return this;
-        }
         return this.shadowRoot.querySelector('#header') as HTMLElement;
     }
 
