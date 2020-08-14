@@ -39,13 +39,15 @@ commands:
                 type: string
             regression_scale:
                 type: string
+            regression_dir:
+                type: string
         steps:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-072ce0152e91312b804cc2395b652ffe941a3640
-                      - v1-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-
-            - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >>
+                      - v1-golden-images-b0b32fab6ca52c8764563bc4376dec5564420b15-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      - v1-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
             - run:
                   when: on_fail
                   command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci && exit 1
@@ -54,12 +56,12 @@ commands:
                   name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline/ci
-                  key: v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ .Revision }}
+                  key: v1-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
                       - test/visual/screenshots-baseline/ci
-                  key: v1-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ epoch }}
+                  key: v1-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - store_artifacts:
                   path: test/visual/screenshots-current
 
@@ -94,7 +96,7 @@ jobs:
                       - project/documentation/dist
                       - .cache/ms-playwright
 
-    visual-lightest-medium:
+    visual-lightest-medium-ltr:
         executor: node
 
         steps:
@@ -102,8 +104,19 @@ jobs:
             - run-regressions:
                   regression_color: lightest
                   regression_scale: medium
+                  regression_dir: ltr
 
-    visual-lightest-large:
+    visual-lightest-medium-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: lightest
+                  regression_scale: medium
+                  regression_dir: rtl
+
+    visual-lightest-large-ltr:
         executor: node
 
         steps:
@@ -111,8 +124,19 @@ jobs:
             - run-regressions:
                   regression_color: lightest
                   regression_scale: large
+                  regression_dir: ltr
 
-    visual-light-medium:
+    visual-lightest-large-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: lightest
+                  regression_scale: large
+                  regression_dir: rtl
+
+    visual-light-medium-ltr:
         executor: node
 
         steps:
@@ -120,8 +144,19 @@ jobs:
             - run-regressions:
                   regression_color: light
                   regression_scale: medium
+                  regression_dir: ltr
 
-    visual-light-large:
+    visual-light-medium-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: light
+                  regression_scale: medium
+                  regression_dir: rtl
+
+    visual-light-large-ltr:
         executor: node
 
         steps:
@@ -129,8 +164,19 @@ jobs:
             - run-regressions:
                   regression_color: light
                   regression_scale: large
+                  regression_dir: ltr
 
-    visual-dark-medium:
+    visual-light-large-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: light
+                  regression_scale: large
+                  regression_dir: rtl
+
+    visual-dark-medium-ltr:
         executor: node
 
         steps:
@@ -138,8 +184,19 @@ jobs:
             - run-regressions:
                   regression_color: dark
                   regression_scale: medium
+                  regression_dir: ltr
 
-    visual-dark-large:
+    visual-dark-medium-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: dark
+                  regression_scale: medium
+                  regression_dir: rtl
+
+    visual-dark-large-ltr:
         executor: node
 
         steps:
@@ -147,8 +204,19 @@ jobs:
             - run-regressions:
                   regression_color: dark
                   regression_scale: large
+                  regression_dir: ltr
 
-    visual-darkest-medium:
+    visual-dark-large-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: dark
+                  regression_scale: large
+                  regression_dir: rtl
+
+    visual-darkest-medium-ltr:
         executor: node
 
         steps:
@@ -156,8 +224,19 @@ jobs:
             - run-regressions:
                   regression_color: darkest
                   regression_scale: medium
+                  regression_dir: ltr
 
-    visual-darkest-large:
+    visual-darkest-medium-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: darkest
+                  regression_scale: medium
+                  regression_dir: rtl
+
+    visual-darkest-large-ltr:
         executor: node
 
         steps:
@@ -165,6 +244,17 @@ jobs:
             - run-regressions:
                   regression_color: darkest
                   regression_scale: large
+                  regression_dir: ltr
+
+    visual-darkest-large-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_color: darkest
+                  regression_scale: large
+                  regression_dir: rtl
 
     publish-docs:
         executor: node
@@ -181,28 +271,52 @@ workflows:
     build:
         jobs:
             - build
-            - visual-lightest-medium:
+            - visual-lightest-medium-ltr:
                   requires:
                       - build
-            - visual-lightest-large:
+            - visual-lightest-large-ltr:
                   requires:
                       - build
-            - visual-light-medium:
+            - visual-light-medium-ltr:
                   requires:
                       - build
-            - visual-light-large:
+            - visual-light-large-ltr:
                   requires:
                       - build
-            - visual-dark-medium:
+            - visual-dark-medium-ltr:
                   requires:
                       - build
-            - visual-dark-large:
+            - visual-dark-large-ltr:
                   requires:
                       - build
-            - visual-darkest-medium:
+            - visual-darkest-medium-ltr:
                   requires:
                       - build
-            - visual-darkest-large:
+            - visual-darkest-large-ltr:
+                  requires:
+                      - build
+            - visual-lightest-medium-rtl:
+                  requires:
+                      - build
+            - visual-lightest-large-rtl:
+                  requires:
+                      - build
+            - visual-light-medium-rtl:
+                  requires:
+                      - build
+            - visual-light-large-rtl:
+                  requires:
+                      - build
+            - visual-dark-medium-rtl:
+                  requires:
+                      - build
+            - visual-dark-large-rtl:
+                  requires:
+                      - build
+            - visual-darkest-medium-rtl:
+                  requires:
+                      - build
+            - visual-darkest-large-rtl:
                   requires:
                       - build
             - publish-docs:
