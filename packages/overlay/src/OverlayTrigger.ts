@@ -176,26 +176,28 @@ export class OverlayTrigger extends LitElement {
         }
     }
 
-    private onClickSlotChange(event: Event): void {
+    private onClickSlotChange(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
         const content = this.extractSlotContentFromEvent(event);
         this.clickContent = content;
     }
 
-    private onHoverSlotChange(event: Event): void {
+    private onHoverSlotChange(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
         const content = this.extractSlotContentFromEvent(event);
         this.hoverContent = content;
     }
 
-    private onTargetSlotChange(event: Event): void {
+    private onTargetSlotChange(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
         const content = this.extractSlotContentFromEvent(event);
         this.targetContent = content;
     }
 
     private extractSlotContentFromEvent(event: Event): HTMLElement | undefined {
-        /* c8 ignore next 3 */
-        if (!event.target) {
-            return;
-        }
         const slot = event.target as HTMLSlotElement;
         const nodes = slot.assignedNodes({ flatten: true });
         return nodes.find((node) => node instanceof HTMLElement) as HTMLElement;

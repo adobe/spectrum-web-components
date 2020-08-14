@@ -43,10 +43,6 @@ export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {
     private buttonElement!: HTMLButtonElement;
 
     public get focusElement(): HTMLElement {
-        /* c8 ignore next 3 */
-        if (!this.shadowRoot) {
-            return this;
-        }
         return this.buttonElement;
     }
 

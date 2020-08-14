@@ -19,12 +19,12 @@ import {
 import { Scale, Color } from '@spectrum-web-components/theme';
 import {
     html,
-    LitElement,
+    SpectrumElement,
     TemplateResult,
     CSSResultArray,
     property,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import styles from './active-overlay.css.js';
 
@@ -102,7 +102,7 @@ const stateTransition = (
     return stateMachine.states[state].on[event] || state;
 };
 
-export class ActiveOverlay extends LitElement {
+export class ActiveOverlay extends SpectrumElement {
     public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;
     public trigger!: HTMLElement;
@@ -213,7 +213,7 @@ export class ActiveOverlay extends LitElement {
         this.stealOverlayContent(this.overlayContent);
 
         /* c8 ignore next */
-        if (!this.overlayContent || !this.trigger || !this.shadowRoot) return;
+        if (!this.overlayContent || !this.trigger) return;
 
         if (this.placement && this.placement !== 'none') {
             this.popper = createPopper(this.trigger, this, {
@@ -443,13 +443,7 @@ export class ActiveOverlay extends LitElement {
     public applyContentAnimation(
         animation: ContentAnimation
     ): Promise<boolean> {
-        return new Promise((resolve, reject): void => {
-            /* c8 ignore next 4 */
-            if (!this.shadowRoot) {
-                reject();
-                return;
-            }
-
+        return new Promise((resolve): void => {
             const contents = this.shadowRoot.querySelector(
                 '#contents'
             ) as HTMLElement;

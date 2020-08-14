@@ -63,7 +63,7 @@ export class Popover extends SpectrumElement {
 
     public onOverlayQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
         /* c8 ignore next */
-        if (!event.target || !this.shadowRoot) return;
+        if (!event.target) return;
 
         const target = event.target as Node;
         /* c8 ignore next */
