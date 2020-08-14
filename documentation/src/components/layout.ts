@@ -14,9 +14,9 @@ import {
     html,
     CSSResultArray,
     property,
-    LitElement,
+    SpectrumElement,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import './side-nav.js';
 import layoutStyles from './layout.css';
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -43,7 +43,7 @@ const DEFAULT_SCALE = (window.localStorage
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
-export class LayoutElement extends LitElement {
+export class LayoutElement extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [layoutStyles];
     }
@@ -78,6 +78,11 @@ export class LayoutElement extends LitElement {
 
     private updateScale(event: Event) {
         this.scale = (event.target as Dropdown).value as Scale;
+    }
+
+    private updateDirection(event: Event) {
+        const dir = (event.target as Dropdown).value;
+        document.documentElement.dir = dir === 'rtl' ? dir : 'ltr';
     }
 
     // TODO: remove this manual link relationship when
@@ -193,6 +198,25 @@ export class LayoutElement extends LitElement {
                                         </sp-menu-item>
                                         <sp-menu-item value="large">
                                             Large
+                                        </sp-menu-item>
+                                    </sp-menu>
+                                </sp-dropdown>
+                                <label @click=${this.onClickLabel}>
+                                    Direction
+                                </label>
+                                <sp-dropdown
+                                    label="Direction"
+                                    placement="bottom"
+                                    quiet
+                                    value=${this.dir}
+                                    @change=${this.updateDirection}
+                                >
+                                    <sp-menu>
+                                        <sp-menu-item value="ltr">
+                                            LTR
+                                        </sp-menu-item>
+                                        <sp-menu-item value="rtl">
+                                            RTL
                                         </sp-menu-item>
                                     </sp-menu>
                                 </sp-dropdown>
