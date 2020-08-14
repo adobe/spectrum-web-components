@@ -40,7 +40,7 @@ export abstract class IconsetSVG extends Iconset {
     public async applyIconToElement(
         el: HTMLElement,
         icon: string,
-        size: string,
+        _size: string,
         label: string
     ): Promise<void> {
         await this.updateComplete;

@@ -124,6 +124,7 @@ export class OverlayStack {
                 return item;
             }
         }
+        return undefined;
     }
 
     private addEventListeners(): void {

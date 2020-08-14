@@ -1,21 +1,23 @@
 {
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./packages",
         "declaration": true,
         "experimentalDecorators": true,
+        "importHelpers": true,
+        "inlineSources": true,
+        "lib": ["es2017", "dom", "dom.iterable"],
         "module": "esNext",
         "moduleResolution": "node",
-        "rootDir": ".",
-        "sourceMap": true,
-        "inlineSources": true,
-        "strict": true,
+        "noImplicitReturns": true,
+        "noUnusedParameters": true,
         "noUnusedLocals": true,
-        "target": "es2017",
+        "rootDir": ".",
         "skipLibCheck": true,
-        "importHelpers": true,
-        "types": ["chai", "sinon", "karma-chai", "webpack-env", "node"],
-        "lib": ["es2017", "dom", "dom.iterable"],
-        "allowSyntheticDefaultImports": true,
-        "baseUrl": "./packages"
+        "strict": true,
+        "sourceMap": true,
+        "target": "es2017",
+        "types": ["chai", "sinon", "karma-chai", "webpack-env", "node"]
     },
     "include": ["./global.d.ts"]
 }

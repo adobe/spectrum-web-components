@@ -223,7 +223,7 @@ export class Slider extends Focusable {
         return html`
             <div class="ticks">
                 ${ticks.map(
-                    (tick, i) => html`
+                    (_tick, i) => html`
                         <div class="tick">
                             ${this.tickLabels
                                 ? html`
