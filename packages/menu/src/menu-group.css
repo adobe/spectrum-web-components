@@ -11,3 +11,20 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-menu-sectionHeading.css';
+
+/**
+ * The following corrects for positioning of the header when changing the
+ * direction of the content while https://github.com/adobe/spectrum-css/issues/794
+ * persists at the Spectrum CSS level.
+ */
+:host([dir='ltr']) .header {
+    /* .spectrum-Menu-sectionHeading */
+    padding: 0 var(--spectrum-global-dimension-size-450) 0
+        var(--spectrum-global-dimension-size-150);
+}
+
+:host([dir='rtl']) .header {
+    /* .spectrum-Menu-sectionHeading */
+    padding: 0 var(--spectrum-global-dimension-size-150) 0
+        var(--spectrum-global-dimension-size-450);
+}

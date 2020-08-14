@@ -11,6 +11,6 @@ governing permissions and limitations under the License.
 */
 const { buildScreenshots } = require('./regenerate.js');
 
-const { color, scale } = require('yargs').argv;
+const { color, scale, dir } = require('yargs').argv;
 
-buildScreenshots('ci', color, scale);
+buildScreenshots('ci', color, scale, dir);
