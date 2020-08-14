@@ -2,7 +2,7 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: circleci/node:10.18.1-browsers
+            - image: circleci/node:12.18.3-buster-browsers
         environment:
             NPM_CONFIG_PREFIX: ~/.npm-global
             CHROME_BIN: /usr/bin/google-chrome

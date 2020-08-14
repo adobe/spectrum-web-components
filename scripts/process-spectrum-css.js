@@ -26,7 +26,7 @@ const componentRoot = path.resolve(__dirname, '../packages');
 
 async function processComponent(componentPath) {
     const configPath = path.join(componentPath, 'spectrum-config.js');
-    const spectrumConfig = require(configPath);
+    const { default: spectrumConfig } = await import(configPath);
     let inputCssPath;
     let packageCss = false;
     try {
@@ -85,7 +85,9 @@ async function processComponent(componentPath) {
             );
             console.log(chalk.bold.green(`  o ${component.name}`));
             // await fs.writeFile(outputJsonPath, outputJson, { encoding: 'utf8' });
-            return fs.writeFile(outputCssPath, outputCss, { encoding: 'utf8' });
+            return fs.writeFile(outputCssPath, outputCss.css, {
+                encoding: 'utf8',
+            });
         })
     );
 }

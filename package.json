@@ -11,7 +11,7 @@
     "version": "0.0.9",
     "description": "",
     "engines": {
-        "node": ">=10.18.1",
+        "node": ">=12.18.3",
         "yarn": ">=1.16.0"
     },
     "scripts": {
