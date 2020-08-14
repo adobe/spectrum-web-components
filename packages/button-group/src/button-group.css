@@ -14,5 +14,12 @@ governing permissions and limitations under the License.
 
 :host([vertical]) ::slotted(sp-action-button) {
     --spectrum-actionbutton-label-flex-grow: 1;
+}
+
+:host([dir='ltr'][vertical]) ::slotted(sp-action-button) {
     --spectrum-actionbutton-label-text-align: left;
+}
+
+:host([dir='rtl'][vertical]) ::slotted(sp-action-button) {
+    --spectrum-actionbutton-label-text-align: right;
 }

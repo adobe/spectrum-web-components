@@ -26,7 +26,7 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <div style="color: var(--spectrum-global-color-gray-800)">
+        <div>
             <sp-card title="Card Title" subtitle="JPG">
                 <img slot="cover-photo" src=${portrait} alt="Demo Image" />
                 <div slot="footer">Footer</div>
@@ -37,7 +37,7 @@ export const Default = (): TemplateResult => {
 
 export const actions = (): TemplateResult => {
     return html`
-        <div style="color: var(--spectrum-global-color-gray-800)">
+        <div>
             <sp-card title="Card Title" subtitle="JPG">
                 <img slot="cover-photo" src=${portrait} alt="Demo Image" />
                 <div slot="footer">Footer</div>
@@ -71,7 +71,7 @@ export const actions = (): TemplateResult => {
 
 export const empty = (): TemplateResult => {
     return html`
-        <div style="color: var(--spectrum-global-color-gray-800)">
+        <div>
             <sp-card></sp-card>
         </div>
     `;
@@ -184,9 +184,7 @@ export const small = (): TemplateResult => {
 
 export const smallHorizontal = (): TemplateResult => {
     return html`
-        <div
-            style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color));"
-        >
+        <div>
             <sp-card small horizontal title="Card Title" subtitle="JPG">
                 <sp-icon slot="preview" style="width: 36px; height: 36px;">
                     ${FileTxtIcon({ hidden: false })}
@@ -240,7 +238,6 @@ export const SlottedTitle = (): TemplateResult => {
         </style>
         <div
             style="
-            color: var(--spectrum-global-color-gray-800);
             width: 318px;
             --spectrum-card-title-width: 100%;
             --spectrum-card-title-padding-right: 0;

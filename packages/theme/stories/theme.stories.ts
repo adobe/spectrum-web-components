@@ -90,9 +90,9 @@ export const displayFlex = (): TemplateResult => html`
         }
     </style>
     <sp-theme id="flex-theme" color="dark">
-        <sp-button>Left</sp-button>
+        <sp-button>Start</sp-button>
         <sp-button id="middle-button">Middle</sp-button>
-        <sp-button>Right</sp-button>
+        <sp-button>End</sp-button>
     </sp-theme>
 `;
 
