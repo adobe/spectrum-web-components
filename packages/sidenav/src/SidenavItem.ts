@@ -111,10 +111,6 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     }
 
     public get focusElement(): HTMLElement {
-        /* istanbul ignore if */
-        if (!this.shadowRoot) {
-            return this;
-        }
         return this.shadowRoot.querySelector('#itemLink') as HTMLElement;
     }
 

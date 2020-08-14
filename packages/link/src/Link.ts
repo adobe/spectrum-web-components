@@ -28,13 +28,9 @@ export class Link extends LikeAnchor(Focusable) {
     }
 
     @query('#anchor')
-    anchorElement?: HTMLAnchorElement;
+    anchorElement!: HTMLAnchorElement;
 
     public get focusElement(): HTMLElement {
-        /* istanbul ignore if */
-        if (!this.shadowRoot || !this.anchorElement) {
-            return this;
-        }
         return this.anchorElement;
     }
 

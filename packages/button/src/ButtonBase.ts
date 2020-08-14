@@ -43,10 +43,6 @@ export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {
     private buttonElement!: HTMLButtonElement;
 
     public get focusElement(): HTMLElement {
-        /* istanbul ignore if */
-        if (!this.shadowRoot) {
-            return this;
-        }
         return this.buttonElement;
     }
 

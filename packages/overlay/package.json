@@ -59,6 +59,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@popperjs/core": "^2.2.2",
+        "@spectrum-web-components/base": "^0.0.1",
         "@spectrum-web-components/theme": "^0.5.2",
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",
