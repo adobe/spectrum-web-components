@@ -95,8 +95,10 @@ export class Tabs extends Focusable {
     protected manageAutoFocus(): void {
         const tabs = [...this.children] as Tab[];
         const tabUpdateCompletes = tabs.map((tab) => {
-            if (typeof tab.updateComplete !== 'undefined')
+            if (typeof tab.updateComplete !== 'undefined') {
                 return tab.updateComplete;
+            }
+            return Promise.resolve();
         });
         Promise.all(tabUpdateCompletes).then(() => super.manageAutoFocus());
     }
