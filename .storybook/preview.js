@@ -34,11 +34,24 @@ const scaleOptions = {
     Large: 'large',
 };
 let defaultScale = scaleOptions.Medium;
+const directionOptions = {
+    LTR: 'ltr',
+    RTL: 'rtl',
+};
+let defaultDirection = 'ltr';
 addDecorator((story) => {
     const color = select('Color', colorOptions, defaultColor, 'Theme');
     defaultColor = color;
     const scale = select('Scale', scaleOptions, defaultScale, 'Theme');
     defaultScale = scale;
+    const dir = select(
+        'Text direction',
+        directionOptions,
+        defaultDirection,
+        'Theme'
+    );
+    defaultDirection = dir;
+    document.documentElement.setAttribute('dir', dir);
     return html`
         <sp-theme id="root-theme" color=${color} scale=${scale}>
             ${story()}

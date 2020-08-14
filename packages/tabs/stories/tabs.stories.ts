@@ -9,13 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, radios, select } from '@open-wc/demoing-storybook';
+import { html, radios } from '@open-wc/demoing-storybook';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '../sp-tabs.js';
 import '../sp-tab.js';
 import { TemplateResult } from 'lit-html';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export default {
     component: 'sp-tabs',
@@ -23,42 +22,12 @@ export default {
 };
 
 export const Default = (): TemplateResult => {
-    const dir = select(
-        'Text direction',
-        {
-            None: 'none',
-            'Left to right': 'ltr',
-            'Right to left': 'rtl',
-        },
-        'ltr',
-        'Element'
-    );
     return html`
-        <sp-tabs
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            selected="1"
-        >
-            <sp-tab
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-                label="Tab 2"
-                value="2"
-            ></sp-tab>
-            <sp-tab
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-                label="Tab 3"
-                value="3"
-            ></sp-tab>
-            <sp-tab
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-                label="Tab 4"
-                value="4"
-            ></sp-tab>
-            <sp-tab
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-                label="Really Long Name"
-                value="1"
-                selected
-            ></sp-tab>
+        <sp-tabs selected="1">
+            <sp-tab label="Tab 2" value="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            <sp-tab label="Really Long Name" value="1" selected></sp-tab>
         </sp-tabs>
     `;
 };
