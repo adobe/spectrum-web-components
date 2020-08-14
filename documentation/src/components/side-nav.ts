@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    LitElement,
+    SpectrumElement,
     html,
     CSSResultArray,
     property,
     PropertyValues,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import {
@@ -29,7 +29,7 @@ import { search, Result } from './search-index.js';
 import sideNavStyles from './side-nav.css';
 import './adobe-logo.js';
 
-class SideNav extends LitElement {
+class SideNav extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [sideNavStyles];
     }

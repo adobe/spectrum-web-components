@@ -86,8 +86,15 @@ docs-spectrum-logo {
     width: 36px;
     height: 32px;
     display: block;
-    margin-right: 16px;
     padding-top: 7px;
+}
+
+:host([dir='ltr']) docs-spectrum-logo {
+    margin-right: 16px;
+}
+
+:host([dir='rtl']) docs-spectrum-logo {
+    margin-left: 16px;
 }
 
 #logo-container {

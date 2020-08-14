@@ -93,8 +93,12 @@ header svg {
     justify-content: flex-end;
 }
 
-.manage-theme label {
+:host([dir='ltr']) .manage-theme label {
     margin-left: var(--spectrum-global-dimension-size-400);
+}
+
+:host([dir='rtl']) .manage-theme label {
+    margin-right: var(--spectrum-global-dimension-size-400);
 }
 
 @media screen and (min-width: 961px) {
@@ -110,18 +114,23 @@ header svg {
  **/
 label {
     /* .spectrum-FieldLabel,
-   * .spectrum-Form-itemLabel */
+    * .spectrum-Form-itemLabel */
     display: block;
+
     box-sizing: border-box;
-    padding: var(
-            --spectrum-fieldlabel-padding-top,
-            var(--spectrum-global-dimension-size-50)
-        )
-        0
-        var(
-            --spectrum-fieldlabel-padding-bottom,
-            var(--spectrum-global-dimension-size-65)
-        );
+
+    padding-top: var(
+        --spectrum-fieldlabel-padding-top,
+        var(--spectrum-global-dimension-size-50)
+    );
+
+    padding-bottom: var(
+        --spectrum-fieldlabel-padding-bottom,
+        var(--spectrum-global-dimension-size-65)
+    );
+    padding-left: 0;
+    padding-right: 0;
+
     font-size: var(
         --spectrum-fieldlabel-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -134,26 +143,31 @@ label {
         --spectrum-fieldlabel-text-line-height,
         var(--spectrum-global-font-line-height-small)
     );
-    vertical-align: top;
+
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    font-smoothing: subpixel-antialiased; /* .spectrum-FieldLabel,
-   * .spectrum-Form-itemLabel */
-    color: var(
-        --spectrum-fieldlabel-text-color,
-        var(--spectrum-alias-label-text-color)
-    );
+    font-smoothing: subpixel-antialiased;
 
     display: inline-block;
-    padding: var(
-            --spectrum-fieldlabel-side-padding-top,
-            var(--spectrum-global-dimension-size-100)
-        )
-        var(
-            --spectrum-fieldlabel-side-padding-x,
-            var(--spectrum-global-dimension-size-100)
-        )
-        0 0;
+    padding-top: var(
+        --spectrum-fieldlabel-side-padding-top,
+        var(--spectrum-global-dimension-size-100)
+    );
+    padding-bottom: 0;
+}
 
-    cursor: pointer;
+:host([dir='ltr']) label {
+    padding-left: 0;
+    padding-right: var(
+        --spectrum-fieldlabel-side-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+
+:host([dir='rtl']) label {
+    padding-right: 0;
+    padding-left: var(
+        --spectrum-fieldlabel-side-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
 }
