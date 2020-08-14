@@ -9,11 +9,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const parser = require('postcss-selector-parser');
+import parser from 'postcss-selector-parser';
 
 // The transform duplicates `:focus-visible` selectors and prepends various
 // component states to prevent specificity being overriden.
-module.exports.mangleSpecificity = (selector) => {
+export const mangleSpecificity = (selector) => {
     const result = selector.clone();
     let isFocusVisible = false;
     result.walkPseudos((node) => {

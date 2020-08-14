@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { mangleSpecificity } = require('./spectrum-config-utils');
+import { mangleSpecificity } from './spectrum-config-utils.js';
 
-module.exports = {
+const config = {
     spectrum: 'link',
     components: [
         {
@@ -37,3 +37,5 @@ module.exports = {
         },
     ],
 };
+
+export default config;

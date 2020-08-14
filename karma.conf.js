@@ -51,7 +51,7 @@ module.exports = (config) => {
             // this timeout is primarily significant during browser startup
             // after browser startup we shouldn't be coming close to this limit
             browserNoActivityTimeout: 50000, // default value from karma
-            coverageIstanbulReporter: {
+            coverageReporter: {
                 thresholds: {
                     global: {
                         statements: 98,
