@@ -11,8 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { TemplateResult } from 'lit-html';
-import { html, select } from '@open-wc/demoing-storybook';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { html } from '@open-wc/demoing-storybook';
 
 import '../sp-accordion.js';
 import '../sp-accordion-item.js';
@@ -23,37 +22,15 @@ export default {
 };
 
 export const Default = (): TemplateResult => {
-    const dir = select(
-        'Text direction',
-        {
-            None: 'none',
-            'Left to right': 'ltr',
-            'Right to left': 'rtl',
-        },
-        'ltr',
-        'Element'
-    );
     return html`
-        <sp-accordion
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            style="color: var(--spectrum-global-color-gray-800)"
-        >
-            <sp-accordion-item
-                label="Heading 1"
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            >
+        <sp-accordion style="color: var(--spectrum-global-color-gray-800)">
+            <sp-accordion-item label="Heading 1">
                 <div>Item 1</div>
             </sp-accordion-item>
-            <sp-accordion-item
-                label="Heading 2"
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            >
+            <sp-accordion-item label="Heading 2">
                 Item 2
             </sp-accordion-item>
-            <sp-accordion-item
-                label="Heading 3"
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            >
+            <sp-accordion-item label="Heading 3">
                 Item 3
             </sp-accordion-item>
         </sp-accordion>
@@ -61,38 +38,18 @@ export const Default = (): TemplateResult => {
 };
 
 export const AllowMultiple = (): TemplateResult => {
-    const dir = select(
-        'Text direction',
-        {
-            None: 'none',
-            'Left to right': 'ltr',
-            'Right to left': 'rtl',
-        },
-        'ltr',
-        'Element'
-    );
     return html`
         <sp-accordion
             allow-multiple
             style="color: var(--spectrum-global-color-gray-800)"
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
         >
-            <sp-accordion-item
-                label="Heading 1"
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            >
+            <sp-accordion-item label="Heading 1">
                 Item 1
             </sp-accordion-item>
-            <sp-accordion-item
-                label="Heading 2"
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            >
+            <sp-accordion-item label="Heading 2">
                 Item 2
             </sp-accordion-item>
-            <sp-accordion-item
-                label="Heading 3"
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            >
+            <sp-accordion-item label="Heading 3">
                 Item 3
             </sp-accordion-item>
         </sp-accordion>
@@ -100,38 +57,15 @@ export const AllowMultiple = (): TemplateResult => {
 };
 
 export const Disabled = (): TemplateResult => {
-    const dir = select(
-        'Text direction',
-        {
-            None: 'none',
-            'Left to right': 'ltr',
-            'Right to left': 'rtl',
-        },
-        'ltr',
-        'Element'
-    );
     return html`
-        <sp-accordion
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            style="color: var(--spectrum-global-color-gray-800)"
-        >
-            <sp-accordion-item
-                disabled
-                label="Heading 1"
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            >
+        <sp-accordion style="color: var(--spectrum-global-color-gray-800)">
+            <sp-accordion-item disabled label="Heading 1">
                 <div>Item 1</div>
             </sp-accordion-item>
-            <sp-accordion-item
-                label="Heading 2"
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            >
+            <sp-accordion-item label="Heading 2">
                 Item 2
             </sp-accordion-item>
-            <sp-accordion-item
-                label="Heading 3"
-                dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            >
+            <sp-accordion-item label="Heading 3">
                 Item 3
             </sp-accordion-item>
         </sp-accordion>

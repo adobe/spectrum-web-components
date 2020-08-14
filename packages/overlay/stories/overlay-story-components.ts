@@ -92,10 +92,7 @@ class OverlayDrag extends LitElement {
         `;
     }
 
-    private onSlotChange(event: Event): void {
-        if (!event.target) {
-            return;
-        }
+    private onSlotChange(event: Event & { target: HTMLSlotElement }): void {
         const slot = event.target as HTMLSlotElement;
         this.targetElement = undefined;
 
