@@ -18,7 +18,7 @@ const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
 const stories = require('../stories');
 
 module.exports = {
-    buildScreenshots(type, color = 'light', scale = 'medium') {
+    buildScreenshots(type, color = 'light', scale = 'medium', dir = 'ltr') {
         describe('🎁 regenerate screenshots', function () {
             let server, browser, page;
 
@@ -71,10 +71,9 @@ module.exports = {
             const prefix = type;
             console.log(prefix + '...');
             page.setViewport({ width: 800, height: 600 });
-
             for (let i = 0; i < stories.length; i++) {
                 await page.goto(
-                    `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}`,
+                    `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text direction_Theme=${dir}`,
                     {
                         waitUntil: ['load', 'networkidle0'],
                     }
@@ -83,7 +82,7 @@ module.exports = {
                     '!!document.querySelector("sp-theme").shadowRoot'
                 );
                 await page.screenshot({
-                    path: `${baselineDir}/${type}/${stories[i]}__${color}__${scale}.png`,
+                    path: `${baselineDir}/${type}/${stories[i]}__${color}__${scale}__${dir}.png`,
                 });
             }
         }

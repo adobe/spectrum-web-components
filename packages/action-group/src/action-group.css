@@ -55,3 +55,13 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-border-radius-regular)
         var(--spectrum-alias-border-radius-regular);
 }
+
+/**
+ * The following styles corrects issues found in the Spectrum CSS output
+ * that are tracked via: https://github.com/adobe/spectrum-css/issues/795
+ */
+
+:host([dir][compact][vertical]) ::slotted(:nth-child(n)) {
+    margin-right: 0;
+    margin-left: 0;
+}

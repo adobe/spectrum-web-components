@@ -19,6 +19,7 @@ const config = {
                 selector: '.spectrum-Menu-sectionHeading',
                 shadowSelector: '.header',
             },
+            exclude: [/\.spectrum-Menu(?!-sectionHeading)/],
         },
         {
             name: 'menu',

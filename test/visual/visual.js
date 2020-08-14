@@ -25,7 +25,7 @@ const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
 const PixelDiffThreshold = 0;
 
 module.exports = {
-    checkScreenshots(type, color = 'light', scale = 'medium') {
+    checkScreenshots(type, color = 'light', scale = 'medium', dir = 'ltr') {
         describe('👀 page screenshots are correct', function () {
             let server, browser, page;
 
@@ -89,7 +89,7 @@ module.exports = {
                 });
 
                 for (let i = 0; i < stories.length; i++) {
-                    it(`${stories[i]}__${color}__${scale}`, async function () {
+                    it(`${stories[i]}__${color}__${scale}__${dir}`, async function () {
                         return takeAndCompareScreenshot(page, stories[i]);
                     });
                 }
@@ -98,7 +98,7 @@ module.exports = {
 
         async function takeAndCompareScreenshot(page, test) {
             await page.goto(
-                `http://127.0.0.1:4444/iframe.html?id=${test}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}`,
+                `http://127.0.0.1:4444/iframe.html?id=${test}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text direction_Theme=${dir}`,
                 {
                     waitUntil: ['load', 'networkidle0'],
                 }
@@ -109,7 +109,7 @@ module.exports = {
                     document.querySelector('sp-theme').shadowRoot
             );
             await page.screenshot({
-                path: `${currentDir}/${type}/${test}__${color}__${scale}.png`,
+                path: `${currentDir}/${type}/${test}__${color}__${scale}__${dir}.png`,
             });
             return compareScreenshots(test);
         }
@@ -126,13 +126,13 @@ module.exports = {
                 //   });
                 const img1 = fs
                     .createReadStream(
-                        `${currentDir}/${type}/${view}__${color}__${scale}.png`
+                        `${currentDir}/${type}/${view}__${color}__${scale}__${dir}.png`
                     )
                     .pipe(new PNG())
                     .on('parsed', doneReading);
                 const img2 = fs
                     .createReadStream(
-                        `${baselineDir}/${type}/${view}__${color}__${scale}.png`
+                        `${baselineDir}/${type}/${view}__${color}__${scale}__${dir}.png`
                     )
                     .pipe(new PNG())
                     .on('parsed', doneReading);
@@ -168,17 +168,17 @@ module.exports = {
                         (numDiffPixels / (img1.width * img1.height)) * 100;
 
                     const stats = fs.statSync(
-                        `${currentDir}/${type}/${view}__${color}__${scale}.png`
+                        `${currentDir}/${type}/${view}__${color}__${scale}__${dir}.png`
                     );
                     const fileSizeInBytes = stats.size;
                     console.log(
-                        `📸 ${view}__${color}__${scale}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
+                        `📸 ${view}__${color}__${scale}__${dir}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
                     );
 
                     if (numDiffPixels > PixelDiffThreshold) {
                         diff.pack().pipe(
                             fs.createWriteStream(
-                                `${currentDir}/${view}__${color}__${scale}-diff.png`
+                                `${currentDir}/${view}__${color}__${scale}__${dir}-diff.png`
                             )
                         );
                     }
