@@ -28,12 +28,34 @@ export interface SpectrumInterface {
     dir: 'ltr' | 'rtl';
 }
 
+const observedForElements: Set<HTMLElement> = new Set();
+
+const updateRTL = (): void => {
+    const dir =
+        document.documentElement.dir === 'rtl'
+            ? document.documentElement.dir
+            : 'ltr';
+    observedForElements.forEach((el) => {
+        el.setAttribute('dir', dir);
+    });
+};
+
+const rtlObserver = new MutationObserver(updateRTL);
+
+rtlObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['dir'],
+});
+
 export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
     class SlotTextObservingElement extends constructor {
         public shadowRoot!: ShadowRoot;
 
+        /**
+         * @private
+         */
         @property({ reflect: true })
         public dir: 'ltr' | 'rtl' = 'ltr';
 
@@ -45,10 +67,19 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
         }
 
         public connectedCallback(): void {
-            if (!this.hasAttribute('dir')) {
-                this.dir = document.dir === 'rtl' ? document.dir : 'ltr';
-            }
             super.connectedCallback();
+            if (!this.hasAttribute('dir')) {
+                this.dir =
+                    document.documentElement.dir === 'rtl'
+                        ? document.documentElement.dir
+                        : 'ltr';
+            }
+            observedForElements.add(this);
+        }
+
+        public disconnectedCallback(): void {
+            super.disconnectedCallback();
+            observedForElements.delete(this);
         }
     }
     return SlotTextObservingElement;
