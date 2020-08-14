@@ -9,9 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, select } from '@open-wc/demoing-storybook';
+import { html } from '@open-wc/demoing-storybook';
 import { TemplateResult } from 'lit-html';
-import { ifDefined } from 'lit-html/directives/if-defined';
 
 import '../sp-textfield.js';
 
@@ -21,35 +20,16 @@ export default {
 };
 
 export const Default = (): TemplateResult => {
-    const dir = select(
-        'Text direction',
-        {
-            None: 'none',
-            'Left to right': 'ltr',
-            'Right to left': 'rtl',
-        },
-        'ltr',
-        'Element'
-    );
     return html`
+        <sp-textfield placeholder="Enter your name"></sp-textfield>
+        <sp-textfield placeholder="Enter your name" disabled></sp-textfield>
         <sp-textfield
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            placeholder="Enter your name"
-        ></sp-textfield>
-        <sp-textfield
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
-            placeholder="Enter your name"
-            disabled
-        ></sp-textfield>
-        <sp-textfield
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             placeholder="Enter your name"
             pattern="[\\w\\s]*"
             required
             value="A valid input"
         ></sp-textfield>
         <sp-textfield
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             placeholder="Enter your name"
             pattern="[\\w\\s]*"
             required
@@ -57,13 +37,11 @@ export const Default = (): TemplateResult => {
             disabled
         ></sp-textfield>
         <sp-textfield
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             placeholder="Enter your name"
             pattern="[\\d]*"
             value="Not a valid input"
         ></sp-textfield>
         <sp-textfield
-            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             placeholder="Enter your name"
             pattern="^[\\d]$"
             required
