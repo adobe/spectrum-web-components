@@ -30,6 +30,6 @@ describe('Base', () => {
         await elementUpdated(el);
 
         expect(el.dir).to.equal('rtl');
-        expect(el.isDefaultDir).to.be.false;
+        expect(el.isLTR).to.be.false;
     });
 });

@@ -182,7 +182,7 @@ export class Tabs extends Focusable {
         if (!availableArrows.includes(code)) {
             return;
         }
-        if (!this.isDefaultDir && this.direction === 'horizontal') {
+        if (!this.isLTR && this.direction === 'horizontal') {
             availableArrows.reverse();
         }
         event.preventDefault();
