@@ -147,9 +147,9 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
                       </div>
                   `
                 : undefined}
-            <div id="markup">
+            <bdo id="markup" dir="ltr">
                 ${highlightedCode}
-            </div>
+            </bdo>
         `;
     }
 

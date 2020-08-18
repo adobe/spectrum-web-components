@@ -207,12 +207,55 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         // Add `this` to the instances array.
         Theme.instances.add(this);
+        const manageDir = (): void => {
+            const { dir } = this;
+            this.trackedChildren.forEach((el) => {
+                el.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
+            });
+        };
+        if (!this.observer) {
+            this.observer = new MutationObserver(manageDir);
+        }
+        this.observer.observe(this, {
+            attributes: true,
+            attributeFilter: ['dir'],
+        });
+        if (!this.hasAttribute('dir')) {
+            let dirParent = ((this as HTMLElement).assignedSlot ||
+                this.parentNode) as HTMLElement | DocumentFragment | ShadowRoot;
+            while (
+                dirParent !== document.documentElement &&
+                !(dirParent instanceof Theme)
+            ) {
+                dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
+                dirParent.parentNode || // DOM Element detected
+                    (dirParent as ShadowRoot).host) as
+                    | HTMLElement
+                    | DocumentFragment
+                    | ShadowRoot;
+            }
+            this.dir = dirParent.dir === 'rtl' ? dirParent.dir : 'ltr';
+        }
+        requestAnimationFrame(() => manageDir());
     }
 
     protected disconnectedCallback(): void {
         // Remove `this` to the instances array.
         Theme.instances.delete(this);
+        this.observer.disconnect();
     }
+
+    private observer!: MutationObserver;
+
+    public trackChild(el: HTMLElement): void {
+        this.trackedChildren.add(el);
+    }
+
+    public untrackChild(el: HTMLElement): void {
+        this.trackedChildren.delete(el);
+    }
+
+    private trackedChildren: Set<HTMLElement> = new Set();
 
     private shouldAdoptStyles(): void {
         /* istanbul ignore if */
