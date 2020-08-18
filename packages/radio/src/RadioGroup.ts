@@ -105,10 +105,10 @@ export class RadioGroup extends SpectrumElement {
                 buttonFromDelta(-1);
                 break;
             case 'ArrowLeft':
-                buttonFromDelta(this.isDefaultDir ? -1 : 1);
+                buttonFromDelta(this.isLTR ? -1 : 1);
                 break;
             case 'ArrowRight':
-                buttonFromDelta(this.isDefaultDir ? 1 : -1);
+                buttonFromDelta(this.isLTR ? 1 : -1);
                 break;
             case 'ArrowDown':
                 buttonFromDelta(1);
