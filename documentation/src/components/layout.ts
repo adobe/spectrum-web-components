@@ -82,7 +82,7 @@ export class LayoutElement extends SpectrumElement {
 
     private updateDirection(event: Event) {
         const dir = (event.target as Dropdown).value;
-        document.documentElement.dir = dir === 'rtl' ? dir : 'ltr';
+        this.dir = dir === 'rtl' ? dir : 'ltr';
     }
 
     // TODO: remove this manual link relationship when
@@ -104,7 +104,12 @@ export class LayoutElement extends SpectrumElement {
 
     render() {
         return html`
-            <sp-theme color=${this.color} scale=${this.scale} id="app">
+            <sp-theme
+                color=${this.color}
+                scale=${this.scale}
+                dir=${this.dir}
+                id="app"
+            >
                 <header>
                     <sp-action-button
                         quiet
