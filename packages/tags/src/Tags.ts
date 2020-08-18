@@ -97,10 +97,10 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 tagFromDelta(-1);
                 break;
             case 'ArrowLeft':
-                tagFromDelta(this.isDefaultDir ? -1 : 1);
+                tagFromDelta(this.isLTR ? -1 : 1);
                 break;
             case 'ArrowRight':
-                tagFromDelta(this.isDefaultDir ? 1 : -1);
+                tagFromDelta(this.isLTR ? 1 : -1);
                 break;
             case 'ArrowDown':
                 tagFromDelta(1);

@@ -25,7 +25,7 @@ type Constructor<T = Record<string, unknown>> = {
 
 export interface SpectrumInterface {
     shadowRoot: ShadowRoot;
-    isDefaultDir: boolean;
+    isLTR: boolean;
     dir: 'ltr' | 'rtl';
 }
 
@@ -64,7 +64,7 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
         /**
          * @private
          */
-        public get isDefaultDir(): boolean {
+        public get isLTR(): boolean {
             return this.dir === 'ltr';
         }
 
