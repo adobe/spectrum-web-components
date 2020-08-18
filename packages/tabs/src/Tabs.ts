@@ -131,6 +131,9 @@ export class Tabs extends Focusable {
                 this.setAttribute('aria-orientation', 'vertical');
             }
         }
+        if (changes.has('dir')) {
+            this.updateSelectionIndicator();
+        }
     }
 
     /**
