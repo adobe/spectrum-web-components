@@ -194,8 +194,8 @@ The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile [P
 ## Embedding themes
 
 There are a few cases where it is necessary to embed one theme within another.
-For example, if you have an application that is using a dark theme that is
-previewing or editing content that will be displayed in a light theme.
+For example, if you have an application that is using a dark theme with a left to right text direction that is
+previewing or editing content that will be displayed in a light theme with a right to left text direction.
 
 ```html
 <style type="text/css">
@@ -217,7 +217,7 @@ previewing or editing content that will be displayed in a light theme.
         margin-top: 2em;
     }
 </style>
-<sp-theme color="dark">
+<sp-theme color="dark" dir="ltr">
     <div id="outer">
         <div>
             <sp-slider
@@ -234,7 +234,7 @@ previewing or editing content that will be displayed in a light theme.
             <sp-button variant="primary">Cancel</sp-button>
             <sp-button variant="cta">Continue</sp-button>
         </div>
-        <sp-theme color="light">
+        <sp-theme color="light" dir="rtl">
             <div id="inner">
                 <div>
                     <sp-slider

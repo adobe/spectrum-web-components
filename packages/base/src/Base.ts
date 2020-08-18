@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { LitElement, property } from 'lit-element';
+import { Theme } from '@spectrum-web-components/theme';
 
 export * from 'lit-element';
 
@@ -52,6 +53,7 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
 ): T & Constructor<SpectrumInterface> {
     class SlotTextObservingElement extends constructor {
         public shadowRoot!: ShadowRoot;
+        private _dirParent!: HTMLElement;
 
         /**
          * @private
@@ -67,19 +69,41 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
         }
 
         public connectedCallback(): void {
-            super.connectedCallback();
             if (!this.hasAttribute('dir')) {
-                this.dir =
-                    document.documentElement.dir === 'rtl'
-                        ? document.documentElement.dir
-                        : 'ltr';
+                let dirParent = ((this as HTMLElement).assignedSlot ||
+                    this.parentNode) as
+                    | HTMLElement
+                    | DocumentFragment
+                    | ShadowRoot;
+                while (
+                    dirParent !== document.documentElement &&
+                    !(dirParent instanceof Theme)
+                ) {
+                    dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
+                    dirParent.parentNode || // DOM Element detected
+                        (dirParent as ShadowRoot).host) as
+                        | HTMLElement
+                        | DocumentFragment
+                        | ShadowRoot;
+                }
+                this.dir = dirParent.dir === 'rtl' ? dirParent.dir : 'ltr';
+                if (dirParent === document.documentElement) {
+                    observedForElements.add(this);
+                } else {
+                    (dirParent as Theme).trackChild(this);
+                }
+                this._dirParent = dirParent;
             }
-            observedForElements.add(this);
+            super.connectedCallback();
         }
 
         public disconnectedCallback(): void {
             super.disconnectedCallback();
-            observedForElements.delete(this);
+            if (this._dirParent === document.documentElement) {
+                observedForElements.delete(this);
+            } else {
+                (this._dirParent as Theme).untrackChild(this);
+            }
         }
     }
     return SlotTextObservingElement;

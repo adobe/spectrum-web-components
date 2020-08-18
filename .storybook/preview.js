@@ -51,9 +51,9 @@ addDecorator((story) => {
         'Theme'
     );
     defaultDirection = dir;
-    document.documentElement.setAttribute('dir', dir);
+    // document.documentElement.setAttribute('dir', dir);
     return html`
-        <sp-theme id="root-theme" color=${color} scale=${scale}>
+        <sp-theme id="root-theme" color=${color} scale=${scale} dir=${dir}>
             ${story()}
         </sp-theme>
     `;
