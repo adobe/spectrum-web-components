@@ -30,16 +30,23 @@ import '@spectrum-web-components/button/sp-action-button.js';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
+const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';
 const COLOR_FALLBACK = matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
     : 'light';
 const SCALE_MEDIUM = 'medium';
+const DIR_FALLBACK = 'ltr';
 const DEFAULT_COLOR = (window.localStorage
     ? localStorage.getItem(SWC_THEME_COLOR_KEY) || COLOR_FALLBACK
     : COLOR_FALLBACK) as Color;
 const DEFAULT_SCALE = (window.localStorage
     ? localStorage.getItem(SWC_THEME_SCALE_KEY) || SCALE_MEDIUM
     : SCALE_MEDIUM) as Scale;
+const DEFAULT_DIR = (window.localStorage
+    ? localStorage.getItem(SWC_THEME_DIR_KEY) || DIR_FALLBACK
+    : DIR_FALLBACK) as 'ltr' | 'rtl';
+
+console.log(DEFAULT_DIR);
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
@@ -50,6 +57,9 @@ export class LayoutElement extends SpectrumElement {
 
     @property({ attribute: false })
     public color: Color = DEFAULT_COLOR;
+
+    @property({ reflect: true })
+    public dir: 'ltr' | 'rtl' = DEFAULT_DIR;
 
     @property({ type: Boolean })
     public open = false;
@@ -240,6 +250,9 @@ export class LayoutElement extends SpectrumElement {
         }
         if (changes.has('scale') && window.localStorage) {
             localStorage.setItem(SWC_THEME_SCALE_KEY, this.scale);
+        }
+        if (changes.has('dir') && window.localStorage) {
+            localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
     }
 
