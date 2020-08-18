@@ -2,6 +2,8 @@
 
 `sp-theme` sets the rendering theme for all child components, and also sets a number of default sizes & colors for any child content. The Spectrum design system provides four color themes (`lightest`, `light`, `dark`, and `darkest`) and two different scales (`medium` and `large`) to support desktop & mobile UI.
 
+When leveraging an `sp-theme` element, it will assume the role of managing the content direction applied to elements in its DOM scope from the `document`. By default, an `sp-theme` element will resolve its initial content direction from value of its `dir` attribute or to be e the same as its containing `sp-theme` parent or the `document`. Subsequent customization of content direction for that content will need to happen on the `sp-theme` element to be appropriately tracked by elements in that scope. This means that each part of your document scoped by an `sp-theme` element can specify individual content directions and that decedent `sp-theme` elements can override the content direction applied by ancestor elements.
+
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/theme?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/theme)
