@@ -144,7 +144,7 @@ export const nestedTheme = (): TemplateResult => {
                     <sp-button variant="primary">Cancel</sp-button>
                     <sp-button variant="cta">Continue</sp-button>
                 </div>
-                <sp-theme color="${inner}">
+                <sp-theme color="${inner}" dir="ltr">
                     <div id="inner">
                         <div>
                             <sp-slider
@@ -212,7 +212,7 @@ export const reverseColorNestedTheme = (): TemplateResult => {
                     <sp-button variant="primary">Cancel</sp-button>
                     <sp-button variant="cta">Continue</sp-button>
                 </div>
-                <sp-theme color="${outer}">
+                <sp-theme color="${outer}" dir="rtl">
                     <div id="inner">
                         <div>
                             <sp-slider

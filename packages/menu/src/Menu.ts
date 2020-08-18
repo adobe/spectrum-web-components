@@ -210,13 +210,11 @@ export class Menu extends SpectrumElement {
     }
 
     public disconnectedCallback(): void {
-        if (this.observer) {
-            this.observer.disconnect();
-        }
+        this.observer.disconnect();
         super.disconnectedCallback();
     }
 
-    private observer?: MutationObserver;
+    private observer!: MutationObserver;
 }
 
 declare global {
