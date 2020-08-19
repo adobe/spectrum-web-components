@@ -21,7 +21,7 @@
     "@open-wc/building-rollup": "^1.6.3",
     "@open-wc/eslint-config": "^2.1.0",
     "@types/node": "13.11.1",
-    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/eslint-plugin": "^3.9.1",
     "@typescript-eslint/parser": "^2.20.0",
     "concurrently": "^5.1.0",
     "es-dev-server": "^1.5.0",
