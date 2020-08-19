@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.8.3",
+    "version": "0.8.4",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
@@ -58,8 +58,8 @@
         "@spectrum-css/button": "^2.2.0"
     },
     "dependencies": {
-        "@spectrum-web-components/icon": "^0.5.1",
-        "@spectrum-web-components/icons-ui": "^0.2.1",
+        "@spectrum-web-components/icon": "^0.5.2",
+        "@spectrum-web-components/icons-ui": "^0.2.2",
         "@spectrum-web-components/shared": "^0.6.0",
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",

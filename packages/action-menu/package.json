@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.5.6",
+    "version": "0.5.7",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
@@ -47,9 +47,9 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/dropdown": "^0.7.1",
-        "@spectrum-web-components/icons-workflow": "^0.3.1",
-        "@spectrum-web-components/menu": "^0.3.1",
+        "@spectrum-web-components/dropdown": "^0.7.2",
+        "@spectrum-web-components/icons-workflow": "^0.3.2",
+        "@spectrum-web-components/menu": "^0.3.2",
         "@spectrum-web-components/shared": "^0.6.0",
         "lit-element": "^2.1.0",
         "lit-html": "^1.0.0",

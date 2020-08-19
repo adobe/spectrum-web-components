@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.4.2",
+    "version": "0.4.3",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
