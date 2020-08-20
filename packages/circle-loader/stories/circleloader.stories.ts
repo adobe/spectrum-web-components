@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import '../sp-circle-loader.js';
 import { html, number, boolean } from '@open-wc/demoing-storybook';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-circle-loader',

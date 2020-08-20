@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, number, select, radios } from '@open-wc/demoing-storybook';
-import { TemplateResult } from 'lit-element';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 import { Placement } from '../';
 import '@spectrum-web-components/button/sp-button.js';

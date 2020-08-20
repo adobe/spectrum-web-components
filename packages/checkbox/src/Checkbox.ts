@@ -16,7 +16,7 @@ import {
     html,
     property,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { CheckboxBase } from './CheckboxBase.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import {

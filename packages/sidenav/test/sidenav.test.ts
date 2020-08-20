@@ -26,8 +26,7 @@ import {
     expect,
     waitUntil,
 } from '@open-wc/testing';
-import { TemplateResult } from 'lit-html';
-import { LitElement } from 'lit-element';
+import { TemplateResult, LitElement } from '@spectrum-web-components/base';
 
 describe('Sidenav', () => {
     it('loads', async () => {

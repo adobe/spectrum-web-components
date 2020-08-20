@@ -20,9 +20,8 @@ import {
     expect,
     waitUntil,
 } from '@open-wc/testing';
-import { LitElement } from 'lit-element';
-import { TemplateResult } from 'lit-html';
-import { waitForPredicate } from '../../../test/testing-helpers.js';
+import { LitElement, TemplateResult } from '@spectrum-web-components/base';
+import { waitForPredicate, tabEvent } from '../../../test/testing-helpers.js';
 import {
     enterEvent,
     spaceEvent,
@@ -375,11 +374,7 @@ describe('Tabs', () => {
         expect(tab2.classList.contains('focus-visible')).to.be.false;
         expect(tab3.classList.contains('focus-visible')).to.be.false;
 
-        tab1.dispatchEvent(
-            new KeyboardEvent('keydown', {
-                code: 'Tab',
-            })
-        );
+        tab1.dispatchEvent(tabEvent);
         tab1.focus();
         await elementUpdated(tab1);
         expect(document.activeElement, 'first tab is focused').to.equal(tab1);

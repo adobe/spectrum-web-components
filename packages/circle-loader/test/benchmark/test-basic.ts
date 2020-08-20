@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/circle-loader/sp-circle-loader.js';
-import { html } from 'lit-html';
+import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 
 measureFixtureCreation(html`

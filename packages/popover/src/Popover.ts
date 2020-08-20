@@ -16,8 +16,8 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
+    nothing,
 } from '@spectrum-web-components/base';
-import { nothing } from 'lit-html';
 
 import {
     Placement,

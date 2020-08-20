@@ -13,7 +13,7 @@ import { html, action, text, number } from '@open-wc/demoing-storybook';
 
 import '../sp-slider.js';
 import { Slider } from '../';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-slider',

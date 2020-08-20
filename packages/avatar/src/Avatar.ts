@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     property,
     CSSResultArray,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import avatarStyles from './avatar.css.js';
@@ -24,7 +24,7 @@ import avatarStyles from './avatar.css.js';
 /**
  * Avatar component
  */
-export class Avatar extends LitElement {
+export class Avatar extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [avatarStyles];
     }

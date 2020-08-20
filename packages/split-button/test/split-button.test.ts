@@ -17,19 +17,11 @@ import '../sp-split-button.js';
 import { SplitButton } from '..';
 import { cta, moreCta } from '../stories/split-button.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
-
-const keyboardEvent = (code: string, eventDetails = {}): KeyboardEvent => {
-    return new KeyboardEvent('keydown', {
-        ...eventDetails,
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-    });
-};
-const arrowDownEvent = keyboardEvent('ArrowDown');
-const tabEvent = keyboardEvent('Tab');
-const shiftTabEvent = keyboardEvent('Tab', { shiftKey: true });
+import {
+    arrowDownEvent,
+    tabEvent,
+    shiftTabEvent,
+} from '../../../test/testing-helpers.js';
 
 interface TestableSplitButton {
     isShiftTabbing: boolean;

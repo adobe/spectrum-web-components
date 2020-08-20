@@ -48,10 +48,6 @@
     },
     "author": "",
     "license": "Apache-2.0",
-    "peerDependencies": {
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0"
-    },
     "devDependencies": {
         "@spectrum-css/accordion": "^3.0.0-beta.2"
     },

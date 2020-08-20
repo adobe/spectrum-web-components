@@ -18,7 +18,7 @@ import {
     CSSResult,
     CSSResultArray,
     query,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import { Overlay, Placement } from '../';
 import { RadioGroup } from '@spectrum-web-components/radio';

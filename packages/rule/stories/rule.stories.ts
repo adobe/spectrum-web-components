@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, select } from '@open-wc/demoing-storybook';
-import { TemplateResult } from 'lit-element';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-rule.js';
 import './typography-decorator.js';

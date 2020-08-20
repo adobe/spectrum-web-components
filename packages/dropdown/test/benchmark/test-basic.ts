@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/dropdown/sp-dropdown.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { html } from 'lit-html';
+import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 
 measureFixtureCreation(html`

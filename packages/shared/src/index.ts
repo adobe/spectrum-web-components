@@ -13,4 +13,5 @@ governing permissions and limitations under the License.
 export * from './focus-visible.js';
 export * from './focusable.js';
 export * from './get-active-element.js';
+export * from './observe-slot-presence.js';
 export * from './observe-slot-text.js';

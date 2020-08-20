@@ -13,7 +13,7 @@ import { html, action } from '@open-wc/demoing-storybook';
 
 import '../sp-search.js';
 import { Search } from '../';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-search',

@@ -14,7 +14,7 @@ import { html, action, boolean } from '@open-wc/demoing-storybook';
 import '../sp-sidenav.js';
 import '../sp-sidenav-item.js';
 import '../sp-sidenav-heading.js';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-sidenav',

@@ -16,7 +16,7 @@ import '../src/themes.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import '@spectrum-web-components/slider/sp-slider.js';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-theme',

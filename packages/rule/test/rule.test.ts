@@ -10,8 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html } from 'lit-element';
-import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 import '../sp-rule.js';
 import { Rule } from '../';
