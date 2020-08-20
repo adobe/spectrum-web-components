@@ -10,7 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, TemplateResult, query } from 'lit-element';
+import {
+    CSSResultArray,
+    TemplateResult,
+    query,
+} from '@spectrum-web-components/base';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 

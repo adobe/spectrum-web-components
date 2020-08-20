@@ -10,24 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html } from 'lit-element';
-import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 import '../sp-accordion.js';
 import { Default, AllowMultiple } from '../stories/accordion.stories.js';
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
-
-const keyboardEvent = (code: string, shiftKey = false): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-        shiftKey,
-    });
-const arrowUpEvent = keyboardEvent('ArrowUp');
-const arrowDownEvent = keyboardEvent('ArrowDown');
-const shiftTabEvent = keyboardEvent('Tab', true);
+import {
+    arrowUpEvent,
+    arrowDownEvent,
+    shiftTabEvent,
+} from '../../../test/testing-helpers.js';
 
 describe('Accordion', () => {
     it('renders with items accessibly', async () => {

@@ -14,6 +14,7 @@ import { LitElement, property } from 'lit-element';
 import { Theme } from '@spectrum-web-components/theme';
 
 export * from 'lit-element';
+export { nothing } from 'lit-html';
 
 import { UpdatingElement } from 'lit-element';
 

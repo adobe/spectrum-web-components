@@ -12,8 +12,7 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/button/sp-action-button.js';
 import { ActionButton } from '@spectrum-web-components/button';
-import { html } from 'lit-element';
-import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 describe('Button', () => {
     it('loads default', async () => {

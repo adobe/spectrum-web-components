@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html } from 'lit-html';
+import { html } from '@spectrum-web-components/base';
 import { setCustomTemplateLiteralTag } from './custom-tag.js';
 
 setCustomTemplateLiteralTag(html);

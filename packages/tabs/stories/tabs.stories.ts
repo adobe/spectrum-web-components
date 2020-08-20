@@ -14,7 +14,7 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '../sp-tabs.js';
 import '../sp-tab.js';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-tabs',

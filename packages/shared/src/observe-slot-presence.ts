@@ -8,7 +8,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { UpdatingElement, property } from 'lit-element';
+import { UpdatingElement, property } from '@spectrum-web-components/base';
 
 const slotElementObserver = Symbol('slotElementObserver');
 const startObserving = Symbol('startObserving');

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, action, boolean, text } from '@open-wc/demoing-storybook';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 import { ActionMenu } from '../';
 import '@spectrum-web-components/menu/sp-menu.js';

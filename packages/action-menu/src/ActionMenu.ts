@@ -16,7 +16,7 @@ import {
     property,
     PropertyValues,
     html,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { DropdownBase } from '@spectrum-web-components/dropdown';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { MoreIcon } from '@spectrum-web-components/icons-workflow';

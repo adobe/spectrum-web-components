@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { ObserveSlotText } from '../src/observe-slot-text.js';
-import { LitElement, html, TemplateResult } from 'lit-element';
-import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { LitElement, TemplateResult } from '@spectrum-web-components/base';
+import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 class ObserverTest extends ObserveSlotText(LitElement) {
     protected render(): TemplateResult {

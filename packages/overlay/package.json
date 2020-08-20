@@ -61,8 +61,6 @@
         "@popperjs/core": "^2.2.2",
         "@spectrum-web-components/base": "^0.0.1",
         "@spectrum-web-components/theme": "^0.5.2",
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0",
         "popper-max-size-modifier": "^0.2.0",
         "tslib": "^2.0.0"
     }

@@ -16,7 +16,7 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
@@ -56,7 +56,7 @@ export class AccordionItem extends Focusable {
         if (this.disabled) {
             return;
         }
-        if (event.key === 'Enter' || event.key === ' ') {
+        if (event.code === 'Enter' || event.code === 'Space') {
             event.preventDefault();
             this.dispatchEvent(
                 new CustomEvent('sp-accordion-item-toggle', {

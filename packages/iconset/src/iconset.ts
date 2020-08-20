@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { IconsetRegistry } from './iconset-registry.js';
 
-import { LitElement, property } from 'lit-element';
+import { LitElement, property } from '@spectrum-web-components/base';
 
 export abstract class Iconset extends LitElement {
     protected registered = false;

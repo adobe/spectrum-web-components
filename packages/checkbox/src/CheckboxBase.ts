@@ -16,7 +16,7 @@ import {
     TemplateResult,
     query,
     CSSResultArray,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 export class CheckboxBase extends Focusable {

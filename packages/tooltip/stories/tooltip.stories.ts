@@ -14,7 +14,7 @@ import { html, boolean, select, text } from '@open-wc/demoing-storybook';
 import '../sp-tooltip.js';
 import '@spectrum-web-components/icon/sp-icon';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 const tipOptions = ['top', 'bottom', 'left', 'right'];
 

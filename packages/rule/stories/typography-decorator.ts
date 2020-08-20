@@ -17,7 +17,7 @@ import {
     TemplateResult,
     property,
     customElement,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import styles from '@spectrum-web-components/theme/src/typography.css.js';
 

@@ -15,7 +15,7 @@ import '../sp-dropdown.js';
 import { Dropdown } from '../';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-dropdown',

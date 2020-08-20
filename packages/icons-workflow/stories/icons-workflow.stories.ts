@@ -14,7 +14,7 @@ import '../';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/iconset/src/icons-demo.js';
 import { html, color, select } from '@open-wc/demoing-storybook';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 import '../';
 import * as icons from '../';
