@@ -17,16 +17,7 @@ import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { Default, smallHorizontal } from '../stories/card.stories.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import { spy } from 'sinon';
-
-const keyboardEvent = (code: string, shiftKey = false): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        code,
-        shiftKey,
-    });
-const spaceEvent = keyboardEvent('Space');
+import { spaceEvent } from '../../../test/testing-helpers.js';
 
 describe('card', () => {
     it('loads', async () => {

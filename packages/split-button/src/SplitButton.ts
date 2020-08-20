@@ -17,7 +17,7 @@ import {
     html,
     PropertyValues,
     query,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import { ButtonVariants } from '@spectrum-web-components/button';

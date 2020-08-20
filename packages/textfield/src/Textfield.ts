@@ -17,6 +17,7 @@ import {
     query,
     TemplateResult,
     PropertyValues,
+    nothing,
 } from '@spectrum-web-components/base';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -30,7 +31,6 @@ import textfieldStyles from './textfield.css.js';
 import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark-small.css.js';
 import alertSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-small.css.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { nothing } from 'lit-html';
 
 export class Textfield extends Focusable {
     public static get styles(): CSSResultArray {

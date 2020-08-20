@@ -12,18 +12,18 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
     property,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import styles from './coachmark.css.js';
 
 /**
  * @element sp-coachmark
  */
-export class Coachmark extends LitElement {
+export class Coachmark extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles];
     }

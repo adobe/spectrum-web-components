@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { html } from '@open-wc/demoing-storybook';
 
 import '../sp-textfield.js';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-textfield',

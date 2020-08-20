@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from 'lit-html';
-export { TemplateResult } from 'lit-html';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+export { TemplateResult };
 
 export type GenericTemplateLiteralTagType = (
     strings: TemplateStringsArray,

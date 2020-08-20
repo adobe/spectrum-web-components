@@ -16,7 +16,7 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import {
     Placement,

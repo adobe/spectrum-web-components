@@ -16,7 +16,7 @@ import {
     TemplateResult,
     CSSResultArray,
     query,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';

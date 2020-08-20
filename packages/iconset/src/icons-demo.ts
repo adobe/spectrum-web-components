@@ -11,18 +11,18 @@ governing permissions and limitations under the License.
 */
 import { IconsetAddedDetail } from './';
 import {
-    LitElement,
+    SpectrumElement,
     css,
     html,
     TemplateResult,
     CSSResult,
     property,
     customElement,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import '@spectrum-web-components/icon/sp-icon.js';
 
 @customElement('icons-demo')
-export class IconsDemo extends LitElement {
+export class IconsDemo extends SpectrumElement {
     @property()
     public name = 'ui';
 

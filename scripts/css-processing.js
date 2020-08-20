@@ -37,7 +37,7 @@ const postCSSPlugins = (resourcePath) => {
 
 const wrapCSSResult = (content) => {
     return stripIndent`
-        import { css } from 'lit-element';
+        import { css } from '@spectrum-web-components/base';
         const styles = css\`
             ${content}
         \`;

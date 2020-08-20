@@ -50,12 +50,11 @@
         "@spectrum-css/search": "^3.0.0-beta.4"
     },
     "dependencies": {
+        "@spectrum-web-components/base": "^0.0.1",
         "@spectrum-web-components/button": "^0.8.4",
         "@spectrum-web-components/icon": "^0.5.2",
         "@spectrum-web-components/icons-ui": "^0.2.2",
         "@spectrum-web-components/textfield": "^0.4.4",
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0",
         "tslib": "^2.0.0"
     }
 }

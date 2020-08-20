@@ -50,11 +50,10 @@
         "@spectrum-css/checkbox": "^3.0.0-beta.3"
     },
     "dependencies": {
+        "@spectrum-web-components/base": "^0.0.1",
         "@spectrum-web-components/icon": "^0.5.2",
         "@spectrum-web-components/icons-ui": "^0.2.2",
         "@spectrum-web-components/shared": "^0.6.0",
-        "lit-element": "^2.1.0",
-        "lit-html": "^1.0.0",
         "tslib": "^2.0.0"
     }
 }

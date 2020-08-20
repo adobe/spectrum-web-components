@@ -42,7 +42,7 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "lit-element": "^2.1.0",
+        "lit-element": "^2.4.0",
         "lit-html": "^1.0.0",
         "tslib": "^2.0.0"
     }

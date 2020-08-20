@@ -10,7 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResult, supportsAdoptingStyleSheets } from 'lit-element';
+import {
+    CSSResult,
+    supportsAdoptingStyleSheets,
+} from '@spectrum-web-components/base';
 
 import coreStyles from './theme.css.js';
 

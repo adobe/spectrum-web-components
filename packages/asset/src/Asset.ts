@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
     property,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import styles from './asset.css.js';
 
@@ -49,7 +49,7 @@ const folder = (): TemplateResult => html`
 /**
  * @element sp-asset
  */
-export class Asset extends LitElement {
+export class Asset extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles];
     }

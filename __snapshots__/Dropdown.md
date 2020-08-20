@@ -86,6 +86,7 @@
   </div>
   <sp-icon
     class="chevron-down-medium dropdown icon"
+    dir="ltr"
     size="s"
   >
   </sp-icon>

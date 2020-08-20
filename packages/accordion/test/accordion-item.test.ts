@@ -15,16 +15,7 @@ import { spy } from 'sinon';
 
 import '../sp-accordion-item.js';
 import { AccordionItem } from '../src/AccordionItem';
-
-const keyboardEvent = (key: string): KeyboardEvent =>
-    new KeyboardEvent('keydown', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        key,
-    });
-const enterEvent = keyboardEvent('Enter');
-const spaceEvent = keyboardEvent(' ');
+import { spaceEvent, enterEvent } from '../../../test/testing-helpers.js';
 
 describe('Accordion Item', () => {
     it('can exist with no parent accessibly', async () => {

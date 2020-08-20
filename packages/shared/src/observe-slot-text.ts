@@ -14,7 +14,7 @@ import {
     UpdatingElement,
     queryAssignedNodes,
     property,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 const slotElementObserver = Symbol('slotElementObserver');
 const assignedNodesList = Symbol('assinedNodes');

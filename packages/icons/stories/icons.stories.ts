@@ -13,7 +13,7 @@ import '../sp-icons-large.js';
 import '../sp-icons-medium.js';
 import '@spectrum-web-components/iconset/src/icons-demo.js';
 import { html, color } from '@open-wc/demoing-storybook';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     title: 'Icons',

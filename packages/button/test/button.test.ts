@@ -12,8 +12,7 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
-import { html } from 'lit-element';
-import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 import { shiftTabEvent } from '../../../test/testing-helpers.js';
 
 type TestableButtonType = {

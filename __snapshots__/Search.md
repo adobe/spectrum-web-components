@@ -6,6 +6,7 @@
 <form id="form">
   <sp-icon
     class="icon icon-workflow magnifier"
+    dir="ltr"
     size="s"
   >
   </sp-icon>
@@ -24,6 +25,7 @@
   >
   </sp-clear-button>
 </form>
+
 ```
 
 #### `can be cleared from button`
@@ -32,6 +34,7 @@
 <form id="form">
   <sp-icon
     class="icon icon-workflow magnifier"
+    dir="ltr"
     size="s"
   >
   </sp-icon>
@@ -59,6 +62,7 @@
 <form id="form">
   <sp-icon
     class="icon icon-workflow magnifier"
+    dir="ltr"
     size="s"
   >
   </sp-icon>
