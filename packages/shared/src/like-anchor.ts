@@ -14,8 +14,8 @@ import {
     property,
     TemplateResult,
     html,
+    ifDefined,
 } from '@spectrum-web-components/base';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

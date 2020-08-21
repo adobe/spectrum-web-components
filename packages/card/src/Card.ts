@@ -17,6 +17,7 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
+    ifDefined,
 } from '@spectrum-web-components/base';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import '@spectrum-web-components/asset/sp-asset.js';
@@ -26,7 +27,6 @@ import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import cardStyles from './card.css.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
-import { ifDefined } from 'lit-html/directives/if-defined';
 
 /**
  * @element sp-card

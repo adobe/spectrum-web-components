@@ -11,3 +11,10 @@ governing permissions and limitations under the License.
 */
 
 export * from './Base.js';
+export * from 'lit-element';
+export { nothing } from 'lit-html';
+export { ifDefined } from 'lit-html/directives/if-defined';
+export { repeat } from 'lit-html/directives/repeat';
+export { classMap } from 'lit-html/directives/class-map';
+export { styleMap } from 'lit-html/directives/style-map';
+export { until } from 'lit-html/directives/until';

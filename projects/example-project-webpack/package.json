@@ -7,7 +7,7 @@
     "scripts": {
         "build": "webpack",
         "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
-        "serve": "yarn build:prod && http-server dist"
+        "serve": "webpack-dev-server"
     },
     "author": "",
     "license": "Apache-2.0",
@@ -16,7 +16,7 @@
         "@spectrum-web-components/dropdown": "^0.7.2",
         "@spectrum-web-components/menu": "^0.3.2",
         "@spectrum-web-components/styles": "^0.6.0",
-        "lit-element": "^2.2.1",
+        "lit-element": "^2.4.0",
         "lit-html": "^1.0.0"
     },
     "devDependencies": {
