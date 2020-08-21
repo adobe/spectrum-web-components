@@ -46,7 +46,9 @@ export class ActionMenu extends ObserveSlotText(DropdownBase, 'label') {
         return [
             html`
                 <slot name="icon">
-                    ${MoreIcon({ hidden: this.hasLabel })}
+                    <sp-icon size="s" class="icon">
+                        ${MoreIcon({ hidden: this.hasLabel })}
+                    </sp-icon>
                 </slot>
                 <div id="label" ?hidden=${!this.hasLabel}>
                     <slot
