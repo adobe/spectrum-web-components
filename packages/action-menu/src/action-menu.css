@@ -14,15 +14,19 @@ governing permissions and limitations under the License.
     min-width: 0;
 }
 
+:host {
+    min-width: 0;
+}
+
 #button {
     width: auto;
 }
 
-.icon {
-    /* Sizing for .icon is needed because we are using a raw <svg> due to https://github.com/adobe/spectrum-web-components/issues/155 */
-    width: 18px;
-    height: 18px;
+::slotted([slot='icon']) {
+    flex-shrink: 0;
+}
 
+.icon {
     /**
      * Because .icon is acting as default content for its slot, the `::slotted([slot="icon"])` styles do not apply.
      * In the future it may be necessary to add a default content selector to the style processing code.
