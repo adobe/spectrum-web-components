@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
+import '@spectrum-web-components/icon/sp-icon.js';
+import { SettingsIcon } from '@spectrum-web-components/icons-workflow';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
@@ -59,6 +61,42 @@ describe('Action menu', () => {
         const el = await fixture<ActionMenu>(
             html`
                 <sp-action-menu label="More Actions">
+                    <sp-menu>
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads - [custom icon]', async () => {
+        const el = await fixture<ActionMenu>(
+            html`
+                <sp-action-menu label="More Actions">
+                    <sp-icon slot="icon" size="s">
+                        ${SettingsIcon()}
+                    </sp-icon>
                     <sp-menu>
                         <sp-menu-item>
                             Deselect
