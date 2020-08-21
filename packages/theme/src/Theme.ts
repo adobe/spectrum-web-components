@@ -250,11 +250,11 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     private observer!: MutationObserver;
 
-    public trackChild(el: HTMLElement): void {
+    public startManagingContentDirection(el: HTMLElement): void {
         this.trackedChildren.add(el);
     }
 
-    public untrackChild(el: HTMLElement): void {
+    public stopManagingContentDirection(el: HTMLElement): void {
         this.trackedChildren.delete(el);
     }
 

@@ -16,8 +16,8 @@ import {
     TemplateResult,
     property,
     PropertyValues,
+    ifDefined,
 } from '@spectrum-web-components/base';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import { ChevronRightMediumIcon } from '@spectrum-web-components/icons-ui';

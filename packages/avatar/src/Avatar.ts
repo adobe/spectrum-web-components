@@ -16,8 +16,8 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
+    ifDefined,
 } from '@spectrum-web-components/base';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import avatarStyles from './avatar.css.js';
 

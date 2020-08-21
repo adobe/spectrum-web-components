@@ -17,8 +17,8 @@ import {
     html,
     PropertyValues,
     query,
+    ifDefined,
 } from '@spectrum-web-components/base';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import { ButtonVariants } from '@spectrum-web-components/button';
 import { DropdownBase } from '@spectrum-web-components/dropdown';

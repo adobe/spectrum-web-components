@@ -10,13 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, property } from 'lit-element';
+import { LitElement, property, UpdatingElement } from 'lit-element';
 import { Theme } from '@spectrum-web-components/theme';
-
-export * from 'lit-element';
-export { nothing } from 'lit-html';
-
-import { UpdatingElement } from 'lit-element';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,12 +44,17 @@ rtlObserver.observe(document.documentElement, {
     attributeFilter: ['dir'],
 });
 
+type ContentDirectionManager = { startManagingContentDirection?(): void };
+
+const canManageContentDirection = (el: ContentDirectionManager): boolean =>
+    typeof el.startManagingContentDirection === 'undefined';
+
 export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
     class SlotTextObservingElement extends constructor {
         public shadowRoot!: ShadowRoot;
-        private _dirParent!: HTMLElement;
+        private _dirParent?: HTMLElement;
 
         /**
          * @private
@@ -72,38 +72,40 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
         public connectedCallback(): void {
             if (!this.hasAttribute('dir')) {
                 let dirParent = ((this as HTMLElement).assignedSlot ||
-                    this.parentNode) as
-                    | HTMLElement
-                    | DocumentFragment
-                    | ShadowRoot;
+                    this.parentNode) as HTMLElement;
                 while (
                     dirParent !== document.documentElement &&
-                    !(dirParent instanceof Theme)
+                    canManageContentDirection(
+                        dirParent as ContentDirectionManager
+                    )
                 ) {
                     dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
                     dirParent.parentNode || // DOM Element detected
-                        (dirParent as ShadowRoot).host) as
-                        | HTMLElement
-                        | DocumentFragment
-                        | ShadowRoot;
+                        ((dirParent as unknown) as ShadowRoot)
+                            .host) as HTMLElement;
                 }
                 this.dir = dirParent.dir === 'rtl' ? dirParent.dir : this.dir;
                 if (dirParent === document.documentElement) {
                     observedForElements.add(this);
                 } else {
-                    (dirParent as Theme).trackChild(this);
+                    (dirParent as Theme).startManagingContentDirection(this);
                 }
-                this._dirParent = dirParent;
+                this._dirParent = dirParent as HTMLElement;
             }
             super.connectedCallback();
         }
 
         public disconnectedCallback(): void {
             super.disconnectedCallback();
-            if (this._dirParent === document.documentElement) {
-                observedForElements.delete(this);
-            } else {
-                (this._dirParent as Theme).untrackChild(this);
+            if (this._dirParent) {
+                if (this._dirParent === document.documentElement) {
+                    observedForElements.delete(this);
+                } else {
+                    (this._dirParent as Theme).stopManagingContentDirection(
+                        this
+                    );
+                }
+                this.removeAttribute('dir');
             }
         }
     }

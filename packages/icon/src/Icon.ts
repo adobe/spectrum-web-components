@@ -17,12 +17,12 @@ import {
     query,
     CSSResultArray,
     TemplateResult,
+    ifDefined,
 } from '@spectrum-web-components/base';
 
 import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 
 import iconStyles from './icon.css.js';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 export class Icon extends SpectrumElement {
     public static is = 'sp-icon';

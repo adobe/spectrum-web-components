@@ -26,7 +26,7 @@ const IS_DEV = ENV === 'development';
 const IS_DEV_SERVER = process.argv.find((arg) =>
     arg.includes('webpack-dev-server')
 );
-const OUTPUT_PATH = IS_DEV_SERVER ? resolve('src') : resolve('dist');
+const OUTPUT_PATH = IS_DEV_SERVER ? resolve('dist') : resolve('dist');
 
 /**
  * === Copy static files configuration

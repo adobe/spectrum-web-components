@@ -17,8 +17,8 @@ import {
     property,
     CSSResultArray,
     query,
+    ifDefined,
 } from '@spectrum-web-components/base';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
