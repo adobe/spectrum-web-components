@@ -9,10 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { PropertyValues, UpdatingElement } from 'lit-element';
+import {
+    PropertyValues,
+    UpdatingElement,
+    queryAssignedNodes,
+    property,
+} from 'lit-element';
 
-const observedSlotElement = Symbol('observedSlotElement');
 const slotElementObserver = Symbol('slotElementObserver');
+const assignedNodesList = Symbol('assinedNodes');
 const startObserving = Symbol('startObserving');
 
 type Constructor<T = Record<string, unknown>> = {
@@ -23,49 +28,39 @@ type Constructor<T = Record<string, unknown>> = {
 
 export interface SlotTextObservingInterface {
     slotHasContent: boolean;
-    manageObservedSlot(): void;
+    manageTextObservedSlot(): void;
 }
 
 export function ObserveSlotText<T extends Constructor<UpdatingElement>>(
     constructor: T,
-    slotSelector = '#slot'
+    slotSelector?: string
 ): T & Constructor<SlotTextObservingInterface> {
-    return class SlotTextObservingElement extends constructor
+    class SlotTextObservingElement extends constructor
         implements SlotTextObservingInterface {
-        private [observedSlotElement]: HTMLSlotElement | undefined;
-
         private [slotElementObserver]: MutationObserver;
 
+        @property({ type: Boolean, attribute: false })
         public slotHasContent = false;
 
-        public manageObservedSlot(): void {
-            this[observedSlotElement] = (this[observedSlotElement] ||
-                (this.shadowRoot
-                    ? this.shadowRoot.querySelector(slotSelector)
-                    : undefined)) as HTMLSlotElement | undefined;
-            if (!this[observedSlotElement]) {
-                return;
-            }
-            const slot = this[observedSlotElement] as HTMLSlotElement;
-            let assignedNodes = slot.assignedNodes
-                ? slot.assignedNodes()
-                : [...this.childNodes].filter((node) => {
-                      const el = node as HTMLElement;
-                      return !el.hasAttribute('slot');
-                  });
-            assignedNodes = assignedNodes.filter((node) => {
-                if ((node as HTMLElement).tagName) {
-                    return true;
+        @queryAssignedNodes(slotSelector)
+        private [assignedNodesList]!: NodeListOf<HTMLElement>;
+
+        public manageTextObservedSlot(): void {
+            if (!this[assignedNodesList]) return;
+            const assignedNodes = [...this[assignedNodesList]].filter(
+                (node) => {
+                    if ((node as HTMLElement).tagName) {
+                        return true;
+                    }
+                    return node.textContent ? node.textContent.trim() : false;
                 }
-                return node.textContent ? node.textContent.trim() : false;
-            });
+            );
             this.slotHasContent = assignedNodes.length > 0;
-            this.requestUpdate();
         }
 
         protected firstUpdated(changedProperties: PropertyValues): void {
             super.firstUpdated(changedProperties);
-            this.manageObservedSlot();
+            this.manageTextObservedSlot();
         }
 
         private [startObserving](): void {
@@ -77,7 +72,7 @@ export function ObserveSlotText<T extends Constructor<UpdatingElement>>(
                     for (const mutation of mutationsList) {
                         /* istanbul ignore else */
                         if (mutation.type === 'characterData') {
-                            this.manageObservedSlot();
+                            this.manageTextObservedSlot();
                         }
                     }
                 };
@@ -98,5 +93,6 @@ export function ObserveSlotText<T extends Constructor<UpdatingElement>>(
             }
             super.disconnectedCallback();
         }
-    };
+    }
+    return SlotTextObservingElement;
 }

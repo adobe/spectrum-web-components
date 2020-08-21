@@ -27,6 +27,7 @@ import {
     AlertMediumIcon,
     CrossLargeIcon,
 } from '@spectrum-web-components/icons-ui';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 
 import styles from './dialog.css.js';
 
@@ -35,7 +36,10 @@ import styles from './dialog.css.js';
  *
  * @fires close - Announces that the dialog has been closed.
  */
-export class Dialog extends SpectrumElement {
+export class Dialog extends ObserveSlotPresence(
+    SpectrumElement,
+    '[slot="footer"]'
+) {
     public static get styles(): CSSResultArray {
         return [styles, alertMediumStyles, crossLargeStyles];
     }
@@ -48,6 +52,10 @@ export class Dialog extends SpectrumElement {
 
     @property({ type: Boolean, reflect: true })
     public dismissible = false;
+
+    protected get hasFooter(): boolean {
+        return this.slotContentIsPresent;
+    }
 
     @property({ type: Boolean, reflect: true, attribute: 'no-divider' })
     public noDivider = false;
@@ -91,10 +99,6 @@ export class Dialog extends SpectrumElement {
                 bubbles: true,
             })
         );
-    }
-
-    private get hasFooter(): boolean {
-        return !!this.querySelector('[slot="footer"]');
     }
 
     protected render(): TemplateResult {
