@@ -18,8 +18,8 @@ import {
     TemplateResult,
     query,
     nothing,
+    ifDefined,
 } from '@spectrum-web-components/base';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import dropdownStyles from './dropdown.css.js';
 import buttonBaseStyles from '@spectrum-web-components/button/src/button-base.css.js';

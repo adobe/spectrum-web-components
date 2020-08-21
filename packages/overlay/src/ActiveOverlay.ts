@@ -24,8 +24,8 @@ import {
     CSSResultArray,
     property,
     PropertyValues,
+    ifDefined,
 } from '@spectrum-web-components/base';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
 import styles from './active-overlay.css.js';
 
 export interface PositionResult {
