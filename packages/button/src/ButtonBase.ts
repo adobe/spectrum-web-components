@@ -20,20 +20,25 @@ import {
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import {
+    ObserveSlotText,
+    ObserveSlotPresence,
+} from '@spectrum-web-components/shared';
 import buttonStyles from './button-base.css.js';
 
-export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {
+export class ButtonBase extends LikeAnchor(
+    ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
+) {
     public static get styles(): CSSResultArray {
         return [...super.styles, buttonStyles];
     }
 
+    protected get hasIcon(): boolean {
+        return this.slotContentIsPresent;
+    }
+
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;
-
-    private get hasIcon(): boolean {
-        return !!this.querySelector('[slot="icon"]');
-    }
 
     private get hasLabel(): boolean {
         return this.slotHasContent;
@@ -55,7 +60,7 @@ export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {
                 <div id="label" ?hidden=${!this.hasLabel}>
                     <slot
                         id="slot"
-                        @slotchange=${this.manageObservedSlot}
+                        @slotchange=${this.manageTextObservedSlot}
                     ></slot>
                 </div>
             `,

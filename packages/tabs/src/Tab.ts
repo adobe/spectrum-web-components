@@ -18,7 +18,10 @@ import {
     SpectrumElement,
     PropertyValues,
 } from '@spectrum-web-components/base';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+import {
+    FocusVisiblePolyfillMixin,
+    ObserveSlotPresence,
+} from '@spectrum-web-components/shared';
 
 import tabItemStyles from './tab.css.js';
 
@@ -26,13 +29,15 @@ import tabItemStyles from './tab.css.js';
  * @slot icon - The icon that appears on the left of the label
  */
 
-export class Tab extends FocusVisiblePolyfillMixin(SpectrumElement) {
+export class Tab extends FocusVisiblePolyfillMixin(
+    ObserveSlotPresence(SpectrumElement, '[slot="icon"]')
+) {
     public static get styles(): CSSResultArray {
         return [tabItemStyles];
     }
 
-    private get hasIcon(): boolean {
-        return !!this.querySelector('[slot="icon"]');
+    protected get hasIcon(): boolean {
+        return this.slotContentIsPresent;
     }
 
     @property({ reflect: true })
@@ -64,11 +69,13 @@ export class Tab extends FocusVisiblePolyfillMixin(SpectrumElement) {
         `;
     }
 
-    protected firstUpdated(): void {
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
         this.setAttribute('role', 'tab');
     }
 
     protected updated(changes: PropertyValues): void {
+        super.updated(changes);
         if (changes.has('selected')) {
             this.setAttribute(
                 'aria-selected',
