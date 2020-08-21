@@ -6,5 +6,9 @@
     },
     "include": ["*.ts", "src/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../button" }, { "path": "../underlay" }]
+    "references": [
+        { "path": "../button" },
+        { "path": "../shared" },
+        { "path": "../underlay" }
+    ]
 }
