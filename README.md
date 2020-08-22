@@ -21,11 +21,19 @@ yarn
 
 The call to `yarn` will subsequently trigger scripting which will ensure that your local repo is adequately prepared to develop and run the packages in this library. Commands therein include:
 
--   `yarn build:clear-cache` to remove previously created artifacts of the `tsc build` process.
--   `yarn spectrum-vars` to ensure that theme files are up-to-date.
--   `yarn process-icons` to make sure that the most recent icons are included.
--   `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
--   `yarn build` to make sure the most recent code base is represented in each package's `lib` folders.
+Typical development will involve running `yarn storybook`, `yarn test`, and `yarn docs:start` if you're making documentation changes.
+
+# Storybook
+
+Testing changes will typically involve running yarn storybook which will launch a browser window with the storybook pages. From there you can make changes in development and refresh the browser to pick them up.
+
+You can run [Storybook](https://storybook.js.org) through the command:
+
+```bash
+yarn storybook
+```
+
+By default the resulting site will be available at [http://localhost:6006](http://localhost:6006), but the storybook command should launch a browser.
 
 # Documentation
 
@@ -43,15 +51,15 @@ In the case that you'd like to serve and test a static build of the documentatio
 yarn docs:build
 ```
 
-# Storybook
+# Advanced development
 
-You can run [Storybook](https://storybook.js.org) through the command:
+There are several more commands that can be useful in specific scenarios:
 
-```bash
-yarn storybook
-```
-
-By default the resulting site will be available at [http://localhost:6006](http://localhost:6006).
+-   `yarn build:clear-cache` to remove previously created artifacts of the `tsc build` process.
+-   `yarn spectrum-vars` to ensure that theme files are up-to-date.
+-   `yarn process-icons` to make sure that the most recent icons are included.
+-   `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
+-   `yarn build` to make sure the most recent code base is represented in each package's `lib` folders. This happens automatically in the storybook command.
 
 ## Linting
 
@@ -74,6 +82,8 @@ yarn test
 During development you may wish to use `yarn test:watch` to automatically build and re-run the test suites.
 
 ### Screenshot Testing
+
+Note: visual regression is done automatically on pull requests via CircleCI, so unless you're making larger changes it's okay to make use of that.
 
 Visual regressions are tracked via screenshot testing powered by Puppeteer. There are _two_ types of visual testing built into this library: those that should only be run in CircleCI to power the continuous integration workflow and those that can be run on your local machine. Due to the font metrics not being identical, it is difficult to rely on screenshot based testing across OSes, so if you'd like to leverage these tests to manage changes you are making, be sure to create a local baseline before you start to develop.
 
