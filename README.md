@@ -19,13 +19,13 @@ cd spectrum-web-components
 yarn
 ```
 
-The call to `yarn` will subsequently trigger scripting which will ensure that your local repo is adequately prepared to develop and run the packages in this library. Commands therein include:
+The call to `yarn` will subsequently trigger scripting which will ensure that your local repo is adequately prepared to develop and run the packages in this library.
 
 Typical development will involve running `yarn storybook`, `yarn test`, and `yarn docs:start` if you're making documentation changes.
 
 # Storybook
 
-Testing changes will typically involve running yarn storybook which will launch a browser window with the storybook pages. From there you can make changes in development and refresh the browser to pick them up.
+Testing & reviewing changes will typically involve running `yarn storybook` which will launch a browser window with the storybook pages. From there you can make changes in development and refresh the browser to pick them up.
 
 You can run [Storybook](https://storybook.js.org) through the command:
 
@@ -33,7 +33,7 @@ You can run [Storybook](https://storybook.js.org) through the command:
 yarn storybook
 ```
 
-By default the resulting site will be available at [http://localhost:6006](http://localhost:6006), but the storybook command should launch a browser.
+By default the resulting site will be available at [http://localhost:8000](http://localhost:8000), but the storybook command should launch a browser.
 
 # Documentation
 
