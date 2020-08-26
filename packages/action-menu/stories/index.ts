@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-action-menu.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
@@ -20,6 +21,7 @@ export const ActionMenuMarkup = ({
     changeHandler = (() => undefined) as (event: Event) => void,
     disabled = false,
     visibleLabel = '',
+    customIcon = '' as string | TemplateResult,
 } = {}): TemplateResult => {
     return html`
         <sp-action-menu
@@ -27,6 +29,11 @@ export const ActionMenuMarkup = ({
             ?disabled=${disabled}
             @change="${changeHandler}"
         >
+            ${customIcon
+                ? html`
+                      <sp-icon slot="icon" size="s">${customIcon}</sp-icon>
+                  `
+                : html``}
             ${visibleLabel
                 ? html`
                       <span slot="label">${visibleLabel}</span>

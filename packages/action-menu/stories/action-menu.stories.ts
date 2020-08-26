@@ -17,6 +17,8 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { ActionMenuMarkup } from './';
 
+import { SettingsIcon } from '@spectrum-web-components/icons-workflow';
+
 export default {
     component: 'sp-action-menu',
     title: 'Action menu',
@@ -25,6 +27,15 @@ export default {
 export const iconOnly = (): TemplateResult => {
     return html`
         ${ActionMenuMarkup()}
+    `;
+};
+
+export const customIcon = (): TemplateResult => {
+    const customIcon = SettingsIcon();
+    return html`
+        ${ActionMenuMarkup({
+            customIcon,
+        })}
     `;
 };
 

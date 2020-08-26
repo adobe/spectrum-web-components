@@ -29,6 +29,8 @@ module.exports = [
     'action-group--icons-only-justified',
     'action-group--compact-icons-only-justified',
     'action-menu--default',
+    'action-menu--customIcon',
+    'action-menu--iconOnly',
     'actionbar--default',
     'asset--default',
     'asset--file',
