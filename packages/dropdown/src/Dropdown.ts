@@ -179,7 +179,9 @@ export class DropdownBase extends Focusable {
             }
             return;
         }
-        this.setValueFromItem(target);
+        if (target.value) {
+            this.setValueFromItem(target);
+        }
     }
 
     public onKeydown(event: KeyboardEvent): void {
@@ -194,11 +196,13 @@ export class DropdownBase extends Focusable {
         this.open = true;
     }
 
-    public setValueFromItem(item: MenuItem): void {
+    public async setValueFromItem(item: MenuItem): Promise<void> {
         const oldSelectedItemText = this.selectedItemText;
         const oldValue = this.value;
         this.selectedItemText = item.itemText;
         this.value = item.value;
+        this.open = false;
+        await this.updateComplete;
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
@@ -207,6 +211,7 @@ export class DropdownBase extends Focusable {
         if (!applyDefault) {
             this.selectedItemText = oldSelectedItemText;
             this.value = oldValue;
+            this.open = true;
             return;
         }
         const parentElement = item.parentElement as Element;
@@ -218,7 +223,6 @@ export class DropdownBase extends Focusable {
             selectedItem.selected = false;
         }
         item.selected = true;
-        this.open = false;
     }
 
     public toggle(): void {
@@ -244,6 +248,8 @@ export class DropdownBase extends Focusable {
         }
 
         delete this.placeholder;
+
+        this.menuStateResolver();
     }
 
     private async openMenu(): Promise<void> {
@@ -295,8 +301,6 @@ export class DropdownBase extends Focusable {
             this.closeOverlay();
             delete this.closeOverlay;
         }
-
-        this.menuStateResolver();
     }
 
     protected get buttonContent(): TemplateResult[] {
@@ -382,7 +386,10 @@ export class DropdownBase extends Focusable {
         if (changedProperties.has('disabled') && this.disabled) {
             this.open = false;
         }
-        if (changedProperties.has('open')) {
+        if (
+            changedProperties.has('open') &&
+            typeof changedProperties.get('open') !== 'undefined'
+        ) {
             this.menuStatePromise = new Promise(
                 (res) => (this.menuStateResolver = res)
             );

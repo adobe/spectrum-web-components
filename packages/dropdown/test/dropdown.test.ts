@@ -252,6 +252,40 @@ describe('Dropdown', () => {
         expect(el.open).to.be.true;
         expect(secondItem.selected).to.be.false;
     });
+
+    it('can throw focus after `change`', async () => {
+        const el = await dropdownFixture();
+        const input = document.createElement('input');
+        document.body.append(input);
+
+        await elementUpdated(el);
+
+        const secondItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+        const button = el.button as HTMLButtonElement;
+
+        button.click();
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        expect(el.selectedItemText).to.equal('');
+        expect(el.value).to.equal('');
+        expect(secondItem.selected).to.be.false;
+
+        el.addEventListener('change', (): void => {
+            input.focus();
+        });
+
+        secondItem.click();
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+        expect(el.value, 'value changed').to.equal('option-2');
+        expect(secondItem.selected, 'selected changed').to.be.true;
+        await waitUntil(() => document.activeElement === input, 'focus throw');
+        input.remove();
+    });
     it('opens on ArrowDown', async () => {
         const el = await dropdownFixture();
 

@@ -307,9 +307,6 @@ export class OverlayStack {
             await overlay.hide(animated);
             if (overlay.state != 'dispose') return;
 
-            overlay.remove();
-            overlay.dispose();
-
             const index = this.overlays.indexOf(overlay);
             /* istanbul ignore else */
             if (index >= 0) {
@@ -335,6 +332,9 @@ export class OverlayStack {
                 }
                 overlay.tabbingAway = false;
             }
+
+            overlay.remove();
+            overlay.dispose();
         }
     }
 

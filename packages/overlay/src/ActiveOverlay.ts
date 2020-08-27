@@ -325,6 +325,11 @@ export class ActiveOverlay extends LitElement {
 
         this.returnOverlayContent();
         this.state = 'disposed';
+
+        if (this.willNotifyClosed) {
+            this.overlayContent.dispatchEvent(new Event('sp-overlay-closed'));
+            this.willNotifyClosed = false;
+        }
     }
 
     private stealOverlayContent(element: HTMLElement): void {
@@ -356,6 +361,8 @@ export class ActiveOverlay extends LitElement {
         this.stealOverlayContentResolver();
     }
 
+    private willNotifyClosed = false;
+
     private returnOverlayContent(): void {
         /* istanbul ignore if */
         if (!this.overlayContent) return;
@@ -378,9 +385,7 @@ export class ActiveOverlay extends LitElement {
                     this.overlayContent,
                     this.placeholder
                 );
-                this.overlayContent.dispatchEvent(
-                    new Event('sp-overlay-closed')
-                );
+                this.willNotifyClosed = true;
             }
         }
 
