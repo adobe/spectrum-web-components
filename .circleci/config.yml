@@ -4,6 +4,7 @@ executors:
         docker:
             - image: circleci/node:12.18.3-buster-browsers
         environment:
+            NODE_ENV: development
             NPM_CONFIG_PREFIX: ~/.npm-global
             CHROME_BIN: /usr/bin/google-chrome
             FIREFOX_BIN: /usr/local/bin/firefox
@@ -91,6 +92,7 @@ jobs:
                       - project/node_modules
                       - project/packages/*/node_modules
                       - project/documentation/dist
+                      - .cache/ms-playwright
 
     visual-lightest-medium:
         executor: node
