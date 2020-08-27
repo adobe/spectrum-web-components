@@ -17,7 +17,7 @@ import {
 } from '@spectrum-web-components/base';
 
 const slotElementObserver = Symbol('slotElementObserver');
-const assignedNodesList = Symbol('assinedNodes');
+const assignedNodesList = Symbol('assignedNodes');
 const startObserving = Symbol('startObserving');
 
 type Constructor<T = Record<string, unknown>> = {
