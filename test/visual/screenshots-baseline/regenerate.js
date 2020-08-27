@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const puppeteer = require('puppeteer');
+const playwright = require('playwright');
 var rimraf = require('rimraf');
 const { createConfig, startServer } = require('es-dev-server');
 const path = require('path');
@@ -20,7 +20,10 @@ const stories = require('../stories');
 module.exports = {
     buildScreenshots(type, color = 'light', scale = 'medium') {
         describe('🎁 regenerate screenshots', function () {
-            let server, browser, page;
+            let server,
+                browser,
+                page,
+                viewport = { width: 800, height: 600 };
 
             before(async function () {
                 const config = createConfig({
@@ -56,9 +59,12 @@ module.exports = {
             });
 
             before(async function () {
-                browser = await puppeteer.launch({
-                    userDataDir: `${baselineDir}/${type}/userDataDir`,
-                });
+                browser = await playwright[
+                    'chromium'
+                ].launchPersistentContext(
+                    `${baselineDir}/${type}/userDataDir`,
+                    { viewport }
+                );
                 page = await browser.newPage();
             });
 
@@ -70,13 +76,12 @@ module.exports = {
         async function generateBaselineScreenshots(page) {
             const prefix = type;
             console.log(prefix + '...');
-            page.setViewport({ width: 800, height: 600 });
 
             for (let i = 0; i < stories.length; i++) {
                 await page.goto(
                     `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}`,
                     {
-                        waitUntil: ['load', 'networkidle0'],
+                        waitUntil: 'networkidle',
                     }
                 );
                 await page.waitForFunction(

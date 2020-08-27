@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const puppeteer = require('puppeteer');
+const playwright = require('playwright');
 const expect = require('chai').expect;
 const { createConfig, startServer } = require('es-dev-server');
 const path = require('path');
@@ -27,7 +27,10 @@ const PixelDiffThreshold = 0;
 module.exports = {
     checkScreenshots(type, color = 'light', scale = 'medium') {
         describe('👀 page screenshots are correct', function () {
-            let server, browser, page;
+            let server,
+                browser,
+                page,
+                viewport = { width: 800, height: 600 };
 
             before(async function () {
                 // Create the test directory if needed.
@@ -58,9 +61,12 @@ module.exports = {
             });
 
             before(async function () {
-                browser = await puppeteer.launch({
-                    userDataDir: `${baselineDir}/${type}/userDataDir`,
-                });
+                browser = await playwright[
+                    'chromium'
+                ].launchPersistentContext(
+                    `${baselineDir}/${type}/userDataDir`,
+                    { viewport }
+                );
                 page = await browser.newPage();
                 // prevent hover based inaccuracies in screenshots by
                 // moving the mouse off of the screen before loading tests
@@ -81,7 +87,6 @@ module.exports = {
                         ),
                     });
                     ({ server } = await startServer(config));
-                    return page.setViewport({ width: 800, height: 600 });
                 });
 
                 afterEach(() => {
@@ -100,7 +105,7 @@ module.exports = {
             await page.goto(
                 `http://127.0.0.1:4444/iframe.html?id=${test}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}`,
                 {
-                    waitUntil: ['load', 'networkidle0'],
+                    waitUntil: 'networkidle',
                 }
             );
             await page.waitForFunction(
