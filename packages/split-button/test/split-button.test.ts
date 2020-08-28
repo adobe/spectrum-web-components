@@ -273,8 +273,8 @@ describe('Splitbutton', () => {
 
         await elementUpdated(el);
 
-        expect(firstItemSpy.called).to.be.true;
-        expect(firstItemSpy.calledOnce).to.be.true;
+        expect(firstItemSpy.called, '1st called').to.be.true;
+        expect(firstItemSpy.calledOnce, '1st called once').to.be.true;
 
         const trigger = root.querySelector('.trigger') as HTMLButtonElement;
         trigger.click();
@@ -289,8 +289,8 @@ describe('Splitbutton', () => {
 
         expect(el.open).to.be.false;
         expect(el.selectedItemText).to.equal('Option 1');
-        expect(thirdItemSpy.called).to.be.true;
-        expect(thirdItemSpy.calledOnce).to.be.true;
+        expect(thirdItemSpy.called, '3rd called').to.be.true;
+        expect(thirdItemSpy.calledOnce, '3rd called once').to.be.true;
 
         trigger.click();
 
@@ -304,14 +304,14 @@ describe('Splitbutton', () => {
 
         expect(el.open).to.be.false;
         expect(el.selectedItemText).to.equal('Option 1');
-        expect(secondItemSpy.called).to.be.true;
-        expect(secondItemSpy.calledOnce).to.be.true;
+        expect(secondItemSpy.called, '2nd called').to.be.true;
+        expect(secondItemSpy.calledOnce, '2nd called once').to.be.true;
 
         main.click();
 
         await elementUpdated(el);
 
         expect(firstItemSpy.called).to.be.true;
-        expect(firstItemSpy.calledTwice).to.be.true;
+        expect(firstItemSpy.calledTwice, '1st called twice').to.be.true;
     });
 });
