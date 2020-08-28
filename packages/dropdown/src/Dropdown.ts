@@ -372,7 +372,7 @@ export class DropdownBase extends Focusable {
         }
         if (
             changedProperties.has('open') &&
-            typeof changedProperties.get('open') !== 'undefined'
+            (this.open || typeof changedProperties.get('open') !== 'undefined')
         ) {
             this.menuStatePromise = new Promise(
                 (res) => (this.menuStateResolver = res)
