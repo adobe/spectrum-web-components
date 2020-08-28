@@ -83,8 +83,10 @@ export class SplitButton extends DropdownBase {
             return;
         }
         const target =
-            this.optionsMenu.menuItems.find((el) => el.selected) ||
-            this.optionsMenu.menuItems[0];
+            this.type === 'more'
+                ? this.optionsMenu.menuItems[0]
+                : this.optionsMenu.menuItems.find((el) => el.selected) ||
+                  this.optionsMenu.menuItems[0];
         /* istanbul ignore else */
         if (target) {
             target.click();
@@ -187,6 +189,7 @@ export class SplitButton extends DropdownBase {
                 this.optionsMenu.menuItems.forEach(
                     (el) => (el.selected = false)
                 );
+                this.optionsMenu.menuItems[0].selected = true;
                 this.selectedItemText = this.optionsMenu.menuItems[0].itemText;
             } else {
                 const selected =
