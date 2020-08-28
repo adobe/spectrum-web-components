@@ -53,8 +53,8 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-072ce0152e91312b804cc2395b652ffe941a3640
-                      - v1-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-
+                      - v2-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-e3f040631ba658a7f0b64afa1fc64ac3530e16d7
+                      - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-
             - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >>
             - run:
                   when: on_fail
@@ -64,12 +64,12 @@ commands:
                   name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline/ci
-                  key: v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ .Revision }}
+                  key: v2-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ .Revision }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
                       - test/visual/screenshots-baseline/ci
-                  key: v1-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ epoch }}
+                  key: v2-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ epoch }}
             - store_artifacts:
                   path: test/visual/screenshots-current
 
