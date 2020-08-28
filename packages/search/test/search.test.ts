@@ -116,7 +116,6 @@ describe('Search', () => {
         await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         expect(el.value).to.equal('Test');
-        expect(el).shadowDom.to.equalSnapshot();
 
         inputSpy.resetHistory();
         changeSpy.resetHistory();
