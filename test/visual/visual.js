@@ -58,9 +58,22 @@ module.exports = {
 
             after(() => {
                 browser.close();
+                server.close();
             });
 
             before(async function () {
+                const config = createConfig({
+                    port: 4444,
+                    nodeResolve: true,
+                    appIndex: 'index.html',
+                    rootDir: path.resolve(
+                        process.cwd(),
+                        'documentation',
+                        'dist',
+                        'storybook'
+                    ),
+                });
+                ({ server } = await startServer(config));
                 browser = await playwright[
                     'chromium'
                 ].launchPersistentContext(
@@ -74,25 +87,6 @@ module.exports = {
             });
 
             describe('default view', function () {
-                beforeEach(async function () {
-                    const config = createConfig({
-                        port: 4444,
-                        nodeResolve: true,
-                        appIndex: 'index.html',
-                        rootDir: path.resolve(
-                            process.cwd(),
-                            'documentation',
-                            'dist',
-                            'storybook'
-                        ),
-                    });
-                    ({ server } = await startServer(config));
-                });
-
-                afterEach(() => {
-                    server.close();
-                });
-
                 for (let i = 0; i < stories.length; i++) {
                     it(`${stories[i]}__${color}__${scale}__${dir}`, async function () {
                         return takeAndCompareScreenshot(page, stories[i]);
@@ -121,6 +115,16 @@ module.exports = {
 
         function compareScreenshots(view) {
             return new Promise((resolve, reject) => {
+                if (
+                    !fs.existsSync(
+                        `${baselineDir}/${type}/${view}__${color}__${scale}__${dir}.png`
+                    )
+                ) {
+                    reject(
+                        `🙅🏼‍♂️ ${view}__${color}__${scale}__${dir}.png does not have a baseline screenshot.`
+                    );
+                    return;
+                }
                 // Note: for debugging, you can dump the screenshotted img as base64.
                 // fs.createReadStream(`${currentDir}/${type}/test.png`, { encoding: 'base64' })
                 //   .on('data', function (data) {
