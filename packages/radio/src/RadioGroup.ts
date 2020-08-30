@@ -20,7 +20,7 @@ import {
 } from '@spectrum-web-components/base';
 
 import radioGroupStyles from './radio-group.css.js';
-import { Radio } from '@spectrum-web-components/radio';
+import { Radio } from './Radio.js';
 
 /**
  * Radio group component
