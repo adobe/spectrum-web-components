@@ -2,17 +2,25 @@
 
 An `sp-split-button` surfaces an immediately envokable action via it's main button, as well as a list of alternative actions in its toggleable menu overlay. By default, any actions envoked from the overlay will replace the main action button. When leveraging `[type="more"]` the action will be envoked, but the main button will remain the action initally persribed by the implementor.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/split-button?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/split-button)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/split-button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/splitbutton)
 
 ```
-npm install @spectrum-web-components/splitbutton
+yarn add @spectrum-web-components/split-button
+```
 
-# or
+Import the side effectful registration of `<sp-split-button>` via:
 
-yarn add @spectrum-web-components/splitbutton
+```
+import '@spectrum-web-components/split-button/sp-split-button.js';
+```
+
+When looking to leverage the `SplitButton` base class as a type and/or for extension purposes, do so via:
+
+```
+import { SplitButton } from '@spectrum-web-components/split-button';
 ```
 
 ## CTA Split Button

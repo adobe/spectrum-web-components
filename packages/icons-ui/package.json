@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.2.2",
+    "version": "0.3.0",
     "description": "",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -43,7 +43,7 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "@spectrum-css/icon": "^2.1.1",
-        "@spectrum-web-components/icon": "^0.5.2",
+        "@spectrum-web-components/icon": "^0.6.0",
         "@spectrum-web-components/iconset": "^0.1.7",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
@@ -55,8 +55,8 @@
         "prettier": "^2.0.5"
     },
     "dependencies": {
-        "@spectrum-web-components/base": "^0.0.1",
-        "@spectrum-web-components/iconset": "^0.2.1",
+        "@spectrum-web-components/base": "^0.1.0",
+        "@spectrum-web-components/iconset": "^0.2.2",
         "tslib": "^2.0.0"
     }
 }

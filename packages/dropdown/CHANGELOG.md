@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.7.2...@spectrum-web-components/dropdown@0.8.0) (2020-08-31)
+
+### Bug Fixes
+
+-   correct overlay closure order or operations for manual override ([0b7a8c4](https://github.com/adobe/spectrum-web-components/commit/0b7a8c42866ae4f2d38d90fa7b6dc34ed2c21759))
+
+### Features
+
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+-   **split-button:** add split-button pattern ([4833a59](https://github.com/adobe/spectrum-web-components/commit/4833a598bb3da3552d194586350a3888dba79543))
+
 ## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropdown@0.7.1...@spectrum-web-components/dropdown@0.7.2) (2020-08-19)
 
 **Note:** Version bump only for package @spectrum-web-components/dropdown

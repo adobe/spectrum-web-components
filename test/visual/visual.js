@@ -58,9 +58,22 @@ module.exports = {
 
             after(() => {
                 browser.close();
+                server.close();
             });
 
             before(async function () {
+                const config = createConfig({
+                    port: 4444,
+                    nodeResolve: true,
+                    appIndex: 'index.html',
+                    rootDir: path.resolve(
+                        process.cwd(),
+                        'documentation',
+                        'dist',
+                        'storybook'
+                    ),
+                });
+                ({ server } = await startServer(config));
                 browser = await playwright[
                     'chromium'
                 ].launchPersistentContext(
@@ -74,25 +87,6 @@ module.exports = {
             });
 
             describe('default view', function () {
-                beforeEach(async function () {
-                    const config = createConfig({
-                        port: 4444,
-                        nodeResolve: true,
-                        appIndex: 'index.html',
-                        rootDir: path.resolve(
-                            process.cwd(),
-                            'documentation',
-                            'dist',
-                            'storybook'
-                        ),
-                    });
-                    ({ server } = await startServer(config));
-                });
-
-                afterEach(() => {
-                    server.close();
-                });
-
                 for (let i = 0; i < stories.length; i++) {
                     it(`${stories[i]}__${color}__${scale}__${dir}`, async function () {
                         return takeAndCompareScreenshot(page, stories[i]);
@@ -103,7 +97,7 @@ module.exports = {
 
         async function takeAndCompareScreenshot(page, test) {
             await page.goto(
-                `http://127.0.0.1:4444/iframe.html?id=${test}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text direction_Theme=${dir}`,
+                `http://127.0.0.1:4444/iframe.html?id=${test}&knob-Reduce%20Motion_Theme=true&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text%20direction_Theme=${dir}`,
                 {
                     waitUntil: 'networkidle',
                 }
@@ -121,6 +115,16 @@ module.exports = {
 
         function compareScreenshots(view) {
             return new Promise((resolve, reject) => {
+                if (
+                    !fs.existsSync(
+                        `${baselineDir}/${type}/${view}__${color}__${scale}__${dir}.png`
+                    )
+                ) {
+                    reject(
+                        `🙅🏼‍♂️ ${view}__${color}__${scale}__${dir}.png does not have a baseline screenshot.`
+                    );
+                    return;
+                }
                 // Note: for debugging, you can dump the screenshotted img as base64.
                 // fs.createReadStream(`${currentDir}/${type}/test.png`, { encoding: 'base64' })
                 //   .on('data', function (data) {

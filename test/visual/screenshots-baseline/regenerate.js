@@ -78,7 +78,7 @@ module.exports = {
             console.log(prefix + '...');
             for (let i = 0; i < stories.length; i++) {
                 await page.goto(
-                    `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text direction_Theme=${dir}`,
+                    `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&knob-Reduce%20Motion_Theme=true&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text direction_Theme=${dir}`,
                     {
                         waitUntil: 'networkidle',
                     }

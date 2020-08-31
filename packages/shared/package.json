@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.6.0",
+    "version": "0.7.0",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
@@ -42,7 +42,7 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/base": "^0.0.1",
+        "@spectrum-web-components/base": "^0.1.0",
         "focus-visible": "^5.0.2",
         "tslib": "^2.0.0"
     }

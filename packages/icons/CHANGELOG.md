@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.4.1...@spectrum-web-components/icons@0.4.2) (2020-08-31)
+
+**Note:** Version bump only for package @spectrum-web-components/icons
+
 ## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.4.0...@spectrum-web-components/icons@0.4.1) (2020-08-19)
 
 ### Bug Fixes

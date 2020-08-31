@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.4.4...@spectrum-web-components/textfield@0.5.0) (2020-08-31)
+
+### Features
+
+-   **search:** use Spectrum CSS ^3.0.0 ([7830ac0](https://github.com/adobe/spectrum-web-components/commit/7830ac0868e855145cee0922529a0f6d4d3e7f50))
+-   **textfield:** use Spectrum CSS ^3.0.0 ([1c1acb9](https://github.com/adobe/spectrum-web-components/commit/1c1acb94577f97c189a5f4e2d34bf81dc169447c))
+
 ## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.4.3...@spectrum-web-components/textfield@0.4.4) (2020-08-19)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield

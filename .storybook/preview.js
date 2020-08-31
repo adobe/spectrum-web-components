@@ -7,6 +7,7 @@ import {
     withWebComponentsKnobs,
     html,
     select,
+    boolean,
 } from '@open-wc/demoing-storybook';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -39,6 +40,7 @@ const directionOptions = {
     RTL: 'rtl',
 };
 let defaultDirection = 'ltr';
+let defaultReduceMotion = false;
 addDecorator((story) => {
     const color = select('Color', colorOptions, defaultColor, 'Theme');
     defaultColor = color;
@@ -51,8 +53,31 @@ addDecorator((story) => {
         'Theme'
     );
     defaultDirection = dir;
+    const reduceMotion = boolean('Reduce Motion', defaultReduceMotion, 'Theme');
+    defaultReduceMotion = reduceMotion;
     return html`
         <sp-theme id="root-theme" color=${color} scale=${scale} dir=${dir}>
+            ${reduceMotion
+                ? html`
+                      <style>
+                          sp-theme {
+                              --spectrum-global-animation-duration-0: 0ms;
+                              --spectrum-global-animation-duration-100: 0ms;
+                              --spectrum-global-animation-duration-200: 0ms;
+                              --spectrum-global-animation-duration-300: 0ms;
+                              --spectrum-global-animation-duration-400: 0ms;
+                              --spectrum-global-animation-duration-500: 0ms;
+                              --spectrum-global-animation-duration-600: 0ms;
+                              --spectrum-global-animation-duration-700: 0ms;
+                              --spectrum-global-animation-duration-800: 0ms;
+                              --spectrum-global-animation-duration-900: 0ms;
+                              --spectrum-global-animation-duration-1000: 0ms;
+                              --spectrum-global-animation-duration-2000: 0ms;
+                              --spectrum-global-animation-duration-4000: 0ms;
+                          }
+                      </style>
+                  `
+                : html``}
             ${story()}
         </sp-theme>
     `;

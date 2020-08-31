@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, elementUpdated, expect, nextFrame } from '@open-wc/testing';
-import { spy } from 'sinon';
+import { spy, SinonSpy } from 'sinon';
 
 import '../sp-split-button.js';
 import { SplitButton } from '..';
@@ -22,10 +22,7 @@ import {
     tabEvent,
     shiftTabEvent,
 } from '../../../test/testing-helpers.js';
-
-interface TestableSplitButton {
-    isShiftTabbing: boolean;
-}
+import sinon from 'sinon';
 
 describe('Splitbutton', () => {
     it('loads [type="field"] splitbutton accessibly', async () => {
@@ -66,30 +63,36 @@ describe('Splitbutton', () => {
         expect(root.activeElement).to.equal(el.focusElement);
 
         await elementUpdated(el);
+        sinon.spy(HTMLElement.prototype, 'focus');
         el.focusElement.dispatchEvent(shiftTabEvent);
-        expect(((el as unknown) as TestableSplitButton).isShiftTabbing).to.be
-            .true;
+        expect(
+            (HTMLElement.prototype.focus as SinonSpy).callCount,
+            'backward from element'
+        ).to.equal(1);
         await nextFrame();
 
         trigger.focus();
+        (HTMLElement.prototype.focus as SinonSpy).resetHistory();
 
         expect(root.activeElement).to.equal(trigger);
         await elementUpdated(el);
 
         trigger.dispatchEvent(tabEvent);
         expect(
-            ((el as unknown) as TestableSplitButton).isShiftTabbing,
+            (HTMLElement.prototype.focus as SinonSpy).callCount,
             'forward from trigger'
-        ).to.be.false;
+        ).to.equal(0);
 
         await elementUpdated(el);
 
         trigger.focus();
+        (HTMLElement.prototype.focus as SinonSpy).resetHistory();
         trigger.dispatchEvent(shiftTabEvent);
         expect(
-            ((el as unknown) as TestableSplitButton).isShiftTabbing,
+            (HTMLElement.prototype.focus as SinonSpy).callCount,
             'backward from trigger'
-        ).to.be.false;
+        ).to.equal(0);
+        (HTMLElement.prototype.focus as SinonSpy).restore();
     });
     it('[type="field"] manages `selectedItemText`', async () => {
         const test = await fixture<HTMLDivElement>(cta());

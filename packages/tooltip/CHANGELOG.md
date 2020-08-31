@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.4.6...@spectrum-web-components/tooltip@0.5.0) (2020-08-31)
+
+### Features
+
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+
 ## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.4.5...@spectrum-web-components/tooltip@0.4.6) (2020-08-19)
 
 **Note:** Version bump only for package @spectrum-web-components/tooltip
