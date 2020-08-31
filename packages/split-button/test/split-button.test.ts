@@ -24,10 +24,6 @@ import {
 } from '../../../test/testing-helpers.js';
 import sinon from 'sinon';
 
-// interface TestableSplitButton {
-//     isShiftTabbing: boolean;
-// }
-
 describe('Splitbutton', () => {
     it('loads [type="field"] splitbutton accessibly', async () => {
         const test = await fixture<HTMLDivElement>(cta());
