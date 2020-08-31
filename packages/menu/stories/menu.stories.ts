@@ -163,3 +163,27 @@ export const Selected = (): TemplateResult => {
         </sp-popover>
     `;
 };
+
+export const Nested = (): TemplateResult => {
+    return html`
+        <sp-menu>
+            <sp-menu-item>
+                Level 1 - A
+            </sp-menu-item>
+            <sp-menu-item>
+                Level 1 - B
+            </sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-group>
+                <sp-menu>
+                    <sp-menu-item>
+                        Level 2 - α
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Level 2 - β
+                    </sp-menu-item>
+                </sp-menu>
+            </sp-menu-group>
+        </sp-menu>
+    `;
+};

@@ -52,13 +52,11 @@ export class Menu extends SpectrumElement {
     public constructor() {
         super();
         this.handleKeydown = this.handleKeydown.bind(this);
-        this.startListeningToKeyboard = this.startListeningToKeyboard.bind(
-            this
-        );
+        this.onFocusIn = this.onFocusIn.bind(this);
         this.stopListeningToKeyboard = this.stopListeningToKeyboard.bind(this);
         this.onClick = this.onClick.bind(this);
         this.addEventListener('click', this.onClick);
-        this.addEventListener('focusin', this.startListeningToKeyboard);
+        this.addEventListener('focusin', this.onFocusIn);
         this.addEventListener('focusout', this.stopListeningToKeyboard);
     }
 
@@ -79,6 +77,10 @@ export class Menu extends SpectrumElement {
             if (!(el instanceof Element)) {
                 return false;
             }
+
+            if (!this.isDirectChild(el)) {
+                return false;
+            }
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
         /* c8 ignore next 3 */
@@ -86,6 +88,15 @@ export class Menu extends SpectrumElement {
             return;
         }
         this.prepareToCleanUp();
+    }
+
+    private onFocusIn(event: Event): void {
+        const { target } = event;
+        if (this.isDirectChild(target as Element)) {
+            this.startListeningToKeyboard();
+        } else {
+            this.stopListeningToKeyboard();
+        }
     }
 
     public startListeningToKeyboard(): void {
@@ -138,7 +149,8 @@ export class Menu extends SpectrumElement {
                     if (this.menuItems.length === 0) {
                         return;
                     }
-                    if (this.querySelector('[selected]')) {
+                    const selected = this.querySelector('[selected]');
+                    if (selected && this.isDirectChild(selected)) {
                         const itemToBlur = this.menuItems[
                             this.focusInItemIndex
                         ] as MenuItem;
@@ -170,7 +182,7 @@ export class Menu extends SpectrumElement {
     private prepItems = (): void => {
         this.menuItems = [
             ...this.querySelectorAll(`[role="${this.childRole}"]`),
-        ] as MenuItem[];
+        ].filter((menuItem) => this.isDirectChild(menuItem)) as MenuItem[];
         if (!this.menuItems || this.menuItems.length === 0) {
             return;
         }
@@ -178,6 +190,10 @@ export class Menu extends SpectrumElement {
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
         focusInItem.tabIndex = 0;
     };
+
+    private isDirectChild(menuItem: Element): boolean {
+        return menuItem.closest(this.tagName) === this;
+    }
 
     public render(): TemplateResult {
         return html`
