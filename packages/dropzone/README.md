@@ -28,7 +28,7 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
 ## Example
 
 ```html
-<sp-dropzone id="dropzone-1" tabindex="1" style="width: 400px; height: 200px">
+<sp-dropzone id="dropzone-1" tabindex="0" style="width: 400px; height: 200px">
     <sp-illustrated-message heading="Drag and Drop Your File">
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +66,7 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
 ```html
 <sp-dropzone
     id="dropzone"
-    tabindex="1"
+    tabindex="0"
     dragged
     style="width: 400px; height: 200px"
 >

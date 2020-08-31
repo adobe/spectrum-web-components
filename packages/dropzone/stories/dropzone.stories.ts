@@ -23,7 +23,7 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-dropzone id="dropzone">
+        <sp-dropzone id="dropzone" tabindex="0">
             <sp-illustrated-message heading="Drag and Drop Your File">
                 ${illustration}
             </sp-illustrated-message>
