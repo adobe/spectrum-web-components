@@ -2,17 +2,25 @@
 
 `sp-action-group` delivers a set of action buttons in horizontal or vertical orientation while ensuring the appropriate spacing between those buttons. The `compact` attribute merges these buttons so that they are visually joined to clarify their relationship to each other and their distance from other buttons/groups.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/action-group?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/action-group)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/action-group?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/action-group)
 
 ```
-npm install @spectrum-web-components/action-group
-
-# or
-
 yarn add @spectrum-web-components/action-group
+```
+
+Import the side effectful registration of `<sp-action-group>` via:
+
+```
+import '@spectrum-web-components/action-group/sp-action-group.js';
+```
+
+When looking to leverage the `ActionGroup` base class as a type and/or for extension purposes, do so via:
+
+```
+import { ActionGroup } from '@spectrum-web-components/action-group';
 ```
 
 ## Horizontal

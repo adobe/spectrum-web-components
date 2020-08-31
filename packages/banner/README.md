@@ -2,7 +2,7 @@
 
 An `<sp-banner>` is an additional label an existing component may have. Banners cannot be interacted with. Banners in Spectrum have three variations for different uses as well as the ability to place it overlaid in the top-right corner of a container.
 
-### Usge
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/banner?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/banner)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/banner?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/banner)
