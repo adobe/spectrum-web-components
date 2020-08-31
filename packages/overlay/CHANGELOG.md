@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.5.2...@spectrum-web-components/overlay@0.6.0) (2020-08-31)
+
+### Bug Fixes
+
+-   correct overlay closure order or operations for manual override ([0b7a8c4](https://github.com/adobe/spectrum-web-components/commit/0b7a8c42866ae4f2d38d90fa7b6dc34ed2c21759))
+
+### Features
+
+-   **split-button:** add split-button pattern ([4833a59](https://github.com/adobe/spectrum-web-components/commit/4833a598bb3da3552d194586350a3888dba79543))
+
 ## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.5.1...@spectrum-web-components/overlay@0.5.2) (2020-08-19)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

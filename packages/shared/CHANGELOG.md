@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.6.0...@spectrum-web-components/shared@0.7.0) (2020-08-31)
+
+### Bug Fixes
+
+-   **split-button:** follow visible tab order ([966d3b6](https://github.com/adobe/spectrum-web-components/commit/966d3b601a1eda5bf45394fad3bb7d100c7d3b84))
+
+### Features
+
+-   **split-button:** add split-button pattern ([4833a59](https://github.com/adobe/spectrum-web-components/commit/4833a598bb3da3552d194586350a3888dba79543))
+-   use 3.0.0-beta.\* release for styles ([877b485](https://github.com/adobe/spectrum-web-components/commit/877b485f20c76ec8f77975747322f572eea88e97))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.5.1...@spectrum-web-components/shared@0.6.0) (2020-07-27)
 
 ### Bug Fixes

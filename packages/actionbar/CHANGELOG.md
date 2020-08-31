@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/actionbar@0.3.1...@spectrum-web-components/actionbar@0.4.0) (2020-08-31)
+
+### Features
+
+-   use 3.0.0-beta.\* release for styles ([877b485](https://github.com/adobe/spectrum-web-components/commit/877b485f20c76ec8f77975747322f572eea88e97))
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/actionbar@0.3.0...@spectrum-web-components/actionbar@0.3.1) (2020-08-19)
 
 ### Bug Fixes

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.5.7...@spectrum-web-components/action-menu@0.6.0) (2020-08-31)
+
+### Bug Fixes
+
+-   code review feedback ([23b84fc](https://github.com/adobe/spectrum-web-components/commit/23b84fc4c3244716325e0be7abadab6c476d834a))
+-   css fixes for action-menu ([8c804c8](https://github.com/adobe/spectrum-web-components/commit/8c804c808695a889aebd6a2170aa9d42f904187a))
+
+### Features
+
+-   **card:** upgrade to Spectrum CSS v3.0.0 ([84cf1a9](https://github.com/adobe/spectrum-web-components/commit/84cf1a9758b1e357f18efac5763d17d6a4db0578))
+
 ## [0.5.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.5.6...@spectrum-web-components/action-menu@0.5.7) (2020-08-19)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

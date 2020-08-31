@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.3.4...@spectrum-web-components/switch@0.4.0) (2020-08-31)
+
+### Features
+
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+-   **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+
 ## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.3.3...@spectrum-web-components/switch@0.3.4) (2020-08-19)
 
 **Note:** Version bump only for package @spectrum-web-components/switch

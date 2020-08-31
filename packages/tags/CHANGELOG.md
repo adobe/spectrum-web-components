@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tags@0.2.4...@spectrum-web-components/tags@0.3.0) (2020-08-31)
+
+### Bug Fixes
+
+-   support matching keydown to [dir](<[70b40a9](https://github.com/adobe/spectrum-web-components/commit/70b40a9d3bb5fe2d12208365abf132260270721b)>)
+-   **tags:** correct render types ([ecfb6ab](https://github.com/adobe/spectrum-web-components/commit/ecfb6abc15a0e826c5c5087898f76109749e83fb))
+-   **tags:** support distant sibling selectors ([a8dcf7f](https://github.com/adobe/spectrum-web-components/commit/a8dcf7fb4d30a1bf0e0cdc3ac5e044d75701c5fa))
+
+### Features
+
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+-   **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+
 ## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tags@0.2.3...@spectrum-web-components/tags@0.2.4) (2020-08-19)
 
 **Note:** Version bump only for package @spectrum-web-components/tags

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.14.6...@spectrum-web-components/bundle@0.15.0) (2020-08-31)
+
+### Features
+
+-   **accordion:** add accordion pattern ([97529d8](https://github.com/adobe/spectrum-web-components/commit/97529d848eaa1ea4c0d0a7770f7c73927687256b))
+-   **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+-   **quick-actions:** add quick-actions pattern ([3664b51](https://github.com/adobe/spectrum-web-components/commit/3664b51c53ddc200a57f7db1a16036dc7fc81ed5))
+-   **split-button:** add split-button pattern ([4833a59](https://github.com/adobe/spectrum-web-components/commit/4833a598bb3da3552d194586350a3888dba79543))
+
 ## [0.14.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.14.5...@spectrum-web-components/bundle@0.14.6) (2020-08-19)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.4.3...@spectrum-web-components/card@0.5.0) (2020-08-31)
+
+### Features
+
+-   **card:** upgrade to Spectrum CSS v3.0.0 ([84cf1a9](https://github.com/adobe/spectrum-web-components/commit/84cf1a9758b1e357f18efac5763d17d6a4db0578))
+
 ## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.4.2...@spectrum-web-components/card@0.4.3) (2020-08-19)
 
 **Note:** Version bump only for package @spectrum-web-components/card
