@@ -174,7 +174,7 @@ export const Nested = (): TemplateResult => {
                 Level 1 - B
             </sp-menu-item>
             <sp-menu-divider></sp-menu-divider>
-            <sp-menu-group>
+            <sp-menu-item>
                 <sp-menu>
                     <sp-menu-item>
                         Level 2 - α
@@ -183,7 +183,7 @@ export const Nested = (): TemplateResult => {
                         Level 2 - β
                     </sp-menu-item>
                 </sp-menu>
-            </sp-menu-group>
+            </sp-menu-item>
         </sp-menu>
     `;
 };
