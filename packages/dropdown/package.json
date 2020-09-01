@@ -41,10 +41,10 @@
         "/sync/"
     ],
     "sideEffects": [
-        "./sp-dropdown.js",
-        "./sp-dropdown.ts",
-        "./sync/sp-dropdown.js",
-        "./sync/sp-dropdown.ts"
+        "./sp-*.js",
+        "./sp-*.ts",
+        "./sync/sp-*.js",
+        "./sync/sp-*.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

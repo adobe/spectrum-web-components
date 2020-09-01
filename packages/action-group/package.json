@@ -38,8 +38,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-action-group.js",
-        "./sp-action-group.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "karma start --coverage"

@@ -40,10 +40,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-radio.js",
-        "./sp-radio.ts",
-        "./sp-radio-group.js",
-        "./sp-radio-group.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

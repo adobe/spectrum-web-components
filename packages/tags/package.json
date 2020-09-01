@@ -40,10 +40,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-tag.js",
-        "./sp-tag.ts",
-        "./sp-tags.js",
-        "./sp-tags.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

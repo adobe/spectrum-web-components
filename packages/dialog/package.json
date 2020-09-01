@@ -40,10 +40,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-dialog.js",
-        "./sp-dialog.ts",
-        "./sp-dialog-wrapper.js",
-        "./sp-dialog-wrapper.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

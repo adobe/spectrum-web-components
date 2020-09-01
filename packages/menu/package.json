@@ -44,14 +44,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-menu.js",
-        "./sp-menu.ts",
-        "./sp-menu-divider.js",
-        "./sp-menu-divider.ts",
-        "./sp-menu-group.js",
-        "./sp-menu-group.ts",
-        "./sp-menu-item.js",
-        "./sp-menu-item.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
