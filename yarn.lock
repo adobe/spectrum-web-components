@@ -6887,15 +6887,7 @@ chalk@^3.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.0.0.tgz#6e98081ed2d17faab615eb52ac66ec1fe6209e72"
-  integrity sha512-N9oWFcegS0sFr9oh1oz2d7Npos6vNoWW9HvtCg5N1KRFpUhaAhvTv5Y58g880fZaEYSNm3qDz8SU1UrGvp+n7A==
-  dependencies:
-    ansi-styles "^4.1.0"
-    supports-color "^7.1.0"
-
-chalk@^4.1.0:
+chalk@^4.0.0, chalk@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.0.tgz#4e14870a618d9e2edd97dd8345fd9d9dc315646a"
   integrity sha512-qwx12AxXe2Q5xQ43Ac//I6v5aXTipYrSESdOgzrN+9XjgEpyjpKuvSGaN4qE93f7TQTlerQQ8S+EQ0EyDoVL1A==
@@ -9878,19 +9870,7 @@ fast-glob@^2.0.2, fast-glob@^2.2.6:
     merge2 "^1.2.3"
     micromatch "^3.1.10"
 
-fast-glob@^3.0.3, fast-glob@^3.1.1:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.2.tgz#ade1a9d91148965d4bf7c51f72e1ca662d32e63d"
-  integrity sha512-UDV82o4uQyljznxwMxyVRJgZZt3O5wENYojjzbaGEGZgeOxkLFf+V4cnUD+krzb2F72E18RhamkMZ7AdeggF7A==
-  dependencies:
-    "@nodelib/fs.stat" "^2.0.2"
-    "@nodelib/fs.walk" "^1.2.3"
-    glob-parent "^5.1.0"
-    merge2 "^1.3.0"
-    micromatch "^4.0.2"
-    picomatch "^2.2.1"
-
-fast-glob@^3.2.2:
+fast-glob@^3.0.3, fast-glob@^3.1.1, fast-glob@^3.2.2:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.4.tgz#d20aefbf99579383e7f3cc66529158c9b98554d3"
   integrity sha512-kr/Oo6PX51265qeuCYsyGypiO5uJFgBS0jksyG7FUeCyQzNwYnzrNIMR1NXfkZXsMYXYLRAHgISHBz8gQcxKHQ==
@@ -13317,9 +13297,9 @@ lines-and-columns@^1.1.6:
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
 lit-analyzer@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/lit-analyzer/-/lit-analyzer-1.2.0.tgz#e57334390ca9bd501f6bd5ac1ace3fad76053087"
-  integrity sha512-y3Zoo0gmfM3wVyDZvURoFnBmkWR+5jI6PAQ3C1j5T7R2PaY3beqJTZvictaahN8GEuPctXejddIgWNAkQIxKNA==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/lit-analyzer/-/lit-analyzer-1.2.1.tgz#725331a4019ae870dd631d4dd709d39a237161ea"
+  integrity sha512-OEARBhDidyaQENavLbzpTKbEmu5rnAI+SdYsH4ia1BlGlLiqQXoym7uH1MaRPtwtUPbkhUfT4OBDZ+74VHc3Cg==
   dependencies:
     chalk "^2.4.2"
     didyoumean2 "4.1.0"
@@ -15627,12 +15607,7 @@ parse5@^5.0.0, parse5@^5.1.0, parse5@^5.1.1:
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.1.tgz#f68e4e5ba1852ac2cadc00f4555fff6c2abb6178"
   integrity sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==
 
-parse5@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.0.tgz#d2ac3448289c84b49947d49a39f7bef6200fa6ba"
-  integrity sha512-lC0A+4DefTdRr+DLQlEwwZqndL9VzEjiuegI5bj3hp4bnzzwQldSqCpHv7+msRpSOHGJyJvkcCa4q15LMUJ8rg==
-
-parse5@^6.0.1:
+parse5@^6.0.0, parse5@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
   integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
