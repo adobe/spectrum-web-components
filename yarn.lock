@@ -3480,9 +3480,9 @@
   integrity sha512-KzgL9xr87Y5nEnYyAvOZWZkRe7wjsteDF4kAcndUXLc5mKv2rIEz1x80vYz6csp2nT20+90RBUqkQSgKVWE8wQ==
 
 "@spectrum-css/card@^3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-3.0.0-beta.2.tgz#fae862651b7e689ea985f87380957df49e3ed41a"
-  integrity sha512-Hc2V1YXAbPTbdcqdfs6fSzKJUs83DDYT0H5lfkFNZKkDXT+qrEcWwTQLr2bHlGabvVgu8mkBoChpvVhtKsx3Ug==
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-3.0.0-beta.3.tgz#3b48763854c0284528b0e38f9fd96b21b8334f3a"
+  integrity sha512-deOx4ldZJyNlKAAjwRXQ1LsmrAQJrBaKIEaso0J7PQQ0fLM4qmo+LW2Vli1lPY4fedY2F4LBb9nf0WQ6uE4Mdg==
 
 "@spectrum-css/checkbox@^3.0.0-beta.3":
   version "3.0.0-beta.3"
