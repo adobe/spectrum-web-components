@@ -171,3 +171,16 @@ label {
         var(--spectrum-global-dimension-size-100)
     );
 }
+
+.alerts {
+    width: 100vw;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.alerts sp-toast {
+    margin: 0 auto var(--spectrum-global-dimension-size-300);
+}

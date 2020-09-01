@@ -82,7 +82,10 @@ checkbox, and also prevents clicks from activating it.
 Event handlers for clicks and other user actions can be registered on an `<sp-checkbox>` as they would a standard `<input type="checkbox">` element.
 
 ```html
-<sp-checkbox id="checkbox-example" onclick="javascript:alert('Click')">
+<sp-checkbox
+    id="checkbox-example"
+    onclick="spAlert(this, '<sp-checkbox> clicked!')"
+>
     Web component
 </sp-checkbox>
 ```
