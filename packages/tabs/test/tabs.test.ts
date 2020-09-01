@@ -31,8 +31,8 @@ import {
     arrowDownEvent,
 } from '../../../test/testing-helpers.js';
 
-const createTabs = async (): Promise<Tabs> =>
-    await fixture<Tabs>(
+const createTabs = async (): Promise<Tabs> => {
+    const tabs = await fixture<Tabs>(
         html`
             <sp-tabs selected="first">
                 <sp-tab label="Tab 1" value="first"></sp-tab>
@@ -41,6 +41,9 @@ const createTabs = async (): Promise<Tabs> =>
             </sp-tabs>
         `
     );
+    await elementUpdated(tabs);
+    return tabs;
+};
 
 describe('Tabs', () => {
     it('loads accessibly', async () => {
@@ -68,25 +71,25 @@ describe('Tabs', () => {
         if (!(thirdTab instanceof Tab))
             throw new Error('thirdTab not of type Tab');
 
-        expect(firstTab.selected).to.be.true;
-        expect(secondTab.selected).to.be.false;
-        expect(thirdTab.selected).to.be.false;
+        expect(firstTab.selected, 'first: 1, selected').to.be.true;
+        expect(secondTab.selected, 'second: 1, not selected').to.be.false;
+        expect(thirdTab.selected, 'third: 1, not selected').to.be.false;
         expect(tabs.selected).to.equal(firstTab.value);
 
         secondTab.click();
         await elementUpdated(tabs);
 
-        expect(firstTab.selected).to.be.false;
-        expect(secondTab.selected).to.be.true;
-        expect(thirdTab.selected).to.be.false;
+        expect(firstTab.selected, 'first: 2, not selected').to.be.false;
+        expect(secondTab.selected, 'second: 2, selected').to.be.true;
+        expect(thirdTab.selected, 'third: 2, not selected').to.be.false;
         expect(tabs.selected).to.equal(secondTab.value);
 
         thirdTab.click();
         await elementUpdated(tabs);
 
-        expect(firstTab.selected).to.be.false;
-        expect(secondTab.selected).to.be.false;
-        expect(thirdTab.selected).to.be.true;
+        expect(firstTab.selected, 'first: 3, not selected').to.be.false;
+        expect(secondTab.selected, 'second: 3, not selected').to.be.false;
+        expect(thirdTab.selected, 'third: 3, selected').to.be.true;
         expect(tabs.selected).to.equal(thirdTab.value);
     });
 
@@ -142,24 +145,25 @@ describe('Tabs', () => {
         if (!(tab3 instanceof Tab)) throw new Error('tab3 not of type Tab');
 
         expect(tabs.selected).to.equal('first');
-        expect(tab1.selected).to.be.true;
-        expect(tab2.selected).to.be.false;
-        expect(tab3.selected).to.be.false;
+        expect(tab1.selected, 'first: 1, selected').to.be.true;
+        expect(tab2.selected, 'second: 1, not selected').to.be.false;
+        expect(tab3.selected, 'thurd: 1, not selected').to.be.false;
 
         tabs.selected = 'second';
         await elementUpdated(tabs);
 
         expect(tabs.selected).to.equal('second');
-        expect(tab1.selected).to.be.false;
-        expect(tab2.selected).to.be.true;
-        expect(tab3.selected).to.be.false;
+        expect(tab1.selected, 'first: 2, not selected').to.be.false;
+        expect(tab2.selected, 'second: 2, selected').to.be.true;
+        expect(tab3.selected, 'third: 2, not selected').to.be.false;
 
         tabs.selected = 'third';
+        await elementUpdated(tabs);
 
         expect(tabs.selected).to.equal('third');
-        expect(tab1.selected).to.be.false;
-        expect(tab2.selected).to.be.false;
-        expect(tab3.selected).to.be.true;
+        expect(tab1.selected, 'first: 3, not selected').to.be.false;
+        expect(tab2.selected, 'second: 3, not selected').to.be.false;
+        expect(tab3.selected, 'third: 3, selected').to.be.true;
     });
 
     it('ensures setting selected and clicking on tab both work together', async () => {
@@ -323,7 +327,6 @@ describe('Tabs', () => {
                 </sp-tab>
             </sp-tabs>
         `);
-
         await elementUpdated(el);
         expect(el.selected).to.be.equal('');
 
