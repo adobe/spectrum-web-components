@@ -67,15 +67,15 @@ export class Tooltip extends SpectrumElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener('sp-overlay-query', this.onOverlyQuery);
+        this.addEventListener('sp-overlay-query', this.onOverlayQuery);
     }
 
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        this.removeEventListener('sp-overlay-query', this.onOverlyQuery);
+        this.removeEventListener('sp-overlay-query', this.onOverlayQuery);
     }
 
-    public onOverlyQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
+    public onOverlayQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
         /* c8 ignore next */
         if (!event.target) return;
 
