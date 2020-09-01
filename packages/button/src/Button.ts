@@ -29,6 +29,7 @@ export class Button extends ButtonBase {
     public static get styles(): CSSResultArray {
         return [...super.styles, buttonStyles];
     }
+
     /**
      * The visual variant to apply to this button.
      */
