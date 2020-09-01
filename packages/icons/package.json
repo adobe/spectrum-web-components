@@ -40,10 +40,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-icons-large.js",
-        "./sp-icons-large.ts",
-        "./sp-icons-medium.js",
-        "./sp-icons-medium.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

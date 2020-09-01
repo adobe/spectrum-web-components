@@ -50,8 +50,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-theme.js",
-        "./sp-theme.ts",
+        "./sp-*.js",
+        "./sp-*.ts",
         "./theme-*.js",
         "./theme-*.ts",
         "./scale-*.js",

@@ -38,8 +38,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-asset.js",
-        "./sp-asset.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

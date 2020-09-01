@@ -43,7 +43,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@spectrum-web-components/base": "^0.1.0",
-        "focus-visible": "^5.0.2",
+        "focus-visible": "^5.1.0",
         "tslib": "^2.0.0"
     }
 }

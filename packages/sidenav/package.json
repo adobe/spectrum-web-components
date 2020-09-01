@@ -42,12 +42,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./sp-sidenav.js",
-        "./sp-sidenav.ts",
-        "./sp-sidenav-heading.js",
-        "./sp-sidenav-heading.ts",
-        "./sp-sidenav-item.js",
-        "./sp-sidenav-item.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
