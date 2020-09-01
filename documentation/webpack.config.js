@@ -120,6 +120,19 @@ module.exports = merge(openWcConfig, {
                 use: [
                     {
                         loader: 'html-loader',
+                        options: {
+                            minimize: {
+                                collapseWhitespace: false,
+                                removeComments: true,
+                                caseSensitive: true,
+                                removeRedundantAttributes: true,
+                                removeScriptTypeAttributes: true,
+                                removeStyleLinkTypeAttributes: true,
+                                useShortDoctype: true,
+                                minifyCSS: true,
+                                minifyJS: true,
+                            },
+                        },
                     },
                     {
                         loader: 'posthtml-loader',
