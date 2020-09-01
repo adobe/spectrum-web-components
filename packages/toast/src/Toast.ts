@@ -142,6 +142,7 @@ export class Toast extends SpectrumElement {
         }
         if (time - this.countdownStart > (this._timeout as number)) {
             this.open = false;
+            this.countdownStart = 0;
         } else {
             this.countdown();
         }
@@ -179,7 +180,7 @@ export class Toast extends SpectrumElement {
     protected render(): TemplateResult {
         return html`
             ${this.renderIcon(this.variant)}
-            <div class="body">
+            <div class="body" role="alert">
                 <div class="content">
                     <slot></slot>
                 </div>
@@ -197,7 +198,6 @@ export class Toast extends SpectrumElement {
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        this.setAttribute('role', 'alert');
         this.open = true;
     }
 

@@ -26,7 +26,9 @@ import { Switch } from '@spectrum-web-components/switch';
 ## Example
 
 ```html
-<sp-switch label="Switch" onclick="javascript:alert('Click')">Switch</sp-switch>
+<sp-switch label="Switch" onclick="spAlert(this, '<sp-switch> clicked!')">
+    Switch
+</sp-switch>
 ```
 
 ## Variants

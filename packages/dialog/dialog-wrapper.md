@@ -44,7 +44,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
         dialogWrapper.hidden = false;
         dialogWrapper.open = true;
         function handleEvent({type}) {
-            alert(`Handling '${type}' event.`);
+            spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
             dialogWrapper.open = false;
             dialogWrapper.removeEventListener('close', handleEvent);
         }
@@ -77,7 +77,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
         dialogWrapper.hidden = false;
         dialogWrapper.open = true;
         function handleEvent({type}) {
-            alert(`Handling '${type}' event.`);
+            spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
             dialogWrapper.open = false;
             dialogWrapper.removeEventListener('confirm', handleEvent);
             dialogWrapper.removeEventListener('secondary', handleEvent);

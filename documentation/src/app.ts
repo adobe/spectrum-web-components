@@ -12,3 +12,21 @@ governing permissions and limitations under the License.
 import './main.css';
 import './components/page.js';
 import './router.js';
+
+declare global {
+    interface Window {
+        spAlert(el: HTMLElement, message: string): void;
+    }
+}
+
+window.spAlert = (el: HTMLElement, message: string): void => {
+    el.dispatchEvent(
+        new CustomEvent('alert', {
+            composed: true,
+            bubbles: true,
+            detail: {
+                message,
+            },
+        })
+    );
+};

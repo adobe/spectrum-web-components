@@ -16,6 +16,7 @@ import {
     property,
     SpectrumElement,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import './side-nav.js';
 import layoutStyles from './layout.css';
@@ -27,6 +28,7 @@ import '@spectrum-web-components/dropdown/sp-dropdown.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/button/sp-action-button.js';
+import '@spectrum-web-components/toast/sp-toast.js';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
@@ -46,14 +48,22 @@ const DEFAULT_DIR = (window.localStorage
     ? localStorage.getItem(SWC_THEME_DIR_KEY) || DIR_FALLBACK
     : DIR_FALLBACK) as 'ltr' | 'rtl';
 
-console.log(DEFAULT_DIR);
-
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
 export class LayoutElement extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [layoutStyles];
     }
+
+    @property({ attribute: false })
+    private alerts: Map<
+        HTMLElement,
+        {
+            count: number;
+            message: string;
+            element: (count: number, message: string) => TemplateResult;
+        }
+    > = new Map();
 
     @property({ attribute: false })
     public color: Color = DEFAULT_COLOR;
@@ -104,6 +114,44 @@ export class LayoutElement extends SpectrumElement {
         const next = target.nextElementSibling as Dropdown;
         if (!next || next.open) return;
         next.click();
+    }
+
+    private addAlert(event: CustomEvent<{ message: string }>): void {
+        const target = event.composedPath()[0] as HTMLElement;
+        if (!this.alerts.has(target)) {
+            const close = () => {
+                this.alerts.delete(target);
+                target.focus();
+                this.requestUpdate();
+            };
+            this.alerts.set(target, {
+                count: 0,
+                message: '',
+                /**
+                 * <sp-toast> does not allow a `timeout` of less that 6000
+                 * use this as a cheat to reset the timeout to 6000 for
+                 * every additional alert.
+                 */
+
+                element: (count: number, message: string) => html`
+                    <sp-toast
+                        .timeout=${count}
+                        variant="info"
+                        @close=${close}
+                        open
+                    >
+                        ${message} ${count > 1 ? `(${count} alerts)` : ''}
+                    </sp-toast>
+                `,
+            });
+        }
+        const alert = this.alerts.get(target);
+        this.alerts.set(target, {
+            element: alert!.element,
+            count: alert!.count + 1,
+            message: event.detail.message,
+        });
+        this.requestUpdate();
     }
 
     renderContent() {
@@ -175,7 +223,7 @@ export class LayoutElement extends SpectrumElement {
                         ?inert=${this.isNarrow && this.open}
                         role="main"
                     >
-                        <div id="page">
+                        <div id="page" @alert=${this.addAlert}>
                             <div class="manage-theme">
                                 <label @click=${this.onClickLabel}>Theme</label>
                                 <sp-dropdown
@@ -240,6 +288,15 @@ export class LayoutElement extends SpectrumElement {
                         </div>
                     </main>
                 </div>
+                ${this.alerts.size
+                    ? html`
+                          <div class="alerts" role="region">
+                              ${[...this.alerts.values()].map((alert) =>
+                                  alert.element(alert.count, alert.message)
+                              )}
+                          </div>
+                      `
+                    : html``}
             </sp-theme>
         `;
     }

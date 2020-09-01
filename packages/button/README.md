@@ -111,7 +111,7 @@ Events handlers for clicks and other user actions can be registered on a
 `<sp-button>` as on a standard HTML `<button>` element.
 
 ```html
-<sp-button onclick="alert('spectrum-button clicked!')">Click me</sp-button>
+<sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
 ```
 
 ### Autofocus
