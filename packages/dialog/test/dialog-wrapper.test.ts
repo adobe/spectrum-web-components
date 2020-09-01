@@ -75,7 +75,11 @@ describe('Dialog Wrapper', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const dialog = root.querySelector('sp-dialog') as Dialog;
-        dialog.dispatchEvent(new Event('close'));
+        const dialogRoot = dialog.shadowRoot ? dialog.shadowRoot : dialog;
+        const dismissButton = dialogRoot.querySelector(
+            '.close-button'
+        ) as HTMLButtonElement;
+        dismissButton.click();
 
         await elementUpdated(el);
         expect(el.open).to.be.false;
