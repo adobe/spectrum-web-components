@@ -33,8 +33,8 @@ describe('Splitbutton', () => {
         await elementUpdated(el1);
         await elementUpdated(el2);
 
-        expect(el1).to.be.accessible();
-        expect(el2).to.be.accessible();
+        await expect(el1).to.be.accessible();
+        await expect(el2).to.be.accessible();
     });
     it('loads [type="more"] splitbutton accessibly', async () => {
         const test = await fixture<HTMLDivElement>(moreCta());
@@ -44,8 +44,8 @@ describe('Splitbutton', () => {
         await elementUpdated(el1);
         await elementUpdated(el2);
 
-        expect(el1).to.be.accessible();
-        expect(el2).to.be.accessible();
+        await expect(el1).to.be.accessible();
+        await expect(el2).to.be.accessible();
     });
     it('manages tab interactions', async () => {
         const test = await fixture<HTMLDivElement>(moreCta());

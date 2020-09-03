@@ -144,6 +144,7 @@ export class SplitButton extends DropdownBase {
                     @click=${this.onButtonClick}
                     @focus=${this.onButtonFocus}
                     ?disabled=${this.disabled}
+                    aria-label="More"
                 >
                     <sp-icon
                         class="icon ${this.type === 'field'
