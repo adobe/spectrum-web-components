@@ -207,6 +207,8 @@ module.exports = [
     'toast--negative',
     'toast--positive',
     'toast--info',
+    'top-nav--default',
+    'top-nav--selected',
     'tooltip--default',
     'tooltip--w-icon',
     'underlay--default',

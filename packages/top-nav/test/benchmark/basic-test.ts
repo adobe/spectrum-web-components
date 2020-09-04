@@ -10,9 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './focus-visible.js';
-export * from './focusable.js';
-export * from './get-active-element.js';
-export * from './like-anchor.js';
-export * from './observe-slot-presence.js';
-export * from './observe-slot-text.js';
+import '@spectrum-web-components/top-nav/sp-top-nav.js';
+import { html } from '@spectrum-web-components/base';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+
+measureFixtureCreation(html`
+    <sp-top-nav open></sp-top-nav>
+`);

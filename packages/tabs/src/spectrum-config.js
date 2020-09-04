@@ -47,7 +47,7 @@ const config = {
             ],
             complexSelectors: [
                 {
-                    replacement: '::slotted(sp-tab:not(:first-child))',
+                    replacement: '::slotted(:not(:first-child))',
                     selector:
                         '.spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator)',
                 },

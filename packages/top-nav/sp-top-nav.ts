@@ -10,9 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './focus-visible.js';
-export * from './focusable.js';
-export * from './get-active-element.js';
-export * from './like-anchor.js';
-export * from './observe-slot-presence.js';
-export * from './observe-slot-text.js';
+import { TopNav } from './src/TopNav.js';
+
+customElements.define('sp-top-nav', TopNav);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-top-nav': TopNav;
+    }
+}
