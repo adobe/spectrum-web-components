@@ -42,7 +42,7 @@ export function ObserveSlotText<T extends Constructor<UpdatingElement>>(
         @property({ type: Boolean, attribute: false })
         public slotHasContent = false;
 
-        @queryAssignedNodes(slotSelector)
+        @queryAssignedNodes(slotSelector, true)
         private [assignedNodesList]!: NodeListOf<HTMLElement>;
 
         public manageTextObservedSlot(): void {
