@@ -1,0 +1,54 @@
+{
+    "name": "@spectrum-web-components/top-nav",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/top-nav"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/top-nav",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.0.1",
+    "description": "",
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        "./src/": "./src/",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./sp-top-nav": "./sp-top-nav.js",
+        "./sp-top-nav.js": "./sp-top-nav.js"
+    },
+    "files": [
+        "custom-elements.json",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/"
+    ],
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "devDependencies": {},
+    "dependencies": {
+        "@spectrum-web-components/tabs": "^0.2.0",
+        "tslib": "^2.0.0"
+    }
+}

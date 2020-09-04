@@ -117,14 +117,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
     vertical-align: top;
 }
-:host([dir='ltr'][direction='horizontal']) ::slotted(sp-tab:not(:first-child)) {
+:host([dir='ltr'][direction='horizontal']) ::slotted(:not(:first-child)) {
     /* [dir=ltr] .spectrum-Tabs--horizontal .spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator) */
     margin-left: var(
         --spectrum-tabs-item-gap,
         var(--spectrum-global-dimension-size-300)
     );
 }
-:host([dir='rtl'][direction='horizontal']) ::slotted(sp-tab:not(:first-child)) {
+:host([dir='rtl'][direction='horizontal']) ::slotted(:not(:first-child)) {
     /* [dir=rtl] .spectrum-Tabs--horizontal .spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator) */
     margin-right: var(
         --spectrum-tabs-item-gap,
