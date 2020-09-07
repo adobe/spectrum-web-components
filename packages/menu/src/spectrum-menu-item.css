@@ -255,7 +255,7 @@ slot[name='icon'] + #label,
     transform: matrix(-1, 0, 0, 1, 0, 0);
 }
 :host([dir='ltr']) #button:focus-visible,
-:host([dir='ltr']) #button.is-focused {
+:host([dir='ltr'][focused]) #button {
     /* [dir=ltr] .spectrum-Menu-item.focus-ring,
    * [dir=ltr] .spectrum-Menu-item.is-focused */
     border-left-color: var(
@@ -264,7 +264,7 @@ slot[name='icon'] + #label,
     );
 }
 :host([dir='rtl']) #button:focus-visible,
-:host([dir='rtl']) #button.is-focused {
+:host([dir='rtl'][focused]) #button {
     /* [dir=rtl] .spectrum-Menu-item.focus-ring,
    * [dir=rtl] .spectrum-Menu-item.is-focused */
     border-right-color: var(
@@ -273,7 +273,7 @@ slot[name='icon'] + #label,
     );
 }
 #button:focus-visible,
-#button.is-focused {
+:host([focused]) #button {
     /* .spectrum-Menu-item.focus-ring,
    * .spectrum-Menu-item.is-focused */
     background-color: var(

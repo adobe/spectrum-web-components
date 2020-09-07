@@ -329,14 +329,16 @@ describe('Dropdown', () => {
         const el = await dropdownFixture();
 
         await elementUpdated(el);
+        const menu = el.querySelector('sp-menu') as Menu;
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
         el.open = true;
         await elementUpdated(el);
         await waitUntil(
-            () => document.activeElement === firstItem,
+            () => document.activeElement === menu,
             'first item focused'
         );
+        expect(firstItem.focused).to.be.true;
 
         el.blur();
         await elementUpdated(el);
@@ -345,17 +347,18 @@ describe('Dropdown', () => {
         el.focus();
         await elementUpdated(el);
         await waitUntil(
-            () => document.activeElement === firstItem,
+            () => document.activeElement === menu,
             'first item refocused'
         );
         expect(el.open).to.be.true;
-        expect(document.activeElement === firstItem).to.be.true;
+        expect(document.activeElement === menu).to.be.true;
+        expect(firstItem.focused).to.be.true;
     });
     it('allows tabing to close', async () => {
         const el = await dropdownFixture();
 
         await elementUpdated(el);
-        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+        const menu = el.querySelector('sp-menu') as Menu;
 
         el.open = true;
         await elementUpdated(el);
@@ -363,21 +366,21 @@ describe('Dropdown', () => {
         expect(el.open).to.be.true;
         el.focus();
         await elementUpdated(el);
-        await waitUntil(() => document.activeElement === firstItem);
+        await waitUntil(() => document.activeElement === menu);
         await waitUntil(
-            () => document.activeElement === firstItem,
+            () => document.activeElement === menu,
             'first item refocused'
         );
         expect(el.open).to.be.true;
-        expect(document.activeElement === firstItem).to.be.true;
+        expect(document.activeElement === menu).to.be.true;
 
-        firstItem.dispatchEvent(tabEvent);
+        menu.dispatchEvent(tabEvent);
         await elementUpdated(el);
         await waitUntil(() => !el.open);
 
         expect(el.open, 'closes').to.be.false;
-        expect(document.activeElement === firstItem, 'focuses something else')
-            .to.be.false;
+        expect(document.activeElement === menu, 'focuses something else').to.be
+            .false;
     });
     it('displays selected item text by default', async () => {
         const focusSelectedSpy = spy();
@@ -439,15 +442,10 @@ describe('Dropdown', () => {
         button.click();
 
         await elementUpdated(menu);
-        await waitUntil(
-            () => document.activeElement === secondItem,
-            'second item focused'
-        );
+        await waitUntil(() => document.activeElement === menu, 'menu focused');
 
         expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
-        expect(focusSelectedSpy.called, 'focused selected element').to.be.true;
-        expect(focusSelectedSpy.calledOnce, 'focused selected element once').to
-            .be.true;
+        expect(secondItem.focused, 'secondItem "focused"').to.be.true;
     });
     it('resets value when item not available', async () => {
         const el = await fixture<Dropdown>(

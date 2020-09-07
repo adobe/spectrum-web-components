@@ -63,13 +63,11 @@ export class Menu extends SpectrumElement {
     }
 
     public focus(): void {
-        if (this.menuItems.length === 0) {
+        if (!this.menuItems.length) {
             return;
         }
-
-        const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
-        this.focusedItemIndex = this.focusInItemIndex;
-        focusInItem.focus();
+        this.focusMenuItemByOffset(0);
+        super.focus();
     }
 
     private onClick(event: Event): void {
@@ -105,6 +103,10 @@ export class Menu extends SpectrumElement {
             this.prepareToCleanUp();
             return;
         }
+        if (code === 'Space' || code === 'Enter') {
+            this.menuItems[this.focusedItemIndex].click();
+            return;
+        }
         if (code !== 'ArrowDown' && code !== 'ArrowUp') {
             return;
         }
@@ -115,6 +117,7 @@ export class Menu extends SpectrumElement {
 
     public focusMenuItemByOffset(offset: number): void {
         const focusedItem = this.menuItems[this.focusedItemIndex] as MenuItem;
+        focusedItem.focused = false;
         this.focusedItemIndex =
             (this.menuItems.length + this.focusedItemIndex + offset) %
             this.menuItems.length;
@@ -125,7 +128,8 @@ export class Menu extends SpectrumElement {
                 this.menuItems.length;
             itemToFocus = this.menuItems[this.focusedItemIndex] as MenuItem;
         }
-        itemToFocus.focus();
+        itemToFocus.focused = true;
+        this.setAttribute('aria-activedescendant', itemToFocus.id);
         focusedItem.tabIndex = -1;
     }
 
@@ -163,6 +167,11 @@ export class Menu extends SpectrumElement {
             item = this.menuItems[index] as MenuItem;
         }
         index = Math.max(index, 0);
+        this.menuItems.forEach((item, i) => {
+            if (i !== index) {
+                item.focused = false;
+            }
+        });
         this.focusedItemIndex = index;
         this.focusInItemIndex = index;
     }
