@@ -51,6 +51,11 @@ const config = {
                     selector: '.is-selected',
                     name: 'selected',
                 },
+                {
+                    type: 'boolean',
+                    selector: '.is-focused',
+                    name: 'focused',
+                },
             ],
             ids: [
                 {

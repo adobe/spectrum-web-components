@@ -29,10 +29,8 @@ export const Default = (): TemplateResult => {
                 const dropdown = event.target as Dropdown;
                 action(`Change: ${dropdown.value}`)();
             }}"
+            label="Select a Country with a very long label, too long in fact"
         >
-            <span slot="label">
-                Select a Country with a very long label, too long in fact
-            </span>
             <sp-menu>
                 <sp-menu-item>
                     Deselect

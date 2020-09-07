@@ -15,6 +15,8 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
+    PropertyValues,
+    ifDefined,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/icon/sp-icon.js';
@@ -37,7 +39,12 @@ export class MenuItem extends ActionButton {
         return [menuItemStyles, checkmarkMediumStyles];
     }
 
+    static instanceCount = 0;
+
     private _value = '';
+
+    @property({ type: Boolean, reflect: true })
+    public focused = false;
 
     @property({ type: String })
     public get value(): string {
@@ -81,6 +88,41 @@ export class MenuItem extends ActionButton {
             `);
         }
         return content;
+    }
+
+    protected render(): TemplateResult {
+        return this.href && this.href.length > 0
+            ? this.renderAnchor({
+                  id: 'button',
+                  className: 'button',
+                  anchorContent: this.buttonContent,
+              })
+            : html`
+                  <div
+                      id="button"
+                      class="button"
+                      aria-label=${ifDefined(this.label)}
+                  >
+                      ${this.buttonContent}
+                  </div>
+              `;
+    }
+
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
+        if (!this.hasAttribute('id')) {
+            this.id = `sp-menu-item-${MenuItem.instanceCount++}`;
+        }
+    }
+
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (this.getAttribute('role') === 'option' && changes.has('selected')) {
+            this.setAttribute(
+                'aria-selected',
+                this.selected ? 'true' : 'false'
+            );
+        }
     }
 
     public connectedCallback(): void {

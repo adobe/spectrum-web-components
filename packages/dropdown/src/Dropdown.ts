@@ -333,6 +333,8 @@ export class DropdownBase extends Focusable {
         return html`
             <button
                 aria-haspopup="true"
+                aria-controls="popover"
+                aria-expanded=${this.open ? 'true' : 'false'}
                 aria-label=${ifDefined(this.label || undefined)}
                 id="button"
                 class="button"

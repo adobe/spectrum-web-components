@@ -154,17 +154,20 @@ describe('Menu', () => {
 
         el.focus();
 
-        expect(document.activeElement === firstItem).to.be.true;
+        expect(document.activeElement === el).to.be.true;
+        expect(firstItem.focused).to.be.true;
 
         el.dispatchEvent(arrowUpEvent);
         el.dispatchEvent(arrowUpEvent);
         el.dispatchEvent(tEvent);
 
-        expect(document.activeElement === thirdToLastItem).to.be.true;
+        expect(document.activeElement === el).to.be.true;
+        expect(thirdToLastItem.focused).to.be.true;
 
         el.dispatchEvent(arrowDownEvent);
 
-        expect(document.activeElement === secondToLastItem).to.be.true;
+        expect(document.activeElement === el).to.be.true;
+        expect(secondToLastItem.focused).to.be.true;
     });
 
     it('handle focus and late descendent additions', async () => {
@@ -189,9 +192,10 @@ describe('Menu', () => {
 
         el.focus();
 
-        expect(document.activeElement === firstItem).to.be.true;
+        expect(document.activeElement === el).to.be.true;
+        expect(firstItem.focused).to.be.true;
 
-        firstItem.blur();
+        el.blur();
 
         const group = el.querySelector('sp-menu-group') as HTMLElement;
         const prependedItem = document.createElement('sp-menu-item');
@@ -203,16 +207,19 @@ describe('Menu', () => {
 
         await elementUpdated(el);
 
-        expect(document.activeElement === firstItem).to.be.false;
-        expect(document.activeElement === prependedItem).to.be.false;
+        expect(document.activeElement === el).to.be.false;
+        expect(firstItem.focused).to.be.false;
+        expect(prependedItem.focused).to.be.false;
 
         el.focus();
 
-        expect(document.activeElement === prependedItem).to.be.true;
+        expect(document.activeElement === el).to.be.true;
+        expect(prependedItem.focused).to.be.true;
 
         el.dispatchEvent(arrowUpEvent);
 
-        expect(document.activeElement === appendedItem).to.be.true;
+        expect(document.activeElement === el).to.be.true;
+        expect(appendedItem.focused).to.be.true;
     });
 
     it('cleans up when tabbing away', async () => {
@@ -245,10 +252,11 @@ describe('Menu', () => {
         ) as MenuItem;
 
         el.focus();
-        expect(document.activeElement === firstItem, 'first').to.be.true;
+        expect(document.activeElement === el).to.be.true;
+        expect(firstItem.focused, 'first').to.be.true;
         el.dispatchEvent(arrowDownEvent);
         el.dispatchEvent(arrowDownEvent);
-        expect(document.activeElement === thirdItem, 'third').to.be.true;
+        expect(thirdItem.focused, 'third').to.be.true;
         // imitate tabbing away
         el.dispatchEvent(tabEvent);
         el.dispatchEvent(
@@ -262,6 +270,6 @@ describe('Menu', () => {
         el.startListeningToKeyboard();
         // focus management should start again from the first item.
         el.dispatchEvent(arrowDownEvent);
-        expect(document.activeElement === secondItem, 'second').to.be.true;
+        expect(secondItem.focused, 'second').to.be.true;
     });
 });

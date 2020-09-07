@@ -12,19 +12,8 @@ governing permissions and limitations under the License.
 
 @import './spectrum-menu-item.css';
 
-#button {
-    width: 100%;
-}
-
-button {
-    border: 0;
-    background: 0;
-    padding: 0;
-    margin: 0;
-    display: inherit;
-    font: inherit;
-    color: inherit;
-    text-align: inherit;
+:host {
+    display: block;
 }
 
 #selected {

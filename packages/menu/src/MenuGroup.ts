@@ -46,13 +46,13 @@ export class MenuGroup extends SpectrumElement {
             <span class="header" id=${labelledby} aria-hidden="true">
                 <slot name="header"></slot>
             </span>
-            <div aria-labelledby=${labelledby} role="group">
+            <div aria-labelledby=${labelledby} role="none">
                 <slot></slot>
             </div>
         `;
     }
 
     protected firstUpdated(): void {
-        this.setAttribute('role', 'group');
+        this.setAttribute('role', 'none');
     }
 }
