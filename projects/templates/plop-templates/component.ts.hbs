@@ -12,17 +12,17 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 
 import styles from './{{ name }}.css.js';
 
 /**
  * @element {{> tagnamePartial }}
  */
-export class {{className name}} extends LitElement {
+export class {{className name}} extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles];
     }

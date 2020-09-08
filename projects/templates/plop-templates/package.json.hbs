@@ -38,8 +38,8 @@
         "/src/"
     ],
     "sideEffects": [
-        "./{{> tagnamePartial }}.js",
-        "./{{> tagnamePartial }}.ts"
+        "./sp-*.js",
+        "./sp-*.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
@@ -47,10 +47,10 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/{{ name }}": "^2.0.0"
+        "@spectrum-css/{{spectrumCSS name}}": "^2.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/base": "^0.0.1",
+        "@spectrum-web-components/base": "^0.1.0",
         "tslib": "^2.0.0"
     }
 }

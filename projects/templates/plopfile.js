@@ -10,6 +10,10 @@ module.exports = function (plop) {
         const capitalized = camel.charAt(0).toUpperCase() + camel.substring(1);
         return capitalized;
     });
+    // name of Spectrum CSS package
+    plop.setHelper('spectrumCSS', function (name) {
+        return name.replace(/-/g, '');
+    });
     // name used as title in storybook and documentation
     plop.setHelper('displayName', function (name) {
         const camel = name.replace(/-([a-z])/g, (g) => {
