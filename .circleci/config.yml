@@ -257,6 +257,20 @@ jobs:
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
             - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site" -t
 
+    publish-preview:
+        executor: node
+
+        steps:
+            - downstream
+            - restore_cache:
+                  keys:
+                      - v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Installing Dependencies
+                  command: yarn
+            - run: yarn docs:build
+            - run: yarn netlify deploy
+
 workflows:
     version: 2
     build:
@@ -315,5 +329,8 @@ workflows:
                       branches:
                           only:
                               - main
+                  requires:
+                      - build
+            - publish-preview:
                   requires:
                       - build
