@@ -28,10 +28,11 @@ yarn add @spectrum-web-components/top-nav
     <sp-top-nav-item href="#page-4">
         Page with Really Long Name
     </sp-top-nav-item>
-    <sp-action-menu label="Account" style="margin-inline-start: auto;">
-        <sp-icon size="s" slot="icon">
-            ${SettingsIcon()}
-        </sp-icon>
+    <sp-action-menu
+        label="Account"
+        placement="bottom-end"
+        style="margin-inline-start: auto;"
+    >
         <sp-menu>
             <sp-menu-item>
                 Account Settings
