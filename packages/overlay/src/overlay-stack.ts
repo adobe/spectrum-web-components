@@ -33,10 +33,10 @@ export class OverlayStack {
 
     public constructor() {
         this.addEventListeners();
-        this.initTabTrapping();
     }
 
     private canTabTrap = true;
+    private trappingInited = false;
     private tabTrapper!: HTMLElement;
     private overlayHolder!: HTMLElement;
 
@@ -90,6 +90,11 @@ export class OverlayStack {
     }
 
     private startTabTrapping(): void {
+        if (!this.trappingInited) {
+            this.initTabTrapping();
+            this.trappingInited = true;
+        }
+        /* c8 ignore next 3 */
         if (!this.canTabTrap) {
             return;
         }
@@ -99,7 +104,7 @@ export class OverlayStack {
 
     private stopTabTrapping(): void {
         /* c8 ignore next 3 */
-        if (!this.canTabTrap) {
+        if (!this.canTabTrap || !this.trappingInited) {
             return;
         }
         this.tabTrapper.removeAttribute('tabindex');
