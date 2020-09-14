@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.7.0...@spectrum-web-components/shared@0.7.1) (2020-09-14)
+
+### Bug Fixes
+
+-   **top-nav:** prototype top-nav pattern ([9708f6f](https://github.com/adobe/spectrum-web-components/commit/9708f6f63e080c0ec91c11763d3121a407349d1a))
+-   flatten assigned nodes to observe text of nested slots ([08ffd68](https://github.com/adobe/spectrum-web-components/commit/08ffd68bf31222019ec947b6aa32feada39f4fd2))
+
 # [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.6.0...@spectrum-web-components/shared@0.7.0) (2020-08-31)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.1.0...@spectrum-web-components/split-button@0.1.1) (2020-09-14)
+
+### Bug Fixes
+
+-   **split-button:** test a11y correctly, find issues, fix them ([4283994](https://github.com/adobe/spectrum-web-components/commit/4283994e0456813ee53be4a1bfd6b53965e41433))
+
 # 0.1.0 (2020-08-31)
 
 ### Bug Fixes

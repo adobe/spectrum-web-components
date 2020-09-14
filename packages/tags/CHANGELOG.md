@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tags@0.3.0...@spectrum-web-components/tags@0.3.1) (2020-09-14)
+
+**Note:** Version bump only for package @spectrum-web-components/tags
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tags@0.2.4...@spectrum-web-components/tags@0.3.0) (2020-08-31)
 
 ### Bug Fixes
