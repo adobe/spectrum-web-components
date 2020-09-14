@@ -11,6 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, CSSResultArray, TemplateResult } from 'lit-element';
 import '@spectrum-web-components/bundle/elements.js';
+// work around while `top-nav` isn't "officially" in the bundle
+import '@spectrum-web-components/top-nav/sp-top-nav.js';
+import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
 import { RouteComponent } from './route-component.js';
 import componentStyles from './markdown.css';
 import { AppRouter } from '../router.js';
