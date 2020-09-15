@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.0...@spectrum-web-components/overlay@0.6.1) (2020-09-15)
+
+### Bug Fixes
+
+-   **overlay:** only "tab trap" when you mean to ([74e1bd2](https://github.com/adobe/spectrum-web-components/commit/74e1bd2182785ec14f944bef8806ecc3e8d15c10))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.5.2...@spectrum-web-components/overlay@0.6.0) (2020-08-31)
 
 ### Bug Fixes
