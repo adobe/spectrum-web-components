@@ -818,4 +818,4 @@ var(--spectrum-global-dimension-size-100))/2)}#label{align-self:center;justify-s
 `));let c,n,u=e=>e;class d extends o.a{constructor(){super(...arguments),this.vertical=!1}render(){return this.vertical?Object(l.d)(c||(c=u``)):Object(l.d)(n||(n=u`
             <hr />
         `))}}d.styles=[i],Object(a.a)([Object(l.e)({type:Boolean,reflect:!0})],d.prototype,"vertical",void 0),customElements.define("sp-rule",d)}}]);
-//# sourceMappingURL=5.ef7f4bff75def61efe5e.js.map
+//# sourceMappingURL=5.d326d41f158c3dd41c05.js.map
