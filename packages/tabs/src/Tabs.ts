@@ -246,7 +246,7 @@ export class Tabs extends Focusable {
             element.removeAttribute('selected');
         });
 
-        if (value.length) {
+        if (value?.length) {
             const currentChecked = this.querySelector(`[value="${value}"]`);
 
             if (currentChecked) {
