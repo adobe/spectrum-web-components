@@ -201,28 +201,28 @@ describe('Sidenav', () => {
         await waitUntil(() => el.value === 'Section 1', 'wait for selection');
 
         expect(el.value).to.equal('Section 1');
-        expect(selected.tabIndex).to.equal(0);
+        expect(selected.tabIndex, 'initially 0').to.equal(0);
 
-        el.dispatchEvent(new Event('focusin'));
-
-        await elementUpdated(el);
-
-        expect(el.value).to.equal('Section 1');
-        expect(selected.tabIndex).to.equal(-1);
-
-        el.dispatchEvent(new Event('focusout'));
+        el.focus();
 
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 1');
-        expect(selected.tabIndex).to.equal(0);
+        expect(selected.tabIndex, '-1 when focusin').to.equal(-1);
 
-        toBeSelected.click();
+        el.blur();
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('Section 1');
+        expect(selected.tabIndex, '0 when blur').to.equal(0);
+
+        toBeSelected.focusElement.click();
 
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 0');
-        expect(toBeSelected.tabIndex).to.equal(0);
+        expect(toBeSelected.tabIndex, '-1 when click based focus').to.equal(-1);
     });
     it('manage tab index', async () => {
         const el = await fixture<SideNav>(
@@ -393,6 +393,10 @@ describe('Sidenav', () => {
                         value="Section 0"
                         label="Section 0"
                     ></sp-sidenav-item>
+                    <sp-sidenav-item
+                        value="Section 1"
+                        label="Section 1"
+                    ></sp-sidenav-item>
                 </sp-sidenav>
             `
         );
@@ -401,25 +405,27 @@ describe('Sidenav', () => {
         expect(el.manageTabIndex).to.be.true;
 
         const item1 = el.querySelector('sp-sidenav-item') as SideNavItem;
+        const item2 = el.querySelector(
+            'sp-sidenav-item:nth-child(2)'
+        ) as SideNavItem;
 
         await elementUpdated(item1);
+        await elementUpdated(item2);
         expect(item1.manageTabIndex).to.be.true;
-        expect(item1.tabIndex).to.equal(-1);
+        expect(item1.tabIndex, 'first item tabindex').to.equal(0);
+        expect(item2.tabIndex, 'second item tabindex').to.equal(-1);
 
-        const item2 = document.createElement('sp-sidenav-item');
-        item2.value = 'Section 1';
-        item2.label = 'Section 1';
-
-        expect(item2.manageTabIndex).to.be.false;
-        expect(item2.tabIndex, 'before').to.equal(0);
+        const item3 = document.createElement('sp-sidenav-item');
+        item3.value = 'Section 2';
+        item3.label = 'Section 2';
 
         await elementUpdated(el);
 
-        el.appendChild(item2);
+        el.appendChild(item3);
 
-        await elementUpdated(item2);
+        await elementUpdated(item3);
 
-        expect(item2.manageTabIndex).to.be.true;
-        expect(item2.tabIndex, 'after').to.equal(-1);
+        expect(item3.manageTabIndex).to.be.true;
+        expect(item3.tabIndex, 'after').to.equal(-1);
     });
 });

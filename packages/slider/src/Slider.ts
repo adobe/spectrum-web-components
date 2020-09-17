@@ -29,7 +29,7 @@ export const variants = ['color', 'filled', 'ramp', 'range', 'tick'];
 
 export class Slider extends Focusable {
     public static get styles(): CSSResultArray {
-        return [...super.styles, sliderStyles, spectrumSliderStyles];
+        return [sliderStyles, spectrumSliderStyles];
     }
 
     @property()

@@ -36,7 +36,7 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
  */
 export class Radio extends Focusable {
     public static get styles(): CSSResultArray {
-        return [...super.styles, radioStyles];
+        return [radioStyles];
     }
     @property({ type: String, reflect: true })
     public name = '';

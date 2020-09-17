@@ -91,7 +91,7 @@ export class DialogWrapper extends SpectrumElement {
     public focus(): void {
         if (this.shadowRoot) {
             const firstFocusable = this.shadowRoot.querySelector(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
             ) as SpectrumElement;
             if (firstFocusable) {
                 if (firstFocusable.updateComplete) {

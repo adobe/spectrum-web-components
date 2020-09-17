@@ -12,10 +12,8 @@ governing permissions and limitations under the License.
 import {
     SpectrumElement,
     property,
-    CSSResultArray,
     PropertyValues,
 } from '@spectrum-web-components/base';
-import focusableStyles from './focusable.css.js';
 
 import { FocusVisiblePolyfillMixin } from './focus-visible.js';
 
@@ -28,9 +26,6 @@ type DisableableElement = HTMLElement & { disabled?: boolean };
  * https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
  */
 export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
-    public static get styles(): CSSResultArray {
-        return [focusableStyles];
-    }
     /**
      * Disable this control. It will not receive focus or events
      */
@@ -47,19 +42,78 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * The tab index to apply to this control. See general documentation about
      * the tabindex HTML property
      */
-    @property({ type: Number, reflect: true })
-    public tabIndex = 0;
+    @property({ type: Number })
+    public get tabIndex(): number {
+        const tabIndexAttribute = parseFloat(
+            this.hasAttribute('tabindex')
+                ? (this.getAttribute('tabindex') as string) || '0'
+                : '0'
+        );
+        // When `disabled` tabindex is -1.
+        // When host tabindex -1, use that as the cache.
+        if (this.disabled || tabIndexAttribute < 0) {
+            return -1;
+        }
+        // When `focusElement` isn't available yet,
+        // use host tabindex as the cache.
+        if (!this.focusElement) {
+            return tabIndexAttribute;
+        }
+        // All other times, use the tabindex of `focusElement`
+        // as the cache for this value.
+        return this.focusElement.tabIndex;
+    }
+    public set tabIndex(tabIndex: number) {
+        // Flipping `manipulatingTabindex` to true before a change
+        // allows for that change NOT to effect the cached value of tabindex
+        if (this.manipulatingTabindex) {
+            this.manipulatingTabindex = false;
+            return;
+        }
+        // All code paths are about to address the host tabindex without side effect.
+        this.manipulatingTabindex = true;
+        if (tabIndex === -1 || this.disabled) {
+            // Do not cange the tabindex of `focusElement` as it is the "old" value cache.
+            // Make element NOT focusable.
+            this.setAttribute('tabindex', '-1');
+            this.removeAttribute('focusable');
+            if (tabIndex !== -1) {
+                // Cache all NON-`-1` values on the `focusElement`.
+                this.manageFocusElementTabindex(tabIndex);
+            }
+            return;
+        }
+        this.setAttribute('focusable', '');
+        if (this.hasAttribute('tabindex')) {
+            this.removeAttribute('tabindex');
+        } else {
+            // You can't remove an attribute that isn't there,
+            // manually end the `manipulatingTabindex` guard.
+            this.manipulatingTabindex = false;
+        }
+        this.manageFocusElementTabindex(tabIndex);
+    }
 
-    protected isShiftTabbing = false;
-    private newTabindex?: number = 0;
-    private oldTabindex = 0;
+    private async manageFocusElementTabindex(tabIndex: number): Promise<void> {
+        if (!this.focusElement) {
+            // allow setting these values to be async when needed.
+            await this.updateComplete;
+        }
+        if (tabIndex === null) {
+            this.focusElement.removeAttribute('tabindex');
+        } else {
+            this.focusElement.tabIndex = tabIndex;
+        }
+    }
+
+    private manipulatingTabindex = false;
 
     public get focusElement(): DisableableElement {
         throw new Error('Must implement focusElement getter!');
     }
 
     public focus(): void {
-        if (this.disabled) {
+        if (this.disabled || !this.focusElement) {
             return;
         }
 
@@ -71,6 +125,10 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     public click(): void {
+        if (this.disabled) {
+            return;
+        }
+
         this.focusElement.click();
     }
 
@@ -82,72 +140,19 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
                     code: 'Tab',
                 })
             );
-            this.focus();
+            this.focusElement.focus();
         }
     }
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.manageAutoFocus();
-        this.manageFocusIn();
-        this.manageShiftTab();
-    }
-
-    protected manageFocusIn(): void {
-        this.addEventListener('focusin', (event) => {
-            // only throw focus when `focusin` occurs directly on the `:host()`
-            if (event.composedPath()[0] === this) {
-                this.handleFocus();
-            }
-            // when focus has been thrown do not reapply `focusout` listeners
-            if (event.relatedTarget === this) {
-                return;
-            }
-            let doTimeout = true;
-            const innerHandler = (event: FocusEvent): void => {
-                if (
-                    event.relatedTarget &&
-                    this.shadowRoot &&
-                    this.shadowRoot.contains(event.relatedTarget as Node)
-                ) {
-                    return;
-                }
-                setTimeout(() => {
-                    // Typically this would be done via `clearTimeout()`.
-                    // However, there are moment when the asyncrony of native
-                    // DOM events causes the `outerHandler` to run before the
-                    // value returned from `setTimeout` can be cached, which
-                    // prevents the following call to be prevented. In ALL
-                    // cases the `outerHandler` will run before the callback
-                    // for the `setTimeout` which leads to the use of this
-                    // technique instead.
-                    if (doTimeout) {
-                        this.focus();
-                    }
-                });
-            };
-            const outerHandler = (): void => {
-                doTimeout = false;
-                this.focusElement.removeEventListener('focusout', innerHandler);
-                this.removeEventListener('focusout', outerHandler);
-            };
-            this.focusElement.addEventListener('focusout', innerHandler);
-            this.addEventListener('focusout', outerHandler);
-        });
-    }
-
-    protected manageShiftTab(): void {
-        this.addEventListener('keydown', (event) => {
-            if (
-                !event.defaultPrevented &&
-                event.shiftKey &&
-                event.code === 'Tab'
-            ) {
-                this.isShiftTabbing = true;
-                HTMLElement.prototype.focus.apply(this);
-                setTimeout(() => (this.isShiftTabbing = false), 0);
-            }
-        });
+        if (
+            !this.hasAttribute('tabindex') ||
+            this.getAttribute('tabindex') !== '-1'
+        ) {
+            this.setAttribute('focusable', '');
+        }
     }
 
     protected update(changedProperties: Map<string, boolean>): void {
@@ -158,13 +163,6 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             );
         }
 
-        if (changedProperties.has('tabIndex')) {
-            // save value of tabindex, as it can be overridden to
-            // undefined in case if the element is disabled
-            this.newTabindex = this.tabIndex;
-            this.handleTabIndexChanged(this.tabIndex);
-        }
-
         super.update(changedProperties);
     }
 
@@ -172,49 +170,34 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         super.updated(changedProperties);
 
         if (changedProperties.has('disabled')) {
-            this.focusElement.disabled = this.disabled;
             if (this.disabled) {
                 this.blur();
             }
         }
-
-        if (
-            changedProperties.has('tabIndex') &&
-            this.newTabindex !== undefined
-        ) {
-            this.focusElement.tabIndex = this.newTabindex;
-            this.newTabindex = undefined;
-        }
     }
 
-    private handleFocus(): void {
-        if (this.isShiftTabbing) {
-            return;
-        }
-
-        this.focus();
-    }
-
-    private handleDisabledChanged(
+    private async handleDisabledChanged(
         disabled: boolean,
         oldDisabled: boolean
-    ): void {
+    ): Promise<void> {
         if (disabled) {
-            this.oldTabindex = this.tabIndex;
-            this.tabIndex = -1;
-            this.setAttribute('aria-disabled', 'true');
-        } else if (oldDisabled) {
-            this.tabIndex = this.oldTabindex;
-            this.removeAttribute('aria-disabled');
-        }
-    }
-
-    private handleTabIndexChanged(tabindex: number): void {
-        if (this.disabled && tabindex) {
-            if (this.tabIndex !== -1) {
-                this.oldTabindex = this.tabIndex;
+            this.manipulatingTabindex = true;
+            this.setAttribute('tabindex', '-1');
+            await this.updateComplete;
+            if (typeof this.focusElement.disabled === 'undefined') {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.focusElement.disabled = true;
             }
-            this.tabIndex = -1;
+        } else if (oldDisabled) {
+            this.manipulatingTabindex = true;
+            this.removeAttribute('tabindex');
+            await this.updateComplete;
+            if (typeof this.focusElement.disabled === 'undefined') {
+                this.removeAttribute('aria-disabled');
+            } else {
+                this.focusElement.disabled = false;
+            }
         }
     }
 }

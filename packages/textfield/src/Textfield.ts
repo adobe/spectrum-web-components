@@ -34,12 +34,7 @@ import alertSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-al
 
 export class Textfield extends Focusable {
     public static get styles(): CSSResultArray {
-        return [
-            ...super.styles,
-            textfieldStyles,
-            checkmarkSmallStyles,
-            alertSmallStyles,
-        ];
+        return [textfieldStyles, checkmarkSmallStyles, alertSmallStyles];
     }
 
     @property({ attribute: 'allowed-keys' })

@@ -22,7 +22,6 @@ import { CheckmarkMediumIcon } from '@spectrum-web-components/icons-ui';
 import { ActionButton } from '@spectrum-web-components/button';
 
 import menuItemStyles from './menu-item.css.js';
-import focusableStyles from '@spectrum-web-components/shared/src/focusable.css.js';
 import checkmarkMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark-medium.css.js';
 
 export interface MenuItemQueryRoleEventDetail {
@@ -35,7 +34,7 @@ export interface MenuItemQueryRoleEventDetail {
  */
 export class MenuItem extends ActionButton {
     public static get styles(): CSSResultArray {
-        return [focusableStyles, menuItemStyles, checkmarkMediumStyles];
+        return [menuItemStyles, checkmarkMediumStyles];
     }
 
     @property({ type: Number, reflect: true })

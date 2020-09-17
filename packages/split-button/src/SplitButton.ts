@@ -93,23 +93,6 @@ export class SplitButton extends DropdownBase {
         }
     }
 
-    protected manageShiftTab(): void {
-        this.addEventListener('keydown', (event: KeyboardEvent) => {
-            const target = event.composedPath()[0];
-            if (
-                target &&
-                target === (this.left ? this.trigger : this.focusElement) &&
-                !event.defaultPrevented &&
-                event.shiftKey &&
-                event.code === 'Tab'
-            ) {
-                this.isShiftTabbing = true;
-                HTMLElement.prototype.focus.apply(this);
-                setTimeout(() => (this.isShiftTabbing = false), 0);
-            }
-        });
-    }
-
     protected get buttonContent(): TemplateResult[] {
         return [
             html`

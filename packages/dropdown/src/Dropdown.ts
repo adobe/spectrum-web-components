@@ -55,7 +55,6 @@ import {
 export class DropdownBase extends Focusable {
     public static get styles(): CSSResultArray {
         return [
-            ...super.styles,
             buttonBaseStyles,
             actionButtonStyles,
             dropdownStyles,

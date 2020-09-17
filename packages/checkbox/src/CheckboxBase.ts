@@ -15,15 +15,10 @@ import {
     html,
     TemplateResult,
     query,
-    CSSResultArray,
 } from '@spectrum-web-components/base';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 export class CheckboxBase extends Focusable {
-    public static get styles(): CSSResultArray {
-        return [...super.styles];
-    }
-
     @property({ type: Boolean, reflect: true })
     public checked = false;
 

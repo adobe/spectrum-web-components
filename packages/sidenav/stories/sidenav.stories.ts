@@ -26,6 +26,7 @@ export const Default = (): TemplateResult => {
         <sp-sidenav
             @sidenav-select=${action('select')}
             ?manage-tab-index=${boolean('Manage Tab Index', false, 'Element')}
+            value="Section 2"
         >
             <sp-sidenav-item
                 value="Section 1"

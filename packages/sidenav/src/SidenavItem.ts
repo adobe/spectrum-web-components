@@ -40,9 +40,6 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     public selected = false;
 
     @property({ type: Boolean, reflect: true })
-    public disabled = false;
-
-    @property({ type: Boolean, reflect: true })
     public expanded = false;
 
     protected get parentSideNav(): SideNav | undefined {
@@ -115,10 +112,8 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     }
 
     protected render(): TemplateResult {
-        const tabIndexForSelectedState = this.selected ? '0' : '-1';
         return html`
             <a
-                tabindex=${this.manageTabIndex ? tabIndexForSelectedState : '0'}
                 href=${this.href || '#'}
                 target=${ifDefined(this.target)}
                 download=${ifDefined(this.download)}
@@ -142,6 +137,10 @@ export class SideNavItem extends LikeAnchor(Focusable) {
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
+        if (changes.has('manageTabIndex')) {
+            const tabIndexForSelectedState = this.selected ? 0 : -1;
+            this.tabIndex = this.manageTabIndex ? tabIndexForSelectedState : 0;
+        }
         if (changes.has('selected') || changes.has('manageTabIndex')) {
             const tabIndexForSelectedState = this.selected ? 0 : -1;
             this.tabIndex = this.manageTabIndex ? tabIndexForSelectedState : 0;
