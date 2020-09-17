@@ -145,33 +145,6 @@ describe('Button', () => {
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('With Target');
     });
-    it('targets `el.focusElement` on `focusin`', async () => {
-        let focusedCount = 0;
-        const el = await fixture<Button>(
-            html`
-                <sp-button href="test_url" target="_blank">
-                    With Target
-                </sp-button>
-            `
-        );
-
-        await elementUpdated(el);
-
-        const focusElement = el.focusElement as HTMLButtonElement;
-        focusElement.addEventListener('focus', () => (focusedCount += 1));
-        expect(focusedCount).to.equal(0);
-
-        el.focus();
-        await elementUpdated(el);
-
-        expect(focusedCount).to.equal(1);
-
-        focusElement.blur();
-        el.dispatchEvent(new Event('focusin'));
-        await elementUpdated(el);
-
-        expect(focusedCount).to.equal(2);
-    });
     it('accepts shit+tab interactions', async () => {
         let focusedCount = 0;
         const el = await fixture<Button>(
@@ -199,6 +172,30 @@ describe('Button', () => {
 
         expect(focusedCount).to.equal(1);
     });
+    it('manages `disabled`', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button>
+                    Button
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        const focusElement = el.focusElement as HTMLButtonElement;
+
+        expect(focusElement.disabled, 'initially not').to.be.false;
+
+        el.disabled = true;
+        await elementUpdated(el);
+
+        expect(focusElement.disabled).to.be.true;
+
+        el.disabled = false;
+        await elementUpdated(el);
+
+        expect(focusElement.disabled, 'finally not').to.be.false;
+    });
     it('manages `aria-disabled`', async () => {
         const el = await fixture<Button>(
             html`
@@ -210,20 +207,17 @@ describe('Button', () => {
 
         await elementUpdated(el);
 
-        expect(el.hasAttribute('aria-disabled')).to.be.false;
-        expect((el.focusElement as HTMLButtonElement).disabled).to.be.false;
+        expect(el.hasAttribute('aria-disabled'), 'initially not').to.be.false;
 
         el.disabled = true;
         await elementUpdated(el);
 
-        expect(el.hasAttribute('aria-disabled')).to.be.true;
-        expect((el.focusElement as HTMLButtonElement).disabled).to.be.true;
+        expect(el.getAttribute('aria-disabled')).to.equal('true');
 
         el.disabled = false;
         await elementUpdated(el);
 
-        expect(el.hasAttribute('aria-disabled')).to.be.false;
-        expect((el.focusElement as HTMLButtonElement).disabled).to.be.false;
+        expect(el.hasAttribute('aria-disabled'), 'finally not').to.be.false;
     });
     it('manages tabIndex while disabled', async () => {
         const el = await fixture<Button>(

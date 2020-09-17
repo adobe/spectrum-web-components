@@ -25,9 +25,9 @@ export class Switch extends CheckboxBase {
         /* c8 ignore next 4 */
         if (window.hasOwnProperty('ShadyDOM')) {
             // Override some styles if we are using the web component polyfill
-            return [...super.styles, switchStyles, legacyStyles];
+            return [switchStyles, legacyStyles];
         }
-        return [...super.styles, switchStyles];
+        return [switchStyles];
     }
 
     protected render(): TemplateResult {

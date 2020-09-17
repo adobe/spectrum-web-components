@@ -10,19 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, nextFrame } from '@open-wc/testing';
-import { spy, SinonSpy } from 'sinon';
+import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { spy } from 'sinon';
 
 import '../sp-split-button.js';
 import { SplitButton } from '..';
 import { cta, moreCta } from '../stories/split-button.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
-import {
-    arrowDownEvent,
-    tabEvent,
-    shiftTabEvent,
-} from '../../../test/testing-helpers.js';
-import sinon from 'sinon';
+import { arrowDownEvent } from '../../../test/testing-helpers.js';
 
 describe('Splitbutton', () => {
     it('loads [type="field"] splitbutton accessibly', async () => {
@@ -46,53 +41,6 @@ describe('Splitbutton', () => {
 
         await expect(el1).to.be.accessible();
         await expect(el2).to.be.accessible();
-    });
-    it('manages tab interactions', async () => {
-        const test = await fixture<HTMLDivElement>(moreCta());
-        const el = test.querySelector('sp-split-button') as SplitButton;
-
-        await elementUpdated(el);
-
-        const root = (el.shadowRoot ? el.shadowRoot : el) as ShadowRoot;
-        const trigger = root.querySelector('.trigger') as HTMLButtonElement;
-
-        el.focus();
-
-        await elementUpdated(el);
-
-        expect(root.activeElement).to.equal(el.focusElement);
-
-        await elementUpdated(el);
-        sinon.spy(HTMLElement.prototype, 'focus');
-        el.focusElement.dispatchEvent(shiftTabEvent);
-        expect(
-            (HTMLElement.prototype.focus as SinonSpy).callCount,
-            'backward from element'
-        ).to.equal(1);
-        await nextFrame();
-
-        trigger.focus();
-        (HTMLElement.prototype.focus as SinonSpy).resetHistory();
-
-        expect(root.activeElement).to.equal(trigger);
-        await elementUpdated(el);
-
-        trigger.dispatchEvent(tabEvent);
-        expect(
-            (HTMLElement.prototype.focus as SinonSpy).callCount,
-            'forward from trigger'
-        ).to.equal(0);
-
-        await elementUpdated(el);
-
-        trigger.focus();
-        (HTMLElement.prototype.focus as SinonSpy).resetHistory();
-        trigger.dispatchEvent(shiftTabEvent);
-        expect(
-            (HTMLElement.prototype.focus as SinonSpy).callCount,
-            'backward from trigger'
-        ).to.equal(0);
-        (HTMLElement.prototype.focus as SinonSpy).restore();
     });
     it('[type="field"] manages `selectedItemText`', async () => {
         const test = await fixture<HTMLDivElement>(cta());

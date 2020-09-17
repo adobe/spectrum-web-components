@@ -15,7 +15,6 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
-    PropertyValues,
 } from '@spectrum-web-components/base';
 
 import { AccordionItem } from './AccordionItem.js';
@@ -59,7 +58,7 @@ export class Accordion extends Focusable {
             return;
         }
 
-        this.focusElement.focus();
+        super.focus();
     }
 
     public get focusElement(): Accordion | AccordionItem {
@@ -71,17 +70,16 @@ export class Accordion extends Focusable {
         while (index < items.length && items[index] && items[index].disabled) {
             index += 1;
         }
-        /* istanbul ignore else */
         if (items[index]) {
             return items[index];
         }
-        /* istanbul ignore next */
+        /* c8 ignore next */
         return this;
     }
 
     public startListeningToKeyboard(): void {
         const accordionItems = this.querySelectorAll('sp-accordion-item');
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (accordionItems.length === 0) {
             return;
         }
@@ -94,7 +92,7 @@ export class Accordion extends Focusable {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (code !== 'ArrowDown' && code !== 'ArrowUp') {
             return;
         }
@@ -146,7 +144,7 @@ export class Accordion extends Focusable {
     private onToggle(event: Event): void {
         const target = event.target as AccordionItem;
         const accordionItems = this.querySelectorAll('sp-accordion-item');
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!accordionItems) {
             return;
         }
@@ -160,10 +158,5 @@ export class Accordion extends Focusable {
         }
 
         target.open = true;
-    }
-
-    protected firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        this.tabIndex = 0;
     }
 }

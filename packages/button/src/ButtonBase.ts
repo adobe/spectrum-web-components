@@ -30,7 +30,7 @@ export class ButtonBase extends LikeAnchor(
     ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
 ) {
     public static get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles];
+        return [buttonStyles];
     }
 
     protected get hasIcon(): boolean {

@@ -68,7 +68,7 @@ export class AccordionItem extends Focusable {
     }
 
     private onClick(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (this.disabled) {
             return;
         }

@@ -28,7 +28,7 @@ import linkStyles from './link.css.js';
  */
 export class Link extends LikeAnchor(Focusable) {
     public static get styles(): CSSResultArray {
-        return [...super.styles, linkStyles];
+        return [linkStyles];
     }
 
     @query('#anchor')

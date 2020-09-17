@@ -24,7 +24,8 @@ describe('Focusable', () => {
                 `
             );
             await elementUpdated(el);
-            expect('failed').to.not.equal('failed');
+            const focusEl = el.focusElement;
+            expect(focusEl).to.exist;
         } catch (error) {
             expect(() => {
                 throw error;

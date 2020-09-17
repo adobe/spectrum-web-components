@@ -49,11 +49,27 @@ export class SideNav extends Focusable {
     }
 
     public focus(): void {
-        if (this.disabled || this.focusElement.isSameNode(this)) {
+        if (this.focusElement.isSameNode(this)) {
             return;
         }
 
-        this.focusElement.focus();
+        super.focus();
+    }
+
+    public blur(): void {
+        if (this.focusElement.isSameNode(this)) {
+            return;
+        }
+
+        super.blur();
+    }
+
+    public click(): void {
+        if (this.focusElement.isSameNode(this)) {
+            return;
+        }
+
+        super.click();
     }
 
     public get focusElement(): SideNavItem | SideNav {
@@ -77,9 +93,9 @@ export class SideNav extends Focusable {
         return this;
     }
 
-    private startListeningToKeyboard = (): void => {
+    private startListeningToKeyboard(): void {
         this.addEventListener('keydown', this.handleKeydown);
-        if (this.value) {
+        if (this.value && this.manageTabIndex) {
             const selected = this.querySelector(
                 `[value="${this.value}"]`
             ) as SideNavItem;
@@ -87,11 +103,11 @@ export class SideNav extends Focusable {
                 selected.tabIndex = -1;
             }
         }
-    };
+    }
 
-    private stopListeningToKeyboard = (): void => {
+    private stopListeningToKeyboard(): void {
         this.removeEventListener('keydown', this.handleKeydown);
-        if (this.value) {
+        if (this.value && this.manageTabIndex) {
             const selected = this.querySelector(
                 `[value="${this.value}"]`
             ) as SideNavItem;
@@ -99,7 +115,7 @@ export class SideNav extends Focusable {
                 selected.tabIndex = 0;
             }
         }
-    };
+    }
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
@@ -145,20 +161,41 @@ export class SideNav extends Focusable {
         return parent !== this;
     }
 
+    private handleSlotchange(): void {
+        this.manageTabIndexes();
+    }
+
+    private async manageTabIndexes(): Promise<void> {
+        if (!this.value && this.manageTabIndex) {
+            const managed = this.querySelector(
+                'sp-sidenav-item:not([tabindex])'
+            ) as SideNavItem;
+            if (managed) {
+                managed.tabIndex = -1;
+            }
+            const first = this.querySelector('sp-sidenav-item');
+            if (first) {
+                await first.updateComplete;
+                first.tabIndex = 0;
+            }
+        }
+    }
+
     protected render(): TemplateResult {
         return html`
             <nav @sidenav-select=${this.handleSelect}>
-                <slot></slot>
+                <slot @slotchange=${this.handleSlotchange}></slot>
             </nav>
         `;
     }
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        this.tabIndex = 0;
         const selectedChild = this.querySelector('[selected]') as SideNavItem;
         if (selectedChild) {
             this.value = selectedChild.value;
+        } else {
+            this.manageTabIndexes();
         }
     }
 
@@ -181,28 +218,6 @@ export class SideNav extends Focusable {
                 );
             }
         }
-    }
-
-    protected manageShiftTab(): void {
-        this.addEventListener('keydown', (event: KeyboardEvent) => {
-            const items = [...this.querySelectorAll('sp-sidenav-item')];
-            const firstFocusable = items.find(
-                (item) => !this.isDisabledChild(item)
-            ) as SideNavItem;
-            if (
-                !event.defaultPrevented &&
-                event.shiftKey &&
-                event.code === 'Tab' &&
-                (this.manageTabIndex ||
-                    (event.composedPath() as SideNavItem[]).includes(
-                        firstFocusable
-                    ))
-            ) {
-                this.isShiftTabbing = true;
-                HTMLElement.prototype.focus.apply(this);
-                setTimeout(() => (this.isShiftTabbing = false), 0);
-            }
-        });
     }
 
     private handleManageTabIndex(event: Event): void {
