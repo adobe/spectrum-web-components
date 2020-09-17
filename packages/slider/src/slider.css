@@ -21,8 +21,32 @@ governing permissions and limitations under the License.
     outline-width: 0;
 }
 
-.track {
-    width: 100%;
+/*
+ * The following three declarationsa required while https://github.com/adobe/spectrum-css/issues/521
+ * waits to be addressed at the Spectrum CSS level.
+ */
+
+:host([dir='ltr']) #track-right:before {
+    background-position: 100%;
+}
+
+:host([dir='rtl']) #track-left:before {
+    background-position: 100%;
+}
+
+.track:before {
+    background-size: var(--spectrum-slider-track-background-size) !important;
+}
+
+:host([dir='rtl']) .track:before {
+    /* .spectrum-Slider-track:before */
+    background: var(
+        --spectrum-slider-track-color-rtl,
+        var(
+            --spectrum-slider-track-color,
+            var(--spectrum-global-color-gray-300)
+        )
+    );
 }
 
 /* 

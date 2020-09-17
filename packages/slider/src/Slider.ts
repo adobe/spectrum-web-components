@@ -17,11 +17,13 @@ import {
     TemplateResult,
     query,
     PropertyValues,
+    styleMap,
 } from '@spectrum-web-components/base';
 
 import spectrumSliderStyles from './spectrum-slider.css.js';
 import sliderStyles from './slider.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { StyleInfo } from 'lit-html/directives/style-map';
 
 export const variants = ['color', 'filled', 'ramp', 'range', 'tick'];
 
@@ -33,7 +35,7 @@ export class Slider extends Focusable {
     @property()
     public type = '';
 
-    @property({ reflect: true })
+    @property({ type: Number, reflect: true })
     public get value(): number {
         return this._value;
     }
@@ -172,7 +174,7 @@ export class Slider extends Focusable {
             <div
                 class="track"
                 id="track-left"
-                style=${this.trackStartClipPath}
+                style=${styleMap(this.trackStartStyles)}
                 role="presentation"
             ></div>
         `;
@@ -186,7 +188,7 @@ export class Slider extends Focusable {
             <div
                 class="track"
                 id="track-right"
-                style=${this.trackEndClipPath}
+                style=${styleMap(this.trackEndStyles)}
                 role="presentation"
             ></div>
         `;
@@ -476,62 +478,20 @@ export class Slider extends Focusable {
         return progress / range;
     }
 
-    private get trackStartClipPath(): string {
-        return this.isLTR ? this.trackLeftClipPath : this.trackRightClipPath;
+    private get trackStartStyles(): StyleInfo {
+        return {
+            width: `${this.trackProgress * 100}%`,
+            '--spectrum-slider-track-background-size': `calc(100% / ${this.trackProgress})`,
+        };
     }
 
-    private get trackEndClipPath(): string {
-        return this.isLTR ? this.trackRightClipPath : this.trackLeftClipPath;
-    }
-
-    /**
-     * The track that appears on the left, regardless of text direction.
-     */
-    private get trackLeftClipPath(): string {
-        const movingX = `calc(
-            ${
-                this.isLTR
-                    ? this.trackProgress * 100
-                    : 100 - this.trackProgress * 100
-            }% -
-            var(
-                --spectrum-slider-handle-gap,
-                var(
-                    --spectrum-alias-border-size-thicker
-                )
-            )
-        )`;
-        return `clip-path: polygon(
-            0 0,
-            ${movingX} 0,
-            ${movingX} 100%,
-            0 100%
-        );`;
-    }
-
-    /**
-     * The track that appears on the right, regardless of text direction.
-     */
-    private get trackRightClipPath(): string {
-        const movingX = `calc(
-            ${
-                this.isLTR
-                    ? this.trackProgress * 100
-                    : 100 - this.trackProgress * 100
-            }% +
-            var(
-                --spectrum-slider-handle-gap,
-                var(
-                    --spectrum-alias-border-size-thicker
-                )
-            )
-        )`;
-        return `clip-path: polygon(
-            ${movingX} 0,
-            100% 0,
-            100% 100%,
-            ${movingX} 100%
-        );`;
+    private get trackEndStyles(): StyleInfo {
+        return {
+            width: `${100 - this.trackProgress * 100}%`,
+            '--spectrum-slider-track-background-size': `calc(100% / ${
+                1 - this.trackProgress
+            })`,
+        };
     }
 
     private get handleStyle(): string {

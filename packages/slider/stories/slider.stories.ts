@@ -46,7 +46,12 @@ export const Gradient = (): TemplateResult => {
     };
     return html`
         <div
-            style="width: 500px; margin: 12px 20px;--spectrum-slider-track-color:linear-gradient(to right, red, green 100%);"
+            style="
+                width: 500px;
+                margin: 12px 20px;
+                --spectrum-slider-track-color:linear-gradient(to right, red, green 100%);
+                --spectrum-slider-track-color-rtl:linear-gradient(to left, red, green 100%);
+            "
         >
             <sp-slider
                 label="Opacity"
