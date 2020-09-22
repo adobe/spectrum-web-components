@@ -21,7 +21,7 @@ import { CircleIcon } from '@spectrum-web-components/icons-workflow';
 class ElementWithIcon extends LitElement {
     protected render(): TemplateResult {
         return html`
-            <sp-icon slot="icon">
+            <sp-icon>
                 ${CircleIcon()}
             </sp-icon>
         `
