@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@adobe/spectrum-css-workflow-icons@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.0.0.tgz#913f3a251ef5ea3154929a7a23d4fbd6de1553da"
-  integrity sha512-aJbk7XhsUNefoufMpneq2aIT3VuD++KUY0C08VKbt5p/WOW0aDX8WYavUxW4oiK5cAgsvapcaPaS+eWpBMwXLg==
+"@adobe/spectrum-css-workflow-icons@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.1.0.tgz#79e97f86130e1a30b84c8524cebff93a600dbb8a"
+  integrity sha512-07ec4Pfr+W5II4a36nto3jShBZTbpe39lB977ULYN436UTQsnAdYupezBwFd7eEvOMUawgKfqnxyR2oPxp1SMQ==
 
 "@analytics/cookie-utils@^0.2.3":
   version "0.2.3"
