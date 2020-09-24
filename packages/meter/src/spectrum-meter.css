@@ -10,40 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@keyframes indeterminate-loop-ltr {
-    0% {
-        transform: translate(
-            calc(
-                -1 * var(--spectrum-progressbar-large-indeterminate-fill-width, var(--spectrum-global-dimension-size-1700))
-            )
-        );
-    }
-    to {
-        transform: translate(
-            var(
-                --spectrum-progressbar-large-width,
-                var(--spectrum-global-dimension-size-2400)
-            )
-        );
-    }
-}
-@keyframes indeterminate-loop-rtl {
-    0% {
-        transform: translate(
-            var(
-                --spectrum-progressbar-large-width,
-                var(--spectrum-global-dimension-size-2400)
-            )
-        );
-    }
-    to {
-        transform: translate(
-            calc(
-                -1 * var(--spectrum-progressbar-large-width, var(--spectrum-global-dimension-size-2400))
-            )
-        );
-    }
-}
 :host {
     /* .spectrum-ProgressBar */
     position: relative;
@@ -239,6 +205,40 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-animation-duration-2000)
         )
         infinite;
+}
+@keyframes indeterminate-loop-ltr {
+    0% {
+        transform: translate(
+            calc(
+                -1 * var(--spectrum-progressbar-large-indeterminate-fill-width, var(--spectrum-global-dimension-size-1700))
+            )
+        );
+    }
+    to {
+        transform: translate(
+            var(
+                --spectrum-progressbar-large-width,
+                var(--spectrum-global-dimension-size-2400)
+            )
+        );
+    }
+}
+@keyframes indeterminate-loop-rtl {
+    0% {
+        transform: translate(
+            var(
+                --spectrum-progressbar-large-width,
+                var(--spectrum-global-dimension-size-2400)
+            )
+        );
+    }
+    to {
+        transform: translate(
+            calc(
+                -1 * var(--spectrum-progressbar-large-width, var(--spectrum-global-dimension-size-2400))
+            )
+        );
+    }
 }
 .fill {
     /* .spectrum-ProgressBar .spectrum-ProgressBar-fill */

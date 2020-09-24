@@ -10,6 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.fill-submask-2 {
+    /* .spectrum-ProgressCircle--indeterminate-fill-submask-2 */
+    animation: spectrum-fill-mask-2 1s linear infinite;
+}
 @keyframes spectrum-fill-mask-1 {
     0% {
         transform: rotate(90deg);
@@ -381,10 +385,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     to {
         transform: rotate(270deg);
     }
-}
-.fill-submask-2 {
-    /* .spectrum-ProgressCircle--indeterminate-fill-submask-2 */
-    animation: spectrum-fill-mask-2 1s linear infinite;
 }
 :host {
     /* .spectrum-ProgressCircle */

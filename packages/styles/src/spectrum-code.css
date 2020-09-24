@@ -69,8 +69,7 @@ em {
     font-family: var(
         --spectrum-code-xl-text-font-family,
         var(--spectrum-alias-code-text-font-family)
-    ); /* .spectrum-Code--sizeXL */
-    color: var(--spectrum-code-xl-text-color, var(--spectrum-alias-text-color));
+    );
 }
 .spectrum-Code--sizeL {
     /* .spectrum-Code--sizeL */
@@ -99,8 +98,7 @@ em {
     font-family: var(
         --spectrum-code-l-text-font-family,
         var(--spectrum-alias-code-text-font-family)
-    ); /* .spectrum-Code--sizeL */
-    color: var(--spectrum-code-l-text-color, var(--spectrum-alias-text-color));
+    );
 }
 .spectrum-Code--sizeM {
     /* .spectrum-Code--sizeM */
@@ -129,8 +127,7 @@ em {
     font-family: var(
         --spectrum-code-m-text-font-family,
         var(--spectrum-alias-code-text-font-family)
-    ); /* .spectrum-Code--sizeM */
-    color: var(--spectrum-code-m-text-color, var(--spectrum-alias-text-color));
+    );
 }
 .spectrum-Code--sizeS {
     /* .spectrum-Code--sizeS */
@@ -159,8 +156,7 @@ em {
     font-family: var(
         --spectrum-code-s-text-font-family,
         var(--spectrum-alias-code-text-font-family)
-    ); /* .spectrum-Code--sizeS */
-    color: var(--spectrum-code-s-text-color, var(--spectrum-alias-text-color));
+    );
 }
 .spectrum-Code--sizeXS {
     /* .spectrum-Code--sizeXS */
@@ -189,6 +185,25 @@ em {
     font-family: var(
         --spectrum-code-xs-text-font-family,
         var(--spectrum-alias-code-text-font-family)
-    ); /* .spectrum-Code--sizeXS */
+    );
+}
+.spectrum-Code--sizeXL {
+    /* .spectrum-Code--sizeXL */
+    color: var(--spectrum-code-xl-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Code--sizeL {
+    /* .spectrum-Code--sizeL */
+    color: var(--spectrum-code-l-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Code--sizeM {
+    /* .spectrum-Code--sizeM */
+    color: var(--spectrum-code-m-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Code--sizeS {
+    /* .spectrum-Code--sizeS */
+    color: var(--spectrum-code-s-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Code--sizeXS {
+    /* .spectrum-Code--sizeXS */
     color: var(--spectrum-code-xs-text-color, var(--spectrum-alias-text-color));
 }
