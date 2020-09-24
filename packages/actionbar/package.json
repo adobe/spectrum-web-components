@@ -51,6 +51,7 @@
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.1.0",
+        "@spectrum-web-components/popover": "^0.5.1",
         "tslib": "^2.0.0"
     }
 }

@@ -17,6 +17,7 @@ import {
     TemplateResult,
     property,
 } from '@spectrum-web-components/base';
+import '@spectrum-web-components/popover/sp-popover.js';
 
 import actionbarStyles from './actionbar.css.js';
 
@@ -29,6 +30,15 @@ export class Actionbar extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [actionbarStyles];
     }
+
+    /**
+     * When `flexible` the actionbar sizes itself to its content
+     * rather than a specific width.
+     *
+     * @param {Boolean} flexible
+     */
+    @property({ type: Boolean, reflect: true })
+    public flexible = false;
 
     @property({ type: Boolean, reflect: true })
     public open = false;
