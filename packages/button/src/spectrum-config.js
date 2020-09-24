@@ -26,6 +26,7 @@ const config = {
                     selector: '.spectrum-Icon',
                 },
             ],
+            exclude: [/\.spectrum-ClearButton/],
             excludeSourceSelector: [/^(?!(.*),(.*),(.*),(.*),(.*))/],
         },
         {
@@ -53,7 +54,11 @@ const config = {
                     name: 'icon',
                 },
             ],
-            exclude: [/\.spectrum-ActionButton/, /\.spectrum-Button/],
+            exclude: [
+                /\.spectrum-ActionButton/,
+                /\.spectrum-Button/,
+                /\.spectrum-ClearButton/,
+            ],
             excludeSourceSelector: [
                 /^([^\s]*),([^\s]*),([^\s]*),([^\s]*),([^\s]*)$/,
             ],
@@ -97,7 +102,11 @@ const config = {
                     selector: '.spectrum-Icon',
                 },
             ],
-            exclude: [/\.is-disabled/, /\.spectrum-ActionButton/],
+            exclude: [
+                /\.is-disabled/,
+                /\.spectrum-ActionButton/,
+                /\.spectrum-ClearButton/,
+            ],
             excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
         },
         {
@@ -140,7 +149,11 @@ const config = {
                     selector: '.spectrum-Icon',
                 },
             ],
-            exclude: [/\.is-disabled/, /\.spectrum-Button/],
+            exclude: [
+                /\.is-disabled/,
+                /\.spectrum-Button/,
+                /\.spectrum-ClearButton/,
+            ],
             excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
         },
         {

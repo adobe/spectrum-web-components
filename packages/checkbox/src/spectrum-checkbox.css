@@ -507,20 +507,55 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-red-700)
     );
 }
-#input:focus-visible + #box {
-    /* .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box */
-    forced-color-adjust: none;
-    outline-color: var(
-        --spectrum-checkbox-focus-ring-color-key-focus,
-        var(--spectrum-alias-focus-ring-color)
-    );
-    outline-style: auto;
-    outline-offset: var(
-        --spectrum-checkbox-focus-ring-gap-key-focus,
-        var(--spectrum-alias-focus-ring-gap)
-    );
-    outline-width: var(
-        --spectrum-checkbox-focus-ring-size-key-focus,
-        var(--spectrum-alias-focus-ring-size)
-    );
+@media (forced-colors: active) {
+    #input:focus-visible + #box {
+        forced-color-adjust: none;
+        outline-color: var(
+            --spectrum-checkbox-focus-ring-color-key-focus,
+            var(--spectrum-alias-focus-ring-color)
+        );
+        outline-style: auto;
+        outline-offset: var(
+            --spectrum-checkbox-focus-ring-gap-key-focus,
+            var(--spectrum-alias-focus-ring-gap)
+        );
+        outline-width: var(
+            --spectrum-checkbox-focus-ring-size-key-focus,
+            var(--spectrum-alias-focus-ring-size)
+        );
+    }
+    :host {
+        --spectrum-checkbox-emphasized-box-background-color: var(
+            --spectrum-alias-background-color-transparent,
+            transparent
+        );
+        --spectrum-checkbox-emphasized-box-background-color-disabled: var(
+            --spectrum-alias-background-color-transparent,
+            transparent
+        );
+        --spectrum-checkbox-emphasized-box-border-color-disabled: GrayText;
+        --spectrum-checkbox-text-color-disabled: GrayText;
+        --spectrum-checkbox-box-border-color-key-focus: FieldText;
+        --spectrum-checkbox-emphasized-box-border-color: FieldText;
+        --spectrum-checkbox-quiet-box-border-color: FieldText;
+        --spectrum-checkbox-box-border-color-selected-hover: Highlight;
+        --spectrum-checkbox-emphasized-box-border-color-selected-hover: Highlight;
+        --spectrum-checkbox-quiet-box-border-color-selected-hover: Highlight;
+        --spectrum-checkbox-emphasized-box-border-color-selected: Highlight;
+        --spectrum-checkbox-quiet-box-border-color-selected: Highlight;
+        --spectrum-checkbox-checkmark-color: HighlightText;
+        --spectrum-checkbox-focus-ring-color-key-focus: Highlight;
+        --spectrum-checkbox-focus-ring-gap-key-focus: var(
+            --spectrum-global-dimension-static-size-25,
+            2px
+        );
+        --spectrum-checkbox-focus-ring-size-key-focus: var(
+            --spectrum-global-dimension-static-size-40,
+            3px
+        );
+        --spectrum-checkbox-box-border-color-error: FieldText;
+        --spectrum-checkbox-box-border-color-error-hover: FieldText;
+        --spectrum-checkbox-box-border-color-error-selected: FieldText;
+        --spectrum-checkbox-text-color-error: FieldText;
+    }
 }
