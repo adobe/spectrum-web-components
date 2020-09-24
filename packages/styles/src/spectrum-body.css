@@ -34,11 +34,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     text-transform: var(--spectrum-body-xxxl-text-transform, none);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Body--sizeXXXL */
-    color: var(
-        --spectrum-body-xxxl-text-color,
-        var(--spectrum-alias-text-color)
-    );
+    margin-bottom: 0;
 }
 .spectrum-Body--sizeXXL {
     /* .spectrum-Body--sizeXXL */
@@ -64,11 +60,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     text-transform: var(--spectrum-body-xxl-text-transform, none);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Body--sizeXXL */
-    color: var(
-        --spectrum-body-xxl-text-color,
-        var(--spectrum-alias-text-color)
-    );
+    margin-bottom: 0;
 }
 .spectrum-Body--sizeXL {
     /* .spectrum-Body--sizeXL */
@@ -94,8 +86,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     text-transform: var(--spectrum-body-xl-text-transform, none);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Body--sizeXL */
-    color: var(--spectrum-body-xl-text-color, var(--spectrum-alias-text-color));
+    margin-bottom: 0;
 }
 .spectrum-Body--sizeL {
     /* .spectrum-Body--sizeL */
@@ -121,8 +112,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     text-transform: var(--spectrum-body-l-text-transform, none);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Body--sizeL */
-    color: var(--spectrum-body-l-text-color, var(--spectrum-alias-text-color));
+    margin-bottom: 0;
 }
 .spectrum-Body--sizeM {
     /* .spectrum-Body--sizeM */
@@ -148,8 +138,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     text-transform: var(--spectrum-body-m-text-transform, none);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Body--sizeM */
-    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
+    margin-bottom: 0;
 }
 .spectrum-Body--sizeS {
     /* .spectrum-Body--sizeS */
@@ -175,8 +164,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     text-transform: var(--spectrum-body-s-text-transform, none);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Body--sizeS */
-    color: var(--spectrum-body-s-text-color, var(--spectrum-alias-text-color));
+    margin-bottom: 0;
 }
 .spectrum-Body--sizeXS {
     /* .spectrum-Body--sizeXS */
@@ -202,17 +190,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     text-transform: var(--spectrum-body-xs-text-transform, none);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Body--sizeXS */
-    color: var(--spectrum-body-xs-text-color, var(--spectrum-alias-text-color));
+    margin-bottom: 0;
 }
 .spectrum-Body {
     /* .spectrum-Body */
     font-family: var(
         --spectrum-body-m-text-font-family,
         var(--spectrum-alias-body-text-font-family)
-    ); /* .spectrum,
-   * .spectrum-Body */
-    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
+    );
 }
 .spectrum-Body-strong,
 strong {
@@ -238,4 +223,43 @@ em {
         --spectrum-body-serif-m-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
+}
+.spectrum-Body--sizeXXXL {
+    /* .spectrum-Body--sizeXXXL */
+    color: var(
+        --spectrum-body-xxxl-text-color,
+        var(--spectrum-alias-text-color)
+    );
+}
+.spectrum-Body--sizeXXL {
+    /* .spectrum-Body--sizeXXL */
+    color: var(
+        --spectrum-body-xxl-text-color,
+        var(--spectrum-alias-text-color)
+    );
+}
+.spectrum-Body--sizeXL {
+    /* .spectrum-Body--sizeXL */
+    color: var(--spectrum-body-xl-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body--sizeL {
+    /* .spectrum-Body--sizeL */
+    color: var(--spectrum-body-l-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body--sizeM {
+    /* .spectrum-Body--sizeM */
+    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body--sizeS {
+    /* .spectrum-Body--sizeS */
+    color: var(--spectrum-body-s-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body--sizeXS {
+    /* .spectrum-Body--sizeXS */
+    color: var(--spectrum-body-xs-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body {
+    /* .spectrum,
+   * .spectrum-Body */
+    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
 }

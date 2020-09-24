@@ -80,9 +80,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) * -1
     );
 }
-.button > .icon {
-    /* .spectrum-ClearButton>.spectrum-Icon */
-    margin: 0;
+@media (-ms-high-contrast: none), screen and (-ms-high-contrast: active) {
+    .button > .icon {
+        margin: 0;
+    }
 }
 :host([small]) .button {
     /* .spectrum-ClearButton--small */

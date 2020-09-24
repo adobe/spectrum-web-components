@@ -402,7 +402,7 @@ class SpectrumProcessor {
      *
      * @param {object} rule - The rule who's selects we will transform
      */
-    convertSelectors(rule) {
+    convertSelectors(rule, absolutelyStartsWith) {
         const result = [];
 
         const startsWithHost = re`^${this.component.hostSelector}`;
@@ -453,6 +453,7 @@ class SpectrumProcessor {
                     }
                 }
                 if (
+                    !absolutelyStartsWith &&
                     shouldStartWithHost &&
                     !startsWithHost.test(selector) &&
                     !startsWithModifier.test(selector)
@@ -543,12 +544,50 @@ class SpectrumProcessor {
             ],
         });
 
-        root.walkAtRules((atRule) => {
-            if (atRule.name === 'keyframes') {
-                this.result.root.append(atRule);
+        // Walk the rules all together so that we can maintain CSS order
+        // across all of the rule types.
+        root.walk((rule) => {
+            switch (rule.type) {
+                case 'decl':
+                case 'comment':
+                    // exclude declarations (which would be outside of selectors here)
+                    // and comments from processing.
+                    break;
+                case 'atrule':
+                    if (rule.name === 'keyframes') {
+                        // accept keyframe rules directly
+                        this.result.root.append(rule);
+                    } else if (rule.name === 'media') {
+                        // Walk the rules inside of @media so that the
+                        // selectors therein can be processed.
+                        rule.walkRules((childRule) => {
+                            let selectors = this.convertSelectors(
+                                childRule,
+                                true
+                            );
+                            if (selectors.length) {
+                                selectors = selectors.map((selector) =>
+                                    selector === ':root' ? ':host' : selector
+                                );
+                                childRule.selectors = selectors;
+                                childRule.selector = selectors.join(',');
+                            } else {
+                                childRule.remove();
+                            }
+                        });
+                        // dump @media rules that have had all of their
+                        // selectors excluded by the config.
+                        if (rule.nodes.length) {
+                            this.result.root.append(rule);
+                        }
+                    }
+                    break;
+                case 'rule':
+                default:
+                    this.processRule(rule, result);
+                    break;
             }
         });
-        root.walkRules((rule) => this.processRule(rule, result));
     }
 
     /**
@@ -571,7 +610,6 @@ class SpectrumProcessor {
             });
             return;
         }
-
         const convertedSelectors = this.convertSelectors(rule);
         this.appendRule(
             convertedSelectors,

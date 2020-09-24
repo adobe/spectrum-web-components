@@ -77,11 +77,7 @@ em {
     );
     text-transform: var(--spectrum-detail-xl-text-transform, uppercase);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Detail--sizeXL */
-    color: var(
-        --spectrum-detail-xl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
+    margin-bottom: 0;
 }
 .spectrum-Detail--sizeXL em {
     /* .spectrum-Detail--sizeXL em */
@@ -162,11 +158,7 @@ em {
     );
     text-transform: var(--spectrum-detail-l-text-transform, uppercase);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Detail--sizeL */
-    color: var(
-        --spectrum-detail-l-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
+    margin-bottom: 0;
 }
 .spectrum-Detail--sizeL em {
     /* .spectrum-Detail--sizeL em */
@@ -244,11 +236,7 @@ em {
     );
     text-transform: var(--spectrum-detail-m-text-transform, uppercase);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Detail--sizeM */
-    color: var(
-        --spectrum-detail-m-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
+    margin-bottom: 0;
 }
 .spectrum-Detail--sizeM em {
     /* .spectrum-Detail--sizeM em */
@@ -326,11 +314,7 @@ em {
     );
     text-transform: var(--spectrum-detail-s-text-transform, uppercase);
     margin-top: 0;
-    margin-bottom: 0; /* .spectrum-Detail--sizeS */
-    color: var(
-        --spectrum-detail-s-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
+    margin-bottom: 0;
 }
 .spectrum-Detail--sizeS em {
     /* .spectrum-Detail--sizeS em */
@@ -383,4 +367,32 @@ em {
     text-transform: var(--spectrum-detail-s-strong-text-transform, uppercase);
     margin-top: 0;
     margin-bottom: 0;
+}
+.spectrum-Detail--sizeXL {
+    /* .spectrum-Detail--sizeXL */
+    color: var(
+        --spectrum-detail-xl-text-color,
+        var(--spectrum-alias-heading-text-color)
+    );
+}
+.spectrum-Detail--sizeL {
+    /* .spectrum-Detail--sizeL */
+    color: var(
+        --spectrum-detail-l-text-color,
+        var(--spectrum-alias-heading-text-color)
+    );
+}
+.spectrum-Detail--sizeM {
+    /* .spectrum-Detail--sizeM */
+    color: var(
+        --spectrum-detail-m-text-color,
+        var(--spectrum-alias-heading-text-color)
+    );
+}
+.spectrum-Detail--sizeS {
+    /* .spectrum-Detail--sizeS */
+    color: var(
+        --spectrum-detail-s-text-color,
+        var(--spectrum-alias-heading-text-color)
+    );
 }

@@ -19,7 +19,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-size: var(
         --spectrum-alias-font-size-default,
         var(--spectrum-global-dimension-font-size-100)
-    ); /* .spectrum,
+    );
+}
+.spectrum {
+    /* .spectrum,
    * .spectrum-Body */
     color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
 }
