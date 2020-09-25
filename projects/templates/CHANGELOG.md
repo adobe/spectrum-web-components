@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/swc-templates@0.2.1...swc-templates@0.2.2) (2020-09-25)
+
+### Bug Fixes
+
+-   **swc-templates:** update naming, imports, and dependencies ([12d43ed](https://github.com/adobe/spectrum-web-components/commit/12d43ed82ae97d706eecfe31515c616562848366))
+
 ## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/swc-templates@0.2.0...swc-templates@0.2.1) (2020-08-31)
 
 **Note:** Version bump only for package swc-templates

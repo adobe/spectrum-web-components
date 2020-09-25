@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.1.0...@spectrum-web-components/base@0.1.1) (2020-09-25)
+
+### Bug Fixes
+
+-   dir should never fall back to null ([6b16c6d](https://github.com/adobe/spectrum-web-components/commit/6b16c6dc41e0d4990d07d5de0d762316b324f260))
+
 # 0.1.0 (2020-08-31)
 
 ### Features

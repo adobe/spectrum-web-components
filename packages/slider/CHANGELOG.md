@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.6.1...@spectrum-web-components/slider@0.6.2) (2020-09-25)
+
+### Bug Fixes
+
+-   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   **slider:** simplify application of the gradient backgrounds ([f96a97e](https://github.com/adobe/spectrum-web-components/commit/f96a97eafab63358de3b438d84a2af521250f4ed))
+
 ## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.6.0...@spectrum-web-components/slider@0.6.1) (2020-09-14)
 
 **Note:** Version bump only for package @spectrum-web-components/slider
