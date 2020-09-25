@@ -22,7 +22,7 @@ export class OverlayTimer {
     private coolDownDelay = DEFAULT_COOLDOWN;
 
     private isWarm = false;
-    private cooldownTimeout = 0;
+    private cooldownTimeout?: number;
 
     private component?: HTMLElement;
     private timeout = 0;

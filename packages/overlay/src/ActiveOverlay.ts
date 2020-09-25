@@ -110,7 +110,7 @@ export class ActiveOverlay extends SpectrumElement {
 
     private placeholder?: Comment;
     private popper?: Instance;
-    private originalSlot: string | null = null;
+    private originalSlot?: string;
 
     @property()
     public _state = stateTransition();
@@ -346,7 +346,8 @@ export class ActiveOverlay extends SpectrumElement {
         }
 
         this.overlayContent = element;
-        this.originalSlot = this.overlayContent.getAttribute('slot');
+        this.originalSlot =
+            this.overlayContent.getAttribute('slot') || undefined;
         this.overlayContent.setAttribute('slot', 'overlay');
         this.appendChild(this.overlayContent);
 

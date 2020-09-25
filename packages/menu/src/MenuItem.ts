@@ -37,9 +37,6 @@ export class MenuItem extends ActionButton {
         return [menuItemStyles, checkmarkMediumStyles];
     }
 
-    @property({ type: Number, reflect: true })
-    public tabIndex = -1;
-
     private _value = '';
 
     @property({ type: String })
