@@ -30,6 +30,9 @@ export class CircleLoader extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
 
+    @property({ type: String })
+    public label = '';
+
     @property({ type: Boolean, reflect: true, attribute: 'over-background' })
     public overBackground = false;
 
@@ -85,6 +88,9 @@ export class CircleLoader extends SpectrumElement {
             this.setAttribute('aria-valuenow', '' + this.progress);
         } else if (this.hasAttribute('aria-valuenow')) {
             this.removeAttribute('aria-valuenow');
+        }
+        if (this.label && changes.has('label')) {
+            this.setAttribute('aria-label', this.label);
         }
     }
 }

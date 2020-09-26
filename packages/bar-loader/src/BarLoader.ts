@@ -91,5 +91,8 @@ export class BarLoader extends SpectrumElement {
         } else if (this.hasAttribute('aria-valuenow')) {
             this.removeAttribute('aria-valuenow');
         }
+        if (this.label && changes.has('label')) {
+            this.setAttribute('aria-label', this.label);
+        }
     }
 }
