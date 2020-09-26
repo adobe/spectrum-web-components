@@ -121,8 +121,12 @@ class SideNav extends SpectrumElement {
                             multilevel
                         >
                             <sp-sidenav-item
-                                value="adding-component"
-                                label="Adding Components"
+                                value="developing-components"
+                                label="Developing Components"
+                            ></sp-sidenav-item>
+                            <sp-sidenav-item
+                                value="generating-components"
+                                label="Generating Components"
                             ></sp-sidenav-item>
                             <sp-sidenav-item
                                 value="spectrum-config"

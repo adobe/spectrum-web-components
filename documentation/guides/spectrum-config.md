@@ -1,4 +1,4 @@
-# Specification for .spectrum-config.js files
+# Specification for spectrum-config.js files
 
 The following is an annotated example that serves to document the format
 of the spectrum-config.js file. A higher-level explanation may be found
