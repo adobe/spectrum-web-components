@@ -5,6 +5,10 @@ executors:
             - image: mcr.microsoft.com/playwright:next
         environment:
             NODE_ENV: development
+parameters:
+    current_golden_images_hash:
+        type: string
+        default: d03d62ccb93494ae1bc7ecfc21fe66e1c5bc46a9
 commands:
     setup:
         steps:
@@ -36,18 +40,18 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v2-golden-images-d03d62ccb93494ae1bc7ecfc21fe66e1c5bc46a9-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
             - run:
                   when: on_fail
-                  command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci && exit 1
+                  command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci
             - save_cache:
                   when: on_fail
                   name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline/ci
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
@@ -247,6 +251,26 @@ jobs:
                   regression_scale: large
                   regression_dir: rtl
 
+    apply-new-golden-image-cache:
+        executor: node
+
+        steps:
+            - downstream
+            - run:
+                  command: |
+                      cd .circleci
+                      touch tmp
+                      sed 's/<< pipeline.parameters.current_golden_images_hash >>/<< pipeline.git.revision >>/g' config.yml > tmp 
+                      rm config.yml
+                      mv tmp config.yml
+                      git add config.yml
+            - run:
+                  command: |
+                      git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
+                      git commit -am 'ci: update golden images cache'
+                      git push --set-upstream origin << pipeline.git.branch >>
+                      git push
+
     publish-docs:
         executor: node
 
@@ -273,6 +297,13 @@ jobs:
 
 workflows:
     version: 2
+    manage-golden-images-cache:
+        jobs:
+            - approve-new-golden-image-cache:
+                  type: approval
+            - apply-new-golden-image-cache:
+                  requires:
+                      - approve-new-golden-image-cache
     build:
         jobs:
             - build

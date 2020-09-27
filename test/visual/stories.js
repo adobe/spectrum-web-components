@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 module.exports = [
     'accordion--default',
+    'accordion--open',
     'accordion--allow-multiple',
     'accordion--disabled',
     'action-group--default',
