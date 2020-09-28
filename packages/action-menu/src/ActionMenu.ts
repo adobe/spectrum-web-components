@@ -31,7 +31,7 @@ export class ActionMenu extends ObserveSlotText(DropdownBase, 'label') {
     }
 
     @property({ type: Boolean, reflect: true })
-    public selected = false;
+    public selectable = false;
 
     @property({ type: Boolean, reflect: true })
     public quiet = true;
@@ -63,14 +63,29 @@ export class ActionMenu extends ObserveSlotText(DropdownBase, 'label') {
 
     protected updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
-        if (changedProperties.has('open')) {
-            this.selected = this.open;
-        }
         if (changedProperties.has('quiet')) {
             this.quiet = true;
         }
         if (changedProperties.has('invalid')) {
             this.invalid = false;
+        }
+        if (changedProperties.has('open')) {
+            this.manageMenuItems();
+        }
+    }
+
+    private async manageMenuItems(): Promise<void> {
+        if (this.selectable || !this.optionsMenu) {
+            return;
+        }
+        if (this.optionsMenu.menuItems.length) {
+            this.optionsMenu.menuItems.forEach((el) => (el.selected = false));
+            return;
+        }
+        await this.optionsMenu.updateComplete;
+        /* istanbul ignore else */
+        if (this.optionsMenu.menuItems.length) {
+            this.manageMenuItems();
         }
     }
 }

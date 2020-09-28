@@ -39,6 +39,21 @@ export const customIcon = (): TemplateResult => {
     `;
 };
 
+export const open = (): TemplateResult => {
+    return ActionMenuMarkup({
+        open: true,
+        value: 'Select Inverse',
+    });
+};
+
+export const selectableOpen = (): TemplateResult => {
+    return ActionMenuMarkup({
+        selectable: true,
+        open: true,
+        value: 'Select Inverse',
+    });
+};
+
 export const Default = (): TemplateResult => {
     const ariaLabel = text('Arial Label', 'More Actions', 'Component');
     const visibleLabel = text('Visible Label', 'More Actions', 'Component');

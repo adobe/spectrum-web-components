@@ -32,6 +32,8 @@ module.exports = [
     'action-menu--default',
     'action-menu--custom-icon',
     'action-menu--icon-only',
+    'action-menu--selectable-open',
+    'action-menu--open',
     'actionbar--default',
     'asset--default',
     'asset--file',

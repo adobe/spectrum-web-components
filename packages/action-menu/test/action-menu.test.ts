@@ -17,7 +17,14 @@ import { SettingsIcon } from '@spectrum-web-components/icons-workflow';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    html,
+    expect,
+    waitUntil,
+} from '@open-wc/testing';
+import { MenuItem } from '@spectrum-web-components/menu/src/MenuItem';
 
 const actionMenuFixture = async (): Promise<ActionMenu> =>
     await fixture<ActionMenu>(
@@ -158,5 +165,46 @@ describe('Action menu', () => {
         button.click();
         await elementUpdated(el);
         expect(el.open).to.be.true;
+    });
+    it('prevents menu items from being [selected]', async () => {
+        const el = await actionMenuFixture();
+
+        await elementUpdated(el);
+        const button = el.button as HTMLButtonElement;
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+        const beforeSelectedItems = [...el.querySelectorAll('[selected]')];
+        expect(beforeSelectedItems.length).to.equal(0);
+
+        button.click();
+        await elementUpdated(el);
+
+        firstItem.click();
+        await waitUntil(
+            () => [...el.querySelectorAll('[selected]')].length === 0,
+            'return item to `selected=false`'
+        );
+
+        expect(el.value).to.equal('Deselect');
+    });
+    it('[selectable] allows menu items to be [selected]', async () => {
+        const el = await actionMenuFixture();
+        el.selectable = true;
+
+        await elementUpdated(el);
+        const button = el.button as HTMLButtonElement;
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+        const beforeSelectedItems = [...el.querySelectorAll('[selected]')];
+        expect(beforeSelectedItems.length).to.equal(0);
+
+        button.click();
+        await elementUpdated(el);
+
+        firstItem.click();
+        await waitUntil(
+            () => [...el.querySelectorAll('[selected]')].length === 1,
+            'set item to `selected=true`'
+        );
+
+        expect(el.value).to.equal('Deselect');
     });
 });

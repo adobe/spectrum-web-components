@@ -16,6 +16,10 @@ governing permissions and limitations under the License.
     display: block;
 }
 
+:host([tabindex]:focus) {
+    outline: none;
+}
+
 #selected {
     flex-shrink: 0;
 }
