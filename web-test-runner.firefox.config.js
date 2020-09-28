@@ -4,7 +4,13 @@ module.exports = {
     files: ['packages/*/test/*.test.js'],
     nodeResolve: true,
     concurrency: 1,
+    testsFinishTimeout: 30000,
     coverage: false,
+    testFramework: {
+        config: {
+            timeout: 10000,
+        },
+    },
     testRunnerHtml: (testRunnerImport) => `
         <html>
         <head></head>
