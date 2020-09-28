@@ -6,7 +6,7 @@ executors:
         environment:
             NODE_ENV: development
 parameters:
-    current_golden_images_hash:
+    current_golden_images_cache_key:
         type: string
         default: d03d62ccb93494ae1bc7ecfc21fe66e1c5bc46a9
 commands:
@@ -40,7 +40,7 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_cache_key >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
             - run:
@@ -260,7 +260,7 @@ jobs:
                   command: |
                       cd .circleci
                       touch tmp
-                      sed 's/<< pipeline.parameters.current_golden_images_hash >>/<< pipeline.git.revision >>/g' config.yml > tmp 
+                      sed 's/<< pipeline.parameters.current_golden_images_cache_key >>/<< pipeline.git.revision >>/g' config.yml > tmp 
                       rm config.yml
                       mv tmp config.yml
                       git add config.yml

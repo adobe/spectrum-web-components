@@ -104,18 +104,18 @@ Visual testing is run against the stories in Storybook, and stories added there 
 
 #### Keeping CI Assets Up-to-date
 
-If you find the `visual-*` jobs failing on CircleCI for reasons that you expect (you've updated the Spectrum CSS dependencies, you've added new tests, etc.) then you will need to update the golden images cache key before your build will pass. Said update is a two-step process that allows you to update the golden images for your branch without disrupting other work going on in the repo while also preparing for the reality that CircleCI caches are only guaranteed for up to 30 days, but if you've already run a failing build, you're half way there!
+If you find the `visual-*` jobs failing on CircleCI for reasons that you expect (you've updated the Spectrum CSS dependencies, you've added new tests, etc.) then you will need to update the golden images cache key before your build will pass. The first step to doing so is to review the test results available in the "Artifacts" tab in CircleCI. Before updating the cache key, be sure that the updated caches are both complete (there are times when process errors prevent images from being correctly created) and appear as expected. If you agree with the updated cache content, you can use the "manage-golden-images-cache" workflow and the "approve-new-golden-image-cache" approval job to have CircleCI update the golden images cache key in your branch for you.
 
-Your failing branch will have created a new cache with a key of `v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-{{ .Revision }}`. In `.circleci/config.yml`, you will use that to update the cache that is restored at the beginning of the `run-regressions`, at least for the next 30 days. Using the revision number outlined in the `Build Golden Images Revision Cache` step of your failing build, update the first cache key listed in the `Restore Golden Images Cache` steps that appears as follows:
+Similarly, you can use the cache key available in the `Restore Golden Images Cache` step in your failing `visual-*` jobs to manually update the default value of the `current_golden_images_cache_key` paramater in `.circleci/config.yml`, which appears as:
 
 ```
-- restore_cache:
-    name: Restore Golden Images Cache
-    keys:
-        - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-${REVISION_NUMBER}
+parameters:
+    current_golden_images_cache_key:
+        type: string
+        default: 38ac9f2db1c2c3e2fdf9cbaa05ccbb0b33e88bc6
 ```
 
-With this update, your branch should now be able to pass the visual regression tests by loading the golden images from the new cache. The fact that this revision based cache will expire after 30 days is overcome by the fallback key of `v1-golden-images-master-<< parameters.regression_color >>-<< parameters.regression_scale >>-` which will address the latest cache created by the `master` branch whenever the specifically requested revision cache is not available.
+This will ensure that tests on this branch point to this cache key for at least the next 30 days (keep-alive time of caches on CircleCI). Once the branch is merged to `main`, a cache key of `v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}` will be created on each successful build of `main` that will be long-lived and act as the "fallback" once the revision keyed cache has expired.
 
 ## Benchmarking
 
