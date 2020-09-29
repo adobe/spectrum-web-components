@@ -72,6 +72,18 @@ export class ButtonBase extends LikeAnchor(
         return content;
     }
 
+    protected renderButton(): TemplateResult {
+        return html`
+            <button
+                id="button"
+                class="button"
+                aria-label=${ifDefined(this.label)}
+            >
+                ${this.buttonContent}
+            </button>
+        `;
+    }
+
     protected render(): TemplateResult {
         return this.href && this.href.length > 0
             ? this.renderAnchor({
@@ -79,14 +91,6 @@ export class ButtonBase extends LikeAnchor(
                   className: 'button',
                   anchorContent: this.buttonContent,
               })
-            : html`
-                  <button
-                      id="button"
-                      class="button"
-                      aria-label=${ifDefined(this.label)}
-                  >
-                      ${this.buttonContent}
-                  </button>
-              `;
+            : this.renderButton();
     }
 }
