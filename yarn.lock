@@ -3998,9 +3998,9 @@
   integrity sha512-C9g1ZJrq0fGs9Vu5z/Ft+Cr/plnSWtsk8rK394yAyOrQQym0zajiTvIMJLDlu764ah6k/4PkyPXmN+28/8vJSw==
 
 "@spectrum-css/buttongroup@^3.0.0-beta.3":
-  version "3.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-3.0.0-beta.3.tgz#429a876aa2eb13f3d85b8969dc0833ecded15d3f"
-  integrity sha512-KzgL9xr87Y5nEnYyAvOZWZkRe7wjsteDF4kAcndUXLc5mKv2rIEz1x80vYz6csp2nT20+90RBUqkQSgKVWE8wQ==
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-3.0.0-beta.4.tgz#f777d92a37ce6499b8ecffbe276971d6370ecd97"
+  integrity sha512-Vg/gWcf+czb5A6RWI3yV24xDNDiqyPk1AVPxQzQ9QulAtZfMUS+P/FVZGgCjMT9fDlCHeFLmdcXB5AUt/UXI7g==
 
 "@spectrum-css/card@^3.0.0-beta.2":
   version "3.0.0-beta.3"
