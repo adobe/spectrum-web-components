@@ -90,22 +90,12 @@ export class MenuItem extends ActionButton {
         return content;
     }
 
-    protected render(): TemplateResult {
-        return this.href && this.href.length > 0
-            ? this.renderAnchor({
-                  id: 'button',
-                  className: 'button',
-                  anchorContent: this.buttonContent,
-              })
-            : html`
-                  <div
-                      id="button"
-                      class="button"
-                      aria-label=${ifDefined(this.label)}
-                  >
-                      ${this.buttonContent}
-                  </div>
-              `;
+    protected renderButton(): TemplateResult {
+        return html`
+            <div id="button" class="button" aria-label=${ifDefined(this.label)}>
+                ${this.buttonContent}
+            </div>
+        `;
     }
 
     protected firstUpdated(changes: PropertyValues): void {
