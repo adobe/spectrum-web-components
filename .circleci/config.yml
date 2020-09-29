@@ -8,7 +8,7 @@ executors:
 parameters:
     current_golden_images_cache_key:
         type: string
-        default: d03d62ccb93494ae1bc7ecfc21fe66e1c5bc46a9
+        default: 32a7234fa940873e1849e226dd3a63ad44c00db1
 commands:
     setup:
         steps:
