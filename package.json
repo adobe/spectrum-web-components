@@ -110,7 +110,7 @@
         "@web/test-runner": "^0.7.27",
         "@web/test-runner-playwright": "^0.5.6",
         "@webcomponents/webcomponentsjs": "^2.4.4",
-        "alex": "^8.1.1",
+        "alex": "^9.0.1",
         "babel-loader": "^8.0.5",
         "babel-plugin-bundled-import-meta": "^0.3.2",
         "babel-plugin-transform-node-env-inline": "^0.4.3",
