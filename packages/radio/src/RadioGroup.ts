@@ -32,6 +32,9 @@ export class RadioGroup extends SpectrumElement {
         return [radioGroupStyles];
     }
 
+    @property({ type: String })
+    public name = '';
+
     @queryAssignedNodes('')
     public defaultNodes!: Node[];
 
@@ -61,9 +64,7 @@ export class RadioGroup extends SpectrumElement {
         }
     }
 
-    private handleFocusin = (event: FocusEvent): void => {
-        const target = event.target as Radio;
-        this.selected = target.value;
+    private handleFocusin = (): void => {
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('keydown', this.handleKeydown);
         requestAnimationFrame(() => {
@@ -151,7 +152,9 @@ export class RadioGroup extends SpectrumElement {
                 return;
         }
         event.preventDefault();
-        circularIndexedElement(this.buttons, nextIndex).focus();
+        const nextRadio = circularIndexedElement(this.buttons, nextIndex);
+        nextRadio.focus();
+        this.selected = nextRadio.value;
     };
 
     private handleFocusout = (): void => {
@@ -167,9 +170,6 @@ export class RadioGroup extends SpectrumElement {
         this.removeEventListener('keydown', this.handleKeydown);
         this.removeEventListener('focusout', this.handleFocusout);
     };
-
-    @property({ type: String, reflect: true })
-    public name = '';
 
     private _selected = '';
 
