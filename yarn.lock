@@ -4018,9 +4018,9 @@
   integrity sha512-iifUWDJkp4TpcPgJBpYsM1Z6pONNKDXGb2osBc8cZtQ0i87QX0EssFp9AkdyTObQvQh7wCUrOYLIg7FZTAGLaw==
 
 "@spectrum-css/coachmark@^3.0.0-beta.3":
-  version "3.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-3.0.0-beta.3.tgz#4909ae08032dd911c59bb42de0f27aebc6e259e3"
-  integrity sha512-SAm5VgjHtPI1vRN4nNPAJxWTIfAuh2ZnkUrHF4UTdqZUXMStzPmOwtOg5ylDIrd2OhXlB3qiu+8SAE0EsvbAzg==
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-3.0.0-beta.4.tgz#4b2009e0b2600d84ec6d9139e48b194a54ddaed6"
+  integrity sha512-cNyLJgkE2N2v/OF+8/m0J0oAqWhjDW0WwndE9tN0Hqtk3e3qE15RA7qfR7KwfUuPnx7Kiw15z73a+O9M0Lwiyg==
 
 "@spectrum-css/commons@^2.1.0":
   version "2.1.0"
