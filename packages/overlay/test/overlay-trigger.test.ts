@@ -162,6 +162,38 @@ describe('Overlay Trigger', () => {
         expect(isVisible(outerPopover)).to.be.true;
     });
 
+    it('[disabled] closes a popover', async () => {
+        const el = testDiv.querySelector('#trigger') as OverlayTrigger;
+        const button = testDiv.querySelector('#outer-button') as HTMLElement;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+
+        expect(isVisible(outerPopover)).to.be.false;
+        expect(el.disabled).to.be.false;
+
+        expect(button).to.exist;
+        button.click();
+
+        await waitUntil(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger),
+            'Wait for the DOM node to be stolen and reparented into the overlay'
+        );
+
+        expect(outerPopover.parentElement).to.not.be.an.instanceOf(
+            OverlayTrigger
+        );
+        expect(isVisible(outerPopover)).to.be.true;
+
+        el.disabled = true;
+
+        await waitUntil(
+            () => outerPopover.parentElement instanceof OverlayTrigger,
+            'Wait for the DOM node to be returned to the overlay trigger'
+        );
+
+        expect(isVisible(outerPopover)).to.be.false;
+        expect(el.disabled).to.be.true;
+    });
+
     it('resizes a popover', async () => {
         const button = testDiv.querySelector('#outer-button') as HTMLElement;
         const outerPopover = testDiv.querySelector('#outer-popover') as Popover;

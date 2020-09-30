@@ -16,6 +16,7 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 
 import {
@@ -90,6 +91,17 @@ export class OverlayTrigger extends LitElement {
                 ></slot>
             </div>
         `;
+    }
+
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (
+            this.disabled &&
+            this.closeClickOverlay &&
+            changes.has('disabled')
+        ) {
+            this.closeClickOverlay();
+        }
     }
 
     public static openOverlay = async (
