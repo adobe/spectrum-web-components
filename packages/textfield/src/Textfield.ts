@@ -79,6 +79,9 @@ export class Textfield extends Focusable {
     @property({ type: Boolean, reflect: true })
     public required = false;
 
+    @property({ type: Boolean, reflect: true })
+    public password = false;
+
     @property({ type: String, reflect: true })
     public autocomplete?:
         | HTMLInputElement['autocomplete']
@@ -154,6 +157,7 @@ export class Textfield extends Focusable {
                 @input=${this.onInput}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
+                ?password=${this.password}
                 autocomplete=${ifDefined(this.autocomplete)}
             ></textarea>
         `;
@@ -172,6 +176,7 @@ export class Textfield extends Focusable {
                 @input=${this.onInput}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
+                type=${this.password ? 'password' : 'text'}
                 autocomplete=${ifDefined(this.autocomplete)}
             />
         `;

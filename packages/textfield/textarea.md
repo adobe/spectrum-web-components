@@ -72,3 +72,16 @@ By default the text area has a fixed height and will scroll when text entry goes
     value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
 ></sp-textfield>
 ```
+
+### Password
+
+Provide a way to securely input a password. ( Not recommend ) [See browser compatibility](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-security#Browser_compatibility)
+
+```html
+<sp-textfield
+    multiline
+    password
+    placeholder="Enter password"
+    value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+></sp-textfield>
+```

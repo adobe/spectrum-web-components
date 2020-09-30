@@ -263,6 +263,32 @@ describe('Textfield', () => {
         await elementUpdated(el);
         expect(el.invalid).to.be.true;
     });
+    it('tests on `password`', async () => {
+        let el = await litFixture<Textfield>(
+            html`
+                <sp-textfield value=""></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        let input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('type')).to.equal('text');
+        }
+
+        el = await litFixture<Textfield>(
+            html`
+                <sp-textfield></sp-textfield>
+            `
+        );
+        el.password = true;
+        await elementUpdated(el);
+        input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('type')).to.equal('password');
+        }
+    });
     it('manages `allowed-keys`', async () => {
         const el = await litFixture<Textfield>(
             html`

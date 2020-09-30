@@ -68,5 +68,17 @@ export const Default = (): TemplateResult => {
             disabled
             placeholder="Enter your life story"
         ></sp-textfield>
+        <sp-textfield
+            multiline
+            label="Text area password"
+            password
+            placeholder="Enter Password"
+        ></sp-textfield>
+        <sp-textfield
+            multiline
+            label="Text area password"
+            password
+            placeholder="Enter Password"
+        ></sp-textfield>
     `;
 };

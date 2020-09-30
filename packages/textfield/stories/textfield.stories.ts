@@ -48,6 +48,17 @@ export const Default = (): TemplateResult => {
             value="Not a valid input"
             disabled
         ></sp-textfield>
+        <sp-textfield
+            label="Single line password"
+            password
+            placeholder="Enter Password"
+        ></sp-textfield>
+        <sp-textfield
+            label="Single line password required"
+            password
+            required
+            placeholder="Enter Password"
+        ></sp-textfield>
     `;
 };
 

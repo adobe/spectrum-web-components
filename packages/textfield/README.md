@@ -54,3 +54,11 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 ```html
 <sp-textfield placeholder="Enter your name" quiet></sp-textfield>
 ```
+
+### Password
+
+Provide a way to securely input a password.
+
+```html
+<sp-textfield placeholder="Enter password" password></sp-textfield>
+```
