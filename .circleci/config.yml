@@ -5,6 +5,10 @@ executors:
             - image: mcr.microsoft.com/playwright:next
         environment:
             NODE_ENV: development
+parameters:
+    current_golden_images_hash:
+        type: string
+        default: 79d1ceb110a917eb700123a8a557c2ce3edf4958
 commands:
     setup:
         steps:
@@ -36,18 +40,18 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v2-golden-images-79d1ceb110a917eb700123a8a557c2ce3edf4958-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
             - run:
                   when: on_fail
-                  command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci && exit 1
+                  command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci
             - save_cache:
                   when: on_fail
                   name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline/ci
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
