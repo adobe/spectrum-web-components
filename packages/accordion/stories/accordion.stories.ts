@@ -37,6 +37,22 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const Open = (): TemplateResult => {
+    return html`
+        <sp-accordion style="color: var(--spectrum-global-color-gray-800)">
+            <sp-accordion-item label="Heading 1">
+                <div>Item 1</div>
+            </sp-accordion-item>
+            <sp-accordion-item label="Heading 2" open>
+                Item 2
+            </sp-accordion-item>
+            <sp-accordion-item label="Heading 3">
+                Item 3
+            </sp-accordion-item>
+        </sp-accordion>
+    `;
+};
+
 export const AllowMultiple = (): TemplateResult => {
     return html`
         <sp-accordion
