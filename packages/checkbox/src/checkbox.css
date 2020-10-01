@@ -20,3 +20,30 @@ governing permissions and limitations under the License.
 :host(:empty) label {
     display: none;
 }
+
+/* Work around specificity changes in the selector processing from Spectrum CSS */
+/* stylelint-disable no-descending-specificity */
+:host([disabled][checked]) #input + #box:before,
+:host([disabled][checked]) #input:checked + #box:before {
+    /* .spectrum-Checkbox .spectrum-Checkbox-input:checked:disabled+.spectrum-Checkbox-box:before,
+   * .spectrum-Checkbox .spectrum-Checkbox-input:disabled+.spectrum-Checkbox-box:before */
+    border-color: var(
+        --spectrum-checkbox-emphasized-box-border-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+    background-color: var(
+        --spectrum-checkbox-emphasized-box-background-color-disabled,
+        var(--spectrum-global-color-gray-75)
+    );
+}
+
+:host([invalid][indeterminate]) #box:before,
+:host([invalid][indeterminate]) #input:checked + #box:before {
+    /* .spectrum-Checkbox.is-invalid .spectrum-Checkbox-box:before,
+   * .spectrum-Checkbox.is-invalid .spectrum-Checkbox-input:checked+.spectrum-Checkbox-box:before */
+    border-color: var(
+        --spectrum-checkbox-box-border-color-error,
+        var(--spectrum-global-color-red-500)
+    );
+}
+/* stylelint-enable no-descending-specificity */

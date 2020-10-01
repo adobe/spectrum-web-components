@@ -29,8 +29,6 @@ import { Checkbox } from '@spectrum-web-components/checkbox';
 
 ### Example
 
-<sp-icons-medium></sp-icons-medium>
-
 ```html
 <sp-checkbox>Web component</sp-checkbox>
 ```
@@ -41,8 +39,29 @@ Standard checkboxes are the default style for checkboxes. The blue color
 provides a visual prominence that is optimal for forms, settings, lists or grids
 of assets, etc. where the checkboxes need to be noticed.
 
-```html
-<sp-checkbox checked>Web component</sp-checkbox>
+```html-live
+<div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Default</h4>
+        <sp-checkbox>Web component</sp-checkbox>
+        <sp-checkbox checked>Web component</sp-checkbox>
+        <sp-checkbox indeterminate>Web component</sp-checkbox>
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
+        <sp-checkbox invalid>Web component</sp-checkbox>
+        <sp-checkbox checked invalid>Web component</sp-checkbox>
+        <sp-checkbox indeterminate invalid>Web component</sp-checkbox>
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+        <sp-checkbox disabled>Web component</sp-checkbox>
+        <sp-checkbox checked disabled>Web component</sp-checkbox>
+        <sp-checkbox indeterminate disabled>Web component</sp-checkbox>
+    </div>
+</div>
 ```
 
 ### Quiet checkboxes
@@ -52,29 +71,29 @@ less prominent style than the standard checkboxes. They are optimal for
 application panels where all visual elements are monochrome in order to direct
 focus to the content.
 
-```html
-<sp-checkbox quiet>Web component</sp-checkbox>
-```
+```html-live
+<div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column; justify-content: space-between;">
+        <h4 class="spectrum-Heading--subtitle1">Default</h4>
+        <sp-checkbox quiet>Web component</sp-checkbox>
+        <sp-checkbox quiet checked>Web component</sp-checkbox>
+        <sp-checkbox quiet indeterminate>Web component</sp-checkbox>
+    </div>
 
-### States
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
+        <sp-checkbox quiet invalid>Web component</sp-checkbox>
+        <sp-checkbox quiet checked invalid>Web component</sp-checkbox>
+        <sp-checkbox quiet indeterminate invalid>Web component</sp-checkbox>
+    </div>
 
-In addition to the variant, sp-checkboxes have a number of attributes for
-controlling their visual state. All checkbox variants support the `disabled`,
-`indeterminate`, `invalid` attributes, which applies a disabled style to the
-checkbox, and also prevents clicks from activating it.
-
-```html
-<div>checked:</div>
-<sp-checkbox checked>Web component</sp-checkbox>
-
-<div>indeterminate:</div>
-<sp-checkbox indeterminate>Web component</sp-checkbox>
-
-<div>invalid:</div>
-<sp-checkbox invalid>Web component</sp-checkbox>
-
-<div>disabled:</div>
-<sp-checkbox disabled>Web component</sp-checkbox>
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+        <sp-checkbox quiet disabled>Web component</sp-checkbox>
+        <sp-checkbox quiet checked disabled>Web component</sp-checkbox>
+        <sp-checkbox quiet indeterminate disabled>Web component</sp-checkbox>
+    </div>
+</div>
 ```
 
 ### Handling events
