@@ -65,11 +65,6 @@ const config = {
                     selector: '.is-disabled',
                     name: 'disabled',
                 },
-                {
-                    type: 'boolean',
-                    selector: '.is-password',
-                    name: 'password',
-                },
             ],
         },
     ],

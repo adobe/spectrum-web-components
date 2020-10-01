@@ -48,17 +48,6 @@ export const Default = (): TemplateResult => {
             value="Not a valid input"
             disabled
         ></sp-textfield>
-        <sp-textfield
-            label="Single line password"
-            password
-            placeholder="Enter Password"
-        ></sp-textfield>
-        <sp-textfield
-            label="Single line password required"
-            password
-            required
-            placeholder="Enter Password"
-        ></sp-textfield>
     `;
 };
 
@@ -76,6 +65,22 @@ export const allowedKeys = (): TemplateResult => {
         <sp-textfield
             placeholder="Enter your name"
             allowed-keys="a-z"
+        ></sp-textfield>
+    `;
+};
+
+export const passwordField = (): TemplateResult => {
+    return html`
+        <sp-textfield
+            label="Single line password"
+            password
+            placeholder="Enter Password"
+        ></sp-textfield>
+        <sp-textfield
+            label="Single line password required"
+            password
+            required
+            placeholder="Enter Password"
         ></sp-textfield>
     `;
 };

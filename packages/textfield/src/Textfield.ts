@@ -157,7 +157,6 @@ export class Textfield extends Focusable {
                 @input=${this.onInput}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
-                ?password=${this.password}
                 autocomplete=${ifDefined(this.autocomplete)}
             ></textarea>
         `;
