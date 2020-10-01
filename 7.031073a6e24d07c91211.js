@@ -15,4 +15,4 @@ var(--spectrum-global-dimension-size-100))/2)}#label{align-self:center;justify-s
 `));let l,n,i=r=>r;class b extends e.a{constructor(){super(...arguments),this.vertical=!1}render(){return this.vertical?Object(c.d)(l||(l=i``)):Object(c.d)(n||(n=i`
             <hr />
         `))}}b.styles=[u],Object(a.a)([Object(c.e)({type:Boolean,reflect:!0})],b.prototype,"vertical",void 0),customElements.define("sp-rule",b)}}]);
-//# sourceMappingURL=7.883764f95dd5ce157c5a.js.map
+//# sourceMappingURL=7.031073a6e24d07c91211.js.map
