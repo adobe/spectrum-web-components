@@ -119,8 +119,40 @@ export const disabledIndeterminate = (): TemplateResult => {
     `;
 };
 
-disabledIndeterminate.story = {
-    name: 'Disabled indeterminate',
+export const quietInvalid = (): TemplateResult => {
+    return html`
+        <sp-checkbox quiet invalid>Checkbox</sp-checkbox>
+    `;
+};
+
+export const quietInvalidChecked = (): TemplateResult => {
+    return html`
+        <sp-checkbox quiet invalid checked>Checkbox</sp-checkbox>
+    `;
+};
+
+export const quietInvalidIndeterminate = (): TemplateResult => {
+    return html`
+        <sp-checkbox quiet invalid indeterminate>Checkbox</sp-checkbox>
+    `;
+};
+
+export const quietDisabled = (): TemplateResult => {
+    return html`
+        <sp-checkbox quiet disabled>Checkbox</sp-checkbox>
+    `;
+};
+
+export const quietDisabledChecked = (): TemplateResult => {
+    return html`
+        <sp-checkbox disabled checked>Checkbox</sp-checkbox>
+    `;
+};
+
+export const quietDisabledIndeterminate = (): TemplateResult => {
+    return html`
+        <sp-checkbox quiet disabled indeterminate>Checkbox</sp-checkbox>
+    `;
 };
 
 export const tabIndexExample = (): TemplateResult => {
