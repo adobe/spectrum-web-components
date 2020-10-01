@@ -60,22 +60,22 @@ import {
 ```html
 <sp-popover open style="position: relative">
     <sp-menu>
-        <sp-menu-item>
+        <sp-menu-item value="item-1">
             Deselect
         </sp-menu-item>
-        <sp-menu-item>
+        <sp-menu-item value="item-2">
             Select inverse
         </sp-menu-item>
-        <sp-menu-item>
+        <sp-menu-item value="item-3">
             Feather...
         </sp-menu-item>
-        <sp-menu-item>
+        <sp-menu-item value="item-4">
             Select and mask...
         </sp-menu-item>
-        <sp-menu-item>
+        <sp-menu-item value="item-5">
             Save selection
         </sp-menu-item>
-        <sp-menu-item disabled>
+        <sp-menu-item value="item-6" disabled>
             Make work path
         </sp-menu-item>
     </sp-menu>

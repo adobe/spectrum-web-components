@@ -87,6 +87,72 @@ import { Dropdown } from '@spectrum-web-components/dropdown';
 </sp-dropdown>
 ```
 
+### Value
+
+When the `value` of an `<sp-dropdown>` matches the `value` attribute or the trimmed `textContent` (or `itemText`) of a descendent `<sp-menu-item>` element, it will make that element as `selected`.
+
+### Matching `value`
+
+```html
+<sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
+    value="item-2"
+>
+    <sp-menu>
+        <sp-menu-item value="item-1">
+            Deselect
+        </sp-menu-item>
+        <sp-menu-item value="item-2">
+            Select inverse
+        </sp-menu-item>
+        <sp-menu-item value="item-3">
+            Feather...
+        </sp-menu-item>
+        <sp-menu-item value="item-4">
+            Select and mask...
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item value="item-5">
+            Save selection
+        </sp-menu-item>
+        <sp-menu-item disabled value="item-6">
+            Make work path
+        </sp-menu-item>
+    </sp-menu>
+</sp-dropdown>
+```
+
+### Matching `itemText`
+
+```html
+<sp-dropdown
+    label="Select a Country with a very long label, too long in fact"
+    value="Feather..."
+>
+    <sp-menu>
+        <sp-menu-item>
+            Deselect
+        </sp-menu-item>
+        <sp-menu-item>
+            Select inverse
+        </sp-menu-item>
+        <sp-menu-item>
+            Feather...
+        </sp-menu-item>
+        <sp-menu-item>
+            Select and mask...
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>
+            Save selection
+        </sp-menu-item>
+        <sp-menu-item>
+            Make work path
+        </sp-menu-item>
+    </sp-menu>
+</sp-dropdown>
+```
+
 ## States
 
 ### Invalid
