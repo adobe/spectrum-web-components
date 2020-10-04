@@ -5,6 +5,10 @@ executors:
             - image: mcr.microsoft.com/playwright:next
         environment:
             NODE_ENV: development
+parameters:
+    current_golden_images_hash:
+        type: string
+        default: af71b4f04045c4a48bae7986a7e6aae4cdfac7d0
 commands:
     setup:
         steps:
@@ -36,18 +40,18 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v2-golden-images-d03d62ccb93494ae1bc7ecfc21fe66e1c5bc46a9-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
             - run:
                   when: on_fail
-                  command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci && exit 1
+                  command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci
             - save_cache:
                   when: on_fail
                   name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline/ci
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
@@ -57,6 +61,29 @@ commands:
                   path: test/visual/screenshots-current
 
 jobs:
+    commitlint:
+        executor: node
+
+        steps:
+            - checkout
+            - restore_cache:
+                  keys:
+                      - v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Installing Dependencies
+                  command: yarn --ignore-scripts
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Define environment variable with lastest commit's message
+                  command: |
+                      echo 'export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")' >> $BASH_ENV
+                      source $BASH_ENV
+            - run:
+                  name: Lint commit message
+                  command: echo "$COMMIT_MESSAGE" | npx commitlint
     build:
         executor: node
 
@@ -273,6 +300,9 @@ jobs:
 
 workflows:
     version: 2
+    commitlint:
+        jobs:
+            - commitlint
     build:
         jobs:
             - build

@@ -30,13 +30,13 @@
             // When the single page app is loaded further down in this file,
             // the correct url will be waiting in the browser's history for
             // the single page app to route accordingly.
-            (function(l) {
+            (function (l) {
                 if (l.search) {
                     var q = {};
                     l.search
                         .slice(1)
                         .split('&')
-                        .forEach(function(v) {
+                        .forEach(function (v) {
                             var a = v.split('=');
                             q[a[0]] = a
                                 .slice(1)
@@ -57,11 +57,6 @@
             })(window.location);
         </script>
         <!-- End Single Page Apps for GitHub Pages -->
-        <script>
-            // @TODO: Remove this after user agent stylesheet bug is fixed
-            // https://bugs.chromium.org/p/chromium/issues/detail?id=946975
-            delete Document.prototype.adoptedStyleSheets;
-        </script>
         <script type="module" defer src="./src/main.js"></script>
     </head>
     <body>
