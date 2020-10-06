@@ -4095,9 +4095,9 @@
   integrity sha512-0/g/3lROiRnF4fSMBOQyG9V18x8yr49uWFpMeLGTY3pw8dv2LlfQNULAJs3HxXG/egxHmwjVcIlwLbQAziBP1Q==
 
 "@spectrum-css/slider@^3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-3.0.0-beta.2.tgz#dc4be304b3541b9647fc70a48ba81b6a693dba95"
-  integrity sha512-TZ6qcCsV+VhCF3JvBiM2BXRzoUTlqIS3yOMNkF665pwtVASPRmCXA1WtmJzrEZZT+Lad3MIGncZ5F85fa4/FgQ==
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-3.0.0-beta.3.tgz#96981a21217fe4ad94025024589219f715d86009"
+  integrity sha512-yU1WMIITkmIRCoztKlkaDEUCk6wlI3fOmmK0DPcfQNDxZ7eBqo7AKi/yOfyUMzYO8ao9eUcTRUSjgswDPMPn2A==
 
 "@spectrum-css/splitbutton@^3.0.0-beta.3":
   version "3.0.0-beta.3"
