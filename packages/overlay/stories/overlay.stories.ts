@@ -23,9 +23,19 @@ import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { Color } from '@spectrum-web-components/theme';
+import { Color, Scale } from '@spectrum-web-components/theme';
 
 import './overlay-story-components';
+
+declare global {
+    interface Window {
+        __swc_hack_knobs__: {
+            defaultScale: Scale;
+            defaultDirection: 'ltr' | 'rtl' | 'auto';
+            defaultColor: Color;
+        };
+    }
+}
 
 const storyStyles = html`
     <style>
@@ -275,8 +285,16 @@ export const deepNesting = (): TemplateResult => {
     const outter = color === 'light' ? 'dark' : 'light';
     return html`
         ${storyStyles}
-        <sp-theme color=${outter}>
-            <sp-theme color=${color}>
+        <sp-theme
+            color=${outter}
+            scale=${window.__swc_hack_knobs__.defaultScale}
+            dir=${window.__swc_hack_knobs__.defaultDirection}
+        >
+            <sp-theme
+                color=${color}
+                scale=${window.__swc_hack_knobs__.defaultScale}
+                dir=${window.__swc_hack_knobs__.defaultDirection}
+            >
                 <recursive-popover
                     tabindex=""
                     style="
