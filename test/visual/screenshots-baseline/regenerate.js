@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 const playwright = require('playwright');
 var rimraf = require('rimraf');
-const { createConfig, startServer } = require('es-dev-server');
+const { startDevServer } = require('@web/dev-server');
 const path = require('path');
 const fs = require('fs');
 const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
@@ -26,18 +26,19 @@ module.exports = {
                 viewport = { width: 800, height: 600 };
 
             before(async function () {
-                const config = createConfig({
-                    port: 4444,
-                    nodeResolve: true,
-                    appIndex: 'index.hml',
-                    rootDir: path.resolve(
-                        process.cwd(),
-                        'documentation',
-                        'dist',
-                        'storybook'
-                    ),
+                server = await startDevServer({
+                    config: {
+                        port: 4444,
+                        nodeResolve: true,
+                        appIndex: 'index.html',
+                        rootDir: path.resolve(
+                            process.cwd(),
+                            'documentation',
+                            'dist',
+                            'storybook'
+                        ),
+                    },
                 });
-                ({ server } = await startServer(config));
                 // Create the test directory if needed.
                 if (!fs.existsSync(baselineDir)) {
                     fs.mkdirSync(baselineDir);
@@ -53,9 +54,8 @@ module.exports = {
                 fs.mkdirSync(`${baselineDir}/${type}/userDataDir`);
             });
 
-            after(() => {
-                browser.close();
-                server.close();
+            after(async () => {
+                await Promise.all([browser.close(), server.stop()]);
             });
 
             before(async function () {
@@ -74,17 +74,20 @@ module.exports = {
         });
 
         async function generateBaselineScreenshots(page) {
-            const prefix = type;
-            console.log(prefix + '...');
             for (let i = 0; i < stories.length; i++) {
-                await page.goto(
-                    `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&knob-Reduce%20Motion_Theme=true&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text direction_Theme=${dir}`,
-                    {
-                        waitUntil: 'networkidle',
-                    }
+                const url = `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&viewMode=story&knob-Reduce%20Motion_Theme=true&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text direction_Theme=${dir}`;
+                console.log('visiting:', url);
+                await page.goto(url, {
+                    waitUntil: 'networkidle',
+                });
+                await page.waitForFunction(
+                    () => !!document.querySelector('#root-inner')
                 );
                 await page.waitForFunction(
-                    '!!document.querySelector("sp-theme").shadowRoot'
+                    () => !!document.querySelector('sp-theme')
+                );
+                await page.waitForFunction(
+                    () => !!document.querySelector('sp-theme').shadowRoot
                 );
                 await page.screenshot({
                     path: `${baselineDir}/${type}/${stories[i]}__${color}__${scale}__${dir}.png`,
