@@ -19,6 +19,7 @@ import '@spectrum-web-components/theme/src/themes.js';
 window.process = window.process || {};
 window.process.env = window.process.env || {};
 window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
+window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {};
 
 addDecorator(withA11y);
 addDecorator(withKnobs);
@@ -29,32 +30,46 @@ const colorOptions = {
     Dark: 'dark',
     Darkest: 'darkest',
 };
-let defaultColor = colorOptions.Light;
+window.__swc_hack_knobs__.defaultColor = colorOptions.Light;
 const scaleOptions = {
     Medium: 'medium',
     Large: 'large',
 };
-let defaultScale = scaleOptions.Medium;
+window.__swc_hack_knobs__.defaultScale = scaleOptions.Medium;
 const directionOptions = {
     LTR: 'ltr',
     RTL: 'rtl',
 };
-let defaultDirection = 'ltr';
-let defaultReduceMotion = false;
+window.__swc_hack_knobs__.defaultDirection = 'ltr';
+window.__swc_hack_knobs__.defaultReduceMotion = false;
 addDecorator((story) => {
-    const color = select('Color', colorOptions, defaultColor, 'Theme');
-    defaultColor = color;
-    const scale = select('Scale', scaleOptions, defaultScale, 'Theme');
-    defaultScale = scale;
+    const color = select(
+        'Color',
+        colorOptions,
+        window.__swc_hack_knobs__.defaultColor,
+        'Theme'
+    );
+    window.__swc_hack_knobs__.defaultColor = color;
+    const scale = select(
+        'Scale',
+        scaleOptions,
+        window.__swc_hack_knobs__.defaultScale,
+        'Theme'
+    );
+    window.__swc_hack_knobs__.defaultScale = scale;
     const dir = select(
         'Text direction',
         directionOptions,
-        defaultDirection,
+        window.__swc_hack_knobs__.defaultDirection,
         'Theme'
     );
-    defaultDirection = dir;
-    const reduceMotion = boolean('Reduce Motion', defaultReduceMotion, 'Theme');
-    defaultReduceMotion = reduceMotion;
+    window.__swc_hack_knobs__.defaultDirection = dir;
+    const reduceMotion = boolean(
+        'Reduce Motion',
+        window.__swc_hack_knobs__.defaultReduceMotion,
+        'Theme'
+    );
+    window.__swc_hack_knobs__.defaultReduceMotion = reduceMotion;
     return html`
         <sp-theme id="root-theme" color=${color} scale=${scale} dir=${dir}>
             ${reduceMotion
