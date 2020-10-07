@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 const playwright = require('playwright');
 const expect = require('chai').expect;
-const { createConfig, startServer } = require('es-dev-server');
+const { startDevServer } = require('@web/dev-server');
 const path = require('path');
 const fs = require('fs');
 var rimraf = require('rimraf');
@@ -56,24 +56,24 @@ module.exports = {
                 fs.mkdirSync(`${baselineDir}/${type}/userDataDir`);
             });
 
-            after(() => {
-                browser.close();
-                server.close();
+            after(async () => {
+                await Promise.all([browser.close(), server.stop()]);
             });
 
             before(async function () {
-                const config = createConfig({
-                    port: 4444,
-                    nodeResolve: true,
-                    appIndex: 'index.html',
-                    rootDir: path.resolve(
-                        process.cwd(),
-                        'documentation',
-                        'dist',
-                        'storybook'
-                    ),
+                server = await startDevServer({
+                    config: {
+                        port: 4444,
+                        nodeResolve: true,
+                        appIndex: 'index.html',
+                        rootDir: path.resolve(
+                            process.cwd(),
+                            'documentation',
+                            'dist',
+                            'storybook'
+                        ),
+                    },
                 });
-                ({ server } = await startServer(config));
                 browser = await playwright[
                     'chromium'
                 ].launchPersistentContext(
@@ -103,9 +103,13 @@ module.exports = {
                 }
             );
             await page.waitForFunction(
-                () =>
-                    document.querySelector('sp-theme') &&
-                    document.querySelector('sp-theme').shadowRoot
+                () => !!document.querySelector('#root-inner')
+            );
+            await page.waitForFunction(
+                () => !!document.querySelector('sp-theme')
+            );
+            await page.waitForFunction(
+                () => !!document.querySelector('sp-theme').shadowRoot
             );
             await page.screenshot({
                 path: `${currentDir}/${type}/${test}__${color}__${scale}__${dir}.png`,

@@ -4115,9 +4115,9 @@
   integrity sha512-5v5tnBy4Ypdm52JwmESsGPWP3aqniWaD6WqHGVik3k4es4yjkVNraQxvkj3ExzT/K3shYrM8mFPf2sEeiZ83cg==
 
 "@spectrum-css/table@^3.0.0-beta.3":
-  version "3.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-3.0.0-beta.3.tgz#ef018d453078f88880f9efb260ce17a8716e1490"
-  integrity sha512-8Cqrrn59+SLYykjsTOX9NH78d9abKmJqu8EC1/aR1Tj5L3cf7nFD8wQSe79sBcn5bLVOjV6gqTyeUfULsJ7isw==
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-3.0.0-beta.4.tgz#43078dc62b80aa2d99902a54922f6e98df2c8f86"
+  integrity sha512-moDjwBN63CL+P/Q+OKhrID+ceY8G51EosQ1SMJQgC2a5ueAz8GIH6f/QpKqbNFX+FUa6PUUkpvPQamvEmuC/ug==
 
 "@spectrum-css/tabs@^3.0.0-beta.3":
   version "3.0.0-beta.3"
@@ -5181,7 +5181,24 @@
   dependencies:
     semver "^7.3.2"
 
-"@web/dev-server-core@^0.2.11":
+"@web/dev-server-cli@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-cli/-/dev-server-cli-0.0.3.tgz#65d36b92e1cf0be71098756b17957741691afab3"
+  integrity sha512-mcyWkU1R7eb6kswRQOIGNfvEH8mnkORQDGYAIR290A7FagRrto8ibZVFUe+leG4d7OIw0FGCbU4IlRrGKJgSxw==
+  dependencies:
+    "@babel/code-frame" "^7.10.4"
+    "@types/command-line-args" "^5.0.0"
+    "@web/config-loader" "^0.1.1"
+    "@web/dev-server-core" "^0.2.5"
+    camelcase "^6.0.0"
+    chalk "^4.1.0"
+    command-line-args "^5.1.1"
+    command-line-usage "^6.1.0"
+    ip "^1.1.5"
+    open "^7.1.0"
+    portfinder "^1.0.27"
+
+"@web/dev-server-core@^0.2.10", "@web/dev-server-core@^0.2.11", "@web/dev-server-core@^0.2.5":
   version "0.2.11"
   resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.2.11.tgz#d7c5b43557ff29cf857e389a2cd2d78c426a98b2"
   integrity sha512-67lt5WRJBSOrKqR9pALC+818B3fhhV3vtSl+A36inp4/U9stUZrDK62aVTTEd2Y8Im2OsVyc0k9MgUY2AvEvKQ==
@@ -5252,7 +5269,7 @@
     parse5 "^6.0.1"
     ua-parser-js "^0.7.21"
 
-"@web/dev-server-rollup@^0.2.9":
+"@web/dev-server-rollup@^0.2.5", "@web/dev-server-rollup@^0.2.9":
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.2.9.tgz#e76925846d966053a80ec6d726c189d2c2b7cd2d"
   integrity sha512-YSlXV0igmhgXEy0tCdF0QzKKyDN6Bp5bj4TYmJpXLGWkUHyKwcohHNq/kAG1mxaxdkEX5cO9FUg/MfGZqeOA0w==
@@ -5262,6 +5279,28 @@
     parse5 "^6.0.1"
     rollup "^2.20.0"
     whatwg-url "^8.1.0"
+
+"@web/dev-server@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.0.13.tgz#56b3cedc054ffaf667bca92cac333572506ad23f"
+  integrity sha512-J9oJzm8x3lt5T/W36p5dEhNhZS5Z/9ltU3Xk0zp7cuCaZIJBJ6lhdYYAXiVQU+LsO6uSvxUQW7IGmdqiZPcicQ==
+  dependencies:
+    "@babel/code-frame" "^7.10.4"
+    "@rollup/plugin-node-resolve" "^8.4.0"
+    "@types/command-line-args" "^5.0.0"
+    "@web/config-loader" "^0.1.1"
+    "@web/dev-server-cli" "^0.0.3"
+    "@web/dev-server-core" "^0.2.10"
+    "@web/dev-server-rollup" "^0.2.5"
+    camelcase "^6.0.0"
+    chalk "^4.1.0"
+    command-line-args "^5.1.1"
+    command-line-usage "^6.1.0"
+    debounce "^1.2.0"
+    deepmerge "^4.2.2"
+    ip "^1.1.5"
+    open "^7.1.0"
+    portfinder "^1.0.27"
 
 "@web/test-runner-chrome@^0.7.1":
   version "0.7.1"
@@ -16403,7 +16442,7 @@ mkdirp@0.5.4:
   dependencies:
     minimist "^1.2.5"
 
-mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.4, mkdirp@~0.5.1:
+mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.4, mkdirp@^0.5.5, mkdirp@~0.5.1:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
@@ -17382,6 +17421,14 @@ open@^7.0.4:
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/open/-/open-7.0.4.tgz#c28a9d315e5c98340bf979fdcb2e58664aa10d83"
   integrity sha512-brSA+/yq+b08Hsr4c8fsEW2CRzk1BmfN3SAK/5VCHQ9bdoZJ4qa/+AfR0xHjlbbZUyPkUHs1b8x1RqdyZdkVqQ==
+  dependencies:
+    is-docker "^2.0.0"
+    is-wsl "^2.1.1"
+
+open@^7.1.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/open/-/open-7.3.0.tgz#45461fdee46444f3645b6e14eb3ca94b82e1be69"
+  integrity sha512-mgLwQIx2F/ye9SmbrUkurZCnkoXyXyu9EbHtJZrICjVAJfyMArdHp3KkixGdZx1ZHFPNIwl0DDM1dFFqXbTLZw==
   dependencies:
     is-docker "^2.0.0"
     is-wsl "^2.1.1"
@@ -18388,6 +18435,15 @@ portfinder@^1.0.26:
     async "^2.6.2"
     debug "^3.1.1"
     mkdirp "^0.5.1"
+
+portfinder@^1.0.27:
+  version "1.0.28"
+  resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.28.tgz#67c4622852bd5374dd1dd900f779f53462fac778"
+  integrity sha512-Se+2isanIcEqf2XMHjyUKskczxbPH7dQnlMjXX6+dybayyHvAf/TCgyMRlzf/B6QDhAEFOGes0pzRo3by4AbMA==
+  dependencies:
+    async "^2.6.2"
+    debug "^3.1.1"
+    mkdirp "^0.5.5"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
