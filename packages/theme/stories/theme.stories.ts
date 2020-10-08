@@ -14,6 +14,7 @@ import { html, radios } from '@open-wc/demoing-storybook';
 import '../sp-theme.js';
 import '../src/themes.js';
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import '@spectrum-web-components/slider/sp-slider.js';
 import { TemplateResult } from '@spectrum-web-components/base';
@@ -67,10 +68,10 @@ export const Default = (): TemplateResult => {
                     ></sp-slider>
                 </div>
                 <div><sp-switch>Overdrive</sp-switch></div>
-                <div id="buttons">
+                <sp-button-group id="buttons">
                     <sp-button variant="primary">Cancel</sp-button>
                     <sp-button variant="cta">Continue</sp-button>
-                </div>
+                </sp-button-group>
             </div>
         </sp-theme>
     `;
@@ -110,10 +111,10 @@ export const none = (): TemplateResult => html`
             ></sp-slider>
         </div>
         <div><sp-switch>Overdrive</sp-switch></div>
-        <div id="buttons">
+        <sp-button-group id="buttons">
             <sp-button variant="primary">Cancel</sp-button>
             <sp-button variant="cta">Continue</sp-button>
-        </div>
+        </sp-button-group>
     </div>
     <sp-theme></sp-theme>
 `;
@@ -140,10 +141,10 @@ export const nestedTheme = (): TemplateResult => {
                     ></sp-slider>
                 </div>
                 <div><sp-switch>Overdrive</sp-switch></div>
-                <div id="buttons">
+                <sp-button-group id="buttons">
                     <sp-button variant="primary">Cancel</sp-button>
                     <sp-button variant="cta">Continue</sp-button>
-                </div>
+                </sp-button-group>
                 <sp-theme color="${inner}" dir="ltr">
                     <div id="inner">
                         <div>
@@ -157,10 +158,10 @@ export const nestedTheme = (): TemplateResult => {
                             ></sp-slider>
                         </div>
                         <div><sp-switch>Overdrive</sp-switch></div>
-                        <div id="buttons-inner">
+                        <sp-button-group id="buttons-inner">
                             <sp-button variant="primary">Cancel</sp-button>
                             <sp-button variant="cta">Continue</sp-button>
-                        </div>
+                        </sp-button-group>
                     </div>
                 </sp-theme>
             </div>
@@ -208,10 +209,10 @@ export const reverseColorNestedTheme = (): TemplateResult => {
                     ></sp-slider>
                 </div>
                 <div><sp-switch>Overdrive</sp-switch></div>
-                <div id="buttons">
+                <sp-button-group id="buttons">
                     <sp-button variant="primary">Cancel</sp-button>
                     <sp-button variant="cta">Continue</sp-button>
-                </div>
+                </sp-button-group>
                 <sp-theme color="${outer}" dir="rtl">
                     <div id="inner">
                         <div>
@@ -225,10 +226,10 @@ export const reverseColorNestedTheme = (): TemplateResult => {
                             ></sp-slider>
                         </div>
                         <div><sp-switch>Overdrive</sp-switch></div>
-                        <div id="buttons-inner">
+                        <sp-button-group id="buttons-inner">
                             <sp-button variant="primary">Cancel</sp-button>
                             <sp-button variant="cta">Continue</sp-button>
-                        </div>
+                        </sp-button-group>
                     </div>
                 </sp-theme>
             </div>

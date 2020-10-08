@@ -80,16 +80,16 @@ import {
     <sp-icons-medium></sp-icons-medium>
     <sp-tabs selected="1" direction="horizontal">
         <sp-tab label="Tab 1" value="1">
-            <sp-icon slot="icon" size="s" name="ui:CheckmarkSmall"></sp-icon>
+            <sp-icon slot="icon" size="m" name="ui:CheckmarkSmall"></sp-icon>
         </sp-tab>
         <sp-tab label="Tab 2" value="2">
-            <sp-icon slot="icon" size="s" name="ui:CrossSmall"></sp-icon>
+            <sp-icon slot="icon" size="m" name="ui:CrossSmall"></sp-icon>
         </sp-tab>
         <sp-tab label="Tab 3" value="3">
-            <sp-icon slot="icon" size="s" name="ui:ChevronDownSmall"></sp-icon>
+            <sp-icon slot="icon" size="m" name="ui:ChevronDownSmall"></sp-icon>
         </sp-tab>
         <sp-tab label="Tab 4" value="4">
-            <sp-icon slot="icon" size="s" name="ui:HelpSmall"></sp-icon>
+            <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
         </sp-tab>
     </sp-tabs>
 </div>

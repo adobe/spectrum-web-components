@@ -179,7 +179,7 @@ export const withIcon = (): TemplateResult => {
                 content: html`
                     <sp-icon
                         slot="icon"
-                        size="s"
+                        size="m"
                         name="ui:HelpMedium"
                     ></sp-icon>
                     Help
