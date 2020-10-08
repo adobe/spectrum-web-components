@@ -111,10 +111,10 @@ When bundling your application, be sure to consult the documentation of your bun
             ></sp-slider>
         </div>
         <div><sp-switch>Overdrive</sp-switch></div>
-        <div id="buttons">
+        <sp-button-group id="buttons">
             <sp-button variant="primary">Cancel</sp-button>
             <sp-button variant="cta">Continue</sp-button>
-        </div>
+        </sp-button-group>
     </div>
 </sp-theme>
 ```
@@ -147,10 +147,10 @@ When bundling your application, be sure to consult the documentation of your bun
             ></sp-slider>
         </div>
         <div><sp-switch>Overdrive</sp-switch></div>
-        <div id="buttons">
+        <sp-button-group id="buttons">
             <sp-button variant="primary">Cancel</sp-button>
             <sp-button variant="cta">Continue</sp-button>
-        </div>
+        </sp-button-group>
     </div>
 </sp-theme>
 ```
@@ -185,10 +185,10 @@ The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile [P
             ></sp-slider>
         </div>
         <div><sp-switch>Overdrive</sp-switch></div>
-        <div id="buttons">
+        <sp-button-group id="buttons">
             <sp-button variant="primary">Cancel</sp-button>
             <sp-button variant="cta">Continue</sp-button>
-        </div>
+        </sp-button-group>
     </div>
 </sp-theme>
 ```
@@ -232,10 +232,10 @@ previewing or editing content that will be displayed in a light theme with a rig
             ></sp-slider>
         </div>
         <div><sp-switch>Overdrive</sp-switch></div>
-        <div id="buttons">
+        <sp-button-group id="buttons">
             <sp-button variant="primary">Cancel</sp-button>
             <sp-button variant="cta">Continue</sp-button>
-        </div>
+        </sp-button-group>
         <sp-theme color="light" dir="rtl">
             <div id="inner">
                 <div>
@@ -249,10 +249,10 @@ previewing or editing content that will be displayed in a light theme with a rig
                     ></sp-slider>
                 </div>
                 <div><sp-switch>Overdrive</sp-switch></div>
-                <div id="buttons">
+                <sp-button-group id="buttons">
                     <sp-button variant="primary">Cancel</sp-button>
                     <sp-button variant="cta">Continue</sp-button>
-                </div>
+                </sp-button-group>
             </div>
         </sp-theme>
     </div>

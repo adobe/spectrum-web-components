@@ -24,25 +24,22 @@ export default {
 export const Default = (): TemplateResult => {
     return html`
         <sp-dropzone id="dropzone" tabindex="0">
-            <sp-illustrated-message heading="Drag and Drop Your File">
+            <sp-illustrated-message heading="Drag and Drop Your File" cta>
                 ${illustration}
-            </sp-illustrated-message>
-
-            <div style="color: grey">
-                <div>
+                <div slot="description">
                     <label for="file-input">
                         <sp-link>Select a File</sp-link>
                         from your computer
                     </label>
                     <input type="file" id="file-input" style="display: none" />
                 </div>
-                <div>
+                <div slot="description">
                     or
                     <sp-link href="http://stock.adobe.com" target="blank">
                         Search Adobe Stock
                     </sp-link>
                 </div>
-            </div>
+            </sp-illustrated-message>
         </sp-dropzone>
     `;
 };

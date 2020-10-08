@@ -51,19 +51,19 @@ export const actionButtonsIcons = (): TemplateResult => {
     return html`
         <sp-button-group>
             <sp-action-button>
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
                 Button 1
             </sp-action-button>
             <sp-action-button>
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
                 Longer Button 2
             </sp-action-button>
             <sp-action-button>
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>
                 Short 3
@@ -76,17 +76,17 @@ export const actionButtonsIconsOnly = (): TemplateResult => {
     return html`
         <sp-button-group>
             <sp-action-button quiet label="Properties">
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
             <sp-action-button quiet label="Info">
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
             <sp-action-button quiet label="View All Tags">
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
@@ -118,19 +118,19 @@ export const actionButtonsVerticalIcons = (): TemplateResult => {
     return html`
         <sp-button-group vertical>
             <sp-action-button>
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
                 Button 1
             </sp-action-button>
             <sp-action-button>
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
                 Longer Button 2
             </sp-action-button>
             <sp-action-button>
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>
                 Short 3
@@ -143,17 +143,17 @@ export const actionButtonsVerticalIconsOnly = (): TemplateResult => {
     return html`
         <sp-button-group vertical>
             <sp-action-button quiet label="Properties">
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
             <sp-action-button quiet label="Info">
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
             <sp-action-button quiet label="View All Tags">
-                <sp-icon slot="icon" size="s">
+                <sp-icon slot="icon" size="m">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>

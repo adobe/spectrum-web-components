@@ -52,7 +52,7 @@ import {
 </style>
 <overlay-trigger id="trigger" placement="bottom" offset="6">
     <sp-button variant="primary" slot="trigger">
-        Bottopopover
+        Button popover
     </sp-button>
     <sp-popover dialog slot="click-content" direction="bottom" tip open>
         <div class="options-popover-content">

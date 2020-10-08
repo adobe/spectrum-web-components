@@ -168,13 +168,15 @@ quietActions.story = {
 
 export const small = (): TemplateResult => {
     return html`
-        <div style="width: 208px; height: 264px">
+        <div
+            style="--spectrum-card-title-padding-right: 0; --spectrum-card-title-padding-left: 0;"
+        >
             <sp-card small heading="Card Heading" subheading="JPG">
                 <img
                     slot="cover-photo"
                     src=${portrait}
                     alt="Demo Image"
-                    style="width: 110px"
+                    style="width: 130px"
                 />
                 <div slot="footer">Footer</div>
             </sp-card>
@@ -244,8 +246,9 @@ export const SlottedHeading = (): TemplateResult => {
         <div
             style="
             width: 318px;
-            --spectrum-card-heading-width: 100%;
-            --spectrum-card-heading-padding-right: 0;
+            --spectrum-card-title-width: 100%;
+            --spectrum-card-title-padding-right: 0;
+            --spectrum-card-title-padding-left: 0;
             --spectrum-card-body-header-height: auto;
             --spectrum-alias-single-line-width: 100%;
         "

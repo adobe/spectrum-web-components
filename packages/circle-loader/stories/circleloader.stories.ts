@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-circle-loader.js';
-import { html, number, boolean } from '@open-wc/demoing-storybook';
+import { html } from '@open-wc/demoing-storybook';
 import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
@@ -19,73 +19,32 @@ export default {
 };
 
 export const Default = (): TemplateResult => {
-    const progress = number(
-        'Progress',
-        27,
-        {
-            range: true,
-            min: 0,
-            max: 100,
-            step: 1,
-        },
-        'Component'
-    );
-    const indeterminate = boolean('Indeterminate', false, 'Component');
     return html`
         <div
             style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
         >
-            <sp-circle-loader
-                progress=${progress}
-                size="small"
-                ?indeterminate=${indeterminate}
-            ></sp-circle-loader>
-            <sp-circle-loader
-                progress=${progress}
-                ?indeterminate=${indeterminate}
-            ></sp-circle-loader>
-            <sp-circle-loader
-                progress=${progress}
-                size="large"
-                ?indeterminate=${indeterminate}
-            ></sp-circle-loader>
+            <sp-circle-loader progress="27" size="small"></sp-circle-loader>
+            <sp-circle-loader progress="27"></sp-circle-loader>
+            <sp-circle-loader progress="27" size="large"></sp-circle-loader>
         </div>
     `;
 };
 
 export const overBackground = (): TemplateResult => {
-    const progress = number(
-        'Progress',
-        53,
-        {
-            range: true,
-            min: 0,
-            max: 100,
-            step: 1,
-        },
-        'Component'
-    );
-    const indeterminate = boolean('Indeterminate', false, 'Component');
     return html`
         <div
             style="width: 250px; height: 150px; background-color: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: space-around;"
         >
             <sp-circle-loader
-                progress=${progress}
+                progress="53"
                 over-background
                 size="small"
-                ?indeterminate=${indeterminate}
             ></sp-circle-loader>
+            <sp-circle-loader progress="53" over-background></sp-circle-loader>
             <sp-circle-loader
-                progress=${progress}
-                over-background
-                ?indeterminate=${indeterminate}
-            ></sp-circle-loader>
-            <sp-circle-loader
-                progress=${progress}
+                progress="53"
                 over-background
                 size="large"
-                ?indeterminate=${indeterminate}
             ></sp-circle-loader>
         </div>
     `;
