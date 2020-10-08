@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import '@spectrum-web-components/styles/typography.css';
-@import '@spectrum-css/rule/dist/index-vars.css';
+@import '@spectrum-css/divider/dist/index-vars.css';
 @import '@spectrum-css/table/dist/index-vars.css';
 
 /* 
@@ -48,6 +48,10 @@ article {
     --spectrum-table-row-background-color: var(--spectrum-global-color-gray-75);
 }
 
-.headerContainer {
+.headerContainer > sp-rule {
+    margin-bottom: var(--spectrum-global-dimension-size-150);
+}
+
+.headerContainer > sp-rule[size='large'] {
     margin-bottom: var(--spectrum-global-dimension-size-400);
 }

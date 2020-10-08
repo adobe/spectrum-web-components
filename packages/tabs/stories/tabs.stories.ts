@@ -107,7 +107,7 @@ export const Icons = (): TemplateResult => {
             >
                 <sp-icon
                     slot="icon"
-                    size="s"
+                    size="m"
                     name="ui:CheckmarkSmall"
                 ></sp-icon>
             </sp-tab>
@@ -116,7 +116,7 @@ export const Icons = (): TemplateResult => {
                 value="2"
                 ?vertical=${tabType === directions.vertical}
             >
-                <sp-icon slot="icon" size="s" name="ui:CrossSmall"></sp-icon>
+                <sp-icon slot="icon" size="m" name="ui:CrossSmall"></sp-icon>
             </sp-tab>
             <sp-tab
                 label="Tab 3"
@@ -125,7 +125,7 @@ export const Icons = (): TemplateResult => {
             >
                 <sp-icon
                     slot="icon"
-                    size="s"
+                    size="m"
                     name="ui:ChevronDownSmall"
                 ></sp-icon>
             </sp-tab>
@@ -134,7 +134,7 @@ export const Icons = (): TemplateResult => {
                 value="4"
                 ?vertical=${tabType === directions.vertical}
             >
-                <sp-icon slot="icon" size="s" name="ui:HelpSmall"></sp-icon>
+                <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
             </sp-tab>
         </sp-tabs>
     `;
@@ -157,7 +157,7 @@ export const IconsOnly = (): TemplateResult => {
             >
                 <sp-icon
                     slot="icon"
-                    size="s"
+                    size="m"
                     name="ui:CheckmarkSmall"
                 ></sp-icon>
             </sp-tab>
@@ -166,7 +166,7 @@ export const IconsOnly = (): TemplateResult => {
                 value="2"
                 ?vertical=${tabType === directions.vertical}
             >
-                <sp-icon slot="icon" size="s" name="ui:CrossSmall"></sp-icon>
+                <sp-icon slot="icon" size="m" name="ui:CrossSmall"></sp-icon>
             </sp-tab>
             <sp-tab
                 aria-label="Tab 3"
@@ -175,7 +175,7 @@ export const IconsOnly = (): TemplateResult => {
             >
                 <sp-icon
                     slot="icon"
-                    size="s"
+                    size="m"
                     name="ui:ChevronDownSmall"
                 ></sp-icon>
             </sp-tab>
@@ -184,7 +184,7 @@ export const IconsOnly = (): TemplateResult => {
                 value="4"
                 ?vertical=${tabType === directions.vertical}
             >
-                <sp-icon slot="icon" size="s" name="ui:HelpSmall"></sp-icon>
+                <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
             </sp-tab>
         </sp-tabs>
     `;
@@ -197,22 +197,22 @@ export const iconsIi = (): TemplateResult => {
             <sp-tab label="Tab 1" value="1" vertical>
                 <sp-icon
                     slot="icon"
-                    size="s"
+                    size="m"
                     name="ui:CheckmarkSmall"
                 ></sp-icon>
             </sp-tab>
             <sp-tab label="Tab 2" value="2" vertical>
-                <sp-icon slot="icon" size="s" name="ui:CrossSmall"></sp-icon>
+                <sp-icon slot="icon" size="m" name="ui:CrossSmall"></sp-icon>
             </sp-tab>
             <sp-tab label="Tab 3" value="3" vertical>
                 <sp-icon
                     slot="icon"
-                    size="s"
+                    size="m"
                     name="ui:ChevronDownSmall"
                 ></sp-icon>
             </sp-tab>
             <sp-tab label="Tab 4" value="4" vertical>
-                <sp-icon slot="icon" size="s" name="ui:HelpSmall"></sp-icon>
+                <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
             </sp-tab>
         </sp-tabs>
     `;
@@ -229,22 +229,22 @@ export const iconsIii = (): TemplateResult => {
             <sp-tab label="Tab 1" value="1">
                 <sp-icon
                     slot="icon"
-                    size="s"
+                    size="m"
                     name="ui:CheckmarkSmall"
                 ></sp-icon>
             </sp-tab>
             <sp-tab label="Tab 2" value="2">
-                <sp-icon slot="icon" size="s" name="ui:CrossSmall"></sp-icon>
+                <sp-icon slot="icon" size="m" name="ui:CrossSmall"></sp-icon>
             </sp-tab>
             <sp-tab label="Tab 3" value="3">
                 <sp-icon
                     slot="icon"
-                    size="s"
+                    size="m"
                     name="ui:ChevronDownSmall"
                 ></sp-icon>
             </sp-tab>
             <sp-tab label="Tab 4" value="4">
-                <sp-icon slot="icon" size="s" name="ui:HelpSmall"></sp-icon>
+                <sp-icon slot="icon" size="m" name="ui:HelpSmall"></sp-icon>
             </sp-tab>
         </sp-tabs>
     `;
