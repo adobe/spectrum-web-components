@@ -21,7 +21,7 @@ import { AsteriskIcon } from '@spectrum-web-components/icons-ui';
 class ElementWithIcon extends LitElement {
     protected render(): TemplateResult {
         return html`
-            <sp-icon slot="icon">
+            <sp-icon>
                 ${AsteriskIcon()}
             </sp-icon>
         `

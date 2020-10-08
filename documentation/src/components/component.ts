@@ -68,7 +68,10 @@ function buildTable(
     cells: ((property: JsDocTagParsed) => TemplateResult)[]
 ): TemplateResult {
     return html`
-        <h2 class="spectrum-Heading3">${title}</h2>
+        <div class="headerContainer">
+            <h2 class="spectrum-Heading spectrum-Heading--M">${title}</h2>
+            <sp-rule size="small"></sp-rule>
+        </div>
         <table class="spectrum-Table">
             <thead class="spectrum-Table-head">
                 <tr>
@@ -167,9 +170,9 @@ class ComponentElement extends RouteComponent {
             );
             result = html`
                 <article class="spectrum-Typography">
-                    <div id="title-header" class="spectrum-Article">
+                    <div id="title-header">
                         <h1
-                            class="spectrum-Heading1--display spectrum-Heading1--quiet"
+                            class="spectrum-Heading spectrum-Heading--XXL spectrum-Heading--serif"
                         >
                             ${this.componentName}
                         </h1>

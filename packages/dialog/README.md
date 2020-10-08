@@ -23,27 +23,13 @@ When looking to leverage the `Dialog` base class as a type and/or for extension 
 import { Dialog } from '@spectrum-web-components/dialog';
 ```
 
-## Examples
-
-View this component in [Storybook](storybook/?path=/story/dialog).
-
 ## Variants
 
 ### Small
 
 ```html
-<style>
-    [force-inline] {
-        /* force demo to display inline */
-        position: relative;
-        transform: none;
-        margin: 0 auto;
-        left: auto;
-        top: auto;
-    }
-</style>
-<sp-dialog open size="small" force-inline>
-    <h2 slot="title">Disclaimer</h2>
+<sp-dialog size="small">
+    <h2 slot="heading">Disclaimer</h2>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
     augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
@@ -60,18 +46,8 @@ View this component in [Storybook](storybook/?path=/story/dialog).
 ### Medium
 
 ```html
-<style>
-    [force-inline] {
-        /* force demo to display inline */
-        position: relative;
-        transform: none;
-        margin: 0 auto;
-        left: auto;
-        top: auto;
-    }
-</style>
-<sp-dialog open size="medium" force-inline>
-    <h2 slot="title">Disclaimer</h2>
+<sp-dialog size="medium">
+    <h2 slot="heading">Disclaimer</h2>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
     augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
@@ -88,18 +64,8 @@ View this component in [Storybook](storybook/?path=/story/dialog).
 ### Large
 
 ```html
-<style>
-    [force-inline] {
-        /* force demo to display inline */
-        position: relative;
-        transform: none;
-        margin: 0 auto;
-        left: auto;
-        top: auto;
-    }
-</style>
-<sp-dialog open size="large" force-inline>
-    <h2 slot="title">Disclaimer</h2>
+<sp-dialog size="large">
+    <h2 slot="heading">Disclaimer</h2>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
     augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
@@ -113,27 +79,13 @@ View this component in [Storybook](storybook/?path=/story/dialog).
 </sp-dialog>
 ```
 
-### Dismissible
+### Dismissable
+
+When supplied with the `dissmissable` attribute an `<sp-dialog>` element will surface a "close" button afordance that will dispatch a DOM event with the name of `close` when pressed.
 
 ```html
-<style>
-    [force-inline] {
-        /* force demo to display inline */
-        position: relative;
-        transform: none;
-        margin: 0 auto;
-        left: auto;
-        top: auto;
-    }
-</style>
-<sp-button
-    onClick="this.nextElementSibling.open = !this.nextElementSibling.open"
-    variant="primary"
->
-    Toggle Dialog
-</sp-button>
-<sp-dialog open size="medium" dismissible force-inline>
-    <h2 slot="title">Disclaimer</h2>
+<sp-dialog size="medium" dismissable>
+    <h2 slot="heading">Disclaimer</h2>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
     augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
@@ -150,30 +102,8 @@ View this component in [Storybook](storybook/?path=/story/dialog).
 ### No Divider
 
 ```html
-<style>
-    [force-inline] {
-        /* force demo to display inline */
-        position: relative;
-        transform: none;
-        margin: 0 auto;
-        left: auto;
-        top: auto;
-    }
-</style>
-<sp-button
-    onClick="this.nextElementSibling.nextElementSibling.toggleAttribute('force-inline')"
-    variant="primary"
->
-    Toggle `force-inline`
-</sp-button>
-<sp-button
-    onClick="this.nextElementSibling.open = !this.nextElementSibling.open"
-    variant="primary"
->
-    Toggle Dialog
-</sp-button>
-<sp-dialog open size="medium" dismissible no-divider force-inline>
-    <h2 slot="title">Disclaimer</h2>
+<sp-dialog size="medium" dismissable no-divider>
+    <h2 slot="heading">Disclaimer</h2>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
     augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
@@ -190,28 +120,12 @@ View this component in [Storybook](storybook/?path=/story/dialog).
 ### Hero
 
 ```html
-<style>
-    [force-inline] {
-        /* force demo to display inline */
-        position: relative;
-        transform: none;
-        margin: 0 auto;
-        left: auto;
-        top: auto;
-    }
-</style>
-<sp-button
-    onClick="this.nextElementSibling.open = !this.nextElementSibling.open"
-    variant="primary"
->
-    Toggle Dialog
-</sp-button>
-<sp-dialog open size="medium" dismissible no-divider force-inline>
+<sp-dialog size="medium" dismissable no-divider>
     <div
         slot="hero"
         style="background-image: url(https://placedog.net/500/280)"
     ></div>
-    <h2 slot="title">Disclaimer</h2>
+    <h2 slot="heading">Disclaimer</h2>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
     augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam

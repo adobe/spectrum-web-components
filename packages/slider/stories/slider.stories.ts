@@ -82,57 +82,6 @@ export const Disabled = (): TemplateResult => {
     `;
 };
 
-export const Color = (): TemplateResult => {
-    return html`
-        <div style="width: 500px; margin: 12px 20px;">
-            <sp-slider
-                variant="color"
-                value="5"
-                step="0.5"
-                min="0"
-                max="20"
-                label="Color"
-                id="color-slider"
-            ></sp-slider>
-        </div>
-    `;
-};
-
-export const colorWithAlpha = (): TemplateResult => {
-    return html`
-        <div style="width: 500px; margin: 12px 20px;">
-            <sp-slider
-                variant="color"
-                has-alpha
-                value="5"
-                step="0.5"
-                min="0"
-                max="20"
-                label="Color"
-                id="color-slider"
-            ></sp-slider>
-        </div>
-    `;
-};
-
-export const colorDisabled = (): TemplateResult => {
-    return html`
-        <div style="width: 500px; margin: 12px 20px;">
-            <sp-slider
-                variant="color"
-                has-alpha
-                disabled
-                value="5"
-                step="0.5"
-                min="0"
-                max="20"
-                label="Color"
-                id="color-slider"
-            ></sp-slider>
-        </div>
-    `;
-};
-
 export const focusTabDemo = (): TemplateResult => {
     const value = number('Value', 50);
     const min = number('Min', 0);

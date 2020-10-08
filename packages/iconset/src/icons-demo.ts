@@ -71,7 +71,7 @@ export class IconsDemo extends SpectrumElement {
                 (icon) => html`
                     <div class="icon">
                         <sp-icon
-                            size="l"
+                            size="xl"
                             name=${`${this.name}:${icon}`}
                         ></sp-icon>
                         ${icon}
