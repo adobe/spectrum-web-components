@@ -28,7 +28,7 @@ import { Rule } from '@spectrum-web-components/rule';
 ### Large
 
 ```html-live
-<h2 class="spectrum-Heading--subtitle1">Large</h2>
+<h2 class="spectrum-Heading spectrum-Heading--M">Large</h2>
 <sp-rule size="large"></sp-rule>
 <p class="spectrum-Body">Page or Section Titles.</p>
 ```
@@ -36,7 +36,7 @@ import { Rule } from '@spectrum-web-components/rule';
 ### Medium
 
 ```html-live
-<h3 class="spectrum-Heading--subtitle2">Medium</h3>
+<h3 class="spectrum-Heading spectrum-Heading--S">Medium</h3>
 <sp-rule size="medium"></sp-rule>
 <p class="spectrum-Body">
     Divide subsections, or divide different groups of elements (between panels,
@@ -47,7 +47,7 @@ import { Rule } from '@spectrum-web-components/rule';
 ### Small
 
 ```html-live
-<h4 class="spectrum-Heading--subtitle3">Small</h4>
+<h4 class="spectrum-Heading spectrum-Heading--XS">Small</h4>
 <sp-rule size="small"></sp-rule>
 <p class="spectrum-Body">
     Divide like-elements (tables, tool groups, elements within a panel, etc.)

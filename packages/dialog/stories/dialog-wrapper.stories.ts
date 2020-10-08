@@ -31,9 +31,10 @@ export const wrapperLabeledHero = (): TemplateResult => {
             open
             hero=${landscape}
             hero-label="Hero Image Alt Text"
-            dismissible
+            dismissable
             headline="Wrapped Dialog w/ Hero Image"
             @close=${action('close')}
+            size="small"
         >
             Content of the dialog
         </sp-dialog-wrapper>
@@ -46,7 +47,7 @@ export const wrapperLabeledHero = (): TemplateResult => {
     `;
 };
 
-export const wrapperDismissible = ({
+export const wrapperDismissable = ({
     actionTracking = true,
 } = {}): TemplateResult => {
     const noTransitions = boolean('No Transitions', false, 'Testing');
@@ -60,9 +61,10 @@ export const wrapperDismissible = ({
             ?no-transitions=${noTransitions}
             open
             hero=${landscape}
-            dismissible
+            dismissable
             headline="Wrapped Dialog w/ Hero Image"
             @close=${announceAction('close')}
+            size="small"
         >
             Content of the dialog
         </sp-dialog-wrapper>
@@ -75,7 +77,7 @@ export const wrapperDismissible = ({
     `;
 };
 
-export const wrapperDismissibleUnderlay = (): TemplateResult => {
+export const wrapperDismissableUnderlay = (): TemplateResult => {
     const noTransitions = boolean('No Transitions', false, 'Testing');
     return html`
         <sp-button
@@ -88,10 +90,11 @@ export const wrapperDismissibleUnderlay = (): TemplateResult => {
             ?no-transitions=${noTransitions}
             open
             hero=${landscape}
-            dismissible
+            dismissable
             headline="Wrapped Dialog w/ Hero Image"
             underlay
             @close=${action('close')}
+            size="small"
         >
             Content of the dialog
         </sp-dialog-wrapper>
@@ -159,7 +162,6 @@ export const wrapperFullscreen = (): TemplateResult => {
             confirm-label="Keep Both"
             secondary-label="Replace"
             cancel-label="Cancel"
-            footer="Content for footer"
             @confirm=${action('confirm')}
             @secondary=${action('secondary')}
             @cancel=${action('cancel')}

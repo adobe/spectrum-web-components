@@ -16,11 +16,11 @@ class HomeElement extends RouteComponent {
         return html`
             <section id="hero">
                 <div class="spectrum-Article">
-                    <h1 class="spectrum-Heading1--display">
+                    <h1 class="spectrum-Heading spectrum-Heading--XXXL spectrum-Heading--serif">
                         Spectrum Web Components
                     </h1>
                 </div>
-                <p class="spectrum-Body3">
+                <p class="spectrum-Body spectrum-Body--XL">
                     The Spectrum Web Components project is an implementation of <sp-link
                     href="https://spectrum.adobe.com/">Spectrum, Adobe’s design system</sp-link
                     >. It's designed to work with any web framework — or even
@@ -37,10 +37,10 @@ class HomeElement extends RouteComponent {
             </section>
             <section id="features">
                 <div class="feature">
-                    <h2 class="spectrum-Heading4">
+                    <h2 class="spectrum-Heading spectrum-Heading--S">
                         Standards based
                     </h2>
-                    <p class="spectrum-Body3">
+                    <p class="spectrum-Body spectrum-Body--M">
                         <sp-link
                             href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"
                         >
@@ -52,10 +52,10 @@ class HomeElement extends RouteComponent {
                     </p>
                 </div>
                 <div class="feature">
-                    <h2 class="spectrum-Heading4">
+                    <h2 class="spectrum-Heading spectrum-Heading--S">
                         Light weight
                     </h2>
-                    <p class="spectrum-Body3">
+                    <p class="spectrum-Body spectrum-Body--M">
                         Spectrum Web Components are implemented using the
                         <sp-link
                             href="https://lit-element.polymer-project.org/"
@@ -67,10 +67,10 @@ class HomeElement extends RouteComponent {
                     </p>
                 </div>
                 <div class="feature">
-                    <h2 class="spectrum-Heading4">
+                    <h2 class="spectrum-Heading spectrum-Heading--S">
                         Framework agnostic
                     </h2>
-                    <p class="spectrum-Body3">
+                    <p class="spectrum-Body spectrum-Body--M">
                         You can use web components with any framework, since
                         they’re supported and encapsulated at the browser level.
                     </p>
