@@ -23,6 +23,7 @@
     "main": "lib/index.js",
     "module": "lib/index.js",
     "exports": {
+        ".": "./src/index.js",
         "./lib/": "./lib/",
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json"
