@@ -2,7 +2,7 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:next
+            - image: mcr.microsoft.com/playwright:bionic
         environment:
             NODE_ENV: development
 parameters:
