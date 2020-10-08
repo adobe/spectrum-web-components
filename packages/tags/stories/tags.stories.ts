@@ -65,15 +65,15 @@ export const Default = (): TemplateResult => {
         <sp-tags>
             <sp-tag>
                 Tag 1
-                <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+                <sp-icon slot="icon" size="s" name="ui:Magnifier"></sp-icon>
             </sp-tag>
             <sp-tag invalid>
                 Tag 2
-                <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+                <sp-icon slot="icon" size="s" name="ui:Magnifier"></sp-icon>
             </sp-tag>
             <sp-tag disabled>
                 Tag 3
-                <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+                <sp-icon slot="icon" size="s" name="ui:Magnifier"></sp-icon>
             </sp-tag>
         </sp-tags>
     `;
@@ -120,15 +120,15 @@ export const deletable = (): TemplateResult => {
         <sp-tags @delete=${action('delete')}>
             <sp-tag deletable>
                 Tag 1
-                <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+                <sp-icon slot="icon" size="s" name="ui:Magnifier"></sp-icon>
             </sp-tag>
             <sp-tag invalid deletable>
                 Tag 2
-                <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+                <sp-icon slot="icon" size="s" name="ui:Magnifier"></sp-icon>
             </sp-tag>
             <sp-tag disabled deletable>
                 Tag 3
-                <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+                <sp-icon slot="icon" size="s" name="ui:Magnifier"></sp-icon>
             </sp-tag>
         </sp-tags>
     `;

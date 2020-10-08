@@ -15,7 +15,8 @@ import '../sp-actionbar.js';
 import { html } from '@open-wc/demoing-storybook';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/button/sp-action-button.js';
-import '@spectrum-web-components/button-group/sp-button-group.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import { EditIcon, MoreIcon } from '@spectrum-web-components/icons-workflow';
 
 export default {
@@ -27,18 +28,18 @@ export const Default = (): TemplateResult => {
     return html`
         <sp-actionbar open>
             <sp-checkbox indeterminate>228 Selected</sp-checkbox>
-            <sp-button-group>
+            <sp-action-group>
                 <sp-action-button quiet>
-                    <sp-icon size="s" slot="icon">
+                    <sp-icon size="m" slot="icon">
                         ${EditIcon()}
                     </sp-icon>
                 </sp-action-button>
                 <sp-action-button quiet>
-                    <sp-icon size="s" slot="icon">
+                    <sp-icon size="m" slot="icon">
                         ${MoreIcon()}
                     </sp-icon>
                 </sp-action-button>
-            </sp-button-group>
+            </sp-action-group>
         </sp-actionbar>
     `;
 };

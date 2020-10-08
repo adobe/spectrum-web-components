@@ -39,7 +39,7 @@ export const large = (): TemplateResult => {
         'Element'
     );
     return html`
-        <h2 class="spectrum-Heading--subtitle1">Large</h2>
+        <h2 class="spectrum-Heading spectrum-Heading--M">Large</h2>
         <sp-rule size=${size}></sp-rule>
         <p class="spectrum-Body">Page or Section Titles.</p>
     `;
@@ -53,7 +53,7 @@ export const medium = (): TemplateResult => {
         'Element'
     );
     return html`
-        <h3 class="spectrum-Heading--subtitle2">Medium</h3>
+        <h3 class="spectrum-Heading spectrum-Heading--S">Medium</h3>
         <sp-rule size=${size}></sp-rule>
         <p class="spectrum-Body">
             Divide subsections, or divide different groups of elements (between
@@ -70,7 +70,7 @@ export const small = (): TemplateResult => {
         'Element'
     );
     return html`
-        <h4 class="spectrum-Heading--subtitle3">Small</h4>
+        <h4 class="spectrum-Heading spectrum-Heading--XS">Small</h4>
         <sp-rule size=${size}></sp-rule>
         <p class="spectrum-Body">
             Divide like-elements (tables, tool groups, elements within a panel,
