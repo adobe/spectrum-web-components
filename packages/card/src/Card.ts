@@ -163,12 +163,6 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
         return this.renderPreviewImage;
     }
 
-    /**
-     * sp-asset
-     * sp-quick-actions
-     * sp-checkbox
-     *
-     */
     protected render(): TemplateResult {
         return html`
             ${this.toggles
