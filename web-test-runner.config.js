@@ -3,8 +3,8 @@ const { playwrightLauncher } = require('@web/test-runner-playwright');
 module.exports = {
     files: ['packages/*/test/*.test.js'],
     nodeResolve: true,
-    concurrency: 4,
-    testsFinishTimeout: 30000,
+    concurrentBrowsers: 1,
+    testsFinishTimeout: 45000,
     coverage: true,
     coverageConfig: {
         report: true,
@@ -43,5 +43,23 @@ module.exports = {
     browsers: [
         playwrightLauncher({ product: 'chromium' }),
         playwrightLauncher({ product: 'webkit' }),
+        playwrightLauncher({
+            concurrency: 1,
+            product: 'firefox',
+            launchOptions: {
+                headless: false,
+                args: ['-headless'],
+                firefoxUserPrefs: {
+                    'toolkit.telemetry.reportingpolicy.firstRun': false,
+                    'browser.shell.checkDefaultBrowser': false,
+                    'browser.bookmarks.restore_default_bookmarks': false,
+                    'dom.disable_open_during_load': false,
+                    'dom.max_script_run_time': 0,
+                    'dom.min_background_timeout_value': 10,
+                    'extensions.autoDisableScopes': 0,
+                    'extensions.enabledScopes': 15,
+                },
+            },
+        }),
     ],
 };
