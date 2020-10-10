@@ -65,6 +65,41 @@ describe('Radio Group - focus control', () => {
 
         expect(document.activeElement === selected).to.be.true;
     });
+    it('does not select on focus', async () => {
+        const el = await fixture<RadioGroup>(
+            html`
+                <sp-radio-group>
+                    <sp-radio value="1">Options 1</sp-radio>
+                    <sp-radio value="2">Options 2</sp-radio>
+                    <sp-radio value="3">Options 3</sp-radio>
+                    <sp-radio value="4">Options 4</sp-radio>
+                    <sp-radio value="5">Options 5</sp-radio>
+                </sp-radio-group>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const radio1 = el.querySelector('sp-radio:nth-child(1)') as Radio;
+        const radio2 = el.querySelector('sp-radio:nth-child(2)') as Radio;
+
+        expect(el.selected).to.equal('');
+
+        radio1.focus();
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('');
+        el.selected = '1';
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('1');
+        expect(radio1.checked).to.be.true;
+        radio2.focus();
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('1');
+        expect(radio1.checked).to.be.true;
+    });
     it('loads accepts keyboard events while focused', async () => {
         const el = await fixture<RadioGroup>(
             html`
@@ -122,7 +157,7 @@ describe('Radio Group - focus control', () => {
 
         radio1.blur();
     });
-    it('loads accepts keyboard events while focused', async () => {
+    it('acknowledges `disabled` and accepts keyboard events while focused', async () => {
         const el = await fixture<RadioGroup>(
             html`
                 <sp-radio-group>
