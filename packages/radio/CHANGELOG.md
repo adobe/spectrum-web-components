@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.4.2...@spectrum-web-components/radio@0.4.3) (2020-10-12)
+
+### Bug Fixes
+
+-   **radio:** select in response to arrow keys not focus ([b6acb59](https://github.com/adobe/spectrum-web-components/commit/b6acb59fe4b097c478f09d0b79a76857ccb38066))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+
 ## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.4.1...@spectrum-web-components/radio@0.4.2) (2020-09-25)
 
 ### Bug Fixes

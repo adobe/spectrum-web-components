@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.2...@spectrum-web-components/checkbox@0.5.3) (2020-10-12)
+
+### Bug Fixes
+
+-   **checkbox:** work around specificity changes when processing Spectrum CSS and cover with tests ([d53a871](https://github.com/adobe/spectrum-web-components/commit/d53a871f1ef5117c69ac5c4fc3b31aa9f151515c))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+
 ## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.1...@spectrum-web-components/checkbox@0.5.2) (2020-09-25)
 
 ### Bug Fixes

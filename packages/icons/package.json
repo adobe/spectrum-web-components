@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.4.3",
+    "version": "0.4.4",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
@@ -50,8 +50,8 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/base": "^0.1.1",
-        "@spectrum-web-components/iconset": "^0.2.3",
+        "@spectrum-web-components/base": "^0.1.2",
+        "@spectrum-web-components/iconset": "^0.2.4",
         "tslib": "^2.0.0"
     }
 }

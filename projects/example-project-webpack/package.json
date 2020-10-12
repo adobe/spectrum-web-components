@@ -1,7 +1,7 @@
 {
     "name": "example-project-webpack",
     "private": true,
-    "version": "1.0.24",
+    "version": "1.0.25",
     "description": "An example project that uses the web components and gives an example of how to bundle them minimally with webpack.",
     "main": "index.js",
     "scripts": {
@@ -12,9 +12,9 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@spectrum-web-components/button": "^0.9.2",
-        "@spectrum-web-components/dropdown": "^0.8.3",
-        "@spectrum-web-components/menu": "^0.4.2",
+        "@spectrum-web-components/button": "^0.9.3",
+        "@spectrum-web-components/dropdown": "^0.8.4",
+        "@spectrum-web-components/menu": "^0.4.3",
         "@spectrum-web-components/styles": "^0.6.1",
         "lit-element": "^2.4.0",
         "lit-html": "^1.0.0"

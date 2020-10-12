@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bar-loader@0.2.1...@spectrum-web-components/bar-loader@0.2.2) (2020-10-12)
+
+### Bug Fixes
+
+-   improve accessibility through aria-label attribute usage ([66752b7](https://github.com/adobe/spectrum-web-components/commit/66752b762604ff80d191172b315d2ef20bd6081d))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+
 ## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bar-loader@0.2.0...@spectrum-web-components/bar-loader@0.2.1) (2020-09-25)
 
 **Note:** Version bump only for package @spectrum-web-components/bar-loader

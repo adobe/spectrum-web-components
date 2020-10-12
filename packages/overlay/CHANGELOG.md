@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.2...@spectrum-web-components/overlay@0.6.3) (2020-10-12)
+
+### Bug Fixes
+
+-   **overlay:** close when overlay-trigger becomes [disabled](<[6f27e25](https://github.com/adobe/spectrum-web-components/commit/6f27e25658dd23949ef07c6df72c43768651482b)>)
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+
 ## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.1...@spectrum-web-components/overlay@0.6.2) (2020-09-25)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
@@ -51,7 +51,7 @@
         "@spectrum-css/underlay": "^2.0.7"
     },
     "dependencies": {
-        "@spectrum-web-components/base": "^0.1.1",
+        "@spectrum-web-components/base": "^0.1.2",
         "tslib": "^2.0.0"
     }
 }
