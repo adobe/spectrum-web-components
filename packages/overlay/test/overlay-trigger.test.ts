@@ -318,7 +318,7 @@ describe('Overlay Trigger', () => {
         expect(outerPopover.parentElement).to.not.be.an.instanceOf(
             OverlayTrigger
         );
-        button.click();
+        document.body.click();
         await waitUntil(
             () => outerPopover.parentElement instanceof OverlayTrigger,
             'outter hoverConent returned to OverlayTrigger'
