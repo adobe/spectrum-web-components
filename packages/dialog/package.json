@@ -55,6 +55,9 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.1.2",
         "@spectrum-web-components/button": "^0.9.3",
+        "@spectrum-web-components/icon": "^0.6.2",
+        "@spectrum-web-components/icons-ui": "^0.3.2",
+        "@spectrum-web-components/shared": "^0.7.3",
         "@spectrum-web-components/underlay": "^0.3.2",
         "tslib": "^2.0.0"
     }
