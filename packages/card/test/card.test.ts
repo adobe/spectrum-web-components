@@ -222,7 +222,7 @@ describe('card', () => {
         expect(el.focused, 'still not focused, again 2').to.be.false;
         expect(el.selected, 'still selected, again 3').to.be.false;
     });
-    it('displays the `heading` attribute as `.heading`', async () => {
+    it('displays the `heading` attribute as `.title`', async () => {
         const testHeading = 'This is a test heading';
         const el = await fixture<Card>(
             html`
@@ -240,15 +240,15 @@ describe('card', () => {
         await elementUpdated(el);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
-        const headingEl = root.querySelector('.heading');
+        const headingEl = root.querySelector('.title');
 
-        expect(headingEl, 'did not find heading element').to.not.be.null;
+        expect(headingEl, 'did not find title element').to.not.be.null;
         expect((headingEl as HTMLDivElement).textContent).to.contain(
             testHeading,
             'the heading renders in the element'
         );
     });
-    it('displays the slotted content as `.heading`', async () => {
+    it('displays the slotted content as `.title`', async () => {
         const testHeading = 'This is a test heading';
         const el = await fixture<Card>(
             html`
@@ -268,7 +268,7 @@ describe('card', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const headingSlot = root.querySelector(
-            '[name="heading"]'
+            '.title [name="heading"]'
         ) as HTMLSlotElement;
 
         expect(headingSlot, 'did not find slot element').to.not.be.null;
