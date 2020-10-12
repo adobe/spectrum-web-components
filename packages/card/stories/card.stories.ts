@@ -27,7 +27,7 @@ export default {
 export const Default = (): TemplateResult => {
     return html`
         <div>
-            <sp-card title="Card Title" subtitle="JPG">
+            <sp-card heading="Card Heading" subheading="JPG">
                 <img slot="cover-photo" src=${portrait} alt="Demo Image" />
                 <div slot="footer">Footer</div>
             </sp-card>
@@ -38,7 +38,7 @@ export const Default = (): TemplateResult => {
 export const actions = (): TemplateResult => {
     return html`
         <div>
-            <sp-card title="Card Title" subtitle="JPG">
+            <sp-card heading="Card Heading" subheading="JPG">
                 <img slot="cover-photo" src=${portrait} alt="Demo Image" />
                 <div slot="footer">Footer</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
@@ -80,7 +80,7 @@ export const empty = (): TemplateResult => {
 export const Gallery = (): TemplateResult => {
     return html`
         <div style="width: 532px; height: 224px">
-            <sp-card variant="gallery" title="Card Title" subtitle="JPG">
+            <sp-card variant="gallery" heading="Card Heading" subheading="JPG">
                 <img
                     slot="preview"
                     src=${landscape}
@@ -96,7 +96,7 @@ export const Gallery = (): TemplateResult => {
 export const Quiet = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
-            <sp-card variant="quiet" title="Card Title" subtitle="JPG">
+            <sp-card variant="quiet" heading="Card Heading" subheading="JPG">
                 <img src=${portrait} alt="Demo Image" slot="preview" />
                 <div slot="description">10/15/18</div>
             </sp-card>
@@ -107,9 +107,9 @@ export const Quiet = (): TemplateResult => {
 export const quietFile = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
-            <sp-card variant="quiet" subtitle="JPG" asset="file">
+            <sp-card variant="quiet" subheading="JPG" asset="file">
                 <img src=${portrait} alt="Demo Image" slot="preview" />
-                <div slot="title">File Name</div>
+                <div slot="heading">File Name</div>
                 <div slot="description">10/15/18</div>
             </sp-card>
         </div>
@@ -119,9 +119,9 @@ export const quietFile = (): TemplateResult => {
 export const quietFolder = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
-            <sp-card variant="quiet" subtitle="JPG" asset="folder">
+            <sp-card variant="quiet" subheading="JPG" asset="folder">
                 <img src=${portrait} alt="Demo Image" slot="preview" />
-                <div slot="title">Folder Name</div>
+                <div slot="heading">Folder Name</div>
                 <div slot="description">10/15/18</div>
             </sp-card>
         </div>
@@ -131,7 +131,7 @@ export const quietFolder = (): TemplateResult => {
 export const quietActions = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
-            <sp-card variant="quiet" title="Card Title" subtitle="JPG">
+            <sp-card variant="quiet" heading="Card Heading" subheading="JPG">
                 <img src=${portrait} alt="Demo Image" slot="preview" />
                 <div slot="description">10/15/18</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
@@ -169,7 +169,7 @@ quietActions.story = {
 export const small = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
-            <sp-card small title="Card Title" subtitle="JPG">
+            <sp-card small heading="Card Heading" subheading="JPG">
                 <img
                     slot="cover-photo"
                     src=${portrait}
@@ -185,7 +185,7 @@ export const small = (): TemplateResult => {
 export const smallHorizontal = (): TemplateResult => {
     return html`
         <div>
-            <sp-card small horizontal title="Card Title" subtitle="JPG">
+            <sp-card small horizontal heading="Card Heading" subheading="JPG">
                 <sp-icon slot="preview" style="width: 36px; height: 36px;">
                     ${FileTxtIcon({ hidden: false })}
                 </sp-icon>
@@ -198,7 +198,12 @@ export const smallHorizontal = (): TemplateResult => {
 export const smallQuiet = (): TemplateResult => {
     return html`
         <div style="width: 115px">
-            <sp-card small title="Card Title" subtitle="JPG" variant="quiet">
+            <sp-card
+                small
+                heading="Card Heading"
+                subheading="JPG"
+                variant="quiet"
+            >
                 <img src=${portrait} alt="Demo Image" slot="preview" />
                 <div slot="footer">Footer</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
@@ -229,18 +234,18 @@ export const smallQuiet = (): TemplateResult => {
     `;
 };
 
-export const SlottedTitle = (): TemplateResult => {
+export const SlottedHeading = (): TemplateResult => {
     return html`
         <style>
-            .slotted-textfield-title {
+            .slotted-textfield-heading {
                 width: 100%;
             }
         </style>
         <div
             style="
             width: 318px;
-            --spectrum-card-title-width: 100%;
-            --spectrum-card-title-padding-right: 0;
+            --spectrum-card-heading-width: 100%;
+            --spectrum-card-heading-padding-right: 0;
             --spectrum-card-body-header-height: auto;
             --spectrum-alias-single-line-width: 100%;
         "
@@ -248,12 +253,12 @@ export const SlottedTitle = (): TemplateResult => {
             <sp-card>
                 <img slot="cover-photo" src=${portrait} alt="Demo Image" />
                 <sp-textfield
-                    class="slotted-textfield-title"
-                    slot="title"
+                    class="slotted-textfield-heading"
+                    slot="heading"
                     value="Apr 23 Project"
                     quiet
                 ></sp-textfield>
-                <div slot="subtitle">LAST MODIFIED ON 6/17/2020, 3:37 PM</div>
+                <div slot="subheading">LAST MODIFIED ON 6/17/2020, 3:37 PM</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
                     <sp-menu>
                         <sp-menu-item>

@@ -15,7 +15,7 @@ import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
 
 measureFixtureCreation(html`
-    <sp-card variant="gallery" title="Card Title" subtitle="JPG">
+    <sp-card variant="gallery" heading="Card Heading" subheading="JPG">
         <img slot="preview" src="https://picsum.photos/532/192" />
         <div slot="description">10/15/18</div>
         <div slot="footer">Footer</div>
