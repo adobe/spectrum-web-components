@@ -26,12 +26,12 @@ const config = {
                     name: 'header',
                 },
                 {
-                    selector: '.spectrum-Card-title',
-                    name: 'title',
+                    selector: '.spectrum-Card-heading',
+                    name: 'heading',
                 },
                 {
-                    selector: '.spectrum-Card-subtitle',
-                    name: 'subtitle',
+                    selector: '.spectrum-Card-subheading',
+                    name: 'subheading',
                 },
                 {
                     selector: '.spectrum-Card-content',

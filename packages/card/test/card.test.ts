@@ -23,7 +23,7 @@ describe('card', () => {
     it('loads', async () => {
         const el = await fixture<Card>(
             html`
-                <sp-card title="Card Title" subtitle="JPG">
+                <sp-card heading="Card Heading" subheading="JPG">
                     <img
                         slot="preview"
                         src="https://picsum.photos/532/192"
@@ -41,7 +41,11 @@ describe('card', () => {
     it('loads - [quiet]', async () => {
         const el = await fixture<Card>(
             html`
-                <sp-card variant="quiet" title="Card Title" subtitle="JPG">
+                <sp-card
+                    variant="quiet"
+                    heading="Card Heading"
+                    subheading="JPG"
+                >
                     <img
                         slot="preview"
                         src="https://picsum.photos/532/192"
@@ -63,8 +67,8 @@ describe('card', () => {
             html`
                 <sp-card
                     small
-                    title="Card Title"
-                    subtitle="JPG"
+                    heading="Card Heading"
+                    subheading="JPG"
                     variant="quiet"
                     style="width: 115px;"
                 >
@@ -108,7 +112,11 @@ describe('card', () => {
     it('loads - [gallery]', async () => {
         const el = await fixture<Card>(
             html`
-                <sp-card variant="gallery" title="Card Title" subtitle="JPG">
+                <sp-card
+                    variant="gallery"
+                    heading="Card Heading"
+                    subheading="JPG"
+                >
                     <img
                         slot="preview"
                         src="https://picsum.photos/532/192"
@@ -214,11 +222,11 @@ describe('card', () => {
         expect(el.focused, 'still not focused, again 2').to.be.false;
         expect(el.selected, 'still selected, again 3').to.be.false;
     });
-    it('displays the `title` attribute as `.title`', async () => {
-        const testTitle = 'This is a test title';
+    it('displays the `heading` attribute as `.heading`', async () => {
+        const testHeading = 'This is a test heading';
         const el = await fixture<Card>(
             html`
-                <sp-card title=${testTitle} subtitle="JPG">
+                <sp-card heading=${testHeading} subheading="JPG">
                     <img
                         slot="preview"
                         src="https://picsum.photos/532/192"
@@ -232,20 +240,20 @@ describe('card', () => {
         await elementUpdated(el);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
-        const titleEl = root.querySelector('.title');
+        const headingEl = root.querySelector('.heading');
 
-        expect(titleEl, 'did not find title element').to.not.be.null;
-        expect((titleEl as HTMLDivElement).textContent).to.contain(
-            testTitle,
-            'the title renders in the element'
+        expect(headingEl, 'did not find heading element').to.not.be.null;
+        expect((headingEl as HTMLDivElement).textContent).to.contain(
+            testHeading,
+            'the heading renders in the element'
         );
     });
-    it('displays the slotted content as `.title`', async () => {
-        const testTitle = 'This is a test title';
+    it('displays the slotted content as `.heading`', async () => {
+        const testHeading = 'This is a test heading';
         const el = await fixture<Card>(
             html`
-                <sp-card subtitle="JPG">
-                    <h1 slot="title">${testTitle}</h1>
+                <sp-card subheading="JPG">
+                    <h1 slot="heading">${testHeading}</h1>
                     <img
                         slot="preview"
                         src="https://picsum.photos/532/192"
@@ -259,18 +267,18 @@ describe('card', () => {
         await elementUpdated(el);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
-        const titleSlot = root.querySelector(
-            '[name="title"]'
+        const headingSlot = root.querySelector(
+            '[name="heading"]'
         ) as HTMLSlotElement;
 
-        expect(titleSlot, 'did not find slot element').to.not.be.null;
-        const nodes = titleSlot.assignedNodes();
+        expect(headingSlot, 'did not find slot element').to.not.be.null;
+        const nodes = headingSlot.assignedNodes();
         const h1Element = nodes.find(
             (node) => (node as HTMLElement).tagName === 'H1'
         );
         expect(h1Element, 'did not find H1 element').to.not.be.null;
         expect((h1Element as HTMLHeadingElement).textContent).to.contain(
-            testTitle,
+            testHeading,
             'the slotted content renders in the element'
         );
     });

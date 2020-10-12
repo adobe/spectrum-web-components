@@ -34,8 +34,8 @@ import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
  * @fires change - Announces a change in the `selected` property of a card
  * @slot preview - This is the preview image for Gallery Cards
  * @slot cover-photo - This is the cover photo for Default and Quiet Cards
- * @slot title - HTML content to be listed as the title
- * @slot subtitle - HTML content to be listed as the subtitle
+ * @slot heading - HTML content to be listed as the heading
+ * @slot subheading - HTML content to be listed as the subheading
  * @slot description - A description of the card
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot footer - Footer text
@@ -55,7 +55,7 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public selected = false;
 
     @property()
-    public title = '';
+    public heading = '';
 
     @property({ type: Boolean, reflect: true })
     public horizontal = false;
@@ -70,7 +70,7 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public toggles = false;
 
     @property()
-    public subtitle = '';
+    public subheading = '';
 
     public constructor() {
         super();
@@ -131,11 +131,11 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    protected get renderTitle(): TemplateResult {
+    protected get renderHeading(): TemplateResult {
         return html`
             <div class="title">
-                <slot name="title">
-                    ${this.title}
+                <slot name="heading">
+                    ${this.heading}
                 </slot>
             </div>
         `;
@@ -189,12 +189,12 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
             ${this.renderImage()}
             <div class="body">
                 <div class="header">
-                    ${this.renderTitle}
+                    ${this.renderHeading}
                     ${this.variant === 'gallery'
                         ? html`
                               <div class="subtitle">
-                                  <slot name="subtitle">
-                                      ${this.subtitle}
+                                  <slot name="subheading">
+                                      ${this.subheading}
                                   </slot>
                               </div>
                               <slot name="description"></slot>
@@ -212,8 +212,8 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
                     ? html`
                           <div class="content">
                               <div class="subtitle">
-                                  <slot name="subtitle">
-                                      ${this.subtitle}
+                                  <slot name="subheading">
+                                      ${this.subheading}
                                   </slot>
                               </div>
                               <slot name="description"></slot>

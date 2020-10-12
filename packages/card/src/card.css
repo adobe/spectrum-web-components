@@ -50,9 +50,9 @@ sp-quick-actions {
 }
 
 /**
- * Allow that the title element will take specified use of the available width whether 
+ * Allow that the heading element will take specified use of the available width whether 
  * "actions" are supplied to the element or not.
  **/
-.title {
+.heading {
     width: var(--spectrum-card-title-width);
 }
