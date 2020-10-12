@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.1.2...@spectrum-web-components/base@0.1.3) (2020-10-12)
+
+### Bug Fixes
+
+-   **base:** use full file extension ([6ea4d9d](https://github.com/adobe/spectrum-web-components/commit/6ea4d9d299dc805a0b1743c43e5b67d07b0a47b9))
+
 ## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.1.1...@spectrum-web-components/base@0.1.2) (2020-10-12)
 
 ### Bug Fixes
