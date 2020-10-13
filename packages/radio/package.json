@@ -54,6 +54,7 @@
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.1.3",
+        "@spectrum-web-components/field-group": "^0.0.1",
         "@spectrum-web-components/shared": "^0.7.4",
         "tslib": "^2.0.0"
     }

@@ -24,6 +24,7 @@
         { "path": "../dialog" },
         { "path": "../dropdown" },
         { "path": "../dropzone" },
+        { "path": "../field-group" },
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../icons-ui" },
