@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { html, action } from '@open-wc/demoing-storybook';
 
-import '../';
+import '../sp-checkbox.js';
+import '@spectrum-web-components/field-group/sp-field-group.js';
 import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
@@ -157,14 +158,24 @@ export const quietDisabledIndeterminate = (): TemplateResult => {
 
 export const tabIndexExample = (): TemplateResult => {
     return html`
-        <sp-checkbox tabindex="0">Checkbox 0</sp-checkbox>
-        <sp-checkbox disabled tabindex="3">Checkbox 3</sp-checkbox>
-        <sp-checkbox tabindex="4">Checkbox 4</sp-checkbox>
-        <sp-checkbox tabindex="2" autofocus>Checkbox 2</sp-checkbox>
-        <sp-checkbox tabindex="1">Checkbox 1</sp-checkbox>
+        <sp-field-group horizontal>
+            <sp-checkbox tabindex="0">Checkbox 0</sp-checkbox>
+            <sp-checkbox disabled tabindex="3">Checkbox 3</sp-checkbox>
+            <sp-checkbox tabindex="4">Checkbox 4</sp-checkbox>
+            <sp-checkbox tabindex="2" autofocus>Checkbox 2</sp-checkbox>
+            <sp-checkbox tabindex="1">Checkbox 1</sp-checkbox>
+        </sp-field-group>
     `;
 };
 
-tabIndexExample.story = {
-    name: 'Tab index example',
+export const verticalTabIndexExample = (): TemplateResult => {
+    return html`
+        <sp-field-group vertical>
+            <sp-checkbox tabindex="0">Checkbox 0</sp-checkbox>
+            <sp-checkbox disabled tabindex="3">Checkbox 3</sp-checkbox>
+            <sp-checkbox tabindex="4">Checkbox 4</sp-checkbox>
+            <sp-checkbox tabindex="2" autofocus>Checkbox 2</sp-checkbox>
+            <sp-checkbox tabindex="1">Checkbox 1</sp-checkbox>
+        </sp-field-group>
+    `;
 };

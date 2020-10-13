@@ -30,6 +30,7 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/dropdown/sp-dropdown.js';
 import '@spectrum-web-components/dropzone/sp-dropzone.js';
+import '@spectrum-web-components/field-group/sp-field-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons/sp-icons-large.js';
 import '@spectrum-web-components/icons/sp-icons-medium.js';

@@ -47,14 +47,3 @@ governing permissions and limitations under the License.
     );
 }
 /* stylelint-enable no-descending-specificity */
-
-/**
- * Partial work around until FieldGroup is implemented
- */
-:host([dir='ltr']:not(:first-of-type)) {
-    margin: 0 0 0 var(--spectrum-global-dimension-size-200);
-}
-
-:host([dir='rtl']:not(:first-of-type)) {
-    margin: 0 var(--spectrum-global-dimension-size-200) 0 0;
-}

@@ -10,22 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
-    display: flex;
-    flex-direction: row;
-}
+import {
+    html,
+    SpectrumElement,
+    CSSResultArray,
+    TemplateResult,
+    property,
+} from '@spectrum-web-components/base';
 
-:host([column]) {
-    flex-direction: column;
-}
+import styles from './field-group.css.js';
 
 /**
- * Partial work around until FieldGroup is implemented
+ * @element sp-field-group
  */
-:host([dir='ltr']:not([column])) ::slotted(:not(:first-child)) {
-    margin: 0 0 0 var(--spectrum-global-dimension-size-200);
-}
+export class FieldGroup extends SpectrumElement {
+    public static get styles(): CSSResultArray {
+        return [styles];
+    }
 
-:host([dir='rtl']:not([column])) ::slotted(:not(:first-child)) {
-    margin: 0 var(--spectrum-global-dimension-size-200) 0 0;
+    @property({ type: Boolean, reflect: true })
+    public horizontal = false;
+
+    @property({ type: Boolean, reflect: true })
+    public vertical = false;
+
+    protected render(): TemplateResult {
+        return html`
+            <slot></slot>
+        `;
+    }
 }
