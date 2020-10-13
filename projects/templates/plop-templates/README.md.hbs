@@ -2,16 +2,25 @@
 
 
 
-### Installation
+### Usage
+
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/{{ name }}?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/{{ name }})
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/{{ name }}?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/{{ name }})
 
 ```
-npm install @spectrum-web-components/{{ name }}
-
-# or
-
 yarn add @spectrum-web-components/{{ name }}
+```
+
+Import the side effectful registration of `<{{> tagnamePartial}}>` via:
+
+```
+import '@spectrum-web-components/{{ name }}/{{> tagnamePartial}}.js';
+```
+
+When looking to leverage the `{{className name}}` base class as a type and/or for extension purposes, do so via:
+
+```
+import { {{className name}} } from '@spectrum-web-components/{{ name }}';
 ```
 
 ## Example
