@@ -11,6 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, CSSResultArray } from 'lit-element';
 import '@spectrum-web-components/link/sp-link.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/theme/theme-lightest.js';
+import '@spectrum-web-components/theme/scale-medium.js';
 import './layout.js';
 import { GuideDocs } from '../../guides/index.js';
 import { RouteComponent } from './route-component.js';
@@ -41,7 +44,9 @@ class GuideElement extends RouteComponent {
         if (this.location && this.location.params) {
             result = html`
                 <article class="spectrum-Typography">
-                    ${GuideDocs.get(this.location.params.guide)}
+                    ${GuideDocs.get(
+                        this.location.params.guide || 'getting-started'
+                    )}
                 </article>
             `;
         }

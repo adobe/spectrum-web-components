@@ -75,4 +75,11 @@ AppRouter.setRoutes([
             await import('./components/guide.js');
         },
     },
+    {
+        path: '/getting-started',
+        component: 'docs-guide',
+        action: async () => {
+            await import('./components/guide.js');
+        },
+    },
 ]);

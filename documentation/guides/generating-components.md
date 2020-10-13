@@ -1,4 +1,4 @@
-# Generating a New Component
+# Generating a new component
 
 The fasted way to get started with creating a new component is with our command line generator. Run the following command to have you new component scaffolded for you:
 
