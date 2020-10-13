@@ -60,6 +60,11 @@ class SideNav extends SpectrumElement {
         this.handleSelect(event, 'guides');
     }
 
+    private handleGettingStartedSelect(): void {
+        const path = AppRouter.urlForPath(`/getting-started`);
+        AppRouter.go(path);
+    }
+
     public toggle() {
         this.open = !this.open;
     }
@@ -98,6 +103,11 @@ class SideNav extends SpectrumElement {
                 </div>
                 <div id="navigation">
                     <sp-sidenav manage-tab-index>
+                        <sp-sidenav-item
+                            label="Getting Started"
+                            value="getting-started"
+                            @sidenav-select=${this.handleGettingStartedSelect}
+                        ></sp-sidenav-item>
                         <sp-sidenav-item
                             label="Components"
                             expanded
