@@ -83,7 +83,7 @@ module.exports = [
     'card--small',
     'card--small-horizontal',
     'card--small-quiet',
-    'card--slotted-title',
+    'card--slotted-heading',
     'checkbox--default',
     'checkbox--checked',
     'checkbox--indeterminate',
