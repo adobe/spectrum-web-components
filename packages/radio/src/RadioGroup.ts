@@ -12,26 +12,20 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    SpectrumElement,
     property,
-    CSSResultArray,
     TemplateResult,
     queryAssignedNodes,
 } from '@spectrum-web-components/base';
+import { FieldGroup } from '@spectrum-web-components/field-group';
 
-import radioGroupStyles from './radio-group.css.js';
 import { Radio } from './Radio.js';
 
 /**
  * Radio group component
+ * @slot - The `sp-radio` elements to display/manage in the group.
  *
- * @attr column - arranges radio buttons vertically
  */
-export class RadioGroup extends SpectrumElement {
-    public static get styles(): CSSResultArray {
-        return [radioGroupStyles];
-    }
-
+export class RadioGroup extends FieldGroup {
     @property({ type: String })
     public name = '';
 

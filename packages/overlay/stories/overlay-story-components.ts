@@ -263,6 +263,7 @@ class RecursivePopover extends LitElement {
     public render(): TemplateResult {
         return html`
             <sp-radio-group
+                horizontal
                 @change=${this.onRadioChange}
                 selected="${this.placement}"
                 name="group-example"

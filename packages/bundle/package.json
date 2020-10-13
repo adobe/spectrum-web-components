@@ -65,6 +65,7 @@
         "@spectrum-web-components/dialog": "^0.3.4",
         "@spectrum-web-components/dropdown": "^0.8.5",
         "@spectrum-web-components/dropzone": "^0.4.4",
+        "@spectrum-web-components/field-group": "^0.0.1",
         "@spectrum-web-components/icon": "^0.6.3",
         "@spectrum-web-components/icons": "^0.4.5",
         "@spectrum-web-components/icons-workflow": "^0.3.6",
