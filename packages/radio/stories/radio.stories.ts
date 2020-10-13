@@ -107,7 +107,7 @@ labelBelowChecked.story = {
 
 export const groupExample = (): TemplateResult => {
     return html`
-        <sp-radio-group column selected="first" name="group-example">
+        <sp-radio-group vertical selected="first" name="group-example">
             <sp-radio value="first">Option 1</sp-radio>
             <sp-radio value="second">Option 2</sp-radio>
             <sp-radio value="third">Option 3</sp-radio>
@@ -116,13 +116,49 @@ export const groupExample = (): TemplateResult => {
     `;
 };
 
-groupExample.story = {
-    name: 'Group example',
+export const horizontalGroup = (): TemplateResult => {
+    return html`
+        <sp-radio-group horizontal selected="first" name="group-example">
+            <sp-radio value="first">Option 1</sp-radio>
+            <sp-radio value="second">Option 2</sp-radio>
+            <sp-radio value="third">Option 3</sp-radio>
+            <sp-radio value="fourth">Option 4</sp-radio>
+        </sp-radio-group>
+    `;
+};
+
+export const horizontalLabelBelowGroup = (): TemplateResult => {
+    return html`
+        <sp-radio-group horizontal selected="first" name="group-example">
+            <sp-radio value="first" label-below>Option 1</sp-radio>
+            <sp-radio value="second" label-below>Option 2</sp-radio>
+            <sp-radio value="third" label-below>Option 3</sp-radio>
+            <sp-radio value="fourth" label-below>Option 4</sp-radio>
+        </sp-radio-group>
+    `;
 };
 
 export const tabIndexExample = (): TemplateResult => {
     return html`
-        <sp-radio-group column name="group-example">
+        <sp-radio-group vertical name="group-example">
+            <sp-radio quiet value="zero" tabindex="0">Tab Index 0</sp-radio>
+            <sp-radio disabled value="three" tabindex="3">
+                Tab Index 3
+            </sp-radio>
+            <sp-radio value="one" tabindex="1" autofocus>
+                Tab Index 1
+            </sp-radio>
+            <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
+            <sp-radio invalid value="two" tabindex="2">
+                Tab Index 2
+            </sp-radio>
+        </sp-radio-group>
+    `;
+};
+
+export const horizontalTabIndexExample = (): TemplateResult => {
+    return html`
+        <sp-radio-group horizontal name="group-example">
             <sp-radio quiet value="zero" tabindex="0">Tab Index 0</sp-radio>
             <sp-radio disabled value="three" tabindex="3">
                 Tab Index 3
