@@ -27,7 +27,7 @@ commands:
         steps:
             - checkout
             - attach_workspace:
-                  at: ~/
+                  at: /
     run-regressions:
         parameters:
             regression_color:
@@ -107,12 +107,13 @@ jobs:
                   command: yarn docs:ci
 
             - persist_to_workspace:
-                  root: ~/
+                  root: /
                   paths:
-                      - project/node_modules
-                      - project/packages/*/node_modules
-                      - project/documentation/dist
-                      - .cache/ms-playwright
+                      - root/project/node_modules
+                      - root/project/packages/*/node_modules
+                      - root/project/documentation/dist
+                      - root/.cache/ms-playwright
+                      - home/pwuser/.cache/ms-playwright
 
     visual-lightest-medium-ltr:
         executor: node
