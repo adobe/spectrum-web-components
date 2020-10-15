@@ -68,3 +68,15 @@ export const allowedKeys = (): TemplateResult => {
         ></sp-textfield>
     `;
 };
+
+export const inputType = (): TemplateResult => {
+    return html`
+        <sp-textfield placeholder="Default Text"></sp-textfield>
+        <sp-textfield placeholder="Text" type="text"></sp-textfield>
+        <sp-textfield placeholder="Password" type="password"></sp-textfield>
+        <sp-textfield placeholder="Email" type="email"></sp-textfield>
+        <sp-textfield placeholder="Telephone" type="tel"></sp-textfield>
+        <sp-textfield placeholder="URL" type="url"></sp-textfield>
+        <sp-textfield placeholder="Number" type="number"></sp-textfield>
+    `;
+};

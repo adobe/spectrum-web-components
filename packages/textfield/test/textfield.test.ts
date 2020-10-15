@@ -298,4 +298,102 @@ describe('Textfield', () => {
         expect(el.value).to.equal('asdff');
         expect(inputElement.selectionStart).to.equal(3);
     });
+    it('test on `input type`', async () => {
+        let el = await litFixture<Textfield>(
+            html`
+                <sp-textfield></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        let input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('type')).to.be.null;
+        }
+
+        el = await litFixture<Textfield>(
+            html`
+                <sp-textfield type="text"></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('type')).to.equal('text');
+        }
+
+        el = await litFixture<Textfield>(
+            html`
+                <sp-textfield type="password"></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('type')).to.equal('password');
+        }
+
+        el = await litFixture<Textfield>(
+            html`
+                <sp-textfield type="email"></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('type')).to.equal('email');
+        }
+        el.value = 'not a valid email';
+        await elementUpdated(el);
+        expect(el.invalid).to.be.true;
+
+        el.value = 'valid@email.com';
+        await elementUpdated(el);
+        expect(el.invalid).to.be.false;
+
+        el = await litFixture<Textfield>(
+            html`
+                <sp-textfield type="number"></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('type')).to.equal('number');
+        }
+        el.value = 'not a valid number';
+        await elementUpdated(el);
+        input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.value).not.equal(el.value);
+        }
+
+        el.value = '123432142';
+        await elementUpdated(el);
+        expect(el.invalid).to.be.false;
+
+        el = await litFixture<Textfield>(
+            html`
+                <sp-textfield type="url"></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+        expect(input).to.exist;
+        if (input) {
+            expect(input.getAttribute('type')).to.equal('url');
+        }
+        el.value = 'not a valid url';
+        await elementUpdated(el);
+        expect(el.invalid).to.be.true;
+
+        el.value = 'https://www.validaurl.com';
+        await elementUpdated(el);
+        expect(el.invalid).to.be.false;
+    });
 });

@@ -84,6 +84,9 @@ export class Textfield extends Focusable {
         | HTMLInputElement['autocomplete']
         | HTMLTextAreaElement['autocomplete'];
 
+    @property({ type: String, reflect: true })
+    public type?: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number';
+
     public get focusElement(): HTMLInputElement | HTMLTextAreaElement {
         return this.inputElement;
     }
@@ -172,6 +175,7 @@ export class Textfield extends Focusable {
                 @input=${this.onInput}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
+                type=${ifDefined(this.type)}
                 autocomplete=${ifDefined(this.autocomplete)}
             />
         `;
@@ -187,7 +191,8 @@ export class Textfield extends Focusable {
     protected updated(changedProperties: PropertyValues): void {
         if (
             changedProperties.has('value') ||
-            (changedProperties.has('required') && this.required)
+            (changedProperties.has('required') && this.required) ||
+            (this.type && ['email', 'number', 'url'].includes(this.type))
         ) {
             this.checkValidity();
         }
@@ -200,9 +205,9 @@ export class Textfield extends Focusable {
                 const regex = new RegExp(this.pattern);
                 validity = regex.test(this.value);
             }
-            this.valid = validity;
-            this.invalid = !validity;
         }
+        this.valid = validity;
+        this.invalid = !validity;
         return validity;
     }
 }

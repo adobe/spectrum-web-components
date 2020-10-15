@@ -54,3 +54,11 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 ```html
 <sp-textfield placeholder="Enter your name" quiet></sp-textfield>
 ```
+
+### Type
+
+Define input type `text|email|tel|password|url|number`. This also include the default validation on `email,url,number`.
+
+```html
+<sp-textfield placeholder="Enter your name" type="password"></sp-textfield>
+```
