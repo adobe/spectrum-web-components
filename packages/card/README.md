@@ -39,6 +39,13 @@ import { Card } from '@spectrum-web-components/card';
 </sp-card>
 ```
 
+```html demo
+<sp-card heading="Card Title" subheading="JPG">
+    <img slot="preview" src="https://picsum.photos/200/300" alt="Demo Image" />
+    <div slot="footer">Footer</div>
+</sp-card>
+```
+
 ## Heading
 
 By default, the heading for an `sp-card` is applied via the `heading` attribute, which is restricted to string content only. When HTML content is desired, a slot named `heading` available for applying the heading.

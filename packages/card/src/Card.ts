@@ -22,6 +22,7 @@ import {
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 
+import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
@@ -41,7 +42,10 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot footer - Footer text
  */
-export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
+export class Card extends ObserveSlotPresence(
+    FocusVisiblePolyfillMixin(SpectrumElement),
+    ['[slot="cover-photo"]', '[slot="preview"]']
+) {
     public static get styles(): CSSResultArray {
         return [headingStyles, detailStyles, cardStyles];
     }
@@ -72,6 +76,14 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     @property()
     public subheading = '';
+
+    protected get hasCoverPhoto(): boolean {
+        return this.getSlotContentPresence('[slot="cover-photo"]');
+    }
+
+    protected get hasPreview(): boolean {
+        return this.getSlotContentPresence('[slot="preview"]');
+    }
 
     public constructor() {
         super();
@@ -149,18 +161,30 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
         `;
     }
 
-    private renderImage(): TemplateResult {
+    protected get renderCoverImage(): TemplateResult {
+        return html`
+            <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
+                <slot name="cover-photo"></slot>
+            </sp-asset>
+        `;
+    }
+
+    protected get images(): TemplateResult[] {
+        const images: TemplateResult[] = [];
+        if (this.hasPreview) images.push(this.renderPreviewImage);
+        if (this.hasCoverPhoto || this.variant === 'standard')
+            images.push(this.renderCoverImage);
+        return images;
+    }
+
+    private renderImage(): TemplateResult[] {
         if (this.horizontal) {
-            return this.renderPreviewImage;
+            return this.images;
         }
-        if (this.variant === 'standard') {
-            return html`
-                <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
-                    <slot name="cover-photo"></slot>
-                </sp-asset>
-            `;
+        if (this.variant !== 'standard') {
+            return [this.renderPreviewImage];
         }
-        return this.renderPreviewImage;
+        return this.images;
     }
 
     private get renderSubtitleAndDescription(): TemplateResult {

@@ -26,6 +26,10 @@ slot[name='description'] {
     overflow: hidden;
 }
 
+#preview + #cover-photo {
+    display: none;
+}
+
 #preview ::slotted(*),
 #cover-photo ::slotted(*) {
     width: 100%;
