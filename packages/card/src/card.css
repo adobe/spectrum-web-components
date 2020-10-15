@@ -53,7 +53,7 @@ sp-quick-actions {
  * Allow that the heading element will take specified use of the available width whether 
  * "actions" are supplied to the element or not.
  **/
-.heading {
+.title {
     width: var(--spectrum-card-title-width);
 
     /* Appliction of typography "classes" */
@@ -115,7 +115,6 @@ sp-quick-actions {
         --spectrum-detail-s-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
-    text-transform: var(--spectrum-detail-s-text-transform, uppercase);
     margin-top: 0;
     margin-bottom: 0;
 }
