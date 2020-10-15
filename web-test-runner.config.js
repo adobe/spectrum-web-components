@@ -3,6 +3,7 @@ const { playwrightLauncher } = require('@web/test-runner-playwright');
 module.exports = {
     files: ['packages/*/test/*.test.js'],
     nodeResolve: true,
+    concurrency: 4,
     concurrentBrowsers: 1,
     testsFinishTimeout: 45000,
     coverage: true,
