@@ -175,6 +175,9 @@ export class DropdownBase extends Focusable {
         this.open = true;
     }
     public setValueFromItem(item: MenuItem): void {
+        if (item.value === undefined) {
+            return;
+        }
         const oldSelectedItemText = this.selectedItemText;
         const oldValue = this.value;
         this.selectedItemText = item.itemText;
