@@ -21,6 +21,10 @@ governing permissions and limitations under the License.
     outline-width: 0;
 }
 
+#handle {
+    touch-action: none;
+}
+
 /*
  * The following three declarationsa required while https://github.com/adobe/spectrum-css/issues/521
  * waits to be addressed at the Spectrum CSS level.
