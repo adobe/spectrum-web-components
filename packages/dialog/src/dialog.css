@@ -12,17 +12,77 @@ governing permissions and limitations under the License.
 
 @import './spectrum-dialog.css';
 
-::slotted([slot='button']) {
-    margin-left: var(
-        --spectrum-buttongroup-button-gap-x,
-        var(--spectrum-global-dimension-static-size-200)
-    );
-}
-
 .content {
     overflow: hidden;
 }
 
 .content[tabindex] {
     overflow: auto;
+}
+
+::slotted(img[slot='hero']) {
+    width: 100%;
+    height: auto;
+}
+
+/**
+ * When precessing CSS we don't take into account @media syntax: 
+ * https://github.com/adobe/spectrum-web-components/issues/593
+ * This manually prefers the "desktop" styling for this content.Z
+ */
+
+:host([mode='fullscreen']),
+:host([mode='fullscreenTakeover']) {
+    /* .spectrum-Dialog--fullscreen,
+   * .spectrum-Dialog--fullscreenTakeover */
+    max-height: none;
+    max-width: none;
+}
+:host([mode='fullscreen']) .grid,
+:host([mode='fullscreenTakeover']) .grid {
+    /* .spectrum-Dialog--fullscreen.spectrum-Dialog .spectrum-Dialog-grid,
+   * .spectrum-Dialog--fullscreenTakeover.spectrum-Dialog .spectrum-Dialog-grid */
+    display: grid;
+    grid-template-columns: var(--spectrum-dialog-confirm-padding) 1fr auto auto var(
+            --spectrum-dialog-confirm-padding
+        );
+    grid-template-rows: var(--spectrum-dialog-confirm-padding) auto auto 1fr var(
+            --spectrum-dialog-confirm-padding
+        );
+    grid-template-areas: '.    .       .       .            .' '.    heading header  buttonGroup  .' '.    divider divider divider      .' '.    content content content      .' '.    .       .       .            .';
+}
+:host([mode='fullscreen']) ::slotted([slot='heading']),
+:host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
+    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-heading,
+   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-heading */
+    font-size: 28px;
+}
+:host([mode='fullscreen']) .content,
+:host([mode='fullscreenTakeover']) .content {
+    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-content,
+   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-content */
+    max-height: none;
+}
+:host([mode='fullscreen']) .buttonGroup,
+:host([mode='fullscreen']) .footer,
+:host([mode='fullscreenTakeover']) .buttonGroup,
+:host([mode='fullscreenTakeover']) .footer {
+    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
+   * .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
+   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup,
+   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer */
+    padding-top: 0;
+}
+:host([mode='fullscreen']) .footer,
+:host([mode='fullscreenTakeover']) .footer {
+    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
+   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer */
+    display: none;
+}
+:host([mode='fullscreen']) .buttonGroup,
+:host([mode='fullscreenTakeover']) .buttonGroup {
+    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
+   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup */
+    grid-area: buttonGroup;
+    align-self: start;
 }

@@ -14,42 +14,6 @@ const config = {
     spectrum: 'dialog',
     components: [
         {
-            name: 'dialog-wrapper',
-            host: {
-                selector: '.spectrum-Dialog-wrapper',
-            },
-            attributes: [
-                {
-                    type: 'boolean',
-                    selector: '.is-open',
-                    name: 'open',
-                },
-                {
-                    type: 'boolean',
-                    selector: '.spectrum-Dialog--responsive',
-                    name: 'responsive',
-                },
-            ],
-            descendantAttributes: [
-                {
-                    type: 'boolean',
-                    name: 'mode="fullscreen"',
-                    selector: '.spectrum-Dialog--fullscreen',
-                },
-                {
-                    type: 'boolean',
-                    name: 'mode="fullscreen"',
-                    selector: '.spectrum-Dialog--fullscreenTakeover',
-                },
-            ],
-            classes: [
-                {
-                    selector: '.spectrum-Dialog',
-                    name: 'dialog',
-                },
-            ],
-        },
-        {
             name: 'dialog',
             host: {
                 selector: '.spectrum-Dialog',
@@ -67,8 +31,8 @@ const config = {
                 },
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Dialog--dismissible',
-                    name: 'dismissible',
+                    selector: '.spectrum-Dialog--dismissable',
+                    name: 'dismissable',
                 },
                 {
                     type: 'boolean',
@@ -96,8 +60,8 @@ const config = {
             ],
             slots: [
                 {
-                    selector: '.spectrum-Dialog-title',
-                    name: 'title',
+                    selector: '.spectrum-Dialog-heading',
+                    name: 'heading',
                 },
                 {
                     selector: '.spectrum-Dialog-hero',
@@ -109,6 +73,14 @@ const config = {
                 },
             ],
             classes: [
+                {
+                    selector: '.spectrum-Dialog-grid',
+                    name: 'grid',
+                },
+                {
+                    selector: '.spectrum-Dialog-divider',
+                    name: 'divider',
+                },
                 {
                     selector: '.spectrum-Dialog-content',
                     name: 'content',
@@ -132,6 +104,14 @@ const config = {
                 {
                     selector: '.spectrum-Button',
                     name: 'button',
+                },
+                {
+                    selector: '.spectrum-Dialog-buttonGroup',
+                    name: 'buttonGroup',
+                },
+                {
+                    selector: '.spectrum-Dialog-buttonGroup--noFooter',
+                    name: 'buttonGroup--noFooter',
                 },
             ],
             exclude: [/\.spectrum-Dialog-wrapper/],
