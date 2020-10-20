@@ -19,7 +19,7 @@ import { Button, ActionButton } from '@spectrum-web-components/button';
 import { Underlay } from '@spectrum-web-components/underlay';
 import {
     wrapperLabeledHero,
-    wrapperDismissible,
+    wrapperDismissable,
     wrapperButtons,
     wrapperFullscreen,
     wrapperButtonsUnderlay,
@@ -27,7 +27,7 @@ import {
 
 describe('Dialog Wrapper', () => {
     it('loads wrapped dialog accessibly', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissible());
+        const el = await fixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
 
@@ -58,7 +58,7 @@ describe('Dialog Wrapper', () => {
         const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
         await elementUpdated(el);
         expect(el.open).to.be.true;
-        el.dismissible = true;
+        el.dismissable = true;
         const root = el.shadowRoot ? el.shadowRoot : el;
         const underlay = root.querySelector('sp-underlay') as Underlay;
         underlay.click();
@@ -67,7 +67,7 @@ describe('Dialog Wrapper', () => {
     });
     it('dismisses', async () => {
         const el = await fixture<DialogWrapper>(
-            wrapperDismissible({ actionTracking: false })
+            wrapperDismissable({ actionTracking: false })
         );
 
         await elementUpdated(el);
@@ -84,8 +84,8 @@ describe('Dialog Wrapper', () => {
         await elementUpdated(el);
         expect(el.open).to.be.false;
     });
-    it('manages entry focus - dismissible', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissible());
+    it('manages entry focus - dismissable', async () => {
+        const el = await fixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
