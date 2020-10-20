@@ -117,6 +117,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 href=${this.href || '#'}
                 target=${ifDefined(this.target)}
                 download=${ifDefined(this.download)}
+                rel=${ifDefined(this.rel)}
                 data-level="${this.depth}"
                 @click="${this.handleClick}"
                 id="itemLink"
