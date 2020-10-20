@@ -101,7 +101,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         50% -
             var(
                 --spectrum-actionbutton-icon-size,
-                var(--spectrum-alias-workflow-icon-size)
+                var(--spectrum-alias-workflow-icon-size-m)
             ) / 2
     );
 }
@@ -111,7 +111,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         50% -
             var(
                 --spectrum-actionbutton-icon-size,
-                var(--spectrum-alias-workflow-icon-size)
+                var(--spectrum-alias-workflow-icon-size-m)
             ) / 2
     );
 }
@@ -122,7 +122,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         50% -
             var(
                 --spectrum-actionbutton-icon-size,
-                var(--spectrum-alias-workflow-icon-size)
+                var(--spectrum-alias-workflow-icon-size-m)
             ) / 2
     );
 }
@@ -255,10 +255,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-actionbutton-background-color-key-focus,
         var(--spectrum-global-color-gray-50)
     );
-    border-color: var(
-        --spectrum-actionbutton-border-color-key-focus,
-        var(--spectrum-alias-border-color-focus)
-    );
     box-shadow: 0 0 0
         var(--spectrum-button-primary-border-size-increase-key-focus, 1px)
         var(
@@ -268,6 +264,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     color: var(
         --spectrum-actionbutton-text-color-key-focus,
         var(--spectrum-alias-text-color-hover)
+    );
+}
+.button:focus-visible,
+.button:focus-visible:active {
+    /* .spectrum-ActionButton.focus-ring,
+   * .spectrum-ActionButton.focus-ring:active */
+    border-color: var(
+        --spectrum-actionbutton-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
     );
 }
 .button:focus-visible ::slotted([slot='icon']) {
@@ -373,6 +378,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     color: var(
         --spectrum-actionbutton-text-color-selected-key-focus,
         var(--spectrum-alias-text-color-hover)
+    );
+}
+:host([selected]) .button:focus-visible:active {
+    /* .spectrum-ActionButton.is-selected.focus-ring:active */
+    border-color: var(
+        --spectrum-actionbutton-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
     );
 }
 :host([selected]) .button:focus-visible ::slotted([slot='icon']) {
@@ -839,7 +851,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     border-color: var(
         --spectrum-actionbutton-quiet-border-color-selected,
-        var(--spectrum-alias-border-color)
+        var(--spectrum-global-color-gray-300)
     );
     color: var(
         --spectrum-actionbutton-quiet-text-color-selected,
@@ -869,7 +881,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     border-color: var(
         --spectrum-actionbutton-quiet-border-color-selected-hover,
-        var(--spectrum-alias-border-color-hover)
+        var(--spectrum-global-color-gray-300)
     );
     color: var(
         --spectrum-actionbutton-quiet-text-color-selected-hover,
@@ -884,7 +896,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     border-color: var(
         --spectrum-actionbutton-quiet-border-color-selected-down,
-        var(--spectrum-alias-border-color-down)
+        var(--spectrum-global-color-gray-300)
     );
     color: var(
         --spectrum-actionbutton-quiet-text-color-selected-down,
