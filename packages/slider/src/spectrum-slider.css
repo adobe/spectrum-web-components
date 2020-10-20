@@ -11,8 +11,7 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Dial,
-   * .spectrum-Slider */
+    /* .spectrum-Slider */
     position: relative;
     z-index: 1;
     display: block;
@@ -28,10 +27,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -moz-user-select: none;
     user-select: none;
 }
-:host([dir='ltr']) .spectrum-Dial-controls,
 :host([dir='ltr']) #controls {
-    /* [dir=ltr] .spectrum-Dial-controls,
-   * [dir=ltr] .spectrum-Slider-controls */
+    /* [dir=ltr] .spectrum-Slider-controls */
     margin-left: calc(
         var(
                 --spectrum-slider-handle-width,
@@ -39,10 +36,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2
     );
 }
-:host([dir='rtl']) .spectrum-Dial-controls,
 :host([dir='rtl']) #controls {
-    /* [dir=rtl] .spectrum-Dial-controls,
-   * [dir=rtl] .spectrum-Slider-controls */
+    /* [dir=rtl] .spectrum-Slider-controls */
     margin-right: calc(
         var(
                 --spectrum-slider-handle-width,
@@ -51,8 +46,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 #controls {
-    /* .spectrum-Dial-controls,
-   * .spectrum-Slider-controls */
+    /* .spectrum-Slider-controls */
     display: inline-block;
     box-sizing: border-box;
     position: relative;
@@ -70,53 +64,33 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     vertical-align: top;
 }
-:host([dir='ltr']) #buffer,
 :host([dir='ltr']) #fill,
-:host([dir='ltr']) #ramp,
 :host([dir='ltr']) .track {
-    /* [dir=ltr] .spectrum-Slider-buffer,
-   * [dir=ltr] .spectrum-Slider-fill,
-   * [dir=ltr] .spectrum-Slider-ramp,
+    /* [dir=ltr] .spectrum-Slider-fill,
    * [dir=ltr] .spectrum-Slider-track */
     left: 0;
 }
-:host([dir='rtl']) #buffer,
 :host([dir='rtl']) #fill,
-:host([dir='rtl']) #ramp,
 :host([dir='rtl']) .track {
-    /* [dir=rtl] .spectrum-Slider-buffer,
-   * [dir=rtl] .spectrum-Slider-fill,
-   * [dir=rtl] .spectrum-Slider-ramp,
+    /* [dir=rtl] .spectrum-Slider-fill,
    * [dir=rtl] .spectrum-Slider-track */
     right: 0;
 }
-:host([dir='ltr']) #buffer,
 :host([dir='ltr']) #fill,
-:host([dir='ltr']) #ramp,
 :host([dir='ltr']) .track {
-    /* [dir=ltr] .spectrum-Slider-buffer,
-   * [dir=ltr] .spectrum-Slider-fill,
-   * [dir=ltr] .spectrum-Slider-ramp,
+    /* [dir=ltr] .spectrum-Slider-fill,
    * [dir=ltr] .spectrum-Slider-track */
     right: auto;
 }
-:host([dir='rtl']) #buffer,
 :host([dir='rtl']) #fill,
-:host([dir='rtl']) #ramp,
 :host([dir='rtl']) .track {
-    /* [dir=rtl] .spectrum-Slider-buffer,
-   * [dir=rtl] .spectrum-Slider-fill,
-   * [dir=rtl] .spectrum-Slider-ramp,
+    /* [dir=rtl] .spectrum-Slider-fill,
    * [dir=rtl] .spectrum-Slider-track */
     left: auto;
 }
-#buffer,
 #fill,
-#ramp,
 .track {
-    /* .spectrum-Slider-buffer,
-   * .spectrum-Slider-fill,
-   * .spectrum-Slider-ramp,
+    /* .spectrum-Slider-fill,
    * .spectrum-Slider-track */
     height: var(
         --spectrum-slider-track-height,
@@ -137,11 +111,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     pointer-events: none;
 }
-:host([dir='ltr']) #buffer,
 :host([dir='ltr']) #fill,
 :host([dir='ltr']) .track {
-    /* [dir=ltr] .spectrum-Slider-buffer,
-   * [dir=ltr] .spectrum-Slider-fill,
+    /* [dir=ltr] .spectrum-Slider-fill,
    * [dir=ltr] .spectrum-Slider-track */
     padding-left: 0;
     padding-right: var(
@@ -149,11 +121,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-size-thicker)
     );
 }
-:host([dir='rtl']) #buffer,
 :host([dir='rtl']) #fill,
 :host([dir='rtl']) .track {
-    /* [dir=rtl] .spectrum-Slider-buffer,
-   * [dir=rtl] .spectrum-Slider-fill,
+    /* [dir=rtl] .spectrum-Slider-fill,
    * [dir=rtl] .spectrum-Slider-track */
     padding-right: 0;
     padding-left: var(
@@ -161,11 +131,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-size-thicker)
     );
 }
-:host([dir='ltr']) #buffer,
 :host([dir='ltr']) #fill,
 :host([dir='ltr']) .track {
-    /* [dir=ltr] .spectrum-Slider-buffer,
-   * [dir=ltr] .spectrum-Slider-fill,
+    /* [dir=ltr] .spectrum-Slider-fill,
    * [dir=ltr] .spectrum-Slider-track */
     margin-left: calc(
         var(
@@ -174,11 +142,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2 * -1
     );
 }
-:host([dir='rtl']) #buffer,
 :host([dir='rtl']) #fill,
 :host([dir='rtl']) .track {
-    /* [dir=rtl] .spectrum-Slider-buffer,
-   * [dir=rtl] .spectrum-Slider-fill,
+    /* [dir=rtl] .spectrum-Slider-fill,
    * [dir=rtl] .spectrum-Slider-track */
     margin-right: calc(
         var(
@@ -187,20 +153,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2 * -1
     );
 }
-#buffer,
 #fill,
 .track {
-    /* .spectrum-Slider-buffer,
-   * .spectrum-Slider-fill,
+    /* .spectrum-Slider-fill,
    * .spectrum-Slider-track */
     padding-top: 0;
     padding-bottom: 0;
 }
-#buffer:before,
 #fill:before,
 .track:before {
-    /* .spectrum-Slider-buffer:before,
-   * .spectrum-Slider-fill:before,
+    /* .spectrum-Slider-fill:before,
    * .spectrum-Slider-track:before */
     content: '';
     display: block;
@@ -278,88 +240,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-top: 0;
     padding-bottom: 0;
 }
-:host([dir='ltr']) #buffer {
-    /* [dir=ltr] .spectrum-Slider-buffer */
-    padding-left: 0;
-    padding-right: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
-}
-:host([dir='rtl']) #buffer {
-    /* [dir=rtl] .spectrum-Slider-buffer */
-    padding-right: 0;
+:host([dir='ltr']) .track ~ .track {
+    /* [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
+    left: auto; /* [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
+    right: 0; /* [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
     padding-left: var(
         --spectrum-slider-handle-gap,
         var(--spectrum-alias-border-size-thicker)
     );
-}
-#buffer {
-    /* .spectrum-Slider-buffer */
-    padding-top: 0;
-    padding-bottom: 0; /* .spectrum-Slider-buffer */
-    z-index: 2;
-}
-:host([dir='ltr']) #buffer ~ #buffer,
-:host([dir='ltr']) .track ~ .track {
-    /* [dir=ltr] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
-    left: auto;
-}
-:host([dir='rtl']) #buffer ~ #buffer,
-:host([dir='rtl']) .track ~ .track {
-    /* [dir=rtl] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
-    right: auto;
-}
-:host([dir='ltr']) #buffer ~ #buffer,
-:host([dir='ltr']) .track ~ .track {
-    /* [dir=ltr] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
-    right: 0;
-}
-:host([dir='rtl']) #buffer ~ #buffer,
-:host([dir='rtl']) .track ~ .track {
-    /* [dir=rtl] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
-    left: 0;
-}
-:host([dir='ltr']) #buffer ~ #buffer,
-:host([dir='ltr']) .track ~ .track {
-    /* [dir=ltr] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
-    padding-left: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
-    padding-right: 0;
-}
-:host([dir='rtl']) #buffer ~ #buffer,
-:host([dir='rtl']) .track ~ .track {
-    /* [dir=rtl] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
-    padding-right: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
-    padding-left: 0;
-}
-:host([dir='ltr']) #buffer ~ #buffer,
-:host([dir='ltr']) .track ~ .track {
-    /* [dir=ltr] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
-    margin-left: 0;
-}
-:host([dir='rtl']) #buffer ~ #buffer,
-:host([dir='rtl']) .track ~ .track {
-    /* [dir=rtl] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
-    margin-right: 0;
-}
-:host([dir='ltr']) #buffer ~ #buffer,
-:host([dir='ltr']) .track ~ .track {
-    /* [dir=ltr] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
+    padding-right: 0; /* [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
+    margin-left: 0; /* [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
     margin-right: calc(
         var(
                 --spectrum-slider-handle-width,
@@ -367,10 +257,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2 * -1
     );
 }
-:host([dir='rtl']) #buffer ~ #buffer,
 :host([dir='rtl']) .track ~ .track {
-    /* [dir=rtl] .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
+    /* [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
+    right: auto; /* [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
+    left: 0; /* [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
+    padding-right: var(
+        --spectrum-slider-handle-gap,
+        var(--spectrum-alias-border-size-thicker)
+    );
+    padding-left: 0; /* [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
+    margin-right: 0; /* [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
     margin-left: calc(
         var(
                 --spectrum-slider-handle-width,
@@ -378,51 +274,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2 * -1
     );
 }
-#buffer ~ #buffer,
 .track ~ .track {
-    /* .spectrum-Slider-buffer~.spectrum-Slider-buffer,
-   * .spectrum-Slider-track~.spectrum-Slider-track */
+    /* .spectrum-Slider-track~.spectrum-Slider-track */
     padding-top: 0;
     padding-bottom: 0;
-}
-:host([dir='ltr']) #buffer ~ #buffer {
-    /* [dir=ltr] .spectrum-Slider-buffer~.spectrum-Slider-buffer */
-    margin-right: 0; /* [dir=ltr] .spectrum-Slider-buffer~.spectrum-Slider-buffer */
-    padding-left: calc(
-        var(
-                --spectrum-slider-handle-gap,
-                var(--spectrum-alias-border-size-thicker)
-            ) +
-            var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2
-    );
-    padding-right: 0;
-}
-:host([dir='rtl']) #buffer ~ #buffer {
-    /* [dir=rtl] .spectrum-Slider-buffer~.spectrum-Slider-buffer */
-    margin-left: 0; /* [dir=rtl] .spectrum-Slider-buffer~.spectrum-Slider-buffer */
-    padding-right: calc(
-        var(
-                --spectrum-slider-handle-gap,
-                var(--spectrum-alias-border-size-thicker)
-            ) +
-            var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2
-    );
-    padding-left: 0;
-}
-#buffer ~ #buffer {
-    /* .spectrum-Slider-buffer~.spectrum-Slider-buffer */
-    padding-top: 0;
-    padding-bottom: 0;
-}
-#buffer ~ #buffer:after {
-    /* .spectrum-Slider-buffer~.spectrum-Slider-buffer:after */
-    display: none;
 }
 :host([variant='range']) #value {
     /* .spectrum-Slider--range .spectrum-Slider-value */
@@ -607,22 +462,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     width: 100%;
     height: 100%;
 }
-:host([dir='ltr']) .spectrum-Dial-handle,
 :host([dir='ltr']) #handle {
-    /* [dir=ltr] .spectrum-Dial-handle,
-   * [dir=ltr] .spectrum-Slider-handle */
-    left: 0;
-}
-:host([dir='rtl']) .spectrum-Dial-handle,
-:host([dir='rtl']) #handle {
-    /* [dir=rtl] .spectrum-Dial-handle,
-   * [dir=rtl] .spectrum-Slider-handle */
-    right: 0;
-}
-:host([dir='ltr']) .spectrum-Dial-handle,
-:host([dir='ltr']) #handle {
-    /* [dir=ltr] .spectrum-Dial-handle,
-   * [dir=ltr] .spectrum-Slider-handle */
+    /* [dir=ltr] .spectrum-Slider-handle */
+    left: 0; /* [dir=ltr] .spectrum-Slider-handle */
     margin-left: calc(
         var(
                 --spectrum-slider-handle-width,
@@ -631,10 +473,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     margin-right: 0;
 }
-:host([dir='rtl']) .spectrum-Dial-handle,
 :host([dir='rtl']) #handle {
-    /* [dir=rtl] .spectrum-Dial-handle,
-   * [dir=rtl] .spectrum-Slider-handle */
+    /* [dir=rtl] .spectrum-Slider-handle */
+    right: 0; /* [dir=rtl] .spectrum-Slider-handle */
     margin-right: calc(
         var(
                 --spectrum-slider-handle-width,
@@ -644,8 +485,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-left: 0;
 }
 #handle {
-    /* .spectrum-Dial-handle,
-   * .spectrum-Slider-handle */
+    /* .spectrum-Slider-handle */
     position: absolute;
     top: calc(
         var(--spectrum-slider-height, var(--spectrum-alias-single-line-height)) /
@@ -687,8 +527,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     outline: none;
     cursor: pointer;
     cursor: -webkit-grab;
-    cursor: grab; /* .spectrum-Dial-handle,
-   * .spectrum-Slider-handle */
+    cursor: grab; /* .spectrum-Slider-handle */
     border-color: var(
         --spectrum-slider-handle-border-color,
         var(--spectrum-global-color-gray-700)
@@ -701,8 +540,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dragging]) #handle,
 :host([handle-highlight]) #handle,
 #handle:active {
-    /* .spectrum-Dial-handle:active,
-   * .spectrum-Slider-handle.is-dragged,
+    /* .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle.is-focused,
    * .spectrum-Slider-handle:active */
     cursor: ns-resize;
@@ -713,16 +551,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([handle-highlight]) #handle,
 #handle.is-tophandle,
 #handle:active {
-    /* .spectrum-Dial-handle:active,
-   * .spectrum-Slider-handle.is-dragged,
+    /* .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle.is-focused,
    * .spectrum-Slider-handle.is-tophandle,
    * .spectrum-Slider-handle:active */
     z-index: 3;
 }
 #handle:before {
-    /* .spectrum-Dial-handle:before,
-   * .spectrum-Slider-handle:before */
+    /* .spectrum-Slider-handle:before */
     content: ' ';
     display: block;
     position: absolute;
@@ -772,10 +608,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
         var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
 }
-:host([dir='ltr']) .spectrum-Dial-input,
 :host([dir='ltr']) #input {
-    /* [dir=ltr] .spectrum-Dial-input,
-   * [dir=ltr] .spectrum-Slider-input */
+    /* [dir=ltr] .spectrum-Slider-input */
     left: calc(
         var(
                 --spectrum-slider-handle-width,
@@ -783,10 +617,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / -2 / 4
     );
 }
-:host([dir='rtl']) .spectrum-Dial-input,
 :host([dir='rtl']) #input {
-    /* [dir=rtl] .spectrum-Dial-input,
-   * [dir=rtl] .spectrum-Slider-input */
+    /* [dir=rtl] .spectrum-Slider-input */
     right: calc(
         var(
                 --spectrum-slider-handle-width,
@@ -795,8 +627,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 #input {
-    /* .spectrum-Dial-input,
-   * .spectrum-Slider-input */
+    /* .spectrum-Slider-input */
     margin: 0;
     width: var(
         --spectrum-slider-handle-width,
@@ -819,18 +650,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: default;
     -webkit-appearance: none;
     border: 0;
-    pointer-events: none; /* .spectrum-Dial-input,
-   * .spectrum-Slider-input */
+    pointer-events: none; /* .spectrum-Slider-input */
     background: transparent;
 }
 #input:focus {
-    /* .spectrum-Dial-input:focus,
-   * .spectrum-Slider-input:focus */
+    /* .spectrum-Slider-input:focus */
     outline: none;
 }
 #labelContainer {
-    /* .spectrum-Dial-labelContainer,
-   * .spectrum-Slider-labelContainer */
+    /* .spectrum-Slider-labelContainer */
     display: flex;
     position: relative;
     width: auto;
@@ -838,57 +666,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-fieldlabel-padding-top,
         var(--spectrum-global-dimension-size-50)
     );
-    font-size: var(
-        --spectrum-label-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
+    font-size: var(--spectrum-global-dimension-font-size-75);
     line-height: var(
-        --spectrum-label-text-line-height,
-        var(--spectrum-global-font-line-height-small)
-    ); /* .spectrum-Dial-labelContainer,
-   * .spectrum-Slider-labelContainer */
+        --spectrum-global-font-line-height-small,
+        1.3
+    ); /* .spectrum-Slider-labelContainer */
     color: var(
-        --spectrum-label-text-color,
-        var(--spectrum-alias-label-text-color)
+        --spectrum-alias-label-text-color,
+        var(--spectrum-global-color-gray-700)
     );
 }
-:host([dir='ltr']) .spectrum-Dial-label,
 :host([dir='ltr']) #label {
-    /* [dir=ltr] .spectrum-Dial-label,
-   * [dir=ltr] .spectrum-Slider-label */
+    /* [dir=ltr] .spectrum-Slider-label */
     padding-left: 0;
 }
-:host([dir='rtl']) .spectrum-Dial-label,
 :host([dir='rtl']) #label {
-    /* [dir=rtl] .spectrum-Dial-label,
-   * [dir=rtl] .spectrum-Slider-label */
+    /* [dir=rtl] .spectrum-Slider-label */
     padding-right: 0;
 }
 #label {
-    /* .spectrum-Dial-label,
-   * .spectrum-Slider-label */
+    /* .spectrum-Slider-label */
     flex-grow: 1;
-}
-:host([dir='ltr']) .spectrum-Dial-value,
-:host([dir='ltr']) #value {
-    /* [dir=ltr] .spectrum-Dial-value,
-   * [dir=ltr] .spectrum-Slider-value */
-    padding-right: 0;
-}
-:host([dir='rtl']) .spectrum-Dial-value,
-:host([dir='rtl']) #value {
-    /* [dir=rtl] .spectrum-Dial-value,
-   * [dir=rtl] .spectrum-Slider-value */
-    padding-left: 0;
-}
-#value {
-    /* .spectrum-Dial-value,
-   * .spectrum-Slider-value */
-    flex-grow: 0;
-    cursor: default;
 }
 :host([dir='ltr']) #value {
     /* [dir=ltr] .spectrum-Slider-value */
+    padding-right: 0; /* [dir=ltr] .spectrum-Slider-value */
     margin-left: var(
         --spectrum-slider-label-gap-x,
         var(--spectrum-global-dimension-size-200)
@@ -896,10 +698,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl']) #value {
     /* [dir=rtl] .spectrum-Slider-value */
+    padding-left: 0; /* [dir=rtl] .spectrum-Slider-value */
     margin-right: var(
         --spectrum-slider-label-gap-x,
         var(--spectrum-global-dimension-size-200)
     );
+}
+#value {
+    /* .spectrum-Slider-value */
+    flex-grow: 0;
+    cursor: default;
 }
 .ticks {
     /* .spectrum-Slider-ticks */
@@ -991,14 +799,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-200)
             ) * -1
     );
-    font-size: var(
-        --spectrum-label-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    line-height: var(
-        --spectrum-label-text-line-height,
-        var(--spectrum-global-font-line-height-small)
-    );
+    font-size: var(--spectrum-global-dimension-font-size-75);
+    line-height: var(--spectrum-global-font-line-height-small, 1.3);
 }
 .tick:first-of-type .tickLabel,
 .tick:last-of-type .tickLabel {
@@ -1028,206 +830,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Slider-tick:last-of-type .spectrum-Slider-tickLabel */
     left: 0;
 }
-:host([variant='color']) .spectrum-Dial-labelContainer,
-:host([variant='color']) #labelContainer {
-    /* .spectrum-Slider--color .spectrum-Dial-labelContainer,
-   * .spectrum-Slider--color .spectrum-Slider-labelContainer */
-    padding-bottom: var(
-        --spectrum-fieldlabel-padding-bottom,
-        var(--spectrum-global-dimension-size-65)
-    );
-}
-:host([dir='ltr'][variant='color']) .spectrum-Dial-controls,
-:host([dir='ltr'][variant='color']) .spectrum-Dial-controls:before,
-:host([dir='ltr'][variant='color']) #controls,
-:host([dir='ltr'][variant='color']) #controls:before,
-:host([dir='ltr'][variant='color']) .track {
-    /* [dir=ltr] .spectrum-Slider--color .spectrum-Dial-controls,
-   * [dir=ltr] .spectrum-Slider--color .spectrum-Dial-controls:before,
-   * [dir=ltr] .spectrum-Slider--color .spectrum-Slider-controls,
-   * [dir=ltr] .spectrum-Slider--color .spectrum-Slider-controls:before,
-   * [dir=ltr] .spectrum-Slider--color .spectrum-Slider-track */
-    margin-left: 0;
-}
-:host([dir='rtl'][variant='color']) .spectrum-Dial-controls,
-:host([dir='rtl'][variant='color']) .spectrum-Dial-controls:before,
-:host([dir='rtl'][variant='color']) #controls,
-:host([dir='rtl'][variant='color']) #controls:before,
-:host([dir='rtl'][variant='color']) .track {
-    /* [dir=rtl] .spectrum-Slider--color .spectrum-Dial-controls,
-   * [dir=rtl] .spectrum-Slider--color .spectrum-Dial-controls:before,
-   * [dir=rtl] .spectrum-Slider--color .spectrum-Slider-controls,
-   * [dir=rtl] .spectrum-Slider--color .spectrum-Slider-controls:before,
-   * [dir=rtl] .spectrum-Slider--color .spectrum-Slider-track */
-    margin-right: 0;
-}
-:host([variant='color']) .spectrum-Dial-controls,
-:host([variant='color']) .spectrum-Dial-controls:before,
-:host([variant='color']) #controls,
-:host([variant='color']) #controls:before,
-:host([variant='color']) .track {
-    /* .spectrum-Slider--color .spectrum-Dial-controls,
-   * .spectrum-Slider--color .spectrum-Dial-controls:before,
-   * .spectrum-Slider--color .spectrum-Slider-controls,
-   * .spectrum-Slider--color .spectrum-Slider-controls:before,
-   * .spectrum-Slider--color .spectrum-Slider-track */
-    min-height: auto;
-    height: var(
-        --spectrum-slider-color-track-height,
-        var(--spectrum-global-dimension-static-size-300)
-    );
-    width: 100%;
-}
-:host([variant='color']) .spectrum-Dial-controls:before,
-:host([variant='color']) #controls:before {
-    /* .spectrum-Slider--color .spectrum-Dial-controls:before,
-   * .spectrum-Slider--color .spectrum-Slider-controls:before */
-    display: block;
-    content: '';
-}
-:host([dir='ltr'][variant='color']) .spectrum-Dial-controls:before,
-:host([dir='ltr'][variant='color']) #controls:before,
-:host([dir='ltr'][variant='color']) .track {
-    /* [dir=ltr] .spectrum-Slider--color .spectrum-Dial-controls:before,
-   * [dir=ltr] .spectrum-Slider--color .spectrum-Slider-controls:before,
-   * [dir=ltr] .spectrum-Slider--color .spectrum-Slider-track */
-    margin-right: 0;
-}
-:host([dir='rtl'][variant='color']) .spectrum-Dial-controls:before,
-:host([dir='rtl'][variant='color']) #controls:before,
-:host([dir='rtl'][variant='color']) .track {
-    /* [dir=rtl] .spectrum-Slider--color .spectrum-Dial-controls:before,
-   * [dir=rtl] .spectrum-Slider--color .spectrum-Slider-controls:before,
-   * [dir=rtl] .spectrum-Slider--color .spectrum-Slider-track */
-    margin-left: 0;
-}
-:host([variant='color']) .spectrum-Dial-controls:before,
-:host([variant='color']) #controls:before,
-:host([variant='color']) .track {
-    /* .spectrum-Slider--color .spectrum-Dial-controls:before,
-   * .spectrum-Slider--color .spectrum-Slider-controls:before,
-   * .spectrum-Slider--color .spectrum-Slider-track */
-    top: 0;
-    padding: 0;
-    margin-top: 0;
-    border-radius: var(
-        --spectrum-alias-border-radius-regular,
-        var(--spectrum-global-dimension-size-50)
-    );
-}
-:host([variant='color']) .spectrum-Dial-handle,
-:host([variant='color']) #handle {
-    /* .spectrum-Slider--color .spectrum-Dial-handle,
-   * .spectrum-Slider--color .spectrum-Slider-handle */
-    top: 50%;
-}
-:host([dir='ltr']) .spectrum-Dial-controls:before {
-    /* [dir=ltr] .spectrum-Dial-controls:before */
-    left: auto; /* [dir=ltr] .spectrum-Dial-controls:before */
-    right: calc(
-        var(
-                --spectrum-slider-tick-mark-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * -1
-    );
-}
-:host([dir='rtl']) .spectrum-Dial-controls:before {
-    /* [dir=rtl] .spectrum-Dial-controls:before */
-    right: auto; /* [dir=rtl] .spectrum-Dial-controls:before */
-    left: calc(
-        var(
-                --spectrum-slider-tick-mark-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * -1
-    );
-}
-:host([dir='ltr']) .spectrum-Dial-controls:after {
-    /* [dir=ltr] .spectrum-Dial-controls:after */
-    left: calc(
-        var(
-                --spectrum-slider-tick-mark-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * -1
-    );
-}
-:host([dir='rtl']) .spectrum-Dial-controls:after {
-    /* [dir=rtl] .spectrum-Dial-controls:after */
-    right: calc(
-        var(
-                --spectrum-slider-tick-mark-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * -1
-    );
-}
-:host([dir='ltr']) .spectrum-Dial-handle {
-    /* [dir=ltr] .spectrum-Dial-handle */
-    left: var(--spectrum-global-dimension-size-100);
-}
-:host([dir='ltr']) .spectrum-Dial-handle,
-:host([dir='rtl']) .spectrum-Dial-handle {
-    /* [dir=ltr] .spectrum-Dial-handle,
-   * [dir=rtl] .spectrum-Dial-handle */
-    right: var(--spectrum-global-dimension-size-100);
-}
-:host([dir='rtl']) .spectrum-Dial-handle {
-    /* [dir=rtl] .spectrum-Dial-handle */
-    left: var(--spectrum-global-dimension-size-100);
-}
-:host([dir='ltr']) .spectrum-Dial-handle:after {
-    /* [dir=ltr] .spectrum-Dial-handle:after */
-    left: calc(
-        var(
-                --spectrum-slider-tick-mark-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * -1
-    );
-}
-:host([dir='rtl']) .spectrum-Dial-handle:after {
-    /* [dir=rtl] .spectrum-Dial-handle:after */
-    right: calc(
-        var(
-                --spectrum-slider-tick-mark-width,
-                var(--spectrum-alias-border-size-thick)
-            ) * -1
-    );
-}
-:host([dir='ltr']) .spectrum-Dial-input {
-    /* [dir=ltr] .spectrum-Dial-input */
-    left: 0;
-}
-:host([dir='rtl']) .spectrum-Dial-input {
-    /* [dir=rtl] .spectrum-Dial-input */
-    right: 0;
-}
 :host([disabled]) {
-    /* .spectrum-Dial.is-disabled,
-   * .spectrum-Slider.is-disabled */
+    /* .spectrum-Slider.is-disabled */
     cursor: default;
 }
-:host([disabled]) .spectrum-Dial-handle,
 :host([disabled]) #handle {
-    /* .spectrum-Dial.is-disabled .spectrum-Dial-handle,
-   * .spectrum-Dial.is-disabled .spectrum-Slider-handle,
-   * .spectrum-Slider.is-disabled .spectrum-Dial-handle,
-   * .spectrum-Slider.is-disabled .spectrum-Slider-handle */
+    /* .spectrum-Slider.is-disabled .spectrum-Slider-handle */
     cursor: default;
-    pointer-events: none;
-}
-:host([disabled][variant='color']) .spectrum-Dial-handle:active,
-:host([disabled][variant='color']) .spectrum-Dial-handle:hover,
-:host([disabled][variant='color']) #handle:active,
-:host([disabled][variant='color']) #handle:hover {
-    /* .spectrum-Dial.is-disabled.spectrum-Slider--color .spectrum-Dial-handle:active,
-   * .spectrum-Dial.is-disabled.spectrum-Slider--color .spectrum-Dial-handle:hover,
-   * .spectrum-Dial.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:active,
-   * .spectrum-Dial.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:hover,
-   * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Dial-handle:active,
-   * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Dial-handle:hover,
-   * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:active,
-   * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:hover */
-    border-width: var(
-        --spectrum-slider-color-handle-outset-border-size,
-        var(--spectrum-alias-border-size-thin)
+    pointer-events: none; /* .spectrum-Slider.is-disabled .spectrum-Slider-handle */
+    border-color: var(
+        --spectrum-slider-handle-border-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+    background: var(
+        --spectrum-alias-background-color-default,
+        var(--spectrum-global-color-gray-100)
     );
 }
 .track:before {
@@ -1246,15 +863,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     );
 }
-#buffer:after,
-#buffer:before {
-    /* .spectrum-Slider-buffer:after,
-   * .spectrum-Slider-buffer:before */
-    background: var(
-        --spectrum-slider-player-track-buffer-color,
-        var(--spectrum-global-color-gray-500)
-    );
-}
 #ramp path {
     /* .spectrum-Slider-ramp path */
     fill: var(
@@ -1263,8 +871,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 #handle:hover {
-    /* .spectrum-Dial-handle:hover,
-   * .spectrum-Slider-handle:hover */
+    /* .spectrum-Slider-handle:hover */
     border-color: var(
         --spectrum-slider-handle-border-color-hover,
         var(--spectrum-global-color-gray-800)
@@ -1276,18 +883,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dragging]) #handle,
 #handle:active {
-    /* .spectrum-Dial-handle:active,
-   * .spectrum-Slider-handle.is-dragged,
+    /* .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle:active */
     border-color: var(
         --spectrum-slider-handle-border-color-down,
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([variant='ramp']) .spectrum-Dial-handle,
 :host([variant='ramp']) #handle {
-    /* .spectrum-Slider--ramp .spectrum-Dial-handle,
-   * .spectrum-Slider--ramp .spectrum-Slider-handle */
+    /* .spectrum-Slider--ramp .spectrum-Slider-handle */
     box-shadow: 0 0 0 4px
         var(
             --spectrum-alias-background-color-default,
@@ -1312,124 +916,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     );
 }
-:host([variant='color']) .spectrum-Dial-controls:before,
-:host([variant='color']) #controls:before {
-    /* .spectrum-Slider--color .spectrum-Dial-controls:before,
-   * .spectrum-Slider--color .spectrum-Slider-controls:before */
-    background-color: var(--spectrum-global-color-static-white, #fff);
-    background-image: linear-gradient(
-            -45deg,
-            transparent 75.5%,
-            var(--spectrum-global-color-static-gray-500, #bcbcbc) 0
-        ),
-        linear-gradient(
-            45deg,
-            transparent 75.5%,
-            var(--spectrum-global-color-static-gray-500, #bcbcbc) 0
-        ),
-        linear-gradient(
-            -45deg,
-            var(--spectrum-global-color-static-gray-500, #bcbcbc) 25.5%,
-            transparent 0
-        ),
-        linear-gradient(
-            45deg,
-            var(--spectrum-global-color-static-gray-500, #bcbcbc) 25.5%,
-            transparent 0
-        );
-    background-size: var(--spectrum-global-dimension-static-size-200, 16px)
-        var(--spectrum-global-dimension-static-size-200, 16px);
-    background-position: 0 0,
-        0 var(--spectrum-global-dimension-static-size-100, 8px),
-        var(--spectrum-global-dimension-static-size-100, 8px)
-            calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)),
-        calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)) 0;
-    z-index: 0;
-}
-:host([variant='color']) .track {
-    /* .spectrum-Slider--color .spectrum-Slider-track */
-    background-color: initial;
-    background-image: linear-gradient(
-        90deg,
-        var(
-            --spectrum-slider-color-track-background-color-gradient-start,
-            var(--spectrum-global-color-blue-400)
-        ),
-        var(
-            --spectrum-slider-color-track-background-color-gradient-end,
-            var(--spectrum-global-color-blue-700)
-        )
-    );
-    box-shadow: inset 0 0 0 1px
-        var(
-            --spectrum-slider-color-track-border-color,
-            var(--spectrum-alias-border-color-translucent-dark)
-        );
-}
-:host([variant='color']) .track:before {
-    /* .spectrum-Slider--color .spectrum-Slider-track:before */
-    display: none;
-}
-:host([variant='color']) .spectrum-Dial-handle,
-:host([variant='color']) #handle {
-    /* .spectrum-Slider--color .spectrum-Dial-handle,
-   * .spectrum-Slider--color .spectrum-Slider-handle */
-    box-shadow: inset 0 0 0 1px
-            var(
-                --spectrum-slider-color-handle-inset-border-color,
-                var(--spectrum-alias-border-color-translucent-dark)
-            ),
-        0 0 0 1px
-            var(
-                --spectrum-slider-color-handle-outset-border-color,
-                var(--spectrum-alias-border-color-translucent-dark)
-            );
-    border-color: var(
-        --spectrum-slider-color-handle-border-color,
-        var(--spectrum-global-color-gray-50)
-    );
-    background: var(
-        --spectrum-slider-color-handle-color,
-        var(--spectrum-alias-border-color-transparent)
-    );
-}
-:host([variant='color'][handle-highlight]) #handle {
-    /* .spectrum-Slider--color .spectrum-Slider-handle.is-focused */
-    box-shadow: 0 0 0 1px
-        var(
-            --spectrum-slider-color-handle-outset-border-color-key-focus,
-            var(--spectrum-alias-border-color-translucent-dark)
-        );
-}
-:host([disabled]) .spectrum-Dial-labelContainer,
 :host([disabled]) #labelContainer {
-    /* .spectrum-Slider.is-disabled .spectrum-Dial-labelContainer,
-   * .spectrum-Slider.is-disabled .spectrum-Slider-labelContainer */
+    /* .spectrum-Slider.is-disabled .spectrum-Slider-labelContainer */
     color: var(
-        --spectrum-label-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
+        --spectrum-alias-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
     );
 }
-:host([disabled]) .spectrum-Dial-handle,
-:host([disabled]) #handle {
-    /* .spectrum-Slider.is-disabled .spectrum-Dial-handle,
-   * .spectrum-Slider.is-disabled .spectrum-Slider-handle */
-    border-color: var(
-        --spectrum-slider-handle-border-color-disabled,
-        var(--spectrum-global-color-gray-400)
-    );
-    background: var(
-        --spectrum-alias-background-color-default,
-        var(--spectrum-global-color-gray-100)
-    );
-}
-:host([disabled]) .spectrum-Dial-handle:active,
-:host([disabled]) .spectrum-Dial-handle:hover,
 :host([disabled]) #handle:active,
 :host([disabled]) #handle:hover {
-    /* .spectrum-Slider.is-disabled .spectrum-Dial-handle:active,
-   * .spectrum-Slider.is-disabled .spectrum-Dial-handle:hover,
-   * .spectrum-Slider.is-disabled .spectrum-Slider-handle:active,
+    /* .spectrum-Slider.is-disabled .spectrum-Slider-handle:active,
    * .spectrum-Slider.is-disabled .spectrum-Slider-handle:hover */
     border-color: var(
         --spectrum-slider-handle-border-color-disabled,
@@ -1456,48 +952,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-300)
     );
 }
-:host([disabled]) #buffer:before {
-    /* .spectrum-Slider.is-disabled .spectrum-Slider-buffer:before */
-    background: var(
-        --spectrum-slider-player-track-buffer-color-disabled,
-        var(--spectrum-alias-track-color-default)
-    );
-}
 :host([disabled]) #ramp path {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-ramp path */
     fill: var(
         --spectrum-slider-ramp-track-color-disabled,
         var(--spectrum-global-color-gray-200)
-    );
-}
-:host([disabled][variant='color']) .track {
-    /* .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-track */
-    background: var(
-        --spectrum-slider-color-track-color-disabled,
-        var(--spectrum-global-color-gray-200)
-    ) !important;
-    box-shadow: none;
-}
-:host([disabled][variant='color']) .spectrum-Dial-handle,
-:host([disabled][variant='color']) .spectrum-Dial-handle:active,
-:host([disabled][variant='color']) .spectrum-Dial-handle:hover,
-:host([disabled][variant='color']) #handle,
-:host([disabled][variant='color']) #handle:active,
-:host([disabled][variant='color']) #handle:hover {
-    /* .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Dial-handle,
-   * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Dial-handle:active,
-   * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Dial-handle:hover,
-   * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle,
-   * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:active,
-   * .spectrum-Slider.is-disabled.spectrum-Slider--color .spectrum-Slider-handle:hover */
-    background: var(
-        --spectrum-slider-color-handle-color-disabled,
-        var(--spectrum-alias-border-color-transparent)
-    );
-    box-shadow: none;
-    border-color: var(
-        --spectrum-slider-color-handle-border-color-disabled,
-        var(--spectrum-global-color-gray-400)
     );
 }
 :host([disabled][variant='range'])
