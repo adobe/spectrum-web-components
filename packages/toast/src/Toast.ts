@@ -20,6 +20,9 @@ import {
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
+import alertIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-medium.css.js';
+import infoIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-info-medium.css.js';
+import successIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-success-medium.css.js';
 import {
     AlertSmallIcon,
     InfoSmallIcon,
@@ -50,7 +53,12 @@ export type ToastVariants =
 
 export class Toast extends SpectrumElement {
     public static get styles(): CSSResultArray {
-        return [toastStyles];
+        return [
+            toastStyles,
+            alertIconStyles,
+            infoIconStyles,
+            successIconStyles,
+        ];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -107,19 +115,23 @@ export class Toast extends SpectrumElement {
     private renderIcon(variant: string): TemplateResult {
         let label = '';
         let icon;
+        let className = '';
         switch (variant) {
             case 'info':
+                className = 'alert-medium';
                 label = 'Information';
                 icon = InfoSmallIcon;
                 break;
             case 'negative':
             case 'error': // deprecated
             case 'warning': // deprecated
+                className = 'alert-medium';
                 label = 'Error';
                 icon = AlertSmallIcon;
                 break;
             case 'positive':
             case 'success': // deprecated
+                className = 'success-medium';
                 label = 'Success';
                 icon = SuccessSmallIcon;
                 break;
@@ -127,7 +139,7 @@ export class Toast extends SpectrumElement {
                 return html``;
         }
         return html`
-            <sp-icon class="type" label=${label} size="s">
+            <sp-icon class="type ${className}" label=${label} size="s">
                 ${icon({ hidden: true })}
             </sp-icon>
         `;

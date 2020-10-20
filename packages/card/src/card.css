@@ -55,6 +55,69 @@ sp-quick-actions {
  **/
 .heading {
     width: var(--spectrum-card-title-width);
+
+    /* Appliction of typography "classes" */
+    font-family: var(
+        --spectrum-heading-m-text-font-family,
+        var(--spectrum-alias-body-text-font-family)
+    );
+    font-weight: var(
+        --spectrum-heading-m-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-regular)
+    );
+    line-height: var(
+        --spectrum-heading-xs-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    font-style: var(
+        --spectrum-heading-xs-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    font-size: var(
+        --spectrum-heading-xs-text-size,
+        var(--spectrum-alias-heading-xs-text-size)
+    );
+    letter-spacing: var(
+        --spectrum-heading-xs-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    color: var(
+        --spectrum-heading-xs-text-color,
+        var(--spectrum-alias-heading-text-color)
+    );
+    text-transform: var(--spectrum-heading-xs-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.subtitle {
+    font-family: var(
+        --spectrum-heading-m-text-font-family,
+        var(--spectrum-alias-body-text-font-family)
+    );
+    font-size: var(
+        --spectrum-detail-s-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    font-weight: var(
+        --spectrum-detail-s-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-detail-s-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    font-style: var(
+        --spectrum-detail-s-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-detail-s-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
+    text-transform: var(--spectrum-detail-s-text-transform, uppercase);
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .subtitle {

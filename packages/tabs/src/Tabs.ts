@@ -75,14 +75,14 @@ export class Tabs extends Focusable {
 
     private tabs: Tab[] = [];
 
-    public get focusElement(): Tab | Tabs {
+    public get focusElement(): Tab {
         const focusElement = this.tabs.find(
             (tab) => tab.selected || tab.value === this.selected
         );
         if (focusElement) {
             return focusElement;
         }
-        return this.tabs[0] || this;
+        return this.tabs[0];
     }
 
     constructor() {

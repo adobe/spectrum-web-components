@@ -357,7 +357,7 @@ describe('Overlays', () => {
     it('closes via events', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div id="root">
-                <sp-dialog dismissible></sp-dialog>
+                <sp-dialog dismissable></sp-dialog>
             </div>
         `);
 

@@ -74,6 +74,15 @@ governing permissions and limitations under the License.
     --spectrum-global-color-gray-700: rgb(185, 185, 185);
     --spectrum-global-color-gray-800: rgb(227, 227, 227);
     --spectrum-global-color-gray-900: rgb(255, 255, 255);
+    --spectrum-alias-background-color-primary: var(
+        --spectrum-global-color-gray-100
+    );
+    --spectrum-alias-background-color-secondary: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-alias-background-color-tertiary: var(
+        --spectrum-global-color-gray-50
+    );
     --spectrum-alias-background-color-modal-overlay: rgba(0, 0, 0, 0.5);
     --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.5);
     --spectrum-alias-background-color-hover-overlay: rgba(255, 255, 255, 0.06);
@@ -93,32 +102,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-appframe-separator-color: var(
         --spectrum-global-color-gray-50
     );
-    --spectrum-colorarea-border-color: rgba(255, 255, 255, 0.1);
-    --spectrum-colorarea-border-color-hover: rgba(255, 255, 255, 0.1);
-    --spectrum-colorarea-border-color-down: rgba(255, 255, 255, 0.1);
-    --spectrum-colorarea-border-color-key-focus: rgba(255, 255, 255, 0.1);
-    --spectrum-colorslider-border-color: rgba(255, 255, 255, 0.1);
-    --spectrum-colorslider-border-color-hover: rgba(255, 255, 255, 0.1);
-    --spectrum-colorslider-border-color-down: rgba(255, 255, 255, 0.1);
-    --spectrum-colorslider-border-color-key-focus: rgba(255, 255, 255, 0.1);
-    --spectrum-colorslider-vertical-border-color: rgba(255, 255, 255, 0.1);
-    --spectrum-colorslider-vertical-border-color-hover: rgba(
-        255,
-        255,
-        255,
-        0.1
-    );
-    --spectrum-colorslider-vertical-border-color-down: rgba(255, 255, 255, 0.1);
-    --spectrum-colorslider-vertical-border-color-key-focus: rgba(
-        255,
-        255,
-        255,
-        0.1
-    );
-    --spectrum-colorwheel-border-color: rgba(255, 255, 255, 0.1);
-    --spectrum-colorwheel-border-color-hover: rgba(255, 255, 255, 0.1);
-    --spectrum-colorwheel-border-color-down: rgba(255, 255, 255, 0.1);
-    --spectrum-colorwheel-border-color-key-focus: rgba(255, 255, 255, 0.1);
     --spectrum-miller-column-item-background-color-selected: rgba(
         55,
         142,
@@ -158,8 +141,33 @@ governing permissions and limitations under the License.
     --spectrum-tabs-quiet-vertical-emphasized-selection-indicator-color: var(
         --spectrum-global-color-blue-500
     );
-    --spectrum-tray-background-color: var(--spectrum-global-color-gray-100);
     --spectrum-well-background-color: rgba(227, 227, 227, 0.02);
+    --spectrum-colorarea-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color-hover: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color-key-focus: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color-hover: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color-key-focus: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-vertical-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-vertical-border-color-hover: rgba(
+        255,
+        255,
+        255,
+        0.1
+    );
+    --spectrum-colorslider-vertical-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-vertical-border-color-key-focus: rgba(
+        255,
+        255,
+        255,
+        0.1
+    );
+    --spectrum-colorwheel-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorwheel-border-color-hover: rgba(255, 255, 255, 0.1);
+    --spectrum-colorwheel-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorwheel-border-color-key-focus: rgba(255, 255, 255, 0.1);
     --spectrum-well-border-color: rgba(255, 255, 255, 0.05);
 }
 

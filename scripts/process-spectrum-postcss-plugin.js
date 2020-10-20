@@ -408,6 +408,7 @@ class SpectrumProcessor {
         const startsWithHost = re`^${this.component.hostSelector}`;
         const startsWithModifier = re`^.is-`;
         const hasHost = re`${this.component.hostSelector}(?![a-zA-Z\-])`;
+        const getAllHosts = re`/${this.component.hostSelector}(?![a-zA-Z\-])/g`;
         const startsWithDir = new RegExp(/\[dir\=/);
         const selectorTransform = this.selectorTransform;
         let skipAll = false;
@@ -469,6 +470,31 @@ class SpectrumProcessor {
                         }
                     }
                     if (skip) continue;
+                }
+                // Heal the use of multiple instance of a selector in a row:
+                // .selector.selector => .selector
+                const firstPart = selector.split(' ')[0];
+                let match = getAllHosts.exec(firstPart);
+                if (match) {
+                    let indices = [];
+                    while (match) {
+                        indices.push(match.index);
+                        match = getAllHosts.exec(firstPart);
+                    }
+                    if (indices.length) {
+                        let i = indices.length;
+                        while (i) {
+                            i -= 1;
+                            if (indices[i] > 0) {
+                                selector =
+                                    selector.slice(0, indices[i]) +
+                                    selector.slice(
+                                        indices[i] +
+                                            this.component.hostSelector.length
+                                    );
+                            }
+                        }
+                    }
                 }
                 this.component.complexSelectors.map((complexSelector) => {
                     selector = selector.replace(

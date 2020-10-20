@@ -21,33 +21,39 @@ function computeArrowRotateStylesFn(
     /* c8 ignore next */
     if (!ref.state.styles || !ref.state.styles.arrow) return;
 
-    let rotation: number;
+    let scaleType!: string;
+    let scale!: number;
     switch (ref.state.placement) {
         case 'bottom':
         case 'bottom-start':
         case 'bottom-end':
-            rotation = 180;
+            scaleType = 'scaleY';
+            scale = -1;
             break;
         case 'top':
         case 'top-start':
         case 'top-end':
-            return;
+            break;
         case 'left':
         case 'left-start':
         case 'left-end':
-            rotation = 270;
             break;
         case 'right':
         case 'right-start':
         case 'right-end':
-            rotation = 90;
+            scaleType = 'scaleX';
+            scale = -1;
             break;
+        // Should never go to default as all possible placement values are listed above.
+        // Don't alter the arrow in the case that it ever did as we don't know what changes to apply.
         /* c8 ignore next 2 */
         default:
             return;
     }
 
-    ref.state.styles.arrow.transform += ` rotate(${rotation}deg)`;
+    if (!!scaleType && !!scale) {
+        ref.state.styles.arrow.transform += ` ${scaleType}(${scale})`;
+    }
     // Manage Spectrum CSS usage of negative left margin for centering.
     ref.state.styles.arrow.marginLeft = '0';
     // Manage Spectrum CSS usage of negative top margin for centering.

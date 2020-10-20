@@ -13,22 +13,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Avatar */
     width: var(
-        --spectrum-avatar-small-width,
-        var(--spectrum-global-dimension-size-200)
+        --spectrum-avatar-size-50-width,
+        var(--spectrum-alias-avatar-size-50)
     );
     height: var(
-        --spectrum-avatar-small-height,
-        var(--spectrum-global-dimension-size-200)
+        --spectrum-avatar-size-50-height,
+        var(--spectrum-alias-avatar-size-50)
     );
-    border-radius: var(--spectrum-avatar-small-border-radius, 50%);
+    border-radius: var(--spectrum-avatar-size-50-border-radius, 50%);
     border-style: none;
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    opacity: var(--spectrum-avatar-small-opacity, 1);
+    opacity: var(--spectrum-avatar-size-100-opacity, 1);
 }
 :host([disabled]) {
     /* .spectrum-Avatar.is-disabled */
-    opacity: var(--spectrum-avatar-small-opacity-disabled, 0.3);
+    opacity: var(--spectrum-avatar-size-100-opacity-disabled, 0.3);
 }
