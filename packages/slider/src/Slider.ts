@@ -25,7 +25,7 @@ import sliderStyles from './slider.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { StyleInfo } from 'lit-html/directives/style-map';
 
-export const variants = ['color', 'filled', 'ramp', 'range', 'tick'];
+export const variants = ['filled', 'ramp', 'range', 'tick'];
 
 export class Slider extends Focusable {
     public static get styles(): CSSResultArray {
@@ -132,15 +132,12 @@ export class Slider extends Focusable {
     private boundingClientRect?: DOMRect;
 
     public get focusElement(): HTMLElement {
-        return this.input ? this.input : this;
+        return this.input;
     }
 
     protected render(): TemplateResult {
         return html`
-            ${this.renderLabel()}
-            ${this.variant === 'color'
-                ? this.renderColorTrack()
-                : this.renderTrack()}
+            ${this.renderLabel()} ${this.renderTrack()}
         `;
     }
 
@@ -284,15 +281,6 @@ export class Slider extends Focusable {
                 ${this.renderTrackLeft()} ${this.renderRamp()}
                 ${this.renderTicks()} ${this.renderHandle()}
                 ${this.renderTrackRight()}
-            </div>
-        `;
-    }
-
-    private renderColorTrack(): TemplateResult {
-        return html`
-            <div id="controls" @pointerdown=${this.onTrackPointerDown}>
-                <div class="track"></div>
-                ${this.renderHandle()}
             </div>
         `;
     }
