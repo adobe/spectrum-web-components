@@ -60,41 +60,49 @@ governing permissions and limitations under the License.
     --spectrum-global-color-static-red-500: rgb(227, 72, 80);
     --spectrum-global-color-static-red-600: rgb(215, 55, 63);
     --spectrum-global-color-static-red-700: rgb(201, 37, 45);
+    --spectrum-global-color-static-red-800: rgb(187, 18, 26);
     --spectrum-global-color-static-orange-400: rgb(242, 148, 35);
     --spectrum-global-color-static-orange-500: rgb(230, 134, 25);
     --spectrum-global-color-static-orange-600: rgb(218, 123, 17);
     --spectrum-global-color-static-orange-700: rgb(203, 111, 16);
+    --spectrum-global-color-static-orange-800: rgb(189, 100, 13);
     --spectrum-global-color-static-green-400: rgb(51, 171, 132);
     --spectrum-global-color-static-green-500: rgb(45, 157, 120);
     --spectrum-global-color-static-green-600: rgb(38, 142, 108);
     --spectrum-global-color-static-green-700: rgb(18, 128, 92);
+    --spectrum-global-color-static-green-800: rgb(16, 113, 84);
     --spectrum-global-color-static-celery-200: rgb(88, 224, 111);
     --spectrum-global-color-static-celery-300: rgb(81, 210, 103);
     --spectrum-global-color-static-celery-400: rgb(75, 195, 95);
     --spectrum-global-color-static-celery-500: rgb(68, 181, 86);
     --spectrum-global-color-static-celery-600: rgb(61, 167, 78);
     --spectrum-global-color-static-celery-700: rgb(55, 153, 71);
+    --spectrum-global-color-static-celery-800: rgb(49, 139, 64);
     --spectrum-global-color-static-chartreuse-300: rgb(155, 236, 84);
     --spectrum-global-color-static-chartreuse-400: rgb(142, 222, 73);
     --spectrum-global-color-static-chartreuse-500: rgb(133, 208, 68);
     --spectrum-global-color-static-chartreuse-600: rgb(124, 195, 63);
     --spectrum-global-color-static-chartreuse-700: rgb(115, 181, 58);
+    --spectrum-global-color-static-chartreuse-800: rgb(106, 168, 52);
     --spectrum-global-color-static-yellow-200: rgb(255, 226, 46);
     --spectrum-global-color-static-yellow-300: rgb(250, 217, 0);
     --spectrum-global-color-static-yellow-400: rgb(237, 204, 0);
     --spectrum-global-color-static-yellow-500: rgb(223, 191, 0);
     --spectrum-global-color-static-yellow-600: rgb(210, 178, 0);
     --spectrum-global-color-static-yellow-700: rgb(196, 166, 0);
+    --spectrum-global-color-static-yellow-800: rgb(183, 153, 0);
     --spectrum-global-color-static-magenta-200: rgb(245, 107, 183);
     --spectrum-global-color-static-magenta-300: rgb(236, 90, 170);
     --spectrum-global-color-static-magenta-400: rgb(226, 73, 157);
     --spectrum-global-color-static-magenta-500: rgb(216, 55, 144);
     --spectrum-global-color-static-magenta-600: rgb(202, 41, 130);
     --spectrum-global-color-static-magenta-700: rgb(188, 28, 116);
+    --spectrum-global-color-static-magenta-800: rgb(174, 14, 102);
     --spectrum-global-color-static-fuchsia-400: rgb(207, 62, 220);
     --spectrum-global-color-static-fuchsia-500: rgb(192, 56, 204);
     --spectrum-global-color-static-fuchsia-600: rgb(177, 48, 189);
     --spectrum-global-color-static-fuchsia-700: rgb(162, 40, 173);
+    --spectrum-global-color-static-fuchsia-800: rgb(147, 33, 158);
     --spectrum-global-color-static-purple-400: rgb(157, 100, 225);
     --spectrum-global-color-static-purple-500: rgb(146, 86, 217);
     --spectrum-global-color-static-purple-600: rgb(134, 76, 204);
@@ -106,12 +114,14 @@ governing permissions and limitations under the License.
     --spectrum-global-color-static-indigo-500: rgb(103, 103, 236);
     --spectrum-global-color-static-indigo-600: rgb(92, 92, 224);
     --spectrum-global-color-static-indigo-700: rgb(81, 81, 211);
+    --spectrum-global-color-static-indigo-800: rgb(70, 70, 198);
     --spectrum-global-color-static-seafoam-200: rgb(38, 192, 199);
     --spectrum-global-color-static-seafoam-300: rgb(35, 178, 184);
     --spectrum-global-color-static-seafoam-400: rgb(32, 163, 168);
     --spectrum-global-color-static-seafoam-500: rgb(27, 149, 154);
     --spectrum-global-color-static-seafoam-600: rgb(22, 135, 140);
     --spectrum-global-color-static-seafoam-700: rgb(15, 121, 125);
+    --spectrum-global-color-static-seafoam-800: rgb(9, 108, 111);
     --spectrum-global-color-opacity-100: 1;
     --spectrum-global-color-opacity-90: 0.9;
     --spectrum-global-color-opacity-80: 0.8;
@@ -164,6 +174,18 @@ governing permissions and limitations under the License.
     --spectrum-semantic-negative-color-state-focus: var(
         --spectrum-global-color-red-400
     );
+    --spectrum-semantic-negative-background-color-default: var(
+        --spectrum-global-color-static-red-600
+    );
+    --spectrum-semantic-negative-background-color-hover: var(
+        --spectrum-global-color-static-red-700
+    );
+    --spectrum-semantic-negative-background-color-down: var(
+        --spectrum-global-color-static-red-800
+    );
+    --spectrum-semantic-negative-background-color-key-focus: var(
+        --spectrum-global-color-static-red-700
+    );
     --spectrum-semantic-notice-color-background: var(
         --spectrum-global-color-static-orange-700
     );
@@ -193,6 +215,18 @@ governing permissions and limitations under the License.
     );
     --spectrum-semantic-notice-color-state-focus: var(
         --spectrum-global-color-orange-400
+    );
+    --spectrum-semantic-notice-background-color-default: var(
+        --spectrum-global-color-static-orange-600
+    );
+    --spectrum-semantic-notice-background-color-hover: var(
+        --spectrum-global-color-static-orange-700
+    );
+    --spectrum-semantic-notice-background-color-down: var(
+        --spectrum-global-color-static-orange-800
+    );
+    --spectrum-semantic-notice-background-color-key-focus: var(
+        --spectrum-global-color-static-orange-700
     );
     --spectrum-semantic-positive-color-background: var(
         --spectrum-global-color-static-green-700
@@ -224,6 +258,18 @@ governing permissions and limitations under the License.
     --spectrum-semantic-positive-color-state-focus: var(
         --spectrum-global-color-green-400
     );
+    --spectrum-semantic-positive-background-color-default: var(
+        --spectrum-global-color-static-green-600
+    );
+    --spectrum-semantic-positive-background-color-hover: var(
+        --spectrum-global-color-static-green-700
+    );
+    --spectrum-semantic-positive-background-color-down: var(
+        --spectrum-global-color-static-green-800
+    );
+    --spectrum-semantic-positive-background-color-key-focus: var(
+        --spectrum-global-color-static-green-700
+    );
     --spectrum-semantic-informative-color-background: var(
         --spectrum-global-color-static-blue-700
     );
@@ -254,6 +300,18 @@ governing permissions and limitations under the License.
     --spectrum-semantic-informative-color-state-focus: var(
         --spectrum-global-color-blue-400
     );
+    --spectrum-semantic-informative-background-color-default: var(
+        --spectrum-global-color-static-blue-600
+    );
+    --spectrum-semantic-informative-background-color-hover: var(
+        --spectrum-global-color-static-blue-700
+    );
+    --spectrum-semantic-informative-background-color-down: var(
+        --spectrum-global-color-static-blue-800
+    );
+    --spectrum-semantic-informative-background-color-key-focus: var(
+        --spectrum-global-color-static-blue-700
+    );
     --spectrum-semantic-cta-color-background-default: var(
         --spectrum-global-color-static-blue-600
     );
@@ -266,11 +324,17 @@ governing permissions and limitations under the License.
     --spectrum-semantic-cta-color-background-key-focus: var(
         --spectrum-global-color-static-blue-600
     );
-    --spectrum-semantic-background-color-key-focus: var(
-        --spectrum-global-color-static-blue-600
-    );
-    --spectrum-semantic-neutral-color-background: var(
+    --spectrum-semantic-neutral-background-color-default: var(
         --spectrum-global-color-static-gray-700
+    );
+    --spectrum-semantic-neutral-background-color-hover: var(
+        --spectrum-global-color-static-gray-800
+    );
+    --spectrum-semantic-neutral-background-color-down: var(
+        --spectrum-global-color-static-gray-900
+    );
+    --spectrum-semantic-neutral-background-color-key-focus: var(
+        --spectrum-global-color-static-gray-800
     );
     --spectrum-semantic-presence-color-1: var(
         --spectrum-global-color-static-red-500
@@ -307,6 +371,7 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-static-size-225: 18px;
     --spectrum-global-dimension-static-size-250: 20px;
     --spectrum-global-dimension-static-size-300: 24px;
+    --spectrum-global-dimension-static-size-325: 26px;
     --spectrum-global-dimension-static-size-400: 32px;
     --spectrum-global-dimension-static-size-450: 36px;
     --spectrum-global-dimension-static-size-500: 40px;
@@ -475,15 +540,6 @@ governing permissions and limitations under the License.
         source-han-traditional, 'MingLiu', 'Heiti TC Light', adobe-clean,
         'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
         Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-alias-line-height-body: var(
-        --spectrum-global-font-line-height-medium
-    );
-    --spectrum-alias-line-height-title: var(
-        --spectrum-global-font-line-height-small
-    );
-    --spectrum-alias-body-han-text-line-height: var(
-        --spectrum-global-font-line-height-large
-    );
     --spectrum-alias-body-text-font-family: var(
         --spectrum-global-font-family-base
     );
@@ -498,9 +554,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-button-text-line-height: var(
         --spectrum-global-font-line-height-small
-    );
-    --spectrum-alias-heading-han-text-line-height: var(
-        --spectrum-global-font-line-height-medium
     );
     --spectrum-alias-heading-text-line-height: var(
         --spectrum-global-font-line-height-small
@@ -541,9 +594,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-serif-text-font-family: var(
         --spectrum-global-font-family-serif
     );
-    --spectrum-alias-article-text-font-family: var(
-        --spectrum-global-font-family-serif
-    );
     --spectrum-alias-article-body-text-font-weight: var(
         --spectrum-global-font-weight-regular
     );
@@ -577,6 +627,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-code-text-font-family: var(
         --spectrum-global-font-family-code
     );
+    --spectrum-alias-han-heading-text-line-height: var(
+        --spectrum-global-font-line-height-medium
+    );
     --spectrum-alias-han-heading-text-font-weight-regular: var(
         --spectrum-global-font-weight-bold
     );
@@ -585,12 +638,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-han-heading-text-font-weight-regular-strong: var(
         --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-han-heading-text-font-weight-quiet: var(
-        --spectrum-global-font-weight-light
-    );
-    --spectrum-alias-han-heading-text-font-weight-quiet-emphasis: var(
-        --spectrum-global-font-weight-regular
     );
     --spectrum-alias-han-heading-text-font-weight-quiet-strong: var(
         --spectrum-global-font-weight-bold
@@ -604,15 +651,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-han-heading-text-font-weight-light-strong: var(
         --spectrum-global-font-weight-bold
     );
-    --spectrum-alias-han-heading-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-han-heading-text-font-weight-strong-emphasis: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-han-heading-text-font-weight-strong-strong: var(
-        --spectrum-global-font-weight-black
-    );
     --spectrum-alias-han-heading-text-font-weight-heavy: var(
         --spectrum-global-font-weight-black
     );
@@ -621,6 +659,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-han-heading-text-font-weight-heavy-strong: var(
         --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-han-body-text-line-height: var(
+        --spectrum-global-font-line-height-large
     );
     --spectrum-alias-han-body-text-font-weight-regular: var(
         --spectrum-global-font-weight-regular
@@ -688,21 +729,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-font-size-default: var(
         --spectrum-global-dimension-font-size-100
     );
-    --spectrum-alias-line-height-small: var(
-        --spectrum-global-dimension-size-200
-    );
-    --spectrum-alias-line-height-medium: var(
-        --spectrum-global-dimension-size-250
-    );
-    --spectrum-alias-line-height-large: var(
-        --spectrum-global-dimension-size-300
-    );
-    --spectrum-alias-line-height-xlarge: var(
-        --spectrum-global-dimension-size-400
-    );
-    --spectrum-alias-line-height-xxlarge: var(
-        --spectrum-global-dimension-size-600
-    );
     --spectrum-alias-layout-label-gap-size: var(
         --spectrum-global-dimension-size-100
     );
@@ -733,165 +759,242 @@ governing permissions and limitations under the License.
     --spectrum-alias-single-line-width: var(
         --spectrum-global-dimension-size-2400
     );
-    --spectrum-alias-workflow-icon-size: var(
+    --spectrum-alias-item-height-s: var(--spectrum-global-dimension-size-300);
+    --spectrum-alias-item-height-m: var(--spectrum-global-dimension-size-400);
+    --spectrum-alias-item-height-l: var(--spectrum-global-dimension-size-500);
+    --spectrum-alias-item-height-xl: var(--spectrum-global-dimension-size-600);
+    --spectrum-alias-item-text-size-s: var(
+        --spectrum-global-dimension-font-size-75
+    );
+    --spectrum-alias-item-text-size-m: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-alias-item-text-size-l: var(
+        --spectrum-global-dimension-font-size-200
+    );
+    --spectrum-alias-item-text-size-xl: var(
+        --spectrum-global-dimension-font-size-300
+    );
+    --spectrum-alias-item-padding-s: var(--spectrum-global-dimension-size-115);
+    --spectrum-alias-item-padding-m: var(--spectrum-global-dimension-size-150);
+    --spectrum-alias-item-padding-l: var(--spectrum-global-dimension-size-185);
+    --spectrum-alias-item-padding-xl: var(--spectrum-global-dimension-size-225);
+    --spectrum-alias-item-rounded-padding-s: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-rounded-padding-m: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-item-rounded-padding-l: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-item-rounded-padding-xl: var(
+        --spectrum-global-dimension-size-300
+    );
+    --spectrum-alias-item-icononly-padding-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-item-icononly-padding-m: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-item-icononly-padding-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-icononly-padding-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-workflow-padding-left-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-workflow-padding-left-l: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-workflow-padding-left-xl: var(
+        --spectrum-global-dimension-size-185
+    );
+    --spectrum-alias-item-rounded-workflow-padding-left-s: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-rounded-workflow-padding-left-l: var(
         --spectrum-global-dimension-size-225
     );
-    --spectrum-alias-heading-display1-text-size: var(
-        --spectrum-global-dimension-font-size-1300
+    --spectrum-alias-item-mark-padding-left-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-mark-padding-left-l: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-mark-padding-left-xl: var(
+        --spectrum-global-dimension-size-185
+    );
+    --spectrum-alias-item-control-1-size-s: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-alias-item-control-1-size-m: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-item-control-2-size-m: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-alias-item-control-2-size-l: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-item-control-2-size-xl: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-item-control-3-height-m: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-alias-item-control-3-height-l: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-item-control-3-height-xl: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-item-mark-size-s: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-item-mark-size-l: var(
+        --spectrum-global-dimension-size-275
+    );
+    --spectrum-alias-item-mark-size-xl: var(
+        --spectrum-global-dimension-size-325
+    );
+    --spectrum-alias-workflow-icon-size-s: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-workflow-icon-size-m: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-workflow-icon-size-xl: var(
+        --spectrum-global-dimension-size-275
+    );
+    --spectrum-alias-item-control-gap-s: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-control-gap-m: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-control-gap-l: var(
+        --spectrum-global-dimension-size-130
+    );
+    --spectrum-alias-item-control-gap-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-workflow-icon-gap-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-workflow-icon-gap-m: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-item-workflow-icon-gap-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-workflow-icon-gap-xl: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-mark-gap-s: var(--spectrum-global-dimension-size-85);
+    --spectrum-alias-item-mark-gap-m: var(--spectrum-global-dimension-size-100);
+    --spectrum-alias-item-mark-gap-l: var(--spectrum-global-dimension-size-115);
+    --spectrum-alias-item-mark-gap-xl: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-ui-icon-gap-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-ui-icon-gap-m: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-item-ui-icon-gap-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-ui-icon-gap-xl: var(
+        --spectrum-global-dimension-size-125
     );
     --spectrum-alias-heading-xxxl-text-size: var(
-        --spectrum-global-dimension-font-size-1300
-    );
-    --spectrum-alias-heading-han-display1-text-size: var(
         --spectrum-global-dimension-font-size-1300
     );
     --spectrum-alias-heading-han-xxxl-text-size: var(
         --spectrum-global-dimension-font-size-1300
     );
-    --spectrum-alias-heading-han-display1-margin-top: var(
-        --spectrum-global-dimension-font-size-1200
-    );
     --spectrum-alias-heading-han-xxxl-margin-top: var(
-        --spectrum-global-dimension-font-size-1200
-    );
-    --spectrum-alias-heading-display1-margin-top: var(
         --spectrum-global-dimension-font-size-1200
     );
     --spectrum-alias-heading-xxxl-margin-top: var(
         --spectrum-global-dimension-font-size-1200
     );
-    --spectrum-alias-heading-display2-text-size: var(
-        --spectrum-global-dimension-font-size-1100
-    );
     --spectrum-alias-heading-xxl-text-size: var(
         --spectrum-global-dimension-font-size-1100
     );
-    --spectrum-alias-heading-display2-margin-top: var(
-        --spectrum-global-dimension-font-size-900
-    );
     --spectrum-alias-heading-xxl-margin-top: var(
-        --spectrum-global-dimension-font-size-900
-    );
-    --spectrum-alias-heading-han-display2-text-size: var(
         --spectrum-global-dimension-font-size-900
     );
     --spectrum-alias-heading-han-xxl-text-size: var(
         --spectrum-global-dimension-font-size-900
     );
-    --spectrum-alias-heading-han-display2-margin-top: var(
-        --spectrum-global-dimension-font-size-800
-    );
     --spectrum-alias-heading-han-xxl-margin-top: var(
         --spectrum-global-dimension-font-size-800
-    );
-    --spectrum-alias-heading1-text-size: var(
-        --spectrum-global-dimension-font-size-900
     );
     --spectrum-alias-heading-xl-text-size: var(
         --spectrum-global-dimension-font-size-900
     );
-    --spectrum-alias-heading1-margin-top: var(
-        --spectrum-global-dimension-font-size-800
-    );
     --spectrum-alias-heading-xl-margin-top: var(
-        --spectrum-global-dimension-font-size-800
-    );
-    --spectrum-alias-heading1-han-text-size: var(
         --spectrum-global-dimension-font-size-800
     );
     --spectrum-alias-heading-han-xl-text-size: var(
         --spectrum-global-dimension-font-size-800
     );
-    --spectrum-alias-heading1-han-margin-top: var(
-        --spectrum-global-dimension-font-size-700
-    );
     --spectrum-alias-heading-han-xl-margin-top: var(
-        --spectrum-global-dimension-font-size-700
-    );
-    --spectrum-alias-heading2-text-size: var(
         --spectrum-global-dimension-font-size-700
     );
     --spectrum-alias-heading-l-text-size: var(
         --spectrum-global-dimension-font-size-700
     );
-    --spectrum-alias-heading2-margin-top: var(
-        --spectrum-global-dimension-font-size-600
-    );
     --spectrum-alias-heading-l-margin-top: var(
-        --spectrum-global-dimension-font-size-600
-    );
-    --spectrum-alias-heading2-han-text-size: var(
         --spectrum-global-dimension-font-size-600
     );
     --spectrum-alias-heading-han-l-text-size: var(
         --spectrum-global-dimension-font-size-600
     );
-    --spectrum-alias-heading2-han-margin-top: var(
-        --spectrum-global-dimension-font-size-500
-    );
     --spectrum-alias-heading-han-l-margin-top: var(
-        --spectrum-global-dimension-font-size-500
-    );
-    --spectrum-alias-heading3-text-size: var(
         --spectrum-global-dimension-font-size-500
     );
     --spectrum-alias-heading-m-text-size: var(
         --spectrum-global-dimension-font-size-500
     );
-    --spectrum-alias-heading3-margin-top: var(
-        --spectrum-global-dimension-font-size-400
-    );
     --spectrum-alias-heading-m-margin-top: var(
-        --spectrum-global-dimension-font-size-400
-    );
-    --spectrum-alias-heading3-han-text-size: var(
         --spectrum-global-dimension-font-size-400
     );
     --spectrum-alias-heading-han-m-text-size: var(
         --spectrum-global-dimension-font-size-400
     );
-    --spectrum-alias-heading3-han-margin-top: var(
-        --spectrum-global-dimension-font-size-300
-    );
     --spectrum-alias-heading-han-m-margin-top: var(
-        --spectrum-global-dimension-font-size-300
-    );
-    --spectrum-alias-heading4-text-size: var(
         --spectrum-global-dimension-font-size-300
     );
     --spectrum-alias-heading-s-text-size: var(
         --spectrum-global-dimension-font-size-300
     );
-    --spectrum-alias-heading4-margin-top: var(
-        --spectrum-global-dimension-font-size-200
-    );
     --spectrum-alias-heading-s-margin-top: var(
-        --spectrum-global-dimension-font-size-200
-    );
-    --spectrum-alias-heading5-text-size: var(
         --spectrum-global-dimension-font-size-200
     );
     --spectrum-alias-heading-xs-text-size: var(
         --spectrum-global-dimension-font-size-200
     );
-    --spectrum-alias-heading5-margin-top: var(
-        --spectrum-global-dimension-font-size-100
-    );
     --spectrum-alias-heading-xs-margin-top: var(
-        --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-alias-heading6-text-size: var(
         --spectrum-global-dimension-font-size-100
     );
     --spectrum-alias-heading-xxs-text-size: var(
         --spectrum-global-dimension-font-size-100
     );
-    --spectrum-alias-heading6-margin-top: var(
-        --spectrum-global-dimension-font-size-75
-    );
     --spectrum-alias-heading-xxs-margin-top: var(
         --spectrum-global-dimension-font-size-75
     );
+    --spectrum-alias-avatar-size-50: var(--spectrum-global-dimension-size-200);
+    --spectrum-alias-avatar-size-75: var(--spectrum-global-dimension-size-225);
+    --spectrum-alias-avatar-size-200: var(--spectrum-global-dimension-size-275);
+    --spectrum-alias-avatar-size-300: var(--spectrum-global-dimension-size-325);
+    --spectrum-alias-avatar-size-500: var(--spectrum-global-dimension-size-400);
+    --spectrum-alias-avatar-size-700: var(--spectrum-global-dimension-size-500);
 }
 
 :root,
@@ -900,8 +1003,10 @@ governing permissions and limitations under the License.
     --spectrum-alias-background-color-default: var(
         --spectrum-global-color-gray-100
     );
+    --spectrum-alias-background-color-disabled: var(
+        --spectrum-global-color-gray-200
+    );
     --spectrum-alias-background-color-transparent: transparent;
-    --spectrum-alias-background-color-label-gray: rgb(112, 112, 112);
     --spectrum-alias-background-color-quickactions-overlay: rgba(0, 0, 0, 0.2);
     --spectrum-alias-placeholder-text-color: var(
         --spectrum-global-color-gray-600
@@ -931,7 +1036,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-text-color-selected-neutral: var(
         --spectrum-global-color-gray-900
     );
-    --spectrum-alias-title-text-color: var(--spectrum-global-color-gray-900);
     --spectrum-alias-heading-text-color: var(--spectrum-global-color-gray-900);
     --spectrum-alias-border-color: var(--spectrum-global-color-gray-400);
     --spectrum-alias-border-color-hover: var(--spectrum-global-color-gray-500);
@@ -980,11 +1084,46 @@ governing permissions and limitations under the License.
     --spectrum-alias-icon-color-selected-focus: var(
         --spectrum-global-color-blue-600
     );
-    --spectrum-alias-icon-color-error: var(--spectrum-global-color-red-400);
     --spectrum-alias-toolbar-background-color: var(
         --spectrum-global-color-gray-100
     );
     --spectrum-alias-colorhandle-outer-border-color: rgba(0, 0, 0, 0.42);
+    --spectrum-alias-code-highlight-color-default: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-code-highlight-color-background: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-alias-code-highlight-color-keyword: var(
+        --spectrum-global-color-fuchsia-600
+    );
+    --spectrum-alias-code-highlight-color-section: var(
+        --spectrum-global-color-red-600
+    );
+    --spectrum-alias-code-highlight-color-literal: var(
+        --spectrum-global-color-blue-600
+    );
+    --spectrum-alias-code-highlight-color-attribute: var(
+        --spectrum-global-color-seafoam-600
+    );
+    --spectrum-alias-code-highlight-color-class: var(
+        --spectrum-global-color-magenta-600
+    );
+    --spectrum-alias-code-highlight-color-variable: var(
+        --spectrum-global-color-purple-600
+    );
+    --spectrum-alias-code-highlight-color-title: var(
+        --spectrum-global-color-indigo-600
+    );
+    --spectrum-alias-code-highlight-color-string: var(
+        --spectrum-global-color-fuchsia-600
+    );
+    --spectrum-alias-code-highlight-color-function: var(
+        --spectrum-global-color-blue-600
+    );
+    --spectrum-alias-code-highlight-color-comment: var(
+        --spectrum-global-color-gray-700
+    );
     --spectrum-alias-categorical-color-1: var(
         --spectrum-global-color-static-seafoam-200
     );

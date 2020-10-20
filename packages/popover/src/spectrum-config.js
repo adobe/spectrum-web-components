@@ -49,6 +49,12 @@ const config = {
                     name: 'tip',
                 },
             ],
+            classes: [
+                {
+                    selector: '.spectrum-Popover-tip-triangle',
+                    name: 'triangle',
+                },
+            ],
         },
     ],
 };

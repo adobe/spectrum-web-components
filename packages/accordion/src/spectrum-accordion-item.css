@@ -12,11 +12,17 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) #indicator {
     /* [dir=ltr] .spectrum-Accordion-itemIndicator */
-    left: var(--spectrum-accordion-icon-spacing, 16px);
+    left: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    );
 }
 :host([dir='rtl']) #indicator {
     /* [dir=rtl] .spectrum-Accordion-itemIndicator */
-    right: var(--spectrum-accordion-icon-spacing, 16px);
+    right: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    );
     transform: matrix(-1, 0, 0, 1, 0, 0);
 }
 #indicator {
@@ -30,7 +36,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                         --spectrum-accordion-item-border-size,
                         var(--spectrum-alias-border-size-thin)
                     )
-            ) / 2 - 5px
+            ) / 2 -
+            var(
+                --spectrum-accordion-icon-height,
+                var(--spectrum-global-dimension-size-125)
+            ) / 2
     );
     transition: transform ease
         var(--spectrum-global-animation-duration-100, 0.13s); /* .spectrum-Accordion-itemIndicator */
@@ -66,22 +76,58 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #heading {
     /* .spectrum-Accordion-itemHeading */
     margin: 0;
+    height: var(--spectrum-accordion-item-height, 40px);
+    box-sizing: border-box;
 }
 :host([dir='ltr']) #header {
     /* [dir=ltr] .spectrum-Accordion-itemHeader */
-    padding-left: calc(var(--spectrum-accordion-item-padding, 16px) * 2 + 2px);
+    padding-left: calc(
+        var(
+                --spectrum-accordion-item-padding-x,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-accordion-icon-width,
+                var(--spectrum-global-dimension-size-75)
+            ) +
+            var(
+                --spectrum-accordion-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) +
+            var(
+                --spectrum-accordion-item-border-left-size-key-focus,
+                var(--spectrum-alias-border-size-thick)
+            )
+    ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
     padding-right: var(
-        --spectrum-accordion-item-padding,
-        16px
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
     ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
     text-align: left;
 }
 :host([dir='rtl']) #header {
     /* [dir=rtl] .spectrum-Accordion-itemHeader */
-    padding-right: calc(var(--spectrum-accordion-item-padding, 16px) * 2 + 2px);
+    padding-right: calc(
+        var(
+                --spectrum-accordion-item-padding-x,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-accordion-icon-width,
+                var(--spectrum-global-dimension-size-75)
+            ) +
+            var(
+                --spectrum-accordion-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) +
+            var(
+                --spectrum-accordion-item-border-left-size-key-focus,
+                var(--spectrum-alias-border-size-thick)
+            )
+    ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
     padding-left: var(
-        --spectrum-accordion-item-padding,
-        16px
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
     ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
     text-align: right;
 }
@@ -151,7 +197,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     bottom: calc(
         -1 * var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin))
     );
-    width: var(--spectrum-accordion-item-border-size-key-focus, 2px);
+    width: var(
+        --spectrum-accordion-item-border-left-size-key-focus,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 #content {
     /* .spectrum-Accordion-itemContent */
@@ -225,7 +274,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #header:focus-visible:after {
     /* .spectrum-Accordion-itemHeader.focus-ring:after */
     background-color: var(
-        --spectrum-accordion-border-left-color-key-focus,
+        --spectrum-accordion-item-border-left-color-key-focus,
         var(--spectrum-alias-border-color-focus)
     );
 }

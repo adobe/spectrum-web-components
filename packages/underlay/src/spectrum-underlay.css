@@ -29,27 +29,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     overflow: hidden;
     transition: opacity
             var(
-                --spectrum-dialog-background-exit-animation-duration,
+                --spectrum-dialog-confirm-background-exit-animation-duration,
                 var(--spectrum-global-animation-duration-300)
             )
             cubic-bezier(0.5, 0, 1, 1)
             var(
-                --spectrum-dialog-background-exit-animation-delay,
+                --spectrum-dialog-confirm-background-exit-animation-delay,
                 var(--spectrum-global-animation-duration-200)
             ),
         visibility 0ms linear
             calc(
                 var(
-                        --spectrum-dialog-background-exit-animation-delay,
+                        --spectrum-dialog-confirm-background-exit-animation-delay,
                         var(--spectrum-global-animation-duration-200)
                     ) +
                     var(
-                        --spectrum-dialog-background-exit-animation-duration,
+                        --spectrum-dialog-confirm-background-exit-animation-duration,
                         var(--spectrum-global-animation-duration-300)
                     )
             ); /* .spectrum-Underlay */
     background: var(
-        --spectrum-dialog-underlay-background-color,
+        --spectrum-dialog-confirm-overlay-background-color,
         var(--spectrum-alias-background-color-modal-overlay)
     );
 }
@@ -61,7 +61,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     pointer-events: auto; /* .spectrum-Underlay.is-open */
     transition: opacity
         var(
-            --spectrum-dialog-background-entry-animation-duration,
+            --spectrum-dialog-confirm-background-entry-animation-duration,
             var(--spectrum-global-animation-duration-600)
         )
         cubic-bezier(0, 0, 0.4, 1) 0ms;

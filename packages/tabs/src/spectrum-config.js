@@ -52,7 +52,10 @@ const config = {
                         '.spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator)',
                 },
             ],
-            exclude: [/^\.spectrum-Tabs-item/],
+            exclude: [
+                /^\.spectrum-Tabs-item/,
+                /\.spectrum-Tabs-item \.spectrum/,
+            ],
         },
         {
             name: 'tab',
