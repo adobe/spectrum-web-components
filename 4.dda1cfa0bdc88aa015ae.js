@@ -258,6 +258,7 @@ var(--spectrum-global-dimension-size-150)))}
                 href=${0}
                 target=${0}
                 download=${0}
+                rel=${0}
                 data-level="${0}"
                 @click="${0}"
                 id="itemLink"
@@ -267,7 +268,7 @@ var(--spectrum-global-dimension-size-150)))}
                 ${0}
             </a>
             ${0}
-        `),this.href||"#",Object(i.a)(this.target),Object(i.a)(this.download),this.depth,this.handleClick,Object(i.a)(this.selected&&this.href?"page":void 0),this.label,this.expanded?Object(s.d)(u||(u=m`
+        `),this.href||"#",Object(i.a)(this.target),Object(i.a)(this.download),Object(i.a)(this.rel),this.depth,this.handleClick,Object(i.a)(this.selected&&this.href?"page":void 0),this.label,this.expanded?Object(s.d)(u||(u=m`
                       <slot></slot>
                   `)):void 0)}updated(e){if(super.updated(e),e.has("manageTabIndex")){const e=this.selected?0:-1;this.tabIndex=this.manageTabIndex?e:0}if(e.has("selected")||e.has("manageTabIndex")){const e=this.selected?0:-1;this.tabIndex=this.manageTabIndex?e:0}}connectedCallback(){super.connectedCallback(),this.dispatchEvent(new Event("manage-tab-index",{cancelable:!0}))&&(this.manageTabIndex=!0)}}Object(r.a)([Object(s.e)()],p.prototype,"value",void 0),Object(r.a)([Object(s.e)({type:Boolean,attribute:!1})],p.prototype,"manageTabIndex",void 0),Object(r.a)([Object(s.e)({type:Boolean,reflect:!0})],p.prototype,"selected",void 0),Object(r.a)([Object(s.e)({type:Boolean,reflect:!0})],p.prototype,"expanded",void 0)},56:function(e,t,o){"use strict";var r=o(55);customElements.define("sp-sidenav-item",r.a)},57:function(e,t,o){"use strict";o.d(t,"a",(function(){return r}));class r{constructor(){this.iconsetMap=new Map}static getInstance(){return r.instance||(r.instance=new r),r.instance}addIconset(e,t){this.iconsetMap.set(e,t);const o=new CustomEvent("sp-iconset-added",{bubbles:!0,composed:!0,detail:{name:e,iconset:t}});setTimeout(()=>window.dispatchEvent(o),0)}removeIconset(e){this.iconsetMap.delete(e);const t=new CustomEvent("sp-iconset-removed",{bubbles:!0,composed:!0,detail:{name:e}});setTimeout(()=>window.dispatchEvent(t),0)}getIconset(e){return this.iconsetMap.get(e)}}},58:function(e,t,o){"use strict";var r=o(5);let s;const i=Object(r.b)(s||(s=(e=>e)`
 .checkmark-small{width:var(--spectrum-icon-checkmark-small-width);height:var(--spectrum-icon-checkmark-small-height)}
@@ -782,4 +783,4 @@ var(--spectrum-global-dimension-size-150)))}:host{display:block}
       viewBox="0 0 0 0"
     />
   </svg>`),e,t,o?"true":"false",r);(e=>{s=e})(r.d)},998:function(e,t,o){var r=o(999),s=o(1e3);"string"==typeof(s=s.__esModule?s.default:s)&&(s=[[e.i,s,""]]);var i={insert:"head",singleton:!1};r(s,i);e.exports=s.locals||{}}}]);
-//# sourceMappingURL=4.dc0e1829c857db72a2db.js.map
+//# sourceMappingURL=4.dda1cfa0bdc88aa015ae.js.map
