@@ -36,17 +36,6 @@ describe('Slider', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('loads - [variant="color"]', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider label="Color Slider" variant="color"></sp-slider>
-            `
-        );
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
     it('loads - [variant="tick"]', async () => {
         const el = await fixture<Slider>(
             html`
