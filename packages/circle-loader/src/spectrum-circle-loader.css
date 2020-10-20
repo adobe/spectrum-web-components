@@ -383,83 +383,83 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     }
 }
 .fill-submask-2 {
-    /* .spectrum-CircleLoader--indeterminate-fill-submask-2 */
+    /* .spectrum-ProgressCircle--indeterminate-fill-submask-2 */
     animation: spectrum-fill-mask-2 1s linear infinite;
 }
 :host {
-    /* .spectrum-CircleLoader */
+    /* .spectrum-ProgressCircle */
     display: inline-block;
     position: relative;
     direction: ltr;
 }
 :host,
 .track {
-    /* .spectrum-CircleLoader,
-   * .spectrum-CircleLoader-track */
+    /* .spectrum-ProgressCircle,
+   * .spectrum-ProgressCircle-track */
     width: var(
-        --spectrum-loader-circle-medium-width,
-        var(--spectrum-global-dimension-static-size-400)
+        --spectrum-progresscircle-medium-width,
+        var(--spectrum-global-dimension-size-400)
     );
     height: var(
-        --spectrum-loader-circle-medium-height,
-        var(--spectrum-global-dimension-static-size-400)
+        --spectrum-progresscircle-medium-height,
+        var(--spectrum-global-dimension-size-400)
     );
 }
 .track {
-    /* .spectrum-CircleLoader-track */
+    /* .spectrum-ProgressCircle-track */
     box-sizing: border-box;
     border-style: solid;
-    border-width: var(--spectrum-loader-circle-medium-border-size);
+    border-width: var(--spectrum-progresscircle-medium-border-size);
     border-radius: var(
-        --spectrum-loader-circle-medium-width,
-        var(--spectrum-global-dimension-static-size-400)
-    ); /* .spectrum-CircleLoader-track */
+        --spectrum-progresscircle-medium-width,
+        var(--spectrum-global-dimension-size-400)
+    ); /* .spectrum-ProgressCircle-track */
     border-color: var(
-        --spectrum-loader-circle-medium-track-color,
+        --spectrum-progresscircle-medium-track-color,
         var(--spectrum-alias-track-color-default)
     );
 }
 :host([dir='ltr']) .fills {
-    /* [dir=ltr] .spectrum-CircleLoader-fills */
+    /* [dir=ltr] .spectrum-ProgressCircle-fills */
     left: 0;
 }
 :host([dir='rtl']) .fills {
-    /* [dir=rtl] .spectrum-CircleLoader-fills */
+    /* [dir=rtl] .spectrum-ProgressCircle-fills */
     right: 0;
 }
 .fills {
-    /* .spectrum-CircleLoader-fills */
+    /* .spectrum-ProgressCircle-fills */
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
 }
 .fill {
-    /* .spectrum-CircleLoader-fill */
+    /* .spectrum-ProgressCircle-fill */
     box-sizing: border-box;
     width: var(
-        --spectrum-loader-circle-medium-width,
-        var(--spectrum-global-dimension-static-size-400)
+        --spectrum-progresscircle-medium-width,
+        var(--spectrum-global-dimension-size-400)
     );
     height: var(
-        --spectrum-loader-circle-medium-height,
-        var(--spectrum-global-dimension-static-size-400)
+        --spectrum-progresscircle-medium-height,
+        var(--spectrum-global-dimension-size-400)
     );
     border-style: solid;
-    border-width: var(--spectrum-loader-circle-medium-border-size);
+    border-width: var(--spectrum-progresscircle-medium-border-size);
     border-radius: var(
-        --spectrum-loader-circle-medium-width,
-        var(--spectrum-global-dimension-static-size-400)
-    ); /* .spectrum-CircleLoader-fill */
+        --spectrum-progresscircle-medium-width,
+        var(--spectrum-global-dimension-size-400)
+    ); /* .spectrum-ProgressCircle-fill */
     border-color: var(
-        --spectrum-loader-circle-medium-track-fill-color,
+        --spectrum-progresscircle-medium-track-fill-color,
         var(--spectrum-global-color-blue-500)
     );
 }
 .fillMask1,
 .fillMask2 {
-    /* .spectrum-CircleLoader-fillMask1,
-   * .spectrum-CircleLoader-fillMask2 */
+    /* .spectrum-ProgressCircle-fillMask1,
+   * .spectrum-ProgressCircle-fillMask2 */
     width: 50%;
     height: 100%;
     transform-origin: 100% center;
@@ -469,8 +469,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 .fillSubMask1,
 .fillSubMask2 {
-    /* .spectrum-CircleLoader-fillSubMask1,
-   * .spectrum-CircleLoader-fillSubMask2 */
+    /* .spectrum-ProgressCircle-fillSubMask1,
+   * .spectrum-ProgressCircle-fillSubMask2 */
     width: 100%;
     height: 100%;
     transform-origin: 100% center;
@@ -478,74 +478,74 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transform: rotate(-180deg);
 }
 .fillMask2 {
-    /* .spectrum-CircleLoader-fillMask2 */
+    /* .spectrum-ProgressCircle-fillMask2 */
     transform: rotate(0deg);
 }
 :host([size='small']) {
-    /* .spectrum-CircleLoader--small */
+    /* .spectrum-ProgressCircle--small */
     width: var(
-        --spectrum-loader-circle-small-width,
-        var(--spectrum-global-dimension-static-size-200)
+        --spectrum-progresscircle-small-width,
+        var(--spectrum-global-dimension-size-200)
     );
     height: var(
-        --spectrum-loader-circle-small-height,
-        var(--spectrum-global-dimension-static-size-200)
+        --spectrum-progresscircle-small-height,
+        var(--spectrum-global-dimension-size-200)
     );
 }
 :host([size='small']) .fill,
 :host([size='small']) .track {
-    /* .spectrum-CircleLoader--small .spectrum-CircleLoader-fill,
-   * .spectrum-CircleLoader--small .spectrum-CircleLoader-track */
+    /* .spectrum-ProgressCircle--small .spectrum-ProgressCircle-fill,
+   * .spectrum-ProgressCircle--small .spectrum-ProgressCircle-track */
     width: var(
-        --spectrum-loader-circle-small-width,
-        var(--spectrum-global-dimension-static-size-200)
+        --spectrum-progresscircle-small-width,
+        var(--spectrum-global-dimension-size-200)
     );
     height: var(
-        --spectrum-loader-circle-small-height,
-        var(--spectrum-global-dimension-static-size-200)
+        --spectrum-progresscircle-small-height,
+        var(--spectrum-global-dimension-size-200)
     );
     border-style: solid;
-    border-width: var(--spectrum-loader-circle-small-border-size);
+    border-width: var(--spectrum-progresscircle-small-border-size);
     border-radius: var(
-        --spectrum-loader-circle-small-width,
-        var(--spectrum-global-dimension-static-size-200)
+        --spectrum-progresscircle-small-width,
+        var(--spectrum-global-dimension-size-200)
     );
 }
 :host([size='large']) {
-    /* .spectrum-CircleLoader--large */
+    /* .spectrum-ProgressCircle--large */
     width: var(
-        --spectrum-loader-circle-large-width,
+        --spectrum-progresscircle-large-width,
         var(--spectrum-global-dimension-size-800)
     );
     height: var(
-        --spectrum-loader-circle-large-height,
+        --spectrum-progresscircle-large-height,
         var(--spectrum-global-dimension-size-800)
     );
 }
 :host([size='large']) .fill,
 :host([size='large']) .track {
-    /* .spectrum-CircleLoader--large .spectrum-CircleLoader-fill,
-   * .spectrum-CircleLoader--large .spectrum-CircleLoader-track */
+    /* .spectrum-ProgressCircle--large .spectrum-ProgressCircle-fill,
+   * .spectrum-ProgressCircle--large .spectrum-ProgressCircle-track */
     width: var(
-        --spectrum-loader-circle-large-width,
+        --spectrum-progresscircle-large-width,
         var(--spectrum-global-dimension-size-800)
     );
     height: var(
-        --spectrum-loader-circle-large-height,
+        --spectrum-progresscircle-large-height,
         var(--spectrum-global-dimension-size-800)
     );
     border-style: solid;
     border-width: var(
-        --spectrum-loader-circle-large-border-size,
+        --spectrum-progresscircle-large-border-size,
         var(--spectrum-global-dimension-size-50)
     );
     border-radius: var(
-        --spectrum-loader-circle-large-width,
+        --spectrum-progresscircle-large-width,
         var(--spectrum-global-dimension-size-800)
     );
 }
 :host([indeterminate]) .fills {
-    /* .spectrum-CircleLoader--indeterminate .spectrum-CircleLoader-fills */
+    /* .spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fills */
     will-change: transform;
     transform: translateZ(0);
     animation: spectrum-fills-rotate 1s cubic-bezier(0.25, 0.78, 0.48, 0.89)
@@ -553,42 +553,42 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transform-origin: center;
 }
 :host([indeterminate]) .fillSubMask1 {
-    /* .spectrum-CircleLoader--indeterminate .spectrum-CircleLoader-fillSubMask1 */
+    /* .spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fillSubMask1 */
     will-change: transform;
     transform: translateZ(0);
     animation: spectrum-fill-mask-1 1s linear infinite;
 }
 :host([indeterminate]) .fillSubMask2 {
-    /* .spectrum-CircleLoader--indeterminate .spectrum-CircleLoader-fillSubMask2 */
+    /* .spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fillSubMask2 */
     will-change: transform;
     transform: translateZ(0);
     animation: spectrum-fill-mask-2 1s linear infinite;
 }
 :host([over-background]) .track {
-    /* .spectrum-CircleLoader--overBackground .spectrum-CircleLoader-track */
+    /* .spectrum-ProgressCircle--overBackground .spectrum-ProgressCircle-track */
     border-color: var(
-        --spectrum-loader-circle-medium-over-background-track-color,
+        --spectrum-progresscircle-medium-over-background-track-color,
         var(--spectrum-alias-track-color-over-background)
     );
 }
 :host([over-background]) .fill {
-    /* .spectrum-CircleLoader--overBackground .spectrum-CircleLoader-fill */
+    /* .spectrum-ProgressCircle--overBackground .spectrum-ProgressCircle-fill */
     border-color: var(
-        --spectrum-loader-circle-medium-over-background-track-fill-color,
+        --spectrum-progresscircle-medium-over-background-track-fill-color,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([indeterminate][over-background]) .track {
-    /* .spectrum-CircleLoader--indeterminate.spectrum-CircleLoader--overBackground .spectrum-CircleLoader-track */
+    /* .spectrum-ProgressCircle--indeterminate.spectrum-ProgressCircle--overBackground .spectrum-ProgressCircle-track */
     border-color: var(
-        --spectrum-loader-circle-medium-over-background-track-color,
+        --spectrum-progresscircle-medium-over-background-track-color,
         var(--spectrum-alias-track-color-over-background)
     );
 }
 :host([indeterminate][over-background]) .fill {
-    /* .spectrum-CircleLoader--indeterminate.spectrum-CircleLoader--overBackground .spectrum-CircleLoader-fill */
+    /* .spectrum-ProgressCircle--indeterminate.spectrum-ProgressCircle--overBackground .spectrum-ProgressCircle-fill */
     border-color: var(
-        --spectrum-loader-circle-medium-over-background-track-fill-color,
+        --spectrum-progresscircle-medium-over-background-track-fill-color,
         var(--spectrum-global-color-static-white)
     );
 }

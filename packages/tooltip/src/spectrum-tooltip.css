@@ -45,6 +45,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tooltip-min-height,
         var(--spectrum-global-dimension-size-300)
     );
+    max-width: var(
+        --spectrum-tooltip-max-width,
+        var(--spectrum-global-dimension-size-2000)
+    );
     font-size: var(
         --spectrum-tooltip-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -83,7 +87,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip--bottom.is-open */
     transform: translateY(
         var(
-            --spectrum-dropdown-flyout-menu-offset-y,
+            --spectrum-picker-popover-offset-y,
             var(--spectrum-global-dimension-size-75)
         )
     );
@@ -92,7 +96,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip--top.is-open */
     transform: translateY(
         calc(
-            -1 * var(--spectrum-dropdown-flyout-menu-offset-y, var(--spectrum-global-dimension-size-75))
+            -1 * var(--spectrum-picker-popover-offset-y, var(--spectrum-global-dimension-size-75))
         )
     );
 }
@@ -100,7 +104,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip--right.is-open */
     transform: translateX(
         var(
-            --spectrum-dropdown-flyout-menu-offset-y,
+            --spectrum-picker-popover-offset-y,
             var(--spectrum-global-dimension-size-75)
         )
     );
@@ -109,7 +113,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip--left.is-open */
     transform: translateX(
         calc(
-            -1 * var(--spectrum-dropdown-flyout-menu-offset-y, var(--spectrum-global-dimension-size-75))
+            -1 * var(--spectrum-picker-popover-offset-y, var(--spectrum-global-dimension-size-75))
         )
     );
 }
@@ -245,11 +249,11 @@ p {
         var(--spectrum-global-dimension-size-175)
     );
     align-self: flex-start;
+    flex-shrink: 0;
     margin-top: 1px;
 }
 #label {
     /* .spectrum-Tooltip-label */
-    max-width: var(--spectrum-tooltip-content-max-width);
     line-height: var(
         --spectrum-tooltip-text-line-height,
         var(--spectrum-global-dimension-font-size-200)

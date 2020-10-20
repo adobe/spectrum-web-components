@@ -59,3 +59,29 @@ governing permissions and limitations under the License.
             )
     );
 }
+
+.tip {
+    display: flex;
+}
+
+:host([placement*='bottom']) .tip,
+:host([placement*='top']) .tip {
+    width: var(--spectrum-popover-tip-size);
+    height: calc(var(--spectrum-popover-tip-size) / 2);
+}
+
+:host([placement*='right']) .tip,
+:host([placement*='left']) .tip {
+    height: var(--spectrum-popover-tip-size);
+    width: calc(var(--spectrum-popover-tip-size) / 2);
+}
+
+:host([placement*='bottom']) .triangle-left-right,
+:host([placement*='top']) .triangle-left-right {
+    display: none;
+}
+
+:host([placement*='right']) .triangle-top-bottom,
+:host([placement*='left']) .triangle-top-bottom {
+    display: none;
+}

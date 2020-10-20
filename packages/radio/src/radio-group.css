@@ -18,3 +18,14 @@ governing permissions and limitations under the License.
 :host([column]) {
     flex-direction: column;
 }
+
+/**
+ * Partial work around until FieldGroup is implemented
+ */
+:host([dir='ltr']:not([column])) ::slotted(:not(:first-child)) {
+    margin: 0 0 0 var(--spectrum-global-dimension-size-200);
+}
+
+:host([dir='rtl']:not([column])) ::slotted(:not(:first-child)) {
+    margin: 0 var(--spectrum-global-dimension-size-200) 0 0;
+}

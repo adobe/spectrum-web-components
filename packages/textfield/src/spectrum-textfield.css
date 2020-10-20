@@ -335,50 +335,35 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][invalid]) .icon {
     /* [dir=ltr] .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
-    right: calc(
-        var(--spectrum-textfield-icon-frame) / 2 -
-            var(
-                --spectrum-icon-alert-medium-width,
-                var(--spectrum-global-dimension-size-225)
-            ) / 2
-    ); /* [dir=ltr] .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
-    padding-right: calc(
-        var(
-                --spectrum-textfield-padding-x,
-                var(--spectrum-global-dimension-size-150)
-            ) / 2 - var(--spectrum-global-dimension-size-10)
+    right: var(
+        --spectrum-textfield-icon-margin-left,
+        var(--spectrum-global-dimension-size-150)
     );
 }
 :host([dir='rtl'][invalid]) .icon {
     /* [dir=rtl] .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
-    left: calc(
-        var(--spectrum-textfield-icon-frame) / 2 -
-            var(
-                --spectrum-icon-alert-medium-width,
-                var(--spectrum-global-dimension-size-225)
-            ) / 2
-    ); /* [dir=rtl] .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
-    padding-left: calc(
-        var(
-                --spectrum-textfield-padding-x,
-                var(--spectrum-global-dimension-size-150)
-            ) / 2 - var(--spectrum-global-dimension-size-10)
+    left: var(
+        --spectrum-textfield-icon-margin-left,
+        var(--spectrum-global-dimension-size-150)
     );
 }
 :host([invalid]) .icon {
     /* .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
     width: var(
-        --spectrum-icon-alert-medium-width,
+        --spectrum-textfield-validation-icon-width-error,
         var(--spectrum-global-dimension-size-225)
     );
     height: var(
-        --spectrum-icon-alert-medium-height,
+        --spectrum-textfield-validation-icon-height-error,
         var(--spectrum-global-dimension-size-225)
     );
     bottom: calc(
-        var(--spectrum-textfield-icon-frame) / 2 -
+        var(
+                --spectrum-textfield-height,
+                var(--spectrum-alias-single-line-height)
+            ) / 2 -
             var(
-                --spectrum-icon-alert-medium-height,
+                --spectrum-textfield-validation-icon-height-error,
                 var(--spectrum-global-dimension-size-225)
             ) / 2
     ); /* .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
@@ -397,19 +382,37 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][valid]) .icon {
     /* [dir=ltr] .spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
-    right: var(--spectrum-global-dimension-size-150);
+    right: var(
+        --spectrum-textfield-icon-margin-left,
+        var(--spectrum-global-dimension-size-150)
+    );
 }
 :host([dir='rtl'][valid]) .icon {
     /* [dir=rtl] .spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
-    left: var(--spectrum-global-dimension-size-150);
+    left: var(
+        --spectrum-textfield-icon-margin-left,
+        var(--spectrum-global-dimension-size-150)
+    );
 }
 :host([valid]) .icon {
     /* .spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
-    width: var(--spectrum-icon-checkmark-medium-width);
-    height: var(--spectrum-icon-checkmark-medium-height);
+    width: var(
+        --spectrum-textfield-validation-icon-width-valid,
+        var(--spectrum-global-dimension-size-150)
+    );
+    height: var(
+        --spectrum-textfield-validation-icon-height-valid,
+        var(--spectrum-global-dimension-size-150)
+    );
     bottom: calc(
-        var(--spectrum-textfield-icon-frame) / 2 -
-            var(--spectrum-icon-checkmark-medium-height) / 2
+        var(
+                --spectrum-textfield-height,
+                var(--spectrum-alias-single-line-height)
+            ) / 2 -
+            var(
+                --spectrum-textfield-validation-icon-height-valid,
+                var(--spectrum-global-dimension-size-150)
+            ) / 2
     ); /* .spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
     color: var(
         --spectrum-semantic-positive-color-icon,
@@ -443,11 +446,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: block;
     position: absolute;
     height: var(
-        --spectrum-alias-workflow-icon-size,
+        --spectrum-alias-workflow-icon-size-m,
         var(--spectrum-global-dimension-size-225)
     );
     width: var(
-        --spectrum-alias-workflow-icon-size,
+        --spectrum-alias-workflow-icon-size-m,
         var(--spectrum-global-dimension-size-225)
     );
     top: calc(
@@ -456,7 +459,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-alias-single-line-height)
             ) / 2 -
             var(
-                --spectrum-alias-workflow-icon-size,
+                --spectrum-alias-workflow-icon-size-m,
                 var(--spectrum-global-dimension-size-225)
             ) / 2
     ); /* .spectrum-Textfield-icon */
@@ -477,7 +480,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Textfield--quiet .spectrum-Textfield-icon~.spectrum-Textfield-input */
     padding-left: calc(
         var(
-                --spectrum-alias-workflow-icon-size,
+                --spectrum-alias-workflow-icon-size-m,
                 var(--spectrum-global-dimension-size-225)
             ) + var(--spectrum-global-dimension-size-75)
     );
@@ -486,7 +489,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Textfield--quiet .spectrum-Textfield-icon~.spectrum-Textfield-input */
     padding-right: calc(
         var(
-                --spectrum-alias-workflow-icon-size,
+                --spectrum-alias-workflow-icon-size-m,
                 var(--spectrum-global-dimension-size-225)
             ) + var(--spectrum-global-dimension-size-75)
     );
@@ -499,7 +502,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
-                --spectrum-alias-workflow-icon-size,
+                --spectrum-alias-workflow-icon-size-m,
                 var(--spectrum-global-dimension-size-225)
             ) + var(--spectrum-global-dimension-size-65)
     );
@@ -512,7 +515,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
-                --spectrum-alias-workflow-icon-size,
+                --spectrum-alias-workflow-icon-size-m,
                 var(--spectrum-global-dimension-size-225)
             ) + var(--spectrum-global-dimension-size-65)
     );
@@ -615,7 +618,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-semantic-negative-color-default)
     );
 }
-:host([invalid]) .is-keyboardFocused.spectrum-Textfield #input,
+:host([invalid]) .is-keyboardFocused #input,
 :host([invalid]) #input:focus-visible {
     /* .is-keyboardFocused.spectrum-Textfield.is-invalid .spectrum-Textfield-input,
    * .spectrum-Textfield.is-invalid .spectrum-Textfield-input.focus-ring */
