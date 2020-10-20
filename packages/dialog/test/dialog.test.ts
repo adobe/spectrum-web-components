@@ -16,10 +16,11 @@ import '../sp-dialog.js';
 import { Dialog } from '..';
 import {
     small,
-    dismissible,
+    dismissable,
     alertError,
     fullscreen,
 } from '../stories/dialog.stories.js';
+import { spy } from 'sinon';
 
 describe('Dialog', () => {
     it('loads `[size=small]` dialog accessibly', async () => {
@@ -36,8 +37,8 @@ describe('Dialog', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('loads `[dismissible]` dialog accessibly', async () => {
-        const el = await fixture<Dialog>(dismissible());
+    it('loads `[dismissable]` dialog accessibly', async () => {
+        const el = await fixture<Dialog>(dismissable());
 
         await elementUpdated(el);
 
@@ -63,10 +64,10 @@ describe('Dialog', () => {
         await expect(el).to.be.accessible();
     });
     it('closes', async () => {
-        const el = await fixture<Dialog>(dismissible());
-
+        const closeSpy = spy();
+        const el = await fixture<Dialog>(dismissable());
+        el.addEventListener('close', () => closeSpy());
         await elementUpdated(el);
-        expect(el.open).to.be.true;
 
         const closeButton = (el.shadowRoot
             ? el.shadowRoot.querySelector('.close-button')
@@ -75,6 +76,6 @@ describe('Dialog', () => {
         closeButton.click();
 
         await elementUpdated(el);
-        expect(el.open).to.be.false;
+        expect(closeSpy.calledOnce).to.be.true;
     });
 });
