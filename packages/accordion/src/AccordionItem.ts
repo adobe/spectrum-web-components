@@ -19,8 +19,9 @@ import {
     ifDefined,
 } from '@spectrum-web-components/base';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-
+import '@spectrum-web-components/icon/sp-icon.js';
 import { ChevronRightMediumIcon } from '@spectrum-web-components/icons-ui';
+import chevronRightMediumIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron-right-medium.css.js';
 
 import styles from './accordion-item.css.js';
 
@@ -30,7 +31,7 @@ import styles from './accordion-item.css.js';
  */
 export class AccordionItem extends Focusable {
     public static get styles(): CSSResultArray {
-        return [styles];
+        return [styles, chevronRightMediumIconStyles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -92,7 +93,7 @@ export class AccordionItem extends Focusable {
                 >
                     ${this.label}
                 </button>
-                <sp-icon id="indicator" size="xs">
+                <sp-icon id="indicator" size="xs" class="chevron-right-medium">
                     ${ChevronRightMediumIcon({ hidden: true })}
                 </sp-icon>
             </h3>

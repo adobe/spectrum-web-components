@@ -23,6 +23,36 @@ governing permissions and limitations under the License.
     );
 }
 
+::slotted(*) {
+    font-family: var(
+        --spectrum-body-m-text-font-family,
+        var(--spectrum-alias-body-text-font-family)
+    );
+    font-size: var(
+        --spectrum-body-s-text-size,
+        var(--spectrum-alias-font-size-default)
+    );
+    font-weight: var(
+        --spectrum-body-s-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-body-s-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    font-style: var(
+        --spectrum-body-s-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-body-s-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-body-s-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 /* 
  * IllustratedMessage in spectrum-css has a rule that sets the illustration 
  * color to (--spectrum-global-color-gray-500) instead of a unique 

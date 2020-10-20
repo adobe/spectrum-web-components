@@ -70,7 +70,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     height: var(--spectrum-global-dimension-size-600);
     min-width: 280px;
     max-width: 960px;
-    padding: 0 var(--spectrum-global-dimension-size-200);
+    padding: 0 calc(var(--spectrum-global-dimension-size-200) / 2) 0
+        var(--spectrum-global-dimension-size-200);
     flex-direction: row;
     align-items: center;
     justify-content: space-between;

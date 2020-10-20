@@ -47,7 +47,28 @@ export class Popover extends SpectrumElement {
 
     protected renderTip(): TemplateResult {
         return html`
-            <div id="tip"></div>
+            <div id="tip">
+                <svg
+                    xmlns="http://www.w3.org/svg/2000"
+                    class="tip triangle-top-bottom"
+                    viewBox="0 0 24 12"
+                >
+                    <path
+                        class="triangle"
+                        d="M 0.7071067811865476 0 L 11.414213562373096 10.707106781186548 L 22.121320343559645 0"
+                    ></path>
+                </svg>
+                <svg
+                    xmlns="http://www.w3.org/svg/2000"
+                    class="tip triangle-left-right"
+                    viewBox="0 0 12 24"
+                >
+                    <path
+                        class="triangle"
+                        d="M 0 0.7071067811865476 L 10.707106781186548 11.414213562373096 L 0 22.121320343559645"
+                    ></path>
+                </svg>
+            </div>
         `;
     }
 

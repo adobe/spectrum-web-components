@@ -105,7 +105,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-left-width: 0; /* [dir=ltr] .spectrum-SplitButton-trigger */
     padding-left: calc(
         var(
-                --spectrum-button-primary-padding-x,
+                --spectrum-button-primary-text-padding-x,
                 var(--spectrum-global-dimension-size-200)
             ) -
             var(
@@ -137,7 +137,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-right-width: 0; /* [dir=rtl] .spectrum-SplitButton-trigger */
     padding-right: calc(
         var(
-                --spectrum-button-primary-padding-x,
+                --spectrum-button-primary-text-padding-x,
                 var(--spectrum-global-dimension-size-200)
             ) -
             var(
@@ -260,7 +260,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
     padding-left: calc(
         var(
-                --spectrum-button-primary-padding-x,
+                --spectrum-button-primary-text-padding-x,
                 var(--spectrum-global-dimension-size-200)
             ) -
             var(
@@ -281,7 +281,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
     padding-right: calc(
         var(
-                --spectrum-button-primary-padding-x,
+                --spectrum-button-primary-text-padding-x,
                 var(--spectrum-global-dimension-size-200)
             ) -
             var(
@@ -356,7 +356,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-right-width: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
     padding-right: calc(
         var(
-                --spectrum-button-primary-padding-x,
+                --spectrum-button-primary-text-padding-x,
                 var(--spectrum-global-dimension-size-200)
             ) -
             var(
@@ -392,7 +392,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-left-width: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
     padding-left: calc(
         var(
-                --spectrum-button-primary-padding-x,
+                --spectrum-button-primary-text-padding-x,
                 var(--spectrum-global-dimension-size-200)
             ) -
             var(

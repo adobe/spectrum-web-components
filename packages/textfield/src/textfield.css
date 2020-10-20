@@ -17,31 +17,47 @@ governing permissions and limitations under the License.
     top: 0;
     left: 0;
     height: 100%;
+    resize: none;
 }
 
 :host([grows]) #sizer {
     box-sizing: border-box;
-    padding: 4px 8px;
-    min-width: var(
-        --spectrum-textfield-min-width,
-        var(--spectrum-global-dimension-size-600)
+    border: var(
+            --spectrum-textfield-border-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid;
+    border-radius: var(
+        --spectrum-textfield-border-radius,
+        var(--spectrum-alias-border-radius-regular)
     );
-    width: var(
-        --spectrum-alias-single-line-width,
-        var(--spectrum-global-dimension-size-2400)
+    padding: 3px
+        var(
+            --spectrum-textfield-padding-x,
+            var(--spectrum-global-dimension-size-150)
+        )
+        5px
+        calc(
+            var(
+                    --spectrum-textfield-padding-x,
+                    var(--spectrum-global-dimension-size-150)
+                ) - 1px
+        );
+    text-indent: 0;
+    width: 100%;
+    vertical-align: top;
+    margin: 0;
+    font-family: var(
+        --spectrum-alias-body-text-font-family,
+        var(--spectrum-global-font-family-base)
     );
-    min-height: 50px;
-    border: 1px solid transparent;
-    pointer-events: none;
-    opacity: 0;
-    font-family: adobe-clean, Helvetica, Arial, sans-serif;
     font-size: var(
         --spectrum-textfield-text-size,
-        var(--spectrum-global-dimension-font-size-100)
+        var(--spectrum-alias-font-size-default)
     );
     line-height: var(
-        --spectrum-alias-line-height-medium,
-        var(--spectrum-global-dimension-size-250)
+        --spectrum-textfield-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
     );
 }
 

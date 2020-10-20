@@ -13,22 +13,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) {
     /* [dir=ltr] .spectrum-Toast */
     padding-right: var(
-        --spectrum-toast-padding-right,
+        --spectrum-toast-neutral-padding-right,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=ltr] .spectrum-Toast */
     padding-left: var(
-        --spectrum-toast-padding-left,
+        --spectrum-toast-neutral-padding-left,
         var(--spectrum-global-dimension-size-200)
     );
 }
 :host([dir='rtl']) {
     /* [dir=rtl] .spectrum-Toast */
     padding-left: var(
-        --spectrum-toast-padding-right,
+        --spectrum-toast-neutral-padding-right,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=rtl] .spectrum-Toast */
     padding-right: var(
-        --spectrum-toast-padding-left,
+        --spectrum-toast-neutral-padding-left,
         var(--spectrum-global-dimension-size-200)
     );
 }
@@ -39,39 +39,39 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-direction: row;
     align-items: stretch;
     border-radius: var(
-        --spectrum-toast-border-radius,
+        --spectrum-toast-neutral-border-radius,
         var(--spectrum-global-dimension-static-size-50)
     );
     padding-top: var(
-        --spectrum-toast-padding-y,
+        --spectrum-toast-neutral-padding-y,
         var(--spectrum-global-dimension-size-100)
     );
     padding-bottom: var(
-        --spectrum-toast-padding-y,
+        --spectrum-toast-neutral-padding-y,
         var(--spectrum-global-dimension-size-100)
     );
     font-size: var(
-        --spectrum-toast-text-size,
+        --spectrum-toast-neutral-text-size,
         var(--spectrum-alias-font-size-default)
     );
     font-weight: var(
-        --spectrum-toast-text-font-weight,
+        --spectrum-toast-neutral-text-font-weight,
         var(--spectrum-global-font-weight-bold)
     );
     -webkit-font-smoothing: antialiased; /* .spectrum-Toast */
     background-color: var(
-        --spectrum-toast-background-color,
+        --spectrum-toast-neutral-background-color,
         var(--spectrum-global-color-static-gray-700)
     );
     color: var(
-        --spectrum-toast-background-color,
+        --spectrum-toast-neutral-background-color,
         var(--spectrum-global-color-static-gray-700)
     );
 }
 :host([dir='ltr']) .type {
     /* [dir=ltr] .spectrum-Toast-typeIcon */
     margin-right: var(
-        --spectrum-toast-icon-padding-right,
+        --spectrum-toast-neutral-icon-padding-right,
         var(--spectrum-global-dimension-size-150)
     ); /* [dir=ltr] .spectrum-Toast-typeIcon */
     margin-left: 0;
@@ -79,7 +79,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) .type {
     /* [dir=rtl] .spectrum-Toast-typeIcon */
     margin-left: var(
-        --spectrum-toast-icon-padding-right,
+        --spectrum-toast-neutral-icon-padding-right,
         var(--spectrum-global-dimension-size-150)
     ); /* [dir=rtl] .spectrum-Toast-typeIcon */
     margin-right: 0;
@@ -97,7 +97,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) .content {
     /* [dir=ltr] .spectrum-Toast-content */
     padding-right: var(
-        --spectrum-toast-content-padding-right,
+        --spectrum-toast-neutral-content-padding-right,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-Toast-content */
     padding-left: 0; /* [dir=ltr] .spectrum-Toast-content */
@@ -106,7 +106,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) .content {
     /* [dir=rtl] .spectrum-Toast-content */
     padding-left: var(
-        --spectrum-toast-content-padding-right,
+        --spectrum-toast-neutral-content-padding-right,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-Toast-content */
     padding-right: 0; /* [dir=rtl] .spectrum-Toast-content */
@@ -118,11 +118,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: inline-block;
     box-sizing: border-box;
     padding-top: var(--spectrum-global-dimension-size-65);
-    padding-bottom: var(
-        --spectrum-global-dimension-size-65
+    padding-bottom: var(--spectrum-global-dimension-size-65);
+    font-size: var(
+        --spectrum-toast-info-text-size,
+        var(--spectrum-alias-font-size-default)
+    );
+    font-weight: var(
+        --spectrum-toast-info-text-font-weight,
+        var(--spectrum-global-font-weight-bold)
+    );
+    line-height: var(
+        --spectrum-toast-info-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
     ); /* .spectrum-Toast-content */
     color: var(
-        --spectrum-toast-text-color,
+        --spectrum-toast-neutral-text-color,
         var(--spectrum-global-color-static-white)
     );
 }
@@ -141,7 +151,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * [dir=ltr] .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-Button,
    * [dir=ltr] .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */
     margin-left: var(
-        --spectrum-toast-button-gap,
+        --spectrum-toast-neutral-button-gap-x,
         var(--spectrum-global-dimension-size-100)
     );
 }
@@ -154,7 +164,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * [dir=rtl] .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-Button,
    * [dir=rtl] .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */
     margin-right: var(
-        --spectrum-toast-button-gap,
+        --spectrum-toast-neutral-button-gap-x,
         var(--spectrum-global-dimension-size-100)
     );
 }
@@ -176,7 +186,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) .body + .buttons {
     /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */
     padding-left: var(
-        --spectrum-toast-padding-right,
+        --spectrum-toast-neutral-padding-right,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */
     border-left-width: 1px; /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */
@@ -185,7 +195,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) .body + .buttons {
     /* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */
     padding-right: var(
-        --spectrum-toast-padding-right,
+        --spectrum-toast-neutral-padding-right,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */
     border-right-width: 1px; /* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */
@@ -220,7 +230,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Toast--error,
    * .spectrum-Toast--negative */
     background-color: var(
-        --spectrum-toast-error-background-color,
+        --spectrum-toast-negative-background-color,
         var(--spectrum-global-color-static-red-700)
     );
 }
@@ -233,7 +243,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Toast--negative,
    * .spectrum-Toast--negative .spectrum-Toast-closeButton.focus-ring:not(:active) */
     color: var(
-        --spectrum-toast-error-background-color,
+        --spectrum-toast-negative-background-color,
         var(--spectrum-global-color-static-red-700)
     );
 }

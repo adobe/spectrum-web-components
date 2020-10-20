@@ -20,7 +20,7 @@ a {
     outline: none;
     cursor: pointer; /* .spectrum-Link */
     color: var(
-        --spectrum-link-text-color,
+        --spectrum-link-primary-text-color,
         var(--spectrum-global-color-blue-600)
     );
 }
@@ -32,7 +32,7 @@ a:focus-visible {
     -webkit-text-decoration-style: double;
     text-decoration-style: double; /* .spectrum-Link.focus-ring */
     color: var(
-        --spectrum-link-text-color-key-focus,
+        --spectrum-link-primary-text-color-key-focus,
         var(--spectrum-alias-text-color-key-focus)
     );
 }
@@ -47,14 +47,14 @@ a:focus-visible {
 a:hover {
     /* .spectrum-Link:hover */
     color: var(
-        --spectrum-link-text-color-hover,
+        --spectrum-link-primary-text-color-hover,
         var(--spectrum-global-color-blue-600)
     );
 }
 a:active {
     /* .spectrum-Link:active */
     color: var(
-        --spectrum-link-text-color-down,
+        --spectrum-link-primary-text-color-down,
         var(--spectrum-global-color-blue-700)
     );
 }

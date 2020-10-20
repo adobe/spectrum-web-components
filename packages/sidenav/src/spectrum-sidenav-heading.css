@@ -61,51 +61,51 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #heading {
     /* .spectrum-SideNav-heading */
     height: var(
-        --spectrum-sidenav-header-height,
+        --spectrum-sidenav-heading-height,
         var(--spectrum-alias-single-line-height)
     );
     line-height: var(
-        --spectrum-sidenav-header-height,
+        --spectrum-sidenav-heading-height,
         var(--spectrum-alias-single-line-height)
     );
     margin-top: var(
-        --spectrum-sidenav-header-gap-top,
+        --spectrum-sidenav-heading-gap-top,
         var(--spectrum-global-dimension-size-200)
     );
     margin-bottom: var(
-        --spectrum-sidenav-header-gap-bottom,
+        --spectrum-sidenav-heading-gap-bottom,
         var(--spectrum-global-dimension-size-50)
     );
     padding-top: 0;
     padding-bottom: 0;
     padding-left: var(
-        --spectrum-sidenav-header-padding-x,
+        --spectrum-sidenav-heading-padding-x,
         var(--spectrum-global-dimension-size-150)
     );
     padding-right: var(
-        --spectrum-sidenav-header-padding-x,
+        --spectrum-sidenav-heading-padding-x,
         var(--spectrum-global-dimension-size-150)
     );
     border-radius: var(
-        --spectrum-sidenav-header-border-radius,
+        --spectrum-sidenav-heading-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
     font-size: var(
-        --spectrum-sidenav-header-text-size,
+        --spectrum-sidenav-heading-text-size,
         var(--spectrum-global-dimension-font-size-50)
     );
     font-weight: var(
-        --spectrum-sidenav-header-font-weight,
+        --spectrum-sidenav-heading-text-font-weight,
         var(--spectrum-global-font-weight-medium)
     );
     font-style: normal;
     letter-spacing: var(
-        --spectrum-sidenav-header-letter-spacing,
+        --spectrum-sidenav-heading-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: uppercase; /* .spectrum-SideNav-heading */
     color: var(
-        --spectrum-sidenav-header-text-color,
+        --spectrum-sidenav-heading-text-color,
         var(--spectrum-global-color-gray-700)
     );
 }
@@ -116,7 +116,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
     padding-left: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation-level1,
+                --spectrum-sidenav-multilevel-item-indentation,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
@@ -132,7 +132,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
     padding-right: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation-level1,
+                --spectrum-sidenav-multilevel-item-indentation,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
@@ -149,8 +149,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
     padding-left: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation-level2,
-                var(--spectrum-global-dimension-size-300)
+                --spectrum-sidenav-multilevel-item-indentation,
+                var(--spectrum-global-dimension-size-150)
             ) +
             var(
                 --spectrum-sidenav-item-padding-x,
@@ -166,8 +166,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
     padding-right: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation-level2,
-                var(--spectrum-global-dimension-size-300)
+                --spectrum-sidenav-multilevel-item-indentation,
+                var(--spectrum-global-dimension-size-150)
             ) +
             var(
                 --spectrum-sidenav-item-padding-x,

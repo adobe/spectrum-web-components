@@ -268,17 +268,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 .title {
     /* .spectrum-Card-title */
-    font-size: var(
-        --spectrum-card-title-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* .spectrum-Card .spectrum-Card-title */
-    color: var(
-        --spectrum-alias-text-color,
-        var(--spectrum-global-color-gray-800)
-    );
+    text-overflow: ellipsis;
 }
 :host([dir='ltr']) .subtitle {
     /* [dir=ltr] .spectrum-Card-subtitle */
@@ -294,18 +286,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-100)
     );
 }
-.subtitle {
-    /* .spectrum-Card-subtitle */
-    letter-spacing: var(
-        --spectrum-card-subtitle-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    text-transform: uppercase;
-}
-::slotted([slot='description']),
-.subtitle {
-    /* .spectrum-Card-description,
-   * .spectrum-Card-subtitle */
+::slotted([slot='description']) {
+    /* .spectrum-Card-description */
     font-size: var(
         --spectrum-card-subtitle-text-size,
         var(--spectrum-global-dimension-font-size-50)
