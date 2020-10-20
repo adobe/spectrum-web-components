@@ -37,7 +37,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-static-size-25)
             ) * -1
     );
-    transition: box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+    transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)
             ease-out,
         margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
 }

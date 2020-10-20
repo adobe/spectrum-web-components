@@ -29,9 +29,15 @@ governing permissions and limitations under the License.
     -webkit-appearance: none;
 }
 
-slot[name='icon']::slotted(svg) {
+slot[name='icon']::slotted(:not(sp-icon)) {
     fill: currentColor;
     stroke: currentColor;
-    width: var(--spectrum-alias-workflow-icon-size, 18px);
-    height: var(--spectrum-alias-workflow-icon-size, 18px);
+    height: var(
+        --spectrum-alias-workflow-icon-size-m,
+        var(--spectrum-global-dimension-size-225)
+    );
+    width: var(
+        --spectrum-alias-workflow-icon-size-m,
+        var(--spectrum-global-dimension-size-225)
+    );
 }
