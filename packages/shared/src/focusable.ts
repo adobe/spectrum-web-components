@@ -56,7 +56,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
         // When `focusElement` isn't available yet,
         // use host tabindex as the cache.
-        if (!this.focusElement) {
+        if (!this.focusElement || this.focusElement.isSameNode(this)) {
             return tabIndexAttribute;
         }
         // All other times, use the tabindex of `focusElement`

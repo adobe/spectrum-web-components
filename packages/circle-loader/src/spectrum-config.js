@@ -10,63 +10,63 @@ governing permissions and limitations under the License.
 */
 
 const config = {
-    spectrum: 'circleloader',
+    spectrum: 'progresscircle',
     components: [
         {
             name: 'circle-loader',
-            host: '.spectrum-CircleLoader',
+            host: '.spectrum-ProgressCircle',
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-CircleLoader--indeterminate',
+                    selector: '.spectrum-ProgressCircle--indeterminate',
                     name: 'indeterminate',
                 },
                 {
                     type: 'enum',
                     name: 'size',
                     values: [
-                        '.spectrum-CircleLoader--small',
-                        '.spectrum-CircleLoader--large',
+                        '.spectrum-ProgressCircle--small',
+                        '.spectrum-ProgressCircle--large',
                     ],
                 },
                 {
                     type: 'boolean',
                     name: 'over-background',
-                    selector: '.spectrum-CircleLoader--overBackground',
+                    selector: '.spectrum-ProgressCircle--overBackground',
                 },
             ],
             classes: [
                 {
-                    selector: '.spectrum-CircleLoader-track',
+                    selector: '.spectrum-ProgressCircle-track',
                     name: 'track',
                 },
                 {
-                    selector: '.spectrum-CircleLoader-fills',
+                    selector: '.spectrum-ProgressCircle-fills',
                     name: 'fills',
                 },
                 {
-                    selector: '.spectrum-CircleLoader-fill',
+                    selector: '.spectrum-ProgressCircle-fill',
                     name: 'fill',
                 },
                 {
-                    selector: '.spectrum-CircleLoader-fillMask1',
+                    selector: '.spectrum-ProgressCircle-fillMask1',
                     name: 'fillMask1',
                 },
                 {
-                    selector: '.spectrum-CircleLoader-fillMask2',
+                    selector: '.spectrum-ProgressCircle-fillMask2',
                     name: 'fillMask2',
                 },
                 {
-                    selector: '.spectrum-CircleLoader-fillSubMask1',
+                    selector: '.spectrum-ProgressCircle-fillSubMask1',
                     name: 'fillSubMask1',
                 },
                 {
-                    selector: '.spectrum-CircleLoader-fillSubMask2',
+                    selector: '.spectrum-ProgressCircle-fillSubMask2',
                     name: 'fillSubMask2',
                 },
                 {
                     selector:
-                        '.spectrum-CircleLoader--indeterminate-fill-submask-2',
+                        '.spectrum-ProgressCircle--indeterminate-fill-submask-2',
                     name: 'fill-submask-2',
                 },
             ],

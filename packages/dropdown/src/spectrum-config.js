@@ -10,17 +10,17 @@ governing permissions and limitations under the License.
 */
 
 const config = {
-    spectrum: 'dropdown',
+    spectrum: 'picker',
     components: [
         {
             name: 'dropdown',
             host: {
-                selector: '.spectrum-Dropdown',
+                selector: '.spectrum-Picker',
             },
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Dropdown--quiet',
+                    selector: '.spectrum-Picker--quiet',
                 },
                 {
                     type: 'boolean',
@@ -39,7 +39,7 @@ const config = {
                     name: 'icon',
                 },
                 {
-                    selector: '.spectrum-Dropdown-icon',
+                    selector: '.spectrum-Picker-icon',
                     name: 'dropdown',
                 },
                 {
@@ -53,15 +53,15 @@ const config = {
             ],
             ids: [
                 {
-                    selector: '.spectrum-Dropdown-trigger',
+                    selector: '.spectrum-Picker-trigger',
                     name: 'button',
                 },
                 {
-                    selector: '.spectrum-Dropdown-label',
+                    selector: '.spectrum-Picker-label',
                     name: 'label',
                 },
                 {
-                    selector: '.spectrum-Dropdown-popover',
+                    selector: '.spectrum-Picker-popover',
                     name: 'popover',
                 },
             ],

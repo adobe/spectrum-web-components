@@ -38,7 +38,7 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "@spectrum-css/commons": "^2.1.0",
-        "@spectrum-css/typography": "^2.1.3",
-        "@spectrum-css/vars": "^2.3.0"
+        "@spectrum-css/typography": "^2.1.4-beta.0",
+        "@spectrum-css/vars": "^3.0.0-beta.1"
     }
 }

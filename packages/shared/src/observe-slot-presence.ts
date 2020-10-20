@@ -8,10 +8,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { UpdatingElement, property } from '@spectrum-web-components/base';
+import { UpdatingElement } from '@spectrum-web-components/base';
 
 const slotElementObserver = Symbol('slotElementObserver');
 const startObserving = Symbol('startObserving');
+const slotContentIsPresent = Symbol('slotContentIsPresent');
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,22 +22,55 @@ type Constructor<T = Record<string, unknown>> = {
 
 export interface SlotPresenceObservingInterface {
     slotContentIsPresent: boolean;
+    getSlotContentPresence(selector: string): boolean;
     managePresenceObservedSlot(): void;
 }
 
 export function ObserveSlotPresence<T extends Constructor<UpdatingElement>>(
     constructor: T,
-    lightDomSelector: string
+    lightDomSelector: string | string[]
 ): T & Constructor<SlotPresenceObservingInterface> {
+    const lightDomSelectors = Array.isArray(lightDomSelector)
+        ? lightDomSelector
+        : [lightDomSelector];
     class SlotPresenceObservingElement extends constructor
         implements SlotPresenceObservingInterface {
         private [slotElementObserver]!: MutationObserver;
 
-        @property({ type: Boolean, attribute: false })
-        public slotContentIsPresent = false;
+        /**
+         *  @private
+         */
+        public get slotContentIsPresent(): boolean {
+            if (lightDomSelectors.length === 1) {
+                return (
+                    this[slotContentIsPresent].get(lightDomSelectors[0]) ||
+                    false
+                );
+            } else {
+                throw new Error(
+                    'Multiple selectors provided to `ObserveSlotPresence` use `getSlotContentPresence(selector: string)` instead.'
+                );
+            }
+        }
+        private [slotContentIsPresent]: Map<string, boolean> = new Map();
+
+        public getSlotContentPresence(selector: string): boolean {
+            if (this[slotContentIsPresent].has(selector)) {
+                return this[slotContentIsPresent].get(selector) || false;
+            }
+            throw new Error(
+                `The provided selector \`\` is not being observed.`
+            );
+        }
 
         public managePresenceObservedSlot = (): void => {
-            this.slotContentIsPresent = !!this.querySelector(lightDomSelector);
+            lightDomSelectors.forEach((selector) => {
+                this[slotContentIsPresent].set(
+                    selector,
+                    !!this.querySelector(selector)
+                );
+            });
+            this.requestUpdate();
         };
 
         private [startObserving](): void {

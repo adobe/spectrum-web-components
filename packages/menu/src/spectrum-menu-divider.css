@@ -16,7 +16,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-100) +
             var(--spectrum-icon-checkmark-medium-width) +
             var(
-                --spectrum-selectlist-option-icon-padding-x,
+                --spectrum-listitem-option-icon-padding-x,
                 var(--spectrum-global-dimension-size-150)
             )
     );
@@ -27,7 +27,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-100) +
             var(--spectrum-icon-checkmark-medium-width) +
             var(
-                --spectrum-selectlist-option-icon-padding-x,
+                --spectrum-listitem-option-icon-padding-x,
                 var(--spectrum-global-dimension-size-150)
             )
     );
@@ -38,7 +38,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-right: calc(
         var(
-                --spectrum-selectlist-option-padding,
+                --spectrum-listitem-option-padding,
                 var(--spectrum-global-dimension-static-size-150)
             ) -
             var(
@@ -53,7 +53,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-left: calc(
         var(
-                --spectrum-selectlist-option-padding,
+                --spectrum-listitem-option-padding,
                 var(--spectrum-global-dimension-static-size-150)
             ) -
             var(
@@ -65,7 +65,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) .spectrum-Menu-item {
     /* [dir=ltr] .spectrum-Menu-item */
     border-left: var(
-            --spectrum-selectlist-border-size-key-focus,
+            --spectrum-listitem-border-size-key-focus,
             var(--spectrum-global-dimension-static-size-25)
         )
         solid transparent;
@@ -73,7 +73,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) .spectrum-Menu-item {
     /* [dir=rtl] .spectrum-Menu-item */
     border-right: var(
-            --spectrum-selectlist-border-size-key-focus,
+            --spectrum-listitem-border-size-key-focus,
             var(--spectrum-global-dimension-static-size-25)
         )
         solid transparent;
@@ -82,7 +82,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Menu-item.is-selected */
     padding-right: calc(
         var(
-                --spectrum-selectlist-option-padding,
+                --spectrum-listitem-option-padding,
                 var(--spectrum-global-dimension-static-size-150)
             ) -
             var(
@@ -95,7 +95,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Menu-item.is-selected */
     padding-left: calc(
         var(
-                --spectrum-selectlist-option-padding,
+                --spectrum-listitem-option-padding,
                 var(--spectrum-global-dimension-static-size-150)
             ) -
             var(
@@ -115,7 +115,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=ltr] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
     margin-left: var(
-        --spectrum-selectlist-thumbnail-image-padding-x,
+        --spectrum-listitem-thumbnail-image-padding-x,
         var(--spectrum-global-dimension-size-100)
     );
 }
@@ -130,7 +130,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=rtl] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
     margin-right: var(
-        --spectrum-selectlist-thumbnail-image-padding-x,
+        --spectrum-listitem-thumbnail-image-padding-x,
         var(--spectrum-global-dimension-size-100)
     );
 }
@@ -139,7 +139,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Menu-checkmark,
    * [dir=ltr] .spectrum-Menu-chevron */
     margin-left: var(
-        --spectrum-selectlist-option-icon-padding-x,
+        --spectrum-listitem-option-icon-padding-x,
         var(--spectrum-global-dimension-size-150)
     );
 }
@@ -148,7 +148,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Menu-checkmark,
    * [dir=rtl] .spectrum-Menu-chevron */
     margin-right: var(
-        --spectrum-selectlist-option-icon-padding-x,
+        --spectrum-listitem-option-icon-padding-x,
         var(--spectrum-global-dimension-size-150)
     );
 }
@@ -161,18 +161,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-sizing: initial;
     overflow: visible;
     height: var(
-        --spectrum-selectlist-divider-size,
+        --spectrum-listitem-divider-size,
         var(--spectrum-alias-border-size-thick)
     );
-    margin: calc(var(--spectrum-selectlist-divider-padding, 3px) / 2)
+    margin: calc(var(--spectrum-listitem-divider-padding, 3px) / 2)
         var(
-            --spectrum-selectlist-option-padding,
+            --spectrum-listitem-option-padding,
             var(--spectrum-global-dimension-static-size-150)
         );
     padding: 0;
     border: none; /* .spectrum-Menu-divider */
     background-color: var(
-        --spectrum-selectlist-divider-color,
+        --spectrum-listitem-divider-color,
         var(--spectrum-alias-border-color-extralight)
     );
 }
@@ -181,7 +181,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Menu-item.focus-ring,
    * [dir=ltr] .spectrum-Menu-item.is-focused */
     border-left-color: var(
-        --spectrum-selectlist-option-focus-indicator-color,
+        --spectrum-listitem-option-focus-indicator-color,
         var(--spectrum-alias-border-color-focus)
     );
 }
@@ -190,7 +190,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Menu-item.focus-ring,
    * [dir=rtl] .spectrum-Menu-item.is-focused */
     border-right-color: var(
-        --spectrum-selectlist-option-focus-indicator-color,
+        --spectrum-listitem-option-focus-indicator-color,
         var(--spectrum-alias-border-color-focus)
     );
 }

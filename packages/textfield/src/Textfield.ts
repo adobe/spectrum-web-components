@@ -24,17 +24,17 @@ import {
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import {
-    AlertSmallIcon,
-    CheckmarkSmallIcon,
+    AlertMediumIcon,
+    CheckmarkMediumIcon,
 } from '@spectrum-web-components/icons-ui';
 
 import textfieldStyles from './textfield.css.js';
-import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark-small.css.js';
-import alertSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-small.css.js';
+import checkmarkMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark-medium.css.js';
+import alertMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-medium.css.js';
 
 export class Textfield extends Focusable {
     public static get styles(): CSSResultArray {
-        return [textfieldStyles, checkmarkSmallStyles, alertSmallStyles];
+        return [textfieldStyles, checkmarkMediumStyles, alertMediumStyles];
     }
 
     @property({ attribute: 'allowed-keys' })
@@ -122,14 +122,14 @@ export class Textfield extends Focusable {
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
-                <sp-icon id="invalid" class="icon alert-small">
-                    ${AlertSmallIcon({ hidden: true })}
+                <sp-icon id="invalid" class="icon alert-medium">
+                    ${AlertMediumIcon({ hidden: true })}
                 </sp-icon>
             `;
         } else if (this.valid) {
             return html`
-                <sp-icon id="valid" class="icon checkmark-small">
-                    ${CheckmarkSmallIcon({ hidden: true })}
+                <sp-icon id="valid" class="icon checkmark-medium">
+                    ${CheckmarkMediumIcon({ hidden: true })}
                 </sp-icon>
             `;
         }
@@ -138,7 +138,7 @@ export class Textfield extends Focusable {
 
     private get renderMultiline(): TemplateResult {
         return html`
-            ${this.grows
+            ${this.grows && !this.quiet
                 ? html`
                       <div id="sizer">${this.value}</div>
                   `

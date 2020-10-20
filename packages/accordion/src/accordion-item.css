@@ -11,3 +11,49 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-accordion-item.css';
+
+:host {
+    --spectrum-accordion-item-header-height: 46px;
+}
+
+/**
+ * What follows are styles working around: https://github.com/adobe/spectrum-css/issues/1033
+ */
+#indicator {
+    /* .spectrum-Accordion-itemIndicator */
+    top: calc(
+        50% -
+            var(
+                --spectrum-accordion-icon-height,
+                var(--spectrum-global-dimension-size-125)
+            ) / 2
+    );
+}
+
+#heading {
+    /* .spectrum-Accordion-itemHeading */
+    height: auto;
+    position: relative;
+}
+
+#header {
+    /* .spectrum-Accordion-itemHeader */
+    min-height: calc(
+        100% -
+            var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    );
+}
+
+:host([open]) > #header:after {
+    /* .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeader:after */
+    height: calc(
+        100% -
+            var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    );
+}
