@@ -40,8 +40,10 @@ export class IllustratedMessage extends SpectrumElement {
     protected render(): TemplateResult {
         return html`
             <div id="illustration"><slot></slot></div>
-            <h2 id="heading">${this.heading}</h2>
-            <p id="description">${this.description}</p>
+            <h2 id="heading"><slot name="heading">${this.heading}</slot></h2>
+            <div id="description">
+                <slot name="description">${this.description}</slot>
+            </div>
         `;
     }
 }

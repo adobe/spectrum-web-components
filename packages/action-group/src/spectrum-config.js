@@ -44,9 +44,25 @@ const config = {
             ],
             complexSelectors: [
                 {
-                    replacement: '::slotted(*:not(:first-of-type))',
+                    replacement: '::slotted(:not(:last-child))',
+                    selector: '.spectrum-ActionGroup-item:not(:last-child)',
+                },
+                {
+                    replacement: '::slotted(:not(:first-child))',
                     selector:
                         '.spectrum-ActionGroup-item+.spectrum-ActionGroup-item',
+                },
+                {
+                    replacement: '::slotted([selected])',
+                    selector: '.spectrum-ActionGroup-item.is-selected',
+                },
+                {
+                    replacement: '::slotted(:hover)',
+                    selector: '.spectrum-ActionGroup-item:hover',
+                },
+                {
+                    replacement: '::slotted(:focus-visible)',
+                    selector: '.spectrum-ActionGroup-item.focus-ring',
                 },
             ],
         },

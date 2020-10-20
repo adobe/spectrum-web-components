@@ -29,7 +29,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     overflow: auto; /* .spectrum-Menu .spectrum-Menu */
     display: block; /* .spectrum-Menu */
     background-color: var(
-        --spectrum-selectlist-background-color,
+        --spectrum-listitem-background-color,
         var(--spectrum-alias-background-color-transparent)
     );
 }

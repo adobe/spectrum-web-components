@@ -56,7 +56,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-QuickActions--left.is-open */
     transform: translateX(
         var(
-            --spectrum-dropdown-flyout-menu-offset-y,
+            --spectrum-picker-popover-offset-y,
             var(--spectrum-global-dimension-size-75)
         )
     );
@@ -65,21 +65,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-QuickActions--right.is-open */
     transform: translateX(
         calc(
-            -1 * var(--spectrum-dropdown-flyout-menu-offset-y, var(--spectrum-global-dimension-size-75))
+            -1 * var(--spectrum-picker-popover-offset-y, var(--spectrum-global-dimension-size-75))
         )
     );
 }
 :host([dir='ltr']) slot[name='action'] + ::slotted([slot='action']) {
     /* [dir=ltr] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
     margin-left: var(
-        --spectrum-quickactions-icon-button-gap-x,
+        --spectrum-quickactions-button-gap-x,
         var(--spectrum-global-dimension-size-100)
     );
 }
 :host([dir='rtl']) slot[name='action'] + ::slotted([slot='action']) {
     /* [dir=rtl] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
     margin-right: var(
-        --spectrum-quickactions-icon-button-gap-x,
+        --spectrum-quickactions-button-gap-x,
         var(--spectrum-global-dimension-size-100)
     );
 }
