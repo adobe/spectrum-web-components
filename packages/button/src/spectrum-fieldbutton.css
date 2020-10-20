@@ -22,18 +22,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .button {
     /* .spectrum-FieldButton */
     height: var(
-        --spectrum-dropdown-height,
+        --spectrum-picker-height,
         var(--spectrum-global-dimension-size-400)
     );
     padding: 0
         var(
-            --spectrum-dropdown-padding-x,
+            --spectrum-picker-padding-x,
             var(--spectrum-global-dimension-size-150)
         );
     font-family: inherit;
     font-weight: 400;
     font-size: var(
-        --spectrum-dropdown-text-size,
+        --spectrum-picker-text-size,
         var(--spectrum-alias-font-size-default)
     );
     line-height: normal;
@@ -44,15 +44,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-top: 0;
     padding-bottom: 0;
     padding-left: var(
-        --spectrum-dropdown-padding-x,
+        --spectrum-picker-padding-x,
         var(--spectrum-global-dimension-size-150)
     );
     padding-right: var(
-        --spectrum-dropdown-padding-x,
+        --spectrum-picker-padding-x,
         var(--spectrum-global-dimension-size-150)
     );
     border-width: var(
-        --spectrum-dropdown-border-size,
+        --spectrum-picker-border-size,
         var(--spectrum-alias-border-size-thin)
     );
     border-style: solid;
@@ -84,7 +84,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .button.is-open {
     /* .spectrum-FieldButton.is-open */
     border-width: var(
-        --spectrum-dropdown-border-size,
+        --spectrum-picker-border-size,
         var(--spectrum-alias-border-size-thin)
     );
 }
