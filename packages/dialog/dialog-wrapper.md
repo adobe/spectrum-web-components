@@ -31,7 +31,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
 <sp-dialog-wrapper
     id="dialog-wrapper-demo"
     headline="Dialog title"
-    dismissible
+    dismissable
     underlay
     footer="Content for footer"
     hidden
@@ -63,6 +63,43 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
     id="dialog-wrapper-demo"
     headline="Dialog title"
     mode="fullscreen"
+    confirm-label="Keep Both"
+    secondary-label="Replace"
+    cancel-label="Cancel"
+    footer="Content for footer"
+    hidden
+>
+    Content of the dialog
+</sp-dialog-wrapper>
+<sp-button
+    onClick="
+        const dialogWrapper = this.previousElementSibling;
+        dialogWrapper.hidden = false;
+        dialogWrapper.open = true;
+        function handleEvent({type}) {
+            spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
+            dialogWrapper.open = false;
+            dialogWrapper.removeEventListener('confirm', handleEvent);
+            dialogWrapper.removeEventListener('secondary', handleEvent);
+            dialogWrapper.removeEventListener('cancel', handleEvent);
+        }
+        dialogWrapper.addEventListener('confirm', handleEvent);
+        dialogWrapper.addEventListener('secondary', handleEvent);
+        dialogWrapper.addEventListener('cancel', handleEvent);
+    "
+    variant="primary"
+>
+    Toggle Dialog
+</sp-button>
+```
+
+### Fullscreen Takeover Mode
+
+```html
+<sp-dialog-wrapper
+    id="dialog-wrapper-demo"
+    headline="Dialog title"
+    mode="fullscreenTakeover"
     confirm-label="Keep Both"
     secondary-label="Replace"
     cancel-label="Cancel"
