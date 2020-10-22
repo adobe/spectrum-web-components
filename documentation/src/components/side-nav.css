@@ -26,8 +26,12 @@ aside {
         position: fixed;
         top: 0;
         left: 0;
-        transition: transform var(--spectrum-global-animation-duration-200)
-            ease-in-out;
+        transition: transform
+            var(
+                --spectrum-dialog-confirm-background-entry-animation-duration,
+                var(--spectrum-global-animation-duration-600)
+            )
+            cubic-bezier(0, 0, 0.4, 1);
         transform: translateX(-100%);
         z-index: 10;
         background: inherit;
@@ -39,22 +43,7 @@ aside {
     }
 
     .scrim {
-        position: fixed;
-        background-color: var(--spectrum-alias-background-color-modal-overlay);
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 1;
-        opacity: 0;
-        transition: opacity var(--spectrum-global-animation-duration-200)
-            ease-in 0ms;
-    }
-
-    :host([open]) .scrim {
-        pointer-events: all;
-        opacity: 1;
+        z-index: 10;
     }
 }
 

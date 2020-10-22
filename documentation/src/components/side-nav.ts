@@ -17,6 +17,7 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import {
@@ -65,6 +66,10 @@ class SideNav extends SpectrumElement {
         AppRouter.go(path);
     }
 
+    private close() {
+        this.open = false;
+    }
+
     public toggle() {
         this.open = !this.open;
     }
@@ -86,11 +91,15 @@ class SideNav extends SpectrumElement {
 
     render(): TemplateResult {
         return html`
-            <div class="scrim" @click=${this.toggle}></div>
+            <sp-underlay
+                class="scrim"
+                @click=${this.close}
+                ?open=${this.open}
+            ></sp-underlay>
             <aside>
                 <div id="nav-header">
                     <div id="logo-container">
-                        <a href="#">
+                        <a href="#index">
                             <docs-spectrum-logo></docs-spectrum-logo>
                             <div id="header-title">
                                 Spectrum

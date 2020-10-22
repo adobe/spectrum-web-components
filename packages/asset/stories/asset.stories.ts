@@ -23,7 +23,7 @@ export default {
 export const Default = (): TemplateResult => {
     return html`
         <sp-asset style="height: 128px">
-            <img src=${portrait} alt="Demo Image" />
+            <img src=${portrait} alt="Demo Graphic" />
         </sp-asset>
     `;
 };

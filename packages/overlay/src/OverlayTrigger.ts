@@ -68,6 +68,8 @@ export class OverlayTrigger extends LitElement {
     }
 
     protected render(): TemplateResult {
+        // Keyboard event availability documented in README.md
+        /* eslint-disable lit-a11y/click-events-have-key-events */
         return html`
             <div
                 id="trigger"
@@ -91,6 +93,7 @@ export class OverlayTrigger extends LitElement {
                 ></slot>
             </div>
         `;
+        /* eslint-enable lit-a11y/click-events-have-key-events */
     }
 
     protected updated(changes: PropertyValues): void {

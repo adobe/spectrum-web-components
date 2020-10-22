@@ -32,7 +32,7 @@ describe('Menu', () => {
     it('renders empty', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu tabindex="0"><a href="#">Test</a></sp-menu>
+                <sp-menu tabindex="0"><a href="#anchor">Test</a></sp-menu>
             `
         );
 
