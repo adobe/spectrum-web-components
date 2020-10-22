@@ -135,12 +135,14 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     protected manageAutoFocus(): void {
         if (this.autofocus) {
             /* Trick :focus-visible polyfill into thinking keyboard based focus */
-            this.dispatchEvent(
-                new KeyboardEvent('keydown', {
-                    code: 'Tab',
-                })
-            );
-            this.focusElement.focus();
+            requestAnimationFrame(() => {
+                this.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        code: 'Tab',
+                    })
+                );
+                this.focusElement.focus();
+            });
         }
     }
 
