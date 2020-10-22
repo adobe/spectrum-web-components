@@ -169,10 +169,8 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     protected updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
 
-        if (changedProperties.has('disabled')) {
-            if (this.disabled) {
-                this.blur();
-            }
+        if (changedProperties.has('disabled') && this.disabled) {
+            this.blur();
         }
     }
 
