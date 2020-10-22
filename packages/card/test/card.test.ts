@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 import '../sp-card.js';
 import { Card } from '../';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 import { Default, smallHorizontal } from '../stories/card.stories.js';
@@ -74,7 +78,7 @@ describe('card', () => {
                 >
                     <img
                         src="https://picsum.photos/300/400"
-                        alt="Demo Image"
+                        alt="Demo Graphic"
                         slot="preview"
                     />
                     <div slot="footer">Footer</div>

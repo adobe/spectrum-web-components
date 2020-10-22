@@ -253,10 +253,10 @@ export class Slider extends Focusable {
                 <input
                     type="range"
                     id="input"
-                    value="${this.value}"
-                    step="${this.step}"
-                    min="${this.min}"
-                    max="${this.max}"
+                    value=${this.value}
+                    step=${this.step}
+                    min=${this.min}
+                    max=${this.max}
                     aria-disabled=${this.disabled ? 'true' : 'false'}
                     aria-labelledby="label"
                     aria-valuenow=${this.value}
