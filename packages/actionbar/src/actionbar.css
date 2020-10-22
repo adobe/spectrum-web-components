@@ -11,8 +11,3 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-actionbar.css';
-
-:host([dir='rtl']) #popover {
-    padding: 0 var(--spectrum-global-dimension-size-200) 0
-        calc(var(--spectrum-global-dimension-size-200) / 2);
-}
