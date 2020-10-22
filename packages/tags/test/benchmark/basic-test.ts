@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
 import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
     <sp-tags>

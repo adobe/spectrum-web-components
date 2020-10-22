@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
     <sp-dialog open></sp-dialog>
