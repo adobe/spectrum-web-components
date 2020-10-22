@@ -22,7 +22,22 @@
                 "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
                 "templateFile": "config/license.js"
             }
+        ],
+        "lit-a11y/click-events-have-key-events": [
+            "error",
+            {
+                "allowList": [
+                    "sp-button",
+                    "sp-action-button",
+                    "sp-checkbox",
+                    "sp-radio",
+                    "sp-switch",
+                    "sp-menu-item",
+                    "sp-clear-button",
+                    "sp-underlay"
+                ]
+            }
         ]
     },
-    "extends": ["plugin:prettier/recommended"]
+    "extends": ["plugin:prettier/recommended", "plugin:lit-a11y/recommended"]
 }

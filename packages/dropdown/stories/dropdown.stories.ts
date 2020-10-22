@@ -61,7 +61,7 @@ export const Default = (): TemplateResult => {
         </p>
         <p>
             This is a
-            <a href="#">link</a>
+            <a href="#anchor">link</a>
             .
         </p>
     `;
