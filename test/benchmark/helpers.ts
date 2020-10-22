@@ -1,5 +1,8 @@
 import { customElement, html, LitElement, property } from 'lit-element';
 import { TemplateResult, render } from 'lit-html';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/scale-medium.js';
+import '@spectrum-web-components/theme/theme-lightest.js';
 
 declare global {
     interface Window {
@@ -89,12 +92,12 @@ export const fixture = (
 };
 
 interface MeasureFixtureCreationOpts {
-    afterRender?: (root: ShadowRoot) => Promise<unknown>;
+    afterRender?: (root: HTMLElement) => Promise<unknown>;
     numRenders: number;
 }
 
 const defaultMeasureOpts = {
-    numRenders: 10,
+    numRenders: 100,
 };
 
 export const measureFixtureCreation = async (
@@ -106,23 +109,27 @@ export const measureFixtureCreation = async (
         ...options,
     };
     const templates = new Array<TemplateResult>(opts.numRenders).fill(template);
-    const renderContainer = document.createElement('div');
-    const renderTargetRoot = renderContainer.attachShadow({ mode: 'open' });
+    const renderContainer = document.createElement('sp-theme');
+    renderContainer.scale = 'large';
+    renderContainer.color = 'lightest';
 
     document.body.appendChild(renderContainer);
     const start = performance.now();
-    render(templates, renderTargetRoot);
-    const firstChild = renderTargetRoot.firstElementChild;
+    render(templates, renderContainer);
+    const children = renderContainer.querySelectorAll('*');
+    const updates = [...children].filter((el) => 'updateComplete' in el);
 
-    if (firstChild && 'updateComplete' in firstChild) {
-        await (firstChild as LitElement).updateComplete;
+    if (updates.length) {
+        await Promise.all(
+            updates.map((el) => (el as LitElement).updateComplete)
+        );
         document.body.offsetWidth;
     } else {
         await new Promise((res) => requestAnimationFrame(res));
     }
 
     if (opts.afterRender) {
-        opts.afterRender(renderTargetRoot);
+        opts.afterRender(renderContainer);
     }
 
     const end = performance.now();

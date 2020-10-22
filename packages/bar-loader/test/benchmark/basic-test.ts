@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/bar-loader/sp-bar-loader.js';
 import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-bar-loader open></sp-bar-loader>
+    <sp-bar-loader label="Loading" progress="50"></sp-bar-loader>
 `);

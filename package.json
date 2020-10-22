@@ -191,7 +191,7 @@
         "stylelint": "^13.5.0",
         "stylelint-config-prettier": "^8.0.1",
         "stylelint-config-standard": "^20.0.0",
-        "tachometer": "^0.4.9",
+        "tachometer": "^0.5.5",
         "ts-loader": "^8.0.0",
         "typescript": "^4.0.2",
         "walker": "^1.0.7",

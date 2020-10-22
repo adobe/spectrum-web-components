@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/radio/sp-radio.js';
 import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
     <sp-radio-group id="test-default">
