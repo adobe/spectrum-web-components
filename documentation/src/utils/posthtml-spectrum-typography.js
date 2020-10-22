@@ -18,7 +18,7 @@ const matchHelper = require('posthtml-match-helper');
 const transformations = [
     {
         selector: 'p,ul,ol',
-        classes: ['spectrum-Body', 'spectrum-Body--M'],
+        classes: ['spectrum-Body', 'spectrum-Body--sizeM'],
     },
     {
         // Wrap h1's in a .spectrum-Article to get nice typography
@@ -40,7 +40,7 @@ const transformations = [
                         tag: 'h1',
                         attrs: {
                             class:
-                                'spectrum-Heading spectrum-Heading--XXXL spectrum-Heading--serif',
+                                'spectrum-Heading spectrum-Heading--sizeXXXL spectrum-Heading--serif',
                         },
                         content: node.content,
                     },
@@ -67,7 +67,7 @@ const transformations = [
                     {
                         tag: 'h1',
                         attrs: {
-                            class: 'spectrum-Heading spectrum-Heading--M',
+                            class: 'spectrum-Heading spectrum-Heading--sizeM',
                         },
                         content: node.content,
                     },
@@ -98,7 +98,7 @@ const transformations = [
                     {
                         tag: 'h3',
                         attrs: {
-                            class: 'spectrum-Heading spectrum-Heading--S',
+                            class: 'spectrum-Heading spectrum-Heading--sizeS',
                         },
                         content: node.content,
                     },
@@ -112,7 +112,7 @@ const transformations = [
     },
     {
         selector: 'h4',
-        classes: ['spectrum-Header', 'spectrum-Heading--XS'],
+        classes: ['spectrum-Header', 'spectrum-Heading--sizeXS'],
     },
     {
         selector: 'hr',
