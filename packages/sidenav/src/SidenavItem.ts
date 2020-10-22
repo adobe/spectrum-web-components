@@ -132,16 +132,12 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 ? html`
                       <slot></slot>
                   `
-                : undefined}
+                : html``}
         `;
     }
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (changes.has('manageTabIndex')) {
-            const tabIndexForSelectedState = this.selected ? 0 : -1;
-            this.tabIndex = this.manageTabIndex ? tabIndexForSelectedState : 0;
-        }
         if (changes.has('selected') || changes.has('manageTabIndex')) {
             const tabIndexForSelectedState = this.selected ? 0 : -1;
             this.tabIndex = this.manageTabIndex ? tabIndexForSelectedState : 0;
