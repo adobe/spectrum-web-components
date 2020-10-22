@@ -18,6 +18,7 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 
 export default {
     component: 'sp-card',
@@ -28,7 +29,7 @@ export const Default = (): TemplateResult => {
     return html`
         <div>
             <sp-card heading="Card Heading" subheading="JPG">
-                <img slot="cover-photo" src=${portrait} alt="Demo Image" />
+                <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
                 <div slot="footer">Footer</div>
             </sp-card>
         </div>
@@ -39,7 +40,7 @@ export const actions = (): TemplateResult => {
     return html`
         <div>
             <sp-card heading="Card Heading" subheading="JPG">
-                <img slot="cover-photo" src=${portrait} alt="Demo Image" />
+                <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
                 <div slot="footer">Footer</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
                     <sp-menu>
@@ -85,7 +86,7 @@ export const Gallery = (): TemplateResult => {
                     slot="preview"
                     src=${landscape}
                     style="object-fit: cover"
-                    alt="Demo Image"
+                    alt="Demo Graphic"
                 />
                 <div slot="description">10/15/18</div>
             </sp-card>
@@ -97,7 +98,7 @@ export const Quiet = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
             <sp-card variant="quiet" heading="Card Heading" subheading="JPG">
-                <img src=${portrait} alt="Demo Image" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="description">10/15/18</div>
             </sp-card>
         </div>
@@ -108,7 +109,7 @@ export const quietFile = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
             <sp-card variant="quiet" subheading="JPG" asset="file">
-                <img src=${portrait} alt="Demo Image" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="heading">File Name</div>
                 <div slot="description">10/15/18</div>
             </sp-card>
@@ -120,7 +121,7 @@ export const quietFolder = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
             <sp-card variant="quiet" subheading="JPG" asset="folder">
-                <img src=${portrait} alt="Demo Image" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="heading">Folder Name</div>
                 <div slot="description">10/15/18</div>
             </sp-card>
@@ -132,7 +133,7 @@ export const quietActions = (): TemplateResult => {
     return html`
         <div style="width: 208px; height: 264px">
             <sp-card variant="quiet" heading="Card Heading" subheading="JPG">
-                <img src=${portrait} alt="Demo Image" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="description">10/15/18</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
                     <sp-menu>
@@ -175,7 +176,7 @@ export const small = (): TemplateResult => {
                 <img
                     slot="cover-photo"
                     src=${portrait}
-                    alt="Demo Image"
+                    alt="Demo Graphic"
                     style="width: 130px"
                 />
                 <div slot="footer">Footer</div>
@@ -206,7 +207,7 @@ export const smallQuiet = (): TemplateResult => {
                 subheading="JPG"
                 variant="quiet"
             >
-                <img src=${portrait} alt="Demo Image" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="preview" />
                 <div slot="footer">Footer</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
                     <sp-menu>
@@ -254,7 +255,7 @@ export const SlottedHeading = (): TemplateResult => {
         "
         >
             <sp-card>
-                <img slot="cover-photo" src=${portrait} alt="Demo Image" />
+                <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
                 <sp-textfield
                     class="slotted-textfield-heading"
                     slot="heading"

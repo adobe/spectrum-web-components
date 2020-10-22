@@ -53,7 +53,6 @@ class OverlayTargetIcon extends LitElement {
                 data-prefix="fas"
                 data-icon="bullseye"
                 class="svg-inline--fa fa-bullseye fa-w-16"
-                role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 496 512"
             >
@@ -301,7 +300,7 @@ class RecursivePopover extends LitElement {
                               <recursive-popover
                                   position="${this.placement}"
                                   depth="${this.depth + 1}"
-                                  tabindex=""
+                                  tabindex="0"
                               ></recursive-popover>
                           `
                         : html`

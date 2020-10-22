@@ -110,10 +110,18 @@ export class LayoutElement extends SpectrumElement {
     // has been completed and links are natively part of the library
     private onClickLabel(event: { target: HTMLElement }) {
         const { target } = event;
-        if (!target) return;
         const next = target.nextElementSibling as Dropdown;
         if (!next || next.open) return;
         next.click();
+    }
+
+    private onKeypressLabel(event: KeyboardEvent & { target: HTMLElement }) {
+        const { code, target } = event;
+        if (code === 'Space' || code === 'Enter') {
+            const next = target.nextElementSibling as Dropdown;
+            if (!next || next.open) return;
+            next.click();
+        }
     }
 
     private addAlert(event: CustomEvent<{ message: string }>): void {
@@ -179,7 +187,6 @@ export class LayoutElement extends SpectrumElement {
                             viewBox="0 0 36 36"
                             focusable="false"
                             aria-hidden="true"
-                            role="img"
                             width="22"
                             height="22"
                             fill="currentColor"
@@ -225,7 +232,12 @@ export class LayoutElement extends SpectrumElement {
                     >
                         <div id="page" @alert=${this.addAlert}>
                             <div class="manage-theme">
-                                <label @click=${this.onClickLabel}>Theme</label>
+                                <label
+                                    @click=${this.onClickLabel}
+                                    @keypress=${this.onKeypressLabel}
+                                >
+                                    Theme
+                                </label>
                                 <sp-dropdown
                                     placement="bottom"
                                     quiet
@@ -247,7 +259,12 @@ export class LayoutElement extends SpectrumElement {
                                         </sp-menu-item>
                                     </sp-menu>
                                 </sp-dropdown>
-                                <label @click=${this.onClickLabel}>Scale</label>
+                                <label
+                                    @click=${this.onClickLabel}
+                                    @keypress=${this.onKeypressLabel}
+                                >
+                                    Scale
+                                </label>
                                 <sp-dropdown
                                     label="Scale"
                                     placement="bottom"
@@ -264,7 +281,10 @@ export class LayoutElement extends SpectrumElement {
                                         </sp-menu-item>
                                     </sp-menu>
                                 </sp-dropdown>
-                                <label @click=${this.onClickLabel}>
+                                <label
+                                    @click=${this.onClickLabel}
+                                    @keypress=${this.onKeypressLabel}
+                                >
                                     Direction
                                 </label>
                                 <sp-dropdown
