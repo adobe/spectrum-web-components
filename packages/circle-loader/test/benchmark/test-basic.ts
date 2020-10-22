@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/circle-loader/sp-circle-loader.js';
 import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-circle-loader indeterminate></sp-circle-loader>
+    <sp-circle-loader label="Loading" indeterminate></sp-circle-loader>
 `);
