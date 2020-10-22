@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) {
-    /* [dir=ltr] .spectrum-ToggleSwitch */
+    /* [dir=ltr] .spectrum-Switch */
     margin-right: calc(
         var(
                 --spectrum-switch-cursor-hit-x,
@@ -20,7 +20,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([dir='rtl']) {
-    /* [dir=rtl] .spectrum-ToggleSwitch */
+    /* [dir=rtl] .spectrum-Switch */
     margin-left: calc(
         var(
                 --spectrum-switch-cursor-hit-x,
@@ -29,7 +29,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host {
-    /* .spectrum-ToggleSwitch */
+    /* .spectrum-Switch */
     display: inline-flex;
     align-items: flex-start;
     position: relative;
@@ -41,15 +41,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     vertical-align: top;
 }
 :host([dir='ltr']) #input {
-    /* [dir=ltr] .spectrum-ToggleSwitch-input */
+    /* [dir=ltr] .spectrum-Switch-input */
     left: 0;
 }
 :host([dir='rtl']) #input {
-    /* [dir=rtl] .spectrum-ToggleSwitch-input */
+    /* [dir=rtl] .spectrum-Switch-input */
     right: 0;
 }
 #input {
-    /* .spectrum-ToggleSwitch-input */
+    /* .spectrum-Switch-input */
     margin: 0;
     box-sizing: border-box;
     padding: 0;
@@ -62,7 +62,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: pointer;
 }
 :host([dir='ltr'][checked]) #input + #switch:before {
-    /* [dir=ltr] .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch:before */
+    /* [dir=ltr] .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
     transform: translateX(
         calc(
             100% -
@@ -74,7 +74,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([dir='rtl'][checked]) #input + #switch:before {
-    /* [dir=rtl] .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch:before */
+    /* [dir=rtl] .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
     transform: translateX(
         calc(
             -100% + var(--spectrum-switch-handle-border-size, var(--spectrum-alias-border-size-thick))
@@ -83,12 +83,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([disabled]) #input,
 #input[disabled] {
-    /* .spectrum-ToggleSwitch-input:disabled,
-   * .spectrum-ToggleSwitch-input[disabled] */
+    /* .spectrum-Switch-input:disabled,
+   * .spectrum-Switch-input[disabled] */
     cursor: default;
 }
 #input:focus-visible + #switch:after {
-    /* .spectrum-ToggleSwitch-input.focus-ring+.spectrum-ToggleSwitch-switch:after */
+    /* .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
     margin: calc(
         var(
                 --spectrum-alias-focus-ring-gap,
@@ -97,7 +97,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 #label {
-    /* .spectrum-ToggleSwitch-label */
+    /* .spectrum-Switch-label */
     margin-left: var(
         --spectrum-switch-text-gap,
         var(--spectrum-global-dimension-size-125)
@@ -117,21 +117,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         ease-in-out;
 }
 :host([dir='ltr']) #switch {
-    /* [dir=ltr] .spectrum-ToggleSwitch-switch */
+    /* [dir=ltr] .spectrum-Switch-switch */
     left: 0;
 }
 :host([dir='ltr']) #switch,
 :host([dir='rtl']) #switch {
-    /* [dir=ltr] .spectrum-ToggleSwitch-switch,
-   * [dir=rtl] .spectrum-ToggleSwitch-switch */
+    /* [dir=ltr] .spectrum-Switch-switch,
+   * [dir=rtl] .spectrum-Switch-switch */
     right: 0;
 }
 :host([dir='rtl']) #switch {
-    /* [dir=rtl] .spectrum-ToggleSwitch-switch */
+    /* [dir=rtl] .spectrum-Switch-switch */
     left: 0;
 }
 #switch {
-    /* .spectrum-ToggleSwitch-switch */
+    /* .spectrum-Switch-switch */
     display: inline-block;
     box-sizing: border-box;
     position: relative;
@@ -177,18 +177,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-switch-track-height,
                 var(--spectrum-global-dimension-size-175)
             ) / 2
-    ); /* .spectrum-ToggleSwitch-switch */
+    ); /* .spectrum-Switch-switch */
     background-color: var(
-        --spectrum-switch-emphasized-track-color,
+        --spectrum-switch-track-color,
         var(--spectrum-global-color-gray-300)
     );
 }
 #switch:before {
-    /* .spectrum-ToggleSwitch-switch:before */
+    /* .spectrum-Switch-switch:before */
     display: block;
     position: absolute;
     content: '';
-    box-sizing: border-box; /* .spectrum-ToggleSwitch-switch:before */
+    box-sizing: border-box; /* .spectrum-Switch-switch:before */
     transition: background var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         border var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
@@ -210,40 +210,40 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-size-thick)
     );
     border-radius: var(--spectrum-switch-handle-border-radius);
-    border-style: solid; /* .spectrum-ToggleSwitch-switch:before */
+    border-style: solid; /* .spectrum-Switch-switch:before */
     background-color: var(
-        --spectrum-switch-emphasized-handle-background-color,
+        --spectrum-switch-handle-background-color,
         var(--spectrum-global-color-gray-75)
     );
     border-color: var(
-        --spectrum-switch-emphasized-handle-border-color,
+        --spectrum-switch-handle-border-color,
         var(--spectrum-global-color-gray-600)
     );
 }
 :host([dir='ltr']) #switch:before {
-    /* [dir=ltr] .spectrum-ToggleSwitch-switch:before */
+    /* [dir=ltr] .spectrum-Switch-switch:before */
     left: 0;
 }
 :host([dir='rtl']) #switch:before {
-    /* [dir=rtl] .spectrum-ToggleSwitch-switch:before */
+    /* [dir=rtl] .spectrum-Switch-switch:before */
     right: 0;
 }
 :host([dir='ltr']) #switch:after {
-    /* [dir=ltr] .spectrum-ToggleSwitch-switch:after */
+    /* [dir=ltr] .spectrum-Switch-switch:after */
     left: 0;
 }
 :host([dir='ltr']) #switch:after,
 :host([dir='rtl']) #switch:after {
-    /* [dir=ltr] .spectrum-ToggleSwitch-switch:after,
-   * [dir=rtl] .spectrum-ToggleSwitch-switch:after */
+    /* [dir=ltr] .spectrum-Switch-switch:after,
+   * [dir=rtl] .spectrum-Switch-switch:after */
     right: 0;
 }
 :host([dir='rtl']) #switch:after {
-    /* [dir=rtl] .spectrum-ToggleSwitch-switch:after */
+    /* [dir=rtl] .spectrum-Switch-switch:after */
     left: 0;
 }
 #switch:after {
-    /* .spectrum-ToggleSwitch-switch:after */
+    /* .spectrum-Switch-switch:after */
     border-radius: calc(
         var(
                 --spectrum-switch-track-height,
@@ -260,176 +260,178 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     bottom: 0;
     top: 0;
     margin: 0;
-    transition: box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+    transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)
             ease-out,
         margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
 }
 #input ~ #label {
-    /* .spectrum-ToggleSwitch-input~.spectrum-ToggleSwitch-label */
-    color: var(
-        --spectrum-switch-emphasized-text-color,
-        var(--spectrum-alias-text-color)
-    );
+    /* .spectrum-Switch-input~.spectrum-Switch-label */
+    color: var(--spectrum-switch-text-color, var(--spectrum-alias-text-color));
 }
 :host([checked]) #input + #switch {
-    /* .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch */
+    /* .spectrum-Switch-input:checked+.spectrum-Switch-switch */
     background-color: var(
-        --spectrum-switch-emphasized-track-color-selected,
-        var(--spectrum-global-color-blue-500)
+        --spectrum-switch-track-color-selected,
+        var(--spectrum-global-color-gray-700)
     );
 }
 :host([checked]) #input + #switch:before {
-    /* .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch:before */
+    /* .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
     border-color: var(
-        --spectrum-switch-emphasized-handle-border-color-selected,
-        var(--spectrum-global-color-blue-500)
+        --spectrum-switch-handle-border-color-selected,
+        var(--spectrum-global-color-gray-700)
     );
 }
 :host(:hover) #input + #switch:before {
-    /* .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input+.spectrum-ToggleSwitch-switch:before */
+    /* .spectrum-Switch:hover .spectrum-Switch-input+.spectrum-Switch-switch:before */
     border-color: var(
-        --spectrum-switch-emphasized-handle-border-color-hover,
+        --spectrum-switch-handle-border-color-hover,
         var(--spectrum-global-color-gray-700)
     );
     box-shadow: none;
 }
 :host(:hover) #input ~ #label {
-    /* .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input~.spectrum-ToggleSwitch-label */
+    /* .spectrum-Switch:hover .spectrum-Switch-input~.spectrum-Switch-label */
     color: var(
-        --spectrum-switch-emphasized-text-color-hover,
+        --spectrum-switch-text-color-hover,
         var(--spectrum-alias-text-color-hover)
     );
 }
 :host(:hover[checked]) #input:enabled + #switch {
-    /* .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch */
+    /* .spectrum-Switch:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
+    background-color: var(
+        --spectrum-switch-track-color-selected-hover,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+:host(:hover[checked]) #input:enabled + #switch:before {
+    /* .spectrum-Switch:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
+    border-color: var(
+        --spectrum-switch-handle-border-color-selected-hover,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+:host(:active) #input + #switch:before {
+    /* .spectrum-Switch:active .spectrum-Switch-input+.spectrum-Switch-switch:before */
+    border-color: var(
+        --spectrum-switch-handle-border-color-down,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+:host(:active) #input ~ #label {
+    /* .spectrum-Switch:active .spectrum-Switch-input~.spectrum-Switch-label */
+    color: var(
+        --spectrum-switch-text-color-down,
+        var(--spectrum-alias-text-color-down)
+    );
+}
+:host(:active[checked]) #input:enabled + #switch {
+    /* .spectrum-Switch:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
+    background-color: var(
+        --spectrum-switch-track-color-selected-down,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+:host(:active[checked]) #input:enabled + #switch:before {
+    /* .spectrum-Switch:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
+    border-color: var(
+        --spectrum-switch-handle-border-color-selected-down,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+:host([disabled]) #input + #switch {
+    /* .spectrum-Switch .spectrum-Switch-input:disabled+.spectrum-Switch-switch */
+    background-color: var(
+        --spectrum-switch-track-color-disabled,
+        var(--spectrum-global-color-gray-300)
+    );
+}
+:host([disabled]) #input + #switch:before {
+    /* .spectrum-Switch .spectrum-Switch-input:disabled+.spectrum-Switch-switch:before */
+    border-color: var(
+        --spectrum-switch-handle-border-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+}
+:host([disabled]) #input ~ #label {
+    /* .spectrum-Switch .spectrum-Switch-input:disabled~.spectrum-Switch-label */
+    color: var(
+        --spectrum-switch-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    );
+}
+:host([disabled][checked]) #input + #switch {
+    /* .spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch */
+    background-color: var(
+        --spectrum-switch-track-color-selected-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+}
+:host([disabled][checked]) #input + #switch:before {
+    /* .spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch:before */
+    border-color: var(
+        --spectrum-switch-handle-border-color-selected-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+}
+:host([disabled][checked]) #input ~ #label {
+    /* .spectrum-Switch .spectrum-Switch-input:disabled:checked~.spectrum-Switch-label */
+    color: var(
+        --spectrum-switch-text-color-selected-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    );
+}
+:host([checked]) .spectrum-Switch--emphasized #input + #switch {
+    /* .spectrum-Switch--emphasized .spectrum-Switch-input:checked+.spectrum-Switch-switch */
+    background-color: var(
+        --spectrum-switch-emphasized-track-color-selected,
+        var(--spectrum-global-color-blue-500)
+    );
+}
+:host([checked]) .spectrum-Switch--emphasized #input + #switch:before {
+    /* .spectrum-Switch--emphasized .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
+    border-color: var(
+        --spectrum-switch-emphasized-handle-border-color-selected,
+        var(--spectrum-global-color-blue-500)
+    );
+}
+:host([checked]) .spectrum-Switch--emphasized:hover #input:enabled + #switch {
+    /* .spectrum-Switch--emphasized:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-emphasized-track-color-selected-hover,
         var(--spectrum-global-color-blue-600)
     );
 }
-:host(:hover[checked]) #input:enabled + #switch:before {
-    /* .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch:before */
+:host([checked])
+    .spectrum-Switch--emphasized:hover
+    #input:enabled
+    + #switch:before {
+    /* .spectrum-Switch--emphasized:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-emphasized-handle-border-color-selected-hover,
         var(--spectrum-global-color-blue-600)
     );
 }
-:host(:active) #input + #switch:before {
-    /* .spectrum-ToggleSwitch:active .spectrum-ToggleSwitch-input+.spectrum-ToggleSwitch-switch:before */
-    border-color: var(
-        --spectrum-switch-emphasized-handle-border-color-down,
-        var(--spectrum-global-color-gray-800)
-    );
-}
-:host(:active) #input ~ #label {
-    /* .spectrum-ToggleSwitch:active .spectrum-ToggleSwitch-input~.spectrum-ToggleSwitch-label */
-    color: var(
-        --spectrum-switch-emphasized-text-color-down,
-        var(--spectrum-alias-text-color-down)
-    );
-}
-:host(:active[checked]) #input:enabled + #switch {
-    /* .spectrum-ToggleSwitch:active .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch */
+:host(.spectrum-Switch--emphasized:active[checked]) #input:enabled + #switch {
+    /* .spectrum-Switch.spectrum-Switch--emphasized:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-emphasized-track-color-selected-down,
         var(--spectrum-global-color-blue-700)
     );
 }
-:host(:active[checked]) #input:enabled + #switch:before {
-    /* .spectrum-ToggleSwitch:active .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch:before */
+:host(.spectrum-Switch--emphasized:active[checked])
+    #input:enabled
+    + #switch:before {
+    /* .spectrum-Switch.spectrum-Switch--emphasized:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-emphasized-handle-border-color-selected-down,
         var(--spectrum-global-color-blue-700)
     );
 }
-:host([disabled]) #input + #switch {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input:disabled+.spectrum-ToggleSwitch-switch */
-    background-color: var(
-        --spectrum-switch-emphasized-track-color-disabled,
-        var(--spectrum-global-color-gray-300)
-    );
-}
-:host([disabled]) #input + #switch:before {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input:disabled+.spectrum-ToggleSwitch-switch:before */
-    border-color: var(
-        --spectrum-switch-emphasized-handle-border-color-disabled,
-        var(--spectrum-global-color-gray-400)
-    );
-}
-:host([disabled]) #input ~ #label {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input:disabled~.spectrum-ToggleSwitch-label */
-    color: var(
-        --spectrum-switch-emphasized-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
-    );
-}
-:host([disabled][checked]) #input + #switch {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input:disabled:checked+.spectrum-ToggleSwitch-switch */
-    background-color: var(
-        --spectrum-switch-emphasized-track-color-selected-disabled,
-        var(--spectrum-global-color-gray-400)
-    );
-}
-:host([disabled][checked]) #input + #switch:before {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input:disabled:checked+.spectrum-ToggleSwitch-switch:before */
-    border-color: var(
-        --spectrum-switch-emphasized-handle-border-color-selected-disabled,
-        var(--spectrum-global-color-gray-400)
-    );
-}
-:host([disabled][checked]) #input ~ #label {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input:disabled:checked~.spectrum-ToggleSwitch-label */
-    color: var(
-        --spectrum-switch-emphasized-text-color-selected-disabled,
-        var(--spectrum-alias-text-color-disabled)
-    );
-}
-:host([quiet][checked]) #input + #switch {
-    /* .spectrum-ToggleSwitch--quiet .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch */
-    background-color: var(
-        --spectrum-switch-quiet-track-color-selected,
-        var(--spectrum-global-color-gray-700)
-    );
-}
-:host([quiet][checked]) #input + #switch:before {
-    /* .spectrum-ToggleSwitch--quiet .spectrum-ToggleSwitch-input:checked+.spectrum-ToggleSwitch-switch:before */
-    border-color: var(
-        --spectrum-switch-quiet-handle-border-color-selected,
-        var(--spectrum-global-color-gray-700)
-    );
-}
-:host([quiet][checked]:hover) #input:enabled + #switch {
-    /* .spectrum-ToggleSwitch--quiet:hover .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch */
-    background-color: var(
-        --spectrum-switch-quiet-track-color-selected-hover,
-        var(--spectrum-global-color-gray-800)
-    );
-}
-:host([quiet][checked]:hover) #input:enabled + #switch:before {
-    /* .spectrum-ToggleSwitch--quiet:hover .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch:before */
-    border-color: var(
-        --spectrum-switch-quiet-handle-border-color-selected-hover,
-        var(--spectrum-global-color-gray-800)
-    );
-}
-:host([quiet]:active[checked]) #input:enabled + #switch {
-    /* .spectrum-ToggleSwitch.spectrum-ToggleSwitch--quiet:active .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch */
-    background-color: var(
-        --spectrum-switch-quiet-track-color-selected-down,
-        var(--spectrum-global-color-gray-900)
-    );
-}
-:host([quiet]:active[checked]) #input:enabled + #switch:before {
-    /* .spectrum-ToggleSwitch.spectrum-ToggleSwitch--quiet:active .spectrum-ToggleSwitch-input:checked:enabled+.spectrum-ToggleSwitch-switch:before */
-    border-color: var(
-        --spectrum-switch-quiet-handle-border-color-selected-down,
-        var(--spectrum-global-color-gray-900)
-    );
-}
 #input:focus-visible + #switch:after,
 :host(:hover) #input:focus-visible + #switch:after {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input.focus-ring+.spectrum-ToggleSwitch-switch:after,
-   * .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input.focus-ring+.spectrum-ToggleSwitch-switch:after */
+    /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
     box-shadow: 0 0 0
         var(
             --spectrum-switch-focus-ring-size-key-focus,
@@ -442,46 +444,55 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #input:focus-visible + #switch:before,
 :host(:hover) #input:focus-visible + #switch:before {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input.focus-ring+.spectrum-ToggleSwitch-switch:before,
-   * .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input.focus-ring+.spectrum-ToggleSwitch-switch:before */
+    /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before */
     border-color: var(
-        --spectrum-switch-emphasized-handle-border-color-key-focus,
+        --spectrum-switch-handle-border-color-key-focus,
         var(--spectrum-global-color-gray-700)
     );
 }
 :host([checked]) #input:focus-visible + #switch,
 :host(:hover[checked]) #input:focus-visible + #switch {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input.focus-ring:checked+.spectrum-ToggleSwitch-switch,
-   * .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input.focus-ring:checked+.spectrum-ToggleSwitch-switch */
+    /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
+    background-color: var(
+        --spectrum-switch-track-color-selected-key-focus,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+:host([checked]) #input:focus-visible + #switch:before,
+:host(:hover[checked]) #input:focus-visible + #switch:before {
+    /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
+    border-color: var(
+        --spectrum-switch-handle-border-color-selected-key-focus,
+        var(--spectrum-global-color-gray-800)
+    );
+}
+:host([checked]) .spectrum-Switch--emphasized #input:focus-visible + #switch,
+:host([checked])
+    .spectrum-Switch--emphasized:hover
+    #input:focus-visible
+    + #switch {
+    /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
+   * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-emphasized-track-color-selected-key-focus,
         var(--spectrum-global-color-blue-600)
     );
 }
-:host([checked]) #input:focus-visible + #switch:before,
-:host(:hover[checked]) #input:focus-visible + #switch:before {
-    /* .spectrum-ToggleSwitch .spectrum-ToggleSwitch-input.focus-ring:checked+.spectrum-ToggleSwitch-switch:before,
-   * .spectrum-ToggleSwitch:hover .spectrum-ToggleSwitch-input.focus-ring:checked+.spectrum-ToggleSwitch-switch:before */
+:host([checked])
+    .spectrum-Switch--emphasized
+    #input:focus-visible
+    + #switch:before,
+:host([checked])
+    .spectrum-Switch--emphasized:hover
+    #input:focus-visible
+    + #switch:before {
+    /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
+   * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-emphasized-handle-border-color-selected-key-focus,
         var(--spectrum-global-color-blue-600)
-    );
-}
-:host([quiet][checked]) #input:focus-visible + #switch,
-:host([quiet][checked]:hover) #input:focus-visible + #switch {
-    /* .spectrum-ToggleSwitch--quiet .spectrum-ToggleSwitch-input.focus-ring:checked+.spectrum-ToggleSwitch-switch,
-   * .spectrum-ToggleSwitch--quiet:hover .spectrum-ToggleSwitch-input.focus-ring:checked+.spectrum-ToggleSwitch-switch */
-    background-color: var(
-        --spectrum-switch-quiet-track-color-selected-key-focus,
-        var(--spectrum-global-color-gray-800)
-    );
-}
-:host([quiet][checked]) #input:focus-visible + #switch:before,
-:host([quiet][checked]:hover) #input:focus-visible + #switch:before {
-    /* .spectrum-ToggleSwitch--quiet .spectrum-ToggleSwitch-input.focus-ring:checked+.spectrum-ToggleSwitch-switch:before,
-   * .spectrum-ToggleSwitch--quiet:hover .spectrum-ToggleSwitch-input.focus-ring:checked+.spectrum-ToggleSwitch-switch:before */
-    border-color: var(
-        --spectrum-switch-quiet-handle-border-color-selected-key-focus,
-        var(--spectrum-global-color-gray-800)
     );
 }

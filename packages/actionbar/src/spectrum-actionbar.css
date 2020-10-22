@@ -61,6 +61,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ActionBar--fixed */
     position: fixed;
 }
+:host([dir='ltr']) #popover {
+    /* [dir=ltr] .spectrum-ActionBar-popover */
+    padding-left: var(
+        --spectrum-global-dimension-size-200
+    ); /* [dir=ltr] .spectrum-ActionBar-popover */
+    padding-right: calc(var(--spectrum-global-dimension-size-200) / 2);
+}
+:host([dir='rtl']) #popover {
+    /* [dir=rtl] .spectrum-ActionBar-popover */
+    padding-right: var(
+        --spectrum-global-dimension-size-200
+    ); /* [dir=rtl] .spectrum-ActionBar-popover */
+    padding-left: calc(var(--spectrum-global-dimension-size-200) / 2);
+}
 #popover {
     /* .spectrum-ActionBar-popover */
     position: relative;
@@ -70,8 +84,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     height: var(--spectrum-global-dimension-size-600);
     min-width: 280px;
     max-width: 960px;
-    padding: 0 calc(var(--spectrum-global-dimension-size-200) / 2) 0
-        var(--spectrum-global-dimension-size-200);
     flex-direction: row;
     align-items: center;
     justify-content: space-between;

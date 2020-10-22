@@ -524,10 +524,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-animation-duration-100)
         )
         ease-in-out;
-    outline: none;
-    cursor: pointer;
-    cursor: -webkit-grab;
-    cursor: grab; /* .spectrum-Slider-handle */
+    outline: none; /* .spectrum-Slider-handle */
     border-color: var(
         --spectrum-slider-handle-border-color,
         var(--spectrum-global-color-gray-700)
@@ -543,9 +540,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle.is-focused,
    * .spectrum-Slider-handle:active */
-    cursor: ns-resize;
-    cursor: -webkit-grabbing;
-    cursor: grabbing;
+    border-width: var(
+        --spectrum-slider-handle-border-size-down,
+        var(--spectrum-global-dimension-size-75)
+    );
 }
 :host([dragging]) #handle,
 :host([handle-highlight]) #handle,
@@ -691,6 +689,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) #value {
     /* [dir=ltr] .spectrum-Slider-value */
     padding-right: 0; /* [dir=ltr] .spectrum-Slider-value */
+    text-align: right; /* [dir=ltr] .spectrum-Slider-value */
     margin-left: var(
         --spectrum-slider-label-gap-x,
         var(--spectrum-global-dimension-size-200)
@@ -699,6 +698,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) #value {
     /* [dir=rtl] .spectrum-Slider-value */
     padding-left: 0; /* [dir=rtl] .spectrum-Slider-value */
+    text-align: left; /* [dir=rtl] .spectrum-Slider-value */
     margin-right: var(
         --spectrum-slider-label-gap-x,
         var(--spectrum-global-dimension-size-200)
@@ -708,6 +708,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Slider-value */
     flex-grow: 0;
     cursor: default;
+    font-feature-settings: 'tnum';
 }
 .ticks {
     /* .spectrum-Slider-ticks */

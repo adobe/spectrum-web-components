@@ -48,7 +48,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/illustratedmessage": "^3.0.0-beta.3"
+        "@spectrum-css/illustratedmessage": "^3.0.0-beta.4"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.1.3",

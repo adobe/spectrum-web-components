@@ -117,7 +117,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--XXXL {
+.spectrum-Heading--sizeXXXL {
     font-size: var(
         --spectrum-heading-xxxl-text-size,
         var(--spectrum-alias-heading-xxxl-text-size)
@@ -143,7 +143,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Heading--XXL {
+.spectrum-Heading--sizeXXL {
     font-size: var(
         --spectrum-heading-xxl-text-size,
         var(--spectrum-alias-heading-xxl-text-size)
@@ -169,7 +169,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Heading--XL {
+.spectrum-Heading--sizeXL {
     font-size: var(
         --spectrum-heading-xl-text-size,
         var(--spectrum-alias-heading-xl-text-size)
@@ -195,7 +195,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Heading--L {
+.spectrum-Heading--sizeL {
     font-size: var(
         --spectrum-heading-l-text-size,
         var(--spectrum-alias-heading-l-text-size)
@@ -221,7 +221,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Heading--M {
+.spectrum-Heading--sizeM {
     font-size: var(
         --spectrum-heading-m-text-size,
         var(--spectrum-alias-heading-m-text-size)
@@ -247,7 +247,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Heading--S {
+.spectrum-Heading--sizeS {
     font-size: var(
         --spectrum-heading-s-text-size,
         var(--spectrum-alias-heading-s-text-size)
@@ -273,7 +273,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Heading--XS {
+.spectrum-Heading--sizeXS {
     font-size: var(
         --spectrum-heading-xs-text-size,
         var(--spectrum-alias-heading-xs-text-size)
@@ -299,7 +299,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Heading--XXS {
+.spectrum-Heading--sizeXXS {
     font-size: var(
         --spectrum-heading-xxs-text-size,
         var(--spectrum-alias-heading-xxs-text-size)
@@ -405,7 +405,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Body--XXXL {
+.spectrum-Body--sizeXXXL {
     font-size: var(
         --spectrum-body-xxxl-text-size,
         var(--spectrum-global-dimension-font-size-600)
@@ -431,7 +431,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Body--XXL {
+.spectrum-Body--sizeXXL {
     font-size: var(
         --spectrum-body-xxl-text-size,
         var(--spectrum-global-dimension-font-size-500)
@@ -457,7 +457,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Body--XL {
+.spectrum-Body--sizeXL {
     font-size: var(
         --spectrum-body-xl-text-size,
         var(--spectrum-global-dimension-font-size-400)
@@ -483,7 +483,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Body--L {
+.spectrum-Body--sizeL {
     font-size: var(
         --spectrum-body-l-text-size,
         var(--spectrum-global-dimension-font-size-300)
@@ -509,7 +509,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Body--M {
+.spectrum-Body--sizeM {
     font-size: var(
         --spectrum-body-m-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -535,7 +535,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Body--S {
+.spectrum-Body--sizeS {
     font-size: var(
         --spectrum-body-s-text-size,
         var(--spectrum-alias-font-size-default)
@@ -561,7 +561,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Body--XS {
+.spectrum-Body--sizeXS {
     font-size: var(
         --spectrum-body-xs-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -658,7 +658,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Detail--XL {
+.spectrum-Detail--sizeXL {
     font-size: var(
         --spectrum-detail-xl-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -684,7 +684,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--XL em {
+.spectrum-Detail--sizeXL em {
     font-size: var(
         --spectrum-detail-xl-emphasis-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -713,7 +713,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--XL strong {
+.spectrum-Detail--sizeXL strong {
     font-size: var(
         --spectrum-detail-xl-strong-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -739,7 +739,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--L {
+.spectrum-Detail--sizeL {
     font-size: var(
         --spectrum-detail-l-text-size,
         var(--spectrum-global-dimension-font-size-100)
@@ -765,7 +765,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--L em {
+.spectrum-Detail--sizeL em {
     font-size: var(
         --spectrum-detail-l-emphasis-text-size,
         var(--spectrum-global-dimension-font-size-100)
@@ -791,7 +791,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--L strong {
+.spectrum-Detail--sizeL strong {
     font-size: var(
         --spectrum-detail-l-strong-text-size,
         var(--spectrum-global-dimension-font-size-100)
@@ -817,7 +817,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--M {
+.spectrum-Detail--sizeM {
     font-size: var(
         --spectrum-detail-m-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -843,7 +843,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--M em {
+.spectrum-Detail--sizeM em {
     font-size: var(
         --spectrum-detail-m-emphasis-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -869,7 +869,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--M strong {
+.spectrum-Detail--sizeM strong {
     font-size: var(
         --spectrum-detail-m-strong-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -895,7 +895,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--S {
+.spectrum-Detail--sizeS {
     font-size: var(
         --spectrum-detail-s-text-size,
         var(--spectrum-global-dimension-font-size-50)
@@ -921,7 +921,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--S em {
+.spectrum-Detail--sizeS em {
     font-size: var(
         --spectrum-detail-s-emphasis-text-size,
         var(--spectrum-global-dimension-font-size-50)
@@ -947,7 +947,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum-Detail--S strong {
+.spectrum-Detail--sizeS strong {
     font-size: var(
         --spectrum-detail-s-strong-text-size,
         var(--spectrum-global-dimension-font-size-50)
@@ -1003,7 +1003,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code--XL {
+.spectrum-Code--sizeXL {
     font-size: var(
         --spectrum-code-xl-text-size,
         var(--spectrum-global-dimension-font-size-400)
@@ -1032,7 +1032,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code--L {
+.spectrum-Code--sizeL {
     font-size: var(
         --spectrum-code-l-text-size,
         var(--spectrum-global-dimension-font-size-300)
@@ -1061,7 +1061,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code--M {
+.spectrum-Code--sizeM {
     font-size: var(
         --spectrum-code-m-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -1090,7 +1090,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code--S {
+.spectrum-Code--sizeS {
     font-size: var(
         --spectrum-code-s-text-size,
         var(--spectrum-alias-font-size-default)
@@ -1119,7 +1119,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code--XS {
+.spectrum-Code--sizeXS {
     font-size: var(
         --spectrum-code-xs-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -1148,7 +1148,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Heading--XXXL {
+.spectrum-Typography .spectrum-Heading--sizeXXXL {
     margin-top: var(
         --spectrum-heading-xxxl-margin-top,
         var(--spectrum-alias-heading-xxxl-margin-top)
@@ -1159,7 +1159,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Heading--XXL {
+.spectrum-Typography .spectrum-Heading--sizeXXL {
     margin-top: var(
         --spectrum-heading-xxl-margin-top,
         var(--spectrum-alias-heading-xxl-margin-top)
@@ -1170,7 +1170,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Heading--XL {
+.spectrum-Typography .spectrum-Heading--sizeXL {
     margin-top: var(
         --spectrum-heading-xl-margin-top,
         var(--spectrum-alias-heading-xl-margin-top)
@@ -1181,7 +1181,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Heading--L {
+.spectrum-Typography .spectrum-Heading--sizeL {
     margin-top: var(
         --spectrum-heading-l-margin-top,
         var(--spectrum-alias-heading-l-margin-top)
@@ -1192,7 +1192,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Heading--M {
+.spectrum-Typography .spectrum-Heading--sizeM {
     margin-top: var(
         --spectrum-heading-m-margin-top,
         var(--spectrum-alias-heading-m-margin-top)
@@ -1203,7 +1203,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Heading--S {
+.spectrum-Typography .spectrum-Heading--sizeS {
     margin-top: var(
         --spectrum-heading-s-margin-top,
         var(--spectrum-alias-heading-s-margin-top)
@@ -1214,7 +1214,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Heading--XS {
+.spectrum-Typography .spectrum-Heading--sizeXS {
     margin-top: var(
         --spectrum-heading-xs-margin-top,
         var(--spectrum-alias-heading-xs-margin-top)
@@ -1225,7 +1225,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Heading--XXS {
+.spectrum-Typography .spectrum-Heading--sizeXXS {
     margin-top: var(
         --spectrum-heading-xxs-margin-top,
         var(--spectrum-alias-heading-xxs-margin-top)
@@ -1236,7 +1236,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Body--XXXL {
+.spectrum-Typography .spectrum-Body--sizeXXXL {
     margin-top: var(--spectrum-body-xxxl-margin-top, 0px);
     margin-bottom: var(
         --spectrum-body-xxxl-margin-bottom,
@@ -1244,7 +1244,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Body--XXL {
+.spectrum-Typography .spectrum-Body--sizeXXL {
     margin-top: var(--spectrum-body-xxl-margin-top, 0px);
     margin-bottom: var(
         --spectrum-body-xxl-margin-bottom,
@@ -1252,7 +1252,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Body--XL {
+.spectrum-Typography .spectrum-Body--sizeXL {
     margin-top: var(--spectrum-body-xl-margin-top, 0px);
     margin-bottom: var(
         --spectrum-body-xl-margin-bottom,
@@ -1260,7 +1260,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Body--L {
+.spectrum-Typography .spectrum-Body--sizeL {
     margin-top: var(--spectrum-body-l-margin-top, 0px);
     margin-bottom: var(
         --spectrum-body-l-margin-bottom,
@@ -1268,7 +1268,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Body--M {
+.spectrum-Typography .spectrum-Body--sizeM {
     margin-top: var(--spectrum-body-m-margin-top, 0px);
     margin-bottom: var(
         --spectrum-body-m-margin-bottom,
@@ -1276,7 +1276,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Body--S {
+.spectrum-Typography .spectrum-Body--sizeS {
     margin-top: var(--spectrum-body-s-margin-top, 0px);
     margin-bottom: var(
         --spectrum-body-s-margin-bottom,
@@ -1284,7 +1284,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Body--XS {
+.spectrum-Typography .spectrum-Body--sizeXS {
     margin-top: var(--spectrum-body-xs-margin-top, 0px);
     margin-bottom: var(
         --spectrum-body-xs-margin-bottom,
@@ -1292,9 +1292,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XXXL,
-.spectrum:lang(ko) .spectrum-Heading--XXXL,
-.spectrum:lang(zh) .spectrum-Heading--XXXL {
+.spectrum:lang(ja) .spectrum-Heading--sizeXXXL,
+.spectrum:lang(ko) .spectrum-Heading--sizeXXXL,
+.spectrum:lang(zh) .spectrum-Heading--sizeXXXL {
     font-size: var(
         --spectrum-heading-han-xxxl-text-size,
         var(--spectrum-alias-heading-xxxl-text-size)
@@ -1320,9 +1320,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XXL,
-.spectrum:lang(ko) .spectrum-Heading--XXL,
-.spectrum:lang(zh) .spectrum-Heading--XXL {
+.spectrum:lang(ja) .spectrum-Heading--sizeXXL,
+.spectrum:lang(ko) .spectrum-Heading--sizeXXL,
+.spectrum:lang(zh) .spectrum-Heading--sizeXXL {
     font-size: var(
         --spectrum-heading-han-xxl-text-size,
         var(--spectrum-alias-heading-han-xxl-text-size)
@@ -1348,9 +1348,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XL,
-.spectrum:lang(ko) .spectrum-Heading--XL,
-.spectrum:lang(zh) .spectrum-Heading--XL {
+.spectrum:lang(ja) .spectrum-Heading--sizeXL,
+.spectrum:lang(ko) .spectrum-Heading--sizeXL,
+.spectrum:lang(zh) .spectrum-Heading--sizeXL {
     font-size: var(
         --spectrum-heading-han-xl-text-size,
         var(--spectrum-alias-heading-han-xl-text-size)
@@ -1376,9 +1376,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Heading--L,
-.spectrum:lang(ko) .spectrum-Heading--L,
-.spectrum:lang(zh) .spectrum-Heading--L {
+.spectrum:lang(ja) .spectrum-Heading--sizeL,
+.spectrum:lang(ko) .spectrum-Heading--sizeL,
+.spectrum:lang(zh) .spectrum-Heading--sizeL {
     font-size: var(
         --spectrum-heading-han-l-text-size,
         var(--spectrum-alias-heading-han-l-text-size)
@@ -1404,9 +1404,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Heading--M,
-.spectrum:lang(ko) .spectrum-Heading--M,
-.spectrum:lang(zh) .spectrum-Heading--M {
+.spectrum:lang(ja) .spectrum-Heading--sizeM,
+.spectrum:lang(ko) .spectrum-Heading--sizeM,
+.spectrum:lang(zh) .spectrum-Heading--sizeM {
     font-size: var(
         --spectrum-heading-han-m-text-size,
         var(--spectrum-alias-heading-han-m-text-size)
@@ -1432,9 +1432,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Heading--S,
-.spectrum:lang(ko) .spectrum-Heading--S,
-.spectrum:lang(zh) .spectrum-Heading--S {
+.spectrum:lang(ja) .spectrum-Heading--sizeS,
+.spectrum:lang(ko) .spectrum-Heading--sizeS,
+.spectrum:lang(zh) .spectrum-Heading--sizeS {
     font-size: var(
         --spectrum-heading-han-s-text-size,
         var(--spectrum-alias-heading-s-text-size)
@@ -1460,9 +1460,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XS,
-.spectrum:lang(ko) .spectrum-Heading--XS,
-.spectrum:lang(zh) .spectrum-Heading--XS {
+.spectrum:lang(ja) .spectrum-Heading--sizeXS,
+.spectrum:lang(ko) .spectrum-Heading--sizeXS,
+.spectrum:lang(zh) .spectrum-Heading--sizeXS {
     font-size: var(
         --spectrum-heading-han-xs-text-size,
         var(--spectrum-alias-heading-xs-text-size)
@@ -1488,9 +1488,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XXS,
-.spectrum:lang(ko) .spectrum-Heading--XXS,
-.spectrum:lang(zh) .spectrum-Heading--XXS {
+.spectrum:lang(ja) .spectrum-Heading--sizeXXS,
+.spectrum:lang(ko) .spectrum-Heading--sizeXXS,
+.spectrum:lang(zh) .spectrum-Heading--sizeXXS {
     font-size: var(
         --spectrum-heading-han-xxs-text-size,
         var(--spectrum-alias-heading-xxs-text-size)
@@ -1598,9 +1598,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum:lang(ja) .spectrum-Body--XXXL,
-.spectrum:lang(ko) .spectrum-Body--XXXL,
-.spectrum:lang(zh) .spectrum-Body--XXXL {
+.spectrum:lang(ja) .spectrum-Body--sizeXXXL,
+.spectrum:lang(ko) .spectrum-Body--sizeXXXL,
+.spectrum:lang(zh) .spectrum-Body--sizeXXXL {
     font-size: var(
         --spectrum-body-han-xxxl-text-size,
         var(--spectrum-global-dimension-font-size-600)
@@ -1626,9 +1626,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Body--XXL,
-.spectrum:lang(ko) .spectrum-Body--XXL,
-.spectrum:lang(zh) .spectrum-Body--XXL {
+.spectrum:lang(ja) .spectrum-Body--sizeXXL,
+.spectrum:lang(ko) .spectrum-Body--sizeXXL,
+.spectrum:lang(zh) .spectrum-Body--sizeXXL {
     font-size: var(
         --spectrum-body-han-xxl-text-size,
         var(--spectrum-global-dimension-font-size-500)
@@ -1654,9 +1654,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Body--XL,
-.spectrum:lang(ko) .spectrum-Body--XL,
-.spectrum:lang(zh) .spectrum-Body--XL {
+.spectrum:lang(ja) .spectrum-Body--sizeXL,
+.spectrum:lang(ko) .spectrum-Body--sizeXL,
+.spectrum:lang(zh) .spectrum-Body--sizeXL {
     font-size: var(
         --spectrum-body-han-xl-text-size,
         var(--spectrum-global-dimension-font-size-400)
@@ -1682,9 +1682,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Body--L,
-.spectrum:lang(ko) .spectrum-Body--L,
-.spectrum:lang(zh) .spectrum-Body--L {
+.spectrum:lang(ja) .spectrum-Body--sizeL,
+.spectrum:lang(ko) .spectrum-Body--sizeL,
+.spectrum:lang(zh) .spectrum-Body--sizeL {
     font-size: var(
         --spectrum-body-han-l-text-size,
         var(--spectrum-global-dimension-font-size-300)
@@ -1710,9 +1710,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Body--M,
-.spectrum:lang(ko) .spectrum-Body--M,
-.spectrum:lang(zh) .spectrum-Body--M {
+.spectrum:lang(ja) .spectrum-Body--sizeM,
+.spectrum:lang(ko) .spectrum-Body--sizeM,
+.spectrum:lang(zh) .spectrum-Body--sizeM {
     font-size: var(
         --spectrum-body-han-m-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -1738,9 +1738,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Body--S,
-.spectrum:lang(ko) .spectrum-Body--S,
-.spectrum:lang(zh) .spectrum-Body--S {
+.spectrum:lang(ja) .spectrum-Body--sizeS,
+.spectrum:lang(ko) .spectrum-Body--sizeS,
+.spectrum:lang(zh) .spectrum-Body--sizeS {
     font-size: var(
         --spectrum-body-han-s-text-size,
         var(--spectrum-alias-font-size-default)
@@ -1766,9 +1766,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Body--XS,
-.spectrum:lang(ko) .spectrum-Body--XS,
-.spectrum:lang(zh) .spectrum-Body--XS {
+.spectrum:lang(ja) .spectrum-Body--sizeXS,
+.spectrum:lang(ko) .spectrum-Body--sizeXS,
+.spectrum:lang(zh) .spectrum-Body--sizeXS {
     font-size: var(
         --spectrum-body-han-xs-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -1794,9 +1794,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--XL,
-.spectrum:lang(ko) .spectrum-Detail--XL,
-.spectrum:lang(zh) .spectrum-Detail--XL {
+.spectrum:lang(ja) .spectrum-Detail--sizeXL,
+.spectrum:lang(ko) .spectrum-Detail--sizeXL,
+.spectrum:lang(zh) .spectrum-Detail--sizeXL {
     font-size: var(
         --spectrum-detail-han-xl-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -1822,9 +1822,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--XL em,
-.spectrum:lang(ko) .spectrum-Detail--XL em,
-.spectrum:lang(zh) .spectrum-Detail--XL em {
+.spectrum:lang(ja) .spectrum-Detail--sizeXL em,
+.spectrum:lang(ko) .spectrum-Detail--sizeXL em,
+.spectrum:lang(zh) .spectrum-Detail--sizeXL em {
     font-size: var(
         --spectrum-detail-han-xl-emphasis-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -1853,9 +1853,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--XL strong,
-.spectrum:lang(ko) .spectrum-Detail--XL strong,
-.spectrum:lang(zh) .spectrum-Detail--XL strong {
+.spectrum:lang(ja) .spectrum-Detail--sizeXL strong,
+.spectrum:lang(ko) .spectrum-Detail--sizeXL strong,
+.spectrum:lang(zh) .spectrum-Detail--sizeXL strong {
     font-size: var(
         --spectrum-detail-han-xl-strong-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -1884,9 +1884,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--L,
-.spectrum:lang(ko) .spectrum-Detail--L,
-.spectrum:lang(zh) .spectrum-Detail--L {
+.spectrum:lang(ja) .spectrum-Detail--sizeL,
+.spectrum:lang(ko) .spectrum-Detail--sizeL,
+.spectrum:lang(zh) .spectrum-Detail--sizeL {
     font-size: var(
         --spectrum-detail-han-l-text-size,
         var(--spectrum-global-dimension-font-size-100)
@@ -1912,9 +1912,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--L em,
-.spectrum:lang(ko) .spectrum-Detail--L em,
-.spectrum:lang(zh) .spectrum-Detail--L em {
+.spectrum:lang(ja) .spectrum-Detail--sizeL em,
+.spectrum:lang(ko) .spectrum-Detail--sizeL em,
+.spectrum:lang(zh) .spectrum-Detail--sizeL em {
     font-size: var(
         --spectrum-detail-han-l-emphasis-text-size,
         var(--spectrum-global-dimension-font-size-100)
@@ -1943,9 +1943,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--L strong,
-.spectrum:lang(ko) .spectrum-Detail--L strong,
-.spectrum:lang(zh) .spectrum-Detail--L strong {
+.spectrum:lang(ja) .spectrum-Detail--sizeL strong,
+.spectrum:lang(ko) .spectrum-Detail--sizeL strong,
+.spectrum:lang(zh) .spectrum-Detail--sizeL strong {
     font-size: var(
         --spectrum-detail-han-l-strong-text-size,
         var(--spectrum-global-dimension-font-size-100)
@@ -1974,9 +1974,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--M,
-.spectrum:lang(ko) .spectrum-Detail--M,
-.spectrum:lang(zh) .spectrum-Detail--M {
+.spectrum:lang(ja) .spectrum-Detail--sizeM,
+.spectrum:lang(ko) .spectrum-Detail--sizeM,
+.spectrum:lang(zh) .spectrum-Detail--sizeM {
     font-size: var(
         --spectrum-detail-han-m-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -2002,9 +2002,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--M em,
-.spectrum:lang(ko) .spectrum-Detail--M em,
-.spectrum:lang(zh) .spectrum-Detail--M em {
+.spectrum:lang(ja) .spectrum-Detail--sizeM em,
+.spectrum:lang(ko) .spectrum-Detail--sizeM em,
+.spectrum:lang(zh) .spectrum-Detail--sizeM em {
     font-size: var(
         --spectrum-detail-han-m-emphasis-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -2033,9 +2033,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--M strong,
-.spectrum:lang(ko) .spectrum-Detail--M strong,
-.spectrum:lang(zh) .spectrum-Detail--M strong {
+.spectrum:lang(ja) .spectrum-Detail--sizeM strong,
+.spectrum:lang(ko) .spectrum-Detail--sizeM strong,
+.spectrum:lang(zh) .spectrum-Detail--sizeM strong {
     font-size: var(
         --spectrum-detail-han-m-strong-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -2064,9 +2064,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--S,
-.spectrum:lang(ko) .spectrum-Detail--S,
-.spectrum:lang(zh) .spectrum-Detail--S {
+.spectrum:lang(ja) .spectrum-Detail--sizeS,
+.spectrum:lang(ko) .spectrum-Detail--sizeS,
+.spectrum:lang(zh) .spectrum-Detail--sizeS {
     font-size: var(
         --spectrum-detail-han-s-text-size,
         var(--spectrum-global-dimension-font-size-50)
@@ -2092,9 +2092,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--S em,
-.spectrum:lang(ko) .spectrum-Detail--S em,
-.spectrum:lang(zh) .spectrum-Detail--S em {
+.spectrum:lang(ja) .spectrum-Detail--sizeS em,
+.spectrum:lang(ko) .spectrum-Detail--sizeS em,
+.spectrum:lang(zh) .spectrum-Detail--sizeS em {
     font-size: var(
         --spectrum-detail-han-s-emphasis-text-size,
         var(--spectrum-global-dimension-font-size-50)
@@ -2123,9 +2123,9 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 
-.spectrum:lang(ja) .spectrum-Detail--S strong,
-.spectrum:lang(ko) .spectrum-Detail--S strong,
-.spectrum:lang(zh) .spectrum-Detail--S strong {
+.spectrum:lang(ja) .spectrum-Detail--sizeS strong,
+.spectrum:lang(ko) .spectrum-Detail--sizeS strong,
+.spectrum:lang(zh) .spectrum-Detail--sizeS strong {
     font-size: var(
         --spectrum-detail-han-s-strong-text-size,
         var(--spectrum-global-dimension-font-size-50)
@@ -2195,9 +2195,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum:lang(ja) .spectrum-Code--XL,
-.spectrum:lang(ko) .spectrum-Code--XL,
-.spectrum:lang(zh) .spectrum-Code--XL {
+.spectrum:lang(ja) .spectrum-Code--sizeXL,
+.spectrum:lang(ko) .spectrum-Code--sizeXL,
+.spectrum:lang(zh) .spectrum-Code--sizeXL {
     font-size: var(
         --spectrum-code-han-xl-text-size,
         var(--spectrum-global-dimension-font-size-400)
@@ -2226,9 +2226,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum:lang(ja) .spectrum-Code--L,
-.spectrum:lang(ko) .spectrum-Code--L,
-.spectrum:lang(zh) .spectrum-Code--L {
+.spectrum:lang(ja) .spectrum-Code--sizeL,
+.spectrum:lang(ko) .spectrum-Code--sizeL,
+.spectrum:lang(zh) .spectrum-Code--sizeL {
     font-size: var(
         --spectrum-code-han-l-text-size,
         var(--spectrum-global-dimension-font-size-300)
@@ -2257,9 +2257,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum:lang(ja) .spectrum-Code--M,
-.spectrum:lang(ko) .spectrum-Code--M,
-.spectrum:lang(zh) .spectrum-Code--M {
+.spectrum:lang(ja) .spectrum-Code--sizeM,
+.spectrum:lang(ko) .spectrum-Code--sizeM,
+.spectrum:lang(zh) .spectrum-Code--sizeM {
     font-size: var(
         --spectrum-code-han-m-text-size,
         var(--spectrum-global-dimension-font-size-200)
@@ -2288,9 +2288,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum:lang(ja) .spectrum-Code--S,
-.spectrum:lang(ko) .spectrum-Code--S,
-.spectrum:lang(zh) .spectrum-Code--S {
+.spectrum:lang(ja) .spectrum-Code--sizeS,
+.spectrum:lang(ko) .spectrum-Code--sizeS,
+.spectrum:lang(zh) .spectrum-Code--sizeS {
     font-size: var(
         --spectrum-code-han-s-text-size,
         var(--spectrum-alias-font-size-default)
@@ -2319,9 +2319,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum:lang(ja) .spectrum-Code--XS,
-.spectrum:lang(ko) .spectrum-Code--XS,
-.spectrum:lang(zh) .spectrum-Code--XS {
+.spectrum:lang(ja) .spectrum-Code--sizeXS,
+.spectrum:lang(ko) .spectrum-Code--sizeXS,
+.spectrum:lang(zh) .spectrum-Code--sizeXS {
     font-size: var(
         --spectrum-code-han-xs-text-size,
         var(--spectrum-global-dimension-font-size-75)
@@ -2350,534 +2350,534 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--XXXL {
+.spectrum-Heading--sizeXXXL {
     color: var(
         --spectrum-heading-xxxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading--XXL {
+.spectrum-Heading--sizeXXL {
     color: var(
         --spectrum-heading-xxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading--XL {
+.spectrum-Heading--sizeXL {
     color: var(
         --spectrum-heading-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading--L {
+.spectrum-Heading--sizeL {
     color: var(
         --spectrum-heading-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading--M {
+.spectrum-Heading--sizeM {
     color: var(
         --spectrum-heading-m-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading--S {
+.spectrum-Heading--sizeS {
     color: var(
         --spectrum-heading-s-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading--XS {
+.spectrum-Heading--sizeXS {
     color: var(
         --spectrum-heading-xs-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading--XXS {
+.spectrum-Heading--sizeXXS {
     color: var(
         --spectrum-heading-xxs-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-XXXL--light {
+.spectrum-Heading-sizeXXXL--light {
     color: var(
         --spectrum-heading-light-xxxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-XXL--light {
+.spectrum-Heading-sizeXXL--light {
     color: var(
         --spectrum-heading-light-xxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-XL--light {
+.spectrum-Heading-sizeXL--light {
     color: var(
         --spectrum-heading-light-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-L--light {
+.spectrum-Heading-sizeL--light {
     color: var(
         --spectrum-heading-light-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-XXXL--heavy {
+.spectrum-Heading-sizeXXXL--heavy {
     color: var(
         --spectrum-heading-heavy-xxxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-XXL--heavy {
+.spectrum-Heading-sizeXXL--heavy {
     color: var(
         --spectrum-heading-heavy-xxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-XL--heavy {
+.spectrum-Heading-sizeXL--heavy {
     color: var(
         --spectrum-heading-heavy-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-L--heavy {
+.spectrum-Heading-sizeL--heavy {
     color: var(
         --spectrum-heading-heavy-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-XXXL--heading {
+.spectrum-Heading-sizeXXXL--heading {
     color: var(
         --spectrum-heading-xxxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-XXL--heading {
+.spectrum-Heading-sizeXXL--heading {
     color: var(
         --spectrum-heading-xxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-XL--heading {
+.spectrum-Heading-sizeXL--heading {
     color: var(
         --spectrum-heading-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Heading-L--heading {
+.spectrum-Heading-sizeL--heading {
     color: var(
         --spectrum-heading-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Body--XXXL {
+.spectrum-Body--sizeXXXL {
     color: var(
         --spectrum-body-xxxl-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 
-.spectrum-Body--XXL {
+.spectrum-Body--sizeXXL {
     color: var(
         --spectrum-body-xxl-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 
-.spectrum-Body--XL {
+.spectrum-Body--sizeXL {
     color: var(--spectrum-body-xl-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum-Body--L {
+.spectrum-Body--sizeL {
     color: var(--spectrum-body-l-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum-Body--M {
+.spectrum-Body--sizeM {
     color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum-Body--S {
+.spectrum-Body--sizeS {
     color: var(--spectrum-body-s-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum-Body--XS {
+.spectrum-Body--sizeXS {
     color: var(--spectrum-body-xs-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum-Detail--XL {
+.spectrum-Detail--sizeXL {
     color: var(
         --spectrum-detail-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Detail--L {
+.spectrum-Detail--sizeL {
     color: var(
         --spectrum-detail-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Detail--M {
+.spectrum-Detail--sizeM {
     color: var(
         --spectrum-detail-m-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Detail--S {
+.spectrum-Detail--sizeS {
     color: var(
         --spectrum-detail-s-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum-Code--XL {
+.spectrum-Code--sizeXL {
     color: var(--spectrum-code-xl-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum-Code--L {
+.spectrum-Code--sizeL {
     color: var(--spectrum-code-l-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum-Code--M {
+.spectrum-Code--sizeM {
     color: var(--spectrum-code-m-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum-Code--S {
+.spectrum-Code--sizeS {
     color: var(--spectrum-code-s-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum-Code--XS {
+.spectrum-Code--sizeXS {
     color: var(--spectrum-code-xs-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum:lang(ja) .spectrum-Body--XXXL,
-.spectrum:lang(ko) .spectrum-Body--XXXL,
-.spectrum:lang(zh) .spectrum-Body--XXXL {
+.spectrum:lang(ja) .spectrum-Body--sizeXXXL,
+.spectrum:lang(ko) .spectrum-Body--sizeXXXL,
+.spectrum:lang(zh) .spectrum-Body--sizeXXXL {
     color: var(
         --spectrum-body-han-xxxl-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Body--XXL,
-.spectrum:lang(ko) .spectrum-Body--XXL,
-.spectrum:lang(zh) .spectrum-Body--XXL {
+.spectrum:lang(ja) .spectrum-Body--sizeXXL,
+.spectrum:lang(ko) .spectrum-Body--sizeXXL,
+.spectrum:lang(zh) .spectrum-Body--sizeXXL {
     color: var(
         --spectrum-body-han-xxl-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Body--XL,
-.spectrum:lang(ko) .spectrum-Body--XL,
-.spectrum:lang(zh) .spectrum-Body--XL {
+.spectrum:lang(ja) .spectrum-Body--sizeXL,
+.spectrum:lang(ko) .spectrum-Body--sizeXL,
+.spectrum:lang(zh) .spectrum-Body--sizeXL {
     color: var(
         --spectrum-body-han-xl-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Body--L,
-.spectrum:lang(ko) .spectrum-Body--L,
-.spectrum:lang(zh) .spectrum-Body--L {
+.spectrum:lang(ja) .spectrum-Body--sizeL,
+.spectrum:lang(ko) .spectrum-Body--sizeL,
+.spectrum:lang(zh) .spectrum-Body--sizeL {
     color: var(
         --spectrum-body-han-l-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Body--M,
-.spectrum:lang(ko) .spectrum-Body--M,
-.spectrum:lang(zh) .spectrum-Body--M {
+.spectrum:lang(ja) .spectrum-Body--sizeM,
+.spectrum:lang(ko) .spectrum-Body--sizeM,
+.spectrum:lang(zh) .spectrum-Body--sizeM {
     color: var(
         --spectrum-body-han-m-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Body--S,
-.spectrum:lang(ko) .spectrum-Body--S,
-.spectrum:lang(zh) .spectrum-Body--S {
+.spectrum:lang(ja) .spectrum-Body--sizeS,
+.spectrum:lang(ko) .spectrum-Body--sizeS,
+.spectrum:lang(zh) .spectrum-Body--sizeS {
     color: var(
         --spectrum-body-han-s-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Body--XS,
-.spectrum:lang(ko) .spectrum-Body--XS,
-.spectrum:lang(zh) .spectrum-Body--XS {
+.spectrum:lang(ja) .spectrum-Body--sizeXS,
+.spectrum:lang(ko) .spectrum-Body--sizeXS,
+.spectrum:lang(zh) .spectrum-Body--sizeXS {
     color: var(
         --spectrum-body-han-xs-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XXXL,
-.spectrum:lang(ko) .spectrum-Heading--XXXL,
-.spectrum:lang(zh) .spectrum-Heading--XXXL {
+.spectrum:lang(ja) .spectrum-Heading--sizeXXXL,
+.spectrum:lang(ko) .spectrum-Heading--sizeXXXL,
+.spectrum:lang(zh) .spectrum-Heading--sizeXXXL {
     color: var(
         --spectrum-heading-xxxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XXL,
-.spectrum:lang(ko) .spectrum-Heading--XXL,
-.spectrum:lang(zh) .spectrum-Heading--XXL {
+.spectrum:lang(ja) .spectrum-Heading--sizeXXL,
+.spectrum:lang(ko) .spectrum-Heading--sizeXXL,
+.spectrum:lang(zh) .spectrum-Heading--sizeXXL {
     color: var(
         --spectrum-heading-xxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XL,
-.spectrum:lang(ko) .spectrum-Heading--XL,
-.spectrum:lang(zh) .spectrum-Heading--XL {
+.spectrum:lang(ja) .spectrum-Heading--sizeXL,
+.spectrum:lang(ko) .spectrum-Heading--sizeXL,
+.spectrum:lang(zh) .spectrum-Heading--sizeXL {
     color: var(
         --spectrum-heading-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading--L,
-.spectrum:lang(ko) .spectrum-Heading--L,
-.spectrum:lang(zh) .spectrum-Heading--L {
+.spectrum:lang(ja) .spectrum-Heading--sizeL,
+.spectrum:lang(ko) .spectrum-Heading--sizeL,
+.spectrum:lang(zh) .spectrum-Heading--sizeL {
     color: var(
         --spectrum-heading-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading--M,
-.spectrum:lang(ko) .spectrum-Heading--M,
-.spectrum:lang(zh) .spectrum-Heading--M {
+.spectrum:lang(ja) .spectrum-Heading--sizeM,
+.spectrum:lang(ko) .spectrum-Heading--sizeM,
+.spectrum:lang(zh) .spectrum-Heading--sizeM {
     color: var(
         --spectrum-heading-m-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading--S,
-.spectrum:lang(ko) .spectrum-Heading--S,
-.spectrum:lang(zh) .spectrum-Heading--S {
+.spectrum:lang(ja) .spectrum-Heading--sizeS,
+.spectrum:lang(ko) .spectrum-Heading--sizeS,
+.spectrum:lang(zh) .spectrum-Heading--sizeS {
     color: var(
         --spectrum-heading-s-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XS,
-.spectrum:lang(ko) .spectrum-Heading--XS,
-.spectrum:lang(zh) .spectrum-Heading--XS {
+.spectrum:lang(ja) .spectrum-Heading--sizeXS,
+.spectrum:lang(ko) .spectrum-Heading--sizeXS,
+.spectrum:lang(zh) .spectrum-Heading--sizeXS {
     color: var(
         --spectrum-heading-xs-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading--XXS,
-.spectrum:lang(ko) .spectrum-Heading--XXS,
-.spectrum:lang(zh) .spectrum-Heading--XXS {
+.spectrum:lang(ja) .spectrum-Heading--sizeXXS,
+.spectrum:lang(ko) .spectrum-Heading--sizeXXS,
+.spectrum:lang(zh) .spectrum-Heading--sizeXXS {
     color: var(
         --spectrum-heading-xxs-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-XXXL--light,
-.spectrum:lang(ko) .spectrum-Heading-XXXL--light,
-.spectrum:lang(zh) .spectrum-Heading-XXXL--light {
+.spectrum:lang(ja) .spectrum-Heading-sizeXXXL--light,
+.spectrum:lang(ko) .spectrum-Heading-sizeXXXL--light,
+.spectrum:lang(zh) .spectrum-Heading-sizeXXXL--light {
     color: var(
         --spectrum-heading-light-xxxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-XXL--light,
-.spectrum:lang(ko) .spectrum-Heading-XXL--light,
-.spectrum:lang(zh) .spectrum-Heading-XXL--light {
+.spectrum:lang(ja) .spectrum-Heading-sizeXXL--light,
+.spectrum:lang(ko) .spectrum-Heading-sizeXXL--light,
+.spectrum:lang(zh) .spectrum-Heading-sizeXXL--light {
     color: var(
         --spectrum-heading-light-xxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-XL--light,
-.spectrum:lang(ko) .spectrum-Heading-XL--light,
-.spectrum:lang(zh) .spectrum-Heading-XL--light {
+.spectrum:lang(ja) .spectrum-Heading-sizeXL--light,
+.spectrum:lang(ko) .spectrum-Heading-sizeXL--light,
+.spectrum:lang(zh) .spectrum-Heading-sizeXL--light {
     color: var(
         --spectrum-heading-light-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-L--light,
-.spectrum:lang(ko) .spectrum-Heading-L--light,
-.spectrum:lang(zh) .spectrum-Heading-L--light {
+.spectrum:lang(ja) .spectrum-Heading-sizeL--light,
+.spectrum:lang(ko) .spectrum-Heading-sizeL--light,
+.spectrum:lang(zh) .spectrum-Heading-sizeL--light {
     color: var(
         --spectrum-heading-light-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-XXXL--heavy,
-.spectrum:lang(ko) .spectrum-Heading-XXXL--heavy,
-.spectrum:lang(zh) .spectrum-Heading-XXXL--heavy {
+.spectrum:lang(ja) .spectrum-Heading-sizeXXXL--heavy,
+.spectrum:lang(ko) .spectrum-Heading-sizeXXXL--heavy,
+.spectrum:lang(zh) .spectrum-Heading-sizeXXXL--heavy {
     color: var(
         --spectrum-heading-heavy-xxxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-XXL--heavy,
-.spectrum:lang(ko) .spectrum-Heading-XXL--heavy,
-.spectrum:lang(zh) .spectrum-Heading-XXL--heavy {
+.spectrum:lang(ja) .spectrum-Heading-sizeXXL--heavy,
+.spectrum:lang(ko) .spectrum-Heading-sizeXXL--heavy,
+.spectrum:lang(zh) .spectrum-Heading-sizeXXL--heavy {
     color: var(
         --spectrum-heading-heavy-xxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-XL--heavy,
-.spectrum:lang(ko) .spectrum-Heading-XL--heavy,
-.spectrum:lang(zh) .spectrum-Heading-XL--heavy {
+.spectrum:lang(ja) .spectrum-Heading-sizeXL--heavy,
+.spectrum:lang(ko) .spectrum-Heading-sizeXL--heavy,
+.spectrum:lang(zh) .spectrum-Heading-sizeXL--heavy {
     color: var(
         --spectrum-heading-heavy-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-L--heavy,
-.spectrum:lang(ko) .spectrum-Heading-L--heavy,
-.spectrum:lang(zh) .spectrum-Heading-L--heavy {
+.spectrum:lang(ja) .spectrum-Heading-sizeL--heavy,
+.spectrum:lang(ko) .spectrum-Heading-sizeL--heavy,
+.spectrum:lang(zh) .spectrum-Heading-sizeL--heavy {
     color: var(
         --spectrum-heading-heavy-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-XXXL--heading,
-.spectrum:lang(ko) .spectrum-Heading-XXXL--heading,
-.spectrum:lang(zh) .spectrum-Heading-XXXL--heading {
+.spectrum:lang(ja) .spectrum-Heading-sizeXXXL--heading,
+.spectrum:lang(ko) .spectrum-Heading-sizeXXXL--heading,
+.spectrum:lang(zh) .spectrum-Heading-sizeXXXL--heading {
     color: var(
         --spectrum-heading-xxxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-XXL--heading,
-.spectrum:lang(ko) .spectrum-Heading-XXL--heading,
-.spectrum:lang(zh) .spectrum-Heading-XXL--heading {
+.spectrum:lang(ja) .spectrum-Heading-sizeXXL--heading,
+.spectrum:lang(ko) .spectrum-Heading-sizeXXL--heading,
+.spectrum:lang(zh) .spectrum-Heading-sizeXXL--heading {
     color: var(
         --spectrum-heading-xxl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-XL--heading,
-.spectrum:lang(ko) .spectrum-Heading-XL--heading,
-.spectrum:lang(zh) .spectrum-Heading-XL--heading {
+.spectrum:lang(ja) .spectrum-Heading-sizeXL--heading,
+.spectrum:lang(ko) .spectrum-Heading-sizeXL--heading,
+.spectrum:lang(zh) .spectrum-Heading-sizeXL--heading {
     color: var(
         --spectrum-heading-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Heading-L--heading,
-.spectrum:lang(ko) .spectrum-Heading-L--heading,
-.spectrum:lang(zh) .spectrum-Heading-L--heading {
+.spectrum:lang(ja) .spectrum-Heading-sizeL--heading,
+.spectrum:lang(ko) .spectrum-Heading-sizeL--heading,
+.spectrum:lang(zh) .spectrum-Heading-sizeL--heading {
     color: var(
         --spectrum-heading-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Detail--XL,
-.spectrum:lang(ko) .spectrum-Detail--XL,
-.spectrum:lang(zh) .spectrum-Detail--XL {
+.spectrum:lang(ja) .spectrum-Detail--sizeXL,
+.spectrum:lang(ko) .spectrum-Detail--sizeXL,
+.spectrum:lang(zh) .spectrum-Detail--sizeXL {
     color: var(
         --spectrum-detail-xl-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Detail--L,
-.spectrum:lang(ko) .spectrum-Detail--L,
-.spectrum:lang(zh) .spectrum-Detail--L {
+.spectrum:lang(ja) .spectrum-Detail--sizeL,
+.spectrum:lang(ko) .spectrum-Detail--sizeL,
+.spectrum:lang(zh) .spectrum-Detail--sizeL {
     color: var(
         --spectrum-detail-l-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Detail--M,
-.spectrum:lang(ko) .spectrum-Detail--M,
-.spectrum:lang(zh) .spectrum-Detail--M {
+.spectrum:lang(ja) .spectrum-Detail--sizeM,
+.spectrum:lang(ko) .spectrum-Detail--sizeM,
+.spectrum:lang(zh) .spectrum-Detail--sizeM {
     color: var(
         --spectrum-detail-m-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Detail--S,
-.spectrum:lang(ko) .spectrum-Detail--S,
-.spectrum:lang(zh) .spectrum-Detail--S {
+.spectrum:lang(ja) .spectrum-Detail--sizeS,
+.spectrum:lang(ko) .spectrum-Detail--sizeS,
+.spectrum:lang(zh) .spectrum-Detail--sizeS {
     color: var(
         --spectrum-detail-s-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 
-.spectrum:lang(ja) .spectrum-Code--XL,
-.spectrum:lang(ko) .spectrum-Code--XL,
-.spectrum:lang(zh) .spectrum-Code--XL {
+.spectrum:lang(ja) .spectrum-Code--sizeXL,
+.spectrum:lang(ko) .spectrum-Code--sizeXL,
+.spectrum:lang(zh) .spectrum-Code--sizeXL {
     color: var(--spectrum-code-xl-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum:lang(ja) .spectrum-Code--L,
-.spectrum:lang(ko) .spectrum-Code--L,
-.spectrum:lang(zh) .spectrum-Code--L {
+.spectrum:lang(ja) .spectrum-Code--sizeL,
+.spectrum:lang(ko) .spectrum-Code--sizeL,
+.spectrum:lang(zh) .spectrum-Code--sizeL {
     color: var(--spectrum-code-l-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum:lang(ja) .spectrum-Code--M,
-.spectrum:lang(ko) .spectrum-Code--M,
-.spectrum:lang(zh) .spectrum-Code--M {
+.spectrum:lang(ja) .spectrum-Code--sizeM,
+.spectrum:lang(ko) .spectrum-Code--sizeM,
+.spectrum:lang(zh) .spectrum-Code--sizeM {
     color: var(--spectrum-code-m-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum:lang(ja) .spectrum-Code--S,
-.spectrum:lang(ko) .spectrum-Code--S,
-.spectrum:lang(zh) .spectrum-Code--S {
+.spectrum:lang(ja) .spectrum-Code--sizeS,
+.spectrum:lang(ko) .spectrum-Code--sizeS,
+.spectrum:lang(zh) .spectrum-Code--sizeS {
     color: var(--spectrum-code-s-text-color, var(--spectrum-alias-text-color));
 }
 
-.spectrum:lang(ja) .spectrum-Code--XS,
-.spectrum:lang(ko) .spectrum-Code--XS,
-.spectrum:lang(zh) .spectrum-Code--XS {
+.spectrum:lang(ja) .spectrum-Code--sizeXS,
+.spectrum:lang(ko) .spectrum-Code--sizeXS,
+.spectrum:lang(zh) .spectrum-Code--sizeXS {
     color: var(--spectrum-code-xs-text-color, var(--spectrum-alias-text-color));
 }
 

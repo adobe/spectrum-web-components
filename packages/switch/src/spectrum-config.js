@@ -11,16 +11,16 @@ governing permissions and limitations under the License.
 */
 
 const config = {
-    spectrum: 'toggle',
+    spectrum: 'switch',
     components: [
         {
             name: 'switch',
-            host: '.spectrum-ToggleSwitch',
+            host: '.spectrum-Switch',
             focus: '#input',
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-ToggleSwitch--quiet',
+                    selector: '.spectrum-Switch--quiet',
                 },
                 {
                     type: 'boolean',
@@ -34,21 +34,21 @@ const config = {
             ],
             ids: [
                 {
-                    selector: '.spectrum-ToggleSwitch-input',
+                    selector: '.spectrum-Switch-input',
                     name: 'input',
                 },
                 {
-                    selector: '.spectrum-ToggleSwitch-switch',
+                    selector: '.spectrum-Switch-switch',
                     name: 'switch',
                 },
                 {
-                    selector: '.spectrum-ToggleSwitch-label',
+                    selector: '.spectrum-Switch-label',
                     name: 'label',
                 },
             ],
             exclude: [
                 /* deprecated */
-                /spectrum-ToggleSwitch--ab/,
+                /spectrum-Switch--ab/,
             ],
         },
     ],
