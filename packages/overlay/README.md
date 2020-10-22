@@ -71,3 +71,7 @@ import {
     </sp-tooltip>
 </overlay-trigger>
 ```
+
+## Accessibility
+
+When using an `<overlay-trigger>` element, it is important to be sure the that content you project into `slot="trigger"` is "interactive". This means that an element within that branch of DOM will be able to receive focus and said element will appropriately convert keyboard interactions to `click` events similar to what you find with `<a href="#">Anchors</a>`, `<button>Buttons</button>`, etc. You can find further reading on the subject of accessible keyboard interactions at [https://www.w3.org/WAI/WCAG21/Understanding/keyboard](https://www.w3.org/WAI/WCAG21/Understanding/keyboard).
