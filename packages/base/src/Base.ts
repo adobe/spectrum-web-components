@@ -11,7 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import { LitElement, property, UpdatingElement } from 'lit-element';
-import { Theme } from '@spectrum-web-components/theme';
+type ThemeRoot = HTMLElement & {
+    startManagingContentDirection: (el: HTMLElement) => void;
+    stopManagingContentDirection: (el: HTMLElement) => void;
+};
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -89,7 +92,9 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                 if (dirParent === document.documentElement) {
                     observedForElements.add(this);
                 } else {
-                    (dirParent as Theme).startManagingContentDirection(this);
+                    (dirParent as ThemeRoot).startManagingContentDirection(
+                        this
+                    );
                 }
                 this._dirParent = dirParent as HTMLElement;
             }
@@ -102,7 +107,7 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                 if (this._dirParent === document.documentElement) {
                     observedForElements.delete(this);
                 } else {
-                    (this._dirParent as Theme).stopManagingContentDirection(
+                    (this._dirParent as ThemeRoot).stopManagingContentDirection(
                         this
                     );
                 }

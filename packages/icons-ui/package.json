@@ -20,8 +20,9 @@
     ],
     "version": "0.3.3",
     "description": "",
-    "main": "lib/index.js",
-    "module": "lib/index.js",
+    "main": "./lib/index.js",
+    "module": "./lib/index.js",
+    "types": "./lib/index.d.ts",
     "exports": {
         ".": "./src/index.js",
         "./lib/": "./lib/",

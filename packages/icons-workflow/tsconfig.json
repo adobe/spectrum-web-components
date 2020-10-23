@@ -5,5 +5,7 @@
         "outDir": "./lib",
         "rootDir": "./src"
     },
-    "include": ["src/**/*.ts", "../../global.d.ts"]
+    "include": ["src/**/*.ts", "../../global.d.ts"],
+    "exclude": ["test/*.ts", "stories/*.ts"],
+    "references": [{ "path": "../base" }]
 }
