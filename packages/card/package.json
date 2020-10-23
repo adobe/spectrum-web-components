@@ -20,8 +20,9 @@
     ],
     "version": "0.5.5",
     "description": "",
-    "main": "src/index.js",
-    "module": "src/index.js",
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "types": "./src/index.d.ts",
     "type": "module",
     "exports": {
         ".": "./src/index.js",

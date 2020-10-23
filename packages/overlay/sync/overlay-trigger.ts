@@ -11,11 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { OverlayTrigger } from '../src/OverlayTrigger.js';
-import {
-    Overlay,
-    OverlayOptions,
-    TriggerInteractions,
-} from '@spectrum-web-components/overlay';
+import { Overlay, OverlayOptions, TriggerInteractions } from '../src/index.js';
 import '../overlay-trigger.js';
 
 OverlayTrigger.openOverlay = async (

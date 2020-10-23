@@ -1,9 +1,9 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "composite": true,
         "outDir": "../",
-        "types": ["mocha", "chai", "sinon", "webpack-env", "node"]
+        "types": ["mocha", "chai", "sinon", "webpack-env", "node"],
+        "declaration": false
     },
     "include": [
         "../packages/**/*.ts",
