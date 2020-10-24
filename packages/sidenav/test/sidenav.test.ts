@@ -14,6 +14,7 @@ import '../sp-sidenav.js';
 import '../sp-sidenav-item.js';
 import '../sp-sidenav-heading.js';
 import { SideNav, SideNavItem } from '../';
+import { manageTabIndex } from '../stories/sidenav.stories.js';
 import {
     arrowDownEvent,
     arrowUpEvent,
@@ -164,34 +165,7 @@ describe('Sidenav', () => {
         expect(el.value).to.equal('Section 2a');
     });
     it('prevents [tabindex=0] while `focusin`', async () => {
-        const el = await fixture<SideNav>(
-            html`
-                <sp-sidenav manage-tab-index>
-                    <sp-sidenav-heading label="CATEGORY 1">
-                        <sp-sidenav-item
-                            value="Section 0"
-                            label="Section 0"
-                        ></sp-sidenav-item>
-                        <sp-sidenav-item
-                            value="Section 1"
-                            label="Section 1"
-                            selected
-                        ></sp-sidenav-item>
-                        <sp-sidenav-item
-                            value="Section 2"
-                            label="Section 2"
-                            disabled
-                        ></sp-sidenav-item>
-                        <sp-sidenav-item value="Section 3" label="Section 3">
-                            <sp-sidenav-item
-                                value="Section 3a"
-                                label="Section 3a"
-                            ></sp-sidenav-item>
-                        </sp-sidenav-item>
-                    </sp-sidenav-heading>
-                </sp-sidenav>
-            `
-        );
+        const el = await fixture<SideNav>(manageTabIndex());
         const selected = el.querySelector('[value="Section 1"]') as SideNavItem;
         const toBeSelected = el.querySelector(
             '[value="Section 0"]'
@@ -222,66 +196,41 @@ describe('Sidenav', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 0');
-        expect(toBeSelected.tabIndex, '-1 when click based focus').to.equal(-1);
+        expect(toBeSelected.tabIndex, 'will be new focusable child').to.equal(
+            0
+        );
+        expect(selected.tabIndex, 'no longer selected').to.equal(-1);
     });
     it('manage tab index', async () => {
-        const el = await fixture<SideNav>(
-            html`
-                <sp-sidenav manage-tab-index>
-                    <sp-sidenav-heading label="CATEGORY 1">
-                        <sp-sidenav-item
-                            value="Section 0"
-                            label="Section 0"
-                            disabled
-                        ></sp-sidenav-item>
-                        <sp-sidenav-item
-                            value="Section 1"
-                            label="Section 1"
-                        ></sp-sidenav-item>
-                        <sp-sidenav-item
-                            value="Section 2"
-                            label="Section 2"
-                            disabled
-                        ></sp-sidenav-item>
-                        <sp-sidenav-item value="Section 3" label="Section 3">
-                            <sp-sidenav-item
-                                value="Section 3a"
-                                label="Section 3a"
-                            ></sp-sidenav-item>
-                        </sp-sidenav-item>
-                    </sp-sidenav-heading>
-                </sp-sidenav>
-            `
-        );
+        const el = await fixture<SideNav>(manageTabIndex());
 
         await elementUpdated(el);
-        expect(el.value).to.be.undefined;
-
-        el.focus();
-        let focused = document.activeElement as SideNavItem;
-        const root = focused.shadowRoot ? focused.shadowRoot : focused;
-        const clickEl = root.querySelector('a') as HTMLAnchorElement;
-        clickEl.click();
-
-        await elementUpdated(el);
-
         expect(el.value).to.equal('Section 1');
 
-        el.dispatchEvent(arrowDownEvent);
+        el.focus();
+        el.dispatchEvent(arrowUpEvent);
+        let focused = document.activeElement as SideNavItem;
+        focused.focusElement.click();
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('Section 0');
+
+        el.focus();
         el.dispatchEvent(arrowDownEvent);
         el.dispatchEvent(arrowDownEvent);
         focused = document.activeElement as SideNavItem;
         expect(focused.expanded).to.be.false;
-        focused.click();
+        focused.focusElement.click();
 
         await elementUpdated(el);
 
         expect(focused.expanded).to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowDownEvent);
+        await elementUpdated(el);
         focused = document.activeElement as SideNavItem;
-        focused.click();
+        focused.focusElement.click();
 
         await elementUpdated(el);
 
@@ -301,35 +250,7 @@ describe('Sidenav', () => {
     it('manage tab index through shadow DOM', async () => {
         class SideNavTestEl extends LitElement {
             protected render(): TemplateResult {
-                return html`
-                    <sp-sidenav manage-tab-index>
-                        <sp-sidenav-heading label="CATEGORY 1">
-                            <sp-sidenav-item
-                                value="Section 0"
-                                label="Section 0"
-                                disabled
-                            ></sp-sidenav-item>
-                            <sp-sidenav-item
-                                value="Section 1"
-                                label="Section 1"
-                            ></sp-sidenav-item>
-                            <sp-sidenav-item
-                                value="Section 2"
-                                label="Section 2"
-                                disabled
-                            ></sp-sidenav-item>
-                            <sp-sidenav-item
-                                value="Section 3"
-                                label="Section 3"
-                            >
-                                <sp-sidenav-item
-                                    value="Section 3a"
-                                    label="Section 3a"
-                                ></sp-sidenav-item>
-                            </sp-sidenav-item>
-                        </sp-sidenav-heading>
-                    </sp-sidenav>
-                `;
+                return manageTabIndex();
             }
         }
         customElements.define('sidenav-test-el', SideNavTestEl);
@@ -342,35 +263,34 @@ describe('Sidenav', () => {
         const sidenavEl = rootNode.querySelector('sp-sidenav') as SideNav;
 
         await elementUpdated(sidenavEl);
-        expect(sidenavEl.value).to.be.undefined;
-
-        sidenavEl.focus();
-        let focused = rootNode.activeElement as SideNavItem;
-        const root = focused.shadowRoot ? focused.shadowRoot : focused;
-        const clickEl = root.querySelector('a') as HTMLAnchorElement;
-        clickEl.click();
-
-        await elementUpdated(el);
-
         expect(sidenavEl.value).to.equal('Section 1');
 
-        sidenavEl.dispatchEvent(arrowDownEvent);
+        sidenavEl.focus();
+        sidenavEl.dispatchEvent(arrowUpEvent);
+        let focused = rootNode.activeElement as SideNavItem;
+        focused.focusElement.click();
+
+        await elementUpdated(sidenavEl);
+
+        expect(sidenavEl.value).to.equal('Section 0');
+
+        sidenavEl.focus();
         sidenavEl.dispatchEvent(arrowDownEvent);
         sidenavEl.dispatchEvent(arrowDownEvent);
         focused = rootNode.activeElement as SideNavItem;
         expect(focused.expanded).to.be.false;
-        focused.click();
+        focused.focusElement.click();
 
-        await elementUpdated(el);
+        await elementUpdated(sidenavEl);
 
         expect(focused.expanded).to.be.true;
 
-        sidenavEl.dispatchEvent(arrowUpEvent);
-        sidenavEl.dispatchEvent(arrowUpEvent);
+        sidenavEl.dispatchEvent(arrowDownEvent);
+        await elementUpdated(sidenavEl);
         focused = rootNode.activeElement as SideNavItem;
-        focused.click();
+        focused.focusElement.click();
 
-        await elementUpdated(el);
+        await elementUpdated(sidenavEl);
 
         expect(sidenavEl.value).to.equal('Section 3a');
 
