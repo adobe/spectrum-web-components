@@ -36,6 +36,14 @@ type EndPolyfillCoordinationCallback = () => void;
 
 import 'focus-visible';
 
+let hasFocusVisible = true;
+
+try {
+    document.body.querySelector(':focus-visible');
+} catch (error) {
+    hasFocusVisible = false;
+}
+
 /**
  * This mixin function is designed to be applied to a class that inherits
  * from HTMLElement. It makes it easy for a custom element to coordinate with
@@ -108,7 +116,6 @@ export const FocusVisiblePolyfillMixin = <
     };
 
     const $endPolyfillCoordination = Symbol('endPolyfillCoordination');
-    const $polyfillReadyResolver = Symbol('polyfillReadyResolver');
 
     // IE11 doesn't natively support custom elements or JavaScript class
     // syntax The mixin implementation assumes that the user will take the
@@ -116,38 +123,34 @@ export const FocusVisiblePolyfillMixin = <
     class FocusVisibleCoordinator extends SuperClass {
         private [$endPolyfillCoordination]: EndPolyfillCoordinationCallback | null = null;
 
-        public focusVisiblePolyfillReady!: Promise<void>;
-
-        private [$polyfillReadyResolver]!: () => void;
-
         // Attempt to coordinate with the polyfill when connected to the
         // document:
         connectedCallback(): void {
             super.connectedCallback && super.connectedCallback();
-            this.focusVisiblePolyfillReady = new Promise(
-                (res) => (this[$polyfillReadyResolver] = res)
-            );
-            requestAnimationFrame(() => {
-                if (this[$endPolyfillCoordination] == null) {
-                    this[$endPolyfillCoordination] = coordinateWithPolyfill(
-                        this
-                    );
-                }
-                this[$polyfillReadyResolver]();
-            });
+            if (!hasFocusVisible) {
+                requestAnimationFrame(() => {
+                    if (this[$endPolyfillCoordination] == null) {
+                        this[$endPolyfillCoordination] = coordinateWithPolyfill(
+                            this
+                        );
+                    }
+                });
+            }
         }
 
         disconnectedCallback(): void {
             super.disconnectedCallback && super.disconnectedCallback();
             // It's important to remove the polyfill event listener when we
             // disconnect, otherwise we will leak the whole element via window:
-            requestAnimationFrame(() => {
-                if (this[$endPolyfillCoordination] != null) {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    this[$endPolyfillCoordination]!();
-                    this[$endPolyfillCoordination] = null;
-                }
-            });
+            if (!hasFocusVisible) {
+                requestAnimationFrame(() => {
+                    if (this[$endPolyfillCoordination] != null) {
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        this[$endPolyfillCoordination]!();
+                        this[$endPolyfillCoordination] = null;
+                    }
+                });
+            }
         }
     }
 
