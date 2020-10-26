@@ -18,6 +18,7 @@ import {
     triggerBlurFor,
     html,
     expect,
+    waitUntil,
 } from '@open-wc/testing';
 
 function inputForRadio(radio: Radio): HTMLInputElement {
@@ -97,7 +98,10 @@ describe('Radio', () => {
         ) as Radio;
 
         expect(autoElement).to.exist;
-        expect(document.activeElement).to.equal(autoElement);
+        await waitUntil(
+            () => document.activeElement === autoElement,
+            'Autofocused'
+        );
 
         await triggerBlurFor(autoElement);
 
