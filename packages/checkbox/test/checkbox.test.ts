@@ -18,6 +18,7 @@ import {
     triggerBlurFor,
     html,
     expect,
+    waitUntil,
 } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
@@ -120,7 +121,10 @@ describe('Checkbox', () => {
         ) as Checkbox;
 
         expect(autoElement).to.exist;
-        expect(document.activeElement).to.equal(autoElement);
+        await waitUntil(
+            () => document.activeElement === autoElement,
+            'Autofocused'
+        );
 
         await triggerBlurFor(autoElement);
 
