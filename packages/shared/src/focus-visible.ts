@@ -71,6 +71,10 @@ export const FocusVisiblePolyfillMixin = <
         // the shadow root immediately:
         if (self.applyFocusVisiblePolyfill) {
             self.applyFocusVisiblePolyfill(instance.shadowRoot);
+
+            if (instance.manageAutoFocus) {
+                instance.manageAutoFocus();
+            }
         } else {
             const coordinationHandler = (): void => {
                 if (self.applyFocusVisiblePolyfill && instance.shadowRoot) {
@@ -104,22 +108,32 @@ export const FocusVisiblePolyfillMixin = <
     };
 
     const $endPolyfillCoordination = Symbol('endPolyfillCoordination');
+    const $polyfillReadyResolver = Symbol('polyfillReadyResolver');
 
     // IE11 doesn't natively support custom elements or JavaScript class
     // syntax The mixin implementation assumes that the user will take the
     // appropriate steps to support both:
     class FocusVisibleCoordinator extends SuperClass {
         private [$endPolyfillCoordination]: EndPolyfillCoordinationCallback | null = null;
+
+        public focusVisiblePolyfillReady!: Promise<void>;
+
+        private [$polyfillReadyResolver]!: () => void;
+
         // Attempt to coordinate with the polyfill when connected to the
         // document:
         connectedCallback(): void {
             super.connectedCallback && super.connectedCallback();
+            this.focusVisiblePolyfillReady = new Promise(
+                (res) => (this[$polyfillReadyResolver] = res)
+            );
             requestAnimationFrame(() => {
                 if (this[$endPolyfillCoordination] == null) {
                     this[$endPolyfillCoordination] = coordinateWithPolyfill(
                         this
                     );
                 }
+                this[$polyfillReadyResolver]();
             });
         }
 

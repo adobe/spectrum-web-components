@@ -108,7 +108,10 @@ describe('Tabs', () => {
 
         const autoElement = tabs.querySelector('[label="Tab 2"]') as Tab;
 
-        expect(document.activeElement).to.equal(autoElement);
+        await waitUntil(
+            () => document.activeElement === autoElement,
+            'Autofocused'
+        );
     });
 
     it('forces only one tab to be selected', async () => {
