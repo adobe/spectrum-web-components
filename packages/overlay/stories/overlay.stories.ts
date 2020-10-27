@@ -43,12 +43,12 @@ const storyStyles = html`
         body,
         #root,
         #root-inner,
-        #root-theme {
+        sp-story-decorator {
             height: 100%;
             margin: 0;
         }
 
-        #root-theme {
+        sp-story-decorator::part(container) {
             display: flex;
             flex-direction: column;
             width: 100%;

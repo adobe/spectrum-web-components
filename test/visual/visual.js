@@ -97,7 +97,7 @@ module.exports = {
 
         async function takeAndCompareScreenshot(page, test) {
             await page.goto(
-                `http://127.0.0.1:4444/iframe.html?id=${test}&knob-Reduce%20Motion_Theme=true&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text%20direction_Theme=${dir}`,
+                `http://127.0.0.1:4444/iframe.html?id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`,
                 {
                     waitUntil: 'networkidle',
                 }
@@ -106,10 +106,10 @@ module.exports = {
                 () => !!document.querySelector('#root-inner')
             );
             await page.waitForFunction(
-                () => !!document.querySelector('sp-theme')
+                () => !!document.querySelector('sp-story-decorator')
             );
             await page.waitForFunction(
-                () => !!document.querySelector('sp-theme').shadowRoot
+                () => !!document.querySelector('sp-story-decorator').shadowRoot
             );
             await page.screenshot({
                 path: `${currentDir}/${type}/${test}__${color}__${scale}__${dir}.png`,
