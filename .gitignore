@@ -38,6 +38,11 @@ packages/*/*/*.d.ts
 !packages/*/test/global.d.ts
 *.tsbuildinfo
 
+projects/**/*.js
+projects/**/*.js.map
+projects/**/*.d.ts
+!projects/*/global.d.ts
+
 spectrum-web-components.build.log
 spectrum-web-components.build.error.log
 TESTS.xml

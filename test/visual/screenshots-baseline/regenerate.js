@@ -75,7 +75,7 @@ module.exports = {
 
         async function generateBaselineScreenshots(page) {
             for (let i = 0; i < stories.length; i++) {
-                const url = `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&viewMode=story&knob-Reduce%20Motion_Theme=true&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text direction_Theme=${dir}`;
+                const url = `http://127.0.0.1:4444/iframe.html?id=${stories[i]}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`;
                 console.log('visiting:', url);
                 await page.goto(url, {
                     waitUntil: 'networkidle',
@@ -84,10 +84,12 @@ module.exports = {
                     () => !!document.querySelector('#root-inner')
                 );
                 await page.waitForFunction(
-                    () => !!document.querySelector('sp-theme')
+                    () => !!document.querySelector('sp-story-decorator')
                 );
                 await page.waitForFunction(
-                    () => !!document.querySelector('sp-theme').shadowRoot
+                    () =>
+                        !!document.querySelector('sp-story-decorator')
+                            .shadowRoot
                 );
                 await page.screenshot({
                     path: `${baselineDir}/${type}/${stories[i]}__${color}__${scale}__${dir}.png`,

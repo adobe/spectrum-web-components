@@ -47,10 +47,13 @@ rtlObserver.observe(document.documentElement, {
     attributeFilter: ['dir'],
 });
 
-type ContentDirectionManager = { startManagingContentDirection?(): void };
+type ContentDirectionManager = HTMLElement & {
+    startManagingContentDirection?(): void;
+};
 
 const canManageContentDirection = (el: ContentDirectionManager): boolean =>
-    typeof el.startManagingContentDirection === 'undefined';
+    typeof el.startManagingContentDirection !== 'undefined' ||
+    el.tagName === 'SP-THEME';
 
 export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
     constructor: T
@@ -78,7 +81,7 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                     this.parentNode) as HTMLElement;
                 while (
                     dirParent !== document.documentElement &&
-                    canManageContentDirection(
+                    !canManageContentDirection(
                         dirParent as ContentDirectionManager
                     )
                 ) {
