@@ -40,6 +40,9 @@ export class Textfield extends Focusable {
     @property({ attribute: 'allowed-keys' })
     allowedKeys = '';
 
+    @property({ type: Boolean, reflect: true })
+    public focused = false;
+
     @query('#input')
     private inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
@@ -119,6 +122,14 @@ export class Textfield extends Focusable {
         );
     }
 
+    private onFocus(): void {
+        this.focused = true;
+    }
+
+    private onBlur(): void {
+        this.focused = false;
+    }
+
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
@@ -152,6 +163,8 @@ export class Textfield extends Focusable {
                 .value=${this.value}
                 @change=${this.onChange}
                 @input=${this.onInput}
+                @focus=${this.onFocus}
+                @blur=${this.onBlur}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
                 autocomplete=${ifDefined(this.autocomplete)}
@@ -170,6 +183,8 @@ export class Textfield extends Focusable {
                 .value=${this.value}
                 @change=${this.onChange}
                 @input=${this.onInput}
+                @focus=${this.onFocus}
+                @blur=${this.onBlur}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
                 autocomplete=${ifDefined(this.autocomplete)}
