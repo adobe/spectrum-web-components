@@ -41,26 +41,8 @@ export class MenuItem extends ActionButton {
 
     static instanceCount = 0;
 
-    private _value = '';
-
     @property({ type: Boolean, reflect: true })
     public focused = false;
-
-    @property({ type: String })
-    public get value(): string {
-        return this._value || this.itemText;
-    }
-    public set value(value: string) {
-        if (value === this._value) {
-            return;
-        }
-        this._value = value || '';
-        if (this._value) {
-            this.setAttribute('value', this._value);
-        } else {
-            this.removeAttribute('value');
-        }
-    }
 
     /**
      * Hide this getter from web-component-analyzer until

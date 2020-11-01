@@ -20,6 +20,7 @@ import {
     InfoIcon,
     ViewAllTagsIcon,
 } from '@spectrum-web-components/icons-workflow';
+import { ActionGroup } from '../src/ActionGroup.js';
 
 export default {
     title: 'Action Group',
@@ -33,6 +34,49 @@ export const Default = (): TemplateResult => {
             <sp-action-button>Longer Button 2</sp-action-button>
             <sp-action-button>Short 3</sp-action-button>
         </sp-action-group>
+    `;
+};
+
+export const selectsSingle = (): TemplateResult => {
+    return html`
+        <sp-action-group
+            label="Favorite Color"
+            selects="single"
+            @change=${({ target }: Event & { target: ActionGroup }) => {
+                const next = target.nextElementSibling as HTMLDivElement;
+                next.textContent = `Selected: ${JSON.stringify(
+                    target.selected
+                )}`;
+            }}
+        >
+            <sp-action-button>Red</sp-action-button>
+            <sp-action-button>Green</sp-action-button>
+            <sp-action-button>Blue</sp-action-button>
+            <sp-action-button selected>Yellow</sp-action-button>
+        </sp-action-group>
+        <div>Selected:</div>
+    `;
+};
+
+export const selectsMultiple = (): TemplateResult => {
+    return html`
+        <sp-action-group
+            label="Favorite Colors"
+            selects="multiple"
+            emphasized
+            @change=${({ target }: Event & { target: ActionGroup }) => {
+                const next = target.nextElementSibling as HTMLDivElement;
+                next.textContent = `Selected: ${JSON.stringify(
+                    target.selected
+                )}`;
+            }}
+        >
+            <sp-action-button>Red</sp-action-button>
+            <sp-action-button selected>Green</sp-action-button>
+            <sp-action-button selected>Blue</sp-action-button>
+            <sp-action-button>Yellow</sp-action-button>
+        </sp-action-group>
+        <div>Selected:</div>
     `;
 };
 
@@ -61,17 +105,17 @@ export const iconsOnly = (): TemplateResult => {
 export const quietIconsOnly = (): TemplateResult => {
     return html`
         <sp-action-group quiet>
-            <sp-action-button quiet label="Properties">
+            <sp-action-button label="Properties">
                 <sp-icon slot="icon" size="m">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet label="Info">
+            <sp-action-button label="Info">
                 <sp-icon slot="icon" size="m">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet label="View All Tags">
+            <sp-action-button label="View All Tags">
                 <sp-icon slot="icon" size="m">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>
@@ -115,17 +159,17 @@ export const compactIconsOnly = (): TemplateResult => {
 export const compactQuietIconsOnly = (): TemplateResult => {
     return html`
         <sp-action-group compact quiet>
-            <sp-action-button quiet label="Properties">
+            <sp-action-button label="Properties">
                 <sp-icon slot="icon" size="m">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet label="Info">
+            <sp-action-button label="Info">
                 <sp-icon slot="icon" size="m">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet label="View All Tags">
+            <sp-action-button label="View All Tags">
                 <sp-icon slot="icon" size="m">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>
@@ -169,17 +213,17 @@ export const iconsOnlyVertical = (): TemplateResult => {
 export const quietIconsOnlyVertical = (): TemplateResult => {
     return html`
         <sp-action-group vertical quiet>
-            <sp-action-button quiet label="Properties">
+            <sp-action-button label="Properties">
                 <sp-icon slot="icon" size="m">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet label="Info">
+            <sp-action-button label="Info">
                 <sp-icon slot="icon" size="m">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet label="View All Tags">
+            <sp-action-button label="View All Tags">
                 <sp-icon slot="icon" size="m">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>
@@ -223,17 +267,17 @@ export const compactIconsOnlyVertical = (): TemplateResult => {
 export const compactQuietIconsOnlyVertical = (): TemplateResult => {
     return html`
         <sp-action-group vertical compact quiet>
-            <sp-action-button quiet label="Properties">
+            <sp-action-button label="Properties">
                 <sp-icon slot="icon" size="m">
                     ${PropertiesIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet label="Info">
+            <sp-action-button label="Info">
                 <sp-icon slot="icon" size="m">
                     ${InfoIcon({ hidden: true })}
                 </sp-icon>
             </sp-action-button>
-            <sp-action-button quiet label="View All Tags">
+            <sp-action-button label="View All Tags">
                 <sp-icon slot="icon" size="m">
                     ${ViewAllTagsIcon({ hidden: true })}
                 </sp-icon>

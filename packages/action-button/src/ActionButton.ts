@@ -33,8 +33,14 @@ export class ActionButton extends ButtonBase {
         return [buttonStyles, cornerTriangleStyles];
     }
 
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
+
     @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
     public holdAffordance = false;
+
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
 
     @property({ type: Boolean, reflect: true })
     public selected = false;
@@ -42,14 +48,32 @@ export class ActionButton extends ButtonBase {
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
-    @property({ type: Boolean, reflect: true })
-    public quiet = false;
+    @property({ type: String })
+    public get value(): string {
+        return this._value || this.itemText;
+    }
+    public set value(value: string) {
+        if (value === this._value) {
+            return;
+        }
+        this._value = value || '';
+        if (this._value) {
+            this.setAttribute('value', this._value);
+        } else {
+            this.removeAttribute('value');
+        }
+    }
+    private _value = '';
 
     @property({ type: String, reflect: true })
     public size = 'm';
 
-    @property({ type: Boolean, reflect: true })
-    public emphasized = false;
+    /**
+     * @private
+     */
+    public get itemText(): string {
+        return (this.textContent || /* c8 ignore next */ '').trim();
+    }
 
     constructor() {
         super();
