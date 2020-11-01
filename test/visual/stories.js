@@ -15,6 +15,8 @@ module.exports = [
     'accordion--allow-multiple',
     'accordion--disabled',
     'action-group--default',
+    'action-group--selects-single',
+    'action-group--selects-multiple',
     'action-group--icons-only',
     'action-group--quiet-icons-only',
     'action-group--compact',

@@ -28,14 +28,14 @@ import { Actionbar } from '@spectrum-web-components/actionbar';
 ```html
 <sp-actionbar open>
     <sp-checkbox indeterminate>228 Selected</sp-checkbox>
-    <div class="spectrum-ButtonGroup">
-        <sp-action-button quiet label="Edit">
+    <sp-action-group quiet>
+        <sp-action-button label="Edit">
             <sp-icon-edit slot="icon"></sp-icon-edit>
         </sp-action-button>
-        <sp-action-button quiet label="More">
+        <sp-action-button label="More">
             <sp-icon-more slot="icon"></sp-icon-more>
         </sp-action-button>
-    </div>
+    </sp-action-group>
 </sp-actionbar>
 ```
 
