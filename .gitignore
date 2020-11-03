@@ -32,6 +32,7 @@ packages/**/spectrum-vars.json
 packages/**/*.js.map
 packages/**/*.d.ts
 !packages/*/global.d.ts
+!packages/*/local.d.ts
 packages/*/*/*.d.ts
 !test/global.d.ts
 !packages/*/test/global.d.ts

@@ -12,13 +12,6 @@ import {
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 
-// While https://github.com/open-wc/open-wc/issues/1210 and
-// go https://github.com/popperjs/popper-core/issues/933 persist
-// without an acceptable outcome, this allows the built storybook
-// to function with `process.env.NODE_ENV`... :/
-window.process = window.process || {};
-window.process.env = window.process.env || {};
-window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {};
 
 addDecorator(withA11y);
