@@ -21,11 +21,3 @@ import '@spectrum-web-components/dropdown/sp-dropdown';
 // import '@spectrum-web-components/dropdown/sync/sp-dropdown';
 import '@spectrum-web-components/menu/sp-menu';
 import '@spectrum-web-components/menu/sp-menu-item';
-
-// While https://github.com/open-wc/open-wc/issues/1210 and
-// go https://github.com/popperjs/popper-core/issues/933 persist
-// without an acceptable outcome, this allows the built storybook
-// to function with `process.env.NODE_ENV`... :/
-window.process = window.process || {};
-window.process.env = window.process.env || {};
-window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
