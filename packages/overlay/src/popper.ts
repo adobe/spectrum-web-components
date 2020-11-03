@@ -13,17 +13,19 @@ governing permissions and limitations under the License.
 // Bundle only what we want from popper
 // See: https://popper.js.org/docs#popper-lite-tree-shaking
 
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="../local.d.ts" />
 import {
     popperGenerator,
     defaultModifiers,
-} from '@popperjs/core/lib/popper-lite';
-import type { Instance } from '@popperjs/core/lib/types';
-import type { Placement } from '@popperjs/core/lib/enums';
+} from '@popperjs/core/dist/esm/popper-lite.js';
+import type { Instance } from '@popperjs/core/dist/esm/types.js';
+import type { Placement } from '@popperjs/core/dist/esm/enums.js';
 
-import flip from '@popperjs/core/lib/modifiers/flip.js';
-import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
-import arrow from '@popperjs/core/lib/modifiers/arrow.js';
-import offset from '@popperjs/core/lib/modifiers/offset.js';
+import flip from '@popperjs/core/dist/esm/modifiers/flip.js';
+import preventOverflow from '@popperjs/core/dist/esm/modifiers/preventOverflow.js';
+import arrow from '@popperjs/core/dist/esm/modifiers/arrow.js';
+import offset from '@popperjs/core/dist/esm/modifiers/offset.js';
 import { computeArrowRotateStyles } from './popper-arrow-rotate.js';
 import maxSize from 'popper-max-size-modifier';
 import { applyMaxSize } from './apply-max-size.js';
