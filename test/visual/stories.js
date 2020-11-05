@@ -51,6 +51,7 @@ module.exports = [
     'actionbutton--emphasized',
     'actionbutton--w-icon-button',
     'actionbutton--icon-only-button',
+    'actionbutton--hold-affordance',
     'button--default',
     'button--variant-cta',
     'button--variant-primary',

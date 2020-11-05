@@ -12,11 +12,16 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
+    html,
     property,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './action-button.css.js';
+import '@spectrum-web-components/icon/sp-icon.js';
+import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
+import { CornerTriangleIcon } from '@spectrum-web-components/icons-ui';
 
 /**
  * @element sp-card
@@ -25,7 +30,7 @@ import buttonStyles from './action-button.css.js';
  */
 export class ActionButton extends ButtonBase {
     public static get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles];
+        return [...super.styles, buttonStyles, cornerTriangleStyles];
     }
 
     @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
@@ -62,6 +67,18 @@ export class ActionButton extends ButtonBase {
             this.selected = !this.selected;
         }
     };
+
+    protected get buttonContent(): TemplateResult[] {
+        const buttonContent = super.buttonContent;
+        if (this.holdAffordance) {
+            buttonContent.push(html`
+                <sp-icon id="hold-affordance" class="corner-triangle">
+                    ${CornerTriangleIcon({ hidden: true })}
+                </sp-icon>
+            `);
+        }
+        return buttonContent;
+    }
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
