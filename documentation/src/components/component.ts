@@ -69,7 +69,7 @@ function buildTable(
 ): TemplateResult {
     return html`
         <div class="headerContainer">
-            <h2 class="spectrum-Heading spectrum-Heading--M">${title}</h2>
+            <h2 class="spectrum-Heading spectrum-Heading--sizeM">${title}</h2>
             <sp-rule size="small"></sp-rule>
         </div>
         <table class="spectrum-Table">
@@ -172,7 +172,7 @@ class ComponentElement extends RouteComponent {
                 <article class="spectrum-Typography">
                     <div id="title-header">
                         <h1
-                            class="spectrum-Heading spectrum-Heading--XXL spectrum-Heading--serif"
+                            class="spectrum-Heading spectrum-Heading--sizeXXL spectrum-Heading--serif"
                         >
                             ${this.componentName}
                         </h1>
