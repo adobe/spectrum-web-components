@@ -1,4 +1,4 @@
-import { create } from 'storybook-prebuilt/theming/create.js';
+import { create } from '@web/storybook-prebuilt/theming/create.js';
 
 export default create({
     base: 'light',

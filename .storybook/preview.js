@@ -1,16 +1,40 @@
-import {
-    addParameters,
-    addDecorator,
-    setCustomElements,
-    withA11y,
-    withKnobs,
-    withWebComponentsKnobs,
-    html,
-    select,
-    boolean,
-} from '@open-wc/demoing-storybook';
+import { addDecorator } from '@web/storybook-prebuilt/web-components.js';
+import { html } from 'lit-html';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+
+export const parameters = {
+    argTypes: {
+        color: {
+            control: {
+                type: 'inline-radio',
+                options: ['lightest', 'light', 'dark', 'darkest'],
+            },
+        },
+        scale: {
+            control: {
+                type: 'inline-radio',
+                options: ['medium', 'large'],
+            },
+        },
+        direction: {
+            control: {
+                type: 'inline-radio',
+                options: ['ltr', 'rtl'],
+            },
+        },
+        reduceMotion: {
+            control: 'boolean',
+        },
+    },
+    args: {
+        color: 'light',
+        scale: 'medium',
+        direction: 'ltr',
+        reduceMotion: false,
+    },
+    actions: { argTypesRegex: '^on[A-Z].*' },
+};
 
 // While https://github.com/open-wc/open-wc/issues/1210 and
 // go https://github.com/popperjs/popper-core/issues/933 persist
@@ -20,44 +44,15 @@ window.process = window.process || {};
 window.process.env = window.process.env || {};
 window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
 
-addDecorator(withA11y);
-addDecorator(withKnobs);
-addDecorator(withWebComponentsKnobs);
-const colorOptions = {
-    Lightest: 'lightest',
-    Light: 'light',
-    Dark: 'dark',
-    Darkest: 'darkest',
-};
-let defaultColor = colorOptions.Light;
-const scaleOptions = {
-    Medium: 'medium',
-    Large: 'large',
-};
-let defaultScale = scaleOptions.Medium;
-const directionOptions = {
-    LTR: 'ltr',
-    RTL: 'rtl',
-};
-let defaultDirection = 'ltr';
-let defaultReduceMotion = false;
-addDecorator((story) => {
-    const color = select('Color', colorOptions, defaultColor, 'Theme');
-    defaultColor = color;
-    const scale = select('Scale', scaleOptions, defaultScale, 'Theme');
-    defaultScale = scale;
-    const dir = select(
-        'Text direction',
-        directionOptions,
-        defaultDirection,
-        'Theme'
-    );
-    defaultDirection = dir;
-    const reduceMotion = boolean('Reduce Motion', defaultReduceMotion, 'Theme');
-    defaultReduceMotion = reduceMotion;
+addDecorator((story, { args }) => {
     return html`
-        <sp-theme id="root-theme" color=${color} scale=${scale} dir=${dir}>
-            ${reduceMotion
+        <sp-theme
+            id="root-theme"
+            color=${args.color}
+            scale=${args.scale}
+            dir=${args.direction}
+        >
+            ${args.reduceMotion
                 ? html`
                       <style>
                           sp-theme {
@@ -82,25 +77,3 @@ addDecorator((story) => {
         </sp-theme>
     `;
 });
-
-addParameters({
-    a11y: {
-        config: {},
-        options: {
-            checks: { 'color-contrast': { options: { noScroll: true } } },
-            restoreScroll: true,
-        },
-    },
-    docs: {
-        iframeHeight: '200px',
-    },
-});
-
-async function run() {
-    const customElements = await (
-        await fetch(new URL('../custom-elements.json', import.meta.url))
-    ).json();
-    setCustomElements(customElements);
-}
-
-run();

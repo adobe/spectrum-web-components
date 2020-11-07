@@ -10,59 +10,38 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-import { html } from '@open-wc/demoing-storybook';
+import { html } from '@spectrum-web-components/base';
 
 import '../sp-accordion.js';
 import '../sp-accordion-item.js';
+import { Story } from '../../../.storybook/types';
 
 export default {
     title: 'Accordion',
     component: 'sp-accordion',
+    argTypes: {
+        open: { control: 'boolean' },
+        allowMultiple: { control: 'boolean' },
+        disabled: { control: 'boolean' },
+    },
 };
 
-export const Default = (): TemplateResult => {
-    return html`
-        <sp-accordion style="color: var(--spectrum-global-color-gray-800)">
-            <sp-accordion-item label="Heading 1">
-                <div>Item 1</div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 2">
-                Item 2
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 3">
-                Item 3
-            </sp-accordion-item>
-        </sp-accordion>
-    `;
-};
+interface StoryArgs {
+    open: boolean;
+    disabled: boolean;
+    allowMultiple: boolean;
+}
 
-export const Open = (): TemplateResult => {
-    return html`
-        <sp-accordion style="color: var(--spectrum-global-color-gray-800)">
-            <sp-accordion-item label="Heading 1">
-                <div>Item 1</div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 2" open>
-                Item 2
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 3">
-                Item 3
-            </sp-accordion-item>
-        </sp-accordion>
-    `;
-};
-
-export const AllowMultiple = (): TemplateResult => {
+const Template: Story<StoryArgs> = ({ allowMultiple, disabled, open }) => {
     return html`
         <sp-accordion
-            allow-multiple
+            .allowMultiple=${allowMultiple}
             style="color: var(--spectrum-global-color-gray-800)"
         >
-            <sp-accordion-item label="Heading 1">
-                Item 1
+            <sp-accordion-item label="Heading 1" .disabed=${disabled}>
+                <div>Item 1</div>
             </sp-accordion-item>
-            <sp-accordion-item label="Heading 2">
+            <sp-accordion-item label="Heading 2" .open=${open}>
                 Item 2
             </sp-accordion-item>
             <sp-accordion-item label="Heading 3">
@@ -71,19 +50,19 @@ export const AllowMultiple = (): TemplateResult => {
         </sp-accordion>
     `;
 };
+export const Default = Template.bind({});
 
-export const Disabled = (): TemplateResult => {
-    return html`
-        <sp-accordion style="color: var(--spectrum-global-color-gray-800)">
-            <sp-accordion-item disabled label="Heading 1">
-                <div>Item 1</div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 2">
-                Item 2
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 3">
-                Item 3
-            </sp-accordion-item>
-        </sp-accordion>
-    `;
+export const Open = Template.bind({});
+Open.args = {
+    open: true,
+};
+
+export const AllowMultiple = Template.bind({});
+AllowMultiple.args = {
+    allowMultiple: true,
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+    disabled: true,
 };

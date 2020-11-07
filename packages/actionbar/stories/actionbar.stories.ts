@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-actionbar.js';
-import { html } from '@open-wc/demoing-storybook';
+import { html } from 'lit-html';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/button/sp-action-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
