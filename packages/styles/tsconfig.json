@@ -5,6 +5,5 @@
         "rootDir": "./"
     },
     "include": ["*.ts", "src/*.ts"],
-    "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../base" }, { "path": "../styles" }]
+    "exclude": ["test/*.ts", "stories/*.ts"]
 }

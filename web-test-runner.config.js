@@ -25,6 +25,7 @@ module.exports = {
             'packages/*/stories/*',
             'packages/icons-ui/**',
             'packages/icons-workflow/**',
+            'packages/styles/**',
             'test/**',
         ],
         threshold: {
