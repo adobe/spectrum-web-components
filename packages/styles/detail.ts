@@ -10,9 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-illustratedmessage.css';
+import baseStyles from './src/spectrum-base.css.js';
+import langStyles from './src/spectrum-lang.css.js';
+import detailStyles from './src/spectrum-detail.css.js';
 
-/* Ensure that SVGs with viewBox attributes size correctly. */
-::slotted(svg[viewBox]) {
-    width: 100%;
-}
+export default [baseStyles, langStyles, detailStyles];

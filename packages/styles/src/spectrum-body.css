@@ -1,0 +1,241 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.spectrum-Body--sizeXXXL {
+    /* .spectrum-Body--sizeXXXL */
+    font-size: var(
+        --spectrum-body-xxxl-text-size,
+        var(--spectrum-global-dimension-font-size-600)
+    );
+    font-weight: var(
+        --spectrum-body-xxxl-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-body-xxxl-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    font-style: var(
+        --spectrum-body-xxxl-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-body-xxxl-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-body-xxxl-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0; /* .spectrum-Body--sizeXXXL */
+    color: var(
+        --spectrum-body-xxxl-text-color,
+        var(--spectrum-alias-text-color)
+    );
+}
+.spectrum-Body--sizeXXL {
+    /* .spectrum-Body--sizeXXL */
+    font-size: var(
+        --spectrum-body-xxl-text-size,
+        var(--spectrum-global-dimension-font-size-500)
+    );
+    font-weight: var(
+        --spectrum-body-xxl-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-body-xxl-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    font-style: var(
+        --spectrum-body-xxl-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-body-xxl-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-body-xxl-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0; /* .spectrum-Body--sizeXXL */
+    color: var(
+        --spectrum-body-xxl-text-color,
+        var(--spectrum-alias-text-color)
+    );
+}
+.spectrum-Body--sizeXL {
+    /* .spectrum-Body--sizeXL */
+    font-size: var(
+        --spectrum-body-xl-text-size,
+        var(--spectrum-global-dimension-font-size-400)
+    );
+    font-weight: var(
+        --spectrum-body-xl-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-body-xl-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    font-style: var(
+        --spectrum-body-xl-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-body-xl-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-body-xl-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0; /* .spectrum-Body--sizeXL */
+    color: var(--spectrum-body-xl-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body--sizeL {
+    /* .spectrum-Body--sizeL */
+    font-size: var(
+        --spectrum-body-l-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    font-weight: var(
+        --spectrum-body-l-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-body-l-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    font-style: var(
+        --spectrum-body-l-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-body-l-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-body-l-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0; /* .spectrum-Body--sizeL */
+    color: var(--spectrum-body-l-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body--sizeM {
+    /* .spectrum-Body--sizeM */
+    font-size: var(
+        --spectrum-body-m-text-size,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    font-weight: var(
+        --spectrum-body-m-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-body-m-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    font-style: var(
+        --spectrum-body-m-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-body-m-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-body-m-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0; /* .spectrum-Body--sizeM */
+    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body--sizeS {
+    /* .spectrum-Body--sizeS */
+    font-size: var(
+        --spectrum-body-s-text-size,
+        var(--spectrum-alias-font-size-default)
+    );
+    font-weight: var(
+        --spectrum-body-s-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-body-s-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    font-style: var(
+        --spectrum-body-s-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-body-s-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-body-s-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0; /* .spectrum-Body--sizeS */
+    color: var(--spectrum-body-s-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body--sizeXS {
+    /* .spectrum-Body--sizeXS */
+    font-size: var(
+        --spectrum-body-xs-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    font-weight: var(
+        --spectrum-body-xs-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-body-xs-text-line-height,
+        var(--spectrum-alias-body-text-line-height)
+    );
+    font-style: var(
+        --spectrum-body-xs-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-body-xs-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-body-xs-text-transform, none);
+    margin-top: 0;
+    margin-bottom: 0; /* .spectrum-Body--sizeXS */
+    color: var(--spectrum-body-xs-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body {
+    /* .spectrum-Body */
+    font-family: var(
+        --spectrum-body-m-text-font-family,
+        var(--spectrum-alias-body-text-font-family)
+    ); /* .spectrum,
+   * .spectrum-Body */
+    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
+}
+.spectrum-Body-strong,
+strong {
+    /* .spectrum-Body .spectrum-Body-strong,
+   * .spectrum-Body strong */
+    font-weight: var(
+        --spectrum-body-m-strong-text-font-weight,
+        var(--spectrum-global-font-weight-bold)
+    );
+}
+.spectrum-Body-emphasis,
+em {
+    /* .spectrum-Body .spectrum-Body-emphasis,
+   * .spectrum-Body em */
+    font-style: var(
+        --spectrum-body-m-emphasis-text-font-style,
+        var(--spectrum-global-font-style-italic)
+    );
+}
+.spectrum-Body--serif {
+    /* .spectrum-Body--serif */
+    font-family: var(
+        --spectrum-body-serif-m-text-font-family,
+        var(--spectrum-alias-serif-text-font-family)
+    );
+}

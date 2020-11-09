@@ -53,6 +53,7 @@
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.1.3",
+        "@spectrum-web-components/styles": "^0.6.1",
         "tslib": "^2.0.0"
     }
 }
