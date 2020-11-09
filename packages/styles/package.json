@@ -21,6 +21,9 @@
     "version": "0.6.1",
     "description": "",
     "style": "all-medium-lightest.css",
+    "main": "src/spectrum-base.css.js",
+    "module": "src/spectrum-base.css.js",
+    "type": "module",
     "exports": {
         "./": "./"
     },
