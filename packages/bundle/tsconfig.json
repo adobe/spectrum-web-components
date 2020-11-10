@@ -25,6 +25,7 @@
         { "path": "../dropdown" },
         { "path": "../dropzone" },
         { "path": "../field-group" },
+        { "path": "../field-label" },
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../icons-ui" },
