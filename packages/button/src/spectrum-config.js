@@ -121,6 +121,11 @@ const config = {
                     name: 'selected',
                     selector: '.is-selected',
                 },
+                {
+                    type: 'boolean',
+                    name: 'emphasized',
+                    selector: '.spectrum-ActionButton--emphasized',
+                },
             ],
             ids: [
                 '.spectrum-ActionButton-label',

@@ -39,10 +39,10 @@ export const Checked = (): TemplateResult => {
     `;
 };
 
-export const Quiet = (): TemplateResult => {
+export const emphasized = (): TemplateResult => {
     return html`
         <sp-switch
-            quiet
+            emphasized
             @click="${action('Click')}"
             @change="${action('Change')}"
         >
@@ -51,10 +51,10 @@ export const Quiet = (): TemplateResult => {
     `;
 };
 
-export const quietChecked = (): TemplateResult => {
+export const emphasizedChecked = (): TemplateResult => {
     return html`
         <sp-switch
-            quiet
+            emphasized
             checked
             @click="${action('Click')}"
             @change="${action('Change')}"
@@ -62,10 +62,6 @@ export const quietChecked = (): TemplateResult => {
             Switch
         </sp-switch>
     `;
-};
-
-quietChecked.story = {
-    name: 'Quiet checked',
 };
 
 export const Autofocus = (): TemplateResult => {

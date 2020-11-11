@@ -381,47 +381,42 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-disabled)
     );
 }
-:host([checked]) .spectrum-Switch--emphasized #input + #switch {
+:host([emphasized][checked]) #input + #switch {
     /* .spectrum-Switch--emphasized .spectrum-Switch-input:checked+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-emphasized-track-color-selected,
         var(--spectrum-global-color-blue-500)
     );
 }
-:host([checked]) .spectrum-Switch--emphasized #input + #switch:before {
+:host([emphasized][checked]) #input + #switch:before {
     /* .spectrum-Switch--emphasized .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-emphasized-handle-border-color-selected,
         var(--spectrum-global-color-blue-500)
     );
 }
-:host([checked]) .spectrum-Switch--emphasized:hover #input:enabled + #switch {
+:host([emphasized][checked]:hover) #input:enabled + #switch {
     /* .spectrum-Switch--emphasized:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-emphasized-track-color-selected-hover,
         var(--spectrum-global-color-blue-600)
     );
 }
-:host([checked])
-    .spectrum-Switch--emphasized:hover
-    #input:enabled
-    + #switch:before {
+:host([emphasized][checked]:hover) #input:enabled + #switch:before {
     /* .spectrum-Switch--emphasized:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-emphasized-handle-border-color-selected-hover,
         var(--spectrum-global-color-blue-600)
     );
 }
-:host(.spectrum-Switch--emphasized:active[checked]) #input:enabled + #switch {
+:host([emphasized]:active[checked]) #input:enabled + #switch {
     /* .spectrum-Switch.spectrum-Switch--emphasized:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-emphasized-track-color-selected-down,
         var(--spectrum-global-color-blue-700)
     );
 }
-:host(.spectrum-Switch--emphasized:active[checked])
-    #input:enabled
-    + #switch:before {
+:host([emphasized]:active[checked]) #input:enabled + #switch:before {
     /* .spectrum-Switch.spectrum-Switch--emphasized:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-emphasized-handle-border-color-selected-down,
@@ -469,11 +464,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([checked]) .spectrum-Switch--emphasized #input:focus-visible + #switch,
-:host([checked])
-    .spectrum-Switch--emphasized:hover
-    #input:focus-visible
-    + #switch {
+:host([emphasized][checked]) #input:focus-visible + #switch,
+:host([emphasized][checked]:hover) #input:focus-visible + #switch {
     /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
    * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
     background-color: var(
@@ -481,14 +473,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-600)
     );
 }
-:host([checked])
-    .spectrum-Switch--emphasized
-    #input:focus-visible
-    + #switch:before,
-:host([checked])
-    .spectrum-Switch--emphasized:hover
-    #input:focus-visible
-    + #switch:before {
+:host([emphasized][checked]) #input:focus-visible + #switch:before,
+:host([emphasized][checked]:hover) #input:focus-visible + #switch:before {
     /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
    * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
     border-color: var(
