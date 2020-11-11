@@ -20,15 +20,17 @@ interface Properties {
     disabled?: boolean;
     selected?: boolean;
     toggles?: boolean;
+    emphasized?: boolean;
 }
 
 function renderButton(properties: Properties): TemplateResult {
     return html`
         <sp-action-button
-            .quiet="${!!properties.quiet}"
-            .disabled=${!!properties.disabled}
-            .selected=${!!properties.selected}
-            .toggles=${!!properties.toggles}
+            ?quiet="${!!properties.quiet}"
+            ?emphasized="${!!properties.emphasized}"
+            ?disabled=${!!properties.disabled}
+            ?selected=${!!properties.selected}
+            ?toggles=${!!properties.toggles}
             @click=${action(`Action`)}
         >
             Action
@@ -55,6 +57,22 @@ export default {
 export const Default = (): TemplateResult => {
     return renderButtonsSelected({
         quiet: false,
+        disabled: false,
+        selected: false,
+    });
+};
+
+export const emphasized = (): TemplateResult => {
+    return renderButtonsSelected({
+        emphasized: true,
+        disabled: false,
+        selected: false,
+    });
+};
+
+export const quiet = (): TemplateResult => {
+    return renderButtonsSelected({
+        quiet: true,
         disabled: false,
         selected: false,
     });

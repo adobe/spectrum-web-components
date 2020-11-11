@@ -24,7 +24,6 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 /**
  * Spectrum Radio Button Component
  *
- * @attr quiet - Uses the quiet style
  * @attr label-below - Moves the label below the radio button
  * @attr invalid - Uses the invalid style
  * @attr disabled - Uses the disabled style
@@ -46,6 +45,9 @@ export class Radio extends Focusable {
 
     @property({ type: Boolean, reflect: true })
     public checked = false;
+
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
 
     @query('#input')
     private inputElement!: HTMLInputElement;

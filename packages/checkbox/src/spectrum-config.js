@@ -22,10 +22,6 @@ const config = {
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Checkbox--quiet',
-                },
-                {
-                    type: 'boolean',
                     selector: ':disabled',
                 },
                 {
@@ -37,6 +33,11 @@ const config = {
                     type: 'boolean',
                     name: 'invalid',
                     selector: '.is-invalid',
+                },
+                {
+                    type: 'boolean',
+                    name: 'emphasized',
+                    selector: '.spectrum-Checkbox--emphasized',
                 },
             ],
             ids: [
