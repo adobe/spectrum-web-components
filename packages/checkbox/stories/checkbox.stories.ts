@@ -40,20 +40,16 @@ export const Indeterminate = (): TemplateResult => {
     `;
 };
 
-export const Quiet = (): TemplateResult => {
+export const emphasized = (): TemplateResult => {
     return html`
-        <sp-checkbox quiet>Checkbox</sp-checkbox>
+        <sp-checkbox emphasized>Checkbox</sp-checkbox>
     `;
 };
 
-export const quietChecked = (): TemplateResult => {
+export const emphasizedChecked = (): TemplateResult => {
     return html`
-        <sp-checkbox quiet checked>Checkbox</sp-checkbox>
+        <sp-checkbox emphasized checked>Checkbox</sp-checkbox>
     `;
-};
-
-quietChecked.story = {
-    name: 'Quiet checked',
 };
 
 export const quietIndeterminate = (): TemplateResult => {

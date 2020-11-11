@@ -391,12 +391,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
-:host([indeterminate]) .spectrum-Checkbox--emphasized #box:before,
-:host([indeterminate])
-    .spectrum-Checkbox--emphasized
-    #input:focus-visible
-    + #box:before,
-.spectrum-Checkbox--emphasized #input:checked + #box:before {
+:host([emphasized][indeterminate]) #box:before,
+:host([emphasized][indeterminate]) #input:focus-visible + #box:before,
+:host([emphasized]) #input:checked + #box:before {
     /* .spectrum-Checkbox--emphasized.is-indeterminate .spectrum-Checkbox-box:before,
    * .spectrum-Checkbox--emphasized.is-indeterminate .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:before,
    * .spectrum-Checkbox--emphasized .spectrum-Checkbox-input:checked+.spectrum-Checkbox-box:before */
@@ -405,8 +402,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-500)
     );
 }
-:host([indeterminate]) .spectrum-Checkbox--emphasized:hover #box:before,
-.spectrum-Checkbox--emphasized:hover #input:checked + #box:before {
+:host([emphasized][indeterminate]:hover) #box:before,
+:host([emphasized]:hover) #input:checked + #box:before {
     /* .spectrum-Checkbox--emphasized:hover.is-indeterminate .spectrum-Checkbox-box:before,
    * .spectrum-Checkbox--emphasized:hover .spectrum-Checkbox-input:checked+.spectrum-Checkbox-box:before */
     border-color: var(
@@ -414,8 +411,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-600)
     );
 }
-:host([indeterminate]) .spectrum-Checkbox--emphasized:active #box:before,
-.spectrum-Checkbox--emphasized:active #input:checked + #box:before {
+:host([emphasized][indeterminate]:active) #box:before,
+:host([emphasized]:active) #input:checked + #box:before {
     /* .spectrum-Checkbox--emphasized:active.is-indeterminate .spectrum-Checkbox-box:before,
    * .spectrum-Checkbox--emphasized:active .spectrum-Checkbox-input:checked+.spectrum-Checkbox-box:before */
     border-color: var(

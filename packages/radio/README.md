@@ -44,21 +44,20 @@ import {
 
 ### Standard radio
 
-Standard radio buttons are the default style for radio buttons. The blue color provides a visual prominence that is optimal for forms, settings, etc. where the radio buttons need to be noticed.
+Standard radio buttons are the default style for radio buttons. They are optimal for
+application panels where all visual elements are monochrome in order to direct
+focus to the content.
 
 ```html
 <sp-radio>Standard radio button</sp-radio>
 ```
 
-### Quiet radio
+### Emphasized radio
 
-Quiet radio buttons are a secondary style for radio buttons. The gray color provides a
-less prominent style than the standard radioes. They are optimal for
-application panels where all visual elements are monochrome in order to direct
-focus to the content.
+Emphasized radio buttons are a secondary style for radio buttons. The blue color provides a visual prominence that is optimal for forms, settings, etc. where the radio buttons need to be noticed.
 
 ```html
-<sp-radio quiet>Quiet radio button</sp-radio>
+<sp-radio emphasized>Emphasized radio button</sp-radio>
 ```
 
 ## States
