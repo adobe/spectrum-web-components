@@ -22,10 +22,6 @@ const config = {
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Radio--quiet',
-                },
-                {
-                    type: 'boolean',
                     name: 'label-below',
                     selector: '.spectrum-Radio--labelBelow',
                 },
@@ -41,6 +37,11 @@ const config = {
                     type: 'boolean',
                     name: 'invalid',
                     selector: '.is-invalid',
+                },
+                {
+                    type: 'boolean',
+                    name: 'emphasized',
+                    selector: '.spectrum-Radio--emphasized',
                 },
             ],
             ids: [

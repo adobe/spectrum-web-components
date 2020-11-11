@@ -15,6 +15,7 @@ import {
     TemplateResult,
     html,
     PropertyValues,
+    property,
 } from '@spectrum-web-components/base';
 import { CheckboxBase } from '@spectrum-web-components/checkbox/src/CheckboxBase.js';
 import switchStyles from './switch.css.js';
@@ -29,6 +30,9 @@ export class Switch extends CheckboxBase {
         }
         return [switchStyles];
     }
+
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
 
     protected render(): TemplateResult {
         return html`

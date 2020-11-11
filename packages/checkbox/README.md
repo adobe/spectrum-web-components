@@ -35,9 +35,9 @@ import { Checkbox } from '@spectrum-web-components/checkbox';
 
 ### Standard checkboxes
 
-Standard checkboxes are the default style for checkboxes. The blue color
-provides a visual prominence that is optimal for forms, settings, lists or grids
-of assets, etc. where the checkboxes need to be noticed.
+Standard checkboxes are the default style for checkboxes. They are optimal for
+application panels where all visual elements are monochrome in order to direct
+focus to the content.
 
 ```html-live
 <div style="display: flex; justify-content: space-between;">
@@ -64,20 +64,19 @@ of assets, etc. where the checkboxes need to be noticed.
 </div>
 ```
 
-### Quiet checkboxes
+### Emphasized checkboxes
 
-Quiet checkboxes are a secondary style for checkboxes. The gray color provides a
-less prominent style than the standard checkboxes. They are optimal for
-application panels where all visual elements are monochrome in order to direct
-focus to the content.
+Emphasized checkboxes are a secondary style for checkboxes. The blue color
+provides a visual prominence that is optimal for forms, settings, lists or grids
+of assets, etc. where the checkboxes need to be noticed.
 
 ```html-live
 <div style="display: flex; justify-content: space-between;">
     <div style="display: flex; flex-direction: column; justify-content: space-between;">
         <h4 class="spectrum-Heading--subtitle1">Default</h4>
-        <sp-checkbox quiet>Web component</sp-checkbox>
-        <sp-checkbox quiet checked>Web component</sp-checkbox>
-        <sp-checkbox quiet indeterminate>Web component</sp-checkbox>
+        <sp-checkbox emphasized>Web component</sp-checkbox>
+        <sp-checkbox emphasized checked>Web component</sp-checkbox>
+        <sp-checkbox emphasized indeterminate>Web component</sp-checkbox>
     </div>
 
     <div style="display: flex; flex-direction: column;">

@@ -40,6 +40,9 @@ export class ActionButton extends ButtonBase {
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
+
     constructor() {
         super();
         this.addEventListener('click', this.onClick);
