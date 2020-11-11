@@ -31,20 +31,16 @@ export const Checked = (): TemplateResult => {
     `;
 };
 
-export const Quiet = (): TemplateResult => {
+export const emphasized = (): TemplateResult => {
     return html`
-        <sp-radio quiet>Radio</sp-radio>
+        <sp-radio emphasized>Radio</sp-radio>
     `;
 };
 
-export const quietChecked = (): TemplateResult => {
+export const emphasizedChecked = (): TemplateResult => {
     return html`
-        <sp-radio quiet checked>Radio</sp-radio>
+        <sp-radio emphasized checked>Radio</sp-radio>
     `;
-};
-
-quietChecked.story = {
-    name: 'Quiet checked',
 };
 
 export const Autofocus = (): TemplateResult => {

@@ -34,6 +34,9 @@ export class Checkbox extends CheckboxBase {
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
+
     public static get styles(): CSSResultArray {
         return [checkboxStyles, checkmarkSmallStyles, dashSmallStyles];
     }
