@@ -20,16 +20,17 @@ const config = {
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Switch--quiet',
-                },
-                {
-                    type: 'boolean',
                     selector: ':disabled',
                 },
                 {
                     type: 'boolean',
                     name: 'checked',
                     selector: ':checked',
+                },
+                {
+                    type: 'boolean',
+                    name: 'emphasized',
+                    selector: '.spectrum-Switch--emphasized',
                 },
             ],
             ids: [
