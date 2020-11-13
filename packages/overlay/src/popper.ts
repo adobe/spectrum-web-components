@@ -17,8 +17,8 @@ import {
     popperGenerator,
     defaultModifiers,
 } from '@popperjs/core/lib/popper-lite';
-import { Instance } from '@popperjs/core/lib/types';
-import { Placement } from '@popperjs/core/lib/enums';
+import type { Instance } from '@popperjs/core/lib/types';
+import type { Placement } from '@popperjs/core/lib/enums';
 
 import flip from '@popperjs/core/lib/modifiers/flip.js';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
@@ -39,4 +39,5 @@ export const createPopper = popperGenerator({
     ],
 });
 
-export { Instance, Placement, maxSize, applyMaxSize };
+export type { Instance, Placement };
+export { maxSize, applyMaxSize };
