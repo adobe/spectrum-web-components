@@ -36,6 +36,7 @@ export { WorkflowIcons };
 export * from '@spectrum-web-components/illustrated-message';
 export * from '@spectrum-web-components/link';
 export * from '@spectrum-web-components/menu';
+export * from '@spectrum-web-components/meter';
 export * from '@spectrum-web-components/overlay';
 export * from '@spectrum-web-components/popover';
 export * from '@spectrum-web-components/quick-actions';
