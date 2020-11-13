@@ -6,6 +6,7 @@
         "experimentalDecorators": true,
         "importHelpers": true,
         "inlineSources": true,
+        "isolatedModules": true,
         "lib": ["es2017", "dom", "dom.iterable"],
         "module": "esNext",
         "moduleResolution": "node",
