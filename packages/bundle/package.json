@@ -73,6 +73,7 @@
         "@spectrum-web-components/illustrated-message": "^0.3.3",
         "@spectrum-web-components/link": "^0.5.6",
         "@spectrum-web-components/menu": "^0.4.4",
+        "@spectrum-web-components/meter": "^0.0.1",
         "@spectrum-web-components/overlay": "^0.6.4",
         "@spectrum-web-components/popover": "^0.5.4",
         "@spectrum-web-components/quick-actions": "^0.1.3",
