@@ -64,7 +64,7 @@
         "test:build": "tsc --build test/tsconfig-test.json",
         "test:ci": "yarn test:build && yarn test:start",
         "test:start": "web-test-runner",
-        "test:watch": "run-p watch 'test:build -w' 'web-test-runner --watch'",
+        "test:watch": "run-p watch 'test:build -w' 'test:start --watch'",
         "test:bench": "node test/benchmark/cli.js",
         "test:visual:clean": "rm test/visual/screenshots-current/**/*.png",
         "test:visual:baseline:local": "mocha test/visual/screenshots-baseline/local.js --timeout=500000",

@@ -33,6 +33,7 @@
         { "path": "../illustrated-message" },
         { "path": "../link" },
         { "path": "../menu" },
+        { "path": "../meter" },
         { "path": "../popover" },
         { "path": "../overlay" },
         { "path": "../quick-actions" },
