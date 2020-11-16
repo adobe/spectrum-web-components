@@ -57,7 +57,7 @@ export const sideIndeterminate = (): TemplateResult => {
 
 const makeOverBackground = (story: TemplateResult): TemplateResult => html`
     <div
-        style="background-color: rgb(15, 121, 125); color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block"
+        style="background-color: var(--spectrum-global-color-seafoam-600); color: var(--spectrum-global-color-seafoam-600); padding: var(--spectrum-global-dimension-size-175) var(--spectrum-global-dimension-size-250); display: inline-block"
     >
         ${story}
     </div>
