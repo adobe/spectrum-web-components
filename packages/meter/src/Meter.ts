@@ -84,8 +84,3 @@ export class Meter extends SpectrumElement {
         }
     }
 }
-
-/*
-type of change(packages): work done
-feat(meter): add meter pattern
-*/
