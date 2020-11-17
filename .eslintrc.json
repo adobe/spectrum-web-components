@@ -1,6 +1,6 @@
 {
     "root": true,
-    "plugins": ["notice", "spectrum-web-components"],
+    "plugins": ["notice", "spectrum-web-components", "import"],
     "env": {
         "browser": true,
         "node": true,
@@ -12,6 +12,8 @@
         "sourceType": "module"
     },
     "rules": {
+        "import/extensions": ["error", "ignorePackages", { "ts": "never" }],
+        "import/prefer-default-export": "off",
         "spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
