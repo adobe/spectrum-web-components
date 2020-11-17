@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, CSSResultArray } from 'lit-element';
-import { RouteComponent } from './route-component';
+import { RouteComponent } from './route-component.js';
 import componentStyles from './markdown.css';
 import homeStyles from './home.css';
 import '@spectrum-web-components/button/sp-button.js';
