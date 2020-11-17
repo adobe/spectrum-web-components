@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { Router, Route, RouterOptions } from '@vaadin/router';
-import { Page } from './components/page';
+import { Page } from './components/page.js';
 
 const githubUrl = 'https://opensource.adobe.com/spectrum-web-components/';
 const baseUrl =
