@@ -23,6 +23,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-font-line-height-medium)
     );
     text-transform: uppercase;
-    letter-spacing: 0.06em; /* .spectrum-Menu-sectionHeading */
+    letter-spacing: 0.06em;
+}
+.header {
+    /* .spectrum-Menu-sectionHeading */
     color: var(--spectrum-global-color-gray-700);
 }

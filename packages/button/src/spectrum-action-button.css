@@ -47,18 +47,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-weight: var(
         --spectrum-actionbutton-text-font-weight,
         var(--spectrum-alias-body-text-font-weight)
-    ); /* .spectrum-ActionButton */
-    background-color: var(
-        --spectrum-actionbutton-background-color,
-        var(--spectrum-global-color-gray-75)
-    );
-    border-color: var(
-        --spectrum-actionbutton-border-color,
-        var(--spectrum-alias-border-color)
-    );
-    color: var(
-        --spectrum-actionbutton-text-color,
-        var(--spectrum-alias-text-color)
     );
 }
 :host([dir='ltr']) .button slot[name='icon'] + #label {
@@ -66,7 +54,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-left: var(
         --spectrum-actionbutton-icon-padding-x,
         var(--spectrum-global-dimension-size-85)
-    ); /* [dir=ltr] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
+    );
+}
+:host([dir='rtl']) .button slot[name='icon'] + #label {
+    /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
+    padding-right: var(
+        --spectrum-actionbutton-icon-padding-x,
+        var(--spectrum-global-dimension-size-85)
+    );
+}
+:host([dir='ltr']) .button slot[name='icon'] + #label {
+    /* [dir=ltr] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
     padding-right: calc(
         var(
                 --spectrum-actionbutton-text-padding-x,
@@ -80,10 +78,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl']) .button slot[name='icon'] + #label {
     /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
-    padding-right: var(
-        --spectrum-actionbutton-icon-padding-x,
-        var(--spectrum-global-dimension-size-85)
-    ); /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
     padding-left: calc(
         var(
                 --spectrum-actionbutton-text-padding-x,
@@ -161,10 +155,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     bottom: var(
         --spectrum-actionbutton-hold-icon-padding-bottom,
         var(--spectrum-global-dimension-size-40)
-    ); /* .spectrum-ActionButton .spectrum-ActionButton-hold */
-    color: var(
-        --spectrum-actionbutton-hold-icon-color,
-        var(--spectrum-alias-icon-color)
     );
 }
 #label {
@@ -172,15 +162,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Button-label */
     align-self: center;
     justify-self: center;
-    text-align: center; /* .spectrum-ActionButton-label */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    text-align: center;
 }
 #label:empty {
     /* .spectrum-ActionButton-label:empty,
    * .spectrum-Button-label:empty */
     display: none;
+}
+#label {
+    /* .spectrum-ActionButton-label */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 :host([quiet]) .button {
     /* .spectrum-ActionButton--quiet */
@@ -199,17 +192,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-weight: var(
         --spectrum-actionbutton-quiet-text-font-weight,
         var(--spectrum-alias-body-text-font-weight)
-    ); /* .spectrum-ActionButton--quiet */
+    );
+}
+.button {
+    /* .spectrum-ActionButton */
     background-color: var(
-        --spectrum-actionbutton-quiet-background-color,
-        var(--spectrum-alias-background-color-transparent)
+        --spectrum-actionbutton-background-color,
+        var(--spectrum-global-color-gray-75)
     );
     border-color: var(
-        --spectrum-actionbutton-quiet-border-color,
-        var(--spectrum-alias-border-color-transparent)
+        --spectrum-actionbutton-border-color,
+        var(--spectrum-alias-border-color)
     );
     color: var(
-        --spectrum-actionbutton-quiet-text-color,
+        --spectrum-actionbutton-text-color,
         var(--spectrum-alias-text-color)
     );
 }
@@ -217,6 +213,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ActionButton .spectrum-Icon */
     color: var(
         --spectrum-actionbutton-icon-color,
+        var(--spectrum-alias-icon-color)
+    );
+}
+#hold-affordance {
+    /* .spectrum-ActionButton .spectrum-ActionButton-hold */
+    color: var(
+        --spectrum-actionbutton-hold-icon-color,
         var(--spectrum-alias-icon-color)
     );
 }
@@ -763,6 +766,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     color: var(
         --spectrum-actionbutton-emphasized-icon-color-selected-disabled,
         var(--spectrum-alias-icon-color-disabled)
+    );
+}
+:host([quiet]) .button {
+    /* .spectrum-ActionButton--quiet */
+    background-color: var(
+        --spectrum-actionbutton-quiet-background-color,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    border-color: var(
+        --spectrum-actionbutton-quiet-border-color,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    color: var(
+        --spectrum-actionbutton-quiet-text-color,
+        var(--spectrum-alias-text-color)
     );
 }
 :host([quiet]) .button:hover {

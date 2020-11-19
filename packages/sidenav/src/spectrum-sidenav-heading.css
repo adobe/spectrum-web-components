@@ -103,11 +103,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-sidenav-heading-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
-    text-transform: uppercase; /* .spectrum-SideNav-heading */
-    color: var(
-        --spectrum-sidenav-heading-text-color,
-        var(--spectrum-global-color-gray-700)
-    );
+    text-transform: uppercase;
 }
 :host([dir='ltr'])
     .spectrum-SideNav--multiLevel
@@ -173,5 +169,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-sidenav-item-padding-x,
                 var(--spectrum-global-dimension-size-150)
             )
+    );
+}
+#heading {
+    /* .spectrum-SideNav-heading */
+    color: var(
+        --spectrum-sidenav-heading-text-color,
+        var(--spectrum-global-color-gray-700)
     );
 }

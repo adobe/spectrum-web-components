@@ -19,48 +19,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
         visibility 0ms linear
             var(--spectrum-global-animation-duration-100, 0.13s);
-    pointer-events: none; /* .spectrum-Popover */
-    display: inline-flex;
-    flex-direction: column;
-    min-width: var(--spectrum-global-dimension-size-400);
-    min-height: var(--spectrum-global-dimension-size-400);
-    position: absolute;
-    border-style: solid;
-    border-width: var(
-        --spectrum-popover-border-size,
-        var(--spectrum-alias-border-size-thin)
-    );
-    border-radius: var(
-        --spectrum-popover-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    outline: none;
-    box-sizing: border-box; /* .spectrum-Popover */
-    background-color: var(
-        --spectrum-popover-background-color,
-        var(--spectrum-global-color-gray-50)
-    );
-    border-color: var(
-        --spectrum-popover-border-color,
-        var(--spectrum-alias-border-color-dark)
-    );
-    filter: drop-shadow(
-        0 1px 4px
-            var(
-                --spectrum-popover-shadow-color,
-                var(--spectrum-alias-dropshadow-color)
-            )
-    );
-    -webkit-filter: drop-shadow(
-        0 1px 4px
-            var(
-                --spectrum-popover-shadow-color,
-                var(--spectrum-alias-dropshadow-color)
-            )
-    );
-    will-change: filter;
-    -webkit-clip-path: inset(-30px -30px);
-    clip-path: inset(-30px -30px);
+    pointer-events: none;
 }
 :host([open]) {
     /* .spectrum-Popover.is-open */
@@ -103,6 +62,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
     );
 }
+:host {
+    /* .spectrum-Popover */
+    display: inline-flex;
+    flex-direction: column;
+    min-width: var(--spectrum-global-dimension-size-400);
+    min-height: var(--spectrum-global-dimension-size-400);
+    position: absolute;
+    border-style: solid;
+    border-width: var(
+        --spectrum-popover-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    border-radius: var(
+        --spectrum-popover-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    outline: none;
+    box-sizing: border-box;
+}
 #tip {
     /* .spectrum-Popover-tip */
     position: absolute;
@@ -123,14 +101,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     stroke-width: var(
         --spectrum-popover-border-size,
         var(--spectrum-alias-border-size-thin)
-    ); /* .spectrum-Popover .spectrum-Popover-tip .spectrum-Popover-tip-triangle */
-    fill: var(
-        --spectrum-popover-background-color,
-        var(--spectrum-global-color-gray-50)
-    );
-    stroke: var(
-        --spectrum-popover-border-color,
-        var(--spectrum-alias-border-color-dark)
     );
 }
 :host([dialog]) {
@@ -185,4 +155,43 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Popover--top .spectrum-Popover-tip */
     left: 50%;
     margin-left: calc(var(--spectrum-global-dimension-size-150) * -1);
+}
+:host {
+    /* .spectrum-Popover */
+    background-color: var(
+        --spectrum-popover-background-color,
+        var(--spectrum-global-color-gray-50)
+    );
+    border-color: var(
+        --spectrum-popover-border-color,
+        var(--spectrum-alias-border-color-dark)
+    );
+    filter: drop-shadow(
+        0 1px 4px
+            var(
+                --spectrum-popover-shadow-color,
+                var(--spectrum-alias-dropshadow-color)
+            )
+    );
+    -webkit-filter: drop-shadow(
+        0 1px 4px
+            var(
+                --spectrum-popover-shadow-color,
+                var(--spectrum-alias-dropshadow-color)
+            )
+    );
+    will-change: filter;
+    -webkit-clip-path: inset(-30px -30px);
+    clip-path: inset(-30px -30px);
+}
+#tip .triangle {
+    /* .spectrum-Popover .spectrum-Popover-tip .spectrum-Popover-tip-triangle */
+    fill: var(
+        --spectrum-popover-background-color,
+        var(--spectrum-global-color-gray-50)
+    );
+    stroke: var(
+        --spectrum-popover-border-color,
+        var(--spectrum-alias-border-color-dark)
+    );
 }

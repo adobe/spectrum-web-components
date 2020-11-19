@@ -413,10 +413,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: var(
         --spectrum-progresscircle-medium-width,
         var(--spectrum-global-dimension-size-400)
-    ); /* .spectrum-ProgressCircle-track */
-    border-color: var(
-        --spectrum-progresscircle-medium-track-color,
-        var(--spectrum-alias-track-color-default)
     );
 }
 :host([dir='ltr']) .fills {
@@ -450,10 +446,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: var(
         --spectrum-progresscircle-medium-width,
         var(--spectrum-global-dimension-size-400)
-    ); /* .spectrum-ProgressCircle-fill */
-    border-color: var(
-        --spectrum-progresscircle-medium-track-fill-color,
-        var(--spectrum-global-color-blue-500)
     );
 }
 .fillMask1,
@@ -563,6 +555,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     will-change: transform;
     transform: translateZ(0);
     animation: spectrum-fill-mask-2 1s linear infinite;
+}
+.track {
+    /* .spectrum-ProgressCircle-track */
+    border-color: var(
+        --spectrum-progresscircle-medium-track-color,
+        var(--spectrum-alias-track-color-default)
+    );
+}
+.fill {
+    /* .spectrum-ProgressCircle-fill */
+    border-color: var(
+        --spectrum-progresscircle-medium-track-fill-color,
+        var(--spectrum-global-color-blue-500)
+    );
 }
 :host([over-background]) .track {
     /* .spectrum-ProgressCircle--overBackground .spectrum-ProgressCircle-track */

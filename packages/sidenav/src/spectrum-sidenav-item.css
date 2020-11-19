@@ -67,15 +67,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: pointer;
     transition: background-color
             var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
-        color var(--spectrum-global-animation-duration-100, 0.13s) ease-out; /* .spectrum-SideNav-itemLink */
-    background-color: var(
-        --spectrum-sidenav-item-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
-    color: var(
-        --spectrum-sidenav-item-text-color,
-        var(--spectrum-alias-text-color)
-    );
+        color var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
 }
 #itemLink:focus {
     /* .spectrum-SideNav-itemLink:focus */
@@ -114,10 +106,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: var(
         --spectrum-sidenav-item-border-radius,
         var(--spectrum-alias-border-radius-regular)
-    ); /* .spectrum-SideNav-itemLink.focus-ring:before */
-    border-color: var(
-        --spectrum-sidenav-item-border-color-key-focus,
-        var(--spectrum-alias-border-color-focus)
     );
 }
 :host([dir='ltr']) #itemLink ::slotted([slot='icon']) {
@@ -235,6 +223,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: default;
     pointer-events: none;
 }
+#itemLink {
+    /* .spectrum-SideNav-itemLink */
+    background-color: var(
+        --spectrum-sidenav-item-background-color,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    color: var(
+        --spectrum-sidenav-item-text-color,
+        var(--spectrum-alias-text-color)
+    );
+}
 #itemLink:hover {
     /* .spectrum-SideNav-itemLink:hover */
     background-color: var(
@@ -262,5 +261,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     color: var(
         --spectrum-sidenav-item-text-color-key-focus,
         var(--spectrum-alias-text-color-hover)
+    );
+}
+#itemLink:focus-visible:before {
+    /* .spectrum-SideNav-itemLink.focus-ring:before */
+    border-color: var(
+        --spectrum-sidenav-item-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
     );
 }

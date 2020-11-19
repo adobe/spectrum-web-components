@@ -26,8 +26,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-right: 0;
     padding: 0;
     list-style-type: none;
-    overflow: auto; /* .spectrum-Menu .spectrum-Menu */
-    display: block; /* .spectrum-Menu */
+    overflow: auto;
+}
+:host {
+    /* .spectrum-Menu .spectrum-Menu */
+    display: block;
+}
+:host {
+    /* .spectrum-Menu */
     background-color: var(
         --spectrum-listitem-background-color,
         var(--spectrum-alias-background-color-transparent)

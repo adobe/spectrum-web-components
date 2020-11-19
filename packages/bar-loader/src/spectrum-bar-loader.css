@@ -66,11 +66,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ProgressBar-track */
     overflow: hidden;
     border-radius: var(--spectrum-progressbar-large-border-radius);
-    z-index: 1; /* .spectrum-ProgressBar .spectrum-ProgressBar-track */
-    background-color: var(
-        --spectrum-progressbar-large-track-color,
-        var(--spectrum-alias-track-color-default)
-    );
+    z-index: 1;
 }
 .fill,
 .track {
@@ -84,11 +80,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .fill {
     /* .spectrum-ProgressBar-fill */
     border: none;
-    transition: width 1s; /* .spectrum-ProgressBar .spectrum-ProgressBar-fill */
-    background: var(
-        --spectrum-progressbar-large-track-fill-color,
-        var(--spectrum-global-color-blue-500)
-    );
+    transition: width 1s;
 }
 :host([dir='ltr']) .label,
 :host([dir='ltr']) .percentage {
@@ -172,7 +164,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][side-label]) .percentage {
     /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
-    text-align: right; /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
+    text-align: right;
+}
+:host([dir='rtl'][side-label]) .percentage {
+    /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
+    text-align: left;
+}
+:host([dir='ltr'][side-label]) .percentage {
+    /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
     margin-left: var(
         --spectrum-progressbar-large-label-gap-x,
         var(--spectrum-global-dimension-size-150)
@@ -180,7 +179,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl'][side-label]) .percentage {
     /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
-    text-align: left; /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
     margin-right: var(
         --spectrum-progressbar-large-label-gap-x,
         var(--spectrum-global-dimension-size-150)
@@ -241,6 +239,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-animation-duration-2000)
         )
         infinite;
+}
+.fill {
+    /* .spectrum-ProgressBar .spectrum-ProgressBar-fill */
+    background: var(
+        --spectrum-progressbar-large-track-fill-color,
+        var(--spectrum-global-color-blue-500)
+    );
+}
+.track {
+    /* .spectrum-ProgressBar .spectrum-ProgressBar-track */
+    background-color: var(
+        --spectrum-progressbar-large-track-color,
+        var(--spectrum-alias-track-color-default)
+    );
 }
 :host([over-background]) .fill {
     /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-fill */

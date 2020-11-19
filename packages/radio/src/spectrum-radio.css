@@ -53,10 +53,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-radio-circle-dot-size,
                 var(--spectrum-global-dimension-static-size-50)
             ) / 2
-    ); /* .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
-    border-color: var(
-        --spectrum-radio-emphasized-circle-border-color-selected,
-        var(--spectrum-global-color-blue-500)
     );
 }
 #input:focus-visible + #button:after {
@@ -70,7 +66,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #label {
     /* [dir=ltr] .spectrum-Radio-label */
-    text-align: left; /* [dir=ltr] .spectrum-Radio-label */
+    text-align: left;
+}
+:host([dir='rtl']) #label {
+    /* [dir=rtl] .spectrum-Radio-label */
+    text-align: right;
+}
+:host([dir='ltr']) #label {
+    /* [dir=ltr] .spectrum-Radio-label */
     margin-left: var(
         --spectrum-radio-text-gap,
         var(--spectrum-global-dimension-size-125)
@@ -78,7 +81,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl']) #label {
     /* [dir=rtl] .spectrum-Radio-label */
-    text-align: right; /* [dir=rtl] .spectrum-Radio-label */
     margin-right: var(
         --spectrum-radio-text-gap,
         var(--spectrum-global-dimension-size-125)
@@ -104,11 +106,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-body-text-line-height)
     );
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
-        ease-in-out; /* .spectrum-Radio-label */
-    color: var(
-        --spectrum-radio-emphasized-text-color,
-        var(--spectrum-alias-text-color)
-    );
+        ease-in-out;
 }
 #button {
     /* .spectrum-Radio-button */
@@ -163,15 +161,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: border var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out; /* .spectrum-Radio-button:before */
-    background-color: var(
-        --spectrum-radio-emphasized-circle-background-color,
-        var(--spectrum-global-color-gray-75)
-    );
-    border-color: var(
-        --spectrum-radio-emphasized-circle-border-color,
-        var(--spectrum-global-color-gray-600)
-    );
+            ease-in-out;
 }
 #button:after {
     /* .spectrum-Radio-button:after */
@@ -206,6 +196,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([label-below]) #label {
     /* .spectrum-Radio--labelBelow .spectrum-Radio-label */
     margin: var(--spectrum-global-dimension-size-40) 0 0 0;
+}
+:host([checked]) #input + #button:before {
+    /* .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
+    border-color: var(
+        --spectrum-radio-emphasized-circle-border-color-selected,
+        var(--spectrum-global-color-blue-500)
+    );
+}
+#label {
+    /* .spectrum-Radio-label */
+    color: var(
+        --spectrum-radio-emphasized-text-color,
+        var(--spectrum-alias-text-color)
+    );
+}
+#button:before {
+    /* .spectrum-Radio-button:before */
+    background-color: var(
+        --spectrum-radio-emphasized-circle-background-color,
+        var(--spectrum-global-color-gray-75)
+    );
+    border-color: var(
+        --spectrum-radio-emphasized-circle-border-color,
+        var(--spectrum-global-color-gray-600)
+    );
 }
 :host(:hover) #button:before {
     /* .spectrum-Radio:hover .spectrum-Radio-button:before */
