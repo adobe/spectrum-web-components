@@ -23,6 +23,7 @@ import {
     wrapperButtons,
     wrapperFullscreen,
     wrapperButtonsUnderlay,
+    wrapperDismissableUnderlayError,
 } from '../stories/dialog-wrapper.stories.js';
 
 describe('Dialog Wrapper', () => {
@@ -54,16 +55,27 @@ describe('Dialog Wrapper', () => {
         await elementUpdated(el);
         expect(el).to.be.accessible();
     });
-    it('dismisses via clicking the underlay', async () => {
-        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+    it('dismisses via clicking the underlay when [dismissable]', async () => {
+        const test = await fixture<HTMLDivElement>(
+            wrapperDismissableUnderlayError()
+        );
+        const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
         await elementUpdated(el);
         expect(el.open).to.be.true;
         el.dismissable = true;
-        const root = el.shadowRoot ? el.shadowRoot : el;
-        const underlay = root.querySelector('sp-underlay') as Underlay;
+        const underlay = el.shadowRoot.querySelector('sp-underlay') as Underlay;
         underlay.click();
         await elementUpdated(el);
         expect(el.open).to.be.false;
+    });
+    it('does not dismiss via clicking the underlay :not([dismissable])', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        const underlay = el.shadowRoot.querySelector('sp-underlay') as Underlay;
+        underlay.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
     });
     it('dismisses', async () => {
         const el = await fixture<DialogWrapper>(
