@@ -177,10 +177,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-switch-track-height,
                 var(--spectrum-global-dimension-size-175)
             ) / 2
-    ); /* .spectrum-Switch-switch */
-    background-color: var(
-        --spectrum-switch-track-color,
-        var(--spectrum-global-color-gray-300)
     );
 }
 #switch:before {
@@ -188,7 +184,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: block;
     position: absolute;
     content: '';
-    box-sizing: border-box; /* .spectrum-Switch-switch:before */
+    box-sizing: border-box;
+}
+:host([dir='ltr']) #switch:before {
+    /* [dir=ltr] .spectrum-Switch-switch:before */
+    left: 0;
+}
+:host([dir='rtl']) #switch:before {
+    /* [dir=rtl] .spectrum-Switch-switch:before */
+    right: 0;
+}
+#switch:before {
+    /* .spectrum-Switch-switch:before */
     transition: background var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         border var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
@@ -210,23 +217,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-size-thick)
     );
     border-radius: var(--spectrum-switch-handle-border-radius);
-    border-style: solid; /* .spectrum-Switch-switch:before */
-    background-color: var(
-        --spectrum-switch-handle-background-color,
-        var(--spectrum-global-color-gray-75)
-    );
-    border-color: var(
-        --spectrum-switch-handle-border-color,
-        var(--spectrum-global-color-gray-600)
-    );
-}
-:host([dir='ltr']) #switch:before {
-    /* [dir=ltr] .spectrum-Switch-switch:before */
-    left: 0;
-}
-:host([dir='rtl']) #switch:before {
-    /* [dir=rtl] .spectrum-Switch-switch:before */
-    right: 0;
+    border-style: solid;
 }
 :host([dir='ltr']) #switch:after {
     /* [dir=ltr] .spectrum-Switch-switch:after */
@@ -263,6 +254,24 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)
             ease-out,
         margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
+}
+#switch {
+    /* .spectrum-Switch-switch */
+    background-color: var(
+        --spectrum-switch-track-color,
+        var(--spectrum-global-color-gray-300)
+    );
+}
+#switch:before {
+    /* .spectrum-Switch-switch:before */
+    background-color: var(
+        --spectrum-switch-handle-background-color,
+        var(--spectrum-global-color-gray-75)
+    );
+    border-color: var(
+        --spectrum-switch-handle-border-color,
+        var(--spectrum-global-color-gray-600)
+    );
 }
 #input ~ #label {
     /* .spectrum-Switch-input~.spectrum-Switch-label */

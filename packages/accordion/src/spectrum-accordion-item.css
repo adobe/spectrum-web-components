@@ -43,11 +43,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2
     );
     transition: transform ease
-        var(--spectrum-global-animation-duration-100, 0.13s); /* .spectrum-Accordion-itemIndicator */
-    color: var(
-        --spectrum-accordion-icon-color,
-        var(--spectrum-global-color-gray-600)
-    );
+        var(--spectrum-global-animation-duration-100, 0.13s);
 }
 :host {
     /* .spectrum-Accordion-item */
@@ -59,11 +55,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-accordion-item-border-size,
             var(--spectrum-alias-border-size-thin)
         )
-        solid transparent; /* .spectrum-Accordion-item */
-    border-color: var(
-        --spectrum-accordion-border-color,
-        var(--spectrum-global-color-gray-300)
-    );
+        solid transparent;
 }
 :host(:first-of-type) {
     /* .spectrum-Accordion-item:first-of-type */
@@ -98,12 +90,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-accordion-item-border-left-size-key-focus,
                 var(--spectrum-alias-border-size-thick)
             )
-    ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
-    padding-right: var(
-        --spectrum-accordion-item-padding-x,
-        var(--spectrum-global-dimension-size-225)
-    ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
-    text-align: left;
+    );
 }
 :host([dir='rtl']) #header {
     /* [dir=rtl] .spectrum-Accordion-itemHeader */
@@ -124,11 +111,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-accordion-item-border-left-size-key-focus,
                 var(--spectrum-alias-border-size-thick)
             )
-    ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
+    );
+}
+:host([dir='ltr']) #header {
+    /* [dir=ltr] .spectrum-Accordion-itemHeader */
+    padding-right: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    );
+}
+:host([dir='rtl']) #header {
+    /* [dir=rtl] .spectrum-Accordion-itemHeader */
     padding-left: var(
         --spectrum-accordion-item-padding-x,
         var(--spectrum-global-dimension-size-225)
-    ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
+    );
+}
+:host([dir='ltr']) #header {
+    /* [dir=ltr] .spectrum-Accordion-itemHeader */
+    text-align: left;
+}
+:host([dir='rtl']) #header {
+    /* [dir=rtl] .spectrum-Accordion-itemHeader */
     text-align: right;
 }
 #header {
@@ -169,11 +173,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     background-color: inherit;
     border: 0;
     font-family: inherit;
-    width: 100%; /* .spectrum-Accordion-itemHeader */
-    color: var(
-        --spectrum-accordion-text-color,
-        var(--spectrum-global-color-gray-700)
-    );
+    width: 100%;
 }
 #header:focus {
     /* .spectrum-Accordion-itemHeader:focus */
@@ -252,6 +252,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([disabled]) #header {
     /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader */
     cursor: default;
+}
+:host {
+    /* .spectrum-Accordion-item */
+    border-color: var(
+        --spectrum-accordion-border-color,
+        var(--spectrum-global-color-gray-300)
+    );
+}
+#indicator {
+    /* .spectrum-Accordion-itemIndicator */
+    color: var(
+        --spectrum-accordion-icon-color,
+        var(--spectrum-global-color-gray-600)
+    );
+}
+#header {
+    /* .spectrum-Accordion-itemHeader */
+    color: var(
+        --spectrum-accordion-text-color,
+        var(--spectrum-global-color-gray-700)
+    );
 }
 #header:hover {
     /* .spectrum-Accordion-itemHeader:hover */

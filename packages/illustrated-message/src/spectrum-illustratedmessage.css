@@ -21,10 +21,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #illustration {
     /* .spectrum-IllustratedMessage-illustration */
-    margin-bottom: 24px; /* .spectrum-IllustratedMessage-illustration */
-    color: var(--spectrum-global-color-gray-500);
-    fill: currentColor;
-    stroke: currentColor;
+    margin-bottom: 24px;
 }
 #heading {
     /* .spectrum-IllustratedMessage-heading */
@@ -40,4 +37,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([cta]) #description {
     /* .spectrum-IllustratedMessage--cta .spectrum-IllustratedMessage-description */
     font-style: normal;
+}
+#illustration {
+    /* .spectrum-IllustratedMessage-illustration */
+    color: var(--spectrum-global-color-gray-500);
+    fill: currentColor;
+    stroke: currentColor;
 }

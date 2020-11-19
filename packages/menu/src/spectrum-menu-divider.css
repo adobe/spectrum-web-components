@@ -170,11 +170,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-dimension-static-size-150)
         );
     padding: 0;
-    border: none; /* .spectrum-Menu-divider */
-    background-color: var(
-        --spectrum-listitem-divider-color,
-        var(--spectrum-alias-border-color-extralight)
-    );
+    border: none;
 }
 :host([dir='ltr']) .spectrum-Menu-item:focus-visible,
 :host([dir='ltr']) .spectrum-Menu-item.is-focused {
@@ -192,5 +188,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-right-color: var(
         --spectrum-listitem-option-focus-indicator-color,
         var(--spectrum-alias-border-color-focus)
+    );
+}
+:host {
+    /* .spectrum-Menu-divider */
+    background-color: var(
+        --spectrum-listitem-divider-color,
+        var(--spectrum-alias-border-color-extralight)
     );
 }

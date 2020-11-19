@@ -65,20 +65,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: 100%;
     padding: 0;
     margin: 0;
-    border: none; /* .spectrum-ClearButton */
-    background-color: var(
-        --spectrum-clearbutton-medium-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
-    color: var(
-        --spectrum-clearbutton-medium-icon-color,
-        var(--spectrum-alias-icon-color)
-    );
+    border: none;
 }
 .button > .icon {
     /* .spectrum-ClearButton>.spectrum-Icon */
-    margin: 0 auto; /* .spectrum-ClearButton>.spectrum-Icon */
-    margin: 0;
+    margin: 0 auto;
 }
 :host([variant='overBackground']) .button:focus-visible:after {
     /* .spectrum-ClearButton--overBackground.focus-ring:after */
@@ -87,17 +78,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-alias-focus-ring-gap,
                 var(--spectrum-global-dimension-static-size-25)
             ) * -1
-    ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring:after,
-   * .spectrum-ClearButton--overBackground.focus-ring:after */
-    box-shadow: 0 0 0
-        var(
-            --spectrum-alias-focus-ring-size,
-            var(--spectrum-global-dimension-static-size-25)
-        )
-        var(
-            --spectrum-button-over-background-border-color-key-focus,
-            var(--spectrum-global-color-static-white)
-        );
+    );
+}
+.button > .icon {
+    /* .spectrum-ClearButton>.spectrum-Icon */
+    margin: 0;
 }
 :host([small]) .button {
     /* .spectrum-ClearButton--small */
@@ -108,6 +93,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     height: var(
         --spectrum-clearbutton-small-height,
         var(--spectrum-global-dimension-size-300)
+    );
+}
+.button {
+    /* .spectrum-ClearButton */
+    background-color: var(
+        --spectrum-clearbutton-medium-background-color,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    color: var(
+        --spectrum-clearbutton-medium-icon-color,
+        var(--spectrum-alias-icon-color)
     );
 }
 .button:hover {
@@ -195,6 +191,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-ClearButton--overBackground.focus-ring */
     box-shadow: none;
+}
+:host([variant='overBackground']) .button:focus-visible:after {
+    /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring:after,
+   * .spectrum-ClearButton--overBackground.focus-ring:after */
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-button-over-background-border-color-key-focus,
+            var(--spectrum-global-color-static-white)
+        );
 }
 :host([variant='overBackground']) .button:active {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:active,

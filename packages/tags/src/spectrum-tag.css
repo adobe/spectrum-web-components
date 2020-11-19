@@ -64,35 +64,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         background-color var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out; /* .spectrum-Tags-item */
-    color: var(
-        --spectrum-tag-text-color,
-        var(--spectrum-global-color-gray-700)
-    );
-    background-color: var(
-        --spectrum-tag-background-color,
-        var(--spectrum-global-color-gray-75)
-    );
-    border-color: var(
-        --spectrum-tag-border-color,
-        var(--spectrum-global-color-gray-600)
-    );
+            ease-in-out;
 }
 :host([disabled]) {
     /* .spectrum-Tags-item.is-disabled */
-    pointer-events: none; /* .spectrum-Tags-item.is-disabled */
-    color: var(
-        --spectrum-tag-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
-    );
-    background-color: var(
-        --spectrum-tag-background-color-disabled,
-        var(--spectrum-global-color-gray-200)
-    );
-    border-color: var(
-        --spectrum-tag-border-color-disabled,
-        var(--spectrum-global-color-gray-200)
-    );
+    pointer-events: none;
 }
 :host([dir='ltr']) > ::slotted([slot='avatar']),
 :host([dir='ltr']) > ::slotted([slot='icon']) {
@@ -192,6 +168,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+:host {
+    /* .spectrum-Tags-item */
+    color: var(
+        --spectrum-tag-text-color,
+        var(--spectrum-global-color-gray-700)
+    );
+    background-color: var(
+        --spectrum-tag-background-color,
+        var(--spectrum-global-color-gray-75)
+    );
+    border-color: var(
+        --spectrum-tag-border-color,
+        var(--spectrum-global-color-gray-600)
+    );
 }
 .clear-button {
     /* .spectrum-Tags-item .spectrum-ClearButton */
@@ -408,6 +399,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     color: var(
         --spectrum-tag-icon-color-error,
         var(--spectrum-global-color-red-500)
+    );
+}
+:host([disabled]) {
+    /* .spectrum-Tags-item.is-disabled */
+    color: var(
+        --spectrum-tag-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    );
+    background-color: var(
+        --spectrum-tag-background-color-disabled,
+        var(--spectrum-global-color-gray-200)
+    );
+    border-color: var(
+        --spectrum-tag-border-color-disabled,
+        var(--spectrum-global-color-gray-200)
     );
 }
 :host([disabled]) ::slotted([slot='avatar']) {

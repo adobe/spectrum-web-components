@@ -18,11 +18,7 @@ a {
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-in-out;
     outline: none;
-    cursor: pointer; /* .spectrum-Link */
-    color: var(
-        --spectrum-link-primary-text-color,
-        var(--spectrum-global-color-blue-600)
-    );
+    cursor: pointer;
 }
 :host([quiet]) a:focus-visible,
 :host([over-background]) a:focus-visible,
@@ -30,11 +26,7 @@ a:focus-visible {
     /* .spectrum-Link.focus-ring */
     text-decoration: underline;
     -webkit-text-decoration-style: double;
-    text-decoration-style: double; /* .spectrum-Link.focus-ring */
-    color: var(
-        --spectrum-link-primary-text-color-key-focus,
-        var(--spectrum-alias-text-color-key-focus)
-    );
+    text-decoration-style: double;
 }
 :host([quiet]) a {
     /* .spectrum-Link--quiet */
@@ -43,6 +35,13 @@ a:focus-visible {
 :host([quiet]) a:hover {
     /* .spectrum-Link--quiet:hover */
     text-decoration: underline;
+}
+a {
+    /* .spectrum-Link */
+    color: var(
+        --spectrum-link-primary-text-color,
+        var(--spectrum-global-color-blue-600)
+    );
 }
 a:hover {
     /* .spectrum-Link:hover */
@@ -56,6 +55,15 @@ a:active {
     color: var(
         --spectrum-link-primary-text-color-down,
         var(--spectrum-global-color-blue-700)
+    );
+}
+:host([quiet]) a:focus-visible,
+:host([over-background]) a:focus-visible,
+a:focus-visible {
+    /* .spectrum-Link.focus-ring */
+    color: var(
+        --spectrum-link-primary-text-color-key-focus,
+        var(--spectrum-alias-text-color-key-focus)
     );
 }
 .spectrum-Link--secondary,
