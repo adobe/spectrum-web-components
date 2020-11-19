@@ -101,6 +101,33 @@ export const wrapperDismissableUnderlay = (): TemplateResult => {
     `;
 };
 
+export const wrapperDismissableUnderlayError = (): TemplateResult => {
+    const noTransitions = boolean('No Transitions', false, 'Testing');
+    return html`
+        <div>
+            <sp-button
+                onClick="this.nextElementSibling.open = !this.nextElementSibling.open"
+                variant="primary"
+            >
+                Toggle Dialog
+            </sp-button>
+            <sp-dialog-wrapper
+                ?no-transitions=${noTransitions}
+                open
+                hero=${landscape}
+                dismissable
+                error
+                headline="Wrapped Dialog w/ Hero Image"
+                underlay
+                @close=${action('close')}
+                size="small"
+            >
+                Content of the dialog
+            </sp-dialog-wrapper>
+        </div>
+    `;
+};
+
 export const wrapperButtons = ({
     actionTracking = true,
 } = {}): TemplateResult => {

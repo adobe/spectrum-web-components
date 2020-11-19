@@ -113,6 +113,9 @@ export class DialogWrapper extends SpectrumElement {
     }
 
     private dismiss(): void {
+        if (!this.dismissable) {
+            return;
+        }
         this.close();
     }
 
@@ -163,6 +166,7 @@ export class DialogWrapper extends SpectrumElement {
                 <sp-dialog
                     ?dismissable=${this.dismissable}
                     ?no-divider=${this.noDivider}
+                    ?error=${this.error}
                     mode=${ifDefined(this.mode ? this.mode : undefined)}
                     size=${ifDefined(this.size ? this.size : undefined)}
                     @close=${this.close}

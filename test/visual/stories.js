@@ -111,6 +111,7 @@ module.exports = [
     'circle-loader--over-background',
     'dialog-wrapped--wrapper-dismissable',
     'dialog-wrapped--wrapper-dismissable-underlay',
+    'dialog-wrapped--wrapper-dismissable-underlay-error',
     'dialog-wrapped--wrapper-buttons',
     'dialog-wrapped--wrapper-buttons-underlay',
     'dialog-wrapped--wrapper-fullscreen',
