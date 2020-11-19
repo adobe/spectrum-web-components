@@ -49,6 +49,8 @@ module.exports = [
     'bar-loader--over-background-side-label',
     'actionbutton--default',
     'actionbutton--emphasized',
+    'actionbutton--emphasized-and-quiet',
+    'actionbutton--quiet',
     'actionbutton--w-icon-button',
     'actionbutton--icon-only-button',
     'actionbutton--hold-affordance',

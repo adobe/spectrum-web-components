@@ -27,13 +27,44 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #button {
     /* [dir=ltr] .spectrum-SplitButton-action */
-    margin-left: 0; /* [dir=ltr] .spectrum-SplitButton-action */
+    margin-left: 0;
+}
+:host([dir='rtl']) #button {
+    /* [dir=rtl] .spectrum-SplitButton-action */
+    margin-right: 0;
+}
+:host([dir='ltr']) #button {
+    /* [dir=ltr] .spectrum-SplitButton-action */
     border-top-left-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton-action */
-    border-top-right-radius: 0; /* [dir=ltr] .spectrum-SplitButton-action */
-    border-bottom-right-radius: 0; /* [dir=ltr] .spectrum-SplitButton-action */
+    );
+}
+:host([dir='rtl']) #button {
+    /* [dir=rtl] .spectrum-SplitButton-action */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='ltr']) #button {
+    /* [dir=ltr] .spectrum-SplitButton-action */
+    border-top-right-radius: 0;
+}
+:host([dir='rtl']) #button {
+    /* [dir=rtl] .spectrum-SplitButton-action */
+    border-top-left-radius: 0;
+}
+:host([dir='ltr']) #button {
+    /* [dir=ltr] .spectrum-SplitButton-action */
+    border-bottom-right-radius: 0;
+}
+:host([dir='rtl']) #button {
+    /* [dir=rtl] .spectrum-SplitButton-action */
+    border-bottom-left-radius: 0;
+}
+:host([dir='ltr']) #button {
+    /* [dir=ltr] .spectrum-SplitButton-action */
     border-bottom-left-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
@@ -41,13 +72,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl']) #button {
     /* [dir=rtl] .spectrum-SplitButton-action */
-    margin-right: 0; /* [dir=rtl] .spectrum-SplitButton-action */
-    border-top-right-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton-action */
-    border-top-left-radius: 0; /* [dir=rtl] .spectrum-SplitButton-action */
-    border-bottom-left-radius: 0; /* [dir=rtl] .spectrum-SplitButton-action */
     border-bottom-right-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
@@ -72,10 +96,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-right-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
-    ); /* [dir=ltr] .spectrum-SplitButton-action:after */
-    border-bottom-right-radius: var(
-        --spectrum-alias-border-radius-small,
-        var(--spectrum-global-dimension-size-25)
     );
 }
 :host([dir='rtl']) #button:after {
@@ -83,7 +103,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-left-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
-    ); /* [dir=rtl] .spectrum-SplitButton-action:after */
+    );
+}
+:host([dir='ltr']) #button:after {
+    /* [dir=ltr] .spectrum-SplitButton-action:after */
+    border-bottom-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='rtl']) #button:after {
+    /* [dir=rtl] .spectrum-SplitButton-action:after */
     border-bottom-left-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
@@ -91,18 +121,66 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .trigger {
     /* [dir=ltr] .spectrum-SplitButton-trigger */
-    margin-left: 0; /* [dir=ltr] .spectrum-SplitButton-trigger */
-    border-top-left-radius: 0; /* [dir=ltr] .spectrum-SplitButton-trigger */
+    margin-left: 0;
+}
+:host([dir='rtl']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton-trigger */
+    margin-right: 0;
+}
+:host([dir='ltr']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton-trigger */
+    border-top-left-radius: 0;
+}
+:host([dir='rtl']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-top-right-radius: 0;
+}
+:host([dir='ltr']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton-trigger */
     border-top-right-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton-trigger */
+    );
+}
+:host([dir='rtl']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-top-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='ltr']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton-trigger */
     border-bottom-right-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton-trigger */
-    border-bottom-left-radius: 0; /* [dir=ltr] .spectrum-SplitButton-trigger */
-    border-left-width: 0; /* [dir=ltr] .spectrum-SplitButton-trigger */
+    );
+}
+:host([dir='rtl']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='ltr']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton-trigger */
+    border-bottom-left-radius: 0;
+}
+:host([dir='rtl']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-bottom-right-radius: 0;
+}
+:host([dir='ltr']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton-trigger */
+    border-left-width: 0;
+}
+:host([dir='rtl']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton-trigger */
+    border-right-width: 0;
+}
+:host([dir='ltr']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton-trigger */
     padding-left: calc(
         var(
                 --spectrum-button-primary-text-padding-x,
@@ -112,7 +190,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-button-primary-border-size,
                 var(--spectrum-alias-border-size-thick)
             ) * 4
-    ); /* [dir=ltr] .spectrum-SplitButton-trigger */
+    );
+}
+:host([dir='rtl']) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton-trigger */
+    padding-right: calc(
+        var(
+                --spectrum-button-primary-text-padding-x,
+                var(--spectrum-global-dimension-size-200)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) * 4
+    );
+}
+:host([dir='ltr']) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton-trigger */
     padding-right: calc(
         var(--spectrum-global-dimension-size-150) -
             var(
@@ -123,28 +217,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl']) .trigger {
     /* [dir=rtl] .spectrum-SplitButton-trigger */
-    margin-right: 0; /* [dir=rtl] .spectrum-SplitButton-trigger */
-    border-top-right-radius: 0; /* [dir=rtl] .spectrum-SplitButton-trigger */
-    border-top-left-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton-trigger */
-    border-bottom-left-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton-trigger */
-    border-bottom-right-radius: 0; /* [dir=rtl] .spectrum-SplitButton-trigger */
-    border-right-width: 0; /* [dir=rtl] .spectrum-SplitButton-trigger */
-    padding-right: calc(
-        var(
-                --spectrum-button-primary-text-padding-x,
-                var(--spectrum-global-dimension-size-200)
-            ) -
-            var(
-                --spectrum-button-primary-border-size,
-                var(--spectrum-alias-border-size-thick)
-            ) * 4
-    ); /* [dir=rtl] .spectrum-SplitButton-trigger */
     padding-left: calc(
         var(--spectrum-global-dimension-size-150) -
             var(
@@ -180,10 +252,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-left-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
-    ); /* [dir=ltr] .spectrum-SplitButton-trigger:after */
-    border-bottom-left-radius: var(
-        --spectrum-alias-border-radius-small,
-        var(--spectrum-global-dimension-size-25)
     );
 }
 :host([dir='rtl']) .trigger:after {
@@ -191,7 +259,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-right-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
-    ); /* [dir=rtl] .spectrum-SplitButton-trigger:after */
+    );
+}
+:host([dir='ltr']) .trigger:after {
+    /* [dir=ltr] .spectrum-SplitButton-trigger:after */
+    border-bottom-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='rtl']) .trigger:after {
+    /* [dir=rtl] .spectrum-SplitButton-trigger:after */
     border-bottom-right-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
@@ -224,30 +302,50 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) #button {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-top-left-radius: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-top-right-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-bottom-right-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-bottom-left-radius: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    margin-right: 0;
+    border-top-left-radius: 0;
 }
 :host([dir='rtl'][left]) #button {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-top-right-radius: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-top-right-radius: 0;
+}
+:host([dir='ltr'][left]) #button {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='rtl'][left]) #button {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
     border-top-left-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    );
+}
+:host([dir='ltr'][left]) #button {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='rtl'][left]) #button {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
     border-bottom-left-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-bottom-right-radius: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    );
+}
+:host([dir='ltr'][left]) #button {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-bottom-left-radius: 0;
+}
+:host([dir='rtl'][left]) #button {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    border-bottom-right-radius: 0;
+}
+:host([dir='ltr'][left]) #button {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
     margin-right: 0;
 }
 :host([dir='ltr'][left]) #button,
@@ -255,6 +353,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action,
    * [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
     margin-left: 0;
+}
+:host([dir='rtl'][left]) #button {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
+    margin-right: 0;
 }
 :host([dir='ltr'][left][variant='cta']) #button {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
@@ -271,10 +373,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-button-primary-border-size,
                 var(--spectrum-alias-border-size-thick)
             )
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
-    margin-left: var(
-        --spectrum-button-primary-border-size,
-        var(--spectrum-alias-border-size-thick)
     );
 }
 :host([dir='rtl'][left][variant='cta']) #button {
@@ -292,7 +390,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-button-primary-border-size,
                 var(--spectrum-alias-border-size-thick)
             )
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    );
+}
+:host([dir='ltr'][left][variant='cta']) #button {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    margin-left: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+:host([dir='rtl'][left][variant='cta']) #button {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
     margin-right: var(
         --spectrum-button-primary-border-size,
         var(--spectrum-alias-border-size-thick)
@@ -303,18 +411,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-left-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
-    border-top-right-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
-    border-bottom-right-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
-    border-bottom-left-radius: var(
-        --spectrum-alias-border-radius-small,
-        var(--spectrum-global-dimension-size-25)
     );
 }
 :host([dir='rtl'][left]) #button:after {
@@ -322,15 +418,45 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-right-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    );
+}
+:host([dir='ltr'][left]) #button:after {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='rtl'][left]) #button:after {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
     border-top-left-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    );
+}
+:host([dir='ltr'][left]) #button:after {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='rtl'][left]) #button:after {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
     border-bottom-left-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    );
+}
+:host([dir='ltr'][left]) #button:after {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
+    border-bottom-left-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='rtl'][left]) #button:after {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
     border-bottom-right-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
@@ -338,22 +464,80 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) .trigger {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    margin-right: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    margin-right: 0;
+}
+:host([dir='rtl'][left]) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    margin-left: 0;
+}
+:host([dir='ltr'][left]) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
     border-top-left-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-top-right-radius: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-bottom-right-radius: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    );
+}
+:host([dir='rtl'][left]) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-top-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='ltr'][left]) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-top-right-radius: 0;
+}
+:host([dir='rtl'][left]) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-top-left-radius: 0;
+}
+:host([dir='ltr'][left]) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-bottom-right-radius: 0;
+}
+:host([dir='rtl'][left]) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-bottom-left-radius: 0;
+}
+:host([dir='ltr'][left]) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
     border-bottom-left-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    );
+}
+:host([dir='rtl'][left]) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='ltr'][left]) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
     border-left-width: var(
         --spectrum-button-primary-border-size,
         var(--spectrum-alias-border-size-thick)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-right-width: 0; /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    );
+}
+:host([dir='rtl'][left]) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-right-width: var(
+        --spectrum-button-primary-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+:host([dir='ltr'][left]) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-right-width: 0;
+}
+:host([dir='rtl'][left]) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    border-left-width: 0;
+}
+:host([dir='ltr'][left]) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
     padding-right: calc(
         var(
                 --spectrum-button-primary-text-padding-x,
@@ -363,7 +547,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-button-primary-border-size,
                 var(--spectrum-alias-border-size-thick)
             ) * 4
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    );
+}
+:host([dir='rtl'][left]) .trigger {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
+    padding-left: calc(
+        var(
+                --spectrum-button-primary-text-padding-x,
+                var(--spectrum-global-dimension-size-200)
+            ) -
+            var(
+                --spectrum-button-primary-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) * 4
+    );
+}
+:host([dir='ltr'][left]) .trigger {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
     padding-left: calc(
         var(--spectrum-global-dimension-size-150) -
             var(
@@ -374,32 +574,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl'][left]) .trigger {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    margin-left: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-top-right-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-top-left-radius: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-bottom-left-radius: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-bottom-right-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-right-width: var(
-        --spectrum-button-primary-border-size,
-        var(--spectrum-alias-border-size-thick)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-left-width: 0; /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    padding-left: calc(
-        var(
-                --spectrum-button-primary-text-padding-x,
-                var(--spectrum-global-dimension-size-200)
-            ) -
-            var(
-                --spectrum-button-primary-border-size,
-                var(--spectrum-alias-border-size-thick)
-            ) * 4
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
     padding-right: calc(
         var(--spectrum-global-dimension-size-150) -
             var(
@@ -427,18 +601,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-left-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
-    border-top-right-radius: var(
-        --spectrum-alias-border-radius-small,
-        var(--spectrum-global-dimension-size-25)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
-    border-bottom-right-radius: var(
-        --spectrum-alias-border-radius-small,
-        var(--spectrum-global-dimension-size-25)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
-    border-bottom-left-radius: var(
-        --spectrum-button-primary-border-radius,
-        var(--spectrum-alias-border-radius-large)
     );
 }
 :host([dir='rtl'][left]) .trigger:after {
@@ -446,15 +608,45 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-right-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    );
+}
+:host([dir='ltr'][left]) .trigger:after {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-top-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='rtl'][left]) .trigger:after {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
     border-top-left-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    );
+}
+:host([dir='ltr'][left]) .trigger:after {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-bottom-right-radius: var(
+        --spectrum-alias-border-radius-small,
+        var(--spectrum-global-dimension-size-25)
+    );
+}
+:host([dir='rtl'][left]) .trigger:after {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
     border-bottom-left-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    );
+}
+:host([dir='ltr'][left]) .trigger:after {
+    /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-border-radius,
+        var(--spectrum-alias-border-radius-large)
+    );
+}
+:host([dir='rtl'][left]) .trigger:after {
+    /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
     border-bottom-right-radius: var(
         --spectrum-button-primary-border-radius,
         var(--spectrum-alias-border-radius-large)

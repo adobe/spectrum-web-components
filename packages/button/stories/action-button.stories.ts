@@ -70,6 +70,15 @@ export const emphasized = (): TemplateResult => {
     });
 };
 
+export const emphasizedAndQuiet = (): TemplateResult => {
+    return renderButtonsSelected({
+        emphasized: true,
+        quiet: true,
+        disabled: false,
+        selected: false,
+    });
+};
+
 export const quiet = (): TemplateResult => {
     return renderButtonsSelected({
         quiet: true,

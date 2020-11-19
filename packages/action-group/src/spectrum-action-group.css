@@ -121,11 +121,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-left-radius: var(
         --spectrum-actionbutton-border-radius,
         var(--spectrum-alias-border-radius-regular)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    );
+}
+:host([dir='rtl'][compact]:not([quiet])) ::slotted(*:first-child) {
+    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    border-top-right-radius: var(
+        --spectrum-actionbutton-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+}
+:host([dir='ltr'][compact]:not([quiet])) ::slotted(*:first-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     border-bottom-left-radius: var(
         --spectrum-actionbutton-border-radius,
         var(--spectrum-alias-border-radius-regular)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    );
+}
+:host([dir='rtl'][compact]:not([quiet])) ::slotted(*:first-child) {
+    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    border-bottom-right-radius: var(
+        --spectrum-actionbutton-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+}
+:host([dir='ltr'][compact]:not([quiet])) ::slotted(*:first-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     margin-right: calc(
         -1 * var(
                 --spectrum-actionbutton-border-size,
@@ -135,14 +155,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl'][compact]:not([quiet])) ::slotted(*:first-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-    border-top-right-radius: var(
-        --spectrum-actionbutton-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-    border-bottom-right-radius: var(
-        --spectrum-actionbutton-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     margin-left: calc(
         -1 * var(
                 --spectrum-actionbutton-border-size,
@@ -155,35 +167,53 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-top-right-radius: var(
         --spectrum-actionbutton-border-radius,
         var(--spectrum-alias-border-radius-regular)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-    border-bottom-right-radius: var(
-        --spectrum-actionbutton-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-    margin-left: calc(
-        -1 * var(
-                --spectrum-actionbutton-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) / 2
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-    margin-right: 0;
+    );
 }
 :host([dir='rtl'][compact]:not([quiet])) ::slotted(*:last-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     border-top-left-radius: var(
         --spectrum-actionbutton-border-radius,
         var(--spectrum-alias-border-radius-regular)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    );
+}
+:host([dir='ltr'][compact]:not([quiet])) ::slotted(*:last-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    border-bottom-right-radius: var(
+        --spectrum-actionbutton-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+}
+:host([dir='rtl'][compact]:not([quiet])) ::slotted(*:last-child) {
+    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     border-bottom-left-radius: var(
         --spectrum-actionbutton-border-radius,
         var(--spectrum-alias-border-radius-regular)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    );
+}
+:host([dir='ltr'][compact]:not([quiet])) ::slotted(*:last-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    margin-left: calc(
+        -1 * var(
+                --spectrum-actionbutton-border-size,
+                var(--spectrum-alias-border-size-thin)
+            ) / 2
+    );
+}
+:host([dir='rtl'][compact]:not([quiet])) ::slotted(*:last-child) {
+    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     margin-right: calc(
         -1 * var(
                 --spectrum-actionbutton-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    );
+}
+:host([dir='ltr'][compact]:not([quiet])) ::slotted(*:last-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    margin-right: 0;
+}
+:host([dir='rtl'][compact]:not([quiet])) ::slotted(*:last-child) {
+    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     margin-left: 0;
 }
 :host([compact]:not([quiet])) ::slotted([selected]) {
