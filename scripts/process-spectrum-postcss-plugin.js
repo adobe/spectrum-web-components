@@ -590,17 +590,8 @@ class SpectrumProcessor {
     appendRule(selectors, nodes, comment) {
         if (selectors.length === 0) return;
 
-        const selector = selectors.join(',');
-        let parentRule;
-        this.result.root.walkRules(selector, (rule) => {
-            parentRule = rule;
-            return false;
-        });
-
-        if (!parentRule) {
-            parentRule = postcss.rule({ selectors });
-            this.result.root.append(parentRule);
-        }
+        const parentRule = postcss.rule({ selectors });
+        this.result.root.append(parentRule);
 
         if (comment) {
             comment = postcss.comment({ text: comment });

@@ -19,31 +19,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
         visibility 0ms linear
             var(--spectrum-global-animation-duration-100, 0.13s);
-    pointer-events: none; /* .spectrum-QuickActions */
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(
-            --spectrum-quickactions-padding-y,
-            var(--spectrum-global-dimension-size-50)
-        )
-        var(
-            --spectrum-quickactions-padding-x,
-            var(--spectrum-global-dimension-size-50)
-        );
-    height: var(
-        --spectrum-quickactions-height,
-        var(--spectrum-global-dimension-size-500)
-    );
-    border-radius: var(
-        --spectrum-quickactions-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    ); /* .spectrum-QuickActions */
-    background-color: var(
-        --spectrum-quickactions-background-color,
-        var(--spectrum-alias-background-color-quickactions)
-    );
+    pointer-events: none;
 }
 :host([opened]) {
     /* .spectrum-QuickActions.is-open */
@@ -67,6 +43,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         calc(
             -1 * var(--spectrum-picker-popover-offset-y, var(--spectrum-global-dimension-size-75))
         )
+    );
+}
+:host {
+    /* .spectrum-QuickActions */
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(
+            --spectrum-quickactions-padding-y,
+            var(--spectrum-global-dimension-size-50)
+        )
+        var(
+            --spectrum-quickactions-padding-x,
+            var(--spectrum-global-dimension-size-50)
+        );
+    height: var(
+        --spectrum-quickactions-height,
+        var(--spectrum-global-dimension-size-500)
+    );
+    border-radius: var(
+        --spectrum-quickactions-border-radius,
+        var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='ltr']) slot[name='action'] + ::slotted([slot='action']) {
@@ -102,5 +101,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     background-color: var(
         --spectrum-quickactions-overlay-color,
         var(--spectrum-alias-background-color-quickactions-overlay)
+    );
+}
+:host {
+    /* .spectrum-QuickActions */
+    background-color: var(
+        --spectrum-quickactions-background-color,
+        var(--spectrum-alias-background-color-quickactions)
     );
 }

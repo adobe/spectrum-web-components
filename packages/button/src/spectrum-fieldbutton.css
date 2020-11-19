@@ -60,19 +60,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: background-color
             var(--spectrum-global-animation-duration-100, 0.13s),
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s),
-        border-color var(--spectrum-global-animation-duration-100, 0.13s); /* .spectrum-FieldButton */
-    color: var(
-        --spectrum-fieldbutton-text-color,
-        var(--spectrum-alias-text-color)
-    );
-    background-color: var(
-        --spectrum-fieldbutton-background-color,
-        var(--spectrum-global-color-gray-75)
-    );
-    border-color: var(
-        --spectrum-fieldbutton-border-color,
-        var(--spectrum-alias-border-color)
-    );
+        border-color var(--spectrum-global-animation-duration-100, 0.13s);
 }
 .button.is-disabled,
 .button:disabled {
@@ -93,28 +81,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin: 0;
     padding: 0;
     border-width: 0;
-    border-radius: var(
-        --spectrum-fieldbutton-quiet-border-radius,
-        0
-    ); /* .spectrum-FieldButton--quiet */
-    color: var(
-        --spectrum-fieldbutton-text-color,
-        var(--spectrum-alias-text-color)
-    );
-    border-color: var(
-        --spectrum-fieldbutton-quiet-border-color,
-        var(--spectrum-alias-border-color-transparent)
-    );
-    background-color: var(
-        --spectrum-fieldbutton-quiet-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
+    border-radius: var(--spectrum-fieldbutton-quiet-border-radius, 0);
 }
 :host([quiet]) .button.is-disabled:focus-visible,
 :host([quiet]) .button:disabled:focus-visible {
     /* .spectrum-FieldButton--quiet.is-disabled.focus-ring,
    * .spectrum-FieldButton--quiet:disabled.focus-ring */
     box-shadow: none;
+}
+.button {
+    /* .spectrum-FieldButton */
+    color: var(
+        --spectrum-fieldbutton-text-color,
+        var(--spectrum-alias-text-color)
+    );
+    background-color: var(
+        --spectrum-fieldbutton-background-color,
+        var(--spectrum-global-color-gray-75)
+    );
+    border-color: var(
+        --spectrum-fieldbutton-border-color,
+        var(--spectrum-alias-border-color)
+    );
 }
 .button:hover {
     /* .spectrum-FieldButton:hover */
@@ -234,6 +222,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     color: var(
         --spectrum-fieldbutton-icon-color-disabled,
         var(--spectrum-alias-icon-color-disabled)
+    );
+}
+:host([quiet]) .button {
+    /* .spectrum-FieldButton--quiet */
+    color: var(
+        --spectrum-fieldbutton-text-color,
+        var(--spectrum-alias-text-color)
+    );
+    border-color: var(
+        --spectrum-fieldbutton-quiet-border-color,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    background-color: var(
+        --spectrum-fieldbutton-quiet-background-color,
+        var(--spectrum-alias-background-color-transparent)
     );
 }
 :host([quiet]) .button:hover {

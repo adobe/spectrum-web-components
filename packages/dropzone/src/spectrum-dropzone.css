@@ -25,7 +25,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-dropzone-padding,
         var(--spectrum-global-dimension-size-900)
     );
-    border-style: dashed; /* .spectrum-Dropzone */
+    border-style: dashed;
+}
+:host([dragged]) {
+    /* .spectrum-Dropzone.is-dragged */
+    border-style: solid;
+}
+:host(:focus) {
+    /* .spectrum-Dropzone:focus */
+    outline: 0;
+    border-style: dashed;
+}
+:host(:focus:focus-visible) {
+    /* .spectrum-Dropzone:focus.focus-ring */
+    border-style: solid;
+}
+:host {
+    /* .spectrum-Dropzone */
     border-color: var(
         --spectrum-dropzone-border-color,
         var(--spectrum-global-color-gray-300)
@@ -33,7 +49,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dragged]) {
     /* .spectrum-Dropzone.is-dragged */
-    border-style: solid; /* .spectrum-Dropzone.is-dragged */
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
@@ -43,30 +58,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-highlight-selected)
     );
 }
+:host([dragged]) ::slotted(*) {
+    /* .spectrum-Dropzone.is-dragged .spectrum-IllustratedMessage-illustration */
+    color: var(--spectrum-global-color-blue-400);
+}
 :host(:focus) {
     /* .spectrum-Dropzone:focus */
-    outline: 0;
-    border-style: dashed; /* .spectrum-Dropzone:focus */
     border-color: var(
         --spectrum-dropzone-border-color,
         var(--spectrum-global-color-gray-300)
     );
 }
+:host(:focus) ::slotted(*) {
+    /* .spectrum-Dropzone:focus .spectrum-IllustratedMessage-illustration */
+    color: var(--spectrum-global-color-static-gray-500, #bcbcbc);
+}
 :host(:focus:focus-visible) {
     /* .spectrum-Dropzone:focus.focus-ring */
-    border-style: solid; /* .spectrum-Dropzone:focus.focus-ring */
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
     );
-}
-:host([dragged]) ::slotted(*) {
-    /* .spectrum-Dropzone.is-dragged .spectrum-IllustratedMessage-illustration */
-    color: var(--spectrum-global-color-blue-400);
-}
-:host(:focus) ::slotted(*) {
-    /* .spectrum-Dropzone:focus .spectrum-IllustratedMessage-illustration */
-    color: var(--spectrum-global-color-static-gray-500, #bcbcbc);
 }
 :host(:focus[dragged]:focus-visible) ::slotted(*) {
     /* .spectrum-Dropzone:focus.is-dragged.focus-ring .spectrum-IllustratedMessage-illustration */

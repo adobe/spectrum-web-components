@@ -26,11 +26,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tabs-focus-ring-padding-x,
         var(--spectrum-global-dimension-size-100)
     );
-    vertical-align: top; /* .spectrum-Tabs */
-    border-bottom-color: var(
-        --spectrum-tabs-rule-color,
-        var(--spectrum-global-color-gray-200)
-    );
+    vertical-align: top;
 }
 :host([dir='ltr']) ::slotted(*):before {
     /* [dir=ltr] .spectrum-Tabs-item:before */
@@ -74,10 +70,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: var(
         --spectrum-tabs-rule-border-radius,
         var(--spectrum-global-dimension-static-size-10)
-    ); /* .spectrum-Tabs-selectionIndicator */
-    background-color: var(
-        --spectrum-tabs-selection-indicator-color,
-        var(--spectrum-global-color-gray-900)
     );
 }
 :host([compact]) ::slotted(*) {
@@ -91,7 +83,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-tabs-rule-height,
                 var(--spectrum-alias-border-size-thick)
             )
-    ); /* .spectrum-Tabs--compact .spectrum-Tabs-item,
+    );
+}
+:host([compact]) ::slotted(*) {
+    /* .spectrum-Tabs--compact .spectrum-Tabs-item,
    * .spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
     height: calc(
         var(
@@ -160,11 +155,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([quiet]) {
     /* .spectrum-Tabs--quiet */
-    display: inline-flex; /* .spectrum-Tabs--quiet */
-    border-bottom-color: var(
-        --spectrum-tabs-quiet-rule-color,
-        var(--spectrum-alias-border-color-transparent)
-    );
+    display: inline-flex;
 }
 :host([dir='ltr'][direction='vertical']) {
     /* [dir=ltr] .spectrum-Tabs--vertical */
@@ -172,11 +163,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-tabs-vertical-rule-width,
             var(--spectrum-alias-border-size-thick)
         )
-        solid; /* [dir=ltr] .spectrum-Tabs--vertical */
-    border-left-color: var(
-        --spectrum-tabs-vertical-rule-color,
-        var(--spectrum-global-color-gray-200)
-    );
+        solid;
 }
 :host([dir='rtl'][direction='vertical']) {
     /* [dir=rtl] .spectrum-Tabs--vertical */
@@ -184,11 +171,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-tabs-vertical-rule-width,
             var(--spectrum-alias-border-size-thick)
         )
-        solid; /* [dir=rtl] .spectrum-Tabs--vertical */
-    border-right-color: var(
-        --spectrum-tabs-vertical-rule-color,
-        var(--spectrum-global-color-gray-200)
-    );
+        solid;
 }
 :host([direction='vertical']) {
     /* .spectrum-Tabs--vertical */
@@ -281,7 +264,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-bottom: var(
         --spectrum-tabs-compact-vertical-item-gap,
         var(--spectrum-global-dimension-size-50)
-    ); /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item,
+    );
+}
+:host([direction='vertical'][compact]) ::slotted(*) {
+    /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item,
    * .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item .spectrum-Icon */
     height: var(
         --spectrum-tabs-compact-vertical-item-height,
@@ -290,14 +276,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][direction='vertical']) #selectionIndicator {
     /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
-    left: 0; /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+    left: 0;
+}
+:host([dir='rtl'][direction='vertical']) #selectionIndicator {
+    /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+    right: 0;
+}
+:host([dir='ltr'][direction='vertical']) #selectionIndicator {
+    /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     left: calc(
         -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
     );
 }
 :host([dir='rtl'][direction='vertical']) #selectionIndicator {
     /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
-    right: 0; /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     right: calc(
         -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
     );
@@ -308,6 +300,41 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     width: var(
         --spectrum-tabs-vertical-rule-width,
         var(--spectrum-alias-border-size-thick)
+    );
+}
+:host {
+    /* .spectrum-Tabs */
+    border-bottom-color: var(
+        --spectrum-tabs-rule-color,
+        var(--spectrum-global-color-gray-200)
+    );
+}
+:host([dir='ltr'][direction='vertical']) {
+    /* [dir=ltr] .spectrum-Tabs--vertical */
+    border-left-color: var(
+        --spectrum-tabs-vertical-rule-color,
+        var(--spectrum-global-color-gray-200)
+    );
+}
+:host([dir='rtl'][direction='vertical']) {
+    /* [dir=rtl] .spectrum-Tabs--vertical */
+    border-right-color: var(
+        --spectrum-tabs-vertical-rule-color,
+        var(--spectrum-global-color-gray-200)
+    );
+}
+#selectionIndicator {
+    /* .spectrum-Tabs-selectionIndicator */
+    background-color: var(
+        --spectrum-tabs-selection-indicator-color,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+:host([quiet]) {
+    /* .spectrum-Tabs--quiet */
+    border-bottom-color: var(
+        --spectrum-tabs-quiet-rule-color,
+        var(--spectrum-alias-border-color-transparent)
     );
 }
 :host([quiet]) #selectionIndicator {

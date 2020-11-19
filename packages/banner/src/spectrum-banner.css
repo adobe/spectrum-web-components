@@ -32,10 +32,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     line-height: var(
         --spectrum-banner-text-line-height,
         var(--spectrum-alias-heading-text-line-height)
-    ); /* .spectrum-Banner */
-    color: var(
-        --spectrum-banner-text-color,
-        var(--spectrum-global-color-static-white)
     );
 }
 #header {
@@ -54,6 +50,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Banner--corner */
     position: absolute;
     top: -10px;
+}
+:host {
+    /* .spectrum-Banner */
+    color: var(
+        --spectrum-banner-text-color,
+        var(--spectrum-global-color-static-white)
+    );
 }
 :host([type='info']) {
     /* .spectrum-Banner--info */
