@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.5.4...@spectrum-web-components/card@1.0.0) (2020-11-20)
+
+### Bug Fixes
+
+-   switch to heading/subheading instead of title ([d182a0f](https://github.com/adobe/spectrum-web-components/commit/d182a0f829b21296f07b50f37c8aecda2c0ed137))
+-   tests weren't fully updated ([22bf3b1](https://github.com/adobe/spectrum-web-components/commit/22bf3b14d304a9106525a05a8c0dc16834648356))
+-   these selectors didn't actually change ([a5ac275](https://github.com/adobe/spectrum-web-components/commit/a5ac275dfc9873ba65abf7a4d9631cc67fd65aa1))
+
+### BREAKING CHANGES
+
+-   renamed title/subtitle attributes and slot.
+
 ## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.5.3...@spectrum-web-components/card@0.5.4) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/card

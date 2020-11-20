@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.5.4...@spectrum-web-components/sidenav@0.6.0) (2020-11-20)
+
+### Features
+
+-   support rel attribute for sidenav item ([90522e7](https://github.com/adobe/spectrum-web-components/commit/90522e79f57df974b3610877143d32d6885c4c41))
+
 ## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.5.3...@spectrum-web-components/sidenav@0.5.4) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/sidenav
