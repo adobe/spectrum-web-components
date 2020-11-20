@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 /* stylelint-disable */
-:root,
-:host {
+:host,
+:root {
     --spectrum-global-dimension-scale-factor: 1;
     --spectrum-global-dimension-size-0: 0px;
     --spectrum-global-dimension-size-10: 1px;
@@ -724,5 +724,4 @@ governing permissions and limitations under the License.
     --spectrum-tooltip-padding-bottom: 5px;
     --spectrum-tooltip-positive-padding-bottom: 5px;
 }
-
 /* stylelint-enable */

@@ -14,13 +14,15 @@ governing permissions and limitations under the License.
 
 const path = require('path');
 const fs = require('fs-extra');
+const postcss = require('postcss');
+const { postCSSPlugins } = require('./css-processing');
 
 // load our license file
 const license = fs.readFileSync(
     path.join(__dirname, '..', 'config', 'license.js')
 );
 
-const processCSSData = (data, identifier) => {
+const processCSSData = async (data, identifier) => {
     /* lit-html is a JS litteral, so `\` escapes by default.
      * for there to be unicode characters, the escape must
      * escape itself...
@@ -53,6 +55,12 @@ const processCSSData = (data, identifier) => {
         );
     }
 
+    result = await postcss(postCSSPlugins())
+        .process(result, {
+            from: undefined,
+        })
+        .then((output) => output.css);
+
     return result;
 };
 
@@ -61,24 +69,24 @@ const writeProcessedCSSToFile = (dstPath, contents) => {
     fs.writeFile(dstPath, result, 'utf8');
 };
 
-const processCSS = (srcPath, dstPath, identifier) => {
-    fs.readFile(srcPath, 'utf8', function (error, data) {
+const processCSS = async (srcPath, dstPath, identifier) => {
+    fs.readFile(srcPath, 'utf8', async function (error, data) {
         if (error) {
             return console.log(error);
         }
 
-        let result = processCSSData(data, identifier);
+        let result = await processCSSData(data, identifier);
         writeProcessedCSSToFile(dstPath, result);
     });
 };
 
 // For fonts.css we need to combine 2 source files into 1
-const processMultiSourceCSS = (srcPaths, dstPath, identifier) => {
+const processMultiSourceCSS = async (srcPaths, dstPath, identifier) => {
     let result = '';
 
     for (const srcPath of srcPaths) {
         let data = fs.readFileSync(srcPath, 'utf8');
-        result = `${result}\n${processCSSData(data, identifier)}`;
+        result = `${result}\n${await processCSSData(data, identifier)}`;
     }
 
     writeProcessedCSSToFile(dstPath, result);
@@ -109,7 +117,7 @@ themes.forEach(async (theme) => {
     );
 
     console.log(`processing theme ${srcPath}`);
-    processes.push(processCSS(srcPath, dstPath, theme));
+    processes.push(await processCSS(srcPath, dstPath, theme));
 });
 
 scales.forEach(async (scale) => {
@@ -118,7 +126,7 @@ scales.forEach(async (scale) => {
         path.join(__dirname, '..', 'packages', 'styles', `scale-${scale}.css`)
     );
     console.log(`processing scale  ${srcPath}`);
-    processes.push(processCSS(srcPath, dstPath, scale));
+    processes.push(await processCSS(srcPath, dstPath, scale));
 });
 
 cores.forEach(async (core) => {
@@ -127,70 +135,78 @@ cores.forEach(async (core) => {
         path.join(__dirname, '..', 'packages', 'styles', `core-${core}.css`)
     );
     console.log(`processing core ${srcPath}`);
-    processes.push(processCSS(srcPath, dstPath, core));
+    processes.push(await processCSS(srcPath, dstPath, core));
 });
 
-{
-    // Typography
-    const typographyPath = path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@spectrum-css',
-        'typography',
-        'dist'
-    );
-    const srcPath = path.join(typographyPath, 'index-vars.css');
-    const dstPath = path.resolve(
-        path.join(__dirname, '..', 'packages', 'styles', 'typography.css')
-    );
-    console.log(`processing typography`);
-    processes.push(processCSS(srcPath, dstPath, 'typography'));
-}
-
-{
-    // Typography
-    const typographyPath = path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@spectrum-css',
-        'typography'
-    );
-
-    // Commons
-    const commonsPath = path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@spectrum-css',
-        'commons'
-    );
-
-    // typography.css
+(async () => {
     {
-        const srcPath = path.join(typographyPath, 'dist', 'index-vars.css');
+        // Typography
+        const typographyPath = path.join(
+            __dirname,
+            '..',
+            'node_modules',
+            '@spectrum-css',
+            'typography',
+            'dist'
+        );
+        const srcPath = path.join(typographyPath, 'index-vars.css');
         const dstPath = path.resolve(
             path.join(__dirname, '..', 'packages', 'styles', 'typography.css')
         );
         console.log(`processing typography`);
-        processes.push(processCSS(srcPath, dstPath, 'typography'));
+        processes.push(await processCSS(srcPath, dstPath, 'typography'));
     }
 
-    // fonts.css (2 sources so a little tricky)
     {
-        const srcPath1 = path.join(commonsPath, 'fonts.css');
-        const srcPath2 = path.join(typographyPath, 'font.css');
-        const dstPath = path.resolve(
-            path.join(__dirname, '..', 'packages', 'styles', 'fonts.css')
+        // Typography
+        const typographyPath = path.join(
+            __dirname,
+            '..',
+            'node_modules',
+            '@spectrum-css',
+            'typography'
         );
-        console.log(`processing fonts from commons & typography`);
-        processes.push(
-            processMultiSourceCSS([srcPath1, srcPath2], dstPath, ':root ')
-        );
-    }
-}
 
-Promise.all(processes).then(() => {
-    console.log('complete.');
-});
+        // Commons
+        const commonsPath = path.join(
+            __dirname,
+            '..',
+            'node_modules',
+            '@spectrum-css',
+            'commons'
+        );
+
+        // typography.css
+        {
+            const srcPath = path.join(typographyPath, 'dist', 'index-vars.css');
+            const dstPath = path.resolve(
+                path.join(
+                    __dirname,
+                    '..',
+                    'packages',
+                    'styles',
+                    'typography.css'
+                )
+            );
+            console.log(`processing typography`);
+            processes.push(await processCSS(srcPath, dstPath, 'typography'));
+        }
+
+        // fonts.css (2 sources so a little tricky)
+        {
+            const srcPath1 = path.join(commonsPath, 'fonts.css');
+            const srcPath2 = path.join(typographyPath, 'font.css');
+            const dstPath = path.resolve(
+                path.join(__dirname, '..', 'packages', 'styles', 'fonts.css')
+            );
+            console.log(`processing fonts from commons & typography`);
+            processes.push(
+                processMultiSourceCSS([srcPath1, srcPath2], dstPath, ':root ')
+            );
+        }
+    }
+
+    Promise.all(processes).then(() => {
+        console.log('complete.');
+    });
+})();
