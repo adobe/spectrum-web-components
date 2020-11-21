@@ -27,11 +27,46 @@ When looking to leverage the `Button` or `ClearButton` base classes as a type an
 import { Button, ClearButton } from '@spectrum-web-components/button';
 ```
 
-## Example
+## Sizes
+
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
+
+<div class="tabs--s">
 
 ```html demo
-<sp-button>Hello world</sp-button>
+<sp-button size="s">Small</sp-button>
 ```
+
+</div>
+
+<div class="tabs--m">
+
+```html demo
+<sp-button size="m">Medium</sp-button>
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html demo
+<sp-button size="l">Large</sp-button>
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html demo
+<sp-button size="xl">Extra Large</sp-button>
+```
+
+</div>
 
 ## Variants
 

@@ -17,6 +17,7 @@ import {
     TemplateResult,
     PropertyValues,
     property,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -25,7 +26,7 @@ import styles from './bar-loader.css.js';
 /**
  * @element sp-bar-loader
  */
-export class BarLoader extends SpectrumElement {
+export class BarLoader extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [styles];
     }
@@ -41,9 +42,6 @@ export class BarLoader extends SpectrumElement {
 
     @property({ type: Boolean, reflect: true, attribute: 'side-label' })
     public sideLabel = false;
-
-    @property({ type: String, reflect: true })
-    public size = 'm';
 
     @property({ type: Number })
     public progress = 0;

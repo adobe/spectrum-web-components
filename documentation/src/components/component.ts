@@ -27,7 +27,8 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import { RouteComponent } from './route-component.js';
-import componentStyles from './markdown.css';
+import markdownStyles from './markdown.css';
+import componentStyles from './component.css';
 import { AppRouter } from '../router.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
@@ -128,7 +129,7 @@ class ComponentElement extends RouteComponent {
     private docsLoaded = false;
 
     public static get styles(): CSSResultArray {
-        return [componentStyles];
+        return [markdownStyles, componentStyles];
     }
 
     public get componentName(): string {

@@ -117,7 +117,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     cxow: 1;
 }
-:host {
+:host([dir]) {
     /* .spectrum-StatusLight */
     --spectrum-statuslight-info-padding-y: var(
         --spectrum-global-dimension-size-65
@@ -161,7 +161,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-StatusLight--neutral */
     font-style: italic;
 }
-:host {
+:host([dir]) {
     /* .spectrum-StatusLight */
     color: var(
         --spectrum-alias-text-color,
@@ -204,7 +204,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-green-400)
     );
 }
-.spectrum-StatusLight--active:before,
+:host([active]):before,
 :host([variant='info']):before {
     /* .spectrum-StatusLight--active:before,
    * .spectrum-StatusLight--info:before */

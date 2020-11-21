@@ -13,3 +13,23 @@ governing permissions and limitations under the License.
 .docExample {
     margin: 1.2em 0 1.5em 0;
 }
+
+[class^='tabs--'] {
+    display: none;
+}
+
+sp-tabs[selected='s'] ~ .tabs--s {
+    display: block;
+}
+
+sp-tabs[selected='m'] ~ .tabs--m {
+    display: block;
+}
+
+sp-tabs[selected='l'] ~ .tabs--l {
+    display: block;
+}
+
+sp-tabs[selected='xl'] ~ .tabs--xl {
+    display: block;
+}
