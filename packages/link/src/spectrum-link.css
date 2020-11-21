@@ -44,38 +44,38 @@ a {
         var(--spectrum-global-dimension-font-size-100)
     );
 }
-.spectrum-Link--sizeS {
+:host([size='s']) {
     /* .spectrum-Link--sizeS */
     --spectrum-link-primary-text-size: var(
         --spectrum-alias-item-text-size-s,
         var(--spectrum-global-dimension-font-size-75)
     );
 }
-.spectrum-Link--sizeM {
+:host([size='m']) {
     /* .spectrum-Link--sizeM */
     --spectrum-link-primary-text-size: var(
         --spectrum-alias-item-text-size-m,
         var(--spectrum-global-dimension-font-size-100)
     );
 }
-.spectrum-Link--sizeL {
+:host([size='l']) {
     /* .spectrum-Link--sizeL */
     --spectrum-link-primary-text-size: var(
         --spectrum-alias-item-text-size-l,
         var(--spectrum-global-dimension-font-size-200)
     );
 }
-.spectrum-Link--sizeXL {
+:host([size='xl']) {
     /* .spectrum-Link--sizeXL */
     --spectrum-link-primary-text-size: var(
         --spectrum-alias-item-text-size-xl,
         var(--spectrum-global-dimension-font-size-300)
     );
 }
-.spectrum-Link--sizeL,
-.spectrum-Link--sizeM,
-.spectrum-Link--sizeS,
-.spectrum-Link--sizeXL {
+:host([size='l']),
+:host([size='m']),
+:host([size='s']),
+:host([size='xl']) {
     /* .spectrum-Link--sizeL,
    * .spectrum-Link--sizeM,
    * .spectrum-Link--sizeS,

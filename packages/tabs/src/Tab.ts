@@ -21,6 +21,7 @@ import {
 import {
     FocusVisiblePolyfillMixin,
     ObserveSlotPresence,
+    ObserveSlotText,
 } from '@spectrum-web-components/shared';
 
 import tabItemStyles from './tab.css.js';
@@ -30,7 +31,7 @@ import tabItemStyles from './tab.css.js';
  */
 
 export class Tab extends FocusVisiblePolyfillMixin(
-    ObserveSlotPresence(SpectrumElement, '[slot="icon"]')
+    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'))
 ) {
     public static get styles(): CSSResultArray {
         return [tabItemStyles];
@@ -38,6 +39,10 @@ export class Tab extends FocusVisiblePolyfillMixin(
 
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
+    }
+
+    protected get hasLabel(): boolean {
+        return !!this.label || this.slotHasContent;
     }
 
     @property({ reflect: true })
@@ -59,13 +64,9 @@ export class Tab extends FocusVisiblePolyfillMixin(
                       <slot name="icon"></slot>
                   `
                 : html``}
-            ${this.label
-                ? html`
-                      <label id="itemLabel">
-                          ${this.label}
-                      </label>
-                  `
-                : html``}
+            <label id="itemLabel" ?hidden=${!this.hasLabel}>
+                <slot>${this.label}</slot>
+            </label>
         `;
     }
 

@@ -23,12 +23,54 @@ When looking to leverage the `Link` base class as a type and/or for extension pu
 import { Link } from '@spectrum-web-components/link';
 ```
 
-## Example
+## Sizes
 
-<!-- prettier-ignore -->
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
+
+<div class="tabs--s">
+
 ```html
-This is an <sp-link href="#">example link</sp-link>.
+This is an
+<sp-link size="s" href="#">example link</sp-link>
+.
 ```
+
+</div>
+
+<div class="tabs--m">
+
+```html
+This is an
+<sp-link size="m" href="#">example link</sp-link>
+.
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html
+This is an
+<sp-link size="l" href="#">example link</sp-link>
+.
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html
+This is an
+<sp-link size="xl" href="#">example link</sp-link>
+.
+```
+
+</div>
 
 ## Variants
 

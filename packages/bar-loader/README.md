@@ -23,19 +23,80 @@ When looking to leverage the `BarLoader` base class as a type and/or for extensi
 import { BarLoader } from '@spectrum-web-components/bar-loader';
 ```
 
-## Variants
+## Sizes
 
-### Default
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
 
-An `<sp-bar-loader>` is used to visually show the progression of a system operation such as downloading, uploading, processing, etc.
+<div class="tabs--s">
 
 ```html
 <div
     style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-bar-loader label="Loaded a little" progress="22"></sp-bar-loader>
+    <sp-bar-loader
+        size="s"
+        label="Loaded a little"
+        progress="22"
+    ></sp-bar-loader>
 </div>
 ```
+
+</div>
+
+<div class="tabs--m">
+
+```html
+<div
+    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+>
+    <sp-bar-loader
+        size="m"
+        label="Loaded a little"
+        progress="22"
+    ></sp-bar-loader>
+</div>
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html
+<div
+    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+>
+    <sp-bar-loader
+        size="l"
+        label="Loaded a little"
+        progress="22"
+    ></sp-bar-loader>
+</div>
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html
+<div
+    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
+>
+    <sp-bar-loader
+        size="xl"
+        label="Loaded a little"
+        progress="22"
+    ></sp-bar-loader>
+</div>
+```
+
+</div>
+
+## Variants
 
 ### Over background
 

@@ -23,21 +23,86 @@ When looking to leverage the `ActionButton` base class as a type and/or for exte
 import { ActionButton } from '@spectrum-web-components/action-button';
 ```
 
-## Example
+## Sizes
+
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
+
+<div class="tabs--s">
 
 ```html demo
 <sp-button-group>
-    <sp-action-button>
+    <sp-action-button size="s">
         Do action
     </sp-action-button>
-    <sp-action-button selected>
+    <sp-action-button size="s" selected>
         Do action
     </sp-action-button>
-    <sp-action-button disabled>
+    <sp-action-button size="s" disabled>
         Do action
     </sp-action-button>
 </sp-button-group>
 ```
+
+</div>
+
+<div class="tabs--m">
+
+```html demo
+<sp-button-group>
+    <sp-action-button size="m">
+        Do action
+    </sp-action-button>
+    <sp-action-button size="m" selected>
+        Do action
+    </sp-action-button>
+    <sp-action-button size="m" disabled>
+        Do action
+    </sp-action-button>
+</sp-button-group>
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html demo
+<sp-button-group>
+    <sp-action-button size="l">
+        Do action
+    </sp-action-button>
+    <sp-action-button size="l" selected>
+        Do action
+    </sp-action-button>
+    <sp-action-button size="l" disabled>
+        Do action
+    </sp-action-button>
+</sp-button-group>
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html demo
+<sp-button-group>
+    <sp-action-button size="xl">
+        Do action
+    </sp-action-button>
+    <sp-action-button size="xl" selected>
+        Do action
+    </sp-action-button>
+    <sp-action-button size="xl" disabled>
+        Do action
+    </sp-action-button>
+</sp-button-group>
+```
+
+</div>
 
 ## Variants
 

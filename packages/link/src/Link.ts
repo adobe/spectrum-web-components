@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     TemplateResult,
     query,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -26,7 +27,7 @@ import linkStyles from './link.css.js';
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
  */
-export class Link extends LikeAnchor(Focusable) {
+export class Link extends SizedMixin(LikeAnchor(Focusable)) {
     public static get styles(): CSSResultArray {
         return [linkStyles];
     }

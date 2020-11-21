@@ -31,6 +31,29 @@ const config = {
                     name: 'over-background',
                     selector: '.spectrum-Link--overBackground',
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Link--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Link--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Link--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-Link--sizeXL',
+                        },
+                    ],
+                },
             ],
             exclude: [/\.is-disabled/, /\.spectrum-Link--subtle/],
             selectorTransforms: [mangleSpecificity],

@@ -23,13 +23,48 @@ When looking to leverage the `Meter` base class as a type and/or for extension p
 import { Meter } from '@spectrum-web-components/meter';
 ```
 
-## Examples
+## Sizes
 
-### Default
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
+
+<div class="tabs--s">
 
 ```html
-<sp-meter progress="71">Tasks Completed</sp-meter>
+<sp-meter size="s" progress="71">Tasks Completed</sp-meter>
 ```
+
+</div>
+
+<div class="tabs--m">
+
+```html
+<sp-meter size="m" progress="71">Tasks Completed</sp-meter>
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html
+<sp-meter size="l" progress="71">Tasks Completed</sp-meter>
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html
+<sp-meter size="xl" progress="71">Tasks Completed</sp-meter>
+```
+
+</div>
+
+## Variants
 
 ### Over Background
 

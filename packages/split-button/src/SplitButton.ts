@@ -18,6 +18,7 @@ import {
     PropertyValues,
     query,
     ifDefined,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-button.js';
@@ -31,7 +32,7 @@ import styles from './split-button.css.js';
 /**
  * @slot options - The menu with options that will display when the dropdown is open
  */
-export class SplitButton extends DropdownBase {
+export class SplitButton extends SizedMixin(DropdownBase) {
     public static get styles(): CSSResultArray {
         return [styles, chevronStyles];
     }
@@ -44,9 +45,6 @@ export class SplitButton extends DropdownBase {
      */
     @property({ reflect: true })
     public variant: ButtonVariants = 'cta';
-
-    @property({ type: String, reflect: true })
-    public size = 'm';
 
     public get target(): HTMLButtonElement | this {
         return this;
@@ -117,6 +115,7 @@ export class SplitButton extends DropdownBase {
                     @click=${this.passClick}
                     ?disabled=${this.disabled}
                     variant=${this.variant}
+                    size=${this.size}
                 >
                     ${this.buttonContent}
                 </sp-button>
@@ -130,6 +129,7 @@ export class SplitButton extends DropdownBase {
                     ?disabled=${this.disabled}
                     aria-label="More"
                     variant=${this.variant}
+                    size=${this.size}
                 >
                     <sp-icon
                         class="icon ${this.type === 'field'

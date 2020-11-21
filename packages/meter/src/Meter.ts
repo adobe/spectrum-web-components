@@ -17,6 +17,7 @@ import {
     TemplateResult,
     property,
     PropertyValues,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -25,7 +26,7 @@ import styles from './meter.css.js';
 /**
  * @element sp-meter
  */
-export class Meter extends SpectrumElement {
+export class Meter extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [styles];
     }
@@ -44,9 +45,6 @@ export class Meter extends SpectrumElement {
 
     @property({ type: Boolean, reflect: true })
     public positive = false;
-
-    @property({ type: String, reflect: true })
-    public size = 'm';
 
     @property({ type: String, reflect: true })
     public label = '';

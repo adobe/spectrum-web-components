@@ -73,7 +73,7 @@ const transformations = [
                     },
                     {
                         tag: 'sp-rule',
-                        attrs: { size: 'large' },
+                        attrs: { size: 'l' },
                     },
                 ],
             };
@@ -104,7 +104,7 @@ const transformations = [
                     },
                     {
                         tag: 'sp-rule',
-                        attrs: { size: 'medium' },
+                        attrs: { size: 'm' },
                     },
                 ],
             };

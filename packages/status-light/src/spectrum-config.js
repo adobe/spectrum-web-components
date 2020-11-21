@@ -22,6 +22,11 @@ const config = {
                     name: 'disabled',
                 },
                 {
+                    type: 'boolean',
+                    selector: '.spectrum-StatusLight--active',
+                    name: 'active',
+                },
+                {
                     type: 'enum',
                     name: 'variant',
                     values: [
@@ -61,6 +66,12 @@ const config = {
                             selector: '.spectrum-StatusLight--sizeXL',
                         },
                     ],
+                },
+            ],
+            complexSelectors: [
+                {
+                    replacement: ':host([dir])',
+                    selector: /^.spectrum-StatusLight$/,
                 },
             ],
         },
