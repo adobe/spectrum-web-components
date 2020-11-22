@@ -63,7 +63,10 @@ export class Menu extends SpectrumElement {
     }
 
     public focus(): void {
-        if (!this.menuItems.length) {
+        if (
+            !this.menuItems.length ||
+            this.menuItems.every((item) => item.disabled)
+        ) {
             return;
         }
         this.focusMenuItemByOffset(0);
