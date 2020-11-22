@@ -49,22 +49,17 @@ export class AccordionItem extends Focusable {
 
     constructor() {
         super();
-
         this.addEventListener('keydown', this.onKeyDown);
     }
 
     private onKeyDown(event: KeyboardEvent): void {
+        /* c8 ignore next 3 */
         if (this.disabled) {
             return;
         }
         if (event.code === 'Enter' || event.code === 'Space') {
             event.preventDefault();
-            this.dispatchEvent(
-                new CustomEvent('sp-accordion-item-toggle', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
+            this.toggle();
         }
     }
 
@@ -73,12 +68,21 @@ export class AccordionItem extends Focusable {
         if (this.disabled) {
             return;
         }
-        this.dispatchEvent(
+        this.toggle();
+    }
+
+    private toggle(): void {
+        this.open = !this.open;
+        const applyDefault = this.dispatchEvent(
             new CustomEvent('sp-accordion-item-toggle', {
                 bubbles: true,
                 composed: true,
+                cancelable: true,
             })
         );
+        if (!applyDefault) {
+            this.open = !this.open;
+        }
     }
 
     protected render(): TemplateResult {
