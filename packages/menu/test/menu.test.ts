@@ -59,6 +59,24 @@ describe('Menu', () => {
             .false;
         expect(document.activeElement === anchor, 'anchor').to.be.true;
     });
+    it('renders w/ [disabled] menu items', async () => {
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu tabindex="0">
+                    <sp-menu-item disabled>Disabled item</sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(document.activeElement === el, 'self not focused, 1').to.be
+            .false;
+
+        el.focus();
+        await elementUpdated(el);
+        expect(document.activeElement === el, 'self not focused, 2').to.be
+            .false;
+    });
     it('renders w/ menu items', async () => {
         const el = await fixture<Menu>(
             html`
