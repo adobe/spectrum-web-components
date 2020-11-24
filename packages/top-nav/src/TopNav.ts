@@ -56,7 +56,7 @@ export class TopNav extends SpectrumElement {
     };
 
     @property({ reflect: true })
-    public set selected(value: string) {
+    public set selected(value: string | undefined) {
         const oldValue = this.selected;
 
         if (value === oldValue) {
@@ -68,11 +68,11 @@ export class TopNav extends SpectrumElement {
         this.requestUpdate('selected', oldValue);
     }
 
-    public get selected(): string {
+    public get selected(): string | undefined {
         return this._selected;
     }
 
-    private _selected = '';
+    private _selected!: string | undefined;
 
     protected items: TopNavItem[] = [];
 
@@ -122,13 +122,13 @@ export class TopNav extends SpectrumElement {
         this.manageItems();
     }
 
-    protected updateCheckedState(value: string): void {
+    protected updateCheckedState(value: string | undefined): void {
         this.items.forEach((item) => {
             item.selected = false;
         });
 
         requestAnimationFrame(() => {
-            if (value.length) {
+            if (value && value.length) {
                 const currentItem = this.items.find(
                     (item) =>
                         item.value === value ||
