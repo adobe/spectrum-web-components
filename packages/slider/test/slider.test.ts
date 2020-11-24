@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import '../sp-slider.js';
 import { Slider } from '../';
+import { tick } from '../stories/slider.stories.js';
 import {
     fixture,
     elementUpdated,
@@ -49,6 +50,13 @@ describe('Slider', () => {
                 ></sp-slider>
             `
         );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads - [variant="tick"] irregularly', async () => {
+        const el = await fixture<Slider>(tick());
 
         await elementUpdated(el);
 

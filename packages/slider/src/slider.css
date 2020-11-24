@@ -25,6 +25,28 @@ governing permissions and limitations under the License.
     touch-action: none;
 }
 
+.not-exact.ticks {
+    justify-content: start;
+}
+
+:host([dir='ltr']) .not-exact .tick {
+    padding-right: var(--sp-slider-tick-offset);
+}
+
+:host([dir='rtl']) .not-exact .tick {
+    padding-left: var(--sp-slider-tick-offset);
+}
+
+:host([dir='ltr']) .not-exact .tick:after {
+    left: auto;
+    transform: translate(-50%, 0);
+}
+
+:host([dir='rtl']) .not-exact .tick:after {
+    right: auto;
+    transform: translate(50%, 0);
+}
+
 /*
  * The following three declarationsa required while https://github.com/adobe/spectrum-css/issues/521
  * waits to be addressed at the Spectrum CSS level.

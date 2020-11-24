@@ -18,6 +18,7 @@ import {
     query,
     PropertyValues,
     styleMap,
+    ifDefined,
 } from '@spectrum-web-components/base';
 
 import spectrumSliderStyles from './spectrum-slider.css.js';
@@ -217,10 +218,18 @@ export class Slider extends Focusable {
         }
         const tickStep = this.tickStep || this.step;
         const tickCount = (this.max - this.min) / tickStep;
-        const ticks = new Array(tickCount + 1);
+        const partialFit = tickCount % 1 !== 0;
+        const ticks = new Array(Math.floor(tickCount + 1));
         ticks.fill(0, 0, tickCount + 1);
         return html`
-            <div class="ticks">
+            <div
+                class="${partialFit ? 'not-exact ' : ''}ticks"
+                style=${ifDefined(
+                    partialFit
+                        ? `--sp-slider-tick-offset: calc(100% / ${this.max} * ${this.tickStep}`
+                        : undefined
+                )}
+            >
                 ${ticks.map(
                     (_tick, i) => html`
                         <div class="tick">
@@ -430,7 +439,7 @@ export class Slider extends Focusable {
         const percent = (offset - minOffset) / size;
         const value = this.min + (this.max - this.min) * percent;
 
-        return this.isLTR ? value : 100 - value;
+        return this.isLTR ? value : this.max - value;
     }
 
     private dispatchInputEvent(): void {

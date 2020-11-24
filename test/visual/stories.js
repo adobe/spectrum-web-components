@@ -189,6 +189,7 @@ module.exports = [
     'sidenav--hrefs',
     'slider--default',
     'slider--gradient',
+    'slider--tick',
     'slider--disabled',
     'slider--focus-tab-demo',
     'split-button--cta',
