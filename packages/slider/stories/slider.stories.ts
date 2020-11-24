@@ -66,6 +66,18 @@ export const Gradient = (): TemplateResult => {
     `;
 };
 
+export const tick = (): TemplateResult => {
+    return html`
+        <sp-slider
+            label="Slider Label"
+            variant="tick"
+            tick-step="5"
+            min="0"
+            max="92"
+        ></sp-slider>
+    `;
+};
+
 export const Disabled = (): TemplateResult => {
     const label = text('Label', 'Intensity');
     return html`
