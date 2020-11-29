@@ -1,6 +1,6 @@
 ## Description
 
-`sp-toast`s display brief, temporary notifications. They are noticeable but do not disrupt the user experience and do not require an action to be taken.
+`sp-toast` elements display brief, temporary notifications. They are noticeable but do not disrupt the user experience and do not require an action to be taken.
 
 ### Usage
 
@@ -28,13 +28,15 @@ import { Toast } from '@spectrum-web-components/toast';
 ### Default
 
 ```html
-<sp-toast>This is important information that you should read, soon.</sp-toast>
+<sp-toast open>
+    This is important information that you should read, soon.
+</sp-toast>
 ```
 
 ### With actions
 
 ```html
-<sp-toast>
+<sp-toast open>
     This is important information that you should read, soon.
     <sp-button slot="action" variant="overBackground" quiet>
         Do something
@@ -45,7 +47,7 @@ import { Toast } from '@spectrum-web-components/toast';
 ### Wrapping
 
 ```html
-<sp-toast style="width: 300px">
+<sp-toast open style="width: 300px">
     This is important information that you should read, soon.
     <sp-button slot="action" variant="overBackground" quiet>
         Do something
@@ -58,7 +60,7 @@ import { Toast } from '@spectrum-web-components/toast';
 #### Negative
 
 ```html
-<sp-toast variant="negative">
+<sp-toast open variant="negative">
     This is negative information that you should read, soon.
 </sp-toast>
 ```
@@ -66,7 +68,7 @@ import { Toast } from '@spectrum-web-components/toast';
 #### Positive
 
 ```html
-<sp-toast variant="positive">
+<sp-toast open variant="positive">
     This is positive information that you should read, soon.
 </sp-toast>
 ```
@@ -74,7 +76,9 @@ import { Toast } from '@spectrum-web-components/toast';
 #### Info
 
 ```html
-<sp-toast variant="info">This is information that you should read.</sp-toast>
+<sp-toast open variant="info">
+    This is information that you should read.
+</sp-toast>
 ```
 
 ## Accessibility
