@@ -18,6 +18,7 @@ import {
     html,
     expect,
     nextFrame,
+    waitUntil,
 } from '@open-wc/testing';
 import { ClearButton } from '@spectrum-web-components/button';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
@@ -62,9 +63,11 @@ describe('Toast', () => {
         );
 
         await elementUpdated(el);
-        expect(el.open).to.be.true;
+        expect(el.open).to.be.false;
 
         ((el as unknown) as TestableToast)._timeout = 100;
+        el.open = true;
+        await elementUpdated(el);
 
         await waitForPredicate(() => el.open === false);
         expect(el.open).to.be.false;
@@ -77,10 +80,13 @@ describe('Toast', () => {
         );
 
         await elementUpdated(el);
-        expect(el.open).to.be.true;
+        expect(el.open).to.be.false;
 
         const testableEl = (el as unknown) as TestableToast;
         testableEl._timeout = 100;
+        el.open = true;
+        await elementUpdated(el);
+
         const firstStart = testableEl.countdownStart;
 
         await nextFrame();
@@ -112,13 +118,18 @@ describe('Toast', () => {
         );
 
         await elementUpdated(el);
-        await nextFrame();
 
         const testableEl = (el as unknown) as TestableToast;
-        expect(el.open).to.be.true;
+        expect(el.open, 'not open to start').to.be.false;
+
+        el.open = true;
+        await elementUpdated(el);
+        await nextFrame();
+
         expect(testableEl.countdownStart, 'initially not 0').to.not.equal(0);
 
         testableEl._timeout = 100;
+
         el.dispatchEvent(new FocusEvent('focusin'));
 
         await elementUpdated(el);
@@ -131,13 +142,13 @@ describe('Toast', () => {
             0
         );
 
-        await waitForPredicate(() => el.open === false);
-        expect(el.open).to.be.false;
+        await waitUntil(() => el.open === false, 'closes');
+        expect(el.open, 'not open to end').to.be.false;
     });
     it('closes', async () => {
         const el = await fixture<Toast>(
             html`
-                <sp-toast open timeout="100">Help text.</sp-toast>
+                <sp-toast open>Help text.</sp-toast>
             `
         );
 
@@ -197,5 +208,27 @@ describe('Toast', () => {
 
         await elementUpdated(el);
         expect(el.variant).to.equal(toastVariants[0]);
+    });
+    it('maintains [variant] when disconnected/connected', async () => {
+        const el = await fixture<Toast>(
+            html`
+                <sp-toast variant="positive">
+                    This toast maintains variants.
+                </sp-toast>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.variant).to.equal('positive');
+
+        el.remove();
+
+        await elementUpdated(el);
+        expect(el.variant).to.equal('positive');
+
+        document.body.append(el);
+
+        await elementUpdated(el);
+        expect(el.variant).to.equal('positive');
     });
 });

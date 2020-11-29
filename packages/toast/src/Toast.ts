@@ -208,18 +208,15 @@ export class Toast extends SpectrumElement {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        this.open = true;
-    }
-
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (changes.has('open') && this.timeout) {
-            if (this.open) {
+        if (changes.has('open')) {
+            if (this.open && this.timeout) {
                 this.startCountdown();
             } else {
-                this.stopCountdown();
+                if (this.timeout) {
+                    this.stopCountdown();
+                }
                 const applyDefault = this.dispatchEvent(
                     new CustomEvent('close', {
                         composed: true,
