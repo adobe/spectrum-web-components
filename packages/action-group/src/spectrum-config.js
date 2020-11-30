@@ -65,6 +65,7 @@ const config = {
                     selector: '.spectrum-ActionGroup-item.focus-ring',
                 },
             ],
+            exclude: [/\.spectrum-ActionButton-label/],
         },
     ],
 };

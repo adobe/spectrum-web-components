@@ -208,7 +208,7 @@ class SpectrumProcessor {
                     // e.g. `.valid .selector, ::slotted(.invalid) .selector {}` would be lost.
                     isInvalidSelector = true;
                     this.warn(
-                        `:slotted() rules must be the last in the selector`,
+                        `:slotted() rules must be the last in the selector: ${selector}`,
                         {
                             node: rule,
                         }
