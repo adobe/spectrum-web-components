@@ -17,6 +17,7 @@ import {
     TemplateResult,
     property,
     query,
+    ifDefined,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/rule/sp-rule.js';
@@ -38,6 +39,7 @@ import styles from './dialog.css.js';
  * @fires close - Announces that the dialog has been closed.
  */
 export class Dialog extends ObserveSlotPresence(SpectrumElement, [
+    '[slot="hero"]',
     '[slot="footer"]',
     '[slot="button"]',
 ]) {
@@ -60,6 +62,10 @@ export class Dialog extends ObserveSlotPresence(SpectrumElement, [
 
     protected get hasButtons(): boolean {
         return this.getSlotContentPresence('[slot="button"]');
+    }
+
+    protected get hasHero(): boolean {
+        return this.getSlotContentPresence('[slot="hero"]');
     }
 
     @property({ type: Boolean, reflect: true, attribute: 'no-divider' })
@@ -105,7 +111,10 @@ export class Dialog extends ObserveSlotPresence(SpectrumElement, [
         return html`
             <div class="grid">
                 <slot name="hero"></slot>
-                <slot name="heading"></slot>
+                <slot
+                    name="heading"
+                    class=${ifDefined(this.hasHero ? this.hasHero : undefined)}
+                ></slot>
                 ${this.error
                     ? html`
                           <sp-icon class="type-icon alert-medium">

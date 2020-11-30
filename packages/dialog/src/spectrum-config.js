@@ -114,6 +114,13 @@ const config = {
                     name: 'buttonGroup--noFooter',
                 },
             ],
+            complexSelectors: [
+                {
+                    replacement: '.no-header::slotted([slot="heading"])',
+                    selector:
+                        '.spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader',
+                },
+            ],
             exclude: [/\.spectrum-Dialog-wrapper/],
         },
     ],
