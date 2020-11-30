@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.button {
+:host {
     /* .spectrum-ActionButton,
    * .spectrum-Button,
    * .spectrum-ClearButton,
@@ -47,7 +47,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     touch-action: none;
     cursor: pointer;
 }
-.button:focus {
+:host(:focus) {
     /* .spectrum-ActionButton:focus,
    * .spectrum-Button:focus,
    * .spectrum-ClearButton:focus,
@@ -55,7 +55,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-LogicButton:focus */
     outline: none;
 }
-.button::-moz-focus-inner {
+:host(::-moz-focus-inner) {
     /* .spectrum-ActionButton::-moz-focus-inner,
    * .spectrum-Button::-moz-focus-inner,
    * .spectrum-ClearButton::-moz-focus-inner,
@@ -67,7 +67,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-top: -2px;
     margin-bottom: -2px;
 }
-.button:disabled {
+:host(:disabled) {
     /* .spectrum-ActionButton:disabled,
    * .spectrum-Button:disabled,
    * .spectrum-ClearButton:disabled,

@@ -44,6 +44,9 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
      */
     @property({ type: Number })
     public get tabIndex(): number {
+        if (this.focusElement === this) {
+            return Number(this.getAttribute('tabindex')) || -1;
+        }
         const tabIndexAttribute = parseFloat(
             this.hasAttribute('tabindex')
                 ? (this.getAttribute('tabindex') as string) || '0'
@@ -64,6 +67,12 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         return this.focusElement.tabIndex;
     }
     public set tabIndex(tabIndex: number) {
+        if (this.focusElement === this) {
+            if (tabIndex !== this.tabIndex) {
+                this.setAttribute('tabindex', '' + tabIndex);
+            }
+            return;
+        }
         // Flipping `manipulatingTabindex` to true before a change
         // allows for that change NOT to effect the cached value of tabindex
         if (this.manipulatingTabindex) {
@@ -117,11 +126,19 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             return;
         }
 
-        this.focusElement.focus();
+        if (this.focusElement !== this) {
+            this.focusElement.focus();
+        } else {
+            HTMLElement.prototype.focus.apply(this);
+        }
     }
 
     public blur(): void {
-        this.focusElement.blur();
+        if (this.focusElement !== this) {
+            this.focusElement.blur();
+        } else {
+            HTMLElement.prototype.blur.apply(this);
+        }
     }
 
     public click(): void {
@@ -129,7 +146,11 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             return;
         }
 
-        this.focusElement.click();
+        if (this.focusElement !== this) {
+            this.focusElement.click();
+        } else {
+            HTMLElement.prototype.click.apply(this);
+        }
     }
 
     protected manageAutoFocus(): void {
