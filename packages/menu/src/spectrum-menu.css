@@ -28,7 +28,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     list-style-type: none;
     overflow: auto;
 }
-:host {
+::slotted(sp-menu) {
     /* .spectrum-Menu .spectrum-Menu */
     display: block;
 }

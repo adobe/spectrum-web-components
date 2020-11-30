@@ -33,6 +33,12 @@ const config = {
                 /\.spectrum-Menu-checkmark/,
                 /\.spectrum-Menu-chevron/,
             ],
+            complexSelectors: [
+                {
+                    replacement: '::slotted(sp-menu)',
+                    selector: '.spectrum-Menu .spectrum-Menu',
+                },
+            ],
         },
         {
             name: 'menu-item',
