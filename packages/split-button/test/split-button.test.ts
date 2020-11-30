@@ -42,6 +42,30 @@ describe('Splitbutton', () => {
         await expect(el1).to.be.accessible();
         await expect(el2).to.be.accessible();
     });
+    it('receives "focus()"', async () => {
+        const test = await fixture<HTMLDivElement>(cta());
+        const el1 = test.querySelector('sp-split-button') as SplitButton;
+        const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
+        const el1FocusElement = el1.focusElement;
+        const el2FocusElement = el2.shadowRoot.querySelector(
+            '.trigger'
+        ) as HTMLElement;
+
+        await elementUpdated(el1);
+        await elementUpdated(el2);
+
+        el1.focus();
+        await elementUpdated(el1);
+
+        expect(document.activeElement === el1);
+        expect(el1.shadowRoot.activeElement === el1FocusElement);
+
+        el2.focus();
+        await elementUpdated(el2);
+
+        expect(document.activeElement === el2);
+        expect(el1.shadowRoot.activeElement === el2FocusElement);
+    });
     it('[type="field"] manages `selectedItemText`', async () => {
         const test = await fixture<HTMLDivElement>(cta());
         const el = test.querySelector('sp-split-button') as SplitButton;

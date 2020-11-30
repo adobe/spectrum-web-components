@@ -15,6 +15,10 @@ sp-popover {
     display: none;
 }
 
+.dropdown {
+    flex-shrink: 0;
+}
+
 /**
  * The accessibility team would prefer that it be possible to override the :focus-visible
  * heuristics in _some_ cases, like when clicking an `sp-field-label`...

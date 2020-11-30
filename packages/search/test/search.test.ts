@@ -15,6 +15,7 @@ import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
 import {
     waitForPredicate,
     escapeEvent,
+    spaceEvent,
 } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
@@ -50,6 +51,26 @@ describe('Search', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal('');
+    });
+    it('captures keyboard events to the clear button', async () => {
+        const el = await litFixture<Search>(
+            html`
+                <sp-search value="Test"></sp-search>
+            `
+        );
+
+        await elementUpdated(el);
+        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
+
+        expect(el.value).to.equal('Test');
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const clearButton = root.querySelector('#button') as HTMLButtonElement;
+        clearButton.dispatchEvent(escapeEvent);
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('Test');
     });
     it('dispatches events when using the "clear" button', async () => {
         const inputSpy = spy();
@@ -115,6 +136,10 @@ describe('Search', () => {
         await elementUpdated(el);
         await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
+        expect(el.value).to.equal('Test');
+        el.focusElement.dispatchEvent(spaceEvent);
+
+        await elementUpdated(el);
         expect(el.value).to.equal('Test');
 
         inputSpy.resetHistory();

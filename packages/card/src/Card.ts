@@ -100,7 +100,6 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
-        /* istanbul ignore else */
         if (code === 'Space') {
             this.toggleSelected();
         }

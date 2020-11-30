@@ -16,7 +16,7 @@ import {
     TemplateResult,
     CSSResultArray,
     query,
-    ifDefined,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -37,10 +37,16 @@ export class ButtonBase extends LikeAnchor(
         return this.slotContentIsPresent;
     }
 
+    @property({ type: Boolean, reflect: true })
+    public active = false;
+
+    @property({ type: String })
+    public type: 'button' | 'submit' | 'reset' = 'button';
+
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;
 
-    private get hasLabel(): boolean {
+    protected get hasLabel(): boolean {
         return this.slotHasContent;
     }
 
@@ -48,7 +54,7 @@ export class ButtonBase extends LikeAnchor(
     private buttonElement!: HTMLButtonElement;
 
     public get focusElement(): HTMLElement {
-        return this.buttonElement;
+        return this.buttonElement || this;
     }
 
     protected get buttonContent(): TemplateResult[] {
@@ -72,15 +78,33 @@ export class ButtonBase extends LikeAnchor(
         return content;
     }
 
+    public click(): void {
+        if (this.disabled) {
+            return;
+        }
+
+        if (this.shouldProxyClick()) {
+            return;
+        }
+
+        super.click();
+    }
+
+    private shouldProxyClick(): boolean {
+        if (this.type !== 'button') {
+            const proxy = document.createElement('button');
+            proxy.type = this.type;
+            this.insertAdjacentElement('afterend', proxy);
+            proxy.click();
+            proxy.remove();
+            return true;
+        }
+        return false;
+    }
+
     protected renderButton(): TemplateResult {
         return html`
-            <button
-                id="button"
-                class="button"
-                aria-label=${ifDefined(this.label)}
-            >
-                ${this.buttonContent}
-            </button>
+            ${this.buttonContent}
         `;
     }
 
@@ -92,5 +116,83 @@ export class ButtonBase extends LikeAnchor(
                   anchorContent: this.buttonContent,
               })
             : this.renderButton();
+    }
+
+    private handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                this.addEventListener('keyup', this.handleKeyup);
+                this.active = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private handleKeypress(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Enter':
+                this.click();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private handleKeyup(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                this.removeEventListener('keyup', this.handleKeyup);
+                this.active = false;
+                this.click();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private handleFocusout(): void {
+        this.active = false;
+    }
+
+    private manageRole(): void {
+        if (this.href && this.href.length > 0) {
+            this.removeAttribute('role');
+            this.removeEventListener('keydown', this.handleKeydown);
+            this.removeEventListener('keypress', this.handleKeypress);
+        } else if (!this.hasAttribute('role')) {
+            this.setAttribute('role', 'button');
+            this.addEventListener('keydown', this.handleKeydown);
+            this.addEventListener('keypress', this.handleKeypress);
+        }
+    }
+
+    protected firstUpdated(changed: PropertyValues): void {
+        super.firstUpdated(changed);
+        if (!this.hasAttribute('tabindex')) {
+            this.tabIndex = 0;
+        }
+        this.manageRole();
+        this.addEventListener('click', this.shouldProxyClick);
+    }
+
+    protected updated(changed: PropertyValues): void {
+        super.updated(changed);
+        if (changed.has('href')) {
+            this.manageRole();
+        }
+        if (changed.has('label')) {
+            this.setAttribute('aria-label', this.label || '');
+        }
+        if (changed.has('active')) {
+            if (this.active) {
+                this.addEventListener('focusout', this.handleFocusout);
+            } else {
+                this.removeEventListener('focusout', this.handleFocusout);
+            }
+        }
     }
 }
