@@ -13,50 +13,6 @@ governing permissions and limitations under the License.
 @import './spectrum-action-group.css';
 
 /**
- * The following styles translate the Spectrum CSS usage of `border-radius` directly on `.spectrum-ActionGroup-item`
- * to a usage of the `--spectrum-actionbutton-border-radius` custom property so that it pieces the shadow DOM in
- * `<sp-action-button>` appropriately.
- **/
-
-:host([compact]:not([quiet])) ::slotted(*) {
-    /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item */
-    --spectrum-actionbutton-border-radius: 0;
-}
-
-:host([compact][vertical]:not([quiet])) ::slotted(*) {
-    /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item */
-    --spectrum-actionbutton-border-radius: 0;
-}
-
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(*:first-child),
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(*:last-child) {
-    --spectrum-actionbutton-border-radius: var(
-            --spectrum-alias-border-radius-regular
-        )
-        0 0 var(--spectrum-alias-border-radius-regular);
-}
-
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(*:first-child),
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(*:last-child) {
-    --spectrum-actionbutton-border-radius: 0
-        var(--spectrum-alias-border-radius-regular)
-        var(--spectrum-alias-border-radius-regular) 0;
-}
-
-:host([compact][vertical]:not([quiet])) ::slotted(*:first-child) {
-    --spectrum-actionbutton-border-radius: var(
-            --spectrum-alias-border-radius-regular
-        )
-        var(--spectrum-alias-border-radius-regular) 0 0;
-}
-
-:host([compact][vertical]:not([quiet])) ::slotted(*:last-child) {
-    --spectrum-actionbutton-border-radius: 0 0
-        var(--spectrum-alias-border-radius-regular)
-        var(--spectrum-alias-border-radius-regular);
-}
-
-/**
  * The following styles corrects issues found in the Spectrum CSS output
  * that are tracked via: https://github.com/adobe/spectrum-css/issues/795
  */

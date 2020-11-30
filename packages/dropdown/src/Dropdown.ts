@@ -22,9 +22,7 @@ import {
 } from '@spectrum-web-components/base';
 
 import dropdownStyles from './dropdown.css.js';
-import buttonBaseStyles from '@spectrum-web-components/button/src/button-base.css.js';
-import actionButtonStyles from '@spectrum-web-components/button/src/action-button.css.js';
-import fieldButtonStyles from '@spectrum-web-components/button/src/field-button.css.js';
+import '@spectrum-web-components/button/sp-field-button.js';
 import alertSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-small.css.js';
 import chevronDownMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron-down-medium.css.js';
 
@@ -54,13 +52,7 @@ import {
  */
 export class DropdownBase extends Focusable {
     public static get styles(): CSSResultArray {
-        return [
-            buttonBaseStyles,
-            actionButtonStyles,
-            dropdownStyles,
-            alertSmallStyles,
-            chevronDownMediumStyles,
-        ];
+        return [dropdownStyles, alertSmallStyles, chevronDownMediumStyles];
     }
 
     public static openOverlay = async (
@@ -239,8 +231,6 @@ export class DropdownBase extends Focusable {
         if (this.optionsMenu && this.placeholder) {
             const parentElement =
                 this.placeholder.parentElement ||
-                /* istanbul ignore next */
-
                 this.placeholder.getRootNode();
 
             if (parentElement) {
@@ -269,8 +259,7 @@ export class DropdownBase extends Focusable {
         );
 
         const parentElement =
-            this.optionsMenu.parentElement ||
-            /* istanbul ignore next */ this.optionsMenu.getRootNode();
+            this.optionsMenu.parentElement || this.optionsMenu.getRootNode();
 
         if (parentElement) {
             parentElement.replaceChild(this.placeholder, this.optionsMenu);
@@ -278,9 +267,9 @@ export class DropdownBase extends Focusable {
 
         this.popover.append(this.optionsMenu);
         this.sizePopover(this.popover);
-        const { button, popover } = this;
+        const { popover } = this;
         this.closeOverlay = await Dropdown.openOverlay(
-            button,
+            this,
             'inline',
             popover,
             {
@@ -333,9 +322,9 @@ export class DropdownBase extends Focusable {
         ];
     }
 
-    protected render(): TemplateResult {
+    protected get renderButton(): TemplateResult {
         return html`
-            <button
+            <sp-field-button
                 aria-haspopup="true"
                 aria-controls="popover"
                 aria-expanded=${this.open ? 'true' : 'false'}
@@ -348,7 +337,13 @@ export class DropdownBase extends Focusable {
                 ?disabled=${this.disabled}
             >
                 ${this.buttonContent}
-            </button>
+            </sp-field-button>
+        `;
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            ${this.renderButton}
             <sp-popover
                 open
                 id="popover"
@@ -388,7 +383,7 @@ export class DropdownBase extends Focusable {
     }
 
     private async manageSelection(): Promise<void> {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.optionsMenu) {
             return;
         }
@@ -412,7 +407,6 @@ export class DropdownBase extends Focusable {
             return;
         }
         await this.optionsMenu.updateComplete;
-        /* istanbul ignore else */
         if (this.optionsMenu.menuItems.length) {
             this.manageSelection();
         }
@@ -435,6 +429,6 @@ export class DropdownBase extends Focusable {
 
 export class Dropdown extends DropdownBase {
     public static get styles(): CSSResultArray {
-        return [...super.styles, fieldButtonStyles];
+        return [...super.styles];
     }
 }

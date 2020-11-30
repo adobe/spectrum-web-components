@@ -307,13 +307,27 @@ class SpectrumProcessor {
                         // If there is only a pseudo selector following the :host,
                         // then we need to append the pseudo to the root
                         // node (e.g ":host([quiet]) :hover" -> ":host([quiet]:hover)")
-                        const lastNode = result.at(2);
-                        if (
-                            lastNode.type === 'pseudo' &&
-                            lastNode.value !== '::slotted'
+                        let remainder = result.at(2);
+                        let insertions = 0;
+                        while (
+                            remainder &&
+                            remainder.type !== 'combinator' &&
+                            remainder.type === 'pseudo'
                         ) {
-                            lastNode.remove();
-                            addNodeToHost(result, lastNode);
+                            const node = remainder;
+                            remainder = remainder.next();
+                            node.remove();
+                            // Pseudo-elements go after the host selector `:host::before` or `:host([attr])::after`.
+                            if (
+                                node.value.match(/before$/) !== null ||
+                                node.value.match(/after$/) !== null ||
+                                node.value.match(/slotted/) !== null
+                            ) {
+                                result.insertAfter(result.at(insertions), node);
+                                insertions += 1;
+                            } else {
+                                addNodeToHost(result, node);
+                            }
                         }
                     }
                 } else {

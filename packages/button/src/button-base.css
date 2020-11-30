@@ -19,14 +19,12 @@ governing permissions and limitations under the License.
 }
 
 #button {
-    display: flex;
-    flex: 1 1 auto;
+    color: inherit;
+    text-decoration: inherit;
+}
 
-    /* spectrum-css uses "-webkit-appearance: button" to workaround an
-     * iOS and Safari issue. However, it results in incorrect styling
-     * when applied in :host
-     */
-    -webkit-appearance: none;
+#button:focus {
+    outline: none;
 }
 
 slot[name='icon']::slotted(:not(sp-icon)) {

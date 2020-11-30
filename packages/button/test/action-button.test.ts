@@ -27,6 +27,39 @@ describe('Button', () => {
         expect(el.textContent).to.include('Button');
         await expect(el).to.be.accessible();
     });
+    it('loads [hold-affordance]', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button hold-affordance>Button</sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.textContent).to.include('Button');
+        await expect(el).to.be.accessible();
+    });
+    it(':not([toggles])', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button>Button</sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        const button = el.focusElement;
+
+        expect(el.toggles).to.be.false;
+        expect(el.selected).to.be.false;
+        expect(button.hasAttribute('aria-pressed')).to.be.false;
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(el.toggles).to.be.false;
+        expect(el.selected).to.be.false;
+        expect(button.hasAttribute('aria-pressed')).to.be.false;
+    });
     it('toggles', async () => {
         const el = await fixture<ActionButton>(
             html`

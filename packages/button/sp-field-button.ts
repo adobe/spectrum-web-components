@@ -9,30 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { FieldButton } from './src/FieldButton.js';
 
-:host,
-.button {
-    min-width: 0;
-    width: auto;
-}
+customElements.define('sp-field-button', FieldButton);
 
-:host([quiet]) {
-    min-width: 0;
-}
-
-::slotted([slot='icon']) {
-    flex-shrink: 0;
-}
-
-.icon {
-    /**
-     * Because .icon is acting as default content for its slot, the `::slotted([slot="icon"])` styles do not apply.
-     * In the future it may be necessary to add a default content selector to the style processing code.
-     */
-    flex-shrink: 0;
-}
-
-#popover {
-    width: auto;
-    max-width: none;
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-field-button': FieldButton;
+    }
 }
