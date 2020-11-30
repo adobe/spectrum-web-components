@@ -1,8 +1,6 @@
 ## Description
 
-To ensure that content the requires it (modals, menus, etc) can escape overflow rules, the z-index, et al, Spectrum Web Components provides an overlay system that is made up of three interrelated elements, `<overlay-trigger>`, `<active-overlay>`, and `<sp-theme>`. DOM that should be overlaid on _hover_ (`[slot="hover-content"]`) and _click_ (`[slot="click-content"]`) are outlined in the light DOM content of an `<overlay-trigger>`. Said content will be overlayed onto the DOM via an `<active-overlay>` element that will be appended to the `<body>`. Content delivered in this way will acquire CSS Custom Properties for `color` and `size` from the trigger's nearest ancestor `<sp-theme>`.
-
-Note: Cascading styles not applied via `<sp-theme>` are not currently projected along with the overlay content. To ensure that any additionoal styles for the overlaid content are applied, use the `style` attribute directly or encapsulate this content in a custom element that applies its styles via shadow DOM.
+Overlays in Spectrum Web Components are created via the `Overlay` class system which prepares and "overlay stack" that can manage the deployment of one or more overlays onto a page. Whether transient content like tooltip, or extended interactions like selecting a value from a picker, or blocking content like a modal, either the imperative APIs outlined below or the declarative APIs delivered as `<overlay-trigger>` should be able to conver you overlay delivery needs.
 
 ### Usage
 
@@ -13,78 +11,179 @@ Note: Cascading styles not applied via `<sp-theme>` are not currently projected 
 yarn add @spectrum-web-components/overlay
 ```
 
-Import the side effectful registration of `<active-overlay>` or `<overlay-trigger>` via:
+Import the `Overlay` class to leverage its capabilities within you application or custom element:
 
-```
-import '@spectrum-web-components/overlay/active-overlay.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-```
-
-The default of `<overlay-trigger>` will load various dependencies asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<overlay-trigger>` as follows:
-
-```
-import '@spectrum-web-components/overlay/sync/overlay-trigger.js';
+```js
+import { Overlay } from '@spectrum-web-components/overlay';
 ```
 
-When looking to leverage the `ActiveOverlay` or `OverlayTrigger` base class as a type and/or for extension purposes, do so via:
+Primarily, this class gives you access to the `open` method that will allow you to open an overlay:
+
+```js
+Overlay.open(
+    (owner: HTMLElement), // the element to open the overlay in reference to, "trigger"
+    (interaction: TriggerInteractions), // the type of interaction type that opened the overlay
+    (overlayElement: HTMLElement), // the element that will be projected into the overlay, "content"
+    (options: OverlayOptions) // options to customize the overlay
+);
+```
+
+`Overlay.open()` is an asynchronous method that returns a function for closing the overlay, so it is common to leverage this functionality like the following:
+
+```js
+(async () => {
+    const trigger = document.querySelector('#trigger');
+    const interaction = 'click';
+    const content = document.querySelector('#content');
+    const options = {
+        offset: 0,
+        placement: 'bottom',
+    };
+    const closeOverlay = await Overlay.open(
+        trigger,
+        interaction,
+        content,
+        options
+    );
+})();
+```
+
+## Types
+
+### TriggerInteractions
+
+This outlines the user experience that is to be delivered through the process of opening and closing an overlay.
 
 ```
-import {
-    ActiveOverlay,
-    OverlayTrigger
-} from '@spectrum-web-components/overlay';
+type TriggerInteractions =
+    | 'click'
+    | 'custom',
+    | 'hover'
+    | 'inline'
+    | 'modal'
+    | 'replace';
 ```
+
+`click` will open an overlay that will close immediately on the next click that is not on an element within the overlay.
+
+`custom` is less opinionated and allows for some customization of the process from the outside.
+
+`hover` will close the overlay as soon as the pointer leaves the trigger to which the overlay is connected.
+
+`inline` places the overlay after the trigger but before the next element in the logical tab order. This means the `shift + tab` keyboard stroke will return to the trigger.
+
+`modal` manages the overlay like a modal and will trap the tab order within its contents only.
+
+`replace` will position the overlay directly in the position of the trigger in the logical tab order. This means the `shift + tab` keyboard stroke will return the focusable element immediately prior to the trigger.
+
+### OverlayOptions
+
+```
+type OverlayOptions = {
+    delayed?: boolean;
+    placement?: Placement;
+    offset?: number;
+    receivesFocus?: 'auto';
+}
+```
+
+`delayed` allows for the overlay to open the overlay with warmup/cooldown behaviors as described at https://spectrum.adobe.com/page/tooltip/#Immediate-or-delayed-appearance
+
+`placement` outlines where the overlay system should attempt to position the overlay in relation to the trigger. When the layout of the page and/or current scroll positioning prevents the successful placement of the content in this way, the `placement` will be automatically applied as the value best suited for those contitions. Placements available include: `"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"`.
+
+`offset` defined the distance from the trigger that the overlay content should sit in pixels.
+
+`receivesFocus` tells the overlay stack to through focus into the overlay after it has opened.
 
 ## Example
 
 ```html
-<style>
-    overlay-trigger {
-        flex: none;
-    }
-
-    .tooltip {
-        background-color: var(--spectrum-global-color-gray-800);
-        color: var(--spectrum-global-color-gray-50);
-        padding: 4px 10px;
-        font-size: 10px;
-    }
-</style>
-<overlay-trigger id="trigger" placement="bottom" offset="6">
-    <sp-button variant="primary" slot="trigger">Button popover</sp-button>
-    <sp-popover dialog slot="click-content" direction="bottom" tip>
-        <div class="options-popover-content">
-            <sp-slider
-                value="5"
-                step="0.5"
-                min="0"
-                max="20"
-                label="Awesomeness"
-            ></sp-slider>
-            <sp-button>Press me</sp-button>
-        </div>
-    </sp-popover>
-    <sp-tooltip slot="hover-content" delayed>Tooltip</sp-tooltip>
-    <sp-popover slot="longpress-content" tip>
-        <sp-action-group
-            selects="single"
-            vertical
-            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
-        >
-            <sp-action-button>
-                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-            </sp-action-button>
-        </sp-action-group>
-    </sp-popover>
-</overlay-trigger>
+<sp-button
+    onclick="
+        const trigger = this;
+        const interaction = 'click';
+        const content = this.nextElementSibling;
+        if (!content) return;
+        const options = {
+            offset: 0,
+            placement: 'right',
+        };
+        content.open = true;
+        const closeOverlayPromise = Overlay.open(
+            trigger, 
+            interaction,
+            content,
+            options
+        );
+        setTimeout(function () {
+            closeOverlayPromise.then(function(close) {
+                close();
+                content.open = false;
+            });
+        }, 5000);
+    "
+>
+    Click me for a 5 second overlay!
+</sp-button>
+<sp-popover>
+    <sp-dialog size="medium">
+        <h2 slot="heading">Demo</h2>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
+        augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas
+        diam in arcu cursus euismod quis viverra. Posuere ac ut consequat semper
+        viverra nam libero justo laoreet. Enim ut tellus elementum sagittis
+        vitae et leo duis ut. Neque laoreet suspendisse interdum consectetur
+        libero id faucibus nisl. Diam volutpat commodo sed egestas egestas.
+        Dolor magna eget est lorem ipsum dolor. Vitae suscipit tellus mauris a
+        diam maecenas sed. Turpis in eu mi bibendum neque egestas congue.
+        Rhoncus est pellentesque elit ullamcorper dignissim cras lobortis.
+    </sp-dialog>
+</sp-popover>
 ```
 
-## Accessibility
+## Advanced Usage
 
-When using an `<overlay-trigger>` element, it is important to be sure the that content you project into `slot="trigger"` is "interactive". This means that an element within that branch of DOM will be able to receive focus and said element will appropriately convert keyboard interactions to `click` events similar to what you find with `<a href="#">Anchors</a>`, `<button>Buttons</button>`, etc. You can find further reading on the subject of accessible keyboard interactions at [https://www.w3.org/WAI/WCAG21/Understanding/keyboard](https://www.w3.org/WAI/WCAG21/Understanding/keyboard).
+When working with the DOM based APIs of custom elements, it can sometimes be preferred to project content into an overlay from a different shadow root. Sometimes that could take the form of projecting a single slotted element into the overlay. To ensure that that content can be mashalled through any number of `<slot>` elements being addressed into subsequent `<slot>` elements, be sure to use the `flatten: true` option when querying `slot.asignedNodes()`:
+
+```js
+const trigger = shadowRoot.querySelector('#trigger');
+const slot = shadowRoot.querySeletor('slot');
+const interaction = 'click';
+const content = slot
+    .assignedNodes({ flatten: true })
+    .find((node) => node instanceof HTMLElement);
+const options = {
+    offset: 0,
+    placement: 'bottom',
+};
+const closeOverlay = await Overlay.open(trigger, interaction, content, options);
+```
+
+Othertimes, you may actually want to compose content from multiple shadow roots into a single overlay. This is a pattern that can be seen in the `<sp-dropdown>` element where its `<sp-menu>` light DOM child is wrapped by its `<sp-popover>` shadow DOM child before being projected into an overlay. What follows is a more trivial example where content in the light DOM of an elements is injected into an element in the shadow DOM of the same element and then projected into an overlay. Notice the added work here of setting a comment node into the light DOM as a placeholder for the "stolen" content and then swapping that content back into the light DOM when the overlay is closed.
+
+```js
+const trigger = this.shadowRoot.querySelector('#trigger');
+const outterContent = this.shadowRoot.querySelector('#outter-content');
+const innerContent = this.querySelector('#inner-content');
+const innerContentParent =
+    innerContent.parentElement || innerContent.getRootNode();
+const placeholder = document.createComment('placeholder for inner content');
+innerContentParent.replaceChild(placeholder, innerContent);
+outterContent.append(innerContent);
+const interaction = 'click';
+const options = {
+    offset: 0,
+    placement: 'bottom',
+};
+const closeOverlayPromise = Overlay.open(
+    trigger,
+    interaction,
+    outterContent,
+    options
+);
+const closeOverlay = function () {
+    closeOverlayPromise.then((close) => close());
+    innerContentParent.replaceChild(placeholder, innerContent);
+};
+```

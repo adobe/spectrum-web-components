@@ -54,6 +54,7 @@ interface JsDocTagParsed {
 type ParsedTagArray = JsDocTagParsed[];
 
 type TagType = {
+    name: string;
     description?: string;
     properties?: ParsedTagArray;
     slots?: ParsedTagArray;
@@ -132,9 +133,18 @@ class ComponentElement extends RouteComponent {
 
     public get componentName(): string {
         if (this.location) {
-            return `sp-${this.location.params.component}`;
+            return this.location.params.component;
         }
         return '';
+    }
+
+    public get apiDocs(): TagType | undefined {
+        const prefixedEl = docs.tags.find(
+            (el) =>
+                el.name === `sp-${this.componentName}` ||
+                (this.location && el.name === this.location.params.component)
+        ) as TagType;
+        return prefixedEl || undefined;
     }
 
     public get tab(): TabValue {
@@ -173,9 +183,7 @@ class ComponentElement extends RouteComponent {
     render() {
         let result;
         if (this.location && this.location.params) {
-            const APIdocs = docs.tags.find(
-                (el) => el.name === this.componentName
-            ) as TagType;
+            const APIdocs = this.apiDocs;
             const componentDocs = ComponentDocs.get(
                 this.location.params.component
             );
@@ -185,7 +193,7 @@ class ComponentElement extends RouteComponent {
                         <h1
                             class="spectrum-Heading spectrum-Heading--sizeXXL spectrum-Heading--serif"
                         >
-                            ${this.componentName}
+                            ${APIdocs ? APIdocs.name : this.componentName}
                         </h1>
                     </div>
                     ${APIdocs && componentDocs
@@ -212,7 +220,8 @@ class ComponentElement extends RouteComponent {
         return result || html``;
     }
 
-    protected renderDocs(tag: TagType): TemplateResult {
+    protected renderDocs(tag?: TagType): TemplateResult {
+        if (!tag) return html``;
         return html`
             <p>${tag.description}</p>
             ${tag.properties && tag.properties.length

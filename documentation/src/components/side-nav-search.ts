@@ -32,6 +32,14 @@ import { search, ResultGroup } from './search-index.js';
 import { Menu } from '@spectrum-web-components/menu';
 import { Popover } from '@spectrum-web-components/popover';
 
+declare global {
+    interface Window {
+        Overlay: typeof Overlay;
+    }
+}
+
+window.Overlay = Overlay;
+
 class SearchComponent extends LitElement {
     private closeOverlay?: () => void;
 
