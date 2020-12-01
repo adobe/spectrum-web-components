@@ -23,6 +23,7 @@ import layoutStyles from './layout.css';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import { Dropdown } from '@spectrum-web-components/dropdown';
 import '@spectrum-web-components/dropdown/sp-dropdown.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -103,25 +104,6 @@ export class LayoutElement extends SpectrumElement {
     private updateDirection(event: Event) {
         const dir = (event.target as Dropdown).value;
         this.dir = dir === 'rtl' ? dir : 'ltr';
-    }
-
-    // TODO: remove this manual link relationship when
-    // https://github.com/adobe/spectrum-web-components/issues/475
-    // has been completed and links are natively part of the library
-    private onClickLabel(event: { target: HTMLElement }) {
-        const { target } = event;
-        const next = target.nextElementSibling as Dropdown;
-        if (!next || next.open) return;
-        next.click();
-    }
-
-    private onKeypressLabel(event: KeyboardEvent & { target: HTMLElement }) {
-        const { code, target } = event;
-        if (code === 'Space' || code === 'Enter') {
-            const next = target.nextElementSibling as Dropdown;
-            if (!next || next.open) return;
-            next.click();
-        }
     }
 
     private addAlert(event: CustomEvent<{ message: string }>): void {
@@ -232,13 +214,14 @@ export class LayoutElement extends SpectrumElement {
                     >
                         <div id="page" @alert=${this.addAlert}>
                             <div class="manage-theme">
-                                <label
-                                    @click=${this.onClickLabel}
-                                    @keypress=${this.onKeypressLabel}
+                                <sp-field-label
+                                    for="theme-color"
+                                    side-aligned="start"
                                 >
                                     Theme
-                                </label>
+                                </sp-field-label>
                                 <sp-dropdown
+                                    id="theme-color"
                                     placement="bottom"
                                     quiet
                                     value=${this.color}
@@ -259,13 +242,14 @@ export class LayoutElement extends SpectrumElement {
                                         </sp-menu-item>
                                     </sp-menu>
                                 </sp-dropdown>
-                                <label
-                                    @click=${this.onClickLabel}
-                                    @keypress=${this.onKeypressLabel}
+                                <sp-field-label
+                                    for="theme-scale"
+                                    side-aligned="start"
                                 >
                                     Scale
-                                </label>
+                                </sp-field-label>
                                 <sp-dropdown
+                                    id="theme-scale"
                                     label="Scale"
                                     placement="bottom"
                                     quiet
@@ -281,13 +265,14 @@ export class LayoutElement extends SpectrumElement {
                                         </sp-menu-item>
                                     </sp-menu>
                                 </sp-dropdown>
-                                <label
-                                    @click=${this.onClickLabel}
-                                    @keypress=${this.onKeypressLabel}
+                                <sp-field-label
+                                    for="theme-direction"
+                                    side-aligned="start"
                                 >
                                     Direction
-                                </label>
+                                </sp-field-label>
                                 <sp-dropdown
+                                    id="theme-direction"
                                     label="Direction"
                                     placement="bottom"
                                     quiet
