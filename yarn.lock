@@ -3381,9 +3381,9 @@
   integrity sha512-s1jJ675+3H64+flXTcVacvdMaavTXEZ0qBRBCbKVk/1iH8iCoMMWjJjQlr5tWZZsilpnzU2QUaB8D3MSa5HU7g==
 
 "@spectrum-css/sidenav@^3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/sidenav/-/sidenav-3.0.0-beta.2.tgz#b2431fdaaf8ef06d2c4bfbd3c85fb2ebe6eb7816"
-  integrity sha512-0/g/3lROiRnF4fSMBOQyG9V18x8yr49uWFpMeLGTY3pw8dv2LlfQNULAJs3HxXG/egxHmwjVcIlwLbQAziBP1Q==
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/sidenav/-/sidenav-3.0.0-beta.4.tgz#445e5a7187154e93b6b42308c7e645eb8df6653a"
+  integrity sha512-yFS//rqqCSLC7wZC8M3+AAuP64fR6l6ABmHlXSLZfeNw1ceQCLGf2gTd2Ecyahm5afbtn9cHhCfL1qmf3Mx6Tg==
 
 "@spectrum-css/slider@^3.0.0-beta.2":
   version "3.0.0-beta.2"
