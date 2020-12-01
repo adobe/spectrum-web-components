@@ -93,11 +93,11 @@ header svg {
     justify-content: flex-end;
 }
 
-:host([dir='ltr']) .manage-theme label {
+:host([dir='ltr']) .manage-theme sp-field-label {
     margin-left: var(--spectrum-global-dimension-size-400);
 }
 
-:host([dir='rtl']) .manage-theme label {
+:host([dir='rtl']) .manage-theme sp-field-label {
     margin-right: var(--spectrum-global-dimension-size-400);
 }
 
@@ -105,71 +105,6 @@ header svg {
     header {
         display: none;
     }
-}
-
-/**
- * TODO: Remove this manual copy of the Spectrum Field Label styles 
- * once https://github.com/adobe/spectrum-web-components/issues/475
- * has been addressed and this element is natively part of the library
- **/
-label {
-    /* .spectrum-FieldLabel,
-    * .spectrum-Form-itemLabel */
-    display: block;
-
-    box-sizing: border-box;
-
-    padding-top: var(
-        --spectrum-fieldlabel-padding-top,
-        var(--spectrum-global-dimension-size-50)
-    );
-
-    padding-bottom: var(
-        --spectrum-fieldlabel-padding-bottom,
-        var(--spectrum-global-dimension-size-65)
-    );
-    padding-left: 0;
-    padding-right: 0;
-
-    font-size: var(
-        --spectrum-fieldlabel-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-weight: var(
-        --spectrum-fieldlabel-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
-    );
-    line-height: var(
-        --spectrum-fieldlabel-text-line-height,
-        var(--spectrum-global-font-line-height-small)
-    );
-
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
-    font-smoothing: subpixel-antialiased;
-
-    display: inline-block;
-    padding-top: var(
-        --spectrum-fieldlabel-side-padding-top,
-        var(--spectrum-global-dimension-size-100)
-    );
-    padding-bottom: 0;
-}
-
-:host([dir='ltr']) label {
-    padding-left: 0;
-    padding-right: var(
-        --spectrum-fieldlabel-side-padding-x,
-        var(--spectrum-global-dimension-size-100)
-    );
-}
-
-:host([dir='rtl']) label {
-    padding-right: 0;
-    padding-left: var(
-        --spectrum-fieldlabel-side-padding-x,
-        var(--spectrum-global-dimension-size-100)
-    );
 }
 
 .alerts {
