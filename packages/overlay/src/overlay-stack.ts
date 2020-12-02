@@ -328,7 +328,23 @@ export class OverlayStack {
                         overlay.interaction === 'inline') &&
                         !overlay.tabbingAway)
                 ) {
-                    overlay.trigger.focus();
+                    const overlayRoot = overlay.overlayContent.getRootNode() as ShadowRoot;
+                    const overlayContentActiveElement =
+                        overlayRoot.activeElement;
+                    const triggerRoot = overlay.trigger.getRootNode() as ShadowRoot;
+                    const triggerActiveElement = triggerRoot.activeElement;
+                    if (
+                        overlay.overlayContent.contains(
+                            overlayContentActiveElement
+                        ) ||
+                        overlay.trigger
+                            .getRootNode()
+                            .contains(triggerActiveElement) ||
+                        (triggerRoot.host &&
+                            triggerRoot.host.isSameNode(triggerActiveElement))
+                    ) {
+                        overlay.trigger.focus();
+                    }
                 }
                 overlay.tabbingAway = false;
             }
