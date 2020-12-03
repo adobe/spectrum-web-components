@@ -133,7 +133,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 .button:focus-visible,
-.button.is-focused {
+:host([focused]) .button {
     /* .spectrum-FieldButton.focus-ring,
    * .spectrum-FieldButton.is-focused */
     background-color: var(
@@ -156,7 +156,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 .button:focus-visible.is-placeholder,
-.button.is-focused.is-placeholder {
+:host([focused]) .button.is-placeholder {
     /* .spectrum-FieldButton.focus-ring.is-placeholder,
    * .spectrum-FieldButton.is-focused.is-placeholder */
     color: var(
@@ -188,7 +188,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([invalid]) .button:focus-visible,
-:host([invalid]) .button.is-focused {
+:host([invalid][focused]) .button {
     /* .spectrum-FieldButton.is-invalid.focus-ring,
    * .spectrum-FieldButton.is-invalid.is-focused */
     border-color: var(
@@ -251,7 +251,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([quiet]) .button:focus-visible,
-:host([quiet]) .button.is-focused {
+:host([quiet][focused]) .button {
     /* .spectrum-FieldButton--quiet.focus-ring,
    * .spectrum-FieldButton--quiet.is-focused */
     background-color: var(
@@ -265,7 +265,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         );
 }
 :host([quiet]) .button:focus-visible.is-placeholder,
-:host([quiet]) .button.is-focused.is-placeholder {
+:host([quiet][focused]) .button.is-placeholder {
     /* .spectrum-FieldButton--quiet.focus-ring.is-placeholder,
    * .spectrum-FieldButton--quiet.is-focused.is-placeholder */
     color: var(
@@ -287,9 +287,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([quiet]) .button.is-selected:focus-visible,
-:host([quiet]) .button.is-selected.is-focused,
+:host([quiet][focused]) .button.is-selected,
 :host([quiet]) .button:active:focus-visible,
-:host([quiet]) .button:active.is-focused {
+:host([quiet][focused]) .button:active {
     /* .spectrum-FieldButton--quiet.is-selected.focus-ring,
    * .spectrum-FieldButton--quiet.is-selected.is-focused,
    * .spectrum-FieldButton--quiet:active.focus-ring,
@@ -305,7 +305,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         );
 }
 :host([quiet][invalid]) .button:focus-visible,
-:host([quiet][invalid]) .button.is-focused {
+:host([quiet][invalid][focused]) .button {
     /* .spectrum-FieldButton--quiet.is-invalid.focus-ring,
    * .spectrum-FieldButton--quiet.is-invalid.is-focused */
     box-shadow: 0 2px 0 0
