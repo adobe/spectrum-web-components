@@ -47,6 +47,11 @@ const config = {
                     selector: '.spectrum-FieldButton--quiet',
                     name: 'quiet',
                 },
+                {
+                    type: 'boolean',
+                    selector: '.is-focused',
+                    name: 'focused',
+                },
             ],
             classes: [
                 {
