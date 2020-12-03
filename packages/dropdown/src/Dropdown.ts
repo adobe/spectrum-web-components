@@ -83,6 +83,9 @@ export class DropdownBase extends Focusable {
     public disabled = false;
 
     @property({ type: Boolean, reflect: true })
+    public focused = false;
+
+    @property({ type: Boolean, reflect: true })
     public invalid = false;
 
     @property()
@@ -145,11 +148,12 @@ export class DropdownBase extends Focusable {
         return this.button;
     }
 
-    public click(): void {
-        this.focusElement.click();
+    public forceFocusVisible(): void {
+        this.focused = true;
     }
 
     public onButtonBlur(): void {
+        this.focused = false;
         (this.target as HTMLButtonElement).removeEventListener(
             'keydown',
             this.onKeydown

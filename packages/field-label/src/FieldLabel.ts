@@ -25,6 +25,8 @@ import asterickIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-
 
 import styles from './field-label.css.js';
 
+type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
+
 /**
  * @element sp-field-label
  */
@@ -55,6 +57,15 @@ export class FieldLabel extends SpectrumElement {
     private handleClick(): void {
         if (!this.target || this.disabled) return;
         this.target.focus();
+        const parent = this.getRootNode() as ShadowRoot;
+        const target = this.target as AcceptsFocusVisisble;
+        const targetParent = target.getRootNode() as ShadowRoot;
+        const targetHost = targetParent.host as AcceptsFocusVisisble;
+        if (targetParent.isSameNode(parent) && target.forceFocusVisible) {
+            target.forceFocusVisible();
+        } else if (targetHost && targetHost.forceFocusVisible) {
+            targetHost.forceFocusVisible();
+        }
     }
 
     private async manageFor(): Promise<void> {
