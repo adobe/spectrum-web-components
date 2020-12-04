@@ -21,7 +21,7 @@ import {
 import styles from './asset.css.js';
 
 const file = (): TemplateResult => html`
-    <svg viewBox="0 0 128 128" class="file">
+    <svg class="file" role="img" viewBox="0 0 128 128" aria-label="File">
         <path
             class="fileBackground"
             d="M24,126c-5.5,0-10-4.5-10-10V12c0-5.5,4.5-10,10-10h61.5c2.1,0,4.1,0.8,5.6,2.3l20.5,20.4c1.5,1.5,2.4,3.5,2.4,5.7V116c0,5.5-4.5,10-10,10H24z"
@@ -34,7 +34,7 @@ const file = (): TemplateResult => html`
 `;
 
 const folder = (): TemplateResult => html`
-    <svg viewBox="0 0 32 32" class="folder">
+    <svg class="folder" role="img" viewBox="0 0 32 32" aria-label="Folder">
         <path
             class="folderBackground"
             d="M3,29.5c-1.4,0-2.5-1.1-2.5-2.5V5c0-1.4,1.1-2.5,2.5-2.5h10.1c0.5,0,1,0.2,1.4,0.6l3.1,3.1c0.2,0.2,0.4,0.3,0.7,0.3H29c1.4,0,2.5,1.1,2.5,2.5v18c0,1.4-1.1,2.5-2.5,2.5H3z"
