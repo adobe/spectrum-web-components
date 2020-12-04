@@ -283,13 +283,14 @@ export class Slider extends Focusable {
     private renderTrack(): TemplateResult {
         return html`
             <div
-                id="controls"
                 @pointerdown=${this.onTrackPointerDown}
                 @mousedown=${this.onTrackMouseDown}
             >
-                ${this.renderTrackLeft()} ${this.renderRamp()}
-                ${this.renderTicks()} ${this.renderHandle()}
-                ${this.renderTrackRight()}
+                <div id="controls">
+                    ${this.renderTrackLeft()} ${this.renderRamp()}
+                    ${this.renderTicks()} ${this.renderHandle()}
+                    ${this.renderTrackRight()}
+                </div>
             </div>
         `;
     }
