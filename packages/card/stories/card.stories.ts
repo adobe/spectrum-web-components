@@ -258,7 +258,7 @@ export const SlottedHeading = (): TemplateResult => {
                     value="Apr 23 Project"
                     quiet
                 ></sp-textfield>
-                <div slot="subheading">LAST MODIFIED ON 6/17/2020, 3:37 PM</div>
+                <div slot="subheading">Last modified on 6/17/2020, 3:37 PM</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
                     <sp-menu>
                         <sp-menu-item>

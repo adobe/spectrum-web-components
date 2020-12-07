@@ -56,3 +56,8 @@ sp-quick-actions {
 .heading {
     width: var(--spectrum-card-title-width);
 }
+
+.subtitle {
+    /* Override until https://github.com/adobe/spectrum-css/issues/1054 is fixed */
+    text-transform: none;
+}
