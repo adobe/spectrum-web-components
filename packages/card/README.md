@@ -29,7 +29,7 @@ import { Card } from '@spectrum-web-components/card';
 ## Example
 
 ```html demo
-<sp-card heading="Card Heading" subheading="JPG">
+<sp-card heading="Card Heading" subheading="JPG Photo">
     <img
         slot="cover-photo"
         src="https://picsum.photos/200/300"
@@ -44,7 +44,10 @@ import { Card } from '@spectrum-web-components/card';
 By default, the heading for an `sp-card` is applied via the `heading` attribute, which is restricted to string content only. When HTML content is desired, a slot named `heading` available for applying the heading.
 
 ```html demo
-<sp-card subheading="JPG" style="--spectrum-card-body-header-height: auto;">
+<sp-card
+    subheading="JPG Photo"
+    style="--spectrum-card-body-header-height: auto;"
+>
     <h1 slot="heading">Card Heading</h1>
     <img alt="" slot="cover-photo" src="https://picsum.photos/200/300" />
     <div slot="footer">Footer</div>
@@ -63,7 +66,7 @@ Normal cards can contain a heading, a subheading, a cover photo, and a footer.
 ```html
 <sp-card heading="Card Heading">
     <img alt="" slot="cover-photo" src="https://picsum.photos/200/300" />
-    <span slot="subheading">JPG</span>
+    <span slot="subheading">JPG photo</span>
     <div slot="footer">Footer</div>
 </sp-card>
 ```
@@ -73,7 +76,7 @@ Normal cards can contain a heading, a subheading, a cover photo, and a footer.
 Cards can be supplied an `actions` via a names slot.
 
 ```html
-<sp-card heading="Card Heading" subheading="JPG">
+<sp-card heading="Card Heading" subheading="JPG Photo">
     <img
         slot="cover-photo"
         src="https://picsum.photos/200/300"
@@ -120,7 +123,7 @@ Quiet cards can contain a heading, a subheading, a cover photo, a description, a
 
 ```html
 <div style="width: 208px; height: 264px">
-    <sp-card variant="quiet" heading="Card Heading" subheading="JPG">
+    <sp-card variant="quiet" heading="Card Heading" subheading="JPG Photo">
         <img alt="" slot="preview" src="https://picsum.photos/200/300" />
         <div slot="description">10/15/18</div>
         <div slot="footer">Footer</div>
@@ -135,7 +138,7 @@ When leveraging the `asset` attribute, a card can be declared as representing a 
     <sp-card
         variant="quiet"
         heading="Card Heading"
-        subheading="JPG"
+        subheading="JPG Photo"
         asset="file"
     >
         <img alt="" slot="preview" src="https://picsum.photos/200/300" />
@@ -150,7 +153,7 @@ Or a `folder`:
 
 ```html
 <div style="width: 208px; height: 264px">
-    <sp-card variant="quiet" subheading="JPG" asset="folder">
+    <sp-card variant="quiet" subheading="JPG Photo" asset="folder">
         <img alt="" slot="preview" src="https://picsum.photos/200/300" />
         <div slot="heading">Folder Name</div>
         <div slot="description">10/15/18</div>
@@ -163,7 +166,7 @@ Quiet cards will also accept `actions` via a named slot.
 
 ```html
 <div style="width: 208px; height: 264px">
-    <sp-card variant="quiet" heading="Card Heading" subheading="JPG">
+    <sp-card variant="quiet" heading="Card Heading" subheading="JPG Photo">
         <img alt="" slot="preview" src="https://picsum.photos/200/300" />
         <div slot="description">10/15/18</div>
         <sp-action-menu slot="actions" placement="bottom-end">
@@ -199,7 +202,7 @@ Gallery cards can contain a heading, a subheading, an image preview, a descripti
 
 ```html
 <div style="width: 532px; height: 224px">
-    <sp-card variant="gallery" heading="Card Heading" subheading="JPG">
+    <sp-card variant="gallery" heading="Card Heading" subheading="JPG Photo">
         <img alt="" slot="preview" src="https://picsum.photos/532/192" />
         <div slot="description">10/15/18</div>
         <div slot="footer">Footer</div>
@@ -213,7 +216,7 @@ The `small` attriibute can be applied to a standard card:
 
 ```html demo
 <div style="width: 208px; height: 264px">
-    <sp-card small heading="Card Heading" subheading="JPG">
+    <sp-card small heading="Card Heading" subheading="JPG Photo">
         <img
             slot="cover-photo"
             alt="Demo Image"
@@ -230,7 +233,7 @@ A `horizontal` card:
 <div
     style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color));"
 >
-    <sp-card small horizontal heading="Card Heading" subheading="JPG">
+    <sp-card small horizontal heading="Card Heading" subheading="JPG Photo">
         <sp-icon slot="preview" style="width: 36px; height: 36px;">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -255,7 +258,12 @@ Or a `quiet` card:
 <div
     style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color)); width: 110px;"
 >
-    <sp-card small heading="Card Heading" subheading="JPG" variant="quiet">
+    <sp-card
+        small
+        heading="Card Heading"
+        subheading="JPG Photo"
+        variant="quiet"
+    >
         <img src="https://picsum.photos/110" alt="Demo Image" slot="preview" />
         <div slot="footer">Footer</div>
         <sp-action-menu slot="actions" placement="bottom-end">
