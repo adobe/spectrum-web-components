@@ -10,6 +10,115 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.spectrum-ProgressBar--sizeS {
+    /* .spectrum-ProgressBar--sizeS */
+    --spectrum-progressbar-border-radius: var(
+        --spectrum-progressbar-s-border-radius
+    );
+    --spectrum-progressbar-label-gap-y: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-progressbar-height: var(--spectrum-global-dimension-size-50);
+    --spectrum-progressbar-width: var(
+        --spectrum-global-dimension-static-size-2400,
+        192px
+    );
+    --spectrum-progressbar-indeterminate-fill-width: var(
+        --spectrum-global-dimension-size-1700
+    );
+    --spectrum-progressbar-indeterminate-animation-ease: var(
+        --spectrum-global-animation-ease-in-out,
+        cubic-bezier(0.45, 0, 0.4, 1)
+    );
+    --spectrum-progressbar-indeterminate-duration: var(
+        --spectrum-global-animation-duration-2000,
+        1000ms
+    );
+    --spectrum-fieldlabel-side-padding-right: var(
+        --spectrum-global-dimension-size-75
+    );
+}
+.spectrum-ProgressBar--sizeM {
+    /* .spectrum-ProgressBar--sizeM */
+    --spectrum-progressbar-border-radius: var(
+        --spectrum-progressbar-m-border-radius
+    );
+    --spectrum-progressbar-label-gap-y: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-progressbar-height: var(--spectrum-global-dimension-size-75);
+    --spectrum-progressbar-width: var(
+        --spectrum-global-dimension-static-size-2400,
+        192px
+    );
+    --spectrum-progressbar-indeterminate-fill-width: var(
+        --spectrum-global-dimension-size-1700
+    );
+    --spectrum-progressbar-indeterminate-animation-ease: var(
+        --spectrum-global-animation-ease-in-out,
+        cubic-bezier(0.45, 0, 0.4, 1)
+    );
+    --spectrum-progressbar-indeterminate-duration: var(
+        --spectrum-global-animation-duration-2000,
+        1000ms
+    );
+    --spectrum-fieldlabel-side-padding-right: var(
+        --spectrum-global-dimension-size-100
+    );
+}
+.spectrum-ProgressBar--sizeL {
+    /* .spectrum-ProgressBar--sizeL */
+    --spectrum-progressbar-label-gap-y: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-progressbar-height: var(--spectrum-global-dimension-size-100);
+    --spectrum-progressbar-border-radius: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-progressbar-width: var(
+        --spectrum-global-dimension-static-size-2500,
+        200px
+    );
+    --spectrum-progressbar-indeterminate-fill-width: var(
+        --spectrum-global-dimension-size-1800
+    );
+    --spectrum-progressbar-indeterminate-animation-ease: var(
+        --spectrum-global-animation-ease-in-out,
+        cubic-bezier(0.45, 0, 0.4, 1)
+    );
+    --spectrum-progressbar-indeterminate-duration: var(
+        --spectrum-global-animation-duration-2000,
+        1000ms
+    );
+}
+.spectrum-ProgressBar--sizeXL {
+    /* .spectrum-ProgressBar--sizeXL */
+    --spectrum-progressbar-border-radius: var(
+        --spectrum-progressbar-xl-border-radius
+    );
+    --spectrum-progressbar-label-gap-y: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-progressbar-height: var(--spectrum-global-dimension-size-125);
+    --spectrum-progressbar-width: var(
+        --spectrum-global-dimension-static-size-2800,
+        224px
+    );
+    --spectrum-progressbar-indeterminate-fill-width: var(
+        --spectrum-global-dimension-size-2000
+    );
+    --spectrum-progressbar-indeterminate-animation-ease: var(
+        --spectrum-global-animation-ease-in-out,
+        cubic-bezier(0.45, 0, 0.4, 1)
+    );
+    --spectrum-progressbar-indeterminate-duration: var(
+        --spectrum-global-animation-duration-2000,
+        1000ms
+    );
+    --spectrum-fieldlabel-side-padding-right: var(
+        --spectrum-global-dimension-size-200
+    );
+}
 :host {
     /* .spectrum-ProgressBar */
     position: relative;
@@ -17,35 +126,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
+    width: var(--spectrum-progressbar-width);
     vertical-align: top;
-}
-:host,
-.track {
-    /* .spectrum-ProgressBar,
-   * .spectrum-ProgressBar-track */
-    width: var(
-        --spectrum-progressbar-large-width,
-        var(--spectrum-global-dimension-size-2400)
-    );
 }
 .track {
     /* .spectrum-ProgressBar-track */
     overflow: hidden;
-    border-radius: var(--spectrum-progressbar-large-border-radius);
+    width: 100%;
+    height: var(--spectrum-progressbar-height);
+    border-radius: var(--spectrum-progressbar-border-radius);
     z-index: 1;
-}
-.fill,
-.track {
-    /* .spectrum-ProgressBar-fill,
-   * .spectrum-ProgressBar-track */
-    height: var(
-        --spectrum-progressbar-large-height,
-        var(--spectrum-global-dimension-size-75)
-    );
 }
 .fill {
     /* .spectrum-ProgressBar-fill */
     border: none;
+    height: var(--spectrum-progressbar-height);
     transition: width 1s;
 }
 :host([dir='ltr']) .label,
@@ -64,22 +159,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .percentage {
     /* .spectrum-ProgressBar-label,
    * .spectrum-ProgressBar-percentage */
-    font-size: var(
-        --spectrum-fieldlabel-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-weight: var(
-        --spectrum-fieldlabel-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
-    );
-    line-height: var(
-        --spectrum-fieldlabel-text-line-height,
-        var(--spectrum-global-font-line-height-small)
-    );
-    margin-bottom: var(
-        --spectrum-progressbar-large-label-gap-y,
-        var(--spectrum-global-dimension-size-115)
-    );
+    margin-bottom: var(--spectrum-progressbar-label-gap-y);
 }
 .label {
     /* .spectrum-ProgressBar-label */
@@ -87,17 +167,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .percentage {
     /* [dir=ltr] .spectrum-ProgressBar-percentage */
-    margin-left: var(
-        --spectrum-progressbar-small-label-gap-x,
-        var(--spectrum-global-dimension-size-150)
-    );
+    margin-left: var(--spectrum-fieldlabel-side-padding-right);
 }
 :host([dir='rtl']) .percentage {
     /* [dir=rtl] .spectrum-ProgressBar-percentage */
-    margin-right: var(
-        --spectrum-progressbar-small-label-gap-x,
-        var(--spectrum-global-dimension-size-150)
-    );
+    margin-right: var(--spectrum-fieldlabel-side-padding-right);
 }
 .percentage {
     /* .spectrum-ProgressBar-percentage */
@@ -110,22 +184,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     justify-content: space-between;
     width: auto;
 }
+:host([side-label]) .track {
+    /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-track */
+    min-width: var(--spectrum-progressbar-width);
+    flex: 1 1 var(--spectrum-progressbar-width);
+}
 :host([dir='ltr'][side-label]) .label {
     /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
-    margin-right: var(
-        --spectrum-progressbar-large-label-gap-x,
-        var(--spectrum-global-dimension-size-150)
-    );
+    margin-right: var(--spectrum-fieldlabel-side-padding-right);
 }
 :host([dir='rtl'][side-label]) .label {
     /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
-    margin-left: var(
-        --spectrum-progressbar-large-label-gap-x,
-        var(--spectrum-global-dimension-size-150)
-    );
+    margin-left: var(--spectrum-fieldlabel-side-padding-right);
 }
 :host([side-label]) .label {
     /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
+    flex-grow: 0;
     margin-bottom: 0;
 }
 :host([dir='ltr'][side-label]) .percentage {
@@ -138,164 +212,101 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][side-label]) .percentage {
     /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
-    margin-left: var(
-        --spectrum-progressbar-large-label-gap-x,
-        var(--spectrum-global-dimension-size-150)
-    );
+    margin-left: var(--spectrum-fieldlabel-side-padding-right);
 }
 :host([dir='rtl'][side-label]) .percentage {
     /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
-    margin-right: var(
-        --spectrum-progressbar-large-label-gap-x,
-        var(--spectrum-global-dimension-size-150)
-    );
+    margin-right: var(--spectrum-fieldlabel-side-padding-right);
 }
 :host([side-label]) .percentage {
     /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
     order: 3;
     margin-bottom: 0;
 }
-:host([small]) {
-    /* .spectrum-ProgressBar--small */
-    min-width: var(
-        --spectrum-progressbar-small-width,
-        var(--spectrum-global-dimension-size-2400)
-    );
-}
-:host([small]) .fill,
-:host([small]) .track {
-    /* .spectrum-ProgressBar--small .spectrum-ProgressBar-fill,
-   * .spectrum-ProgressBar--small .spectrum-ProgressBar-track */
-    height: var(
-        --spectrum-progressbar-small-height,
-        var(--spectrum-global-dimension-size-50)
-    );
-}
-:host([small]) .track {
-    /* .spectrum-ProgressBar--small .spectrum-ProgressBar-track */
-    border-radius: var(--spectrum-progressbar-small-border-radius);
-}
 :host([indeterminate]) .fill {
     /* .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
-    width: var(
-        --spectrum-progressbar-large-indeterminate-fill-width,
-        var(--spectrum-global-dimension-size-1700)
-    );
+    width: var(--spectrum-progressbar-indeterminate-fill-width);
     position: relative;
     animation-timing-function: var(
-        --spectrum-progressbar-large-indeterminate-animation-ease,
-        var(--spectrum-global-animation-ease-in-out)
+        --spectrum-progressbar-indeterminate-animation-ease
     );
     will-change: transform;
 }
 :host([dir='ltr'][indeterminate]) .fill {
     /* [dir=ltr] .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
     animation: indeterminate-loop-ltr
-        var(
-            --spectrum-progressbar-large-indeterminate-duration,
-            var(--spectrum-global-animation-duration-2000)
-        )
-        infinite;
+        var(--spectrum-progressbar-indeterminate-duration) infinite;
 }
 :host([dir='rtl'][indeterminate]) .fill {
     /* [dir=rtl] .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
     animation: indeterminate-loop-rtl
-        var(
-            --spectrum-progressbar-large-indeterminate-duration,
-            var(--spectrum-global-animation-duration-2000)
-        )
-        infinite;
+        var(--spectrum-progressbar-indeterminate-duration) infinite;
 }
 @keyframes indeterminate-loop-ltr {
     0% {
         transform: translate(
-            calc(
-                -1 * var(--spectrum-progressbar-large-indeterminate-fill-width, var(--spectrum-global-dimension-size-1700))
-            )
+            calc(-1 * var(--spectrum-progressbar-indeterminate-fill-width))
         );
     }
     to {
-        transform: translate(
-            var(
-                --spectrum-progressbar-large-width,
-                var(--spectrum-global-dimension-size-2400)
-            )
-        );
+        transform: translate(var(--spectrum-progressbar-width));
     }
 }
 @keyframes indeterminate-loop-rtl {
     0% {
-        transform: translate(
-            var(
-                --spectrum-progressbar-large-width,
-                var(--spectrum-global-dimension-size-2400)
-            )
-        );
+        transform: translate(var(--spectrum-progressbar-width));
     }
     to {
-        transform: translate(
-            calc(
-                -1 * var(--spectrum-progressbar-large-width, var(--spectrum-global-dimension-size-2400))
-            )
-        );
+        transform: translate(calc(-1 * var(--spectrum-progressbar-width)));
     }
 }
 .fill {
     /* .spectrum-ProgressBar .spectrum-ProgressBar-fill */
-    background: var(
-        --spectrum-progressbar-large-track-fill-color,
-        var(--spectrum-global-color-blue-500)
-    );
+    background: var(--spectrum-global-color-blue-500);
 }
 .track {
     /* .spectrum-ProgressBar .spectrum-ProgressBar-track */
     background-color: var(
-        --spectrum-progressbar-large-track-color,
-        var(--spectrum-alias-track-color-default)
+        --spectrum-alias-track-color-default,
+        var(--spectrum-global-color-gray-300)
     );
 }
 :host([over-background]) .fill {
     /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-fill */
-    background: var(
-        --spectrum-progressbar-large-over-background-track-fill-color,
-        var(--spectrum-global-color-static-white)
-    );
+    background: var(--spectrum-global-color-static-white, #fff);
 }
 :host([over-background]) .label,
 :host([over-background]) .percentage {
     /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-label,
    * .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-percentage */
-    color: var(
-        --spectrum-progressbar-large-over-background-track-fill-color,
-        var(--spectrum-global-color-static-white)
-    );
+    color: var(--spectrum-global-color-static-white, #fff);
 }
 :host([over-background]) .track {
     /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-track */
     background-color: var(
-        --spectrum-progressbar-large-over-background-track-color,
-        var(--spectrum-alias-track-color-over-background)
+        --spectrum-alias-track-color-over-background,
+        hsla(0, 0%, 100%, 0.2)
     );
 }
 :host([positive]) .fill {
     /* .spectrum-ProgressBar.is-positive .spectrum-ProgressBar-fill */
     background: var(
-        --spectrum-meter-large-track-color-positive,
-        var(--spectrum-semantic-positive-color-status)
+        --spectrum-semantic-positive-color-status,
+        var(--spectrum-global-color-green-400)
     );
 }
-:host([warning]) .fill {
-    /* .spectrum-ProgressBar.is-warning .spectrum-ProgressBar-fill */
+:host(.is-notice) .fill {
+    /* .spectrum-ProgressBar.is-notice .spectrum-ProgressBar-fill */
     background: var(
-        --spectrum-meter-large-track-color-warning,
-        var(--spectrum-semantic-notice-color-status)
+        --spectrum-semantic-notice-color-status,
+        var(--spectrum-global-color-orange-400)
     );
 }
-:host([critical]) .fill {
-    /* .spectrum-ProgressBar.is-critical .spectrum-ProgressBar-fill */
+:host(.is-negative) .fill {
+    /* .spectrum-ProgressBar.is-negative .spectrum-ProgressBar-fill */
     background: var(
-        --spectrum-meter-large-track-color-critical,
-        var(--spectrum-semantic-negative-color-status)
+        --spectrum-semantic-negative-color-status,
+        var(--spectrum-global-color-red-400)
     );
 }
 .label,
@@ -303,7 +314,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ProgressBar-label,
    * .spectrum-ProgressBar-percentage */
     color: var(
-        --spectrum-fieldlabel-text-color,
-        var(--spectrum-alias-label-text-color)
+        --spectrum-alias-label-text-color,
+        var(--spectrum-global-color-gray-700)
     );
 }

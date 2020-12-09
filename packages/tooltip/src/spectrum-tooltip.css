@@ -32,7 +32,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip--bottom.is-open */
     transform: translateY(
         var(
-            --spectrum-picker-popover-offset-y,
+            --spectrum-picker-m-popover-offset-y,
             var(--spectrum-global-dimension-size-75)
         )
     );
@@ -41,7 +41,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip--top.is-open */
     transform: translateY(
         calc(
-            -1 * var(--spectrum-picker-popover-offset-y, var(--spectrum-global-dimension-size-75))
+            -1 * var(--spectrum-picker-m-popover-offset-y, var(--spectrum-global-dimension-size-75))
         )
     );
 }
@@ -49,7 +49,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip--right.is-open */
     transform: translateX(
         var(
-            --spectrum-picker-popover-offset-y,
+            --spectrum-picker-m-popover-offset-y,
             var(--spectrum-global-dimension-size-75)
         )
     );
@@ -58,7 +58,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tooltip--left.is-open */
     transform: translateX(
         calc(
-            -1 * var(--spectrum-picker-popover-offset-y, var(--spectrum-global-dimension-size-75))
+            -1 * var(--spectrum-picker-m-popover-offset-y, var(--spectrum-global-dimension-size-75))
         )
     );
 }
@@ -103,7 +103,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     line-height: var(
         --spectrum-tooltip-text-line-height,
-        var(--spectrum-global-dimension-font-size-200)
+        var(--spectrum-alias-component-text-line-height)
     );
     word-break: break-word;
     -webkit-font-smoothing: antialiased;
@@ -253,7 +253,7 @@ p {
     /* .spectrum-Tooltip-label */
     line-height: var(
         --spectrum-tooltip-text-line-height,
-        var(--spectrum-global-dimension-font-size-200)
+        var(--spectrum-alias-component-text-line-height)
     );
 }
 :host {

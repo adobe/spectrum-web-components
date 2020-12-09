@@ -32,7 +32,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-QuickActions--left.is-open */
     transform: translateX(
         var(
-            --spectrum-picker-popover-offset-y,
+            --spectrum-picker-m-popover-offset-y,
             var(--spectrum-global-dimension-size-75)
         )
     );
@@ -41,7 +41,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-QuickActions--right.is-open */
     transform: translateX(
         calc(
-            -1 * var(--spectrum-picker-popover-offset-y, var(--spectrum-global-dimension-size-75))
+            -1 * var(--spectrum-picker-m-popover-offset-y, var(--spectrum-global-dimension-size-75))
         )
     );
 }

@@ -94,12 +94,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     top: 0;
     bottom: 0;
     border-top: var(
-            --spectrum-tabs-focus-ring-size,
+            --spectrum-tabs-m-focus-ring-size,
             var(--spectrum-alias-border-size-thick)
         )
         solid transparent;
     border-bottom: var(
-            --spectrum-tabs-focus-ring-size,
+            --spectrum-tabs-m-focus-ring-size,
             var(--spectrum-alias-border-size-thick)
         )
         solid transparent;

@@ -153,7 +153,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     line-height: var(
         --spectrum-dialog-confirm-description-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-component-text-line-height)
     );
     padding: 0 var(--spectrum-global-dimension-size-25);
     margin: 0 calc(var(--spectrum-global-dimension-size-25) * -1);
@@ -341,6 +341,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     :host([mode='fullscreen']) ::slotted([slot='heading']),
     :host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
         font-size: var(--spectrum-dialog-confirm-title-text-size);
+    }
+}
+@media (forced-colors: active) {
+    :host {
+        border: solid;
     }
 }
 ::slotted([slot='heading']) {

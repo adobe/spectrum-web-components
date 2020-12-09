@@ -50,6 +50,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@spectrum-web-components/accordion": "^0.1.4",
+        "@spectrum-web-components/action-button": "^0.0.1",
         "@spectrum-web-components/action-group": "^0.1.4",
         "@spectrum-web-components/action-menu": "^0.6.5",
         "@spectrum-web-components/actionbar": "^0.4.3",

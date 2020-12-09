@@ -10,29 +10,137 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.spectrum-StatusLight--sizeS {
+    /* .spectrum-StatusLight--sizeS */
+    --spectrum-statuslight-info-text-font-weight: var(
+        --spectrum-alias-body-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    --spectrum-statuslight-info-text-line-height: var(
+        --spectrum-alias-component-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-alias-item-text-size-s,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-statuslight-info-dot-size: var(
+        --spectrum-alias-item-control-1-size-s,
+        var(--spectrum-global-dimension-static-size-100)
+    );
+    --spectrum-statuslight-info-text-gap: var(
+        --spectrum-alias-item-control-gap-s,
+        var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-statuslight-info-height: var(
+        --spectrum-alias-item-height-s,
+        var(--spectrum-global-dimension-size-300)
+    );
+}
+.spectrum-StatusLight--sizeM {
+    /* .spectrum-StatusLight--sizeM */
+    --spectrum-statuslight-info-text-font-weight: var(
+        --spectrum-alias-body-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    --spectrum-statuslight-info-text-line-height: var(
+        --spectrum-alias-component-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-alias-item-text-size-m,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-statuslight-info-dot-size: var(
+        --spectrum-alias-item-control-1-size-m,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-statuslight-info-text-gap: var(
+        --spectrum-alias-item-control-gap-m,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-statuslight-info-height: var(
+        --spectrum-alias-item-height-m,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+.spectrum-StatusLight--sizeL {
+    /* .spectrum-StatusLight--sizeL */
+    --spectrum-statuslight-info-text-font-weight: var(
+        --spectrum-alias-body-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    --spectrum-statuslight-info-text-line-height: var(
+        --spectrum-alias-component-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-alias-item-text-size-l,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    --spectrum-statuslight-info-dot-size: var(
+        --spectrum-alias-item-control-1-size-l
+    );
+    --spectrum-statuslight-info-text-gap: var(
+        --spectrum-alias-item-control-gap-l,
+        var(--spectrum-global-dimension-size-130)
+    );
+    --spectrum-statuslight-info-height: var(
+        --spectrum-alias-item-height-l,
+        var(--spectrum-global-dimension-size-500)
+    );
+}
+.spectrum-StatusLight--sizeXL {
+    /* .spectrum-StatusLight--sizeXL */
+    --spectrum-statuslight-info-text-font-weight: var(
+        --spectrum-alias-body-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    --spectrum-statuslight-info-text-line-height: var(
+        --spectrum-alias-component-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-alias-item-text-size-xl,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    --spectrum-statuslight-info-dot-size: var(
+        --spectrum-alias-item-control-1-size-xl
+    );
+    --spectrum-statuslight-info-text-gap: var(
+        --spectrum-alias-item-control-gap-xl,
+        var(--spectrum-global-dimension-size-160)
+    );
+    --spectrum-statuslight-info-height: var(
+        --spectrum-alias-item-height-xl,
+        var(--spectrum-global-dimension-size-600)
+    );
+    cxow: 1;
+}
 #root {
     /* .spectrum-StatusLight */
-    min-height: var(
-        --spectrum-statuslight-info-height,
-        var(--spectrum-alias-single-line-height)
+    --spectrum-statuslight-info-padding-y: var(
+        --spectrum-global-dimension-size-65
     );
+    --spectrum-statuslight-info-text-line-height: 1.44;
+    --spectrum-statuslight-info-padding-top: calc(
+        var(--spectrum-statuslight-info-padding-y) - 1px
+    );
+    --spectrum-statuslight-info-padding-bottom: calc(
+        var(--spectrum-statuslight-info-padding-y) + 1px
+    );
+    min-height: var(--spectrum-statuslight-info-height);
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding-top: calc(var(--spectrum-global-dimension-size-65) - 1px);
-    padding-bottom: calc(var(--spectrum-global-dimension-size-65) + 1px);
+    padding-top: var(--spectrum-statuslight-info-padding-top);
+    padding-bottom: var(--spectrum-statuslight-info-padding-bottom);
     padding-left: 0;
     padding-right: 0;
     box-sizing: border-box;
-    font-size: var(
-        --spectrum-statuslight-info-text-size,
-        var(--spectrum-alias-font-size-default)
-    );
-    font-weight: var(
-        --spectrum-statuslight-info-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
-    );
-    line-height: 1.44;
+    font-size: var(--spectrum-statuslight-info-text-size);
+    font-weight: var(--spectrum-statuslight-info-text-font-weight);
+    line-height: var(--spectrum-statuslight-info-text-line-height);
 }
 #root:before {
     /* .spectrum-StatusLight:before */
@@ -40,21 +148,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-grow: 0;
     flex-shrink: 0;
     display: inline-block;
-    width: var(
-        --spectrum-statuslight-info-dot-size,
-        var(--spectrum-global-dimension-size-100)
-    );
-    height: var(
-        --spectrum-statuslight-info-dot-size,
-        var(--spectrum-global-dimension-size-100)
-    );
+    width: var(--spectrum-statuslight-info-dot-size);
+    height: var(--spectrum-statuslight-info-dot-size);
     border-radius: 50%;
-    margin: calc(var(--spectrum-global-dimension-size-65) + 1px)
-        var(
-            --spectrum-statuslight-info-text-gap,
-            var(--spectrum-global-dimension-size-150)
-        )
-        calc(var(--spectrum-global-dimension-size-65) - 1px);
+    margin: var(--spectrum-statuslight-info-padding-bottom)
+        var(--spectrum-statuslight-info-text-gap)
+        var(--spectrum-statuslight-info-padding-top);
     -ms-high-contrast-adjust: none;
     forced-color-adjust: none;
 }
@@ -65,8 +164,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #root {
     /* .spectrum-StatusLight */
     color: var(
-        --spectrum-statuslight-info-text-color,
-        var(--spectrum-alias-text-color)
+        --spectrum-alias-text-color,
+        var(--spectrum-global-color-gray-800)
     );
 }
 :host([disabled]) #root,
@@ -74,38 +173,35 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-StatusLight.is-disabled,
    * .spectrum-StatusLight[disabled] */
     color: var(
-        --spectrum-statuslight-info-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
+        --spectrum-alias-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
     );
 }
 :host([disabled]) #root:before,
 #root[disabled]:before {
     /* .spectrum-StatusLight.is-disabled:before,
    * .spectrum-StatusLight[disabled]:before */
-    background-color: var(
-        --spectrum-statuslight-info-dot-color-disabled,
-        var(--spectrum-global-color-gray-400)
-    );
+    background-color: var(--spectrum-global-color-gray-400);
 }
 :host([variant='negative']) #root:before {
     /* .spectrum-StatusLight--negative:before */
     background-color: var(
-        --spectrum-statuslight-negative-dot-color,
-        var(--spectrum-semantic-negative-color-status)
+        --spectrum-semantic-negative-color-status,
+        var(--spectrum-global-color-red-400)
     );
 }
 :host([variant='notice']) #root:before {
     /* .spectrum-StatusLight--notice:before */
     background-color: var(
-        --spectrum-statuslight-notice-dot-color,
-        var(--spectrum-semantic-notice-color-status)
+        --spectrum-semantic-notice-color-status,
+        var(--spectrum-global-color-orange-400)
     );
 }
 :host([variant='positive']) #root:before {
     /* .spectrum-StatusLight--positive:before */
     background-color: var(
-        --spectrum-statuslight-positive-dot-color,
-        var(--spectrum-semantic-positive-color-status)
+        --spectrum-semantic-positive-color-status,
+        var(--spectrum-global-color-green-400)
     );
 }
 .spectrum-StatusLight--active:before,
@@ -113,77 +209,50 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-StatusLight--active:before,
    * .spectrum-StatusLight--info:before */
     background-color: var(
-        --spectrum-statuslight-info-dot-color,
-        var(--spectrum-semantic-informative-color-status)
+        --spectrum-semantic-informative-color-status,
+        var(--spectrum-global-color-blue-400)
     );
 }
 :host([variant='neutral']) #root {
     /* .spectrum-StatusLight--neutral */
     color: var(
-        --spectrum-statuslight-neutral-text-color,
+        --spectrum-alias-label-text-color,
         var(--spectrum-global-color-gray-700)
     );
 }
 :host([variant='neutral']) #root:before {
     /* .spectrum-StatusLight--neutral:before */
-    background-color: var(
-        --spectrum-statuslight-neutral-dot-color,
-        var(--spectrum-global-color-gray-500)
-    );
+    background-color: var(--spectrum-global-color-gray-500);
 }
 :host([variant='celery']) #root:before {
     /* .spectrum-StatusLight--celery:before */
-    background-color: var(
-        --spectrum-statuslight-celery-dot-color,
-        var(--spectrum-global-color-celery-400)
-    );
+    background-color: var(--spectrum-global-color-celery-400);
 }
 :host([variant='yellow']) #root:before {
     /* .spectrum-StatusLight--yellow:before */
-    background-color: var(
-        --spectrum-statuslight-yellow-dot-color,
-        var(--spectrum-global-color-yellow-400)
-    );
+    background-color: var(--spectrum-global-color-yellow-400);
 }
 :host([variant='fuchsia']) #root:before {
     /* .spectrum-StatusLight--fuchsia:before */
-    background-color: var(
-        --spectrum-statuslight-fuchsia-dot-color,
-        var(--spectrum-global-color-fuchsia-400)
-    );
+    background-color: var(--spectrum-global-color-fuchsia-400);
 }
 :host([variant='indigo']) #root:before {
     /* .spectrum-StatusLight--indigo:before */
-    background-color: var(
-        --spectrum-statuslight-indigo-dot-color,
-        var(--spectrum-global-color-indigo-400)
-    );
+    background-color: var(--spectrum-global-color-indigo-400);
 }
 :host([variant='seafoam']) #root:before {
     /* .spectrum-StatusLight--seafoam:before */
-    background-color: var(
-        --spectrum-statuslight-seafoam-dot-color,
-        var(--spectrum-global-color-seafoam-400)
-    );
+    background-color: var(--spectrum-global-color-seafoam-400);
 }
 :host([variant='chartreuse']) #root:before {
     /* .spectrum-StatusLight--chartreuse:before */
-    background-color: var(
-        --spectrum-statuslight-chartreuse-dot-color,
-        var(--spectrum-global-color-chartreuse-400)
-    );
+    background-color: var(--spectrum-global-color-chartreuse-400);
 }
 :host([variant='magenta']) #root:before {
     /* .spectrum-StatusLight--magenta:before */
-    background-color: var(
-        --spectrum-statuslight-magenta-dot-color,
-        var(--spectrum-global-color-magenta-400)
-    );
+    background-color: var(--spectrum-global-color-magenta-400);
 }
 :host([variant='purple']) #root:before {
     /* .spectrum-StatusLight--purple:before */
-    background-color: var(
-        --spectrum-statuslight-purple-dot-color,
-        var(--spectrum-global-color-purple-400)
-    );
+    background-color: var(--spectrum-global-color-purple-400);
 }

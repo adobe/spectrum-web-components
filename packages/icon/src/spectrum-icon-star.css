@@ -10,25 +10,3 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.star {
-    /* .spectrum-UIIcon-Star */
-    width: var(
-        --spectrum-icon-star-width,
-        var(--spectrum-global-dimension-size-225)
-    );
-    height: var(
-        --spectrum-icon-star-height,
-        var(--spectrum-global-dimension-size-225)
-    );
-}
-.spectrum-UIIcon-StarOutline {
-    /* .spectrum-UIIcon-StarOutline */
-    width: var(
-        --spectrum-icon-star-outline-width,
-        var(--spectrum-global-dimension-size-225)
-    );
-    height: var(
-        --spectrum-icon-star-outline-height,
-        var(--spectrum-global-dimension-size-225)
-    );
-}

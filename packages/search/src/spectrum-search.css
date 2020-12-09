@@ -44,7 +44,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transform: translateX(
         calc(
             var(
-                    --spectrum-fieldbutton-min-width,
+                    --spectrum-actionbutton-m-min-width,
                     var(--spectrum-global-dimension-size-400)
                 ) / 2 -
                 var(
@@ -57,35 +57,35 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .icon {
     /* .spectrum-Search-icon */
     color: var(
-        --spectrum-textfield-icon-color,
+        --spectrum-textfield-m-icon-color,
         var(--spectrum-alias-icon-color)
     );
 }
 #input:hover ~ .icon {
     /* .spectrum-Search-input:hover~.spectrum-Search-icon */
     color: var(
-        --spectrum-search-icon-color-hover,
+        --spectrum-search-m-icon-color-hover,
         var(--spectrum-global-color-gray-900)
     );
 }
 #input:active ~ .icon {
     /* .spectrum-Search-input:active~.spectrum-Search-icon */
     color: var(
-        --spectrum-search-icon-color-down,
+        --spectrum-search-m-icon-color-down,
         var(--spectrum-alias-icon-color-down)
     );
 }
 #input:focus-visible ~ .icon {
     /* .spectrum-Search-input.focus-ring~.spectrum-Search-icon */
     color: var(
-        --spectrum-search-icon-color-key-focus,
+        --spectrum-search-m-icon-color-key-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
 #input:disabled ~ .icon {
     /* .spectrum-Search-input:disabled~.spectrum-Search-icon */
     color: var(
-        --spectrum-textfield-text-color-disabled,
+        --spectrum-textfield-m-text-color-disabled,
         var(--spectrum-alias-text-color-disabled)
     );
 }

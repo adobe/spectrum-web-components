@@ -10,11 +10,3 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.chevron-right-large {
-    /* .spectrum-UIIcon-ChevronRightLarge */
-    width: var(--spectrum-icon-chevron-right-large-width);
-    height: var(
-        --spectrum-icon-chevron-right-large-height,
-        var(--spectrum-global-dimension-size-200)
-    );
-}

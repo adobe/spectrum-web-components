@@ -350,9 +350,11 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-static-size-0: 0px;
     --spectrum-global-dimension-static-size-10: 1px;
     --spectrum-global-dimension-static-size-25: 2px;
-    --spectrum-global-dimension-static-size-50: 4px;
     --spectrum-global-dimension-static-size-40: 3px;
+    --spectrum-global-dimension-static-size-50: 4px;
     --spectrum-global-dimension-static-size-65: 5px;
+    --spectrum-global-dimension-static-size-75: 6px;
+    --spectrum-global-dimension-static-size-85: 7px;
     --spectrum-global-dimension-static-size-100: 8px;
     --spectrum-global-dimension-static-size-115: 9px;
     --spectrum-global-dimension-static-size-125: 10px;
@@ -363,6 +365,7 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-static-size-200: 16px;
     --spectrum-global-dimension-static-size-225: 18px;
     --spectrum-global-dimension-static-size-250: 20px;
+    --spectrum-global-dimension-static-size-275: 22px;
     --spectrum-global-dimension-static-size-300: 24px;
     --spectrum-global-dimension-static-size-325: 26px;
     --spectrum-global-dimension-static-size-400: 32px;
@@ -377,12 +380,18 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-static-size-1200: 96px;
     --spectrum-global-dimension-static-size-1700: 136px;
     --spectrum-global-dimension-static-size-2400: 192px;
+    --spectrum-global-dimension-static-size-2500: 200px;
     --spectrum-global-dimension-static-size-2600: 208px;
+    --spectrum-global-dimension-static-size-2800: 224px;
+    --spectrum-global-dimension-static-size-3200: 256px;
     --spectrum-global-dimension-static-size-3400: 272px;
+    --spectrum-global-dimension-static-size-3500: 280px;
     --spectrum-global-dimension-static-size-3600: 288px;
+    --spectrum-global-dimension-static-size-3800: 304px;
     --spectrum-global-dimension-static-size-4600: 368px;
     --spectrum-global-dimension-static-size-5000: 400px;
     --spectrum-global-dimension-static-size-6000: 480px;
+    --spectrum-global-dimension-static-size-16000: 1280px;
     --spectrum-global-dimension-static-font-size-50: 11px;
     --spectrum-global-dimension-static-font-size-75: 12px;
     --spectrum-global-dimension-static-font-size-100: 14px;
@@ -543,6 +552,12 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-button-text-line-height: var(
         --spectrum-global-font-line-height-small
+    );
+    --spectrum-alias-component-text-line-height: var(
+        --spectrum-global-font-line-height-small
+    );
+    --spectrum-alias-han-component-text-line-height: var(
+        --spectrum-global-font-line-height-medium
     );
     --spectrum-alias-heading-text-line-height: var(
         --spectrum-global-font-line-height-small
@@ -747,6 +762,18 @@ governing permissions and limitations under the License.
     --spectrum-alias-item-height-m: var(--spectrum-global-dimension-size-400);
     --spectrum-alias-item-height-l: var(--spectrum-global-dimension-size-500);
     --spectrum-alias-item-height-xl: var(--spectrum-global-dimension-size-600);
+    --spectrum-alias-item-rounded-border-radius-s: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-rounded-border-radius-m: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-item-rounded-border-radius-l: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-item-rounded-border-radius-xl: var(
+        --spectrum-global-dimension-size-300
+    );
     --spectrum-alias-item-text-size-s: var(
         --spectrum-global-dimension-font-size-75
     );
@@ -758,6 +785,66 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-item-text-size-xl: var(
         --spectrum-global-dimension-font-size-300
+    );
+    --spectrum-alias-item-text-padding-top-s: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-alias-item-text-padding-top-m: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-item-text-padding-top-xl: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-text-padding-bottom-m: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-text-padding-bottom-l: var(
+        --spectrum-global-dimension-size-130
+    );
+    --spectrum-alias-item-text-padding-bottom-xl: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-alias-item-icon-padding-top-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-item-icon-padding-top-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-icon-padding-top-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-icon-padding-top-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-icon-padding-bottom-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-item-icon-padding-bottom-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-icon-padding-bottom-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-icon-padding-bottom-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-mark-padding-top-s: var(
+        --spectrum-global-dimension-size-40
+    );
+    --spectrum-alias-item-mark-padding-top-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-mark-padding-top-xl: var(
+        --spectrum-global-dimension-size-130
+    );
+    --spectrum-alias-item-mark-padding-bottom-s: var(
+        --spectrum-global-dimension-size-40
+    );
+    --spectrum-alias-item-mark-padding-bottom-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-mark-padding-bottom-xl: var(
+        --spectrum-global-dimension-size-130
     );
     --spectrum-alias-item-padding-s: var(--spectrum-global-dimension-size-115);
     --spectrum-alias-item-padding-m: var(--spectrum-global-dimension-size-150);
@@ -779,7 +866,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-50
     );
     --spectrum-alias-item-icononly-padding-m: var(
-        --spectrum-global-dimension-size-75
+        --spectrum-global-dimension-size-85
     );
     --spectrum-alias-item-icononly-padding-l: var(
         --spectrum-global-dimension-size-125
@@ -826,6 +913,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-item-control-2-size-xl: var(
         --spectrum-global-dimension-size-225
     );
+    --spectrum-alias-item-control-2-size-xxl: var(
+        --spectrum-global-dimension-size-250
+    );
     --spectrum-alias-item-control-3-height-m: var(
         --spectrum-global-dimension-size-175
     );
@@ -852,6 +942,39 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-workflow-icon-size-xl: var(
         --spectrum-global-dimension-size-275
+    );
+    --spectrum-alias-ui-icon-alert-size-75: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-ui-icon-alert-size-100: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-ui-icon-alert-size-200: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-ui-icon-alert-size-300: var(
+        --spectrum-global-dimension-size-275
+    );
+    --spectrum-alias-ui-icon-triplegripper-size-100-height: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-ui-icon-doublegripper-size-100-width: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-ui-icon-singlegripper-size-100-width: var(
+        --spectrum-global-dimension-size-300
+    );
+    --spectrum-alias-ui-icon-cornertriangle-size-75: var(
+        --spectrum-global-dimension-size-65
+    );
+    --spectrum-alias-ui-icon-cornertriangle-size-200: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-ui-icon-asterisk-size-75: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-alias-ui-icon-asterisk-size-100: var(
+        --spectrum-global-dimension-size-100
     );
     --spectrum-alias-item-control-gap-s: var(
         --spectrum-global-dimension-size-115
@@ -894,6 +1017,18 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-item-ui-icon-gap-xl: var(
         --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-clearbutton-gap-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-item-clearbutton-gap-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-clearbutton-gap-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-clearbutton-gap-xl: var(
+        --spectrum-global-dimension-size-150
     );
     --spectrum-alias-heading-xxxl-text-size: var(
         --spectrum-global-dimension-font-size-1300
@@ -986,9 +1121,15 @@ governing permissions and limitations under the License.
         --spectrum-global-color-gray-200
     );
     --spectrum-alias-background-color-transparent: transparent;
+    --spectrum-alias-background-color-over-background-down: hsla(
+        0,
+        0%,
+        100%,
+        0.2
+    );
     --spectrum-alias-background-color-quickactions-overlay: rgba(0, 0, 0, 0.2);
     --spectrum-alias-placeholder-text-color: var(
-        --spectrum-global-color-gray-600
+        --spectrum-global-color-gray-800
     );
     --spectrum-alias-placeholder-text-color-hover: var(
         --spectrum-global-color-gray-900
@@ -1015,6 +1156,15 @@ governing permissions and limitations under the License.
     --spectrum-alias-text-color-selected-neutral: var(
         --spectrum-global-color-gray-900
     );
+    --spectrum-alias-text-color-over-background: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-text-color-over-background-disabled: hsla(
+        0,
+        0%,
+        100%,
+        0.2
+    );
     --spectrum-alias-heading-text-color: var(--spectrum-global-color-gray-900);
     --spectrum-alias-border-color: var(--spectrum-global-color-gray-400);
     --spectrum-alias-border-color-hover: var(--spectrum-global-color-gray-500);
@@ -1032,6 +1182,15 @@ governing permissions and limitations under the License.
     --spectrum-alias-border-color-light: var(--spectrum-global-color-gray-200);
     --spectrum-alias-border-color-mid: var(--spectrum-global-color-gray-300);
     --spectrum-alias-border-color-dark: var(--spectrum-global-color-gray-400);
+    --spectrum-alias-border-color-darker-default: var(
+        --spectrum-global-color-gray-600
+    );
+    --spectrum-alias-border-color-darker-hover: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-border-color-darker-down: var(
+        --spectrum-global-color-gray-900
+    );
     --spectrum-alias-border-color-transparent: transparent;
     --spectrum-alias-border-color-translucent-dark: rgba(0, 0, 0, 0.05);
     --spectrum-alias-border-color-translucent-darker: rgba(0, 0, 0, 0.1);
@@ -1050,6 +1209,12 @@ governing permissions and limitations under the License.
     --spectrum-alias-icon-color-down: var(--spectrum-global-color-gray-900);
     --spectrum-alias-icon-color-focus: var(--spectrum-global-color-gray-900);
     --spectrum-alias-icon-color-disabled: var(--spectrum-global-color-gray-400);
+    --spectrum-alias-icon-color-over-background-disabled: hsla(
+        0,
+        0%,
+        100%,
+        0.2
+    );
     --spectrum-alias-icon-color-selected-neutral: var(
         --spectrum-global-color-gray-900
     );
@@ -1062,6 +1227,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-icon-color-selected-focus: var(
         --spectrum-global-color-blue-600
+    );
+    --spectrum-alias-image-opacity-disabled: var(
+        --spectrum-global-color-opacity-30
     );
     --spectrum-alias-toolbar-background-color: var(
         --spectrum-global-color-gray-100

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/actionbar/sp-actionbar.js';
@@ -19,7 +20,6 @@ import '@spectrum-web-components/avatar/sp-avatar.js';
 import '@spectrum-web-components/banner/sp-banner.js';
 import '@spectrum-web-components/bar-loader/sp-bar-loader.js';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/card/sp-card.js';

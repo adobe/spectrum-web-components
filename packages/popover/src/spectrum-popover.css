@@ -32,7 +32,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Popover--bottom.is-open */
     transform: translateY(
         var(
-            --spectrum-picker-popover-offset-y,
+            --spectrum-picker-m-popover-offset-y,
             var(--spectrum-global-dimension-size-75)
         )
     );
@@ -41,7 +41,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Popover--top.is-open */
     transform: translateY(
         calc(
-            -1 * var(--spectrum-picker-popover-offset-y, var(--spectrum-global-dimension-size-75))
+            -1 * var(--spectrum-picker-m-popover-offset-y, var(--spectrum-global-dimension-size-75))
         )
     );
 }
@@ -49,7 +49,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Popover--right.is-open */
     transform: translateX(
         var(
-            --spectrum-picker-popover-offset-y,
+            --spectrum-picker-m-popover-offset-y,
             var(--spectrum-global-dimension-size-75)
         )
     );
@@ -58,7 +58,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Popover--left.is-open */
     transform: translateX(
         calc(
-            -1 * var(--spectrum-picker-popover-offset-y, var(--spectrum-global-dimension-size-75))
+            -1 * var(--spectrum-picker-m-popover-offset-y, var(--spectrum-global-dimension-size-75))
         )
     );
 }
@@ -84,14 +84,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #tip {
     /* .spectrum-Popover-tip */
     position: absolute;
-    --spectrum-popover-tip-size: var(
-        --spectrum-popover-tip-width,
-        var(--spectrum-global-dimension-size-250)
-    );
-    --spectrum-popover-tip-borderWidth: var(
-        --spectrum-popover-border-size,
-        var(--spectrum-alias-border-size-thin)
-    );
     -webkit-transform: translate(0);
 }
 #tip .triangle {

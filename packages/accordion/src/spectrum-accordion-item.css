@@ -30,13 +30,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: block;
     position: absolute;
     top: calc(
-        (
-                var(--spectrum-accordion-item-height, 40px) -
-                    var(
-                        --spectrum-accordion-item-border-size,
-                        var(--spectrum-alias-border-size-thin)
-                    )
-            ) / 2 -
+        50% -
             var(
                 --spectrum-accordion-icon-height,
                 var(--spectrum-global-dimension-size-125)
@@ -68,7 +62,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #heading {
     /* .spectrum-Accordion-itemHeading */
     margin: 0;
-    height: var(--spectrum-accordion-item-height, 40px);
+    position: relative;
     box-sizing: border-box;
 }
 :host([dir='ltr']) #header {
@@ -77,11 +71,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(
                 --spectrum-accordion-item-padding-x,
                 var(--spectrum-global-dimension-size-225)
-            ) +
-            var(
-                --spectrum-accordion-icon-width,
-                var(--spectrum-global-dimension-size-75)
-            ) +
+            ) + var(--spectrum-global-dimension-size-125) +
             var(
                 --spectrum-accordion-icon-gap,
                 var(--spectrum-global-dimension-size-100)
@@ -98,11 +88,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(
                 --spectrum-accordion-item-padding-x,
                 var(--spectrum-global-dimension-size-225)
-            ) +
-            var(
-                --spectrum-accordion-icon-width,
-                var(--spectrum-global-dimension-size-75)
-            ) +
+            ) + var(--spectrum-global-dimension-size-125) +
             var(
                 --spectrum-accordion-icon-gap,
                 var(--spectrum-global-dimension-size-100)
@@ -146,7 +132,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-bottom: var(--spectrum-global-dimension-size-150);
     margin: 0;
     min-height: calc(
-        var(--spectrum-accordion-item-height, 40px) -
+        100% -
             var(
                 --spectrum-accordion-item-border-size,
                 var(--spectrum-alias-border-size-thin)
@@ -238,7 +224,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([open]) > #header:after {
     /* .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeader:after */
     height: calc(
-        var(--spectrum-accordion-item-height, 40px) -
+        100% -
             var(
                 --spectrum-accordion-item-border-size,
                 var(--spectrum-alias-border-size-thin)

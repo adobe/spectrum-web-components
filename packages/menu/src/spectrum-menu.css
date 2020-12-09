@@ -12,6 +12,42 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Menu */
+    --spectrum-listitem-divider-size: var(
+        --spectrum-alias-border-size-thick,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    --spectrum-listitem-divider-padding: 3px;
+    --spectrum-listitem-focus-indicator-size: var(
+        --spectrum-alias-border-size-thick,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    --spectrum-listitem-text-font-weight: var(
+        --spectrum-alias-body-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    --spectrum-listitem-text-size: var(
+        --spectrum-alias-item-text-size-m,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-listitem-height: var(
+        --spectrum-alias-item-height-m,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-listitem-icon-gap: var(
+        --spectrum-alias-item-workflow-icon-gap-m,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-listitem-padding-left: var(
+        --spectrum-alias-item-workflow-padding-left-m
+    );
+    --spectrum-listitem-padding-right: var(
+        --spectrum-alias-item-padding-m,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-listitem-thumbnail-padding-left: var(
+        --spectrum-alias-item-padding-m,
+        var(--spectrum-global-dimension-size-150)
+    );
     display: inline-block;
     box-sizing: border-box;
     margin-top: var(
@@ -33,9 +69,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: block;
 }
 :host {
-    /* .spectrum-Menu */
+    /* .spectrum-Menu,
+   * .spectrum-Menu-item */
     background-color: var(
-        --spectrum-listitem-background-color,
-        var(--spectrum-alias-background-color-transparent)
+        --spectrum-alias-background-color-transparent,
+        transparent
     );
 }

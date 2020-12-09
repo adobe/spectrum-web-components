@@ -10,14 +10,3 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.help-medium {
-    /* .spectrum-UIIcon-HelpMedium */
-    width: var(
-        --spectrum-icon-info-medium-width,
-        var(--spectrum-global-dimension-size-225)
-    );
-    height: var(
-        --spectrum-icon-info-medium-height,
-        var(--spectrum-global-dimension-size-225)
-    );
-}

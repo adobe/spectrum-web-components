@@ -10,11 +10,3 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.arrow-left-medium {
-    /* .spectrum-UIIcon-ArrowLeftMedium */
-    width: var(
-        --spectrum-icon-arrow-left-medium-width,
-        var(--spectrum-global-dimension-size-175)
-    );
-    height: var(--spectrum-icon-arrow-left-medium-height);
-}
