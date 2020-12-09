@@ -10,15 +10,69 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    /* .spectrum-Button,
+   * .spectrum-ClearButton,
+   * .spectrum-LogicButton */
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    margin: 0;
+    border-style: solid;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-appearance: button;
+    vertical-align: top;
+    transition: background var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-out,
+        border-color var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-out,
+        color var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
+    text-decoration: none;
+    font-family: var(
+        --spectrum-alias-body-text-font-family,
+        var(--spectrum-global-font-family-base)
+    );
+    line-height: 1.3;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    cursor: pointer;
+}
+:host(:focus) {
+    /* .spectrum-Button:focus,
+   * .spectrum-ClearButton:focus,
+   * .spectrum-LogicButton:focus */
+    outline: none;
+}
+:host(::-moz-focus-inner) {
+    /* .spectrum-Button::-moz-focus-inner,
+   * .spectrum-ClearButton::-moz-focus-inner,
+   * .spectrum-LogicButton::-moz-focus-inner */
+    border: 0;
+    border-style: none;
+    padding: 0;
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+:host(:disabled) {
+    /* .spectrum-Button:disabled,
+   * .spectrum-ClearButton:disabled,
+   * .spectrum-LogicButton:disabled */
+    cursor: default;
+}
 :host:after {
     /* .spectrum-Button:after,
    * .spectrum-ClearButton:after,
    * .spectrum-LogicButton:after */
     border-radius: calc(
-        var(
-                --spectrum-button-primary-border-radius,
-                var(--spectrum-alias-border-radius-large)
-            ) +
+        var(--spectrum-button-primary-border-radius) +
             var(
                 --spectrum-alias-focus-ring-gap,
                 var(--spectrum-global-dimension-static-size-25)
@@ -50,50 +104,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-alias-focus-ring-gap,
                 var(--spectrum-global-dimension-static-size-25)
             ) * -2
-    );
-}
-:host {
-    /* .spectrum-ClearButton */
-    width: var(
-        --spectrum-clearbutton-medium-width,
-        var(--spectrum-alias-single-line-height)
-    );
-    height: var(
-        --spectrum-clearbutton-medium-height,
-        var(--spectrum-alias-single-line-height)
-    );
-    border-radius: 100%;
-    padding: 0;
-    margin: 0;
-    border: none;
-}
-:host > .icon {
-    /* .spectrum-ClearButton>.spectrum-Icon */
-    margin: 0 auto;
-}
-:host([variant='overBackground']:focus-visible):after {
-    /* .spectrum-ClearButton--overBackground.focus-ring:after */
-    margin: calc(
-        var(
-                --spectrum-alias-focus-ring-gap,
-                var(--spectrum-global-dimension-static-size-25)
-            ) * -1
-    );
-}
-@media (-ms-high-contrast: none), screen and (-ms-high-contrast: active) {
-    :host > .icon {
-        margin: 0;
-    }
-}
-:host([small]) {
-    /* .spectrum-ClearButton--small */
-    width: var(
-        --spectrum-clearbutton-small-width,
-        var(--spectrum-global-dimension-size-300)
-    );
-    height: var(
-        --spectrum-clearbutton-small-height,
-        var(--spectrum-global-dimension-size-300)
     );
 }
 :host {
@@ -153,21 +163,59 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-disabled)
     );
 }
+:host {
+    /* .spectrum-ClearButton */
+    width: var(
+        --spectrum-clearbutton-medium-width,
+        var(--spectrum-alias-single-line-height)
+    );
+    height: var(
+        --spectrum-clearbutton-medium-height,
+        var(--spectrum-alias-single-line-height)
+    );
+    border-radius: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+:host > .icon {
+    /* .spectrum-ClearButton>.spectrum-Icon */
+    margin: 0 auto;
+}
+:host([variant='overBackground']:focus-visible):after {
+    /* .spectrum-ClearButton--overBackground.focus-ring:after */
+    margin: calc(
+        var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * -1
+    );
+}
+@media (-ms-high-contrast: none), screen and (-ms-high-contrast: active) {
+    :host > .icon {
+        margin: 0;
+    }
+}
+:host([small]) {
+    /* .spectrum-ClearButton--small */
+    width: var(
+        --spectrum-clearbutton-small-width,
+        var(--spectrum-global-dimension-size-300)
+    );
+    height: var(
+        --spectrum-clearbutton-small-height,
+        var(--spectrum-global-dimension-size-300)
+    );
+}
 :host([variant='overBackground']) {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet,
    * .spectrum-ClearButton--overBackground */
     background-color: var(
-        --spectrum-button-quiet-over-background-background-color,
-        var(--spectrum-alias-background-color-transparent)
+        --spectrum-alias-background-color-transparent,
+        transparent
     );
-    border-color: var(
-        --spectrum-button-quiet-over-background-border-color,
-        var(--spectrum-alias-border-color-transparent)
-    );
-    color: var(
-        --spectrum-button-quiet-over-background-text-color,
-        var(--spectrum-global-color-static-white)
-    );
+    border-color: var(--spectrum-alias-border-color-transparent, transparent);
+    color: var(--spectrum-global-color-static-white, #fff);
 }
 :host([variant='overBackground']:focus-visible),
 :host([variant='overBackground']:hover) {
@@ -175,18 +223,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
    * .spectrum-ClearButton--overBackground.focus-ring,
    * .spectrum-ClearButton--overBackground:hover */
-    background-color: var(
-        --spectrum-button-quiet-over-background-background-color-hover,
-        hsla(0, 0%, 100%, 0.1)
-    );
-    border-color: var(
-        --spectrum-button-quiet-over-background-border-color-hover,
-        var(--spectrum-alias-border-color-transparent)
-    );
-    color: var(
-        --spectrum-button-quiet-over-background-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
+    background-color: hsla(0, 0%, 100%, 0.1);
+    border-color: var(--spectrum-alias-border-color-transparent, transparent);
+    color: var(--spectrum-global-color-static-white, #fff);
 }
 :host([variant='overBackground']:focus-visible) {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
@@ -201,26 +240,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-alias-focus-ring-size,
             var(--spectrum-global-dimension-static-size-25)
         )
-        var(
-            --spectrum-button-over-background-border-color-key-focus,
-            var(--spectrum-global-color-static-white)
-        );
+        var(--spectrum-global-color-static-white, #fff);
 }
 :host([variant='overBackground'][active]) {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:active,
    * .spectrum-ClearButton--overBackground:active */
-    background-color: var(
-        --spectrum-button-quiet-over-background-background-color-down,
-        hsla(0, 0%, 100%, 0.15)
-    );
-    border-color: var(
-        --spectrum-button-quiet-over-background-border-color-down,
-        var(--spectrum-alias-border-color-transparent)
-    );
-    color: var(
-        --spectrum-button-quiet-over-background-text-color-down,
-        var(--spectrum-global-color-static-white)
-    );
+    background-color: hsla(0, 0%, 100%, 0.2);
+    border-color: var(--spectrum-alias-border-color-transparent, transparent);
+    color: var(--spectrum-global-color-static-white, #fff);
 }
 :host([variant='overBackground'][disabled]),
 :host([variant='overBackground']:disabled) {
@@ -229,15 +256,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton--overBackground.is-disabled,
    * .spectrum-ClearButton--overBackground:disabled */
     background-color: var(
-        --spectrum-button-quiet-over-background-background-color-disabled,
-        var(--spectrum-alias-background-color-transparent)
+        --spectrum-alias-background-color-transparent,
+        transparent
     );
-    border-color: var(
-        --spectrum-button-quiet-over-background-border-color-disabled,
-        var(--spectrum-alias-border-color-transparent)
-    );
-    color: var(
-        --spectrum-button-quiet-over-background-text-color-disabled,
-        hsla(0, 0%, 100%, 0.15)
-    );
+    border-color: var(--spectrum-alias-border-color-transparent, transparent);
+    color: hsla(0, 0%, 100%, 0.15);
 }

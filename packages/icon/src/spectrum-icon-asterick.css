@@ -10,14 +10,32 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.asterick {
-    /* .spectrum-UIIcon-Asterisk */
+.spectrum-UIIcon-Asterisk75 {
+    /* .spectrum-UIIcon-Asterisk75 */
     width: var(
-        --spectrum-fieldlabel-asterisk-size,
+        --spectrum-alias-ui-icon-asterisk-size-75,
+        var(--spectrum-global-dimension-static-size-100)
+    );
+    height: var(--spectrum-alias-ui-icon-asterisk-size-300);
+}
+.spectrum-UIIcon-Asterisk100 {
+    /* .spectrum-UIIcon-Asterisk100 */
+    width: var(
+        --spectrum-alias-ui-icon-asterisk-size-100,
         var(--spectrum-global-dimension-size-100)
     );
     height: var(
-        --spectrum-fieldlabel-asterisk-size,
+        --spectrum-alias-ui-icon-asterisk-size-100,
         var(--spectrum-global-dimension-size-100)
     );
+}
+.spectrum-UIIcon-Asterisk200 {
+    /* .spectrum-UIIcon-Asterisk200 */
+    width: var(--spectrum-alias-ui-icon-asterisk-size-200);
+    height: var(--spectrum-alias-ui-icon-asterisk-size-200);
+}
+.spectrum-UIIcon-Asterisk300 {
+    /* .spectrum-UIIcon-Asterisk300 */
+    width: var(--spectrum-alias-ui-icon-asterisk-size-300);
+    height: var(--spectrum-alias-ui-icon-asterisk-size-300);
 }

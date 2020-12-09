@@ -16,9 +16,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     vertical-align: top;
     flex-wrap: wrap;
 }
-:host([horizontal]) ::slotted(:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
-    margin: 0 0 0 var(--spectrum-global-dimension-size-200);
+:host([dir='ltr'][horizontal]) .spectrum-FieldGroup-item:not(:last-child) {
+    /* [dir=ltr] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
+    margin-right: var(--spectrum-global-dimension-size-200);
+}
+:host([dir='rtl'][horizontal]) .spectrum-FieldGroup-item:not(:last-child) {
+    /* [dir=rtl] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
+    margin-left: var(--spectrum-global-dimension-size-200);
 }
 :host([vertical]) {
     /* .spectrum-FieldGroup--vertical */

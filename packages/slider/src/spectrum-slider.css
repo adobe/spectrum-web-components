@@ -12,38 +12,107 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Slider */
+    --spectrum-slider-handle-border-size: var(
+        --spectrum-alias-border-size-thick,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    --spectrum-slider-handle-border-size-down: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-slider-track-border-radius: var(
+        --spectrum-global-dimension-static-size-10,
+        1px
+    );
+    --spectrum-slider-track-height: var(
+        --spectrum-alias-border-size-thick,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    --spectrum-slider-handle-gap: var(
+        --spectrum-alias-border-size-thicker,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    --spectrum-slider-animation-duration: var(
+        --spectrum-global-animation-duration-100,
+        130ms
+    );
+    --spectrum-slider-height: var(
+        --spectrum-alias-item-height-m,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-slider-min-width: var(--spectrum-global-dimension-size-1250);
+    --spectrum-slider-handle-width: var(
+        --spectrum-alias-item-control-2-size-l,
+        var(--spectrum-global-dimension-size-200)
+    );
+    --spectrum-slider-handle-height: var(
+        --spectrum-alias-item-control-2-size-l,
+        var(--spectrum-global-dimension-size-200)
+    );
+    --spectrum-slider-handle-border-radius: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-slider-label-gap-x: var(
+        --spectrum-alias-item-control-gap-m,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-slider-tick-mark-width: var(
+        --spectrum-alias-border-size-thick,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    --spectrum-slider-tick-mark-border-radius: var(
+        --spectrum-alias-border-radius-xsmall,
+        var(--spectrum-global-dimension-size-10)
+    );
+    --spectrum-slider-tick-mark-height: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-slider-label-gap-y: var(--spectrum-global-dimension-size-85);
+    --spectrum-slider-controls-margin: calc(
+        var(--spectrum-slider-handle-width) / 2
+    );
+    --spectrum-slider-track-margin-offset: calc(
+        var(--spectrum-slider-controls-margin) * -1
+    );
+    --spectrum-slider-handle-margin-top: calc(
+        var(--spectrum-slider-handle-width) / -2
+    );
+    --spectrum-slider-handle-margin-left: calc(
+        var(--spectrum-slider-handle-width) / -2
+    );
+    --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
+    --spectrum-slider-track-middle-handleoffset: calc(
+        var(--spectrum-slider-handle-gap) + var(--spectrum-slider-handle-width) /
+            2
+    );
+    --spectrum-slider-input-top: calc(
+        var(--spectrum-slider-handle-margin-top) / 4
+    );
+    --spectrum-slider-input-left: calc(
+        var(--spectrum-slider-handle-margin-left) / 4
+    );
+    --spectrum-slider-ramp-margin-top: 0;
+    --spectrum-slider-range-track-reset: 0;
+    --spectrum-label-text-size: var(--spectrum-global-dimension-font-size-75);
+    --spectrum-label-text-line-height: var(
+        --spectrum-global-font-line-height-small,
+        1.3
+    );
     position: relative;
     z-index: 1;
     display: block;
-    min-height: var(
-        --spectrum-slider-height,
-        var(--spectrum-alias-single-line-height)
-    );
-    min-width: var(
-        --spectrum-slider-min-width,
-        var(--spectrum-global-dimension-size-1250)
-    );
+    min-height: var(--spectrum-slider-height);
+    min-width: var(--spectrum-slider-min-width);
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
 }
 :host([dir='ltr']) #controls {
     /* [dir=ltr] .spectrum-Slider-controls */
-    margin-left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2
-    );
+    margin-left: var(--spectrum-slider-controls-margin);
 }
 :host([dir='rtl']) #controls {
     /* [dir=rtl] .spectrum-Slider-controls */
-    margin-right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2
-    );
+    margin-right: var(--spectrum-slider-controls-margin);
 }
 #controls {
     /* .spectrum-Slider-controls */
@@ -51,17 +120,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-sizing: border-box;
     position: relative;
     z-index: auto;
-    width: calc(
-        100% -
-            var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * 2
-    );
-    min-height: var(
-        --spectrum-slider-height,
-        var(--spectrum-alias-single-line-height)
-    );
+    width: calc(100% - var(--spectrum-slider-controls-margin) * 2);
+    min-height: var(--spectrum-slider-height);
     vertical-align: top;
 }
 :host([dir='ltr']) #fill,
@@ -92,23 +152,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .track {
     /* .spectrum-Slider-fill,
    * .spectrum-Slider-track */
-    height: var(
-        --spectrum-slider-track-height,
-        var(--spectrum-alias-border-size-thick)
-    );
+    height: var(--spectrum-slider-track-height);
     box-sizing: border-box;
     position: absolute;
     z-index: 1;
-    top: calc(
-        var(--spectrum-slider-height, var(--spectrum-alias-single-line-height)) /
-            2
-    );
-    margin-top: calc(
-        var(
-                --spectrum-slider-fill-track-height,
-                var(--spectrum-alias-border-size-thick)
-            ) / -2
-    );
+    top: calc(var(--spectrum-slider-height) / 2);
+    margin-top: calc(var(--spectrum-slider-track-height) / -2);
     pointer-events: none;
 }
 :host([dir='ltr']) #fill,
@@ -116,42 +165,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Slider-fill,
    * [dir=ltr] .spectrum-Slider-track */
     padding-left: 0;
-    padding-right: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
+    padding-right: var(--spectrum-slider-track-handleoffset);
 }
 :host([dir='rtl']) #fill,
 :host([dir='rtl']) .track {
     /* [dir=rtl] .spectrum-Slider-fill,
    * [dir=rtl] .spectrum-Slider-track */
     padding-right: 0;
-    padding-left: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
+    padding-left: var(--spectrum-slider-track-handleoffset);
 }
 :host([dir='ltr']) #fill,
 :host([dir='ltr']) .track {
     /* [dir=ltr] .spectrum-Slider-fill,
    * [dir=ltr] .spectrum-Slider-track */
-    margin-left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    margin-left: var(--spectrum-slider-track-margin-offset);
 }
 :host([dir='rtl']) #fill,
 :host([dir='rtl']) .track {
     /* [dir=rtl] .spectrum-Slider-fill,
    * [dir=rtl] .spectrum-Slider-track */
-    margin-right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    margin-right: var(--spectrum-slider-track-margin-offset);
 }
 #fill,
 .track {
@@ -167,10 +200,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     content: '';
     display: block;
     height: 100%;
-    border-radius: var(
-        --spectrum-slider-track-border-radius,
-        var(--spectrum-global-dimension-static-size-10)
-    );
+    border-radius: var(--spectrum-slider-track-border-radius);
 }
 :host([dir='ltr']) #fill {
     /* [dir=ltr] .spectrum-Slider-fill */
@@ -183,28 +213,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) #fill {
     /* [dir=ltr] .spectrum-Slider-fill */
     padding-left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 +
-            var(
-                --spectrum-slider-handle-gap,
-                var(--spectrum-alias-border-size-thicker)
-            )
+        var(--spectrum-slider-controls-margin) +
+            var(--spectrum-slider-track-handleoffset)
     );
     padding-right: 0;
 }
 :host([dir='rtl']) #fill {
     /* [dir=rtl] .spectrum-Slider-fill */
     padding-right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 +
-            var(
-                --spectrum-slider-handle-gap,
-                var(--spectrum-alias-border-size-thicker)
-            )
+        var(--spectrum-slider-controls-margin) +
+            var(--spectrum-slider-track-handleoffset)
     );
     padding-left: 0;
 }
@@ -217,28 +235,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Slider-fill--right */
     padding-left: 0;
     padding-right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 +
-            var(
-                --spectrum-slider-handle-gap,
-                var(--spectrum-alias-border-size-thicker)
-            )
+        var(--spectrum-slider-controls-margin) +
+            var(--spectrum-slider-track-handleoffset)
     );
 }
 :host([dir='rtl']) .spectrum-Slider-fill--right {
     /* [dir=rtl] .spectrum-Slider-fill--right */
     padding-right: 0;
     padding-left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 +
-            var(
-                --spectrum-slider-handle-gap,
-                var(--spectrum-alias-border-size-thicker)
-            )
+        var(--spectrum-slider-controls-margin) +
+            var(--spectrum-slider-track-handleoffset)
     );
 }
 .spectrum-Slider-fill--right {
@@ -256,53 +262,37 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .track ~ .track {
     /* [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
-    right: 0;
+    right: var(--spectrum-slider-range-track-reset);
 }
 :host([dir='rtl']) .track ~ .track {
     /* [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
-    left: 0;
+    left: var(--spectrum-slider-range-track-reset);
 }
 :host([dir='ltr']) .track ~ .track {
     /* [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
-    padding-left: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
+    padding-left: var(--spectrum-slider-track-handleoffset);
     padding-right: 0;
 }
 :host([dir='rtl']) .track ~ .track {
     /* [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
-    padding-right: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
+    padding-right: var(--spectrum-slider-track-handleoffset);
     padding-left: 0;
 }
 :host([dir='ltr']) .track ~ .track {
     /* [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
-    margin-left: 0;
+    margin-left: var(--spectrum-slider-range-track-reset);
 }
 :host([dir='rtl']) .track ~ .track {
     /* [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
-    margin-right: 0;
+    margin-right: var(--spectrum-slider-range-track-reset);
 }
 :host([dir='ltr']) .track ~ .track {
     /* [dir=ltr] .spectrum-Slider-track~.spectrum-Slider-track */
-    margin-right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    margin-right: var(--spectrum-slider-track-margin-offset);
 }
 :host([dir='rtl']) .track ~ .track {
     /* [dir=rtl] .spectrum-Slider-track~.spectrum-Slider-track */
-    margin-left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    margin-left: var(--spectrum-slider-track-margin-offset);
 }
 .track ~ .track {
     /* .spectrum-Slider-track~.spectrum-Slider-track */
@@ -318,26 +308,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr'][variant='range']) .track:first-of-type {
     /* [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track:first-of-type */
     padding-left: 0;
-    padding-right: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
+    padding-right: var(--spectrum-slider-track-handleoffset);
 }
 :host([dir='rtl'][variant='range']) .track:first-of-type {
     /* [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track:first-of-type */
     padding-right: 0;
-    padding-left: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
+    padding-left: var(--spectrum-slider-track-handleoffset);
 }
 :host([dir='ltr'][variant='range']) .track:first-of-type {
     /* [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track:first-of-type */
-    left: 0;
+    left: var(--spectrum-slider-range-track-reset);
 }
 :host([dir='rtl'][variant='range']) .track:first-of-type {
     /* [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track:first-of-type */
-    right: 0;
+    right: var(--spectrum-slider-range-track-reset);
 }
 :host([dir='ltr'][variant='range']) .track:first-of-type {
     /* [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track:first-of-type */
@@ -349,21 +333,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][variant='range']) .track:first-of-type {
     /* [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track:first-of-type */
-    margin-left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    margin-left: var(--spectrum-slider-track-margin-offset);
 }
 :host([dir='rtl'][variant='range']) .track:first-of-type {
     /* [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track:first-of-type */
-    margin-right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    margin-right: var(--spectrum-slider-track-margin-offset);
 }
 :host([variant='range']) .track:first-of-type {
     /* .spectrum-Slider--range .spectrum-Slider-track:first-of-type */
@@ -398,42 +372,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track */
     padding-top: 0;
     padding-bottom: 0;
-    padding-left: calc(
-        var(
-                --spectrum-slider-handle-gap,
-                var(--spectrum-alias-border-size-thicker)
-            ) +
-            var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2
-    );
-    padding-right: calc(
-        var(
-                --spectrum-slider-handle-gap,
-                var(--spectrum-alias-border-size-thicker)
-            ) +
-            var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2
-    );
-    margin: 0;
+    padding-left: var(--spectrum-slider-track-middle-handleoffset);
+    padding-right: var(--spectrum-slider-track-middle-handleoffset);
+    margin: var(--spectrum-slider-range-track-reset);
 }
 :host([dir='ltr'][variant='range']) .track:last-of-type {
     /* [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track:last-of-type */
-    padding-left: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
+    padding-left: var(--spectrum-slider-track-handleoffset);
     padding-right: 0;
 }
 :host([dir='rtl'][variant='range']) .track:last-of-type {
     /* [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track:last-of-type */
-    padding-right: var(
-        --spectrum-slider-handle-gap,
-        var(--spectrum-alias-border-size-thicker)
-    );
+    padding-right: var(--spectrum-slider-track-handleoffset);
     padding-left: 0;
 }
 :host([dir='ltr'][variant='range']) .track:last-of-type {
@@ -446,29 +396,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][variant='range']) .track:last-of-type {
     /* [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track:last-of-type */
-    right: 0;
+    right: var(--spectrum-slider-range-track-reset);
 }
 :host([dir='rtl'][variant='range']) .track:last-of-type {
     /* [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track:last-of-type */
-    left: 0;
+    left: var(--spectrum-slider-range-track-reset);
 }
 :host([dir='ltr'][variant='range']) .track:last-of-type {
     /* [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track:last-of-type */
-    margin-right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    margin-right: var(--spectrum-slider-track-margin-offset);
 }
 :host([dir='rtl'][variant='range']) .track:last-of-type {
     /* [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track:last-of-type */
-    margin-left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    margin-left: var(--spectrum-slider-track-margin-offset);
 }
 :host([variant='range']) .track:last-of-type {
     /* .spectrum-Slider--range .spectrum-Slider-track:last-of-type */
@@ -477,47 +417,24 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #ramp {
     /* [dir=ltr] .spectrum-Slider-ramp */
-    left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    left: var(--spectrum-slider-track-margin-offset);
 }
 :host([dir='ltr']) #ramp,
 :host([dir='rtl']) #ramp {
     /* [dir=ltr] .spectrum-Slider-ramp,
    * [dir=rtl] .spectrum-Slider-ramp */
-    right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    right: var(--spectrum-slider-track-margin-offset);
 }
 :host([dir='rtl']) #ramp {
     /* [dir=rtl] .spectrum-Slider-ramp */
-    left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / 2 * -1
-    );
+    left: var(--spectrum-slider-track-margin-offset);
 }
 #ramp {
     /* .spectrum-Slider-ramp */
-    margin-top: 0;
-    height: var(
-        --spectrum-slider-ramp-track-height,
-        var(--spectrum-global-dimension-static-size-200)
-    );
+    margin-top: var(--spectrum-slider-ramp-margin-top);
+    height: var(--spectrum-global-dimension-static-size-200, 16px);
     position: absolute;
-    top: calc(
-        var(
-                --spectrum-slider-ramp-track-height,
-                var(--spectrum-global-dimension-static-size-200)
-            ) / 2
-    );
+    top: calc(var(--spectrum-global-dimension-static-size-200, 16px) / 2);
 }
 :host([dir='rtl']) #ramp svg {
     /* [dir=rtl] .spectrum-Slider-ramp svg */
@@ -538,63 +455,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #handle {
     /* [dir=ltr] .spectrum-Slider-handle */
-    margin-left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / -2
-    );
+    margin-left: calc(var(--spectrum-slider-handle-width) / -2);
     margin-right: 0;
 }
 :host([dir='rtl']) #handle {
     /* [dir=rtl] .spectrum-Slider-handle */
-    margin-right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / -2
-    );
+    margin-right: calc(var(--spectrum-slider-handle-width) / -2);
     margin-left: 0;
 }
 #handle {
     /* .spectrum-Slider-handle */
     position: absolute;
-    top: calc(
-        var(--spectrum-slider-height, var(--spectrum-alias-single-line-height)) /
-            2
-    );
+    top: calc(var(--spectrum-slider-height) / 2);
     z-index: 2;
     display: inline-block;
     box-sizing: border-box;
-    width: var(
-        --spectrum-slider-handle-width,
-        var(--spectrum-global-dimension-size-200)
-    );
-    height: var(
-        --spectrum-slider-handle-height,
-        var(--spectrum-global-dimension-size-200)
-    );
-    margin-top: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / -2
-    );
+    width: var(--spectrum-slider-handle-width);
+    height: var(--spectrum-slider-handle-height);
+    margin-top: var(--spectrum-slider-handle-margin-top);
     margin-bottom: 0;
-    border-width: var(
-        --spectrum-slider-handle-border-size,
-        var(--spectrum-alias-border-size-thick)
-    );
+    border-width: var(--spectrum-slider-handle-border-size);
     border-style: solid;
-    border-radius: var(
-        --spectrum-slider-handle-border-radius,
-        var(--spectrum-alias-border-radius-medium)
-    );
-    transition: border-width
-        var(
-            --spectrum-slider-animation-duration,
-            var(--spectrum-global-animation-duration-100)
-        )
+    border-radius: var(--spectrum-slider-handle-border-radius);
+    transition: border-width var(--spectrum-slider-animation-duration)
         ease-in-out;
     outline: none;
 }
@@ -604,10 +487,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle.is-focused,
    * .spectrum-Slider-handle:active */
-    border-width: var(
-        --spectrum-slider-handle-border-size-down,
-        var(--spectrum-global-dimension-size-75)
-    );
+    border-width: var(--spectrum-slider-handle-border-size-down);
 }
 :host([dragging]) #handle,
 :host([handle-highlight]) #handle,
@@ -630,34 +510,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ease-out,
         width var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
         height var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
-    width: var(
-        --spectrum-slider-handle-width,
-        var(--spectrum-global-dimension-size-200)
-    );
-    height: var(
-        --spectrum-slider-handle-height,
-        var(--spectrum-global-dimension-size-200)
-    );
+    width: var(--spectrum-slider-handle-width);
+    height: var(--spectrum-slider-handle-height);
     transform: translate(-50%, -50%);
     border-radius: 100%;
 }
 :host([handle-highlight]) #handle:before {
     /* .spectrum-Slider-handle.is-focused:before */
     width: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) +
+        var(--spectrum-slider-handle-width) +
             var(
                 --spectrum-alias-focus-ring-gap,
                 var(--spectrum-global-dimension-static-size-25)
             ) * 2
     );
     height: calc(
-        var(
-                --spectrum-slider-handle-height,
-                var(--spectrum-global-dimension-size-200)
-            ) +
+        var(--spectrum-slider-handle-height) +
             var(
                 --spectrum-alias-focus-ring-gap,
                 var(--spectrum-global-dimension-static-size-25)
@@ -666,41 +534,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #input {
     /* [dir=ltr] .spectrum-Slider-input */
-    left: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / -2 / 4
-    );
+    left: var(--spectrum-slider-input-left);
 }
 :host([dir='rtl']) #input {
     /* [dir=rtl] .spectrum-Slider-input */
-    right: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / -2 / 4
-    );
+    right: var(--spectrum-slider-input-left);
 }
 #input {
     /* .spectrum-Slider-input */
     margin: 0;
-    width: var(
-        --spectrum-slider-handle-width,
-        var(--spectrum-global-dimension-size-200)
-    );
-    height: var(
-        --spectrum-slider-handle-height,
-        var(--spectrum-global-dimension-size-200)
-    );
+    width: var(--spectrum-slider-handle-width);
+    height: var(--spectrum-slider-handle-height);
     padding: 0;
     position: absolute;
-    top: calc(
-        var(
-                --spectrum-slider-handle-width,
-                var(--spectrum-global-dimension-size-200)
-            ) / -2 / 4
-    );
+    top: var(--spectrum-slider-input-top);
     overflow: hidden;
     opacity: 0.000001;
     cursor: default;
@@ -718,11 +565,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: relative;
     width: auto;
     padding-top: var(
-        --spectrum-fieldlabel-padding-top,
+        --spectrum-fieldlabel-m-padding-top,
         var(--spectrum-global-dimension-size-50)
     );
-    font-size: var(--spectrum-global-dimension-font-size-75);
-    line-height: var(--spectrum-global-font-line-height-small, 1.3);
+    font-size: var(--spectrum-label-text-size);
+    line-height: var(--spectrum-label-text-line-height);
 }
 :host([dir='ltr']) #label {
     /* [dir=ltr] .spectrum-Slider-label */
@@ -760,65 +607,35 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #value {
     /* [dir=ltr] .spectrum-Slider-value */
-    margin-left: var(
-        --spectrum-slider-label-gap-x,
-        var(--spectrum-global-dimension-size-200)
-    );
+    margin-left: var(--spectrum-slider-label-gap-x);
 }
 :host([dir='rtl']) #value {
     /* [dir=rtl] .spectrum-Slider-value */
-    margin-right: var(
-        --spectrum-slider-label-gap-x,
-        var(--spectrum-global-dimension-size-200)
-    );
+    margin-right: var(--spectrum-slider-label-gap-x);
 }
 .ticks {
     /* .spectrum-Slider-ticks */
     display: flex;
     justify-content: space-between;
     z-index: 0;
-    margin: 0
-        calc(
-            var(
-                    --spectrum-slider-handle-width,
-                    var(--spectrum-global-dimension-size-200)
-                ) / 2 * -1
-        );
+    margin: 0 var(--spectrum-slider-track-margin-offset);
     margin-top: calc(
-        var(--spectrum-slider-tick-mark-height, 10px) +
-            var(
-                --spectrum-slider-track-height,
-                var(--spectrum-alias-border-size-thick)
-            ) / 2
+        var(--spectrum-slider-tick-mark-height) +
+            var(--spectrum-slider-track-height) / 2
     );
 }
 .tick {
     /* .spectrum-Slider-tick */
     position: relative;
-    width: var(
-        --spectrum-slider-tick-mark-width,
-        var(--spectrum-alias-border-size-thick)
-    );
+    width: var(--spectrum-slider-tick-mark-width);
 }
 :host([dir='ltr']) .tick:after {
     /* [dir=ltr] .spectrum-Slider-tick:after */
-    left: calc(
-        50% -
-            var(
-                --spectrum-slider-tick-mark-width,
-                var(--spectrum-alias-border-size-thick)
-            ) / 2
-    );
+    left: calc(50% - var(--spectrum-slider-tick-mark-width) / 2);
 }
 :host([dir='rtl']) .tick:after {
     /* [dir=rtl] .spectrum-Slider-tick:after */
-    right: calc(
-        50% -
-            var(
-                --spectrum-slider-tick-mark-width,
-                var(--spectrum-alias-border-size-thick)
-            ) / 2
-    );
+    right: calc(50% - var(--spectrum-slider-tick-mark-width) / 2);
 }
 .tick:after {
     /* .spectrum-Slider-tick:after */
@@ -826,40 +643,24 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: absolute;
     top: 0;
     content: '';
-    width: var(
-        --spectrum-slider-tick-mark-width,
-        var(--spectrum-alias-border-size-thick)
-    );
-    height: var(--spectrum-slider-tick-mark-height, 10px);
-    border-radius: var(
-        --spectrum-slider-tick-mark-border-radius,
-        var(--spectrum-alias-border-radius-xsmall)
-    );
+    width: var(--spectrum-slider-tick-mark-width);
+    height: var(--spectrum-slider-tick-mark-height);
+    border-radius: var(--spectrum-slider-tick-mark-border-radius);
 }
 .tick .tickLabel {
     /* .spectrum-Slider-tick .spectrum-Slider-tickLabel */
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: var(
-        --spectrum-slider-label-gap-x,
-        var(--spectrum-global-dimension-size-200)
+    margin-top: calc(
+        var(--spectrum-slider-label-gap-y) +
+            var(--spectrum-slider-tick-mark-height)
     );
     margin-bottom: 0;
-    margin-left: calc(
-        var(
-                --spectrum-slider-label-gap-x,
-                var(--spectrum-global-dimension-size-200)
-            ) * -1
-    );
-    margin-right: calc(
-        var(
-                --spectrum-slider-label-gap-x,
-                var(--spectrum-global-dimension-size-200)
-            ) * -1
-    );
-    font-size: var(--spectrum-global-dimension-font-size-75);
-    line-height: var(--spectrum-global-font-line-height-small, 1.3);
+    margin-left: calc(var(--spectrum-slider-label-gap-x) * -1);
+    margin-right: calc(var(--spectrum-slider-label-gap-x) * -1);
+    font-size: var(--spectrum-label-text-size);
+    line-height: var(--spectrum-label-text-line-height);
 }
 .tick:first-of-type .tickLabel,
 .tick:last-of-type .tickLabel {
@@ -867,11 +668,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Slider-tick:last-of-type .spectrum-Slider-tickLabel */
     display: block;
     position: absolute;
-    margin-top: var(
-        --spectrum-slider-label-gap-x,
-        var(--spectrum-global-dimension-size-200)
-    );
-    margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
 }
@@ -900,10 +696,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 .track:before {
     /* .spectrum-Slider-track:before */
-    background: var(
-        --spectrum-slider-track-color,
-        var(--spectrum-global-color-gray-300)
-    );
+    background: var(--spectrum-global-color-gray-400);
 }
 #labelContainer {
     /* .spectrum-Slider-labelContainer */
@@ -916,38 +709,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #fill:before {
     /* .spectrum-Slider--filled .spectrum-Slider-track:first-child:before,
    * .spectrum-Slider-fill:before */
-    background: var(
-        --spectrum-slider-fill-track-color,
-        var(--spectrum-global-color-gray-700)
-    );
+    background: var(--spectrum-global-color-gray-700);
 }
 #ramp path {
     /* .spectrum-Slider-ramp path */
-    fill: var(
-        --spectrum-slider-track-color,
-        var(--spectrum-global-color-gray-300)
-    );
+    fill: var(--spectrum-global-color-gray-400);
 }
 #handle {
     /* .spectrum-Slider-handle */
-    border-color: var(
-        --spectrum-slider-handle-border-color,
-        var(--spectrum-global-color-gray-700)
-    );
-    background: var(
-        --spectrum-slider-handle-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
+    border-color: var(--spectrum-global-color-gray-700);
+    background: var(--spectrum-alias-background-color-transparent, transparent);
 }
+:host([handle-highlight]) #handle,
 #handle:hover {
-    /* .spectrum-Slider-handle:hover */
-    border-color: var(
-        --spectrum-slider-handle-border-color-hover,
-        var(--spectrum-global-color-gray-800)
-    );
-}
-:host([handle-highlight]) #handle {
-    /* .spectrum-Slider-handle.is-focused */
+    /* .spectrum-Slider-handle.is-focused,
+   * .spectrum-Slider-handle:hover */
     border-color: var(--spectrum-global-color-gray-800);
 }
 :host([handle-highlight]) #handle:before {
@@ -963,10 +739,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #handle:active {
     /* .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle:active */
-    border-color: var(
-        --spectrum-slider-handle-border-color-down,
-        var(--spectrum-global-color-gray-800)
-    );
+    border-color: var(--spectrum-global-color-gray-800);
 }
 :host([variant='ramp']) #handle {
     /* .spectrum-Slider--ramp .spectrum-Slider-handle */
@@ -983,27 +756,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .tick:after {
     /* .spectrum-Slider-tick:after */
     background-color: var(
-        --spectrum-slider-tick-mark-color,
-        var(--spectrum-alias-track-color-default)
+        --spectrum-alias-track-color-default,
+        var(--spectrum-global-color-gray-300)
     );
 }
 :host([dragging]) #handle {
     /* .spectrum-Slider-handle.is-dragged */
-    border-color: var(
-        --spectrum-slider-handle-border-color-down,
-        var(--spectrum-global-color-gray-800)
-    );
-    background: var(
-        --spectrum-slider-handle-background-color-down,
-        var(--spectrum-alias-background-color-transparent)
-    );
+    border-color: var(--spectrum-global-color-gray-800);
+    background: var(--spectrum-alias-background-color-transparent, transparent);
 }
 :host([variant='range']) .track:not(:first-of-type):not(:last-of-type):before {
     /* .spectrum-Slider--range .spectrum-Slider-track:not(:first-of-type):not(:last-of-type):before */
-    background: var(
-        --spectrum-slider-fill-track-color,
-        var(--spectrum-global-color-gray-700)
-    );
+    background: var(--spectrum-global-color-gray-700);
 }
 :host([disabled]) #labelContainer {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-labelContainer */
@@ -1014,10 +778,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([disabled]) #handle {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-handle */
-    border-color: var(
-        --spectrum-slider-handle-border-color-disabled,
-        var(--spectrum-global-color-gray-400)
-    );
+    border-color: var(--spectrum-global-color-gray-400);
     background: var(
         --spectrum-alias-background-color-default,
         var(--spectrum-global-color-gray-100)
@@ -1027,43 +788,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([disabled]) #handle:hover {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-handle:active,
    * .spectrum-Slider.is-disabled .spectrum-Slider-handle:hover */
-    border-color: var(
-        --spectrum-slider-handle-border-color-disabled,
-        var(--spectrum-global-color-gray-400)
-    );
-    background: var(
-        --spectrum-slider-handle-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
-}
-:host([disabled]) .track:before {
-    /* .spectrum-Slider.is-disabled .spectrum-Slider-track:before */
-    background: var(
-        --spectrum-slider-track-color-disabled,
-        var(--spectrum-global-color-gray-300)
-    );
+    border-color: var(--spectrum-global-color-gray-400);
+    background: var(--spectrum-alias-background-color-transparent, transparent);
 }
 :host([disabled][variant='filled']) .track:first-child:before,
-:host([disabled]) #fill:before {
+:host([disabled]) #fill:before,
+:host([disabled]) .track:before {
     /* .spectrum-Slider.is-disabled.spectrum-Slider--filled .spectrum-Slider-track:first-child:before,
-   * .spectrum-Slider.is-disabled .spectrum-Slider-fill:before */
-    background: var(
-        --spectrum-slider-fill-track-color-disabled,
-        var(--spectrum-global-color-gray-300)
-    );
+   * .spectrum-Slider.is-disabled .spectrum-Slider-fill:before,
+   * .spectrum-Slider.is-disabled .spectrum-Slider-track:before */
+    background: var(--spectrum-global-color-gray-300);
 }
 :host([disabled]) #ramp path {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-ramp path */
-    fill: var(
-        --spectrum-slider-ramp-track-color-disabled,
-        var(--spectrum-global-color-gray-200)
-    );
+    fill: var(--spectrum-global-color-gray-200);
 }
 :host([disabled][variant='range'])
     .track:not(:first-of-type):not(:last-of-type):before {
     /* .spectrum-Slider.is-disabled.spectrum-Slider--range .spectrum-Slider-track:not(:first-of-type):not(:last-of-type):before */
-    background: var(
-        --spectrum-slider-fill-track-color-disabled,
-        var(--spectrum-global-color-gray-300)
-    );
+    background: var(--spectrum-global-color-gray-300);
 }

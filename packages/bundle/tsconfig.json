@@ -8,6 +8,7 @@
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
         { "path": "../accordion" },
+        { "path": "../action-button" },
         { "path": "../action-group" },
         { "path": "../action-menu" },
         { "path": "../actionbar" },

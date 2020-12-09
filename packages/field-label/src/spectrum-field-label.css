@@ -10,33 +10,94 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.spectrum-FieldLabel--sizeM,
+.spectrum-FieldLabel--sizeS {
+    /* .spectrum-FieldLabel--sizeM,
+   * .spectrum-FieldLabel--sizeS */
+    --spectrum-fieldlabel-text-font-weight: var(
+        --spectrum-alias-body-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    --spectrum-fieldlabel-text-line-height: var(
+        --spectrum-alias-component-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
+    --spectrum-fieldlabel-text-size: var(
+        --spectrum-global-dimension-font-size-75
+    );
+    --spectrum-fieldlabel-asterisk-gap: var(
+        --spectrum-global-dimension-size-25
+    );
+    --spectrum-fieldlabel-asterisk-margin-y: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-fieldlabel-padding-top: var(--spectrum-global-dimension-size-50);
+    --spectrum-fieldlabel-padding-bottom: var(
+        --spectrum-global-dimension-size-65
+    );
+}
+.spectrum-FieldLabel--sizeL {
+    /* .spectrum-FieldLabel--sizeL */
+    --spectrum-fieldlabel-text-font-weight: var(
+        --spectrum-alias-body-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    --spectrum-fieldlabel-text-line-height: var(
+        --spectrum-alias-component-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
+    --spectrum-fieldlabel-text-size: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-fieldlabel-asterisk-gap: var(
+        --spectrum-global-dimension-size-25
+    );
+    --spectrum-fieldlabel-asterisk-margin-y: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-fieldlabel-padding-top: var(--spectrum-global-dimension-size-75);
+    --spectrum-fieldlabel-padding-bottom: var(
+        --spectrum-global-dimension-size-115
+    );
+}
+.spectrum-FieldLabel--sizeXL {
+    /* .spectrum-FieldLabel--sizeXL */
+    --spectrum-fieldlabel-text-font-weight: var(
+        --spectrum-alias-body-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    --spectrum-fieldlabel-text-line-height: var(
+        --spectrum-alias-component-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
+    --spectrum-fieldlabel-text-size: var(
+        --spectrum-global-dimension-font-size-200
+    );
+    --spectrum-fieldlabel-asterisk-gap: var(
+        --spectrum-global-dimension-size-25
+    );
+    --spectrum-fieldlabel-asterisk-margin-y: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-fieldlabel-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-fieldlabel-padding-bottom: var(
+        --spectrum-global-dimension-size-130
+    );
+}
 :host {
     /* .spectrum-FieldLabel,
    * .spectrum-Form-itemLabel */
     display: block;
     box-sizing: border-box;
-    padding-top: var(
-        --spectrum-fieldlabel-padding-top,
-        var(--spectrum-global-dimension-size-50)
-    );
-    padding-bottom: var(
-        --spectrum-fieldlabel-padding-bottom,
-        var(--spectrum-global-dimension-size-65)
-    );
+    padding-top: var(--spectrum-fieldlabel-padding-top);
+    padding-bottom: var(--spectrum-fieldlabel-padding-bottom);
     padding-left: 0;
     padding-right: 0;
-    font-size: var(
-        --spectrum-fieldlabel-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-weight: var(
-        --spectrum-fieldlabel-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
-    );
-    line-height: var(
-        --spectrum-fieldlabel-text-line-height,
-        var(--spectrum-global-font-line-height-small)
-    );
+    font-size: var(--spectrum-fieldlabel-text-size);
+    font-weight: var(--spectrum-fieldlabel-text-font-weight);
+    line-height: var(--spectrum-fieldlabel-text-line-height);
     vertical-align: top;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -44,72 +105,48 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .requiredIcon {
     /* [dir=ltr] .spectrum-FieldLabel-requiredIcon */
-    margin-left: var(
-        --spectrum-fieldlabel-asterisk-gap,
-        var(--spectrum-global-dimension-size-25)
-    );
+    margin-left: var(--spectrum-fieldlabel-asterisk-gap);
     margin-right: 0;
 }
 :host([dir='rtl']) .requiredIcon {
     /* [dir=rtl] .spectrum-FieldLabel-requiredIcon */
-    margin-right: var(
-        --spectrum-fieldlabel-asterisk-gap,
-        var(--spectrum-global-dimension-size-25)
-    );
+    margin-right: var(--spectrum-fieldlabel-asterisk-gap);
     margin-left: 0;
 }
 .requiredIcon {
     /* .spectrum-FieldLabel-requiredIcon */
-    margin-top: var(
-        --spectrum-fieldlabel-asterisk-margin-y,
-        var(--spectrum-global-dimension-size-50)
-    );
+    margin-top: var(--spectrum-fieldlabel-asterisk-margin-y);
     margin-bottom: 0;
 }
 :host([dir='ltr'][side-aligned='start']) {
     /* [dir=ltr] .spectrum-FieldLabel--left */
     padding-left: 0;
-    padding-right: var(
-        --spectrum-fieldlabel-side-padding-x,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-right: var(--spectrum-global-dimension-size-100);
 }
 :host([dir='rtl'][side-aligned='start']) {
     /* [dir=rtl] .spectrum-FieldLabel--left */
     padding-right: 0;
-    padding-left: var(
-        --spectrum-fieldlabel-side-padding-x,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-left: var(--spectrum-global-dimension-size-100);
 }
 :host([side-aligned='start']) {
     /* .spectrum-FieldLabel--left */
     display: inline-block;
-    padding-top: var(
-        --spectrum-fieldlabel-side-padding-top,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-top: var(--spectrum-global-dimension-size-100);
     padding-bottom: 0;
 }
 :host([dir='ltr'][side-aligned='start']) .requiredIcon {
     /* [dir=ltr] .spectrum-FieldLabel--left .spectrum-FieldLabel-requiredIcon */
-    margin-left: var(
-        --spectrum-fieldlabel-asterisk-gap,
-        var(--spectrum-global-dimension-size-25)
-    );
+    margin-left: var(--spectrum-fieldlabel-asterisk-gap);
     margin-right: 0;
 }
 :host([dir='rtl'][side-aligned='start']) .requiredIcon {
     /* [dir=rtl] .spectrum-FieldLabel--left .spectrum-FieldLabel-requiredIcon */
-    margin-right: var(
-        --spectrum-fieldlabel-asterisk-gap,
-        var(--spectrum-global-dimension-size-25)
-    );
+    margin-right: var(--spectrum-fieldlabel-asterisk-gap);
     margin-left: 0;
 }
 :host([side-aligned='start']) .requiredIcon {
     /* .spectrum-FieldLabel--left .spectrum-FieldLabel-requiredIcon */
-    margin-top: var(--spectrum-fieldlabel-side-asterisk-margin-y, 0);
+    margin-top: var(--spectrum-global-dimension-size-50);
     margin-bottom: 0;
 }
 :host([dir='ltr'][side-aligned='end']) {
@@ -123,56 +160,39 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr'][side-aligned='end']) {
     /* [dir=ltr] .spectrum-FieldLabel--right */
     padding-left: 0;
-    padding-right: var(
-        --spectrum-fieldlabel-side-padding-x,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-right: var(--spectrum-global-dimension-size-100);
 }
 :host([dir='rtl'][side-aligned='end']) {
     /* [dir=rtl] .spectrum-FieldLabel--right */
     padding-right: 0;
-    padding-left: var(
-        --spectrum-fieldlabel-side-padding-x,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-left: var(--spectrum-global-dimension-size-100);
 }
 :host([side-aligned='end']) {
     /* .spectrum-FieldLabel--right */
     display: inline-block;
-    padding-top: var(
-        --spectrum-fieldlabel-side-padding-top,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-top: var(--spectrum-global-dimension-size-100);
     padding-bottom: 0;
 }
 :host {
     /* .spectrum-FieldLabel,
    * .spectrum-Form-itemLabel */
     color: var(
-        --spectrum-fieldlabel-text-color,
-        var(--spectrum-alias-label-text-color)
+        --spectrum-alias-label-text-color,
+        var(--spectrum-global-color-gray-700)
     );
 }
-:host([disabled]) {
-    /* .spectrum-FieldLabel.is-disabled,
-   * .spectrum-Form-itemLabel.is-disabled */
-    color: var(
-        --spectrum-fieldlabel-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
-    );
-}
+:host([disabled]),
 :host([disabled]) .requiredIcon {
-    /* .spectrum-FieldLabel.is-disabled .spectrum-FieldLabel-requiredIcon,
+    /* .spectrum-FieldLabel.is-disabled,
+   * .spectrum-FieldLabel.is-disabled .spectrum-FieldLabel-requiredIcon,
+   * .spectrum-Form-itemLabel.is-disabled,
    * .spectrum-Form-itemLabel.is-disabled .spectrum-FieldLabel-requiredIcon */
     color: var(
-        --spectrum-fieldlabel-asterisk-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
+        --spectrum-alias-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
     );
 }
 .requiredIcon {
     /* .spectrum-FieldLabel-requiredIcon */
-    color: var(
-        --spectrum-fieldlabel-asterisk-color,
-        var(--spectrum-global-color-gray-600)
-    );
+    color: var(--spectrum-global-color-gray-600);
 }

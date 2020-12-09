@@ -232,11 +232,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Toast */
     background-color: var(
         --spectrum-toast-neutral-background-color,
-        var(--spectrum-global-color-static-gray-700)
+        var(--spectrum-semantic-neutral-background-color-default)
     );
     color: var(
         --spectrum-toast-neutral-background-color,
-        var(--spectrum-global-color-static-gray-700)
+        var(--spectrum-semantic-neutral-background-color-default)
     );
 }
 .content {
@@ -280,7 +280,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Toast--negative */
     background-color: var(
         --spectrum-toast-negative-background-color,
-        var(--spectrum-global-color-static-red-700)
+        var(--spectrum-semantic-negative-color-background)
     );
 }
 :host([variant='error']),
@@ -293,14 +293,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Toast--negative .spectrum-Toast-closeButton.focus-ring:not(:active) */
     color: var(
         --spectrum-toast-negative-background-color,
-        var(--spectrum-global-color-static-red-700)
+        var(--spectrum-semantic-negative-color-background)
     );
 }
 :host([variant='info']) {
     /* .spectrum-Toast--info */
     background-color: var(
         --spectrum-toast-info-background-color,
-        var(--spectrum-global-color-static-blue-700)
+        var(--spectrum-semantic-informative-color-background)
     );
 }
 :host([variant='info']),
@@ -309,7 +309,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Toast--info .spectrum-Toast-closeButton.focus-ring:not(:active) */
     color: var(
         --spectrum-toast-info-background-color,
-        var(--spectrum-global-color-static-blue-700)
+        var(--spectrum-semantic-informative-color-background)
     );
 }
 :host([variant='positive']),
@@ -318,7 +318,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Toast--success */
     background-color: var(
         --spectrum-toast-positive-background-color,
-        var(--spectrum-global-color-static-green-700)
+        var(--spectrum-semantic-positive-color-background)
     );
 }
 :host([variant='positive']),
@@ -331,6 +331,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Toast--success .spectrum-Toast-closeButton.focus-ring:not(:active) */
     color: var(
         --spectrum-toast-positive-background-color,
-        var(--spectrum-global-color-static-green-700)
+        var(--spectrum-semantic-positive-color-background)
     );
 }

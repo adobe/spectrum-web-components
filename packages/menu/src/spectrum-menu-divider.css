@@ -15,10 +15,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-right: calc(
         var(--spectrum-global-dimension-size-100) +
             var(--spectrum-icon-checkmark-medium-width) +
-            var(
-                --spectrum-listitem-option-icon-padding-x,
-                var(--spectrum-global-dimension-size-150)
-            )
+            var(--spectrum-listitem-icon-gap)
     );
 }
 :host([dir='rtl']) .spectrum-Menu.is-selectable .spectrum-Menu-item {
@@ -26,10 +23,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-left: calc(
         var(--spectrum-global-dimension-size-100) +
             var(--spectrum-icon-checkmark-medium-width) +
-            var(
-                --spectrum-listitem-option-icon-padding-x,
-                var(--spectrum-global-dimension-size-150)
-            )
+            var(--spectrum-listitem-icon-gap)
     );
 }
 :host([dir='ltr'])
@@ -37,10 +31,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     .spectrum-Menu-item.is-selected {
     /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-right: calc(
-        var(
-                --spectrum-listitem-option-padding,
-                var(--spectrum-global-dimension-static-size-150)
-            ) -
+        var(--spectrum-listitem-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
@@ -52,10 +43,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     .spectrum-Menu-item.is-selected {
     /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-left: calc(
-        var(
-                --spectrum-listitem-option-padding,
-                var(--spectrum-global-dimension-static-size-150)
-            ) -
+        var(--spectrum-listitem-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
@@ -64,27 +52,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .spectrum-Menu-item {
     /* [dir=ltr] .spectrum-Menu-item */
-    border-left: var(
-            --spectrum-listitem-border-size-key-focus,
-            var(--spectrum-global-dimension-static-size-25)
-        )
-        solid transparent;
+    border-left: var(--spectrum-listitem-focus-indicator-size) solid transparent;
 }
 :host([dir='rtl']) .spectrum-Menu-item {
     /* [dir=rtl] .spectrum-Menu-item */
-    border-right: var(
-            --spectrum-listitem-border-size-key-focus,
-            var(--spectrum-global-dimension-static-size-25)
-        )
-        solid transparent;
+    border-right: var(--spectrum-listitem-focus-indicator-size) solid
+        transparent;
 }
 :host([dir='ltr']) .spectrum-Menu-item.is-selected {
     /* [dir=ltr] .spectrum-Menu-item.is-selected */
     padding-right: calc(
-        var(
-                --spectrum-listitem-option-padding,
-                var(--spectrum-global-dimension-static-size-150)
-            ) -
+        var(--spectrum-listitem-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
@@ -94,10 +72,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) .spectrum-Menu-item.is-selected {
     /* [dir=rtl] .spectrum-Menu-item.is-selected */
     padding-left: calc(
-        var(
-                --spectrum-listitem-option-padding,
-                var(--spectrum-global-dimension-static-size-150)
-            ) -
+        var(--spectrum-listitem-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
@@ -114,10 +89,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     + .spectrum-Menu-itemLabel {
     /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=ltr] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-left: var(
-        --spectrum-listitem-thumbnail-image-padding-x,
-        var(--spectrum-global-dimension-size-100)
-    );
+    margin-left: var(--spectrum-listitem-icon-gap);
 }
 :host([dir='rtl'])
     .spectrum-Menu-item
@@ -129,28 +101,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     + .spectrum-Menu-itemLabel {
     /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=rtl] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-right: var(
-        --spectrum-listitem-thumbnail-image-padding-x,
-        var(--spectrum-global-dimension-size-100)
-    );
+    margin-right: var(--spectrum-listitem-icon-gap);
 }
 :host([dir='ltr']) .spectrum-Menu-checkmark,
 :host([dir='ltr']) .spectrum-Menu-chevron {
     /* [dir=ltr] .spectrum-Menu-checkmark,
    * [dir=ltr] .spectrum-Menu-chevron */
-    margin-left: var(
-        --spectrum-listitem-option-icon-padding-x,
-        var(--spectrum-global-dimension-size-150)
-    );
+    margin-left: var(--spectrum-listitem-icon-gap);
 }
 :host([dir='rtl']) .spectrum-Menu-checkmark,
 :host([dir='rtl']) .spectrum-Menu-chevron {
     /* [dir=rtl] .spectrum-Menu-checkmark,
    * [dir=rtl] .spectrum-Menu-chevron */
-    margin-right: var(
-        --spectrum-listitem-option-icon-padding-x,
-        var(--spectrum-global-dimension-size-150)
-    );
+    margin-right: var(--spectrum-listitem-icon-gap);
 }
 :host([dir='rtl']) .spectrum-Menu-chevron {
     /* [dir=rtl] .spectrum-Menu-chevron */
@@ -160,15 +123,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Menu-divider */
     box-sizing: initial;
     overflow: visible;
-    height: var(
-        --spectrum-listitem-divider-size,
-        var(--spectrum-alias-border-size-thick)
-    );
-    margin: calc(var(--spectrum-listitem-divider-padding, 3px) / 2)
-        var(
-            --spectrum-listitem-option-padding,
-            var(--spectrum-global-dimension-static-size-150)
-        );
+    height: var(--spectrum-listitem-divider-size);
+    margin: calc(var(--spectrum-listitem-divider-padding) / 2)
+        var(--spectrum-global-dimension-size-85);
     padding: 0;
     border: none;
 }
@@ -177,8 +134,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Menu-item.focus-ring,
    * [dir=ltr] .spectrum-Menu-item.is-focused */
     border-left-color: var(
-        --spectrum-listitem-option-focus-indicator-color,
-        var(--spectrum-alias-border-color-focus)
+        --spectrum-alias-border-color-focus,
+        var(--spectrum-global-color-blue-400)
     );
 }
 :host([dir='rtl']) .spectrum-Menu-item:focus-visible,
@@ -186,14 +143,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Menu-item.focus-ring,
    * [dir=rtl] .spectrum-Menu-item.is-focused */
     border-right-color: var(
-        --spectrum-listitem-option-focus-indicator-color,
-        var(--spectrum-alias-border-color-focus)
+        --spectrum-alias-border-color-focus,
+        var(--spectrum-global-color-blue-400)
     );
 }
 :host {
     /* .spectrum-Menu-divider */
     background-color: var(
-        --spectrum-listitem-divider-color,
-        var(--spectrum-alias-border-color-extralight)
+        --spectrum-alias-border-color-extralight,
+        var(--spectrum-global-color-gray-100)
     );
 }

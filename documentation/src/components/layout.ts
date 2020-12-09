@@ -28,7 +28,7 @@ import { Dropdown } from '@spectrum-web-components/dropdown';
 import '@spectrum-web-components/dropdown/sp-dropdown.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/button/sp-action-button.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/toast/sp-toast.js';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';

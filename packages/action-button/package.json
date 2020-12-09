@@ -1,0 +1,59 @@
+{
+    "name": "@spectrum-web-components/action-button",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/action-button"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/action-button",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.0.1",
+    "description": "",
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        "./src/": "./src/",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./sp-action-button": "./sp-action-button.js",
+        "./sp-action-button.js": "./sp-action-button.js"
+    },
+    "files": [
+        "custom-elements.json",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/"
+    ],
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "@spectrum-css/actionbutton": "^1.0.0-beta.1",
+        "@spectrum-web-components/icon": "^0.6.3",
+        "@spectrum-web-components/icons-workflow": "^0.3.6"
+    },
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.1.0",
+        "@spectrum-web-components/button": "^0.9.4",
+        "tslib": "^2.0.0"
+    }
+}

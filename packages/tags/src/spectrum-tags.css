@@ -12,6 +12,33 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Tags */
+    --spectrum-tag-border-size: var(
+        --spectrum-alias-border-size-thin,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-tag-icon-gap: var(
+        --spectrum-alias-item-workflow-icon-gap-s,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-tag-text-size: var(
+        --spectrum-alias-item-text-size-s,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-tag-height: var(
+        --spectrum-alias-item-height-s,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-tag-padding-left: var(
+        --spectrum-alias-item-workflow-padding-left-s,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-tag-padding-right: var(
+        --spectrum-alias-item-padding-s,
+        var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-tag-avatar-padding-x: var(--spectrum-tag-icon-gap);
+    --spectrum-taggroup-tag-gap-x: var(--spectrum-global-dimension-size-100);
+    --spectrum-taggroup-tag-gap-y: var(--spectrum-global-dimension-size-100);
     display: inline-block;
     margin: 0;
     padding: 0;

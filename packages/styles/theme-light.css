@@ -92,6 +92,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-highlight-selected-hover: rgba(20, 115, 230, 0.2);
     --spectrum-alias-text-highlight-color: rgba(20, 115, 230, 0.2);
     --spectrum-alias-background-color-quickactions: hsla(0, 0%, 96.1%, 0.9);
+    --spectrum-alias-border-color-selected: var(
+        --spectrum-global-color-blue-500
+    );
     --spectrum-alias-radial-reaction-color-default: rgba(75, 75, 75, 0.6);
     --spectrum-alias-pasteboard-background-color: var(
         --spectrum-global-color-gray-300
@@ -123,6 +126,12 @@ governing permissions and limitations under the License.
     --spectrum-colorwheel-border-color-hover: rgba(44, 44, 44, 0.1);
     --spectrum-colorwheel-border-color-down: rgba(44, 44, 44, 0.1);
     --spectrum-colorwheel-border-color-key-focus: rgba(44, 44, 44, 0.1);
+    --spectrum-divider-s-background-color: colorStopData.light.colorTokens.gray-300;
+    --spectrum-divider-s-vertical-background-color: colorStopData.light.colorTokens.gray-300;
+    --spectrum-divider-m-background-color: colorStopData.light.colorTokens.gray-300;
+    --spectrum-divider-m-vertical-background-color: colorStopData.light.colorTokens.gray-300;
+    --spectrum-divider-l-background-color: colorStopData.light.colorTokens.gray-800;
+    --spectrum-divider-l-vertical-background-color: colorStopData.light.colorTokens.gray-800;
     --spectrum-miller-column-item-background-color-selected: rgba(
         20,
         115,
@@ -135,33 +144,10 @@ governing permissions and limitations under the License.
         230,
         0.2
     );
-    --spectrum-tabs-compact-selection-indicator-color: var(
-        --spectrum-global-color-blue-500
-    );
-    --spectrum-tabs-compact-vertical-rule-color: var(
-        --spectrum-global-color-gray-200
-    );
-    --spectrum-tabs-compact-vertical-emphasized-selection-indicator-color: var(
-        --spectrum-global-color-blue-500
-    );
-    --spectrum-tabs-compact-vertical-emphasized-rule-color: var(
-        --spectrum-global-color-gray-200
-    );
-    --spectrum-tabs-emphasized-selection-indicator-color: var(
-        --spectrum-global-color-blue-500
-    );
-    --spectrum-tabs-quiet-compact-emphasized-selection-indicator-color: var(
-        --spectrum-global-color-blue-500
-    );
-    --spectrum-tabs-quiet-compact-vertical-emphasized-selection-indicator-color: var(
-        --spectrum-global-color-blue-500
-    );
-    --spectrum-tabs-quiet-emphasized-selection-indicator-color: var(
-        --spectrum-global-color-blue-500
-    );
-    --spectrum-tabs-quiet-vertical-emphasized-selection-indicator-color: var(
-        --spectrum-global-color-blue-500
-    );
+    --spectrum-panel-l-divider-color: colorStopData.light.colorAliases.appframe-border-color;
+    --spectrum-panel-l-collapsible-divider-color: colorStopData.light.colorAliases.appframe-border-color;
+    --spectrum-panel-s-divider-color: colorStopData.light.colorAliases.appframe-border-color;
+    --spectrum-panel-s-collapsible-divider-color: colorStopData.light.colorAliases.appframe-border-color;
     --spectrum-well-background-color: rgba(75, 75, 75, 0.02);
     --spectrum-well-border-color: rgba(44, 44, 44, 0.05);
 }

@@ -10,14 +10,3 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.magnifier {
-    /* .spectrum-UIIcon-Magnifier */
-    width: var(
-        --spectrum-icon-magnifier-width,
-        var(--spectrum-global-dimension-size-200)
-    );
-    height: var(
-        --spectrum-icon-magnifier-height,
-        var(--spectrum-global-dimension-size-200)
-    );
-}
