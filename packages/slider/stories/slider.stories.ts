@@ -28,13 +28,14 @@ export const Default = (): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
-                label="Opacity"
                 max="100"
                 min="0"
                 value="50"
                 @input=${handleEvent}
                 @change=${handleEvent}
-            ></sp-slider>
+            >
+                Opacity
+            </sp-slider>
         </div>
     `;
 };
