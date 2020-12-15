@@ -17,7 +17,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 
-import '../';
+import '../src';
 import '../sp-action-button.js';
 
 interface Properties {
@@ -26,6 +26,7 @@ interface Properties {
     selected?: boolean;
     toggles?: boolean;
     emphasized?: boolean;
+    size?: 's' | 'm' | 'l' | 'xl';
 }
 
 function renderButton(properties: Properties): TemplateResult {
@@ -37,11 +38,17 @@ function renderButton(properties: Properties): TemplateResult {
             ?selected=${!!properties.selected}
             ?toggles=${!!properties.toggles}
             @click=${action(`Action`)}
+            size=${properties.size || 'm'}
         >
             Action
         </sp-action-button>
     `;
 }
+
+export default {
+    component: 'sp-action-button',
+    title: 'Action Button',
+};
 
 function renderButtonsSelected(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
@@ -53,19 +60,6 @@ function renderButtonsSelected(properties: Properties): TemplateResult {
         </div>
     `;
 }
-
-export default {
-    component: 'sp-action-button',
-    title: 'ActionButton',
-};
-
-export const Default = (): TemplateResult => {
-    return renderButtonsSelected({
-        quiet: false,
-        disabled: false,
-        selected: false,
-    });
-};
 
 export const emphasized = (): TemplateResult => {
     return renderButtonsSelected({

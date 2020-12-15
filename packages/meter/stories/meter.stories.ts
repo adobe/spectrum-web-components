@@ -27,12 +27,6 @@ const makeOverBackground = (story: TemplateResult): TemplateResult => html`
     </div>
 `;
 
-export const Default = (): TemplateResult => {
-    return html`
-        <sp-meter progress="50">Storage Space</sp-meter>
-    `;
-};
-
 export const sideLabel = (): TemplateResult => {
     return html`
         <sp-meter side-label progress="50">Storage Space</sp-meter>

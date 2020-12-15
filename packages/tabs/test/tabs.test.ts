@@ -58,6 +58,25 @@ describe('Tabs', () => {
         await expect(tabs).to.be.accessible();
     });
 
+    it('loads accessibly w/ slotted content', async () => {
+        const tabs = await fixture<Tabs>(
+            html`
+                <sp-tabs selected="first">
+                    <sp-tab value="first">Tab 1</sp-tab>
+                    <sp-tab value="second">Tab 2</sp-tab>
+                    <sp-tab value="third">Tab 3</sp-tab>
+                </sp-tabs>
+            `
+        );
+
+        const tabList = tabs.querySelectorAll('sp-tab');
+
+        expect(tabList).to.exist;
+        expect(tabList.length).to.equal(3);
+
+        await expect(tabs).to.be.accessible();
+    });
+
     it('reflects selected tab with selected property', async () => {
         const tabs = await createTabs();
 

@@ -134,6 +134,35 @@ export const Icons = (): TemplateResult => {
     `;
 };
 
+export const IconsWithSlottedLabel = (): TemplateResult => {
+    const directions = {
+        horizontal: 'horizontal',
+        vertical: 'vertical',
+    };
+    const type = radios('List Type', directions, directions.horizontal);
+    const tabType = radios('Tab Type', directions, directions.horizontal);
+    return html`
+        <sp-tabs selected="1" direction="${type}">
+            <sp-tab value="1" ?vertical=${tabType === directions.vertical}>
+                Tab 1
+                <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+            </sp-tab>
+            <sp-tab value="2" ?vertical=${tabType === directions.vertical}>
+                Tab 2
+                <sp-icon-close slot="icon"></sp-icon-close>
+            </sp-tab>
+            <sp-tab value="3" ?vertical=${tabType === directions.vertical}>
+                Tab 3
+                <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
+            </sp-tab>
+            <sp-tab value="4" ?vertical=${tabType === directions.vertical}>
+                Tab 4
+                <sp-icon-help slot="icon"></sp-icon-help>
+            </sp-tab>
+        </sp-tabs>
+    `;
+};
+
 export const IconsOnly = (): TemplateResult => {
     const directions = {
         horizontal: 'horizontal',

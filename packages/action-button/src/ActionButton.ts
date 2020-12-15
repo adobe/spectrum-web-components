@@ -24,6 +24,13 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
 import { CornerTriangle300Icon } from '@spectrum-web-components/icons-ui';
 
+const holdAffordanceClass = {
+    s: 'spectrum-UIIcon-CornerTriangle75',
+    m: 'spectrum-UIIcon-CornerTriangle100',
+    l: 'spectrum-UIIcon-CornerTriangle200',
+    xl: 'spectrum-UIIcon-CornerTriangle300',
+};
+
 /**
  * @element sp-card
  *
@@ -100,7 +107,7 @@ export class ActionButton extends SizedMixin(ButtonBase) {
                 <sp-icon
                     id="hold-affordance"
                     size="none"
-                    class="spectrum-UIIcon-CornerTriangle75"
+                    class="${holdAffordanceClass[this.size]}"
                 >
                     ${CornerTriangle300Icon()}
                 </sp-icon>
