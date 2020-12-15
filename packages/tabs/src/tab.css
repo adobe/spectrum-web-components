@@ -66,3 +66,7 @@ governing permissions and limitations under the License.
     line-height: 1;
     margin: var(--sp-tab-vertial-margin-y) 0;
 }
+
+#itemLabel[hidden] {
+    display: none;
+}

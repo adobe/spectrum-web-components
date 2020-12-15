@@ -22,12 +22,20 @@ import {
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import { ButtonVariants } from '@spectrum-web-components/button';
 import { DropdownBase } from '@spectrum-web-components/dropdown';
 import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
 import { MoreIcon } from '@spectrum-web-components/icons-workflow';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import styles from './split-button.css.js';
+
+const chevronClass = {
+    s: 'spectrum-UIIcon-ChevronDown75',
+    m: 'spectrum-UIIcon-ChevronDown100',
+    l: 'spectrum-UIIcon-ChevronDown200',
+    xl: 'spectrum-UIIcon-ChevronDown300',
+};
 
 /**
  * @slot options - The menu with options that will display when the dropdown is open
@@ -132,9 +140,10 @@ export class SplitButton extends SizedMixin(DropdownBase) {
                     size=${this.size}
                 >
                     <sp-icon
+                        size=${this.size}
                         class="icon ${this.type === 'field'
-                            ? 'spectrum-UIIcon-ChevronDown100'
-                            : 'more-medium'}"
+                            ? chevronClass[this.size]
+                            : ''}"
                     >
                         ${this.type === 'field'
                             ? Chevron100Icon()

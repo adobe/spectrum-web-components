@@ -31,7 +31,7 @@ import tabItemStyles from './tab.css.js';
  */
 
 export class Tab extends FocusVisiblePolyfillMixin(
-    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'))
+    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), '')
 ) {
     public static get styles(): CSSResultArray {
         return [tabItemStyles];
@@ -65,7 +65,14 @@ export class Tab extends FocusVisiblePolyfillMixin(
                   `
                 : html``}
             <label id="itemLabel" ?hidden=${!this.hasLabel}>
-                <slot>${this.label}</slot>
+                ${!this.slotHasContent
+                    ? html`
+                          ${this.label}
+                          <slot></slot>
+                      `
+                    : html`
+                          <slot>${this.label}</slot>
+                      `}
             </label>
         `;
     }
