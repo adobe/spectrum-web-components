@@ -45,6 +45,9 @@ import {
 /**
  * @slot label - The placeholder content for the dropdown
  * @slot {"sp-menu"} - The menu of options that will display when the dropdown is open
+ *
+ * @fires sp-open - Announces that the overlay has been opened
+ * @fires sp-close - Announces that the overlay has been closed
  */
 export class DropdownBase extends Focusable {
     public static openOverlay = async (

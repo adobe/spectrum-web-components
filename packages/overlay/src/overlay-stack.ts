@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { ActiveOverlay } from './ActiveOverlay.js';
-import { OverlayOpenDetail } from './overlay-types';
+import { OverlayOpenDetail, OverlayOpenCloseDetail } from './overlay-types';
 import { OverlayTimer } from './overlay-timer.js';
 import '../active-overlay.js';
 
@@ -192,6 +192,16 @@ export class OverlayStack {
                 if (details.receivesFocus === 'auto') {
                     activeOverlay.focus();
                 }
+                details.trigger.dispatchEvent(
+                    new CustomEvent<OverlayOpenCloseDetail>('sp-opened', {
+                        bubbles: true,
+                        composed: true,
+                        cancelable: true,
+                        detail: {
+                            interaction: details.interaction
+                        },
+                    })
+                );
                 return false;
             }
         );
@@ -351,6 +361,17 @@ export class OverlayStack {
 
             overlay.remove();
             overlay.dispose();
+
+            overlay.trigger.dispatchEvent(
+                new CustomEvent<OverlayOpenCloseDetail>('sp-closed', {
+                    bubbles: true,
+                    composed: true,
+                    cancelable: true,
+                    detail: {
+                        interaction: overlay.interaction,
+                    },
+                })
+            );
         }
     }
 

@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers.js';
+import { spy } from 'sinon';
 import {
     fixture,
     aTimeout,
@@ -21,7 +22,7 @@ import {
 } from '@open-wc/testing';
 
 import '../overlay-trigger.js';
-import { OverlayTrigger, ActiveOverlay, TriggerInteractions } from '../';
+import { OverlayTrigger, ActiveOverlay, TriggerInteractions, OverlayOpenCloseDetail } from '../';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -652,6 +653,7 @@ describe('Overlay Trigger', () => {
             'hoverContent should still not be visible'
         );
     });
+
     it('acquires a `color` and `size` from `sp-theme`', async () => {
         const el = await fixture<Theme>(html`
             <sp-theme color="dark">
@@ -695,5 +697,55 @@ describe('Overlay Trigger', () => {
         expect(overlay).to.exist;
         expect(overlay.color).to.not.equal('dark');
         expect(overlay.color).to.equal('light');
+    });
+
+    it('dispatches events on open/close', async () => {
+        const openedSpy = spy();
+        const closedSpy = spy();
+
+        const el = testDiv.querySelector('#trigger') as OverlayTrigger;
+        const outerButton = testDiv.querySelector(
+            '#outer-button'
+        ) as HTMLElement;
+        const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
+
+        el.addEventListener('sp-opened',openedSpy);
+        el.addEventListener('sp-closed',closedSpy);
+
+        outerButton.click();
+
+        await waitUntil(
+            () => !(outerPopover.parentElement instanceof OverlayTrigger),
+            'outer content stolen and reparented'
+        );
+
+        await waitUntil(
+            () => openedSpy.calledOnce,
+            'opened event sent'
+        );
+
+        expect(isVisible(outerPopover)).to.be.true;
+        expect(closed).to.be.false;
+
+        const openedEvent = openedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        expect(openedEvent.detail.interaction).to.equal('click');
+
+        document.body.click();
+
+        // Wait for the DOM node to be put back in its original place
+        await waitUntil(
+            () => outerPopover.parentElement instanceof OverlayTrigger,
+            'inner content returned'
+        );
+
+        await waitUntil(
+            () => closedSpy.calledOnce,
+            'closed event sent'
+        );
+
+        const closedEvent = closedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        expect(closedEvent.detail.interaction).to.equal('click');
+
+        expect(isVisible(outerPopover)).to.be.false;
     });
 });
