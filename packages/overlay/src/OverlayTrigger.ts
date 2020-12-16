@@ -34,6 +34,9 @@ import overlayTriggerStyles from './overlay-trigger.css.js';
  * @slot trigger - The content that will trigger the various overlays
  * @slot hover-content - The content that will be displayed on hover
  * @slot click-content - The content that will be displayed on click
+ *
+ * @fires sp-open - Announces that the overlay has been opened
+ * @fires sp-close - Announces that the overlay has been closed
  */
 export class OverlayTrigger extends LitElement {
     private closeClickOverlay?: () => void;

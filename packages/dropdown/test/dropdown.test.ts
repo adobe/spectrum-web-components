@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import '../sp-dropdown.js';
 import { Dropdown } from '../';
 import '@spectrum-web-components/overlay/active-overlay.js';
+import { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay'
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
@@ -613,5 +614,57 @@ describe('Dropdown', () => {
 
         expect(el.open).to.be.false;
         expect(mouseenterSpy.calledOnce).to.be.true;
+    });
+
+    it('dispatches events on open/close', async () => {
+        const openedSpy = spy();
+        const closedSpy = spy();
+        const handleOpenedSpy = (event: Event): void => openedSpy(event);
+        const handleClosedSpy = (event: Event): void => closedSpy(event);
+
+        const el = await fixture<Dropdown>(
+            html`
+                <sp-dropdown
+                    label="Select a Country with a very long label, too long in fact"
+                    @sp-opened=${handleOpenedSpy}
+                    @sp-closed=${handleClosedSpy}
+                >
+                    <sp-menu>
+                        <sp-menu-item value="deselect">
+                            Deselect Text
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-dropdown>
+            `
+        );
+
+        await elementUpdated(el);
+        const menu = el.querySelector('sp-menu') as Menu;
+        el.open = true;
+
+        await elementUpdated(el);
+        await waitUntil(
+            () => document.activeElement === menu,
+            'first item focused'
+        );
+
+        expect(openedSpy.calledOnce).to.be.true;
+        expect(closedSpy.calledOnce).to.be.false;
+
+        const openedEvent = openedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        expect(openedEvent.detail.interaction).to.equal('inline');
+
+        el.open = false;
+        await elementUpdated(el);
+
+        await waitUntil(
+            () => closedSpy.calledOnce,
+            'closed event received'
+        );
+
+        expect(closedSpy.calledOnce).to.be.true;
+
+        const closedEvent = closedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        expect(closedEvent.detail.interaction).to.equal('inline');
     });
 });
