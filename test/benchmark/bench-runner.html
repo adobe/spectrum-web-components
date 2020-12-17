@@ -11,6 +11,7 @@
             const params = new URLSearchParams(window.location.search);
             const pack = params.get('package');
             const bench = params.get('bench');
+            window.tachometerStart = params.get('start');
             import(`../../packages/${pack}/test/benchmark/${bench}.js`);
         </script>
     </body>
