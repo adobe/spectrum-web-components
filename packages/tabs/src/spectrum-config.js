@@ -89,6 +89,13 @@ const config = {
                 },
             ],
             exclude: [/.spectrum-Tabs(?!-item)/],
+            complexSelectors: [
+                {
+                    replacement:
+                        ":host(:not([vertical])) ::slotted([slot='icon'])",
+                    selector: '.spectrum-Tabs-item .spectrum-Icon',
+                },
+            ],
         },
     ],
 };
