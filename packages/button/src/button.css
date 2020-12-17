@@ -11,3 +11,11 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-button.css';
+
+:host([dir='ltr']) #label + slot[name='icon']::slotted(*) {
+    padding-left: var(--spectrum-button-primary-icon-gap);
+}
+
+:host([dir='rtl']) #label + slot[name='icon']::slotted(*) {
+    padding-right: var(--spectrum-button-primary-icon-gap);
+}

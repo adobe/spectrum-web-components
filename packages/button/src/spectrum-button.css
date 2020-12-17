@@ -121,7 +121,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Button-label:empty */
     display: none;
 }
-.spectrum-Button--sizeS {
+:host([size='s']) {
     /* .spectrum-Button--sizeS */
     --spectrum-button-primary-focus-ring-size-key-focus: var(
         --spectrum-alias-focus-ring-size,
@@ -181,7 +181,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) - 3px
     );
 }
-.spectrum-Button--sizeM {
+:host([size='m']) {
     /* .spectrum-Button--sizeM */
     --spectrum-button-primary-min-width: var(
         --spectrum-button-primary-m-min-width
@@ -236,7 +236,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-alias-item-rounded-workflow-padding-left-m
     );
 }
-.spectrum-Button--sizeL {
+:host([size='l']) {
     /* .spectrum-Button--sizeL */
     --spectrum-button-primary-focus-ring-size-key-focus: var(
         --spectrum-alias-focus-ring-size,
@@ -293,7 +293,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-225)
     );
 }
-.spectrum-Button--sizeXL {
+:host([size='xl']) {
     /* .spectrum-Button--sizeXL */
     --spectrum-button-primary-focus-ring-size-key-focus: var(
         --spectrum-alias-focus-ring-size,

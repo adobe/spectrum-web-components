@@ -18,8 +18,8 @@ import {
 } from '@spectrum-web-components/base';
 import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './clear-button.css.js';
-import { CrossLargeIcon } from '@spectrum-web-components/icons-ui';
-import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross-medium.css.js';
+import { Cross75Icon } from '@spectrum-web-components/icons-ui';
+import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
 
 export class ClearButton extends ButtonBase {
     public static get styles(): CSSResultArray {
@@ -35,8 +35,12 @@ export class ClearButton extends ButtonBase {
     protected get buttonContent(): TemplateResult[] {
         return [
             html`
-                <sp-icon slot="icon" class="icon cross-medium" size="s">
-                    ${CrossLargeIcon({ hidden: true })}
+                <sp-icon
+                    slot="icon"
+                    class="icon spectrum-UIIcon-Cross75"
+                    size="none"
+                >
+                    ${Cross75Icon()}
                 </sp-icon>
             `,
         ];
