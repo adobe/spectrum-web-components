@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-ProgressBar--sizeS {
+:host([size='s']) {
     /* .spectrum-ProgressBar--sizeS */
     --spectrum-progressbar-border-radius: var(
         --spectrum-progressbar-s-border-radius
@@ -38,7 +38,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-dimension-size-75
     );
 }
-.spectrum-ProgressBar--sizeM {
+:host([size='m']) {
     /* .spectrum-ProgressBar--sizeM */
     --spectrum-progressbar-border-radius: var(
         --spectrum-progressbar-m-border-radius
@@ -66,7 +66,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-dimension-size-100
     );
 }
-.spectrum-ProgressBar--sizeL {
+:host([size='l']) {
     /* .spectrum-ProgressBar--sizeL */
     --spectrum-progressbar-label-gap-y: var(
         --spectrum-global-dimension-size-50
@@ -91,7 +91,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         1000ms
     );
 }
-.spectrum-ProgressBar--sizeXL {
+:host([size='xl']) {
     /* .spectrum-ProgressBar--sizeXL */
     --spectrum-progressbar-border-radius: var(
         --spectrum-progressbar-xl-border-radius

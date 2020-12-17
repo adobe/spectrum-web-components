@@ -25,9 +25,27 @@ const config = {
                     name: 'side-label',
                 },
                 {
-                    type: 'boolean',
-                    selector: '.spectrum-ProgressBar--small',
-                    name: 'small',
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-ProgressBar--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-ProgressBar--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-ProgressBar--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-ProgressBar--sizeXL',
+                        },
+                    ],
                 },
                 {
                     type: 'boolean',

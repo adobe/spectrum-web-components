@@ -31,12 +31,6 @@ export const label = (): TemplateResult => {
     `;
 };
 
-export const labelSmall = (): TemplateResult => {
-    return html`
-        <sp-bar-loader label="Loading" progress="50" small></sp-bar-loader>
-    `;
-};
-
 export const indeterminate = (): TemplateResult => {
     return html`
         <sp-bar-loader label="Loading" indeterminate></sp-bar-loader>
