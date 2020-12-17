@@ -19,6 +19,7 @@ import {
     PropertyValues,
 } from '@spectrum-web-components/base';
 
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './meter.css.js';
 
 /**
@@ -44,8 +45,8 @@ export class Meter extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public positive = false;
 
-    @property({ type: Boolean, reflect: true })
-    public small = false;
+    @property({ type: String, reflect: true })
+    public size = 'm';
 
     @property({ type: String, reflect: true })
     public label = '';
@@ -56,10 +57,12 @@ export class Meter extends SpectrumElement {
 
     protected render(): TemplateResult {
         return html`
-            <div class="label">
+            <sp-field-label size=${this.size} class="label">
                 <slot>${this.label}</slot>
-            </div>
-            <div class="percentage">${this.progress}%</div>
+            </sp-field-label>
+            <sp-field-label size=${this.size} class="percentage">
+                ${this.progress}%
+            </sp-field-label>
             <div class="track">
                 <div
                     class="fill"
