@@ -22,16 +22,12 @@ import {
 } from '@spectrum-web-components/base';
 
 import dropdownStyles from './dropdown.css.js';
-import '@spectrum-web-components/button/sp-field-button.js';
-import alertSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-small.css.js';
-import chevronDownMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron-down-medium.css.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    AlertSmallIcon,
-    ChevronDownMediumIcon,
-} from '@spectrum-web-components/icons-ui';
+import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
+import { AlertIcon } from '@spectrum-web-components/icons-workflow';
 import {
     MenuItem,
     MenuItemQueryRoleEventDetail,
@@ -51,10 +47,6 @@ import {
  * @slot {"sp-menu"} - The menu of options that will display when the dropdown is open
  */
 export class DropdownBase extends Focusable {
-    public static get styles(): CSSResultArray {
-        return [dropdownStyles, alertSmallStyles, chevronDownMediumStyles];
-    }
-
     public static openOverlay = async (
         target: HTMLElement,
         interaction: TriggerInteractions,
@@ -178,7 +170,7 @@ export class DropdownBase extends Focusable {
     }
 
     public onKeydown = (event: KeyboardEvent): void => {
-        if (event.code !== 'ArrowDown') {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp') {
             return;
         }
         event.preventDefault();
@@ -298,7 +290,7 @@ export class DropdownBase extends Focusable {
     protected get buttonContent(): TemplateResult[] {
         return [
             html`
-                <div
+                <span
                     id="label"
                     class=${ifDefined(this.value ? undefined : 'placeholder')}
                 >
@@ -307,16 +299,19 @@ export class DropdownBase extends Focusable {
                         : html`
                               <slot name="label">${this.label}</slot>
                           `}
-                </div>
+                </span>
                 ${this.invalid
                     ? html`
-                          <sp-icon class="icon alert-small" size="s">
-                              ${AlertSmallIcon({ hidden: true })}
+                          <sp-icon class="validationIcon" size="m">
+                              ${AlertIcon({ hidden: true })}
                           </sp-icon>
                       `
                     : nothing}
-                <sp-icon class="icon dropdown chevron-down-medium" size="s">
-                    ${ChevronDownMediumIcon({ hidden: true })}
+                <sp-icon
+                    class="icon dropdown spectrum-UIIcon-ChevronDown100"
+                    size="m"
+                >
+                    ${Chevron100Icon()}
                 </sp-icon>
             `,
         ];
@@ -324,7 +319,7 @@ export class DropdownBase extends Focusable {
 
     protected get renderButton(): TemplateResult {
         return html`
-            <sp-field-button
+            <button
                 aria-haspopup="true"
                 aria-controls="popover"
                 aria-expanded=${this.open ? 'true' : 'false'}
@@ -337,7 +332,7 @@ export class DropdownBase extends Focusable {
                 ?disabled=${this.disabled}
             >
                 ${this.buttonContent}
-            </sp-field-button>
+            </button>
         `;
     }
 
@@ -429,6 +424,6 @@ export class DropdownBase extends Focusable {
 
 export class Dropdown extends DropdownBase {
     public static get styles(): CSSResultArray {
-        return [...super.styles];
+        return [dropdownStyles, chevronStyles];
     }
 }
