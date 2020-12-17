@@ -23,11 +23,9 @@ import {
 import '@spectrum-web-components/button/sp-button.js';
 import { ButtonVariants } from '@spectrum-web-components/button';
 import { DropdownBase } from '@spectrum-web-components/dropdown';
-import {
-    ChevronDownMediumIcon,
-    MoreIcon,
-} from '@spectrum-web-components/icons-ui';
-import ChevronDownMediumStyle from '@spectrum-web-components/icon/src/spectrum-icon-chevron-down-medium.css.js';
+import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
+import { MoreIcon } from '@spectrum-web-components/icons-workflow';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import styles from './split-button.css.js';
 
 /**
@@ -35,7 +33,7 @@ import styles from './split-button.css.js';
  */
 export class SplitButton extends DropdownBase {
     public static get styles(): CSSResultArray {
-        return [styles, ChevronDownMediumStyle];
+        return [styles, chevronStyles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -46,6 +44,9 @@ export class SplitButton extends DropdownBase {
      */
     @property({ reflect: true })
     public variant: ButtonVariants = 'cta';
+
+    @property({ type: String, reflect: true })
+    public size = 'm';
 
     public get target(): HTMLButtonElement | this {
         return this;
@@ -132,11 +133,11 @@ export class SplitButton extends DropdownBase {
                 >
                     <sp-icon
                         class="icon ${this.type === 'field'
-                            ? 'chevron-down-medium'
+                            ? 'spectrum-UIIcon-ChevronDown100'
                             : 'more-medium'}"
                     >
                         ${this.type === 'field'
-                            ? ChevronDownMediumIcon({ hidden: true })
+                            ? Chevron100Icon()
                             : MoreIcon({ hidden: true })}
                     </sp-icon>
                 </sp-button>
