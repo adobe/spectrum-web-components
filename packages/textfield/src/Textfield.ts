@@ -23,18 +23,15 @@ import {
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    AlertMediumIcon,
-    CheckmarkMediumIcon,
-} from '@spectrum-web-components/icons-ui';
+import { Checkmark100Icon } from '@spectrum-web-components/icons-ui';
+import { AlertIcon } from '@spectrum-web-components/icons-workflow';
 
 import textfieldStyles from './textfield.css.js';
-import checkmarkMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark-medium.css.js';
-import alertMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-medium.css.js';
+import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
 export class Textfield extends Focusable {
     public static get styles(): CSSResultArray {
-        return [textfieldStyles, checkmarkMediumStyles, alertMediumStyles];
+        return [textfieldStyles, checkmarkStyles];
     }
 
     @property({ attribute: 'allowed-keys' })
@@ -133,14 +130,18 @@ export class Textfield extends Focusable {
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
-                <sp-icon id="invalid" class="icon alert-medium">
-                    ${AlertMediumIcon({ hidden: true })}
+                <sp-icon id="invalid" class="icon" size="none">
+                    ${AlertIcon()}
                 </sp-icon>
             `;
         } else if (this.valid) {
             return html`
-                <sp-icon id="valid" class="icon checkmark-medium">
-                    ${CheckmarkMediumIcon({ hidden: true })}
+                <sp-icon
+                    id="valid"
+                    class="icon spectrum-UIIcon-Checkmark100"
+                    size="none"
+                >
+                    ${Checkmark100Icon()}
                 </sp-icon>
             `;
         }
