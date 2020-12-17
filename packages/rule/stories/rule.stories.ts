@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, select } from '@open-wc/demoing-storybook';
+import { html } from '@open-wc/demoing-storybook';
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-rule.js';
 import './typography-decorator.js';
-import '@spectrum-web-components/button/sp-action-button.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import {
     AlignLeftIcon,
@@ -32,29 +32,17 @@ export default {
 };
 
 export const large = (): TemplateResult => {
-    const size = select(
-        'Size',
-        ['small', 'medium', 'large'],
-        'large',
-        'Element'
-    );
     return html`
         <h2 class="spectrum-Heading spectrum-Heading--sizeM">Large</h2>
-        <sp-rule size=${size}></sp-rule>
+        <sp-rule size="l"></sp-rule>
         <p class="spectrum-Body">Page or Section Titles.</p>
     `;
 };
 
 export const medium = (): TemplateResult => {
-    const size = select(
-        'Size',
-        ['small', 'medium', 'large'],
-        'medium',
-        'Element'
-    );
     return html`
         <h3 class="spectrum-Heading spectrum-Heading--sizeS">Medium</h3>
-        <sp-rule size=${size}></sp-rule>
+        <sp-rule size="m"></sp-rule>
         <p class="spectrum-Body">
             Divide subsections, or divide different groups of elements (between
             panels, rails, etc.)
@@ -63,15 +51,9 @@ export const medium = (): TemplateResult => {
 };
 
 export const small = (): TemplateResult => {
-    const size = select(
-        'Size',
-        ['small', 'medium', 'large'],
-        'small',
-        'Element'
-    );
     return html`
         <h4 class="spectrum-Heading spectrum-Heading--sizeXS">Small</h4>
-        <sp-rule size=${size}></sp-rule>
+        <sp-rule size="s"></sp-rule>
         <p class="spectrum-Body">
             Divide like-elements (tables, tool groups, elements within a panel,
             etc.)
@@ -80,15 +62,16 @@ export const small = (): TemplateResult => {
 };
 
 export const verticalSmall = (): TemplateResult => {
-    const size = select('Size', ['small', 'medium'], 'small', 'Element');
     return html`
-        <div style="height: 32px; display: flex;">
+        <div
+            style="height: var(--spectrum-global-dimension-size-400, 32px); display: flex;"
+        >
             <sp-action-button quiet>
                 <sp-icon slot="icon">
                     ${AlignLeftIcon()}
                 </sp-icon>
             </sp-action-button>
-            <sp-rule size=${size} vertical></sp-rule>
+            <sp-rule size="s" vertical></sp-rule>
             <sp-action-button quiet>
                 <sp-icon slot="icon">
                     ${AlignRightIcon()}
@@ -99,15 +82,16 @@ export const verticalSmall = (): TemplateResult => {
 };
 
 export const verticalMedium = (): TemplateResult => {
-    const size = select('Size', ['small', 'medium'], 'medium', 'Element');
     return html`
-        <div style="height: 32px; display: flex;">
+        <div
+            style="height: var(--spectrum-global-dimension-size-400, 32px); display: flex;"
+        >
             <sp-action-button quiet>
                 <sp-icon slot="icon">
                     ${AlignLeftIcon()}
                 </sp-icon>
             </sp-action-button>
-            <sp-rule size=${size} vertical></sp-rule>
+            <sp-rule size="m" vertical></sp-rule>
             <sp-action-button quiet>
                 <sp-icon slot="icon">
                     ${AlignRightIcon()}

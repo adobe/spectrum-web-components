@@ -10,17 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-Divider--sizeS {
+:host([size='s']) {
     /* .spectrum-Divider--sizeS */
     --spectrum-divider-height: var(--spectrum-global-dimension-size-10);
     --spectrum-divider-vertical-width: var(--spectrum-global-dimension-size-10);
 }
-.spectrum-Divider--sizeM {
+:host([size='m']) {
     /* .spectrum-Divider--sizeM */
     --spectrum-divider-height: var(--spectrum-global-dimension-size-25);
     --spectrum-divider-vertical-width: var(--spectrum-global-dimension-size-25);
 }
-.spectrum-Divider--sizeL {
+:host([size='l']) {
     /* .spectrum-Divider--sizeL */
     --spectrum-divider-height: var(--spectrum-global-dimension-size-50);
     --spectrum-divider-vertical-width: var(--spectrum-global-dimension-size-50);
@@ -52,15 +52,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-color-gray-300
     );
 }
-.spectrum-Divider--sizeL {
+:host([size='l']) {
     /* .spectrum-Divider--sizeL */
     background-color: var(--spectrum-divider-l-background-color);
 }
-.spectrum-Divider--sizeM {
+:host([size='m']) {
     /* .spectrum-Divider--sizeM */
     background-color: var(--spectrum-divider-m-background-color);
 }
-.spectrum-Divider--sizeS {
+:host([size='s']) {
     /* .spectrum-Divider--sizeS */
     background-color: var(--spectrum-divider-s-background-color);
 }

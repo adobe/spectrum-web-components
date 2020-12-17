@@ -29,7 +29,7 @@ import { Rule } from '@spectrum-web-components/rule';
 
 ```html-live
 <h2 class="spectrum-Heading spectrum-Heading--M">Large</h2>
-<sp-rule size="large"></sp-rule>
+<sp-rule size="l"></sp-rule>
 <p class="spectrum-Body">Page or Section Titles.</p>
 ```
 
@@ -37,7 +37,7 @@ import { Rule } from '@spectrum-web-components/rule';
 
 ```html-live
 <h3 class="spectrum-Heading spectrum-Heading--S">Medium</h3>
-<sp-rule size="medium"></sp-rule>
+<sp-rule size="m"></sp-rule>
 <p class="spectrum-Body">
     Divide subsections, or divide different groups of elements (between panels,
     rails, etc.)
@@ -48,7 +48,7 @@ import { Rule } from '@spectrum-web-components/rule';
 
 ```html-live
 <h4 class="spectrum-Heading spectrum-Heading--XS">Small</h4>
-<sp-rule size="small"></sp-rule>
+<sp-rule size="s"></sp-rule>
 <p class="spectrum-Body">
     Divide like-elements (tables, tool groups, elements within a panel, etc.)
 </p>
@@ -64,7 +64,7 @@ When a vertical Rule is used inside of a flex container, use `align-self: stretc
     <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
-    <sp-rule size="small" vertical></sp-rule>
+    <sp-rule size="s" vertical></sp-rule>
     <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
@@ -78,7 +78,7 @@ When a vertical Rule is used inside of a flex container, use `align-self: stretc
     <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
-    <sp-rule size="medium" vertical></sp-rule>
+    <sp-rule size="m" vertical></sp-rule>
     <sp-action-button quiet label="Zoom in">
         <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
     </sp-action-button>
