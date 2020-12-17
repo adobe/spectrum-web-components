@@ -17,7 +17,7 @@ import '../sp-tags.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import { avatar } from '@spectrum-web-components/avatar/stories/images';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { MagnifyIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 
 export default {
     title: 'Tags',
@@ -64,21 +64,15 @@ export const Default = (): TemplateResult => {
         <sp-tags>
             <sp-tag>
                 Tag 1
-                <sp-icon slot="icon" size="s">
-                    ${MagnifyIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
             </sp-tag>
             <sp-tag invalid>
                 Tag 2
-                <sp-icon slot="icon" size="s">
-                    ${MagnifyIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
             </sp-tag>
             <sp-tag disabled>
                 Tag 3
-                <sp-icon slot="icon" size="s">
-                    ${MagnifyIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
             </sp-tag>
         </sp-tags>
     `;
@@ -124,21 +118,15 @@ export const deletable = (): TemplateResult => {
         <sp-tags @delete=${action('delete')}>
             <sp-tag deletable>
                 Tag 1
-                <sp-icon slot="icon" size="s">
-                    ${MagnifyIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
             </sp-tag>
             <sp-tag invalid deletable>
                 Tag 2
-                <sp-icon slot="icon" size="s">
-                    ${MagnifyIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
             </sp-tag>
             <sp-tag disabled deletable>
                 Tag 3
-                <sp-icon slot="icon" size="s">
-                    ${MagnifyIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
             </sp-tag>
         </sp-tags>
     `;

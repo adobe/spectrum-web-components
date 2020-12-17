@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { IconsetAddedDetail } from './';
+import { IconsetAddedDetail } from '../';
 import {
     SpectrumElement,
     css,
@@ -19,12 +19,29 @@ import {
     property,
     customElement,
 } from '@spectrum-web-components/base';
+import { Search } from '@spectrum-web-components/search';
+import '@spectrum-web-components/search/sp-search.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 
 @customElement('icons-demo')
 export class IconsDemo extends SpectrumElement {
     @property()
     public name = 'ui';
+
+    @property()
+    public size = 'm';
+
+    @property()
+    public search = '';
+
+    @property({ attribute: false })
+    public icons: {
+        name: string;
+        story(size: string): TemplateResult;
+        tag: string;
+    }[] = [];
 
     private iconset: string[] = [];
     public constructor() {
@@ -47,6 +64,7 @@ export class IconsDemo extends SpectrumElement {
     }
     public static get styles(): CSSResult[] {
         return [
+            ...bodyStyles,
             css`
                 :host {
                     display: grid;
@@ -61,12 +79,60 @@ export class IconsDemo extends SpectrumElement {
                 sp-icon {
                     margin-bottom: 10px;
                 }
+                .search {
+                    grid-column-start: 1;
+                    grid-column-end: -1;
+                }
             `,
         ];
     }
+    private updateSearch(event: Event & { target: Search }): void {
+        event.stopPropagation();
+        this.search = event.target.value;
+    }
+    private submit(event: Event & { target: Search }): void {
+        event.stopPropagation();
+        this.updateSearch(event);
+    }
+    private renderSearch(): TemplateResult {
+        const matchingIcons = this.search
+            ? this.icons.filter(
+                  (icon) => icon.name.toLowerCase().search(this.search) !== -1
+              )
+            : this.icons;
+        return html`
+            <div class="search">
+                <sp-field-label for="search">Spectrum icons:</sp-field-label>
+                <sp-search
+                    id="search"
+                    @keydown=${this.updateSearch}
+                    @input=${this.updateSearch}
+                    @submit=${this.submit}
+                    .value=${this.search}
+                    label="Search for icons"
+                    autocomplete="off"
+                ></sp-search>
+                <p class="spectrum-Body spectrum-Body--sizeM">
+                    Showing ${matchingIcons.length} of ${this.icons.length}
+                    available icons.
+                </p>
+            </div>
+            ${matchingIcons.map((icon) => {
+                return html`
+                    <div class="icon">
+                        ${icon.story(this.size)} ${icon.tag}
+                    </div>
+                `;
+            })}
+        `;
+    }
     protected render(): TemplateResult {
         return html`
-            <slot></slot>
+            ${this.icons.length
+                ? this.renderSearch()
+                : html`
+                      <slot></slot>
+                  `}
             ${this.iconset.map(
                 (icon) => html`
                     <div class="icon">

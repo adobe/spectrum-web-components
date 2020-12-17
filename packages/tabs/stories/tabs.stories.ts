@@ -11,15 +11,13 @@ governing permissions and limitations under the License.
 */
 import { html, radios } from '@open-wc/demoing-storybook';
 import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 import '../sp-tabs.js';
 import '../sp-tab.js';
 import { TemplateResult } from '@spectrum-web-components/base';
-import {
-    AlertIcon,
-    CheckmarkIcon,
-    HelpIcon,
-    InfoIcon,
-} from '@spectrum-web-components/icons-workflow';
 
 export default {
     component: 'sp-tabs',
@@ -109,36 +107,28 @@ export const Icons = (): TemplateResult => {
                 value="1"
                 ?vertical=${tabType === directions.vertical}
             >
-                <sp-icon slot="icon" size="m">
-                    ${CheckmarkIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
             </sp-tab>
             <sp-tab
                 label="Tab 2"
                 value="2"
                 ?vertical=${tabType === directions.vertical}
             >
-                <sp-icon slot="icon" size="m">
-                    ${AlertIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-close slot="icon"></sp-icon-close>
             </sp-tab>
             <sp-tab
                 label="Tab 3"
                 value="3"
                 ?vertical=${tabType === directions.vertical}
             >
-                <sp-icon slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab
                 label="Tab 4"
                 value="4"
                 ?vertical=${tabType === directions.vertical}
             >
-                <sp-icon slot="icon" size="m">
-                    ${HelpIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-help slot="icon"></sp-icon-help>
             </sp-tab>
         </sp-tabs>
     `;
@@ -153,25 +143,33 @@ export const IconsOnly = (): TemplateResult => {
     const tabType = radios('Tab Type', directions, directions.horizontal);
     return html`
         <sp-tabs selected="1" direction="${type}">
-            <sp-tab value="1" ?vertical=${tabType === directions.vertical}>
-                <sp-icon label="Tab 1" slot="icon" size="m">
-                    ${CheckmarkIcon({ hidden: true })}
-                </sp-icon>
+            <sp-tab
+                aria-label="Tab 1"
+                value="1"
+                ?vertical=${tabType === directions.vertical}
+            >
+                <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
             </sp-tab>
-            <sp-tab value="2" ?vertical=${tabType === directions.vertical}>
-                <sp-icon label="Tab 2" slot="icon" size="m">
-                    ${AlertIcon({ hidden: true })}
-                </sp-icon>
+            <sp-tab
+                aria-label="Tab 2"
+                value="2"
+                ?vertical=${tabType === directions.vertical}
+            >
+                <sp-icon-close slot="icon"></sp-icon-close>
             </sp-tab>
-            <sp-tab value="3" ?vertical=${tabType === directions.vertical}>
-                <sp-icon label="Tab 3" slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
+            <sp-tab
+                aria-label="Tab 3"
+                value="3"
+                ?vertical=${tabType === directions.vertical}
+            >
+                <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
-            <sp-tab value="4" ?vertical=${tabType === directions.vertical}>
-                <sp-icon label="Tab 4" slot="icon" size="m">
-                    ${HelpIcon({ hidden: true })}
-                </sp-icon>
+            <sp-tab
+                aria-label="Tab 4"
+                value="4"
+                ?vertical=${tabType === directions.vertical}
+            >
+                <sp-icon-help slot="icon"></sp-icon-help>
             </sp-tab>
         </sp-tabs>
     `;
@@ -181,24 +179,16 @@ export const iconsIi = (): TemplateResult => {
     return html`
         <sp-tabs selected="1" direction="vertical">
             <sp-tab label="Tab 1" value="1" vertical>
-                <sp-icon slot="icon" size="m">
-                    ${CheckmarkIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
             </sp-tab>
             <sp-tab label="Tab 2" value="2" vertical>
-                <sp-icon slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-close slot="icon"></sp-icon-close>
             </sp-tab>
             <sp-tab label="Tab 3" value="3" vertical>
-                <sp-icon slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab label="Tab 4" value="4" vertical>
-                <sp-icon slot="icon" size="m">
-                    ${HelpIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-help slot="icon"></sp-icon-help>
             </sp-tab>
         </sp-tabs>
     `;
@@ -210,27 +200,18 @@ iconsIi.story = {
 
 export const iconsIii = (): TemplateResult => {
     return html`
-        <sp-icons-medium></sp-icons-medium>
         <sp-tabs selected="1" direction="vertical">
             <sp-tab label="Tab 1" value="1">
-                <sp-icon slot="icon" size="m">
-                    ${CheckmarkIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
             </sp-tab>
             <sp-tab label="Tab 2" value="2">
-                <sp-icon slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-close slot="icon"></sp-icon-close>
             </sp-tab>
             <sp-tab label="Tab 3" value="3">
-                <sp-icon slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab label="Tab 4" value="4">
-                <sp-icon slot="icon" size="m">
-                    ${HelpIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-help slot="icon"></sp-icon-help>
             </sp-tab>
         </sp-tabs>
     `;

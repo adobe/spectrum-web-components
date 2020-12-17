@@ -9,5 +9,31 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './IconBase.js';
-export * from './Icon.js';
+
+import {
+    html,
+    SpectrumElement,
+    CSSResultArray,
+    TemplateResult,
+    property,
+} from '@spectrum-web-components/base';
+
+import iconStyles from './icon.css.js';
+
+export class IconBase extends SpectrumElement {
+    public static get styles(): CSSResultArray {
+        return [iconStyles];
+    }
+
+    @property()
+    public label?: string;
+
+    @property({ reflect: true })
+    public size = 'm';
+
+    protected render(): TemplateResult {
+        return html`
+            <slot></slot>
+        `;
+    }
+}

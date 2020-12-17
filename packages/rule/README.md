@@ -59,14 +59,13 @@ import { Rule } from '@spectrum-web-components/rule';
 When a vertical Rule is used inside of a flex container, use `align-self: stretch; height: auto;` on the Rule.
 
 ```html-live
-<sp-icons-medium></sp-icons-medium>
 <div style="height: 32px; display: flex;">
     <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
     <sp-rule size="s" vertical></sp-rule>
     <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </div>
 ```
@@ -76,11 +75,11 @@ When a vertical Rule is used inside of a flex container, use `align-self: stretc
 ```html-live
 <div style="height: 32px; display: flex;">
     <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
     <sp-rule size="m" vertical></sp-rule>
     <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="m" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </div>
 ```

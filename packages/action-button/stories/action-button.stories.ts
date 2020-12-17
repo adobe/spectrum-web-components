@@ -12,11 +12,9 @@ governing permissions and limitations under the License.
 import { html, action } from '@open-wc/demoing-storybook';
 import { TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    EditIcon,
-    MoreIcon,
-    SettingsIcon,
-} from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 
 import '../';
 import '../sp-action-button.js';
@@ -102,9 +100,7 @@ export const toggles = (): TemplateResult => {
 export const wIconButton = (): TemplateResult => {
     return html`
         <sp-action-button>
-            <sp-icon slot="icon">
-                ${EditIcon({ hidden: true })}
-            </sp-icon>
+            <sp-icon-edit slot="icon"></sp-icon-edit>
             This is an action button
         </sp-action-button>
     `;
@@ -117,9 +113,7 @@ wIconButton.story = {
 export const iconOnlyButton = (): TemplateResult => {
     return html`
         <sp-action-button label="Edit">
-            <sp-icon slot="icon">
-                ${EditIcon({ hidden: true })}
-            </sp-icon>
+            <sp-icon-edit slot="icon"></sp-icon-edit>
         </sp-action-button>
     `;
 };
@@ -128,21 +122,15 @@ export const holdAffordance = (): TemplateResult => {
     return html`
         <sp-action-group>
             <sp-action-button label="Edit" hold-affordance>
-                <sp-icon slot="icon">
-                    ${EditIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
 
             <sp-action-button hold-affordance quiet>
-                <sp-icon slot="icon">
-                    ${SettingsIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-settings slot="icon"></sp-icon-settings>
             </sp-action-button>
 
             <sp-action-button hold-affordance selected>
-                <sp-icon slot="icon">
-                    ${MoreIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-more slot="icon"></sp-icon-more>
             </sp-action-button>
         </sp-action-group>
     `;

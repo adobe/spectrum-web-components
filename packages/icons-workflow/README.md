@@ -59,7 +59,7 @@ TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: De
 When working in the context of other frameworks, it is possible to import the icons with a generic template tag as follows:
 
 ```js
-import { CircleIcon } from '@spectrum-web-components/icons-workflow/lib/icons.js';
+import { CircleIcon } from '@spectrum-web-components/icons-workflow/src/icons.js';
 
 console.log(CircleIcon());
 
@@ -85,7 +85,7 @@ What's more, if you're already working with a specific parser in your project, y
 import {
     CircleIcon,
     setCustomTemplateLiteralTag,
-} from '@spectrum-web-components/icons-workflow/lib/icons.js';
+} from '@spectrum-web-components/icons-workflow/src/icons.js';
 import htm from 'htm';
 import { h } from 'preact';
 

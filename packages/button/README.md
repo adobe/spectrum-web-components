@@ -71,7 +71,7 @@ SVG.
 <sp-button-group>
     <sp-button variant="primary">Label only</sp-button>
     <sp-button variant="primary">
-        <sp-icon slot="icon" size="m" name="ui:HelpMedium"></sp-icon>
+        <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
     </sp-button>
     <sp-button variant="primary">

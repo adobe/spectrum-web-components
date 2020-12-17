@@ -18,8 +18,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { CheckmarkCircleIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 
 export default {
     component: 'sp-menu',
@@ -78,7 +77,6 @@ export const Default = (): TemplateResult => {
 
 export const headersAndIcons = (): TemplateResult => {
     return html`
-        <sp-icons-medium></sp-icons-medium>
         <sp-popover open>
             <sp-menu>
                 <sp-menu-group>
@@ -101,15 +99,15 @@ export const headersAndIcons = (): TemplateResult => {
                         Section Heading
                     </span>
                     <sp-menu-item>
-                        <sp-icon size="s" slot="icon">
-                            ${CheckmarkCircleIcon({ hidden: true })}
-                        </sp-icon>
+                        <sp-icon-checkmark-circle
+                            slot="icon"
+                        ></sp-icon-checkmark-circle>
                         Save
                     </sp-menu-item>
                     <sp-menu-item disabled>
-                        <sp-icon size="s" slot="icon">
-                            ${CheckmarkCircleIcon({ hidden: true })}
-                        </sp-icon>
+                        <sp-icon-checkmark-circle
+                            slot="icon"
+                        ></sp-icon-checkmark-circle>
                         Download
                     </sp-menu-item>
                 </sp-menu-group>
