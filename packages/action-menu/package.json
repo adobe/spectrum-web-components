@@ -50,7 +50,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@spectrum-web-components/base": "^0.1.3",
-        "@spectrum-web-components/button": "^0.9.4",
+        "@spectrum-web-components/action-button": "^0.0.1",
         "@spectrum-web-components/dropdown": "^0.8.5",
         "@spectrum-web-components/icon": "^0.6.3",
         "@spectrum-web-components/icons-workflow": "^0.3.6",
