@@ -47,10 +47,6 @@ const config = {
                     name: 'label',
                 },
             ],
-            exclude: [
-                /* deprecated */
-                /spectrum-Switch--ab/,
-            ],
         },
     ],
 };
