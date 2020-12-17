@@ -20,11 +20,11 @@ import {
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/icon/sp-icon.js';
-import { CheckmarkMediumIcon } from '@spectrum-web-components/icons-ui';
-import { ActionButton } from '@spectrum-web-components/button';
+import { Checkmark100Icon } from '@spectrum-web-components/icons-ui';
+import { ActionButton } from '@spectrum-web-components/action-button';
 
 import menuItemStyles from './menu-item.css.js';
-import checkmarkMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark-medium.css.js';
+import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
 export interface MenuItemQueryRoleEventDetail {
     role: string;
@@ -36,7 +36,7 @@ export interface MenuItemQueryRoleEventDetail {
  */
 export class MenuItem extends ActionButton {
     public static get styles(): CSSResultArray {
-        return [menuItemStyles, checkmarkMediumStyles];
+        return [menuItemStyles, checkmarkStyles];
     }
 
     static instanceCount = 0;
@@ -79,11 +79,11 @@ export class MenuItem extends ActionButton {
             content.push(html`
                 <sp-icon
                     id="selected"
-                    size="s"
+                    size="none"
                     slot="icon"
-                    class="checkmark-medium"
+                    class="spectrum-UIIcon-Checkmark100"
                 >
-                    ${CheckmarkMediumIcon({ hidden: true })}
+                    ${Checkmark100Icon()}
                 </sp-icon>
             `);
         }

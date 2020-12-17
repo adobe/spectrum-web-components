@@ -19,6 +19,7 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
+import { CheckmarkCircleIcon } from '@spectrum-web-components/icons-workflow';
 
 export default {
     component: 'sp-menu',
@@ -100,19 +101,15 @@ export const headersAndIcons = (): TemplateResult => {
                         Section Heading
                     </span>
                     <sp-menu-item>
-                        <sp-icon
-                            name="ui:SuccessMedium"
-                            size="s"
-                            slot="icon"
-                        ></sp-icon>
+                        <sp-icon size="s" slot="icon">
+                            ${CheckmarkCircleIcon({ hidden: true })}
+                        </sp-icon>
                         Save
                     </sp-menu-item>
                     <sp-menu-item disabled>
-                        <sp-icon
-                            name="ui:SuccessMedium"
-                            size="s"
-                            slot="icon"
-                        ></sp-icon>
+                        <sp-icon size="s" slot="icon">
+                            ${CheckmarkCircleIcon({ hidden: true })}
+                        </sp-icon>
                         Download
                     </sp-menu-item>
                 </sp-menu-group>

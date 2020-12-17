@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
+import '../sp-menu.js';
 import '../sp-menu-item.js';
 
 export default {
@@ -20,8 +21,10 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-menu-item>
-            Menu Item
-        </sp-menu-item>
+        <sp-menu>
+            <sp-menu-item>
+                Menu Item
+            </sp-menu-item>
+        </sp-menu>
     `;
 };
