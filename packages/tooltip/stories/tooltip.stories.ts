@@ -14,13 +14,35 @@ import { html, boolean, select, text } from '@open-wc/demoing-storybook';
 import '../sp-tooltip.js';
 import '@spectrum-web-components/icon/sp-icon';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined, TemplateResult } from '@spectrum-web-components/base';
+import {
+    AlertIcon,
+    CheckmarkIcon,
+    InfoIcon,
+} from '@spectrum-web-components/icons-workflow';
 
 const tipOptions = ['top', 'bottom', 'left', 'right'];
 
 const variantOptions = ['', 'info', 'positive', 'negative'];
 
-const iconOptions = ['AlertSmall', 'CheckmarkSmall', 'InfoSmall'];
+const iconOptions: {
+    [key: string]: ({
+        width,
+        height,
+        hidden,
+        title,
+    }?: {
+        width?: number;
+        height?: number;
+        hidden?: boolean;
+        title?: string;
+    }) => TemplateResult | string;
+} = {
+    '': () => html``,
+    negative: AlertIcon,
+    positive: CheckmarkIcon,
+    info: InfoIcon,
+};
 
 export default {
     component: 'sp-tooltip',
@@ -50,8 +72,13 @@ export const Default = (): TemplateResult => {
 };
 
 export const wIcon = (): TemplateResult => {
+    const variant = select(
+        'Variant',
+        variantOptions,
+        variantOptions[3],
+        'Element'
+    );
     return html`
-        <sp-icons-medium></sp-icons-medium>
         <sp-tooltip
             ?open=${boolean('Open', true, 'Element')}
             placement=${select(
@@ -60,23 +87,15 @@ export const wIcon = (): TemplateResult => {
                 tipOptions[0],
                 'Element'
             )}
-            variant=${select(
-                'Variant',
-                variantOptions,
-                variantOptions[0],
-                'Element'
-            )}
+            variant=${ifDefined(variant || undefined)}
         >
-            <sp-icon
-                size="s"
-                name="ui:${select(
-                    'Icon',
-                    iconOptions,
-                    iconOptions[0],
-                    'Element'
-                )}"
-                slot="icon"
-            ></sp-icon>
+            ${!!variant
+                ? html`
+                      <sp-icon size="none" slot="icon">
+                          ${iconOptions[variant]()}
+                      </sp-icon>
+                  `
+                : html``}
             ${text('Tip text', 'Tooltip', 'Element')}
         </sp-tooltip>
     `;
