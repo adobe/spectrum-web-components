@@ -14,7 +14,7 @@ import { TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
+import { HelpIcon } from '@spectrum-web-components/icons-workflow';
 
 interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
@@ -166,7 +166,6 @@ attributeQuietVariantOverbackground.story = {
 export const withIcon = (): TemplateResult => {
     const iconRight = boolean('Icon on Right', false);
     return html`
-        <sp-icons-medium></sp-icons-medium>
         <style>
             .row {
                 padding: 10px;
@@ -177,11 +176,9 @@ export const withIcon = (): TemplateResult => {
                 variant: 'primary',
                 iconRight: iconRight,
                 content: html`
-                    <sp-icon
-                        slot="icon"
-                        size="m"
-                        name="ui:HelpMedium"
-                    ></sp-icon>
+                    <sp-icon slot="icon" size="m">
+                        ${HelpIcon({ hidden: true })}
+                    </sp-icon>
                     Help
                 `,
             })}
