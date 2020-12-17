@@ -14,16 +14,7 @@ import { fixture, elementUpdated, expect } from '@open-wc/testing';
 
 import '../sp-button-group.js';
 import { ButtonGroup } from '..';
-import {
-    buttons,
-    actionButtons,
-    actionButtonsIcons,
-    actionButtonsIconsOnly,
-    buttonsVertical,
-    actionButtonsVertical,
-    actionButtonsVerticalIcons,
-    actionButtonsVerticalIconsOnly,
-} from '../stories/button-group.stories.js';
+import { buttons, buttonsVertical } from '../stories/button-group.stories.js';
 
 describe('Buttongroup', () => {
     it('loads default button-group accessibly with sp-button', async () => {
@@ -33,50 +24,8 @@ describe('Buttongroup', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('loads default button-group accessibly with sp-action-button', async () => {
-        const el = await fixture<ButtonGroup>(actionButtons());
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
-    it('loads default button-group accessibly with sp-action-button and icons', async () => {
-        const el = await fixture<ButtonGroup>(actionButtonsIcons());
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
-    it('loads default button-group accessibly with sp-action-button, icons only', async () => {
-        const el = await fixture<ButtonGroup>(actionButtonsIconsOnly());
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
     it('loads default button-group[vertial] accessibly with sp-button', async () => {
         const el = await fixture<ButtonGroup>(buttonsVertical());
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
-    it('loads default button-group[vertial] accessibly with sp-action-button', async () => {
-        const el = await fixture<ButtonGroup>(actionButtonsVertical());
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
-    it('loads default button-group[vertial] accessibly with sp-action-button and icons', async () => {
-        const el = await fixture<ButtonGroup>(actionButtonsVerticalIcons());
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
-    it('loads default button-group[vertial] accessibly with sp-action-button, icons only', async () => {
-        const el = await fixture<ButtonGroup>(actionButtonsVerticalIconsOnly());
 
         await elementUpdated(el);
 
