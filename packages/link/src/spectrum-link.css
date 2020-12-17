@@ -12,6 +12,78 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 a {
     /* .spectrum-Link */
+    --spectrum-link-over-background-text-color: var(
+        --spectrum-alias-text-color-over-background,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-link-over-background-text-color-hover: var(
+        --spectrum-alias-text-color-over-background,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-link-over-background-text-color-down: var(
+        --spectrum-alias-text-color-over-background,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-link-over-background-text-color-key-focus: var(
+        --spectrum-alias-text-color-over-background,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-link-primary-text-color: var(--spectrum-global-color-blue-600);
+    --spectrum-link-primary-text-color-hover: var(
+        --spectrum-global-color-blue-600
+    );
+    --spectrum-link-primary-text-color-down: var(
+        --spectrum-global-color-blue-700
+    );
+    --spectrum-link-primary-text-color-key-focus: var(
+        --spectrum-alias-text-color-key-focus,
+        var(--spectrum-global-color-blue-600)
+    );
+    --spectrum-link-primary-text-size: var(
+        --spectrum-alias-item-text-size-m,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+}
+.spectrum-Link--sizeS {
+    /* .spectrum-Link--sizeS */
+    --spectrum-link-primary-text-size: var(
+        --spectrum-alias-item-text-size-s,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+}
+.spectrum-Link--sizeM {
+    /* .spectrum-Link--sizeM */
+    --spectrum-link-primary-text-size: var(
+        --spectrum-alias-item-text-size-m,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+}
+.spectrum-Link--sizeL {
+    /* .spectrum-Link--sizeL */
+    --spectrum-link-primary-text-size: var(
+        --spectrum-alias-item-text-size-l,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+}
+.spectrum-Link--sizeXL {
+    /* .spectrum-Link--sizeXL */
+    --spectrum-link-primary-text-size: var(
+        --spectrum-alias-item-text-size-xl,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+}
+.spectrum-Link--sizeL,
+.spectrum-Link--sizeM,
+.spectrum-Link--sizeS,
+.spectrum-Link--sizeXL {
+    /* .spectrum-Link--sizeL,
+   * .spectrum-Link--sizeM,
+   * .spectrum-Link--sizeS,
+   * .spectrum-Link--sizeXL */
+    font-size: var(--spectrum-link-primary-text-size);
+}
+a {
+    /* .spectrum-Link */
     background-color: initial;
     -webkit-text-decoration-skip: objects;
     text-decoration: underline;
@@ -38,33 +110,21 @@ a:focus-visible {
 }
 a {
     /* .spectrum-Link */
-    color: var(
-        --spectrum-link-primary-text-color,
-        var(--spectrum-global-color-blue-600)
-    );
+    color: var(--spectrum-link-primary-text-color);
 }
 a:hover {
     /* .spectrum-Link:hover */
-    color: var(
-        --spectrum-link-primary-text-color-hover,
-        var(--spectrum-global-color-blue-600)
-    );
+    color: var(--spectrum-link-primary-text-color-hover);
 }
 a:active {
     /* .spectrum-Link:active */
-    color: var(
-        --spectrum-link-primary-text-color-down,
-        var(--spectrum-global-color-blue-700)
-    );
+    color: var(--spectrum-link-primary-text-color-down);
 }
 :host([quiet]) a:focus-visible,
 :host([over-background]) a:focus-visible,
 a:focus-visible {
     /* .spectrum-Link.focus-ring */
-    color: var(
-        --spectrum-link-primary-text-color-key-focus,
-        var(--spectrum-alias-text-color-key-focus)
-    );
+    color: var(--spectrum-link-primary-text-color-key-focus);
 }
 .spectrum-Link--secondary,
 .spectrum-Link--secondary:active,
@@ -78,29 +138,17 @@ a:focus-visible {
 }
 :host([over-background]) a {
     /* .spectrum-Link--overBackground */
-    color: var(
-        --spectrum-link-over-background-text-color,
-        var(--spectrum-global-color-static-white)
-    );
+    color: var(--spectrum-link-over-background-text-color);
 }
 :host([over-background]) a:hover {
     /* .spectrum-Link--overBackground:hover */
-    color: var(
-        --spectrum-link-over-background-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
+    color: var(--spectrum-link-over-background-text-color-hover);
 }
 :host([over-background]) a:active {
     /* .spectrum-Link--overBackground:active */
-    color: var(
-        --spectrum-link-over-background-text-color-down,
-        var(--spectrum-global-color-static-white)
-    );
+    color: var(--spectrum-link-over-background-text-color-down);
 }
 :host([over-background]) a:focus {
     /* .spectrum-Link--overBackground:focus */
-    color: var(
-        --spectrum-link-over-background-text-color-key-focus,
-        var(--spectrum-global-color-static-white)
-    );
+    color: var(--spectrum-link-over-background-text-color-key-focus);
 }
