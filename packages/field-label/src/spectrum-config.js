@@ -38,6 +38,29 @@ const config = {
                         },
                     ],
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-FieldLabel--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-FieldLabel--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-FieldLabel--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-FieldLabel--sizeXL',
+                        },
+                    ],
+                },
             ],
             classes: [
                 {
