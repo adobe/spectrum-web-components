@@ -11,6 +11,10 @@ governing permissions and limitations under the License.
 */
 @import './spectrum-popover.css';
 
+:host {
+    --sp-popover-tip-size: 24px;
+}
+
 :host([placement*='bottom'][open]) {
     /* .spectrum-Popover--bottom.is-open */
     max-height: calc(
@@ -66,14 +70,14 @@ governing permissions and limitations under the License.
 
 :host([placement*='bottom']) .tip,
 :host([placement*='top']) .tip {
-    width: var(--spectrum-popover-tip-size);
-    height: calc(var(--spectrum-popover-tip-size) / 2);
+    width: var(--sp-popover-tip-size);
+    height: calc(var(--sp-popover-tip-size) / 2);
 }
 
 :host([placement*='right']) .tip,
 :host([placement*='left']) .tip {
-    height: var(--spectrum-popover-tip-size);
-    width: calc(var(--spectrum-popover-tip-size) / 2);
+    height: var(--sp-popover-tip-size);
+    width: calc(var(--sp-popover-tip-size) / 2);
 }
 
 :host([placement*='bottom']) .triangle-left-right,
