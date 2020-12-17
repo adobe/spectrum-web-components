@@ -23,16 +23,15 @@ import {
 import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { MagnifierIcon } from '@spectrum-web-components/icons-ui';
+import { MagnifyIcon } from '@spectrum-web-components/icons-workflow';
 
 import searchStyles from './search.css.js';
-import magnifierStyles from '@spectrum-web-components/icon/src/spectrum-icon-magnifier.css.js';
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
 export class Search extends Textfield {
     public static get styles(): CSSResultArray {
-        return [...super.styles, searchStyles, magnifierStyles];
+        return [...super.styles, searchStyles];
     }
 
     @property()
@@ -101,7 +100,7 @@ export class Search extends Textfield {
                 @keydown=${this.handleKeydown}
             >
                 <sp-icon class="icon magnifier icon-workflow" size="s">
-                    ${MagnifierIcon({ hidden: true })}
+                    ${MagnifyIcon({ hidden: true })}
                 </sp-icon>
                 ${super.render()}
                 ${this.value
