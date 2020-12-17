@@ -58,7 +58,6 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
         const $ = cheerio.load(svg, {
             xmlMode: true,
         });
-        const title = Case.capital(id);
         const fileName = `${id}.ts`;
         const location = path.join(
             rootDir,
@@ -72,21 +71,15 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
 
         $('*').each((index, el) => {
             if (el.name === 'svg') {
-                $(el).attr('aria-hidden', '...');
-                $(el).attr('role', 'img');
+                $(el).attr('aria-hidden', 'true');
                 if (keepColors !== 'keep') {
                     $(el).attr('fill', 'currentColor');
                 }
-                $(el).attr('aria-label', '${title}');
                 $(el).removeAttr('id');
             }
             if (el.name === 'defs') {
                 $(el).remove();
             }
-            const dimensions = {
-                width: 0,
-                height: 0,
-            };
             Object.keys(el.attribs).forEach((x) => {
                 if (x === 'class') {
                     $(el).removeAttr(x);
@@ -97,17 +90,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
                 if (keepColors !== 'keep' && x === 'fill') {
                     $(el).attr(x, 'currentColor');
                 }
-                if (el.name === 'svg') {
-                    if (x === 'width' || x === 'height') {
-                        dimensions[x] = $(el).attr(x);
-                        $(el).attr(x, '${' + x + '}');
-                    }
-                }
             });
-            $(el).attr(
-                'viewBox',
-                `0 0 ${dimensions.width} ${dimensions.height}`
-            );
         });
 
         const iconLiteral = `
@@ -116,18 +99,8 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
       import {tag as html, TemplateResult} from '../custom-tag.js';
 
       export {setCustomTemplateLiteralTag} from '../custom-tag.js';
-      export const ${ComponentName}Icon = ({
-        width = 24,
-        height = 24,
-        hidden = false,
-        title = '${title}',
-      } = {},): string | TemplateResult => {
-        return html\`${$('svg')
-            .toString()
-            .replace(
-                'aria-hidden="..."',
-                "aria-hidden=\"${hidden ? 'true' : 'false'}\""
-            )}\`;
+      export const ${ComponentName}Icon = (): string | TemplateResult => {
+        return html\`${$('svg').toString()}\`;
       }
     `;
 
