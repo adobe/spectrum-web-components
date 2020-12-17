@@ -11,3 +11,14 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-radio.css';
+
+/**
+ * Work around the realities in https://github.com/adobe/spectrum-css/issues/1089
+ * while full t-shirt sizing is being developed at the Spectrum CSS level.
+ */
+:host {
+    --spectrum-radio-label-margin-top: var(
+        --spectrum-global-dimension-size-75,
+        6px
+    );
+}
