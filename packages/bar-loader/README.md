@@ -33,7 +33,6 @@ An `<sp-bar-loader>` is used to visually show the progression of a system operat
 <div
     style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-bar-loader label="Loaded a lot" progress="71" small></sp-bar-loader>
     <sp-bar-loader label="Loaded a little" progress="22"></sp-bar-loader>
 </div>
 ```
@@ -46,7 +45,6 @@ When a loader needs to be placed on top of a colored background, use the over ba
 <div
     style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-alias-background-color-modal-overlay);"
 >
-    <sp-bar-loader progress="42" over-background small></sp-bar-loader>
     <sp-bar-loader progress="7" over-background></sp-bar-loader>
 </div>
 ```
@@ -59,7 +57,6 @@ A bar loader can be either determinate or indeterminate as signified by `[indete
 <div
     style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-bar-loader indeterminate small></sp-bar-loader>
     <sp-bar-loader indeterminate></sp-bar-loader>
 </div>
 ```
@@ -72,7 +69,6 @@ A bar loader can be delivered with its labeling displayed above its visual indic
 <div
     style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-bar-loader small label="Label Above" progress="71"></sp-bar-loader>
     <sp-bar-loader
         side-label
         indeterminate
