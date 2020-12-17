@@ -15,7 +15,8 @@ import { spy } from 'sinon';
 
 import '../sp-dialog-wrapper.js';
 import { Dialog, DialogWrapper } from '../';
-import { Button, ActionButton } from '@spectrum-web-components/button';
+import { ActionButton } from '@spectrum-web-components/action-button';
+import { Button } from '@spectrum-web-components/button';
 import { Underlay } from '@spectrum-web-components/underlay';
 import {
     wrapperLabeledHero,
