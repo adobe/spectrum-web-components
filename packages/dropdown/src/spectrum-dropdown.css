@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
+#button {
     /* .spectrum-Picker */
     position: relative;
     display: inline-flex;
@@ -39,11 +39,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     touch-action: none;
     cursor: pointer;
 }
-:host(:focus) {
+#button:focus {
     /* .spectrum-Picker:focus */
     outline: none;
 }
-:host(::-moz-focus-inner) {
+#button::-moz-focus-inner {
     /* .spectrum-Picker::-moz-focus-inner */
     border: 0;
     border-style: none;
@@ -51,11 +51,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-top: -2px;
     margin-bottom: -2px;
 }
-:host(:disabled) {
+#button:disabled {
     /* .spectrum-Picker:disabled */
     cursor: default;
 }
-:host {
+#button {
     /* .spectrum-Picker */
     --spectrum-picker-border-size: var(
         --spectrum-alias-border-size-thin,
@@ -108,17 +108,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-picker-width: var(--spectrum-global-dimension-size-2400);
     --spectrum-picker-border-size-increase-focus: 1px;
 }
-:host([dir='ltr']) {
+:host([dir='ltr']) #button {
     /* [dir=ltr] .spectrum-Picker */
     padding-left: var(--spectrum-picker-textonly-padding-left);
     padding-right: var(--spectrum-picker-textonly-padding-right);
 }
-:host([dir='rtl']) {
+:host([dir='rtl']) #button {
     /* [dir=rtl] .spectrum-Picker */
     padding-right: var(--spectrum-picker-textonly-padding-left);
     padding-left: var(--spectrum-picker-textonly-padding-right);
 }
-:host {
+#button {
     /* .spectrum-Picker */
     display: flex;
     justify-content: center;
@@ -138,34 +138,34 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s),
         border-color var(--spectrum-global-animation-duration-100, 0.13s);
 }
-:host([disabled]),
-:host(:disabled) {
+:host([disabled]) #button,
+#button:disabled {
     /* .spectrum-Picker.is-disabled,
    * .spectrum-Picker:disabled */
     border-width: var(--spectrum-picker-disabled-border-size);
     cursor: default;
 }
-:host([dir='ltr']) .dropdown {
+:host([dir='ltr']) #button .spectrum-Picker-icon {
     /* [dir=ltr] .spectrum-Picker .spectrum-Picker-icon */
     margin-right: var(--spectrum-picker-icon-gap);
 }
-:host([dir='rtl']) .dropdown {
+:host([dir='rtl']) #button .spectrum-Picker-icon {
     /* [dir=rtl] .spectrum-Picker .spectrum-Picker-icon */
     margin-left: var(--spectrum-picker-icon-gap);
 }
-.dropdown {
+.spectrum-Picker-icon {
     /* .spectrum-Picker .spectrum-Picker-icon */
     flex-shrink: 0;
 }
-:host([dir='ltr']) #label + .dropdown {
+:host([dir='ltr']) #button #label + .spectrum-Picker-icon {
     /* [dir=ltr] .spectrum-Picker .spectrum-Picker-label+.spectrum-Picker-icon */
     margin-left: var(--spectrum-picker-icon-gap);
 }
-:host([dir='rtl']) #label + .dropdown {
+:host([dir='rtl']) #button #label + .spectrum-Picker-icon {
     /* [dir=rtl] .spectrum-Picker .spectrum-Picker-label+.spectrum-Picker-icon */
     margin-right: var(--spectrum-picker-icon-gap);
 }
-:host([quiet]) {
+:host([quiet]) #button {
     /* .spectrum-Picker--quiet */
     --spectrum-picker-border-size: 0;
     --spectrum-picker-border-radius: 0;
@@ -174,8 +174,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     width: auto;
     min-width: 0;
 }
-:host([quiet][disabled]:focus-visible),
-:host([quiet]:disabled:focus-visible) {
+:host([quiet][disabled]) #button:focus-visible,
+:host([quiet]) #button:disabled:focus-visible {
     /* .spectrum-Picker--quiet.is-disabled.focus-ring,
    * .spectrum-Picker--quiet:disabled.focus-ring */
     box-shadow: none;
@@ -209,7 +209,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-in-out;
 }
-.spectrum-Picker-menuIcon {
+.dropdown {
     /* .spectrum-Picker-menuIcon */
     display: inline-block;
     position: relative;
@@ -218,19 +218,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         ease-out;
     flex-shrink: 0;
 }
-:host([dir='ltr']) .spectrum-Picker-validationIcon {
+:host([dir='ltr']) .validationIcon {
     /* [dir=ltr] .spectrum-Picker-validationIcon */
     margin-left: var(--spectrum-picker-error-icon-margin-left);
 }
-:host([dir='rtl']) .spectrum-Picker-validationIcon {
+:host([dir='rtl']) .validationIcon {
     /* [dir=rtl] .spectrum-Picker-validationIcon */
     margin-right: var(--spectrum-picker-error-icon-margin-left);
 }
-:host([dir='ltr']) #label ~ .spectrum-Picker-menuIcon {
+:host([dir='ltr']) #label ~ .dropdown {
     /* [dir=ltr] .spectrum-Picker-label~.spectrum-Picker-menuIcon */
     margin-left: var(--spectrum-picker-ui-icon-gap);
 }
-:host([dir='rtl']) #label ~ .spectrum-Picker-menuIcon {
+:host([dir='rtl']) #label ~ .dropdown {
     /* [dir=rtl] .spectrum-Picker-label~.spectrum-Picker-menuIcon */
     margin-right: var(--spectrum-picker-ui-icon-gap);
 }
@@ -258,7 +258,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                     ))
     );
 }
-:host {
+#button {
     /* .spectrum-Picker */
     color: var(
         --spectrum-alias-text-color,
@@ -270,7 +270,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-400)
     );
 }
-:host(:hover) {
+#button:hover {
     /* .spectrum-Picker:hover */
     color: var(
         --spectrum-alias-text-color-hover,
@@ -282,15 +282,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-:host(:hover) .spectrum-Picker-menuIcon {
+#button:hover .dropdown {
     /* .spectrum-Picker:hover .spectrum-Picker-menuIcon */
     color: var(
         --spectrum-alias-icon-color-hover,
         var(--spectrum-global-color-gray-900)
     );
 }
-:host(.is-open),
-:host(:active) {
+:host([open]) #button,
+#button:active {
     /* .spectrum-Picker.is-open,
    * .spectrum-Picker:active */
     background-color: var(--spectrum-global-color-gray-200);
@@ -299,8 +299,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-:host(.is-open.placeholder) #label,
-:host(:active.placeholder) #label {
+:host([open]) #button.placeholder #label,
+#button:active.placeholder #label {
     /* .spectrum-Picker.is-open.is-placeholder .spectrum-Picker-label,
    * .spectrum-Picker:active.is-placeholder .spectrum-Picker-label */
     color: var(
@@ -308,8 +308,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host(:focus-visible),
-:host(.is-focused) {
+#button:focus-visible,
+:host([focused]) #button {
     /* .spectrum-Picker.focus-ring,
    * .spectrum-Picker.is-focused */
     background-color: var(--spectrum-global-color-gray-50);
@@ -327,8 +327,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host(:focus-visible.placeholder),
-:host(.is-focused.placeholder) {
+#button:focus-visible.placeholder,
+:host([focused]) #button.placeholder {
     /* .spectrum-Picker.focus-ring.is-placeholder,
    * .spectrum-Picker.is-focused.is-placeholder */
     color: var(
@@ -336,27 +336,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([invalid]) {
+:host([invalid]) #button {
     /* .spectrum-Picker.is-invalid */
     border-color: var(--spectrum-global-color-red-500);
 }
-:host([invalid]) .spectrum-Picker-validationIcon {
+:host([invalid]) #button .validationIcon {
     /* .spectrum-Picker.is-invalid .spectrum-Picker-validationIcon */
     color: var(
         --spectrum-semantic-negative-color-icon,
         var(--spectrum-global-color-red-600)
     );
 }
-:host([invalid].is-open),
-:host([invalid]:active),
-:host([invalid]:hover) {
+:host([invalid][open]) #button,
+:host([invalid]) #button:active,
+:host([invalid]) #button:hover {
     /* .spectrum-Picker.is-invalid.is-open,
    * .spectrum-Picker.is-invalid:active,
    * .spectrum-Picker.is-invalid:hover */
     border-color: var(--spectrum-global-color-red-600);
 }
-:host([invalid]:focus-visible),
-:host([invalid].is-focused) {
+:host([invalid]) #button:focus-visible,
+:host([invalid][focused]) #button {
     /* .spectrum-Picker.is-invalid.focus-ring,
    * .spectrum-Picker.is-invalid.is-focused */
     border-color: var(
@@ -369,8 +369,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-blue-400)
         );
 }
-:host([disabled]),
-:host(:disabled) {
+:host([disabled]) #button,
+#button:disabled {
     /* .spectrum-Picker.is-disabled,
    * .spectrum-Picker:disabled */
     background-color: var(--spectrum-global-color-gray-200);
@@ -379,12 +379,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-:host([disabled]) .dropdown,
-:host([disabled]) .spectrum-Picker-menuIcon,
-:host([disabled]) .spectrum-Picker-validationIcon,
-:host(:disabled) .dropdown,
-:host(:disabled) .spectrum-Picker-menuIcon,
-:host(:disabled) .spectrum-Picker-validationIcon {
+:host([disabled]) #button .spectrum-Picker-icon,
+:host([disabled]) #button .dropdown,
+:host([disabled]) #button .validationIcon,
+#button:disabled .spectrum-Picker-icon,
+#button:disabled .dropdown,
+#button:disabled .validationIcon {
     /* .spectrum-Picker.is-disabled .spectrum-Picker-icon,
    * .spectrum-Picker.is-disabled .spectrum-Picker-menuIcon,
    * .spectrum-Picker.is-disabled .spectrum-Picker-validationIcon,
@@ -396,8 +396,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-400)
     );
 }
-:host([disabled]) #label.placeholder,
-:host(:disabled) #label.placeholder {
+:host([disabled]) #button #label.placeholder,
+#button:disabled #label.placeholder {
     /* .spectrum-Picker.is-disabled .spectrum-Picker-label.is-placeholder,
    * .spectrum-Picker:disabled .spectrum-Picker-label.is-placeholder */
     color: var(
@@ -405,7 +405,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-.spectrum-Picker-menuIcon {
+.dropdown {
     /* .spectrum-Picker-menuIcon */
     color: var(
         --spectrum-alias-icon-color,
@@ -433,7 +433,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([quiet]) {
+:host([quiet]) #button {
     /* .spectrum-Picker--quiet */
     color: var(
         --spectrum-alias-text-color,
@@ -441,8 +441,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     border-color: var(--spectrum-alias-border-color-transparent, transparent);
 }
-:host([quiet]),
-:host([quiet]:hover) {
+:host([quiet]) #button,
+:host([quiet]) #button:hover {
     /* .spectrum-Picker--quiet,
    * .spectrum-Picker--quiet:hover */
     background-color: var(
@@ -450,15 +450,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         transparent
     );
 }
-:host([quiet]:hover) {
+:host([quiet]) #button:hover {
     /* .spectrum-Picker--quiet:hover */
     color: var(
         --spectrum-alias-text-color-hover,
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([quiet]:focus-visible),
-:host([quiet]) .is-focused {
+:host([quiet]) #button:focus-visible,
+:host([quiet][focused]) #button {
     /* .spectrum-Picker--quiet.focus-ring,
    * .spectrum-Picker--quiet.is-focused */
     background-color: var(
@@ -471,8 +471,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-blue-400)
         );
 }
-:host([quiet]:focus-visible) .placeholder,
-:host([quiet]) .is-focused.placeholder {
+:host([quiet]) #button:focus-visible.placeholder,
+:host([quiet][focused]) #button.placeholder {
     /* .spectrum-Picker--quiet.focus-ring.is-placeholder,
    * .spectrum-Picker--quiet.is-focused.is-placeholder */
     color: var(
@@ -480,8 +480,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([quiet]:focus-visible) .spectrum-Picker-menuIcon,
-:host([quiet]) .is-focused .spectrum-Picker-menuIcon {
+:host([quiet]) #button:focus-visible .dropdown,
+:host([quiet][focused]) #button .dropdown {
     /* .spectrum-Picker--quiet.focus-ring .spectrum-Picker-menuIcon,
    * .spectrum-Picker--quiet.is-focused .spectrum-Picker-menuIcon */
     color: var(
@@ -489,8 +489,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([quiet]) .is-open,
-:host([quiet]:active) {
+:host([quiet][open]) #button,
+:host([quiet]) #button:active {
     /* .spectrum-Picker--quiet.is-open,
    * .spectrum-Picker--quiet:active */
     background-color: var(
@@ -499,10 +499,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     border-color: var(--spectrum-alias-border-color-transparent, transparent);
 }
-:host([quiet]) .is-open:focus-visible,
-:host([quiet]) .is-open.is-focused,
-:host([quiet]:active:focus-visible),
-:host([quiet]:active) .is-focused {
+:host([quiet][open]) #button:focus-visible,
+:host([quiet][open][focused]) #button,
+:host([quiet]) #button:active:focus-visible,
+:host([quiet][focused]) #button:active {
     /* .spectrum-Picker--quiet.is-open.focus-ring,
    * .spectrum-Picker--quiet.is-open.is-focused,
    * .spectrum-Picker--quiet:active.focus-ring,
@@ -517,8 +517,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-blue-400)
         );
 }
-:host([quiet][invalid]:focus-visible),
-:host([quiet][invalid]) .is-focused {
+:host([quiet][invalid]) #button:focus-visible,
+:host([quiet][invalid][focused]) #button {
     /* .spectrum-Picker--quiet.is-invalid.focus-ring,
    * .spectrum-Picker--quiet.is-invalid.is-focused */
     box-shadow: 0 2px 0 0
@@ -527,8 +527,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-blue-400)
         );
 }
-:host([quiet][disabled]),
-:host([quiet]:disabled) {
+:host([quiet][disabled]) #button,
+:host([quiet]) #button:disabled {
     /* .spectrum-Picker--quiet.is-disabled,
    * .spectrum-Picker--quiet:disabled */
     background-color: var(

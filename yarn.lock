@@ -3509,17 +3509,17 @@
   dependencies:
     "@spectrum-css/vars" "^3.0.0-beta.2"
 
-"@spectrum-css/dropzone@^3.0.0-beta.4":
+"@spectrum-css/dropzone@^3.0.0-beta.5":
   version "3.0.0-beta.5"
   resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-3.0.0-beta.5.tgz#b0be9e57fabf9796b30cfa81036d6f8406cfa8b4"
   integrity sha512-S9ZqXdFCQ7raDX+U2+nkvjAq10bp4mTnKHv3jCwI1Tnp7TFj7I69FPdsbjjhI8BEERgRhNHO9njW1R7LsAVLuw==
 
-"@spectrum-css/fieldgroup@^3.0.0-beta.5":
+"@spectrum-css/fieldgroup@^3.0.0-beta.6":
   version "3.0.0-beta.6"
   resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-3.0.0-beta.6.tgz#ee9bd3ee46fda89c8187335be97e7233a139db38"
   integrity sha512-73h4lN2VeYRE0ziKTSZFCR0Tec9pes4aFryz/dlUvCdZv05yfbdoOmJeDTQJW/sDTR2LdeKEJC/MpjkzpYch9A==
 
-"@spectrum-css/fieldlabel@^3.0.0-beta.6":
+"@spectrum-css/fieldlabel@^3.0.0-beta.7":
   version "3.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-3.0.0-beta.7.tgz#f37797565e21b3609b8fbc2dafcea8ea41ffa114"
   integrity sha512-0pseiPghqlOdALsRtidveWyt2YjfSXTZWDlSkcne/J0/QXBJOQH/7Qfy7TmROQZYRB2LqH1VzmE1zbvGwr5Aog==
@@ -3549,7 +3549,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/modal/-/modal-3.0.0-beta.3.tgz#f6dc835e12c507728627ba5c7687b9da370ccf05"
   integrity sha512-OjOTHESisbAgsuEQAe2A2faQuFoY9Fr1qbOimKDsJb7WYvmPdZ3y11mwT7NuLjk+wehfwu4tebB74Yp7Cafqsg==
 
-"@spectrum-css/picker@^1.0.0-beta.2":
+"@spectrum-css/picker@^1.0.0-beta.3":
   version "1.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-1.0.0-beta.3.tgz#476593597b5a9e0105397e4e39350869cf6e7965"
   integrity sha512-jHzFnS5Frd3JSwZ6B8ymH/sVnNqAUBo9p93Zax4VHTUDsPTtTkvxj/Vxo4POmrJEL9v3qUB2Yk13rD2BSfEzLQ==
