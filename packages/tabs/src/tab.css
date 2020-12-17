@@ -17,7 +17,7 @@ governing permissions and limitations under the License.
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: var(--spectrum-tabs-vertical-item-height, auto) !important;
+    height: auto !important;
 
     --sp-tab-vertial-margin-y: calc(
         (
@@ -44,14 +44,14 @@ governing permissions and limitations under the License.
 
     /* Custom */
     height: auto;
-    margin-top: 0;
+    margin-top: 0 !important;
     top: 0;
     bottom: 0;
 }
 
 :host([vertical]) ::slotted([slot='icon']) {
     margin-top: var(--sp-tab-vertial-margin-y);
-    height: auto;
+    flex-shrink: 0;
 }
 
 :host([dir][vertical]) slot[name='icon'] + #itemLabel {

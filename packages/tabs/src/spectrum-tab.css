@@ -32,7 +32,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Tabs-item.is-disabled .spectrum-Tabs-itemLabel */
     cursor: default;
 }
-::slotted([slot='icon']) {
+:host(:not([vertical])) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item .spectrum-Icon */
     height: calc(var(--spectrum-tabs-height) - var(--spectrum-tabs-rule-size));
 }
@@ -96,7 +96,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     );
 }
-::slotted([slot='icon']) {
+:host(:not([vertical])) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item .spectrum-Icon */
     color: var(
         --spectrum-alias-icon-color,
