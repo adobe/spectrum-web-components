@@ -49,6 +49,6 @@ describe('icons', () => {
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
-        expect(el.getIconList().length).to.equal(36);
+        expect(el.getIconList().length).to.equal(48);
     });
 });
