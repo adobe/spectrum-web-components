@@ -26,7 +26,7 @@ describe('Icon', () => {
     it('loads', async () => {
         const el = await fixture<Icon>(
             html`
-                <sp-icon size="xxs" name="ui:Magnifier"></sp-icon>
+                <sp-icon size="xxs" name="ui:Chevron200"></sp-icon>
             `
         );
 
@@ -58,9 +58,10 @@ describe('Icon', () => {
     });
 
     it('loads w/ label', async () => {
+        const label = 'Chevron';
         const el = await fixture<Icon>(
             html`
-                <sp-icon name="ui:Magnifier" label="Magnify"></sp-icon>
+                <sp-icon name="ui:Chevron200" label=${label}></sp-icon>
             `
         );
 
@@ -73,7 +74,7 @@ describe('Icon', () => {
         const icon = container.querySelector('svg') as SVGElement;
         expect(icon).to.exist;
         expect(icon.hasAttribute('aria-hidden')).to.be.false;
-        expect(icon.getAttribute('aria-label')).to.equal('Magnify');
+        expect(icon.getAttribute('aria-label')).to.equal(label);
     });
 
     it('does not error when name is missing', async () => {

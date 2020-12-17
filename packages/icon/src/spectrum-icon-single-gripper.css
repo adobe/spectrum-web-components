@@ -10,3 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.spectrum-UIIcon-SingleGripper100 {
+    /* .spectrum-UIIcon-SingleGripper100 */
+    width: var(--spectrum-alias-ui-icon-singlegripper-size-100-height);
+    height: var(
+        --spectrum-alias-ui-icon-singlegripper-size-100-width,
+        var(--spectrum-global-dimension-size-300)
+    );
+}
