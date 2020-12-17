@@ -70,6 +70,29 @@ const config = {
                     selector: '.is-critical',
                     name: 'critical',
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-ProgressBar--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-ProgressBar--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-ProgressBar--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-ProgressBar--sizeXL',
+                        },
+                    ],
+                },
             ],
         },
     ],

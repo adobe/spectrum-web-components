@@ -39,12 +39,6 @@ export const sideLabel = (): TemplateResult => {
     `;
 };
 
-export const small = (): TemplateResult => {
-    return html`
-        <sp-meter small progress="50">Storage Space</sp-meter>
-    `;
-};
-
 export const critical = (): TemplateResult => {
     return html`
         <sp-meter critical progress="95">Storage Space</sp-meter>
