@@ -76,6 +76,15 @@ const optionDefinitions: commandLineUsage.OptionDefinition[] = [
         type: String,
         defaultValue: 'latest',
     },
+    {
+        name: 'start',
+        description:
+            'Test from "page" start (includes element registration and upgrade) or "element" start (only includes upgrade).' +
+            '\n(default element)',
+        alias: 's',
+        type: String,
+        defaultValue: 'element',
+    },
 ];
 
 interface Options {
@@ -86,6 +95,7 @@ interface Options {
     timeout: string;
     browser: string;
     compare: string;
+    start: string;
 }
 
 (async () => {
@@ -131,6 +141,7 @@ $ node test/benchmark/cli -n 20
             .filter((dirEntry) => dirEntry.isDirectory())
             .map((dirEntry) => dirEntry.name);
     }
+    const start = opts.start;
 
     const printResults: string[] = [];
     for (const packageName of packages) {
@@ -176,32 +187,34 @@ $ node test/benchmark/cli -n 20
             const pjson = await import(
                 pathjoin(process.cwd(), 'packages', packageName, 'package.json')
             );
-            if (pjson.version === '0.0.1') {
+            if (pjson.version === '0.0.1' && opts.compare !== 'none') {
                 console.log(
-                    `⚠️  It looks like '${packageName}' has yet to be published to NPM. Skipping!`
+                    `⚠️  It looks like '${packageName}' has yet to be published to NPM. Skipping comparison!`
                 );
                 return;
             }
             if (!config.benchmarks) return;
-            config.benchmarks.push({
-                name: `${packageName}:${benchmark}`,
-                url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}`,
-                packageVersions: {
-                    label: 'remote',
-                    dependencies: {
-                        '@spectrum-web-components/bundle': opts.compare,
+            if (opts.compare !== 'none') {
+                config.benchmarks.push({
+                    name: `${packageName}:${benchmark}`,
+                    url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}`,
+                    packageVersions: {
+                        label: 'remote',
+                        dependencies: {
+                            '@spectrum-web-components/bundle': opts.compare,
+                        },
                     },
-                },
-                measurement: 'global',
-                browser: {
-                    name: 'chrome',
-                    headless: true,
-                    windowSize: {
-                        width: 800,
-                        height: 600,
+                    measurement: 'global',
+                    browser: {
+                        name: 'chrome',
+                        headless: true,
+                        windowSize: {
+                            width: 800,
+                            height: 600,
+                        },
                     },
-                },
-            });
+                });
+            }
             config.benchmarks.push({
                 name: `${packageName}:${benchmark}`,
                 url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}`,
