@@ -16,9 +16,10 @@ import {
     PropertyValues,
     html,
     ifDefined,
+    property,
 } from '@spectrum-web-components/base';
 import { DropdownBase } from '@spectrum-web-components/dropdown';
-import '@spectrum-web-components/button/sp-action-button.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { MoreIcon } from '@spectrum-web-components/icons-workflow';
 import actionMenuStyles from './action-menu.css.js';
@@ -28,8 +29,11 @@ import actionMenuStyles from './action-menu.css.js';
  */
 export class ActionMenu extends ObserveSlotText(DropdownBase, 'label') {
     public static get styles(): CSSResultArray {
-        return [...super.styles, actionMenuStyles];
+        return [actionMenuStyles];
     }
+
+    @property({ type: String, reflect: true })
+    public size = 'm';
 
     protected listRole = 'menu';
     protected itemRole = 'menuitem';
@@ -40,12 +44,12 @@ export class ActionMenu extends ObserveSlotText(DropdownBase, 'label') {
     protected get buttonContent(): TemplateResult[] {
         return [
             html`
-                <slot name="icon" slot="icon">
+                <slot name="icon" slot="icon" ?icon-only=${!this.hasLabel}>
                     <sp-icon size="m" class="icon">
                         ${MoreIcon({ hidden: this.hasLabel })}
                     </sp-icon>
                 </slot>
-                <slot name="label"></slot>
+                <slot name="label" ?hidden=${!this.hasLabel}></slot>
             `,
         ];
     }

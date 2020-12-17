@@ -7,6 +7,7 @@
     "include": ["*.ts", "src/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
+        { "path": "../action-button" },
         { "path": "../dropdown" },
         { "path": "../icons-workflow" },
         { "path": "../shared" }
