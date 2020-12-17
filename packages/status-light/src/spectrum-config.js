@@ -14,10 +14,7 @@ const config = {
     components: [
         {
             name: 'status-light',
-            host: {
-                selector: '.spectrum-StatusLight',
-                shadowSelector: '#root',
-            },
+            host: '.spectrum-StatusLight',
             attributes: [
                 {
                     type: 'boolean',
@@ -41,6 +38,28 @@ const config = {
                         '.spectrum-StatusLight--magenta',
                         '.spectrum-StatusLight--purple',
                         '.spectrum-StatusLight--celery',
+                    ],
+                },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-StatusLight--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-StatusLight--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-StatusLight--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-StatusLight--sizeXL',
+                        },
                     ],
                 },
             ],

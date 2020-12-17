@@ -35,6 +35,9 @@ export class StatusLight extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    @property({ type: String, reflect: true })
+    public size = 'm';
+
     /**
      * The visual variant to apply to this status light.
      */
@@ -56,9 +59,7 @@ export class StatusLight extends SpectrumElement {
 
     protected render(): TemplateResult {
         return html`
-            <div id="root">
-                <slot></slot>
-            </div>
+            <slot></slot>
         `;
     }
 

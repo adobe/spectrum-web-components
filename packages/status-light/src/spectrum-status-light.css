@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-StatusLight--sizeS {
+:host([size='s']) {
     /* .spectrum-StatusLight--sizeS */
     --spectrum-statuslight-info-text-font-weight: var(
         --spectrum-alias-body-text-font-weight,
@@ -37,7 +37,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-300)
     );
 }
-.spectrum-StatusLight--sizeM {
+:host([size='m']) {
     /* .spectrum-StatusLight--sizeM */
     --spectrum-statuslight-info-text-font-weight: var(
         --spectrum-alias-body-text-font-weight,
@@ -64,7 +64,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-400)
     );
 }
-.spectrum-StatusLight--sizeL {
+:host([size='l']) {
     /* .spectrum-StatusLight--sizeL */
     --spectrum-statuslight-info-text-font-weight: var(
         --spectrum-alias-body-text-font-weight,
@@ -90,7 +90,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-500)
     );
 }
-.spectrum-StatusLight--sizeXL {
+:host([size='xl']) {
     /* .spectrum-StatusLight--sizeXL */
     --spectrum-statuslight-info-text-font-weight: var(
         --spectrum-alias-body-text-font-weight,
@@ -117,7 +117,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     cxow: 1;
 }
-#root {
+:host {
     /* .spectrum-StatusLight */
     --spectrum-statuslight-info-padding-y: var(
         --spectrum-global-dimension-size-65
@@ -142,7 +142,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-weight: var(--spectrum-statuslight-info-text-font-weight);
     line-height: var(--spectrum-statuslight-info-text-line-height);
 }
-#root:before {
+:host:before {
     /* .spectrum-StatusLight:before */
     content: '';
     flex-grow: 0;
@@ -157,19 +157,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -ms-high-contrast-adjust: none;
     forced-color-adjust: none;
 }
-:host([variant='neutral']) #root {
+:host([variant='neutral']) {
     /* .spectrum-StatusLight--neutral */
     font-style: italic;
 }
-#root {
+:host {
     /* .spectrum-StatusLight */
     color: var(
         --spectrum-alias-text-color,
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([disabled]) #root,
-#root[disabled] {
+:host([disabled]),
+:host([disabled]) {
     /* .spectrum-StatusLight.is-disabled,
    * .spectrum-StatusLight[disabled] */
     color: var(
@@ -177,27 +177,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-:host([disabled]) #root:before,
-#root[disabled]:before {
+:host([disabled]):before,
+:host([disabled]):before {
     /* .spectrum-StatusLight.is-disabled:before,
    * .spectrum-StatusLight[disabled]:before */
     background-color: var(--spectrum-global-color-gray-400);
 }
-:host([variant='negative']) #root:before {
+:host([variant='negative']):before {
     /* .spectrum-StatusLight--negative:before */
     background-color: var(
         --spectrum-semantic-negative-color-status,
         var(--spectrum-global-color-red-400)
     );
 }
-:host([variant='notice']) #root:before {
+:host([variant='notice']):before {
     /* .spectrum-StatusLight--notice:before */
     background-color: var(
         --spectrum-semantic-notice-color-status,
         var(--spectrum-global-color-orange-400)
     );
 }
-:host([variant='positive']) #root:before {
+:host([variant='positive']):before {
     /* .spectrum-StatusLight--positive:before */
     background-color: var(
         --spectrum-semantic-positive-color-status,
@@ -205,7 +205,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 .spectrum-StatusLight--active:before,
-:host([variant='info']) #root:before {
+:host([variant='info']):before {
     /* .spectrum-StatusLight--active:before,
    * .spectrum-StatusLight--info:before */
     background-color: var(
@@ -213,46 +213,46 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-400)
     );
 }
-:host([variant='neutral']) #root {
+:host([variant='neutral']) {
     /* .spectrum-StatusLight--neutral */
     color: var(
         --spectrum-alias-label-text-color,
         var(--spectrum-global-color-gray-700)
     );
 }
-:host([variant='neutral']) #root:before {
+:host([variant='neutral']):before {
     /* .spectrum-StatusLight--neutral:before */
     background-color: var(--spectrum-global-color-gray-500);
 }
-:host([variant='celery']) #root:before {
+:host([variant='celery']):before {
     /* .spectrum-StatusLight--celery:before */
     background-color: var(--spectrum-global-color-celery-400);
 }
-:host([variant='yellow']) #root:before {
+:host([variant='yellow']):before {
     /* .spectrum-StatusLight--yellow:before */
     background-color: var(--spectrum-global-color-yellow-400);
 }
-:host([variant='fuchsia']) #root:before {
+:host([variant='fuchsia']):before {
     /* .spectrum-StatusLight--fuchsia:before */
     background-color: var(--spectrum-global-color-fuchsia-400);
 }
-:host([variant='indigo']) #root:before {
+:host([variant='indigo']):before {
     /* .spectrum-StatusLight--indigo:before */
     background-color: var(--spectrum-global-color-indigo-400);
 }
-:host([variant='seafoam']) #root:before {
+:host([variant='seafoam']):before {
     /* .spectrum-StatusLight--seafoam:before */
     background-color: var(--spectrum-global-color-seafoam-400);
 }
-:host([variant='chartreuse']) #root:before {
+:host([variant='chartreuse']):before {
     /* .spectrum-StatusLight--chartreuse:before */
     background-color: var(--spectrum-global-color-chartreuse-400);
 }
-:host([variant='magenta']) #root:before {
+:host([variant='magenta']):before {
     /* .spectrum-StatusLight--magenta:before */
     background-color: var(--spectrum-global-color-magenta-400);
 }
-:host([variant='purple']) #root:before {
+:host([variant='purple']):before {
     /* .spectrum-StatusLight--purple:before */
     background-color: var(--spectrum-global-color-purple-400);
 }
