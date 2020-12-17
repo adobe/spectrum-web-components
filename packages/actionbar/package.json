@@ -49,7 +49,8 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/actionbar": "^3.0.0-beta.5",
+        "@spectrum-css/actionbar": "^3.0.0-beta.6",
+        "@spectrum-web-components/action-button": "^0.0.1",
         "@spectrum-web-components/icon": "^0.6.1"
     },
     "dependencies": {
