@@ -50,7 +50,7 @@ visual prominence that is optimal for forms, settings, etc. where the switches
 need to be noticed.
 
 ```html
-<sp-switch checked quiet>Web component</sp-switch>
+<sp-switch checked emphasized>Web component</sp-switch>
 ```
 
 ## State

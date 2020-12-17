@@ -11,3 +11,36 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-switch.css';
+
+/**
+ * Work around the realities in https://github.com/adobe/spectrum-css/issues/1089
+ * while full t-shirt sizing is being developed at the Spectrum CSS level.
+ */
+:host {
+    --spectrum-switch-label-margin-top: var(
+        --spectrum-global-dimension-size-65,
+        5px
+    );
+    --spectrum-switch-track-width: var(--spectrum-global-dimension-size-325);
+    --spectrum-switch-handle-border-radius: 50%;
+}
+
+:host([dir='ltr'][checked]) #input + #switch:before {
+    /* [dir=ltr] .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
+    transform: translateX(
+        calc(
+            var(--spectrum-switch-track-width) -
+                var(--spectrum-switch-handle-size)
+        )
+    );
+}
+
+:host([dir='rtl'][checked]) #input + #switch:before {
+    /* [dir=rtl] .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
+    transform: translateX(
+        calc(
+            var(--spectrum-switch-handle-size) -
+                var(--spectrum-switch-track-width)
+        )
+    );
+}
