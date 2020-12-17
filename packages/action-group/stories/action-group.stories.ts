@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-action-group.js';
-import '@spectrum-web-components/button/sp-action-button.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import {
     PropertiesIcon,
