@@ -42,11 +42,30 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
     if (!fs.existsSync(`${rootDir}packages/icons-ui/src/icons`)) {
         fs.mkdirSync(`${rootDir}packages/icons-ui/src/icons`);
     }
+    if (!fs.existsSync(`${rootDir}packages/icons-ui/src/elements`)) {
+        fs.mkdirSync(`${rootDir}packages/icons-ui/src/elements`);
+    }
+    if (!fs.existsSync(`${rootDir}packages/icons-ui/icons`)) {
+        fs.mkdirSync(`${rootDir}packages/icons-ui/icons`);
+    }
     fs.writeFileSync(
         path.join(rootDir, 'packages', 'icons-ui', 'src', 'icons.ts'),
         disclaimer,
         'utf-8'
     );
+    const manifestPath = path.join(
+        rootDir,
+        'packages',
+        'icons-ui',
+        'stories',
+        'icon-manifest.ts'
+    );
+    fs.writeFileSync(manifestPath, disclaimer, 'utf-8');
+    let manifestImports = `import {
+        html,
+        TemplateResult
+    } from '@spectrum-web-components/base';\r\n`;
+    let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
     icons.forEach((i) => {
         const svg = fs.readFileSync(i, 'utf-8');
@@ -125,12 +144,113 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
             exportString,
             'utf-8'
         );
+
+        const iconElement = `
+        ${disclaimer}
+
+        import {
+            html,
+            TemplateResult
+        } from '@spectrum-web-components/base';
+        import {
+            IconBase
+        } from '@spectrum-web-components/icon';
+
+        import {
+            ${ComponentName}Icon
+        } from '../icons/${id}.js';
+        import {
+            setCustomTemplateLiteralTag
+        } from '../custom-tag.js';
+
+        export class Icon${ComponentName} extends IconBase {
+            protected render(): TemplateResult {
+                setCustomTemplateLiteralTag(html);
+                return ${ComponentName}Icon() as TemplateResult;
+            }
+        }
+        `;
+        const iconElementFile = prettier.format(iconElement, {
+            printWidth: 100,
+            tabWidth: 2,
+            useTabs: false,
+            semi: true,
+            singleQuote: true,
+            trailingComma: 'all',
+            bracketSpacing: true,
+            jsxBracketSameLine: false,
+            arrowParens: 'avoid',
+            parser: 'typescript',
+        });
+
+        fs.writeFileSync(
+            path.join(
+                rootDir,
+                'packages',
+                'icons-ui',
+                'src',
+                'elements',
+                `Icon${id}.ts`
+            ),
+            iconElementFile,
+            'utf-8'
+        );
+
+        const iconElementName = `sp-icon-${Case.kebab(ComponentName)}`;
+        const iconRegistration = `
+        ${disclaimer}
+
+        import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
+
+        customElements.define('${iconElementName}', Icon${ComponentName});
+
+        declare global {
+            interface HTMLElementTagNameMap {
+                '${iconElementName}': Icon${ComponentName};
+            }
+        }
+        `;
+        const iconRegistrationFile = prettier.format(iconRegistration, {
+            printWidth: 100,
+            tabWidth: 2,
+            useTabs: false,
+            semi: true,
+            singleQuote: true,
+            trailingComma: 'all',
+            bracketSpacing: true,
+            jsxBracketSameLine: false,
+            arrowParens: 'avoid',
+            parser: 'typescript',
+        });
+
+        fs.writeFileSync(
+            path.join(
+                rootDir,
+                'packages',
+                'icons-ui',
+                'icons',
+                `${iconElementName}.ts`
+            ),
+            iconRegistrationFile,
+            'utf-8'
+        );
+        const importStatement = `\r\nimport '../icons/${iconElementName}.js';`;
+        const metadata = `{name: '${Case.sentence(
+            ComponentName
+        )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;
+        manifestImports += importStatement;
+        manifestListings += metadata;
     });
 
     const exportString = `\r\nexport { setCustomTemplateLiteralTag } from './custom-tag.js';\r\n`;
     fs.appendFileSync(
         path.join(rootDir, 'packages', 'icons-ui', 'src', 'icons.ts'),
         exportString,
+        'utf-8'
+    );
+    fs.appendFileSync(
+        manifestPath,
+        `${manifestImports}${manifestListings}];\r\n`,
         'utf-8'
     );
 });
