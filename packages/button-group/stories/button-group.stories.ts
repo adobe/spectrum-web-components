@@ -14,13 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-button-group.js';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/button/sp-action-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    PropertiesIcon,
-    InfoIcon,
-    ViewAllTagsIcon,
-} from '@spectrum-web-components/icons-workflow';
 
 export default {
     title: 'Button Group',
@@ -37,126 +31,12 @@ export const buttons = (): TemplateResult => {
     `;
 };
 
-export const actionButtons = (): TemplateResult => {
-    return html`
-        <sp-button-group>
-            <sp-action-button>Button 1</sp-action-button>
-            <sp-action-button>Longer Button 2</sp-action-button>
-            <sp-action-button>Short 3</sp-action-button>
-        </sp-button-group>
-    `;
-};
-
-export const actionButtonsIcons = (): TemplateResult => {
-    return html`
-        <sp-button-group>
-            <sp-action-button>
-                <sp-icon slot="icon" size="m">
-                    ${PropertiesIcon({ hidden: true })}
-                </sp-icon>
-                Button 1
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
-                Longer Button 2
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon slot="icon" size="m">
-                    ${ViewAllTagsIcon({ hidden: true })}
-                </sp-icon>
-                Short 3
-            </sp-action-button>
-        </sp-button-group>
-    `;
-};
-
-export const actionButtonsIconsOnly = (): TemplateResult => {
-    return html`
-        <sp-button-group>
-            <sp-action-button quiet label="Properties">
-                <sp-icon slot="icon" size="m">
-                    ${PropertiesIcon({ hidden: true })}
-                </sp-icon>
-            </sp-action-button>
-            <sp-action-button quiet label="Info">
-                <sp-icon slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
-            </sp-action-button>
-            <sp-action-button quiet label="View All Tags">
-                <sp-icon slot="icon" size="m">
-                    ${ViewAllTagsIcon({ hidden: true })}
-                </sp-icon>
-            </sp-action-button>
-        </sp-button-group>
-    `;
-};
-
 export const buttonsVertical = (): TemplateResult => {
     return html`
         <sp-button-group vertical>
             <sp-button>Button 1</sp-button>
             <sp-button>Longer Button 2</sp-button>
             <sp-button>Short 3</sp-button>
-        </sp-button-group>
-    `;
-};
-
-export const actionButtonsVertical = (): TemplateResult => {
-    return html`
-        <sp-button-group vertical>
-            <sp-action-button>Button 1</sp-action-button>
-            <sp-action-button>Longer Button 2</sp-action-button>
-            <sp-action-button>Short 3</sp-action-button>
-        </sp-button-group>
-    `;
-};
-
-export const actionButtonsVerticalIcons = (): TemplateResult => {
-    return html`
-        <sp-button-group vertical>
-            <sp-action-button>
-                <sp-icon slot="icon" size="m">
-                    ${PropertiesIcon({ hidden: true })}
-                </sp-icon>
-                Button 1
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
-                Longer Button 2
-            </sp-action-button>
-            <sp-action-button>
-                <sp-icon slot="icon" size="m">
-                    ${ViewAllTagsIcon({ hidden: true })}
-                </sp-icon>
-                Short 3
-            </sp-action-button>
-        </sp-button-group>
-    `;
-};
-
-export const actionButtonsVerticalIconsOnly = (): TemplateResult => {
-    return html`
-        <sp-button-group vertical>
-            <sp-action-button quiet label="Properties">
-                <sp-icon slot="icon" size="m">
-                    ${PropertiesIcon({ hidden: true })}
-                </sp-icon>
-            </sp-action-button>
-            <sp-action-button quiet label="Info">
-                <sp-icon slot="icon" size="m">
-                    ${InfoIcon({ hidden: true })}
-                </sp-icon>
-            </sp-action-button>
-            <sp-action-button quiet label="View All Tags">
-                <sp-icon slot="icon" size="m">
-                    ${ViewAllTagsIcon({ hidden: true })}
-                </sp-icon>
-            </sp-action-button>
         </sp-button-group>
     `;
 };
