@@ -19,9 +19,9 @@ import {
     PropertyValues,
 } from '@spectrum-web-components/base';
 import type { Focusable } from '@spectrum-web-components/shared';
-import { AsteriskIcon } from '@spectrum-web-components/icons-ui';
+import { Asterisk100Icon } from '@spectrum-web-components/icons-ui';
 import '@spectrum-web-components/icon/sp-icon.js';
-import asterickIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterick.css.js';
+import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
 
 import styles from './field-label.css.js';
 
@@ -32,7 +32,7 @@ type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
  */
 export class FieldLabel extends SpectrumElement {
     public static get styles(): CSSResultArray {
-        return [styles, asterickIconStyles];
+        return [styles, asteriskIconStyles];
     }
 
     static instanceCount = 0;
@@ -51,6 +51,9 @@ export class FieldLabel extends SpectrumElement {
 
     @property({ type: String, reflect: true, attribute: 'side-aligned' })
     public sideAligned?: 'start' | 'end';
+
+    @property({ type: String, reflect: true })
+    public size = 'm';
 
     private target?: HTMLElement;
 
@@ -97,8 +100,10 @@ export class FieldLabel extends SpectrumElement {
                 <slot></slot>
                 ${this.required
                     ? html`
-                          <sp-icon class="requiredIcon asterick">
-                              ${AsteriskIcon({ hidden: true })}
+                          <sp-icon
+                              class="requiredIcon spectrum-UIIcon-Asterisk100"
+                          >
+                              ${Asterisk100Icon()}
                           </sp-icon>
                       `
                     : html``}

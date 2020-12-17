@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-FieldLabel--sizeM,
-.spectrum-FieldLabel--sizeS {
+:host([size='m']),
+:host([size='s']) {
     /* .spectrum-FieldLabel--sizeM,
    * .spectrum-FieldLabel--sizeS */
     --spectrum-fieldlabel-text-font-weight: var(
@@ -36,7 +36,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-dimension-size-65
     );
 }
-.spectrum-FieldLabel--sizeL {
+:host([size='l']) {
     /* .spectrum-FieldLabel--sizeL */
     --spectrum-fieldlabel-text-font-weight: var(
         --spectrum-alias-body-text-font-weight,
@@ -60,7 +60,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-dimension-size-115
     );
 }
-.spectrum-FieldLabel--sizeXL {
+:host([size='xl']) {
     /* .spectrum-FieldLabel--sizeXL */
     --spectrum-fieldlabel-text-font-weight: var(
         --spectrum-alias-body-text-font-weight,

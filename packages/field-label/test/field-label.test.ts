@@ -14,6 +14,8 @@ import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { Textfield } from '@spectrum-web-components/textfield';
+import '@spectrum-web-components/dropdown/sp-dropdown.js';
+import { Dropdown } from '@spectrum-web-components/dropdown';
 
 import '../sp-field-label.js';
 import { FieldLabel } from '..';
@@ -134,5 +136,30 @@ describe('FieldLabel', () => {
         await elementUpdated(el);
 
         expect(document.activeElement === input);
+    });
+    it('forces focus visible when available', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <sp-field-label required for="test"></sp-field-label>
+                    <sp-dropdown id="test">
+                        <sp-menu>
+                            <sp-menu-item>Test</sp-menu-item>
+                        </sp-menu>
+                    </sp-dropdown>
+                </div>
+            `
+        );
+        const el = test.querySelector('sp-field-label') as FieldLabel;
+        const dropdown = test.querySelector('sp-dropdown') as Dropdown;
+
+        await elementUpdated(el);
+        expect(!dropdown.focused);
+
+        el.click();
+        await elementUpdated(el);
+
+        expect(document.activeElement === dropdown);
+        expect(dropdown.focused);
     });
 });
