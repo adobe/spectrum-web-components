@@ -27,10 +27,20 @@ const config = {
                 {
                     type: 'enum',
                     name: 'size',
+                    forceOntoHost: true,
                     values: [
-                        '.spectrum-Divider--small',
-                        '.spectrum-Divider--medium',
-                        '.spectrum-Divider--large',
+                        {
+                            name: 's',
+                            selector: '.spectrum-Divider--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Divider--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Divider--sizeL',
+                        },
                     ],
                 },
             ],
