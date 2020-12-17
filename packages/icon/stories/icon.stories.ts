@@ -16,7 +16,7 @@ import { back } from './images';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '@spectrum-web-components/icons/sp-icons-large.js';
 
-const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'];
+const sizes = ['s', 'm', 'l', 'xl', 'xxl'];
 
 export default {
     component: 'sp-icon',
@@ -28,7 +28,7 @@ export const Medium = (): TemplateResult => {
         <sp-icons-medium></sp-icons-medium>
         ${sizes.map(
             (size) => html`
-                <sp-icon size=${size} name="ui:Magnifier"></sp-icon>
+                <sp-icon size=${size} name="ui:Chevron200"></sp-icon>
             `
         )}
     `;
@@ -39,7 +39,7 @@ export const Large = (): TemplateResult => {
         <sp-icons-large></sp-icons-large>
         ${sizes.map(
             (size) => html`
-                <sp-icon size=${size} name="ui:Magnifier"></sp-icon>
+                <sp-icon size=${size} name="ui:Chevron400"></sp-icon>
             `
         )}
     `;
