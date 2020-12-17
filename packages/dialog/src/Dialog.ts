@@ -21,14 +21,11 @@ import {
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/rule/sp-rule.js';
-import '@spectrum-web-components/button/sp-action-button.js';
-import alertMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-medium.css.js';
-import crossLargeStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross-large.css.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    AlertMediumIcon,
-    CrossLargeIcon,
-} from '@spectrum-web-components/icons-ui';
+import { Cross500Icon } from '@spectrum-web-components/icons-ui';
+import { AlertIcon } from '@spectrum-web-components/icons-workflow';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 
 import styles from './dialog.css.js';
@@ -44,7 +41,7 @@ export class Dialog extends ObserveSlotPresence(SpectrumElement, [
     '[slot="button"]',
 ]) {
     public static get styles(): CSSResultArray {
-        return [styles, alertMediumStyles, crossLargeStyles];
+        return [styles, crossStyles];
     }
 
     @query('.content')
@@ -117,29 +114,15 @@ export class Dialog extends ObserveSlotPresence(SpectrumElement, [
                 ></slot>
                 ${this.error
                     ? html`
-                          <sp-icon class="type-icon alert-medium">
-                              ${AlertMediumIcon({ hidden: true })}
+                          <sp-icon class="type-icon">
+                              ${AlertIcon({ hidden: true })}
                           </sp-icon>
-                      `
-                    : html``}
-                ${this.dismissable
-                    ? html`
-                          <sp-action-button
-                              class="close-button"
-                              label="Close"
-                              quiet
-                              @click=${this.close}
-                          >
-                              <sp-icon class="cross-large">
-                                  ${CrossLargeIcon({ hidden: true })}
-                              </sp-icon>
-                          </sp-action-button>
                       `
                     : html``}
                 ${this.noDivider
                     ? html``
                     : html`
-                          <sp-rule size="medium" class="divider"></sp-rule>
+                          <sp-rule size="m" class="divider"></sp-rule>
                       `}
                 <div class="content">
                     <slot @slotchange=${this.onContentSlotChange}></slot>
@@ -160,6 +143,25 @@ export class Dialog extends ObserveSlotPresence(SpectrumElement, [
                           >
                               <slot name="button"></slot>
                           </sp-button-group>
+                      `
+                    : html``}
+                ${this.dismissable
+                    ? html`
+                          <sp-action-button
+                              class="close-button"
+                              label="Close"
+                              quiet
+                              size="m"
+                              @click=${this.close}
+                          >
+                              <sp-icon
+                                  class="spectrum-UIIcon-Cross500"
+                                  size="m"
+                                  slot="icon"
+                              >
+                                  ${Cross500Icon()}
+                              </sp-icon>
+                          </sp-action-button>
                       `
                     : html``}
             </div>
