@@ -13,6 +13,7 @@ import '../sp-tabs.js';
 import '../sp-tab.js';
 import { Tabs, Tab } from '../';
 import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import {
     fixture,
     elementUpdated,
@@ -265,18 +266,10 @@ describe('Tabs', () => {
         const el = await fixture<Tabs>(html`
             <sp-tabs>
                 <sp-tab label="Tab 1" value="first" selected>
-                    <sp-icon
-                        slot="icon"
-                        size="s"
-                        name="ui:CheckmarkSmall"
-                    ></sp-icon>
+                    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
                 </sp-tab>
                 <sp-tab label="Tab 2" value="second">
-                    <sp-icon
-                        slot="icon"
-                        size="s"
-                        name="ui:CheckmarkSmall"
-                    ></sp-icon>
+                    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
                 </sp-tab>
             </sp-tabs>
         `);
@@ -315,18 +308,10 @@ describe('Tabs', () => {
         const el = await fixture<Tabs>(html`
             <sp-tabs selected="Unknown">
                 <sp-tab label="Tab 1" value="first">
-                    <sp-icon
-                        slot="icon"
-                        size="s"
-                        name="ui:CheckmarkSmall"
-                    ></sp-icon>
+                    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
                 </sp-tab>
                 <sp-tab label="Tab 2" value="second">
-                    <sp-icon
-                        slot="icon"
-                        size="s"
-                        name="ui:CheckmarkSmall"
-                    ></sp-icon>
+                    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
                 </sp-tab>
             </sp-tabs>
         `);
@@ -449,18 +434,10 @@ describe('Tabs', () => {
                 return html`
                     <sp-tabs selected="Unknown">
                         <sp-tab label="Tab 1" value="first">
-                            <sp-icon
-                                slot="icon"
-                                size="s"
-                                name="ui:CheckmarkSmall"
-                            ></sp-icon>
+                            <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
                         </sp-tab>
                         <sp-tab label="Tab 2" value="second">
-                            <sp-icon
-                                slot="icon"
-                                size="s"
-                                name="ui:CheckmarkSmall"
-                            ></sp-icon>
+                            <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
                         </sp-tab>
                     </sp-tabs>
                 `;
@@ -516,18 +493,10 @@ describe('Tabs', () => {
         const el = await fixture<Tabs>(html`
             <sp-tabs selected="Unknown" direction="vertical">
                 <sp-tab label="Tab 1" value="first">
-                    <sp-icon
-                        slot="icon"
-                        size="s"
-                        name="ui:CheckmarkSmall"
-                    ></sp-icon>
+                    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
                 </sp-tab>
                 <sp-tab label="Tab 2" value="second">
-                    <sp-icon
-                        slot="icon"
-                        size="s"
-                        name="ui:CheckmarkSmall"
-                    ></sp-icon>
+                    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
                 </sp-tab>
             </sp-tabs>
         `);

@@ -14,7 +14,7 @@ import { TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { HelpIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 
 interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
@@ -176,9 +176,7 @@ export const withIcon = (): TemplateResult => {
                 variant: 'primary',
                 iconRight: iconRight,
                 content: html`
-                    <sp-icon slot="icon" size="m">
-                        ${HelpIcon({ hidden: true })}
-                    </sp-icon>
+                    <sp-icon-help slot="icon"></sp-icon-help>
                     Help
                 `,
             })}

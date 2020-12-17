@@ -52,6 +52,7 @@ const config = {
                     ],
                 },
             ],
+            exclude: [/img/, /svg/],
         },
         {
             name: 'icon-arrow',

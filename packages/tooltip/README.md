@@ -45,7 +45,6 @@ Tooltips can be top, bottom, left, or right.
 #### Informative
 
 This is the informative or info variant of Tooltip
-<sp-icons-medium></sp-icons-medium>
 
 ```html
 <sp-tooltip open placement="top" variant="info">Label</sp-tooltip>
@@ -53,11 +52,11 @@ This is the informative or info variant of Tooltip
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="info">
-    <sp-icon size="s" name="ui:InfoSmall" slot="icon"></sp-icon>
+    <sp-icon-info slot="icon" size="s"></sp-icon-info>
     Label
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="info">
-    <sp-icon size="s" name="ui:InfoSmall" slot="icon"></sp-icon>
+    <sp-icon-info slot="icon" size="s"></sp-icon-info>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 ```
@@ -72,11 +71,11 @@ This is the postive (a.k.a.) success variant of Tooltip
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="positive">
-    <sp-icon size="s" name="ui:CheckmarkSmall" slot="icon"></sp-icon>
+    <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
     Label
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="positive">
-    <sp-icon size="s" name="ui:CheckmarkSmall" slot="icon"></sp-icon>
+    <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 ```
@@ -91,11 +90,11 @@ This is the negative a.k.a. error variant of Tooltip
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="negative">
-    <sp-icon size="s" name="ui:AlertSmall" slot="icon"></sp-icon>
+    <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
     Label
 </sp-tooltip>
 <sp-tooltip open placement="top" variant="negative">
-    <sp-icon size="s" name="ui:AlertSmall" slot="icon"></sp-icon>
+    <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
 ```

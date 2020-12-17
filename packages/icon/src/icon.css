@@ -16,12 +16,8 @@ governing permissions and limitations under the License.
     height: 100%;
 }
 
-img {
-    width: 100%;
-    height: auto;
-    vertical-align: top;
-}
-
+img,
+svg,
 ::slotted(*) {
     height: 100%;
     width: 100%;
