@@ -9,6 +9,7 @@
     "references": [
         { "path": "../icon" },
         { "path": "../icons-ui" },
+        { "path": "../icons-workflow" },
         { "path": "../shared" }
     ]
 }
