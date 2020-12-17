@@ -12,15 +12,42 @@ governing permissions and limitations under the License.
 
 import '../';
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/iconset/src/icons-demo.js';
+import '@spectrum-web-components/iconset/stories/icons-demo.js';
 import { html, color, select } from '@open-wc/demoing-storybook';
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import '../';
 import * as icons from '../';
+import { iconManifest } from './icon-manifest.js';
 
 export default {
     title: 'Icons',
+};
+
+export const uiElements = (): TemplateResult => {
+    const size = select(
+        'Icon Size',
+        ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'],
+        'm',
+        'Element'
+    );
+    return html`
+        <style>
+            .icon {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            sp-icon {
+                margin-bottom: 10px;
+            }
+        </style>
+        <icons-demo
+            style="color: ${color('Color', '#000', 'Element')}"
+            size=${size}
+            .icons=${iconManifest}
+        ></icons-demo>
+    `;
 };
 
 export const ui = (): TemplateResult => {
