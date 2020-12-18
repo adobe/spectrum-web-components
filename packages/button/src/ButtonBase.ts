@@ -50,11 +50,11 @@ export class ButtonBase extends LikeAnchor(
         return this.slotHasContent;
     }
 
-    @query('.button')
-    private buttonElement!: HTMLButtonElement;
+    @query('.anchor')
+    private anchorElement!: HTMLButtonElement;
 
     public get focusElement(): HTMLElement {
-        return this.buttonElement || this;
+        return this;
     }
 
     protected get buttonContent(): TemplateResult[] {
@@ -78,6 +78,14 @@ export class ButtonBase extends LikeAnchor(
         return content;
     }
 
+    constructor() {
+        super();
+
+        this.addEventListener('click', this.handleClickCapture, {
+            capture: true,
+        });
+    }
+
     public click(): void {
         if (this.disabled) {
             return;
@@ -90,16 +98,29 @@ export class ButtonBase extends LikeAnchor(
         super.click();
     }
 
+    private handleClickCapture(event: Event): void | boolean {
+        if (this.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+            return false;
+        }
+    }
+
     private shouldProxyClick(): boolean {
-        if (this.type !== 'button') {
+        let handled = false;
+        if (this.anchorElement) {
+            this.anchorElement.click();
+            handled = true;
+        } else if (this.type !== 'button') {
             const proxy = document.createElement('button');
             proxy.type = this.type;
             this.insertAdjacentElement('afterend', proxy);
             proxy.click();
             proxy.remove();
-            return true;
+            handled = true;
         }
-        return false;
+        return handled;
     }
 
     protected renderButton(): TemplateResult {
@@ -112,7 +133,7 @@ export class ButtonBase extends LikeAnchor(
         return this.href && this.href.length > 0
             ? this.renderAnchor({
                   id: 'button',
-                  className: 'button',
+                  className: 'button anchor',
                   anchorContent: this.buttonContent,
               })
             : this.renderButton();
@@ -122,8 +143,10 @@ export class ButtonBase extends LikeAnchor(
         const { code } = event;
         switch (code) {
             case 'Space':
-                this.addEventListener('keyup', this.handleKeyup);
-                this.active = true;
+                if (typeof this.href === 'undefined') {
+                    this.addEventListener('keyup', this.handleKeyup);
+                    this.active = true;
+                }
                 break;
             default:
                 break;
@@ -161,12 +184,8 @@ export class ButtonBase extends LikeAnchor(
     private manageRole(): void {
         if (this.href && this.href.length > 0) {
             this.removeAttribute('role');
-            this.removeEventListener('keydown', this.handleKeydown);
-            this.removeEventListener('keypress', this.handleKeypress);
         } else if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'button');
-            this.addEventListener('keydown', this.handleKeydown);
-            this.addEventListener('keypress', this.handleKeypress);
         }
     }
 
@@ -177,6 +196,8 @@ export class ButtonBase extends LikeAnchor(
         }
         this.manageRole();
         this.addEventListener('click', this.shouldProxyClick);
+        this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('keypress', this.handleKeypress);
     }
 
     protected updated(changed: PropertyValues): void {
@@ -193,6 +214,9 @@ export class ButtonBase extends LikeAnchor(
             } else {
                 this.removeEventListener('focusout', this.handleFocusout);
             }
+        }
+        if (this.anchorElement) {
+            this.anchorElement.tabIndex = -1;
         }
     }
 }
