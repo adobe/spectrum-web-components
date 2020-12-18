@@ -18,6 +18,11 @@ governing permissions and limitations under the License.
     vertical-align: top;
 }
 
+:host([disabled]) {
+    pointer-events: none;
+    cursor: auto;
+}
+
 #button {
     color: inherit;
     text-decoration: inherit;
@@ -25,6 +30,10 @@ governing permissions and limitations under the License.
 
 #button:focus {
     outline: none;
+}
+
+:host:after {
+    pointer-events: none;
 }
 
 slot[name='icon']::slotted(:not(sp-icon)) {

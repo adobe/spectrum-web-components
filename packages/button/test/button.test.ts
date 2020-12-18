@@ -30,7 +30,7 @@ describe('Button', () => {
     it('loads default', async () => {
         const el = await fixture<Button>(
             html`
-                <sp-button>Button</sp-button>
+                <sp-button tabindex="0">Button</sp-button>
             `
         );
 
@@ -53,7 +53,7 @@ describe('Button', () => {
     it('loads default w/ an icon', async () => {
         const el = await fixture<Button>(
             html`
-                <sp-button>
+                <sp-button label="">
                     Button
                     <svg slot="icon"></svg>
                 </sp-button>
@@ -63,6 +63,8 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
+        expect(!((el as unknown) as { hasIcon: boolean }).hasIcon);
+        expect(!((el as unknown) as { iconRight: boolean }).iconRight);
         await expect(el).to.be.accessible();
     });
     it('loads default w/ an icon-right', async () => {
@@ -191,28 +193,38 @@ describe('Button', () => {
         expect(focusedCount).to.equal(1);
     });
     it('manages `disabled`', async () => {
+        const clickSpy = spy();
         const el = await fixture<Button>(
             html`
-                <sp-button>
+                <sp-button @click=${() => clickSpy()}>
                     Button
                 </sp-button>
             `
         );
 
         await elementUpdated(el);
-        const focusElement = el.focusElement as HTMLButtonElement;
+        el.click();
+        await elementUpdated(el);
+        expect(clickSpy.calledOnce);
 
-        expect(focusElement.disabled, 'initially not').to.be.false;
-
+        clickSpy.resetHistory();
         el.disabled = true;
         await elementUpdated(el);
-
-        expect(focusElement.disabled).to.be.true;
-
-        el.disabled = false;
+        el.click();
         await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(0);
 
-        expect(focusElement.disabled, 'finally not').to.be.false;
+        clickSpy.resetHistory();
+        await elementUpdated(el);
+        el.dispatchEvent(new Event('click', {}));
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(0);
+
+        clickSpy.resetHistory();
+        el.disabled = false;
+        el.click();
+        await elementUpdated(el);
+        expect(clickSpy.calledOnce);
     });
     it('manages `aria-disabled`', async () => {
         const el = await fixture<Button>(
@@ -444,5 +456,45 @@ describe('Button', () => {
 
         expect(submitSpy.callCount).to.equal(1);
         expect(resetSpy.callCount).to.equal(1);
+    });
+    it('proxies click by [href]', async () => {
+        const clickSpy = spy();
+        const el = await fixture<Button>(
+            html`
+                <sp-button href="test_url">With Href</sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        ((el as unknown) as {
+            anchorElement: HTMLAnchorElement;
+        }).anchorElement.addEventListener('click', (event: Event): void => {
+            event.preventDefault();
+            event.stopPropagation();
+            clickSpy();
+        });
+        expect(clickSpy.callCount).to.equal(0);
+
+        el.click();
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(1);
+    });
+    it('manages "active" while focused', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button label="Button">
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        el.active = true;
+        await elementUpdated(el);
+
+        el.dispatchEvent(new FocusEvent('focusout'));
+        await elementUpdated(el);
+
+        expect(el.active).to.be.false;
     });
 });
