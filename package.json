@@ -107,7 +107,7 @@
         "@typescript-eslint/eslint-plugin": "^4.2.0",
         "@typescript-eslint/parser": "^4.2.0",
         "@vaadin/router": "^1.2.0",
-        "@web/dev-server": "^0.0.15",
+        "@web/dev-server": "^0.1.0",
         "@web/test-runner": "^0.9.4",
         "@web/test-runner-playwright": "^0.6.4",
         "@webcomponents/webcomponentsjs": "^2.4.4",
