@@ -2936,9 +2936,9 @@
     whatwg-url "^7.0.0"
 
 "@open-wc/building-webpack@^2.13.45":
-  version "2.13.45"
-  resolved "https://registry.yarnpkg.com/@open-wc/building-webpack/-/building-webpack-2.13.45.tgz#46d2ee49cccef4d50b3a729498233ee31bc8f777"
-  integrity sha512-e2unfCbeEjw1sxYYVWOsSEpS5yx6kCMSD38MKxRepRgTcoz8pmU16TaanYCPyQoA045cBKnih5NeAWl9SWFDXQ==
+  version "2.13.46"
+  resolved "https://registry.yarnpkg.com/@open-wc/building-webpack/-/building-webpack-2.13.46.tgz#fe57e735eab96d9cfe9d99952e90a1cb3b3f7611"
+  integrity sha512-UAkH7edseLJKA1iTR63GVAjq/sJFOStMhcRstA1+fF7w7fFwB3sN+CtiUvhB51ZhHwbUDXsto69j8s8ZZmbvZg==
   dependencies:
     "@babel/core" "^7.11.1"
     "@babel/plugin-proposal-nullish-coalescing-operator" "^7.10.4"
@@ -2946,14 +2946,14 @@
     "@babel/plugin-syntax-dynamic-import" "^7.8.3"
     "@babel/plugin-syntax-import-meta" "^7.10.4"
     "@babel/preset-env" "^7.9.0"
-    "@open-wc/building-utils" "^2.18.2"
-    "@open-wc/webpack-index-html-plugin" "^1.7.13"
+    "@open-wc/building-utils" "^2.18.3"
+    "@open-wc/webpack-index-html-plugin" "^1.7.14"
     babel-loader "^8.0.0"
     babel-plugin-bundled-import-meta "^0.3.2"
     babel-plugin-template-html-minifier "^4.0.0"
     clean-webpack-plugin "^2.0.0"
     copy-webpack-plugin "^5.0.1"
-    es-dev-server "^1.57.7"
+    es-dev-server "^1.57.8"
     terser-webpack-plugin "^2.3.0"
     webpack-merge "^4.1.5"
     workbox-webpack-plugin "^4.3.1"
@@ -3121,12 +3121,12 @@
     mocha "^6.2.2"
     sinon-chai "^3.3.0"
 
-"@open-wc/webpack-index-html-plugin@^1.7.13":
-  version "1.7.13"
-  resolved "https://registry.yarnpkg.com/@open-wc/webpack-index-html-plugin/-/webpack-index-html-plugin-1.7.13.tgz#0d972436e0b537c730a2b95ddc9df00279d69233"
-  integrity sha512-cjimzHLPCHlO37PSGWdznqFt6xinx9QWMtnH6ZRen5wOa6p/hB0JMSIfOzBXsZLJ/ocv8Up00v9KtHtTgDnZ4w==
+"@open-wc/webpack-index-html-plugin@^1.7.14":
+  version "1.7.14"
+  resolved "https://registry.yarnpkg.com/@open-wc/webpack-index-html-plugin/-/webpack-index-html-plugin-1.7.14.tgz#538647b01df58a29c041ed29486bd41b1c4033e3"
+  integrity sha512-IFPGUGXuy6kuYxlY74cXdGhXkmYhr9JheU+8yyEBSFzWN5RolrinQ9DTJ9A06nJbnc/ts2yJ77MQPzGmGB/nRg==
   dependencies:
-    "@open-wc/building-utils" "^2.18.2"
+    "@open-wc/building-utils" "^2.18.3"
     deepmerge "^4.2.2"
     parse5 "^5.1.1"
 
@@ -3954,6 +3954,11 @@
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@types/lunr/-/lunr-2.3.2.tgz#d4a51703315ed0e53c43257216f1014ce6491562"
   integrity sha512-zcUZYquYDUEegRRPQtkZ068U9CoIjW6pJMYCVDRK25r76FEWvMm1oHqZQUfQh4ayIZ42lipXOpXEiAtGXc1XUg==
+
+"@types/mime-types@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/mime-types/-/mime-types-2.1.0.tgz#9ca52cda363f699c69466c2a6ccdaad913ea7a73"
+  integrity sha1-nKUs2jY/aZxpRmwqbM2q2RPqenM=
 
 "@types/mime@*":
   version "2.0.1"
@@ -9676,10 +9681,10 @@ es-abstract@^1.17.0-next.1, es-abstract@^1.17.2, es-abstract@^1.17.5:
     string.prototype.trimleft "^2.1.1"
     string.prototype.trimright "^2.1.1"
 
-es-dev-server@^1.5.0, es-dev-server@^1.57.7:
-  version "1.57.8"
-  resolved "https://registry.yarnpkg.com/es-dev-server/-/es-dev-server-1.57.8.tgz#5aa107f27066686a75ebf03fed412a7de3d7127d"
-  integrity sha512-+zfCy3hH337ktOoHJLcpEIoxRPWAuJA6SjgMFz1ZVV8DYksK/zITrhQbB4SzAkxRNXwJsc+knM29mTTsbwAXHw==
+es-dev-server@^1.5.0, es-dev-server@^1.57.7, es-dev-server@^1.57.8:
+  version "1.60.1"
+  resolved "https://registry.yarnpkg.com/es-dev-server/-/es-dev-server-1.60.1.tgz#79f6906b6115093787e3966055027a6575174632"
+  integrity sha512-7/bn3j51qqQ+D9EKu3vup44XhRGzhNKwTf7MPykv9j7NucIw5BlRJCL0rqMXDF7MCiRiS1RRgblKM7dNKBIp5g==
   dependencies:
     "@babel/core" "^7.11.1"
     "@babel/plugin-proposal-dynamic-import" "^7.10.4"
@@ -9709,6 +9714,7 @@ es-dev-server@^1.5.0, es-dev-server@^1.57.7:
     "@types/koa-static" "^4.0.1"
     "@types/koa__cors" "^3.0.1"
     "@types/lru-cache" "^5.1.0"
+    "@types/mime-types" "^2.1.0"
     "@types/minimatch" "^3.0.3"
     "@types/path-is-inside" "^1.0.0"
     "@types/whatwg-url" "^6.4.0"
