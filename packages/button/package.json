@@ -34,7 +34,9 @@
         "./sp-button": "./sp-button.js",
         "./sp-button.js": "./sp-button.js",
         "./sp-clear-button": "./sp-clear-button.js",
-        "./sp-clear-button.js": "./sp-clear-button.js"
+        "./sp-clear-button.js": "./sp-clear-button.js",
+        "./sp-field-button": "./sp-field-button.js",
+        "./sp-field-button.js": "./sp-field-button.js"
     },
     "files": [
         "custom-elements.json",
