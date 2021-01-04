@@ -16,6 +16,8 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/dropdown/sp-dropdown.js';
 import { Dropdown } from '@spectrum-web-components/dropdown';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 
 import '../sp-field-label.js';
 import { FieldLabel } from '..';
