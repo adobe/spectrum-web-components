@@ -96,7 +96,9 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 
 </div>
 
-## CTA Split Button
+## Variants
+
+### CTA
 
 ```html
 <sp-split-button>
@@ -119,7 +121,7 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## Primary Split Button
+### Primary
 
 ```html
 <sp-split-button variant="primary">
@@ -142,7 +144,7 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## Secondary Split Button
+### Secondary
 
 ```html
 <sp-split-button variant="secondary">
@@ -165,7 +167,11 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## CTA More Split Button
+## More button
+
+When using the `more` value of the `type` attribute, an `<sp-split-button>` will maintain its default option value without regard to the most recently used option.
+
+### CTA
 
 ```html
 <sp-split-button type="more">
@@ -188,7 +194,7 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## Primary More Split Button
+### Primary
 
 ```html
 <sp-split-button type="more" variant="primary">
@@ -211,7 +217,7 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## Secondary More Split Button
+### Secondary
 
 ```html
 <sp-split-button type="more" variant="secondary">
