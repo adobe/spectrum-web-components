@@ -29,6 +29,31 @@ describe('Meter', () => {
         await expect(el).to.be.accessible();
     });
 
+    it('accepts a changing process w/ [label]', async () => {
+        const el = await fixture<Meter>(html`
+            <sp-meter label="Changing Value"></sp-meter>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('0');
+
+        el.progress = 50;
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('50');
+
+        el.progress = 100;
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-valuenow')).to.be.true;
+        expect(el.getAttribute('aria-valuenow')).to.equal('100');
+    });
+
     it('accepts a changing process', async () => {
         const el = await fixture<Meter>(html`
             <sp-meter>Changing Value</sp-meter>
