@@ -297,6 +297,7 @@ jobs:
                   name: Installing Dependencies
                   command: yarn
             - run: yarn docs:build
+            - run: echo '/*    /index.html   200' > documentation/dist/_redirects
             - run: yarn netlify deploy
 
 workflows:
