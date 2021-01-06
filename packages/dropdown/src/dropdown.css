@@ -20,7 +20,8 @@ sp-popover {
     display: none;
 }
 
-.dropdown {
+.dropdown,
+.validationIcon {
     flex-shrink: 0;
 }
 
