@@ -68,6 +68,34 @@ describe('Sidenav', () => {
 
         expect(document.activeElement === el).to.be.false;
     });
+    it('does not accept focus when all children [disabled]', async () => {
+        const el = await fixture<SideNav>(
+            html`
+                <sp-sidenav>
+                    <sp-sidenav-item
+                        disabled
+                        value="Section 1"
+                        label="Section 1"
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item
+                        disabled
+                        value="Section 2"
+                        label="Section 2"
+                    ></sp-sidenav-item>
+                </sp-sidenav>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+        expect(el.matches(':focus-within')).to.be.false;
+    });
     it('sets manageTabIndex on new children', async () => {
         const el = await fixture<SideNav>(
             html`

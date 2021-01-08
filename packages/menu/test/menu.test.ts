@@ -27,6 +27,7 @@ import {
     tabEvent,
     tEvent,
 } from '../../../test/testing-helpers.js';
+import { spy } from 'sinon';
 
 describe('Menu', () => {
     it('renders empty', async () => {
@@ -60,9 +61,10 @@ describe('Menu', () => {
         expect(document.activeElement === anchor, 'anchor').to.be.true;
     });
     it('renders w/ [disabled] menu items', async () => {
+        const focusinSpy = spy();
         const el = await fixture<Menu>(
             html`
-                <sp-menu tabindex="0">
+                <sp-menu tabindex="0" @focusin=${() => focusinSpy()}>
                     <sp-menu-item disabled>Disabled item</sp-menu-item>
                 </sp-menu>
             `
@@ -76,6 +78,35 @@ describe('Menu', () => {
         await elementUpdated(el);
         expect(document.activeElement === el, 'self not focused, 2').to.be
             .false;
+        expect(focusinSpy.callCount).to.equal(0);
+    });
+    it('renders w/ all [disabled] menu items', async () => {
+        const focusinSpy = spy();
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu tabindex="0" @focusin=${() => focusinSpy()}>
+                    <sp-menu-item disabled>Disabled item 1</sp-menu-item>
+                    <sp-menu-item disabled>Disabled item 2</sp-menu-item>
+                </sp-menu>
+            `
+        );
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
+        await elementUpdated(el);
+        expect(document.activeElement === el, 'self not focused, 1').to.be
+            .false;
+
+        el.focus();
+        await elementUpdated(el);
+        expect(document.activeElement === el, 'self not focused, 2').to.be
+            .false;
+        expect(focusinSpy.callCount).to.equal(0);
+        firstItem.focus();
+        await elementUpdated(el);
+        expect(document.activeElement === el, 'self not focused, 2').to.be
+            .false;
+        expect(focusinSpy.callCount).to.equal(0);
+        expect(el.matches(':focus-within')).to.be.false;
     });
     it('renders w/ menu items', async () => {
         const el = await fixture<Menu>(
@@ -239,7 +270,6 @@ describe('Menu', () => {
         expect(document.activeElement === el).to.be.true;
         expect(appendedItem.focused).to.be.true;
     });
-
     it('cleans up when tabbing away', async () => {
         const el = await fixture<Menu>(
             html`
@@ -289,5 +319,43 @@ describe('Menu', () => {
         // focus management should start again from the first item.
         el.dispatchEvent(arrowDownEvent);
         expect(secondItem.focused, 'second').to.be.true;
+    });
+    it('handles focus across focused MenuItem removals', async () => {
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu id="test">
+                    <sp-menu-item class="first">
+                        Deselect
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Invert Selection
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Feather...
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Select and Mask...
+                    </sp-menu-item>
+                    <sp-menu-item selected class="selected">
+                        Save Selection
+                    </sp-menu-item>
+                </sp-menu>
+            `
+        );
+        const firstItem = el.querySelector('.first') as MenuItem;
+        const selectedItem = el.querySelector('.selected') as MenuItem;
+
+        await elementUpdated(el);
+
+        el.focus();
+
+        expect(document.activeElement === el);
+        expect(selectedItem.focused);
+
+        selectedItem.remove();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el);
+        expect(firstItem.focused);
     });
 });

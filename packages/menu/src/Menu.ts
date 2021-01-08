@@ -59,7 +59,6 @@ export class Menu extends SpectrumElement {
         this.onClick = this.onClick.bind(this);
         this.addEventListener('click', this.onClick);
         this.addEventListener('focusin', this.startListeningToKeyboard);
-        this.addEventListener('focusout', this.stopListeningToKeyboard);
     }
 
     public focus(): void {
@@ -90,10 +89,16 @@ export class Menu extends SpectrumElement {
     }
 
     public startListeningToKeyboard(): void {
-        if (this.menuItems.length === 0) {
-            return;
-        }
         this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('focusout', this.handleFocusout);
+    }
+
+    public handleFocusout(): void {
+        this.stopListeningToKeyboard();
+        const focusedItem = this.menuItems[this.focusedItemIndex] as MenuItem;
+        if (focusedItem) {
+            focusedItem.focused = false;
+        }
     }
 
     public stopListeningToKeyboard(): void {
@@ -119,17 +124,25 @@ export class Menu extends SpectrumElement {
     }
 
     public focusMenuItemByOffset(offset: number): void {
+        const step = offset || 1;
         const focusedItem = this.menuItems[this.focusedItemIndex] as MenuItem;
         focusedItem.focused = false;
         this.focusedItemIndex =
             (this.menuItems.length + this.focusedItemIndex + offset) %
             this.menuItems.length;
         let itemToFocus = this.menuItems[this.focusedItemIndex] as MenuItem;
-        while (itemToFocus.disabled) {
+        let availableItems = this.menuItems.length;
+        // cycle through the available items in the directions of the offset to find the next non-disabled item
+        while (itemToFocus.disabled && availableItems) {
+            availableItems -= 1;
             this.focusedItemIndex =
-                (this.menuItems.length + this.focusedItemIndex + offset) %
+                (this.menuItems.length + this.focusedItemIndex + step) %
                 this.menuItems.length;
             itemToFocus = this.menuItems[this.focusedItemIndex] as MenuItem;
+        }
+        // if there are no non-disabled items, skip the work to focus a child
+        if (itemToFocus.disabled) {
+            return;
         }
         itemToFocus.focused = true;
         this.setAttribute('aria-activedescendant', itemToFocus.id);
@@ -145,6 +158,10 @@ export class Menu extends SpectrumElement {
                     if (this.menuItems.length === 0) {
                         return;
                     }
+                    const focusedItem = this.menuItems[
+                        this.focusedItemIndex
+                    ] as MenuItem;
+                    focusedItem.focused = false;
                     if (this.querySelector('[selected]')) {
                         const itemToBlur = this.menuItems[
                             this.focusInItemIndex
@@ -189,6 +206,9 @@ export class Menu extends SpectrumElement {
         this.updateSelectedItemIndex();
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
         focusInItem.tabIndex = 0;
+        if ((this.getRootNode() as Document).activeElement === this) {
+            focusInItem.focused = true;
+        }
     };
 
     public render(): TemplateResult {
