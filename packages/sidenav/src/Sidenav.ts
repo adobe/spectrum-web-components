@@ -133,8 +133,15 @@ export class SideNav extends Focusable {
         const focused = items.indexOf(getActiveElement(this) as SideNavItem);
         let next = focused;
         next = (items.length + next + direction) % items.length;
-        while (this.isDisabledChild(items[next])) {
+        let availableItems = items.length;
+        // cycle through the available items in the directions of the offset to find the next non-disabled item
+        while (this.isDisabledChild(items[next]) && availableItems) {
+            availableItems -= 1;
             next = (items.length + next + direction) % items.length;
+        }
+        // if there are no non-disabled items, skip the work to focus a child
+        if (this.isDisabledChild(items[next])) {
+            return;
         }
         items[next].focus();
     }

@@ -45,6 +45,29 @@ describe('Accordion', () => {
 
         expect(document.activeElement === el).to.be.false;
     });
+    it('does not accept focus when all children [disabled]', async () => {
+        const el = await fixture<Accordion>(
+            html`
+                <sp-accordion>
+                    <sp-accordion-item disabled label="Heading 1">
+                        <div>Item 1</div>
+                    </sp-accordion-item>
+                    <sp-accordion-item disabled label="Heading 2">
+                        <div>Item 2</div>
+                    </sp-accordion-item>
+                </sp-accordion>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+    });
     it('only allows one open item by default', async () => {
         const el = await fixture<Accordion>(Default());
         await elementUpdated(el);
