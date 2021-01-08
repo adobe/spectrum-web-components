@@ -172,8 +172,7 @@ export class Card extends ObserveSlotPresence(
     protected get images(): TemplateResult[] {
         const images: TemplateResult[] = [];
         if (this.hasPreview) images.push(this.renderPreviewImage);
-        if (this.hasCoverPhoto || this.variant === 'standard')
-            images.push(this.renderCoverImage);
+        if (this.hasCoverPhoto) images.push(this.renderCoverImage);
         return images;
     }
 
