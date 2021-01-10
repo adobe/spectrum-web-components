@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { boolean } from '@open-wc/demoing-storybook';
 
 import '../sp-dialog.js';
 import { landscape } from './images.js';
@@ -23,9 +22,8 @@ export default {
 };
 
 export const small = (): TemplateResult => {
-    const noTransitions = boolean('No Transitions', false, 'Testing');
     return html`
-        <sp-dialog size="small" ?no-transitions=${noTransitions}>
+        <sp-dialog size="small">
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor

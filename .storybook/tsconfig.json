@@ -2,7 +2,8 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "noImplicitAny": false,
-        "noUnusedLocals": false
+        "noUnusedLocals": false,
+        "declaration": false
     },
     "include": ["../global.d.ts", "../packages/*/stories/**/*.ts"],
     "exclude": [

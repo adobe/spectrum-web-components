@@ -9,23 +9,18 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { boolean, html, select, text } from '@open-wc/demoing-storybook';
-import { ifDefined, TemplateResult } from '@spectrum-web-components/base';
+import '../sp-tooltip.js';
 import '@spectrum-web-components/icon/sp-icon';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
     AlertIcon,
     CheckmarkIcon,
     InfoIcon,
 } from '@spectrum-web-components/icons-workflow';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Placement } from '@spectrum-web-components/overlay/src/popper';
-import '../sp-tooltip.js';
-
-const tipOptions = ['top', 'bottom', 'left', 'right'];
-
-const variantOptions = ['', 'info', 'positive', 'negative'];
 
 const iconOptions: {
     [key: string]: ({
@@ -49,60 +44,56 @@ const iconOptions: {
 export default {
     component: 'sp-tooltip',
     title: 'Tooltip',
+    argTypes: {
+        text: { control: 'string' },
+    },
+    args: {
+        text: 'Tooltip',
+    },
 };
 
-export const Default = (): TemplateResult => {
+interface Properties {
+    open?: boolean;
+    placement?: Placement;
+    variant?: string;
+    text?: string;
+}
+
+export const Default = ({
+    placement,
+    variant,
+    text,
+}: Properties): TemplateResult => {
     return html`
-        <sp-tooltip
-            ?open=${boolean('Open', true, 'Element')}
-            placement=${select(
-                'Tip direction',
-                tipOptions,
-                tipOptions[0],
-                'Element'
-            )}
-            variant=${select(
-                'Variant',
-                variantOptions,
-                variantOptions[0],
-                'Element'
-            )}
-        >
-            ${text('Tip text', 'Tooltip', 'Element')}
+        <sp-tooltip open placement=${placement} variant=${variant}>
+            ${text}
         </sp-tooltip>
     `;
 };
+Default.args = {
+    placement: 'top',
+    variant: '',
+};
 
-export const wIcon = (): TemplateResult => {
-    const variant = select(
-        'Variant',
-        variantOptions,
-        variantOptions[3],
-        'Element'
-    );
+export const wIcon = ({
+    placement,
+    variant,
+    text,
+}: Properties): TemplateResult => {
     return html`
-        <sp-tooltip
-            ?open=${boolean('Open', true, 'Element')}
-            placement=${select(
-                'Tip direction',
-                tipOptions,
-                tipOptions[0],
-                'Element'
-            )}
-            variant=${ifDefined(variant || undefined)}
-        >
+        <sp-tooltip open placement=${placement} variant=${variant}>
             ${!!variant
                 ? html`
                       <sp-icon slot="icon">${iconOptions[variant]()}</sp-icon>
                   `
                 : html``}
-            ${text('Tip text', 'Tooltip', 'Element')}
+            ${text}
         </sp-tooltip>
     `;
 };
-
-wIcon.story = {
-    name: 'w/ Icon',
+wIcon.args = {
+    placement: 'top',
+    variant: 'negative',
 };
 
 const overlayStyles = html`

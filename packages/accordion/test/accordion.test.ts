@@ -119,7 +119,7 @@ describe('Accordion', () => {
         expect(!secondItem.open);
     });
     it('allows more than one open item when `[allow-multiple]`', async () => {
-        const el = await fixture<Accordion>(AllowMultiple());
+        const el = await fixture<Accordion>(Default({ allowMultiple: true }));
 
         await elementUpdated(el);
         const firstItem = el.querySelector(

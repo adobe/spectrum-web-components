@@ -9,11 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, select, boolean, text } from '@open-wc/demoing-storybook';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-toast.js';
-import { toastVariants } from '../';
 import '@spectrum-web-components/button/sp-button.js';
 
 const toast = ({
@@ -31,26 +29,44 @@ const toast = ({
 export default {
     component: 'sp-toast',
     title: 'Toast',
+    argTypes: {
+        content: { control: 'string' },
+    },
+    args: {
+        content: 'This is a toast message.',
+    },
 };
 
-export const Default = (): TemplateResult => {
-    const content = text('Content', 'This is a toast message.', 'Component');
-    const variants = ['', ...toastVariants];
-    const variant = select('Variant', variants, variants[0], 'Component');
-    const disappearing = boolean('Disappearing', false, 'Component');
-    const open = boolean('Open', true, 'Component');
+interface Properties {
+    variant: string;
+    disappearing: boolean;
+    open: boolean;
+    content: string;
+}
+
+export const Default = ({
+    variant,
+    disappearing,
+    open,
+    content,
+}: Properties): TemplateResult => {
     return toast({ variant, disappearing, open, content });
 };
 
-const variantDemo = (variant: string): TemplateResult => {
-    const content = text('Content', 'This is a toast message.', 'Component');
-    const disappearing = boolean('Disappearing', false, 'Component');
-    const open = boolean('Open', true, 'Component');
+const variantDemo = ({
+    variant,
+    disappearing,
+    open,
+    content,
+}: Properties): TemplateResult => {
     return toast({ variant, disappearing, open, content });
 };
 
-export const Positive = (): TemplateResult => variantDemo('positive');
+export const Positive = (args: Properties): TemplateResult =>
+    variantDemo({ ...args, variant: 'positive' });
 
-export const Negative = (): TemplateResult => variantDemo('negative');
+export const Negative = (args: Properties): TemplateResult =>
+    variantDemo({ ...args, variant: 'negative' });
 
-export const Info = (): TemplateResult => variantDemo('info');
+export const Info = (args: Properties): TemplateResult =>
+    variantDemo({ ...args, variant: 'info' });

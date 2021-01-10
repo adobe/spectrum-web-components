@@ -9,10 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action } from '@open-wc/demoing-storybook';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-checkbox.js';
-import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-checkbox',
@@ -33,8 +32,8 @@ const checkbox = ({
             size=${size}
             ?checked=${checked}
             ?indeterminate=${indeterminate}
-            @click="${action('Click')}"
-            @change="${action('Change')}"
+            @click="${() => console.log('Click')}"
+            @change="${() => console.log('Change')}"
         >
             Checkbox
         </sp-checkbox>

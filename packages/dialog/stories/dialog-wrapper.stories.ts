@@ -11,23 +11,22 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { action, boolean } from '@open-wc/demoing-storybook';
 
 import '@spectrum-web-components/button/sp-button.js';
 
 import '../sp-dialog-wrapper.js';
 import { landscape } from './images.js';
 
+const action = (msg1: string) => (msg2: string | number): void =>
+    console.log(msg1, msg2);
 export default {
     title: 'Dialog Wrapped',
     component: 'sp-dialog-wrapper',
 };
 
 export const wrapperLabeledHero = (): TemplateResult => {
-    const noTransitions = boolean('No Transitions', false, 'Testing');
     return html`
         <sp-dialog-wrapper
-            ?no-transitions=${noTransitions}
             open
             hero=${landscape}
             hero-label="Hero Image Alt Text"
@@ -50,7 +49,6 @@ export const wrapperLabeledHero = (): TemplateResult => {
 export const wrapperDismissable = ({
     actionTracking = true,
 } = {}): TemplateResult => {
-    const noTransitions = boolean('No Transitions', false, 'Testing');
     const announceAction = actionTracking
         ? action
         : () => {
@@ -58,7 +56,6 @@ export const wrapperDismissable = ({
           };
     return html`
         <sp-dialog-wrapper
-            ?no-transitions=${noTransitions}
             open
             hero=${landscape}
             dismissable
@@ -78,7 +75,6 @@ export const wrapperDismissable = ({
 };
 
 export const wrapperDismissableUnderlay = (): TemplateResult => {
-    const noTransitions = boolean('No Transitions', false, 'Testing');
     return html`
         <sp-button
             onClick="this.nextElementSibling.open = !this.nextElementSibling.open"
@@ -87,7 +83,6 @@ export const wrapperDismissableUnderlay = (): TemplateResult => {
             Toggle Dialog
         </sp-button>
         <sp-dialog-wrapper
-            ?no-transitions=${noTransitions}
             open
             hero=${landscape}
             dismissable
@@ -102,7 +97,6 @@ export const wrapperDismissableUnderlay = (): TemplateResult => {
 };
 
 export const wrapperDismissableUnderlayError = (): TemplateResult => {
-    const noTransitions = boolean('No Transitions', false, 'Testing');
     return html`
         <div>
             <sp-button
@@ -112,7 +106,6 @@ export const wrapperDismissableUnderlayError = (): TemplateResult => {
                 Toggle Dialog
             </sp-button>
             <sp-dialog-wrapper
-                ?no-transitions=${noTransitions}
                 open
                 hero=${landscape}
                 dismissable
@@ -131,7 +124,6 @@ export const wrapperDismissableUnderlayError = (): TemplateResult => {
 export const wrapperButtons = ({
     actionTracking = true,
 } = {}): TemplateResult => {
-    const noTransitions = boolean('No Transitions', false, 'Testing');
     const announceAction = actionTracking
         ? action
         : () => {
@@ -139,7 +131,6 @@ export const wrapperButtons = ({
           };
     return html`
         <sp-dialog-wrapper
-            ?no-transitions=${noTransitions}
             open
             size="large"
             headline="Wrapped Dialog w/ Buttons"
@@ -157,10 +148,8 @@ export const wrapperButtons = ({
 };
 
 export const wrapperButtonsUnderlay = (): TemplateResult => {
-    const noTransitions = boolean('No Transitions', false, 'Testing');
     return html`
         <sp-dialog-wrapper
-            ?no-transitions=${noTransitions}
             open
             underlay
             size="large"
@@ -179,10 +168,8 @@ export const wrapperButtonsUnderlay = (): TemplateResult => {
 };
 
 export const wrapperFullscreen = (): TemplateResult => {
-    const noTransitions = boolean('No Transitions', false, 'Testing');
     return html`
         <sp-dialog-wrapper
-            ?no-transitions=${noTransitions}
             open
             headline="Wrapped Dialog - Fullscreen"
             mode="fullscreen"

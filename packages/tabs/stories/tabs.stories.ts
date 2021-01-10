@@ -9,7 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, radios } from '@open-wc/demoing-storybook';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
@@ -17,12 +16,25 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 import '../sp-tabs.js';
 import '../sp-tab.js';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-tabs',
     title: 'Tabs',
+    argTypes: {
+        verticalTabs: { control: 'boolean' },
+        verticalTab: { control: 'boolean' },
+    },
+    args: {
+        type: false,
+        verticalTab: false,
+    },
 };
+
+interface Properties {
+    verticalTabs?: boolean;
+    verticalTab?: boolean;
+}
 
 export const Default = (): TemplateResult => {
     return html`
@@ -93,69 +105,53 @@ export const VerticalRight = (): TemplateResult => {
     `;
 };
 
-export const Icons = (): TemplateResult => {
-    const directions = {
-        horizontal: 'horizontal',
-        vertical: 'vertical',
-    };
-    const type = radios('List Type', directions, directions.horizontal);
-    const tabType = radios('Tab Type', directions, directions.horizontal);
+export const Icons = ({
+    verticalTabs,
+    verticalTab,
+}: Properties): TemplateResult => {
     return html`
-        <sp-tabs selected="1" direction="${type}">
-            <sp-tab
-                label="Tab 1"
-                value="1"
-                ?vertical=${tabType === directions.vertical}
-            >
+        <sp-tabs
+            selected="1"
+            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
+        >
+            <sp-tab label="Tab 1" value="1" ?vertical=${verticalTab}>
                 <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
             </sp-tab>
-            <sp-tab
-                label="Tab 2"
-                value="2"
-                ?vertical=${tabType === directions.vertical}
-            >
+            <sp-tab label="Tab 2" value="2" ?vertical=${verticalTab}>
                 <sp-icon-close slot="icon"></sp-icon-close>
             </sp-tab>
-            <sp-tab
-                label="Tab 3"
-                value="3"
-                ?vertical=${tabType === directions.vertical}
-            >
+            <sp-tab label="Tab 3" value="3" ?vertical=${verticalTab}>
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
-            <sp-tab
-                label="Tab 4"
-                value="4"
-                ?vertical=${tabType === directions.vertical}
-            >
+            <sp-tab label="Tab 4" value="4" ?vertical=${verticalTab}>
                 <sp-icon-help slot="icon"></sp-icon-help>
             </sp-tab>
         </sp-tabs>
     `;
 };
 
-export const IconsWithSlottedLabel = (): TemplateResult => {
-    const directions = {
-        horizontal: 'horizontal',
-        vertical: 'vertical',
-    };
-    const type = radios('List Type', directions, directions.horizontal);
-    const tabType = radios('Tab Type', directions, directions.horizontal);
+export const IconsWithSlottedLabel = ({
+    verticalTabs,
+    verticalTab,
+}: Properties): TemplateResult => {
     return html`
-        <sp-tabs selected="1" direction="${type}">
-            <sp-tab value="1" ?vertical=${tabType === directions.vertical}>
+        <sp-tabs
+            selected="1"
+            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
+        >
+            <sp-tab value="1" ?vertical=${verticalTab}>
                 Tab 1
                 <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
             </sp-tab>
-            <sp-tab value="2" ?vertical=${tabType === directions.vertical}>
+            <sp-tab value="2" ?vertical=${verticalTab}>
                 Tab 2
                 <sp-icon-close slot="icon"></sp-icon-close>
             </sp-tab>
-            <sp-tab value="3" ?vertical=${tabType === directions.vertical}>
+            <sp-tab value="3" ?vertical=${verticalTab}>
                 Tab 3
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
-            <sp-tab value="4" ?vertical=${tabType === directions.vertical}>
+            <sp-tab value="4" ?vertical=${verticalTab}>
                 Tab 4
                 <sp-icon-help slot="icon"></sp-icon-help>
             </sp-tab>
@@ -163,41 +159,25 @@ export const IconsWithSlottedLabel = (): TemplateResult => {
     `;
 };
 
-export const IconsOnly = (): TemplateResult => {
-    const directions = {
-        horizontal: 'horizontal',
-        vertical: 'vertical',
-    };
-    const type = radios('List Type', directions, directions.horizontal);
-    const tabType = radios('Tab Type', directions, directions.horizontal);
+export const IconsOnly = ({
+    verticalTabs,
+    verticalTab,
+}: Properties): TemplateResult => {
     return html`
-        <sp-tabs selected="1" direction="${type}">
-            <sp-tab
-                aria-label="Tab 1"
-                value="1"
-                ?vertical=${tabType === directions.vertical}
-            >
+        <sp-tabs
+            selected="1"
+            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
+        >
+            <sp-tab aria-label="Tab 1" value="1" ?vertical=${verticalTab}>
                 <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
             </sp-tab>
-            <sp-tab
-                aria-label="Tab 2"
-                value="2"
-                ?vertical=${tabType === directions.vertical}
-            >
+            <sp-tab aria-label="Tab 2" value="2" ?vertical=${verticalTab}>
                 <sp-icon-close slot="icon"></sp-icon-close>
             </sp-tab>
-            <sp-tab
-                aria-label="Tab 3"
-                value="3"
-                ?vertical=${tabType === directions.vertical}
-            >
+            <sp-tab aria-label="Tab 3" value="3" ?vertical=${verticalTab}>
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
-            <sp-tab
-                aria-label="Tab 4"
-                value="4"
-                ?vertical=${tabType === directions.vertical}
-            >
+            <sp-tab aria-label="Tab 4" value="4" ?vertical=${verticalTab}>
                 <sp-icon-help slot="icon"></sp-icon-help>
             </sp-tab>
         </sp-tabs>
@@ -250,14 +230,13 @@ iconsIii.story = {
     name: 'Icons III',
 };
 
-export const Quiet = (): TemplateResult => {
-    const directions = {
-        horizontal: 'horizontal',
-        vertical: 'vertical',
-    };
-    const type = radios('Type', directions, directions.horizontal);
+export const Quiet = ({ verticalTabs }: Properties): TemplateResult => {
     return html`
-        <sp-tabs selected="1" quiet direction="${type}">
+        <sp-tabs
+            selected="1"
+            quiet
+            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
+        >
             <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2"></sp-tab>
             <sp-tab label="Tab 3" value="3"></sp-tab>
@@ -266,14 +245,13 @@ export const Quiet = (): TemplateResult => {
     `;
 };
 
-export const Compact = (): TemplateResult => {
-    const directions = {
-        horizontal: 'horizontal',
-        vertical: 'vertical',
-    };
-    const type = radios('Type', directions, directions.horizontal);
+export const Compact = ({ verticalTabs }: Properties): TemplateResult => {
     return html`
-        <sp-tabs selected="1" compact direction="${type}">
+        <sp-tabs
+            selected="1"
+            compact
+            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
+        >
             <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2"></sp-tab>
             <sp-tab label="Tab 3" value="3"></sp-tab>
@@ -282,16 +260,14 @@ export const Compact = (): TemplateResult => {
     `;
 };
 
-export const quietCompact = (): TemplateResult => {
-    const directions = {
-        horizontal: 'horizontal',
-        vertical: 'vertical',
-    };
-    const type = radios('Type', directions, directions.horizontal) as
-        | 'vertical'
-        | 'horizontal';
+export const quietCompact = ({ verticalTabs }: Properties): TemplateResult => {
     return html`
-        <sp-tabs selected="1" quiet compact direction="${type}">
+        <sp-tabs
+            selected="1"
+            quiet
+            compact
+            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
+        >
             <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2"></sp-tab>
             <sp-tab label="Tab 3" value="3"></sp-tab>

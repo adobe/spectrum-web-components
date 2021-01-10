@@ -9,28 +9,20 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
-import { html, TemplateResult } from '@spectrum-web-components/base';
-
-import '../sp-picker.js';
-import { Picker } from '../';
+import '../sp-dropdown.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { states } from './states.js';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {
-    title: 'Picker',
-    component: 'sp-picker',
+    component: 'sp-dropdown',
+    title: 'Dropdown',
 };
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-picker
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
-            label="Select a Country with a very long label, too long, in fact"
+        <sp-dropdown
+            label="Select a Country with a very long label, too long in fact"
         >
             <sp-menu>
                 <sp-menu-item>Deselect</sp-menu-item>
@@ -41,34 +33,7 @@ export const Default = (): TemplateResult => {
                 <sp-menu-item>Save Selection</sp-menu-item>
                 <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-menu>
-        </sp-picker>
-        <p>This is some text.</p>
-        <p>This is some text.</p>
-        <p>
-            This is a
-            <a href="#anchor">link</a>
-            .
-        </p>
-    `;
-};
-
-export const quiet = (): TemplateResult => {
-    return html`
-        <sp-picker
-            quiet
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
-            label="Pick an item"
-        >
-            <sp-menu>
-                <sp-menu-item value="1">Item 1</sp-menu-item>
-                <sp-menu-item value="2">Item 2</sp-menu-item>
-                <sp-menu-item value="3">Item 3</sp-menu-item>
-                <sp-menu-item value="4">Item 4</sp-menu-item>
-            </sp-menu>
-        </sp-picker>
+        </sp-dropdown>
         <p>This is some text.</p>
         <p>This is some text.</p>
         <p>
@@ -85,20 +50,14 @@ export const Open = (): TemplateResult => {
             fieldset {
                 float: left;
                 clear: left;
+                display: inline-block;
                 margin-bottom: 15px;
             }
         </style>
         <fieldset>
-            <sp-picker
-                label="Open picker"
-                open
-                @change="${(event: Event): void => {
-                    const picker = event.target as Picker;
-                    console.log(`Change: ${picker.value}`);
-                }}"
-            >
+            <sp-dropdown label="Open dropdown" open>
                 <span slot="label">
-                    Select a Country with a very long label, too long, in fact
+                    Select a Country with a very long label, too long in fact
                 </span>
                 <sp-menu>
                     <sp-menu-item>Deselect</sp-menu-item>
@@ -109,36 +68,24 @@ export const Open = (): TemplateResult => {
                     <sp-menu-item>Save Selection</sp-menu-item>
                     <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-menu>
-            </sp-picker>
+            </sp-dropdown>
         </fieldset>
         <fieldset>
-            <sp-picker
-                label="Picker that displays below the options"
-                @change="${(event: Event): void => {
-                    const picker = event.target as Picker;
-                    console.log(`Change: ${picker.value}`);
-                }}"
-            >
+            <sp-dropdown label="Dropdown that displays below the options">
                 <span slot="label">
                     Other menu that goes behind the open one
                 </span>
                 <sp-menu>
                     <sp-menu-item>Not so many options...</sp-menu-item>
                 </sp-menu>
-            </sp-picker>
+            </sp-dropdown>
         </fieldset>
     `;
 };
 
 export const initialValue = (): TemplateResult => {
     return html`
-        <sp-picker
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
-            value="item-2"
-        >
+        <sp-dropdown value="item-2">
             <span slot="label">
                 Select a Country with a very long label, too long in fact
             </span>
@@ -153,36 +100,6 @@ export const initialValue = (): TemplateResult => {
                     Make Work Path
                 </sp-menu-item>
             </sp-menu>
-        </sp-picker>
-    `;
-};
-
-export const custom = (): TemplateResult => {
-    return html`
-        <sp-picker
-            style="width: 400px;"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                action(`Change: ${picker.value}`)();
-            }}"
-            label="Pick a state"
-        >
-            <sp-menu style="max-height: 400px;">
-                ${states.map(
-                    (state) => html`
-                        <sp-menu-item id=${state.id} value=${state.id}>
-                            ${state.label}
-                        </sp-menu-item>
-                    `
-                )}
-            </sp-menu>
-        </sp-picker>
-        <p>This is some text.</p>
-        <p>This is some text.</p>
-        <p>
-            This is a
-            <a href="#anchor">link</a>
-            .
-        </p>
+        </sp-dropdown>
     `;
 };

@@ -41,6 +41,8 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
      * The tab index to apply to this control. See general documentation about
      * the tabindex HTML property
+     *
+     * @private
      */
     @property({ type: Number })
     public get tabIndex(): number {
@@ -123,6 +125,9 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     private manipulatingTabindex = false;
 
+    /**
+     * @private
+     */
     public get focusElement(): DisableableElement {
         throw new Error('Must implement focusElement getter!');
     }

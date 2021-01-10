@@ -9,26 +9,45 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, boolean, radios, text } from '@open-wc/demoing-storybook';
+import { html } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-banner.js';
-import { TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-banner',
     title: 'Banner',
+    argTypes: {
+        header: { control: 'text' },
+        content: { control: 'text' },
+        type: {
+            control: {
+                type: 'inline-radio',
+                options: ['info', 'warning', 'error'],
+            },
+        },
+        inCorner: { control: 'boolean' },
+    },
+    args: {
+        header: 'Header Text',
+        content: 'Content of the banner!',
+        type: 'info',
+    },
 };
 
-export const Default = (): TemplateResult => {
-    const header = text('Header', 'Header Text');
-    const content = text('Content', 'Content of the banner!');
-    const typeOptions = {
-        info: 'info',
-        warning: 'warning',
-        error: 'error',
-    };
-    const type = radios('Type', typeOptions, typeOptions.info);
-    const inCorner = boolean('In Corner', false);
+interface StoryArgs {
+    header?: string;
+    content?: string;
+    type?: 'info' | 'warning' | 'error';
+    inCorner?: boolean;
+}
+
+const Template = ({
+    header = 'Header text',
+    content = 'Content of the banner!',
+    type = 'info',
+    inCorner,
+}: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="margin: -8px 0;">
             <div
@@ -42,6 +61,8 @@ export const Default = (): TemplateResult => {
         </div>
     `;
 };
+
+export const Default = (args: StoryArgs): TemplateResult => Template(args);
 
 export const bannerTypes = (): TemplateResult => {
     return html`
@@ -60,9 +81,7 @@ export const bannerTypes = (): TemplateResult => {
     `;
 };
 
-bannerTypes.story = {
-    name: 'Banner Types',
-};
+bannerTypes.storyName = 'Banner Types';
 
 export const cornerPlacement = (): TemplateResult => {
     return html`
@@ -79,6 +98,4 @@ export const cornerPlacement = (): TemplateResult => {
     `;
 };
 
-cornerPlacement.story = {
-    name: 'Corner Placement',
-};
+cornerPlacement.storyName = 'Corner Placement';

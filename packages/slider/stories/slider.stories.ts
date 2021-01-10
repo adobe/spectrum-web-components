@@ -9,11 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action, text, number } from '@open-wc/demoing-storybook';
+import { html } from 'lit-html';
 
 import '../sp-slider.js';
 import { Slider } from '../';
 import { TemplateResult } from '@spectrum-web-components/base';
+
+const action = (msg1: string) => (msg2: string | number): void =>
+    console.log(msg1, msg2);
 
 export default {
     component: 'sp-slider',
@@ -80,7 +83,6 @@ export const tick = (): TemplateResult => {
 };
 
 export const Disabled = (): TemplateResult => {
-    const label = text('Label', 'Intensity');
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -89,17 +91,17 @@ export const Disabled = (): TemplateResult => {
                 step="0.5"
                 min="0"
                 max="20"
-                label="${label}"
+                label="Intensity"
             ></sp-slider>
         </div>
     `;
 };
 
 export const focusTabDemo = (): TemplateResult => {
-    const value = number('Value', 50);
-    const min = number('Min', 0);
-    const max = number('Max', 100);
-    const step = number('Step', 1);
+    const value = 50;
+    const min = 0;
+    const max = 100;
+    const step = 1;
     return html`
         <div style="width: 500px; margin: 12px 20px 20px;">
             <sp-slider

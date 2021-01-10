@@ -12,15 +12,24 @@ governing permissions and limitations under the License.
 import '../sp-icons-large.js';
 import '../sp-icons-medium.js';
 import '../../iconset/stories/icons-demo.js';
-import { html, color } from '@open-wc/demoing-storybook';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     title: 'Icons',
+    argTypes: {
+        color: { control: 'color' },
+    },
+    args: {
+        color: '#000000',
+    },
 };
 
-export const listMedium = (): TemplateResult => html`
-    <icons-demo style="color: ${color('Color', '#000', 'Element')}">
+interface Properties {
+    color: string;
+}
+
+export const listMedium = ({ color }: Properties): TemplateResult => html`
+    <icons-demo style="color: ${color}">
         <sp-icons-medium></sp-icons-medium>
     </icons-demo>
 `;
@@ -29,8 +38,8 @@ listMedium.story = {
     name: 'UI Icons - Medium',
 };
 
-export const listLarge = (): TemplateResult => html`
-    <icons-demo style="color: ${color('Color', '#000', 'Element')}">
+export const listLarge = ({ color }: Properties): TemplateResult => html`
+    <icons-demo style="color: ${color}">
         <sp-icons-large></sp-icons-large>
     </icons-demo>
 `;

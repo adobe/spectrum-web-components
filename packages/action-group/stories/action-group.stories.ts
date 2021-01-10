@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { spreadProps } from '@open-wc/lit-helpers';
 
 import '../sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -26,9 +27,15 @@ export default {
     component: 'sp-action-group',
 };
 
-export const Default = (): TemplateResult => {
+interface Properties {
+    compact?: boolean;
+    emphasized?: boolean;
+    quiet?: boolean;
+}
+
+export const Default = (args: Properties): TemplateResult => {
     return html`
-        <sp-action-group>
+        <sp-action-group ...=${spreadProps(args)}>
             <sp-action-button>Button 1</sp-action-button>
             <sp-action-button>Longer Button 2</sp-action-button>
             <sp-action-button>Short 3</sp-action-button>
@@ -36,9 +43,12 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const selectsSingle = (): TemplateResult => {
+export const selectsSingle = (args: Properties): TemplateResult => {
     return html`
         <sp-action-group
+            ?compact=${args.compact}
+            ?emphasized=${args.emphasized}
+            ?quiet=${args.quiet}
             label="Favorite Color"
             selects="single"
             @change=${({ target }: Event & { target: ActionGroup }) => {
@@ -97,9 +107,9 @@ export const selectsSingleWithTooltips = (): TemplateResult => {
 export const selectsMultiple = (): TemplateResult => {
     return html`
         <sp-action-group
+            ...=${spreadProps(args)}
             label="Favorite Colors"
             selects="multiple"
-            emphasized
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
                 next.textContent = `Selected: ${JSON.stringify(

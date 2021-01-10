@@ -9,8 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, text } from '@open-wc/demoing-storybook';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from 'lit-html';
 
 import '../sp-avatar.js';
 import { avatar } from './images';
@@ -18,12 +17,27 @@ import { avatar } from './images';
 export default {
     component: 'sp-avatar',
     title: 'Avatar',
+    argTypes: {
+        label: { control: 'text' },
+        src: { control: 'text' },
+    },
+    args: {
+        label: 'Place dog',
+        src: avatar,
+    },
 };
 
-export const Default = (): TemplateResult => {
-    const label = text('Label', 'Place Dog', 'Element');
-    const src = text('Image Source', avatar, 'Element');
+interface StoryArgs {
+    label?: string;
+    src?: string;
+}
+
+const Template = ({
+    label = 'Place Dog',
+    src = avatar,
+}: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-avatar label=${label} src=${src}></sp-avatar>
     `;
 };
+export const Default = (args: StoryArgs = {}): TemplateResult => Template(args);

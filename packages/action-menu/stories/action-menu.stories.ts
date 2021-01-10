@@ -9,10 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action, boolean, text } from '@open-wc/demoing-storybook';
 import { TemplateResult } from '@spectrum-web-components/base';
 
-import { ActionMenu } from '../';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { ActionMenuMarkup } from './';
@@ -22,35 +20,39 @@ import { SettingsIcon } from '@spectrum-web-components/icons-workflow';
 export default {
     component: 'sp-action-menu',
     title: 'Action menu',
+    argTypes: {
+        ariaLabel: { control: 'string' },
+        visibleLabel: { control: 'string' },
+        disabled: { control: 'boolean' },
+        changeHandler: { action: 'change' },
+    },
+    args: {
+        ariaLabel: 'More actions',
+        visibleLabel: 'More Actions',
+        disabled: false,
+    },
 };
 
-export const iconOnly = (): TemplateResult => {
-    return html`
-        ${ActionMenuMarkup()}
-    `;
+interface StoryArgs {
+    ariaLabel?: string;
+    visibleLabel?: string;
+    disabled?: boolean;
+    customIcon?: string | TemplateResult;
+}
+
+const Template = (args: StoryArgs = {}): TemplateResult =>
+    ActionMenuMarkup(args);
+
+export const Default = (args: StoryArgs = {}): TemplateResult => Template(args);
+
+export const iconOnly = (args: StoryArgs = {}): TemplateResult =>
+    Template(args);
+iconOnly.args = {
+    visibleLabel: '',
 };
 
-export const customIcon = (): TemplateResult => {
-    const customIcon = SettingsIcon();
-    return html`
-        ${ActionMenuMarkup({
-            customIcon,
-        })}
-    `;
-};
-
-export const Default = (): TemplateResult => {
-    const ariaLabel = text('Arial Label', 'More Actions', 'Component');
-    const visibleLabel = text('Visible Label', 'More Actions', 'Component');
-    const disabled = boolean('Is Disabled', false, 'Component');
-    const changeHandler = (event: Event): void => {
-        const actionMenu = event.target as ActionMenu;
-        action(`Change: ${actionMenu.value}`)();
-    };
-    return ActionMenuMarkup({
-        ariaLabel,
-        disabled,
-        changeHandler,
-        visibleLabel,
-    });
+export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
+customIcon.args = {
+    customIcon: SettingsIcon(),
+    visibleLabel: '',
 };

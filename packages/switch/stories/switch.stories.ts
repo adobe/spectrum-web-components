@@ -9,10 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action } from '@open-wc/demoing-storybook';
-
 import '../sp-switch.js';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-switch',
@@ -21,7 +19,7 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-switch @click="${action('Click')}" @change="${action('Change')}">
+        <sp-switch>
             Switch
         </sp-switch>
     `;
@@ -29,11 +27,7 @@ export const Default = (): TemplateResult => {
 
 export const Checked = (): TemplateResult => {
     return html`
-        <sp-switch
-            checked
-            @click="${action('Click')}"
-            @change="${action('Change')}"
-        >
+        <sp-switch checked>
             Switch
         </sp-switch>
     `;
@@ -41,11 +35,7 @@ export const Checked = (): TemplateResult => {
 
 export const emphasized = (): TemplateResult => {
     return html`
-        <sp-switch
-            emphasized
-            @click="${action('Click')}"
-            @change="${action('Change')}"
-        >
+        <sp-switch emphasized>
             Switch
         </sp-switch>
     `;
@@ -53,12 +43,7 @@ export const emphasized = (): TemplateResult => {
 
 export const emphasizedChecked = (): TemplateResult => {
     return html`
-        <sp-switch
-            emphasized
-            checked
-            @click="${action('Click')}"
-            @change="${action('Change')}"
-        >
+        <sp-switch emphasized checked>
             Switch
         </sp-switch>
     `;
@@ -66,11 +51,7 @@ export const emphasizedChecked = (): TemplateResult => {
 
 export const Autofocus = (): TemplateResult => {
     return html`
-        <sp-switch
-            autofocus
-            @click="${action('Click')}"
-            @change="${action('Change')}"
-        >
+        <sp-switch autofocus>
             Switch
         </sp-switch>
     `;

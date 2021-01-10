@@ -55,6 +55,9 @@ export class Accordion extends Focusable {
         super.focus();
     }
 
+    /**
+     * @private
+     */
     public get focusElement(): Accordion | AccordionItem {
         const items = this.items;
         if (items && !items.length) {

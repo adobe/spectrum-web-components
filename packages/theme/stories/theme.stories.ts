@@ -9,19 +9,29 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, radios } from '@open-wc/demoing-storybook';
-
 import '../sp-theme.js';
 import '../src/themes.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import '@spectrum-web-components/slider/sp-slider.js';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { Color } from '../src/index.js';
 
 export default {
     component: 'sp-theme',
     title: 'Theme',
+    argTypes: {
+        colorStop: {
+            control: {
+                type: 'inline-radio',
+                options: ['light', 'dark'],
+            },
+        },
+    },
+    args: {
+        colorStop: 'light',
+    },
 };
 
 const storyStyles = html`
@@ -47,12 +57,11 @@ const storyStyles = html`
     </style>
 `;
 
-export const Default = (): TemplateResult => {
-    const colorOptions = {
-        Light: 'light',
-        Dark: 'dark',
-    };
-    const color = radios('Color stop', colorOptions, colorOptions.Light);
+export const Default = ({
+    colorStop: color,
+}: {
+    colorStop: Color;
+}): TemplateResult => {
     return html`
         ${storyStyles}
         <sp-theme color="${color}">
@@ -119,12 +128,11 @@ export const none = (): TemplateResult => html`
     <sp-theme></sp-theme>
 `;
 
-export const nestedTheme = (): TemplateResult => {
-    const colorOptions = {
-        Light: 'light',
-        Dark: 'dark',
-    };
-    const outer = radios('Outer color stop', colorOptions, colorOptions.Light);
+export const nestedTheme = ({
+    colorStop: outer,
+}: {
+    colorStop: Color;
+}): TemplateResult => {
     const inner = outer === 'light' ? 'dark' : 'light';
     return html`
         ${storyStyles}
@@ -169,12 +177,11 @@ export const nestedTheme = (): TemplateResult => {
     `;
 };
 
-export const reverseColorNestedTheme = (): TemplateResult => {
-    const colorOptions = {
-        Light: 'light',
-        Dark: 'dark',
-    };
-    const outer = radios('Outer color stop', colorOptions, colorOptions.Light);
+export const reverseColorNestedTheme = ({
+    colorStop: outer,
+}: {
+    colorStop: Color;
+}): TemplateResult => {
     const inner = outer === 'light' ? 'dark' : 'light';
     return html`
         <style type="text/css">

@@ -9,7 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { action } from '@open-wc/demoing-storybook';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
@@ -44,7 +43,6 @@ export function renderButton(properties: Properties): TemplateResult {
                 variant="${properties.variant}"
                 ?quiet="${!!properties.quiet}"
                 ?disabled=${!!properties.disabled}
-                @click=${action(`Click ${properties.variant}`)}
                 size=${properties.size || 'm'}
                 href=${ifDefined(properties.href)}
                 target=${ifDefined(properties.target)}
@@ -57,7 +55,6 @@ export function renderButton(properties: Properties): TemplateResult {
             <sp-button
                 ?quiet="${!!properties.quiet}"
                 ?disabled=${!!properties.disabled}
-                @click=${action(`Click ${properties.variant}`)}
                 size=${properties.size}
             >
                 ${properties.content || 'Click Me'}
