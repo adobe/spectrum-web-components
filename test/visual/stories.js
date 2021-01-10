@@ -330,4 +330,4 @@ module.exports = [
     'tooltip--default',
     'tooltip--w-icon',
     'underlay--default',
-];
+].sort();
