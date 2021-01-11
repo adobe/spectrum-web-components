@@ -35,11 +35,7 @@ export class ClearButton extends ButtonBase {
     protected get buttonContent(): TemplateResult[] {
         return [
             html`
-                <sp-icon
-                    slot="icon"
-                    class="icon spectrum-UIIcon-Cross75"
-                    size="none"
-                >
+                <sp-icon slot="icon" class="icon spectrum-UIIcon-Cross75">
                     ${Cross75Icon()}
                 </sp-icon>
             `,

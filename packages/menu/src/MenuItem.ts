@@ -61,7 +61,6 @@ export class MenuItem extends ActionButton {
             content.push(html`
                 <sp-icon
                     id="selected"
-                    size="none"
                     slot="icon"
                     class="spectrum-UIIcon-Checkmark100"
                 >

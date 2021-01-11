@@ -28,105 +28,10 @@ governing permissions and limitations under the License.
     cursor: auto;
 }
 
-:host([size='s']) {
-    --spectrum-actionbutton-quiet-border-size: var(
-        --spectrum-alias-border-size-thin,
-        var(--spectrum-global-dimension-static-size-10)
-    );
-    --spectrum-actionbutton-quiet-border-radius: var(
-        --spectrum-alias-border-radius-regular,
-        var(--spectrum-global-dimension-size-50)
-    );
-    --spectrum-actionbutton-quiet-text-font-weight: var(
-        --spectrum-alias-body-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
-    );
-    --spectrum-actionbutton-quiet-text-size: var(
-        --spectrum-alias-item-text-size-s,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    --spectrum-actionbutton-border-size: var(
-        --spectrum-alias-border-size-thin,
-        var(--spectrum-global-dimension-static-size-10)
-    );
-    --spectrum-actionbutton-border-radius: var(
-        --spectrum-alias-border-radius-regular,
-        var(--spectrum-global-dimension-size-50)
-    );
-    --spectrum-actionbutton-min-width: var(
-        --spectrum-global-dimension-size-400
-    );
-    --spectrum-actionbutton-text-font-weight: var(
-        --spectrum-alias-body-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
-    );
-    --spectrum-actionbutton-text-line-height: var(
-        --spectrum-alias-component-text-line-height,
-        var(--spectrum-global-font-line-height-small)
-    );
-    --spectrum-actionbutton-text-size: var(
-        --spectrum-alias-item-text-size-s,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    --spectrum-actionbutton-icon-gap: var(
-        --spectrum-alias-item-workflow-icon-gap-s,
-        var(--spectrum-global-dimension-size-85)
-    );
-    --spectrum-actionbutton-height: var(
-        --spectrum-alias-item-height-s,
-        var(--spectrum-global-dimension-size-300)
-    );
-    --spectrum-actionbutton-padding-left: var(
-        --spectrum-alias-item-workflow-padding-left-s,
-        var(--spectrum-global-dimension-size-85)
-    );
-    --spectrum-actionbutton-padding-right: var(
-        --spectrum-alias-item-padding-s,
-        var(--spectrum-global-dimension-size-115)
-    );
-    --spectrum-actionbutton-icononly-padding-left: var(
-        --spectrum-alias-item-icononly-padding-s,
-        var(--spectrum-global-dimension-size-50)
-    );
-    --spectrum-actionbutton-icononly-padding-right: var(
-        --spectrum-alias-item-icononly-padding-s,
-        var(--spectrum-global-dimension-size-50)
-    );
-    --spectrum-actionbutton-textonly-padding-left: var(
-        --spectrum-alias-item-padding-s,
-        var(--spectrum-global-dimension-size-115)
-    );
-    --spectrum-actionbutton-textonly-padding-right: var(
-        --spectrum-alias-item-padding-s,
-        var(--spectrum-global-dimension-size-115)
-    );
-    --spectrum-actionbutton-hold-icon-padding-bottom: var(
-        --spectrum-global-dimension-size-25
-    );
-    --spectrum-actionbutton-hold-icon-padding-right: var(
-        --spectrum-global-dimension-size-25
-    );
-    --spectrum-icon-tshirt-size-height: var(
-        --spectrum-alias-workflow-icon-size-s,
-        var(--spectrum-global-dimension-size-200)
-    );
-    --spectrum-icon-tshirt-size-width: var(
-        --spectrum-alias-workflow-icon-size-s,
-        var(--spectrum-global-dimension-size-200)
-    );
-    --spectrum-ui-icon-tshirt-size-height: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-75,
-        var(--spectrum-global-dimension-size-65)
-    );
-    --spectrum-ui-icon-tshirt-size-width: var(
-        --spectrum-alias-ui-icon-cornertriangle-size-75,
-        var(--spectrum-global-dimension-size-65)
-    );
-}
-
 #button {
     color: inherit;
     text-decoration: inherit;
+    display: flex;
 }
 
 #button:focus {

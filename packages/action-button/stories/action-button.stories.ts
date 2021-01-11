@@ -113,6 +113,20 @@ export const iconOnlyButton = (): TemplateResult => {
     `;
 };
 
+export const iconSizeOverridden = (): TemplateResult => {
+    return html`
+        <sp-action-button label="Edit" size="xl">
+            <sp-icon-edit slot="icon" size="s"></sp-icon-edit>
+        </sp-action-button>
+        <h1>For testing purposes only</h1>
+        <p>
+            This is a test to ensure that sizing the icon will still work when
+            it's in the scope of a parent element. You shouldn't normally do
+            this as it deviates from the Spectrum design specification.
+        </p>
+    `;
+};
+
 export const holdAffordance = (): TemplateResult => {
     return html`
         <sp-action-group>

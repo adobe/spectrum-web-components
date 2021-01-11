@@ -32,17 +32,17 @@ export const iconButtons = (): TemplateResult => {
         >
             <sp-quick-actions opened>
                 <sp-action-button quiet label="Edit">
-                    <sp-icon slot="icon" size="s">
+                    <sp-icon slot="icon">
                         ${EditIcon({ hidden: true })}
                     </sp-icon>
                 </sp-action-button>
                 <sp-action-button quiet label="Copy">
-                    <sp-icon slot="icon" size="s">
+                    <sp-icon slot="icon">
                         ${CopyIcon({ hidden: true })}
                     </sp-icon>
                 </sp-action-button>
                 <sp-action-button quiet label="Delete">
-                    <sp-icon slot="icon" size="s">
+                    <sp-icon slot="icon">
                         ${DeleteIcon({ hidden: true })}
                     </sp-icon>
                 </sp-action-button>

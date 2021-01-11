@@ -305,15 +305,12 @@ export class DropdownBase extends Focusable {
                 </span>
                 ${this.invalid
                     ? html`
-                          <sp-icon class="validationIcon" size="m">
+                          <sp-icon class="validationIcon">
                               ${AlertIcon({ hidden: true })}
                           </sp-icon>
                       `
                     : nothing}
-                <sp-icon
-                    class="icon dropdown spectrum-UIIcon-ChevronDown100"
-                    size="m"
-                >
+                <sp-icon class="icon dropdown spectrum-UIIcon-ChevronDown100">
                     ${Chevron100Icon()}
                 </sp-icon>
             `,

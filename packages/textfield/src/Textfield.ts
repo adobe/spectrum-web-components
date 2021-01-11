@@ -130,17 +130,13 @@ export class Textfield extends Focusable {
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
-                <sp-icon id="invalid" class="icon" size="none">
+                <sp-icon id="invalid" class="icon">
                     ${AlertIcon()}
                 </sp-icon>
             `;
         } else if (this.valid) {
             return html`
-                <sp-icon
-                    id="valid"
-                    class="icon spectrum-UIIcon-Checkmark100"
-                    size="none"
-                >
+                <sp-icon id="valid" class="icon spectrum-UIIcon-Checkmark100">
                     ${Checkmark100Icon()}
                 </sp-icon>
             `;

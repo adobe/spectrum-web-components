@@ -97,11 +97,7 @@ export class AccordionItem extends Focusable {
                 >
                     ${this.label}
                 </button>
-                <sp-icon
-                    id="indicator"
-                    size="xs"
-                    class="spectrum-UIIcon-ChevronRight100"
-                >
+                <sp-icon id="indicator" class="spectrum-UIIcon-ChevronRight100">
                     ${Chevron100Icon()}
                 </sp-icon>
             </h3>

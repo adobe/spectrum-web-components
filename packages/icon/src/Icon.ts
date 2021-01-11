@@ -100,7 +100,7 @@ export class Icon extends IconBase {
         return iconset.applyIconToElement(
             this.iconContainer,
             icon.icon,
-            this.size,
+            this.size || '',
             this.label ? this.label : ''
         );
     }
