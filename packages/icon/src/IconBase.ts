@@ -29,7 +29,7 @@ export class IconBase extends SpectrumElement {
     public label?: string;
 
     @property({ reflect: true })
-    public size = 'm';
+    public size?: 's' | 'm' | 'l' | 'xl';
 
     protected render(): TemplateResult {
         return html`

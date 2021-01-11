@@ -106,7 +106,6 @@ export class ActionButton extends SizedMixin(ButtonBase) {
             buttonContent.unshift(html`
                 <sp-icon
                     id="hold-affordance"
-                    size="none"
                     class="${holdAffordanceClass[this.size]}"
                 >
                     ${CornerTriangle300Icon()}

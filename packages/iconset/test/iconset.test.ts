@@ -85,7 +85,7 @@ describe('Iconset', () => {
 
         const el = await fixture<Icon>(
             html`
-                <sp-icon size="xxs" name="ui:Chevron200"></sp-icon>
+                <sp-icon name="ui:Chevron200"></sp-icon>
             `
         );
 
@@ -110,7 +110,7 @@ describe('Iconset', () => {
         const el = await fixture<HTMLDivElement>(
             html`
                 <div>
-                    <sp-icon size="xxs" name="ui:Chevron200"></sp-icon>
+                    <sp-icon name="ui:Chevron200"></sp-icon>
                     <sp-icons-medium></sp-icons-medium>
                 </div>
             `

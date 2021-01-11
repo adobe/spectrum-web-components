@@ -127,7 +127,7 @@ export class Toast extends SpectrumElement {
                 return html``;
         }
         return html`
-            <sp-icon class="type" label=${label} size="m">
+            <sp-icon class="type" label=${label}>
                 ${icon({ hidden: true })}
             </sp-icon>
         `;

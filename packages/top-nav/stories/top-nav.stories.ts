@@ -39,7 +39,7 @@ export const Default = (): TemplateResult => {
                 Page with Really Long Name
             </sp-top-nav-item>
             <sp-action-menu label="Account" style="margin-inline-start: auto;">
-                <sp-icon size="m" slot="icon">
+                <sp-icon slot="icon">
                     ${SettingsIcon()}
                 </sp-icon>
                 <sp-menu>
@@ -80,7 +80,7 @@ export const Selected = (): TemplateResult => {
                 Page with Really Long Name
             </sp-top-nav-item>
             <sp-action-menu label="Account" style="margin-inline-start: auto;">
-                <sp-icon size="m" slot="icon">
+                <sp-icon slot="icon">
                     ${SettingsIcon()}
                 </sp-icon>
                 <sp-menu>

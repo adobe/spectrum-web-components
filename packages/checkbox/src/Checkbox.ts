@@ -42,18 +42,10 @@ export class Checkbox extends CheckboxBase {
         return html`
             ${super.render()}
             <span id="box">
-                <sp-icon
-                    id="checkmark"
-                    size="s"
-                    class="spectrum-UIIcon-Checkmark75"
-                >
+                <sp-icon id="checkmark" class="spectrum-UIIcon-Checkmark75">
                     ${Checkmark75Icon()}
                 </sp-icon>
-                <sp-icon
-                    id="partialCheckmark"
-                    size="s"
-                    class="spectrum-UIIcon-Dash75"
-                >
+                <sp-icon id="partialCheckmark" class="spectrum-UIIcon-Dash75">
                     ${Dash75Icon()}
                 </sp-icon>
             </span>

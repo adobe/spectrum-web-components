@@ -15,6 +15,7 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import '../sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
+import { HelpIcon } from '@spectrum-web-components/icons-workflow';
 
 interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
@@ -69,8 +70,15 @@ export function renderButton(properties: Properties): TemplateResult {
 
 export function renderButtonSet(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
+    const icon = Object.assign({}, properties, {
+        content: html`
+            <sp-icon slot="icon">${HelpIcon({ hidden: true })}</sp-icon>
+            Click Me
+        `,
+    });
     return html`
         ${renderButton(properties)} ${renderButton(disabled)}
+        ${renderButton(icon)}
     `;
 }
 

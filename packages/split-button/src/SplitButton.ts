@@ -140,7 +140,6 @@ export class SplitButton extends SizedMixin(DropdownBase) {
                     size=${this.size}
                 >
                     <sp-icon
-                        size=${this.size}
                         class="icon ${this.type === 'field'
                             ? chevronClass[this.size]
                             : ''}"

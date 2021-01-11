@@ -99,7 +99,7 @@ export class Search extends Textfield {
                 @reset=${this.reset}
                 @keydown=${this.handleKeydown}
             >
-                <sp-icon class="icon magnifier icon-workflow" size="s">
+                <sp-icon class="icon magnifier icon-workflow">
                     ${MagnifyIcon({ hidden: true })}
                 </sp-icon>
                 ${super.render()}

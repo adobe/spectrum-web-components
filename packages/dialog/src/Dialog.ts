@@ -156,7 +156,6 @@ export class Dialog extends ObserveSlotPresence(SpectrumElement, [
                           >
                               <sp-icon
                                   class="spectrum-UIIcon-Cross500"
-                                  size="m"
                                   slot="icon"
                               >
                                   ${Cross500Icon()}

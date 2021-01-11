@@ -40,7 +40,7 @@ export const withIcon = (): TemplateResult => {
                 variant,
                 iconRight,
                 content: html`
-                    <sp-icon slot="icon" size="m">
+                    <sp-icon slot="icon">
                         ${HelpIcon({ hidden: true })}
                     </sp-icon>
                     Help
@@ -64,6 +64,22 @@ export const withIcon = (): TemplateResult => {
                 ${bellIcon} Custom SVG
             </sp-button>
         </div>
+    `;
+};
+
+export const iconSizeOverridden = (): TemplateResult => {
+    return html`
+        <sp-button label="Edit" size="xl" variant=${variant}>
+            <sp-icon slot="icon" size="s">
+                ${HelpIcon({ hidden: true })} Testing
+            </sp-icon>
+        </sp-button>
+        <h1>For testing purposes only</h1>
+        <p>
+            This is a test to ensure that sizing the icon will still work when
+            it's in the scope of a parent element. You shouldn't normally do
+            this as it deviates from the Spectrum design specification.
+        </p>
     `;
 };
 

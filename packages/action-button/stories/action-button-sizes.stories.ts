@@ -48,7 +48,7 @@ function renderButton(properties: Properties): TemplateResult {
 
 function renderButtonsSelected(properties: Properties): TemplateResult {
     const icon = html`
-        <sp-icon slot="icon" size=${properties.size || 'm'}>
+        <sp-icon slot="icon">
             ${EditIcon({ hidden: true })}
         </sp-icon>
     `;

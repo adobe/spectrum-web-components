@@ -91,7 +91,7 @@ export const wIcon = (): TemplateResult => {
         >
             ${!!variant
                 ? html`
-                      <sp-icon size="none" slot="icon">
+                      <sp-icon slot="icon">
                           ${iconOptions[variant]()}
                       </sp-icon>
                   `

@@ -94,7 +94,7 @@ describe('Action menu', () => {
         const el = await fixture<ActionMenu>(
             html`
                 <sp-action-menu label="More Actions">
-                    <sp-icon slot="icon" size="s">
+                    <sp-icon slot="icon">
                         ${SettingsIcon()}
                     </sp-icon>
                     <sp-menu>
