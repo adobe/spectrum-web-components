@@ -123,7 +123,7 @@
         "deepmerge": "^4.0.0",
         "element-closest": "^3.0.1",
         "eslint": "^7.11.0",
-        "eslint-config-prettier": "^6.12.0",
+        "eslint-config-prettier": "^7.1.0",
         "eslint-formatter-pretty": "^4.0.0",
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-lit-a11y": "^1.0.0",

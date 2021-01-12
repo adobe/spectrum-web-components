@@ -19,7 +19,16 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { SettingsIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/avatar/sp-avatar.js';
+import {
+    SettingsIcon,
+    DownloadIcon,
+    LinkIcon,
+    SearchIcon,
+} from '@spectrum-web-components/icons-workflow';
+import { logo, avatar } from './images';
 
 export default {
     title: 'Top Nav',
@@ -103,6 +112,52 @@ export const Selected = (): TemplateResult => {
                     </sp-menu-item>
                 </sp-menu>
             </sp-action-menu>
+        </sp-top-nav>
+    `;
+};
+
+// https://spectrum.adobe.com/page/application-frame/#Application-mode
+// https://spectrum.adobe.com/page/headers/#Anatomy
+
+export const Modes = (): TemplateResult => {
+    return html`
+        <sp-top-nav>
+            <sp-action-button quiet href="/marketing-page" label="App">
+                <sp-icon slot="icon" src=${logo}></sp-icon>
+            </sp-action-button>
+            <sp-top-nav-item href="#">Design</sp-top-nav-item>
+            <sp-top-nav-item href="#prototype">Prototype</sp-top-nav-item>
+            <span style="margin-inline-start: auto; font-size: 1.1em;">
+                document_name.pdf
+            </span>
+            <sp-action-group style="margin-inline-start: auto;">
+                <sp-action-button quiet label="Search">
+                    <sp-icon size="s" slot="icon">${SearchIcon()}</sp-icon>
+                </sp-action-button>
+                <sp-action-button quiet label="Download">
+                    <sp-icon size="s" slot="icon">${DownloadIcon()}</sp-icon>
+                </sp-action-button>
+                <sp-action-button quiet label="Link">
+                    <sp-icon size="s" slot="icon">${LinkIcon()}</sp-icon>
+                </sp-action-button>
+                <sp-action-menu label="User">
+                    <sp-avatar
+                        slot="icon"
+                        label="User avatar"
+                        src=${avatar}
+                        style="--spectrum-avatar-small-width: var(--spectrum-global-dimension-size-300); --spectrum-avatar-small-height: var(--spectrum-global-dimension-size-300);"
+                    ></sp-avatar>
+                    <sp-menu>
+                        <sp-menu-item>
+                            Profile
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Sign Out
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
+            </sp-action-group>
         </sp-top-nav>
     `;
 };

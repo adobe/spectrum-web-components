@@ -26,7 +26,7 @@
     "concurrently": "^5.1.0",
     "es-dev-server": "^1.5.0",
     "eslint": "^7.8.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-prettier": "^7.1.0",
     "prettier": "^2.0.4",
     "rimraf": "^2.6.3",
     "rollup": "^2.3.4",

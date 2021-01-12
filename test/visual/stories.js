@@ -332,6 +332,7 @@ module.exports = [
     'toast--info',
     'top-nav--default',
     'top-nav--selected',
+    'top-nav--modes',
     'tooltip--default',
     'tooltip--w-icon',
     'underlay--default',
