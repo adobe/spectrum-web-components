@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.6.0...@spectrum-web-components/sidenav@0.7.0) (2021-01-13)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   prevent infinite loops when all children are [disabled](<[2deac3d](https://github.com/adobe/spectrum-web-components/commit/2deac3d88ea7f2f27e74d60793e253952d0d765f)>)
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+-   **sidenav:** update spectrum css input ([bd43201](https://github.com/adobe/spectrum-web-components/commit/bd43201749948479216400af6c320c1c6dd269cd))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.5.4...@spectrum-web-components/sidenav@0.6.0) (2020-11-20)
 
 ### Features

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/illustrated-message@0.3.3...@spectrum-web-components/illustrated-message@0.4.0) (2021-01-13)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **illustrated-message:** update spectrum css input ([25c0545](https://github.com/adobe/spectrum-web-components/commit/25c054583f944bf2fd0b10c4abdd70f65b4a5f20))
+-   **styles:** vend CSS literal versions of the typography system ([6406c96](https://github.com/adobe/spectrum-web-components/commit/6406c96377557a88ad7756147e6e5777f5d1f746))
+
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/illustrated-message@0.3.2...@spectrum-web-components/illustrated-message@0.3.3) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/illustrated-message

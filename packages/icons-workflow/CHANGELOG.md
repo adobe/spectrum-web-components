@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.6...@spectrum-web-components/icons-workflow@0.4.0) (2021-01-13)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+
+### Features
+
+-   **icons-workflow:** update spectrum css input ([549b4b6](https://github.com/adobe/spectrum-web-components/commit/549b4b6b3743ac6ca3b8fe1048188ab96ba85eee))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+
 ## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.5...@spectrum-web-components/icons-workflow@0.3.6) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/icons-workflow

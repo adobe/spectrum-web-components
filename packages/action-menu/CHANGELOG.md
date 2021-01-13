@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.6.5...@spectrum-web-components/action-menu@0.7.0) (2021-01-13)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **action-menu:** update spectrum css input ([62a5065](https://github.com/adobe/spectrum-web-components/commit/62a50651a3c797598f8d76330e87f2824cdabbc5))
+-   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+
 ## [0.6.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.6.4...@spectrum-web-components/action-menu@0.6.5) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

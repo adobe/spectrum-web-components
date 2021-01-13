@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.4...@spectrum-web-components/overlay@0.7.0) (2021-01-13)
+
+### Bug Fixes
+
+-   **overlay:** do not focus the trigger when closing an overlay, unless expected ([21d7dfe](https://github.com/adobe/spectrum-web-components/commit/21d7dfeaa94919586bede27a9c7ae077a2d214a5))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   **overlay:** use esm build from popper and point through to types ([078ca0f](https://github.com/adobe/spectrum-web-components/commit/078ca0fb9bc43d1ee5288e641ff1ec49f40e8df5))
+-   **overlay:** use isolatedModules in tsconfig ([48d6069](https://github.com/adobe/spectrum-web-components/commit/48d60694ad5d6014b8664f515e698651f55c9e5f))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   add open/close events for some menus and overlays ([17f0a58](https://github.com/adobe/spectrum-web-components/commit/17f0a58722fdfee39653c2abde048391f7f24564))
+-   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
+-   **story-decorator:** add story decorator to replace knobs for theme application ([7c0c6be](https://github.com/adobe/spectrum-web-components/commit/7c0c6be37d58ad3e6d8973e8d4f5ccc587bf55af))
+
 ## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.3...@spectrum-web-components/overlay@0.6.4) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.4.5...@spectrum-web-components/icons@0.5.0) (2021-01-13)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **icons:** update spectrum css input ([296738e](https://github.com/adobe/spectrum-web-components/commit/296738ee582c760812214f0181db3503856db608))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+
 ## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.4.4...@spectrum-web-components/icons@0.4.5) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/icons

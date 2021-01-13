@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.1.5...@spectrum-web-components/asset@0.2.0) (2021-01-13)
+
+### Bug Fixes
+
+-   update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
+-   **asset:** include alternative text for the file/folder versions ([92a091c](https://github.com/adobe/spectrum-web-components/commit/92a091c67b9f09eee820987c096f5dd1ce60df5b))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **asset:** update spectrum css input ([b3f0d70](https://github.com/adobe/spectrum-web-components/commit/b3f0d7045d1436ad0f8386faba09d185a7757df5))
+
 ## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.1.4...@spectrum-web-components/asset@0.1.5) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/asset

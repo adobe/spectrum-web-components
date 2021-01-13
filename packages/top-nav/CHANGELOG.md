@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.0.5...@spectrum-web-components/top-nav@0.1.0) (2021-01-13)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   **top-nav:** initialize nav with an undefined selection ([3473f63](https://github.com/adobe/spectrum-web-components/commit/3473f635facb6f22e92d329f7bf018f4eb1a9852))
+
 ## [0.0.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.0.4...@spectrum-web-components/top-nav@0.0.5) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/top-nav

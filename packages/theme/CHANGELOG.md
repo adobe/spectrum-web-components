@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.6.3...@spectrum-web-components/theme@0.7.0) (2021-01-13)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
 ## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.6.2...@spectrum-web-components/theme@0.6.3) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/theme

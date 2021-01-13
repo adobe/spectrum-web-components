@@ -1,7 +1,7 @@
 {
     "name": "swc-templates",
     "private": true,
-    "version": "0.2.2",
+    "version": "0.3.0",
     "description": "Templates for generating a Spectrum Web Component package.",
     "main": "index.js",
     "scripts": {
