@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.3.4...@spectrum-web-components/dialog@0.4.0) (2021-01-13)
+
+### Bug Fixes
+
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   **dialog:** more complete support for Spectrum CSS input ([925934a](https://github.com/adobe/spectrum-web-components/commit/925934aaf3e21d990a48775b05116fafe5abf1c4))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   **dialog:** support "error" in wrapper, prevent undelay closure when not dismissable ([6789102](https://github.com/adobe/spectrum-web-components/commit/67891021a505213adcfa088cc7b4715b6119e37d))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   **dialog:** use styles from the modal package ([0f04ce1](https://github.com/adobe/spectrum-web-components/commit/0f04ce1e3123af198830c126e8f0df76ae8eaec9))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **dialog:** update spectrum css input ([405ca5e](https://github.com/adobe/spectrum-web-components/commit/405ca5ea5c5d6b88130c6d80cfc394168f5110a0))
+-   **dialog:** use latest @spectrum-css/dialog beta ([b5d5718](https://github.com/adobe/spectrum-web-components/commit/b5d5718f74f4cb30ee8ce067c6a82898c0d192fd))
+
 ## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.3.3...@spectrum-web-components/dialog@0.3.4) (2020-10-12)
 
 ### Bug Fixes

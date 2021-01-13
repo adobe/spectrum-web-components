@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.7.4...@spectrum-web-components/shared@0.8.0) (2021-01-13)
+
+### Bug Fixes
+
+-   **button:** relate to this.href correctly ([fade3ea](https://github.com/adobe/spectrum-web-components/commit/fade3ea9bd6bda6192f84a0ab9af4b812517e267))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+-   **shared:** conditionally apply focus-visible polyfill ([b854df6](https://github.com/adobe/spectrum-web-components/commit/b854df6dd050da4762eaf75eca1a7a62673b3828))
+
+### Performance Improvements
+
+-   **shared:** focus-visible, lazily instantiate the focus-visible polyfilling ([fe257c1](https://github.com/adobe/spectrum-web-components/commit/fe257c1eb10bcb8cfb8ca6700e89efb2386980e5))
+
 ## [0.7.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.7.3...@spectrum-web-components/shared@0.7.4) (2020-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/shared

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.15.6...@spectrum-web-components/bundle@0.16.0) (2021-01-13)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
+-   **field-label:** add field label pattern ([2fa7c7e](https://github.com/adobe/spectrum-web-components/commit/2fa7c7e0201a6161d6cc769dc171ae37c70ab136))
+-   **meter:** add meter pattern ([fa092ba](https://github.com/adobe/spectrum-web-components/commit/fa092ba915a2fe6320cd9bdbe33055a9e41eee87))
+
 ## [0.15.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.15.5...@spectrum-web-components/bundle@0.15.6) (2020-11-20)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle
