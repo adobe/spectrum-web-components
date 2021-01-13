@@ -14,15 +14,17 @@ const config = {
     components: [
         {
             name: 'status-light',
-            host: {
-                selector: '.spectrum-StatusLight',
-                shadowSelector: '#root',
-            },
+            host: '.spectrum-StatusLight',
             attributes: [
                 {
                     type: 'boolean',
                     selector: '.is-disabled',
                     name: 'disabled',
+                },
+                {
+                    type: 'boolean',
+                    selector: '.spectrum-StatusLight--active',
+                    name: 'active',
                 },
                 {
                     type: 'enum',
@@ -42,6 +44,34 @@ const config = {
                         '.spectrum-StatusLight--purple',
                         '.spectrum-StatusLight--celery',
                     ],
+                },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-StatusLight--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-StatusLight--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-StatusLight--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-StatusLight--sizeXL',
+                        },
+                    ],
+                },
+            ],
+            complexSelectors: [
+                {
+                    replacement: ':host([dir])',
+                    selector: /^.spectrum-StatusLight$/,
                 },
             ],
         },

@@ -8,7 +8,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 376c085967f53f8f020003d945ab177bd02d0c2f
+        default: 706d8c6805f4a099932b6fd3c5abba07daf8c55c
 commands:
     setup:
         steps:
@@ -42,7 +42,7 @@ commands:
                   keys:
                       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
+            - run: yarn test:visual:ci --concurrency=5 --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
             - run:
                   when: on_fail
                   command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci
@@ -297,6 +297,7 @@ jobs:
                   name: Installing Dependencies
                   command: yarn
             - run: yarn docs:build
+            - run: echo '/*    /index.html   200' > documentation/dist/_redirects
             - run: yarn netlify deploy
 
 workflows:

@@ -20,6 +20,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { shiftTabEvent } from '../../../test/testing-helpers.js';
+import { spy } from 'sinon';
 
 type TestableButtonType = {
     hasLabel: boolean;
@@ -29,7 +30,7 @@ describe('Button', () => {
     it('loads default', async () => {
         const el = await fixture<Button>(
             html`
-                <sp-button>Button</sp-button>
+                <sp-button tabindex="0">Button</sp-button>
             `
         );
 
@@ -52,7 +53,7 @@ describe('Button', () => {
     it('loads default w/ an icon', async () => {
         const el = await fixture<Button>(
             html`
-                <sp-button>
+                <sp-button label="">
                     Button
                     <svg slot="icon"></svg>
                 </sp-button>
@@ -62,6 +63,25 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
+        expect(!((el as unknown) as { hasIcon: boolean }).hasIcon);
+        expect(!((el as unknown) as { iconRight: boolean }).iconRight);
+        await expect(el).to.be.accessible();
+    });
+    it('loads default w/ an icon-right', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button icon-right>
+                    Button
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.textContent).to.include('Button');
+        expect(((el as unknown) as { hasIcon: boolean }).hasIcon);
+        expect(((el as unknown) as { iconRight: boolean }).iconRight);
         await expect(el).to.be.accessible();
     });
     it('loads default only icon', async () => {
@@ -76,6 +96,21 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         await expect(el).to.be.accessible();
+    });
+    it('manages "role"', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button>Button</sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('button');
+
+        el.href = '#';
+
+        await elementUpdated(el);
+        expect(el.hasAttribute('role')).to.be.false;
     });
     it('allows label to be toggled', async () => {
         const testNode = document.createTextNode('Button');
@@ -105,21 +140,6 @@ describe('Button', () => {
         await elementUpdated(el);
 
         expect(labelTestableEl.hasLabel, 'label is returned').to.be.true;
-    });
-    it('loads default w/ an icon on the right', async () => {
-        const el = await fixture<Button>(
-            html`
-                <sp-button icon-right>
-                    Button
-                    <svg slot="icon"></svg>
-                </sp-button>
-            `
-        );
-
-        await elementUpdated(el);
-        expect(el).to.not.be.undefined;
-        expect(el.textContent).to.include('Button');
-        await expect(el).to.be.accessible();
     });
     it('loads with href', async () => {
         const el = await fixture<Button>(
@@ -173,28 +193,38 @@ describe('Button', () => {
         expect(focusedCount).to.equal(1);
     });
     it('manages `disabled`', async () => {
+        const clickSpy = spy();
         const el = await fixture<Button>(
             html`
-                <sp-button>
+                <sp-button @click=${() => clickSpy()}>
                     Button
                 </sp-button>
             `
         );
 
         await elementUpdated(el);
-        const focusElement = el.focusElement as HTMLButtonElement;
+        el.click();
+        await elementUpdated(el);
+        expect(clickSpy.calledOnce);
 
-        expect(focusElement.disabled, 'initially not').to.be.false;
-
+        clickSpy.resetHistory();
         el.disabled = true;
         await elementUpdated(el);
-
-        expect(focusElement.disabled).to.be.true;
-
-        el.disabled = false;
+        el.click();
         await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(0);
 
-        expect(focusElement.disabled, 'finally not').to.be.false;
+        clickSpy.resetHistory();
+        await elementUpdated(el);
+        el.dispatchEvent(new Event('click', {}));
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(0);
+
+        clickSpy.resetHistory();
+        el.disabled = false;
+        el.click();
+        await elementUpdated(el);
+        expect(clickSpy.calledOnce);
     });
     it('manages `aria-disabled`', async () => {
         const el = await fixture<Button>(
@@ -246,5 +276,225 @@ describe('Button', () => {
         await elementUpdated(el);
 
         expect(el.tabIndex).to.equal(2);
+    });
+    it('swallows `click` interaction when `[disabled]`', async () => {
+        const clickSpy = spy();
+        const el = await fixture<Button>(
+            html`
+                <sp-button disabled @click=${() => clickSpy()}>
+                    Button
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(0);
+
+        el.click();
+
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(0);
+    });
+    it('translates keyboard interactions to click', async () => {
+        const clickSpy = spy();
+        const el = await fixture<Button>(
+            html`
+                <sp-button @click=${() => clickSpy()}>Button</sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+
+        el.dispatchEvent(
+            new KeyboardEvent('keypress', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'Enter',
+                key: 'Enter',
+            })
+        );
+
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(1);
+        clickSpy.resetHistory();
+
+        el.dispatchEvent(
+            new KeyboardEvent('keypress', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'Space',
+                key: 'Space',
+            })
+        );
+
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(0);
+        clickSpy.resetHistory();
+
+        el.dispatchEvent(
+            new KeyboardEvent('keydown', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'Space',
+                key: 'Space',
+            })
+        );
+        el.dispatchEvent(
+            new KeyboardEvent('keyup', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'Space',
+                key: 'Space',
+            })
+        );
+
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(1);
+        clickSpy.resetHistory();
+
+        el.dispatchEvent(
+            new KeyboardEvent('keydown', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'Space',
+                key: 'Space',
+            })
+        );
+        el.dispatchEvent(
+            new KeyboardEvent('keyup', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'KeyG',
+                key: 'g',
+            })
+        );
+
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(0);
+
+        el.dispatchEvent(
+            new KeyboardEvent('keyup', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'Space',
+                key: 'Space',
+            })
+        );
+        clickSpy.resetHistory();
+
+        el.dispatchEvent(
+            new KeyboardEvent('keydown', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'KeyG',
+                key: 'g',
+            })
+        );
+        el.dispatchEvent(
+            new KeyboardEvent('keyup', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'Space',
+                key: 'Space',
+            })
+        );
+
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(0);
+    });
+    it('proxies clicks by "type"', async () => {
+        const submitSpy = spy();
+        const resetSpy = spy();
+        const test = await fixture<HTMLFormElement>(
+            html`
+                <form
+                    @submit=${(event: Event): void => {
+                        event.preventDefault();
+                        submitSpy();
+                    }}
+                    @reset=${(event: Event): void => {
+                        event.preventDefault();
+                        resetSpy();
+                    }}
+                >
+                    <sp-button>Button</sp-button>
+                </form>
+            `
+        );
+        const el = test.querySelector('sp-button') as Button;
+
+        await elementUpdated(el);
+        el.type = 'submit';
+
+        await elementUpdated(el);
+        el.click();
+
+        expect(submitSpy.callCount).to.equal(1);
+        expect(resetSpy.callCount).to.equal(0);
+
+        el.type = 'reset';
+
+        await elementUpdated(el);
+        el.click();
+
+        expect(submitSpy.callCount).to.equal(1);
+        expect(resetSpy.callCount).to.equal(1);
+
+        el.type = 'button';
+
+        await elementUpdated(el);
+        el.click();
+
+        expect(submitSpy.callCount).to.equal(1);
+        expect(resetSpy.callCount).to.equal(1);
+    });
+    it('proxies click by [href]', async () => {
+        const clickSpy = spy();
+        const el = await fixture<Button>(
+            html`
+                <sp-button href="test_url">With Href</sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        ((el as unknown) as {
+            anchorElement: HTMLAnchorElement;
+        }).anchorElement.addEventListener('click', (event: Event): void => {
+            event.preventDefault();
+            event.stopPropagation();
+            clickSpy();
+        });
+        expect(clickSpy.callCount).to.equal(0);
+
+        el.click();
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(1);
+    });
+    it('manages "active" while focused', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button label="Button">
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        el.active = true;
+        await elementUpdated(el);
+
+        el.dispatchEvent(new FocusEvent('focusout'));
+        await elementUpdated(el);
+
+        expect(el.active).to.be.false;
     });
 });

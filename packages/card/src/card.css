@@ -53,7 +53,7 @@ sp-quick-actions {
  * Allow that the heading element will take specified use of the available width whether 
  * "actions" are supplied to the element or not.
  **/
-.heading {
+.title {
     width: var(--spectrum-card-title-width);
 }
 

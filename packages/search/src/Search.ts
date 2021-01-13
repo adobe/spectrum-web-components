@@ -23,16 +23,15 @@ import {
 import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { MagnifierIcon } from '@spectrum-web-components/icons-ui';
+import { MagnifyIcon } from '@spectrum-web-components/icons-workflow';
 
 import searchStyles from './search.css.js';
-import magnifierStyles from '@spectrum-web-components/icon/src/spectrum-icon-magnifier.css.js';
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
 export class Search extends Textfield {
     public static get styles(): CSSResultArray {
-        return [...super.styles, searchStyles, magnifierStyles];
+        return [...super.styles, searchStyles];
     }
 
     @property()
@@ -48,7 +47,7 @@ export class Search extends Textfield {
     public placeholder = 'Search';
 
     @query('#form')
-    public form?: HTMLFormElement;
+    public form!: HTMLFormElement;
 
     private handleSubmit(event: Event): void {
         const applyDefault = this.dispatchEvent(
@@ -71,12 +70,7 @@ export class Search extends Textfield {
     }
 
     public async reset(): Promise<void> {
-        /* c8 ignore next */
-        if (!this.form) {
-            return;
-        }
         this.value = '';
-        this.form.reset();
         await this.updateComplete;
         this.focusElement.dispatchEvent(
             new InputEvent('input', {
@@ -102,10 +96,11 @@ export class Search extends Textfield {
                 id="form"
                 method=${ifDefined(this.method)}
                 @submit=${this.handleSubmit}
+                @reset=${this.reset}
                 @keydown=${this.handleKeydown}
             >
-                <sp-icon class="icon magnifier icon-workflow" size="s">
-                    ${MagnifierIcon({ hidden: true })}
+                <sp-icon class="icon magnifier icon-workflow">
+                    ${MagnifyIcon({ hidden: true })}
                 </sp-icon>
                 ${super.render()}
                 ${this.value
@@ -114,7 +109,7 @@ export class Search extends Textfield {
                               id="button"
                               label="Reset"
                               tabindex="-1"
-                              @click=${this.reset}
+                              type="reset"
                               @keydown=${stopPropagation}
                           ></sp-clear-button>
                       `
@@ -125,8 +120,6 @@ export class Search extends Textfield {
 
     public updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
-        if (changedProperties.has('multiline')) {
-            this.multiline = false;
-        }
+        this.multiline = false;
     }
 }

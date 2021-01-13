@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import '../sp-dropdown.js';
 import { Dropdown } from '../';
 import '@spectrum-web-components/overlay/active-overlay.js';
+import { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay'
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
@@ -30,6 +31,7 @@ import {
     arrowDownEvent,
     arrowUpEvent,
     tabEvent,
+    tEvent,
 } from '../../../test/testing-helpers.js';
 
 describe('Dropdown', () => {
@@ -39,6 +41,46 @@ describe('Dropdown', () => {
                 <sp-dropdown
                     label="Select a Country with a very long label, too long in fact"
                 >
+                    <sp-menu>
+                        <sp-menu-item>
+                            Deselect
+                        </sp-menu-item>
+                        <sp-menu-item value="option-2">
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Feather...
+                        </sp-menu-item>
+                        <sp-menu-item>
+                            Select and Mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>
+                            Save Selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            Make Work Path
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-dropdown>
+            `
+        );
+
+        await waitUntil(
+            () => !!window.applyFocusVisiblePolyfill,
+            'polyfill loaded'
+        );
+        return el;
+    };
+
+    const slottedLabelFixture = async (): Promise<Dropdown> => {
+        const el = await fixture<Dropdown>(
+            html`
+                <sp-dropdown>
+                    <span slot="label">
+                        Select a Country with a very long label, too long in
+                        fact
+                    </span>
                     <sp-menu>
                         <sp-menu-item>
                             Deselect
@@ -83,6 +125,13 @@ describe('Dropdown', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('loads accessibly w/ slotted label', async () => {
+        const el = await slottedLabelFixture();
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
     it('renders invalid accessibly', async () => {
         const el = await dropdownFixture();
 
@@ -91,6 +140,7 @@ describe('Dropdown', () => {
         el.invalid = true;
         await elementUpdated(el);
 
+        expect(el.invalid);
         await expect(el).to.be.accessible();
     });
     it('renders selection accessibly', async () => {
@@ -225,6 +275,7 @@ describe('Dropdown', () => {
         expect(el.value).to.equal('Deselect');
     });
     it('can have selection prevented', async () => {
+        const preventChangeSpy = spy();
         const el = await dropdownFixture();
 
         await elementUpdated(el);
@@ -244,12 +295,14 @@ describe('Dropdown', () => {
 
         el.addEventListener('change', (event: Event): void => {
             event.preventDefault();
+            preventChangeSpy();
         });
 
         secondItem.click();
         await elementUpdated(el);
         await waitUntil(() => el.open, 'reopens dropdown');
         expect(secondItem.selected, 'selection prevented').to.be.false;
+        expect(preventChangeSpy.calledOnce);
     });
 
     it('can throw focus after `change`', async () => {
@@ -285,7 +338,50 @@ describe('Dropdown', () => {
         await waitUntil(() => document.activeElement === input, 'focus throw');
         input.remove();
     });
-    it('opens on ArrowDown', async () => {
+    it.only('opens on ArrowUp', async () => {
+        const el = await dropdownFixture();
+
+        await elementUpdated(el);
+
+        const button = el.button as HTMLButtonElement;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(el.open, 'inially closed').to.be.false;
+
+        button.dispatchEvent(tEvent);
+        await elementUpdated(el);
+
+        expect(el.open, 'still closed').to.be.false;
+
+        button.dispatchEvent(arrowUpEvent);
+        await elementUpdated(el);
+
+        expect(el.open, 'open by ArrowUp').to.be.true;
+
+        await waitUntil(
+            () => document.querySelector('active-overlay') !== null,
+            'an active-overlay has been inserted on the page'
+        );
+
+        button.dispatchEvent(
+            new KeyboardEvent('keyup', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                key: 'Escape',
+                code: 'Escape',
+            })
+        );
+        await elementUpdated(el);
+        await waitUntil(() => el.open === false, 'closed by Escape');
+        await waitUntil(
+            () => document.querySelector('active-overlay') === null,
+            'an active-overlay has been inserted on the page'
+        );
+    });
+    it.only('opens on ArrowDown', async () => {
         const el = await dropdownFixture();
 
         await elementUpdated(el);
@@ -298,17 +394,12 @@ describe('Dropdown', () => {
         el.focus();
         await elementUpdated(el);
 
-        expect(el.open).to.be.false;
-
-        button.dispatchEvent(arrowUpEvent);
-        await elementUpdated(el);
-
-        expect(el.open).to.be.false;
+        expect(el.open, 'inially closed').to.be.false;
 
         button.dispatchEvent(arrowDownEvent);
         await elementUpdated(el);
 
-        expect(el.open).to.be.true;
+        expect(el.open, 'open by ArrowDown').to.be.true;
         expect(el.selectedItemText).to.equal('');
         expect(el.value).to.equal('');
 
@@ -523,5 +614,57 @@ describe('Dropdown', () => {
 
         expect(el.open).to.be.false;
         expect(mouseenterSpy.calledOnce).to.be.true;
+    });
+
+    it('dispatches events on open/close', async () => {
+        const openedSpy = spy();
+        const closedSpy = spy();
+        const handleOpenedSpy = (event: Event): void => openedSpy(event);
+        const handleClosedSpy = (event: Event): void => closedSpy(event);
+
+        const el = await fixture<Dropdown>(
+            html`
+                <sp-dropdown
+                    label="Select a Country with a very long label, too long in fact"
+                    @sp-opened=${handleOpenedSpy}
+                    @sp-closed=${handleClosedSpy}
+                >
+                    <sp-menu>
+                        <sp-menu-item value="deselect">
+                            Deselect Text
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-dropdown>
+            `
+        );
+
+        await elementUpdated(el);
+        const menu = el.querySelector('sp-menu') as Menu;
+        el.open = true;
+
+        await elementUpdated(el);
+        await waitUntil(
+            () => document.activeElement === menu,
+            'first item focused'
+        );
+
+        expect(openedSpy.calledOnce).to.be.true;
+        expect(closedSpy.calledOnce).to.be.false;
+
+        const openedEvent = openedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        expect(openedEvent.detail.interaction).to.equal('inline');
+
+        el.open = false;
+        await elementUpdated(el);
+
+        await waitUntil(
+            () => closedSpy.calledOnce,
+            'closed event received'
+        );
+
+        expect(closedSpy.calledOnce).to.be.true;
+
+        const closedEvent = closedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        expect(closedEvent.detail.interaction).to.equal('inline');
     });
 });

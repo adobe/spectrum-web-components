@@ -22,11 +22,12 @@ import {
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 
-// import { MoreIcon } from '@spectrum-web-components/icons-workflow';
+import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import cardStyles from './card.css.js';
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
+import headingStyles from '@spectrum-web-components/styles/heading.js';
+import detailStyles from '@spectrum-web-components/styles/detail.js';
 
 /**
  * @element sp-card
@@ -42,7 +43,7 @@ import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
  */
 export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
-        return [cardStyles];
+        return [headingStyles, detailStyles, cardStyles];
     }
 
     @property()
@@ -99,7 +100,6 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
-        /* istanbul ignore else */
         if (code === 'Space') {
             this.toggleSelected();
         }
@@ -133,7 +133,7 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected get renderHeading(): TemplateResult {
         return html`
-            <div class="title">
+            <div class="title spectrum-Heading spectrum-Heading--sizeXS">
                 <slot name="heading">
                     ${this.heading}
                 </slot>
@@ -161,6 +161,17 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
             `;
         }
         return this.renderPreviewImage;
+    }
+
+    private get renderSubtitleAndDescription(): TemplateResult {
+        return html`
+            <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
+                <slot name="subheading">
+                    ${this.subheading}
+                </slot>
+            </div>
+            <slot name="description"></slot>
+        `;
     }
 
     protected render(): TemplateResult {
@@ -191,14 +202,7 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 <div class="header">
                     ${this.renderHeading}
                     ${this.variant === 'gallery'
-                        ? html`
-                              <div class="subtitle">
-                                  <slot name="subheading">
-                                      ${this.subheading}
-                                  </slot>
-                              </div>
-                              <slot name="description"></slot>
-                          `
+                        ? this.renderSubtitleAndDescription
                         : html``}
                     ${this.variant !== 'quiet' || !this.small
                         ? html`
@@ -211,12 +215,7 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 ${this.variant !== 'gallery'
                     ? html`
                           <div class="content">
-                              <div class="subtitle">
-                                  <slot name="subheading">
-                                      ${this.subheading}
-                                  </slot>
-                              </div>
-                              <slot name="description"></slot>
+                              ${this.renderSubtitleAndDescription}
                           </div>
                       `
                     : html``}

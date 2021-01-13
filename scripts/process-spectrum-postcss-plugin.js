@@ -120,14 +120,15 @@ class SpectrumProcessor {
                     result.first.replaceWith(host);
 
                     let remainder = host.next();
+                    // Pseudo-elements go after the host selector `:host::before` or `:host([attr])::after`.
                     while (remainder && remainder.type !== 'combinator') {
                         const node = remainder;
                         remainder = remainder.next();
                         node.remove();
-                        // Pseudo-elements go after the host selector `:host::before` or `:host([attr])::after`.
                         if (
-                            node.value.match(/before$/) !== null ||
-                            node.value.match(/after$/) !== null
+                            node.value &&
+                            (node.value.match(/before$/) !== null ||
+                                node.value.match(/after$/) !== null)
                         ) {
                             result.insertAfter(host, node);
                         } else {
@@ -208,7 +209,7 @@ class SpectrumProcessor {
                     // e.g. `.valid .selector, ::slotted(.invalid) .selector {}` would be lost.
                     isInvalidSelector = true;
                     this.warn(
-                        `:slotted() rules must be the last in the selector`,
+                        `:slotted() rules must be the last in the selector: ${selector}`,
                         {
                             node: rule,
                         }
@@ -252,6 +253,7 @@ class SpectrumProcessor {
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
             let attributeFound = false;
+            let forceOntoHost = false;
             result.walk((node) => {
                 const attribute = this.component.attributeForNode(node);
                 if (!attribute) return;
@@ -269,7 +271,7 @@ class SpectrumProcessor {
                 const next = node.next();
                 node.remove();
                 addNodeToHost(result, attribute.shadowNode);
-
+                forceOntoHost = attribute.forceOntoHost;
                 if (
                     !next &&
                     prev &&
@@ -299,7 +301,7 @@ class SpectrumProcessor {
                 attributeFound = true;
             });
             if (attributeFound) {
-                if (this.component.spectrumClassIsHost) {
+                if (this.component.spectrumClassIsHost || forceOntoHost) {
                     if (
                         result.length >= 3 &&
                         result.at(1).type === 'combinator'
@@ -307,13 +309,27 @@ class SpectrumProcessor {
                         // If there is only a pseudo selector following the :host,
                         // then we need to append the pseudo to the root
                         // node (e.g ":host([quiet]) :hover" -> ":host([quiet]:hover)")
-                        const lastNode = result.at(2);
-                        if (
-                            lastNode.type === 'pseudo' &&
-                            lastNode.value !== '::slotted'
+                        let remainder = result.at(2);
+                        let insertions = 0;
+                        while (
+                            remainder &&
+                            remainder.type !== 'combinator' &&
+                            remainder.type === 'pseudo'
                         ) {
-                            lastNode.remove();
-                            addNodeToHost(result, lastNode);
+                            const node = remainder;
+                            remainder = remainder.next();
+                            node.remove();
+                            // Pseudo-elements go after the host selector `:host::before` or `:host([attr])::after`.
+                            if (
+                                node.value.match(/before$/) !== null ||
+                                node.value.match(/after$/) !== null ||
+                                node.value.match(/slotted/) !== null
+                            ) {
+                                result.insertAfter(result.at(insertions), node);
+                                insertions += 1;
+                            } else {
+                                addNodeToHost(result, node);
+                            }
                         }
                     }
                 } else {
@@ -402,12 +418,13 @@ class SpectrumProcessor {
      *
      * @param {object} rule - The rule who's selects we will transform
      */
-    convertSelectors(rule) {
+    convertSelectors(rule, absolutelyStartsWith) {
         const result = [];
 
         const startsWithHost = re`^${this.component.hostSelector}`;
         const startsWithModifier = re`^.is-`;
         const hasHost = re`${this.component.hostSelector}(?![a-zA-Z\-])`;
+        const getAllHosts = re`/${this.component.hostSelector}(?![a-zA-Z\-])/g`;
         const startsWithDir = new RegExp(/\[dir\=/);
         const selectorTransform = this.selectorTransform;
         let skipAll = false;
@@ -452,6 +469,7 @@ class SpectrumProcessor {
                     }
                 }
                 if (
+                    !absolutelyStartsWith &&
                     shouldStartWithHost &&
                     !startsWithHost.test(selector) &&
                     !startsWithModifier.test(selector)
@@ -469,6 +487,31 @@ class SpectrumProcessor {
                         }
                     }
                     if (skip) continue;
+                }
+                // Heal the use of multiple instance of a selector in a row:
+                // .selector.selector => .selector
+                const firstPart = selector.split(' ')[0];
+                let match = getAllHosts.exec(firstPart);
+                if (match) {
+                    let indices = [];
+                    while (match) {
+                        indices.push(match.index);
+                        match = getAllHosts.exec(firstPart);
+                    }
+                    if (indices.length) {
+                        let i = indices.length;
+                        while (i) {
+                            i -= 1;
+                            if (indices[i] > 0) {
+                                selector =
+                                    selector.slice(0, indices[i]) +
+                                    selector.slice(
+                                        indices[i] +
+                                            this.component.hostSelector.length
+                                    );
+                            }
+                        }
+                    }
                 }
                 this.component.complexSelectors.map((complexSelector) => {
                     selector = selector.replace(
@@ -517,12 +560,50 @@ class SpectrumProcessor {
             ],
         });
 
-        root.walkAtRules((atRule) => {
-            if (atRule.name === 'keyframes') {
-                this.result.root.append(atRule);
+        // Walk the rules all together so that we can maintain CSS order
+        // across all of the rule types.
+        root.walk((rule) => {
+            switch (rule.type) {
+                case 'decl':
+                case 'comment':
+                    // exclude declarations (which would be outside of selectors here)
+                    // and comments from processing.
+                    break;
+                case 'atrule':
+                    if (rule.name === 'keyframes') {
+                        // accept keyframe rules directly
+                        this.result.root.append(rule);
+                    } else if (rule.name === 'media') {
+                        // Walk the rules inside of @media so that the
+                        // selectors therein can be processed.
+                        rule.walkRules((childRule) => {
+                            let selectors = this.convertSelectors(
+                                childRule,
+                                true
+                            );
+                            if (selectors.length) {
+                                selectors = selectors.map((selector) =>
+                                    selector === ':root' ? ':host' : selector
+                                );
+                                childRule.selectors = selectors;
+                                childRule.selector = selectors.join(',');
+                            } else {
+                                childRule.remove();
+                            }
+                        });
+                        // dump @media rules that have had all of their
+                        // selectors excluded by the config.
+                        if (rule.nodes.length) {
+                            this.result.root.append(rule);
+                        }
+                    }
+                    break;
+                case 'rule':
+                default:
+                    this.processRule(rule, result);
+                    break;
             }
         });
-        root.walkRules((rule) => this.processRule(rule, result));
     }
 
     /**
@@ -545,7 +626,6 @@ class SpectrumProcessor {
             });
             return;
         }
-
         const convertedSelectors = this.convertSelectors(rule);
         this.appendRule(
             convertedSelectors,
@@ -564,17 +644,8 @@ class SpectrumProcessor {
     appendRule(selectors, nodes, comment) {
         if (selectors.length === 0) return;
 
-        const selector = selectors.join(',');
-        let parentRule;
-        this.result.root.walkRules(selector, (rule) => {
-            parentRule = rule;
-            return false;
-        });
-
-        if (!parentRule) {
-            parentRule = postcss.rule({ selectors });
-            this.result.root.append(parentRule);
-        }
+        const parentRule = postcss.rule({ selectors });
+        this.result.root.append(parentRule);
 
         if (comment) {
             comment = postcss.comment({ text: comment });
@@ -805,6 +876,7 @@ class ComponentConfig {
                         name,
                         selector,
                         node: nodeFromSelector(selector),
+                        forceOntoHost: attribute.forceOntoHost,
                         shadowNode: nodeFromSelector(
                             `[${attribute.name}${operator}"${name}"]`
                         ),
@@ -854,6 +926,7 @@ class ComponentConfig {
                         name,
                         selector,
                         node: nodeFromSelector(selector),
+                        forceOntoHost: attribute.forceOntoHost,
                         shadowNode: nodeFromSelector(
                             `[${attribute.name}${operator}"${name}"]`
                         ),

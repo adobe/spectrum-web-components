@@ -108,6 +108,35 @@ export const levelsAndDisabled = (): TemplateResult => {
     `;
 };
 
+export const manageTabIndex = (): TemplateResult => {
+    return html`
+        <sp-sidenav manage-tab-index>
+            <sp-sidenav-heading label="CATEGORY 1">
+                <sp-sidenav-item
+                    value="Section 0"
+                    label="Section 0"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Section 1"
+                    label="Section 1"
+                    selected
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Section 2"
+                    label="Section 2"
+                    disabled
+                ></sp-sidenav-item>
+                <sp-sidenav-item value="Section 3" label="Section 3">
+                    <sp-sidenav-item
+                        value="Section 3a"
+                        label="Section 3a"
+                    ></sp-sidenav-item>
+                </sp-sidenav-item>
+            </sp-sidenav-heading>
+        </sp-sidenav>
+    `;
+};
+
 export const Hrefs = (): TemplateResult => {
     return html`
         <sp-sidenav @sidenav-select=${action('select')} value="current">

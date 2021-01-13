@@ -1,0 +1,155 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.spectrum-UIIcon-ArrowDown75,
+.spectrum-UIIcon-ArrowDown100,
+.spectrum-UIIcon-ArrowDown200,
+.spectrum-UIIcon-ArrowDown300,
+.spectrum-UIIcon-ArrowDown400,
+.spectrum-UIIcon-ArrowDown500,
+.spectrum-UIIcon-ArrowDown600 {
+    /* .spectrum-UIIcon-ArrowDown75,
+   * .spectrum-UIIcon-ArrowDown100,
+   * .spectrum-UIIcon-ArrowDown200,
+   * .spectrum-UIIcon-ArrowDown300,
+   * .spectrum-UIIcon-ArrowDown400,
+   * .spectrum-UIIcon-ArrowDown500,
+   * .spectrum-UIIcon-ArrowDown600,
+   * .spectrum-UIIcon-ChevronDown75,
+   * .spectrum-UIIcon-ChevronDown100,
+   * .spectrum-UIIcon-ChevronDown200,
+   * .spectrum-UIIcon-ChevronDown300,
+   * .spectrum-UIIcon-ChevronDown400,
+   * .spectrum-UIIcon-ChevronDown500 */
+    transform: rotate(90deg);
+}
+.spectrum-UIIcon-ArrowLeft75,
+.spectrum-UIIcon-ArrowLeft100,
+.spectrum-UIIcon-ArrowLeft200,
+.spectrum-UIIcon-ArrowLeft300,
+.spectrum-UIIcon-ArrowLeft400,
+.spectrum-UIIcon-ArrowLeft500,
+.spectrum-UIIcon-ArrowLeft600 {
+    /* .spectrum-UIIcon-ArrowLeft75,
+   * .spectrum-UIIcon-ArrowLeft100,
+   * .spectrum-UIIcon-ArrowLeft200,
+   * .spectrum-UIIcon-ArrowLeft300,
+   * .spectrum-UIIcon-ArrowLeft400,
+   * .spectrum-UIIcon-ArrowLeft500,
+   * .spectrum-UIIcon-ArrowLeft600,
+   * .spectrum-UIIcon-ChevronLeft75,
+   * .spectrum-UIIcon-ChevronLeft100,
+   * .spectrum-UIIcon-ChevronLeft200,
+   * .spectrum-UIIcon-ChevronLeft300,
+   * .spectrum-UIIcon-ChevronLeft400,
+   * .spectrum-UIIcon-ChevronLeft500 */
+    transform: rotate(180deg);
+}
+.spectrum-UIIcon-ArrowUp75,
+.spectrum-UIIcon-ArrowUp100,
+.spectrum-UIIcon-ArrowUp200,
+.spectrum-UIIcon-ArrowUp300,
+.spectrum-UIIcon-ArrowUp400,
+.spectrum-UIIcon-ArrowUp500,
+.spectrum-UIIcon-ArrowUp600 {
+    /* .spectrum-UIIcon-ArrowUp75,
+   * .spectrum-UIIcon-ArrowUp100,
+   * .spectrum-UIIcon-ArrowUp200,
+   * .spectrum-UIIcon-ArrowUp300,
+   * .spectrum-UIIcon-ArrowUp400,
+   * .spectrum-UIIcon-ArrowUp500,
+   * .spectrum-UIIcon-ArrowUp600,
+   * .spectrum-UIIcon-ChevronUp75,
+   * .spectrum-UIIcon-ChevronUp100,
+   * .spectrum-UIIcon-ChevronUp200,
+   * .spectrum-UIIcon-ChevronUp300,
+   * .spectrum-UIIcon-ChevronUp400,
+   * .spectrum-UIIcon-ChevronUp500 */
+    transform: rotate(270deg);
+}
+.spectrum-UIIcon-ArrowDown75,
+.spectrum-UIIcon-ArrowLeft75,
+.spectrum-UIIcon-ArrowRight75,
+.spectrum-UIIcon-ArrowUp75 {
+    /* .spectrum-UIIcon-ArrowDown75,
+   * .spectrum-UIIcon-ArrowLeft75,
+   * .spectrum-UIIcon-ArrowRight75,
+   * .spectrum-UIIcon-ArrowUp75 */
+    width: var(--spectrum-alias-ui-icon-arrow-size-75);
+    height: var(--spectrum-alias-ui-icon-arrow-size-75);
+}
+.spectrum-UIIcon-ArrowDown100,
+.spectrum-UIIcon-ArrowLeft100,
+.spectrum-UIIcon-ArrowRight100,
+.spectrum-UIIcon-ArrowUp100 {
+    /* .spectrum-UIIcon-ArrowDown100,
+   * .spectrum-UIIcon-ArrowLeft100,
+   * .spectrum-UIIcon-ArrowRight100,
+   * .spectrum-UIIcon-ArrowUp100 */
+    width: var(--spectrum-alias-ui-icon-arrow-size-100);
+    height: var(--spectrum-alias-ui-icon-arrow-size-100);
+}
+.spectrum-UIIcon-ArrowDown200,
+.spectrum-UIIcon-ArrowLeft200,
+.spectrum-UIIcon-ArrowRight200,
+.spectrum-UIIcon-ArrowUp200 {
+    /* .spectrum-UIIcon-ArrowDown200,
+   * .spectrum-UIIcon-ArrowLeft200,
+   * .spectrum-UIIcon-ArrowRight200,
+   * .spectrum-UIIcon-ArrowUp200 */
+    width: var(--spectrum-alias-ui-icon-arrow-size-200);
+    height: var(--spectrum-alias-ui-icon-arrow-size-200);
+}
+.spectrum-UIIcon-ArrowDown300,
+.spectrum-UIIcon-ArrowLeft300,
+.spectrum-UIIcon-ArrowRight300,
+.spectrum-UIIcon-ArrowUp300 {
+    /* .spectrum-UIIcon-ArrowDown300,
+   * .spectrum-UIIcon-ArrowLeft300,
+   * .spectrum-UIIcon-ArrowRight300,
+   * .spectrum-UIIcon-ArrowUp300 */
+    width: var(--spectrum-alias-ui-icon-arrow-size-300);
+    height: var(--spectrum-alias-ui-icon-arrow-size-300);
+}
+.spectrum-UIIcon-ArrowDown400,
+.spectrum-UIIcon-ArrowLeft400,
+.spectrum-UIIcon-ArrowRight400,
+.spectrum-UIIcon-ArrowUp400 {
+    /* .spectrum-UIIcon-ArrowDown400,
+   * .spectrum-UIIcon-ArrowLeft400,
+   * .spectrum-UIIcon-ArrowRight400,
+   * .spectrum-UIIcon-ArrowUp400 */
+    width: var(--spectrum-alias-ui-icon-arrow-size-400);
+    height: var(--spectrum-alias-ui-icon-arrow-size-400);
+}
+.spectrum-UIIcon-ArrowDown500,
+.spectrum-UIIcon-ArrowLeft500,
+.spectrum-UIIcon-ArrowRight500,
+.spectrum-UIIcon-ArrowUp500 {
+    /* .spectrum-UIIcon-ArrowDown500,
+   * .spectrum-UIIcon-ArrowLeft500,
+   * .spectrum-UIIcon-ArrowRight500,
+   * .spectrum-UIIcon-ArrowUp500 */
+    width: var(--spectrum-alias-ui-icon-arrow-size-500);
+    height: var(--spectrum-alias-ui-icon-arrow-size-500);
+}
+.spectrum-UIIcon-ArrowDown600,
+.spectrum-UIIcon-ArrowLeft600,
+.spectrum-UIIcon-ArrowRight600,
+.spectrum-UIIcon-ArrowUp600 {
+    /* .spectrum-UIIcon-ArrowDown600,
+   * .spectrum-UIIcon-ArrowLeft600,
+   * .spectrum-UIIcon-ArrowRight600,
+   * .spectrum-UIIcon-ArrowUp600 */
+    width: var(--spectrum-alias-ui-icon-arrow-size-600);
+    height: var(--spectrum-alias-ui-icon-arrow-size-600);
+}

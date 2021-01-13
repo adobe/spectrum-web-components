@@ -52,7 +52,10 @@ const config = {
                         '.spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator)',
                 },
             ],
-            exclude: [/^\.spectrum-Tabs-item/],
+            exclude: [
+                /^\.spectrum-Tabs-item/,
+                /\.spectrum-Tabs-item \.spectrum/,
+            ],
         },
         {
             name: 'tab',
@@ -86,6 +89,13 @@ const config = {
                 },
             ],
             exclude: [/.spectrum-Tabs(?!-item)/],
+            complexSelectors: [
+                {
+                    replacement:
+                        ":host(:not([vertical])) ::slotted([slot='icon'])",
+                    selector: '.spectrum-Tabs-item .spectrum-Icon',
+                },
+            ],
         },
     ],
 };

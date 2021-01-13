@@ -14,8 +14,21 @@ import '@spectrum-web-components/bundle/elements.js';
 // work around while `top-nav` isn't "officially" in the bundle
 import '@spectrum-web-components/top-nav/sp-top-nav.js';
 import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import { RouteComponent } from './route-component.js';
-import componentStyles from './markdown.css';
+import markdownStyles from './markdown.css';
+import componentStyles from './component.css';
 import { AppRouter } from '../router.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
@@ -68,7 +81,10 @@ function buildTable(
     cells: ((property: JsDocTagParsed) => TemplateResult)[]
 ): TemplateResult {
     return html`
-        <h2 class="spectrum-Heading3">${title}</h2>
+        <div class="headerContainer">
+            <h2 class="spectrum-Heading spectrum-Heading--sizeM">${title}</h2>
+            <sp-rule size="small"></sp-rule>
+        </div>
         <table class="spectrum-Table">
             <thead class="spectrum-Table-head">
                 <tr>
@@ -113,7 +129,7 @@ class ComponentElement extends RouteComponent {
     private docsLoaded = false;
 
     public static get styles(): CSSResultArray {
-        return [componentStyles];
+        return [markdownStyles, componentStyles];
     }
 
     public get componentName(): string {
@@ -167,9 +183,9 @@ class ComponentElement extends RouteComponent {
             );
             result = html`
                 <article class="spectrum-Typography">
-                    <div id="title-header" class="spectrum-Article">
+                    <div id="title-header">
                         <h1
-                            class="spectrum-Heading1--display spectrum-Heading1--quiet"
+                            class="spectrum-Heading spectrum-Heading--sizeXXL spectrum-Heading--serif"
                         >
                             ${this.componentName}
                         </h1>

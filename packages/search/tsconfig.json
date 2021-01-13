@@ -6,10 +6,5 @@
     },
     "include": ["*.ts", "src/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [
-        { "path": "../button" },
-        { "path": "../icon" },
-        { "path": "../icons-ui" },
-        { "path": "../textfield" }
-    ]
+    "references": [{ "path": "../textfield" }]
 }

@@ -10,6 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+@import './spectrum-slider.css';
+
 /* 
  * Removes blue outline from :host when it is being focused.
  * This situation is not addressed in spectrum-css because the slider element itself
@@ -21,10 +23,40 @@ governing permissions and limitations under the License.
     outline-width: 0;
 }
 
+#handle {
+    touch-action: none;
+}
+
+.not-exact.ticks {
+    justify-content: start;
+}
+
+:host([dir='ltr']) .not-exact .tick {
+    padding-right: var(--sp-slider-tick-offset);
+}
+
+:host([dir='rtl']) .not-exact .tick {
+    padding-left: var(--sp-slider-tick-offset);
+}
+
+:host([dir='ltr']) .not-exact .tick:after {
+    left: auto;
+    transform: translate(-50%, 0);
+}
+
+:host([dir='rtl']) .not-exact .tick:after {
+    right: auto;
+    transform: translate(50%, 0);
+}
+
 /*
  * The following three declarationsa required while https://github.com/adobe/spectrum-css/issues/521
  * waits to be addressed at the Spectrum CSS level.
  */
+
+.track:before {
+    background-size: var(--spectrum-slider-track-background-size) !important;
+}
 
 :host([dir='ltr']) #track-right:before {
     background-position: 100%;
@@ -34,8 +66,11 @@ governing permissions and limitations under the License.
     background-position: 100%;
 }
 
-.track:before {
-    background-size: var(--spectrum-slider-track-background-size) !important;
+:host([dir='ltr']) .track:before {
+    background: var(
+        --spectrum-slider-track-color,
+        var(--spectrum-global-color-gray-300)
+    );
 }
 
 :host([dir='rtl']) .track:before {
@@ -47,18 +82,4 @@ governing permissions and limitations under the License.
             var(--spectrum-global-color-gray-300)
         )
     );
-}
-
-/* 
- * Placeholder gradient for color variant with alpha on. In the long run, the gradient
- * should be produced programatically 
-*/
-:host([has-alpha][variant='color']) {
-    & .track {
-        background: linear-gradient(
-            to right,
-            rgba(38, 128, 235, 0.5),
-            rgb(9, 90, 186)
-        );
-    }
 }

@@ -24,7 +24,7 @@ import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 import '../sp-dialog.js';
-import styles from './dialog-wrapper.css.js';
+import styles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
 
 /**
@@ -50,7 +50,7 @@ export class DialogWrapper extends SpectrumElement {
     public confirmLabel = '';
 
     @property({ type: Boolean, reflect: true })
-    public dismissible = false;
+    public dismissable = false;
 
     @property()
     public footer = '';
@@ -113,6 +113,9 @@ export class DialogWrapper extends SpectrumElement {
     }
 
     private dismiss(): void {
+        if (!this.dismissable) {
+            return;
+        }
         this.close();
     }
 
@@ -159,69 +162,77 @@ export class DialogWrapper extends SpectrumElement {
                       ></sp-underlay>
                   `
                 : html``}
-            <sp-dialog
-                ?dismissible=${this.dismissible}
-                ?no-divider=${this.noDivider}
-                ?open=${this.open}
-                mode=${ifDefined(this.mode ? this.mode : undefined)}
-                size=${ifDefined(this.size ? this.size : undefined)}
-                @close=${this.close}
-            >
-                ${this.hero
-                    ? html`
-                          <img
-                              src="${this.hero}"
-                              slot="hero"
-                              aria-hidden=${ifDefined(
-                                  this.heroLabel ? undefined : 'true'
-                              )}
-                              alt=${ifDefined(
-                                  this.heroLabel ? this.heroLabel : undefined
-                              )}
-                          />
-                      `
-                    : html``}
-                ${this.headline
-                    ? html`
-                          <h2 slot="title">${this.headline}</h2>
-                      `
-                    : html``}
-                <slot></slot>
-                <div slot="footer">${this.footer}</div>
-                ${this.secondaryLabel
-                    ? html`
-                          <sp-button
-                              variant="primary"
-                              slot="button"
-                              @click=${this.clickSecondary}
-                          >
-                              ${this.secondaryLabel}
-                          </sp-button>
-                      `
-                    : html``}
-                ${this.cancelLabel
-                    ? html`
-                          <sp-button
-                              variant="secondary"
-                              slot="button"
-                              @click=${this.clickCancel}
-                          >
-                              ${this.cancelLabel}
-                          </sp-button>
-                      `
-                    : html``}
-                ${this.confirmLabel
-                    ? html`
-                          <sp-button
-                              variant="cta"
-                              slot="button"
-                              @click=${this.clickConfirm}
-                          >
-                              ${this.confirmLabel}
-                          </sp-button>
-                      `
-                    : html``}
-            </sp-dialog>
+            <div class="modal ${this.mode}">
+                <sp-dialog
+                    ?dismissable=${this.dismissable}
+                    ?no-divider=${this.noDivider}
+                    ?error=${this.error}
+                    mode=${ifDefined(this.mode ? this.mode : undefined)}
+                    size=${ifDefined(this.size ? this.size : undefined)}
+                    @close=${this.close}
+                >
+                    ${this.hero
+                        ? html`
+                              <img
+                                  src="${this.hero}"
+                                  slot="hero"
+                                  aria-hidden=${ifDefined(
+                                      this.heroLabel ? undefined : 'true'
+                                  )}
+                                  alt=${ifDefined(
+                                      this.heroLabel
+                                          ? this.heroLabel
+                                          : undefined
+                                  )}
+                              />
+                          `
+                        : html``}
+                    ${this.headline
+                        ? html`
+                              <h2 slot="heading">${this.headline}</h2>
+                          `
+                        : html``}
+                    <slot></slot>
+                    ${this.footer
+                        ? html`
+                              <div slot="footer">${this.footer}</div>
+                          `
+                        : html``}
+                    ${this.secondaryLabel
+                        ? html`
+                              <sp-button
+                                  variant="primary"
+                                  slot="button"
+                                  @click=${this.clickSecondary}
+                              >
+                                  ${this.secondaryLabel}
+                              </sp-button>
+                          `
+                        : html``}
+                    ${this.cancelLabel
+                        ? html`
+                              <sp-button
+                                  variant="secondary"
+                                  slot="button"
+                                  @click=${this.clickCancel}
+                              >
+                                  ${this.cancelLabel}
+                              </sp-button>
+                          `
+                        : html``}
+                    ${this.confirmLabel
+                        ? html`
+                              <sp-button
+                                  variant="cta"
+                                  slot="button"
+                                  @click=${this.clickConfirm}
+                              >
+                                  ${this.confirmLabel}
+                              </sp-button>
+                          `
+                        : html``}
+                </sp-dialog>
+            </div>
         `;
     }
 }

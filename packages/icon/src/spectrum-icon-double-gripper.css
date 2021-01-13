@@ -10,14 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.double-gripper {
-    /* .spectrum-UIIcon-DoubleGripper */
-    width: var(
-        --spectrum-icon-doublegripper-width,
-        var(--spectrum-global-dimension-size-200)
-    );
+.spectrum-UIIcon-DoubleGripper100 {
+    /* .spectrum-UIIcon-DoubleGripper100 */
+    width: var(--spectrum-alias-ui-icon-doublegripper-size-100-height);
     height: var(
-        --spectrum-icon-doublegripper-height,
-        var(--spectrum-global-dimension-size-50)
+        --spectrum-alias-ui-icon-doublegripper-size-100-width,
+        var(--spectrum-global-dimension-size-200)
     );
 }

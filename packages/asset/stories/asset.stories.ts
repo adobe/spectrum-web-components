@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-asset.js';
-import { portrait } from '@spectrum-web-components/card/stories/images';
+import { portrait } from '../../card/stories/images';
 
 export default {
     title: 'Asset',
@@ -23,7 +23,7 @@ export default {
 export const Default = (): TemplateResult => {
     return html`
         <sp-asset style="height: 128px">
-            <img src=${portrait} alt="Demo Image" />
+            <img src=${portrait} alt="Demo Graphic" />
         </sp-asset>
     `;
 };

@@ -28,13 +28,6 @@ import { Slider } from '@spectrum-web-components/slider';
 #### Standard
 
 ```html
-<sp-slider></sp-slider>
-<sp-slider disabled></sp-slider>
-```
-
-#### With Label
-
-```html
 <sp-slider label="Slider Label"></sp-slider>
 <sp-slider label="Slider Label - Disabled" disabled></sp-slider>
 ```

@@ -22,18 +22,12 @@ import {
 } from '@spectrum-web-components/base';
 
 import dropdownStyles from './dropdown.css.js';
-import buttonBaseStyles from '@spectrum-web-components/button/src/button-base.css.js';
-import actionButtonStyles from '@spectrum-web-components/button/src/action-button.css.js';
-import fieldButtonStyles from '@spectrum-web-components/button/src/field-button.css.js';
-import alertSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-small.css.js';
-import chevronDownMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron-down-medium.css.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    AlertSmallIcon,
-    ChevronDownMediumIcon,
-} from '@spectrum-web-components/icons-ui';
+import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
+import { AlertIcon } from '@spectrum-web-components/icons-workflow';
 import {
     MenuItem,
     MenuItemQueryRoleEventDetail,
@@ -51,18 +45,11 @@ import {
 /**
  * @slot label - The placeholder content for the dropdown
  * @slot {"sp-menu"} - The menu of options that will display when the dropdown is open
+ *
+ * @fires sp-open - Announces that the overlay has been opened
+ * @fires sp-close - Announces that the overlay has been closed
  */
 export class DropdownBase extends Focusable {
-    public static get styles(): CSSResultArray {
-        return [
-            buttonBaseStyles,
-            actionButtonStyles,
-            dropdownStyles,
-            alertSmallStyles,
-            chevronDownMediumStyles,
-        ];
-    }
-
     public static openOverlay = async (
         target: HTMLElement,
         interaction: TriggerInteractions,
@@ -81,6 +68,9 @@ export class DropdownBase extends Focusable {
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
+
+    @property({ type: Boolean, reflect: true })
+    public focused = false;
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
@@ -145,11 +135,12 @@ export class DropdownBase extends Focusable {
         return this.button;
     }
 
-    public click(): void {
-        this.focusElement.click();
+    public forceFocusVisible(): void {
+        this.focused = true;
     }
 
     public onButtonBlur(): void {
+        this.focused = false;
         (this.target as HTMLButtonElement).removeEventListener(
             'keydown',
             this.onKeydown
@@ -182,7 +173,7 @@ export class DropdownBase extends Focusable {
     }
 
     public onKeydown = (event: KeyboardEvent): void => {
-        if (event.code !== 'ArrowDown') {
+        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp') {
             return;
         }
         event.preventDefault();
@@ -235,8 +226,6 @@ export class DropdownBase extends Focusable {
         if (this.optionsMenu && this.placeholder) {
             const parentElement =
                 this.placeholder.parentElement ||
-                /* istanbul ignore next */
-
                 this.placeholder.getRootNode();
 
             if (parentElement) {
@@ -265,8 +254,7 @@ export class DropdownBase extends Focusable {
         );
 
         const parentElement =
-            this.optionsMenu.parentElement ||
-            /* istanbul ignore next */ this.optionsMenu.getRootNode();
+            this.optionsMenu.parentElement || this.optionsMenu.getRootNode();
 
         if (parentElement) {
             parentElement.replaceChild(this.placeholder, this.optionsMenu);
@@ -274,9 +262,9 @@ export class DropdownBase extends Focusable {
 
         this.popover.append(this.optionsMenu);
         this.sizePopover(this.popover);
-        const { button, popover } = this;
+        const { popover } = this;
         this.closeOverlay = await Dropdown.openOverlay(
-            button,
+            this,
             'inline',
             popover,
             {
@@ -305,7 +293,7 @@ export class DropdownBase extends Focusable {
     protected get buttonContent(): TemplateResult[] {
         return [
             html`
-                <div
+                <span
                     id="label"
                     class=${ifDefined(this.value ? undefined : 'placeholder')}
                 >
@@ -314,22 +302,22 @@ export class DropdownBase extends Focusable {
                         : html`
                               <slot name="label">${this.label}</slot>
                           `}
-                </div>
+                </span>
                 ${this.invalid
                     ? html`
-                          <sp-icon class="icon alert-small" size="s">
-                              ${AlertSmallIcon({ hidden: true })}
+                          <sp-icon class="validationIcon">
+                              ${AlertIcon({ hidden: true })}
                           </sp-icon>
                       `
                     : nothing}
-                <sp-icon class="icon dropdown chevron-down-medium" size="s">
-                    ${ChevronDownMediumIcon({ hidden: true })}
+                <sp-icon class="icon dropdown spectrum-UIIcon-ChevronDown100">
+                    ${Chevron100Icon()}
                 </sp-icon>
             `,
         ];
     }
 
-    protected render(): TemplateResult {
+    protected get renderButton(): TemplateResult {
         return html`
             <button
                 aria-haspopup="true"
@@ -345,6 +333,12 @@ export class DropdownBase extends Focusable {
             >
                 ${this.buttonContent}
             </button>
+        `;
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            ${this.renderButton}
             <sp-popover
                 open
                 id="popover"
@@ -384,7 +378,7 @@ export class DropdownBase extends Focusable {
     }
 
     private async manageSelection(): Promise<void> {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.optionsMenu) {
             return;
         }
@@ -408,7 +402,6 @@ export class DropdownBase extends Focusable {
             return;
         }
         await this.optionsMenu.updateComplete;
-        /* istanbul ignore else */
         if (this.optionsMenu.menuItems.length) {
             this.manageSelection();
         }
@@ -431,6 +424,6 @@ export class DropdownBase extends Focusable {
 
 export class Dropdown extends DropdownBase {
     public static get styles(): CSSResultArray {
-        return [...super.styles, fieldButtonStyles];
+        return [dropdownStyles, chevronStyles];
     }
 }

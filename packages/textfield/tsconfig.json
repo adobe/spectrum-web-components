@@ -7,8 +7,10 @@
     "include": ["*.ts", "src/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
+        { "path": "../base" },
         { "path": "../icon" },
         { "path": "../icons-ui" },
+        { "path": "../icons-workflow" },
         { "path": "../shared" }
     ]
 }

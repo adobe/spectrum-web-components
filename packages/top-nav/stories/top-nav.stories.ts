@@ -20,9 +20,14 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/button/sp-action-button.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
-import { SettingsIcon, DownloadIcon, LinkIcon, SearchIcon } from '@spectrum-web-components/icons-workflow';
+import {
+    SettingsIcon,
+    DownloadIcon,
+    LinkIcon,
+    SearchIcon,
+} from '@spectrum-web-components/icons-workflow';
 import { logo, avatar } from './images';
 
 export default {
@@ -43,7 +48,7 @@ export const Default = (): TemplateResult => {
                 Page with Really Long Name
             </sp-top-nav-item>
             <sp-action-menu label="Account" style="margin-inline-start: auto;">
-                <sp-icon size="s" slot="icon">
+                <sp-icon slot="icon">
                     ${SettingsIcon()}
                 </sp-icon>
                 <sp-menu>
@@ -84,7 +89,7 @@ export const Selected = (): TemplateResult => {
                 Page with Really Long Name
             </sp-top-nav-item>
             <sp-action-menu label="Account" style="margin-inline-start: auto;">
-                <sp-icon size="s" slot="icon">
+                <sp-icon slot="icon">
                     ${SettingsIcon()}
                 </sp-icon>
                 <sp-menu>
@@ -121,8 +126,10 @@ export const Modes = (): TemplateResult => {
                 <sp-icon slot="icon" src=${logo}></sp-icon>
             </sp-action-button>
             <sp-top-nav-item href="#">Design</sp-top-nav-item>
-            <sp-top-nav-item href='#prototype'>Prototype</sp-top-nav-item>
-            <span style="margin-inline-start: auto; font-size: 1.1em;">document_name.pdf</span>
+            <sp-top-nav-item href="#prototype">Prototype</sp-top-nav-item>
+            <span style="margin-inline-start: auto; font-size: 1.1em;">
+                document_name.pdf
+            </span>
             <sp-action-group style="margin-inline-start: auto;">
                 <sp-action-button quiet label="Search">
                     <sp-icon size="s" slot="icon">${SearchIcon()}</sp-icon>
@@ -134,9 +141,12 @@ export const Modes = (): TemplateResult => {
                     <sp-icon size="s" slot="icon">${LinkIcon()}</sp-icon>
                 </sp-action-button>
                 <sp-action-menu label="User">
-                    <sp-avatar slot="icon" label="User avatar" src=${avatar}
-                        style="--spectrum-avatar-small-width: var(--spectrum-global-dimension-size-300); --spectrum-avatar-small-height: var(--spectrum-global-dimension-size-300);">
-                    </sp-avatar>
+                    <sp-avatar
+                        slot="icon"
+                        label="User avatar"
+                        src=${avatar}
+                        style="--spectrum-avatar-small-width: var(--spectrum-global-dimension-size-300); --spectrum-avatar-small-height: var(--spectrum-global-dimension-size-300);"
+                    ></sp-avatar>
                     <sp-menu>
                         <sp-menu-item>
                             Profile
@@ -150,4 +160,4 @@ export const Modes = (): TemplateResult => {
             </sp-action-group>
         </sp-top-nav>
     `;
-}
+};

@@ -1,5 +1,17 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
 import { html, CSSResultArray } from 'lit-element';
-import { RouteComponent } from './route-component';
+import { RouteComponent } from './route-component.js';
 import componentStyles from './markdown.css';
 import homeStyles from './home.css';
 import '@spectrum-web-components/button/sp-button.js';
@@ -16,11 +28,11 @@ class HomeElement extends RouteComponent {
         return html`
             <section id="hero">
                 <div class="spectrum-Article">
-                    <h1 class="spectrum-Heading1--display">
+                    <h1 class="spectrum-Heading spectrum-Heading--sizeXXXL spectrum-Heading--serif">
                         Spectrum Web Components
                     </h1>
                 </div>
-                <p class="spectrum-Body3">
+                <p class="spectrum-Body spectrum-Body--sizeXL">
                     The Spectrum Web Components project is an implementation of <sp-link
                     href="https://spectrum.adobe.com/">Spectrum, Adobe’s design system</sp-link
                     >. It's designed to work with any web framework — or even
@@ -37,10 +49,10 @@ class HomeElement extends RouteComponent {
             </section>
             <section id="features">
                 <div class="feature">
-                    <h2 class="spectrum-Heading4">
+                    <h2 class="spectrum-Heading spectrum-Heading--sizeS">
                         Standards based
                     </h2>
-                    <p class="spectrum-Body3">
+                    <p class="spectrum-Body spectrum-Body--sizeM">
                         <sp-link
                             href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"
                         >
@@ -52,10 +64,10 @@ class HomeElement extends RouteComponent {
                     </p>
                 </div>
                 <div class="feature">
-                    <h2 class="spectrum-Heading4">
+                    <h2 class="spectrum-Heading spectrum-Heading--sizeS">
                         Light weight
                     </h2>
-                    <p class="spectrum-Body3">
+                    <p class="spectrum-Body spectrum-Body--sizeM">
                         Spectrum Web Components are implemented using the
                         <sp-link
                             href="https://lit-element.polymer-project.org/"
@@ -67,10 +79,10 @@ class HomeElement extends RouteComponent {
                     </p>
                 </div>
                 <div class="feature">
-                    <h2 class="spectrum-Heading4">
+                    <h2 class="spectrum-Heading spectrum-Heading--sizeS">
                         Framework agnostic
                     </h2>
-                    <p class="spectrum-Body3">
+                    <p class="spectrum-Body spectrum-Body--sizeM">
                         You can use web components with any framework, since
                         they’re supported and encapsulated at the browser level.
                     </p>
@@ -78,7 +90,7 @@ class HomeElement extends RouteComponent {
             </section>
             <section id="example" class="spectrum-Typography">
                 <div class="headerContainer">
-                    <h2 class="spectrum-Heading2">
+                    <h2 class="spectrum-Heading spectrum-Heading--sizeM">
                         Sample element usage
                     </h2>
                     <sp-rule size="large"></sp-rule>

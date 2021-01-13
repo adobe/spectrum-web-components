@@ -29,8 +29,6 @@ import {
 
 ## Example
 
-<sp-icons-medium></sp-icons-medium>
-
 ```html-live
 <sp-tags>
     <sp-tag>Tag 1</sp-tag>
@@ -72,15 +70,15 @@ import {
 <sp-tags>
     <sp-tag>
         Tag 1
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
     </sp-tag>
     <sp-tag invalid>
         Tag 2
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
     </sp-tag>
     <sp-tag disabled>
         Tag 3
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
     </sp-tag>
 </sp-tags>
 ```
@@ -130,15 +128,15 @@ Use the `deletable` attribute to signify `sp-tags` elements that can be removed.
 <sp-tags>
     <sp-tag deletable>
         Tag 1
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
     </sp-tag>
     <sp-tag invalid deletable>
         Tag 2
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
     </sp-tag>
     <sp-tag disabled deletable>
         Tag 3
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
     </sp-tag>
 </sp-tags>
 ```

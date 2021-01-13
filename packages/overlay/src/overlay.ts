@@ -148,3 +148,17 @@ export class Overlay {
         Overlay.overlayStack.closeOverlay(this.overlayElement);
     }
 }
+
+/**
+* Announces that an overlay-based UI element has opened
+* @event sp-open
+* @type {object}
+* @property {TriggerInteractions} interaction type of interaction that triggered the opening
+*/
+
+/**
+* Announces that an overlay-based UI element has opened
+* @event sp-close
+* @type {object}
+* @property {TriggerInteractions} interaction type of interaction that triggered the closing
+*/

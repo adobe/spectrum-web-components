@@ -16,6 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 
 import styles from './rule.css.js';
@@ -23,7 +24,7 @@ import styles from './rule.css.js';
 /**
  * @element sp-rule
  */
-export class Rule extends SpectrumElement {
+export class Rule extends SizedMixin(SpectrumElement, ['s', 'm', 'l']) {
     public static styles: CSSResultArray = [styles];
 
     @property({ type: Boolean, reflect: true })

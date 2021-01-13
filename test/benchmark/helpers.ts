@@ -1,9 +1,25 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
 import { customElement, html, LitElement, property } from 'lit-element';
 import { TemplateResult, render } from 'lit-html';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/scale-medium.js';
+import '@spectrum-web-components/theme/theme-lightest.js';
 
 declare global {
     interface Window {
         tachometerResult: undefined | number;
+        tachometerStart: undefined | 'page' | 'element';
     }
 }
 
@@ -89,12 +105,12 @@ export const fixture = (
 };
 
 interface MeasureFixtureCreationOpts {
-    afterRender?: (root: ShadowRoot) => Promise<unknown>;
+    afterRender?: (root: HTMLElement) => Promise<unknown>;
     numRenders: number;
 }
 
 const defaultMeasureOpts = {
-    numRenders: 10,
+    numRenders: 100,
 };
 
 export const measureFixtureCreation = async (
@@ -106,23 +122,27 @@ export const measureFixtureCreation = async (
         ...options,
     };
     const templates = new Array<TemplateResult>(opts.numRenders).fill(template);
-    const renderContainer = document.createElement('div');
-    const renderTargetRoot = renderContainer.attachShadow({ mode: 'open' });
+    const renderContainer = document.createElement('sp-theme');
+    renderContainer.scale = 'large';
+    renderContainer.color = 'lightest';
 
     document.body.appendChild(renderContainer);
-    const start = performance.now();
-    render(templates, renderTargetRoot);
-    const firstChild = renderTargetRoot.firstElementChild;
+    const start = window.tachometerStart === 'page' ? 0 : performance.now();
+    render(templates, renderContainer);
+    const children = renderContainer.querySelectorAll('*');
+    const updates = [...children].filter((el) => 'updateComplete' in el);
 
-    if (firstChild && 'updateComplete' in firstChild) {
-        await (firstChild as LitElement).updateComplete;
+    if (updates.length) {
+        await Promise.all(
+            updates.map((el) => (el as LitElement).updateComplete)
+        );
         document.body.offsetWidth;
     } else {
         await new Promise((res) => requestAnimationFrame(res));
     }
 
     if (opts.afterRender) {
-        opts.afterRender(renderTargetRoot);
+        opts.afterRender(renderContainer);
     }
 
     const end = performance.now();

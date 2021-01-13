@@ -23,62 +23,106 @@ When looking to leverage the `ActionGroup` base class as a type and/or for exten
 import { ActionGroup } from '@spectrum-web-components/action-group';
 ```
 
-## Horizontal
+## Selects
 
-<sp-icons-medium></sp-icons-medium>
+An `<sp-action-group selects="single|multiple">` will manage a `selected` property that consists on an array of the `<sp-action-button>` children that are currently selected. A `change` event is dispatched from the `<sp-action-group>` element when the value of `selected` is updated. This event can be canceled via `event.preventDefault()`, after which the value of `selected` will be returned to what it was previously.
+
+### Single
+
+An `<sp-action-group selects="single">` will manage its `<sp-action-button>` children as "radio buttons" allowing the user to select a _single_ one of the buttons presented. The `<sp-action-button>` children will only be able to turn their `selected` value on while maintaining a single selection after an intial selection is made.
+
+```html
+<sp-action-group selects="single" emphasized>
+    <sp-action-button>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        Button 1
+    </sp-action-button>
+    <sp-action-button selected>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        Longer Button 2
+    </sp-action-button>
+    <sp-action-button>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        Short 3
+    </sp-action-button>
+</sp-action-group>
+```
+
+### Multiple
+
+An `<sp-action-group selects="multiple">` will manage its `<sp-action-button>` children as "chekboxes" allowing the user to select a _multiple_ of the buttons presented. The `<sp-action-button>` children will toggle their `selected` value on and off when clicked sucessively.
+
+```html
+<sp-action-group selects="multiple" emphasized>
+    <sp-action-button selected>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        Button 1
+    </sp-action-button>
+    <sp-action-button>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        Longer Button 2
+    </sp-action-button>
+    <sp-action-button selected>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+        Short 3
+    </sp-action-button>
+</sp-action-group>
+```
+
+## Default
 
 ```html
 <sp-action-group>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Button 1
     </sp-action-button>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Longer Button 2
     </sp-action-button>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Short 3
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group compact>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Button 1
     </sp-action-button>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Longer Button 2
     </sp-action-button>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Short 3
     </sp-action-button>
 </sp-action-group>
 <br />
-<sp-action-group>
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+<sp-action-group quiet>
+    <sp-action-button label="Zoom in">
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+    <sp-action-button label="Zoom in">
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+    <sp-action-button label="Zoom in">
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group compact>
     <sp-action-button label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </sp-action-group>
 ```
@@ -89,52 +133,52 @@ import { ActionGroup } from '@spectrum-web-components/action-group';
 <div style="display: flex; justify-content: space-around;">
     <sp-action-group vertical>
         <sp-action-button>
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
             Button 1
         </sp-action-button>
         <sp-action-button>
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
             Longer Button 2
         </sp-action-button>
         <sp-action-button>
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
             Short 3
         </sp-action-button>
     </sp-action-group>
     <sp-action-group vertical compact>
         <sp-action-button>
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
             Button 1
         </sp-action-button>
         <sp-action-button>
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
             Longer Button 2
         </sp-action-button>
         <sp-action-button>
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
             Short 3
         </sp-action-button>
     </sp-action-group>
-    <sp-action-group vertical>
-        <sp-action-button quiet label="Zoom in">
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+    <sp-action-group vertical quiet>
+        <sp-action-button label="Zoom in">
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
         </sp-action-button>
-        <sp-action-button quiet label="Zoom in">
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-action-button label="Zoom in">
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
         </sp-action-button>
-        <sp-action-button quiet label="Zoom in">
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-action-button label="Zoom in">
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
         </sp-action-button>
     </sp-action-group>
     <sp-action-group compact vertical>
         <sp-action-button label="Zoom in">
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
         </sp-action-button>
         <sp-action-button label="Zoom in">
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
         </sp-action-button>
         <sp-action-button label="Zoom in">
-            <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
         </sp-action-button>
     </sp-action-group>
 </div>
@@ -145,55 +189,55 @@ import { ActionGroup } from '@spectrum-web-components/action-group';
 ```html
 <sp-action-group justified>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Button 1
     </sp-action-button>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Longer Button 2
     </sp-action-button>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Short 3
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group justified compact>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Button 1
     </sp-action-button>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Longer Button 2
     </sp-action-button>
     <sp-action-button>
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
         Short 3
     </sp-action-button>
 </sp-action-group>
 <br />
-<sp-action-group justified>
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+<sp-action-group justified quiet>
+    <sp-action-button label="Zoom in">
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+    <sp-action-button label="Zoom in">
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
-    <sp-action-button quiet label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+    <sp-action-button label="Zoom in">
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </sp-action-group>
 <br />
 <sp-action-group compact justified>
     <sp-action-button label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
     <sp-action-button label="Zoom in">
-        <sp-icon slot="icon" size="xs" name="ui:Magnifier"></sp-icon>
+        <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </sp-action-group>
 ```

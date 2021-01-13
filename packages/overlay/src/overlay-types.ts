@@ -33,6 +33,10 @@ export interface OverlayOpenDetail {
     theme: ThemeData;
 }
 
+export interface OverlayOpenCloseDetail {
+    interaction: TriggerInteractions;
+}
+
 /**
  * Used, via an event, to query details about how an element should be shown in
  * an overlay
@@ -55,5 +59,7 @@ export type OverlayOptions = {
 declare global {
     interface GlobalEventHandlersEventMap {
         'sp-overlay-query': CustomEvent<OverlayDisplayQueryDetail>;
+        'sp-open': CustomEvent<OverlayOpenCloseDetail>;
+        'sp-close': CustomEvent<OverlayOpenCloseDetail>;
     }
 }

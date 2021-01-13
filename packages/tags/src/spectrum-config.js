@@ -37,9 +37,19 @@ const config = {
                     name: 'invalid',
                 },
                 {
+                    selector: '.is-selected',
+                    type: 'boolean',
+                    name: 'selected',
+                },
+                {
                     selector: '.spectrum-Tags-item--deletable',
                     type: 'boolean',
                     name: 'deletable',
+                },
+                {
+                    selector: '.spectrum-Tags-item--removable',
+                    type: 'boolean',
+                    name: 'removable',
                 },
             ],
             classes: [
@@ -50,6 +60,10 @@ const config = {
                 {
                     selector: '.spectrum-Tags-itemLabel',
                     name: 'label',
+                },
+                {
+                    selector: '.spectrum-Tags-itemIcon',
+                    name: 'itemIcon',
                 },
             ],
             slots: [

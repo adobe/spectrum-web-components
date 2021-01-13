@@ -45,6 +45,29 @@ describe('Accordion', () => {
 
         expect(document.activeElement === el).to.be.false;
     });
+    it('does not accept focus when all children [disabled]', async () => {
+        const el = await fixture<Accordion>(
+            html`
+                <sp-accordion>
+                    <sp-accordion-item disabled label="Heading 1">
+                        <div>Item 1</div>
+                    </sp-accordion-item>
+                    <sp-accordion-item disabled label="Heading 2">
+                        <div>Item 2</div>
+                    </sp-accordion-item>
+                </sp-accordion>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+    });
     it('only allows one open item by default', async () => {
         const el = await fixture<Accordion>(Default());
         await elementUpdated(el);
@@ -55,11 +78,8 @@ describe('Accordion', () => {
             'sp-accordion-item:nth-of-type(2)'
         ) as AccordionItem;
 
-        const firstRoot = firstItem.shadowRoot as ShadowRoot;
-        const secondRoot = secondItem.shadowRoot as ShadowRoot;
-
-        const firstButton = firstRoot.querySelector('button') as HTMLElement;
-        const secondButton = secondRoot.querySelector('button') as HTMLElement;
+        const firstButton = firstItem.focusElement;
+        const secondButton = secondItem.focusElement;
 
         firstButton.click();
         await elementUpdated(el);
@@ -70,6 +90,33 @@ describe('Accordion', () => {
         await elementUpdated(el);
         openItems = el.querySelectorAll('sp-accordion-item[open]');
         expect(openItems.length).to.equal(1);
+    });
+    it('can have `toggle` events canceled', async () => {
+        const el = await fixture<Accordion>(Default());
+        await elementUpdated(el);
+        const firstItem = el.querySelector(
+            'sp-accordion-item:nth-of-type(1)'
+        ) as AccordionItem;
+        const secondItem = el.querySelector(
+            'sp-accordion-item:nth-of-type(2)'
+        ) as AccordionItem;
+
+        const firstButton = firstItem.focusElement;
+        const secondButton = secondItem.focusElement;
+
+        firstButton.click();
+        await elementUpdated(el);
+        expect(firstItem.open);
+        expect(!secondItem.open);
+
+        el.addEventListener('sp-accordion-item-toggle', (event: Event) =>
+            event.preventDefault()
+        );
+
+        secondButton.click();
+        await elementUpdated(el);
+        expect(firstItem.open);
+        expect(!secondItem.open);
     });
     it('allows more than one open item when `[allow-multiple]`', async () => {
         const el = await fixture<Accordion>(AllowMultiple());
@@ -82,11 +129,8 @@ describe('Accordion', () => {
             'sp-accordion-item:nth-of-type(2)'
         ) as AccordionItem;
 
-        const firstRoot = firstItem.shadowRoot as ShadowRoot;
-        const secondRoot = secondItem.shadowRoot as ShadowRoot;
-
-        const firstButton = firstRoot.querySelector('button') as HTMLElement;
-        const secondButton = secondRoot.querySelector('button') as HTMLElement;
+        const firstButton = firstItem.focusElement;
+        const secondButton = secondItem.focusElement;
 
         firstButton.click();
         await elementUpdated(el);
@@ -100,7 +144,7 @@ describe('Accordion', () => {
         expect(firstItem.open).to.be.true;
         expect(secondItem.open).to.be.true;
     });
-    it('ensures that the correct item is open and that items cannot be closed', async () => {
+    it('ensures that the correct item is open and that items can be closed', async () => {
         const el = await fixture<Accordion>(Default());
 
         await elementUpdated(el);
@@ -111,26 +155,53 @@ describe('Accordion', () => {
             'sp-accordion-item:nth-of-type(2)'
         ) as AccordionItem;
 
-        const firstRoot = firstItem.shadowRoot as ShadowRoot;
-        const secondRoot = secondItem.shadowRoot as ShadowRoot;
-
-        const firstButton = firstRoot.querySelector('button') as HTMLElement;
-        const secondButton = secondRoot.querySelector('button') as HTMLElement;
+        const firstButton = firstItem.focusElement;
+        const secondButton = secondItem.focusElement;
 
         firstButton.click();
         await elementUpdated(el);
-        let openItem = el.querySelector('sp-accordion-item[open]');
-        expect(openItem).to.equal(firstItem);
+        expect(firstItem.open);
+        expect(!secondItem.open);
 
         secondButton.click();
         await elementUpdated(el);
-        openItem = el.querySelector('sp-accordion-item[open]');
-        expect(openItem).to.equal(secondItem);
+        expect(!firstItem.open);
+        expect(secondItem.open);
 
         secondButton.click();
         await elementUpdated(el);
-        openItem = el.querySelector('sp-accordion-item[open]');
-        expect(openItem).to.equal(secondItem);
+        expect(!firstItem.open);
+        expect(!secondItem.open);
+    });
+
+    it('ensures that the correct item is open and that items can be closed when [allow-multiple]', async () => {
+        const el = await fixture<Accordion>(AllowMultiple());
+
+        await elementUpdated(el);
+        const firstItem = el.querySelector(
+            'sp-accordion-item:nth-of-type(1)'
+        ) as AccordionItem;
+        const secondItem = el.querySelector(
+            'sp-accordion-item:nth-of-type(2)'
+        ) as AccordionItem;
+
+        const firstButton = firstItem.focusElement;
+        const secondButton = secondItem.focusElement;
+
+        firstButton.click();
+        await elementUpdated(el);
+        expect(firstItem.open);
+        expect(!secondItem.open);
+
+        secondButton.click();
+        await elementUpdated(el);
+        expect(firstItem.open);
+        expect(secondItem.open);
+
+        secondButton.click();
+        await elementUpdated(el);
+        expect(firstItem.open);
+        expect(!secondItem.open);
     });
     it('handles focus and keyboard input and ignores disabled items', async () => {
         const el = await fixture<Accordion>(

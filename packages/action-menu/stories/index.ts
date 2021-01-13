@@ -31,7 +31,7 @@ export const ActionMenuMarkup = ({
         >
             ${customIcon
                 ? html`
-                      <sp-icon slot="icon" size="s">${customIcon}</sp-icon>
+                      <sp-icon slot="icon">${customIcon}</sp-icon>
                   `
                 : html``}
             ${visibleLabel

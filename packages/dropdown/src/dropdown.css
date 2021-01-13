@@ -11,6 +11,38 @@ governing permissions and limitations under the License.
 */
 @import './spectrum-dropdown.css';
 
+:host {
+    display: inline-flex;
+    vertical-align: top;
+}
+
 sp-popover {
     display: none;
+}
+
+.dropdown,
+.validationIcon {
+    flex-shrink: 0;
+}
+
+/**
+ * The accessibility team would prefer that it be possible to override the :focus-visible
+ * heuristics in _some_ cases, like when clicking an `sp-field-label`...
+ *
+ * From Picker
+ **/
+:host([focused]:not([quiet])) #button #label.placeholder {
+    /* .spectrum-Picker-trigger.focus-ring .spectrum-Picker-label.is-placeholder */
+    color: var(
+        --spectrum-picker-placeholder-text-color-key-focus,
+        var(--spectrum-alias-placeholder-text-color-hover)
+    );
+}
+
+:host([focused]:not([quiet])) #button .dropdown {
+    /* .spectrum-Picker-trigger.focus-ring .spectrum-Picker-icon */
+    color: var(
+        --spectrum-picker-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-focus)
+    );
 }

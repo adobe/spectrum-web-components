@@ -21,10 +21,10 @@ import {
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import {
-    AlertSmallIcon,
-    InfoSmallIcon,
-    SuccessSmallIcon,
-} from '@spectrum-web-components/icons-ui';
+    AlertIcon,
+    InfoIcon,
+    CheckmarkCircleIcon,
+} from '@spectrum-web-components/icons-workflow';
 
 import toastStyles from './toast.css.js';
 
@@ -110,24 +110,24 @@ export class Toast extends SpectrumElement {
         switch (variant) {
             case 'info':
                 label = 'Information';
-                icon = InfoSmallIcon;
+                icon = InfoIcon;
                 break;
             case 'negative':
             case 'error': // deprecated
             case 'warning': // deprecated
                 label = 'Error';
-                icon = AlertSmallIcon;
+                icon = AlertIcon;
                 break;
             case 'positive':
             case 'success': // deprecated
                 label = 'Success';
-                icon = SuccessSmallIcon;
+                icon = CheckmarkCircleIcon;
                 break;
             default:
                 return html``;
         }
         return html`
-            <sp-icon class="type" label=${label} size="s">
+            <sp-icon class="type" label=${label}>
                 ${icon({ hidden: true })}
             </sp-icon>
         `;
@@ -196,18 +196,15 @@ export class Toast extends SpectrumElement {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        this.open = true;
-    }
-
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (changes.has('open') && this.timeout) {
-            if (this.open) {
+        if (changes.has('open')) {
+            if (this.open && this.timeout) {
                 this.startCountdown();
             } else {
-                this.stopCountdown();
+                if (this.timeout) {
+                    this.stopCountdown();
+                }
                 const applyDefault = this.dispatchEvent(
                     new CustomEvent('close', {
                         composed: true,

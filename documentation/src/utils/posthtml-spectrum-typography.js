@@ -18,7 +18,7 @@ const matchHelper = require('posthtml-match-helper');
 const transformations = [
     {
         selector: 'p,ul,ol',
-        classes: ['spectrum-Body3'],
+        classes: ['spectrum-Body', 'spectrum-Body--sizeM'],
     },
     {
         // Wrap h1's in a .spectrum-Article to get nice typography
@@ -28,7 +28,7 @@ const transformations = [
             if (
                 node.attrs &&
                 node.attrs.class &&
-                /spectrum-Heading1/.test(node.attrs.class)
+                /spectrum-Heading/.test(node.attrs.class)
             ) {
                 return node;
             }
@@ -38,7 +38,10 @@ const transformations = [
                 content: [
                     {
                         tag: 'h1',
-                        attrs: { class: 'spectrum-Heading1' },
+                        attrs: {
+                            class:
+                                'spectrum-Heading spectrum-Heading--sizeXXXL spectrum-Heading--serif',
+                        },
                         content: node.content,
                     },
                 ],
@@ -51,7 +54,7 @@ const transformations = [
             if (
                 node.attrs &&
                 node.attrs.class &&
-                /spectrum-Heading2/.test(node.attrs.class)
+                /spectrum-Heading/.test(node.attrs.class)
             ) {
                 return node;
             }
@@ -63,12 +66,14 @@ const transformations = [
                 content: [
                     {
                         tag: 'h1',
-                        attrs: { class: 'spectrum-Heading2' },
+                        attrs: {
+                            class: 'spectrum-Heading spectrum-Heading--sizeM',
+                        },
                         content: node.content,
                     },
                     {
                         tag: 'sp-rule',
-                        attrs: { size: 'large' },
+                        attrs: { size: 'l' },
                     },
                 ],
             };
@@ -76,7 +81,38 @@ const transformations = [
     },
     {
         selector: 'h3',
-        classes: ['spectrum-Heading3'],
+        fn: (node) => {
+            if (
+                node.attrs &&
+                node.attrs.class &&
+                /spectrum-Heading/.test(node.attrs.class)
+            ) {
+                return node;
+            }
+            return {
+                tag: 'div',
+                attrs: {
+                    class: 'headerContainer',
+                },
+                content: [
+                    {
+                        tag: 'h3',
+                        attrs: {
+                            class: 'spectrum-Heading spectrum-Heading--sizeS',
+                        },
+                        content: node.content,
+                    },
+                    {
+                        tag: 'sp-rule',
+                        attrs: { size: 'm' },
+                    },
+                ],
+            };
+        },
+    },
+    {
+        selector: 'h4',
+        classes: ['spectrum-Header', 'spectrum-Heading--sizeXS'],
     },
     {
         selector: 'hr',

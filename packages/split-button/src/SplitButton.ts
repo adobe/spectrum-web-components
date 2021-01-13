@@ -18,25 +18,31 @@ import {
     PropertyValues,
     query,
     ifDefined,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import { ButtonVariants } from '@spectrum-web-components/button';
 import { DropdownBase } from '@spectrum-web-components/dropdown';
-import {
-    ChevronDownMediumIcon,
-    MoreIcon,
-} from '@spectrum-web-components/icons-ui';
-import buttonBaseStyles from '@spectrum-web-components/button/src/button-base.css.js';
-import buttonStyles from '@spectrum-web-components/button/src/button.css.js';
-import ChevronDownMediumStyle from '@spectrum-web-components/icon/src/spectrum-icon-chevron-down-medium.css.js';
+import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
+import { MoreIcon } from '@spectrum-web-components/icons-workflow';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import styles from './split-button.css.js';
+
+const chevronClass = {
+    s: 'spectrum-UIIcon-ChevronDown75',
+    m: 'spectrum-UIIcon-ChevronDown100',
+    l: 'spectrum-UIIcon-ChevronDown200',
+    xl: 'spectrum-UIIcon-ChevronDown300',
+};
 
 /**
  * @slot options - The menu with options that will display when the dropdown is open
  */
-export class SplitButton extends DropdownBase {
+export class SplitButton extends SizedMixin(DropdownBase) {
     public static get styles(): CSSResultArray {
-        return [buttonBaseStyles, buttonStyles, styles, ChevronDownMediumStyle];
+        return [styles, chevronStyles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -78,7 +84,7 @@ export class SplitButton extends DropdownBase {
     }
 
     private passClick(): void {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.optionsMenu) {
             return;
         }
@@ -87,7 +93,6 @@ export class SplitButton extends DropdownBase {
                 ? this.optionsMenu.menuItems[0]
                 : this.optionsMenu.menuItems.find((el) => el.selected) ||
                   this.optionsMenu.menuItems[0];
-        /* istanbul ignore else */
         if (target) {
             target.click();
         }
@@ -98,6 +103,7 @@ export class SplitButton extends DropdownBase {
             html`
                 <div
                     id="label"
+                    role="presentation"
                     class=${ifDefined(this.value ? undefined : 'placeholder')}
                 >
                     ${this.selectedItemText}
@@ -109,36 +115,40 @@ export class SplitButton extends DropdownBase {
     protected render(): TemplateResult {
         const buttons: TemplateResult[] = [
             html`
-                <button
+                <sp-button
                     aria-haspopup="true"
                     aria-label=${ifDefined(this.label || undefined)}
                     id="button"
                     class="button ${this.variant}"
                     @click=${this.passClick}
                     ?disabled=${this.disabled}
+                    variant=${this.variant}
+                    size=${this.size}
                 >
                     ${this.buttonContent}
-                </button>
+                </sp-button>
             `,
             html`
-                <button
+                <sp-button
                     class="button trigger ${this.variant}"
                     @blur=${this.onButtonBlur}
                     @click=${this.onButtonClick}
                     @focus=${this.onButtonFocus}
                     ?disabled=${this.disabled}
                     aria-label="More"
+                    variant=${this.variant}
+                    size=${this.size}
                 >
                     <sp-icon
                         class="icon ${this.type === 'field'
-                            ? 'chevron-down-medium'
-                            : 'more-medium'}"
+                            ? chevronClass[this.size]
+                            : ''}"
                     >
                         ${this.type === 'field'
-                            ? ChevronDownMediumIcon({ hidden: true })
+                            ? Chevron100Icon()
                             : MoreIcon({ hidden: true })}
                     </sp-icon>
-                </button>
+                </sp-button>
             `,
         ];
         if (this.left) {
@@ -163,7 +173,7 @@ export class SplitButton extends DropdownBase {
     }
 
     private async manageSplitButtonItems(): Promise<void> {
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!this.optionsMenu) {
             return;
         }
@@ -185,7 +195,6 @@ export class SplitButton extends DropdownBase {
             return;
         }
         await this.optionsMenu.updateComplete;
-        /* istanbul ignore else */
         if (this.optionsMenu.menuItems.length) {
             this.manageSplitButtonItems();
         }

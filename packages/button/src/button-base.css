@@ -14,13 +14,7 @@ governing permissions and limitations under the License.
 
 :host {
     display: inline-flex;
-    flex-direction: row;
     vertical-align: top;
-}
-
-#button {
-    display: flex;
-    flex: 1 1 auto;
 
     /* spectrum-css uses "-webkit-appearance: button" to workaround an
      * iOS and Safari issue. However, it results in incorrect styling
@@ -29,9 +23,34 @@ governing permissions and limitations under the License.
     -webkit-appearance: none;
 }
 
-slot[name='icon']::slotted(svg) {
+:host([disabled]) {
+    pointer-events: none;
+    cursor: auto;
+}
+
+#button {
+    color: inherit;
+    text-decoration: inherit;
+    display: flex;
+}
+
+#button:focus {
+    outline: none;
+}
+
+:host:after {
+    pointer-events: none;
+}
+
+slot[name='icon']::slotted(:not(sp-icon)) {
     fill: currentColor;
     stroke: currentColor;
-    width: var(--spectrum-alias-workflow-icon-size, 18px);
-    height: var(--spectrum-alias-workflow-icon-size, 18px);
+    height: var(
+        --spectrum-alias-workflow-icon-size-m,
+        var(--spectrum-global-dimension-size-225)
+    );
+    width: var(
+        --spectrum-alias-workflow-icon-size-m,
+        var(--spectrum-global-dimension-size-225)
+    );
 }

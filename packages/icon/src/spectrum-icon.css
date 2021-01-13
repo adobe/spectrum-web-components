@@ -23,92 +23,56 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-UIIcon:not(:root) */
     overflow: hidden;
 }
-:host([size='xxs']),
-:host([size='xxs']) img,
-:host([size='xxs']) svg {
-    /* .spectrum-Icon--sizeXXS,
-   * .spectrum-Icon--sizeXXS img,
-   * .spectrum-Icon--sizeXXS svg */
-    height: calc(
-        var(
-                --spectrum-alias-workflow-icon-size,
-                var(--spectrum-global-dimension-size-225)
-            ) / 2
-    );
-    width: calc(
-        var(
-                --spectrum-alias-workflow-icon-size,
-                var(--spectrum-global-dimension-size-225)
-            ) / 2
-    );
-}
-:host([size='xs']),
-:host([size='xs']) img,
-:host([size='xs']) svg {
-    /* .spectrum-Icon--sizeXS,
-   * .spectrum-Icon--sizeXS img,
-   * .spectrum-Icon--sizeXS svg */
-    height: calc(var(--spectrum-global-dimension-size-300) / 2);
-    width: calc(var(--spectrum-global-dimension-size-300) / 2);
-}
-:host([size='s']),
-:host([size='s']) img,
-:host([size='s']) svg {
+:host([size='s']) {
     /* .spectrum-Icon--sizeS,
    * .spectrum-Icon--sizeS img,
    * .spectrum-Icon--sizeS svg */
     height: var(
-        --spectrum-alias-workflow-icon-size,
-        var(--spectrum-global-dimension-size-225)
+        --spectrum-alias-workflow-icon-size-s,
+        var(--spectrum-global-dimension-size-200)
     );
     width: var(
-        --spectrum-alias-workflow-icon-size,
-        var(--spectrum-global-dimension-size-225)
+        --spectrum-alias-workflow-icon-size-s,
+        var(--spectrum-global-dimension-size-200)
     );
 }
-:host([size='m']),
-:host([size='m']) img,
-:host([size='m']) svg {
+:host([size='m']) {
     /* .spectrum-Icon--sizeM,
    * .spectrum-Icon--sizeM img,
    * .spectrum-Icon--sizeM svg */
-    height: var(--spectrum-global-dimension-size-300);
-    width: var(--spectrum-global-dimension-size-300);
+    height: var(
+        --spectrum-alias-workflow-icon-size-m,
+        var(--spectrum-global-dimension-size-225)
+    );
+    width: var(
+        --spectrum-alias-workflow-icon-size-m,
+        var(--spectrum-global-dimension-size-225)
+    );
 }
-:host([size='l']),
-:host([size='l']) img,
-:host([size='l']) svg {
+:host([size='l']) {
     /* .spectrum-Icon--sizeL,
    * .spectrum-Icon--sizeL img,
    * .spectrum-Icon--sizeL svg */
-    height: calc(
-        var(
-                --spectrum-alias-workflow-icon-size,
-                var(--spectrum-global-dimension-size-225)
-            ) * 2
-    );
-    width: calc(
-        var(
-                --spectrum-alias-workflow-icon-size,
-                var(--spectrum-global-dimension-size-225)
-            ) * 2
-    );
+    height: var(--spectrum-alias-workflow-icon-size-l);
+    width: var(--spectrum-alias-workflow-icon-size-l);
 }
-:host([size='xl']),
-:host([size='xl']) img,
-:host([size='xl']) svg {
+:host([size='xl']) {
     /* .spectrum-Icon--sizeXL,
    * .spectrum-Icon--sizeXL img,
    * .spectrum-Icon--sizeXL svg */
-    height: calc(var(--spectrum-global-dimension-size-300) * 2);
-    width: calc(var(--spectrum-global-dimension-size-300) * 2);
+    height: var(
+        --spectrum-alias-workflow-icon-size-xl,
+        var(--spectrum-global-dimension-size-275)
+    );
+    width: var(
+        --spectrum-alias-workflow-icon-size-xl,
+        var(--spectrum-global-dimension-size-275)
+    );
 }
-:host([size='xxl']),
-:host([size='xxl']) img,
-:host([size='xxl']) svg {
+:host([size='xxl']) {
     /* .spectrum-Icon--sizeXXL,
    * .spectrum-Icon--sizeXXL img,
    * .spectrum-Icon--sizeXXL svg */
-    height: calc(var(--spectrum-global-dimension-size-300) * 3);
-    width: calc(var(--spectrum-global-dimension-size-300) * 3);
+    height: var(--spectrum-global-dimension-size-400);
+    width: var(--spectrum-global-dimension-size-400);
 }

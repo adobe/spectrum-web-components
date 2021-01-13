@@ -28,13 +28,14 @@ export const Default = (): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
-                label="Opacity"
                 max="100"
                 min="0"
                 value="50"
                 @input=${handleEvent}
                 @change=${handleEvent}
-            ></sp-slider>
+            >
+                Opacity
+            </sp-slider>
         </div>
     `;
 };
@@ -66,6 +67,18 @@ export const Gradient = (): TemplateResult => {
     `;
 };
 
+export const tick = (): TemplateResult => {
+    return html`
+        <sp-slider
+            label="Slider Label"
+            variant="tick"
+            tick-step="5"
+            min="0"
+            max="92"
+        ></sp-slider>
+    `;
+};
+
 export const Disabled = (): TemplateResult => {
     const label = text('Label', 'Intensity');
     return html`
@@ -77,57 +90,6 @@ export const Disabled = (): TemplateResult => {
                 min="0"
                 max="20"
                 label="${label}"
-            ></sp-slider>
-        </div>
-    `;
-};
-
-export const Color = (): TemplateResult => {
-    return html`
-        <div style="width: 500px; margin: 12px 20px;">
-            <sp-slider
-                variant="color"
-                value="5"
-                step="0.5"
-                min="0"
-                max="20"
-                label="Color"
-                id="color-slider"
-            ></sp-slider>
-        </div>
-    `;
-};
-
-export const colorWithAlpha = (): TemplateResult => {
-    return html`
-        <div style="width: 500px; margin: 12px 20px;">
-            <sp-slider
-                variant="color"
-                has-alpha
-                value="5"
-                step="0.5"
-                min="0"
-                max="20"
-                label="Color"
-                id="color-slider"
-            ></sp-slider>
-        </div>
-    `;
-};
-
-export const colorDisabled = (): TemplateResult => {
-    return html`
-        <div style="width: 500px; margin: 12px 20px;">
-            <sp-slider
-                variant="color"
-                has-alpha
-                disabled
-                value="5"
-                step="0.5"
-                min="0"
-                max="20"
-                label="Color"
-                id="color-slider"
             ></sp-slider>
         </div>
     `;

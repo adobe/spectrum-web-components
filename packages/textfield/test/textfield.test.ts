@@ -17,7 +17,7 @@ describe('Textfield', () => {
     it('loads default textfield accessibly', async () => {
         const el = await litFixture<Textfield>(
             html`
-                <sp-textfield placeholder="Enter Your Name"></sp-textfield>
+                <sp-textfield label="Enter Your Name"></sp-textfield>
             `
         );
 
@@ -28,16 +28,49 @@ describe('Textfield', () => {
     it('loads multiline textfield accessibly', async () => {
         const el = await litFixture<Textfield>(
             html`
-                <sp-textfield
-                    placeholder="Enter your name"
-                    multiline
-                ></sp-textfield>
+                <sp-textfield label="Enter your name" multiline></sp-textfield>
             `
         );
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+
+    it('manages tabIndex while disabled', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield placeholder="Enter Your Name"></sp-textfield>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(0);
+
+        el.disabled = true;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+
+        el.tabIndex = 2;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+
+        el.disabled = false;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(2);
+    });
+
+    it('manages tabIndex before first render', async () => {
+        const el = document.createElement('sp-textfield') as Textfield;
+
+        expect(el.focusElement).to.be.null;
+        expect(el.tabIndex).to.equal(0);
+
+        el.remove();
     });
     it('loads', async () => {
         const testPlaceholder = 'Enter your name';
@@ -181,6 +214,13 @@ describe('Textfield', () => {
         await elementUpdated(el);
 
         el.focus();
+        await elementUpdated(el);
+
+        expect(activeElement === el.focusElement).to.be.false;
+        expect(document.activeElement === el).to.be.false;
+        document.removeEventListener('focusin', onFocusIn);
+
+        el.click();
         await elementUpdated(el);
 
         expect(activeElement === el.focusElement).to.be.false;

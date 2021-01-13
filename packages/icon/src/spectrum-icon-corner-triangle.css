@@ -10,14 +10,35 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.corner-triangle {
-    /* .spectrum-UIIcon-CornerTriangle */
+.spectrum-UIIcon-CornerTriangle75 {
+    /* .spectrum-UIIcon-CornerTriangle75 */
     width: var(
-        --spectrum-icon-cornertriangle-width,
+        --spectrum-alias-ui-icon-cornertriangle-size-75,
         var(--spectrum-global-dimension-size-65)
     );
     height: var(
-        --spectrum-icon-cornertriangle-height,
+        --spectrum-alias-ui-icon-cornertriangle-size-75,
         var(--spectrum-global-dimension-size-65)
     );
+}
+.spectrum-UIIcon-CornerTriangle100 {
+    /* .spectrum-UIIcon-CornerTriangle100 */
+    width: var(--spectrum-alias-ui-icon-cornertriangle-size-100);
+    height: var(--spectrum-alias-ui-icon-cornertriangle-size-100);
+}
+.spectrum-UIIcon-CornerTriangle200 {
+    /* .spectrum-UIIcon-CornerTriangle200 */
+    width: var(
+        --spectrum-alias-ui-icon-cornertriangle-size-200,
+        var(--spectrum-global-dimension-size-75)
+    );
+    height: var(
+        --spectrum-alias-ui-icon-cornertriangle-size-200,
+        var(--spectrum-global-dimension-size-75)
+    );
+}
+.spectrum-UIIcon-CornerTriangle300 {
+    /* .spectrum-UIIcon-CornerTriangle300 */
+    width: var(--spectrum-alias-ui-icon-cornertriangle-size-300);
+    height: var(--spectrum-alias-ui-icon-cornertriangle-size-300);
 }

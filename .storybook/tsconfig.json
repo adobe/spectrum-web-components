@@ -7,6 +7,7 @@
     "include": ["../global.d.ts", "../packages/*/stories/**/*.ts"],
     "exclude": [
         "../packages/*/src/**/*.ts",
+        "../packages/*/icons/**/*.ts",
         "../packages/*/node_modules/**/*.ts"
     ]
 }

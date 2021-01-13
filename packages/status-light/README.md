@@ -23,11 +23,46 @@ When looking to leverage the `StatusLight` base class as a type and/or for exten
 import { StatusLight } from '@spectrum-web-components/status-light';
 ```
 
-## Example
+## Sizes
+
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
+
+<div class="tabs--s">
 
 ```html
-<sp-status-light variant="positive">approved</sp-status-light>
+<sp-status-light size="s" variant="positive">approved</sp-status-light>
 ```
+
+</div>
+
+<div class="tabs--m">
+
+```html
+<sp-status-light size="m" variant="positive">approved</sp-status-light>
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html
+<sp-status-light size="l" variant="positive">approved</sp-status-light>
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html
+<sp-status-light size="xl" variant="positive">approved</sp-status-light>
+```
+
+</div>
 
 ### Variants
 

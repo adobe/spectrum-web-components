@@ -19,6 +19,8 @@ import {
 } from '@spectrum-web-components/base';
 
 import messageStyles from './illustrated-message.css.js';
+import headingStyles from '@spectrum-web-components/styles/heading.js';
+import bodyStyles from '@spectrum-web-components/styles/body.js';
 
 /**
  * @slot - The SVG that represents the illustration
@@ -28,7 +30,7 @@ export class IllustratedMessage extends SpectrumElement {
     public static readonly is = 'sp-illustrated-message';
 
     public static get styles(): CSSResultArray {
-        return [messageStyles];
+        return [headingStyles, bodyStyles, messageStyles];
     }
 
     @property()
@@ -40,8 +42,15 @@ export class IllustratedMessage extends SpectrumElement {
     protected render(): TemplateResult {
         return html`
             <div id="illustration"><slot></slot></div>
-            <h2 id="heading">${this.heading}</h2>
-            <p id="description">${this.description}</p>
+            <h2
+                id="heading"
+                class="spectrum-Heading spectrum-Heading--sizeL spectrum-Heading--light"
+            >
+                <slot name="heading">${this.heading}</slot>
+            </h2>
+            <div id="description" class="spectrum-Body spectrum-Body--sizeS">
+                <slot name="description">${this.description}</slot>
+            </div>
         `;
     }
 }

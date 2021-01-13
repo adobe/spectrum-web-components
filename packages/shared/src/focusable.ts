@@ -44,6 +44,12 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
      */
     @property({ type: Number })
     public get tabIndex(): number {
+        if (this.focusElement === this) {
+            const tabindex = this.hasAttribute('tabindex')
+                ? Number(this.getAttribute('tabindex'))
+                : NaN;
+            return !isNaN(tabindex) ? tabindex : -1;
+        }
         const tabIndexAttribute = parseFloat(
             this.hasAttribute('tabindex')
                 ? (this.getAttribute('tabindex') as string) || '0'
@@ -70,6 +76,14 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             this.manipulatingTabindex = false;
             return;
         }
+        if (this.focusElement === this) {
+            if (tabIndex !== this.tabIndex) {
+                this._tabIndex = tabIndex;
+                const tabindex = this.disabled ? '-1' : '' + tabIndex;
+                this.setAttribute('tabindex', tabindex);
+            }
+            return;
+        }
         // All code paths are about to address the host tabindex without side effect.
         this.manipulatingTabindex = true;
         if (tabIndex === -1 || this.disabled) {
@@ -93,6 +107,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
         this.manageFocusElementTabindex(tabIndex);
     }
+    private _tabIndex = 0;
 
     private async manageFocusElementTabindex(tabIndex: number): Promise<void> {
         if (!this.focusElement) {
@@ -117,11 +132,19 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             return;
         }
 
-        this.focusElement.focus();
+        if (this.focusElement !== this) {
+            this.focusElement.focus();
+        } else {
+            HTMLElement.prototype.focus.apply(this);
+        }
     }
 
     public blur(): void {
-        this.focusElement.blur();
+        if (this.focusElement !== this) {
+            this.focusElement.blur();
+        } else {
+            HTMLElement.prototype.blur.apply(this);
+        }
     }
 
     public click(): void {
@@ -129,7 +152,11 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             return;
         }
 
-        this.focusElement.click();
+        if (this.focusElement !== this) {
+            this.focusElement.click();
+        } else {
+            HTMLElement.prototype.click.apply(this);
+        }
     }
 
     protected manageAutoFocus(): void {
@@ -169,10 +196,8 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     protected updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
 
-        if (changedProperties.has('disabled')) {
-            if (this.disabled) {
-                this.blur();
-            }
+        if (changedProperties.has('disabled') && this.disabled) {
+            this.blur();
         }
     }
 
@@ -180,23 +205,30 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         disabled: boolean,
         oldDisabled: boolean
     ): Promise<void> {
+        const canSetDisabled = (): boolean =>
+            this.focusElement !== this &&
+            typeof this.focusElement.disabled !== 'undefined';
         if (disabled) {
             this.manipulatingTabindex = true;
             this.setAttribute('tabindex', '-1');
             await this.updateComplete;
-            if (typeof this.focusElement.disabled === 'undefined') {
-                this.setAttribute('aria-disabled', 'true');
-            } else {
+            if (canSetDisabled()) {
                 this.focusElement.disabled = true;
+            } else {
+                this.setAttribute('aria-disabled', 'true');
             }
         } else if (oldDisabled) {
             this.manipulatingTabindex = true;
-            this.removeAttribute('tabindex');
-            await this.updateComplete;
-            if (typeof this.focusElement.disabled === 'undefined') {
-                this.removeAttribute('aria-disabled');
+            if (this.focusElement === this) {
+                this.setAttribute('tabindex', '' + this._tabIndex);
             } else {
+                this.removeAttribute('tabindex');
+            }
+            await this.updateComplete;
+            if (canSetDisabled()) {
                 this.focusElement.disabled = false;
+            } else {
+                this.removeAttribute('aria-disabled');
             }
         }
     }

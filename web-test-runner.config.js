@@ -1,3 +1,14 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
 const { playwrightLauncher } = require('@web/test-runner-playwright');
 
 module.exports = {
@@ -14,12 +25,15 @@ module.exports = {
             'packages/*/stories/*',
             'packages/icons-ui/**',
             'packages/icons-workflow/**',
+            // The following file is no longer used in Chrome where coverage is calculated.
+            'packages/shared/src/focus-visible.*',
+            'packages/styles/**',
             'test/**',
         ],
         threshold: {
             statements: 98,
-            branches: 94,
-            functions: 95,
+            branches: 93,
+            functions: 94,
             lines: 98,
         },
     },
@@ -28,24 +42,10 @@ module.exports = {
             timeout: 10000,
         },
     },
-    testRunnerHtml: (testRunnerImport) => `
-        <html>
-        <head></head>
-        <body>
-            <script type="module">
-            import '${testRunnerImport}';
-            window.process = window.process || {};
-            window.process.env = window.process.env || {};
-            window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
-            </script>
-        </body>
-        </html>
-    `,
     browsers: [
         playwrightLauncher({ product: 'chromium' }),
         playwrightLauncher({ product: 'webkit' }),
         playwrightLauncher({
-            concurrency: 1,
             product: 'firefox',
             launchOptions: {
                 headless: false,

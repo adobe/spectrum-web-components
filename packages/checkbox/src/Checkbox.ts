@@ -19,13 +19,10 @@ import {
 } from '@spectrum-web-components/base';
 import { CheckboxBase } from './CheckboxBase.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    CheckmarkSmallIcon,
-    DashSmallIcon,
-} from '@spectrum-web-components/icons-ui';
+import { Checkmark75Icon, Dash75Icon } from '@spectrum-web-components/icons-ui';
 import checkboxStyles from './checkbox.css.js';
-import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark-small.css.js';
-import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash-small.css.js';
+import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
 
 export class Checkbox extends CheckboxBase {
     @property({ type: Boolean, reflect: true })
@@ -33,6 +30,9 @@ export class Checkbox extends CheckboxBase {
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
+
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
 
     public static get styles(): CSSResultArray {
         return [checkboxStyles, checkmarkSmallStyles, dashSmallStyles];
@@ -42,11 +42,11 @@ export class Checkbox extends CheckboxBase {
         return html`
             ${super.render()}
             <span id="box">
-                <sp-icon id="checkmark" size="s" class="checkmark-small">
-                    ${CheckmarkSmallIcon({ hidden: true })}
+                <sp-icon id="checkmark" class="spectrum-UIIcon-Checkmark75">
+                    ${Checkmark75Icon()}
                 </sp-icon>
-                <sp-icon id="partialCheckmark" size="s" class="dash-small">
-                    ${DashSmallIcon({ hidden: true })}
+                <sp-icon id="partialCheckmark" class="spectrum-UIIcon-Dash75">
+                    ${Dash75Icon()}
                 </sp-icon>
             </span>
             <label id="label"><slot></slot></label>

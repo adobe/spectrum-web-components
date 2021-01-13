@@ -23,22 +23,22 @@ import {
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    AlertSmallIcon,
-    CheckmarkSmallIcon,
-} from '@spectrum-web-components/icons-ui';
+import { Checkmark100Icon } from '@spectrum-web-components/icons-ui';
+import { AlertIcon } from '@spectrum-web-components/icons-workflow';
 
 import textfieldStyles from './textfield.css.js';
-import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark-small.css.js';
-import alertSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-alert-small.css.js';
+import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
 export class Textfield extends Focusable {
     public static get styles(): CSSResultArray {
-        return [textfieldStyles, checkmarkSmallStyles, alertSmallStyles];
+        return [textfieldStyles, checkmarkStyles];
     }
 
     @property({ attribute: 'allowed-keys' })
     allowedKeys = '';
+
+    @property({ type: Boolean, reflect: true })
+    public focused = false;
 
     @query('#input')
     private inputElement!: HTMLInputElement | HTMLTextAreaElement;
@@ -119,17 +119,25 @@ export class Textfield extends Focusable {
         );
     }
 
+    private onFocus(): void {
+        this.focused = true;
+    }
+
+    private onBlur(): void {
+        this.focused = false;
+    }
+
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
-                <sp-icon id="invalid" class="icon alert-small">
-                    ${AlertSmallIcon({ hidden: true })}
+                <sp-icon id="invalid" class="icon">
+                    ${AlertIcon()}
                 </sp-icon>
             `;
         } else if (this.valid) {
             return html`
-                <sp-icon id="valid" class="icon checkmark-small">
-                    ${CheckmarkSmallIcon({ hidden: true })}
+                <sp-icon id="valid" class="icon spectrum-UIIcon-Checkmark100">
+                    ${Checkmark100Icon()}
                 </sp-icon>
             `;
         }
@@ -138,7 +146,7 @@ export class Textfield extends Focusable {
 
     private get renderMultiline(): TemplateResult {
         return html`
-            ${this.grows
+            ${this.grows && !this.quiet
                 ? html`
                       <div id="sizer">${this.value}</div>
                   `
@@ -152,6 +160,8 @@ export class Textfield extends Focusable {
                 .value=${this.value}
                 @change=${this.onChange}
                 @input=${this.onInput}
+                @focus=${this.onFocus}
+                @blur=${this.onBlur}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
                 autocomplete=${ifDefined(this.autocomplete)}
@@ -170,6 +180,8 @@ export class Textfield extends Focusable {
                 .value=${this.value}
                 @change=${this.onChange}
                 @input=${this.onInput}
+                @focus=${this.onFocus}
+                @blur=${this.onBlur}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
                 autocomplete=${ifDefined(this.autocomplete)}

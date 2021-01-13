@@ -1,5 +1,17 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
 import { main } from 'tachometer/lib/cli';
-import { readdirSync } from 'fs';
+import { ConfigFile } from 'tachometer/lib/configfile';
+import { readdirSync, writeFileSync } from 'fs';
 import { join as pathjoin } from 'path';
 import * as commandLineArgs from 'command-line-args';
 import * as commandLineUsage from 'command-line-usage';
@@ -40,6 +52,13 @@ const optionDefinitions: commandLineUsage.OptionDefinition[] = [
         defaultValue: 50,
     },
     {
+        name: 'timeout',
+        description:
+            'The maximum number of minutes to spend auto-sampling.\n(default 3)',
+        alias: 't',
+        type: Number,
+    },
+    {
         name: 'browser',
         description:
             'Which browsers to launch in automatic mode.' +
@@ -48,6 +67,24 @@ const optionDefinitions: commandLineUsage.OptionDefinition[] = [
         type: String,
         defaultValue: 'chrome',
     },
+    {
+        name: 'compare',
+        description:
+            'Which version of @spectrum-web-components/bundle to compare your performance against.' +
+            '\n(default latest)',
+        alias: 'c',
+        type: String,
+        defaultValue: 'latest',
+    },
+    {
+        name: 'start',
+        description:
+            'Test from "page" start (includes element registration and upgrade) or "element" start (only includes upgrade).' +
+            '\n(default element)',
+        alias: 's',
+        type: String,
+        defaultValue: 'element',
+    },
 ];
 
 interface Options {
@@ -55,7 +92,10 @@ interface Options {
     package: string[];
     remote: string;
     'sample-size': string;
+    timeout: string;
     browser: string;
+    compare: string;
+    start: string;
 }
 
 (async () => {
@@ -101,10 +141,18 @@ $ node test/benchmark/cli -n 20
             .filter((dirEntry) => dirEntry.isDirectory())
             .map((dirEntry) => dirEntry.name);
     }
+    const start = opts.start;
 
     const printResults: string[] = [];
     for (const packageName of packages) {
         const runCommands: string[] = [];
+        const config: Partial<ConfigFile> = {
+            $schema:
+                'https://raw.githubusercontent.com/Polymer/tachometer/master/config.schema.json',
+            timeout: parseFloat(opts.timeout) || 0,
+            sampleSize: parseFloat(opts['sample-size']) || 50,
+            benchmarks: [],
+        };
 
         const hasTests = readdirSync(pathjoin('packages', packageName)).find(
             (dirEntry) => dirEntry === 'test'
@@ -132,18 +180,68 @@ $ node test/benchmark/cli -n 20
             .map((dirEntry) => dirEntry.name.replace(/\.js$/, ''));
 
         for (const benchmark of benchmarks) {
-            runCommands.push(
-                `${packageName}:${benchmark}=test/benchmark/bench-runner.html` +
-                    `?bench=${benchmark}` +
-                    `&package=${packageName}`
+            /**
+             * Assume that packages with the default package version
+             * have yet to be published to NPM and skip.
+             **/
+            const pjson = await import(
+                pathjoin(process.cwd(), 'packages', packageName, 'package.json')
             );
+            if (pjson.version === '0.0.1' && opts.compare !== 'none') {
+                console.log(
+                    `⚠️  It looks like '${packageName}' has yet to be published to NPM. Skipping comparison!`
+                );
+                return;
+            }
+            if (!config.benchmarks) return;
+            if (opts.compare !== 'none') {
+                config.benchmarks.push({
+                    name: `${packageName}:${benchmark}`,
+                    url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}`,
+                    packageVersions: {
+                        label: 'remote',
+                        dependencies: {
+                            '@spectrum-web-components/bundle': opts.compare,
+                        },
+                    },
+                    measurement: 'global',
+                    browser: {
+                        name: 'chrome',
+                        headless: true,
+                        windowSize: {
+                            width: 800,
+                            height: 600,
+                        },
+                    },
+                });
+            }
+            config.benchmarks.push({
+                name: `${packageName}:${benchmark}`,
+                url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}`,
+                measurement: 'global',
+                browser: {
+                    name: 'chrome',
+                    headless: true,
+                    windowSize: {
+                        width: 800,
+                        height: 600,
+                    },
+                },
+            });
         }
+
+        writeFileSync(
+            pathjoin(process.cwd(), 'test/benchmark/config.json'),
+            JSON.stringify(config),
+            {
+                encoding: 'utf8',
+            }
+        );
 
         const statResults = await main([
             ...runCommands,
-            '--measure=global',
-            `--browser=${opts.browser}${opts.remote ? `@${opts.remote}` : ''}`,
-            `--sample-size=${opts['sample-size']}`,
+            `--config=./test/benchmark/config.json`,
+            `--force-clean-npm-install`,
         ]);
 
         if (!statResults) {

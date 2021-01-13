@@ -11,33 +11,51 @@ governing permissions and limitations under the License.
 */
 
 const config = {
-    spectrum: 'barloader',
+    spectrum: 'progressbar',
     components: [
         {
             name: 'bar-loader',
             host: {
-                selector: '.spectrum-BarLoader',
+                selector: '.spectrum-ProgressBar',
             },
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-BarLoader--sideLabel',
+                    selector: '.spectrum-ProgressBar--sideLabel',
                     name: 'side-label',
                 },
                 {
-                    type: 'boolean',
-                    selector: '.spectrum-BarLoader--small',
-                    name: 'small',
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-ProgressBar--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-ProgressBar--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-ProgressBar--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-ProgressBar--sizeXL',
+                        },
+                    ],
                 },
                 {
                     type: 'boolean',
-                    selector: '.spectrum-BarLoader--indeterminate',
+                    selector: '.spectrum-ProgressBar--indeterminate',
                     name: 'indeterminate',
                 },
                 {
                     type: 'boolean',
                     name: 'over-background',
-                    selector: '.spectrum-BarLoader--overBackground',
+                    selector: '.spectrum-ProgressBar--overBackground',
                 },
                 {
                     type: 'boolean',
@@ -57,19 +75,19 @@ const config = {
             ],
             classes: [
                 {
-                    selector: '.spectrum-BarLoader-track',
+                    selector: '.spectrum-ProgressBar-track',
                     name: 'track',
                 },
                 {
-                    selector: '.spectrum-BarLoader-fill',
+                    selector: '.spectrum-ProgressBar-fill',
                     name: 'fill',
                 },
                 {
-                    selector: '.spectrum-BarLoader-label',
+                    selector: '.spectrum-ProgressBar-label',
                     name: 'label',
                 },
                 {
-                    selector: '.spectrum-BarLoader-percentage',
+                    selector: '.spectrum-ProgressBar-percentage',
                     name: 'percentage',
                 },
             ],

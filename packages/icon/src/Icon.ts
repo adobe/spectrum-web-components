@@ -12,41 +12,27 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    SpectrumElement,
     property,
     query,
-    CSSResultArray,
     TemplateResult,
     ifDefined,
 } from '@spectrum-web-components/base';
 
 import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 
-import iconStyles from './icon.css.js';
+import { IconBase } from './IconBase.js';
 
-export class Icon extends SpectrumElement {
-    public static is = 'sp-icon';
-
+export class Icon extends IconBase {
     @property()
     public src?: string;
 
     @property()
     public name?: string;
 
-    @property({ reflect: true })
-    public size = 'm';
-
-    @property()
-    public label?: string;
-
     @query('#container')
     private iconContainer?: HTMLElement;
 
     private updateIconPromise?: Promise<void>;
-
-    public static get styles(): CSSResultArray {
-        return [iconStyles];
-    }
 
     public connectedCallback(): void {
         super.connectedCallback();
@@ -92,9 +78,7 @@ export class Icon extends SpectrumElement {
                 <img src="${this.src}" alt=${ifDefined(this.label)} />
             `;
         }
-        return html`
-            <slot></slot>
-        `;
+        return super.render();
     }
 
     private async updateIcon(): Promise<void> {
@@ -116,7 +100,7 @@ export class Icon extends SpectrumElement {
         return iconset.applyIconToElement(
             this.iconContainer,
             icon.icon,
-            this.size,
+            this.size || '',
             this.label ? this.label : ''
         );
     }

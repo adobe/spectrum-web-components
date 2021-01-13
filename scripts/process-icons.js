@@ -17,9 +17,7 @@ const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
     // get icon name from filename
     const iconName = path.basename(srcPath, path.extname(srcPath));
     // regex will extract width, height and svg content into $1, $2 and $3 respectively
-    const regex = new RegExp(
-        /<svg.*width="([0-9]+)".*height="([0-9]+)">(.*?)<\/svg>/i
-    );
+    const regex = new RegExp(/<svg.*viewBox="(.*)">(.*?)<\/svg>/i);
 
     const content = fs.readFileSync(srcPath, 'utf8');
 
@@ -28,13 +26,12 @@ const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
         // no matching result, bail
         return;
     }
-    const svgWidth = parseInt(match[1], 10);
-    const svgHeight = parseInt(match[2], 10);
-    const svgContent = match[3];
+    const viewBox = match[1];
+    const svgContent = match[2];
     // append the content to the target file handle
     fs.writeSync(
         fd,
-        `<symbol id="spectrum-icon-${iconName}" viewBox="0 0 ${svgWidth} ${svgHeight}">${svgContent}</symbol>`
+        `<symbol id="spectrum-icon-${iconName}" viewBox="${viewBox}">${svgContent}</symbol>`
     );
 };
 

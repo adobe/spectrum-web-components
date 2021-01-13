@@ -10,87 +10,57 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([size='s']) {
+    /* .spectrum-Divider--sizeS */
+    --spectrum-divider-height: var(--spectrum-global-dimension-size-10);
+    --spectrum-divider-vertical-width: var(--spectrum-global-dimension-size-10);
+}
+:host([size='m']) {
+    /* .spectrum-Divider--sizeM */
+    --spectrum-divider-height: var(--spectrum-global-dimension-size-25);
+    --spectrum-divider-vertical-width: var(--spectrum-global-dimension-size-25);
+}
+:host([size='l']) {
+    /* .spectrum-Divider--sizeL */
+    --spectrum-divider-height: var(--spectrum-global-dimension-size-50);
+    --spectrum-divider-vertical-width: var(--spectrum-global-dimension-size-50);
+}
 :host {
-    /* .spectrum-Rule */
+    /* .spectrum-Divider */
+    --spectrum-divider-vertical-height: 100%;
     width: 100%;
+    height: var(--spectrum-divider-height);
     overflow: visible;
     border: none;
-    border-width: var(
-        --spectrum-divider-medium-height,
-        var(--spectrum-global-dimension-static-size-25)
-    );
-    border-radius: var(
-        --spectrum-divider-medium-height,
-        var(--spectrum-global-dimension-static-size-25)
-    );
-}
-:host([size='large']) {
-    /* .spectrum-Rule--large */
-    height: var(
-        --spectrum-divider-large-height,
-        var(--spectrum-global-dimension-static-size-50)
-    );
-    border-radius: var(
-        --spectrum-divider-large-border-radius,
-        var(--spectrum-global-dimension-static-size-25)
-    ); /* .spectrum-Rule--large */
-    background-color: var(
-        --spectrum-rule-large-background-color,
-        var(--spectrum-global-color-gray-800)
-    );
-}
-:host([size='medium']) {
-    /* .spectrum-Rule--medium */
-    height: var(
-        --spectrum-divider-medium-height,
-        var(--spectrum-global-dimension-static-size-25)
-    );
-    border-radius: var(
-        --spectrum-divider-medium-border-radius,
-        var(--spectrum-global-dimension-static-size-10)
-    ); /* .spectrum-Rule--medium */
-    background-color: var(
-        --spectrum-rule-medium-background-color,
-        var(--spectrum-global-color-gray-300)
-    );
-}
-:host([size='small']) {
-    /* .spectrum-Rule--small */
-    height: var(
-        --spectrum-divider-small-height,
-        var(--spectrum-global-dimension-static-size-10)
-    );
-    border-radius: var(
-        --spectrum-divider-small-border-radius,
-        var(--spectrum-global-dimension-static-size-10)
-    ); /* .spectrum-Rule--small */
-    background-color: var(
-        --spectrum-rule-small-background-color,
-        var(--spectrum-global-color-gray-300)
-    );
+    border-width: var(--spectrum-divider-height);
+    border-radius: var(--spectrum-divider-height);
 }
 :host([vertical]) {
-    /* .spectrum-Rule--vertical */
-    height: 100%;
+    /* .spectrum-Divider--vertical */
+    height: var(--spectrum-divider-vertical-height);
+    width: var(--spectrum-divider-vertical-width);
 }
-:host([vertical][size='large']) {
-    /* .spectrum-Rule--vertical.spectrum-Rule--large */
-    width: var(
-        --spectrum-divider-large-vertical-width,
-        var(--spectrum-global-dimension-static-size-50)
+:host {
+    /* .spectrum-Divider */
+    --spectrum-divider-l-background-color: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-divider-m-background-color: var(
+        --spectrum-global-color-gray-300
+    );
+    --spectrum-divider-s-background-color: var(
+        --spectrum-global-color-gray-300
     );
 }
-:host([vertical][size='medium']) {
-    /* .spectrum-Rule--vertical.spectrum-Rule--medium */
-    width: var(
-        --spectrum-divider-medium-vertical-width,
-        var(--spectrum-global-dimension-static-size-25)
-    );
+:host([size='l']) {
+    /* .spectrum-Divider--sizeL */
+    background-color: var(--spectrum-divider-l-background-color);
 }
-:host([vertical][size='small']) {
-    /* .spectrum-Rule--vertical.spectrum-Rule--small */
-    width: var(
-        --spectrum-divider-small-veritcal-width,
-        var(--spectrum-global-dimension-static-size-10)
-    );
+:host([size='m']) {
+    /* .spectrum-Divider--sizeM */
+    background-color: var(--spectrum-divider-m-background-color);
+}
+:host([size='s']) {
+    /* .spectrum-Divider--sizeS */
+    background-color: var(--spectrum-divider-s-background-color);
 }

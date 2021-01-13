@@ -23,7 +23,82 @@ When looking to leverage the `SplitButton` base class as a type and/or for exten
 import { SplitButton } from '@spectrum-web-components/split-button';
 ```
 
-## CTA Split Button
+## Sizes
+
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
+
+<div class="tabs--s">
+
+```html
+<sp-split-button size="s">
+    Split Button
+    <sp-popover slot="more" open>
+        <sp-menu>
+            <sp-menu-item>Option 1</sp-menu-item>
+            <sp-menu-item>Option Extended</sp-menu-item>
+        </sp-menu>
+    </sp-popover>
+</sp-split-button>
+```
+
+</div>
+
+<div class="tabs--m">
+
+```html
+<sp-split-button size="m">
+    Split Button
+    <sp-popover slot="more" open>
+        <sp-menu>
+            <sp-menu-item>Option 1</sp-menu-item>
+            <sp-menu-item>Option Extended</sp-menu-item>
+        </sp-menu>
+    </sp-popover>
+</sp-split-button>
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html
+<sp-split-button size="l">
+    Split Button
+    <sp-popover slot="more" open>
+        <sp-menu>
+            <sp-menu-item>Option 1</sp-menu-item>
+            <sp-menu-item>Option Extended</sp-menu-item>
+        </sp-menu>
+    </sp-popover>
+</sp-split-button>
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html
+<sp-split-button size="xl">
+    Split Button
+    <sp-popover slot="more" open>
+        <sp-menu>
+            <sp-menu-item>Option 1</sp-menu-item>
+            <sp-menu-item>Option Extended</sp-menu-item>
+        </sp-menu>
+    </sp-popover>
+</sp-split-button>
+```
+
+</div>
+
+## Variants
+
+### CTA
 
 ```html
 <sp-split-button>
@@ -46,7 +121,7 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## Primary Split Button
+### Primary
 
 ```html
 <sp-split-button variant="primary">
@@ -69,7 +144,7 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## Secondary Split Button
+### Secondary
 
 ```html
 <sp-split-button variant="secondary">
@@ -92,7 +167,11 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## CTA More Split Button
+## More button
+
+When using the `more` value of the `type` attribute, an `<sp-split-button>` will maintain its default option value without regard to the most recently used option.
+
+### CTA
 
 ```html
 <sp-split-button type="more">
@@ -115,7 +194,7 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## Primary More Split Button
+### Primary
 
 ```html
 <sp-split-button type="more" variant="primary">
@@ -138,7 +217,7 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-## Secondary More Split Button
+### Secondary
 
 ```html
 <sp-split-button type="more" variant="secondary">

@@ -32,10 +32,16 @@ packages/**/spectrum-vars.json
 packages/**/*.js.map
 packages/**/*.d.ts
 !packages/*/global.d.ts
+!packages/*/local.d.ts
 packages/*/*/*.d.ts
 !test/global.d.ts
 !packages/*/test/global.d.ts
 *.tsbuildinfo
+
+projects/**/*.js
+projects/**/*.js.map
+projects/**/*.d.ts
+!projects/*/global.d.ts
 
 spectrum-web-components.build.log
 spectrum-web-components.build.error.log
@@ -47,6 +53,7 @@ TESTS.xml
 /test/visual/screenshots-current/**/*.png
 /test/visual/**/local/
 !test/visual/**/*.js
+test/visual/screenshots-baseline/ci/userDataDir/
 
 package-lock.json
 custom-elements.json

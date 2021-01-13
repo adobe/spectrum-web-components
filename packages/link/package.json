@@ -20,8 +20,9 @@
     ],
     "version": "0.5.6",
     "description": "",
-    "main": "src/index.js",
-    "module": "src/index.js",
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "types": "./src/index.d.ts",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
@@ -48,7 +49,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/link": "^3.0.0"
+        "@spectrum-css/link": "^3.1.0-beta.0"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.1.3",

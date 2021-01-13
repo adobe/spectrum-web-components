@@ -16,7 +16,7 @@ import {
     TemplateResult,
     CSSResultArray,
     query,
-    ifDefined,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -37,23 +37,29 @@ export class ButtonBase extends LikeAnchor(
         return this.slotContentIsPresent;
     }
 
+    @property({ type: Boolean, reflect: true })
+    public active = false;
+
+    @property({ type: String })
+    public type: 'button' | 'submit' | 'reset' = 'button';
+
     @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
     protected iconRight = false;
 
-    private get hasLabel(): boolean {
+    protected get hasLabel(): boolean {
         return this.slotHasContent;
     }
 
-    @query('.button')
-    private buttonElement!: HTMLButtonElement;
+    @query('.anchor')
+    private anchorElement!: HTMLButtonElement;
 
     public get focusElement(): HTMLElement {
-        return this.buttonElement;
+        return this;
     }
 
     protected get buttonContent(): TemplateResult[] {
         const icon = html`
-            <slot name="icon"></slot>
+            <slot name="icon" ?icon-only=${!this.hasLabel}></slot>
         `;
         const content = [
             html`
@@ -72,15 +78,54 @@ export class ButtonBase extends LikeAnchor(
         return content;
     }
 
+    constructor() {
+        super();
+
+        this.addEventListener('click', this.handleClickCapture, {
+            capture: true,
+        });
+    }
+
+    public click(): void {
+        if (this.disabled) {
+            return;
+        }
+
+        if (this.shouldProxyClick()) {
+            return;
+        }
+
+        super.click();
+    }
+
+    private handleClickCapture(event: Event): void | boolean {
+        if (this.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+            return false;
+        }
+    }
+
+    private shouldProxyClick(): boolean {
+        let handled = false;
+        if (this.anchorElement) {
+            this.anchorElement.click();
+            handled = true;
+        } else if (this.type !== 'button') {
+            const proxy = document.createElement('button');
+            proxy.type = this.type;
+            this.insertAdjacentElement('afterend', proxy);
+            proxy.click();
+            proxy.remove();
+            handled = true;
+        }
+        return handled;
+    }
+
     protected renderButton(): TemplateResult {
         return html`
-            <button
-                id="button"
-                class="button"
-                aria-label=${ifDefined(this.label)}
-            >
-                ${this.buttonContent}
-            </button>
+            ${this.buttonContent}
         `;
     }
 
@@ -88,9 +133,97 @@ export class ButtonBase extends LikeAnchor(
         return this.href && this.href.length > 0
             ? this.renderAnchor({
                   id: 'button',
-                  className: 'button',
+                  className: 'button anchor',
                   anchorContent: this.buttonContent,
               })
             : this.renderButton();
+    }
+
+    private handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                if (typeof this.href === 'undefined') {
+                    this.addEventListener('keyup', this.handleKeyup);
+                    this.active = true;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private handleKeypress(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Enter':
+                this.click();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private handleKeyup(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                this.removeEventListener('keyup', this.handleKeyup);
+                this.active = false;
+                this.click();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private handleRemoveActive(): void {
+        this.active = false;
+    }
+
+    private handlePointerdown(): void {
+        this.active = true;
+    }
+
+    private manageRole(): void {
+        if (this.href && this.href.length > 0) {
+            this.removeAttribute('role');
+        } else if (!this.hasAttribute('role')) {
+            this.setAttribute('role', 'button');
+        }
+    }
+
+    protected firstUpdated(changed: PropertyValues): void {
+        super.firstUpdated(changed);
+        if (!this.hasAttribute('tabindex')) {
+            this.tabIndex = 0;
+        }
+        this.manageRole();
+        this.addEventListener('click', this.shouldProxyClick);
+        this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('keypress', this.handleKeypress);
+        this.addEventListener('pointerdown', this.handlePointerdown);
+    }
+
+    protected updated(changed: PropertyValues): void {
+        super.updated(changed);
+        if (changed.has('href')) {
+            this.manageRole();
+        }
+        if (changed.has('label')) {
+            this.setAttribute('aria-label', this.label || '');
+        }
+        if (changed.has('active')) {
+            if (this.active) {
+                this.addEventListener('focusout', this.handleRemoveActive);
+                this.addEventListener('pointerup', this.handleRemoveActive);
+            } else {
+                this.removeEventListener('focusout', this.handleRemoveActive);
+                this.removeEventListener('pointerup', this.handleRemoveActive);
+            }
+        }
+        if (this.anchorElement) {
+            this.anchorElement.tabIndex = -1;
+        }
     }
 }

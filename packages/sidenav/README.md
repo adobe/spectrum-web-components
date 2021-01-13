@@ -105,13 +105,13 @@ will send the user to the location of the item.
 <sp-icons-medium></sp-icons-medium>
 <sp-sidenav>
     <sp-sidenav-item value="Section Title 1" label="Section Title 1">
-        <sp-icon slot="icon" size="s" name="ui:Star"></sp-icon>
+        <sp-icon-star slot="icon"></sp-icon-star>
     </sp-sidenav-item>
     <sp-sidenav-item value="Section Title 2" label="Section Title 2">
-        <sp-icon slot="icon" size="s" name="ui:Star"></sp-icon>
+        <sp-icon-star slot="icon"></sp-icon-star>
     </sp-sidenav-item>
     <sp-sidenav-item value="Section Title 3" label="Section Title 3">
-        <sp-icon slot="icon" size="s" name="ui:Star"></sp-icon>
+        <sp-icon-star slot="icon"></sp-icon-star>
     </sp-sidenav-item>
 </sp-sidenav>
 ```

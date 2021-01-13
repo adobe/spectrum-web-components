@@ -19,8 +19,9 @@ import {
     ifDefined,
 } from '@spectrum-web-components/base';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-
-import { ChevronRightMediumIcon } from '@spectrum-web-components/icons-ui';
+import '@spectrum-web-components/icon/sp-icon.js';
+import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
+import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './accordion-item.css.js';
 
@@ -30,7 +31,7 @@ import styles from './accordion-item.css.js';
  */
 export class AccordionItem extends Focusable {
     public static get styles(): CSSResultArray {
-        return [styles];
+        return [styles, chevronIconStyles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -48,22 +49,17 @@ export class AccordionItem extends Focusable {
 
     constructor() {
         super();
-
         this.addEventListener('keydown', this.onKeyDown);
     }
 
     private onKeyDown(event: KeyboardEvent): void {
+        /* c8 ignore next 3 */
         if (this.disabled) {
             return;
         }
         if (event.code === 'Enter' || event.code === 'Space') {
             event.preventDefault();
-            this.dispatchEvent(
-                new CustomEvent('sp-accordion-item-toggle', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
+            this.toggle();
         }
     }
 
@@ -72,12 +68,21 @@ export class AccordionItem extends Focusable {
         if (this.disabled) {
             return;
         }
-        this.dispatchEvent(
+        this.toggle();
+    }
+
+    private toggle(): void {
+        this.open = !this.open;
+        const applyDefault = this.dispatchEvent(
             new CustomEvent('sp-accordion-item-toggle', {
                 bubbles: true,
                 composed: true,
+                cancelable: true,
             })
         );
+        if (!applyDefault) {
+            this.open = !this.open;
+        }
     }
 
     protected render(): TemplateResult {
@@ -92,8 +97,8 @@ export class AccordionItem extends Focusable {
                 >
                     ${this.label}
                 </button>
-                <sp-icon id="indicator" size="xs">
-                    ${ChevronRightMediumIcon({ hidden: true })}
+                <sp-icon id="indicator" class="spectrum-UIIcon-ChevronRight100">
+                    ${Chevron100Icon()}
                 </sp-icon>
             </h3>
             <div id="content" role="region" aria-labelledby="header">

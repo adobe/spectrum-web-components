@@ -15,19 +15,21 @@ import { spy } from 'sinon';
 
 import '../sp-dialog-wrapper.js';
 import { Dialog, DialogWrapper } from '../';
-import { Button, ActionButton } from '@spectrum-web-components/button';
+import { ActionButton } from '@spectrum-web-components/action-button';
+import { Button } from '@spectrum-web-components/button';
 import { Underlay } from '@spectrum-web-components/underlay';
 import {
     wrapperLabeledHero,
-    wrapperDismissible,
+    wrapperDismissable,
     wrapperButtons,
     wrapperFullscreen,
     wrapperButtonsUnderlay,
+    wrapperDismissableUnderlayError,
 } from '../stories/dialog-wrapper.stories.js';
 
 describe('Dialog Wrapper', () => {
     it('loads wrapped dialog accessibly', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissible());
+        const el = await fixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
 
@@ -54,20 +56,31 @@ describe('Dialog Wrapper', () => {
         await elementUpdated(el);
         expect(el).to.be.accessible();
     });
-    it('dismisses via clicking the underlay', async () => {
-        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+    it('dismisses via clicking the underlay when [dismissable]', async () => {
+        const test = await fixture<HTMLDivElement>(
+            wrapperDismissableUnderlayError()
+        );
+        const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
         await elementUpdated(el);
         expect(el.open).to.be.true;
-        el.dismissible = true;
-        const root = el.shadowRoot ? el.shadowRoot : el;
-        const underlay = root.querySelector('sp-underlay') as Underlay;
+        el.dismissable = true;
+        const underlay = el.shadowRoot.querySelector('sp-underlay') as Underlay;
         underlay.click();
         await elementUpdated(el);
         expect(el.open).to.be.false;
     });
+    it('does not dismiss via clicking the underlay :not([dismissable])', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        const underlay = el.shadowRoot.querySelector('sp-underlay') as Underlay;
+        underlay.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+    });
     it('dismisses', async () => {
         const el = await fixture<DialogWrapper>(
-            wrapperDismissible({ actionTracking: false })
+            wrapperDismissable({ actionTracking: false })
         );
 
         await elementUpdated(el);
@@ -84,8 +97,8 @@ describe('Dialog Wrapper', () => {
         await elementUpdated(el);
         expect(el.open).to.be.false;
     });
-    it('manages entry focus - dismissible', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissible());
+    it('manages entry focus - dismissable', async () => {
+        const el = await fixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
         expect(el.open).to.be.true;

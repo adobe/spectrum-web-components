@@ -17,7 +17,7 @@ const fs = require('fs');
 var rimraf = require('rimraf');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
-const stories = require('./stories');
+const storiesAll = require('./stories');
 
 const currentDir = `${process.cwd()}/test/visual/screenshots-current`;
 const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
@@ -25,14 +25,23 @@ const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
 const PixelDiffThreshold = 0;
 
 module.exports = {
-    checkScreenshots(type, color = 'light', scale = 'medium', dir = 'ltr') {
-        describe('👀 page screenshots are correct', function () {
-            let server,
-                browser,
-                page,
-                viewport = { width: 800, height: 600 };
+    checkScreenshots(
+        type,
+        color = 'light',
+        scale = 'medium',
+        dir = 'ltr',
+        concurrency = 10
+    ) {
+        let stories = storiesAll, // storiesAll.splice(0, 8),
+            testQueue = [],
+            results = [],
+            server,
+            browser,
+            viewport = { width: 800, height: 600 };
 
-            before(async function () {
+        describe('👀 page screenshots are correct', function () {
+            before(async () => {
+                // Prop file system...
                 // Create the test directory if needed.
                 if (!fs.existsSync(currentDir)) {
                     fs.mkdirSync(currentDir);
@@ -54,13 +63,8 @@ module.exports = {
                     rimraf.sync(`${baselineDir}/${type}/userDataDir`);
                 }
                 fs.mkdirSync(`${baselineDir}/${type}/userDataDir`);
-            });
 
-            after(async () => {
-                await Promise.all([browser.close(), server.stop()]);
-            });
-
-            before(async function () {
+                // start server and browser
                 server = await startDevServer({
                     config: {
                         port: 4444,
@@ -74,30 +78,64 @@ module.exports = {
                         ),
                     },
                 });
-                browser = await playwright[
-                    'chromium'
-                ].launchPersistentContext(
+                browser = await playwright['chromium'].launchPersistentContext(
                     `${baselineDir}/${type}/userDataDir`,
-                    { viewport }
+                    {
+                        viewport,
+                    }
                 );
-                page = await browser.newPage();
-                // prevent hover based inaccuracies in screenshots by
-                // moving the mouse off of the screen before loading tests
-                await page.mouse.move(-5, -5);
+                for (let i = 0; i < concurrency; i += 1) {
+                    (async () => {
+                        const page = await browser.newPage();
+                        // prevent hover based inaccuracies in screenshots by
+                        // moving the mouse off of the screen before loading tests
+                        await page.mouse.move(-5, -5);
+                        releasePage(page);
+                    })();
+                }
+                for (let i = 0; i < stories.length; i++) {
+                    results.push({
+                        title: `${stories[i]}__${color}__${scale}__${dir}`,
+                        test: queueTest(stories[i]),
+                    });
+                }
+            });
+
+            after(async () => {
+                await Promise.all([browser.close(), server.stop()]);
             });
 
             describe('default view', function () {
                 for (let i = 0; i < stories.length; i++) {
                     it(`${stories[i]}__${color}__${scale}__${dir}`, async function () {
-                        return takeAndCompareScreenshot(page, stories[i]);
+                        return (await results[i].test)();
                     });
                 }
             });
         });
 
+        function releasePage(page) {
+            if (testQueue[0]) {
+                testQueue.shift()(page);
+            }
+        }
+
+        async function availablePage() {
+            let resolver;
+            const testPromise = new Promise((res) => (resolver = res));
+            testQueue.push(resolver);
+            return testPromise;
+        }
+
+        async function queueTest(story) {
+            const page = await availablePage();
+            return takeAndCompareScreenshot(page, story);
+        }
+
+        //Process methods
         async function takeAndCompareScreenshot(page, test) {
             await page.goto(
-                `http://127.0.0.1:4444/iframe.html?id=${test}&knob-Reduce%20Motion_Theme=true&knob-Color_Theme=${color}&knob-Scale_Theme=${scale}&knob-Text%20direction_Theme=${dir}`,
+                `http://127.0.0.1:4444/iframe.html?id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`,
                 {
                     waitUntil: 'networkidle',
                 }
@@ -106,26 +144,27 @@ module.exports = {
                 () => !!document.querySelector('#root-inner')
             );
             await page.waitForFunction(
-                () => !!document.querySelector('sp-theme')
+                () => !!document.querySelector('sp-story-decorator')
             );
             await page.waitForFunction(
-                () => !!document.querySelector('sp-theme').shadowRoot
+                () => !!document.querySelector('sp-story-decorator').shadowRoot
             );
             await page.screenshot({
                 path: `${currentDir}/${type}/${test}__${color}__${scale}__${dir}.png`,
             });
-            return compareScreenshots(test);
+            return compareScreenshots(test, page);
         }
 
-        function compareScreenshots(view) {
+        function compareScreenshots(view, page) {
             return new Promise((resolve, reject) => {
+                const testFileName = `${view}__${color}__${scale}__${dir}`;
                 if (
-                    !fs.existsSync(
-                        `${baselineDir}/${type}/${view}__${color}__${scale}__${dir}.png`
-                    )
+                    !fs.existsSync(`${baselineDir}/${type}/${testFileName}.png`)
                 ) {
-                    reject(
-                        `🙅🏼‍♂️ ${view}__${color}__${scale}__${dir}.png does not have a baseline screenshot.`
+                    resolve(() =>
+                        Promise.reject(
+                            `🙅🏼‍♂️ ${testFileName}.png does not have a baseline screenshot.`
+                        )
                     );
                     return;
                 }
@@ -139,13 +178,13 @@ module.exports = {
                 //   });
                 const img1 = fs
                     .createReadStream(
-                        `${currentDir}/${type}/${view}__${color}__${scale}__${dir}.png`
+                        `${currentDir}/${type}/${testFileName}.png`
                     )
                     .pipe(new PNG())
                     .on('parsed', doneReading);
                 const img2 = fs
                     .createReadStream(
-                        `${baselineDir}/${type}/${view}__${color}__${scale}__${dir}.png`
+                        `${baselineDir}/${type}/${testFileName}.png`
                     )
                     .pipe(new PNG())
                     .on('parsed', doneReading);
@@ -181,25 +220,27 @@ module.exports = {
                         (numDiffPixels / (img1.width * img1.height)) * 100;
 
                     const stats = fs.statSync(
-                        `${currentDir}/${type}/${view}__${color}__${scale}__${dir}.png`
+                        `${currentDir}/${type}/${testFileName}.png`
                     );
                     const fileSizeInBytes = stats.size;
-                    console.log(
-                        `📸 ${view}__${color}__${scale}__${dir}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
-                    );
 
                     if (numDiffPixels > PixelDiffThreshold) {
                         diff.pack().pipe(
                             fs.createWriteStream(
-                                `${currentDir}/${view}__${color}__${scale}__${dir}-diff.png`
+                                `${currentDir}/${testFileName}-diff.png`
                             )
                         );
                     }
-                    expect(
-                        numDiffPixels,
-                        'number of different pixels'
-                    ).to.equal(PixelDiffThreshold);
-                    resolve();
+                    releasePage(page);
+                    resolve(() => {
+                        console.log(
+                            `📸 ${testFileName}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
+                        );
+                        expect(
+                            numDiffPixels,
+                            'number of different pixels'
+                        ).to.equal(PixelDiffThreshold);
+                    });
                 }
             });
         }

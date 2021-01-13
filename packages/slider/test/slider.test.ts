@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import '../sp-slider.js';
 import { Slider } from '../';
+import { tick } from '../stories/slider.stories.js';
 import {
     fixture,
     elementUpdated,
@@ -36,17 +37,6 @@ describe('Slider', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('loads - [variant="color"]', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider label="Color Slider" variant="color"></sp-slider>
-            `
-        );
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
     it('loads - [variant="tick"]', async () => {
         const el = await fixture<Slider>(
             html`
@@ -60,6 +50,13 @@ describe('Slider', () => {
                 ></sp-slider>
             `
         );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads - [variant="tick"] irregularly', async () => {
+        const el = await fixture<Slider>(tick());
 
         await elementUpdated(el);
 
@@ -245,19 +242,23 @@ describe('Slider', () => {
 
         controls.dispatchEvent(
             new PointerEvent('pointerdown', {
-                clientX: 50,
+                // account for 8px <body> margin by default
+                clientX: 9,
                 pointerId: 4,
+                bubbles: true,
             })
         );
         controls.dispatchEvent(
             new MouseEvent('mousedown', {
-                clientX: 50,
+                // account for 8px <body> margin by default
+                clientX: 9,
+                bubbles: true,
             })
         );
         await elementUpdated(el);
 
         expect(pointerId).to.equal(4);
-        expect(el.value).to.equal(1);
+        expect(el.value).to.equal(0);
     });
     it('will fallback to `trackMouseDown` on `#controls`', async () => {
         const el = await fixture<Slider>(
@@ -279,12 +280,14 @@ describe('Slider', () => {
 
         controls.dispatchEvent(
             new MouseEvent('mousedown', {
-                clientX: 50,
+                // account for 8px <body> margin by default
+                clientX: 9,
+                bubbles: true,
             })
         );
         await elementUpdated(el);
 
-        expect(el.value).to.equal(1);
+        expect(el.value).to.equal(0);
         ((el as unknown) as TestableSliderType).supportsPointerEvent = supportsPointerEvent;
     });
     it('can be disabled', async () => {

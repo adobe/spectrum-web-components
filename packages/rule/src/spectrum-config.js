@@ -11,26 +11,36 @@ governing permissions and limitations under the License.
 */
 
 const config = {
-    spectrum: 'rule',
+    spectrum: 'divider',
     components: [
         {
             name: 'rule',
             host: {
-                selector: '.spectrum-Rule',
+                selector: '.spectrum-Divider',
             },
             attributes: [
                 {
-                    selector: '.spectrum-Rule--vertical',
+                    selector: '.spectrum-Divider--vertical',
                     type: 'boolean',
                     name: 'vertical',
                 },
                 {
                     type: 'enum',
                     name: 'size',
+                    forceOntoHost: true,
                     values: [
-                        '.spectrum-Rule--small',
-                        '.spectrum-Rule--medium',
-                        '.spectrum-Rule--large',
+                        {
+                            name: 's',
+                            selector: '.spectrum-Divider--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Divider--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Divider--sizeL',
+                        },
                     ],
                 },
             ],

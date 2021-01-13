@@ -25,21 +25,19 @@ import { QuickActions } from '@spectrum-web-components/quick-actions';
 
 ## Example
 
-<sp-icons-medium></sp-icons-medium>
-
 ```html
 <div
     style="padding: 2em; background-color: var(--spectrum-quickactions-overlay-color, var(--spectrum-alias-background-color-quickactions-overlay));"
 >
     <sp-quick-actions opened>
         <sp-action-button quiet label="Info">
-            <sp-icon slot="icon" size="s" name="ui:InfoMedium"></sp-icon>
+            <sp-icon-info slot="icon"></sp-icon-info>
         </sp-action-button>
         <sp-action-button quiet label="Magnify">
-            <sp-icon slot="icon" size="s" name="ui:Magnifier"></sp-icon>
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
         </sp-action-button>
         <sp-action-button quiet label="Star">
-            <sp-icon slot="icon" size="s" name="ui:Star"></sp-icon>
+            <sp-icon-star slot="icon"></sp-icon-star>
         </sp-action-button>
     </sp-quick-actions>
 </div>

@@ -15,6 +15,8 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
+    PropertyValues,
+    queryAssignedNodes,
 } from '@spectrum-web-components/base';
 
 import { AccordionItem } from './AccordionItem.js';
@@ -30,27 +32,19 @@ export class Accordion extends Focusable {
         return [styles];
     }
 
-    public focusedItemIndex = 0;
-    public focusInItemIndex = 0;
-    protected isShiftTabbing = false;
-
     /**
      * Allows multiple accordion items to be opened at the same time
      */
     @property({ type: Boolean, reflect: true, attribute: 'allow-multiple' })
     public allowMultiple = false;
 
-    public constructor() {
-        super();
-        this.handleKeydown = this.handleKeydown.bind(this);
-        this.startListeningToKeyboard = this.startListeningToKeyboard.bind(
-            this
-        );
-        this.stopListeningToKeyboard = this.stopListeningToKeyboard.bind(this);
+    @queryAssignedNodes()
+    private defaultNodes!: NodeListOf<AccordionItem>;
 
-        this.addEventListener('focusin', this.startListeningToKeyboard);
-        this.addEventListener('focusout', this.stopListeningToKeyboard);
-        this.addEventListener('sp-accordion-item-toggle', this.onToggle);
+    private get items(): AccordionItem[] {
+        return [...(this.defaultNodes || [])].filter(
+            (node: HTMLElement) => typeof node.tagName !== 'undefined'
+        ) as AccordionItem[];
     }
 
     public focus(): void {
@@ -62,8 +56,8 @@ export class Accordion extends Focusable {
     }
 
     public get focusElement(): Accordion | AccordionItem {
-        const items = this.querySelectorAll('sp-accordion-item');
-        if (!items.length) {
+        const items = this.items;
+        if (items && !items.length) {
             return this;
         }
         let index = 0;
@@ -78,9 +72,9 @@ export class Accordion extends Focusable {
     }
 
     public startListeningToKeyboard(): void {
-        const accordionItems = this.querySelectorAll('sp-accordion-item');
+        const items = this.items;
         /* c8 ignore next 3 */
-        if (accordionItems.length === 0) {
+        if (items && !items.length) {
             return;
         }
         this.addEventListener('keydown', this.handleKeydown);
@@ -102,37 +96,36 @@ export class Accordion extends Focusable {
     }
 
     private focusItemByOffset(direction: number): void {
-        const items = [...this.querySelectorAll('sp-accordion-item')];
+        const items = this.items;
         const focused = items.indexOf(getActiveElement(this) as AccordionItem);
         let next = focused;
-        next = (items.length + next + direction) % items.length;
-        while (items[next].disabled) {
+        let availableItems = items.length;
+        // cycle through the available items in the directions of the offset to find the next non-disabled item
+        while ((items[next].disabled || next === focused) && availableItems) {
+            availableItems -= 1;
             next = (items.length + next + direction) % items.length;
+        }
+        // if there are no non-disabled items, skip the work to focus a child
+        if (items[next].disabled || next === focused) {
+            return;
         }
         items[next].focus();
     }
 
-    protected manageShiftTab(): void {
-        this.addEventListener('keydown', (event: KeyboardEvent) => {
-            const items = [
-                ...this.querySelectorAll('sp-accordion-item'),
-            ] as AccordionItem[];
-            const firstFocusable = items.find(
-                (item) => !item.disabled
-            ) as AccordionItem;
-            if (
-                !event.defaultPrevented &&
-                event.shiftKey &&
-                event.code === 'Tab' &&
-                (event.composedPath() as AccordionItem[]).includes(
-                    firstFocusable
-                )
-            ) {
-                this.isShiftTabbing = true;
-                HTMLElement.prototype.focus.apply(this);
-                setTimeout(() => (this.isShiftTabbing = false), 0);
-            }
-        });
+    private onToggle(event: Event): void {
+        const target = event.target as AccordionItem;
+        const items = [...this.items] as AccordionItem[];
+        /* c8 ignore next 3 */
+        if (items && !items.length) {
+            return;
+        }
+        if (!this.allowMultiple && !event.defaultPrevented) {
+            items.forEach((item) => {
+                if (item.open && item !== target) {
+                    item.open = false;
+                }
+            });
+        }
     }
 
     protected render(): TemplateResult {
@@ -141,22 +134,11 @@ export class Accordion extends Focusable {
         `;
     }
 
-    private onToggle(event: Event): void {
-        const target = event.target as AccordionItem;
-        const accordionItems = this.querySelectorAll('sp-accordion-item');
-        /* c8 ignore next 3 */
-        if (!accordionItems) {
-            return;
-        }
-        if (!this.allowMultiple) {
-            accordionItems.forEach((item: Element) => {
-                const accordionItem = item as AccordionItem;
-                if (accordionItem.open && accordionItem !== target) {
-                    accordionItem.open = false;
-                }
-            });
-        }
+    protected firstUpdated(changed: PropertyValues): void {
+        super.firstUpdated(changed);
 
-        target.open = true;
+        this.addEventListener('focusin', this.startListeningToKeyboard);
+        this.addEventListener('focusout', this.stopListeningToKeyboard);
+        this.addEventListener('sp-accordion-item-toggle', this.onToggle);
     }
 }

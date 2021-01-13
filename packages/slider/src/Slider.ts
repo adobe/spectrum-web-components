@@ -18,18 +18,18 @@ import {
     query,
     PropertyValues,
     styleMap,
+    ifDefined,
 } from '@spectrum-web-components/base';
 
-import spectrumSliderStyles from './spectrum-slider.css.js';
 import sliderStyles from './slider.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { StyleInfo } from 'lit-html/directives/style-map';
 
-export const variants = ['color', 'filled', 'ramp', 'range', 'tick'];
+export const variants = ['filled', 'ramp', 'range', 'tick'];
 
 export class Slider extends Focusable {
     public static get styles(): CSSResultArray {
-        return [sliderStyles, spectrumSliderStyles];
+        return [sliderStyles];
     }
 
     @property()
@@ -132,15 +132,12 @@ export class Slider extends Focusable {
     private boundingClientRect?: DOMRect;
 
     public get focusElement(): HTMLElement {
-        return this.input ? this.input : this;
+        return this.input;
     }
 
     protected render(): TemplateResult {
         return html`
-            ${this.renderLabel()}
-            ${this.variant === 'color'
-                ? this.renderColorTrack()
-                : this.renderTrack()}
+            ${this.renderLabel()} ${this.renderTrack()}
         `;
     }
 
@@ -153,7 +150,7 @@ export class Slider extends Focusable {
     private renderLabel(): TemplateResult {
         return html`
             <div id="labelContainer">
-                <label id="label" for="input">${this.label}</label>
+                <label id="label" for="input"><slot>${this.label}</slot></label>
                 <div
                     id="value"
                     role="textbox"
@@ -220,10 +217,18 @@ export class Slider extends Focusable {
         }
         const tickStep = this.tickStep || this.step;
         const tickCount = (this.max - this.min) / tickStep;
-        const ticks = new Array(tickCount + 1);
+        const partialFit = tickCount % 1 !== 0;
+        const ticks = new Array(Math.floor(tickCount + 1));
         ticks.fill(0, 0, tickCount + 1);
         return html`
-            <div class="ticks">
+            <div
+                class="${partialFit ? 'not-exact ' : ''}ticks"
+                style=${ifDefined(
+                    partialFit
+                        ? `--sp-slider-tick-offset: calc(100% / ${this.max} * ${this.tickStep}`
+                        : undefined
+                )}
+            >
                 ${ticks.map(
                     (_tick, i) => html`
                         <div class="tick">
@@ -256,10 +261,10 @@ export class Slider extends Focusable {
                 <input
                     type="range"
                     id="input"
-                    value="${this.value}"
-                    step="${this.step}"
-                    min="${this.min}"
-                    max="${this.max}"
+                    value=${this.value}
+                    step=${this.step}
+                    min=${this.min}
+                    max=${this.max}
                     aria-disabled=${this.disabled ? 'true' : 'false'}
                     aria-labelledby="label"
                     aria-valuenow=${this.value}
@@ -277,22 +282,14 @@ export class Slider extends Focusable {
     private renderTrack(): TemplateResult {
         return html`
             <div
-                id="controls"
                 @pointerdown=${this.onTrackPointerDown}
                 @mousedown=${this.onTrackMouseDown}
             >
-                ${this.renderTrackLeft()} ${this.renderRamp()}
-                ${this.renderTicks()} ${this.renderHandle()}
-                ${this.renderTrackRight()}
-            </div>
-        `;
-    }
-
-    private renderColorTrack(): TemplateResult {
-        return html`
-            <div id="controls" @pointerdown=${this.onTrackPointerDown}>
-                <div class="track"></div>
-                ${this.renderHandle()}
+                <div id="controls">
+                    ${this.renderTrackLeft()} ${this.renderRamp()}
+                    ${this.renderTicks()} ${this.renderHandle()}
+                    ${this.renderTrackRight()}
+                </div>
             </div>
         `;
     }
@@ -442,7 +439,7 @@ export class Slider extends Focusable {
         const percent = (offset - minOffset) / size;
         const value = this.min + (this.max - this.min) * percent;
 
-        return this.isLTR ? value : 100 - value;
+        return this.isLTR ? value : this.max - value;
     }
 
     private dispatchInputEvent(): void {
