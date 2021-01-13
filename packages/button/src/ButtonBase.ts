@@ -177,8 +177,12 @@ export class ButtonBase extends LikeAnchor(
         }
     }
 
-    private handleFocusout(): void {
+    private handleRemoveActive(): void {
         this.active = false;
+    }
+
+    private handlePointerdown(): void {
+        this.active = true;
     }
 
     private manageRole(): void {
@@ -198,6 +202,7 @@ export class ButtonBase extends LikeAnchor(
         this.addEventListener('click', this.shouldProxyClick);
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
+        this.addEventListener('pointerdown', this.handlePointerdown);
     }
 
     protected updated(changed: PropertyValues): void {
@@ -210,9 +215,11 @@ export class ButtonBase extends LikeAnchor(
         }
         if (changed.has('active')) {
             if (this.active) {
-                this.addEventListener('focusout', this.handleFocusout);
+                this.addEventListener('focusout', this.handleRemoveActive);
+                this.addEventListener('pointerup', this.handleRemoveActive);
             } else {
-                this.removeEventListener('focusout', this.handleFocusout);
+                this.removeEventListener('focusout', this.handleRemoveActive);
+                this.removeEventListener('pointerup', this.handleRemoveActive);
             }
         }
         if (this.anchorElement) {

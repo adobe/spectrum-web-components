@@ -29,7 +29,9 @@
     },
     "files": [
         "custom-elements.json",
-        "*.css"
+        "*.css",
+        "*.js",
+        "*.ts"
     ],
     "sideEffects": [
         "./*.css"
