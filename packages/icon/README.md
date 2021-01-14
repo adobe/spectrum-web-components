@@ -34,7 +34,7 @@ Names icons on this page are provided by the [`<sp-icons-medium>` icon set](comp
 
 ## Variants
 
-Icons are available in various sizes in Spectrum ranging from `xxs` to `xxl`, `m` being the default. We can specify the size via `size` attribute.
+Icons are available in various sizes in Spectrum ranging from `s` to `xxl`. By default an `sp-icon` without a `size` attribute will appear as if it were `size="m"`. We can specify the size via `size` attribute.
 
 ### Size variants
 
