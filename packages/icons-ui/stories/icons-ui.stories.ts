@@ -27,7 +27,7 @@ export default {
 export const uiElements = (): TemplateResult => {
     const size = select(
         'Icon Size',
-        ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'],
+        ['s', 'm', 'l', 'xl', 'xxl'],
         'm',
         'Element'
     );
