@@ -22,6 +22,7 @@ import {
 
 import '@spectrum-web-components/rule/sp-rule.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
 import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import { Cross500Icon } from '@spectrum-web-components/icons-ui';

@@ -56,10 +56,12 @@
     "dependencies": {
         "@spectrum-web-components/action-button": "^0.1.0",
         "@spectrum-web-components/base": "^0.2.0",
+        "@spectrum-web-components/button-group": "^0.4.0",
         "@spectrum-web-components/icon": "^0.7.0",
         "@spectrum-web-components/icons-ui": "^0.4.0",
         "@spectrum-web-components/icons-workflow": "^0.4.0",
         "@spectrum-web-components/modal": "^0.1.0",
+        "@spectrum-web-components/rule": "^0.4.0",
         "@spectrum-web-components/shared": "^0.8.0",
         "@spectrum-web-components/underlay": "^0.4.0",
         "tslib": "^2.0.0"
