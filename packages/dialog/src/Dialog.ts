@@ -18,6 +18,7 @@ import {
     property,
     query,
     ifDefined,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/rule/sp-rule.js';
@@ -176,6 +177,16 @@ export class Dialog extends ObserveSlotPresence(SpectrumElement, [
             this.contentElement.removeAttribute('tabindex');
         }
     };
+
+    protected shouldUpdate(changes: PropertyValues): boolean {
+        if (changes.has('mode') && !!this.mode) {
+            this.dismissable = false;
+        }
+        if (changes.has('dismissable') && this.dismissable) {
+            this.dismissable = !this.mode;
+        }
+        return super.shouldUpdate(changes);
+    }
 
     protected onContentSlotChange(): void {
         this.shouldManageTabOrderForScrolling();

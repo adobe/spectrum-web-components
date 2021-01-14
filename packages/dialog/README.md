@@ -83,6 +83,8 @@ import { Dialog } from '@spectrum-web-components/dialog';
 
 When supplied with the `dissmissable` attribute an `<sp-dialog>` element will surface a "close" button afordance that will dispatch a DOM event with the name of `close` when pressed.
 
+Note: the `dissmissable` attribute will not be followed when `mode="fullscreen"` or `mode="fullscreenTakeover"` are applies in accordance with the Spectrum specification.
+
 ```html
 <sp-dialog size="medium" dismissable>
     <h2 slot="heading">Disclaimer</h2>

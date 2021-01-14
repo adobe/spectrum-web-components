@@ -200,7 +200,7 @@ export const alertErrorWithLongTitle = (): TemplateResult => {
 
 export const fullscreen = (): TemplateResult => {
     return html`
-        <sp-dialog mode="fullscreen">
+        <sp-dialog mode="fullscreen" dismissable>
             <h2 slot="heading">Enable Smart Filters?</h2>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
