@@ -199,8 +199,10 @@ export class Toast extends SpectrumElement {
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('open')) {
-            if (this.open && this.timeout) {
-                this.startCountdown();
+            if (this.open) {
+                if (this.timeout) {
+                    this.startCountdown();
+                }
             } else {
                 if (this.timeout) {
                     this.stopCountdown();
