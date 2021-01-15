@@ -22,6 +22,7 @@ import {
 } from '@open-wc/testing';
 import { ClearButton } from '@spectrum-web-components/button';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
+import { spy } from 'sinon';
 
 interface TestableToast {
     _timeout: number;
@@ -32,7 +33,7 @@ describe('Toast', () => {
     it('loads', async () => {
         const el = await fixture<Toast>(
             html`
-                <sp-toast>Help text.</sp-toast>
+                <sp-toast open>Help text.</sp-toast>
             `
         );
 
@@ -44,7 +45,7 @@ describe('Toast', () => {
         it(`loads - [variant="${variant}"]`, async () => {
             const el = await fixture<Toast>(
                 html`
-                    <sp-toast variant=${variant}>
+                    <sp-toast variant=${variant} open>
                         This toast is of the \`${variant}\` variant.
                     </sp-toast>
                 `
@@ -190,7 +191,7 @@ describe('Toast', () => {
     it('validates variants', async () => {
         const el = await fixture<Toast>(
             html`
-                <sp-toast variant="invalid">
+                <sp-toast variant="invalid" open>
                     This toast validates variants.
                 </sp-toast>
             `
@@ -212,7 +213,7 @@ describe('Toast', () => {
     it('maintains [variant] when disconnected/connected', async () => {
         const el = await fixture<Toast>(
             html`
-                <sp-toast variant="positive">
+                <sp-toast variant="positive" open>
                     This toast maintains variants.
                 </sp-toast>
             `
@@ -230,5 +231,35 @@ describe('Toast', () => {
 
         await elementUpdated(el);
         expect(el.variant).to.equal('positive');
+    });
+    it('reopens', async () => {
+        const closeSpy = spy();
+        const el = await fixture<Toast>(
+            html`
+                <sp-toast
+                    variant="positive"
+                    open
+                    @close=${() => {
+                        closeSpy();
+                    }}
+                >
+                    This toast maintains variants.
+                </sp-toast>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.open);
+
+        el.open = false;
+
+        await elementUpdated(el);
+        expect(!el.open);
+
+        el.open = true;
+
+        await elementUpdated(el);
+        expect(el.open);
+        expect(closeSpy.callCount).to.equal(1);
     });
 });
