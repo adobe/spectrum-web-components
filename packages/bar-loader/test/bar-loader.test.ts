@@ -19,7 +19,7 @@ describe('BarLoader', () => {
     it('loads default bar-loader accessibly', async () => {
         const el = await fixture<BarLoader>(
             html`
-                <sp-bar-loader></sp-bar-loader>
+                <sp-bar-loader label="Loading"></sp-bar-loader>
             `
         );
 
@@ -55,7 +55,7 @@ describe('BarLoader', () => {
     });
     it('loads - [indeterminate]', async () => {
         const el = await fixture<BarLoader>(html`
-            <sp-bar-loader indeterminate></sp-bar-loader>
+            <sp-bar-loader indeterminate label="Loading"></sp-bar-loader>
         `);
 
         await elementUpdated(el);

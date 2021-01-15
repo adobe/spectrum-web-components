@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import '../sp-menu-group.js';
 import '../sp-menu.js';
 import '../sp-menu-item.js';
-import { MenuGroup, Menu } from '../';
+import { Menu } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Menu group', () => {
@@ -21,63 +21,22 @@ describe('Menu group', () => {
             html`
                 <sp-menu>
                     <sp-menu-group>
-                        <span slot="header">
-                            Section Heading
-                        </span>
-                        <sp-menu-item>
-                            Action 1
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Action 2
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Action 3
-                        </sp-menu-item>
+                        <span slot="header">Section Heading</span>
+                        <sp-menu-item>Action 1</sp-menu-item>
+                        <sp-menu-item>Action 2</sp-menu-item>
+                        <sp-menu-item>Action 3</sp-menu-item>
                     </sp-menu-group>
                     <sp-menu-divider></sp-menu-divider>
                     <sp-menu-group>
-                        <span slot="header">
-                            Section Heading
-                        </span>
-                        <sp-menu-item>
-                            Save
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Download
-                        </sp-menu-item>
+                        <span slot="header">Section Heading</span>
+                        <sp-menu-item>Save</sp-menu-item>
+                        <sp-menu-item disabled>Download</sp-menu-item>
                     </sp-menu-group>
                 </sp-menu>
             `
         );
 
         await elementUpdated(el);
-
-        const firstGroup = el.querySelector(
-            'sp-menu-group:nth-of-type(1)'
-        ) as MenuGroup;
-        const secondGroup = el.querySelector(
-            'sp-menu-group:nth-of-type(2)'
-        ) as MenuGroup;
-        const firstLabelledByEl = firstGroup.shadowRoot
-            ? (firstGroup.shadowRoot.querySelector(
-                  '[aria-labelledby]'
-              ) as HTMLDivElement)
-            : null;
-        const secondLabelledByEl = secondGroup.shadowRoot
-            ? (secondGroup.shadowRoot.querySelector(
-                  '[aria-labelledby]'
-              ) as HTMLDivElement)
-            : null;
-        const firstLabelledById = firstLabelledByEl
-            ? (firstLabelledByEl.getAttribute('aria-labelledby') as string)
-            : null;
-        const secondLabelledById = secondLabelledByEl
-            ? (secondLabelledByEl.getAttribute('aria-labelledby') as string)
-            : null;
-
-        expect(firstLabelledById).to.not.be.null;
-        expect(secondLabelledById).to.not.be.null;
-        expect(firstLabelledById).to.not.equal(secondLabelledById);
 
         await expect(el).to.be.accessible();
     });

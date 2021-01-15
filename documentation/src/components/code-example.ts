@@ -141,15 +141,11 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
             ${this.showDemo
                 ? html`
                       <div class="demo-example">
-                          <slot name="demo">
-                              ${renderedCode}
-                          </slot>
+                          <slot name="demo">${renderedCode}</slot>
                       </div>
                   `
                 : undefined}
-            <bdo id="markup" dir="ltr">
-                ${highlightedCode}
-            </bdo>
+            <bdo id="markup" dir="ltr">${highlightedCode}</bdo>
         `;
     }
 

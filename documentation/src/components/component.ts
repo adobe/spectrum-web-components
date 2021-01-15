@@ -90,9 +90,7 @@ function buildTable(
                 <tr>
                     ${headings.map(
                         (heading) => html`
-                            <th class="spectrum-Table-headCell">
-                                ${heading}
-                            </th>
+                            <th class="spectrum-Table-headCell">${heading}</th>
                         `
                     )}
                 </tr>
