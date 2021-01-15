@@ -26,7 +26,12 @@ import { Textfield } from '@spectrum-web-components/textfield';
 ## Example
 
 ```html
-<sp-textfield placeholder="Enter your name" multiline></sp-textfield>
+<sp-field-label for="story-0">Background</sp-field-label>
+<sp-textfield
+    id="story-0"
+    multiline
+    placeholder="Enter your life story"
+></sp-textfield>
 ```
 
 ## Variants
@@ -36,7 +41,13 @@ import { Textfield } from '@spectrum-web-components/textfield';
 Dictate the validity state of the text entry with the `valid` attribute.
 
 ```html
-<sp-textfield placeholder="Enter your name" valid multiline></sp-textfield>
+<sp-field-label for="story-1" required>Background</sp-field-label>
+<sp-textfield
+    id="story-1"
+    multiline
+    placeholder="Enter your name"
+    valid
+></sp-textfield>
 ```
 
 ### Invalid
@@ -44,7 +55,13 @@ Dictate the validity state of the text entry with the `valid` attribute.
 Dictate the invalidity state of the text entry with the `invalid` attribute.
 
 ```html
-<sp-textfield placeholder="Enter your name" invalid multiline></sp-textfield>
+<sp-field-label for="story-2" required>Background</sp-field-label>
+<sp-textfield
+    id="story-2"
+    invalid
+    multiline
+    placeholder="Enter your name"
+></sp-textfield>
 ```
 
 ### Quiet
@@ -52,7 +69,13 @@ Dictate the invalidity state of the text entry with the `invalid` attribute.
 The quiet style works best when a clear layout (vertical stack, table, grid) assists in a user's ability to parse the element. Too many quiet components in a small space can be hard to read.
 
 ```html
-<sp-textfield placeholder="Enter your name" quiet multiline></sp-textfield>
+<sp-field-label for="story-3">Background (quietly)</sp-field-label>
+<sp-textfield
+    id="story-3"
+    multiline
+    placeholder="Enter your name"
+    quiet
+></sp-textfield>
 ```
 
 ### Grows
@@ -62,22 +85,36 @@ By default the text area has a fixed height and will scroll when text entry goes
 Note: When leveraging the `quiet` attribute, the `grows` attribute does not effect the final delivery of the element.
 
 ```html
-<sp-textfield
-    multiline
-    placeholder="Enter your name"
-    value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
-></sp-textfield>
-<sp-textfield
-    multiline
-    grows
-    placeholder="Enter your name"
-    value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
-></sp-textfield>
-<sp-textfield
-    multiline
-    grows
-    quiet
-    placeholder="Enter your name"
-    value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
-></sp-textfield>
+<div style="display: flex; flex-wrap: wrap;">
+    <div>
+        <sp-field-label for="story-4">Background</sp-field-label>
+        <sp-textfield
+            id="story-4"
+            multiline
+            placeholder="Enter your name"
+            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+        ></sp-textfield>
+    </div>
+    <div>
+        <sp-field-label for="story-5">Background</sp-field-label>
+        <sp-textfield
+            id="story-5"
+            grows
+            multiline
+            placeholder="Enter your name"
+            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+        ></sp-textfield>
+    </div>
+    <div>
+        <sp-field-label for="story-6">Background (quietly)</sp-field-label>
+        <sp-textfield
+            id="story-6"
+            grows
+            multiline
+            placeholder="Enter your name"
+            value="By default the text area has a fixed height and will scroll when text entry goes beyond the available space. With the use of the `grows` attribute the text area will grow to accomidate the full content of the element."
+            quiet
+        ></sp-textfield>
+    </div>
+</div>
 ```
