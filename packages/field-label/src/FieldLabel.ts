@@ -17,6 +17,7 @@ import {
     TemplateResult,
     property,
     PropertyValues,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 import type { Focusable } from '@spectrum-web-components/shared';
 import { Asterisk100Icon } from '@spectrum-web-components/icons-ui';
@@ -30,7 +31,7 @@ type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
 /**
  * @element sp-field-label
  */
-export class FieldLabel extends SpectrumElement {
+export class FieldLabel extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [styles, asteriskIconStyles];
     }
@@ -51,9 +52,6 @@ export class FieldLabel extends SpectrumElement {
 
     @property({ type: String, reflect: true, attribute: 'side-aligned' })
     public sideAligned?: 'start' | 'end';
-
-    @property({ type: String, reflect: true })
-    public size = 'm';
 
     private target?: HTMLElement;
 
@@ -77,6 +75,9 @@ export class FieldLabel extends SpectrumElement {
         }
         const parent = this.getRootNode() as HTMLElement;
         const target = parent.querySelector(`#${this.for}`) as Focusable;
+        if (!target) {
+            return;
+        }
         if (typeof target.updateComplete !== 'undefined') {
             await target.updateComplete;
         }

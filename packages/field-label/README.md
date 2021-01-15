@@ -23,15 +23,70 @@ When looking to leverage the `FieldLabel` base class as a type and/or for extens
 import { FieldLabel } from '@spectrum-web-components/field-label';
 ```
 
-## Example
+## Sizes
+
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
+
+<div class="tabs--s">
+
+```html demo
+<sp-field-label for="lifestory-0" size="s">Life Story</sp-field-label>
+<sp-textfield
+    placeholder="Enter your life story"
+    id="lifestory-0"
+></sp-textfield>
+```
+
+</div>
+
+<div class="tabs--m">
+
+```html demo
+<sp-field-label for="lifestory-1" size="m">Life Story</sp-field-label>
+<sp-textfield
+    placeholder="Enter your life story"
+    id="lifestory-1"
+></sp-textfield>
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html demo
+<sp-field-label for="lifestory-2" size="l">Life Story</sp-field-label>
+<sp-textfield
+    placeholder="Enter your life story"
+    id="lifestory-2"
+></sp-textfield>
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html demo
+<sp-field-label for="lifestory-3" size="xl">Life Story</sp-field-label>
+<sp-textfield
+    placeholder="Enter your life story"
+    id="lifestory-3"
+></sp-textfield>
+```
+
+</div>
+
+## Examples
 
 ```html
 <sp-field-label for="lifestory">
     Life Story
 </sp-field-label>
-<sp-textfield placeholder="Enter your life story" id="lifestory">
-    <input />
-</sp-textfield>
+<sp-textfield placeholder="Enter your life story" id="lifestory"></sp-textfield>
 <sp-field-label for="birth-place">
     Birthplace
 </sp-field-label>
