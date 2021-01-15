@@ -43,9 +43,6 @@ export class ButtonBase extends LikeAnchor(
     @property({ type: String })
     public type: 'button' | 'submit' | 'reset' = 'button';
 
-    @property({ type: Boolean, reflect: true, attribute: 'icon-right' })
-    protected iconRight = false;
-
     protected get hasLabel(): boolean {
         return this.slotHasContent;
     }
@@ -58,9 +55,6 @@ export class ButtonBase extends LikeAnchor(
     }
 
     protected get buttonContent(): TemplateResult[] {
-        const icon = html`
-            <slot name="icon" ?icon-only=${!this.hasLabel}></slot>
-        `;
         const content = [
             html`
                 <div id="label" ?hidden=${!this.hasLabel}>
@@ -71,10 +65,11 @@ export class ButtonBase extends LikeAnchor(
                 </div>
             `,
         ];
-        if (!this.hasIcon) {
-            return content;
+        if (this.hasIcon) {
+            content.unshift(html`
+                <slot name="icon" ?icon-only=${!this.hasLabel}></slot>
+            `);
         }
-        this.iconRight ? content.push(icon) : content.unshift(icon);
         return content;
     }
 

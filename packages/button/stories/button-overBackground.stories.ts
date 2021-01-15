@@ -9,7 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { boolean } from '@open-wc/demoing-storybook';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { renderButtonSet, bellIcon, makeOverBackground } from './index.js';
 import { HelpIcon } from '@spectrum-web-components/icons-workflow';
@@ -29,7 +28,6 @@ export const quiet = (): TemplateResult =>
     });
 
 export const withIcon = (): TemplateResult => {
-    const iconRight = boolean('Icon on Right', false);
     return html`
         <style>
             .row {
@@ -39,7 +37,6 @@ export const withIcon = (): TemplateResult => {
         <div class="row">
             ${renderButtonSet({
                 variant,
-                iconRight,
                 content: html`
                     <sp-icon slot="icon">
                         ${HelpIcon({ hidden: true })}
@@ -51,19 +48,10 @@ export const withIcon = (): TemplateResult => {
         <div class="row">
             ${renderButtonSet({
                 variant,
-                iconRight,
                 content: html`
                     ${bellIcon} Custom SVG
                 `,
             })}
-        </div>
-        <div class="row">
-            <sp-button variant=${variant} icon-right>
-                ${bellIcon} Custom SVG
-            </sp-button>
-            <sp-button variant=${variant}>
-                ${bellIcon} Custom SVG
-            </sp-button>
         </div>
     `;
 };
