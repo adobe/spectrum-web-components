@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { stub } from 'sinon';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { Textfield } from '@spectrum-web-components/textfield';
@@ -63,6 +64,35 @@ describe('FieldLabel', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('allows unfulfilled "for"', async () => {
+        const el = await fixture<FieldLabel>(
+            html`
+                <sp-field-label>Input label</sp-field-label>
+            `
+        );
+        await elementUpdated(el);
+        const manageSpy = stub(
+            (el as unknown) as { manageFor(): Promise<string> },
+            'manageFor'
+        );
+        manageSpy.callsFake(
+            async (...args): Promise<string> => {
+                try {
+                    await ((FieldLabel.prototype as unknown) as {
+                        manageFor(): Promise<void>;
+                    }).manageFor.apply(el, ...args);
+                } catch (error) {
+                    return 'Error was thrown.';
+                }
+                return 'No error was thrown.';
+            }
+        );
+
+        el.for = 'not-available';
+        await elementUpdated(el);
+        const result = await manageSpy.returnValues[0];
+        expect(result).to.equal('No error was thrown.');
     });
     it('associates itself to an element whose "id" matches its "for" attribute', async () => {
         const test = await fixture<HTMLDivElement>(

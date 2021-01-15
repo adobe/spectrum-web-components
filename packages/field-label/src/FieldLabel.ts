@@ -93,6 +93,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
                 );
             }
         }
+        return Promise.resolve();
     }
 
     protected render(): TemplateResult {
