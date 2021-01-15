@@ -22,7 +22,6 @@ interface Properties {
     quiet?: boolean;
     content?: TemplateResult;
     disabled?: boolean;
-    iconRight?: boolean;
     size?: 's' | 'm' | 'l' | 'xl';
     href?: string;
     target?: '_blank' | '_parent' | '_self' | '_top';
@@ -45,7 +44,6 @@ export function renderButton(properties: Properties): TemplateResult {
                 variant="${properties.variant}"
                 ?quiet="${!!properties.quiet}"
                 ?disabled=${!!properties.disabled}
-                ?icon-right=${properties.iconRight}
                 @click=${action(`Click ${properties.variant}`)}
                 size=${properties.size || 'm'}
                 href=${ifDefined(properties.href)}
