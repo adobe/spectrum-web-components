@@ -19,7 +19,7 @@ describe('Meter', () => {
     it('loads default meter accessibly', async () => {
         const el = await fixture<Meter>(
             html`
-                <sp-meter></sp-meter>
+                <sp-meter label="Loading"></sp-meter>
             `
         );
 

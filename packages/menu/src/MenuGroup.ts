@@ -46,7 +46,7 @@ export class MenuGroup extends SpectrumElement {
             <span class="header" id=${labelledby} aria-hidden="true">
                 <slot name="header"></slot>
             </span>
-            <div aria-labelledby=${labelledby} role="presentation">
+            <div role="presentation">
                 <slot></slot>
             </div>
         `;

@@ -17,7 +17,7 @@ import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 describe('Circle Loader', () => {
     it('loads', async () => {
         const el = await fixture<CircleLoader>(html`
-            <sp-circle-loader></sp-circle-loader>
+            <sp-circle-loader label="Loading"></sp-circle-loader>
         `);
 
         await elementUpdated(el);
@@ -27,7 +27,7 @@ describe('Circle Loader', () => {
     });
     it('loads - [indeterminate]', async () => {
         const el = await fixture<CircleLoader>(html`
-            <sp-circle-loader indeterminate></sp-circle-loader>
+            <sp-circle-loader indeterminate label="Loading"></sp-circle-loader>
         `);
 
         await elementUpdated(el);
