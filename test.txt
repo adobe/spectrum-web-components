@@ -1,0 +1,1 @@
+This allows me to create a PR against the main repo to confirm the the presence checks I've set up will prevent contributors for having unending CI runs. Fingers crossed!
