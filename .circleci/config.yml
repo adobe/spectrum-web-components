@@ -42,6 +42,10 @@ commands:
                   keys:
                       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            - run:
+                  name: Confirm cache presence
+                  command: |
+                      test -d test/visual/screenshots-baseline/ci
             - run: yarn test:visual:ci --concurrency=5 --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
             - run:
                   when: on_fail
