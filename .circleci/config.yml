@@ -10,19 +10,6 @@ parameters:
         type: string
         default: 706d8c6805f4a099932b6fd3c5abba07daf8c55c
 commands:
-    setup:
-        steps:
-            - checkout
-            - restore_cache:
-                  keys:
-                      - v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - run:
-                  name: Installing Dependencies
-                  command: yarn
-            - save_cache:
-                  paths:
-                      - node_modules
-                  key: v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
     downstream:
         steps:
             - checkout
@@ -88,32 +75,53 @@ jobs:
         executor: node
 
         steps:
-            - setup
+            - checkout
+            - restore_cache:
+                  keys:
+                      - v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Installing Dependencies
+                  command: yarn
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - persist_to_workspace:
+                  root: /
+                  paths:
+                      - home/pwuser/.cache/ms-playwright
+                      - root/.cache/ms-playwright
+                      - root/project/node_modules
+                      - root/project/packages
+                      - root/project/projects/story-decorator
+
+    test:
+        executor: node
+
+        steps:
+            - downstream
             - run:
                   name: Lint
                   command: yarn lint
             - run: yarn analyze
-
-            # test & get code coverage
             - run:
                   name: Run tests
                   command: yarn test:ci
-
             - store_artifacts:
                   path: coverage
 
+    docs:
+        executor: node
+
+        steps:
+            - downstream
             - run:
                   name: Generate Docs
                   command: yarn docs:ci
-
             - persist_to_workspace:
                   root: /
                   paths:
-                      - root/project/node_modules
-                      - root/project/packages/*/node_modules
                       - root/project/documentation/dist
-                      - root/.cache/ms-playwright
-                      - home/pwuser/.cache/ms-playwright
 
     visual-lightest-medium-ltr:
         executor: node
@@ -290,12 +298,6 @@ jobs:
 
         steps:
             - downstream
-            - restore_cache:
-                  keys:
-                      - v2-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - run:
-                  name: Installing Dependencies
-                  command: yarn
             - run: yarn docs:build
             - run: echo '/*    /index.html   200' > documentation/dist/_redirects
             - run: yarn netlify deploy
@@ -308,64 +310,88 @@ workflows:
     build:
         jobs:
             - build
+            - test:
+                  requires:
+                      - build
+            - docs:
+                  requires:
+                      - build
             - visual-lightest-medium-ltr:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-lightest-large-ltr:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-light-medium-ltr:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-light-large-ltr:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-dark-medium-ltr:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-dark-large-ltr:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-darkest-medium-ltr:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-darkest-large-ltr:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-lightest-medium-rtl:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-lightest-large-rtl:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-light-medium-rtl:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-light-large-rtl:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-dark-medium-rtl:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-dark-large-rtl:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-darkest-medium-rtl:
                   requires:
-                      - build
+                      - test
+                      - docs
             - visual-darkest-large-rtl:
                   requires:
-                      - build
+                      - test
+                      - docs
             - publish-docs:
                   filters:
                       branches:
                           only:
                               - main
                   requires:
-                      - build
+                      - test
+                      - docs
             - publish-preview:
                   requires:
-                      - build
+                      - test
+                      - docs
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
