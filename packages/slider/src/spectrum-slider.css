@@ -103,7 +103,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     min-height: var(--spectrum-slider-height);
     min-width: var(--spectrum-slider-min-width);
     -webkit-user-select: none;
-    -moz-user-select: none;
     user-select: none;
 }
 :host([dir='ltr']) #controls {
@@ -302,7 +301,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='range']) #value {
     /* .spectrum-Slider--range .spectrum-Slider-value */
     -webkit-user-select: text;
-    -moz-user-select: text;
     user-select: text;
 }
 :host([dir='ltr'][variant='range']) .track:first-of-type {
