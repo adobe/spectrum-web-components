@@ -35,3 +35,49 @@ governing permissions and limitations under the License.
 :host([data-popper-placement*='bottom']) #tip {
     margin-left: 0;
 }
+
+:host([placement*='right']) #tip,
+:host([placement*='left']) #tip {
+    border: solid
+        var(
+            --spectrum-tooltip-tip-height,
+            var(--spectrum-global-dimension-size-50)
+        )
+        transparent;
+    border-left-color: var(
+        --spectrum-tooltip-background-color,
+        var(--spectrum-global-color-static-gray-700)
+    );
+}
+
+:host([placement*='left']) #tip {
+    transform: none;
+}
+
+:host([placement*='right']) #tip {
+    transform: scaleX(-1);
+}
+
+:host([variant='negative'][placement*='right']) #tip,
+:host([variant='negative'][placement*='left']) #tip {
+    border-left-color: var(
+        --spectrum-tooltip-negative-background-color,
+        var(--spectrum-global-color-static-red-700)
+    );
+}
+
+:host([variant='info'][placement*='right']) #tip,
+:host([variant='info'][placement*='left']) #tip {
+    border-left-color: var(
+        --spectrum-tooltip-info-background-color,
+        var(--spectrum-global-color-static-blue-700)
+    );
+}
+
+:host([variant='positive'][placement*='right']) #tip,
+:host([variant='positive'][placement*='left']) #tip {
+    border-left-color: var(
+        --spectrum-tooltip-positive-background-color,
+        var(--spectrum-global-color-static-green-700)
+    );
+}
