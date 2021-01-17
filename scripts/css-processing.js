@@ -24,8 +24,8 @@ const postCSSPlugins = (resourcePath) => {
             browsers: [
                 'last 2 Chrome versions',
                 'last 2 Firefox versions',
-                'last 2 Safari versions',
-                'last 2 iOS versions',
+                'last 3 Safari versions',
+                'last 3 iOS versions',
             ],
         }),
         // minify the css with cssnano presets

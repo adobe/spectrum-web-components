@@ -50,6 +50,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([variant='sticky']) {
     /* .spectrum-ActionBar--sticky */
+    position: -webkit-sticky;
     position: sticky;
 }
 :host([flexible]) #popover {
