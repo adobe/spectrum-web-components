@@ -28,7 +28,10 @@ import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.c
 import '@spectrum-web-components/icon/sp-icon.js';
 import { Cross500Icon } from '@spectrum-web-components/icons-ui';
 import { AlertIcon } from '@spectrum-web-components/icons-workflow';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared';
+import {
+    ObserveSlotPresence,
+    FocusVisiblePolyfillMixin,
+} from '@spectrum-web-components/shared';
 
 import styles from './dialog.css.js';
 
@@ -37,11 +40,13 @@ import styles from './dialog.css.js';
  *
  * @fires close - Announces that the dialog has been closed.
  */
-export class Dialog extends ObserveSlotPresence(SpectrumElement, [
-    '[slot="hero"]',
-    '[slot="footer"]',
-    '[slot="button"]',
-]) {
+export class Dialog extends FocusVisiblePolyfillMixin(
+    ObserveSlotPresence(SpectrumElement, [
+        '[slot="hero"]',
+        '[slot="footer"]',
+        '[slot="button"]',
+    ])
+) {
     public static get styles(): CSSResultArray {
         return [styles, crossStyles];
     }
