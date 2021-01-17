@@ -21,6 +21,12 @@ const postCSSPlugins = (resourcePath) => {
         require('postcss-inherit')(),
         require('postcss-preset-env')({
             stage: 0,
+            browsers: [
+                'last 2 Chrome versions',
+                'last 2 Firefox versions',
+                'last 2 Safari versions',
+                'last 2 iOS versions',
+            ],
         }),
         // minify the css with cssnano presets
         require('cssnano')({
