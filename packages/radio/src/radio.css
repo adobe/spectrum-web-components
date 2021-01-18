@@ -22,3 +22,9 @@ governing permissions and limitations under the License.
         6px
     );
 }
+
+/* End work around. */
+
+:host([disabled]) {
+    pointer-events: none;
+}
