@@ -47,6 +47,26 @@ const config = {
                     name: 'label',
                 },
             ],
+            complexSelectors: [
+                {
+                    replacement:
+                        ':host([disabled][checked][dir]) #input + #switch',
+                    selector:
+                        '.spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch',
+                },
+                {
+                    replacement:
+                        ':host([disabled][checked][dir]) #input + #switch:before',
+                    selector:
+                        '.spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch:before',
+                },
+                {
+                    replacement:
+                        ':host([disabled][checked][dir]) #input ~ #label',
+                    selector:
+                        '.spectrum-Switch .spectrum-Switch-input:disabled:checked~.spectrum-Switch-label',
+                },
+            ],
         },
     ],
 };

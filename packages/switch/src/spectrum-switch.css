@@ -300,15 +300,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-:host([disabled][checked]) #input + #switch {
+:host([disabled][checked][dir]) #input + #switch {
     /* .spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch */
     background-color: var(--spectrum-global-color-gray-400);
 }
-:host([disabled][checked]) #input + #switch:before {
+:host([disabled][checked][dir]) #input + #switch:before {
     /* .spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch:before */
     border-color: var(--spectrum-global-color-gray-400);
 }
-:host([disabled][checked]) #input ~ #label {
+:host([disabled][checked][dir]) #input ~ #label {
     /* .spectrum-Switch .spectrum-Switch-input:disabled:checked~.spectrum-Switch-label */
     color: var(
         --spectrum-alias-text-color-disabled,
