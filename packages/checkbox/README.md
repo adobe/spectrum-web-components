@@ -81,16 +81,16 @@ of assets, etc. where the checkboxes need to be noticed.
 
     <div style="display: flex; flex-direction: column;">
         <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
-        <sp-checkbox quiet invalid>Web component</sp-checkbox>
-        <sp-checkbox quiet checked invalid>Web component</sp-checkbox>
-        <sp-checkbox quiet indeterminate invalid>Web component</sp-checkbox>
+        <sp-checkbox emphasized invalid>Web component</sp-checkbox>
+        <sp-checkbox emphasized checked invalid>Web component</sp-checkbox>
+        <sp-checkbox emphasized indeterminate invalid>Web component</sp-checkbox>
     </div>
 
     <div style="display: flex; flex-direction: column;">
         <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
-        <sp-checkbox quiet disabled>Web component</sp-checkbox>
-        <sp-checkbox quiet checked disabled>Web component</sp-checkbox>
-        <sp-checkbox quiet indeterminate disabled>Web component</sp-checkbox>
+        <sp-checkbox emphasized disabled>Web component</sp-checkbox>
+        <sp-checkbox emphasized checked disabled>Web component</sp-checkbox>
+        <sp-checkbox emphasized indeterminate disabled>Web component</sp-checkbox>
     </div>
 </div>
 ```
@@ -102,7 +102,7 @@ Event handlers for clicks and other user actions can be registered on an `<sp-ch
 ```html
 <sp-checkbox
     id="checkbox-example"
-    onclick="spAlert(this, '<sp-checkbox> clicked!')"
+    onclick="spAlert(this, '<sp-radio> clicked!')"
 >
     Web component
 </sp-checkbox>

@@ -40,54 +40,81 @@ import {
 </sp-radio-group>
 ```
 
-## Variants
+### Standard radio buttons
 
-### Standard radio
+Standard radio buttons are the default style for radio buttons. They are optimal for application panels where all visual elements are monochrome in order to direct focus to the content.
 
-Standard radio buttons are the default style for radio buttons. They are optimal for
-application panels where all visual elements are monochrome in order to direct
-focus to the content.
+```html-live
+<div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Default</h4>
+        <sp-radio-group name="example" vertical>
+            <sp-radio value="kittens">Kittens</sp-radio>
+            <sp-radio value="puppies" checked>Puppies</sp-radio>
+        </sp-radio-group>
+    </div>
 
-```html
-<sp-radio>Standard radio button</sp-radio>
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
+        <sp-radio-group name="example" vertical>
+            <sp-radio invalid value="kittens">Kittens</sp-radio>
+            <sp-radio invalid value="puppies" checked>Puppies</sp-radio>
+        </sp-radio-group>
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+        <sp-radio-group name="example" vertical>
+            <sp-radio disabled value="kittens">Kittens</sp-radio>
+            <sp-radio disabled value="puppies" checked>Puppies</sp-radio>
+        </sp-radio-group>
+    </div>
+</div>
 ```
 
-### Emphasized radio
+### Emphasized radio buttons
 
 Emphasized radio buttons are a secondary style for radio buttons. The blue color provides a visual prominence that is optimal for forms, settings, etc. where the radio buttons need to be noticed.
 
-```html
-<sp-radio emphasized>Emphasized radio button</sp-radio>
+```html-live
+<div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Default</h4>
+        <sp-radio-group name="example" vertical>
+            <sp-radio emphasized value="kittens">Kittens</sp-radio>
+            <sp-radio emphasized value="puppies" checked>Puppies</sp-radio>
+        </sp-radio-group>
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Invalid</h4>
+        <sp-radio-group name="example" vertical>
+            <sp-radio emphasized invalid value="kittens">Kittens</sp-radio>
+            <sp-radio emphasized invalid value="puppies" checked>Puppies</sp-radio>
+        </sp-radio-group>
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+        <sp-radio-group name="example" vertical>
+            <sp-radio emphasized disabled value="kittens">Kittens</sp-radio>
+            <sp-radio emphasized disabled value="puppies" checked>Puppies</sp-radio>
+        </sp-radio-group>
+    </div>
+</div>
 ```
 
-## States
+### Label Below
 
-In addition to the variant, `<sp-radio>` buttons have a number of attributes for
-controlling their visual state. All radio variants support the `disabled` and `invalid` attributes. Invalid which applies a disabled style to the
-radio, and also prevents clicks from activating it.
+``html
+<sp-radio label-below>A label</sp-radio>
 
-### Checked
-
-When the radio is selected. Can be deselected only by selecting another radio in the group or by manually setting checked property
-
-```html
-<sp-radio checked>Checked radio button</sp-radio>
 ```
 
-### Invalid
+### Wrapping behavior
 
-Indicates some error state related to the radio button. Can still be checked.
-
-```html
-<sp-radio invalid>Invalid radio button</sp-radio>
-```
-
-### Disabled
-
-When the radio button is no longer interactable. The button cannot be checked.
-
-```html
-<sp-radio disabled>Disabled radio button</sp-radio>
+``html
+<sp-radio label-below>Radio with an extraordinarily long label please don't do this but if you did it should wrap text when it gets longer than the container which contains the radio which has an unacceptably long label</sp-radio>
 ```
 
 ### Handling events
