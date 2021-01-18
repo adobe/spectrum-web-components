@@ -31,7 +31,8 @@
         "custom-elements.json",
         "*.css",
         "*.js",
-        "*.ts"
+        "*.ts",
+        "*.map"
     ],
     "sideEffects": [
         "./*.css"
