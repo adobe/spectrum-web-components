@@ -22,10 +22,6 @@ const config = {
             attributes: [
                 {
                     type: 'boolean',
-                    selector: ':disabled',
-                },
-                {
-                    type: 'boolean',
                     name: 'indeterminate',
                     selector: '.is-indeterminate',
                 },
@@ -60,6 +56,52 @@ const config = {
                 {
                     selector: '.spectrum-Checkbox-label',
                     name: 'label',
+                },
+            ],
+            complexSelectors: [
+                {
+                    replacement:
+                        ':host([dir]) #input:checked:disabled + #box:before',
+                    selector:
+                        '.spectrum-Checkbox .spectrum-Checkbox-input:checked:disabled+.spectrum-Checkbox-box:before',
+                },
+                {
+                    replacement: '#input:disabled + #box:before',
+                    selector:
+                        '.spectrum-Checkbox .spectrum-Checkbox-input:disabled+.spectrum-Checkbox-box:before',
+                },
+                {
+                    replacement: ':host([invalid][dir]) #box:before',
+                    selector:
+                        '.spectrum-Checkbox.is-invalid .spectrum-Checkbox-box:before',
+                },
+                {
+                    replacement:
+                        ':host([invalid][dir]) #input:checked + #box:before',
+                    selector:
+                        '.spectrum-Checkbox.is-invalid .spectrum-Checkbox-input:checked+.spectrum-Checkbox-box:before',
+                },
+                {
+                    replacement: ':host([invalid][dir]) #box:before',
+                    selector:
+                        '.spectrum-Checkbox.is-invalid .spectrum-Checkbox-box:before',
+                },
+                {
+                    replacement:
+                        ':host([invalid][dir]) #input:checked + #box:before',
+                    selector:
+                        '.spectrum-Checkbox.is-invalid .spectrum-Checkbox-input:checked+.spectrum-Checkbox-box:before',
+                },
+                {
+                    replacement: ':host([invalid][dir]:hover) #box:before',
+                    selector:
+                        '.spectrum-Checkbox.is-invalid:hover .spectrum-Checkbox-box:before',
+                },
+                {
+                    replacement:
+                        ':host([invalid][dir]:hover) #input:checked + #box:before',
+                    selector:
+                        '.spectrum-Checkbox.is-invalid:hover .spectrum-Checkbox-input:checked+.spectrum-Checkbox-box:before',
                 },
             ],
         },
