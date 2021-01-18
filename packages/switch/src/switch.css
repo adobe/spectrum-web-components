@@ -25,6 +25,14 @@ governing permissions and limitations under the License.
     --spectrum-switch-handle-border-radius: 50%;
 }
 
+/* Not part of workaround. */
+
+:host([disabled]) {
+    pointer-events: none;
+}
+
+/* Continue work around... */
+
 :host([dir='ltr'][checked]) #input + #switch:before {
     /* [dir=ltr] .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
     transform: translateX(
@@ -44,3 +52,5 @@ governing permissions and limitations under the License.
         )
     );
 }
+
+/* End work around. */

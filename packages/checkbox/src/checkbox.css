@@ -59,3 +59,7 @@ governing permissions and limitations under the License.
 :host(:empty) label {
     display: none;
 }
+
+:host([disabled]) {
+    pointer-events: none;
+}
