@@ -31,40 +31,66 @@ import { Switch } from '@spectrum-web-components/switch';
 </sp-switch>
 ```
 
-## Variants
-
-### Standard switches
+### Standard radio buttons
 
 Standard switches are the default style for switches. They are optimal for
 application panels where all visual elements are monochrome in order to direct
 focus to the content.
 
-```html
-<sp-switch checked>Web component</sp-switch>
+```html-live
+<div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Default</h4>
+        <sp-field-group selected="first" name="example" vertical>
+            <sp-switch value="off">Switch Off</sp-switch>
+            <sp-switch value="on" checked>Switch On</sp-switch>
+        </sp-field-group>
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+        <sp-field-group selected="first" name="example" vertical>
+            <sp-switch disabled value="off">Switch Off</sp-switch>
+            <sp-switch disabled value="on" checked>Switch On</sp-switch>
+        </sp-field-group>
+    </div>
+</div>
 ```
 
-### Emphasized switches
+### Emphasized radio buttons
 
 Emphasized switches are a secondary style for switches. The blue color provides a
 visual prominence that is optimal for forms, settings, etc. where the switches
 need to be noticed.
 
-```html
-<sp-switch checked emphasized>Web component</sp-switch>
+```html-live
+<div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Default</h4>
+        <sp-field-group selected="first" name="example" vertical>
+            <sp-switch emphasized value="off">Switch Off</sp-switch>
+            <sp-switch emphasized value="on" checked>Switch On</sp-switch>
+        </sp-field-group>
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
+        <sp-field-group selected="first" name="example" vertical>
+            <sp-switch emphasized disabled value="off">Switch Off</sp-switch>
+            <sp-switch emphasized disabled value="on" checked>Switch On</sp-switch>
+        </sp-field-group>
+    </div>
+</div>
 ```
 
-## State
+### Handling events
 
-### Checked (controlled)
-
-```html
-<sp-switch checked>Checked true</sp-switch>
-```
-
-### Disabled
+Event handlers for clicks and other user actions can be registered on an `<sp-switch>` similar to a standard `<input type="checkbox">` element.
 
 ```html
-<sp-switch disabled>Disabled switch</sp-switch>
+<sp-switch id="switch-example" onclick="spAlert(this, '<sp-radio> clicked!')">
+    Web component
+</sp-switch>
 ```
 
 ## Accessibility
