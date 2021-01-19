@@ -22,9 +22,6 @@ export class CheckboxBase extends Focusable {
     @property({ type: Boolean, reflect: true })
     public checked = false;
 
-    @property({ type: Boolean, reflect: true })
-    public quiet = false;
-
     @query('#input')
     protected inputElement!: HTMLInputElement;
 

@@ -28,15 +28,15 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const Checked = (): TemplateResult => {
-    return html`
-        <sp-checkbox checked>Checkbox</sp-checkbox>
-    `;
-};
-
 export const Indeterminate = (): TemplateResult => {
     return html`
         <sp-checkbox indeterminate>Checkbox</sp-checkbox>
+    `;
+};
+
+export const Checked = (): TemplateResult => {
+    return html`
+        <sp-checkbox checked>Checkbox</sp-checkbox>
     `;
 };
 
@@ -46,25 +46,33 @@ export const emphasized = (): TemplateResult => {
     `;
 };
 
+export const emphasizedIndeterminate = (): TemplateResult => {
+    return html`
+        <sp-checkbox emphasized indeterminate>Checkbox</sp-checkbox>
+    `;
+};
+
 export const emphasizedChecked = (): TemplateResult => {
     return html`
         <sp-checkbox emphasized checked>Checkbox</sp-checkbox>
     `;
 };
 
-export const quietIndeterminate = (): TemplateResult => {
+export const emphasizedInvalid = (): TemplateResult => {
     return html`
-        <sp-checkbox quiet indeterminate>Checkbox</sp-checkbox>
+        <sp-checkbox emphasized invalid>Checkbox</sp-checkbox>
     `;
 };
 
-quietIndeterminate.story = {
-    name: 'Quiet indeterminate',
+export const emphasizedInvalidIndeterminate = (): TemplateResult => {
+    return html`
+        <sp-checkbox emphasized invalid indeterminate>Checkbox</sp-checkbox>
+    `;
 };
 
-export const Autofocus = (): TemplateResult => {
+export const emphasizedInvalidChecked = (): TemplateResult => {
     return html`
-        <sp-checkbox autofocus>Checkbox</sp-checkbox>
+        <sp-checkbox emphasized invalid checked>Checkbox</sp-checkbox>
     `;
 };
 
@@ -74,24 +82,22 @@ export const Invalid = (): TemplateResult => {
     `;
 };
 
-export const invalidChecked = (): TemplateResult => {
-    return html`
-        <sp-checkbox invalid checked>Checkbox</sp-checkbox>
-    `;
-};
-
-invalidChecked.story = {
-    name: 'Invalid checked',
-};
-
 export const invalidIndeterminate = (): TemplateResult => {
     return html`
         <sp-checkbox invalid indeterminate>Checkbox</sp-checkbox>
     `;
 };
 
-invalidIndeterminate.story = {
-    name: 'Invalid indeterminate',
+export const invalidChecked = (): TemplateResult => {
+    return html`
+        <sp-checkbox invalid checked>Checkbox</sp-checkbox>
+    `;
+};
+
+export const Autofocus = (): TemplateResult => {
+    return html`
+        <sp-checkbox autofocus>Checkbox</sp-checkbox>
+    `;
 };
 
 export const Disabled = (): TemplateResult => {
@@ -106,49 +112,27 @@ export const disabledChecked = (): TemplateResult => {
     `;
 };
 
-disabledChecked.story = {
-    name: 'Disabled checked',
-};
-
 export const disabledIndeterminate = (): TemplateResult => {
     return html`
         <sp-checkbox disabled indeterminate>Checkbox</sp-checkbox>
     `;
 };
 
-export const quietInvalid = (): TemplateResult => {
+export const emphasizedDisabled = (): TemplateResult => {
     return html`
-        <sp-checkbox quiet invalid>Checkbox</sp-checkbox>
+        <sp-checkbox emphasized disabled>Checkbox</sp-checkbox>
     `;
 };
 
-export const quietInvalidChecked = (): TemplateResult => {
+export const emphasizedDisabledIndeterminate = (): TemplateResult => {
     return html`
-        <sp-checkbox quiet invalid checked>Checkbox</sp-checkbox>
+        <sp-checkbox emphasized disabled indeterminate>Checkbox</sp-checkbox>
     `;
 };
 
-export const quietInvalidIndeterminate = (): TemplateResult => {
+export const emphasizedDisabledChecked = (): TemplateResult => {
     return html`
-        <sp-checkbox quiet invalid indeterminate>Checkbox</sp-checkbox>
-    `;
-};
-
-export const quietDisabled = (): TemplateResult => {
-    return html`
-        <sp-checkbox quiet disabled>Checkbox</sp-checkbox>
-    `;
-};
-
-export const quietDisabledChecked = (): TemplateResult => {
-    return html`
-        <sp-checkbox disabled checked>Checkbox</sp-checkbox>
-    `;
-};
-
-export const quietDisabledIndeterminate = (): TemplateResult => {
-    return html`
-        <sp-checkbox quiet disabled indeterminate>Checkbox</sp-checkbox>
+        <sp-checkbox emphasized checked>Checkbox</sp-checkbox>
     `;
 };
 
