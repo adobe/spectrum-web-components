@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import '../sp-textfield.js';
 import { Textfield } from '../';
 import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
+import { executeServerCommand } from '@web/test-runner-commands';
 
 describe('Textfield', () => {
     it('loads default textfield accessibly', async () => {
@@ -136,7 +137,6 @@ describe('Textfield', () => {
             : null;
         expect(input).to.not.be.null;
     });
-
     it('valid - multiline', async () => {
         const el = await litFixture<Textfield>(
             html`
@@ -240,6 +240,62 @@ describe('Textfield', () => {
         el.focusElement.dispatchEvent(new Event('input'));
 
         expect(el.value).to.equal(testValue);
+    });
+    it('accepts maxlength', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your name"
+                    maxlength="3"
+                    minlength="2"
+                    required
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        el.focus();
+
+        await executeServerCommand('send-keys', {
+            type: 'a',
+        });
+        await elementUpdated(el);
+        expect(el.value).to.equal('a');
+        expect(el.checkValidity()).to.be.false;
+
+        await executeServerCommand('send-keys', {
+            type: 'b',
+        });
+        await elementUpdated(el);
+        expect(el.value).to.equal('ab');
+        expect(el.checkValidity());
+
+        await executeServerCommand('send-keys', {
+            type: 'c',
+        });
+        await elementUpdated(el);
+        expect(el.value).to.equal('abc');
+        expect(el.checkValidity());
+
+        await executeServerCommand('send-keys', {
+            type: 'd',
+        });
+        await elementUpdated(el);
+        expect(el.value).to.equal('abc');
+        expect(el.checkValidity());
+
+        await executeServerCommand('send-keys', {
+            press: 'Backspace',
+        });
+        await elementUpdated(el);
+        expect(el.value).to.equal('ab');
+        expect(el.checkValidity());
+
+        await executeServerCommand('send-keys', {
+            press: 'Backspace',
+        });
+        await elementUpdated(el);
+        expect(el.value).to.equal('a');
+        expect(el.checkValidity()).to.be.false;
     });
     it('dispatches a `change` event', async () => {
         const testValue = 'Test Name';
