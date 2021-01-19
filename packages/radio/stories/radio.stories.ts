@@ -137,7 +137,9 @@ export const horizontalLabelBelowGroup = (): TemplateResult => {
 export const tabIndexExample = (): TemplateResult => {
     return html`
         <sp-radio-group vertical name="group-example">
-            <sp-radio quiet value="zero" tabindex="0">Tab Index 0</sp-radio>
+            <sp-radio emphasized value="zero" tabindex="0">
+                Tab Index 0
+            </sp-radio>
             <sp-radio disabled value="three" tabindex="3">
                 Tab Index 3
             </sp-radio>
@@ -155,7 +157,9 @@ export const tabIndexExample = (): TemplateResult => {
 export const horizontalTabIndexExample = (): TemplateResult => {
     return html`
         <sp-radio-group horizontal name="group-example">
-            <sp-radio quiet value="zero" tabindex="0">Tab Index 0</sp-radio>
+            <sp-radio emphasized value="zero" tabindex="0">
+                Tab Index 0
+            </sp-radio>
             <sp-radio disabled value="three" tabindex="3">
                 Tab Index 3
             </sp-radio>
