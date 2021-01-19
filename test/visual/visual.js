@@ -134,40 +134,60 @@ module.exports = {
 
         //Process methods
         async function takeAndCompareScreenshot(page, test) {
-            await page.goto(
-                `http://127.0.0.1:4444/iframe.html?id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`,
-                {
-                    waitUntil: 'networkidle',
+            try {
+                const testFileName = `${test}__${color}__${scale}__${dir}`;
+                await page.goto(
+                    `http://127.0.0.1:4444/iframe.html?id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`,
+                    {
+                        waitUntil: 'networkidle',
+                    }
+                );
+                await page.waitForFunction(
+                    () => !!document.querySelector('#root-inner')
+                );
+                await page.waitForFunction(
+                    () => !!document.querySelector('sp-story-decorator')
+                );
+                await page.waitForFunction(
+                    () =>
+                        !!document.querySelector('sp-story-decorator')
+                            .shadowRoot
+                );
+                await page.screenshot({
+                    path: `${currentDir}/${type}/${testFileName}.png`,
+                });
+                if (
+                    !fs.existsSync(`${baselineDir}/${type}/${testFileName}.png`)
+                ) {
+                    releasePage(page);
+                    return Promise.resolve(() => {
+                        console.log(
+                            `🙅🏼‍♂️ ${testFileName}.png does not have a baseline screenshot.`
+                        );
+                        expect(
+                            true,
+                            `🙅🏼‍♂️ ${testFileName}.png does not have a baseline screenshot.`
+                        ).to.equal(false);
+                    });
                 }
-            );
-            await page.waitForFunction(
-                () => !!document.querySelector('#root-inner')
-            );
-            await page.waitForFunction(
-                () => !!document.querySelector('sp-story-decorator')
-            );
-            await page.waitForFunction(
-                () => !!document.querySelector('sp-story-decorator').shadowRoot
-            );
-            await page.screenshot({
-                path: `${currentDir}/${type}/${test}__${color}__${scale}__${dir}.png`,
-            });
-            return compareScreenshots(test, page);
+                return compareScreenshots(test, page);
+            } catch (error) {
+                releasePage(page);
+                return Promise.resolve(() => {
+                    console.log(
+                        `🙅🏼‍♂️ ${testFileName} does not exist in test content.`
+                    );
+                    expect(
+                        true,
+                        `🙅🏼‍♂️ ${testFileName} does not exist in test content.`
+                    ).to.equal(false);
+                });
+            }
         }
 
         function compareScreenshots(view, page) {
             return new Promise((resolve, reject) => {
                 const testFileName = `${view}__${color}__${scale}__${dir}`;
-                if (
-                    !fs.existsSync(`${baselineDir}/${type}/${testFileName}.png`)
-                ) {
-                    resolve(() =>
-                        Promise.reject(
-                            `🙅🏼‍♂️ ${testFileName}.png does not have a baseline screenshot.`
-                        )
-                    );
-                    return;
-                }
                 // Note: for debugging, you can dump the screenshotted img as base64.
                 // fs.createReadStream(`${currentDir}/${type}/test.png`, { encoding: 'base64' })
                 //   .on('data', function (data) {
