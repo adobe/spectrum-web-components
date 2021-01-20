@@ -70,14 +70,6 @@ export const actions = (): TemplateResult => {
     `;
 };
 
-export const empty = (): TemplateResult => {
-    return html`
-        <div>
-            <sp-card></sp-card>
-        </div>
-    `;
-};
-
 export const Gallery = (): TemplateResult => {
     return html`
         <div style="width: 532px; height: 224px">

@@ -109,14 +109,6 @@ Cards can be supplied an `actions` via a names slot.
 </sp-card>
 ```
 
-### Empty
-
-An empty card will still fill space in a design.
-
-```html
-<sp-card></sp-card>
-```
-
 ### Quiet
 
 Quiet cards can contain a heading, a subheading, a cover photo, a description, and a footer.
