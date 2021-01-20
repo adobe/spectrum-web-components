@@ -60,10 +60,10 @@ export class Textfield extends Focusable {
     public grows = false;
 
     @property({ type: Number })
-    public maxlength?: number;
+    public maxlength = -1;
 
     @property({ type: Number })
-    public minlength?: number;
+    public minlength = -1;
 
     @property({ type: Boolean, reflect: true })
     public multiline = false;
@@ -156,8 +156,12 @@ export class Textfield extends Focusable {
             <textarea
                 aria-label=${this.label || this.placeholder}
                 id="input"
-                maxlength=${ifDefined(this.maxlength)}
-                minlength=${this.minlength}
+                maxlength=${ifDefined(
+                    this.maxlength > -1 ? this.maxlength : undefined
+                )}
+                minlength=${ifDefined(
+                    this.minlength > -1 ? this.minlength : undefined
+                )}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${this.value}
@@ -179,8 +183,12 @@ export class Textfield extends Focusable {
                 type="text"
                 aria-label=${this.label || this.placeholder}
                 id="input"
-                maxlength=${this.maxlength}
-                minlength=${this.minlength}
+                maxlength=${ifDefined(
+                    this.maxlength > -1 ? this.maxlength : undefined
+                )}
+                minlength=${ifDefined(
+                    this.minlength > -1 ? this.minlength : undefined
+                )}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${live(this.value)}
