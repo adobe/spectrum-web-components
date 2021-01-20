@@ -105,9 +105,11 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    private handleSelectedChange(event: Event & { target: Checkbox }): void {
-        const { target } = event;
-        this.selected = target.checked;
+    private handleSelectedChange({
+        target: { checked },
+    }: Event & { target: Checkbox }): void {
+        this.selected = checked;
+        this.announceChange();
     }
 
     public toggleSelected(): void {
@@ -121,6 +123,10 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
             return;
         }
         this.selected = !this.selected;
+        this.announceChange();
+    }
+
+    private announceChange(): void {
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
@@ -178,9 +184,7 @@ export class Card extends FocusVisiblePolyfillMixin(SpectrumElement) {
         return html`
             ${this.toggles
                 ? html`
-                      <sp-quick-actions
-                          class="spectrum-QuickActions quickActions"
-                      >
+                      <sp-quick-actions class="quickActions">
                           <sp-checkbox
                               tabindex="-1"
                               class="checkbox"
