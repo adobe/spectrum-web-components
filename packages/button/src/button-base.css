@@ -15,7 +15,9 @@ governing permissions and limitations under the License.
 :host {
     display: inline-flex;
     vertical-align: top;
+}
 
+:host([dir]) {
     /* spectrum-css uses "-webkit-appearance: button" to workaround an
      * iOS and Safari issue. However, it results in incorrect styling
      * when applied in :host
