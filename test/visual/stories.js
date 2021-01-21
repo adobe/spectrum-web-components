@@ -118,6 +118,7 @@ module.exports = [
     'button-warning--link-with-target',
     'card--default',
     'card--actions',
+    'card--no-preview-image',
     'card--gallery',
     'card--quiet',
     'card--quiet-file',

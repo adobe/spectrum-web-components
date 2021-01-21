@@ -44,25 +44,13 @@ export const actions = (): TemplateResult => {
                 <div slot="footer">Footer</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
                     <sp-menu>
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item>Select Inverse</sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-menu>
                 </sp-action-menu>
             </sp-card>
@@ -81,6 +69,16 @@ export const Gallery = (): TemplateResult => {
                     alt="Demo Graphic"
                 />
                 <div slot="description">10/15/18</div>
+            </sp-card>
+        </div>
+    `;
+};
+
+export const noPreviewImage = (): TemplateResult => {
+    return html`
+        <div>
+            <sp-card heading="Card Heading" subheading="No preview image">
+                <div slot="footer">Footer</div>
             </sp-card>
         </div>
     `;
@@ -129,25 +127,13 @@ export const quietActions = (): TemplateResult => {
                 <div slot="description">10/15/18</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
                     <sp-menu>
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item>Select Inverse</sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-menu>
                 </sp-action-menu>
             </sp-card>
@@ -203,25 +189,13 @@ export const smallQuiet = (): TemplateResult => {
                 <div slot="footer">Footer</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
                     <sp-menu>
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item>Select Inverse</sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-menu>
                 </sp-action-menu>
             </sp-card>
@@ -257,25 +231,13 @@ export const SlottedHeading = (): TemplateResult => {
                 <div slot="subheading">Last modified on 6/17/2020, 3:37 PM</div>
                 <sp-action-menu slot="actions" placement="bottom-end">
                     <sp-menu>
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item>Select Inverse</sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-menu>
                 </sp-action-menu>
             </sp-card>
