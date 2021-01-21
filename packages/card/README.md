@@ -92,27 +92,25 @@ Cards can be supplied an `actions` via a names slot.
     <div slot="footer">Footer</div>
     <sp-action-menu slot="actions" placement="bottom-end">
         <sp-menu>
-            <sp-menu-item>
-                Deselect
-            </sp-menu-item>
-            <sp-menu-item>
-                Select Inverse
-            </sp-menu-item>
-            <sp-menu-item>
-                Feather...
-            </sp-menu-item>
-            <sp-menu-item>
-                Select and Mask...
-            </sp-menu-item>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
             <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>
-                Save Selection
-            </sp-menu-item>
-            <sp-menu-item disabled>
-                Make Work Path
-            </sp-menu-item>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-menu>
     </sp-action-menu>
+</sp-card>
+```
+
+### No Preview Image
+
+Cards with no preview image can contain a heading, a subheading, and a footer.
+
+```html demo
+<sp-card heading="Card Title" subheading="No Preview Image">
+    <div slot="footer">Footer</div>
 </sp-card>
 ```
 
@@ -170,25 +168,13 @@ Quiet cards will also accept `actions` via a named slot.
         <div slot="description">10/15/18</div>
         <sp-action-menu slot="actions" placement="bottom-end">
             <sp-menu>
-                <sp-menu-item>
-                    Deselect
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select Inverse
-                </sp-menu-item>
-                <sp-menu-item>
-                    Feather...
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select and Mask...
-                </sp-menu-item>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
                 <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>
-                    Save Selection
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Make Work Path
-                </sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-menu>
         </sp-action-menu>
     </sp-card>
@@ -267,25 +253,13 @@ Or a `quiet` card:
         <div slot="footer">Footer</div>
         <sp-action-menu slot="actions" placement="bottom-end">
             <sp-menu>
-                <sp-menu-item>
-                    Deselect
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select Inverse
-                </sp-menu-item>
-                <sp-menu-item>
-                    Feather...
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select and Mask...
-                </sp-menu-item>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
                 <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>
-                    Save Selection
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Make Work Path
-                </sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-menu>
         </sp-action-menu>
     </sp-card>
