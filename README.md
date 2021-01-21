@@ -130,7 +130,7 @@ This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer)
 
 ## Anatomy of a Component
 
-There is extended documentation on adding a new component to the library in the [documentation site](http://localhost:8080/guides/adding-component). However, at a high level, you will be building the following structure:
+There is extended documentation on adding a new component to the library in the [documentation site](https://opensource.adobe.com/spectrum-web-components/guides/generating-components). However, at a high level, you will be building the following structure:
 
 -   packages
     -   new-component-name
