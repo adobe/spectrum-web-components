@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bar-loader@0.2.3...@spectrum-web-components/bar-loader@0.4.0) (2021-01-21)
+
+### Bug Fixes
+
+-   address a11y issues raised by updating our dependencies ([4f06477](https://github.com/adobe/spectrum-web-components/commit/4f0647782eea7fdd85560e1bcb2f8b892f30bc33))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/adobe/spectrum-web-components/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
+-   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **bar-loader:** update spectrum css input ([7c41293](https://github.com/adobe/spectrum-web-components/commit/7c41293db4c59bfc6943972ea133b410777c73f3))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bar-loader@0.2.3...@spectrum-web-components/bar-loader@0.3.0) (2021-01-13)
 
 ### Bug Fixes

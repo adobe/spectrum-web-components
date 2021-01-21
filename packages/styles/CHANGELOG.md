@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.6.1...@spectrum-web-components/styles@0.8.0) (2021-01-21)
+
+### Bug Fixes
+
+-   **styles:** ensure ",map" file inclusion in the published package ([54a2b13](https://github.com/adobe/spectrum-web-components/commit/54a2b130d5ec943807429420460ffbd93f033d25))
+-   final prerelease review of canary builds ([1fc032f](https://github.com/adobe/spectrum-web-components/commit/1fc032ff436d8be1817a2784787e30b07a2873c6))
+-   missing dependency ([bb411b5](https://github.com/adobe/spectrum-web-components/commit/bb411b5691fe8ab095d5de775bf3ec3f20f3e6aa))
+-   **styles:** process CSS in package for use directly in a browser ([cf52924](https://github.com/adobe/spectrum-web-components/commit/cf52924404112e44a0abc6eacd4092f3ca4a9ea1))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **styles:** update spectrum css input ([88314bb](https://github.com/adobe/spectrum-web-components/commit/88314bb34c3c6f372402ded0b0d7cf97a29a5677))
+-   **styles:** vend CSS literal versions of the typography system ([6406c96](https://github.com/adobe/spectrum-web-components/commit/6406c96377557a88ad7756147e6e5777f5d1f746))
+
 # [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.6.1...@spectrum-web-components/styles@0.7.0) (2021-01-13)
 
 ### Bug Fixes

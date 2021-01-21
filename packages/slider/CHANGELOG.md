@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.6.4...@spectrum-web-components/slider@0.8.0) (2021-01-21)
+
+### Bug Fixes
+
+-   use the "browsers" listing in postcss-preset-env ([4eaf6a2](https://github.com/adobe/spectrum-web-components/commit/4eaf6a28f7b5eaf60487841d264d6d804ae675ce))
+-   **slider:** allow irregular tick spacing and correct RTL value application ([a83f879](https://github.com/adobe/spectrum-web-components/commit/a83f879bfef87b928452104a47b45201ab30ee89))
+-   **slider:** allow pointer interactions that start at the very begin/end to be tracked ([ff8c95c](https://github.com/adobe/spectrum-web-components/commit/ff8c95c6a1c7be3da0bed162064302591712d275))
+-   **slider:** allow slot based label content ([d2d474e](https://github.com/adobe/spectrum-web-components/commit/d2d474e9385b3445aff3ca152c70ee12ecf6b3fb))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   **slider:** prevent pointercancel events by container touch-action ([4687d03](https://github.com/adobe/spectrum-web-components/commit/4687d03c2b1ea1de3cb76d6ed3782e56153d271f))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **slider:** update spectrum css input ([21ebe36](https://github.com/adobe/spectrum-web-components/commit/21ebe36d600501771c3382e987f4e22753c36262))
+-   **slider:** use latest @spectrum-css/slider beta ([9f29bbe](https://github.com/adobe/spectrum-web-components/commit/9f29bbee3a43c092f4ee141e18a96fe0dfa4fba4))
+
 # [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.6.4...@spectrum-web-components/slider@0.7.0) (2021-01-13)
 
 ### Bug Fixes

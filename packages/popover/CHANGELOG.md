@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.5.4...@spectrum-web-components/popover@0.7.0) (2021-01-21)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **popover:** update spectrum css input ([0f7a00e](https://github.com/adobe/spectrum-web-components/commit/0f7a00e3bf1fc35c566719d1619cf5d4e859b190))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.5.4...@spectrum-web-components/popover@0.6.0) (2021-01-13)
 
 ### Bug Fixes

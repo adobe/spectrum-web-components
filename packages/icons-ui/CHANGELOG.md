@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.3.3...@spectrum-web-components/icons-ui@0.5.0) (2021-01-21)
+
+### Bug Fixes
+
+-   **icon:** clean up docs and types for available size values ([c38850d](https://github.com/adobe/spectrum-web-components/commit/c38850d1120a8599d8c623302bbc2c21485c99bc))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **icons-ui:** update spectrum css input ([4cb87ff](https://github.com/adobe/spectrum-web-components/commit/4cb87ff45cec625f273dd6e8ce7785b38cee448a))
+-   **icons-ui:** vend fully registered icon components ([915a7b5](https://github.com/adobe/spectrum-web-components/commit/915a7b58294403943a331e40098b7947ffc87dc6))
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.3.3...@spectrum-web-components/icons-ui@0.4.0) (2021-01-13)
 
 ### Bug Fixes

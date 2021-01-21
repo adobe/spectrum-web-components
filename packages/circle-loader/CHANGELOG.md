@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/circle-loader@0.3.3...@spectrum-web-components/circle-loader@0.5.0) (2021-01-21)
+
+### Bug Fixes
+
+-   address a11y issues raised by updating our dependencies ([4f06477](https://github.com/adobe/spectrum-web-components/commit/4f0647782eea7fdd85560e1bcb2f8b892f30bc33))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **circle-loader:** update spectrum css input ([75dcf52](https://github.com/adobe/spectrum-web-components/commit/75dcf5288c0c56b922a986352503a8de64819223))
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/circle-loader@0.3.3...@spectrum-web-components/circle-loader@0.4.0) (2021-01-13)
 
 ### Bug Fixes

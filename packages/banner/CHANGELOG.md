@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/banner@0.4.3...@spectrum-web-components/banner@0.5.1) (2021-01-21)
+
+### Bug Fixes
+
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/banner@0.4.3...@spectrum-web-components/banner@0.5.0) (2021-01-13)
 
 ### Bug Fixes
