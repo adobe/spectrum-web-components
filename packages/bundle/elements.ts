@@ -15,7 +15,6 @@ import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/actionbar/sp-actionbar.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import '@spectrum-web-components/banner/sp-banner.js';
