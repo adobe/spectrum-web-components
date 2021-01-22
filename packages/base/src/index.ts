@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 export * from './Base.js';
+export * from './defineElement.js';
 export * from './sizedMixin.js';
 export * from 'lit-element';
 export { nothing } from 'lit-html';
