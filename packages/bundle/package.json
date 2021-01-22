@@ -82,7 +82,6 @@
         "@spectrum-web-components/popover": "^0.7.0",
         "@spectrum-web-components/quick-actions": "^0.3.0",
         "@spectrum-web-components/radio": "^0.6.0",
-        "@spectrum-web-components/rule": "^0.5.0",
         "@spectrum-web-components/search": "^0.7.0",
         "@spectrum-web-components/sidenav": "^0.8.0",
         "@spectrum-web-components/slider": "^0.8.0",
