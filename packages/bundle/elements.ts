@@ -45,6 +45,7 @@ import '@spectrum-web-components/meter/sp-meter.js';
 import '@spectrum-web-components/overlay/active-overlay.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import '@spectrum-web-components/radio/sp-radio.js';

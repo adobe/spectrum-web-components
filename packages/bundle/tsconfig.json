@@ -37,6 +37,7 @@
         { "path": "../menu" },
         { "path": "../meter" },
         { "path": "../popover" },
+        { "path": "../progress-bar" },
         { "path": "../progress-circle" },
         { "path": "../overlay" },
         { "path": "../quick-actions" },
