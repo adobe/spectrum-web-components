@@ -54,7 +54,6 @@
         "@spectrum-web-components/action-button": "^0.2.0",
         "@spectrum-web-components/action-group": "^0.3.0",
         "@spectrum-web-components/action-menu": "^0.8.0",
-        "@spectrum-web-components/actionbar": "^0.6.0",
         "@spectrum-web-components/asset": "^0.3.0",
         "@spectrum-web-components/avatar": "^0.6.0",
         "@spectrum-web-components/banner": "^0.5.1",
