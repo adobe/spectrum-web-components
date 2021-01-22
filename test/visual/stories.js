@@ -14,6 +14,7 @@ module.exports = [
     'accordion--open',
     'accordion--allow-multiple',
     'accordion--disabled',
+    'action-bar--default',
     'action-button-sizes--s',
     'action-button-sizes--m',
     'action-button-sizes--l',
