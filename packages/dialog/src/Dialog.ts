@@ -21,7 +21,7 @@ import {
     PropertyValues,
 } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/rule/sp-rule.js';
+import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
@@ -129,7 +129,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
                 ${this.noDivider
                     ? html``
                     : html`
-                          <sp-rule size="m" class="divider"></sp-rule>
+                          <sp-divider size="m" class="divider"></sp-divider>
                       `}
                 <div class="content">
                     <slot @slotchange=${this.onContentSlotChange}></slot>
