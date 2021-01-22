@@ -24,7 +24,10 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
+<<<<<<< HEAD
         ".": "./src/index.js",
+=======
+>>>>>>> 216af43b (feat(action-bar): create sp-action-bar component to replace sp-actionbar)
         "./src/": "./src/",
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json",
