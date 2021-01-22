@@ -20,7 +20,6 @@
         { "path": "../button-group" },
         { "path": "../card" },
         { "path": "../checkbox" },
-        { "path": "../circle-loader" },
         { "path": "../coachmark" },
         { "path": "../dialog" },
         { "path": "../divider" },

@@ -149,8 +149,6 @@ module.exports = [
     'checkbox--emphasized-disabled-checked',
     'checkbox--tab-index-example',
     'checkbox--vertical-tab-index-example',
-    'circle-loader--default',
-    'circle-loader--over-background',
     'dialog-wrapped--wrapper-dismissable',
     'dialog-wrapped--wrapper-dismissable-underlay',
     'dialog-wrapped--wrapper-dismissable-underlay-error',
