@@ -73,7 +73,9 @@ When working with styles that are driven by the conditional presence of `<slot>`
 
 ```js
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
+import { defineElement } from '@spectrum-web-components/base';
 import { LitElement, html } from 'lit-element';
+
 class ObserveSlotPresenceElement extends ObserveSlotPresence(LitElement, '[slot="conditional-slot"]') {
     // translate the mixin properties into locally understandable language
     protected get hasConditionalSlotContent() {
@@ -99,7 +101,6 @@ class ObserveSlotPresenceElement extends ObserveSlotPresence(LitElement, '[slot=
         console.log(this.slotContentIsPresent); // => true when <observing-slot-presence-element><div slot="conditional-slot"></div></observing-slot-presence-element>
     }
 }
-import { defineElement } from '@spectrum-web-components/base';
 
 defineElement('observing-slot-presence-element', ObserveSlotPresenceElement);
 ```
@@ -110,6 +111,7 @@ When working with `<slot>`s and their `slotchange` event, you will have the oppo
 
 ```js
 import { ObserveSlotText } from '@spectrum-web-components/shared';
+import { defineElement } from '@spectrum-web-components/base';
 import { LitElement, html } from 'lit-element';
 
 class ObserveSlotTextElement extends ObserveSlotText(LitElement, '#observing-slot') {
@@ -129,8 +131,6 @@ class ObserveSlotTextElement extends ObserveSlotText(LitElement, '#observing-slo
         console.log(this.slotHasContent); // => true when <observing-slot-text-element>Text</observing-slot-text-element>
     }
 }
-
-import { defineElement } from '@spectrum-web-components/base';
 
 defineElement('observing-slot-text-element', ObserveSlotTextElement);
 ```

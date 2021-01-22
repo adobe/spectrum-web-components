@@ -21,7 +21,7 @@ import {
     expect,
     waitUntil,
 } from '@open-wc/testing';
-import { LitElement, TemplateResult } from '@spectrum-web-components/base';
+import { LitElement, TemplateResult, defineElement } from '@spectrum-web-components/base';
 import { waitForPredicate, tabEvent } from '../../../test/testing-helpers.js';
 import {
     enterEvent,
@@ -462,9 +462,8 @@ describe('Tabs', () => {
                 `;
             }
         }
-        import { defineElement } from '@spectrum-web-components/base';
 
-defineElement('tab-test-el', TabTestEl);
+        defineElement('tab-test-el', TabTestEl);
         const el = await fixture<Tabs>(
             html`
                 <tab-test-el></tab-test-el>

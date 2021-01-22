@@ -27,7 +27,7 @@ import {
     expect,
     waitUntil,
 } from '@open-wc/testing';
-import { TemplateResult, LitElement } from '@spectrum-web-components/base';
+import { TemplateResult, LitElement, defineElement } from '@spectrum-web-components/base';
 
 describe('Sidenav', () => {
     it('loads', async () => {
@@ -281,9 +281,8 @@ describe('Sidenav', () => {
                 return manageTabIndex();
             }
         }
-        import { defineElement } from '@spectrum-web-components/base';
 
-defineElement('sidenav-test-el', SideNavTestEl);
+        defineElement('sidenav-test-el', SideNavTestEl);
         const el = await fixture<SideNav>(html`
             <sidenav-test-el></sidenav-test-el>
         `);

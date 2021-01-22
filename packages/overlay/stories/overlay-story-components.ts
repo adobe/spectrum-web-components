@@ -18,6 +18,7 @@ import {
     CSSResult,
     CSSResultArray,
     query,
+    defineElement
 } from '@spectrum-web-components/base';
 
 import { Overlay, Placement } from '../';
@@ -64,7 +65,6 @@ class OverlayTargetIcon extends LitElement {
         `;
     }
 }
-import { defineElement } from '@spectrum-web-components/base';
 
 defineElement('overlay-target-icon', OverlayTargetIcon);
 
@@ -178,7 +178,6 @@ class OverlayDrag extends LitElement {
         `;
     }
 }
-import { defineElement } from '@spectrum-web-components/base';
 
 defineElement('overlay-drag', OverlayDrag);
 
@@ -315,6 +314,5 @@ class RecursivePopover extends LitElement {
         `;
     }
 }
-import { defineElement } from '@spectrum-web-components/base';
 
 defineElement('recursive-popover', RecursivePopover);
