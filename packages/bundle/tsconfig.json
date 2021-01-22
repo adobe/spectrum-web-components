@@ -15,7 +15,6 @@
         { "path": "../asset" },
         { "path": "../avatar" },
         { "path": "../banner" },
-        { "path": "../bar-loader" },
         { "path": "../button" },
         { "path": "../button-group" },
         { "path": "../card" },

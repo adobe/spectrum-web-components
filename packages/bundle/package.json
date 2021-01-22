@@ -57,7 +57,6 @@
         "@spectrum-web-components/asset": "^0.3.0",
         "@spectrum-web-components/avatar": "^0.6.0",
         "@spectrum-web-components/banner": "^0.5.1",
-        "@spectrum-web-components/bar-loader": "^0.4.0",
         "@spectrum-web-components/button": "^0.11.0",
         "@spectrum-web-components/button-group": "^0.5.0",
         "@spectrum-web-components/card": "^0.7.0",
