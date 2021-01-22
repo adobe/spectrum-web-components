@@ -17,7 +17,6 @@ export * from '@spectrum-web-components/action-menu';
 export * from '@spectrum-web-components/avatar';
 export * from '@spectrum-web-components/asset';
 export * from '@spectrum-web-components/banner';
-export * from '@spectrum-web-components/bar-loader';
 export * from '@spectrum-web-components/button';
 export * from '@spectrum-web-components/button-group';
 export * from '@spectrum-web-components/card';

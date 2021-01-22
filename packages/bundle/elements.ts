@@ -18,7 +18,6 @@ import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import '@spectrum-web-components/banner/sp-banner.js';
-import '@spectrum-web-components/bar-loader/sp-bar-loader.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
