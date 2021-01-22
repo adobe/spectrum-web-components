@@ -49,7 +49,6 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/rule/sp-rule.js';
 import '@spectrum-web-components/search/sp-search.js';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';

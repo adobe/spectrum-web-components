@@ -41,7 +41,6 @@
         { "path": "../overlay" },
         { "path": "../quick-actions" },
         { "path": "../radio" },
-        { "path": "../rule" },
         { "path": "../search" },
         { "path": "../sidenav" },
         { "path": "../slider" },
