@@ -3157,6 +3157,30 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-3.0.0-beta.2.tgz#f0b3a2db44aa57b1a82e47ab392c716a3056a157"
   integrity sha512-HpcRDUkSjKVWUi7+jf6zp33YszXs3qFljaaNVTVOf0m0mqjWWXHxgLrvYlFFlHp5ITbNXds5Cb7EgiXCKmVIpA==
 
+"@spectrum-web-components/base@^0.1.0", "@spectrum-web-components/base@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-web-components/base/-/base-0.1.3.tgz#3929336db2fbbf52bc429ad74f2fb5aefbaa2e68"
+  integrity sha512-Tg7EeAF9lzrgnW4tTXeGUvhFBuNd1PW2xt4xhhRdhsFmv8y+OL0I9J9ywOepXT0KNF34bYE/gwObeBO9WN5AYA==
+  dependencies:
+    "@spectrum-web-components/theme" "^0.6.3"
+    lit-element "^2.4.0"
+    lit-html "^1.0.0"
+    tslib "^2.0.0"
+
+"@spectrum-web-components/styles@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-web-components/styles/-/styles-0.6.1.tgz#8d215856dbea2fb0fa9a2eb4940b2535ada8583e"
+  integrity sha512-SaUmuBhgkqDcQGeUP8EVnSctGpx+Pauw+F7V6w7NCQLL3enIjp6ZPSIqDWjJLc8JkYe9qqoDFOrhczDzOhOuFA==
+
+"@spectrum-web-components/theme@^0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-web-components/theme/-/theme-0.6.3.tgz#169a6189174237da75348105398057f3657b179c"
+  integrity sha512-PjKAMv+wXROdvcmJAW3nD9EKj+3ELroQLuPvx4DQ/FscgoM7ht2XcR0pcdSsNuT5xlJFLD3lwCtFmpH7rUjwUQ==
+  dependencies:
+    "@spectrum-web-components/base" "^0.1.3"
+    "@spectrum-web-components/styles" "^0.6.1"
+    tslib "^2.0.0"
+
 "@stylelint/postcss-css-in-js@^0.37.2":
   version "0.37.2"
   resolved "https://registry.yarnpkg.com/@stylelint/postcss-css-in-js/-/postcss-css-in-js-0.37.2.tgz#7e5a84ad181f4234a2480803422a47b8749af3d2"

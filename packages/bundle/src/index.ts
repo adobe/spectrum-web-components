@@ -41,6 +41,7 @@ export * from '@spectrum-web-components/menu';
 export * from '@spectrum-web-components/meter';
 export * from '@spectrum-web-components/overlay';
 export * from '@spectrum-web-components/popover';
+export * from '@spectrum-web-components/progress-bar';
 export * from '@spectrum-web-components/progress-circle';
 export * from '@spectrum-web-components/quick-actions';
 export * from '@spectrum-web-components/radio';
