@@ -47,7 +47,6 @@ module.exports = [
     'action-menu--default',
     'action-menu--custom-icon',
     'action-menu--icon-only',
-    'actionbar--default',
     'asset--default',
     'asset--file',
     'asset--folder',
