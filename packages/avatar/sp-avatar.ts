@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Avatar } from './src/Avatar.js';
 
-customElements.define('sp-avatar', Avatar);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-avatar', Avatar);
 
 declare global {
     interface HTMLElementTagNameMap {

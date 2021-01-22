@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { IconsLarge } from './src/IconsLarge.js';
 
-customElements.define('sp-icons-large', IconsLarge);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-icons-large', IconsLarge);
 
 declare global {
     interface HTMLElementTagNameMap {

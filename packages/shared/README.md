@@ -99,7 +99,9 @@ class ObserveSlotPresenceElement extends ObserveSlotPresence(LitElement, '[slot=
         console.log(this.slotContentIsPresent); // => true when <observing-slot-presence-element><div slot="conditional-slot"></div></observing-slot-presence-element>
     }
 }
-customElements.define('observing-slot-presence-element', ObserveSlotPresenceElement);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('observing-slot-presence-element', ObserveSlotPresenceElement);
 ```
 
 ### ObserveSlotText
@@ -128,5 +130,7 @@ class ObserveSlotTextElement extends ObserveSlotText(LitElement, '#observing-slo
     }
 }
 
-customElements.define('observing-slot-text-element', ObserveSlotTextElement);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('observing-slot-text-element', ObserveSlotTextElement);
 ```

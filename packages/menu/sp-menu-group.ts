@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { MenuGroup } from './src/MenuGroup.js';
 
-customElements.define('sp-menu-group', MenuGroup);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-menu-group', MenuGroup);
 
 declare global {
     interface HTMLElementTagNameMap {

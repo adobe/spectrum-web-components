@@ -16,7 +16,9 @@ import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 describe('Focusable', () => {
     it('enforces the presense of a `focusElement`', async () => {
-        customElements.define('focusable-test', class extends Focusable {});
+        import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('focusable-test', class extends Focusable {});
         try {
             const el = await fixture<Focusable>(
                 html`

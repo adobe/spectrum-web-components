@@ -12,7 +12,9 @@ governing permissions and limitations under the License.
 
 import { ActionGroup } from './src/ActionGroup.js';
 
-customElements.define('sp-action-group', ActionGroup);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-action-group', ActionGroup);
 
 declare global {
     interface HTMLElementTagNameMap {

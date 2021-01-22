@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { StatusLight } from './src/StatusLight.js';
 
-customElements.define('sp-status-light', StatusLight);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-status-light', StatusLight);
 
 declare global {
     interface HTMLElementTagNameMap {

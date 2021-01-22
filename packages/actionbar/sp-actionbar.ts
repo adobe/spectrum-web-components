@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Actionbar } from './src/Actionbar.js';
 
-customElements.define('sp-actionbar', Actionbar);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-actionbar', Actionbar);
 
 declare global {
     interface HTMLElementTagNameMap {

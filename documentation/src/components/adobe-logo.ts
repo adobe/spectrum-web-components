@@ -40,4 +40,6 @@ class SpectrumLogo extends LitElement {
         `;
     }
 }
-customElements.define('docs-spectrum-logo', SpectrumLogo);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('docs-spectrum-logo', SpectrumLogo);

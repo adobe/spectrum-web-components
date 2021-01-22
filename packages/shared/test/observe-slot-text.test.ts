@@ -22,7 +22,9 @@ class ObserverTest extends ObserveSlotText(LitElement) {
     }
 }
 
-customElements.define('observe-slot-test', ObserverTest);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('observe-slot-test', ObserverTest);
 
 describe('ObserveSlotText', () => {
     it('does no management when slot unavailable', async () => {

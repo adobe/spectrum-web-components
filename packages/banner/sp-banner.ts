@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Banner } from './src/Banner.js';
 
-customElements.define('sp-banner', Banner);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-banner', Banner);
 
 declare global {
     interface HTMLElementTagNameMap {

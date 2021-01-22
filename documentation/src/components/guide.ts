@@ -53,4 +53,6 @@ class GuideElement extends RouteComponent {
         return result || html``;
     }
 }
-customElements.define('docs-guide', GuideElement);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('docs-guide', GuideElement);

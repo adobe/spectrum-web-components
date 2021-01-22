@@ -12,7 +12,9 @@ governing permissions and limitations under the License.
 
 import { Asset } from './src/Asset.js';
 
-customElements.define('sp-asset', Asset);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-asset', Asset);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { MenuDivider } from './src/MenuDivider.js';
 
-customElements.define('sp-menu-divider', MenuDivider);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-menu-divider', MenuDivider);
 
 declare global {
     interface HTMLElementTagNameMap {

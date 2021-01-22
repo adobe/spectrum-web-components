@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Switch } from './src/Switch.js';
 
-customElements.define('sp-switch', Switch);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-switch', Switch);
 
 declare global {
     interface HTMLElementTagNameMap {

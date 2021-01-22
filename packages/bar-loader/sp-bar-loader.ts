@@ -12,7 +12,9 @@ governing permissions and limitations under the License.
 
 import { BarLoader } from './src/BarLoader.js';
 
-customElements.define('sp-bar-loader', BarLoader);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-bar-loader', BarLoader);
 
 declare global {
     interface HTMLElementTagNameMap {

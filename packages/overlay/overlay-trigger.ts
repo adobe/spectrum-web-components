@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { OverlayTrigger } from './src/OverlayTrigger.js';
 
-customElements.define('overlay-trigger', OverlayTrigger);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('overlay-trigger', OverlayTrigger);
 
 declare global {
     interface HTMLElementTagNameMap {

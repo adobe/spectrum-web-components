@@ -174,4 +174,6 @@ class SearchComponent extends LitElement {
     }
 }
 
-customElements.define('docs-search', SearchComponent);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('docs-search', SearchComponent);

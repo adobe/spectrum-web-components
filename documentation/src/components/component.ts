@@ -298,4 +298,6 @@ class ComponentElement extends RouteComponent {
         `;
     }
 }
-customElements.define('docs-component', ComponentElement);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('docs-component', ComponentElement);

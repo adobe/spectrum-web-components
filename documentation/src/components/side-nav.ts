@@ -181,4 +181,6 @@ class SideNav extends SpectrumElement {
     }
 }
 
-customElements.define('docs-side-nav', SideNav);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('docs-side-nav', SideNav);

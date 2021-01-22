@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { ClearButton } from './src/ClearButton.js';
 
-customElements.define('sp-clear-button', ClearButton);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-clear-button', ClearButton);
 
 declare global {
     interface HTMLElementTagNameMap {

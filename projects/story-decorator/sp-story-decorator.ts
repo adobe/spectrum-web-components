@@ -12,7 +12,9 @@ governing permissions and limitations under the License.
 
 import { StoryDecorator } from './src/StoryDecorator.js';
 
-customElements.define('sp-story-decorator', StoryDecorator);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-story-decorator', StoryDecorator);
 
 declare global {
     interface HTMLElementTagNameMap {

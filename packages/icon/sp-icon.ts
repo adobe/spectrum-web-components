@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Icon } from './src/Icon.js';
 
-customElements.define('sp-icon', Icon);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-icon', Icon);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -281,7 +281,9 @@ describe('Sidenav', () => {
                 return manageTabIndex();
             }
         }
-        customElements.define('sidenav-test-el', SideNavTestEl);
+        import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sidenav-test-el', SideNavTestEl);
         const el = await fixture<SideNav>(html`
             <sidenav-test-el></sidenav-test-el>
         `);

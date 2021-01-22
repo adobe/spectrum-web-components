@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Button } from './src/Button.js';
 
-customElements.define('sp-button', Button);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-button', Button);
 
 declare global {
     interface HTMLElementTagNameMap {

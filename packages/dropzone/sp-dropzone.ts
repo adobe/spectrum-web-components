@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Dropzone } from './src/Dropzone.js';
 
-customElements.define('sp-dropzone', Dropzone);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-dropzone', Dropzone);
 
 declare global {
     interface HTMLElementTagNameMap {

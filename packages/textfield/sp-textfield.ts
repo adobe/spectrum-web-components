@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Textfield } from './src/Textfield.js';
 
-customElements.define('sp-textfield', Textfield);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-textfield', Textfield);
 
 declare global {
     interface HTMLElementTagNameMap {

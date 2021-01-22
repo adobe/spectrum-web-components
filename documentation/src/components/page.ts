@@ -37,4 +37,6 @@ export class Page extends LayoutElement {
     }
 }
 
-customElements.define('docs-page', Page);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('docs-page', Page);

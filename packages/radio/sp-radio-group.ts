@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { RadioGroup } from './src/RadioGroup.js';
 
-customElements.define('sp-radio-group', RadioGroup);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-radio-group', RadioGroup);
 
 declare global {
     interface HTMLElementTagNameMap {

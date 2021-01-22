@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { IconsMedium } from './src/IconsMedium.js';
 
-customElements.define('sp-icons-medium', IconsMedium);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-icons-medium', IconsMedium);
 
 declare global {
     interface HTMLElementTagNameMap {

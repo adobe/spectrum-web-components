@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Dialog } from './src/Dialog.js';
 
-customElements.define('sp-dialog', Dialog);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-dialog', Dialog);
 
 declare global {
     interface HTMLElementTagNameMap {

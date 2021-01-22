@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Search } from './src/Search.js';
 
-customElements.define('sp-search', Search);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-search', Search);
 
 declare global {
     interface HTMLElementTagNameMap {

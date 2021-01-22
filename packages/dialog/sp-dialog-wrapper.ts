@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { DialogWrapper } from './src/DialogWrapper.js';
 
-customElements.define('sp-dialog-wrapper', DialogWrapper);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-dialog-wrapper', DialogWrapper);
 
 declare global {
     interface HTMLElementTagNameMap {

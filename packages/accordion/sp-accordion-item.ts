@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { AccordionItem } from './src/AccordionItem.js';
 
-customElements.define('sp-accordion-item', AccordionItem);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-accordion-item', AccordionItem);
 
 declare global {
     interface HTMLElementTagNameMap {

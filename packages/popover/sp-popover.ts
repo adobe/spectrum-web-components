@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Popover } from './src/Popover.js';
 
-customElements.define('sp-popover', Popover);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-popover', Popover);
 
 declare global {
     interface HTMLElementTagNameMap {

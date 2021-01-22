@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Coachmark } from './src/Coachmark.js';
 
-customElements.define('sp-coachmark', Coachmark);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-coachmark', Coachmark);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Theme } from './src/Theme.js';
 
-customElements.define('sp-theme', Theme);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-theme', Theme);
 
 declare global {
     interface HTMLElementTagNameMap {

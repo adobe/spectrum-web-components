@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Slider } from './src/Slider.js';
 
-customElements.define('sp-slider', Slider);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-slider', Slider);
 
 declare global {
     interface HTMLElementTagNameMap {

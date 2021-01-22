@@ -24,7 +24,9 @@ class ObserverTest extends ObserveSlotPresence(
     }
 }
 
-customElements.define('observe-presence-test', ObserverTest);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('observe-presence-test', ObserverTest);
 
 describe('ObserveSlotPresence', () => {
     it('does no management when slot unavailable', async () => {

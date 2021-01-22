@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Toast } from './src/Toast.js';
 
-customElements.define('sp-toast', Toast);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-toast', Toast);
 
 declare global {
     interface HTMLElementTagNameMap {

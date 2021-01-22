@@ -12,7 +12,9 @@ governing permissions and limitations under the License.
 
 import { Rule } from './src/Rule.js';
 
-customElements.define('sp-rule', Rule);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-rule', Rule);
 
 declare global {
     interface HTMLElementTagNameMap {

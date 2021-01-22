@@ -12,7 +12,9 @@ governing permissions and limitations under the License.
 
 import { Tab } from './src/Tab.js';
 
-customElements.define('sp-tab', Tab);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-tab', Tab);
 
 declare global {
     interface HTMLElementTagNameMap {

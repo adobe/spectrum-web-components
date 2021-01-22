@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { SideNavItem } from './src/SidenavItem.js';
 
-customElements.define('sp-sidenav-item', SideNavItem);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-sidenav-item', SideNavItem);
 
 declare global {
     interface HTMLElementTagNameMap {

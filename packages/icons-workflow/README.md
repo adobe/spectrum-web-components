@@ -28,7 +28,9 @@ class ElementWithIcon extends LitElement {
     }
 }
 
-customElements.define('element-with-icon', ElementWithIcon);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('element-with-icon', ElementWithIcon);
 ```
 
 Every icons can be customized via the following options:

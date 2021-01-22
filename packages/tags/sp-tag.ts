@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Tag } from './src/Tag.js';
 
-customElements.define('sp-tag', Tag);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-tag', Tag);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { CircleLoader } from './src/CircleLoader.js';
 
-customElements.define('sp-circle-loader', CircleLoader);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-circle-loader', CircleLoader);
 
 declare global {
     interface HTMLElementTagNameMap {

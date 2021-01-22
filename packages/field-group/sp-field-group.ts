@@ -12,7 +12,9 @@ governing permissions and limitations under the License.
 
 import { FieldGroup } from './src/FieldGroup.js';
 
-customElements.define('sp-field-group', FieldGroup);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-field-group', FieldGroup);
 
 declare global {
     interface HTMLElementTagNameMap {

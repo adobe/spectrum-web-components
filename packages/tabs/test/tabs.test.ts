@@ -462,7 +462,9 @@ describe('Tabs', () => {
                 `;
             }
         }
-        customElements.define('tab-test-el', TabTestEl);
+        import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('tab-test-el', TabTestEl);
         const el = await fixture<Tabs>(
             html`
                 <tab-test-el></tab-test-el>

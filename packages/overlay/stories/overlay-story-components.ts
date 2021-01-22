@@ -64,7 +64,9 @@ class OverlayTargetIcon extends LitElement {
         `;
     }
 }
-customElements.define('overlay-target-icon', OverlayTargetIcon);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('overlay-target-icon', OverlayTargetIcon);
 
 class OverlayDrag extends LitElement {
     @property({ type: Number })
@@ -176,7 +178,9 @@ class OverlayDrag extends LitElement {
         `;
     }
 }
-customElements.define('overlay-drag', OverlayDrag);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('overlay-drag', OverlayDrag);
 
 class RecursivePopover extends LitElement {
     @property({ type: String })
@@ -311,4 +315,6 @@ class RecursivePopover extends LitElement {
         `;
     }
 }
-customElements.define('recursive-popover', RecursivePopover);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('recursive-popover', RecursivePopover);

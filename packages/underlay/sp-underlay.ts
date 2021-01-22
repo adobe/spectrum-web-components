@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Underlay } from './src/Underlay.js';
 
-customElements.define('sp-underlay', Underlay);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-underlay', Underlay);
 
 declare global {
     interface HTMLElementTagNameMap {

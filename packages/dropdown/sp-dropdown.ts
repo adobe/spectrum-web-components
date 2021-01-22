@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Dropdown } from './src/Dropdown.js';
 
-customElements.define('sp-dropdown', Dropdown);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-dropdown', Dropdown);
 
 declare global {
     interface HTMLElementTagNameMap {

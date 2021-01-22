@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Checkbox } from './src/Checkbox.js';
 
-customElements.define('sp-checkbox', Checkbox);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-checkbox', Checkbox);
 
 declare global {
     interface HTMLElementTagNameMap {

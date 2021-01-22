@@ -103,4 +103,6 @@ class HomeElement extends RouteComponent {
         `;
     }
 }
-customElements.define('docs-home', HomeElement);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('docs-home', HomeElement);

@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Tooltip } from './src/Tooltip.js';
 
-customElements.define('sp-tooltip', Tooltip);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-tooltip', Tooltip);
 
 declare global {
     interface HTMLElementTagNameMap {

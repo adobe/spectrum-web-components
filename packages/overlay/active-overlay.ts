@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { ActiveOverlay } from './src/ActiveOverlay.js';
 
-customElements.define('active-overlay', ActiveOverlay);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('active-overlay', ActiveOverlay);
 
 declare global {
     interface HTMLElementTagNameMap {

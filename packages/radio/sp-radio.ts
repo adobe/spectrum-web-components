@@ -11,7 +11,9 @@ governing permissions and limitations under the License.
 */
 import { Radio } from './src/Radio.js';
 
-customElements.define('sp-radio', Radio);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-radio', Radio);
 
 declare global {
     interface HTMLElementTagNameMap {

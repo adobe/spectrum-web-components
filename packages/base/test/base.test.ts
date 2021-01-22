@@ -13,7 +13,9 @@ import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
 
 class DirElement extends SpectrumElement {}
 
-customElements.define('dir-element', DirElement);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('dir-element', DirElement);
 
 describe('Base', () => {
     after(() => {

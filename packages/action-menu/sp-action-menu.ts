@@ -12,7 +12,9 @@ governing permissions and limitations under the License.
 
 import { ActionMenu } from './src/ActionMenu.js';
 
-customElements.define('sp-action-menu', ActionMenu);
+import { defineElement } from '@spectrum-web-components/base';
+
+defineElement('sp-action-menu', ActionMenu);
 
 declare global {
     interface HTMLElementTagNameMap {
