@@ -24,7 +24,6 @@ import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/circle-loader/sp-circle-loader.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
