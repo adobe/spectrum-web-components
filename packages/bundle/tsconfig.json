@@ -23,6 +23,7 @@
         { "path": "../circle-loader" },
         { "path": "../coachmark" },
         { "path": "../dialog" },
+        { "path": "../divider" },
         { "path": "../dropdown" },
         { "path": "../dropzone" },
         { "path": "../field-group" },

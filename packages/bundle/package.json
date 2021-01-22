@@ -66,6 +66,7 @@
         "@spectrum-web-components/coachmark": "^0.5.0",
         "@spectrum-web-components/dialog": "^0.5.1",
         "@spectrum-web-components/dropdown": "^0.10.1",
+        "@spectrum-web-components/divider": "^0.0.1",
         "@spectrum-web-components/dropzone": "^0.6.0",
         "@spectrum-web-components/field-group": "^0.2.1",
         "@spectrum-web-components/field-label": "^0.2.1",
