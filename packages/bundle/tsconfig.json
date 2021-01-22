@@ -38,6 +38,7 @@
         { "path": "../menu" },
         { "path": "../meter" },
         { "path": "../popover" },
+        { "path": "../progress-circle" },
         { "path": "../overlay" },
         { "path": "../quick-actions" },
         { "path": "../radio" },

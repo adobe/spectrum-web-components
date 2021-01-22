@@ -221,6 +221,8 @@ module.exports = [
     'popover--dialog-right',
     'popover--dialog-bottom',
     'popover--dialog-left',
+    'progress-circle--default',
+    'progress-circle--over-background',
     'radio--default',
     'radio--checked',
     'radio--emphasized',

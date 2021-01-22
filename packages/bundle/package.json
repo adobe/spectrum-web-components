@@ -80,6 +80,7 @@
         "@spectrum-web-components/meter": "^0.2.1",
         "@spectrum-web-components/overlay": "^0.8.1",
         "@spectrum-web-components/popover": "^0.7.1",
+        "@spectrum-web-components/progress-circle": "^0.0.1",
         "@spectrum-web-components/quick-actions": "^0.3.0",
         "@spectrum-web-components/radio": "^0.6.1",
         "@spectrum-web-components/search": "^0.7.1",
