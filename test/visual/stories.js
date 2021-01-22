@@ -217,6 +217,8 @@ module.exports = [
     'overlay--edges',
     'popover--default',
     'popover--dialog',
+    'progress-circle--default',
+    'progress-circle--over-background',
     'radio--default',
     'radio--checked',
     'radio--emphasized',
