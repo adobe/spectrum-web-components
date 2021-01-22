@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@1.0.0...@spectrum-web-components/card@0.7.0) (2021-01-21)
+
+### Bug Fixes
+
+-   ensure that all paths to user change of selected trigger a change event ([2eee81e](https://github.com/adobe/spectrum-web-components/commit/2eee81e280b5c46c71ab09ea93ad1856b9e1ea5b))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   override and clear text-transform: uppercase ([dddce4b](https://github.com/adobe/spectrum-web-components/commit/dddce4bc438f8cf8df217b062c9681ec52587060))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   **card:** do not transform subheadling text to uppercase ([4244390](https://github.com/adobe/spectrum-web-components/commit/4244390ed83b740c1879d7ee43ead31d520aaa93))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+-   **card:** update spectrum css input ([18b6dae](https://github.com/adobe/spectrum-web-components/commit/18b6dae1e89e0cf4dd854d569545c5a3046dbc9f))
+-   **styles:** vend CSS literal versions of the typography system ([6406c96](https://github.com/adobe/spectrum-web-components/commit/6406c96377557a88ad7756147e6e5777f5d1f746))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.5.4...@spectrum-web-components/card@0.6.0) (2021-01-13)
 
 ### Bug Fixes

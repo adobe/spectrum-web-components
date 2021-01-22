@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.1.8...example-project-rollup@0.2.1) (2021-01-21)
+
+### Bug Fixes
+
+- **overlay:** use esm build from popper and point through to types ([078ca0f](https://github.com/adobe/spectrum-web-components/commit/078ca0fb9bc43d1ee5288e641ff1ec49f40e8df5))
+
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.1.8...example-project-rollup@0.2.0) (2021-01-13)
 
 ### Bug Fixes

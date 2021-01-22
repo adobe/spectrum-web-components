@@ -26,6 +26,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import '../sp-dialog.js';
 import styles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 
 /**
  * @element sp-dialog-wrapper
@@ -35,7 +36,7 @@ import { Dialog } from './Dialog.js';
  * @fires confirm - Announces that the "confirm" button has been clicked.
  * @fires close - Announces that the dialog has been closed.
  */
-export class DialogWrapper extends SpectrumElement {
+export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [styles];
     }

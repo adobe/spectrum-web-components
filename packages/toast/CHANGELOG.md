@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.5.4...@spectrum-web-components/toast@0.7.0) (2021-01-21)
+
+### Bug Fixes
+
+-   **toast:** ensure "close" event only triggers when open===false ([7fa08ba](https://github.com/adobe/spectrum-web-components/commit/7fa08ba4b6bf45d28e90d70cd3238df94c8fb7a7))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **toast:** default to "open === false", always dispatch "close" event ([fcb3729](https://github.com/adobe/spectrum-web-components/commit/fcb37292178bac2cb2327eebd4f3a01908e27f38))
+-   **toast:** update spectrum css input ([183ee95](https://github.com/adobe/spectrum-web-components/commit/183ee95c8f9e0ba2c9f2f8d0bc922728e36fdb0a))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.5.4...@spectrum-web-components/toast@0.6.0) (2021-01-13)
 
 ### Bug Fixes

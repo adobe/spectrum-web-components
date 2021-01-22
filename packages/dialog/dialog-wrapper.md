@@ -28,104 +28,113 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
 ### Small
 
 ```html
-<sp-dialog-wrapper
-    id="dialog-wrapper-demo"
-    headline="Dialog title"
-    dismissable
-    underlay
-    footer="Content for footer"
-    hidden
->
-    Content of the dialog
-</sp-dialog-wrapper>
-<sp-button
-    onClick="
-        const dialogWrapper = this.previousElementSibling;
-        dialogWrapper.hidden = false;
-        dialogWrapper.open = true;
-        function handleEvent({type}) {
-            spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
-            dialogWrapper.open = false;
-            dialogWrapper.removeEventListener('close', handleEvent);
-        }
-        dialogWrapper.addEventListener('close', handleEvent);
-    "
-    variant="primary"
->
-    Toggle Dialog
-</sp-button>
+<overlay-trigger type="modal" placement="none">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button
+        slot="trigger"
+        variant="primary"
+        onClick="
+            const overlayTrigger = this.parentElement;
+            overlayTrigger.clickContent.open = true;
+        "
+    >
+        Toggle Dialog
+    </sp-button>
+</overlay-trigger>
 ```
 
 ### Fullscreen Mode
 
 ```html
-<sp-dialog-wrapper
-    id="dialog-wrapper-demo"
-    headline="Dialog title"
-    mode="fullscreen"
-    confirm-label="Keep Both"
-    secondary-label="Replace"
-    cancel-label="Cancel"
-    footer="Content for footer"
-    hidden
->
-    Content of the dialog
-</sp-dialog-wrapper>
-<sp-button
-    onClick="
-        const dialogWrapper = this.previousElementSibling;
-        dialogWrapper.hidden = false;
-        dialogWrapper.open = true;
-        function handleEvent({type}) {
-            spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
-            dialogWrapper.open = false;
-            dialogWrapper.removeEventListener('confirm', handleEvent);
-            dialogWrapper.removeEventListener('secondary', handleEvent);
-            dialogWrapper.removeEventListener('cancel', handleEvent);
-        }
-        dialogWrapper.addEventListener('confirm', handleEvent);
-        dialogWrapper.addEventListener('secondary', handleEvent);
-        dialogWrapper.addEventListener('cancel', handleEvent);
-    "
-    variant="primary"
->
-    Toggle Dialog
-</sp-button>
+<overlay-trigger type="modal" placement="none">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        mode="fullscreen"
+        confirm-label="Keep Both"
+        secondary-label="Replace"
+        cancel-label="Cancel"
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button
+        slot="trigger"
+        variant="primary"
+        onClick="
+            const overlayTrigger = this.parentElement;
+            const dialogWrapper = overlayTrigger.clickContent;
+            dialogWrapper.open = true;
+            function handleEvent({type}) {
+                spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
+                dialogWrapper.open = false;
+                dialogWrapper.dispatchEvent(
+                    new Event('close', {
+                        bubbles: true,
+                    })
+                );
+                dialogWrapper.removeEventListener('confirm', handleEvent);
+                dialogWrapper.removeEventListener('secondary', handleEvent);
+                dialogWrapper.removeEventListener('cancel', handleEvent);
+            }
+            dialogWrapper.addEventListener('confirm', handleEvent);
+            dialogWrapper.addEventListener('secondary', handleEvent);
+            dialogWrapper.addEventListener('cancel', handleEvent);
+        "
+    >
+        Toggle Dialog
+    </sp-button>
+</overlay-trigger>
 ```
 
 ### Fullscreen Takeover Mode
 
 ```html
-<sp-dialog-wrapper
-    id="dialog-wrapper-demo"
-    headline="Dialog title"
-    mode="fullscreenTakeover"
-    confirm-label="Keep Both"
-    secondary-label="Replace"
-    cancel-label="Cancel"
-    footer="Content for footer"
-    hidden
->
-    Content of the dialog
-</sp-dialog-wrapper>
-<sp-button
-    onClick="
-        const dialogWrapper = this.previousElementSibling;
-        dialogWrapper.hidden = false;
-        dialogWrapper.open = true;
-        function handleEvent({type}) {
-            spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
-            dialogWrapper.open = false;
-            dialogWrapper.removeEventListener('confirm', handleEvent);
-            dialogWrapper.removeEventListener('secondary', handleEvent);
-            dialogWrapper.removeEventListener('cancel', handleEvent);
-        }
-        dialogWrapper.addEventListener('confirm', handleEvent);
-        dialogWrapper.addEventListener('secondary', handleEvent);
-        dialogWrapper.addEventListener('cancel', handleEvent);
-    "
-    variant="primary"
->
-    Toggle Dialog
-</sp-button>
+<overlay-trigger type="modal" placement="none">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        mode="fullscreenTakeover"
+        confirm-label="Keep Both"
+        secondary-label="Replace"
+        cancel-label="Cancel"
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button
+        slot="trigger"
+        variant="primary"
+        onClick="
+            const overlayTrigger = this.parentElement;
+            const dialogWrapper = overlayTrigger.clickContent;
+            dialogWrapper.open = true;
+            function handleEvent({type}) {
+                spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
+                dialogWrapper.open = false;
+                dialogWrapper.dispatchEvent(
+                    new Event('close', {
+                        bubbles: true,
+                    })
+                );
+                dialogWrapper.removeEventListener('confirm', handleEvent);
+                dialogWrapper.removeEventListener('secondary', handleEvent);
+                dialogWrapper.removeEventListener('cancel', handleEvent);
+            }
+            dialogWrapper.addEventListener('confirm', handleEvent);
+            dialogWrapper.addEventListener('secondary', handleEvent);
+            dialogWrapper.addEventListener('cancel', handleEvent);
+        "
+    >
+        Toggle Dialog
+    </sp-button>
+</overlay-trigger>
 ```

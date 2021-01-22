@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.4...@spectrum-web-components/checkbox@0.7.0) (2021-01-21)
+
+### Bug Fixes
+
+-   complete deprecation of "quiet" attribute in checkbox and radio ([29d8452](https://github.com/adobe/spectrum-web-components/commit/29d84526cd63fe3217937119e85d8a1a87aa0d27))
+-   ensure [disabled] styling ([4c067eb](https://github.com/adobe/spectrum-web-components/commit/4c067eb82dcfc5f1aaf3ecedfbfc83f4ffb90a22))
+-   implement "emphasized" styles ([750bbe7](https://github.com/adobe/spectrum-web-components/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update configuration for Spectrum CSS processing for specificity ([5c2e21e](https://github.com/adobe/spectrum-web-components/commit/5c2e21ed68d94a75cac0cc248925cc5bca35cc25))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **checkbox:** update spectrum css input ([e894cb4](https://github.com/adobe/spectrum-web-components/commit/e894cb4bc2b36882a9124d1bcbe94d5ad7dbb38e))
+-   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.4...@spectrum-web-components/checkbox@0.6.0) (2021-01-13)
 
 ### Bug Fixes

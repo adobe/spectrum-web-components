@@ -163,7 +163,7 @@ describe('card', () => {
         expect(clickSpy.called).to.be.true;
         expect(clickSpy.calledOnce).to.be.true;
     });
-    it('can be `toggles`', async () => {
+    it('can be `[toggles]`', async () => {
         const test = await fixture<HTMLDivElement>(Default());
         const el = test.querySelector('sp-card') as Card;
         el.toggles = true;
@@ -224,7 +224,31 @@ describe('card', () => {
 
         await elementUpdated(el);
         expect(el.focused, 'still not focused, again 2').to.be.false;
-        expect(el.selected, 'still selected, again 3').to.be.false;
+        // change event is prevented
+        expect(el.selected, 'still selected, again 3');
+    });
+
+    it('announces when `[toggles]`', async () => {
+        const changeSpy = spy();
+        const test = await fixture<HTMLDivElement>(Default());
+        const el = test.querySelector('sp-card') as Card;
+        el.toggles = true;
+        el.addEventListener('change', changeSpy);
+
+        await elementUpdated(el);
+
+        const checkbox = el.shadowRoot.querySelector('sp-checkbox') as Checkbox;
+        expect(el.selected, 'default to not selected').to.be.false;
+        checkbox.click();
+        await elementUpdated(el);
+
+        expect(el.selected, 'selected');
+        expect(changeSpy.callCount).to.equal(1);
+        checkbox.click();
+        await elementUpdated(el);
+
+        expect(el.selected, 'no longer selected').to.be.false;
+        expect(changeSpy.callCount).to.equal(2);
     });
     it('displays the `heading` attribute as `.title`', async () => {
         const testHeading = 'This is a test heading';

@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.7.0",
+    "version": "0.8.0",
     "description": "",
     "style": "all-medium-lightest.css",
     "main": "src/spectrum-base.css.js",
@@ -43,9 +43,9 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-web-components/base": "^0.2.0",
         "@spectrum-css/commons": "^3.0.0",
         "@spectrum-css/typography": "^3.0.0-beta.1",
-        "@spectrum-css/vars": "^3.0.0-beta.2"
+        "@spectrum-css/vars": "^3.0.0-beta.2",
+        "@spectrum-web-components/base": "^0.3.0"
     }
 }

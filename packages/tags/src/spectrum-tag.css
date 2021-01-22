@@ -50,7 +50,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: var(--spectrum-global-dimension-size-50);
     outline: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
     user-select: none;
     transition: border-color
             var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,

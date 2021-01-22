@@ -19,6 +19,7 @@ import {
     PropertyValues,
     nothing,
     ifDefined,
+    live,
 } from '@spectrum-web-components/base';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -59,10 +60,10 @@ export class Textfield extends Focusable {
     public grows = false;
 
     @property({ type: Number })
-    public maxlength?: number;
+    public maxlength = -1;
 
     @property({ type: Number })
-    public minlength?: number;
+    public minlength = -1;
 
     @property({ type: Boolean, reflect: true })
     public multiline = false;
@@ -155,6 +156,12 @@ export class Textfield extends Focusable {
             <textarea
                 aria-label=${this.label || this.placeholder}
                 id="input"
+                maxlength=${ifDefined(
+                    this.maxlength > -1 ? this.maxlength : undefined
+                )}
+                minlength=${ifDefined(
+                    this.minlength > -1 ? this.minlength : undefined
+                )}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${this.value}
@@ -173,11 +180,18 @@ export class Textfield extends Focusable {
         return html`
             <!-- @ts-ignore -->
             <input
+                type="text"
                 aria-label=${this.label || this.placeholder}
                 id="input"
+                maxlength=${ifDefined(
+                    this.maxlength > -1 ? this.maxlength : undefined
+                )}
+                minlength=${ifDefined(
+                    this.minlength > -1 ? this.minlength : undefined
+                )}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
-                .value=${this.value}
+                .value=${live(this.value)}
                 @change=${this.onChange}
                 @input=${this.onInput}
                 @focus=${this.onFocus}
@@ -211,6 +225,9 @@ export class Textfield extends Focusable {
             if ((this.disabled || this.multiline) && this.pattern) {
                 const regex = new RegExp(this.pattern);
                 validity = regex.test(this.value);
+            }
+            if (typeof this.minlength !== 'undefined') {
+                validity = validity && this.value.length > this.minlength;
             }
             this.valid = validity;
             this.invalid = !validity;

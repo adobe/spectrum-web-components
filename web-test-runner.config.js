@@ -10,8 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 const { playwrightLauncher } = require('@web/test-runner-playwright');
+const { sendKeysPlugin } = require('./test/send-keys-plugin.js');
 
 module.exports = {
+    plugins: [sendKeysPlugin()],
     files: ['packages/*/test/*.test.js'],
     nodeResolve: true,
     concurrency: 4,

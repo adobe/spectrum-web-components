@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES2017",
+        "rootDir": ".",
+        "sourceMap": false,
+        "strict": true
+    },
+    "include": ["./send-keys-plugin.ts"],
+    "exclude": []
+}

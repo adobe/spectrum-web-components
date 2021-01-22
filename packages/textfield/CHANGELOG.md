@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.5.4...@spectrum-web-components/textfield@0.7.0) (2021-01-21)
+
+### Bug Fixes
+
+-   disallow undefined property for min and maxlength ([21547f7](https://github.com/adobe/spectrum-web-components/commit/21547f70e3e2987ca72f14a294519560bdb901e3))
+-   **textfield:** reimplement min/maxlength ([23a4c2e](https://github.com/adobe/spectrum-web-components/commit/23a4c2e61dbc399bf9e58bb32952e16b8aa9d5ae))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   **button:** relate to this.href correctly ([fade3ea](https://github.com/adobe/spectrum-web-components/commit/fade3ea9bd6bda6192f84a0ab9af4b812517e267))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   **textfield:** process ".is-focused" and ".is-keyboardFocused" styles ([48fd67d](https://github.com/adobe/spectrum-web-components/commit/48fd67d7cdab3aac26c20a8e9232d6320b27fb59))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+-   **textfield:** update spectrum css input ([2ce4ba2](https://github.com/adobe/spectrum-web-components/commit/2ce4ba2e0a9c6dcc6c0041fde02b0d98f08cf6a1))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.5.4...@spectrum-web-components/textfield@0.6.0) (2021-01-13)
 
 ### Bug Fixes

@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.9.4...@spectrum-web-components/button@0.11.0) (2021-01-21)
+
+### Bug Fixes
+
+-   allow sp-dropdown to accept focus visibly from sp-field-label ([134bafc](https://github.com/adobe/spectrum-web-components/commit/134bafc9c2e4d06e48107182f82dd7487066b7f1))
+-   correct specificity of webkit appearance work around ([f0d06bf](https://github.com/adobe/spectrum-web-components/commit/f0d06bf17bbf1d7d2a41a3008373a4b0f4097cf9))
+-   final prerelease review of canary builds ([1fc032f](https://github.com/adobe/spectrum-web-components/commit/1fc032ff436d8be1817a2784787e30b07a2873c6))
+-   implement "emphasized" styles ([750bbe7](https://github.com/adobe/spectrum-web-components/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   use the "browsers" listing in postcss-preset-env ([4eaf6a2](https://github.com/adobe/spectrum-web-components/commit/4eaf6a28f7b5eaf60487841d264d6d804ae675ce))
+-   **button:** delivery hold affordance when attribute available ([aecc6fe](https://github.com/adobe/spectrum-web-components/commit/aecc6fe7e632fec4556c4425d56a731605492873))
+-   **button:** relate to this.href correctly ([fade3ea](https://github.com/adobe/spectrum-web-components/commit/fade3ea9bd6bda6192f84a0ab9af4b812517e267))
+
+### Features
+
+-   apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/adobe/spectrum-web-components/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
+-   deprecate "icon-right" in buttons as per Spectrum ([064a775](https://github.com/adobe/spectrum-web-components/commit/064a775f9915523a3c9a744f824b5903f26c382e))
+-   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
+-   **button:** update spectrum css input ([7b5b200](https://github.com/adobe/spectrum-web-components/commit/7b5b20012621a4a43c8402fb07fe163fe919495d))
+-   **button:** use latest @spectrum-css/button beta ([b3b20ed](https://github.com/adobe/spectrum-web-components/commit/b3b20ed85923955deca5ca4d18d95ea8c5ce15ea))
+-   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+
 # [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.9.4...@spectrum-web-components/button@0.10.0) (2021-01-13)
 
 ### Bug Fixes
