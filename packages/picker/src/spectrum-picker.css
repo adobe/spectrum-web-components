@@ -208,7 +208,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-in-out;
 }
+<<<<<<< HEAD
 .picker {
+=======
+.dropdown {
+>>>>>>> 02f44045 (feat(picker): replace dropdown with picker component)
     /* .spectrum-Picker-menuIcon */
     display: inline-block;
     position: relative;
