@@ -64,28 +64,41 @@ governing permissions and limitations under the License.
     );
 }
 
-.tip {
-    display: flex;
-}
+/* provide dimensions */
 
-:host([placement*='bottom']) .tip,
-:host([placement*='top']) .tip {
+.tip {
     width: var(--sp-popover-tip-size);
     height: calc(var(--sp-popover-tip-size) / 2);
+    position: absolute;
 }
 
-:host([placement*='right']) .tip,
+/* override #tip orientation so we can orient on .tip instead */
+
+:host([placement*='right']) #tip {
+    transform: none;
+}
+
+:host([placement*='bottom']) #tip {
+    transform: none;
+}
+
+/* orient the tip */
+
+:host([placement*='top']) .tip {
+    top: 100%;
+}
+
+:host([placement*='bottom']) .tip {
+    bottom: 100%;
+    transform: scaleY(-1);
+}
+
 :host([placement*='left']) .tip {
-    height: var(--sp-popover-tip-size);
-    width: calc(var(--sp-popover-tip-size) / 2);
+    transform-origin: 100% 0%;
+    transform: rotate(-90deg) translateY(-200%);
 }
 
-:host([placement*='bottom']) .triangle-left-right,
-:host([placement*='top']) .triangle-left-right {
-    display: none;
-}
-
-:host([placement*='right']) .triangle-top-bottom,
-:host([placement*='left']) .triangle-top-bottom {
-    display: none;
+:host([placement*='right']) .tip {
+    transform-origin: 0% 0%;
+    transform: rotate(90deg);
 }

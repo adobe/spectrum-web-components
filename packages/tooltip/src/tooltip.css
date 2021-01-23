@@ -12,26 +12,72 @@ governing permissions and limitations under the License.
 
 @import './spectrum-tooltip.css';
 
-/* This is getting pulled out by PostCSS, maybe... */
+/* move the #tip styling from spectrum-css onto a pseudo-element,
+   replacing rotations with mirrors of two different border setups (horizontal vs vertical) */
+
 #tip {
-    border-right-color: transparent;
-    border-left-color: transparent;
-    border-bottom-color: transparent;
+    border: none;
 }
 
-:host([data-popper-placement]) {
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-top: 0;
+:host([placement*='right']) #tip,
+:host([placement*='left']) #tip,
+:host([placement*='bottom']) #tip {
+    transform: none;
 }
 
-:host([data-popper-placement='left']) #tip,
-:host([data-popper-placement='right']) #tip {
-    margin-top: 0;
+#tip:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: solid
+        var(
+            --spectrum-tooltip-tip-height,
+            var(--spectrum-global-dimension-size-50)
+        )
+        transparent;
+    border-top-color: var(
+        --spectrum-tooltip-background-color,
+        var(--spectrum-global-color-static-gray-700)
+    );
 }
 
-:host([data-popper-placement*='top']) #tip,
-:host([data-popper-placement*='bottom']) #tip {
-    margin-left: 0;
+/* orient the tip */
+
+:host([placement*='bottom']) #tip:after {
+    bottom: 100%;
+    transform: scaleY(-1);
+}
+
+:host([placement*='left']) #tip:after {
+    left: 100%;
+    transform: rotate(-90deg);
+}
+
+:host([placement*='right']) #tip:after {
+    right: 100%;
+    transform: rotate(90deg);
+}
+
+/* color the tip the correct variant color on either a vertical or horizontal axis */
+
+:host([variant='negative']) #tip:after {
+    border-top-color: var(
+        --spectrum-tooltip-negative-background-color,
+        var(--spectrum-global-color-static-red-700)
+    );
+}
+
+:host([variant='info']) #tip:after {
+    border-top-color: var(
+        --spectrum-tooltip-info-background-color,
+        var(--spectrum-global-color-static-blue-700)
+    );
+}
+
+:host([variant='positive']) #tip:after {
+    border-top-color: var(
+        --spectrum-tooltip-positive-background-color,
+        var(--spectrum-global-color-static-green-700)
+    );
 }

@@ -10,23 +10,23 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { createPopper, Instance, maxSize, applyMaxSize } from './popper.js';
 import {
-    Placement,
-    OverlayOpenDetail,
-    TriggerInteractions,
-} from './overlay-types.js';
-import { Scale, Color } from '@spectrum-web-components/theme';
-import {
-    html,
-    SpectrumElement,
-    TemplateResult,
     CSSResultArray,
+    html,
+    ifDefined,
     property,
     PropertyValues,
-    ifDefined,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { Color, Scale } from '@spectrum-web-components/theme';
 import styles from './active-overlay.css.js';
+import {
+    OverlayOpenDetail,
+    Placement,
+    TriggerInteractions,
+} from './overlay-types.js';
+import { applyMaxSize, createPopper, Instance, maxSize } from './popper.js';
 
 export interface PositionResult {
     arrowOffsetLeft: number;
