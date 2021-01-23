@@ -1,0 +1,69 @@
+{
+    "name": "@spectrum-web-components/picker",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/picker"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/picker",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.0.1",
+    "description": "",
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        "./src/": "./src/",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./sp-picker": "./sp-picker.js",
+        "./sp-picker.js": "./sp-picker.js",
+        "./sync/sp-picker": "./sync/sp-picker.js",
+        "./sync/sp-picker.js": "./sync/sp-picker.js"
+    },
+    "files": [
+        "custom-elements.json",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "/sync/"
+    ],
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts",
+        "./sync/sp-*.js",
+        "./sync/sp-*.ts"
+    ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "@spectrum-css/picker": "^0.0.1"
+    },
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.3.0",
+        "@spectrum-web-components/button": "^0.11.0",
+        "@spectrum-web-components/icon": "^0.8.0",
+        "@spectrum-web-components/icons-ui": "^0.5.0",
+        "@spectrum-web-components/icons-workflow": "^0.5.0",
+        "@spectrum-web-components/menu": "^0.6.0",
+        "@spectrum-web-components/overlay": "^0.8.0",
+        "@spectrum-web-components/popover": "^0.7.0",
+        "@spectrum-web-components/shared": "^0.9.0",
+        "tslib": "^2.0.0"
+    }
+}
