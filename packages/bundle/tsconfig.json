@@ -35,6 +35,7 @@
         { "path": "../link" },
         { "path": "../menu" },
         { "path": "../meter" },
+        { "path": "../picker" },
         { "path": "../popover" },
         { "path": "../progress-bar" },
         { "path": "../progress-circle" },

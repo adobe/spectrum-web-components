@@ -10,14 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-// import our stylesheets
-import './styles.css';
-
-// import the components we'll use in this page
-import '@spectrum-web-components/button/sp-button';
-// use the following import to chunk your build at the async boundary infront of the Overlay package
-import '@spectrum-web-components/picker/sp-picker';
-// use the following import to chunk your build as defaulted in the Rollup config.
-// import '@spectrum-web-components/picker/sync/sp-picker';
-import '@spectrum-web-components/menu/sp-menu';
-import '@spectrum-web-components/menu/sp-menu-item';
+export * from './Picker.js';
