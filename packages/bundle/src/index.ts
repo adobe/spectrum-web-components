@@ -39,6 +39,7 @@ export * from '@spectrum-web-components/link';
 export * from '@spectrum-web-components/menu';
 export * from '@spectrum-web-components/meter';
 export * from '@spectrum-web-components/overlay';
+export * from '@spectrum-web-components/picker';
 export * from '@spectrum-web-components/popover';
 export * from '@spectrum-web-components/progress-bar';
 export * from '@spectrum-web-components/progress-circle';
