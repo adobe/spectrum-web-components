@@ -50,12 +50,20 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
+<<<<<<< HEAD
         "@spectrum-web-components/base": "^0.3.1",
         "@spectrum-web-components/menu": "^0.6.1",
         "@spectrum-web-components/overlay": "^0.8.1",
         "@spectrum-web-components/picker": "^0.0.1",
         "@spectrum-web-components/switch": "^0.6.1",
         "@spectrum-web-components/theme": "^0.7.2",
+=======
+        "@spectrum-web-components/base": "^0.3.0",
+        "@spectrum-web-components/picker": "^0.0.1",
+        "@spectrum-web-components/menu": "^0.6.0",
+        "@spectrum-web-components/switch": "^0.6.0",
+        "@spectrum-web-components/theme": "^0.7.1",
+>>>>>>> e6385e5f (fix(picker): remove usages of dropdown and replace with picker)
         "tslib": "^2.0.0"
     }
 }

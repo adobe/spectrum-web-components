@@ -49,9 +49,15 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "@spectrum-css/fieldlabel": "^3.0.0-beta.7",
+<<<<<<< HEAD
         "@spectrum-web-components/menu": "^0.6.1",
         "@spectrum-web-components/textfield": "^0.7.1",
         "@spectrum-web-components/picker": "^0.0.1"
+=======
+        "@spectrum-web-components/picker": "^0.0.1",
+        "@spectrum-web-components/menu": "^0.6.0",
+        "@spectrum-web-components/textfield": "^0.7.0"
+>>>>>>> e6385e5f (fix(picker): remove usages of dropdown and replace with picker)
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.3.1",
