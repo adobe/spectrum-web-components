@@ -52,6 +52,7 @@
         "@spectrum-web-components/icons-ui": "^0.5.1",
         "@spectrum-web-components/icons-workflow": "^0.5.1",
         "@spectrum-web-components/overlay": "^0.8.1",
+        "@spectrum-web-components/picker": "^0.0.1",
         "tslib": "^2.0.0"
     }
 }
