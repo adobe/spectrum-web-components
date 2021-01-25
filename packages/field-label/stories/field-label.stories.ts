@@ -122,29 +122,19 @@ export const picker = (): TemplateResult => {
         <sp-field-label for="country" required>
             Select a Country with a very long label, too long in fact
         </sp-field-label>
-        <sp-dropdown id="country" value="item-2">
+        <sp-picker id="country" value="item-2">
             <sp-menu>
-                <sp-menu-item value="item-1">
-                    Deselect
-                </sp-menu-item>
-                <sp-menu-item value="item-2">
-                    Select Inverse
-                </sp-menu-item>
-                <sp-menu-item value="item-3">
-                    Feather...
-                </sp-menu-item>
-                <sp-menu-item value="item-4">
-                    Select and Mask...
-                </sp-menu-item>
+                <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
+                <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                <sp-menu-item value="item-4">Select and Mask...</sp-menu-item>
                 <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item value="item-5">
-                    Save Selection
-                </sp-menu-item>
+                <sp-menu-item value="item-5">Save Selection</sp-menu-item>
                 <sp-menu-item disabled value="item-6">
                     Make Work Path
                 </sp-menu-item>
             </sp-menu>
-        </sp-dropdown>
+        </sp-picker>
     `;
 };
 

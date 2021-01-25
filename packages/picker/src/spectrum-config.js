@@ -52,7 +52,7 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Picker-menuIcon',
-                    name: 'dropdown',
+                    name: 'picker',
                 },
                 {
                     selector: '.spectrum-Menu-checkmark',

@@ -159,8 +159,6 @@ module.exports = [
     'divider--small',
     'divider--vertical-small',
     'divider--vertical-medium',
-    'dropdown--default',
-    'dropdown--initial-value',
     'dropzone--default',
     'field-group--horizontal',
     'field-group--vertical',

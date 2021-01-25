@@ -27,7 +27,6 @@ import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/dropdown/sp-dropdown.js';
 import '@spectrum-web-components/dropzone/sp-dropzone.js';
 import '@spectrum-web-components/field-group/sp-field-group.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';

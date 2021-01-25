@@ -15,8 +15,8 @@ import { stub } from 'sinon';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { Textfield } from '@spectrum-web-components/textfield';
-import '@spectrum-web-components/dropdown/sp-dropdown.js';
-import { Dropdown } from '@spectrum-web-components/dropdown';
+import '@spectrum-web-components/picker/sp-picker.js';
+import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
@@ -174,24 +174,24 @@ describe('FieldLabel', () => {
             html`
                 <div>
                     <sp-field-label required for="test"></sp-field-label>
-                    <sp-dropdown id="test">
+                    <sp-picker id="test">
                         <sp-menu>
                             <sp-menu-item>Test</sp-menu-item>
                         </sp-menu>
-                    </sp-dropdown>
+                    </sp-picker>
                 </div>
             `
         );
         const el = test.querySelector('sp-field-label') as FieldLabel;
-        const dropdown = test.querySelector('sp-dropdown') as Dropdown;
+        const picker = test.querySelector('sp-picker') as Picker;
 
         await elementUpdated(el);
-        expect(!dropdown.focused);
+        expect(!picker.focused);
 
         el.click();
         await elementUpdated(el);
 
-        expect(document.activeElement === dropdown);
-        expect(dropdown.focused);
+        expect(document.activeElement === picker);
+        expect(picker.focused);
     });
 });

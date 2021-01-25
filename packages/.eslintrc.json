@@ -58,7 +58,7 @@
             }
         },
         {
-            "files": ["Dropdown.ts", "SplitButton.ts"],
+            "files": ["Picker.ts", "SplitButton.ts"],
             "rules": {
                 "lit-a11y/click-events-have-key-events": [
                     "error",
