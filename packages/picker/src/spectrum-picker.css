@@ -208,7 +208,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-in-out;
 }
-.dropdown {
+.picker {
     /* .spectrum-Picker-menuIcon */
     display: inline-block;
     position: relative;
@@ -225,11 +225,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Picker-validationIcon */
     margin-right: var(--spectrum-picker-error-icon-margin-left);
 }
-:host([dir='ltr']) #label ~ .dropdown {
+:host([dir='ltr']) #label ~ .picker {
     /* [dir=ltr] .spectrum-Picker-label~.spectrum-Picker-menuIcon */
     margin-left: var(--spectrum-picker-ui-icon-gap);
 }
-:host([dir='rtl']) #label ~ .dropdown {
+:host([dir='rtl']) #label ~ .picker {
     /* [dir=rtl] .spectrum-Picker-label~.spectrum-Picker-menuIcon */
     margin-right: var(--spectrum-picker-ui-icon-gap);
 }
@@ -281,7 +281,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-#button:hover .dropdown {
+#button:hover .picker {
     /* .spectrum-Picker:hover .spectrum-Picker-menuIcon */
     color: var(
         --spectrum-alias-icon-color-hover,
@@ -379,10 +379,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([disabled]) #button .spectrum-Picker-icon,
-:host([disabled]) #button .dropdown,
+:host([disabled]) #button .picker,
 :host([disabled]) #button .validationIcon,
 #button:disabled .spectrum-Picker-icon,
-#button:disabled .dropdown,
+#button:disabled .picker,
 #button:disabled .validationIcon {
     /* .spectrum-Picker.is-disabled .spectrum-Picker-icon,
    * .spectrum-Picker.is-disabled .spectrum-Picker-menuIcon,
@@ -404,7 +404,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-500)
     );
 }
-.dropdown {
+.picker {
     /* .spectrum-Picker-menuIcon */
     color: var(
         --spectrum-alias-icon-color,
@@ -479,8 +479,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([quiet]) #button:focus-visible .dropdown,
-:host([quiet][focused]) #button .dropdown {
+:host([quiet]) #button:focus-visible .picker,
+:host([quiet][focused]) #button .picker {
     /* .spectrum-Picker--quiet.focus-ring .spectrum-Picker-menuIcon,
    * .spectrum-Picker--quiet.is-focused .spectrum-Picker-menuIcon */
     color: var(

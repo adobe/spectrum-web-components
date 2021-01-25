@@ -25,7 +25,7 @@ governing permissions and limitations under the License.
     -webkit-appearance: none;
 }
 
-:host(.spectrum-Dropdown-trigger) #button {
+:host(.spectrum-Picker-trigger) #button {
     text-align: left;
 }
 

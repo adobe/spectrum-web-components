@@ -24,7 +24,6 @@ export * from '@spectrum-web-components/checkbox';
 export * from '@spectrum-web-components/coachmark';
 export * from '@spectrum-web-components/dialog';
 export * from '@spectrum-web-components/divider';
-export * from '@spectrum-web-components/dropdown';
 export * from '@spectrum-web-components/dropzone';
 export * from '@spectrum-web-components/field-group';
 export * from '@spectrum-web-components/field-label';

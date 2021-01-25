@@ -13,7 +13,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@spectrum-web-components/button": "^0.11.0",
-        "@spectrum-web-components/dropdown": "^0.10.0",
+        "@spectrum-web-components/picker": "^0.0.1",
         "@spectrum-web-components/menu": "^0.6.0",
         "@spectrum-web-components/styles": "^0.8.0",
         "lit-element": "^2.4.0",

@@ -19,11 +19,11 @@ import {
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/dropdown/sp-dropdown.js';
+import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/switch/sp-switch.js';
-import { Dropdown } from '@spectrum-web-components/dropdown';
+import { Picker } from '@spectrum-web-components/picker';
 import { Switch } from '@spectrum-web-components/switch';
 import { Scale, Color } from '@spectrum-web-components/theme';
 
@@ -177,16 +177,14 @@ export class StoryDecorator extends SpectrumElement {
 
     private handleClickLabel(event: { target: HTMLElement }): void {
         const { target } = event;
-        const next = target.nextElementSibling as Dropdown;
+        const next = target.nextElementSibling as Picker;
         if (!next || next.open) return;
         next.click();
     }
 
-    private updateTheme({
-        target,
-    }: Event & { target: Dropdown | Switch }): void {
+    private updateTheme({ target }: Event & { target: Picker | Switch }): void {
         const { id } = target;
-        const { value } = target as Dropdown;
+        const { value } = target as Picker;
         const { checked } = target as Switch;
         switch (id) {
             case 'color':
@@ -234,7 +232,7 @@ export class StoryDecorator extends SpectrumElement {
     private get colorControl(): TemplateResult {
         return html`
             <label @click=${this.handleClickLabel}>Theme</label>
-            <sp-dropdown
+            <sp-picker
                 id="color"
                 placement="top"
                 quiet
@@ -242,27 +240,19 @@ export class StoryDecorator extends SpectrumElement {
                 @change=${this.updateTheme}
             >
                 <sp-menu>
-                    <sp-menu-item value="lightest">
-                        Lightest
-                    </sp-menu-item>
-                    <sp-menu-item value="light">
-                        Light
-                    </sp-menu-item>
-                    <sp-menu-item value="dark">
-                        Dark
-                    </sp-menu-item>
-                    <sp-menu-item value="darkest">
-                        Darkest
-                    </sp-menu-item>
+                    <sp-menu-item value="lightest">Lightest</sp-menu-item>
+                    <sp-menu-item value="light">Light</sp-menu-item>
+                    <sp-menu-item value="dark">Dark</sp-menu-item>
+                    <sp-menu-item value="darkest">Darkest</sp-menu-item>
                 </sp-menu>
-            </sp-dropdown>
+            </sp-picker>
         `;
     }
 
     private get scaleControl(): TemplateResult {
         return html`
             <label @click=${this.handleClickLabel}>Scale</label>
-            <sp-dropdown
+            <sp-picker
                 id="scale"
                 label="Scale"
                 placement="top"
@@ -271,23 +261,17 @@ export class StoryDecorator extends SpectrumElement {
                 @change=${this.updateTheme}
             >
                 <sp-menu>
-                    <sp-menu-item value="medium">
-                        Medium
-                    </sp-menu-item>
-                    <sp-menu-item value="large">
-                        Large
-                    </sp-menu-item>
+                    <sp-menu-item value="medium">Medium</sp-menu-item>
+                    <sp-menu-item value="large">Large</sp-menu-item>
                 </sp-menu>
-            </sp-dropdown>
+            </sp-picker>
         `;
     }
 
     private get dirControl(): TemplateResult {
         return html`
-            <label @click=${this.handleClickLabel}>
-                Direction
-            </label>
-            <sp-dropdown
+            <label @click=${this.handleClickLabel}>Direction</label>
+            <sp-picker
                 id="dir"
                 label="Direction"
                 placement="top"
@@ -296,14 +280,10 @@ export class StoryDecorator extends SpectrumElement {
                 @change=${this.updateTheme}
             >
                 <sp-menu>
-                    <sp-menu-item value="ltr">
-                        LTR
-                    </sp-menu-item>
-                    <sp-menu-item value="rtl">
-                        RTL
-                    </sp-menu-item>
+                    <sp-menu-item value="ltr">LTR</sp-menu-item>
+                    <sp-menu-item value="rtl">RTL</sp-menu-item>
                 </sp-menu>
-            </sp-dropdown>
+            </sp-picker>
         `;
     }
 

@@ -83,14 +83,10 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
 ## Examples
 
 ```html
-<sp-field-label for="lifestory">
-    Life Story
-</sp-field-label>
+<sp-field-label for="lifestory">Life Story</sp-field-label>
 <sp-textfield placeholder="Enter your life story" id="lifestory"></sp-textfield>
-<sp-field-label for="birth-place">
-    Birthplace
-</sp-field-label>
-<sp-dropdown id="birth-place">
+<sp-field-label for="birth-place">Birthplace</sp-field-label>
+<sp-picker id="birth-place">
     <span slot="label">Choose a location:</span>
     <sp-menu>
         <sp-menu-item>Istanbul</sp-menu-item>
@@ -102,7 +98,7 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
         <sp-menu-item>Santiago</sp-menu-item>
         <sp-menu-item>Tokyo</sp-menu-item>
     </sp-menu>
-</sp-dropdown>
+</sp-picker>
 ```
 
 ## Side Aligned
@@ -131,7 +127,7 @@ Use `side-aligned="start"` to display the `<sp-field-label>` inline and to align
 >
     Birthplace
 </sp-field-label>
-<sp-dropdown id="birth-place-1">
+<sp-picker id="birth-place-1">
     <span slot="label">Choose a location:</span>
     <sp-menu>
         <sp-menu-item>Istanbul</sp-menu-item>
@@ -143,7 +139,7 @@ Use `side-aligned="start"` to display the `<sp-field-label>` inline and to align
         <sp-menu-item>Santiago</sp-menu-item>
         <sp-menu-item>Tokyo</sp-menu-item>
     </sp-menu>
-</sp-dropdown>
+</sp-picker>
 ```
 
 ### End
@@ -168,7 +164,7 @@ Use `side-aligned="end"` to display the `<sp-field-label>` inline and to align t
 <sp-field-label for="birth-place-1" side-aligned="end" style="width: 120px">
     Birthplace
 </sp-field-label>
-<sp-dropdown id="birth-place-1">
+<sp-picker id="birth-place-1">
     <span slot="label">Choose a location:</span>
     <sp-menu>
         <sp-menu-item>Istanbul</sp-menu-item>
@@ -180,5 +176,5 @@ Use `side-aligned="end"` to display the `<sp-field-label>` inline and to align t
         <sp-menu-item>Santiago</sp-menu-item>
         <sp-menu-item>Tokyo</sp-menu-item>
     </sp-menu>
-</sp-dropdown>
+</sp-picker>
 ```

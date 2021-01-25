@@ -49,7 +49,7 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "@spectrum-css/fieldlabel": "^3.0.0-beta.7",
-        "@spectrum-web-components/dropdown": "^0.10.0",
+        "@spectrum-web-components/picker": "^0.0.1",
         "@spectrum-web-components/menu": "^0.6.0",
         "@spectrum-web-components/textfield": "^0.7.0"
     },
