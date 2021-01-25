@@ -6,5 +6,9 @@
     },
     "include": ["*.ts", "src/*.ts", "sync/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../base" }]
+    "references": [
+        { "path": "../base" },
+        { "path": "../menu" },
+        { "path": "../popover" }
+    ]
 }
