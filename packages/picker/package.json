@@ -53,11 +53,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-<<<<<<< HEAD
         "@spectrum-css/picker": "^1.0.0-beta.3"
-=======
-        "@spectrum-css/picker": "^0.0.1"
->>>>>>> 02f44045 (feat(picker): replace dropdown with picker component)
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.3.0",
