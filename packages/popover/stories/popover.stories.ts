@@ -24,15 +24,15 @@ export const Default = (): TemplateResult => {
     return html`
         <div style="color: var(--spectrum-global-color-gray-800)">
             <sp-popover variant="default" open style="max-width: 320px">
-                <div style="font-size: 14px; padding: 10px">
-                    ${content}
-                </div>
+                <div style="font-size: 14px; padding: 10px">${content}</div>
             </sp-popover>
         </div>
     `;
 };
 
-export const Dialog = (): TemplateResult => {
+const dialog = (
+    placementStart: 'top' | 'bottom' | 'left' | 'right'
+): TemplateResult => {
     const tip = boolean('Has Tip', true);
     const placements = {
         top: 'top',
@@ -40,7 +40,11 @@ export const Dialog = (): TemplateResult => {
         left: 'left',
         right: 'right',
     };
-    const placement = radios('Placement', placements, placements.bottom);
+    const placement = radios(
+        'Placement',
+        placements,
+        placements[placementStart]
+    );
     return html`
         <div
             style="color: var(--spectrum-global-color-gray-800); position: relative; display: contents"
@@ -67,3 +71,8 @@ export const Dialog = (): TemplateResult => {
         </div>
     `;
 };
+
+export const dialogTop = (): TemplateResult => dialog('top');
+export const dialogRight = (): TemplateResult => dialog('right');
+export const dialogBottom = (): TemplateResult => dialog('bottom');
+export const dialogLeft = (): TemplateResult => dialog('left');

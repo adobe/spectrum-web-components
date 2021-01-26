@@ -17,7 +17,10 @@ import {
     CheckmarkIcon,
     InfoIcon,
 } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import { Placement } from '@spectrum-web-components/overlay/src/popper';
 import '../sp-tooltip.js';
 
 const tipOptions = ['top', 'bottom', 'left', 'right'];
@@ -90,9 +93,7 @@ export const wIcon = (): TemplateResult => {
         >
             ${!!variant
                 ? html`
-                      <sp-icon slot="icon">
-                          ${iconOptions[variant]()}
-                      </sp-icon>
+                      <sp-icon slot="icon">${iconOptions[variant]()}</sp-icon>
                   `
                 : html``}
             ${text('Tip text', 'Tooltip', 'Element')}
@@ -115,6 +116,10 @@ const overlayStyles = html`
             margin: 0;
         }
 
+        sp-story-decorator > div {
+            display: contents;
+        }
+
         sp-story-decorator::part(container) {
             display: flex;
             flex-direction: column;
@@ -131,15 +136,25 @@ const overlayStyles = html`
     </style>
 `;
 
-export const Overlaid = (): TemplateResult => {
+const overlaid = (placement: Placement): TemplateResult => {
+    requestAnimationFrame(async () => {
+        const overlay = document.querySelector(
+            `overlay-trigger[placement="${placement}"]`
+        ) as OverlayTrigger;
+        await overlay.updateComplete;
+        const trigger = (overlay.shadowRoot as ShadowRoot).querySelector(
+            '#trigger'
+        ) as HTMLDivElement;
+        trigger.dispatchEvent(new MouseEvent('mouseenter'));
+    });
     return html`
         ${overlayStyles}
-        ${[
+        ${([
             ['bottom', ''],
             ['left', 'negative'],
             ['right', 'positive'],
             ['top', 'info'],
-        ].map(([placement, variant]) => {
+        ] as [Placement, string][]).map(([placement, variant]) => {
             return html`
                 <overlay-trigger placement=${placement}>
                     <sp-button label="${placement} test" slot="trigger">
@@ -154,3 +169,8 @@ export const Overlaid = (): TemplateResult => {
         })}
     `;
 };
+
+export const overlaidTop = (): TemplateResult => overlaid('top');
+export const overlaidRight = (): TemplateResult => overlaid('right');
+export const overlaidBottom = (): TemplateResult => overlaid('bottom');
+export const overlaidLeft = (): TemplateResult => overlaid('left');
