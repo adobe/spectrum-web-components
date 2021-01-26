@@ -127,6 +127,9 @@ export class Slider extends Focusable {
     @query('#input')
     private input!: HTMLInputElement;
 
+    @query('#label')
+    private labelEl!: HTMLLabelElement;
+
     private supportsPointerEvent = 'setPointerCapture' in this;
     private currentMouseEvent?: MouseEvent;
     private boundingClientRect?: DOMRect;
@@ -299,7 +302,7 @@ export class Slider extends Focusable {
             return;
         }
         this.boundingClientRect = this.getBoundingClientRect();
-        this.focus();
+        this.labelEl.click();
         this.dragging = true;
         this.handle.setPointerCapture(event.pointerId);
     }
@@ -314,7 +317,7 @@ export class Slider extends Focusable {
         this.boundingClientRect = this.getBoundingClientRect();
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
-        this.focus();
+        this.labelEl.click();
         this.dragging = true;
         this.currentMouseEvent = event;
         this._trackMouseEvent();
@@ -330,7 +333,7 @@ export class Slider extends Focusable {
 
     private onPointerUp(event: PointerEvent): void {
         // Retain focus on input element after mouse up to enable keyboard interactions
-        this.focus();
+        this.labelEl.click();
         this.handleHighlight = false;
         this.dragging = false;
         this.handle.releasePointerCapture(event.pointerId);
@@ -339,7 +342,7 @@ export class Slider extends Focusable {
 
     private onMouseUp = (event: MouseEvent): void => {
         // Retain focus on input element after mouse up to enable keyboard interactions
-        this.focus();
+        this.labelEl.click();
         this.currentMouseEvent = event;
         document.removeEventListener('mousemove', this.onMouseMove);
         document.removeEventListener('mouseup', this.onMouseUp);
@@ -415,7 +418,15 @@ export class Slider extends Focusable {
     }
 
     private onInputFocus(): void {
-        this.handleHighlight = true;
+        let isFocusVisible;
+        try {
+            isFocusVisible =
+                this.input.matches(':focus-visible') ||
+                this.matches('.focus-visible');
+        } catch (error) {
+            isFocusVisible = this.matches('.focus-visible');
+        }
+        this.handleHighlight = isFocusVisible;
     }
 
     private onInputBlur(): void {
