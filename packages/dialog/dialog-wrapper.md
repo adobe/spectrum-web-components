@@ -38,16 +38,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
     >
         Content of the dialog
     </sp-dialog-wrapper>
-    <sp-button
-        slot="trigger"
-        variant="primary"
-        onClick="
-            const overlayTrigger = this.parentElement;
-            overlayTrigger.clickContent.open = true;
-        "
-    >
-        Toggle Dialog
-    </sp-button>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -72,7 +63,6 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
         onClick="
             const overlayTrigger = this.parentElement;
             const dialogWrapper = overlayTrigger.clickContent;
-            dialogWrapper.open = true;
             function handleEvent({type}) {
                 spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
