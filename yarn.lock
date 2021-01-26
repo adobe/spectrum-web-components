@@ -4133,9 +4133,9 @@
     whatwg-url "^8.4.0"
 
 "@web/dev-server@^0.1.3":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.4.tgz#ca705243910c25823b9fd452ebd2db246a85eb96"
-  integrity sha512-aYqrUFd6s32QJ4vPJlKGoD66U/I4erMSIzEInvN4IcUqUKQyF7Ol11J+QU0t2lkBAfoH4/yD2PzZXRC51P04dA==
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.5.tgz#e26ce32fb432f833366cb50cd84405a0e6734723"
+  integrity sha512-6fiaKH6WKOO2Va6uIQW4WRbHLtLkIreSSH9dAWkMnw9u4+DVhSOhl58n60zwBbzbN6uwRDAQqMvZO+nKnoV5lg==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@rollup/plugin-node-resolve" "^11.0.1"
