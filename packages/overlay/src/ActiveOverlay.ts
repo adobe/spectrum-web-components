@@ -159,7 +159,7 @@ export class ActiveOverlay extends SpectrumElement {
 
     public focus(): void {
         const firstFocusable = this.querySelector(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
         ) as HTMLElement;
         if (firstFocusable) {
             firstFocusable.focus();

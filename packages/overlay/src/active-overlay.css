@@ -41,6 +41,14 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
+:host(:focus) {
+    outline: none;
+}
+
+:host([placement='none']) ::slotted(*) {
+    height: 100vh;
+}
+
 sp-theme,
 #contents {
     height: 100%;
