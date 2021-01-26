@@ -5,4 +5,4 @@
 `));let d,p,l=e=>e;class m extends(Object(i.a)(o.a,["s","m","l"])){constructor(){super(...arguments),this.vertical=!1}render(){return this.vertical?Object(a.d)(d||(d=l``)):Object(a.d)(p||(p=l`
             <hr />
         `))}}m.styles=[n],Object(s.a)([Object(a.e)({type:Boolean,reflect:!0})],m.prototype,"vertical",void 0),customElements.define("sp-rule",m)}}]);
-//# sourceMappingURL=9.e1e805e9f062a272a4b8.js.map
+//# sourceMappingURL=9.882adc58eab3f4c6f3c3.js.map
