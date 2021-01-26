@@ -28,6 +28,7 @@ governing permissions and limitations under the License.
 #tip:after {
     content: '';
     position: absolute;
+    left: 0;
     width: 0;
     height: 0;
     border: solid
@@ -56,6 +57,7 @@ governing permissions and limitations under the License.
 
 :host([placement*='right']) #tip:after {
     right: 100%;
+    left: auto;
     transform: rotate(90deg);
 }
 
