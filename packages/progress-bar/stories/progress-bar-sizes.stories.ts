@@ -15,7 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '../sp-progress-bar.js';
 
 export default {
-    title: 'Progress Bar',
+    title: 'Progress Bar/Sizes',
     component: 'sp-progress-bar',
 };
 
