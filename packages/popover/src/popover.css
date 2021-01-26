@@ -70,6 +70,7 @@ governing permissions and limitations under the License.
     width: var(--sp-popover-tip-size);
     height: calc(var(--sp-popover-tip-size) / 2);
     position: absolute;
+    left: 0;
 }
 
 /* override #tip orientation so we can orient on .tip instead */
