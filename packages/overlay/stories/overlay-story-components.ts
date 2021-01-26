@@ -222,12 +222,10 @@ class RecursivePopover extends LitElement {
     }
 
     private handleFocusin(): void {
-        console.log('focusin');
         this.focus();
     }
 
     public focus(): void {
-        console.log('focus');
         if (this.shadowRoot.activeElement !== null) {
             return;
         }
@@ -267,18 +265,10 @@ class RecursivePopover extends LitElement {
                 selected="${this.placement}"
                 name="group-example"
             >
-                <sp-radio value="top">
-                    Top
-                </sp-radio>
-                <sp-radio value="right">
-                    Right
-                </sp-radio>
-                <sp-radio value="bottom">
-                    Bottom
-                </sp-radio>
-                <sp-radio value="left">
-                    Left
-                </sp-radio>
+                <sp-radio value="top">Top</sp-radio>
+                <sp-radio value="right">Right</sp-radio>
+                <sp-radio value="bottom">Bottom</sp-radio>
+                <sp-radio value="left">Left</sp-radio>
             </sp-radio-group>
             <overlay-trigger placement="${this.placement}" type="modal">
                 <sp-button

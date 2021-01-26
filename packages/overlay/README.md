@@ -51,10 +51,8 @@ import {
     }
 </style>
 <overlay-trigger id="trigger" placement="bottom" offset="6">
-    <sp-button variant="primary" slot="trigger">
-        Button popover
-    </sp-button>
-    <sp-popover dialog slot="click-content" direction="bottom" tip open>
+    <sp-button variant="primary" slot="trigger">Button popover</sp-button>
+    <sp-popover dialog slot="click-content" direction="bottom" tip>
         <div class="options-popover-content">
             <sp-slider
                 value="5"
@@ -66,9 +64,7 @@ import {
             <sp-button>Press me</sp-button>
         </div>
     </sp-popover>
-    <sp-tooltip slot="hover-content" delayed open>
-        Tooltip
-    </sp-tooltip>
+    <sp-tooltip slot="hover-content" delayed>Tooltip</sp-tooltip>
 </overlay-trigger>
 ```
 
