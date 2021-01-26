@@ -134,8 +134,8 @@ module.exports = {
 
         //Process methods
         async function takeAndCompareScreenshot(page, test) {
+            const testFileName = `${test}__${color}__${scale}__${dir}`;
             try {
-                const testFileName = `${test}__${color}__${scale}__${dir}`;
                 await page.goto(
                     `http://127.0.0.1:4444/iframe.html?id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`,
                     {
