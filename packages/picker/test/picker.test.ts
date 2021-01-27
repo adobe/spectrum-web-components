@@ -319,7 +319,7 @@ describe('Picker', () => {
         await waitUntil(() => document.activeElement === input, 'focus throw');
         input.remove();
     });
-    it.only('opens on ArrowUp', async () => {
+    it('opens on ArrowUp', async () => {
         const el = await pickerFixture();
 
         await elementUpdated(el);
@@ -362,7 +362,7 @@ describe('Picker', () => {
             'an active-overlay has been inserted on the page'
         );
     });
-    it.only('opens on ArrowDown', async () => {
+    it('opens on ArrowDown', async () => {
         const el = await pickerFixture();
 
         await elementUpdated(el);

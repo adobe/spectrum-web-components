@@ -15,5 +15,5 @@ import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-progress-bar open></sp-progress-bar>
+    <sp-progress-bar label="Loading" indeterminate></sp-progress-bar>
 `);
