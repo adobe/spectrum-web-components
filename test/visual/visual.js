@@ -149,9 +149,7 @@ module.exports = {
                     () => !!document.querySelector('sp-story-decorator')
                 );
                 await page.waitForFunction(
-                    () =>
-                        !!document.querySelector('sp-story-decorator')
-                            .shadowRoot
+                    () => !!document.querySelector('sp-story-decorator').ready
                 );
                 await page.screenshot({
                     path: `${currentDir}/${type}/${testFileName}.png`,
