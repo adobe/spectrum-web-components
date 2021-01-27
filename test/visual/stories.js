@@ -160,6 +160,7 @@ module.exports = [
     'divider--small',
     'divider--vertical-small',
     'divider--vertical-medium',
+    'divider--vertical-large',
     'dropzone--default',
     'field-group--horizontal',
     'field-group--vertical',

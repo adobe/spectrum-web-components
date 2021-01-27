@@ -90,3 +90,19 @@ export const verticalMedium = (): TemplateResult => {
         </div>
     `;
 };
+
+export const verticalLarge = (): TemplateResult => {
+    return html`
+        <div
+            style="height: var(--spectrum-global-dimension-size-400, 32px); display: flex;"
+        >
+            <sp-action-button quiet>
+                <sp-icon-align-left slot="icon"></sp-icon-align-left>
+            </sp-action-button>
+            <sp-divider size="l" vertical></sp-divider>
+            <sp-action-button quiet>
+                <sp-icon-align-right slot="icon"></sp-icon-align-right>
+            </sp-action-button>
+        </div>
+    `;
+};
