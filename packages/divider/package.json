@@ -41,7 +41,9 @@
     ],
     "sideEffects": [
         "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.ts",
+        "./stories/typography-decorator.js",
+        "./stories/typography-decorator.ts"
     ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

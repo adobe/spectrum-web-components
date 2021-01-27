@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-divider.js';
+import './typography-decorator.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-align-left.js';
@@ -21,6 +22,11 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-align-right.js';
 export default {
     title: 'Divider',
     component: 'sp-divider',
+    decorators: [
+        (story: () => TemplateResult): TemplateResult => html`
+            <typography-decorator .story=${story()}></typography-decorator>
+        `,
+    ],
 };
 
 export const large = (): TemplateResult => {
