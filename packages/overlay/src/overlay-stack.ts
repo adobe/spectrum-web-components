@@ -99,6 +99,7 @@ export class OverlayStack {
             return;
         }
         this.tabTrapper.tabIndex = -1;
+        this.tabTrapper.setAttribute('aria-hidden', 'true');
         this.overlayHolder.hidden = false;
     }
 
@@ -108,6 +109,7 @@ export class OverlayStack {
             return;
         }
         this.tabTrapper.removeAttribute('tabindex');
+        this.tabTrapper.removeAttribute('aria-hidden');
         this.overlayHolder.hidden = true;
     }
 
@@ -189,6 +191,12 @@ export class OverlayStack {
                 this.overlays.push(activeOverlay);
                 await activeOverlay.updateComplete;
                 this.addOverlayEventListeners(activeOverlay);
+                const contentWithOpen = (activeOverlay.overlayContent as unknown) as {
+                    open: boolean;
+                };
+                if (typeof contentWithOpen.open !== 'undefined') {
+                    contentWithOpen.open = true;
+                }
                 if (details.receivesFocus === 'auto') {
                     activeOverlay.focus();
                 }
@@ -198,7 +206,7 @@ export class OverlayStack {
                         composed: true,
                         cancelable: true,
                         detail: {
-                            interaction: details.interaction
+                            interaction: details.interaction,
                         },
                     })
                 );
@@ -316,6 +324,12 @@ export class OverlayStack {
     ): Promise<void> {
         if (overlay) {
             await overlay.hide(animated);
+            const contentWithOpen = (overlay.overlayContent as unknown) as {
+                open: boolean;
+            };
+            if (typeof contentWithOpen.open !== 'undefined') {
+                contentWithOpen.open = false;
+            }
             if (overlay.state != 'dispose') return;
 
             const index = this.overlays.indexOf(overlay);

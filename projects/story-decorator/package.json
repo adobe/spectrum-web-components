@@ -53,6 +53,7 @@
         "@spectrum-web-components/base": "^0.3.0",
         "@spectrum-web-components/picker": "^0.0.1",
         "@spectrum-web-components/menu": "^0.6.0",
+        "@spectrum-web-components/overlay": "^0.8.0",
         "@spectrum-web-components/switch": "^0.6.0",
         "@spectrum-web-components/theme": "^0.7.1",
         "tslib": "^2.0.0"

@@ -35,6 +35,9 @@ export class Tooltip extends SpectrumElement {
         return [tooltipStyles];
     }
 
+    @property({ type: Boolean, reflect: true })
+    public open = false;
+
     /**
      * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"}
      * @attr

@@ -16,6 +16,7 @@ import {
     css,
     property,
     TemplateResult,
+    ifDefined,
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -26,6 +27,7 @@ import '@spectrum-web-components/switch/sp-switch.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { Switch } from '@spectrum-web-components/switch';
 import { Scale, Color } from '@spectrum-web-components/theme';
+import { ActiveOverlay } from '@spectrum-web-components/overlay';
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -49,6 +51,41 @@ declare global {
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {};
 
+const reduceMotionProperties = css`
+    --spectrum-global-animation-duration-100: 0ms;
+    --spectrum-global-animation-duration-200: 0ms;
+    --spectrum-global-animation-duration-300: 0ms;
+    --spectrum-global-animation-duration-400: 0ms;
+    --spectrum-global-animation-duration-500: 0ms;
+    --spectrum-global-animation-duration-600: 0ms;
+    --spectrum-global-animation-duration-700: 0ms;
+    --spectrum-global-animation-duration-800: 0ms;
+    --spectrum-global-animation-duration-900: 0ms;
+    --spectrum-global-animation-duration-1000: 0ms;
+    --spectrum-global-animation-duration-2000: 0ms;
+    --spectrum-global-animation-duration-4000: 0ms;
+`;
+
+ActiveOverlay.prototype.renderTheme = function (
+    content: TemplateResult
+): TemplateResult {
+    const { color, scale } = this;
+    return html`
+        ${window.__swc_hack_knobs__.defaultReduceMotion
+            ? html`
+                  <style>
+                      sp-theme {
+                          ${reduceMotionProperties}
+                      }
+                  </style>
+              `
+            : html``}
+        <sp-theme color=${ifDefined(color)} scale=${ifDefined(scale)}>
+            ${content}
+        </sp-theme>
+    `;
+};
+
 export class StoryDecorator extends SpectrumElement {
     static styles = [
         css`
@@ -67,19 +104,7 @@ export class StoryDecorator extends SpectrumElement {
                 );
             }
             :host([reduce-motion]) sp-theme {
-                --spectrum-global-animation-duration-0: 0ms;
-                --spectrum-global-animation-duration-100: 0ms;
-                --spectrum-global-animation-duration-200: 0ms;
-                --spectrum-global-animation-duration-300: 0ms;
-                --spectrum-global-animation-duration-400: 0ms;
-                --spectrum-global-animation-duration-500: 0ms;
-                --spectrum-global-animation-duration-600: 0ms;
-                --spectrum-global-animation-duration-700: 0ms;
-                --spectrum-global-animation-duration-800: 0ms;
-                --spectrum-global-animation-duration-900: 0ms;
-                --spectrum-global-animation-duration-1000: 0ms;
-                --spectrum-global-animation-duration-2000: 0ms;
-                --spectrum-global-animation-duration-4000: 0ms;
+                ${reduceMotionProperties}
             }
             .manage-theme {
                 position: fixed;

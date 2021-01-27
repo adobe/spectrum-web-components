@@ -79,6 +79,8 @@ export class OverlayTrigger extends LitElement {
                 @click=${this.onTrigger}
                 @mouseenter=${this.onTrigger}
                 @mouseleave=${this.onTrigger}
+                @focusin=${this.onTrigger}
+                @focusout=${this.onTrigger}
             >
                 <slot
                     @slotchange=${this.onTargetSlotChange}
@@ -137,9 +139,11 @@ export class OverlayTrigger extends LitElement {
                 this.onTriggerClick();
                 return;
             case 'mouseenter':
+            case 'focusin':
                 this.onTriggerMouseEnter();
                 return;
             case 'mouseleave':
+            case 'focusout':
                 this.onTriggerMouseLeave();
                 return;
         }
