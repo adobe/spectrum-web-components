@@ -52,7 +52,7 @@
         "@spectrum-css/progresscircle": "^1.0.0-beta.3"
     },
     "dependencies": {
-        "@spectrum-web-components/base": "^0.1.0",
+        "@spectrum-web-components/base": "^0.3.0",
         "tslib": "^2.0.0"
     }
 }
