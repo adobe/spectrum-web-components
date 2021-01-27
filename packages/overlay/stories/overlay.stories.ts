@@ -111,9 +111,7 @@ export const Default = (): TemplateResult => {
             placement="${placement}"
             offset="${offset}"
         >
-            <sp-button variant="primary" slot="trigger">
-                Show Popover
-            </sp-button>
+            <sp-button variant="primary" slot="trigger">Show Popover</sp-button>
             <sp-popover
                 dialog
                 slot="click-content"
@@ -179,12 +177,8 @@ export const inline = (): TemplateResult => {
                 </sp-button>
             </sp-overlay>
         </overlay-trigger>
-        <p>
-            This is some text.
-        </p>
-        <p>
-            This is some text.
-        </p>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
         <p>
             This is a
             <a href="#anchor">link</a>
@@ -208,12 +202,8 @@ export const replace = (): TemplateResult => {
                 </sp-button>
             </sp-overlay>
         </overlay-trigger>
-        <p>
-            This is some text.
-        </p>
-        <p>
-            This is some text.
-        </p>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
         <p>
             This is a
             <a href="#anchor">link</a>
@@ -258,12 +248,8 @@ export const modal = (): TemplateResult => {
                 Content of the dialog
             </sp-dialog-wrapper>
         </overlay-trigger>
-        <p>
-            This is some text.
-        </p>
-        <p>
-            This is some text.
-        </p>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
         <p>
             This is a
             <a href="#anchor">link</a>
@@ -274,13 +260,15 @@ export const modal = (): TemplateResult => {
 
 export const deepNesting = (): TemplateResult => {
     const colorOptions = {
+        Lightest: 'lightest',
         Light: 'light',
         Dark: 'dark',
+        Darkest: 'darkest',
     };
     const color = radios(
         'Color stop',
         colorOptions,
-        colorOptions.Light
+        window.__swc_hack_knobs__.defaultColor
     ) as Color;
     const outter = color === 'light' ? 'dark' : 'light';
     return html`

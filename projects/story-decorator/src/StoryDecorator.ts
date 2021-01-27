@@ -47,9 +47,19 @@ declare global {
             defaultReduceMotion: boolean;
         };
     }
+    interface Document {
+        fonts?: {
+            ready: Promise<void>;
+        };
+    }
 }
 
-window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {};
+window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
+    defaultColor: color,
+    defaultScale: scale,
+    defaultDirection: dir,
+    defaultReduceMotion: reduceMotion,
+};
 
 const reduceMotionProperties = css`
     --spectrum-global-animation-duration-100: 0ms;
@@ -200,6 +210,8 @@ export class StoryDecorator extends SpectrumElement {
     @property({ type: Boolean, attribute: 'reduce-motion', reflect: true })
     public reduceMotion = reduceMotion;
 
+    public ready = false;
+
     private handleClickLabel(event: { target: HTMLElement }): void {
         const { target } = event;
         const next = target.nextElementSibling as Dropdown;
@@ -254,6 +266,27 @@ export class StoryDecorator extends SpectrumElement {
                 </div>
             </sp-theme>
         `;
+    }
+
+    protected async firstUpdated(): Promise<void> {
+        const descendents = [
+            ...this.querySelectorAll('*'),
+        ] as SpectrumElement[];
+        const litElementDescendents = descendents.filter(
+            (el) =>
+                el.tagName.search('-') !== -1 &&
+                typeof el.updateComplete !== 'undefined'
+        );
+        const updates = litElementDescendents.map((el) => el.updateComplete);
+        await Promise.all([
+            ...updates,
+            document.fonts ? document.fonts.ready : Promise.resolve(),
+        ]);
+        new Promise((res) => {
+            setTimeout(res);
+        }).then(() => {
+            setTimeout(() => (this.ready = true));
+        });
     }
 
     private get colorControl(): TemplateResult {
