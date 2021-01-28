@@ -12,34 +12,42 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-bar-loader.js';
+import '../sp-progress-bar.js';
 
 export default {
-    title: 'Bar Loader',
-    component: 'sp-bar-loader',
+    title: 'Progress Bar',
+    component: 'sp-progress-bar',
 };
 
 export const label = (): TemplateResult => {
     return html`
-        <sp-bar-loader label="Loading" progress="50"></sp-bar-loader>
+        <sp-progress-bar label="Loading" progress="50"></sp-progress-bar>
     `;
 };
 
 export const indeterminate = (): TemplateResult => {
     return html`
-        <sp-bar-loader label="Loading" indeterminate></sp-bar-loader>
+        <sp-progress-bar label="Loading" indeterminate></sp-progress-bar>
     `;
 };
 
 export const sideLabel = (): TemplateResult => {
     return html`
-        <sp-bar-loader side-label label="Loading" progress="50"></sp-bar-loader>
+        <sp-progress-bar
+            side-label
+            label="Loading"
+            progress="50"
+        ></sp-progress-bar>
     `;
 };
 
 export const sideIndeterminate = (): TemplateResult => {
     return html`
-        <sp-bar-loader side-label label="Loading" indeterminate></sp-bar-loader>
+        <sp-progress-bar
+            side-label
+            label="Loading"
+            indeterminate
+        ></sp-progress-bar>
     `;
 };
 
@@ -53,48 +61,48 @@ const makeOverBackground = (story: TemplateResult): TemplateResult => html`
 
 export const overBackground = (): TemplateResult => {
     return makeOverBackground(html`
-        <sp-bar-loader progress="50" over-background></sp-bar-loader>
+        <sp-progress-bar progress="50" over-background></sp-progress-bar>
     `);
 };
 
 export const overBackgroundLabel = (): TemplateResult => {
     return makeOverBackground(html`
-        <sp-bar-loader
+        <sp-progress-bar
             label="Loading"
             progress="50"
             over-background
-        ></sp-bar-loader>
+        ></sp-progress-bar>
     `);
 };
 
 export const overBackgroundIndeterminate = (): TemplateResult => {
     return makeOverBackground(html`
-        <sp-bar-loader
+        <sp-progress-bar
             label="Loading"
             indeterminate
             over-background
-        ></sp-bar-loader>
+        ></sp-progress-bar>
     `);
 };
 
 export const overBackgroundSideLabel = (): TemplateResult => {
     return makeOverBackground(html`
-        <sp-bar-loader
+        <sp-progress-bar
             label="Loading"
             progress="50"
             over-background
             side-label
-        ></sp-bar-loader>
+        ></sp-progress-bar>
     `);
 };
 
 export const overBackgroundSideLabelIndeterminate = (): TemplateResult => {
     return makeOverBackground(html`
-        <sp-bar-loader
+        <sp-progress-bar
             label="Loading"
             indeterminate
             over-background
             side-label
-        ></sp-bar-loader>
+        ></sp-progress-bar>
     `);
 };

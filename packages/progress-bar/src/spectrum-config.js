@@ -14,7 +14,7 @@ const config = {
     spectrum: 'progressbar',
     components: [
         {
-            name: 'bar-loader',
+            name: 'progress-bar',
             host: {
                 selector: '.spectrum-ProgressBar',
             },

@@ -10,12 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { BarLoader } from './src/BarLoader.js';
+@import './spectrum-progress-bar.css';
 
-customElements.define('sp-bar-loader', BarLoader);
+.fill {
+    width: 100%;
+    transform-origin: left;
+}
 
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-bar-loader': BarLoader;
-    }
+:host([dir='rtl']) .fill {
+    transform-origin: right;
 }

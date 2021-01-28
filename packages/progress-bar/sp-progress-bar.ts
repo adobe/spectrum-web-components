@@ -10,4 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './BarLoader.js';
+import { ProgressBar } from './src/ProgressBar.js';
+
+customElements.define('sp-progress-bar', ProgressBar);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-progress-bar': ProgressBar;
+    }
+}

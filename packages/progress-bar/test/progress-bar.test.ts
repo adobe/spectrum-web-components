@@ -12,14 +12,14 @@ governing permissions and limitations under the License.
 
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
-import '../sp-bar-loader.js';
-import { BarLoader } from '..';
+import '../sp-progress-bar.js';
+import { ProgressBar } from '..';
 
-describe('BarLoader', () => {
-    it('loads default bar-loader accessibly', async () => {
-        const el = await fixture<BarLoader>(
+describe('ProgressBar', () => {
+    it('loads default progress-bar accessibly', async () => {
+        const el = await fixture<ProgressBar>(
             html`
-                <sp-bar-loader label="Loading"></sp-bar-loader>
+                <sp-progress-bar label="Loading"></sp-progress-bar>
             `
         );
 
@@ -30,8 +30,8 @@ describe('BarLoader', () => {
     });
 
     it('accepts a changing progress', async () => {
-        const el = await fixture<BarLoader>(html`
-            <sp-bar-loader label="Changing value"></sp-bar-loader>
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="Changing value"></sp-progress-bar>
         `);
 
         await elementUpdated(el);
@@ -54,8 +54,8 @@ describe('BarLoader', () => {
         expect(el.getAttribute('aria-valuenow')).to.equal('100');
     });
     it('loads - [indeterminate]', async () => {
-        const el = await fixture<BarLoader>(html`
-            <sp-bar-loader indeterminate label="Loading"></sp-bar-loader>
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar indeterminate label="Loading"></sp-progress-bar>
         `);
 
         await elementUpdated(el);
@@ -64,8 +64,8 @@ describe('BarLoader', () => {
         await expect(el).to.be.accessible();
     });
     it('accepts user `role`', async () => {
-        const el = await fixture<BarLoader>(html`
-            <sp-bar-loader role="progressbar"></sp-bar-loader>
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar role="progressbar"></sp-progress-bar>
         `);
 
         await elementUpdated(el);
@@ -73,11 +73,11 @@ describe('BarLoader', () => {
         expect(el.getAttribute('role')).to.equal('progressbar');
     });
     it('returns to indeterminate', async () => {
-        const el = await fixture<BarLoader>(html`
-            <sp-bar-loader
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar
                 progress="50"
                 label="Sometimes indeterminate"
-            ></sp-bar-loader>
+            ></sp-progress-bar>
         `);
 
         await elementUpdated(el);
