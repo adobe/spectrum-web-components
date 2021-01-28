@@ -9,4 +9,20 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './Dropdown.js';
+
+import { Picker } from '../src/Picker.js';
+import {
+    Overlay,
+    OverlayOptions,
+    TriggerInteractions,
+} from '@spectrum-web-components/overlay';
+import '../sp-picker.js';
+
+Picker.openOverlay = async (
+    target: HTMLElement,
+    interaction: TriggerInteractions,
+    content: HTMLElement,
+    options: OverlayOptions
+): Promise<() => void> => {
+    return await Overlay.open(target, interaction, content, options);
+};

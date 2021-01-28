@@ -9,7 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-@import './spectrum-dropdown.css';
+
+@import './spectrum-picker.css';
 
 :host {
     display: inline-flex;
@@ -20,7 +21,7 @@ sp-popover {
     display: none;
 }
 
-.dropdown,
+.picker,
 .validationIcon {
     flex-shrink: 0;
 }
@@ -39,7 +40,7 @@ sp-popover {
     );
 }
 
-:host([focused]:not([quiet])) #button .dropdown {
+:host([focused]:not([quiet])) #button .picker {
     /* .spectrum-Picker-trigger.focus-ring .spectrum-Picker-icon */
     color: var(
         --spectrum-picker-icon-color-key-focus,

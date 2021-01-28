@@ -10,19 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Dropdown } from '../src/Dropdown.js';
-import {
-    Overlay,
-    OverlayOptions,
-    TriggerInteractions,
-} from '@spectrum-web-components/overlay';
-import '../sp-dropdown.js';
-
-Dropdown.openOverlay = async (
-    target: HTMLElement,
-    interaction: TriggerInteractions,
-    content: HTMLElement,
-    options: OverlayOptions
-): Promise<() => void> => {
-    return await Overlay.open(target, interaction, content, options);
-};
+export * from './Picker.js';
