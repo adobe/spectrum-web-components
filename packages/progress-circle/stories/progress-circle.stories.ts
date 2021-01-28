@@ -9,13 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-circle-loader.js';
-import { html } from '@open-wc/demoing-storybook';
-import { TemplateResult } from '@spectrum-web-components/base';
+
+import { html, TemplateResult } from '@spectrum-web-components/base';
+
+import '../sp-progress-circle.js';
 
 export default {
-    component: 'sp-circle-loader',
-    title: 'Circle Loader',
+    title: 'Progress Circle',
+    component: 'sp-progress-circle',
 };
 
 export const Default = (): TemplateResult => {
@@ -23,9 +24,9 @@ export const Default = (): TemplateResult => {
         <div
             style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
         >
-            <sp-circle-loader progress="27" size="small"></sp-circle-loader>
-            <sp-circle-loader progress="27"></sp-circle-loader>
-            <sp-circle-loader progress="27" size="large"></sp-circle-loader>
+            <sp-progress-circle progress="27" size="small"></sp-progress-circle>
+            <sp-progress-circle progress="27"></sp-progress-circle>
+            <sp-progress-circle progress="27" size="large"></sp-progress-circle>
         </div>
     `;
 };
@@ -35,17 +36,20 @@ export const overBackground = (): TemplateResult => {
         <div
             style="width: 250px; height: 150px; background-color: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: space-around;"
         >
-            <sp-circle-loader
+            <sp-progress-circle
                 progress="53"
                 over-background
                 size="small"
-            ></sp-circle-loader>
-            <sp-circle-loader progress="53" over-background></sp-circle-loader>
-            <sp-circle-loader
+            ></sp-progress-circle>
+            <sp-progress-circle
+                progress="53"
+                over-background
+            ></sp-progress-circle>
+            <sp-progress-circle
                 progress="53"
                 over-background
                 size="large"
-            ></sp-circle-loader>
+            ></sp-progress-circle>
         </div>
     `;
 };

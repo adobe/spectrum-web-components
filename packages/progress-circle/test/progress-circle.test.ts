@@ -10,14 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-circle-loader.js';
-import { CircleLoader } from '../';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
-describe('Circle Loader', () => {
+import '../sp-progress-circle.js';
+import { ProgressCircle } from '..';
+
+describe('ProgressCircle', () => {
     it('loads', async () => {
-        const el = await fixture<CircleLoader>(html`
-            <sp-circle-loader label="Loading"></sp-circle-loader>
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle label="Loading"></sp-progress-circle>
         `);
 
         await elementUpdated(el);
@@ -26,8 +27,11 @@ describe('Circle Loader', () => {
         await expect(el).to.be.accessible();
     });
     it('loads - [indeterminate]', async () => {
-        const el = await fixture<CircleLoader>(html`
-            <sp-circle-loader indeterminate label="Loading"></sp-circle-loader>
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle
+                indeterminate
+                label="Loading"
+            ></sp-progress-circle>
         `);
 
         await elementUpdated(el);
@@ -36,8 +40,8 @@ describe('Circle Loader', () => {
         await expect(el).to.be.accessible();
     });
     it('accepts user `role`', async () => {
-        const el = await fixture<CircleLoader>(html`
-            <sp-circle-loader role="progressbar"></sp-circle-loader>
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle role="progressbar"></sp-progress-circle>
         `);
 
         await elementUpdated(el);
@@ -45,8 +49,8 @@ describe('Circle Loader', () => {
         expect(el.getAttribute('role')).to.equal('progressbar');
     });
     it('returns to indeterminate', async () => {
-        const el = await fixture<CircleLoader>(html`
-            <sp-circle-loader progress="50"></sp-circle-loader>
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle progress="50"></sp-progress-circle>
         `);
 
         await elementUpdated(el);

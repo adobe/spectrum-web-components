@@ -9,4 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './CircleLoader.js';
+
+import { ProgressCircle } from './src/ProgressCircle.js';
+
+customElements.define('sp-progress-circle', ProgressCircle);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-progress-circle': ProgressCircle;
+    }
+}
