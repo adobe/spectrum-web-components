@@ -7,13 +7,12 @@
     "include": ["*.ts", "src/*.ts", "sync/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
+        { "path": "../base" },
+        { "path": "../menu" },
         { "path": "../button" },
         { "path": "../icon" },
         { "path": "../icons-ui" },
         { "path": "../icons-workflow" },
-        { "path": "../menu" },
-        { "path": "../overlay" },
-        { "path": "../popover" },
-        { "path": "../shared" }
+        { "path": "../popover" }
     ]
 }

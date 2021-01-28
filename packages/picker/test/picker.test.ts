@@ -10,10 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-dropdown.js';
-import { Dropdown } from '../';
+import '../sp-picker.js';
+import { Picker } from '..';
+
 import '@spectrum-web-components/overlay/active-overlay.js';
-import { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay'
+import { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
@@ -34,35 +35,25 @@ import {
     tEvent,
 } from '../../../test/testing-helpers.js';
 
-describe('Dropdown', () => {
-    const dropdownFixture = async (): Promise<Dropdown> => {
-        const el = await fixture<Dropdown>(
+describe('Picker', () => {
+    const pickerFixture = async (): Promise<Picker> => {
+        const el = await fixture<Picker>(
             html`
-                <sp-dropdown
+                <sp-picker
                     label="Select a Country with a very long label, too long in fact"
                 >
                     <sp-menu>
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
+                        <sp-menu-item>Deselect</sp-menu-item>
                         <sp-menu-item value="option-2">
                             Select Inverse
                         </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-menu>
-                </sp-dropdown>
+                </sp-picker>
             `
         );
 
@@ -73,36 +64,26 @@ describe('Dropdown', () => {
         return el;
     };
 
-    const slottedLabelFixture = async (): Promise<Dropdown> => {
-        const el = await fixture<Dropdown>(
+    const slottedLabelFixture = async (): Promise<Picker> => {
+        const el = await fixture<Picker>(
             html`
-                <sp-dropdown>
+                <sp-picker>
                     <span slot="label">
                         Select a Country with a very long label, too long in
                         fact
                     </span>
                     <sp-menu>
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
+                        <sp-menu-item>Deselect</sp-menu-item>
                         <sp-menu-item value="option-2">
                             Select Inverse
                         </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-menu>
-                </sp-dropdown>
+                </sp-picker>
             `
         );
 
@@ -119,7 +100,7 @@ describe('Dropdown', () => {
     });
 
     it('loads accessibly', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
 
@@ -133,7 +114,7 @@ describe('Dropdown', () => {
         await expect(el).to.be.accessible();
     });
     it('renders invalid accessibly', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
 
@@ -144,7 +125,7 @@ describe('Dropdown', () => {
         await expect(el).to.be.accessible();
     });
     it('renders selection accessibly', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
 
@@ -154,7 +135,7 @@ describe('Dropdown', () => {
         await expect(el).to.be.accessible();
     });
     it('closes when becoming disabled', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
 
@@ -169,7 +150,7 @@ describe('Dropdown', () => {
         expect(el.open).to.be.false;
     });
     it('closes when clicking away', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
         el.id = 'closing';
         const other = document.createElement('div');
         document.body.append(other);
@@ -186,9 +167,9 @@ describe('Dropdown', () => {
 
         other.remove();
     });
-    it('toggles between dropdowns', async () => {
-        const el2 = await dropdownFixture();
-        const el1 = await dropdownFixture();
+    it('toggles between pickers', async () => {
+        const el2 = await pickerFixture();
+        const el1 = await pickerFixture();
 
         el1.id = 'away';
         el2.id = 'other';
@@ -210,7 +191,7 @@ describe('Dropdown', () => {
         await waitUntil(() => el1.open && !el2.open, '1 open, 2 closed: again');
     });
     it('selects', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
 
@@ -234,7 +215,7 @@ describe('Dropdown', () => {
         expect(el.value).to.equal('option-2');
     });
     it('re-selects', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
 
@@ -276,7 +257,7 @@ describe('Dropdown', () => {
     });
     it('can have selection prevented', async () => {
         const preventChangeSpy = spy();
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
 
@@ -300,13 +281,13 @@ describe('Dropdown', () => {
 
         secondItem.click();
         await elementUpdated(el);
-        await waitUntil(() => el.open, 'reopens dropdown');
+        await waitUntil(() => el.open, 'reopens picker');
         expect(secondItem.selected, 'selection prevented').to.be.false;
         expect(preventChangeSpy.calledOnce);
     });
 
     it('can throw focus after `change`', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
         const input = document.createElement('input');
         document.body.append(input);
 
@@ -338,8 +319,8 @@ describe('Dropdown', () => {
         await waitUntil(() => document.activeElement === input, 'focus throw');
         input.remove();
     });
-    it.only('opens on ArrowUp', async () => {
-        const el = await dropdownFixture();
+    it('opens on ArrowUp', async () => {
+        const el = await pickerFixture();
 
         await elementUpdated(el);
 
@@ -381,8 +362,8 @@ describe('Dropdown', () => {
             'an active-overlay has been inserted on the page'
         );
     });
-    it.only('opens on ArrowDown', async () => {
-        const el = await dropdownFixture();
+    it('opens on ArrowDown', async () => {
+        const el = await pickerFixture();
 
         await elementUpdated(el);
 
@@ -411,13 +392,13 @@ describe('Dropdown', () => {
         expect(el.value).to.equal('Deselect');
     });
     it('loads', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
     });
     it('refocuses on list when open', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
         const menu = el.querySelector('sp-menu') as Menu;
@@ -446,7 +427,7 @@ describe('Dropdown', () => {
         expect(firstItem.focused).to.be.true;
     });
     it('allows tabing to close', async () => {
-        const el = await dropdownFixture();
+        const el = await pickerFixture();
 
         await elementUpdated(el);
         const menu = el.querySelector('sp-menu') as Menu;
@@ -478,9 +459,9 @@ describe('Dropdown', () => {
         const focusFirstSpy = spy();
         const handleFirstFocus = (): void => focusFirstSpy();
         const handleSelectedFocus = (): void => focusSelectedSpy();
-        const el = await fixture<Dropdown>(
+        const el = await fixture<Picker>(
             html`
-                <sp-dropdown
+                <sp-picker
                     value="inverse"
                     label="Select a Country with a very long label, too long in fact"
                 >
@@ -491,21 +472,13 @@ describe('Dropdown', () => {
                         <sp-menu-item value="inverse">
                             Select Inverse
                         </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-menu>
-                </sp-dropdown>
+                </sp-picker>
             `
         );
 
@@ -539,9 +512,9 @@ describe('Dropdown', () => {
         expect(secondItem.focused, 'secondItem "focused"').to.be.true;
     });
     it('resets value when item not available', async () => {
-        const el = await fixture<Dropdown>(
+        const el = await fixture<Picker>(
             html`
-                <sp-dropdown
+                <sp-picker
                     value="missing"
                     label="Select a Country with a very long label, too long in fact"
                 >
@@ -552,21 +525,13 @@ describe('Dropdown', () => {
                         <sp-menu-item value="inverse">
                             Select Inverse
                         </sp-menu-item>
-                        <sp-menu-item>
-                            Feather...
-                        </sp-menu-item>
-                        <sp-menu-item>
-                            Select and Mask...
-                        </sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Save Selection
-                        </sp-menu-item>
-                        <sp-menu-item disabled>
-                            Make Work Path
-                        </sp-menu-item>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-menu>
-                </sp-dropdown>
+                </sp-picker>
             `
         );
 
@@ -580,9 +545,9 @@ describe('Dropdown', () => {
     it('allows event listeners on child items', async () => {
         const mouseenterSpy = spy();
         const handleMouseenter = (): void => mouseenterSpy();
-        const el = await fixture<Dropdown>(
+        const el = await fixture<Picker>(
             html`
-                <sp-dropdown
+                <sp-picker
                     label="Select a Country with a very long label, too long in fact"
                 >
                     <sp-menu>
@@ -593,7 +558,7 @@ describe('Dropdown', () => {
                             Deselect Text
                         </sp-menu-item>
                     </sp-menu>
-                </sp-dropdown>
+                </sp-picker>
             `
         );
 
@@ -622,9 +587,9 @@ describe('Dropdown', () => {
         const handleOpenedSpy = (event: Event): void => openedSpy(event);
         const handleClosedSpy = (event: Event): void => closedSpy(event);
 
-        const el = await fixture<Dropdown>(
+        const el = await fixture<Picker>(
             html`
-                <sp-dropdown
+                <sp-picker
                     label="Select a Country with a very long label, too long in fact"
                     @sp-opened=${handleOpenedSpy}
                     @sp-closed=${handleClosedSpy}
@@ -634,7 +599,7 @@ describe('Dropdown', () => {
                             Deselect Text
                         </sp-menu-item>
                     </sp-menu>
-                </sp-dropdown>
+                </sp-picker>
             `
         );
 
@@ -651,20 +616,19 @@ describe('Dropdown', () => {
         expect(openedSpy.calledOnce).to.be.true;
         expect(closedSpy.calledOnce).to.be.false;
 
-        const openedEvent = openedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        const openedEvent = openedSpy
+            .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
         expect(openedEvent.detail.interaction).to.equal('inline');
 
         el.open = false;
         await elementUpdated(el);
 
-        await waitUntil(
-            () => closedSpy.calledOnce,
-            'closed event received'
-        );
+        await waitUntil(() => closedSpy.calledOnce, 'closed event received');
 
         expect(closedSpy.calledOnce).to.be.true;
 
-        const closedEvent = closedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        const closedEvent = closedSpy
+            .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
         expect(closedEvent.detail.interaction).to.equal('inline');
     });
 });

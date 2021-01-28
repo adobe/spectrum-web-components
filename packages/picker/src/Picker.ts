@@ -12,22 +12,22 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    property,
-    PropertyValues,
     CSSResultArray,
     TemplateResult,
+    property,
+    PropertyValues,
     query,
     nothing,
     ifDefined,
 } from '@spectrum-web-components/base';
 
-import dropdownStyles from './dropdown.css.js';
+import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
-import { AlertIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import {
     MenuItem,
     MenuItemQueryRoleEventDetail,
@@ -43,13 +43,14 @@ import {
 } from '@spectrum-web-components/overlay';
 
 /**
- * @slot label - The placeholder content for the dropdown
- * @slot {"sp-menu"} - The menu of options that will display when the dropdown is open
+ * @element sp-picker
+ * @slot label - The placeholder content for the picker
+ * @slot {"sp-menu"} - The menu of options that will display when the picker is open
  *
  * @fires sp-open - Announces that the overlay has been opened
  * @fires sp-close - Announces that the overlay has been closed
  */
-export class DropdownBase extends Focusable {
+export class PickerBase extends Focusable {
     public static openOverlay = async (
         target: HTMLElement,
         interaction: TriggerInteractions,
@@ -87,6 +88,7 @@ export class DropdownBase extends Focusable {
      * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"}
      * @attr
      */
+
     @property()
     public placement: Placement = 'bottom-start';
 
@@ -263,15 +265,10 @@ export class DropdownBase extends Focusable {
         this.popover.append(this.optionsMenu);
         this.sizePopover(this.popover);
         const { popover } = this;
-        this.closeOverlay = await Dropdown.openOverlay(
-            this,
-            'inline',
-            popover,
-            {
-                placement: this.placement,
-                receivesFocus: 'auto',
-            }
-        );
+        this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
+            placement: this.placement,
+            receivesFocus: 'auto',
+        });
         this.menuStateResolver();
     }
 
@@ -305,12 +302,10 @@ export class DropdownBase extends Focusable {
                 </span>
                 ${this.invalid
                     ? html`
-                          <sp-icon class="validationIcon">
-                              ${AlertIcon({ hidden: true })}
-                          </sp-icon>
+                          <sp-icon-alert class="validationIcon"></sp-icon-alert>
                       `
                     : nothing}
-                <sp-icon class="icon dropdown spectrum-UIIcon-ChevronDown100">
+                <sp-icon class="icon picker spectrum-UIIcon-ChevronDown100">
                     ${Chevron100Icon()}
                 </sp-icon>
             `,
@@ -422,8 +417,8 @@ export class DropdownBase extends Focusable {
     }
 }
 
-export class Dropdown extends DropdownBase {
+export class Picker extends PickerBase {
     public static get styles(): CSSResultArray {
-        return [dropdownStyles, chevronStyles];
+        return [pickerStyles, chevronStyles];
     }
 }

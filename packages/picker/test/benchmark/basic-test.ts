@@ -9,12 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Dropdown } from './src/Dropdown.js';
 
-customElements.define('sp-dropdown', Dropdown);
+import '@spectrum-web-components/picker/sp-picker.js';
+import { html } from '@spectrum-web-components/base';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-dropdown': Dropdown;
-    }
-}
+measureFixtureCreation(html`
+    <sp-picker open></sp-picker>
+`);
