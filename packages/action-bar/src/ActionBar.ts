@@ -17,22 +17,19 @@ import {
     TemplateResult,
     property,
 } from '@spectrum-web-components/base';
-import '@spectrum-web-components/popover/sp-popover.js';
-
-import actionbarStyles from './actionbar.css.js';
-
-export const actionbarVariants = ['sticky', 'fixed'];
+import actionBarStyles from './action-bar.css.js';
+export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
- * Actionbar component
+ * @element sp-action-bar
  */
-export class Actionbar extends SpectrumElement {
+export class ActionBar extends SpectrumElement {
     public static get styles(): CSSResultArray {
-        return [actionbarStyles];
+        return [actionBarStyles];
     }
 
     /**
-     * When `flexible` the actionbar sizes itself to its content
+     * When `flexible` the action bar sizes itself to its content
      * rather than a specific width.
      *
      * @param {Boolean} flexible
@@ -54,7 +51,7 @@ export class Actionbar extends SpectrumElement {
         if (variant === this.variant) {
             return;
         }
-        if (actionbarVariants.includes(variant)) {
+        if (actionBarVariants.includes(variant)) {
             this.setAttribute('variant', variant);
             this._variant = variant;
             return;

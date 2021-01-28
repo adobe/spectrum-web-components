@@ -1,32 +1,32 @@
 ## Description
 
-A `<sp-actionbar>` delivers a floating action bar that is a convenient way to deliver stateful actions in cases like selection mode. `<sp-actionbar>` can be deployed in two variants beyond the default: `[varient="fixed"]`, to position the element in relation to the page, and `[variant=sticky]`, to position the content in relation to content that may scroll.
+A `<sp-action-bar>` delivers a floating action bar that is a convenient way to deliver stateful actions in cases like selection mode. `<sp-action-bar>` can be deployed in two variants beyond the default: `[varient="fixed"]` to position the element in relation to the page, and `[variant=sticky]` to position the content in relation to content that may scroll.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/actionbar?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/actionbar)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/actionbar?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/actionbar)
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/action-bar?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/action-bar)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/action-bar?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/action-bar)
 
 ```
-yarn add @spectrum-web-components/actionbar
+yarn add @spectrum-web-components/action-bar
 ```
 
-Import the side effectful registration of `<sp-actionbar>` via:
+Import the side effectful registration of `<sp-action-bar>` via:
 
 ```
-import '@spectrum-web-components/actionbar/sp-actionbar.js';
+import '@spectrum-web-components/action-bar/sp-action-bar.js';
 ```
 
-When looking to leverage the `Actionbar` base class as a type and/or for extension purposes, do so via:
+When looking to leverage the `ActionBar` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Actionbar } from '@spectrum-web-components/actionbar';
+import { ActionBar } from '@spectrum-web-components/action-bar';
 ```
 
 ## Example
 
 ```html
-<sp-actionbar open>
+<sp-action-bar open>
     <sp-checkbox indeterminate>228 Selected</sp-checkbox>
     <sp-action-group quiet>
         <sp-action-button label="Edit">
@@ -36,24 +36,24 @@ import { Actionbar } from '@spectrum-web-components/actionbar';
             <sp-icon-more slot="icon"></sp-icon-more>
         </sp-action-button>
     </sp-action-group>
-</sp-actionbar>
+</sp-action-bar>
 ```
 
 ## Variants
 
 ### Fixed
 
-When using `[variant="fixed"]`, the `<sp-actionbar>` will display by default at the bottom left of the window and can be customized via CSS from the outside.
+When using `[variant="fixed"]`, the `<sp-action-bar>` will display by default at the bottom left of the window and can be customized via CSS from the outside.
 
 ```html
 <h4>Look down and to the left when toggling.</h4>
-<sp-actionbar variant="fixed">
+<sp-action-bar variant="fixed">
     <sp-checkbox indeterminate>228 Selected</sp-checkbox>
-</sp-actionbar>
+</sp-action-bar>
 <sp-button
     onclick="javascript:this.previousElementSibling.open = !this.previousElementSibling.open;"
 >
-    Toggle fixed actionbar
+    Toggle fixed action bar
 </sp-button>
 ```
 
@@ -64,9 +64,9 @@ When using `[variant="sticky"]`, be sure you've spent some time touching up on [
 ```html
 <section style="position: relative; max-height: 6em; overflow: auto;">
     <h4>Scroll down for toggle button</h4>
-    <sp-actionbar variant="sticky" style="top: 0;">
+    <sp-action-bar variant="sticky" style="top: 0;">
         <sp-checkbox indeterminate>228 Selected</sp-checkbox>
-    </sp-actionbar>
+    </sp-action-bar>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -79,7 +79,7 @@ When using `[variant="sticky"]`, be sure you've spent some time touching up on [
     <sp-button
         onclick="javascript:this.previousElementSibling.previousElementSibling.open = !this.previousElementSibling.previousElementSibling.open;"
     >
-        Toggle sticky actionbar
+        Toggle sticky action bar
     </sp-button>
 </section>
 ```
