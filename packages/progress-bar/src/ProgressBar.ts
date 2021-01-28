@@ -21,12 +21,12 @@ import {
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import styles from './bar-loader.css.js';
+import styles from './progress-bar.css.js';
 
 /**
- * @element sp-bar-loader
+ * @element sp-progress-bar
  */
-export class BarLoader extends SizedMixin(SpectrumElement) {
+export class ProgressBar extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [styles];
     }

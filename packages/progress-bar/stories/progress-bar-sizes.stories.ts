@@ -12,33 +12,49 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-bar-loader.js';
+import '../sp-progress-bar.js';
 
 export default {
-    title: 'Bar Loader/Sizes',
-    component: 'sp-bar-loader',
+    title: 'Progress Bar/Sizes',
+    component: 'sp-progress-bar',
 };
 
 export const s = (): TemplateResult => {
     return html`
-        <sp-bar-loader label="Loading" progress="50" size="s"></sp-bar-loader>
+        <sp-progress-bar
+            label="Loading"
+            progress="50"
+            size="s"
+        ></sp-progress-bar>
     `;
 };
 
 export const m = (): TemplateResult => {
     return html`
-        <sp-bar-loader label="Loading" progress="50" size="m"></sp-bar-loader>
+        <sp-progress-bar
+            label="Loading"
+            progress="50"
+            size="m"
+        ></sp-progress-bar>
     `;
 };
 
 export const l = (): TemplateResult => {
     return html`
-        <sp-bar-loader label="Loading" progress="50" size="l"></sp-bar-loader>
+        <sp-progress-bar
+            label="Loading"
+            progress="50"
+            size="l"
+        ></sp-progress-bar>
     `;
 };
 
 export const XL = (): TemplateResult => {
     return html`
-        <sp-bar-loader label="Loading" progress="50" size="xl"></sp-bar-loader>
+        <sp-progress-bar
+            label="Loading"
+            progress="50"
+            size="xl"
+        ></sp-progress-bar>
     `;
 };

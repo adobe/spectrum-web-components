@@ -10,13 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import './spectrum-bar-loader.css';
+import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
+import { html } from '@spectrum-web-components/base';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
-.fill {
-    width: 100%;
-    transform-origin: left;
-}
-
-:host([dir='rtl']) .fill {
-    transform-origin: right;
-}
+measureFixtureCreation(html`
+    <sp-progress-bar label="Loading" indeterminate></sp-progress-bar>
+`);
