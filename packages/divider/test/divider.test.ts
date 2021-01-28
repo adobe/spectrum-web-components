@@ -12,14 +12,14 @@ governing permissions and limitations under the License.
 
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
-import '../sp-rule.js';
-import { Rule } from '../';
+import '../sp-divider.js';
+import { Divider } from '..';
 
-describe('Rule', () => {
-    it('loads default rule accessibly', async () => {
-        const el = await fixture<Rule>(
+describe('Divider', () => {
+    it('loads default divider accessibly', async () => {
+        const el = await fixture<Divider>(
             html`
-                <sp-rule></sp-rule>
+                <sp-divider></sp-divider>
             `
         );
 
@@ -27,10 +27,10 @@ describe('Rule', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('loads [vertical] rule accessibly', async () => {
-        const el = await fixture<Rule>(
+    it('loads [vertical] divider accessibly', async () => {
+        const el = await fixture<Divider>(
             html`
-                <sp-rule vertical></sp-rule>
+                <sp-divider vertical></sp-divider>
             `
         );
 

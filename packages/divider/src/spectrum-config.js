@@ -14,7 +14,7 @@ const config = {
     spectrum: 'divider',
     components: [
         {
-            name: 'rule',
+            name: 'divider',
             host: {
                 selector: '.spectrum-Divider',
             },

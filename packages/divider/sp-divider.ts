@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Rule } from './src/Rule.js';
+import { Divider } from './src/Divider.js';
 
-customElements.define('sp-rule', Rule);
+customElements.define('sp-divider', Divider);
 
 declare global {
     interface HTMLElementTagNameMap {
-        'sp-rule': Rule;
+        'sp-divider': Divider;
     }
 }
