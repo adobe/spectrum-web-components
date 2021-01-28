@@ -9,37 +9,34 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-actionbar.js';
-import { html } from '@open-wc/demoing-storybook';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+
+import '../sp-action-bar.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { EditIcon, MoreIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 
 export default {
-    component: 'sp-actionbar',
-    title: 'Actionbar',
+    title: 'Action Bar',
+    component: 'sp-action-bar',
 };
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-actionbar open>
+        <sp-action-bar open>
             <sp-checkbox indeterminate>228 Selected</sp-checkbox>
             <sp-action-group quiet>
                 <sp-action-button>
-                    <sp-icon slot="icon">
-                        ${EditIcon()}
-                    </sp-icon>
+                    <sp-icon-edit slot="icon"></sp-icon-edit>
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-icon slot="icon">
-                        ${MoreIcon()}
-                    </sp-icon>
+                    <sp-icon-more slot="icon"></sp-icon-more>
                 </sp-action-button>
             </sp-action-group>
-        </sp-actionbar>
+        </sp-action-bar>
     `;
 };

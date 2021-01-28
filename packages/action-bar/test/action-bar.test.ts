@@ -9,15 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
-import '../sp-actionbar.js';
-import { Actionbar } from '../';
-import { Default } from '../stories/actionbar.stories.js';
+import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
-describe('Actionbar', () => {
+import '../sp-action-bar.js';
+import { ActionBar } from '..';
+import { Default } from '../stories/action-bar.stories.js';
+
+describe('ActionBar', () => {
     it('loads', async () => {
-        const el = await fixture<Actionbar>(Default());
+        const el = await fixture<ActionBar>(Default());
 
         await elementUpdated(el);
 
@@ -27,9 +28,9 @@ describe('Actionbar', () => {
     });
 
     it('accepts variants', async () => {
-        const el = await fixture<Actionbar>(
+        const el = await fixture<ActionBar>(
             html`
-                <sp-actionbar variant="sticky">Help text.</sp-actionbar>
+                <sp-action-bar variant="sticky">Help text.</sp-action-bar>
             `
         );
 
@@ -60,9 +61,9 @@ describe('Actionbar', () => {
         expect(el.hasAttribute('variant')).to.be.false;
     });
     it('validates variants', async () => {
-        const el = await fixture<Actionbar>(
+        const el = await fixture<ActionBar>(
             html`
-                <sp-actionbar variant="other">Help text.</sp-actionbar>
+                <sp-action-bar variant="other">Help text.</sp-action-bar>
             `
         );
 

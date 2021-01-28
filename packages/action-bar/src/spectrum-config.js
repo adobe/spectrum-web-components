@@ -14,7 +14,7 @@ const config = {
     spectrum: 'actionbar',
     components: [
         {
-            name: 'actionbar',
+            name: 'action-bar',
             host: {
                 selector: '.spectrum-ActionBar',
             },

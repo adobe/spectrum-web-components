@@ -9,12 +9,5 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Actionbar } from './src/Actionbar.js';
 
-customElements.define('sp-actionbar', Actionbar);
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-actionbar': Actionbar;
-    }
-}
+export * from './ActionBar.js';
