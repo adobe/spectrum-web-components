@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.8.0...@spectrum-web-components/overlay@0.8.1) (2021-01-28)
+
+### Bug Fixes
+
+-   **overlay:** remove trapped content from a11y tree, manage focus, open projected content ([6c496c0](https://github.com/adobe/spectrum-web-components/commit/6c496c0a930737b7fd74a565766ab41339691551))
+-   **tooltip:** correct arrow orientation, remove popper-arrow-rotate ([fcd6ea2](https://github.com/adobe/spectrum-web-components/commit/fcd6ea28ef5e4f06a07994ebd8f8b9be1a934eb2))
+
 # [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.4...@spectrum-web-components/overlay@0.8.0) (2021-01-21)
 
 ### Bug Fixes

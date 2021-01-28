@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.8.0...@spectrum-web-components/slider@0.8.1) (2021-01-28)
+
+### Bug Fixes
+
+-   **slider:** manage focus more like a native rage input ([865115e](https://github.com/adobe/spectrum-web-components/commit/865115e1e43e164952eeca01b473c9606762377a))
+
 # [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.6.4...@spectrum-web-components/slider@0.8.0) (2021-01-21)
 
 ### Bug Fixes

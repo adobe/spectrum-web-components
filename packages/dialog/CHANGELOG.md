@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.5.0...@spectrum-web-components/dialog@0.5.1) (2021-01-28)
+
+### Bug Fixes
+
+-   allow ActiveOverlay to manage open state ([a7c4cff](https://github.com/adobe/spectrum-web-components/commit/a7c4cffec56a7efc86b6409e3bc692574713a6bc))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.3.4...@spectrum-web-components/dialog@0.5.0) (2021-01-21)
 
 ### Bug Fixes

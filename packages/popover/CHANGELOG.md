@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.7.0...@spectrum-web-components/popover@0.7.1) (2021-01-28)
+
+### Bug Fixes
+
+-   position tip shapes for bi-directional delivery ([35654de](https://github.com/adobe/spectrum-web-components/commit/35654decb855ffeef0c56c2958244dd240d3bbef))
+-   **tooltip:** correct arrow orientation, remove popper-arrow-rotate ([fcd6ea2](https://github.com/adobe/spectrum-web-components/commit/fcd6ea28ef5e4f06a07994ebd8f8b9be1a934eb2))
+-   allow ActiveOverlay to manage open state ([a7c4cff](https://github.com/adobe/spectrum-web-components/commit/a7c4cffec56a7efc86b6409e3bc692574713a6bc))
+
 # [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.5.4...@spectrum-web-components/popover@0.7.0) (2021-01-21)
 
 ### Bug Fixes

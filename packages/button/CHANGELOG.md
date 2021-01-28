@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.11.0...@spectrum-web-components/button@0.11.1) (2021-01-28)
+
+### Bug Fixes
+
+-   **button:** remove old package export listings ([32e8573](https://github.com/adobe/spectrum-web-components/commit/32e85733e2ed96b6d80ce6c2461f1a98c0f1470a))
+
 # [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.9.4...@spectrum-web-components/button@0.11.0) (2021-01-21)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.2.0...@spectrum-web-components/story-decorator@0.2.1) (2021-01-28)
+
+### Bug Fixes
+
+-   **story-decorator:** ensure reduce motion application in overlays ([3f1bc23](https://github.com/adobe/spectrum-web-components/commit/3f1bc23bb2e87dedd285915c034ea497a0271d07))
+
 # 0.2.0 (2021-01-21)
 
 ### Features

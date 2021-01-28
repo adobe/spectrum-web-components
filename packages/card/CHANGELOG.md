@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.7.0...@spectrum-web-components/card@0.7.1) (2021-01-28)
+
+### Bug Fixes
+
+-   **card:** create no preview image variant of card instead of no imageless variant at all ([7b102b9](https://github.com/adobe/spectrum-web-components/commit/7b102b9dc8460ddd179829b9c80f9b0628abf733))
+-   remove standard variant from image getter ([97e4713](https://github.com/adobe/spectrum-web-components/commit/97e47132bad276ef2b2989395622dc57d37efb7c))
+-   **card:** allow for preview or cover-photo ([2d2f42b](https://github.com/adobe/spectrum-web-components/commit/2d2f42bb075c805d9c308d268c5f99a3cb2d0490))
+-   **card:** removed empty card from documentation/stories ([8322894](https://github.com/adobe/spectrum-web-components/commit/83228948550dd6fef2a06ddbdc0f9954d8971fac))
+
 # [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@1.0.0...@spectrum-web-components/card@0.7.0) (2021-01-21)
 
 ### Bug Fixes
