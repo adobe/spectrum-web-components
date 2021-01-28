@@ -16,7 +16,7 @@ import componentStyles from './markdown.css';
 import homeStyles from './home.css';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/link/sp-link.js';
-import '@spectrum-web-components/rule/sp-rule.js';
+import '@spectrum-web-components/divider/sp-divider.js';
 
 class HomeElement extends RouteComponent {
     public static get styles(): CSSResultArray {
@@ -93,7 +93,7 @@ class HomeElement extends RouteComponent {
                     <h2 class="spectrum-Heading spectrum-Heading--sizeM">
                         Sample element usage
                     </h2>
-                    <sp-rule size="large"></sp-rule>
+                    <sp-divider size="l"></sp-divider>
                 </div>
                 <code-example class="language-html">
                     &lt;sp-button variant='cta' href='components/button'&gt;Use

@@ -24,8 +24,8 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import { Dropdown } from '@spectrum-web-components/dropdown';
-import '@spectrum-web-components/dropdown/sp-dropdown.js';
+import { Picker } from '@spectrum-web-components/picker';
+import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -94,15 +94,15 @@ export class LayoutElement extends SpectrumElement {
     }
 
     private updateColor(event: Event) {
-        this.color = (event.target as Dropdown).value as Color;
+        this.color = (event.target as Picker).value as Color;
     }
 
     private updateScale(event: Event) {
-        this.scale = (event.target as Dropdown).value as Scale;
+        this.scale = (event.target as Picker).value as Scale;
     }
 
     private updateDirection(event: Event) {
-        const dir = (event.target as Dropdown).value;
+        const dir = (event.target as Picker).value;
         this.dir = dir === 'rtl' ? dir : 'ltr';
     }
 
@@ -220,7 +220,7 @@ export class LayoutElement extends SpectrumElement {
                                 >
                                     Theme
                                 </sp-field-label>
-                                <sp-dropdown
+                                <sp-picker
                                     id="theme-color"
                                     placement="bottom"
                                     quiet
@@ -241,14 +241,14 @@ export class LayoutElement extends SpectrumElement {
                                             Darkest
                                         </sp-menu-item>
                                     </sp-menu>
-                                </sp-dropdown>
+                                </sp-picker>
                                 <sp-field-label
                                     for="theme-scale"
                                     side-aligned="start"
                                 >
                                     Scale
                                 </sp-field-label>
-                                <sp-dropdown
+                                <sp-picker
                                     id="theme-scale"
                                     label="Scale"
                                     placement="bottom"
@@ -264,14 +264,14 @@ export class LayoutElement extends SpectrumElement {
                                             Large
                                         </sp-menu-item>
                                     </sp-menu>
-                                </sp-dropdown>
+                                </sp-picker>
                                 <sp-field-label
                                     for="theme-direction"
                                     side-aligned="start"
                                 >
                                     Direction
                                 </sp-field-label>
-                                <sp-dropdown
+                                <sp-picker
                                     id="theme-direction"
                                     label="Direction"
                                     placement="bottom"
@@ -287,7 +287,7 @@ export class LayoutElement extends SpectrumElement {
                                             RTL
                                         </sp-menu-item>
                                     </sp-menu>
-                                </sp-dropdown>
+                                </sp-picker>
                             </div>
                             ${this.renderContent()}
                         </div>
