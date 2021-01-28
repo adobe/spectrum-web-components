@@ -11,20 +11,23 @@ governing permissions and limitations under the License.
 */
 
 import {
+    html,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    html,
     property,
-    SpectrumElement,
     PropertyValues,
     ifDefined,
 } from '@spectrum-web-components/base';
 
-import circleLoaderStyles from './circle-loader.css.js';
+import progressCircleStyles from './progress-circle.css.js';
 
-export class CircleLoader extends SpectrumElement {
+/**
+ * @element sp-progress-circle
+ */
+export class ProgressCircle extends SpectrumElement {
     public static get styles(): CSSResultArray {
-        return [circleLoaderStyles];
+        return [progressCircleStyles];
     }
 
     @property({ type: Boolean, reflect: true })

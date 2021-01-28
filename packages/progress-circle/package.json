@@ -1,36 +1,36 @@
 {
-    "name": "@spectrum-web-components/circle-loader",
+    "name": "@spectrum-web-components/progress-circle",
     "publishConfig": {
         "access": "public"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/circle-loader"
+        "directory": "packages/progress-circle"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/circle-loader",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/progress-circle",
     "keywords": [
         "spectrum css",
         "web components",
         "lit-element",
         "lit-html"
     ],
-    "version": "0.5.0",
+    "version": "0.0.1",
     "description": "",
-    "main": "./src/index.js",
-    "module": "./src/index.js",
-    "types": "./src/index.d.ts",
+    "main": "src/index.js",
+    "module": "src/index.js",
     "type": "module",
+    "types": "./src/index.d.ts",
     "exports": {
         ".": "./src/index.js",
         "./src/": "./src/",
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json",
-        "./sp-circle-loader": "./sp-circle-loader.js",
-        "./sp-circle-loader.js": "./sp-circle-loader.js"
+        "./sp-progress-circle": "./sp-progress-circle.js",
+        "./sp-progress-circle.js": "./sp-progress-circle.js"
     },
     "files": [
         "custom-elements.json",

@@ -9,12 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { CircleLoader } from './src/CircleLoader.js';
 
-customElements.define('sp-circle-loader', CircleLoader);
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+import { html } from '@spectrum-web-components/base';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-circle-loader': CircleLoader;
-    }
-}
+measureFixtureCreation(html`
+    <sp-progress-circle indeterminate></sp-progress-circle>
+`);
