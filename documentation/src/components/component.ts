@@ -83,7 +83,7 @@ function buildTable(
     return html`
         <div class="headerContainer">
             <h2 class="spectrum-Heading spectrum-Heading--sizeM">${title}</h2>
-            <sp-rule size="small"></sp-rule>
+            <sp-divider size="s"></sp-divider>
         </div>
         <table class="spectrum-Table">
             <thead class="spectrum-Table-head">
