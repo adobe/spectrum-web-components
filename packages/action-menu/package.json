@@ -51,10 +51,10 @@
     "dependencies": {
         "@spectrum-web-components/action-button": "^0.2.1",
         "@spectrum-web-components/base": "^0.3.1",
-        "@spectrum-web-components/dropdown": "^0.10.1",
         "@spectrum-web-components/icon": "^0.8.1",
         "@spectrum-web-components/icons-workflow": "^0.5.1",
         "@spectrum-web-components/menu": "^0.6.1",
+        "@spectrum-web-components/picker": "^0.0.1",
         "@spectrum-web-components/shared": "^0.9.0",
         "tslib": "^2.0.0"
     }

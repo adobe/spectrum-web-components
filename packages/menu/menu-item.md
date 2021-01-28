@@ -29,26 +29,20 @@ Menus are a collection of `<sp-menu-item>`s that can be modified via a `disabled
 
 ```html
 <sp-menu>
-    <sp-menu-item>
-        Active Menu Item
-    </sp-menu-item>
-    <sp-menu-item disabled>
-        Disabled Menu Item
-    </sp-menu-item>
-    <sp-menu-item selected>
-        Selected Menu Item
-    </sp-menu-item>
+    <sp-menu-item>Active Menu Item</sp-menu-item>
+    <sp-menu-item disabled>Disabled Menu Item</sp-menu-item>
+    <sp-menu-item selected>Selected Menu Item</sp-menu-item>
 </sp-menu>
 ```
 
 ### Value
 
-When displayed as a descendent of an element that manages selection (e.g. `<sp-action-menu>`, `<sp-dropdown>`, `<sp-split-button>`, etc.), an `<sp-menu-item>` will represent the "selected" value of that ancestor when its `value` attribute or the trimmed `textContent` (represeted by `el.itemText`) matches the `value` of the ancestor element.
+When displayed as a descendent of an element that manages selection (e.g. `<sp-action-menu>`, `<sp-picker>`, `<sp-split-button>`, etc.), an `<sp-menu-item>` will represent the "selected" value of that ancestor when its `value` attribute or the trimmed `textContent` (represeted by `el.itemText`) matches the `value` of the ancestor element.
 
 In the following example, the selected `<sp-menu-item>` represents a `value` of `Text that is really long and useful to a visitor, but not exactly good to use in your application or component state.` for the ancestor element.
 
 ```html
-<sp-dropdown
+<sp-picker
     label="Menu items examples"
     value="Text that is really long and useful to a visitor, but not exactly good to use in your application or component state."
 >
@@ -59,7 +53,7 @@ In the following example, the selected `<sp-menu-item>` represents a `value` of 
         </sp-menu-item>
         <sp-menu-item>Not selected</sp-menu-item>
     </sp-menu>
-</sp-dropdown>
+</sp-picker>
 
 <sp-action-menu
     value="Text that is really long and useful to a visitor, but not exactly good to use in your application or component state."
@@ -78,7 +72,7 @@ In the following example, the selected `<sp-menu-item>` represents a `value` of 
 When the `value` attribute is leveraged, the selected `<sp-menu-item>` represents a `value` of `short-key` for the `<sp-action-menu>` element.
 
 ```html
-<sp-dropdown value="short-key">
+<sp-picker value="short-key">
     <span slot="label">Menu items examples</span>
     <sp-menu>
         <sp-menu-item value="not-selected">Not selected</sp-menu-item>
@@ -87,7 +81,7 @@ When the `value` attribute is leveraged, the selected `<sp-menu-item>` represent
             good to use in your application or component state.
         </sp-menu-item>
     </sp-menu>
-</sp-dropdown>
+</sp-picker>
 <sp-action-menu value="short-key">
     <span slot="label">Menu items examples</span>
     <sp-menu>

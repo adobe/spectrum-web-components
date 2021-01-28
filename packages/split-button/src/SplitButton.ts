@@ -24,7 +24,7 @@ import {
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import { ButtonVariants } from '@spectrum-web-components/button';
-import { DropdownBase } from '@spectrum-web-components/dropdown';
+import { PickerBase } from '@spectrum-web-components/picker';
 import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
 import { MoreIcon } from '@spectrum-web-components/icons-workflow';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
@@ -38,9 +38,9 @@ const chevronClass = {
 };
 
 /**
- * @slot options - The menu with options that will display when the dropdown is open
+ * @slot options - The menu with options that will display when the picker is open
  */
-export class SplitButton extends SizedMixin(DropdownBase) {
+export class SplitButton extends SizedMixin(PickerBase) {
     public static get styles(): CSSResultArray {
         return [styles, chevronStyles];
     }
