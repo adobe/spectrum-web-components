@@ -51,9 +51,9 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@spectrum-web-components/base": "^0.3.1",
-        "@spectrum-web-components/dropdown": "^0.10.1",
         "@spectrum-web-components/menu": "^0.6.1",
         "@spectrum-web-components/overlay": "^0.8.1",
+        "@spectrum-web-components/picker": "^0.0.1",
         "@spectrum-web-components/switch": "^0.6.1",
         "@spectrum-web-components/theme": "^0.7.2",
         "tslib": "^2.0.0"
