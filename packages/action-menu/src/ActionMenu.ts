@@ -18,16 +18,16 @@ import {
     ifDefined,
     property,
 } from '@spectrum-web-components/base';
-import { DropdownBase } from '@spectrum-web-components/dropdown';
+import { PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { MoreIcon } from '@spectrum-web-components/icons-workflow';
 import actionMenuStyles from './action-menu.css.js';
 
 /**
- * @slot options - The menu with options that will display when the dropdown is open
+ * @slot options - The menu with options that will display when the picker is open
  */
-export class ActionMenu extends ObserveSlotText(DropdownBase, 'label') {
+export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public static get styles(): CSSResultArray {
         return [actionMenuStyles];
     }

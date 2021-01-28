@@ -3157,6 +3157,22 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-3.0.0-beta.2.tgz#f0b3a2db44aa57b1a82e47ab392c716a3056a157"
   integrity sha512-HpcRDUkSjKVWUi7+jf6zp33YszXs3qFljaaNVTVOf0m0mqjWWXHxgLrvYlFFlHp5ITbNXds5Cb7EgiXCKmVIpA==
 
+"@spectrum-web-components/dropdown@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-web-components/dropdown/-/dropdown-0.10.1.tgz#d292dd561aaf4165c03179b4a48451d75cba6394"
+  integrity sha512-kGeeQqbc2kbTDo9Io7GN/p8iO8Tpb87/LN4ZKjzTFYxIICLb9qMqk57ziLkH0XdPc/8w5Rjo6RubAYChMcDKlg==
+  dependencies:
+    "@spectrum-web-components/base" "^0.3.1"
+    "@spectrum-web-components/button" "^0.11.1"
+    "@spectrum-web-components/icon" "^0.8.1"
+    "@spectrum-web-components/icons-ui" "^0.5.1"
+    "@spectrum-web-components/icons-workflow" "^0.5.1"
+    "@spectrum-web-components/menu" "^0.6.1"
+    "@spectrum-web-components/overlay" "^0.8.1"
+    "@spectrum-web-components/popover" "^0.7.1"
+    "@spectrum-web-components/shared" "^0.9.0"
+    tslib "^2.0.0"
+
 "@stylelint/postcss-css-in-js@^0.37.2":
   version "0.37.2"
   resolved "https://registry.yarnpkg.com/@stylelint/postcss-css-in-js/-/postcss-css-in-js-0.37.2.tgz#7e5a84ad181f4234a2480803422a47b8749af3d2"

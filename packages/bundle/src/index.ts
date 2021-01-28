@@ -10,22 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from '@spectrum-web-components/accordion';
+export * from '@spectrum-web-components/action-bar';
 export * from '@spectrum-web-components/action-button';
 export * from '@spectrum-web-components/action-group';
 export * from '@spectrum-web-components/action-menu';
-export * from '@spectrum-web-components/actionbar';
 export * from '@spectrum-web-components/avatar';
 export * from '@spectrum-web-components/asset';
 export * from '@spectrum-web-components/banner';
-export * from '@spectrum-web-components/bar-loader';
 export * from '@spectrum-web-components/button';
 export * from '@spectrum-web-components/button-group';
 export * from '@spectrum-web-components/card';
 export * from '@spectrum-web-components/checkbox';
-export * from '@spectrum-web-components/circle-loader';
 export * from '@spectrum-web-components/coachmark';
 export * from '@spectrum-web-components/dialog';
-export * from '@spectrum-web-components/dropdown';
+export * from '@spectrum-web-components/divider';
 export * from '@spectrum-web-components/dropzone';
 export * from '@spectrum-web-components/field-group';
 export * from '@spectrum-web-components/field-label';
@@ -40,10 +38,12 @@ export * from '@spectrum-web-components/link';
 export * from '@spectrum-web-components/menu';
 export * from '@spectrum-web-components/meter';
 export * from '@spectrum-web-components/overlay';
+export * from '@spectrum-web-components/picker';
 export * from '@spectrum-web-components/popover';
+export * from '@spectrum-web-components/progress-bar';
+export * from '@spectrum-web-components/progress-circle';
 export * from '@spectrum-web-components/quick-actions';
 export * from '@spectrum-web-components/radio';
-export * from '@spectrum-web-components/rule';
 export * from '@spectrum-web-components/search';
 export * from '@spectrum-web-components/sidenav';
 export * from '@spectrum-web-components/slider';
