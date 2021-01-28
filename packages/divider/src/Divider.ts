@@ -12,31 +12,28 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    LitElement,
+    SpectrumElement,
     CSSResultArray,
     TemplateResult,
     property,
-    customElement,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 
-import styles from '@spectrum-web-components/theme/src/typography.css.js';
+import styles from './divider.css.js';
 
 /**
- * @element typography-decorator
+ * @element sp-divider
  */
-@customElement('typography-decorator')
-export class Typography extends LitElement {
-    static styles: CSSResultArray = [styles];
+export class Divider extends SizedMixin(SpectrumElement, ['s', 'm', 'l']) {
+    public static styles: CSSResultArray = [styles];
 
-    @property({ attribute: false })
-    public story?: TemplateResult;
+    @property({ type: Boolean, reflect: true })
+    public vertical = false;
 
     protected render(): TemplateResult {
-        if (!this.story) return html``;
+        if (this.vertical) return html``;
         return html`
-            <div class="spectrum-Typography">
-                ${this.story}
-            </div>
+            <hr />
         `;
     }
 }

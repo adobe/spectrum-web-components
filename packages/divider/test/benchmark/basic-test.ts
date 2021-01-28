@@ -10,30 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    html,
-    SpectrumElement,
-    CSSResultArray,
-    TemplateResult,
-    property,
-    SizedMixin,
-} from '@spectrum-web-components/base';
+import '@spectrum-web-components/divider/sp-divider.js';
+import { html } from '@spectrum-web-components/base';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
-import styles from './rule.css.js';
-
-/**
- * @element sp-rule
- */
-export class Rule extends SizedMixin(SpectrumElement, ['s', 'm', 'l']) {
-    public static styles: CSSResultArray = [styles];
-
-    @property({ type: Boolean, reflect: true })
-    public vertical = false;
-
-    protected render(): TemplateResult {
-        if (this.vertical) return html``;
-        return html`
-            <hr />
-        `;
-    }
-}
+measureFixtureCreation(html`
+    <sp-divider></sp-divider>
+`);

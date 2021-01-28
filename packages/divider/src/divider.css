@@ -10,4 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './Rule.js';
+@import './spectrum-divider.css';
+
+:host {
+    display: block;
+}
+
+hr {
+    border: none;
+    margin: 0;
+}
