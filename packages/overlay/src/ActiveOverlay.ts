@@ -106,7 +106,6 @@ export class ActiveOverlay extends SpectrumElement {
     public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;
     public trigger!: HTMLElement;
-    public returnFocusElement?: HTMLSpanElement;
 
     private placeholder?: Comment;
     private popper?: Instance;
@@ -312,14 +311,10 @@ export class ActiveOverlay extends SpectrumElement {
             this.popper.destroy();
             this.popper = undefined;
         }
-
-        if (this.returnFocusElement) {
-            this.returnFocusElement.remove();
-            this.trigger.removeEventListener(
-                'keydown',
-                this.handleInlineTriggerKeydown
-            );
-        }
+        this.trigger.removeEventListener(
+            'keydown',
+            this.handleInlineTriggerKeydown
+        );
 
         this.returnOverlayContent();
         this.state = 'disposed';

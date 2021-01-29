@@ -246,18 +246,6 @@ export class OverlayStack {
     }
 
     public addInlineOverlayEventListeners(activeOverlay: ActiveOverlay): void {
-        if (!activeOverlay.returnFocusElement) {
-            activeOverlay.returnFocusElement = document.createElement('span');
-            activeOverlay.returnFocusElement.tabIndex = -1;
-            if (activeOverlay.trigger.hasAttribute('slot')) {
-                activeOverlay.returnFocusElement.slot =
-                    activeOverlay.trigger.slot;
-            }
-            activeOverlay.trigger.insertAdjacentElement(
-                'afterend',
-                activeOverlay.returnFocusElement
-            );
-        }
         activeOverlay.trigger.addEventListener(
             'keydown',
             activeOverlay.handleInlineTriggerKeydown
@@ -268,8 +256,18 @@ export class OverlayStack {
             if (code !== 'Tab') return;
 
             activeOverlay.tabbingAway = true;
-            if (shiftKey && activeOverlay.returnFocusElement) {
-                activeOverlay.returnFocusElement.focus();
+            if (shiftKey) {
+                const returnFocusElement = document.createElement('span');
+                returnFocusElement.tabIndex = -1;
+                if (activeOverlay.trigger.hasAttribute('slot')) {
+                    returnFocusElement.slot = activeOverlay.trigger.slot;
+                }
+                activeOverlay.trigger.insertAdjacentElement(
+                    'afterend',
+                    returnFocusElement
+                );
+                returnFocusElement.focus();
+                returnFocusElement.remove();
                 return;
             }
 
