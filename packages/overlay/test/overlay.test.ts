@@ -24,7 +24,7 @@ import {
     elementUpdated,
     waitUntil,
 } from '@open-wc/testing';
-import { tabEvent, shiftTabEvent } from '../../../test/testing-helpers.js';
+import { executeServerCommand } from '@web/test-runner-commands';
 
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
@@ -395,47 +395,51 @@ describe('Overlays', () => {
                 <div class="content">
                     <input />
                 </div>
+                <a href="#">After</a>
             </div>
         `);
 
         const trigger = el.querySelector('.trigger') as HTMLElement;
         const content = el.querySelector('.content') as HTMLElement;
+        const input = el.querySelector('input') as HTMLInputElement;
+        const after = el.querySelector('a') as HTMLAnchorElement;
 
         openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
 
+        trigger.focus();
+        await executeServerCommand('send-keys', {
+            press: 'Tab',
+        });
+
+        expect(document.activeElement === input);
+        expect(input.closest('active-overlay') !== null);
+
+        await executeServerCommand('send-keys', {
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement === trigger);
+
+        await executeServerCommand('send-keys', {
+            press: 'Tab',
+        });
+
+        expect(document.activeElement === input);
+
+        await executeServerCommand('send-keys', {
+            press: 'Tab',
+        });
+
+        expect(document.activeElement === after);
         await waitUntil(
-            () => !!el.querySelector('span[tabindex="-1"]'),
-            'returnFocusElement available'
-        );
-
-        const overlays = document.querySelectorAll('active-overlay');
-        const overlay = overlays[0];
-
-        expect(overlay).to.not.be.undefined;
-
-        trigger.dispatchEvent(tabEvent);
-
-        await waitUntil(
-            () => !!el.querySelector('span[tabindex="-1"]'),
-            'returnFocusElement persists on forward tab'
-        );
-
-        content.dispatchEvent(shiftTabEvent);
-
-        expect(document.activeElement === overlay.returnFocusElement).to.be
-            .true;
-
-        content.dispatchEvent(tabEvent);
-
-        await waitUntil(
-            () => el.querySelector('span[tabindex="-1"]') === null,
-            'returnFocusElement no longer available'
+            () => document.querySelector('active-element') === null
         );
     });
 
     it('closes an inline overlay when tabbing before the trigger', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div>
+                <a href="#">Before</a>
                 <button class="trigger">Trigger</button>
                 <div class="content">
                     <label>
@@ -448,31 +452,32 @@ describe('Overlays', () => {
 
         const trigger = el.querySelector('.trigger') as HTMLElement;
         const content = el.querySelector('.content') as HTMLElement;
+        const input = el.querySelector('input') as HTMLInputElement;
+        const before = el.querySelector('a') as HTMLAnchorElement;
 
         openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
 
+        trigger.focus();
+        await executeServerCommand('send-keys', {
+            press: 'Tab',
+        });
+
+        expect(document.activeElement === input);
+        expect(input.closest('active-overlay') !== null);
+
+        await executeServerCommand('send-keys', {
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement === trigger);
+
+        await executeServerCommand('send-keys', {
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement === before);
         await waitUntil(
-            () => !!el.querySelector('span[tabindex="-1"]'),
-            'returnFocusElement available'
-        );
-
-        const overlays = document.querySelectorAll('active-overlay');
-        const overlay = overlays[0];
-
-        await elementUpdated(overlay);
-
-        trigger.dispatchEvent(tabEvent);
-
-        await waitUntil(
-            () => !!el.querySelector('span[tabindex="-1"]'),
-            'returnFocusElement persists on forward tab'
-        );
-
-        trigger.dispatchEvent(shiftTabEvent);
-
-        await waitUntil(
-            () => el.querySelector('span[tabindex="-1"]') === null,
-            'returnFocusElement no longer available'
+            () => document.querySelector('active-element') === null
         );
     });
 });
