@@ -52,7 +52,7 @@
         "cheerio": "^1.0.0-rc.2",
         "fs": "^0.0.1-security",
         "glob": "^7.1.3",
-        "http-server": "^0.11.1",
+        "http-server": "^0.12.3",
         "path": "^0.12.7",
         "prettier": "^2.0.5"
     },
