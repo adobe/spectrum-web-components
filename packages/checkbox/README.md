@@ -27,11 +27,64 @@ When looking to leverage the `Checkbox` base class as a type and/or for extensio
 import { Checkbox } from '@spectrum-web-components/checkbox';
 ```
 
-### Example
+## Sizes
 
-```html
-<sp-checkbox>Web component</sp-checkbox>
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
+
+<div class="tabs--s">
+
+```html demo
+<sp-field-group>
+    <sp-checkbox size="s">Small</sp-checkbox>
+    <sp-checkbox size="s" checked>Small Checked</sp-checkbox>
+    <sp-checkbox size="s" indeterminate>Small Indeterminate</sp-checkbox>
+</sp-field-group>
 ```
+
+</div>
+
+<div class="tabs--m">
+
+```html demo
+<sp-field-group>
+    <sp-checkbox size="m">Medium</sp-checkbox>
+    <sp-checkbox size="m" checked>Medium Checked</sp-checkbox>
+    <sp-checkbox size="m" indeterminate>Medium Indeterminate</sp-checkbox>
+</sp-field-group>
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html demo
+<sp-field-group>
+    <sp-checkbox size="l">Large</sp-checkbox>
+    <sp-checkbox size="l" checked>Large Checked</sp-checkbox>
+    <sp-checkbox size="l" indeterminate>Large Indeterminate</sp-checkbox>
+</sp-field-group>
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html demo
+<sp-field-group>
+    <sp-checkbox size="xl">Extra Large</sp-checkbox>
+    <sp-checkbox size="xl" checked>Extra Large Checked</sp-checkbox>
+    <sp-checkbox size="xl" indeterminate>Extra Large Indeterminate</sp-checkbox>
+</sp-field-group>
+```
+
+</div>
+
+## Variants
 
 ### Standard checkboxes
 
