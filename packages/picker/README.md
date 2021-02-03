@@ -29,41 +29,140 @@ When looking to leverage the `Picker` base class as a type and/or for extension 
 import { Picker } from '@spectrum-web-components/picker';
 ```
 
-## Example
+## Sizes
 
-```html
-<p><strong>Standard:</strong></p>
-<sp-picker label="Select a Country with a very long label, too long in fact">
-    <sp-menu>
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-menu>
-</sp-picker>
-<br />
-<br />
-<p><strong>Quiet:</strong></p>
-<sp-picker
-    label="Select a Country with a very long label, too long in fact"
-    quiet
->
-    <sp-menu>
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-menu>
-</sp-picker>
+<sp-tabs selected="m">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab value="m">Medium</sp-tab>
+    <sp-tab value="l">Large</sp-tab>
+    <sp-tab value="xl">Extra Large</sp-tab>
+</sp-tabs>
+
+<div class="tabs--s">
+
+```html demo
+<sp-field-group>
+    <sp-picker size="s" label="Selection type">
+        <sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-menu>
+    </sp-picker>
+    <sp-picker quiet size="s" label="Selection type">
+        <sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-menu>
+    </sp-picker>
+</sp-field-group>
 ```
 
-### Value
+</div>
+
+<div class="tabs--m">
+
+```html demo
+<sp-field-group>
+    <sp-picker size="m" label="Selection type">
+        <sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-menu>
+    </sp-picker>
+    <sp-picker quiet size="m" label="Selection type">
+        <sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-menu>
+    </sp-picker>
+</sp-field-group>
+```
+
+</div>
+
+<div class="tabs--l">
+
+```html demo
+<sp-field-group>
+    <sp-picker size="l" label="Selection type">
+        <sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-menu>
+    </sp-picker>
+    <sp-picker quiet size="l" label="Selection type">
+        <sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-menu>
+    </sp-picker>
+</sp-field-group>
+```
+
+</div>
+
+<div class="tabs--xl">
+
+```html demo
+<sp-field-group>
+    <sp-picker size="xl" label="Selection type">
+        <sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-menu>
+    </sp-picker>
+    <sp-picker quiet size="xl" label="Selection type">
+        <sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-menu>
+    </sp-picker>
+</sp-field-group>
+```
+
+</div>
+
+## Value
 
 When the `value` of an `<sp-picker>` matches the `value` attribute or the trimmed `textContent` (or `itemText`) of a descendent `<sp-menu-item>` element, it will make that element as `selected`.
 
