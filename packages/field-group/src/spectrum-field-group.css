@@ -12,17 +12,18 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-FieldGroup */
+    --spectrum-fieldgroup-margin: var(--spectrum-global-dimension-size-200);
     display: flex;
     vertical-align: top;
     flex-wrap: wrap;
 }
 :host([dir='ltr'][horizontal]) .spectrum-FieldGroup-item:not(:last-child) {
     /* [dir=ltr] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
-    margin-right: var(--spectrum-global-dimension-size-200);
+    margin-right: var(--spectrum-fieldgroup-margin);
 }
 :host([dir='rtl'][horizontal]) .spectrum-FieldGroup-item:not(:last-child) {
     /* [dir=rtl] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
-    margin-left: var(--spectrum-global-dimension-size-200);
+    margin-left: var(--spectrum-fieldgroup-margin);
 }
 :host([vertical]) {
     /* .spectrum-FieldGroup--vertical */

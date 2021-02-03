@@ -10,66 +10,32 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-a {
-    /* .spectrum-Link */
-    --spectrum-link-over-background-text-color: var(
-        --spectrum-alias-text-color-over-background,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-link-over-background-text-color-hover: var(
-        --spectrum-alias-text-color-over-background,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-link-over-background-text-color-down: var(
-        --spectrum-alias-text-color-over-background,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-link-over-background-text-color-key-focus: var(
-        --spectrum-alias-text-color-over-background,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-link-primary-text-color: var(--spectrum-global-color-blue-600);
-    --spectrum-link-primary-text-color-hover: var(
-        --spectrum-global-color-blue-600
-    );
-    --spectrum-link-primary-text-color-down: var(
-        --spectrum-global-color-blue-700
-    );
-    --spectrum-link-primary-text-color-key-focus: var(
-        --spectrum-alias-text-color-key-focus,
-        var(--spectrum-global-color-blue-600)
-    );
-    --spectrum-link-primary-text-size: var(
-        --spectrum-alias-item-text-size-m,
-        var(--spectrum-global-dimension-font-size-100)
-    );
-}
 :host([size='s']) {
     /* .spectrum-Link--sizeS */
     --spectrum-link-primary-text-size: var(
-        --spectrum-alias-item-text-size-s,
-        var(--spectrum-global-dimension-font-size-75)
+        --spectrum-link-primary-s-text-size,
+        var(--spectrum-alias-item-text-size-s)
     );
 }
 :host([size='m']) {
     /* .spectrum-Link--sizeM */
     --spectrum-link-primary-text-size: var(
-        --spectrum-alias-item-text-size-m,
-        var(--spectrum-global-dimension-font-size-100)
+        --spectrum-link-primary-m-text-size,
+        var(--spectrum-alias-item-text-size-m)
     );
 }
 :host([size='l']) {
     /* .spectrum-Link--sizeL */
     --spectrum-link-primary-text-size: var(
-        --spectrum-alias-item-text-size-l,
-        var(--spectrum-global-dimension-font-size-200)
+        --spectrum-link-primary-l-text-size,
+        var(--spectrum-alias-item-text-size-l)
     );
 }
 :host([size='xl']) {
     /* .spectrum-Link--sizeXL */
     --spectrum-link-primary-text-size: var(
-        --spectrum-alias-item-text-size-xl,
-        var(--spectrum-global-dimension-font-size-300)
+        --spectrum-link-primary-xl-text-size,
+        var(--spectrum-alias-item-text-size-xl)
     );
 }
 :host([size='l']),
@@ -110,21 +76,33 @@ a:focus-visible {
 }
 a {
     /* .spectrum-Link */
-    color: var(--spectrum-link-primary-text-color);
+    color: var(
+        --spectrum-link-primary-m-text-color,
+        var(--spectrum-global-color-blue-600)
+    );
 }
 a:hover {
     /* .spectrum-Link:hover */
-    color: var(--spectrum-link-primary-text-color-hover);
+    color: var(
+        --spectrum-link-primary-m-text-color-hover,
+        var(--spectrum-global-color-blue-600)
+    );
 }
 a:active {
     /* .spectrum-Link:active */
-    color: var(--spectrum-link-primary-text-color-down);
+    color: var(
+        --spectrum-link-primary-m-text-color-down,
+        var(--spectrum-global-color-blue-700)
+    );
 }
 :host([quiet]) a:focus-visible,
 :host([over-background]) a:focus-visible,
 a:focus-visible {
     /* .spectrum-Link.focus-ring */
-    color: var(--spectrum-link-primary-text-color-key-focus);
+    color: var(
+        --spectrum-link-primary-m-text-color-key-focus,
+        var(--spectrum-alias-text-color-key-focus)
+    );
 }
 .spectrum-Link--secondary,
 .spectrum-Link--secondary:active,
@@ -138,17 +116,29 @@ a:focus-visible {
 }
 :host([over-background]) a {
     /* .spectrum-Link--overBackground */
-    color: var(--spectrum-link-over-background-text-color);
+    color: var(
+        --spectrum-link-over-background-m-text-color,
+        var(--spectrum-alias-text-color-over-background)
+    );
 }
 :host([over-background]) a:hover {
     /* .spectrum-Link--overBackground:hover */
-    color: var(--spectrum-link-over-background-text-color-hover);
+    color: var(
+        --spectrum-link-over-background-m-text-color-hover,
+        var(--spectrum-alias-text-color-over-background)
+    );
 }
 :host([over-background]) a:active {
     /* .spectrum-Link--overBackground:active */
-    color: var(--spectrum-link-over-background-text-color-down);
+    color: var(
+        --spectrum-link-over-background-m-text-color-down,
+        var(--spectrum-alias-text-color-over-background)
+    );
 }
 :host([over-background]) a:focus {
     /* .spectrum-Link--overBackground:focus */
-    color: var(--spectrum-link-over-background-text-color-key-focus);
+    color: var(
+        --spectrum-link-over-background-m-text-color-key-focus,
+        var(--spectrum-alias-text-color-over-background)
+    );
 }

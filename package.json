@@ -96,7 +96,7 @@
         "@open-wc/demoing-storybook": "^2.4.7",
         "@open-wc/polyfills-loader": "^0.3.3",
         "@open-wc/testing": "^2.5.32",
-        "@spectrum-css/table": "^3.0.0-beta.6",
+        "@spectrum-css/table": "^3.0.0",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",
         "@types/command-line-usage": "^5.0.1",

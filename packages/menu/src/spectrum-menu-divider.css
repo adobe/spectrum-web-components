@@ -16,14 +16,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     overflow: visible;
     height: var(--spectrum-listitem-divider-size);
     margin: calc(var(--spectrum-listitem-divider-padding) / 2)
-        var(--spectrum-global-dimension-size-85);
+        var(--spectrum-listitem-padding-y);
     padding: 0;
     border: none;
 }
 :host {
     /* .spectrum-Menu-divider */
     background-color: var(
-        --spectrum-alias-border-color-extralight,
-        var(--spectrum-global-color-gray-100)
+        --spectrum-listitem-m-divider-color,
+        var(--spectrum-alias-border-color-extralight)
     );
 }

@@ -49,7 +49,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/textfield": "^3.0.0-beta.6"
+        "@spectrum-css/textfield": "^3.0.0"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.3.2",

@@ -105,12 +105,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-appframe-separator-color: var(
         --spectrum-global-color-gray-50
     );
-    --spectrum-divider-s-background-color: colorStopData.dark.colorTokens.gray-300;
-    --spectrum-divider-s-vertical-background-color: colorStopData.dark.colorTokens.gray-300;
-    --spectrum-divider-m-background-color: colorStopData.dark.colorTokens.gray-300;
-    --spectrum-divider-m-vertical-background-color: colorStopData.dark.colorTokens.gray-300;
-    --spectrum-divider-l-background-color: colorStopData.dark.colorTokens.gray-800;
-    --spectrum-divider-l-vertical-background-color: colorStopData.dark.colorTokens.gray-800;
     --spectrum-miller-column-item-background-color-selected: rgba(
         55,
         142,
@@ -123,10 +117,6 @@ governing permissions and limitations under the License.
         240,
         0.2
     );
-    --spectrum-panel-l-divider-color: colorStopData.dark.colorAliases.appframe-border-color;
-    --spectrum-panel-l-collapsible-divider-color: colorStopData.dark.colorAliases.appframe-border-color;
-    --spectrum-panel-s-divider-color: colorStopData.dark.colorAliases.appframe-border-color;
-    --spectrum-panel-s-collapsible-divider-color: colorStopData.dark.colorAliases.appframe-border-color;
     --spectrum-well-background-color: hsla(0, 0%, 89%, 0.02);
     --spectrum-colorarea-border-color: hsla(0, 0%, 100%, 0.1);
     --spectrum-colorarea-border-color-hover: hsla(0, 0%, 100%, 0.1);

@@ -115,11 +115,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Button--overBackground.spectrum-Button--quiet,
    * .spectrum-ClearButton--overBackground */
     background-color: var(
-        --spectrum-alias-background-color-transparent,
-        transparent
+        --spectrum-button-quiet-over-background-m-background-color,
+        var(--spectrum-alias-background-color-transparent)
     );
-    border-color: var(--spectrum-alias-border-color-transparent, transparent);
-    color: var(--spectrum-global-color-static-white, #fff);
+    border-color: var(
+        --spectrum-button-quiet-over-background-m-border-color,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    color: var(
+        --spectrum-button-quiet-over-background-m-text-color,
+        var(--spectrum-global-color-static-white)
+    );
 }
 :host([variant='overBackground']:focus-visible),
 :host([variant='overBackground']:hover) {
@@ -127,9 +133,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
    * .spectrum-ClearButton--overBackground.focus-ring,
    * .spectrum-ClearButton--overBackground:hover */
-    background-color: hsla(0, 0%, 100%, 0.1);
-    border-color: var(--spectrum-alias-border-color-transparent, transparent);
-    color: var(--spectrum-global-color-static-white, #fff);
+    background-color: var(
+        --spectrum-button-quiet-over-background-m-background-color-hover,
+        hsla(0, 0%, 100%, 0.1)
+    );
+    border-color: var(
+        --spectrum-button-quiet-over-background-m-border-color-hover,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    color: var(
+        --spectrum-button-quiet-over-background-m-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
 }
 :host([variant='overBackground']:focus-visible) {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
@@ -144,14 +159,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-alias-focus-ring-size,
             var(--spectrum-global-dimension-static-size-25)
         )
-        var(--spectrum-global-color-static-white, #fff);
+        var(
+            --spectrum-button-over-background-m-border-color-key-focus,
+            var(--spectrum-global-color-static-white)
+        );
 }
 :host([variant='overBackground'][active]) {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:active,
    * .spectrum-ClearButton--overBackground:active */
-    background-color: hsla(0, 0%, 100%, 0.2);
-    border-color: var(--spectrum-alias-border-color-transparent, transparent);
-    color: var(--spectrum-global-color-static-white, #fff);
+    background-color: var(
+        --spectrum-button-quiet-over-background-m-background-color-down,
+        hsla(0, 0%, 100%, 0.2)
+    );
+    border-color: var(
+        --spectrum-button-quiet-over-background-m-border-color-down,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    color: var(
+        --spectrum-button-quiet-over-background-m-text-color-down,
+        var(--spectrum-global-color-static-white)
+    );
 }
 :host([variant='overBackground'][disabled]),
 :host([variant='overBackground']:disabled) {
@@ -160,9 +187,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton--overBackground.is-disabled,
    * .spectrum-ClearButton--overBackground:disabled */
     background-color: var(
-        --spectrum-alias-background-color-transparent,
-        transparent
+        --spectrum-button-quiet-over-background-m-background-color-disabled,
+        var(--spectrum-alias-background-color-transparent)
     );
-    border-color: var(--spectrum-alias-border-color-transparent, transparent);
-    color: hsla(0, 0%, 100%, 0.15);
+    border-color: var(
+        --spectrum-button-quiet-over-background-m-border-color-disabled,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    color: var(
+        --spectrum-button-quiet-over-background-m-text-color-disabled,
+        hsla(0, 0%, 100%, 0.15)
+    );
 }

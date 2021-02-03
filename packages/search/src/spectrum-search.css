@@ -12,6 +12,16 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Search */
+    --spectrum-search-quiet-button-offset: calc(
+        var(
+                --spectrum-actionbutton-m-min-width,
+                var(--spectrum-global-dimension-size-400)
+            ) / 2 -
+            var(
+                --spectrum-icon-cross-small-width,
+                var(--spectrum-global-dimension-size-100)
+            ) / 2
+    );
     display: inline-block;
     position: relative;
 }
@@ -41,18 +51,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 .spectrum-Search--quiet #button {
     /* .spectrum-Search--quiet .spectrum-Search-clearButton */
-    transform: translateX(
-        calc(
-            var(
-                    --spectrum-actionbutton-m-min-width,
-                    var(--spectrum-global-dimension-size-400)
-                ) / 2 -
-                var(
-                    --spectrum-icon-cross-small-width,
-                    var(--spectrum-global-dimension-size-100)
-                ) / 2
-        )
-    );
+    transform: translateX(var(--spectrum-search-quiet-button-offset));
 }
 .icon {
     /* .spectrum-Search-icon */

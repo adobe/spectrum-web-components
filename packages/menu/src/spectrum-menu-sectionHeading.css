@@ -13,19 +13,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .header {
     /* .spectrum-Menu-sectionHeading */
     display: block;
-    margin: var(--spectrum-global-dimension-size-75) 0 0 0;
-    padding: 0 var(--spectrum-global-dimension-size-450) 0
-        var(--spectrum-global-dimension-size-150);
-    font-size: var(--spectrum-global-dimension-font-size-50);
-    font-weight: 400;
-    line-height: var(
-        --spectrum-alias-body-text-line-height,
-        var(--spectrum-global-font-line-height-medium)
-    );
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    margin: var(--spectrum-listitem-heading-margin);
+    padding: var(--spectrum-listitem-heading-padding);
+    font-size: var(--spectrum-listitem-heading-text-size);
+    font-weight: var(--spectrum-listitem-heading-text-font-weight);
+    line-height: var(--spectrum-listitem-heading-line-height);
+    text-transform: var(--spectrum-listitem-heading-text-transform);
+    letter-spacing: var(--spectrum-listitem-heading-letter-spacing);
 }
 .header {
     /* .spectrum-Menu-sectionHeading */
-    color: var(--spectrum-global-color-gray-700);
+    color: var(--spectrum-listheading-text-color);
 }

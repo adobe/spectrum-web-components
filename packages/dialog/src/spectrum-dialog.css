@@ -12,6 +12,41 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Dialog */
+    --spectrum-dialog-fullscreen-header-text-size: 28px;
+    --spectrum-dialog-confirm-small-width: 400px;
+    --spectrum-dialog-confirm-medium-width: 480px;
+    --spectrum-dialog-confirm-large-width: 640px;
+    --spectrum-dialog-error-width: var(--spectrum-dialog-confirm-medium-width);
+    --spectrum-dialog-confirm-hero-height: var(
+        --spectrum-global-dimension-size-1600
+    );
+    --spectrum-dialog-confirm-description-padding: var(
+        --spectrum-global-dimension-size-25
+    );
+    --spectrum-dialog-confirm-description-margin: calc(
+        var(--spectrum-global-dimension-size-25) * -1
+    );
+    --spectrum-dialog-confirm-footer-padding-top: var(
+        --spectrum-global-dimension-static-size-500,
+        40px
+    );
+    --spectrum-dialog-confirm-gap-size: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-dialog-confirm-buttongroup-padding-top: var(
+        --spectrum-global-dimension-static-size-500,
+        40px
+    );
+    --spectrum-dialog-confirm-close-button-size: var(
+        --spectrum-global-dimension-size-400
+    );
+    --spectrum-dialog-confirm-close-button-padding: calc(
+        26px - var(--spectrum-global-dimension-size-175)
+    );
+    --spectrum-dialog-confirm-divider-height: var(
+        --spectrum-global-dimension-static-size-25,
+        2px
+    );
     display: flex;
     box-sizing: border-box;
     width: -webkit-fit-content;
@@ -27,20 +62,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([size='small']) {
     /* .spectrum-Dialog--small */
-    width: 400px;
+    width: var(--spectrum-dialog-confirm-small-width);
 }
 :host([size='medium']) {
     /* .spectrum-Dialog--medium */
-    width: 480px;
+    width: var(--spectrum-dialog-confirm-medium-width);
 }
 :host([size='large']) {
     /* .spectrum-Dialog--large */
-    width: 640px;
+    width: var(--spectrum-dialog-confirm-large-width);
 }
 ::slotted([slot='hero']) {
     /* .spectrum-Dialog-hero */
     grid-area: hero;
-    height: var(--spectrum-global-dimension-size-1600);
+    height: var(--spectrum-dialog-confirm-hero-height);
     border-top-left-radius: var(
         --spectrum-dialog-confirm-border-radius,
         var(--spectrum-global-dimension-size-50)
@@ -67,11 +102,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) ::slotted([slot='heading']) {
     /* [dir=ltr] .spectrum-Dialog-heading */
-    padding-right: var(--spectrum-global-dimension-size-200);
+    padding-right: var(--spectrum-dialog-confirm-gap-size);
 }
 :host([dir='rtl']) ::slotted([slot='heading']) {
     /* [dir=rtl] .spectrum-Dialog-heading */
-    padding-left: var(--spectrum-global-dimension-size-200);
+    padding-left: var(--spectrum-dialog-confirm-gap-size);
 }
 ::slotted([slot='heading']) {
     /* .spectrum-Dialog-heading */
@@ -133,9 +168,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([no-divider]) ::slotted([slot='heading']) {
     /* .spectrum-Dialog--noDivider .spectrum-Dialog-heading */
     padding-bottom: calc(
-        var(--spectrum-global-dimension-static-size-150, 12px) +
-            var(--spectrum-global-dimension-static-size-200, 16px) +
-            var(--spectrum-global-dimension-static-size-25, 2px)
+        var(
+                --spectrum-dialog-confirm-divider-margin-top,
+                var(--spectrum-global-dimension-static-size-150)
+            ) +
+            var(
+                --spectrum-dialog-confirm-divider-margin-bottom,
+                var(--spectrum-global-dimension-static-size-200)
+            ) + var(--spectrum-dialog-confirm-divider-height)
     );
 }
 .content {
@@ -154,13 +194,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-dialog-confirm-description-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
-    padding: 0 var(--spectrum-global-dimension-size-25);
-    margin: 0 calc(var(--spectrum-global-dimension-size-25) * -1);
+    padding: 0 var(--spectrum-dialog-confirm-description-padding);
+    margin: 0 var(--spectrum-dialog-confirm-description-margin);
 }
 .footer {
     /* .spectrum-Dialog-footer */
     grid-area: footer;
-    padding-top: var(--spectrum-global-dimension-static-size-500, 40px);
+    padding-top: var(--spectrum-dialog-confirm-footer-padding-top);
     display: flex;
     flex-wrap: wrap;
     outline: none;
@@ -173,16 +213,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .buttonGroup {
     /* [dir=ltr] .spectrum-Dialog-buttonGroup */
-    padding-left: var(--spectrum-global-dimension-size-200);
+    padding-left: var(--spectrum-dialog-confirm-gap-size);
 }
 :host([dir='rtl']) .buttonGroup {
     /* [dir=rtl] .spectrum-Dialog-buttonGroup */
-    padding-right: var(--spectrum-global-dimension-size-200);
+    padding-right: var(--spectrum-dialog-confirm-gap-size);
 }
 .buttonGroup {
     /* .spectrum-Dialog-buttonGroup */
     grid-area: buttonGroup;
-    padding-top: var(--spectrum-global-dimension-static-size-500, 40px);
+    padding-top: var(--spectrum-dialog-confirm-buttongroup-padding-top);
     display: flex;
     justify-content: flex-end;
 }
@@ -194,7 +234,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid */
     grid-template-columns:
         var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
-        minmax(0, var(--spectrum-global-dimension-size-400)) var(--spectrum-dialog-confirm-padding);
+        minmax(0, var(--spectrum-dialog-confirm-close-button-size)) var(--spectrum-dialog-confirm-padding);
     grid-template-rows: auto var(--spectrum-dialog-confirm-padding) auto auto 1fr auto var(
             --spectrum-dialog-confirm-padding
         );
@@ -210,22 +250,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .close-button {
     /* [dir=ltr] .spectrum-Dialog-closeButton */
-    margin-right: calc(26px - var(--spectrum-global-dimension-size-175));
+    margin-right: var(--spectrum-dialog-confirm-close-button-padding);
 }
 :host([dir='rtl']) .close-button {
     /* [dir=rtl] .spectrum-Dialog-closeButton */
-    margin-left: calc(26px - var(--spectrum-global-dimension-size-175));
+    margin-left: var(--spectrum-dialog-confirm-close-button-padding);
 }
 .close-button {
     /* .spectrum-Dialog-closeButton */
     grid-area: closeButton;
     align-self: start;
     justify-self: end;
-    margin-top: calc(26px - var(--spectrum-global-dimension-size-175));
+    margin-top: var(--spectrum-dialog-confirm-close-button-padding);
 }
 :host([error]) {
     /* .spectrum-Dialog--error */
-    width: 480px;
+    width: var(--spectrum-dialog-error-width, 90%);
 }
 :host([mode='fullscreen']) {
     /* .spectrum-Dialog--fullscreen */
@@ -262,7 +302,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
     /* .spectrum-Dialog--fullscreen .spectrum-Dialog-heading,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-heading */
-    font-size: 28px;
+    font-size: var(--spectrum-dialog-fullscreen-header-text-size);
 }
 :host([mode='fullscreen']) .content,
 :host([mode='fullscreenTakeover']) .content {
@@ -309,7 +349,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     :host([dismissable]) .grid {
         grid-template-columns:
             var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
-            minmax(0, var(--spectrum-global-dimension-size-400)) var(--spectrum-dialog-confirm-padding);
+            minmax(0, var(--spectrum-dialog-confirm-close-button-size)) var(--spectrum-dialog-confirm-padding);
         grid-template-areas: 'hero hero    hero    hero        hero        hero        hero' '.    .       .       .           .           closeButton closeButton' '.    heading heading heading     typeIcon    closeButton closeButton' '.    header  header  header      header      header      .' '.    divider divider divider     divider     divider     .' '.    content content content     content     content     .' '.    footer  footer  buttonGroup buttonGroup buttonGroup .' '.    .       .       .           .           .           .';
     }
     .header {
@@ -328,7 +368,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     }
     :host([mode='fullscreen']) .buttonGroup,
     :host([mode='fullscreenTakeover']) .buttonGroup {
-        padding-top: var(--spectrum-global-dimension-static-size-500, 40px);
+        padding-top: var(--spectrum-dialog-confirm-buttongroup-padding-top);
     }
     :host([mode='fullscreen']) ::slotted([slot='heading']),
     :host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {

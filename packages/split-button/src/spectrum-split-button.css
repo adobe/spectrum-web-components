@@ -55,14 +55,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-direction: row;
     vertical-align: top;
 }
-:host([dir='ltr'].spectrum-Button) + {
-    /* [dir=ltr] .spectrum-Button+.spectrum-SplitButton */
-    margin-left: var(--spectrum-global-dimension-size-150);
-}
-:host([dir='rtl'].spectrum-Button) + {
-    /* [dir=rtl] .spectrum-Button+.spectrum-SplitButton */
-    margin-right: var(--spectrum-global-dimension-size-150);
-}
 :host([dir='ltr']) #button {
     /* [dir=ltr] .spectrum-SplitButton-action */
     margin-left: 0;

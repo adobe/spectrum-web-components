@@ -10,6 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    /* .spectrum-Toast */
+    --spectrum-toast-icon-padding-y: var(--spectrum-global-dimension-size-85);
+    --spectrum-toast-neutral-content-padding-top: var(
+        --spectrum-global-dimension-size-65
+    );
+    --spectrum-toast-content-padding-bottom: var(
+        --spectrum-global-dimension-size-65
+    );
+    --spectrum-toast-button-margin-right: var(
+        --spectrum-global-dimension-size-130
+    );
+}
 :host([dir='ltr']) {
     /* [dir=ltr] .spectrum-Toast */
     padding-right: var(
@@ -92,8 +105,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Toast-typeIcon */
     flex-shrink: 0;
     flex-grow: 0;
-    margin-top: var(--spectrum-global-dimension-size-85);
-    margin-bottom: var(--spectrum-global-dimension-size-85);
+    margin-top: var(--spectrum-toast-icon-padding-y);
+    margin-bottom: var(--spectrum-toast-icon-padding-y);
 }
 :host([dir='ltr']) .content {
     /* [dir=ltr] .spectrum-Toast-content */
@@ -130,8 +143,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex: 1 1 auto;
     display: inline-block;
     box-sizing: border-box;
-    padding-top: var(--spectrum-global-dimension-size-65);
-    padding-bottom: var(--spectrum-global-dimension-size-65);
+    padding-top: var(
+        --spectrum-toast-neutral-content-padding-top,
+        var(--spectrum-global-dimension-size-65)
+    );
+    padding-bottom: var(--spectrum-toast-content-padding-bottom);
     font-size: var(
         --spectrum-toast-info-text-size,
         var(--spectrum-alias-font-size-default)
@@ -192,11 +208,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .body ::slotted([slot='action']) {
     /* [dir=ltr] .spectrum-Toast-body .spectrum-Button */
-    margin-right: var(--spectrum-global-dimension-size-130);
+    margin-right: var(--spectrum-toast-button-margin-right);
 }
 :host([dir='rtl']) .body ::slotted([slot='action']) {
     /* [dir=rtl] .spectrum-Toast-body .spectrum-Button */
-    margin-left: var(--spectrum-global-dimension-size-130);
+    margin-left: var(--spectrum-toast-button-margin-right);
 }
 :host([dir='ltr']) .body + .buttons {
     /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */

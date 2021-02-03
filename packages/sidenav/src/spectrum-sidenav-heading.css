@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #list {
     /* .spectrum-SideNav */
+    --spectrum-sidenav-item-padding-y: var(--spectrum-global-dimension-size-65);
     list-style-type: none;
     margin: 0;
     padding: 0;

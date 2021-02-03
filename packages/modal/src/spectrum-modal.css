@@ -30,6 +30,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 .modal {
     /* .spectrum-Modal */
+    --spectrum-dialog-confirm-exit-animation-delay: 0ms;
+    --spectrum-dialog-fullscreen-margin: 32px;
+    --spectrum-dialog-max-height: 90vh;
+}
+.modal {
+    /* .spectrum-Modal */
     transform: translateY(
         var(
             --spectrum-dialog-confirm-entry-animation-distance,
@@ -37,7 +43,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
     );
     z-index: 2;
-    max-height: 90vh;
+    max-height: var(--spectrum-dialog-max-height);
     border-radius: var(
         --spectrum-dialog-confirm-border-radius,
         var(--spectrum-global-dimension-size-50)
@@ -50,10 +56,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-dialog-confirm-exit-animation-duration,
                 var(--spectrum-global-animation-duration-100)
             )
-            cubic-bezier(0.5, 0, 1, 1) 0ms,
+            cubic-bezier(0.5, 0, 1, 1)
+            var(--spectrum-dialog-confirm-exit-animation-delay, 0ms),
         visibility 0ms linear
             calc(
-                0ms +
+                var(--spectrum-dialog-confirm-exit-animation-delay, 0ms) +
                     var(
                         --spectrum-dialog-confirm-exit-animation-duration,
                         var(--spectrum-global-animation-duration-100)
@@ -61,7 +68,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ),
         transform 0ms linear
             calc(
-                0ms +
+                var(--spectrum-dialog-confirm-exit-animation-delay, 0ms) +
                     var(
                         --spectrum-dialog-confirm-exit-animation-duration,
                         var(--spectrum-global-animation-duration-100)
@@ -105,10 +112,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .fullscreen {
     /* .spectrum-Modal--fullscreen */
     position: fixed;
-    left: 32px;
-    top: 32px;
-    right: 32px;
-    bottom: 32px;
+    left: var(--spectrum-dialog-fullscreen-margin);
+    top: var(--spectrum-dialog-fullscreen-margin);
+    right: var(--spectrum-dialog-fullscreen-margin);
+    bottom: var(--spectrum-dialog-fullscreen-margin);
     max-width: none;
     max-height: none;
 }

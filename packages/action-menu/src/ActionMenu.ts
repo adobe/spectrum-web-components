@@ -16,7 +16,6 @@ import {
     PropertyValues,
     html,
     ifDefined,
-    property,
 } from '@spectrum-web-components/base';
 import { PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -31,9 +30,6 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public static get styles(): CSSResultArray {
         return [actionMenuStyles];
     }
-
-    @property({ type: String, reflect: true })
-    public size = 'm';
 
     protected listRole = 'menu';
     protected itemRole = 'menuitem';

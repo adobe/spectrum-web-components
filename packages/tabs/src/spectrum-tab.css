@@ -14,10 +14,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs-item */
     position: relative;
     box-sizing: border-box;
-    height: calc(var(--spectrum-tabs-height) - var(--spectrum-tabs-rule-size));
-    line-height: calc(
-        var(--spectrum-tabs-height) - var(--spectrum-tabs-rule-size)
-    );
+    height: var(--spectrum-tabs-item-height);
+    line-height: var(--spectrum-tabs-item-height);
     z-index: 1;
     text-decoration: none;
     white-space: nowrap;
@@ -34,15 +32,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host(:not([vertical])) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item .spectrum-Icon */
-    height: calc(var(--spectrum-tabs-height) - var(--spectrum-tabs-rule-size));
+    height: var(--spectrum-tabs-item-height);
 }
 :host([dir='ltr']) slot[name='icon'] + #itemLabel {
     /* [dir=ltr] .spectrum-Tabs-item .spectrum-Icon+.spectrum-Tabs-itemLabel */
-    margin-left: calc(var(--spectrum-tabs-icon-gap) - 3px);
+    margin-left: calc(
+        var(--spectrum-tabs-icon-gap) - var(--spectrum-global-dimension-size-40)
+    );
 }
 :host([dir='rtl']) slot[name='icon'] + #itemLabel {
     /* [dir=rtl] .spectrum-Tabs-item .spectrum-Icon+.spectrum-Tabs-itemLabel */
-    margin-right: calc(var(--spectrum-tabs-icon-gap) - 3px);
+    margin-right: calc(
+        var(--spectrum-tabs-icon-gap) - var(--spectrum-global-dimension-size-40)
+    );
 }
 :host([dir='ltr']):before {
     /* [dir=ltr] .spectrum-Tabs-item:before */
@@ -78,10 +80,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: pointer;
     vertical-align: top;
     display: inline-block;
-    font-size: var(
-        --spectrum-alias-font-size-default,
-        var(--spectrum-global-dimension-font-size-100)
-    );
+    font-size: var(--spectrum-tabs-text-size);
     font-weight: var(--spectrum-tabs-text-font-weight);
     text-decoration: none;
 }
@@ -92,69 +91,74 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Tabs-item */
     color: var(
-        --spectrum-alias-label-text-color,
-        var(--spectrum-global-color-gray-700)
+        --spectrum-tabs-m-text-color,
+        var(--spectrum-alias-label-text-color)
     );
 }
 :host(:not([vertical])) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item .spectrum-Icon */
-    color: var(
-        --spectrum-alias-icon-color,
-        var(--spectrum-global-color-gray-700)
-    );
+    color: var(--spectrum-tabs-m-icon-color, var(--spectrum-alias-icon-color));
 }
 :host(:hover) {
     /* .spectrum-Tabs-item:hover */
     color: var(
-        --spectrum-alias-text-color-hover,
-        var(--spectrum-global-color-gray-900)
+        --spectrum-tabs-m-text-color-hover,
+        var(--spectrum-alias-text-color-hover)
     );
 }
 :host(:hover) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item:hover .spectrum-Icon */
     color: var(
-        --spectrum-alias-icon-color-hover,
+        --spectrum-tabs-m-icon-color-hover,
+        var(--spectrum-alias-icon-color-hover)
+    );
+}
+:host([selected]) {
+    /* .spectrum-Tabs-item.is-selected */
+    color: var(
+        --spectrum-tabs-m-text-color-selected,
         var(--spectrum-global-color-gray-900)
     );
 }
-:host([selected]),
 :host([selected]) ::slotted([slot='icon']) {
-    /* .spectrum-Tabs-item.is-selected,
-   * .spectrum-Tabs-item.is-selected .spectrum-Icon */
-    color: var(--spectrum-global-color-gray-900);
+    /* .spectrum-Tabs-item.is-selected .spectrum-Icon */
+    color: var(
+        --spectrum-tabs-m-icon-color-selected,
+        var(--spectrum-global-color-gray-900)
+    );
 }
 :host(:focus-visible) {
     /* .spectrum-Tabs-item.focus-ring */
     color: var(
-        --spectrum-alias-text-color-key-focus,
-        var(--spectrum-global-color-blue-600)
+        --spectrum-tabs-m-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
     );
 }
 :host(:focus-visible):before {
     /* .spectrum-Tabs-item.focus-ring:before */
     border-color: var(
-        --spectrum-alias-border-color-focus,
-        var(--spectrum-global-color-blue-400)
+        --spectrum-tabs-m-focus-ring-color,
+        var(--spectrum-alias-border-color-focus)
     );
 }
 :host(:focus-visible) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item.focus-ring .spectrum-Icon */
     color: var(
-        --spectrum-alias-icon-color-focus,
-        var(--spectrum-global-color-gray-900)
+        --spectrum-tabs-m-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-focus)
     );
 }
 :host([disabled]) {
     /* .spectrum-Tabs-item.is-disabled */
     color: var(
-        --spectrum-alias-text-color-disabled,
-        var(--spectrum-global-color-gray-500)
+        --spectrum-tabs-m-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
     );
 }
 :host([disabled]) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item.is-disabled .spectrum-Icon */
     color: var(
-        --spectrum-alias-icon-color-disabled,
-        var(--spectrum-global-color-gray-400)
+        --spectrum-tabs-m-icon-color-disabled,
+        var(--spectrum-alias-icon-color-disabled)
     );
 }

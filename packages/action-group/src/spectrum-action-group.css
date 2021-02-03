@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-ActionGroup */
+    --spectrum-actiongroup-button-gap-reset: 0;
+    --spectrum-actiongroup-quiet-compact-button-gap: var(
+        --spectrum-global-dimension-size-25
+    );
     display: flex;
     flex-wrap: wrap;
 }
@@ -54,11 +58,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][vertical]) ::slotted(:not(:first-child)) {
     /* [dir=ltr] .spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-    margin-left: 0;
+    margin-left: var(--spectrum-actiongroup-button-gap-reset);
 }
 :host([dir='rtl'][vertical]) ::slotted(:not(:first-child)) {
     /* [dir=rtl] .spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-    margin-right: 0;
+    margin-right: var(--spectrum-actiongroup-button-gap-reset);
 }
 :host([vertical]) ::slotted(:not(:first-child)) {
     /* .spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
@@ -69,11 +73,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][vertical][vertical]) {
     /* [dir=ltr] .spectrum-ActionGroup--vertical.spectrum-ActionGroup--vertical */
-    margin-left: 0;
+    margin-left: var(--spectrum-actiongroup-button-gap-reset);
 }
 :host([dir='rtl'][vertical][vertical]) {
     /* [dir=rtl] .spectrum-ActionGroup--vertical.spectrum-ActionGroup--vertical */
-    margin-right: 0;
+    margin-right: var(--spectrum-actiongroup-button-gap-reset);
 }
 :host([vertical][vertical]) {
     /* .spectrum-ActionGroup--vertical.spectrum-ActionGroup--vertical */
@@ -84,27 +88,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][compact][quiet]) ::slotted(:not(:first-child)) {
     /* [dir=ltr] .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-    margin-left: var(--spectrum-global-dimension-size-25);
+    margin-left: var(--spectrum-actiongroup-quiet-compact-button-gap);
 }
 :host([dir='rtl'][compact][quiet]) ::slotted(:not(:first-child)) {
     /* [dir=rtl] .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-    margin-right: var(--spectrum-global-dimension-size-25);
+    margin-right: var(--spectrum-actiongroup-quiet-compact-button-gap);
 }
 :host([compact][quiet]) ::slotted(:not(:first-child)) {
     /* .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-    margin-top: 0;
+    margin-top: var(--spectrum-actiongroup-button-gap-reset);
 }
 :host([dir='ltr'][compact][quiet][vertical]) ::slotted(:not(:first-child)) {
     /* [dir=ltr] .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet.spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-    margin-left: 0;
+    margin-left: var(--spectrum-actiongroup-button-gap-reset);
 }
 :host([dir='rtl'][compact][quiet][vertical]) ::slotted(:not(:first-child)) {
     /* [dir=rtl] .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet.spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-    margin-right: 0;
+    margin-right: var(--spectrum-actiongroup-button-gap-reset);
 }
 :host([compact][quiet][vertical]) ::slotted(:not(:first-child)) {
     /* .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet.spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-    margin-top: var(--spectrum-global-dimension-size-25);
+    margin-top: var(--spectrum-actiongroup-quiet-compact-button-gap);
 }
 :host([compact]:not([quiet])) {
     /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) */

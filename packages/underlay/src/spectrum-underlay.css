@@ -30,6 +30,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host {
     /* .spectrum-Underlay */
+    --spectrum-dialog-confirm-background-entry-animation-delay: 0ms;
+    --spectrum-dialog-confirm-background-exit-animation-ease: cubic-bezier(
+        0.5,
+        0,
+        1,
+        1
+    );
+    --spectrum-dialog-confirm-background-entry-animation-ease: cubic-bezier(
+        0,
+        0,
+        0.4,
+        1
+    );
     position: fixed;
     top: 0;
     right: 0;
@@ -42,7 +55,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-dialog-confirm-background-exit-animation-duration,
                 var(--spectrum-global-animation-duration-300)
             )
-            cubic-bezier(0.5, 0, 1, 1)
+            var(
+                --spectrum-dialog-confirm-background-exit-animation-ease,
+                var(--spectrum-global-animation-linear)
+            )
             var(
                 --spectrum-dialog-confirm-background-exit-animation-delay,
                 var(--spectrum-global-animation-duration-200)
@@ -66,7 +82,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-dialog-confirm-background-entry-animation-duration,
             var(--spectrum-global-animation-duration-600)
         )
-        cubic-bezier(0, 0, 0.4, 1) 0ms;
+        var(
+            --spectrum-dialog-confirm-background-entry-animation-ease,
+            var(--spectrum-global-animation-linear)
+        )
+        var(--spectrum-dialog-confirm-background-entry-animation-delay, 0ms);
 }
 :host {
     /* .spectrum-Underlay */

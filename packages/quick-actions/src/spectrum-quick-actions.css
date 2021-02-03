@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-QuickActions */
+    --spectrum-overlay-animation-distance: var(
+        --spectrum-picker-m-popover-offset-y,
+        var(--spectrum-global-dimension-size-75)
+    );
     visibility: hidden;
     opacity: 0;
     transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
@@ -30,19 +34,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([enter-from='left'][opened]) {
     /* .spectrum-QuickActions--left.is-open */
-    transform: translateX(
-        var(
-            --spectrum-picker-m-popover-offset-y,
-            var(--spectrum-global-dimension-size-75)
-        )
-    );
+    transform: translateX(var(--spectrum-overlay-animation-distance));
 }
 :host([enter-from='right'][opened]) {
     /* .spectrum-QuickActions--right.is-open */
     transform: translateX(
-        calc(
-            -1 * var(--spectrum-picker-m-popover-offset-y, var(--spectrum-global-dimension-size-75))
-        )
+        calc(-1 * var(--spectrum-overlay-animation-distance))
     );
 }
 :host {

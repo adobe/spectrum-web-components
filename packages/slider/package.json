@@ -49,10 +49,10 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/slider": "^3.0.0-beta.5"
+        "@spectrum-css/slider": "^3.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/base": "^0.3.1",
+        "@spectrum-web-components/base": "^0.3.2",
         "@spectrum-web-components/shared": "^0.9.0",
         "tslib": "^2.0.0"
     }
