@@ -49,13 +49,13 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/actionbar": "^3.0.0-beta.6",
+        "@spectrum-css/actionbar": "^3.0.0",
         "@spectrum-web-components/action-button": "^0.2.2",
         "@spectrum-web-components/icon": "^0.8.2"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.3.2",
-        "@spectrum-web-components/popover": "^0.7.0",
+        "@spectrum-web-components/popover": "^0.7.1",
         "tslib": "^2.0.0"
     }
 }

@@ -49,7 +49,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/actiongroup": "^1.0.0-beta.5",
+        "@spectrum-css/actiongroup": "^1.0.0",
         "@spectrum-web-components/icon": "^0.8.2",
         "@spectrum-web-components/icons-workflow": "^0.5.2"
     },

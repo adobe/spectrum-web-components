@@ -12,12 +12,22 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-ActionBar */
+    --spectrum-actionbar-height: var(--spectrum-global-dimension-size-600);
+    --spectrum-actionbar-padding-left: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-actionbar-padding-right: calc(
+        var(--spectrum-global-dimension-size-200) / 2
+    );
+    --spectrum-actionbar-margin-x: var(--spectrum-global-dimension-size-200);
+    --spectrum-actionbar-min-width: 280px;
+    --spectrum-actionbar-max-width: 960px;
     display: flex;
     justify-content: center;
     bottom: 0;
     z-index: 1;
     box-sizing: border-box;
-    padding: 0 var(--spectrum-global-dimension-size-200);
+    padding: 0 var(--spectrum-actionbar-margin-x);
     height: 0;
     opacity: 0;
     overflow: hidden;
@@ -29,8 +39,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([open]) {
     /* .spectrum-ActionBar.is-open */
     height: calc(
-        var(--spectrum-global-dimension-size-600) +
-            var(--spectrum-global-dimension-size-200) * 2
+        var(
+                --spectrum-actionbar-height,
+                var(--spectrum-global-dimension-size-600)
+            ) + var(--spectrum-actionbar-margin-x) * 2
     );
     opacity: 1;
 }
@@ -63,19 +75,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #popover {
     /* [dir=ltr] .spectrum-ActionBar-popover */
-    padding-left: var(--spectrum-global-dimension-size-200);
+    padding-left: var(--spectrum-actionbar-padding-left);
 }
 :host([dir='rtl']) #popover {
     /* [dir=rtl] .spectrum-ActionBar-popover */
-    padding-right: var(--spectrum-global-dimension-size-200);
+    padding-right: var(--spectrum-actionbar-padding-left);
 }
 :host([dir='ltr']) #popover {
     /* [dir=ltr] .spectrum-ActionBar-popover */
-    padding-right: calc(var(--spectrum-global-dimension-size-200) / 2);
+    padding-right: var(--spectrum-actionbar-padding-right);
 }
 :host([dir='rtl']) #popover {
     /* [dir=rtl] .spectrum-ActionBar-popover */
-    padding-left: calc(var(--spectrum-global-dimension-size-200) / 2);
+    padding-left: var(--spectrum-actionbar-padding-right);
 }
 #popover {
     /* .spectrum-ActionBar-popover */
@@ -83,9 +95,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-sizing: border-box;
     width: 100%;
     margin: auto;
-    height: var(--spectrum-global-dimension-size-600);
-    min-width: 280px;
-    max-width: 960px;
+    height: var(
+        --spectrum-actionbar-height,
+        var(--spectrum-global-dimension-size-600)
+    );
+    min-width: var(
+        --spectrum-actionbar-min-width,
+        var(--spectrum-global-dimension-static-size-3500)
+    );
+    max-width: var(
+        --spectrum-actionbar-max-width,
+        var(--spectrum-global-dimension-static-size-3500)
+    );
     flex-direction: row;
     align-items: center;
     justify-content: space-between;

@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-ButtonGroup */
+    --spectrum-buttongroup-button-gap-reset: 0;
     display: flex;
 }
 ::slotted(*) {
@@ -39,11 +40,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][vertical]) ::slotted(*:not(:first-of-type)) {
     /* [dir=ltr] .spectrum-ButtonGroup--vertical .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
-    margin-left: 0;
+    margin-left: var(--spectrum-buttongroup-button-gap-reset);
 }
 :host([dir='rtl'][vertical]) ::slotted(*:not(:first-of-type)) {
     /* [dir=rtl] .spectrum-ButtonGroup--vertical .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
-    margin-right: 0;
+    margin-right: var(--spectrum-buttongroup-button-gap-reset);
 }
 :host([vertical]) ::slotted(*:not(:first-of-type)) {
     /* .spectrum-ButtonGroup--vertical .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */

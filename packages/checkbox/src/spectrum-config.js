@@ -35,6 +35,29 @@ const config = {
                     name: 'emphasized',
                     selector: '.spectrum-Checkbox--emphasized',
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Checkbox--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Checkbox--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Checkbox--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-Checkbox--sizeXL',
+                        },
+                    ],
+                },
             ],
             ids: [
                 {

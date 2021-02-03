@@ -16,6 +16,7 @@ import {
     html,
     property,
     PropertyValues,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 import { CheckboxBase } from './CheckboxBase.js';
 import '@spectrum-web-components/icon/sp-icon.js';
@@ -24,7 +25,21 @@ import checkboxStyles from './checkbox.css.js';
 import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
 
-export class Checkbox extends CheckboxBase {
+const checkmarkClass = {
+    s: 'spectrum-UIIcon-Checkmark75',
+    m: 'spectrum-UIIcon-Checkmark75',
+    l: 'spectrum-UIIcon-Checkmark100',
+    xl: 'spectrum-UIIcon-Checkmark200',
+};
+
+const dashClass = {
+    s: 'spectrum-UIIcon-Dash75',
+    m: 'spectrum-UIIcon-Dash75',
+    l: 'spectrum-UIIcon-Dash100',
+    xl: 'spectrum-UIIcon-Dash200',
+};
+
+export class Checkbox extends SizedMixin(CheckboxBase) {
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
 
@@ -42,10 +57,10 @@ export class Checkbox extends CheckboxBase {
         return html`
             ${super.render()}
             <span id="box">
-                <sp-icon id="checkmark" class="spectrum-UIIcon-Checkmark75">
+                <sp-icon id="checkmark" class=${checkmarkClass[this.size]}>
                     ${Checkmark75Icon()}
                 </sp-icon>
-                <sp-icon id="partialCheckmark" class="spectrum-UIIcon-Dash75">
+                <sp-icon id="partialCheckmark" class=${dashClass[this.size]}>
                     ${Dash75Icon()}
                 </sp-icon>
             </span>

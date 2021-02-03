@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Popover */
+    --spectrum-overlay-animation-distance: var(
+        --spectrum-picker-m-popover-offset-y,
+        var(--spectrum-global-dimension-size-75)
+    );
     visibility: hidden;
     opacity: 0;
     transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
@@ -30,44 +34,41 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([placement*='bottom'][open]) {
     /* .spectrum-Popover--bottom.is-open */
-    transform: translateY(
-        var(
-            --spectrum-picker-m-popover-offset-y,
-            var(--spectrum-global-dimension-size-75)
-        )
-    );
+    transform: translateY(var(--spectrum-overlay-animation-distance));
 }
 :host([placement*='top'][open]) {
     /* .spectrum-Popover--top.is-open */
     transform: translateY(
-        calc(
-            -1 * var(--spectrum-picker-m-popover-offset-y, var(--spectrum-global-dimension-size-75))
-        )
+        calc(-1 * var(--spectrum-overlay-animation-distance))
     );
 }
 :host([placement*='right'][open]) {
     /* .spectrum-Popover--right.is-open */
-    transform: translateX(
-        var(
-            --spectrum-picker-m-popover-offset-y,
-            var(--spectrum-global-dimension-size-75)
-        )
-    );
+    transform: translateX(var(--spectrum-overlay-animation-distance));
 }
 :host([placement*='left'][open]) {
     /* .spectrum-Popover--left.is-open */
     transform: translateX(
-        calc(
-            -1 * var(--spectrum-picker-m-popover-offset-y, var(--spectrum-global-dimension-size-75))
-        )
+        calc(-1 * var(--spectrum-overlay-animation-distance))
     );
 }
 :host {
     /* .spectrum-Popover */
+    --spectrum-popover-target-offset: 13px;
+    --spectrum-popover-dialog-padding: 30px 29px;
+    --spectrum-popover-dialog-min-width: 270px;
+    --spectrum-popover-min-width: var(--spectrum-global-dimension-size-400);
+    --spectrum-popover-min-height: var(--spectrum-global-dimension-size-400);
     display: inline-flex;
     flex-direction: column;
-    min-width: var(--spectrum-global-dimension-size-400);
-    min-height: var(--spectrum-global-dimension-size-400);
+    min-width: var(
+        --spectrum-popover-min-width,
+        var(--spectrum-global-dimension-size-400)
+    );
+    min-height: var(
+        --spectrum-popover-min-height,
+        var(--spectrum-global-dimension-size-400)
+    );
     position: absolute;
     border-style: solid;
     border-width: var(
@@ -97,12 +98,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dialog]) {
     /* .spectrum-Popover--dialog */
-    min-width: 270px;
-    padding: 30px 29px;
+    min-width: var(--spectrum-popover-dialog-min-width);
+    padding: var(--spectrum-popover-dialog-padding);
 }
 :host([placement*='left'][tip]) {
     /* .spectrum-Popover--left.spectrum-Popover--withTip */
-    margin-right: 13px;
+    margin-right: var(--spectrum-popover-target-offset);
 }
 :host([placement*='left']) #tip {
     /* .spectrum-Popover--left .spectrum-Popover-tip */
@@ -110,7 +111,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([placement*='right'][tip]) {
     /* .spectrum-Popover--right.spectrum-Popover--withTip */
-    margin-left: 13px;
+    margin-left: var(--spectrum-popover-target-offset);
 }
 :host([placement*='right']) #tip {
     /* .spectrum-Popover--right .spectrum-Popover-tip */
@@ -126,7 +127,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([placement*='bottom'][tip]) {
     /* .spectrum-Popover--bottom.spectrum-Popover--withTip */
-    margin-top: 13px;
+    margin-top: var(--spectrum-popover-target-offset);
 }
 :host([placement*='bottom']) #tip {
     /* .spectrum-Popover--bottom .spectrum-Popover-tip */
@@ -135,7 +136,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([placement*='top'][tip]) {
     /* .spectrum-Popover--top.spectrum-Popover--withTip */
-    margin-bottom: 13px;
+    margin-bottom: var(--spectrum-popover-target-offset);
 }
 :host([placement*='top']) #tip {
     /* .spectrum-Popover--top .spectrum-Popover-tip */

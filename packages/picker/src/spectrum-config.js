@@ -44,6 +44,29 @@ const config = {
                     selector: '.is-focused',
                     name: 'focused',
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Picker--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Picker--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Picker--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-Picker--sizeXL',
+                        },
+                    ],
+                },
             ],
             classes: [
                 {

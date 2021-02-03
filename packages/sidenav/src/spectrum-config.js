@@ -24,9 +24,9 @@ const config = {
                 },
             ],
             exclude: [
-                /^\.spectrum-SideNav-(item|heading)/,
+                /\.spectrum-SideNav-(item|itemLink|heading)/,
                 // We cannot do global matches like this with shadow DOM
-                /^\.spectrum-SideNav--multiLevel\s\.spectrum-SideNav/,
+                /\.spectrum-SideNav--multiLevel\s\.spectrum-SideNav/,
                 /\.spectrum-SideNav\s\.spectrum-SideNav/,
             ],
         },

@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #list {
     /* .spectrum-SideNav */
+    --spectrum-sidenav-item-padding-y: var(--spectrum-global-dimension-size-65);
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -42,7 +43,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-sidenav-item-height,
         var(--spectrum-alias-single-line-height)
     );
-    padding: var(--spectrum-global-dimension-size-65)
+    padding: var(--spectrum-sidenav-item-padding-y)
         var(
             --spectrum-sidenav-item-padding-x,
             var(--spectrum-global-dimension-size-150)

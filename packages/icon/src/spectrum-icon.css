@@ -23,56 +23,55 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-UIIcon:not(:root) */
     overflow: hidden;
 }
+:host {
+    /* .spectrum-Icon */
+    --spectrum-icon-size-s: var(
+        --spectrum-alias-workflow-icon-size-s,
+        var(--spectrum-global-dimension-size-200)
+    );
+    --spectrum-icon-size-m: var(
+        --spectrum-alias-workflow-icon-size-m,
+        var(--spectrum-global-dimension-size-225)
+    );
+    --spectrum-icon-size-l: var(--spectrum-alias-workflow-icon-size-l);
+    --spectrum-icon-size-xl: var(
+        --spectrum-alias-workflow-icon-size-xl,
+        var(--spectrum-global-dimension-size-275)
+    );
+    --spectrum-icon-size-xxl: var(--spectrum-global-dimension-size-400);
+}
 :host([size='s']) {
     /* .spectrum-Icon--sizeS,
    * .spectrum-Icon--sizeS img,
    * .spectrum-Icon--sizeS svg */
-    height: var(
-        --spectrum-alias-workflow-icon-size-s,
-        var(--spectrum-global-dimension-size-200)
-    );
-    width: var(
-        --spectrum-alias-workflow-icon-size-s,
-        var(--spectrum-global-dimension-size-200)
-    );
+    height: var(--spectrum-icon-size-s);
+    width: var(--spectrum-icon-size-s);
 }
 :host([size='m']) {
     /* .spectrum-Icon--sizeM,
    * .spectrum-Icon--sizeM img,
    * .spectrum-Icon--sizeM svg */
-    height: var(
-        --spectrum-alias-workflow-icon-size-m,
-        var(--spectrum-global-dimension-size-225)
-    );
-    width: var(
-        --spectrum-alias-workflow-icon-size-m,
-        var(--spectrum-global-dimension-size-225)
-    );
+    height: var(--spectrum-icon-size-m);
+    width: var(--spectrum-icon-size-m);
 }
 :host([size='l']) {
     /* .spectrum-Icon--sizeL,
    * .spectrum-Icon--sizeL img,
    * .spectrum-Icon--sizeL svg */
-    height: var(--spectrum-alias-workflow-icon-size-l);
-    width: var(--spectrum-alias-workflow-icon-size-l);
+    height: var(--spectrum-icon-size-l);
+    width: var(--spectrum-icon-size-l);
 }
 :host([size='xl']) {
     /* .spectrum-Icon--sizeXL,
    * .spectrum-Icon--sizeXL img,
    * .spectrum-Icon--sizeXL svg */
-    height: var(
-        --spectrum-alias-workflow-icon-size-xl,
-        var(--spectrum-global-dimension-size-275)
-    );
-    width: var(
-        --spectrum-alias-workflow-icon-size-xl,
-        var(--spectrum-global-dimension-size-275)
-    );
+    height: var(--spectrum-icon-size-xl);
+    width: var(--spectrum-icon-size-xl);
 }
 :host([size='xxl']) {
     /* .spectrum-Icon--sizeXXL,
    * .spectrum-Icon--sizeXXL img,
    * .spectrum-Icon--sizeXXL svg */
-    height: var(--spectrum-global-dimension-size-400);
-    width: var(--spectrum-global-dimension-size-400);
+    height: var(--spectrum-icon-size-xxl);
+    width: var(--spectrum-icon-size-xxl);
 }

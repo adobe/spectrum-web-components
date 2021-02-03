@@ -19,6 +19,7 @@ import {
     query,
     nothing,
     ifDefined,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 
 import pickerStyles from './picker.css.js';
@@ -42,6 +43,13 @@ import {
     OverlayOptions,
 } from '@spectrum-web-components/overlay';
 
+const chevronClass = {
+    s: 'spectrum-UIIcon-ChevronDown75',
+    m: 'spectrum-UIIcon-ChevronDown100',
+    l: 'spectrum-UIIcon-ChevronDown200',
+    xl: 'spectrum-UIIcon-ChevronDown300',
+};
+
 /**
  * @element sp-picker
  * @slot label - The placeholder content for the picker
@@ -50,7 +58,7 @@ import {
  * @fires sp-open - Announces that the overlay has been opened
  * @fires sp-close - Announces that the overlay has been closed
  */
-export class PickerBase extends Focusable {
+export class PickerBase extends SizedMixin(Focusable) {
     public static openOverlay = async (
         target: HTMLElement,
         interaction: TriggerInteractions,
@@ -307,7 +315,7 @@ export class PickerBase extends Focusable {
                           <sp-icon-alert class="validationIcon"></sp-icon-alert>
                       `
                     : nothing}
-                <sp-icon class="icon picker spectrum-UIIcon-ChevronDown100">
+                <sp-icon class="icon picker ${chevronClass[this.size]}">
                     ${Chevron100Icon()}
                 </sp-icon>
             `,
