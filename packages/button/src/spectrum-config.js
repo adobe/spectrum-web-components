@@ -25,7 +25,9 @@ const config = {
                 },
             ],
             exclude: [/\.spectrum-ClearButton/],
-            excludeSourceSelector: [/^(?!(.*),(.*),(.*),(.*),(.*))/],
+            excludeSourceSelector: [
+                /^(?!(\.spectrum-Button.*),(\.spectrum-ClearButton.*),(\.spectrum-LogicButton.*))/,
+            ],
         },
         {
             name: 'button',
@@ -99,7 +101,9 @@ const config = {
                 },
             ],
             exclude: [/\.spectrum-ClearButton/],
-            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
+            excludeSourceSelector: [
+                /^(\.spectrum-Button.*),(\.spectrum-ClearButton.*),(\.spectrum-LogicButton.*)$/,
+            ],
         },
         {
             name: 'clear-button',
@@ -145,7 +149,9 @@ const config = {
                 },
             ],
             exclude: [/\.spectrum-Button/],
-            excludeSourceSelector: [/^(.*),(.*),(.*),(.*),(.*)$/],
+            excludeSourceSelector: [
+                /^(\.spectrum-Button.*),(\.spectrum-ClearButton.*),(\.spectrum-LogicButton.*)$/,
+            ],
         },
     ],
 };
