@@ -15,31 +15,7 @@ governing permissions and limitations under the License.
 :host {
     display: inline-flex;
     vertical-align: top;
-
-    /**
-    * Work around the realities in https://github.com/adobe/spectrum-css/issues/1089
-    * while full t-shirt sizing is being developed at the Spectrum CSS level.
-    */
-    --spectrum-checkbox-label-margin-top: var(
-        --spectrum-global-dimension-size-75,
-        6px
-    );
 }
-
-#input:checked + #box #checkmark,
-:host([indeterminate]) #box #partialCheckmark,
-:host([indeterminate]) #input:checked + #box #partialCheckmark {
-    /* .spectrum-Checkbox-checkmark */
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: scale(1) translate(-50%, -50%);
-    margin: 0;
-}
-
-/**
- * End workaround for https://github.com/adobe/spectrum-css/issues/1089
- **/
 
 :host(:empty) label {
     display: none;
