@@ -31,10 +31,20 @@ const holdAffordanceClass = {
     xl: 'spectrum-UIIcon-CornerTriangle300',
 };
 
+const LONGPRESS_DURATION = 300;
+let LONGPRESS_TIMEOUT: ReturnType<typeof setTimeout>;
+
+export type LongpressEvent = {
+    source: 'pointer' | 'keyboard';
+};
+
 /**
  * @element sp-card
  *
  * @fires change - Announces a change in the `selected` property of an action button
+ * @fires longpress - Synthesizes a "longpress" interaction that signifies a
+ * `pointerdown` event that is >=300ms or a keyboard event wher code is `Space` or code is `ArrowDown`
+ * while `altKey===true`.
  */
 export class ActionButton extends SizedMixin(ButtonBase) {
     public static get styles(): CSSResultArray {
@@ -83,6 +93,7 @@ export class ActionButton extends SizedMixin(ButtonBase) {
     constructor() {
         super();
         this.addEventListener('click', this.onClick);
+        this.addEventListener('pointerdown', this.onPointerdown);
     }
 
     private onClick = (): void => {
@@ -99,6 +110,67 @@ export class ActionButton extends SizedMixin(ButtonBase) {
             this.selected = !this.selected;
         }
     };
+
+    private onPointerdown(): void {
+        this.addEventListener('pointerup', this.onPointerup);
+        this.addEventListener('pointercancel', this.onPointerup);
+        LONGPRESS_TIMEOUT = setTimeout(() => {
+            this.dispatchEvent(
+                new CustomEvent<LongpressEvent>('longpress', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        source: 'pointer',
+                    },
+                })
+            );
+        }, LONGPRESS_DURATION);
+    }
+
+    private onPointerup(): void {
+        clearTimeout(LONGPRESS_TIMEOUT);
+        this.removeEventListener('pointerup', this.onPointerup);
+        this.removeEventListener('pointercancel', this.onPointerup);
+    }
+
+    /**
+     * @private
+     */
+    protected handleKeydown(event: KeyboardEvent): void {
+        if (!this.holdAffordance) {
+            return super.handleKeydown(event);
+        }
+        const { code, altKey } = event;
+        if (code === 'Space' || (altKey && code === 'ArrowDown')) {
+            event.preventDefault();
+            if (code === 'ArrowDown') {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+            }
+            this.addEventListener('keyup', this.handleKeyup);
+            this.active = true;
+        }
+    }
+
+    protected handleKeyup(event: KeyboardEvent): void {
+        if (!this.holdAffordance) {
+            return super.handleKeyup(event);
+        }
+        const { code, altKey } = event;
+        if (code === 'Space' || (altKey && code === 'ArrowDown')) {
+            event.stopPropagation();
+            this.dispatchEvent(
+                new CustomEvent<LongpressEvent>('longpress', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        source: 'keyboard',
+                    },
+                })
+            );
+            this.active = false;
+        }
+    }
 
     protected get buttonContent(): TemplateResult[] {
         const buttonContent = super.buttonContent;
@@ -123,5 +195,11 @@ export class ActionButton extends SizedMixin(ButtonBase) {
                 this.selected ? 'true' : 'false'
             );
         }
+    }
+}
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        longpress: CustomEvent<LongpressEvent>;
     }
 }

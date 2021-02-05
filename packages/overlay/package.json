@@ -61,6 +61,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@popperjs/core": "^2.2.2",
+        "@spectrum-web-components/action-button": "^0.2.2",
         "@spectrum-web-components/base": "^0.3.2",
         "@spectrum-web-components/theme": "^0.7.3",
         "popper-max-size-modifier": "^0.2.0",

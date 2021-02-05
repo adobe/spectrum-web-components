@@ -12,9 +12,11 @@ import { html, number, select, radios } from '@open-wc/demoing-storybook';
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import { Placement } from '../';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { DialogWrapper } from '@spectrum-web-components/dialog';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/slider/sp-slider.js';
@@ -451,5 +453,36 @@ export const sideHoverDraggable = (): TemplateResult => {
                 </sp-tooltip>
             </overlay-trigger>
         </overlay-drag>
+    `;
+};
+
+export const longpress = (): TemplateResult => {
+    return html`
+        <overlay-trigger placement="right-start">
+            <sp-action-button slot="trigger" hold-affordance>
+                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            </sp-action-button>
+            <sp-popover slot="longpress-content" tip>
+                <sp-action-group
+                    @change=${(event: Event & { target: HTMLElement }) =>
+                        event.target.dispatchEvent(
+                            new Event('close', { bubbles: true })
+                        )}
+                    selects="single"
+                    vertical
+                    style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                >
+                    <sp-action-button>
+                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    </sp-action-button>
+                </sp-action-group>
+            </sp-popover>
+        </overlay-trigger>
     `;
 };

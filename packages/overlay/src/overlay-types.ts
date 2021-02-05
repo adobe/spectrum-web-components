@@ -15,6 +15,7 @@ import { Placement as PopperPlacement } from './popper';
 
 export type TriggerInteractions =
     | 'click'
+    | 'longpress'
     | 'hover'
     | 'custom'
     | 'replace'
