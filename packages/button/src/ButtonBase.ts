@@ -134,7 +134,7 @@ export class ButtonBase extends LikeAnchor(
             : this.renderButton();
     }
 
-    private handleKeydown(event: KeyboardEvent): void {
+    protected handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
         switch (code) {
             case 'Space':
@@ -159,7 +159,7 @@ export class ButtonBase extends LikeAnchor(
         }
     }
 
-    private handleKeyup(event: KeyboardEvent): void {
+    protected handleKeyup(event: KeyboardEvent): void {
         const { code } = event;
         switch (code) {
             case 'Space':

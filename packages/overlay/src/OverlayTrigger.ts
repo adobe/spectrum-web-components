@@ -18,6 +18,7 @@ import {
     TemplateResult,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import type { LongpressEvent } from '@spectrum-web-components/action-button';
 
 import {
     Placement,
@@ -34,6 +35,7 @@ import overlayTriggerStyles from './overlay-trigger.css.js';
  * @slot trigger - The content that will trigger the various overlays
  * @slot hover-content - The content that will be displayed on hover
  * @slot click-content - The content that will be displayed on click
+ * @slot longpress-content - The content that will be displayed on click
  *
  * @fires sp-open - Announces that the overlay has been opened
  * @fires sp-close - Announces that the overlay has been closed
@@ -63,6 +65,7 @@ export class OverlayTrigger extends LitElement {
     public disabled = false;
 
     private clickContent?: HTMLElement;
+    private longpressContent?: HTMLElement;
     private hoverContent?: HTMLElement;
     private targetContent?: HTMLElement;
 
@@ -77,6 +80,7 @@ export class OverlayTrigger extends LitElement {
             <div
                 id="trigger"
                 @click=${this.onTrigger}
+                @longpress=${this.onTrigger}
                 @mouseenter=${this.onTrigger}
                 @mouseleave=${this.onTrigger}
                 @focusin=${this.onTrigger}
@@ -91,6 +95,10 @@ export class OverlayTrigger extends LitElement {
                 <slot
                     @slotchange=${this.onClickSlotChange}
                     name="click-content"
+                ></slot>
+                <slot
+                    @slotchange=${this.onLongpressSlotChange}
+                    name="longpress-content"
                 ></slot>
                 <slot
                     @slotchange=${this.onHoverSlotChange}
@@ -130,7 +138,7 @@ export class OverlayTrigger extends LitElement {
         };
     }
 
-    private onTrigger(event: Event): void {
+    private onTrigger(event: CustomEvent<LongpressEvent>): void {
         if (this.disabled) {
             return;
         }
@@ -146,6 +154,9 @@ export class OverlayTrigger extends LitElement {
             case 'focusout':
                 this.onTriggerMouseLeave();
                 return;
+            case 'longpress':
+                this.onTriggerLongpress(event);
+                return;
         }
     }
 
@@ -153,7 +164,7 @@ export class OverlayTrigger extends LitElement {
         if (this.targetContent && this.clickContent) {
             if (this.type === 'modal') {
                 const firstFocusable = this.querySelector(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
                 ) as HTMLElement;
                 if (!firstFocusable) {
                     this.clickContent.tabIndex = 0;
@@ -167,6 +178,34 @@ export class OverlayTrigger extends LitElement {
                 this.overlayOptions
             );
         }
+    }
+
+    private async onTriggerLongpress(
+        event: CustomEvent<LongpressEvent>
+    ): Promise<void> {
+        if (!this.targetContent || !this.longpressContent) {
+            return;
+        }
+        const { targetContent, longpressContent } = this;
+        if (this.type === 'modal') {
+            const firstFocusable = this.querySelector(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
+            ) as HTMLElement;
+            if (!firstFocusable) {
+                longpressContent.tabIndex = 0;
+            }
+        }
+        const type = event.detail.source === 'keyboard' ? 'click' : 'longpress';
+        const interaction = this.type ? this.type : type || 'longpress';
+        this.closeClickOverlay = await OverlayTrigger.openOverlay(
+            targetContent,
+            interaction,
+            longpressContent,
+            {
+                ...this.overlayOptions,
+                receivesFocus: 'auto',
+            }
+        );
     }
 
     private hoverOverlayReady = Promise.resolve();
@@ -203,6 +242,13 @@ export class OverlayTrigger extends LitElement {
     ): void {
         const content = this.extractSlotContentFromEvent(event);
         this.clickContent = content;
+    }
+
+    private onLongpressSlotChange(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        const content = this.extractSlotContentFromEvent(event);
+        this.longpressContent = content;
     }
 
     private onHoverSlotChange(

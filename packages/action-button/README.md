@@ -36,15 +36,9 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 
 ```html demo
 <sp-button-group>
-    <sp-action-button size="s">
-        Do action
-    </sp-action-button>
-    <sp-action-button size="s" selected>
-        Do action
-    </sp-action-button>
-    <sp-action-button size="s" disabled>
-        Do action
-    </sp-action-button>
+    <sp-action-button size="s">Do action</sp-action-button>
+    <sp-action-button size="s" selected>Do action</sp-action-button>
+    <sp-action-button size="s" disabled>Do action</sp-action-button>
 </sp-button-group>
 ```
 
@@ -54,15 +48,9 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 
 ```html demo
 <sp-button-group>
-    <sp-action-button size="m">
-        Do action
-    </sp-action-button>
-    <sp-action-button size="m" selected>
-        Do action
-    </sp-action-button>
-    <sp-action-button size="m" disabled>
-        Do action
-    </sp-action-button>
+    <sp-action-button size="m">Do action</sp-action-button>
+    <sp-action-button size="m" selected>Do action</sp-action-button>
+    <sp-action-button size="m" disabled>Do action</sp-action-button>
 </sp-button-group>
 ```
 
@@ -72,15 +60,9 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 
 ```html demo
 <sp-button-group>
-    <sp-action-button size="l">
-        Do action
-    </sp-action-button>
-    <sp-action-button size="l" selected>
-        Do action
-    </sp-action-button>
-    <sp-action-button size="l" disabled>
-        Do action
-    </sp-action-button>
+    <sp-action-button size="l">Do action</sp-action-button>
+    <sp-action-button size="l" selected>Do action</sp-action-button>
+    <sp-action-button size="l" disabled>Do action</sp-action-button>
 </sp-button-group>
 ```
 
@@ -90,15 +72,9 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 
 ```html demo
 <sp-button-group>
-    <sp-action-button size="xl">
-        Do action
-    </sp-action-button>
-    <sp-action-button size="xl" selected>
-        Do action
-    </sp-action-button>
-    <sp-action-button size="xl" disabled>
-        Do action
-    </sp-action-button>
+    <sp-action-button size="xl">Do action</sp-action-button>
+    <sp-action-button size="xl" selected>Do action</sp-action-button>
+    <sp-action-button size="xl" disabled>Do action</sp-action-button>
 </sp-button-group>
 ```
 
@@ -133,21 +109,37 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 
 ### Action button with hold affordance
 
-The use of the `hold-affordance` attribute signifies that the `<sp-action-button>` in question will be delivered with a visual affordance that can be used to outline that additional related content can be acquired via further interaction with the button (e.g. a click, longpress, etc.).
+The use of the `hold-affordance` attribute signifies that the `<sp-action-button>` in question will be delivered with a visual affordance outlining that special interaction with the button will dispatch a `longpress` event. Via a pointer input, this even will be dispatched when 300ms has passed after a `pointerdown` event without the presence of a `pointerup` or `pointercancel` event. Via the keyboard, an event with a code of `Space` or or `ArrowDown` while `altKey === true` will dispatch the event.
 
-```html demo
+```html-live demo
 <sp-action-group>
-    <sp-action-button label="Edit" hold-affordance>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+    <overlay-trigger placement="bottom">
+        <sp-action-button label="Edit" hold-affordance slot="trigger">
+            <sp-icon-edit slot="icon"></sp-icon-edit>
+        </sp-action-button>
+        <sp-popover slot="longpress-content" dialog tip>
+            <p class="spectrum-Body spectrum-Body--sizeM" style="color: var(--spectrum-body-m-text-color,var(--spectrum-alias-text-color));">This content is triggered by the "longpress" interaction.</p>
+        </sp-popover>
+    </overlay-trigger>
 
-    <sp-action-button hold-affordance quiet>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+    <overlay-trigger placement="top">
+        <sp-action-button hold-affordance quiet slot="trigger">
+            Show Longpress Content
+        </sp-action-button>
+        <sp-popover slot="longpress-content" dialog tip>
+            <p class="spectrum-Body spectrum-Body--sizeM" style="color: var(--spectrum-body-m-text-color,var(--spectrum-alias-text-color));">This content is triggered by the "longpress" interaction.</p>
+        </sp-popover>
+    </overlay-trigger>
 
-    <sp-action-button hold-affordance selected>
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+    <overlay-trigger placement="top">
+        <sp-action-button hold-affordance selected slot="trigger">
+            <sp-icon-edit slot="icon"></sp-icon-edit>
+            Extended Content with Longpress
+        </sp-action-button>
+        <sp-popover slot="longpress-content" dialog tip>
+            <p class="spectrum-Body spectrum-Body--sizeM" style="color: var(--spectrum-body-m-text-color,var(--spectrum-alias-text-color));">This content is triggered by the "longpress" interaction.</p>
+        </sp-popover>
+    </overlay-trigger>
 </sp-action-group>
 ```
 
@@ -156,7 +148,5 @@ The use of the `hold-affordance` attribute signifies that the `<sp-action-button
 With the application of the `toggles` attribute, the button will self manage its `selected` property on `click`:
 
 ```html demo
-<sp-action-button toggles>
-    Toggle button
-</sp-action-button>
+<sp-action-button toggles>Toggle button</sp-action-button>
 ```

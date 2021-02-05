@@ -65,6 +65,23 @@ import {
         </div>
     </sp-popover>
     <sp-tooltip slot="hover-content" delayed>Tooltip</sp-tooltip>
+    <sp-popover slot="longpress-content" tip>
+        <sp-action-group
+            selects="single"
+            vertical
+            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+        >
+            <sp-action-button>
+                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            </sp-action-button>
+            <sp-action-button>
+                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            </sp-action-button>
+        </sp-action-group>
+    </sp-popover>
 </overlay-trigger>
 ```
 

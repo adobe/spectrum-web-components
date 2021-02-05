@@ -18,7 +18,7 @@ governing permissions and limitations under the License.
 :host([placement*='bottom'][open]) {
     /* .spectrum-Popover--bottom.is-open */
     max-height: calc(
-        100% -
+        100vh -
             var(
                 --spectrum-dropdown-flyout-menu-offset-y,
                 var(--spectrum-global-dimension-size-75)
@@ -32,7 +32,7 @@ governing permissions and limitations under the License.
         var(--spectrum-global-dimension-size-75)
     );
     max-height: calc(
-        100% -
+        100vh -
             var(
                 --spectrum-dropdown-flyout-menu-offset-y,
                 var(--spectrum-global-dimension-size-75)
@@ -42,7 +42,7 @@ governing permissions and limitations under the License.
 :host([placement*='right'][open]) {
     /* .spectrum-Popover--right.is-open */
     max-width: calc(
-        100% -
+        100vw -
             var(
                 --spectrum-dropdown-flyout-menu-offset-y,
                 var(--spectrum-global-dimension-size-75)
@@ -56,7 +56,7 @@ governing permissions and limitations under the License.
         var(--spectrum-global-dimension-size-75)
     );
     max-width: calc(
-        100% -
+        100vw -
             var(
                 --spectrum-dropdown-flyout-menu-offset-y,
                 var(--spectrum-global-dimension-size-75)
