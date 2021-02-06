@@ -28,3 +28,7 @@ governing permissions and limitations under the License.
     padding: 0 var(--spectrum-global-dimension-size-150) 0
         var(--spectrum-global-dimension-size-450);
 }
+
+sp-menu {
+    display: block;
+}

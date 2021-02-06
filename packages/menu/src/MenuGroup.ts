@@ -17,6 +17,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 
+import '../sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
 /**
@@ -46,9 +47,9 @@ export class MenuGroup extends SpectrumElement {
             <span class="header" id=${labelledby} aria-hidden="true">
                 <slot name="header"></slot>
             </span>
-            <div role="presentation">
+            <sp-menu role="presentation">
                 <slot></slot>
-            </div>
+            </sp-menu>
         `;
     }
 

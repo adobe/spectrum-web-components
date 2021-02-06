@@ -258,6 +258,11 @@ class SpectrumProcessor {
                 const attribute = this.component.attributeForNode(node);
                 if (!attribute) return;
 
+                if (attribute.doNotHoist) {
+                    node.replaceWith(attribute.shadowNode.clone());
+                    return;
+                }
+
                 if (
                     node.parent &&
                     node.parent.parent &&
@@ -877,6 +882,7 @@ class ComponentConfig {
                         selector,
                         node: nodeFromSelector(selector),
                         forceOntoHost: attribute.forceOntoHost,
+                        doNotHoist: attribute.doNotHoist,
                         shadowNode: nodeFromSelector(
                             `[${attribute.name}${operator}"${name}"]`
                         ),

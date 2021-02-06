@@ -22,8 +22,16 @@ export default {
 export const Default = (): TemplateResult => {
     return html`
         <sp-menu>
-            <sp-menu-item>
-                Menu Item
+            <sp-menu-item>Menu Item</sp-menu-item>
+        </sp-menu>
+    `;
+};
+
+export const noWrap = (): TemplateResult => {
+    return html`
+        <sp-menu style="width: 150px;">
+            <sp-menu-item no-wrap>
+                Select a Country with a very long label, too long, in fact
             </sp-menu-item>
         </sp-menu>
     `;

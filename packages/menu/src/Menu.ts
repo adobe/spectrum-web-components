@@ -15,6 +15,8 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
+    property,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 
 import { MenuItem } from './MenuItem.js';
@@ -33,6 +35,9 @@ export class Menu extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [menuStyles];
     }
+
+    @property({ type: Boolean, reflect: true })
+    public selectable = false;
 
     public menuItems = [] as MenuItem[];
     public focusedItemIndex = 0;
@@ -89,6 +94,20 @@ export class Menu extends SpectrumElement {
     }
 
     public startListeningToKeyboard(): void {
+        const activeElement = (this.getRootNode() as Document).activeElement as
+            | MenuItem
+            | Menu;
+        if (activeElement !== this) {
+            this.focus();
+            if (activeElement && this.focusedItemIndex === 0) {
+                const offset = this.menuItems.indexOf(
+                    activeElement as MenuItem
+                );
+                if (offset > 0) {
+                    this.focusMenuItemByOffset(offset);
+                }
+            }
+        }
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('focusout', this.handleFocusout);
     }
@@ -217,8 +236,11 @@ export class Menu extends SpectrumElement {
         `;
     }
 
-    protected firstUpdated(): void {
-        this.tabIndex = 0;
+    protected firstUpdated(changed: PropertyValues): void {
+        super.firstUpdated(changed);
+        if (this.getAttribute('role') !== 'presentation') {
+            this.tabIndex = 0;
+        }
     }
 
     public connectedCallback(): void {

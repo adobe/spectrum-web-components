@@ -52,13 +52,39 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const quiet = (): TemplateResult => {
+    return html`
+        <sp-picker
+            quiet
+            @change="${(event: Event): void => {
+                const picker = event.target as Picker;
+                action(`Change: ${picker.value}`)();
+            }}"
+            label="Pick an item"
+        >
+            <sp-menu>
+                <sp-menu-item value="1">Item 1</sp-menu-item>
+                <sp-menu-item value="2">Item 2</sp-menu-item>
+                <sp-menu-item value="3">Item 3</sp-menu-item>
+                <sp-menu-item value="4">Item 4</sp-menu-item>
+            </sp-menu>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
+
 export const Open = (): TemplateResult => {
     return html`
         <style>
             fieldset {
                 float: left;
                 clear: left;
-                display: inline-block;
                 margin-bottom: 15px;
             }
         </style>

@@ -26,8 +26,23 @@ const config = {
             host: {
                 selector: '.spectrum-Menu',
             },
+            attributes: [
+                {
+                    selector: '.is-selectable',
+                    type: 'boolean',
+                    name: 'selectable',
+                },
+            ],
+            slots: [
+                {
+                    selector: '.spectrum-Menu-item',
+                    contents: 'sp-menu-item',
+                },
+            ],
             exclude: [
-                /\.spectrum-Menu-item/,
+                /^\.spectrum-Menu-item/,
+                /\.spectrum-Menu-item\s/,
+                /\]\s\.spectrum-Menu-item/,
                 /\.spectrum-Menu-divider/,
                 /\.spectrum-Menu-sectionHeading/,
                 /\.spectrum-Menu-checkmark/,
@@ -38,13 +53,24 @@ const config = {
                     replacement: '::slotted(sp-menu)',
                     selector: '.spectrum-Menu .spectrum-Menu',
                 },
+                {
+                    replacement:
+                        ':host([dir="ltr"][selectable]) ::slotted(sp-menu-item[selected])',
+                    selector:
+                        '.spectrum-Menu[dir=ltr].is-selectable .spectrum-Menu-item.is-selected',
+                },
+                {
+                    replacement:
+                        ':host([dir="rtl"][selectable]) ::slotted(sp-menu-item[selected])',
+                    selector:
+                        '.spectrum-Menu[dir=rtl].is-selectable .spectrum-Menu-item.is-selected',
+                },
             ],
         },
         {
             name: 'menu-item',
             host: {
                 selector: '.spectrum-Menu-item',
-                shadowSelector: '#button',
             },
             attributes: [
                 {
@@ -54,13 +80,13 @@ const config = {
                 },
                 {
                     type: 'boolean',
-                    selector: '.is-selected',
-                    name: 'selected',
+                    selector: '.is-focused',
+                    name: 'focused',
                 },
                 {
                     type: 'boolean',
-                    selector: '.is-focused',
-                    name: 'focused',
+                    selector: '.is-selected',
+                    name: 'selected',
                 },
             ],
             ids: [
@@ -73,10 +99,27 @@ const config = {
                     name: 'selected',
                 },
             ],
+            classes: [
+                {
+                    selector: '.spectrum-Menu-itemIcon',
+                    name: 'icon',
+                },
+                {
+                    selector: '.spectrum-Menu-chevron',
+                    name: 'chevron',
+                },
+            ],
             slots: [
                 {
                     name: 'icon',
                     selector: '.spectrum-Icon',
+                },
+            ],
+            exclude: [/\.spectrum-Menu(?!-[itemLabel|item|checkmark|chevron])/],
+            complexSelectors: [
+                {
+                    replacement: ':host([no-wrap]) #label',
+                    selector: '.spectrum-Menu-itemLabel--wrapping',
                 },
             ],
         },
@@ -85,13 +128,7 @@ const config = {
             host: {
                 selector: '.spectrum-Menu-divider',
             },
-            attributes: [
-                {
-                    type: 'boolean',
-                    selector: '.spectrum-Menu-divider',
-                    name: 'divider',
-                },
-            ],
+            exclude: [/\.spectrum-Menu(?!-divider)/],
         },
     ],
 };
