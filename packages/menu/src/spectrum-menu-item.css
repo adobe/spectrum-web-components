@@ -10,57 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr']) .spectrum-Menu.is-selectable #button {
-    /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
-    padding-right: calc(
-        var(--spectrum-global-dimension-size-100) +
-            var(--spectrum-icon-checkmark-medium-width) +
-            var(--spectrum-listitem-icon-gap)
-    );
-}
-:host([dir='rtl']) .spectrum-Menu.is-selectable #button {
-    /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
-    padding-left: calc(
-        var(--spectrum-global-dimension-size-100) +
-            var(--spectrum-icon-checkmark-medium-width) +
-            var(--spectrum-listitem-icon-gap)
-    );
-}
-:host([dir='ltr'][selected]) .spectrum-Menu.is-selectable #button {
-    /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
-    padding-right: calc(
-        var(--spectrum-listitem-padding-right) -
-            var(
-                --spectrum-popover-border-size,
-                var(--spectrum-alias-border-size-thin)
-            )
-    );
-}
-:host([dir='rtl'][selected]) .spectrum-Menu.is-selectable #button {
-    /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
-    padding-left: calc(
-        var(--spectrum-listitem-padding-right) -
-            var(
-                --spectrum-popover-border-size,
-                var(--spectrum-alias-border-size-thin)
-            )
-    );
-}
 #selected {
     /* .spectrum-Menu-checkmark */
     transform: scale(1);
     opacity: 1;
 }
-:host([dir='ltr']) #button {
+:host([dir='ltr']) {
     /* [dir=ltr] .spectrum-Menu-item */
     border-left: var(--spectrum-listitem-focus-indicator-size) solid transparent;
 }
-:host([dir='rtl']) #button {
+:host([dir='rtl']) {
     /* [dir=rtl] .spectrum-Menu-item */
     border-right: var(--spectrum-listitem-focus-indicator-size) solid
         transparent;
 }
-#button {
+:host {
     /* .spectrum-Menu-item */
     cursor: pointer;
     position: relative;
@@ -78,11 +42,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-style: normal;
     text-decoration: none;
 }
-#button:focus {
+:host(:focus) {
     /* .spectrum-Menu-item:focus */
     outline: none;
 }
-:host([dir='ltr'][selected]) #button {
+:host([dir='ltr'][selected]) {
     /* [dir=ltr] .spectrum-Menu-item.is-selected */
     padding-right: calc(
         var(--spectrum-listitem-padding-right) -
@@ -92,7 +56,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
-:host([dir='rtl'][selected]) #button {
+:host([dir='rtl'][selected]) {
     /* [dir=rtl] .spectrum-Menu-item.is-selected */
     padding-left: calc(
         var(--spectrum-listitem-padding-right) -
@@ -102,31 +66,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
-:host([selected]) #button #selected {
+:host([selected]) #selected {
     /* .spectrum-Menu-item.is-selected .spectrum-Menu-checkmark */
     display: block;
 }
 ::slotted([slot='icon']),
-.spectrum-Menu-itemIcon {
+.icon {
     /* .spectrum-Menu-item .spectrum-Icon,
    * .spectrum-Menu-item .spectrum-Menu-itemIcon */
     flex-shrink: 0;
     align-self: flex-start;
 }
-:host([dir='ltr']) #button slot[name='icon'] + #label,
-:host([dir='ltr']) #button .spectrum-Menu-itemIcon + #label {
+:host([dir='ltr']) slot[name='icon'] + #label,
+:host([dir='ltr']) .icon + #label {
     /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=ltr] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
     margin-left: var(--spectrum-listitem-icon-gap);
 }
-:host([dir='rtl']) #button slot[name='icon'] + #label,
-:host([dir='rtl']) #button .spectrum-Menu-itemIcon + #label {
+:host([dir='rtl']) slot[name='icon'] + #label,
+:host([dir='rtl']) .icon + #label {
     /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=rtl] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
     margin-right: var(--spectrum-listitem-icon-gap);
 }
 slot[name='icon'] + #label,
-.spectrum-Menu-itemIcon + #label {
+.icon + #label {
     /* .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
     width: calc(
@@ -151,7 +115,7 @@ slot[name='icon'] + #label,
             var(--spectrum-listitem-icon-gap)
     );
 }
-.spectrum-Menu-itemLabel--wrapping {
+:host([no-wrap]) #label {
     /* .spectrum-Menu-itemLabel--wrapping */
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -163,13 +127,13 @@ slot[name='icon'] + #label,
     align-self: flex-start;
 }
 :host([dir='ltr']) #selected,
-:host([dir='ltr']) .spectrum-Menu-chevron {
+:host([dir='ltr']) .chevron {
     /* [dir=ltr] .spectrum-Menu-checkmark,
    * [dir=ltr] .spectrum-Menu-chevron */
     margin-left: var(--spectrum-listitem-icon-gap);
 }
 :host([dir='rtl']) #selected,
-:host([dir='rtl']) .spectrum-Menu-chevron {
+:host([dir='rtl']) .chevron {
     /* [dir=rtl] .spectrum-Menu-checkmark,
    * [dir=rtl] .spectrum-Menu-chevron */
     margin-right: var(--spectrum-listitem-icon-gap);
@@ -180,11 +144,11 @@ slot[name='icon'] + #label,
     flex-grow: 0;
     margin-top: var(--spectrum-global-dimension-size-50);
 }
-:host([dir='rtl']) .spectrum-Menu-chevron {
+:host([dir='rtl']) .chevron {
     /* [dir=rtl] .spectrum-Menu-chevron */
     transform: matrix(-1, 0, 0, 1, 0, 0);
 }
-#button {
+:host {
     /* .spectrum-Menu,
    * .spectrum-Menu-item */
     background-color: var(
@@ -192,15 +156,15 @@ slot[name='icon'] + #label,
         transparent
     );
 }
-#button {
+:host {
     /* .spectrum-Menu-item */
     color: var(
         --spectrum-alias-text-color,
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([dir='ltr']) #button:focus-visible,
-:host([dir='ltr'][focused]) #button {
+:host([dir='ltr']:focus-visible),
+:host([dir='ltr'][focused]) {
     /* [dir=ltr] .spectrum-Menu-item.focus-ring,
    * [dir=ltr] .spectrum-Menu-item.is-focused */
     border-left-color: var(
@@ -208,8 +172,8 @@ slot[name='icon'] + #label,
         var(--spectrum-global-color-blue-400)
     );
 }
-:host([dir='rtl']) #button:focus-visible,
-:host([dir='rtl'][focused]) #button {
+:host([dir='rtl']:focus-visible),
+:host([dir='rtl'][focused]) {
     /* [dir=rtl] .spectrum-Menu-item.focus-ring,
    * [dir=rtl] .spectrum-Menu-item.is-focused */
     border-right-color: var(
@@ -217,12 +181,12 @@ slot[name='icon'] + #label,
         var(--spectrum-global-color-blue-400)
     );
 }
-#button:focus-visible,
-:host([focused]) #button,
-#button.is-highlighted,
-#button.is-open,
-#button:focus,
-#button:hover {
+:host(:focus-visible),
+:host([focused]),
+:host(.is-highlighted),
+:host(.is-open),
+:host(:focus),
+:host(:hover) {
     /* .spectrum-Menu-item.focus-ring,
    * .spectrum-Menu-item.is-focused,
    * .spectrum-Menu-item.is-highlighted,
@@ -235,14 +199,14 @@ slot[name='icon'] + #label,
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([selected]) #button {
+:host([selected]) {
     /* .spectrum-Menu-item.is-selected */
     color: var(
         --spectrum-alias-text-color,
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([selected]) #button #selected {
+:host([selected]) #selected {
     /* .spectrum-Menu-item.is-selected .spectrum-Menu-checkmark */
     color: var(
         --spectrum-alias-icon-color-selected,
@@ -250,12 +214,12 @@ slot[name='icon'] + #label,
     );
 }
 .is-active,
-#button:active {
+:host(:active) {
     /* .spectrum-Menu-item .is-active,
    * .spectrum-Menu-item:active */
     background-color: var(--spectrum-alias-background-color-hover-overlay);
 }
-:host([disabled]) #button {
+:host([disabled]) {
     /* .spectrum-Menu-item.is-disabled */
     background-color: var(
         --spectrum-alias-background-color-transparent,

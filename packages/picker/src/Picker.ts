@@ -255,6 +255,8 @@ export class PickerBase extends Focusable {
             'placeholder for optionsMenu'
         );
 
+        this.optionsMenu.selectable = true;
+
         const parentElement =
             this.optionsMenu.parentElement || this.optionsMenu.getRootNode();
 

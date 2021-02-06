@@ -64,6 +64,42 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     list-style-type: none;
     overflow: auto;
 }
+:host([dir='ltr'][selectable]) ::slotted(sp-menu-item) {
+    /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
+    padding-right: calc(
+        var(--spectrum-global-dimension-size-100) +
+            var(--spectrum-icon-checkmark-medium-width) +
+            var(--spectrum-listitem-icon-gap)
+    );
+}
+:host([dir='rtl'][selectable]) ::slotted(sp-menu-item) {
+    /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
+    padding-left: calc(
+        var(--spectrum-global-dimension-size-100) +
+            var(--spectrum-icon-checkmark-medium-width) +
+            var(--spectrum-listitem-icon-gap)
+    );
+}
+:host([dir='ltr'][selectable]) ::slotted(sp-menu-item[selected]) {
+    /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
+    padding-right: calc(
+        var(--spectrum-listitem-padding-right) -
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    );
+}
+:host([dir='rtl'][selectable]) ::slotted(sp-menu-item[selected]) {
+    /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
+    padding-left: calc(
+        var(--spectrum-listitem-padding-right) -
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    );
+}
 ::slotted(sp-menu) {
     /* .spectrum-Menu .spectrum-Menu */
     display: block;

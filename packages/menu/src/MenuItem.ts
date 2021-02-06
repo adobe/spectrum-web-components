@@ -16,7 +16,6 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-    ifDefined,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/icon/sp-icon.js';
@@ -44,6 +43,16 @@ export class MenuItem extends ActionButton {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    @property({
+        type: Boolean,
+        reflect: true,
+        attribute: 'no-wrap',
+        hasChanged() {
+            return false;
+        },
+    })
+    public noWrap = false;
+
     /**
      * Hide this getter from web-component-analyzer until
      * https://github.com/runem/web-component-analyzer/issues/131
@@ -61,8 +70,7 @@ export class MenuItem extends ActionButton {
             content.push(html`
                 <sp-icon
                     id="selected"
-                    slot="icon"
-                    class="spectrum-UIIcon-Checkmark100"
+                    class="spectrum-UIIcon-Checkmark100 icon"
                 >
                     ${Checkmark100Icon()}
                 </sp-icon>
@@ -73,9 +81,7 @@ export class MenuItem extends ActionButton {
 
     protected renderButton(): TemplateResult {
         return html`
-            <div id="button" class="button" aria-label=${ifDefined(this.label)}>
-                ${this.buttonContent}
-            </div>
+            ${this.buttonContent}
         `;
     }
 

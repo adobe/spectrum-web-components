@@ -11,16 +11,3 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-menu-item.css';
-
-:host {
-    display: block;
-}
-
-#selected {
-    flex-shrink: 0;
-}
-
-::slotted(sp-menu) {
-    /* .spectrum-Menu .spectrum-Menu */
-    display: block;
-}
