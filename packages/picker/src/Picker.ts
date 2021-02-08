@@ -59,10 +59,14 @@ type PickerSize = Exclude<ElementSize, 'xxl'>;
  * @element sp-picker
  * @slot label - The placeholder content for the picker
  *
- * @fires sp-open - Announces that the overlay has been opened
- * @fires sp-close - Announces that the overlay has been closed
+ * @fires change - Announces that the `value` of the element has changed
+ * @fires sp-opened - Announces that the overlay has been opened
+ * @fires sp-closed - Announces that the overlay has been closed
  */
 export class PickerBase extends SizedMixin(Focusable) {
+    /**
+     * @private
+     */
     public static openOverlay = async (
         target: HTMLElement,
         interaction: TriggerInteractions,
@@ -191,7 +195,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
     }
 
-    public onKeydown = (event: KeyboardEvent): void => {
+    protected onKeydown = (event: KeyboardEvent): void => {
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp') {
             return;
         }
@@ -328,9 +332,8 @@ export class PickerBase extends SizedMixin(Focusable) {
         return html`
             <button
                 aria-haspopup="true"
-                aria-controls="popover"
                 aria-expanded=${this.open ? 'true' : 'false'}
-                aria-label=${ifDefined(this.label || undefined)}
+                aria-labelledby="button label"
                 id="button"
                 class="button"
                 @blur=${this.onButtonBlur}
@@ -364,7 +367,7 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected updateMenuItems(): void {
         this.menuItems = [
-            ...this.querySelectorAll(`sp-menu-item`),
+            ...this.querySelectorAll('sp-menu-item'),
         ] as MenuItem[];
     }
 
@@ -462,7 +465,7 @@ export class Picker extends PickerBase {
         return [pickerStyles, chevronStyles];
     }
 
-    public onKeydown = (event: KeyboardEvent): void => {
+    protected onKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         if (!code.startsWith('Arrow') || this.readonly) {
             return;
@@ -484,7 +487,9 @@ export class Picker extends PickerBase {
         ) {
             nextIndex += nextOffset;
         }
-        nextIndex = Math.max(Math.min(nextIndex, this.menuItems.length), 0);
+        if (!this.menuItems[nextIndex] || this.menuItems[nextIndex].disabled) {
+            return;
+        }
         if (!this.value || nextIndex !== selectedIndex) {
             this.setValueFromItem(this.menuItems[nextIndex]);
         }

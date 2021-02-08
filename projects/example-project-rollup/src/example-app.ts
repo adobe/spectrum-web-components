@@ -15,6 +15,7 @@ import './styles.css';
 
 // import the components we'll use in this page
 import '@spectrum-web-components/button/sp-button';
+import '@spectrum-web-components/field-label/sp-field-label';
 // use the following import to chunk your build at the async boundary infront of the Overlay package
 import '@spectrum-web-components/picker/sp-picker';
 // use the following import to chunk your build as defaulted in the Rollup config.

@@ -43,24 +43,32 @@ import { Picker } from '@spectrum-web-components/picker';
 
 ```html demo
 <sp-field-group>
-    <sp-picker size="s" label="Selection type">
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-picker>
-    <sp-picker quiet size="s" label="Selection type">
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-picker>
+    <div>
+        <sp-field-label for="picker-s" size="s">Selection type:</sp-field-label>
+        <sp-picker id="picker-s" size="s" label="Selection type">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-picker>
+    </div>
+    <div>
+        <sp-field-label for="picker-s-quiet" size="s">
+            Selection type:
+        </sp-field-label>
+        <sp-picker id="picker-s-quiet" quiet size="s" label="Selection type">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-picker>
+    </div>
 </sp-field-group>
 ```
 
@@ -70,24 +78,32 @@ import { Picker } from '@spectrum-web-components/picker';
 
 ```html demo
 <sp-field-group>
-    <sp-picker size="m" label="Selection type">
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-picker>
-    <sp-picker quiet size="m" label="Selection type">
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-picker>
+    <div>
+        <sp-field-label for="picker-m" size="m">Selection type:</sp-field-label>
+        <sp-picker id="picker-m" size="m" label="Selection type">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-picker>
+    </div>
+    <div>
+        <sp-field-label for="picker-m-quiet" size="m">
+            Selection type:
+        </sp-field-label>
+        <sp-picker id="picker-m-quiet" quiet size="m" label="Selection type">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-picker>
+    </div>
 </sp-field-group>
 ```
 
@@ -97,24 +113,32 @@ import { Picker } from '@spectrum-web-components/picker';
 
 ```html demo
 <sp-field-group>
-    <sp-picker size="l" label="Selection type">
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-picker>
-    <sp-picker quiet size="l" label="Selection type">
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-picker>
+    <div>
+        <sp-field-label for="picker-l" size="l">Selection type:</sp-field-label>
+        <sp-picker id="picker-l" size="l" label="Selection type">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-picker>
+    </div>
+    <div>
+        <sp-field-label for="picker-l-quiet" size="l">
+            Selection type:
+        </sp-field-label>
+        <sp-picker id="picker-l-quiet" quiet size="l" label="Selection type">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-picker>
+    </div>
 </sp-field-group>
 ```
 
@@ -124,24 +148,34 @@ import { Picker } from '@spectrum-web-components/picker';
 
 ```html demo
 <sp-field-group>
-    <sp-picker size="xl" label="Selection type">
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-picker>
-    <sp-picker quiet size="xl" label="Selection type">
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save selection</sp-menu-item>
-        <sp-menu-item disabled>Make work path</sp-menu-item>
-    </sp-picker>
+    <div>
+        <sp-field-label for="picker-xl" size="xl">
+            Selection type:
+        </sp-field-label>
+        <sp-picker id="picker-xl" size="xl" label="Selection type">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-picker>
+    </div>
+    <div>
+        <sp-field-label for="picker-xl-quiet" size="xl">
+            Selection type:
+        </sp-field-label>
+        <sp-picker id="picker-xl-quiet" quiet size="xl" label="Selection type">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save selection</sp-menu-item>
+            <sp-menu-item disabled>Make work path</sp-menu-item>
+        </sp-picker>
+    </div>
 </sp-field-group>
 ```
 
@@ -154,9 +188,11 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 ### Matching `value`
 
 ```html
+<sp-field-label for="picker-value">Selection type:</sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
     value="item-2"
+    id="picker-value"
 >
     <sp-menu-item value="item-1">Deselect</sp-menu-item>
     <sp-menu-item value="item-2">Select inverse</sp-menu-item>
@@ -171,9 +207,11 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 ### Matching `itemText`
 
 ```html
+<sp-field-label for="picker-item-text">Selection type:</sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
     value="Feather..."
+    id="picker-item-text"
 >
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select inverse</sp-menu-item>
@@ -190,10 +228,11 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 ### Invalid
 
 ```html
-<p><strong>Standard:</strong></p>
+<sp-field-label for="picker-invalid">Standard:</sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
     invalid
+    id="picker-invalid"
 >
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select inverse</sp-menu-item>
@@ -205,11 +244,12 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-picker>
 <br />
 <br />
-<p><strong>Quiet:</strong></p>
+<sp-field-label for="picker-invalid-quiet">Quiet:</sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
     invalid
     quiet
+    id="picker-invalid-quiet"
 >
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select inverse</sp-menu-item>
@@ -224,10 +264,11 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 ### Disabled
 
 ```html
-<p><strong>Standard:</strong></p>
+<sp-field-label for="picker-disabled">Standard:</sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
     disabled
+    id="picker-disabled"
 >
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select inverse</sp-menu-item>
@@ -239,11 +280,12 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-picker>
 <br />
 <br />
-<p><strong>Quiet:</strong></p>
+<sp-field-label for="picker-disabled">Quiet:</sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
     disabled
     quiet
+    id="picker-disabled-quiet"
 >
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select inverse</sp-menu-item>
@@ -257,4 +299,4 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 
 ## Accessibility
 
-An `<sp-picker>` parent will ensure that the internal `<sp-menu>` features a role of `listbox` and contains children with the role `option`. Upon focusing the `<sp-picker>` using `ArrowDown` will also open the menu while throwing focus into first selected (or unselected when none are selected) menu item to assist in selecting of a new value.
+To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has a `for` attribute referencing the `id` of the `<sp-picker>` element.

@@ -17,6 +17,7 @@ import { Picker } from '../';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { states } from './states.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '@open-wc/lit-helpers';
 
 export default {
@@ -86,7 +87,9 @@ interface StoryArgs {
 
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="picker-1">Where do you live?</sp-field-label>
         <sp-picker
+            id="picker-1"
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
                 console.log(`Change: ${picker.value}`);
@@ -114,8 +117,10 @@ export const Default = (args: StoryArgs): TemplateResult => {
 
 export const quiet = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="picker-quiet">Where do you live?</sp-field-label>
         <sp-picker
             ...=${spreadProps(args)}
+            id="picker-quiet"
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
                 console.log(`Change: ${picker.value}`);
@@ -150,7 +155,11 @@ export const Open = (args: StoryArgs): TemplateResult => {
             }
         </style>
         <fieldset>
+            <sp-field-label for="picker-open">
+                Where do you live?
+            </sp-field-label>
             <sp-picker
+                id="picker-open"
                 label="Open picker"
                 ...=${spreadProps(args)}
                 @change="${(event: Event): void => {
@@ -171,7 +180,11 @@ export const Open = (args: StoryArgs): TemplateResult => {
             </sp-picker>
         </fieldset>
         <fieldset>
+            <sp-field-label for="picker-closed">
+                Where do you live?
+            </sp-field-label>
             <sp-picker
+                id="picker-closed"
                 label="Picker that displays below the options"
                 @change="${(event: Event): void => {
                     const picker = event.target as Picker;
@@ -192,7 +205,9 @@ Open.args = {
 
 export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="picker-initial">Where do you live?</sp-field-label>
         <sp-picker
+            id="picker-initial"
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
                 console.log(`Change: ${picker.value}`);
@@ -241,12 +256,16 @@ export const readonly = (args: StoryArgs): TemplateResult => {
 
 export const custom = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="picker-state">
+            What state do you live in?
+        </sp-field-label>
         <sp-picker
             style="width: 400px;"
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
                 console.log(`Change: ${picker.value}`);
             }}"
+            id="picker-state"
             label="Pick a state"
             ...=${spreadProps(args)}
         >
