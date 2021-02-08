@@ -24,7 +24,11 @@ export default {
 
 const picker = ({ size }: { size: 's' | 'm' | 'l' | 'xl' }): TemplateResult => {
     return html`
+        <sp-field-label for="picker-${size}" size=${size}>
+            Where do you live?
+        </sp-field-label>
         <sp-picker
+            id="picker-${size}"
             size=${size}
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;

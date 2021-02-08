@@ -43,7 +43,9 @@ When displayed as a descendent of an element that manages selection (e.g. `<sp-a
 In the following example, the selected `<sp-menu-item>` represents a `value` of `Text that is really long and useful to a visitor, but not exactly good to use in your application or component state.` for the ancestor element.
 
 ```html
+<sp-field-label for="picker-content">Value attribute usage:</sp-field-label>
 <sp-picker
+    id="picker-content"
     label="Menu items examples"
     value="Text that is really long and useful to a visitor, but not exactly good to use in your application or component state."
 >
@@ -69,7 +71,8 @@ In the following example, the selected `<sp-menu-item>` represents a `value` of 
 When the `value` attribute is leveraged, the selected `<sp-menu-item>` represents a `value` of `short-key` for the `<sp-action-menu>` element.
 
 ```html
-<sp-picker value="short-key">
+<sp-field-label for="picker-value">Value attribute usage:</sp-field-label>
+<sp-picker id="picker-value" value="short-key">
     <span slot="label">Menu items examples</span>
     <sp-menu-item value="not-selected">Not selected</sp-menu-item>
     <sp-menu-item value="short-key">

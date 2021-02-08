@@ -34,6 +34,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     /**
      * When this control is rendered, focus it automatically
+     * @private
      */
     @property({ type: Boolean })
     public autofocus = false;
