@@ -18,6 +18,7 @@ import { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
     fixture,
@@ -33,9 +34,11 @@ import {
     arrowUpEvent,
     arrowLeftEvent,
     arrowRightEvent,
+    findAccessibilityNode,
     tabEvent,
     tEvent,
 } from '../../../test/testing-helpers.js';
+import { executeServerCommand } from '@web/test-runner-commands';
 
 const isMenuActiveElement = function (): boolean {
     return document.activeElement instanceof Menu;
@@ -43,36 +46,13 @@ const isMenuActiveElement = function (): boolean {
 
 describe('Picker', () => {
     const pickerFixture = async (): Promise<Picker> => {
-        const el = await fixture<Picker>(
+        const test = await fixture<HTMLDivElement>(
             html`
-                <sp-picker
-                    label="Select a Country with a very long label, too long in fact"
-                >
-                    <sp-menu-item>Deselect</sp-menu-item>
-                    <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-picker>
-            `
-        );
-
-        await waitUntil(
-            () => !!window.applyFocusVisiblePolyfill,
-            'polyfill loaded'
-        );
-        return el;
-    };
-
-    const deprecatedPickerFixture = async (): Promise<Picker> => {
-        const el = await fixture<Picker>(
-            html`
-                <sp-picker
-                    label="Select a Country with a very long label, too long in fact"
-                >
-                    <sp-menu>
+                <div>
+                    <sp-field-label for="picker">
+                        Where do you live?
+                    </sp-field-label>
+                    <sp-picker id="picker">
                         <sp-menu-item>Deselect</sp-menu-item>
                         <sp-menu-item value="option-2">
                             Select Inverse
@@ -82,8 +62,8 @@ describe('Picker', () => {
                         <sp-menu-divider></sp-menu-divider>
                         <sp-menu-item>Save Selection</sp-menu-item>
                         <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-menu>
-                </sp-picker>
+                    </sp-picker>
+                </div>
             `
         );
 
@@ -91,25 +71,68 @@ describe('Picker', () => {
             () => !!window.applyFocusVisiblePolyfill,
             'polyfill loaded'
         );
-        return el;
+
+        return test.querySelector('sp-picker') as Picker;
+    };
+
+    const deprecatedPickerFixture = async (): Promise<Picker> => {
+        const test = await fixture<Picker>(
+            html`
+                <div>
+                    <sp-field-label for="picker-deprecated">
+                        Where do you live?
+                    </sp-field-label>
+                    <sp-picker
+                        id="picker-deprecated"
+                        label="Select a Country with a very long label, too long in fact"
+                    >
+                        <sp-menu>
+                            <sp-menu-item>Deselect</sp-menu-item>
+                            <sp-menu-item value="option-2">
+                                Select Inverse
+                            </sp-menu-item>
+                            <sp-menu-item>Feather...</sp-menu-item>
+                            <sp-menu-item>Select and Mask...</sp-menu-item>
+                            <sp-menu-divider></sp-menu-divider>
+                            <sp-menu-item>Save Selection</sp-menu-item>
+                            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                        </sp-menu>
+                    </sp-picker>
+                </div>
+            `
+        );
+
+        await waitUntil(
+            () => !!window.applyFocusVisiblePolyfill,
+            'polyfill loaded'
+        );
+
+        return test.querySelector('sp-picker') as Picker;
     };
 
     const slottedLabelFixture = async (): Promise<Picker> => {
-        const el = await fixture<Picker>(
+        const test = await fixture<Picker>(
             html`
-                <sp-picker>
-                    <span slot="label">
-                        Select a Country with a very long label, too long in
-                        fact
-                    </span>
-                    <sp-menu-item>Deselect</sp-menu-item>
-                    <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-picker>
+                <div>
+                    <sp-field-label for="picker-slotted">
+                        Where do you live?
+                    </sp-field-label>
+                    <sp-picker id="picker-slotted">
+                        <span slot="label">
+                            Select a Country with a very long label, too long in
+                            fact
+                        </span>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item value="option-2">
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                    </sp-picker>
+                </div>
             `
         );
 
@@ -117,7 +140,8 @@ describe('Picker', () => {
             () => !!window.applyFocusVisiblePolyfill,
             'polyfill loaded'
         );
-        return el;
+
+        return test.querySelector('sp-picker') as Picker;
     };
 
     afterEach(async () => {
@@ -132,6 +156,41 @@ describe('Picker', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('manages its "name" value in the accessibility tree', async () => {
+        const el = await pickerFixture();
+
+        await elementUpdated(el);
+        type NamedNode = { name: string };
+        let snapshot = (await executeServerCommand(
+            'a11y-snapshot'
+        )) as NamedNode & { children: NamedNode[] };
+
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) =>
+                    node.name ===
+                    'Where do you live? Select a Country with a very long label, too long in fact'
+            ),
+            '`name` is the label text'
+        );
+
+        el.value = 'option-2';
+        await elementUpdated(el);
+        snapshot = (await executeServerCommand(
+            'a11y-snapshot'
+        )) as NamedNode & { children: NamedNode[] };
+
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'Where do you live? Select Inverse'
+            ),
+            '`name` is the label text plus the selected item text'
+        );
+    });
+
     it('loads accessibly w/ slotted label', async () => {
         const el = await slottedLabelFixture();
 

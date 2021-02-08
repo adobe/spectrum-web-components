@@ -16,6 +16,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { DialogWrapper } from '@spectrum-web-components/dialog';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Picker } from '@spectrum-web-components/picker';
@@ -541,6 +542,9 @@ export const complexModal = (): TemplateResult => {
                 underlay
                 footer="Content for footer"
             >
+                <sp-field-label for="test-picker">
+                    Selection type:
+                </sp-field-label>
                 <sp-picker id="test-picker">
                     <sp-menu>
                         <sp-menu-item>Deselect</sp-menu-item>

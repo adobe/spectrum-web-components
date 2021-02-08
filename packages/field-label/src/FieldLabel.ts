@@ -35,6 +35,9 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
         return [styles, asteriskIconStyles];
     }
 
+    /**
+     * @private
+     */
     static instanceCount = 0;
 
     @property({ type: Boolean, reflect: true })

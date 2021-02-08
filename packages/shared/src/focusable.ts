@@ -34,6 +34,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     /**
      * When this control is rendered, focus it automatically
+     * @private
      */
     @property({ type: Boolean })
     public autofocus = false;
@@ -41,6 +42,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
      * The tab index to apply to this control. See general documentation about
      * the tabindex HTML property
+     * @private
      */
     @property({ type: Number })
     public get tabIndex(): number {

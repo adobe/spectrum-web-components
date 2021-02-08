@@ -6,6 +6,6 @@
         "sourceMap": false,
         "strict": true
     },
-    "include": ["./send-keys-plugin.ts"],
+    "include": ["./send-keys-plugin.ts", "./a11y-snapshot-plugin.ts"],
     "exclude": []
 }
