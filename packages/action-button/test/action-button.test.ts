@@ -47,6 +47,21 @@ describe('ActionButton', () => {
         expect(el.textContent).to.include('Button');
         await expect(el).to.be.accessible();
     });
+    it('maintains a `size` attribute', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button>Button</sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        expect(el.getAttribute('size')).to.equal('m');
+        el.removeAttribute('size');
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        expect(el.getAttribute('size')).to.equal('m');
+    });
     it('dispatches `longpress` events when [hold-affordance]', async () => {
         const longpressSpy = spy();
         const el = await fixture<ActionButton>(

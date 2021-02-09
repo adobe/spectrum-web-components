@@ -24,7 +24,9 @@ import styles from './divider.css.js';
 /**
  * @element sp-divider
  */
-export class Divider extends SizedMixin(SpectrumElement, ['s', 'm', 'l']) {
+export class Divider extends SizedMixin(SpectrumElement, {
+    validSizes: ['s', 'm', 'l'],
+}) {
     public static styles: CSSResultArray = [styles];
 
     @property({ type: Boolean, reflect: true })
