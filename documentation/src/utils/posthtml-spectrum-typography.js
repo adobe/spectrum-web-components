@@ -119,8 +119,21 @@ const transformations = [
         classes: ['spectrum-Rule', 'spectrum-Rule--large'],
     },
     {
+        // Update `<a>` tags that do not have the `no-js` or `logo` slot
+        // to be `<sp-link>` elements.
         selector: 'a',
-        classes: ['spectrum-Link'],
+        fn: (node) => {
+            if (
+                node.attrs.slot &&
+                (node.attrs.slot === 'no-js' || node.attrs.slot === 'logo')
+            ) {
+                return node;
+            }
+            return {
+                ...node,
+                tag: 'sp-link',
+            };
+        },
     },
 ];
 
