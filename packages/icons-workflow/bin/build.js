@@ -69,10 +69,14 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
 
     icons.forEach((i) => {
         const svg = fs.readFileSync(i, 'utf-8');
-        const id = path
+        let id = path
             .basename(i, '.svg')
             .replace('S_', '')
             .replace('_22_N', '');
+        if (id.search(/^Ad[A-Z]/) !== -1) {
+            id = id.replace(/^Ad/, '');
+            id += 'Advert';
+        }
         const ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
         const $ = cheerio.load(svg, {
             xmlMode: true,
