@@ -27,7 +27,9 @@ import linkStyles from './link.css.js';
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
  */
-export class Link extends SizedMixin(LikeAnchor(Focusable)) {
+export class Link extends SizedMixin(LikeAnchor(Focusable), {
+    noDefaultSize: true,
+}) {
     public static get styles(): CSSResultArray {
         return [linkStyles];
     }
