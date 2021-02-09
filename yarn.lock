@@ -3053,9 +3053,9 @@
   integrity sha512-OjOTHESisbAgsuEQAe2A2faQuFoY9Fr1qbOimKDsJb7WYvmPdZ3y11mwT7NuLjk+wehfwu4tebB74Yp7Cafqsg==
 
 "@spectrum-css/picker@^1.0.0-beta.3":
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-1.0.0-beta.3.tgz#476593597b5a9e0105397e4e39350869cf6e7965"
-  integrity sha512-jHzFnS5Frd3JSwZ6B8ymH/sVnNqAUBo9p93Zax4VHTUDsPTtTkvxj/Vxo4POmrJEL9v3qUB2Yk13rD2BSfEzLQ==
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-1.0.0.tgz#5758a128da081becd425b8d9433b24541f12b4b3"
+  integrity sha512-aSoin2SVYl5W2R3nFp+V/Er6rAJUnwygO4E3g/tfDuImq8p5U3FKZj4sggSqfuD2U1PIwNSwX0D1RdxuGXsnUQ==
 
 "@spectrum-css/popover@^3.0.0-beta.6":
   version "3.0.0-beta.6"
