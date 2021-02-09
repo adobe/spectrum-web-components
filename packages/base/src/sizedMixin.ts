@@ -25,31 +25,44 @@ export interface SizedElementInterface {
 
 export function SizedMixin<T extends Constructor<UpdatingElement>>(
     constructor: T,
-    validSizes: Partial<ElementSize>[] = ['s', 'm', 'l', 'xl']
+    {
+        validSizes = ['s', 'm', 'l', 'xl'],
+        noDefaultSize,
+    }: {
+        validSizes?: Partial<ElementSize>[];
+        noDefaultSize?: boolean;
+    } = {}
 ): T & Constructor<SizedElementInterface> {
     class SizedElement extends constructor {
         @property({ type: String, reflect: true })
         public get size(): ElementSize {
-            return this._size;
+            return this._size || 'm';
         }
 
         public set size(value: ElementSize) {
-            const size = value.toLocaleLowerCase() as ElementSize;
+            const defaultSize = noDefaultSize ? null : 'm';
+            const size = (value
+                ? value.toLocaleLowerCase()
+                : value) as ElementSize;
             const validSize = (validSizes.includes(size)
                 ? size
-                : 'm') as ElementSize;
-            if (this._size === validSize) return;
+                : defaultSize) as ElementSize;
+            if (validSize) {
+                this.setAttribute('size', validSize);
+            }
+            if (this._size === validSize) {
+                return;
+            }
             const oldSize = this._size;
             this._size = validSize;
-            this.setAttribute('size', validSize);
             this.requestUpdate('size', oldSize);
         }
 
-        private _size: ElementSize = 'm';
+        private _size: ElementSize | null = 'm';
 
         protected firstUpdated(changes: PropertyValues): void {
             super.firstUpdated(changes);
-            if (!this.hasAttribute('size')) {
+            if (!this.hasAttribute('size') && !noDefaultSize) {
                 this.setAttribute('size', this.size);
             }
         }
