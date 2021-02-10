@@ -3102,6 +3102,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-3.0.0.tgz#44dac6262a29823fb16d8b39764d3d90e0760f4a"
   integrity sha512-q4PTJZ/wlMbIfkbBogYKPb65jUEItTODk6ezpR07NKJRJZ8xKV/pKkpzoUvPWRNasGM7aE2NWvTITWvgx+AWLg==
 
+"@spectrum-css/splitview@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/splitview/-/splitview-3.0.0.tgz#80ca03b462308130cbc44c8bd14670647b6ee7bb"
+  integrity sha512-YFERv9Ao+SlyKyj8dFna7PqAVHg/VCE1QS2C5UPDJtzCLgWl2DjkkPgx8YZgFqfEqq7Ggv9GZu+PYIXR4s8ffQ==
+
 "@spectrum-css/statuslight@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/statuslight/-/statuslight-3.0.0.tgz#01f160d97dbaf91e49b0acd87715c3b103a43389"

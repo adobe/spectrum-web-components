@@ -45,6 +45,7 @@
         { "path": "../sidenav" },
         { "path": "../slider" },
         { "path": "../split-button" },
+        { "path": "../split-view" },
         { "path": "../status-light" },
         { "path": "../switch" },
         { "path": "../tabs" },
