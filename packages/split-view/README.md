@@ -1,6 +1,6 @@
 ## Description
 
-An `sp-split-view` element delivers its first two direct child elements in a horizontal or vertical (`<sp-split-view vertical>`) orientation that distributes the available page real estate as per the supplied attribute API. When leveraging the resizable attribute a pointer and keyboard accessible affordance is provided to the user to customize the distribution of that area between the available children.
+An `sp-split-view` element delivers its first two direct child elements in a horizontal or vertical (`<sp-split-view vertical>`) orientation that distributes the available page real estate as per the supplied attribute API. When leveraging the resizable attribute a pointer and keyboard accessible affordance is provided for the user to customize the distribution of that area between the available children.
 
 ### Usage
 
