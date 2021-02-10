@@ -1,0 +1,176 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+@import './spectrum-split-view.css';
+
+:host {
+    --spectrum-split-view-first-pane-size: 50%;
+}
+
+::slotted(*) {
+    overflow: auto;
+}
+
+::slotted(:first-child) {
+    order: 1;
+}
+
+:host(:not([vertical])) ::slotted(:first-child:not(:last-child)) {
+    width: var(--spectrum-split-view-first-pane-size);
+}
+
+:host([vertical]) ::slotted(:first-child:not(:last-child)) {
+    height: var(--spectrum-split-view-first-pane-size);
+}
+
+::slotted(:nth-child(2)) {
+    order: 3;
+    flex: 1;
+}
+
+::slotted(:nth-child(n + 3)) {
+    display: none;
+}
+
+#splitter {
+    order: 2;
+    height: auto; /* for horizontal splitviews without proper outter height value */
+}
+
+:host([resizable]) #splitter {
+    padding: 0 var(--spectrum-global-dimension-static-size-125);
+    margin: 0 calc(-1 * var(--spectrum-global-dimension-static-size-125));
+    background-clip: content-box;
+    cursor: ew-resize;
+}
+
+:host([vertical][resizable]) #splitter {
+    padding: var(--spectrum-global-dimension-static-size-125) 0;
+    margin: calc(-1 * var(--spectrum-global-dimension-static-size-125)) 0;
+    background-clip: content-box;
+    cursor: ns-resize;
+}
+
+:host([resizable][dir='ltr'][is-resized-start]) #splitter,
+:host([resizable][dir='rtl'][is-resized-end]) #splitter {
+    cursor: e-resize;
+}
+
+:host([resizable][dir='ltr'][is-resized-end]) #splitter,
+:host([resizable][dir='rtl'][is-resized-start]) #splitter {
+    cursor: w-resize;
+}
+
+:host([vertical][resizable][is-resized-start]) #splitter {
+    cursor: s-resize;
+}
+
+:host([vertical][resizable][is-resized-end]) #splitter {
+    cursor: n-resize;
+}
+
+:host([resizable][collapsible][is-resized-start]) #splitter,
+:host([resizable][collapsible][is-resized-end]) #splitter {
+    cursor: ew-resize;
+}
+
+:host([resizable][dir='ltr'][collapsible][is-collapsed-start]) #splitter,
+:host([resizable][dir='rtl'][collapsible][is-collapsed-end]) #splitter {
+    cursor: e-resize;
+}
+
+:host([resizable][dir='ltr'][collapsible][is-collapsed-end]) #splitter,
+:host([resizable][dir='rtl'][collapsible][is-collapsed-start]) #splitter {
+    cursor: w-resize;
+}
+
+:host([vertical][resizable][collapsible][is-collapsed-start]) #splitter {
+    cursor: s-resize;
+}
+
+:host([vertical][resizable][collapsible][is-collapsed-end]) #splitter {
+    cursor: n-resize;
+}
+
+:host([vertical][resizable][collapsible][is-resized-start]) #splitter,
+:host([vertical][resizable][collapsible][is-resized-end]) #splitter {
+    cursor: ns-resize;
+}
+
+:host([dir='ltr'][resizable]) #gripper {
+    left: calc(
+        var(--spectrum-global-dimension-static-size-125) +
+            (
+                var(
+                        --spectrum-dragbar-gripper-width,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) + 2 *
+                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
+                    var(
+                        --spectrum-dragbar-handle-width,
+                        var(--spectrum-global-dimension-static-size-25)
+                    )
+            ) / 2 * -1
+    );
+}
+
+:host([dir='rtl'][resizable]) #gripper {
+    right: calc(
+        var(--spectrum-global-dimension-static-size-125) +
+            (
+                var(
+                        --spectrum-dragbar-gripper-width,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) + 2 *
+                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
+                    var(
+                        --spectrum-dragbar-handle-width,
+                        var(--spectrum-global-dimension-static-size-25)
+                    )
+            ) / 2 * -1
+    );
+}
+
+/* :host([vertical][dir='ltr'][resizable]) #gripper, */
+:host([vertical][resizable]) #gripper {
+    margin-top: var(--spectrum-global-dimension-static-size-125);
+    left: 50%;
+    right: 50%;
+}
+
+:host([dir='ltr'][resizable][is-collapsed-start]) #splitter #gripper {
+    left: var(--spectrum-global-dimension-static-size-125);
+}
+
+:host([dir='rtl'][resizable][is-collapsed-start]) #splitter #gripper {
+    right: var(--spectrum-global-dimension-static-size-125);
+}
+
+:host([vertical][resizable][is-collapsed-start]) #splitter #gripper {
+    left: 50%;
+    right: 50%;
+}
+
+:host([dir='ltr'][resizable][is-collapsed-end]) #splitter #gripper {
+    left: var(--spectrum-global-dimension-static-size-25);
+}
+
+:host([dir='rtl'][resizable][is-collapsed-end]) #splitter #gripper {
+    right: var(--spectrum-global-dimension-static-size-25);
+}
+
+:host([vertical][resizable][is-collapsed-end]) #splitter #gripper {
+    margin-top: 0;
+    top: var(--spectrum-global-dimension-static-size-25);
+    left: 50%;
+    right: 50%;
+}

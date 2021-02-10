@@ -1,0 +1,10 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "./"
+    },
+    "include": ["*.ts", "src/*.ts"],
+    "exclude": ["test/*.ts", "stories/*.ts"],
+    "references": [{ "path": "../base" }]
+}
