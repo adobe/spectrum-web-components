@@ -4061,9 +4061,9 @@
   integrity sha512-CAqefTFAfnUPwYqsWHXpOxHaq1Zo5UQ3m9Zm2p09LggGe57rqHoBn3c++xcoomzXKynAUuiBMDUCQvKMnXjUpA==
 
 "@vaadin/router@^1.2.0":
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/@vaadin/router/-/router-1.7.2.tgz#ba2fcd7bc522f1319e6d853e430e384820dcfa09"
-  integrity sha512-Jcfd85W46k/kq1/1DtQEz7J3poZ+5gArfOYUMbNvPTpiYSvI7egXTIolkU0dvkpxWuSSAIj1RTIbzIqyIfPepA==
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@vaadin/router/-/router-1.7.3.tgz#f9a506d5e8ca5daae6ccfaddba60627a30861bab"
+  integrity sha512-YxY2xQukQzdCyPIYf2gsqC02vg/T21z6YTRx0Fek/sM1a0n8da3y6BRWrrTJrmRdrNPqaHDmdJrFrapLOXUxHw==
   dependencies:
     "@vaadin/vaadin-usage-statistics" "^2.1.0"
     path-to-regexp "2.4.0"
