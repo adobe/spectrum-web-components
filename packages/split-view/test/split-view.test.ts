@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 import '../sp-split-view.js';
-import { SplitView } from '..';
+import { SplitView } from '../';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -143,18 +143,6 @@ describe('SplitView', () => {
         expect(el.primaryMax).to.equal(300);
         expect(el.secondaryMin).to.equal(50);
         expect(el.secondaryMax).to.equal(3840);
-        expect(el.minPos).to.equal(
-            Math.max(el.primaryMin, splitTotalWidth - el.secondaryMax)
-        );
-        expect(el.maxPos).to.equal(
-            Math.min(
-                el.primaryMax,
-                Math.min(
-                    splitTotalWidth - el.secondaryMin,
-                    splitTotalWidth - el.splitterSize
-                )
-            )
-        );
     });
 
     it('use auto height in primary pane', async () => {
@@ -362,7 +350,7 @@ describe('SplitView', () => {
 
         splitter.dispatchEvent(new PointerEvent('pointerup'));
         await elementUpdated(el);
-        expect(el.isCollapsedStart).to.be.true;
+        expect(splitter.classList.contains('is-collapsed-start')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('e-resize');
     });
 
@@ -407,7 +395,7 @@ describe('SplitView', () => {
 
         splitter.dispatchEvent(new PointerEvent('pointerup'));
         await elementUpdated(el);
-        expect(el.isCollapsedEnd).to.be.true;
+        expect(splitter.classList.contains('is-collapsed-end')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('w-resize');
     });
 
@@ -450,7 +438,7 @@ describe('SplitView', () => {
 
         splitter.dispatchEvent(new PointerEvent('pointerup'));
         await elementUpdated(el);
-        expect(el.isCollapsedStart).to.be.true;
+        expect(splitter.classList.contains('is-collapsed-start')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('s-resize');
     });
 
@@ -498,7 +486,7 @@ describe('SplitView', () => {
 
         splitter.dispatchEvent(new PointerEvent('pointerup'));
         await elementUpdated(el);
-        expect(el.isCollapsedEnd).to.be.true;
+        expect(splitter.classList.contains('is-collapsed-end')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('n-resize');
     });
 
@@ -539,7 +527,7 @@ describe('SplitView', () => {
         );
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(50);
-        expect(el.isCollapsedStart).to.be.false;
+        expect(splitter.classList.contains('is-collapsed-start')).to.be.false;
         expect(getComputedStyle(splitter).cursor).to.equal('ew-resize');
 
         el.dispatchEvent(
@@ -550,7 +538,7 @@ describe('SplitView', () => {
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(0);
 
-        expect(el.isCollapsedStart).to.be.true;
+        expect(splitter.classList.contains('is-collapsed-start')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('e-resize');
 
         el.dispatchEvent(
@@ -560,7 +548,7 @@ describe('SplitView', () => {
         );
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(350);
-        expect(el.isCollapsedEnd).to.be.false;
+        expect(splitter.classList.contains('is-collapsed-end')).to.be.false;
         expect(getComputedStyle(splitter).cursor).to.equal('ew-resize');
 
         el.dispatchEvent(
@@ -573,7 +561,7 @@ describe('SplitView', () => {
 
         splitter.dispatchEvent(new PointerEvent('pointerup'));
         await elementUpdated(el);
-        expect(el.isCollapsedEnd).to.be.true;
+        expect(splitter.classList.contains('is-collapsed-end')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('w-resize');
     });
 
@@ -615,7 +603,7 @@ describe('SplitView', () => {
         );
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(50);
-        expect(el.isCollapsedStart).to.be.false;
+        expect(splitter.classList.contains('is-collapsed-start')).to.be.false;
         expect(getComputedStyle(splitter).cursor).to.equal('ns-resize');
 
         el.dispatchEvent(
@@ -626,7 +614,7 @@ describe('SplitView', () => {
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(0);
 
-        expect(el.isCollapsedStart).to.be.true;
+        expect(splitter.classList.contains('is-collapsed-start')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('s-resize');
 
         el.dispatchEvent(
@@ -636,7 +624,7 @@ describe('SplitView', () => {
         );
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(splitTotalHeight - 50);
-        expect(el.isCollapsedEnd).to.be.false;
+        expect(splitter.classList.contains('is-collapsed-end')).to.be.false;
         expect(getComputedStyle(splitter).cursor).to.equal('ns-resize');
 
         el.dispatchEvent(
@@ -651,7 +639,7 @@ describe('SplitView', () => {
 
         splitter.dispatchEvent(new PointerEvent('pointerup'));
         await elementUpdated(el);
-        expect(el.isCollapsedEnd).to.be.true;
+        expect(splitter.classList.contains('is-collapsed-end')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('n-resize');
     });
 

@@ -60,115 +60,100 @@ governing permissions and limitations under the License.
     cursor: ns-resize;
 }
 
-:host([resizable][dir='ltr'][is-resized-start]) #splitter,
-:host([resizable][dir='rtl'][is-resized-end]) #splitter {
+:host([resizable][dir='ltr']) #splitter.is-resized-start,
+:host([resizable][dir='rtl']) #splitter.is-resized-end {
     cursor: e-resize;
 }
 
-:host([resizable][dir='ltr'][is-resized-end]) #splitter,
-:host([resizable][dir='rtl'][is-resized-start]) #splitter {
+:host([resizable][dir='ltr']) #splitter.is-resized-end,
+:host([resizable][dir='rtl']) #splitter.is-resized-start {
     cursor: w-resize;
 }
 
-:host([vertical][resizable][is-resized-start]) #splitter {
+:host([vertical][resizable]) #splitter.is-resized-start {
     cursor: s-resize;
 }
 
-:host([vertical][resizable][is-resized-end]) #splitter {
+:host([vertical][resizable]) #splitter.is-resized-end {
     cursor: n-resize;
 }
 
-:host([resizable][collapsible][is-resized-start]) #splitter,
-:host([resizable][collapsible][is-resized-end]) #splitter {
+:host([resizable][collapsible]) #splitter.is-resized-start,
+:host([resizable][collapsible]) #splitter.is-resized-end {
     cursor: ew-resize;
 }
 
-:host([resizable][dir='ltr'][collapsible][is-collapsed-start]) #splitter,
-:host([resizable][dir='rtl'][collapsible][is-collapsed-end]) #splitter {
+:host([resizable][dir='ltr'][collapsible]) #splitter.is-collapsed-start,
+:host([resizable][dir='rtl'][collapsible]) #splitter.is-collapsed-end {
     cursor: e-resize;
 }
 
-:host([resizable][dir='ltr'][collapsible][is-collapsed-end]) #splitter,
-:host([resizable][dir='rtl'][collapsible][is-collapsed-start]) #splitter {
+:host([resizable][dir='ltr'][collapsible]) #splitter.is-collapsed-end,
+:host([resizable][dir='rtl'][collapsible]) #splitter.is-collapsed-start {
     cursor: w-resize;
 }
 
-:host([vertical][resizable][collapsible][is-collapsed-start]) #splitter {
+:host([vertical][resizable][collapsible]) #splitter.is-collapsed-start {
     cursor: s-resize;
 }
 
-:host([vertical][resizable][collapsible][is-collapsed-end]) #splitter {
+:host([vertical][resizable][collapsible]) #splitter.is-collapsed-end {
     cursor: n-resize;
 }
 
-:host([vertical][resizable][collapsible][is-resized-start]) #splitter,
-:host([vertical][resizable][collapsible][is-resized-end]) #splitter {
+:host([vertical][resizable][collapsible]) #splitter.is-resized-start,
+:host([vertical][resizable][collapsible]) #splitter.is-resized-end {
     cursor: ns-resize;
 }
 
+/**
+ * Apply X offset to compensate adapted hover area (margin/padding) of splitter
+ */
 :host([dir='ltr'][resizable]) #gripper {
-    left: calc(
-        var(--spectrum-global-dimension-static-size-125) +
-            (
-                var(
-                        --spectrum-dragbar-gripper-width,
-                        var(--spectrum-global-dimension-static-size-50)
-                    ) + 2 *
-                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
-                    var(
-                        --spectrum-dragbar-handle-width,
-                        var(--spectrum-global-dimension-static-size-25)
-                    )
-            ) / 2 * -1
-    );
+    transform: translateY(-50%)
+        translateX(var(--spectrum-global-dimension-static-size-125));
 }
 
+/**
+ * Apply X offset to compensate adapted hover area (margin/padding) of splitter
+ */
 :host([dir='rtl'][resizable]) #gripper {
-    right: calc(
-        var(--spectrum-global-dimension-static-size-125) +
-            (
-                var(
-                        --spectrum-dragbar-gripper-width,
-                        var(--spectrum-global-dimension-static-size-50)
-                    ) + 2 *
-                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
-                    var(
-                        --spectrum-dragbar-handle-width,
-                        var(--spectrum-global-dimension-static-size-25)
-                    )
-            ) / 2 * -1
-    );
+    transform: translateY(-50%)
+        translateX(calc(-1 * var(--spectrum-global-dimension-static-size-125)));
 }
 
-/* :host([vertical][dir='ltr'][resizable]) #gripper, */
+/**
+ * Apply Y offset value to compensate adapted hover area (margin/padding) of splitter
+ */
 :host([vertical][resizable]) #gripper {
-    margin-top: var(--spectrum-global-dimension-static-size-125);
-    left: 50%;
-    right: 50%;
+    transform: translateX(
+            calc(-1 * var(--spectrum-splitview-vertical-gripper-width))
+        )
+        translateY(var(--spectrum-global-dimension-static-size-125));
 }
 
-:host([dir='ltr'][resizable][is-collapsed-start]) #splitter #gripper {
+:host([dir='ltr'][resizable]) #splitter.is-collapsed-start #gripper {
     left: var(--spectrum-global-dimension-static-size-125);
 }
 
-:host([dir='rtl'][resizable][is-collapsed-start]) #splitter #gripper {
+:host([dir='rtl'][resizable]) #splitter.is-collapsed-start #gripper {
     right: var(--spectrum-global-dimension-static-size-125);
 }
 
-:host([vertical][resizable][is-collapsed-start]) #splitter #gripper {
+:host([vertical][resizable]) #splitter.is-collapsed-start #gripper {
     left: 50%;
     right: 50%;
 }
 
-:host([dir='ltr'][resizable][is-collapsed-end]) #splitter #gripper {
+:host([dir='ltr'][resizable]) #splitter.is-collapsed-end #gripper {
     left: var(--spectrum-global-dimension-static-size-25);
 }
 
-:host([dir='rtl'][resizable][is-collapsed-end]) #splitter #gripper {
+:host([dir='rtl'][resizable]) #splitter.is-collapsed-end #gripper {
     right: var(--spectrum-global-dimension-static-size-25);
 }
 
-:host([vertical][resizable][is-collapsed-end]) #splitter #gripper {
+:host([vertical][resizable]) #splitter.is-collapsed-end #gripper {
     margin-top: 0;
     top: var(--spectrum-global-dimension-static-size-25);
     left: 50%;

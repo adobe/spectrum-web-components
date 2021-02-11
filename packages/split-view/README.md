@@ -37,7 +37,12 @@ import { SplitView } from '@spectrum-web-components/split-view';
 #### Horizontal Resizable
 
 ```html
-<sp-split-view resizable primary-min="50" secondary-min="50">
+<sp-split-view
+    resizable
+    primary-min="50"
+    secondary-min="50"
+    primary-size="sdfs"
+>
     <div>
         <h1>Left panel</h1>
         <p>
