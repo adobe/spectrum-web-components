@@ -35,7 +35,6 @@ export const HorizontalResizable = (): TemplateResult => {
             primary-min="50"
             primary-size="100"
             secondary-min="50"
-            id="testsplit"
         >
             <div>
                 <h1>First panel</h1>
