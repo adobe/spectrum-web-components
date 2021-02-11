@@ -90,8 +90,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     height: 100%;
     z-index: 1;
 }
-:host([dir='ltr'][is-collapsed-end]) #splitter #gripper:before,
-:host([dir='ltr'][is-collapsed-start]) #splitter #gripper:before {
+:host([dir='ltr']) #splitter.is-collapsed-end #gripper:before,
+:host([dir='ltr']) #splitter.is-collapsed-start #gripper:before {
     /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before,
    * [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before */
     left: calc(
@@ -102,8 +102,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2
     );
 }
-:host([dir='rtl'][is-collapsed-end]) #splitter #gripper:before,
-:host([dir='rtl'][is-collapsed-start]) #splitter #gripper:before {
+:host([dir='rtl']) #splitter.is-collapsed-end #gripper:before,
+:host([dir='rtl']) #splitter.is-collapsed-start #gripper:before {
     /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before,
    * [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before */
     right: calc(
@@ -114,8 +114,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2
     );
 }
-:host([is-collapsed-end]) #splitter #gripper:before,
-:host([is-collapsed-start]) #splitter #gripper:before {
+#splitter.is-collapsed-end #gripper:before,
+#splitter.is-collapsed-start #gripper:before {
     /* .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before,
    * .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before */
     content: '';
@@ -127,25 +127,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     height: 100%;
 }
-:host([dir='ltr'][is-collapsed-start]) #splitter #gripper {
+:host([dir='ltr']) #splitter.is-collapsed-start #gripper {
     /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
     left: 0;
 }
-:host([dir='ltr'][is-collapsed-end]) #splitter #gripper,
-:host([dir='rtl'][is-collapsed-start]) #splitter #gripper {
+:host([dir='ltr']) #splitter.is-collapsed-end #gripper,
+:host([dir='rtl']) #splitter.is-collapsed-start #gripper {
     /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper,
    * [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
     right: 0;
 }
-:host([dir='rtl'][is-collapsed-end]) #splitter #gripper {
+:host([dir='rtl']) #splitter.is-collapsed-end #gripper {
     /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
     left: 0;
 }
-:host([dir='ltr'][is-collapsed-end]) #splitter #gripper {
+:host([dir='ltr']) #splitter.is-collapsed-end #gripper {
     /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
     left: auto;
 }
-:host([dir='rtl'][is-collapsed-end]) #splitter #gripper {
+:host([dir='rtl']) #splitter.is-collapsed-end #gripper {
     /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
     right: auto;
 }
@@ -203,32 +203,32 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-static-size-25)
     );
 }
-:host([dir='ltr'][vertical][is-collapsed-end]) #splitter #gripper,
-:host([dir='ltr'][vertical][is-collapsed-start]) #splitter #gripper {
+:host([dir='ltr'][vertical]) #splitter.is-collapsed-end #gripper,
+:host([dir='ltr'][vertical]) #splitter.is-collapsed-start #gripper {
     /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper,
    * [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
     left: var(--spectrum-splitview-vertical-gripper-width);
 }
-:host([dir='rtl'][vertical][is-collapsed-end]) #splitter #gripper,
-:host([dir='rtl'][vertical][is-collapsed-start]) #splitter #gripper {
+:host([dir='rtl'][vertical]) #splitter.is-collapsed-end #gripper,
+:host([dir='rtl'][vertical]) #splitter.is-collapsed-start #gripper {
     /* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper,
    * [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
     right: var(--spectrum-splitview-vertical-gripper-width);
 }
-:host([dir='ltr'][vertical][is-collapsed-end]) #splitter #gripper:before,
-:host([dir='ltr'][vertical][is-collapsed-start]) #splitter #gripper:before {
+:host([dir='ltr'][vertical]) #splitter.is-collapsed-end #gripper:before,
+:host([dir='ltr'][vertical]) #splitter.is-collapsed-start #gripper:before {
     /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before,
    * [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before */
     left: var(--spectrum-splitview-vertical-gripper-reset);
 }
-:host([dir='rtl'][vertical][is-collapsed-end]) #splitter #gripper:before,
-:host([dir='rtl'][vertical][is-collapsed-start]) #splitter #gripper:before {
+:host([dir='rtl'][vertical]) #splitter.is-collapsed-end #gripper:before,
+:host([dir='rtl'][vertical]) #splitter.is-collapsed-start #gripper:before {
     /* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before,
    * [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before */
     right: var(--spectrum-splitview-vertical-gripper-reset);
 }
-:host([vertical][is-collapsed-end]) #splitter #gripper:before,
-:host([vertical][is-collapsed-start]) #splitter #gripper:before {
+:host([vertical]) #splitter.is-collapsed-end #gripper:before,
+:host([vertical]) #splitter.is-collapsed-start #gripper:before {
     /* .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before,
    * .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before */
     top: calc(
@@ -244,11 +244,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-static-size-25)
     );
 }
-:host([vertical][is-collapsed-start]) #splitter #gripper {
+:host([vertical]) #splitter.is-collapsed-start #gripper {
     /* .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
     top: var(--spectrum-splitview-vertical-gripper-reset);
 }
-:host([vertical][is-collapsed-end]) #splitter #gripper {
+:host([vertical]) #splitter.is-collapsed-end #gripper {
     /* .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
     top: auto;
     bottom: var(--spectrum-splitview-vertical-gripper-reset);

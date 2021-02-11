@@ -62,7 +62,12 @@ export class SplitView extends SpectrumElement {
     @property({ type: Number, attribute: 'primary-max' })
     public primaryMax = DEFAULT_MAX_SIZE;
 
-    /** The start size of the primary pane */
+    /**
+     * The start size of the primary pane, can be a real pixel number|string, percentage or "auto"
+     * For example: "100", "120px", "75%" or "auto" are valid values
+     * @type {number | number + "px" | number + "%" | "auto"}
+     * @attr
+     */
     @property({ type: String, attribute: 'primary-size' })
     public primarySize?: string;
 
@@ -74,26 +79,13 @@ export class SplitView extends SpectrumElement {
     @property({ type: Number, attribute: 'secondary-max' })
     public secondaryMax = DEFAULT_MAX_SIZE;
 
+    /** The current splitter position of split-view */
     @property({ type: Number, reflect: true, attribute: 'splitter-pos' })
     public splitterPos?: number;
 
-    @property({ type: Number, attribute: false })
-    public minPos = 0;
-
-    @property({ type: Number, attribute: false })
-    public maxPos = Infinity;
-
-    @property({ type: Boolean, reflect: true, attribute: 'is-resized-start' })
-    public isResizedStart = false;
-
-    @property({ type: Boolean, reflect: true, attribute: 'is-resized-end' })
-    public isResizedEnd = false;
-
-    @property({ type: Boolean, reflect: true, attribute: 'is-collapsed-start' })
-    public isCollapsedStart = false;
-
-    @property({ type: Boolean, reflect: true, attribute: 'is-collapsed-end' })
-    public isCollapsedEnd = false;
+    /** The current size of first pane of split-view */
+    @property({ type: String, attribute: false })
+    private firstPaneSize = 'auto';
 
     @property()
     public label?: string;
@@ -109,6 +101,10 @@ export class SplitView extends SpectrumElement {
 
     private offset = 0;
 
+    private minPos = 0;
+
+    private maxPos = DEFAULT_MAX_SIZE;
+
     private observer?: WithSWCResizeObserver['ResizeObserver'];
 
     private rect?: DOMRect;
@@ -123,7 +119,6 @@ export class SplitView extends SpectrumElement {
             this.observer = new RO(() => {
                 this.rect = undefined;
                 this.updateMinMax();
-                this.checkStartEnd();
             });
         }
     }
@@ -176,11 +171,23 @@ export class SplitView extends SpectrumElement {
                     this.enoughChildren = this.children.length > 1;
                     this.checkResize();
                 }}
+                style="--spectrum-split-view-first-pane-size: ${this
+                    .firstPaneSize}"
             ></slot>
             ${this.enoughChildren
                 ? html`
                       <div
                           id="splitter"
+                          class="${this.splitterPos === this.minPos
+                              ? 'is-resized-start'
+                              : ''} ${this.splitterPos === this.maxPos
+                              ? 'is-resized-end'
+                              : ''} ${this.splitterPos === 0
+                              ? 'is-collapsed-start'
+                              : ''} ${this.splitterPos &&
+                          this.splitterPos >= this.viewSize - this.splitterSize
+                              ? 'is-collapsed-end'
+                              : ''}"
                           role="separator"
                           aria-label=${ifDefined(this.label || undefined)}
                           tabindex=${ifDefined(
@@ -345,31 +352,6 @@ export class SplitView extends SpectrumElement {
         return Math.max(this.minPos, Math.min(this.maxPos, input));
     }
 
-    private checkStartEnd(): void {
-        if (this.splitterPos === undefined) {
-            return;
-        }
-        this.isResizedStart = this.splitterPos === this.minPos;
-        this.isResizedEnd = this.splitterPos === this.maxPos;
-        this.isCollapsedStart = this.splitterPos === 0;
-        this.isCollapsedEnd =
-            this.splitterPos >= this.viewSize - this.splitterSize;
-    }
-
-    private setFirstPaneSize(x: number): void {
-        this.paneSlot.style.setProperty(
-            '--spectrum-split-view-first-pane-size',
-            `${x}px`
-        );
-    }
-
-    private setFirstPaneAutoSize(): void {
-        this.paneSlot.style.setProperty(
-            '--spectrum-split-view-first-pane-size',
-            'auto'
-        );
-    }
-
     private async calcStartPos(): Promise<number> {
         if (
             this.primarySize !== undefined &&
@@ -381,7 +363,7 @@ export class SplitView extends SpectrumElement {
             return (parseInt(this.primarySize, 10) * this.viewSize) / 100;
         }
         if (this.primarySize === 'auto') {
-            this.setFirstPaneAutoSize();
+            this.firstPaneSize = 'auto';
             const nodes = this.paneSlot.assignedNodes({ flatten: true });
             const firstEl = nodes.find(
                 (node) => node instanceof HTMLElement
@@ -422,8 +404,7 @@ export class SplitView extends SpectrumElement {
             this.splitterPos !== undefined &&
             this.enoughChildren
         ) {
-            this.setFirstPaneSize(Math.round(this.splitterPos));
-            this.checkStartEnd();
+            this.firstPaneSize = `${Math.round(this.splitterPos)}px`;
         }
     }
 }
