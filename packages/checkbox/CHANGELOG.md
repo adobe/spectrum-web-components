@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.7.2...@spectrum-web-components/checkbox@0.8.0) (2021-02-11)
+
+### Bug Fixes
+
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+
+### Features
+
+-   add t-shirt sizing with visual regressions to checkbox and picker elements ([ce47ec8](https://github.com/adobe/spectrum-web-components/commit/ce47ec88bd2c6c8d236c05826d28b2d0dadf12b8))
+
 ## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.7.1...@spectrum-web-components/checkbox@0.7.2) (2021-02-02)
 
 **Note:** Version bump only for package @spectrum-web-components/checkbox

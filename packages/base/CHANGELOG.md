@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.3.2...@spectrum-web-components/base@0.3.3) (2021-02-11)
+
+### Bug Fixes
+
+-   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/adobe/spectrum-web-components/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
+-   reduce cycles ([8917a5e](https://github.com/adobe/spectrum-web-components/commit/8917a5efb28d2e3fcc68c9e25ae98c3b824d7fe4))
+
 ## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.3.1...@spectrum-web-components/base@0.3.2) (2021-02-02)
 
 **Note:** Version bump only for package @spectrum-web-components/base

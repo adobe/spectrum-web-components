@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/banner@0.5.1...@spectrum-web-components/banner@0.5.2) (2021-02-11)
+
+### Bug Fixes
+
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+
 ## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/banner@0.4.3...@spectrum-web-components/banner@0.5.1) (2021-01-21)
 
 ### Bug Fixes

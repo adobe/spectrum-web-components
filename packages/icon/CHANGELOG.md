@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.8.2...@spectrum-web-components/icon@0.8.3) (2021-02-11)
+
+### Bug Fixes
+
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+
 ## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.8.1...@spectrum-web-components/icon@0.8.2) (2021-02-02)
 
 **Note:** Version bump only for package @spectrum-web-components/icon

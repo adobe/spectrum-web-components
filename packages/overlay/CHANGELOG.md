@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.8.2...@spectrum-web-components/overlay@0.9.0) (2021-02-11)
+
+### Bug Fixes
+
+-   **overlay:** place return focus element on demand ([d262237](https://github.com/adobe/spectrum-web-components/commit/d2622374346c0a0f55419f87dd4399918c3aaa15))
+
+### Features
+
+-   allow activation of longpress content ([55e71fd](https://github.com/adobe/spectrum-web-components/commit/55e71fdf9fd5dde489871c3d9798ef8957f4e5b6))
+
 ## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.8.1...@spectrum-web-components/overlay@0.8.2) (2021-02-02)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

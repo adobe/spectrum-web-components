@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.2.2...@spectrum-web-components/field-label@0.2.3) (2021-02-11)
+
+### Bug Fixes
+
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+
 ## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.2.1...@spectrum-web-components/field-label@0.2.2) (2021-02-02)
 
 **Note:** Version bump only for package @spectrum-web-components/field-label

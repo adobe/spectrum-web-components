@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.11.2...@spectrum-web-components/button@0.12.0) (2021-02-11)
+
+### Bug Fixes
+
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+
+### Features
+
+-   allow activation of longpress content ([55e71fd](https://github.com/adobe/spectrum-web-components/commit/55e71fdf9fd5dde489871c3d9798ef8957f4e5b6))
+
+### Performance Improvements
+
+-   **button:** recentralize shared styles in base ([85d3d0a](https://github.com/adobe/spectrum-web-components/commit/85d3d0a3c84301dcf5be492e2b42cd00e8986089))
+
 ## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.11.1...@spectrum-web-components/button@0.11.2) (2021-02-02)
 
 **Note:** Version bump only for package @spectrum-web-components/button
