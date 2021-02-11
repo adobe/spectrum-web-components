@@ -29,16 +29,6 @@ const config = {
                     selector: '.spectrum-SplitView--vertical',
                     name: 'vertical',
                 },
-                // {
-                //     type: 'boolean',
-                //     selector: '.is-collapsed-start',
-                //     name: 'is-collapsed-start',
-                // },
-                // {
-                //     type: 'boolean',
-                //     selector: '.is-collapsed-end',
-                //     name: 'is-collapsed-end',
-                // },
             ],
             ids: [
                 {
