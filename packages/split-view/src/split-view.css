@@ -110,26 +110,49 @@ governing permissions and limitations under the License.
  * Apply X offset to compensate adapted hover area (margin/padding) of splitter
  */
 :host([dir='ltr'][resizable]) #gripper {
-    transform: translateY(-50%)
-        translateX(var(--spectrum-global-dimension-static-size-125));
+    left: calc(
+        var(--spectrum-global-dimension-static-size-125) +
+            (
+                var(
+                        --spectrum-dragbar-gripper-width,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) + 2 *
+                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
+                    var(
+                        --spectrum-dragbar-handle-width,
+                        var(--spectrum-global-dimension-static-size-25)
+                    )
+            ) / 2 * -1
+    );
 }
 
 /**
  * Apply X offset to compensate adapted hover area (margin/padding) of splitter
  */
 :host([dir='rtl'][resizable]) #gripper {
-    transform: translateY(-50%)
-        translateX(calc(-1 * var(--spectrum-global-dimension-static-size-125)));
+    right: calc(
+        var(--spectrum-global-dimension-static-size-125) +
+            (
+                var(
+                        --spectrum-dragbar-gripper-width,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) + 2 *
+                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
+                    var(
+                        --spectrum-dragbar-handle-width,
+                        var(--spectrum-global-dimension-static-size-25)
+                    )
+            ) / 2 * -1
+    );
 }
 
 /**
  * Apply Y offset value to compensate adapted hover area (margin/padding) of splitter
  */
 :host([vertical][resizable]) #gripper {
-    transform: translateX(
-            calc(-1 * var(--spectrum-splitview-vertical-gripper-width))
-        )
-        translateY(var(--spectrum-global-dimension-static-size-125));
+    margin-top: var(--spectrum-global-dimension-static-size-125);
+    left: 50%;
+    right: 50%;
 }
 
 :host([dir='ltr'][resizable]) #splitter.is-collapsed-start #gripper {
