@@ -23,6 +23,14 @@
     "main": "./src/index.js",
     "module": "./src/index.js",
     "types": "./src/index.d.ts",
+    "exports": {
+        ".": "./src/index.js",
+        "./src/*": "./src/*",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./sp-split-button": "./sp-split-button.js",
+        "./sp-split-button.js": "./sp-split-button.js"
+    },
     "type": "module",
     "files": [
         "custom-elements.json",

@@ -25,7 +25,7 @@
     "types": "./src/index.d.ts",
     "type": "module",
     "exports": {
-        "./src/": "./src/",
+        "./src/*": "./src/*.js",
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json",
         "./decorator": "./decorator.js",

@@ -26,7 +26,7 @@
     "type": "module",
     "exports": {
         ".": "./src/index.js",
-        "./src/": "./src/",
+        "./src/*": "./src/*",
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json",
         "./sp-card": "./sp-card.js",

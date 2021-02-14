@@ -15,6 +15,6 @@ import './styles.css';
 
 // import the components we'll use in this page
 import '@spectrum-web-components/button/sp-button';
-import '@spectrum-web-components/dropdown/sp-dropdown';
+import '@spectrum-web-components/picker/sp-picker';
 import '@spectrum-web-components/menu/sp-menu';
 import '@spectrum-web-components/menu/sp-menu-item';

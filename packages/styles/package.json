@@ -25,7 +25,7 @@
     "module": "src/spectrum-base.css.js",
     "type": "module",
     "exports": {
-        "./": "./"
+        "./*": "./*"
     },
     "files": [
         "custom-elements.json",
