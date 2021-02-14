@@ -25,8 +25,8 @@
     "types": "./src/index.d.ts",
     "exports": {
         ".": "./src/index.js",
-        "./src/": "./src/",
-        "./icons/": "./icons/",
+        "./src/*": "./src/*",
+        "./icons/*": "./icons/*",
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json"
     },
