@@ -20,6 +20,7 @@ import {
     nothing,
     ifDefined,
     SizedMixin,
+    ElementSize,
 } from '@spectrum-web-components/base';
 
 import pickerStyles from './picker.css.js';
@@ -49,6 +50,8 @@ const chevronClass = {
     l: 'spectrum-UIIcon-ChevronDown200',
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
+
+type PickerSize = Exclude<ElementSize, 'xxl'>;
 
 /**
  * @element sp-picker
@@ -315,7 +318,9 @@ export class PickerBase extends SizedMixin(Focusable) {
                           <sp-icon-alert class="validationIcon"></sp-icon-alert>
                       `
                     : nothing}
-                <sp-icon class="icon picker ${chevronClass[this.size]}">
+                <sp-icon
+                    class="icon picker ${chevronClass[this.size as PickerSize]}"
+                >
                     ${Chevron100Icon()}
                 </sp-icon>
             `,

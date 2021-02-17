@@ -17,6 +17,7 @@ import {
     PropertyValues,
     TemplateResult,
     SizedMixin,
+    ElementSize,
 } from '@spectrum-web-components/base';
 import { ButtonBase } from '@spectrum-web-components/button';
 import buttonStyles from './action-button.css.js';
@@ -37,6 +38,8 @@ let LONGPRESS_TIMEOUT: ReturnType<typeof setTimeout>;
 export type LongpressEvent = {
     source: 'pointer' | 'keyboard';
 };
+
+type ActionButtonSize = Exclude<ElementSize, 'xxl'>;
 
 /**
  * @element sp-card
@@ -178,7 +181,9 @@ export class ActionButton extends SizedMixin(ButtonBase) {
             buttonContent.unshift(html`
                 <sp-icon
                     id="hold-affordance"
-                    class="${holdAffordanceClass[this.size]}"
+                    class="${holdAffordanceClass[
+                        this.size as ActionButtonSize
+                    ]}"
                 >
                     ${CornerTriangle300Icon()}
                 </sp-icon>
