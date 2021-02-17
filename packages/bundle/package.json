@@ -93,6 +93,7 @@
         "@spectrum-web-components/tags": "^0.5.3",
         "@spectrum-web-components/textfield": "^0.7.3",
         "@spectrum-web-components/theme": "^0.7.4",
+        "@spectrum-web-components/thumbnail": "^0.0.1",
         "@spectrum-web-components/toast": "^0.7.3",
         "@spectrum-web-components/tooltip": "^0.7.3",
         "@spectrum-web-components/underlay": "^0.5.1",

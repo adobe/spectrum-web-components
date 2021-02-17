@@ -3137,6 +3137,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-3.0.0.tgz#2f2d341b8d2c6f74e074b7e8df4a28307561cbbf"
   integrity sha512-ooXiSc5TZuZCFr3wl1JB60nS9FBBkGgqsml7kAS/7bOwRTCUPH7cY80SoaabRL8Z9Clml+K1Pa7I/r+Wphb53g==
 
+"@spectrum-css/thumbnail@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-1.0.0.tgz#4d65298b2f71006351d62a1a2f9b93a46c6cafea"
+  integrity sha512-TwqO8YI0afCq13rlCsHGQj2stsxeSYljc1Q3mEE3CwqcyV2U06xlx91UbkUhH25/71yn0208KWL0kcgk9lr61w==
+
 "@spectrum-css/toast@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-3.0.0.tgz#7931f7a0ecbd18dbfb7ae4fff49d130b626af579"
