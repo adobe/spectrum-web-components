@@ -19,6 +19,7 @@ import {
     query,
     ifDefined,
     SizedMixin,
+    ElementSize,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-button.js';
@@ -36,6 +37,8 @@ const chevronClass = {
     l: 'spectrum-UIIcon-ChevronDown200',
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
+
+type SplitButtonSize = Exclude<ElementSize, 'xxl'>;
 
 /**
  * @slot options - The menu with options that will display when the picker is open
@@ -141,7 +144,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 >
                     <sp-icon
                         class="icon ${this.type === 'field'
-                            ? chevronClass[this.size]
+                            ? chevronClass[this.size as SplitButtonSize]
                             : ''}"
                     >
                         ${this.type === 'field'

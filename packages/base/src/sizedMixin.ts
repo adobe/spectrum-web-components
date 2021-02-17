@@ -17,7 +17,7 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
-type ElementSize = 's' | 'm' | 'l' | 'xl';
+export type ElementSize = 's' | 'm' | 'l' | 'xl' | 'xxl';
 
 export interface SizedElementInterface {
     size: ElementSize;
@@ -29,7 +29,7 @@ export function SizedMixin<T extends Constructor<UpdatingElement>>(
         validSizes = ['s', 'm', 'l', 'xl'],
         noDefaultSize,
     }: {
-        validSizes?: Partial<ElementSize>[];
+        validSizes?: ElementSize[];
         noDefaultSize?: boolean;
     } = {}
 ): T & Constructor<SizedElementInterface> {

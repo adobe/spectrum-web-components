@@ -17,6 +17,7 @@ import {
     property,
     PropertyValues,
     SizedMixin,
+    ElementSize,
 } from '@spectrum-web-components/base';
 import { CheckboxBase } from './CheckboxBase.js';
 import '@spectrum-web-components/icon/sp-icon.js';
@@ -62,6 +63,8 @@ const dashIcon = {
     xl: Dash300Icon,
 };
 
+type CheckboxSize = Exclude<ElementSize, 'xxl'>;
+
 export class Checkbox extends SizedMixin(CheckboxBase) {
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
@@ -80,11 +83,17 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
         return html`
             ${super.render()}
             <span id="box">
-                <sp-icon id="checkmark" class=${checkmarkClass[this.size]}>
-                    ${checkmarkIcon[this.size]()}
+                <sp-icon
+                    id="checkmark"
+                    class=${checkmarkClass[this.size as CheckboxSize]}
+                >
+                    ${checkmarkIcon[this.size as CheckboxSize]()}
                 </sp-icon>
-                <sp-icon id="partialCheckmark" class=${dashClass[this.size]}>
-                    ${dashIcon[this.size]()}
+                <sp-icon
+                    id="partialCheckmark"
+                    class=${dashClass[this.size as CheckboxSize]}
+                >
+                    ${dashIcon[this.size as CheckboxSize]()}
                 </sp-icon>
             </span>
             <label id="label"><slot></slot></label>
