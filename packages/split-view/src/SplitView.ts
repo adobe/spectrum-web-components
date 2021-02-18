@@ -21,6 +21,7 @@ import {
     query,
     nothing,
     LitElement,
+    classMap,
 } from '@spectrum-web-components/base';
 
 import { WithSWCResizeObserver } from './types';
@@ -145,15 +146,12 @@ export class SplitView extends SpectrumElement {
      **/
     public get splitterSize(): number {
         if (!this._splitterSize) {
-            const el = this.shadowRoot.querySelector(
-                '#splitter'
-            ) as HTMLElement;
             this._splitterSize =
-                (el &&
+                (this.splitter &&
                     Math.round(
                         parseFloat(
                             window
-                                .getComputedStyle(el)
+                                .getComputedStyle(this.splitter)
                                 .getPropertyValue(
                                     this.vertical ? 'height' : 'width'
                                 )
@@ -165,12 +163,22 @@ export class SplitView extends SpectrumElement {
     }
 
     protected render(): TemplateResult {
+        const splitterClasses = {
+            'is-resized-start': this.splitterPos === this.minPos,
+            'is-resized-end': (this.splitterPos &&
+                this.splitterPos > this.splitterSize &&
+                this.splitterPos === this.maxPos) as boolean,
+            'is-collapsed-start': this.splitterPos === 0,
+            'is-collapsed-end': (this.splitterPos &&
+                this.splitterPos >=
+                    Math.max(
+                        this.splitterSize,
+                        this.viewSize - this.splitterSize
+                    )) as boolean,
+        };
         return html`
             <slot
-                @slotchange=${() => {
-                    this.enoughChildren = this.children.length > 1;
-                    this.checkResize();
-                }}
+                @slotchange=${this.onContentSlotChange}
                 style="--spectrum-split-view-first-pane-size: ${this
                     .firstPaneSize}"
             ></slot>
@@ -178,16 +186,7 @@ export class SplitView extends SpectrumElement {
                 ? html`
                       <div
                           id="splitter"
-                          class="${this.splitterPos === this.minPos
-                              ? 'is-resized-start'
-                              : ''} ${this.splitterPos === this.maxPos
-                              ? 'is-resized-end'
-                              : ''} ${this.splitterPos === 0
-                              ? 'is-collapsed-start'
-                              : ''} ${this.splitterPos &&
-                          this.splitterPos >= this.viewSize - this.splitterSize
-                              ? 'is-collapsed-end'
-                              : ''}"
+                          class=${classMap(splitterClasses)}
                           role="separator"
                           aria-label=${ifDefined(this.label || undefined)}
                           tabindex=${ifDefined(
@@ -206,6 +205,11 @@ export class SplitView extends SpectrumElement {
                   `
                 : nothing}
         `;
+    }
+
+    private onContentSlotChange(): void {
+        this.enoughChildren = this.children.length > 1;
+        this.checkResize();
     }
 
     private onPointerdown(event: PointerEvent): void {
@@ -359,7 +363,7 @@ export class SplitView extends SpectrumElement {
         ) {
             return parseInt(this.primarySize, 10);
         }
-        if (this.primarySize?.endsWith('%')) {
+        if (this.primarySize !== undefined && /^\d+%$/.test(this.primarySize)) {
             return (parseInt(this.primarySize, 10) * this.viewSize) / 100;
         }
         if (this.primarySize === 'auto') {
