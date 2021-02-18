@@ -95,6 +95,9 @@ export class SplitView extends SpectrumElement {
     @property({ type: Boolean, attribute: false })
     private enoughChildren = false;
 
+    @property({ type: Number })
+    private viewSize = 0;
+
     @query('slot')
     private paneSlot!: HTMLSlotElement;
 
@@ -133,13 +136,6 @@ export class SplitView extends SpectrumElement {
     public disconnectedCallback(): void {
         this.observer?.unobserve(this);
         super.disconnectedCallback();
-    }
-
-    /**
-     * @private
-     **/
-    public get viewSize(): number {
-        return this.vertical ? this.offsetHeight : this.offsetWidth;
     }
 
     /**
@@ -319,6 +315,7 @@ export class SplitView extends SpectrumElement {
     }
 
     private updateMinMax(): void {
+        this.viewSize = this.vertical ? this.offsetHeight : this.offsetWidth;
         this.minPos = Math.max(
             this.primaryMin,
             this.viewSize - this.secondaryMax
