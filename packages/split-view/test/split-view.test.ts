@@ -46,7 +46,6 @@ describe('SplitView', () => {
         const gripper = el.shadowRoot.querySelector(
             '#gripper'
         ) as HTMLDivElement;
-        // expect(gripper).not.to.be.accessible();
         expect(gripper).to.be.null;
         const splitter = el.shadowRoot.querySelector(
             '#splitter'
@@ -71,7 +70,7 @@ describe('SplitView', () => {
         const gripper = el.shadowRoot.querySelector(
             '#gripper'
         ) as HTMLDivElement;
-        expect(gripper).to.be.accessible();
+        await expect(gripper).to.be.accessible();
         const splitter = el.shadowRoot.querySelector(
             '#splitter'
         ) as HTMLDivElement;
@@ -1001,7 +1000,7 @@ describe('SplitView', () => {
             splitter = el.shadowRoot.querySelector(
                 '#splitter'
             ) as HTMLDivElement;
-            expect(splitter).to.be.accessible;
+            await expect(splitter).to.be.accessible;
         }
     });
 
