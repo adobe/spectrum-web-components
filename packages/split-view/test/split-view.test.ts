@@ -1000,7 +1000,7 @@ describe('SplitView', () => {
             splitter = el.shadowRoot.querySelector(
                 '#splitter'
             ) as HTMLDivElement;
-            await expect(splitter).to.be.accessible;
+            await expect(splitter).to.be.accessible();
         }
     });
 
