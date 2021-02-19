@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.17.3...@spectrum-web-components/bundle@0.18.0) (2021-02-19)
+
+### Bug Fixes
+
+-   correct dependency graph ([69165eb](https://github.com/adobe/spectrum-web-components/commit/69165eb7444aea66fd1041996c44ed43e39c3ebc))
+
+### Features
+
+-   setup SplitView component from rebase main ([32f3272](https://github.com/adobe/spectrum-web-components/commit/32f3272dcbaba5b09cf02f66f25b54ab923f4510))
+
 ## [0.17.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.17.2...@spectrum-web-components/bundle@0.17.3) (2021-02-11)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle
