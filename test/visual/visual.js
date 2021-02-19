@@ -84,21 +84,28 @@ module.exports = {
                         viewport,
                     }
                 );
+                browser.on('close', () =>
+                    console.log('THE BROWSER CONTEXT CLOSED!!!')
+                );
+                const tests = [];
+                // BEFORE describing what `it` does in mocha:
+                // - Collect all tests and run their async parts
+                // - Resolve them to direct call methods surfacing success
+                for (let i = 0; i < stories.length; i++) {
+                    const test = async () => {
+                        return {
+                            test: await queueTest(stories[i]),
+                            title: `${stories[i]}__${color}__${scale}__${dir}`,
+                        };
+                    };
+                    tests.push(test());
+                }
                 for (let i = 0; i < concurrency; i += 1) {
                     (async () => {
-                        const page = await browser.newPage();
-                        // prevent hover based inaccuracies in screenshots by
-                        // moving the mouse off of the screen before loading tests
-                        await page.mouse.move(-5, -5);
-                        releasePage(page);
+                        await releasePage();
                     })();
                 }
-                for (let i = 0; i < stories.length; i++) {
-                    results.push({
-                        title: `${stories[i]}__${color}__${scale}__${dir}`,
-                        test: queueTest(stories[i]),
-                    });
-                }
+                results = await Promise.all(tests);
             });
 
             after(async () => {
@@ -107,15 +114,22 @@ module.exports = {
 
             describe('default view', function () {
                 for (let i = 0; i < stories.length; i++) {
-                    it(`${stories[i]}__${color}__${scale}__${dir}`, async function () {
-                        return (await results[i].test)();
+                    it(`${stories[i]}__${color}__${scale}__${dir}`, function () {
+                        return results[i].test();
                     });
                 }
             });
         });
 
-        function releasePage(page) {
+        async function releasePage(oldPage) {
+            if (oldPage) {
+                oldPage.close();
+            }
             if (testQueue[0]) {
+                const page = await browser.newPage();
+                // prevent hover based inaccuracies in screenshots by
+                // moving the mouse off of the screen before loading tests
+                await page.mouse.move(-5, -5);
                 testQueue.shift()(page);
             }
         }
@@ -129,27 +143,34 @@ module.exports = {
 
         async function queueTest(story) {
             const page = await availablePage();
-            return takeAndCompareScreenshot(page, story);
+            return await takeAndCompareScreenshot(page, story);
         }
 
         //Process methods
         async function takeAndCompareScreenshot(page, test) {
             const testFileName = `${test}__${color}__${scale}__${dir}`;
+            const testUrlVars = `id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`;
+            console.log(`🎬 ${testFileName} run started...`);
             try {
                 await page.goto(
-                    `http://127.0.0.1:4444/iframe.html?id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`,
+                    `http://127.0.0.1:4444/iframe.html?${testUrlVars}`,
                     {
                         waitUntil: 'networkidle',
                     }
                 );
+            } catch (error) {
+                releasePage(page);
+                return Promise.resolve(() => {
+                    const msg = `⏱ ${testFileName} failed to load in 30s. URL vars: ${testUrlVars}`;
+                    console.log(msg);
+                    expect(true, msg).to.equal(false);
+                });
+            }
+            try {
                 await page.waitForFunction(
-                    () => !!document.querySelector('#root-inner')
-                );
-                await page.waitForFunction(
-                    () => !!document.querySelector('sp-story-decorator')
-                );
-                await page.waitForFunction(
-                    () => !!document.querySelector('sp-story-decorator').ready
+                    () =>
+                        !!document.querySelector('sp-story-decorator') &&
+                        !!document.querySelector('sp-story-decorator').ready
                 );
                 await page.screenshot({
                     path: `${currentDir}/${type}/${testFileName}.png`,
@@ -159,26 +180,18 @@ module.exports = {
                 ) {
                     releasePage(page);
                     return Promise.resolve(() => {
-                        console.log(
-                            `🙅🏼‍♂️ ${testFileName}.png does not have a baseline screenshot.`
-                        );
-                        expect(
-                            true,
-                            `🙅🏼‍♂️ ${testFileName}.png does not have a baseline screenshot.`
-                        ).to.equal(false);
+                        const msg = `🙅🏼‍♂️ ${testFileName}.png does not have a baseline screenshot.`;
+                        console.log(msg);
+                        expect(true, msg).to.equal(false);
                     });
                 }
                 return compareScreenshots(test, page);
             } catch (error) {
                 releasePage(page);
                 return Promise.resolve(() => {
-                    console.log(
-                        `🙅🏼‍♂️ ${testFileName} does not exist in test content.`
-                    );
-                    expect(
-                        true,
-                        `🙅🏼‍♂️ ${testFileName} does not exist in test content.`
-                    ).to.equal(false);
+                    const msg = `🤷‍♀️ ${testFileName} never became ready. Does it exist in the test content? URL vars: ${testUrlVars}`;
+                    console.log(msg);
+                    expect(true, msg).to.equal(false);
                 });
             }
         }
@@ -186,6 +199,7 @@ module.exports = {
         function compareScreenshots(view, page) {
             return new Promise((resolve, reject) => {
                 const testFileName = `${view}__${color}__${scale}__${dir}`;
+                const testUrlVars = `id=${view}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`;
                 // Note: for debugging, you can dump the screenshotted img as base64.
                 // fs.createReadStream(`${currentDir}/${type}/test.png`, { encoding: 'base64' })
                 //   .on('data', function (data) {
@@ -256,7 +270,7 @@ module.exports = {
                         );
                         expect(
                             numDiffPixels,
-                            'number of different pixels'
+                            `⚖️ number of different pixels. URL vars: ${testUrlVars}`
                         ).to.equal(PixelDiffThreshold);
                     });
                 }
