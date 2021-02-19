@@ -33,8 +33,12 @@ export function isVisible(element: HTMLElement) {
     return !!element.offsetParent;
 }
 
-const keyboardEvent = (code: string, eventDetails = {}): KeyboardEvent => {
-    return new KeyboardEvent('keydown', {
+const keyboardEvent = (
+    code: string,
+    eventDetails = {},
+    eventName = 'keydown'
+): KeyboardEvent => {
+    return new KeyboardEvent(eventName, {
         ...eventDetails,
         bubbles: true,
         composed: true,
@@ -44,6 +48,7 @@ const keyboardEvent = (code: string, eventDetails = {}): KeyboardEvent => {
     });
 };
 export const shiftTabEvent = keyboardEvent('Tab', { shiftKey: true });
+export const shiftEvent = keyboardEvent('Shift', { shiftKey: true });
 export const enterEvent = keyboardEvent('Enter');
 export const escapeEvent = keyboardEvent('Escape');
 export const arrowRightEvent = keyboardEvent('ArrowRight');
@@ -59,3 +64,13 @@ export const pageUpEvent = keyboardEvent('PageUp');
 export const pageDownEvent = keyboardEvent('PageDown');
 export const tabEvent = keyboardEvent('Tab');
 export const tEvent = keyboardEvent('t');
+
+export const shiftKeyupEvent = keyboardEvent(
+    'Shift',
+    { shiftKey: true },
+    'keyup'
+);
+export const arrowRightKeyupEvent = keyboardEvent('ArrowRight', {}, 'keyup');
+export const arrowLeftKeyupEvent = keyboardEvent('ArrowLeft', {}, 'keyup');
+export const arrowUpKeyupEvent = keyboardEvent('ArrowUp', {}, 'keyup');
+export const arrowDownKeyupEvent = keyboardEvent('ArrowDown', {}, 'keyup');
