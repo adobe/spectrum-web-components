@@ -1,0 +1,185 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host(:focus-visible),
+:host([focus]) {
+    /* .spectrum-ColorHandle.focus-ring,
+   * .spectrum-ColorHandle.is-focused */
+    width: calc(
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * 2
+    );
+    height: calc(
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * 2
+    );
+    margin-left: calc(
+        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+    );
+    margin-top: calc(
+        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+    );
+}
+:host {
+    /* .spectrum-ColorHandle */
+    display: block;
+    position: absolute;
+    z-index: 1;
+    box-sizing: border-box;
+    width: var(
+        --spectrum-colorhandle-size,
+        var(--spectrum-global-dimension-size-200)
+    );
+    height: var(
+        --spectrum-colorhandle-size,
+        var(--spectrum-global-dimension-size-200)
+    );
+    margin-left: calc(
+        -1 * var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) / 2
+    );
+    margin-top: calc(
+        -1 * var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) / 2
+    );
+    border-width: var(
+        --spectrum-colorhandle-inner-border-size,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    border-style: solid;
+    background-size: var(--spectrum-global-dimension-static-size-200, 16px)
+        var(--spectrum-global-dimension-static-size-200, 16px);
+    background-position: calc(
+                -1 * var(--spectrum-global-dimension-static-size-25, 2px)
+            )
+            calc(-1 * var(--spectrum-global-dimension-static-size-25, 2px)),
+        calc(-1 * var(--spectrum-global-dimension-static-size-25, 2px))
+            calc(
+                var(--spectrum-global-dimension-static-size-100, 8px) + -1 *
+                    var(--spectrum-global-dimension-static-size-25, 2px)
+            ),
+        calc(
+                var(--spectrum-global-dimension-static-size-100, 8px) + -1 *
+                    var(--spectrum-global-dimension-static-size-25, 2px)
+            )
+            calc(
+                -1 * var(--spectrum-global-dimension-static-size-100, 8px) + -1 *
+                    var(--spectrum-global-dimension-static-size-25, 2px)
+            ),
+        calc(
+                -1 * var(--spectrum-global-dimension-static-size-100, 8px) + -1 *
+                    var(--spectrum-global-dimension-static-size-25, 2px)
+            )
+            calc(-1 * var(--spectrum-global-dimension-static-size-25, 2px));
+    transition: width var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        height var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        border-width var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        margin-left var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        margin-top var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out;
+}
+:host,
+:host:after {
+    /* .spectrum-ColorHandle,
+   * .spectrum-ColorHandle:after */
+    border-radius: 100%;
+}
+:host:after {
+    /* .spectrum-ColorHandle:after */
+    content: '';
+    left: calc(50% - var(--spectrum-global-dimension-size-300) / 2);
+    top: calc(50% - var(--spectrum-global-dimension-size-300) / 2);
+    position: absolute;
+    display: block;
+    width: var(--spectrum-global-dimension-size-300);
+    height: var(--spectrum-global-dimension-size-300);
+}
+:host([disabled]) {
+    /* .spectrum-ColorHandle.is-disabled */
+    pointer-events: none;
+}
+.color {
+    /* .spectrum-ColorHandle-color */
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+}
+:host {
+    /* .spectrum-ColorHandle */
+    border-color: var(
+        --spectrum-colorhandle-inner-border-color,
+        var(--spectrum-global-color-static-white)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-colorhandle-outer-border-size,
+            var(--spectrum-global-dimension-static-size-10)
+        )
+        rgba(0, 0, 0, 0.42);
+    background-color: var(--spectrum-global-color-static-white, #fff);
+    background-image: linear-gradient(
+            -45deg,
+            transparent 75.5%,
+            var(--spectrum-global-color-static-gray-500, #bcbcbc) 0
+        ),
+        linear-gradient(
+            45deg,
+            transparent 75.5%,
+            var(--spectrum-global-color-static-gray-500, #bcbcbc) 0
+        ),
+        linear-gradient(
+            -45deg,
+            var(--spectrum-global-color-static-gray-500, #bcbcbc) 25.5%,
+            transparent 0
+        ),
+        linear-gradient(
+            45deg,
+            var(--spectrum-global-color-static-gray-500, #bcbcbc) 25.5%,
+            transparent 0
+        );
+}
+:host([disabled]) {
+    /* .spectrum-ColorHandle.is-disabled */
+    border-color: var(
+        --spectrum-colorhandle-inner-border-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    );
+    background: var(
+        --spectrum-colorhandle-fill-color-disabled,
+        var(--spectrum-global-color-gray-300)
+    );
+    box-shadow: none;
+}
+:host([disabled]) .color {
+    /* .spectrum-ColorHandle.is-disabled .spectrum-ColorHandle-color */
+    display: none;
+}
+.color {
+    /* .spectrum-ColorHandle-color */
+    box-shadow: inset 0 0 0
+        var(
+            --spectrum-colorhandle-outer-border-size,
+            var(--spectrum-global-dimension-static-size-10)
+        )
+        rgba(0, 0, 0, 0.42);
+}
