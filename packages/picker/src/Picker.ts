@@ -90,6 +90,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    private reparentableChildren?: Element[];
     public optionsMenu?: Menu;
 
     /**
@@ -116,7 +117,7 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected listRole = 'listbox';
     protected itemRole = 'option';
-    private placeholder?: Comment;
+    private placeholderArray?: Comment[];
 
     public constructor() {
         super();
@@ -233,17 +234,24 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected onOverlayClosed(): void {
         this.close();
-        if (this.optionsMenu && this.placeholder) {
-            const parentElement =
-                this.placeholder.parentElement ||
-                this.placeholder.getRootNode();
+        if (
+            this.reparentableChildren &&
+            this.placeholderArray &&
+            this.reparentableChildren.length == this.placeholderArray.length
+        ) {
+            this.placeholderArray.forEach((item, index) => {
+                const parentElement = item.parentElement || item.getRootNode();
 
-            if (parentElement) {
-                parentElement.replaceChild(this.optionsMenu, this.placeholder);
-            }
+                if (parentElement && this.reparentableChildren) {
+                    parentElement.replaceChild(
+                        this.reparentableChildren[index],
+                        item
+                    );
+                }
+            });
         }
 
-        delete this.placeholder;
+        delete this.placeholderArray;
 
         this.menuStateResolver();
     }
@@ -253,26 +261,37 @@ export class PickerBase extends SizedMixin(Focusable) {
         if (
             !this.popover ||
             !this.optionsMenu ||
-            this.optionsMenu.children.length === 0
+            !this.reparentableChildren ||
+            this.reparentableChildren.length === 0
         ) {
             this.menuStateResolver();
             return;
         }
 
-        this.placeholder = document.createComment(
-            'placeholder for optionsMenu'
-        );
+        this.placeholderArray = [];
+        this.reparentableChildren.forEach(() => {
+            if (this.placeholderArray) {
+                this.placeholderArray.push(
+                    document.createComment(
+                        'placeholder for picker child element'
+                    )
+                );
+            }
+        });
 
         this.optionsMenu.selectable = true;
 
-        const parentElement =
-            this.optionsMenu.parentElement || this.optionsMenu.getRootNode();
+        this.reparentableChildren.forEach((item, index) => {
+            const parentElement = item.parentElement || item.getRootNode();
+            if (this.placeholderArray && this.optionsMenu && parentElement) {
+                const placeholderItem = this.placeholderArray[index];
+                if (placeholderItem) {
+                    parentElement.replaceChild(placeholderItem, item);
+                    this.optionsMenu.append(item);
+                }
+            }
+        });
 
-        if (parentElement) {
-            parentElement.replaceChild(this.placeholder, this.optionsMenu);
-        }
-
-        this.popover.append(this.optionsMenu);
         this.sizePopover(this.popover);
         const { popover } = this;
         this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
@@ -349,14 +368,17 @@ export class PickerBase extends SizedMixin(Focusable) {
                 id="popover"
                 @click=${this.onClick}
                 @sp-overlay-closed=${this.onOverlayClosed}
-            ></sp-popover>
+            >
+                <sp-menu id="menu"></sp-menu>
+            </sp-popover>
         `;
     }
 
     protected firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
 
-        this.optionsMenu = this.querySelector('sp-menu') as Menu;
+        this.optionsMenu = this.shadowRoot.querySelector('sp-menu') as Menu;
+        this.reparentableChildren = Array.from(this.children);
     }
 
     protected updated(changedProperties: PropertyValues): void {
