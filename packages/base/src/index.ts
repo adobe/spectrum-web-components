@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 export * from './Base.js';
 export * from './sizedMixin.js';
+export * from './streaming-listener.js';
 export * from 'lit-element';
 export { nothing } from 'lit-html';
 export { ifDefined } from 'lit-html/directives/if-defined.js';
