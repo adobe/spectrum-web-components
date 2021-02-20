@@ -29,7 +29,7 @@ commands:
                   keys:
                       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            - run: yarn test:visual:ci --concurrency=2 --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
+            - run: MOCHA_FILE=./results/test-results.xml yarn test:visual:ci --concurrency=2  --reporter mocha-junit-reporter --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >> --dir=<< parameters.regression_dir >>
             - run:
                   when: on_fail
                   command: cp -RT test/visual/screenshots-current/ci test/visual/screenshots-baseline/ci
@@ -44,6 +44,8 @@ commands:
                   paths:
                       - test/visual/screenshots-baseline/ci
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+            - store_test_results:
+                  path: /root/project/results/
             - store_artifacts:
                   path: test/visual/screenshots-current
 
@@ -106,7 +108,9 @@ jobs:
             - run: yarn analyze
             - run:
                   name: Run tests
-                  command: yarn test:ci
+                  command: yarn test:ci --config web-test-runner.config.ci.js
+            - store_test_results:
+                  path: /root/project/results/
             - store_artifacts:
                   path: coverage
 

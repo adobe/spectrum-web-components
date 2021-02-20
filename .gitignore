@@ -47,6 +47,7 @@ projects/**/*.d.ts
 spectrum-web-components.build.log
 spectrum-web-components.build.error.log
 TESTS.xml
+test-results.xml
 
 /test/benchmark/**/*.js
 /test/benchmark/**/*.js.map
