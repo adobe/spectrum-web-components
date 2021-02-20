@@ -26,6 +26,7 @@ import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import ElementReparenter from '@spectrum-web-components/shared/src/element-reparenter.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -91,6 +92,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     public open = false;
 
     private reparentableChildren?: Element[];
+    private elementReparenter?: ElementReparenter;
     public optionsMenu?: Menu;
 
     /**
@@ -117,7 +119,6 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected listRole = 'listbox';
     protected itemRole = 'option';
-    private placeholderArray?: Comment[];
 
     public constructor() {
         super();
@@ -234,24 +235,10 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected onOverlayClosed(): void {
         this.close();
-        if (
-            this.reparentableChildren &&
-            this.placeholderArray &&
-            this.reparentableChildren.length == this.placeholderArray.length
-        ) {
-            this.placeholderArray.forEach((item, index) => {
-                const parentElement = item.parentElement || item.getRootNode();
-
-                if (parentElement && this.reparentableChildren) {
-                    parentElement.replaceChild(
-                        this.reparentableChildren[index],
-                        item
-                    );
-                }
-            });
+        if (this.elementReparenter) {
+            this.elementReparenter.restore();
         }
-
-        delete this.placeholderArray;
+        this.elementReparenter = undefined;
 
         this.menuStateResolver();
     }
@@ -268,29 +255,12 @@ export class PickerBase extends SizedMixin(Focusable) {
             return;
         }
 
-        this.placeholderArray = [];
-        this.reparentableChildren.forEach(() => {
-            if (this.placeholderArray) {
-                this.placeholderArray.push(
-                    document.createComment(
-                        'placeholder for picker child element'
-                    )
-                );
-            }
-        });
+        this.elementReparenter = new ElementReparenter(
+            this.reparentableChildren,
+            this.optionsMenu
+        );
 
         this.optionsMenu.selectable = true;
-
-        this.reparentableChildren.forEach((item, index) => {
-            const parentElement = item.parentElement || item.getRootNode();
-            if (this.placeholderArray && this.optionsMenu && parentElement) {
-                const placeholderItem = this.placeholderArray[index];
-                if (placeholderItem) {
-                    parentElement.replaceChild(placeholderItem, item);
-                    this.optionsMenu.append(item);
-                }
-            }
-        });
 
         this.sizePopover(this.popover);
         const { popover } = this;
