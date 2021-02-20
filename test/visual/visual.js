@@ -157,12 +157,17 @@ module.exports = {
                 : `🎬 ${testFileName} run started...`;
             console.log(startMsg);
             try {
-                await page.goto(
-                    `http://127.0.0.1:4444/iframe.html?${testUrlVars}`,
-                    {
-                        waitUntil: 'networkidle',
-                    }
-                );
+                await Promise.all([
+                    page.waitForResponse('https://use.typekit.net/evk7lzt.css'),
+                    page.waitForResponse('https://use.typekit.net/af/**'),
+                    page.waitForResponse('https://use.typekit.net/af/**'),
+                    page.goto(
+                        `http://127.0.0.1:4444/iframe.html?${testUrlVars}`,
+                        {
+                            waitUntil: 'networkidle',
+                        }
+                    ),
+                ]);
             } catch (error) {
                 releasePage(page);
                 return Promise.resolve(() => {
