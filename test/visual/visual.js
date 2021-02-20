@@ -23,6 +23,7 @@ const currentDir = `${process.cwd()}/test/visual/screenshots-current`;
 const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
 
 const PixelDiffThreshold = 0;
+const RetryDiffThreshold = 20;
 
 module.exports = {
     checkScreenshots(
@@ -126,11 +127,12 @@ module.exports = {
                 oldPage.close();
             }
             if (testQueue[0]) {
+                const test = testQueue.shift();
                 const page = await browser.newPage();
                 // prevent hover based inaccuracies in screenshots by
                 // moving the mouse off of the screen before loading tests
                 await page.mouse.move(-5, -5);
-                testQueue.shift()(page);
+                test(page);
             }
         }
 
@@ -147,10 +149,13 @@ module.exports = {
         }
 
         //Process methods
-        async function takeAndCompareScreenshot(page, test) {
+        async function takeAndCompareScreenshot(page, test, retry) {
             const testFileName = `${test}__${color}__${scale}__${dir}`;
             const testUrlVars = `id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`;
-            console.log(`🎬 ${testFileName} run started...`);
+            const startMsg = retry
+                ? `♻️  ${testFileName} suffered a near miss, retrying.`
+                : `🎬 ${testFileName} run started...`;
+            console.log(startMsg);
             try {
                 await page.goto(
                     `http://127.0.0.1:4444/iframe.html?${testUrlVars}`,
@@ -185,7 +190,7 @@ module.exports = {
                         expect(true, msg).to.equal(false);
                     });
                 }
-                return compareScreenshots(test, page);
+                return compareScreenshots(test, page, retry);
             } catch (error) {
                 releasePage(page);
                 return Promise.resolve(() => {
@@ -196,7 +201,7 @@ module.exports = {
             }
         }
 
-        function compareScreenshots(view, page) {
+        function compareScreenshots(view, page, retry) {
             return new Promise((resolve, reject) => {
                 const testFileName = `${view}__${color}__${scale}__${dir}`;
                 const testUrlVars = `id=${view}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`;
@@ -222,7 +227,7 @@ module.exports = {
                     .on('parsed', doneReading);
 
                 let filesRead = 0;
-                function doneReading() {
+                async function doneReading() {
                     // Wait until both files are read.
                     if (++filesRead < 2) return;
 
@@ -257,6 +262,15 @@ module.exports = {
                     const fileSizeInBytes = stats.size;
 
                     if (numDiffPixels > PixelDiffThreshold) {
+                        if (numDiffPixels < RetryDiffThreshold && !retry) {
+                            const retryResult = await takeAndCompareScreenshot(
+                                page,
+                                view,
+                                true
+                            );
+                            resolve(retryResult);
+                            return;
+                        }
                         diff.pack().pipe(
                             fs.createWriteStream(
                                 `${currentDir}/${testFileName}-diff.png`
@@ -265,12 +279,13 @@ module.exports = {
                     }
                     releasePage(page);
                     resolve(() => {
+                        const retryMsg = retry ? ': with retry' : '';
                         console.log(
-                            `📸 ${testFileName}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different`
+                            `📸 ${testFileName}.png => ${fileSizeInBytes} bytes, ${percentDiff}% different${retryMsg}`
                         );
                         expect(
                             numDiffPixels,
-                            `⚖️ number of different pixels. URL vars: ${testUrlVars}`
+                            `⚖️ number of different pixels${retryMsg}. URL vars: ${testUrlVars}`
                         ).to.equal(PixelDiffThreshold);
                     });
                 }
