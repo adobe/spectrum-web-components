@@ -24,6 +24,7 @@ const baselineDir = `${process.cwd()}/test/visual/screenshots-baseline`;
 
 const PixelDiffThreshold = 0;
 const RetryDiffThreshold = 20;
+const Timeout = 30000;
 
 module.exports = {
     checkScreenshots(
@@ -33,12 +34,77 @@ module.exports = {
         dir = 'ltr',
         concurrency = 10
     ) {
-        let stories = storiesAll, // storiesAll.splice(0, 8),
+        let stories = storiesAll, // .splice(0, 8),
             testQueue = [],
             results = [],
             server,
             browser,
-            viewport = { width: 800, height: 600 };
+            viewport = { width: 800, height: 600 },
+            browserStartingPromise;
+
+        async function startBrowserContext() {
+            if (browserStartingPromise) {
+                await browserStartingPromise;
+                return browser;
+            }
+            let resolveBroserStartingPromise;
+            browserStartingPromise = new Promise(
+                (resolve) => (resolveBroserStartingPromise = resolve)
+            );
+            browser = await playwright['chromium'].launchPersistentContext(
+                `${baselineDir}/${type}/userDataDir`,
+                {
+                    viewport,
+                }
+            );
+            browser.setDefaultTimeout(Timeout);
+            browser.on('close', () =>
+                console.log('THE BROWSER CONTEXT CLOSED!!!')
+            );
+            browser.route('https://use.typekit.net/evk7lzt.css', (route) => {
+                route.fulfill({
+                    path: './test/visual/typekit/styles.css',
+                });
+            });
+            browser.route(
+                'https://use.typekit.net/af/74ffb1/000000000000000000017702/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3',
+                (route) => {
+                    route.fulfill({
+                        path:
+                            './test/visual/typekit/adobe-clean-italic-400.woff2',
+                    });
+                }
+            );
+            browser.route(
+                'https://use.typekit.net/af/cb695f/000000000000000000017701/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3',
+                (route) => {
+                    route.fulfill({
+                        path:
+                            './test/visual/typekit/adobe-clean-normal-400.woff2',
+                    });
+                }
+            );
+            browser.route(
+                'https://use.typekit.net/af/2468ba/00000000000000003b9ada96/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3',
+                (route) => {
+                    route.fulfill({
+                        path:
+                            './test/visual/typekit/adobe-clean-normal-500.woff2',
+                    });
+                }
+            );
+            browser.route(
+                'https://use.typekit.net/af/eaf09c/000000000000000000017703/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3',
+                (route) => {
+                    route.fulfill({
+                        path:
+                            './test/visual/typekit/adobe-clean-normal-700.woff2',
+                    });
+                }
+            );
+            resolveBroserStartingPromise();
+            browserStartingPromise = undefined;
+        }
 
         describe('👀 page screenshots are correct', function () {
             before(async () => {
@@ -64,6 +130,17 @@ module.exports = {
                     rimraf.sync(`${baselineDir}/${type}/userDataDir`);
                 }
                 fs.mkdirSync(`${baselineDir}/${type}/userDataDir`);
+                fs.copyFile(
+                    path.resolve(process.cwd(), 'documentation', 'favicon.ico'),
+                    path.resolve(
+                        process.cwd(),
+                        'documentation',
+                        'dist',
+                        'storybook',
+                        'favicon.ico'
+                    ),
+                    () => {}
+                );
 
                 // start server and browser
                 server = await startDevServer({
@@ -77,17 +154,29 @@ module.exports = {
                             'dist',
                             'storybook'
                         ),
+                        plugins: [
+                            {
+                                name: 'make-preload-modulepreload',
+                                transform(context) {
+                                    if (context.response.is('html')) {
+                                        return {
+                                            body: context.body.replace(
+                                                '<link rel="preload" href="./384751b7.js" as="script" crossorigin="anonymous">',
+                                                ''
+                                            ),
+                                        };
+                                    }
+                                    if (context.response.is('json')) {
+                                        return {
+                                            body: JSON.stringify({}),
+                                        };
+                                    }
+                                },
+                            },
+                        ],
                     },
                 });
-                browser = await playwright['chromium'].launchPersistentContext(
-                    `${baselineDir}/${type}/userDataDir`,
-                    {
-                        viewport,
-                    }
-                );
-                browser.on('close', () =>
-                    console.log('THE BROWSER CONTEXT CLOSED!!!')
-                );
+                await startBrowserContext();
                 const tests = [];
                 // BEFORE describing what `it` does in mocha:
                 // - Collect all tests and run their async parts
@@ -128,7 +217,19 @@ module.exports = {
             }
             if (testQueue[0]) {
                 const test = testQueue.shift();
-                const page = await browser.newPage();
+                let page;
+                try {
+                    page = await browser.newPage();
+                } catch (error) {
+                    try {
+                        await startBrowserContext();
+                        page = await browser.newPage();
+                    } catch (error) {
+                        console.log(
+                            '🥺 unable to acquire an active browser context.'
+                        );
+                    }
+                }
                 // prevent hover based inaccuracies in screenshots by
                 // moving the mouse off of the screen before loading tests
                 await page.mouse.move(-5, -5);
@@ -152,8 +253,12 @@ module.exports = {
         async function takeAndCompareScreenshot(page, test, retry) {
             const testFileName = `${test}__${color}__${scale}__${dir}`;
             const testUrlVars = `id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`;
+            const retryMessage =
+                typeof retry === 'string'
+                    ? `♻️  ${testFileName} suffered a timeout, retrying.`
+                    : `♻️  ${testFileName} suffered a near miss, retrying.`;
             const startMsg = retry
-                ? `♻️  ${testFileName} suffered a near miss, retrying.`
+                ? retryMessage
                 : `🎬 ${testFileName} run started...`;
             console.log(startMsg);
             try {
@@ -169,18 +274,23 @@ module.exports = {
                     ),
                 ]);
             } catch (error) {
+                if (retry !== 'timeout') {
+                    await startBrowserContext();
+                    return takeAndCompareScreenshot(page, test, 'timeout');
+                }
                 releasePage(page);
                 return Promise.resolve(() => {
-                    const msg = `⏱ ${testFileName} failed to load in 30s. URL vars: ${testUrlVars}`;
+                    const msg = `⏱ ${testFileName} failed to load in ${
+                        (Timeout / 1000) * 2
+                    }s. URL vars: ${testUrlVars}`;
                     console.log(msg);
                     expect(true, msg).to.equal(false);
                 });
             }
             try {
+                await page.waitForSelector('sp-story-decorator');
                 await page.waitForFunction(
-                    () =>
-                        !!document.querySelector('sp-story-decorator') &&
-                        !!document.querySelector('sp-story-decorator').ready
+                    () => !!document.querySelector('sp-story-decorator').ready
                 );
                 await page.screenshot({
                     path: `${currentDir}/${type}/${testFileName}.png`,
@@ -197,6 +307,9 @@ module.exports = {
                 }
                 return compareScreenshots(test, page, retry);
             } catch (error) {
+                if (retry !== 'ready') {
+                    return takeAndCompareScreenshot(page, test, 'ready');
+                }
                 releasePage(page);
                 return Promise.resolve(() => {
                     const msg = `🤷‍♀️ ${testFileName} never became ready. Does it exist in the test content? URL vars: ${testUrlVars}`;
@@ -256,7 +369,7 @@ module.exports = {
                         diff.data,
                         img1.width,
                         img1.height,
-                        { threshold: 0 }
+                        { threshold: 0.004 }
                     );
                     const percentDiff =
                         (numDiffPixels / (img1.width * img1.height)) * 100;
@@ -267,7 +380,10 @@ module.exports = {
                     const fileSizeInBytes = stats.size;
 
                     if (numDiffPixels > PixelDiffThreshold) {
-                        if (numDiffPixels < RetryDiffThreshold && !retry) {
+                        if (
+                            numDiffPixels < RetryDiffThreshold &&
+                            (!retry || typeof retry === 'string')
+                        ) {
                             const retryResult = await takeAndCompareScreenshot(
                                 page,
                                 view,
