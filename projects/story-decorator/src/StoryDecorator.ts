@@ -276,13 +276,11 @@ export class StoryDecorator extends SpectrumElement {
                 typeof el.updateComplete !== 'undefined'
         );
         const updates = litElementDescendents.map((el) => el.updateComplete);
-        await Promise.all([
-            ...updates,
-            document.fonts ? document.fonts.ready : Promise.resolve(),
-        ]);
+        await Promise.all(updates);
         new Promise((res) => {
             setTimeout(res);
-        }).then(() => {
+        }).then(async () => {
+            await (document.fonts ? document.fonts.ready : Promise.resolve());
             setTimeout(() => (this.ready = true));
         });
     }
