@@ -186,7 +186,7 @@ Quiet cards will also accept `actions` via a named slot.
 Gallery cards can contain a heading, a subheading, an image preview, a description, and a footer.
 
 ```html
-<div style="width: 532px; height: 224px">
+<div style="width: 532px; max-width: 100%; height: 224px">
     <sp-card variant="gallery" heading="Card Heading" subheading="JPG Photo">
         <img alt="" slot="preview" src="https://picsum.photos/532/192" />
         <div slot="description">10/15/18</div>
