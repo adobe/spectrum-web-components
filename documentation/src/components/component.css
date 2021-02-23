@@ -33,3 +33,7 @@ sp-tabs[selected='l'] ~ .tabs--l {
 sp-tabs[selected='xl'] ~ .tabs--xl {
     display: block;
 }
+
+code-example {
+    --spectrum-dialog-confirm-min-width: 0;
+}
