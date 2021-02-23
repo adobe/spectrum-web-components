@@ -51,12 +51,16 @@ module.exports = {
             browserStartingPromise = new Promise(
                 (resolve) => (resolveBroserStartingPromise = resolve)
             );
+            if (browser) {
+                await browser.close();
+            }
             browser = await playwright['chromium'].launchPersistentContext(
                 `${baselineDir}/${type}/userDataDir`,
                 {
                     viewport,
                 }
             );
+            console.log('THE BROWSER CONTEXT STARTED!!!');
             browser.setDefaultTimeout(Timeout);
             browser.on('close', () =>
                 console.log('THE BROWSER CONTEXT CLOSED!!!')
@@ -211,25 +215,37 @@ module.exports = {
             });
         });
 
+        async function acquirePage() {
+            if (browserStartingPromise) {
+                await browserStartingPromise;
+            }
+            let page;
+            try {
+                page = await browser.newPage();
+            } catch (error) {
+                try {
+                    if (browserStartingPromise) {
+                        await browserStartingPromise;
+                    } else {
+                        await startBrowserContext();
+                    }
+                    page = await browser.newPage();
+                } catch (error) {
+                    console.log(
+                        '🥺 unable to acquire an active browser context.'
+                    );
+                }
+            }
+            return page;
+        }
+
         async function releasePage(oldPage) {
             if (oldPage) {
                 oldPage.close();
             }
             if (testQueue[0]) {
                 const test = testQueue.shift();
-                let page;
-                try {
-                    page = await browser.newPage();
-                } catch (error) {
-                    try {
-                        await startBrowserContext();
-                        page = await browser.newPage();
-                    } catch (error) {
-                        console.log(
-                            '🥺 unable to acquire an active browser context.'
-                        );
-                    }
-                }
+                const page = await acquirePage();
                 // prevent hover based inaccuracies in screenshots by
                 // moving the mouse off of the screen before loading tests
                 await page.mouse.move(-5, -5);
@@ -251,6 +267,19 @@ module.exports = {
 
         //Process methods
         async function takeAndCompareScreenshot(page, test, retry) {
+            let crashedOrClosedorErrored = false;
+            if (!page || page.isClosed()) {
+                page = await acquirePage();
+            }
+            page.on('crash', () => {
+                crashedOrClosedorErrored = 'crashed';
+            });
+            page.on('close', () => {
+                crashedOrClosedorErrored = 'closed';
+            });
+            page.on('pageerror', () => {
+                crashedOrClosedorErrored = 'errored';
+            });
             const testFileName = `${test}__${color}__${scale}__${dir}`;
             const testUrlVars = `id=${test}&sp_reduceMotion=true&sp_color=${color}&sp_scale=${scale}&sp_dir=${dir}`;
             const retryMessage =
@@ -275,8 +304,15 @@ module.exports = {
                 ]);
             } catch (error) {
                 if (retry !== 'timeout') {
-                    await startBrowserContext();
+                    page = await acquirePage();
                     return takeAndCompareScreenshot(page, test, 'timeout');
+                }
+                if (crashedOrClosedorErrored) {
+                    console.log(
+                        `💥 ${testFileName} had it's page ${crashedOrClosedorErrored}.`
+                    );
+                    page = await acquirePage();
+                    return takeAndCompareScreenshot(page, test);
                 }
                 releasePage(page);
                 return Promise.resolve(() => {
@@ -288,10 +324,17 @@ module.exports = {
                 });
             }
             try {
-                await page.waitForSelector('sp-story-decorator');
                 await page.waitForFunction(
-                    () => !!document.querySelector('sp-story-decorator').ready
+                    () =>
+                        !!document.querySelector('sp-story-decorator') &&
+                        !!document.querySelector('sp-story-decorator').ready
                 );
+                if (crashedOrClosedorErrored === 'errored') {
+                    console.log(
+                        `💥 ${testFileName} had an uncaught exception.`
+                    );
+                    return takeAndCompareScreenshot(page, test);
+                }
                 await page.screenshot({
                     path: `${currentDir}/${type}/${testFileName}.png`,
                 });
@@ -308,7 +351,15 @@ module.exports = {
                 return compareScreenshots(test, page, retry);
             } catch (error) {
                 if (retry !== 'ready') {
+                    page = await acquirePage();
                     return takeAndCompareScreenshot(page, test, 'ready');
+                }
+                if (crashedOrClosedorErrored) {
+                    console.log(
+                        `💥 ${testFileName} had it's page ${crashedOrClosedorErrored}.`
+                    );
+                    page = await acquirePage();
+                    return takeAndCompareScreenshot(page, test);
                 }
                 releasePage(page);
                 return Promise.resolve(() => {
