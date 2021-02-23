@@ -32,9 +32,10 @@ import { Popover } from '@spectrum-web-components/popover';
         height: 200px;
         position: relative;
         width: 320px;
+        max-width: 100%;
     "
 >
-    <sp-popover dialog open>
+    <sp-popover dialog open style="--spectrum-popover-dialog-min-width: 0;">
         <div
             style="
             font-size: 18px;
@@ -67,9 +68,14 @@ element by default. The default popover has no padding by default
         height: 200px;
         position: relative;
         width: 320px;
+        max-width: 100%;
     "
 >
-    <sp-popover variant="default" open style="max-width: 320px">
+    <sp-popover
+        variant="default"
+        open
+        style="max-width: 320px; --spectrum-popover-dialog-min-width: 0;"
+    >
         <div style="font-size: 14px; padding: 10px">
             <div
                 style="
@@ -101,9 +107,10 @@ Popovers with padding, ideal for dialogs.
         height: 200px;
         position: relative;
         width: 320px;
+        max-width: 100%;
     "
 >
-    <sp-popover dialog open>
+    <sp-popover dialog open style="--spectrum-popover-dialog-min-width: 0;">
         <div
             style="
             font-size: 18px;
@@ -131,9 +138,16 @@ Popovers with padding, ideal for dialogs.
         height: 200px;
         position: relative;
         width: 320px;
+        max-width: 100%;
     "
 >
-    <sp-popover dialog placement="bottom" tip open>
+    <sp-popover
+        dialog
+        placement="bottom"
+        tip
+        open
+        style="--spectrum-popover-dialog-min-width: 0;"
+    >
         <div
             style="
             font-size: 18px;
@@ -159,9 +173,16 @@ Popovers with padding, ideal for dialogs.
         height: 200px;
         position: relative;
         width: 320px;
+        max-width: 100%;
     "
 >
-    <sp-popover dialog placement="top" tip open>
+    <sp-popover
+        dialog
+        placement="top"
+        tip
+        open
+        style="--spectrum-popover-dialog-min-width: 0;"
+    >
         <div
             style="
             font-size: 18px;
@@ -187,9 +208,16 @@ Popovers with padding, ideal for dialogs.
         height: 200px;
         position: relative;
         width: 320px;
+        max-width: 100%;
     "
 >
-    <sp-popover dialog placement="left" tip open>
+    <sp-popover
+        dialog
+        placement="left"
+        tip
+        open
+        style="--spectrum-popover-dialog-min-width: 0;"
+    >
         <div
             style="
             font-size: 18px;
@@ -215,9 +243,16 @@ Popovers with padding, ideal for dialogs.
         height: 200px;
         position: relative;
         width: 320px;
+        max-width: 100%;
     "
 >
-    <sp-popover dialog placement="right" tip open>
+    <sp-popover
+        dialog
+        placement="right"
+        tip
+        open
+        style="--spectrum-popover-dialog-min-width: 0;"
+    >
         <div
             style="
             font-size: 18px;

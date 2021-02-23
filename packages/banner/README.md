@@ -62,7 +62,7 @@ In addition to the variant, banners can be placed in the top-right corner of its
 
 ```html
 <div
-    style="width: 300px; height: 100px; background-color: #ba598b; position: relative;"
+    style="width: 300px; max-width: 75%; height: 100px; background-color: #ba598b; position: relative;"
 >
     <sp-banner corner>
         <div slot="header">This banner is in a corner</div>
