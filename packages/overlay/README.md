@@ -93,7 +93,7 @@ type OverlayOptions = {
 
 `offset` defines the distance of the overlay content from the trigger, measured in pixels.
 
-`receivesFocus` tells the overlay stack to through focus into the overlay after it has opened.
+`receivesFocus` tells the overlay stack to throw focus into the overlay after it has opened.
 
 ## Example
 

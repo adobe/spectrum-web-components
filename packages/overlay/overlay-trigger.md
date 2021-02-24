@@ -1,6 +1,6 @@
 ## Description
 
-An `<overlay-trigger>` element supports the delivery of temporary overlay content based on interaction with a persistent trigger element. An element prepared to receive accessible interactions (e.g. an `<sp-button>`, or `<button>`, etc.) is addressed to `slot="trigger"`, and the content to display (either via `click` or `hover`/`focus` interactions) is addressed to `slot="click-content"` or `slot="hover-content"`, respectively. A trigger element can be linked to the delivery of content, intended for a single interaction, or both. Content addressed to `slot="hover-content"` is made available when the mouse enters or leaves the target element, as well as when focus enters or leaves the target elements to support receiving this content via keyboard and screen reader navigation. Be thoughtful with what content you address to `slot="hover-content"`, as the content available via "hover" will be transient and non-interactive.
+An `<overlay-trigger>` element supports the delivery of temporary overlay content based on interaction with a persistent trigger element. An element prepared to receive accessible interactions (e.g. an `<sp-button>`, or `<button>`, etc.) is addressed to `slot="trigger"`, and the content to display (either via `click` or `hover`/`focus` interactions) is addressed to `slot="click-content"` or `slot="hover-content"`, respectively. A trigger element can be linked to the delivery of content, intended for a single interaction, or both. Content addressed to `slot="hover-content"` is made available when the mouse enters or leaves the target element. Keyboard navigation will make this content available when focus enters or leaves the target element. Be thoughtful with what content you address to `slot="hover-content"`, as the content available via "hover" will be transient and non-interactive.
 
 ### Placement
 
@@ -111,7 +111,7 @@ This example only delivers content via the "click" interaction and leverages bot
 
 ### "Hover" content only
 
-Hover content can be customized via the `placement` attribute. However, it not allowing secondary interactions the `type` attribute will not further customize its delivery.
+The delivery of hover content can be customized via the `placement` attribute. However, this content can not be interacted with, so the `type` attribute will not customize its delivery in any way.
 
 ```html
 <overlay-trigger placement="right">
