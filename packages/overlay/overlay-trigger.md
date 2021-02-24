@@ -1,14 +1,14 @@
 ## Description
 
-An `<overlay-trigger>` element supports the delivery of temporary overlay content based on interaction with a persistant trigger element. Address an element prepared to receive accessible interactions (e.g. an `<sp-button>`, or `<button>`, etc.) to `slot="trigger"` and the content for display either via `click` or `hover`/`focus` interactions to `slot="click-content"` or `slot="hover-content"` respectively. A trigger element can be linked to the delivery of content intended for a single interaction or both. Content addressed to `slot="hover-content"` will be made available both when the mouse enters/leaves the target element as well as when focus enters/leaves the target elements to support receiving this content via keyboard and screen reader navigation. Be thoughtful with what content you address to `slot="hover-content"` as the content available via "hover" will be transient and non-interactive.
+An `<overlay-trigger>` element supports the delivery of temporary overlay content based on interaction with a persistent trigger element. An element prepared to receive accessible interactions (e.g. an `<sp-button>`, or `<button>`, etc.) is addressed to `slot="trigger"`, and the content to display (either via `click` or `hover`/`focus` interactions) is addressed to `slot="click-content"` or `slot="hover-content"`, respectively. A trigger element can be linked to the delivery of content, intended for a single interaction, or both. Content addressed to `slot="hover-content"` is made available when the mouse enters or leaves the target element, as well as when focus enters or leaves the target elements to support receiving this content via keyboard and screen reader navigation. Be thoughtful with what content you address to `slot="hover-content"`, as the content available via "hover" will be transient and non-interactive.
 
 ### Placement
 
-When using the `placement` attribute of an `<overlay-trigger>` (`"top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"`), you can suggest to the overlay in which direction from the trigger the content should be made visible. When there is adequate room for the content to display in this direction, it will do so. When adequate room is not available, the overlaid content will calculate the direction in which is will have the most room to be displayed in and use that direction.
+When using the `placement` attribute of an `<overlay-trigger>` (`"top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"`), you can suggest to the overlay in which direction relative to the trigger that the content should display. When there is adequate room for the content to display in the specified direction, it will do so. When adequate room is not available, the overlaid content will calculate the direction in which it has the most room to be displayed and use that direction.
 
 ### Type
 
-The `type` attribute of an `<overlay-trigger>` element outlines how the element's "click" content should appear in the tab order. `inline` will insert the overlay after the trigger; from here forward tabbing would target the next logical element and backward/shift tabbing to return to the target. `replace` will insert the overlay into the page as if it were the trigger; from here forward tabbing would target the next logical element and backward/shift tabbing would target the logical element prior to the target. Finally, `modal` will open the content in a tab order fully separate from the original content flow and trap the tab order within that content until the required interaction is complete.
+The `type` attribute of an `<overlay-trigger>` element outlines how the element's "click" content should appear in the tab order. `inline` will insert the overlay after the trigger; from here, forward tabbing targets the next logical element, and backward/shift tabbing returns to the target. `replace` will insert the overlay into the page as if it were the trigger; from here, forward tabbing targets the next logical element, and backward/shift tabbing targets the logical element prior to the target. Finally, `modal` will open the content in a tab order fully separate from the original content flow and trap the tab order within that content until the required interaction is complete.
 
 ### Installation
 
@@ -85,7 +85,7 @@ Here a default `<overlay-trigger>` manages content that is triggered by click an
 
 ### Click content only
 
-This example only delivers content via the click interaction and leverages both `placement` and `type` attributes to customize the visual relationship of the content to the page and its position in the tab order.
+This example only delivers content via the "click" interaction and leverages both `placement` and `type` attributes to customize the visual relationship of the content to the page and its position in the tab order.
 
 ```html
 <overlay-trigger placement="top" type="replace">
@@ -111,7 +111,7 @@ This example only delivers content via the click interaction and leverages both 
 
 ### "Hover" content only
 
-Hover content can be customized via the `placement` attribute, however it not allowing secondary interactions the `type` attribute will not further customize its delivery.
+Hover content can be customized via the `placement` attribute. However, it not allowing secondary interactions the `type` attribute will not further customize its delivery.
 
 ```html
 <overlay-trigger placement="right">
@@ -124,4 +124,4 @@ Hover content can be customized via the `placement` attribute, however it not al
 
 ## Accessibility
 
-When using an `<overlay-trigger>` element, it is important to be sure the that content you project into `slot="trigger"` is "interactive". This means that an element within that branch of DOM will be able to receive focus and said element will appropriately convert keyboard interactions to `click` events similar to what you find with `<a href="#">Anchors</a>`, `<button>Buttons</button>`, etc. You can find further reading on the subject of accessible keyboard interactions at [https://www.w3.org/WAI/WCAG21/Understanding/keyboard](https://www.w3.org/WAI/WCAG21/Understanding/keyboard).
+When using an `<overlay-trigger>` element, it is important to be sure the that content you project into `slot="trigger"` is "interactive". This means that an element within that branch of DOM will be able to receive focus, and said element will appropriately convert keyboard interactions to `click` events, similar to what you'd find with `<a href="#">Anchors</a>`, `<button>Buttons</button>`, etc. You can find further reading on the subject of accessible keyboard interactions at [https://www.w3.org/WAI/WCAG21/Understanding/keyboard](https://www.w3.org/WAI/WCAG21/Understanding/keyboard).
