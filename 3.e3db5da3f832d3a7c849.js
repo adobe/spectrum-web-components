@@ -796,4 +796,4 @@ var(--spectrum-global-dimension-size-150)))}#heading{color:var(--spectrum-sidena
                 <slot></slot>
             </div>
         `),this.label)}}Object(s.a)([Object(o.e)({reflect:!0})],m.prototype,"label",void 0)}}]);
-//# sourceMappingURL=3.4b955eab63f926e436f9.js.map
+//# sourceMappingURL=3.e3db5da3f832d3a7c849.js.map
