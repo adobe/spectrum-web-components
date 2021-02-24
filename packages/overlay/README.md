@@ -1,6 +1,6 @@
 ## Description
 
-Overlays in Spectrum Web Components are created via the `Overlay` class system which prepares and "overlay stack" that can manage the deployment of one or more overlays onto a page. Whether transient content like tooltip, or extended interactions like selecting a value from a picker, or blocking content like a modal, either the imperative APIs outlined below or the declarative APIs delivered as `<overlay-trigger>` should be able to conver you overlay delivery needs.
+Overlays in Spectrum Web Components are created via the `Overlay` class system, which prepares an "overlay stack" that can manage the deployment of one or more overlays onto a page. Whether it's needed for transient content like a tooltip, for extended interactions like selecting a value from a picker, or for blocking content like a modal, the imperative APIs outlined below or the declarative APIs delivered by `<overlay-trigger>` should cover your overlay delivery needs.
 
 ### Usage
 
@@ -11,7 +11,7 @@ Overlays in Spectrum Web Components are created via the `Overlay` class system w
 yarn add @spectrum-web-components/overlay
 ```
 
-Import the `Overlay` class to leverage its capabilities within you application or custom element:
+Import the `Overlay` class to leverage its capabilities within your application or custom element:
 
 ```js
 import { Overlay } from '@spectrum-web-components/overlay';
@@ -89,9 +89,9 @@ type OverlayOptions = {
 
 `delayed` allows for the overlay to open the overlay with warmup/cooldown behaviors as described at https://spectrum.adobe.com/page/tooltip/#Immediate-or-delayed-appearance
 
-`placement` outlines where the overlay system should attempt to position the overlay in relation to the trigger. When the layout of the page and/or current scroll positioning prevents the successful placement of the content in this way, the `placement` will be automatically applied as the value best suited for those contitions. Placements available include: `"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"`.
+`placement` outlines where the overlay system should attempt to position the overlay in relation to the trigger. When the layout of the page and/or current scroll positioning prevents the successful placement of the content in this way, the `placement` will be automatically applied as the value best suited for those conditions. Placements available include: `"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"`.
 
-`offset` defined the distance from the trigger that the overlay content should sit in pixels.
+`offset` defines the distance of the overlay content from the trigger, measured in pixels.
 
 `receivesFocus` tells the overlay stack to through focus into the overlay after it has opened.
 
@@ -144,7 +144,7 @@ type OverlayOptions = {
 
 ## Advanced Usage
 
-When working with the DOM based APIs of custom elements, it can sometimes be preferred to project content into an overlay from a different shadow root. Sometimes that could take the form of projecting a single slotted element into the overlay. To ensure that that content can be mashalled through any number of `<slot>` elements being addressed into subsequent `<slot>` elements, be sure to use the `flatten: true` option when querying `slot.asignedNodes()`:
+When working with the DOM-based APIs of custom elements, it is sometimes preferred to project content into an overlay from a different shadow root (eg projecting a single-slotted element into the overlay). To ensure that the content can be marshalled through any number of `<slot>` elements which are addressed into subsequent `<slot>` elements, be sure to use the `flatten: true` option when querying `slot.asignedNodes()`:
 
 ```js
 const trigger = shadowRoot.querySelector('#trigger');
@@ -160,7 +160,7 @@ const options = {
 const closeOverlay = await Overlay.open(trigger, interaction, content, options);
 ```
 
-Othertimes, you may actually want to compose content from multiple shadow roots into a single overlay. This is a pattern that can be seen in the `<sp-dropdown>` element where its `<sp-menu>` light DOM child is wrapped by its `<sp-popover>` shadow DOM child before being projected into an overlay. What follows is a more trivial example where content in the light DOM of an elements is injected into an element in the shadow DOM of the same element and then projected into an overlay. Notice the added work here of setting a comment node into the light DOM as a placeholder for the "stolen" content and then swapping that content back into the light DOM when the overlay is closed.
+Other times, you may want to compose content from multiple shadow roots into a single overlay. This is a pattern seen in the `<sp-dropdown>` element: its `<sp-menu>` light DOM child is wrapped by its `<sp-popover>` shadow DOM child before being projected into an overlay. What follows is a more trivial example, where content in the light DOM of an element is injected into an element in the shadow DOM of the same element and then projected into an overlay. Notice the added work here of setting a comment node into the light DOM as a placeholder for the "stolen" content, and then swapping that content back into the light DOM when the overlay is closed.
 
 ```js
 const trigger = this.shadowRoot.querySelector('#trigger');
