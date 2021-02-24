@@ -91,8 +91,7 @@ jobs:
             - persist_to_workspace:
                   root: /
                   paths:
-                      - home/pwuser/.cache/ms-playwright
-                      - root/.cache/ms-playwright
+                      - ms-playwright
                       - root/project/node_modules
                       - root/project/packages
                       - root/project/projects/story-decorator
