@@ -206,14 +206,14 @@ describe('Picker', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
-        expect(el.selectedItemText).to.equal('');
+        expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
 
         secondItem.click();
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Select Inverse');
+        expect(el.selectedItem?.itemText).to.equal('Select Inverse');
         expect(el.value).to.equal('option-2');
     });
     it('re-selects', async () => {
@@ -233,28 +233,28 @@ describe('Picker', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
-        expect(el.selectedItemText).to.equal('');
+        expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
 
         secondItem.click();
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Select Inverse');
+        expect(el.selectedItem?.itemText).to.equal('Select Inverse');
         expect(el.value).to.equal('option-2');
 
         button.click();
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
-        expect(el.selectedItemText).to.equal('Select Inverse');
+        expect(el.selectedItem?.itemText).to.equal('Select Inverse');
         expect(el.value).to.equal('option-2');
 
         firstItem.click();
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Deselect');
+        expect(el.selectedItem?.itemText).to.equal('Deselect');
         expect(el.value).to.equal('Deselect');
     });
     it('can have selection prevented', async () => {
@@ -272,7 +272,7 @@ describe('Picker', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
-        expect(el.selectedItemText).to.equal('');
+        expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
         expect(secondItem.selected).to.be.false;
 
@@ -304,7 +304,7 @@ describe('Picker', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
-        expect(el.selectedItemText).to.equal('');
+        expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
         expect(secondItem.selected).to.be.false;
 
@@ -383,14 +383,14 @@ describe('Picker', () => {
         await elementUpdated(el);
 
         expect(el.open, 'open by ArrowDown').to.be.true;
-        expect(el.selectedItemText).to.equal('');
+        expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
 
         firstItem.click();
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Deselect');
+        expect(el.selectedItem?.itemText).to.equal('Deselect');
         expect(el.value).to.equal('Deselect');
     });
     it('quick selects on ArrowLeft/Right', async () => {
@@ -542,8 +542,8 @@ describe('Picker', () => {
 
         await elementUpdated(el);
         await waitUntil(
-            () => el.selectedItemText === 'Select Inverse',
-            `Selected Item Text: ${el.selectedItemText}`
+            () => el.selectedItem?.itemText === 'Select Inverse',
+            `Selected Item Text: ${el.selectedItem?.itemText}`
         );
 
         const menu = el.querySelector('sp-menu') as Menu;
@@ -558,7 +558,7 @@ describe('Picker', () => {
         secondItem.addEventListener('focus', handleSelectedFocus);
 
         expect(el.value).to.equal('inverse');
-        expect(el.selectedItemText).to.equal('Select Inverse');
+        expect(el.selectedItem?.itemText).to.equal('Select Inverse');
 
         const button = el.button as HTMLButtonElement;
         button.click();
@@ -597,7 +597,7 @@ describe('Picker', () => {
         await waitUntil(() => el.value === '');
 
         expect(el.value).to.equal('');
-        expect(el.selectedItemText).to.equal('');
+        expect(el.selectedItem?.itemText).to.be.undefined;
     });
 
     it('allows event listeners on child items', async () => {

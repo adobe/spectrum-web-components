@@ -66,13 +66,13 @@ describe('Splitbutton', () => {
         expect(document.activeElement === el2);
         expect(el1.shadowRoot.activeElement === el2FocusElement);
     });
-    it('[type="field"] manages `selectedItemText`', async () => {
+    it('[type="field"] manages `selectedItem`', async () => {
         const test = await fixture<HTMLDivElement>(cta());
         const el = test.querySelector('sp-split-button') as SplitButton;
 
         await elementUpdated(el);
 
-        expect(el.selectedItemText).to.equal('Option 1');
+        expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(el.open).to.be.false;
 
         const item3 = el.querySelector('sp-menu-item:nth-child(3)') as MenuItem;
@@ -91,15 +91,15 @@ describe('Splitbutton', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Short');
+        expect(el.selectedItem?.itemText).to.equal('Short');
     });
-    it('[type="more"] manages `selectedItemText`', async () => {
+    it('[type="more"] manages `selectedItem.itemText`', async () => {
         const test = await fixture<HTMLDivElement>(moreCta());
         const el = test.querySelector('sp-split-button') as SplitButton;
 
         await elementUpdated(el);
 
-        expect(el.selectedItemText).to.equal('Option 1');
+        expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(el.open).to.be.false;
 
         const item3 = el.querySelector('sp-menu-item:nth-child(3)') as MenuItem;
@@ -118,7 +118,7 @@ describe('Splitbutton', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Option 1');
+        expect(el.selectedItem?.itemText).to.equal('Option 1');
     });
     it('passes click events as [type="field"]', async () => {
         const firstItemSpy = spy();
@@ -135,7 +135,7 @@ describe('Splitbutton', () => {
 
         await elementUpdated(el);
 
-        expect(el.selectedItemText).to.equal('Option 1');
+        expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(el.open).to.be.false;
 
         const item1 = el.querySelector('sp-menu-item:nth-child(1)') as MenuItem;
@@ -171,7 +171,7 @@ describe('Splitbutton', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Short');
+        expect(el.selectedItem?.itemText).to.equal('Short');
         expect(thirdItemSpy.called, 'third called, still').to.be.true;
         expect(thirdItemSpy.callCount, 'third callCount').to.equal(2);
         expect(thirdItemSpy.calledTwice, 'third calledTwice').to.be.true;
@@ -192,7 +192,7 @@ describe('Splitbutton', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Option Extended');
+        expect(el.selectedItem?.itemText).to.equal('Option Extended');
         expect(secondItemSpy.called, 'second called').to.be.true;
         expect(secondItemSpy.calledTwice, 'second twice').to.be.true;
 
@@ -209,7 +209,7 @@ describe('Splitbutton', () => {
 
         await elementUpdated(el);
 
-        expect(el.selectedItemText).to.equal('Option 1');
+        expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(firstItemSpy.called, 'first called, sill').to.be.true;
         expect(firstItemSpy.callCount, 'first callCount').to.equal(3);
     });
@@ -228,7 +228,7 @@ describe('Splitbutton', () => {
 
         await elementUpdated(el);
 
-        expect(el.selectedItemText).to.equal('Option 1');
+        expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(el.open).to.be.false;
 
         const item2 = el.querySelector('sp-menu-item:nth-child(2)') as MenuItem;
@@ -255,7 +255,7 @@ describe('Splitbutton', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Option 1');
+        expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(thirdItemSpy.called, '3rd called').to.be.true;
         expect(thirdItemSpy.calledOnce, '3rd called once').to.be.true;
 
@@ -270,7 +270,7 @@ describe('Splitbutton', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItemText).to.equal('Option 1');
+        expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(secondItemSpy.called, '2nd called').to.be.true;
         expect(secondItemSpy.calledOnce, '2nd called once').to.be.true;
 
