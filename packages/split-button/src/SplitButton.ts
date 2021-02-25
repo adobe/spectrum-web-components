@@ -109,7 +109,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     role="presentation"
                     class=${ifDefined(this.value ? undefined : 'placeholder')}
                 >
-                    ${this.selectedItemText}
+                    ${this.selectedItem?.itemText || ''}
                 </div>
             `,
         ];
@@ -189,13 +189,11 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     (el) => (el.selected = false)
                 );
                 this.optionsMenu.menuItems[0].selected = true;
-                this.selectedItemText = this.optionsMenu.menuItems[0].itemText;
+                this.selectedItem = this.optionsMenu.menuItems[0];
             } else {
-                const selected =
-                    this.optionsMenu.menuItems.find((el) => el.selected) ||
-                    this.optionsMenu.menuItems[0];
-                selected.selected = true;
-                this.selectedItemText = selected.itemText;
+                this.selectedItem =
+                    this.selectedItem || this.optionsMenu.menuItems[0];
+                this.selectedItem.selected = true;
             }
             return;
         }
