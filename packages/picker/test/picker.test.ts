@@ -31,6 +31,8 @@ import { spy } from 'sinon';
 import {
     arrowDownEvent,
     arrowUpEvent,
+    arrowLeftEvent,
+    arrowRightEvent,
     tabEvent,
     tEvent,
 } from '../../../test/testing-helpers.js';
@@ -390,6 +392,62 @@ describe('Picker', () => {
         expect(el.open).to.be.false;
         expect(el.selectedItemText).to.equal('Deselect');
         expect(el.value).to.equal('Deselect');
+    });
+    it('quick selects on ArrowLeft/Right', async () => {
+        const selectionSpy = spy();
+        const el = await pickerFixture();
+        el.addEventListener('change', (event: Event) => {
+            const { value } = event.target as Picker;
+            console.log('change', value);
+            selectionSpy(value);
+        });
+        const button = el.button as HTMLButtonElement;
+
+        await elementUpdated(el);
+        el.focus();
+        button.dispatchEvent(arrowLeftEvent);
+
+        await elementUpdated(el);
+
+        expect(selectionSpy.callCount).to.equal(1);
+        expect(selectionSpy.calledWith('Deselected'));
+        button.dispatchEvent(arrowLeftEvent);
+
+        await elementUpdated(el);
+        expect(selectionSpy.callCount).to.equal(1);
+        button.dispatchEvent(arrowRightEvent);
+
+        await elementUpdated(el);
+        expect(selectionSpy.calledWith('option-2'));
+
+        button.dispatchEvent(arrowRightEvent);
+        button.dispatchEvent(arrowRightEvent);
+        button.dispatchEvent(arrowRightEvent);
+        button.dispatchEvent(arrowRightEvent);
+
+        await elementUpdated(el);
+        expect(selectionSpy.callCount).to.equal(5);
+        expect(selectionSpy.calledWith('Save Selection'));
+        expect(selectionSpy.calledWith('Make Work Path')).to.be.false;
+    });
+    it('quick selects first item on ArrowRight when no value', async () => {
+        const selectionSpy = spy();
+        const el = await pickerFixture();
+        el.addEventListener('change', (event: Event) => {
+            const { value } = event.target as Picker;
+            console.log('change', value);
+            selectionSpy(value);
+        });
+        const button = el.button as HTMLButtonElement;
+
+        await elementUpdated(el);
+        el.focus();
+        button.dispatchEvent(arrowRightEvent);
+
+        await elementUpdated(el);
+
+        expect(selectionSpy.callCount).to.equal(1);
+        expect(selectionSpy.calledWith('Deselected'));
     });
     it('loads', async () => {
         const el = await pickerFixture();
