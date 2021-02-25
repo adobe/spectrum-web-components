@@ -212,9 +212,14 @@ export class ButtonBase extends LikeAnchor(
             if (this.active) {
                 this.addEventListener('focusout', this.handleRemoveActive);
                 this.addEventListener('pointerup', this.handleRemoveActive);
+                this.addEventListener('pointerleave', this.handleRemoveActive);
             } else {
                 this.removeEventListener('focusout', this.handleRemoveActive);
                 this.removeEventListener('pointerup', this.handleRemoveActive);
+                this.removeEventListener(
+                    'pointerleave',
+                    this.handleRemoveActive
+                );
             }
         }
         if (this.anchorElement) {
