@@ -433,4 +433,42 @@ export class Picker extends PickerBase {
     public static get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
     }
+
+    public onKeydown = (event: KeyboardEvent): void => {
+        const { code } = event;
+        if (!code.startsWith('Arrow')) {
+            return;
+        }
+        event.preventDefault();
+        /* c8 ignore next 3 */
+        if (!this.optionsMenu) {
+            return;
+        }
+        if (code === 'ArrowUp' || code === 'ArrowDown') {
+            this.open = true;
+            return;
+        }
+        let selectedIndex = -1;
+        this.optionsMenu.menuItems.map((item, i) => {
+            if (this.value === item.value && !item.disabled) {
+                selectedIndex = i;
+            }
+        });
+        // use a positive offset to find the first non-disabled item when no selection is available.
+        const nextOffset = !this.value || code === 'ArrowRight' ? 1 : -1;
+        let nextIndex = selectedIndex + nextOffset;
+        while (
+            this.optionsMenu.menuItems[nextIndex] &&
+            this.optionsMenu.menuItems[nextIndex].disabled
+        ) {
+            nextIndex += nextOffset;
+        }
+        nextIndex = Math.max(
+            Math.min(nextIndex, this.optionsMenu.menuItems.length),
+            0
+        );
+        if (!this.value || nextIndex !== selectedIndex) {
+            this.setValueFromItem(this.optionsMenu.menuItems[nextIndex]);
+        }
+    };
 }
