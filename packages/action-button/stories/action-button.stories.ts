@@ -51,6 +51,67 @@ function renderButton(args: Properties): TemplateResult {
 export default {
     component: 'sp-action-button',
     title: 'Action Button',
+    argTypes: {
+        emphasized: {
+            name: 'emphasized',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        disabled: {
+            name: 'disabled',
+            type: { name: 'boolean', required: false },
+            description:
+                'Disable this control. It will not receive focus or events.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        quiet: {
+            name: 'quiet',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        selected: {
+            name: 'selected',
+            type: { name: 'boolean', required: false },
+            description: "Set the first button's state to selected.",
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        toggles: {
+            name: 'toggles',
+            type: { name: 'boolean', required: false },
+            description: 'Allows multiple buttons to be selected at once.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
 function renderButtonsSelected(args: Properties): TemplateResult {
@@ -86,6 +147,7 @@ quiet.args = {
 export const toggles = (args: Properties): TemplateResult =>
     renderButtonsSelected(args);
 toggles.args = {
+    quiet: true,
     toggles: true,
 };
 
