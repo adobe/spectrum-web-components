@@ -18,6 +18,23 @@ import '../sp-accordion-item.js';
 export default {
     title: 'Accordion',
     component: 'sp-accordion',
+    args: {
+        open: false,
+    },
+    argTypes: {
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the second accordion item is open.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
 type Properties = {
@@ -53,20 +70,8 @@ export const Default = (args?: Properties): TemplateResult => Template(args);
 export const Open = (args?: Properties): TemplateResult => Template(args);
 Open.args = {
     open: true,
-};
-Open.argTypes = {
-    open: {
-        name: 'open',
-        type: { name: 'boolean', required: false },
-        description: 'Whether the second accordion item is open.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
-    },
+    allowMultiple: false,
+    disabled: false,
 };
 
 export const AllowMultiple = (args?: Properties): TemplateResult =>
