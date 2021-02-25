@@ -2,7 +2,7 @@ import {
     addDecorator,
     setCustomElements,
 } from '@web/storybook-prebuilt/web-components.js';
-import customElemenents from '../custom-elements.json';
+// import customElemenents from '../custom-elements.json';
 import { swcThemeDecoratorWithConfig } from '@spectrum-web-components/story-decorator/decorator.js';
 
 export const parameters = {
@@ -13,4 +13,4 @@ export const parameters = {
 
 addDecorator(swcThemeDecoratorWithConfig({ bundled: false }));
 
-setCustomElements(customElemenents);
+// setCustomElements(customElemenents);
