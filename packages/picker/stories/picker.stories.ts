@@ -17,6 +17,7 @@ import '../sp-picker.js';
 import { Picker } from '../';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import { states } from './states.js';
 
 export default {
     title: 'Picker',
@@ -154,5 +155,35 @@ export const initialValue = (): TemplateResult => {
                 </sp-menu-item>
             </sp-menu>
         </sp-picker>
+    `;
+};
+
+export const custom = (): TemplateResult => {
+    return html`
+        <sp-picker
+            style="width: 400px;"
+            @change="${(event: Event): void => {
+                const picker = event.target as Picker;
+                action(`Change: ${picker.value}`)();
+            }}"
+            label="Pick an state"
+        >
+            <sp-menu style="max-height: 400px;">
+                ${states.map(
+                    (state) => html`
+                        <sp-menu-item id=${state.id} value=${state.id}>
+                            ${state.label}
+                        </sp-menu-item>
+                    `
+                )}
+            </sp-menu>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
     `;
 };
