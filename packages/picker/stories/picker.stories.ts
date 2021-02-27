@@ -166,7 +166,7 @@ export const custom = (): TemplateResult => {
                 const picker = event.target as Picker;
                 action(`Change: ${picker.value}`)();
             }}"
-            label="Pick an state"
+            label="Pick a state"
         >
             <sp-menu style="max-height: 400px;">
                 ${states.map(
