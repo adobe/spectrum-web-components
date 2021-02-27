@@ -15,6 +15,30 @@ governing permissions and limitations under the License.
 :host {
     display: inline-flex;
     vertical-align: top;
+
+    /**
+     * .spectrum-Picker
+     * Move width management to :host
+     **/
+    max-width: 100%;
+    width: var(--spectrum-picker-width);
+    min-width: var(--spectrum-picker-min-width);
+}
+
+:host([quiet]) {
+    width: auto;
+    min-width: 0;
+}
+
+:host([size]) {
+    /* TODO: https://github.com/adobe/spectrum-css/blob/011ca5408ae5eb32bb55e1cf79c06e40171fd17c/components/picker/index.css#L93 */
+    --spectrum-picker-width: var(--spectrum-global-dimension-size-2400);
+}
+
+#button {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
 }
 
 sp-popover {
