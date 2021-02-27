@@ -28,7 +28,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition-delay: 0ms;
     pointer-events: auto;
 }
-.modal {
+:host {
     /* .spectrum-Modal */
     --spectrum-dialog-confirm-exit-animation-delay: 0ms;
     --spectrum-dialog-fullscreen-margin: 32px;

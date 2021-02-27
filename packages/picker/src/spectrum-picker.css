@@ -10,9 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-#button {
+:host {
     /* .spectrum-Picker */
     --spectrum-button-line-height: 1.3;
+}
+#button {
+    /* .spectrum-Picker */
     position: relative;
     display: inline-flex;
     box-sizing: border-box;
@@ -348,7 +351,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-item-padding-xl)
     );
 }
-#button {
+:host {
     /* .spectrum-Picker */
     --spectrum-picker-min-width: var(--spectrum-global-dimension-size-400);
     --spectrum-picker-disabled-border-size: 0;
