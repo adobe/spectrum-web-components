@@ -164,6 +164,7 @@ export class Menu extends SpectrumElement {
             return;
         }
         itemToFocus.focused = true;
+        itemToFocus.scrollIntoView({ block: 'nearest' });
         this.setAttribute('aria-activedescendant', itemToFocus.id);
         focusedItem.tabIndex = -1;
     }
