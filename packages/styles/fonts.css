@@ -14,53 +14,33 @@ governing permissions and limitations under the License.
 
 :host,
 :root {
-    --spectrum-font-fallbacks-sans: -apple-system, BlinkMacSystemFont,
-        'Segoe UI', Roboto, sans-serif;
-    --spectrum-font-family-base: var(--spectrum-alias-body-text-font-family);
-    --spectrum-font-family-ar: var(--spectrum-alias-font-family-ar);
-    --spectrum-font-family-he: var(--spectrum-alias-font-family-he);
-    --spectrum-font-family-zh: var(--spectrum-alias-font-family-zh);
-    --spectrum-font-family-zhhans: var(--spectrum-alias-font-family-zhhans);
-    --spectrum-font-family-ko: var(--spectrum-alias-font-family-ko);
-    --spectrum-font-family-ja: var(--spectrum-alias-font-family-ja);
-    --spectrum-font-family-han: var(--spectrum-alias-font-family-zh);
-    --spectrum-font-family-zhhant: var(--spectrum-alias-font-family-zh);
-    --spectrum-text-size: var(--spectrum-alias-font-size-default);
-    --spectrum-text-body-line-height: var(--spectrum-alias-line-height-medium);
-    --spectrum-text-size-text-label: var(--spectrum-label-text-size);
-    --spectrum-line-height-text-label: var(--spectrum-label-text-line-height);
-}
-:host,
-:root {
-    font-family: var(--spectrum-font-family-base);
-    font-size: var(--spectrum-text-size);
+    font-family: var(--spectrum-alias-body-text-font-family);
+    font-size: var(--spectrum-alias-font-size-default);
 }
 :host:lang(ar),
 :root:lang(ar) {
-    font-family: var(--spectrum-font-family-ar);
+    font-family: var(--spectrum-alias-font-family-ar);
 }
 :host:lang(he),
 :root:lang(he) {
-    font-family: var(--spectrum-font-family-he);
+    font-family: var(--spectrum-alias-font-family-he);
 }
 :host:lang(zh-Hans),
 :root:lang(zh-Hans) {
-    font-family: var(--spectrum-font-family-zhhans);
-}
-:host:lang(zh-Hant),
-:root:lang(zh-Hant) {
-    font-family: var(--spectrum-font-family-zhhant);
+    font-family: var(--spectrum-alias-font-family-zhhans);
 }
 :host:lang(zh),
-:root:lang(zh) {
-    font-family: var(--spectrum-font-family-zh);
+:host:lang(zh-Hant),
+:root:lang(zh),
+:root:lang(zh-Hant) {
+    font-family: var(--spectrum-alias-font-family-zh);
 }
 :host:lang(ko),
 :root:lang(ko) {
-    font-family: var(--spectrum-font-family-ko);
+    font-family: var(--spectrum-alias-font-family-ko);
 }
 :host:lang(ja),
 :root:lang(ja) {
-    font-family: var(--spectrum-font-family-ja);
+    font-family: var(--spectrum-alias-font-family-ja);
 }
 /* stylelint-enable */

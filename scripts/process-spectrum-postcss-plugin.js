@@ -151,6 +151,23 @@ class SpectrumProcessor {
             }
         });
 
+        // const customPropertyNode = result.first.clone();
+        // const hasCustomProperties = false;
+        // console.log(result.first.type);
+        // // Query declarations for variables
+        // // If variables, hope new host and insert them
+        // // insert new host after hostShadowSelectorNode
+        // customPropertyNode.walkDecls(/^(?!--)/, (decl) => {
+        //     decl.remove();
+        // });
+        // result.first.walkDecls(/^--/, (decl) => {
+        //     hasCustomProperties = true;
+        //     decl.remove();
+        // });
+        // if (hasCustomProperties) {
+        //     result.first.insertBefore(customPropertyNode);
+        // }
+
         // Map shadow DOM classes to ids
         // e.g. ".spectrum-Button-label" -> "#label"
         astTransforms.push((selector, rule) => {
@@ -536,7 +553,6 @@ class SpectrumProcessor {
                     }
                     if (skip) continue;
                 }
-
                 const transformed = selectorTransform(selector, rule);
                 if (transformed) {
                     result.push(transformed);
@@ -632,6 +648,38 @@ class SpectrumProcessor {
             return;
         }
         const convertedSelectors = this.convertSelectors(rule);
+        if (
+            convertedSelectors.length === 1 &&
+            convertedSelectors[0] === this.component.hostShadowSelector &&
+            this.component.hostShadowSelector !== ':host'
+        ) {
+            // In the case that custom property declarations are destined
+            // for `hostShadowSelector` selected rules, we need to hoise them
+            // back up to the :host so that they can be overriden from the outside
+            // To do this:
+            // - clone the rule
+            // - walk the declarations for variables
+            // - take custom properties out of the current rule
+            // - take non-custom properties out of the cloned rule
+            // - insert the cloned rule when custom properties have been found
+            const customPropertyNode = rule.clone();
+            let hasCustomProperties = false;
+            customPropertyNode.walkDecls(/^(?!--)/, (decl) => {
+                decl.remove();
+            });
+            rule.walkDecls(/^--/, (decl) => {
+                hasCustomProperties = true;
+                decl.remove();
+            });
+            if (hasCustomProperties) {
+                console.log('Apply new :host rule');
+                this.appendRule(
+                    [':host'],
+                    customPropertyNode.nodes,
+                    `${rule.selectors.join(',\n   * ')}`
+                );
+            }
+        }
         this.appendRule(
             convertedSelectors,
             rule.nodes,
@@ -647,7 +695,7 @@ class SpectrumProcessor {
      * @param {string} comment - The comment to begin the rule with
      */
     appendRule(selectors, nodes, comment) {
-        if (selectors.length === 0) return;
+        if (selectors.length === 0 || nodes.length === 0) return;
 
         const parentRule = postcss.rule({ selectors });
         this.result.root.append(parentRule);
