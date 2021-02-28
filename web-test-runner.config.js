@@ -11,15 +11,18 @@ governing permissions and limitations under the License.
 */
 const { playwrightLauncher } = require('@web/test-runner-playwright');
 const { sendKeysPlugin } = require('./test/send-keys-plugin.js');
+const {
+    packages,
+    vrtGroups,
+    configuredVisualRegressionPlugin,
+} = require('./web-test-runner.utils.js');
 
 module.exports = {
-    plugins: [sendKeysPlugin()],
-    files: ['packages/*/test/*.test.js'],
+    plugins: [sendKeysPlugin(), configuredVisualRegressionPlugin()],
     nodeResolve: true,
     concurrency: 4,
     concurrentBrowsers: 1,
-    testsFinishTimeout: 45000,
-    coverage: true,
+    testsFinishTimeout: 200000,
     coverageConfig: {
         report: true,
         reportDir: 'coverage',
@@ -41,9 +44,33 @@ module.exports = {
     },
     testFramework: {
         config: {
-            timeout: 10000,
+            timeout: 100000,
         },
     },
+    groups: [
+        {
+            name: 'unit',
+            files: 'packages/*/test/*.test.js',
+        },
+        ...vrtGroups,
+        ...packages.reduce((acc, pkg) => {
+            const skipPkgs = [
+                'bundle',
+                'icons-ui',
+                'icons-workflow',
+                'modal',
+                'styles',
+            ];
+            if (!skipPkgs.includes(pkg)) {
+                acc.push({
+                    name: pkg,
+                    files: `packages/${pkg}/test/*.test.js`,
+                });
+            }
+            return acc;
+        }, []),
+    ],
+    group: 'unit',
     browsers: [
         playwrightLauncher({ product: 'chromium' }),
         playwrightLauncher({ product: 'webkit' }),

@@ -31,11 +31,11 @@ export function sendKeysPlugin() {
                 if (session.browser.type === 'playwright') {
                     if (payload.type) {
                         const page = session.browser.getPage(session.id);
-                        await page.keyboard.type(payload.type);
+                        await page.keyboard.type(payload.type as string);
                         return true;
                     } else if (payload.press) {
                         const page = session.browser.getPage(session.id);
-                        await page.keyboard.press(payload.press);
+                        await page.keyboard.press(payload.press as string);
                         return true;
                     }
                 }
@@ -44,7 +44,6 @@ export function sendKeysPlugin() {
                     `Sending keys is not supported for browser type ${session.browser.type}.`
                 );
             }
-            return false;
         },
     };
 }

@@ -52,10 +52,9 @@ test-results.xml
 /test/benchmark/**/*.js
 /test/benchmark/**/*.js.map
 /test/benchmark/**/*.d.ts
-/test/visual/screenshots-current/**/*.png
-/test/visual/**/local/
 !test/visual/**/*.js
-test/visual/screenshots-baseline/ci/userDataDir/
+test/visual/screenshots-baseline/
+test/visual/screenshots-current/
 
 package-lock.json
 custom-elements.json
