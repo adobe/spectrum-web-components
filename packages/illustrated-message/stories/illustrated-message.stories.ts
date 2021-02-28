@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-illustrated-message.js';
-import { illustration } from '@spectrum-web-components/dropzone/test/test-svg.js';
+import { illustration } from '../../dropzone/test/test-svg.js';
 
 export default {
     component: 'sp-illustrated-message',
