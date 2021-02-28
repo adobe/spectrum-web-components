@@ -15,7 +15,7 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import '../sp-tag.js';
 import '../sp-tags.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
-import { avatar } from '@spectrum-web-components/avatar/stories/images';
+import { avatar } from '../../avatar/stories/images';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 
