@@ -85,22 +85,22 @@ During development you may wish to use `yarn test:watch` to automatically build 
 
 Note: visual regression is done automatically on pull requests via CircleCI, so unless you're making larger changes it's okay to make use of that directly as opposed to doing visual regression local to your machine.
 
-Visual regressions are tracked via screenshot testing powered by Playwright and pngjs with pixelmatch. There are _two_ types of visual testing built into this library: those that should only be run in CircleCI to power the continuous integration workflow and those that can be run on your local machine. Due to the font metrics not being identical, it is difficult to rely on screenshot based testing across OSes. Because of this, the library manages its golden image cache internalto CircleCI rather than as a part of the git repository. If you'd like to leverage visual regression tests locally to manage changes you are making, be sure to create a baseline locally before you begin development.
+Visual regressions are tracked via screenshot testing powered by [`@web/test-runner-visual-regression`](https://github.com/modernweb-dev/web/tree/master/packages/test-runner-visual-regression). Due to the font metrics not being identical, it is difficult to rely on screenshot based testing across OSes. Because of this, the library manages its golden image cache internal to CircleCI rather than as a part of the git repository. Neither the `screenshots-baseline` nor `screenshots-current` directory should ever be added to git. When working with visual regression tests locally to manage changes you are making, be sure to create a baseline locally before you begin development.
 
 To create a local baseline so that you can compare your changes to it later in the development cycle, use the following commands:
 
 ```bash
-yarn storybook:build # creates the test assets
-yarn test:visual:baseline:local --color=light --scale=medium
+yarn test:visual:clean # start with a clean slate
+# yarn test:visual:clean:baseline # removes only baseline images
+# yarn test:visual:clean:current # removes only images updated in the most recent test pass
+yarn test:visual vrt-light-medium-ltr # vrt-${color}-${scale}-${direction} to access all theme options
 # ...
-yarn test:visual:local --color=light --scale=medium
+yarn test:visual vrt-light-medium-ltr # repeat the same as above for a clean comparison
 ```
 
-These tests are run against the built Storybook artifacts, so be sure to run `yarn storybook:build` first.
+#### Screenshot coverage
 
-#### Adding New Tests
-
-Visual testing is run against the stories in Storybook, and stories added there that you would like your work to be regressed against need to be manaully added to [`test/visual/stories.js`](test/visual/stories.js). Only stories that are listed there will be included in the visual regression, so please add any new stories you create to this list so that the quality of this library can be maintained over time.
+Visual regression testing is done against screens derived from the exports of the `*.stories.js` files gathered in [`test/visual/story-imports.js'](test/visual/story-imports.js). Any stories added to the files referenced therein will be added to the next run of the regression testing. As you add packages or story files to existing packages, be sure to include them here so that they become a part of the visual regression suite.
 
 #### Keeping CI Assets Up-to-date
 
