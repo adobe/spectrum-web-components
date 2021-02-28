@@ -20,6 +20,7 @@ import {
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -74,6 +75,7 @@ const reduceMotionProperties = css`
     --spectrum-global-animation-duration-1000: 0ms;
     --spectrum-global-animation-duration-2000: 0ms;
     --spectrum-global-animation-duration-4000: 0ms;
+    --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
 `;
 
 ActiveOverlay.prototype.renderTheme = function (
@@ -122,54 +124,12 @@ export class StoryDecorator extends SpectrumElement {
                 left: var(--spectrum-global-dimension-size-200);
                 right: var(--spectrum-global-dimension-size-200);
                 display: flex;
+                align-items: center;
                 justify-content: flex-end;
                 box-sizing: border-box;
                 background-color: var(--spectrum-global-color-gray-100);
             }
-            label {
-                /* .spectrum-FieldLabel,
-                * .spectrum-Form-itemLabel */
-                display: block;
-
-                box-sizing: border-box;
-
-                padding-top: var(
-                    --spectrum-fieldlabel-padding-top,
-                    var(--spectrum-global-dimension-size-50)
-                );
-
-                padding-bottom: var(
-                    --spectrum-fieldlabel-padding-bottom,
-                    var(--spectrum-global-dimension-size-65)
-                );
-                padding-left: 0;
-                padding-right: 0;
-
-                font-size: var(
-                    --spectrum-fieldlabel-text-size,
-                    var(--spectrum-global-dimension-font-size-75)
-                );
-                font-weight: var(
-                    --spectrum-fieldlabel-text-font-weight,
-                    var(--spectrum-global-font-weight-regular)
-                );
-                line-height: var(
-                    --spectrum-fieldlabel-text-line-height,
-                    var(--spectrum-global-font-line-height-small)
-                );
-
-                -webkit-font-smoothing: subpixel-antialiased;
-                -moz-osx-font-smoothing: auto;
-                font-smoothing: subpixel-antialiased;
-
-                display: inline-block;
-                padding-top: var(
-                    --spectrum-fieldlabel-side-padding-top,
-                    var(--spectrum-global-dimension-size-100)
-                );
-                padding-bottom: 0;
-            }
-            [dir='ltr'] label {
+            [dir='ltr'] sp-field-label {
                 padding-left: 0;
                 padding-right: var(
                     --spectrum-fieldlabel-side-padding-x,
@@ -182,7 +142,7 @@ export class StoryDecorator extends SpectrumElement {
                 margin-right: 0;
                 padding: 0;
             }
-            [dir='rtl'] label {
+            [dir='rtl'] sp-field-label {
                 padding-right: 0;
                 padding-left: var(
                     --spectrum-fieldlabel-side-padding-x,
@@ -199,25 +159,19 @@ export class StoryDecorator extends SpectrumElement {
     ];
 
     @property({ type: String })
-    public color: Color = color;
+    public color: Color = window.__swc_hack_knobs__.defaultColor;
 
     @property({ type: String })
-    public scale: Scale = scale;
+    public scale: Scale = window.__swc_hack_knobs__.defaultScale;
 
     @property({ type: String })
-    public direction: 'ltr' | 'rtl' = dir;
+    public direction: 'ltr' | 'rtl' =
+        window.__swc_hack_knobs__.defaultDirection;
 
     @property({ type: Boolean, attribute: 'reduce-motion', reflect: true })
-    public reduceMotion = reduceMotion;
+    public reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion;
 
     public ready = false;
-
-    private handleClickLabel(event: { target: HTMLElement }): void {
-        const { target } = event;
-        const next = target.nextElementSibling as Picker;
-        if (!next || next.open) return;
-        next.click();
-    }
 
     private updateTheme({ target }: Event & { target: Picker | Switch }): void {
         const { id } = target;
@@ -249,7 +203,7 @@ export class StoryDecorator extends SpectrumElement {
                 dir=${this.direction}
                 part="container"
             >
-                <slot></slot>
+                <slot @slotchange=${this.checkReady}></slot>
                 ${this.reduceMotion
                     ? html`
                           <style>
@@ -266,7 +220,8 @@ export class StoryDecorator extends SpectrumElement {
         `;
     }
 
-    protected async firstUpdated(): Promise<void> {
+    protected async checkReady(): Promise<void> {
+        this.ready = false;
         const descendents = [
             ...this.querySelectorAll('*'),
         ] as SpectrumElement[];
@@ -287,7 +242,7 @@ export class StoryDecorator extends SpectrumElement {
 
     private get colorControl(): TemplateResult {
         return html`
-            <label @click=${this.handleClickLabel}>Theme</label>
+            <sp-field-label for="color">Theme</sp-field-label>
             <sp-picker
                 id="color"
                 placement="top"
@@ -307,7 +262,7 @@ export class StoryDecorator extends SpectrumElement {
 
     private get scaleControl(): TemplateResult {
         return html`
-            <label @click=${this.handleClickLabel}>Scale</label>
+            <sp-field-label for="scale">Scale</sp-field-label>
             <sp-picker
                 id="scale"
                 label="Scale"
@@ -326,7 +281,7 @@ export class StoryDecorator extends SpectrumElement {
 
     private get dirControl(): TemplateResult {
         return html`
-            <label @click=${this.handleClickLabel}>Direction</label>
+            <sp-field-label for="dir">Direction</sp-field-label>
             <sp-picker
                 id="dir"
                 label="Direction"
