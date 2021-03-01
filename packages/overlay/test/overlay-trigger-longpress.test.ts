@@ -18,6 +18,7 @@ import {
 } from '@open-wc/testing';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -25,6 +26,7 @@ import { OverlayTrigger } from '..';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { executeServerCommand } from '@web/test-runner-commands';
 import { waitForPredicate } from '../../../test/testing-helpers';
+import { spy } from 'sinon';
 
 describe('Overlay Trigger - Longpress', () => {
     it('displays `longpress` content', async () => {
@@ -36,7 +38,7 @@ describe('Overlay Trigger - Longpress', () => {
                     </sp-action-button>
                     <sp-popover slot="longpress-content" tip>
                         <sp-action-group
-                            selects="one"
+                            selects="single"
                             vertical
                             style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
                         >
@@ -97,5 +99,40 @@ describe('Overlay Trigger - Longpress', () => {
             press: 'Escape',
         });
         await waitUntil(() => !content.open, 'closes for `pointerdown`');
+    });
+    it('displays `longpress` declaratively', async () => {
+        const openedSpy = spy();
+        const closedSpy = spy();
+        const el = await fixture<OverlayTrigger>(
+            (() => html`
+                <overlay-trigger placement="right-start" open="longpress">
+                    <sp-action-button
+                        slot="trigger"
+                        hold-affordance
+                        @sp-opened=${() => openedSpy()}
+                        @sp-closed=${() => closedSpy()}
+                    >
+                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    </sp-action-button>
+                    <sp-popover slot="longpress-content" tip></sp-popover>
+                </overlay-trigger>
+            `)()
+        );
+        await elementUpdated(el);
+
+        await waitUntil(
+            () => openedSpy.calledOnce,
+            'longpress content projected to overlay',
+            { timeout: 2000 }
+        );
+
+        el.removeAttribute('open');
+        await elementUpdated(el);
+
+        await waitUntil(
+            () => closedSpy.calledOnce,
+            'longpress content returned',
+            { timeout: 2000 }
+        );
     });
 });

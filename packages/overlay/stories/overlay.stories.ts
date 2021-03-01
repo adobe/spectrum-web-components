@@ -8,9 +8,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
-
-import { OverlayTrigger, Placement } from '../';
+import { html, TemplateResult, ifDefined } from '@spectrum-web-components/base';
+import { OverlayContentTypes, OverlayTrigger, Placement } from '../';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/button/sp-button.js';
@@ -20,6 +19,9 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/radio/sp-radio.js';
@@ -119,19 +121,20 @@ export default {
     },
 };
 
-export const Default = ({
-    placement,
-    offset,
-}: {
+interface Properties {
     placement: Placement;
     offset: number;
-}): TemplateResult => {
+    open?: OverlayContentTypes;
+}
+
+const template = ({ placement, offset, open }: Properties): TemplateResult => {
     return html`
         ${storyStyles}
         <overlay-trigger
             id="trigger"
             placement="${placement}"
             offset="${offset}"
+            open=${ifDefined(open)}
         >
             <sp-button variant="primary" slot="trigger">Show Popover</sp-button>
             <sp-popover
@@ -166,30 +169,53 @@ export const Default = ({
                             </div>
                         </sp-popover>
 
-                        <sp-tooltip
-                            slot="hover-content"
-                            delayed
-                            open
-                            tip="bottom"
-                        >
+                        <sp-tooltip slot="hover-content" delayed tip="bottom">
                             Click to open another popover.
                         </sp-tooltip>
                     </overlay-trigger>
                 </div>
             </sp-popover>
-            <sp-tooltip open slot="hover-content" delayed tip="bottom">
+            <sp-tooltip
+                slot="hover-content"
+                ?delayed=${open !== 'hover'}
+                tip="bottom"
+            >
                 Click to open a popover.
             </sp-tooltip>
         </overlay-trigger>
     `;
 };
 
+export const Default = (args: Properties): TemplateResult => template(args);
+
+export const openHoverContent = (args: Properties): TemplateResult =>
+    template({
+        ...args,
+        open: 'hover',
+    });
+
+export const openClickContent = (args: Properties): TemplateResult =>
+    template({
+        ...args,
+        open: 'click',
+    });
+
+const extraText = html`
+    <p>This is some text.</p>
+    <p>This is some text.</p>
+    <p>
+        This is a
+        <a href="#anchor">link</a>
+        .
+    </p>
+`;
+
 export const inline = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
         <overlay-trigger type="inline">
             <sp-button slot="trigger">Open</sp-button>
-            <sp-overlay open slot="click-content">
+            <sp-overlay slot="click-content">
                 <sp-button
                     @click=${(event: Event & { target: HTMLElement }): void => {
                         event.target.dispatchEvent(closeEvent);
@@ -199,13 +225,7 @@ export const inline = (): TemplateResult => {
                 </sp-button>
             </sp-overlay>
         </overlay-trigger>
-        <p>This is some text.</p>
-        <p>This is some text.</p>
-        <p>
-            This is a
-            <a href="#anchor">link</a>
-            .
-        </p>
+        ${extraText}
     `;
 };
 
@@ -214,7 +234,7 @@ export const replace = (): TemplateResult => {
     return html`
         <overlay-trigger type="replace">
             <sp-button slot="trigger">Open</sp-button>
-            <sp-overlay open slot="click-content">
+            <sp-overlay slot="click-content">
                 <sp-button
                     @click=${(event: Event & { target: HTMLElement }): void => {
                         event.target.dispatchEvent(closeEvent);
@@ -224,13 +244,7 @@ export const replace = (): TemplateResult => {
                 </sp-button>
             </sp-overlay>
         </overlay-trigger>
-        <p>This is some text.</p>
-        <p>This is some text.</p>
-        <p>
-            This is a
-            <a href="#anchor">link</a>
-            .
-        </p>
+        ${extraText}
     `;
 };
 
@@ -270,13 +284,7 @@ export const modal = (): TemplateResult => {
                 Content of the dialog
             </sp-dialog-wrapper>
         </overlay-trigger>
-        <p>This is some text.</p>
-        <p>This is some text.</p>
-        <p>
-            This is a
-            <a href="#anchor">link</a>
-            .
-        </p>
+        ${extraText}
     `;
 };
 
@@ -385,8 +393,11 @@ export const updated = (): TemplateResult => {
         </style>
         <overlay-drag>
             <overlay-trigger class="demo top-left" placement="bottom">
-                <overlay-target-icon slot="trigger"></overlay-target-icon>
-                <sp-tooltip slot="hover-content" delayed open tip="bottom">
+                <overlay-target-icon
+                    slot="trigger"
+                    style="translate(400px, 300px)"
+                ></overlay-target-icon>
+                <sp-tooltip slot="hover-content" delayed tip="bottom">
                     Click to open popover
                 </sp-tooltip>
                 <sp-popover
@@ -424,7 +435,6 @@ export const updated = (): TemplateResult => {
                             <sp-tooltip
                                 slot="hover-content"
                                 delayed
-                                open
                                 tip="bottom"
                             >
                                 Click to open another popover.
@@ -447,7 +457,7 @@ export const sideHoverDraggable = (): TemplateResult => {
         <overlay-drag>
             <overlay-trigger placement="right">
                 <overlay-target-icon slot="trigger"></overlay-target-icon>
-                <sp-tooltip slot="hover-content" delayed open tip="right">
+                <sp-tooltip slot="hover-content" delayed tip="right">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Vivamus egestas sed enim sed condimentum. Nunc facilisis
                     scelerisque massa sed luctus. Orci varius natoque penatibus
@@ -499,7 +509,7 @@ export const longpress = (): TemplateResult => {
 };
 
 export const complexModal = (): TemplateResult => {
-    requestAnimationFrame(async () => {
+    requestAnimationFrame(() => {
         const overlay = document.querySelector(
             `overlay-trigger`
         ) as OverlayTrigger;
@@ -512,7 +522,6 @@ export const complexModal = (): TemplateResult => {
                 picker.open = true;
             });
         });
-        trigger.click();
     });
     return html`
         <style>
@@ -542,7 +551,7 @@ export const complexModal = (): TemplateResult => {
                 --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
             }
         </style>
-        <overlay-trigger type="modal" placement="none">
+        <overlay-trigger type="modal" placement="none" open="click">
             <sp-dialog-wrapper
                 slot="click-content"
                 headline="Dialog title"

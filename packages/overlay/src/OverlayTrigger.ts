@@ -28,6 +28,8 @@ import {
 import { openOverlay } from './loader.js';
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
+export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
+
 /**
  * A overlay trigger component for displaying overlays relative to other content.
  * @element overlay-trigger
@@ -42,6 +44,7 @@ import overlayTriggerStyles from './overlay-trigger.css.js';
  */
 export class OverlayTrigger extends LitElement {
     private closeClickOverlay?: () => void;
+    private closeLongpressOverlay?: () => void;
     private closeHoverOverlay?: () => void;
 
     public static get styles(): CSSResultArray {
@@ -61,6 +64,9 @@ export class OverlayTrigger extends LitElement {
     @property({ type: Number, reflect: true })
     public offset = 6;
 
+    @property({ reflect: true })
+    public open?: OverlayContentTypes;
+
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
@@ -69,8 +75,8 @@ export class OverlayTrigger extends LitElement {
     private hoverContent?: HTMLElement;
     private targetContent?: HTMLElement;
 
-    public overloadTarget(target: HTMLElement): void {
-        this.targetContent = target;
+    private handleClose(): void {
+        this.removeAttribute('open');
     }
 
     protected render(): TemplateResult {
@@ -85,6 +91,7 @@ export class OverlayTrigger extends LitElement {
                 @mouseleave=${this.onTrigger}
                 @focusin=${this.onTrigger}
                 @focusout=${this.onTrigger}
+                @sp-closed=${this.handleClose}
             >
                 <slot
                     @slotchange=${this.onTargetSlotChange}
@@ -118,6 +125,50 @@ export class OverlayTrigger extends LitElement {
         ) {
             this.closeClickOverlay();
         }
+        if (changes.has('open')) {
+            this.manageOpen(changes.get('open') as OverlayContentTypes);
+        }
+    }
+
+    private manageOpen(previous?: OverlayContentTypes): void {
+        switch (this.open) {
+            case 'click':
+                if (!this.closeClickOverlay) {
+                    this.onTriggerClick();
+                }
+                break;
+            case 'hover':
+                if (!this.closeHoverOverlay) {
+                    this.onTriggerMouseEnter();
+                }
+                break;
+            case 'longpress':
+                if (!this.closeLongpressOverlay) {
+                    this.onTriggerLongpress();
+                }
+                break;
+            default:
+                switch (previous) {
+                    case 'click':
+                        if (this.closeClickOverlay) {
+                            this.closeClickOverlay();
+                            delete this.closeClickOverlay;
+                        }
+                        break;
+                    case 'longpress':
+                        if (this.closeLongpressOverlay) {
+                            this.closeLongpressOverlay();
+                            delete this.closeLongpressOverlay;
+                        }
+                        break;
+                    case 'hover':
+                        this.onTriggerMouseLeave();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+        }
     }
 
     public static openOverlay = async (
@@ -143,61 +194,69 @@ export class OverlayTrigger extends LitElement {
             return;
         }
         switch (event.type) {
-            case 'click':
-                this.onTriggerClick();
-                return;
             case 'mouseenter':
             case 'focusin':
-                this.onTriggerMouseEnter();
+                if (this.hoverContent) {
+                    this.open = 'hover';
+                }
                 return;
             case 'mouseleave':
             case 'focusout':
-                this.onTriggerMouseLeave();
+                if (this.open === 'hover') {
+                    this.handleClose();
+                }
+                return;
+            case 'click':
+                if (this.clickContent) {
+                    this.open = event.type;
+                }
                 return;
             case 'longpress':
-                this.onTriggerLongpress(event);
+                if (this.longpressContent) {
+                    this.open = event.type;
+                }
                 return;
+        }
+    }
+
+    private prepareToFocusOverlayContent(overlayContent: HTMLElement): void {
+        if (this.type !== 'modal') {
+            return;
+        }
+        const firstFocusable = overlayContent.querySelector(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
+        ) as HTMLElement;
+        if (!firstFocusable) {
+            overlayContent.tabIndex = 0;
         }
     }
 
     public async onTriggerClick(): Promise<void> {
-        if (this.targetContent && this.clickContent) {
-            if (this.type === 'modal') {
-                const firstFocusable = this.querySelector(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-                ) as HTMLElement;
-                if (!firstFocusable) {
-                    this.clickContent.tabIndex = 0;
-                }
-            }
-            const { targetContent, clickContent } = this;
-            this.closeClickOverlay = await OverlayTrigger.openOverlay(
-                targetContent,
-                this.type ? this.type : 'click',
-                clickContent,
-                this.overlayOptions
-            );
+        if (!this.targetContent || !this.clickContent) {
+            return;
         }
+        const { targetContent, clickContent } = this;
+        this.prepareToFocusOverlayContent(clickContent);
+        this.closeClickOverlay = await OverlayTrigger.openOverlay(
+            targetContent,
+            this.type ? this.type : 'click',
+            clickContent,
+            this.overlayOptions
+        );
     }
 
     private async onTriggerLongpress(
-        event: CustomEvent<LongpressEvent>
+        event?: CustomEvent<LongpressEvent>
     ): Promise<void> {
         if (!this.targetContent || !this.longpressContent) {
             return;
         }
         const { targetContent, longpressContent } = this;
-        if (this.type === 'modal') {
-            const firstFocusable = this.querySelector(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-            ) as HTMLElement;
-            if (!firstFocusable) {
-                longpressContent.tabIndex = 0;
-            }
-        }
-        const type = event.detail.source === 'keyboard' ? 'click' : 'longpress';
+        this.prepareToFocusOverlayContent(longpressContent);
+        const type =
+            event && event.detail.source === 'keyboard' ? 'click' : 'longpress';
         const interaction = this.type ? this.type : type || 'longpress';
-        this.closeClickOverlay = await OverlayTrigger.openOverlay(
+        this.closeLongpressOverlay = await OverlayTrigger.openOverlay(
             targetContent,
             interaction,
             longpressContent,
@@ -211,22 +270,23 @@ export class OverlayTrigger extends LitElement {
     private hoverOverlayReady = Promise.resolve();
 
     public async onTriggerMouseEnter(): Promise<void> {
-        if (this.targetContent && this.hoverContent) {
-            let overlayReady: () => void = () => {
-                return;
-            };
-            this.hoverOverlayReady = new Promise((res) => {
-                overlayReady = res;
-            });
-            const { targetContent, hoverContent } = this;
-            this.closeHoverOverlay = await OverlayTrigger.openOverlay(
-                targetContent,
-                'hover',
-                hoverContent,
-                this.overlayOptions
-            );
-            overlayReady();
+        if (!this.targetContent || !this.hoverContent) {
+            return;
         }
+        let overlayReady: () => void = () => {
+            return;
+        };
+        this.hoverOverlayReady = new Promise((res) => {
+            overlayReady = res;
+        });
+        const { targetContent, hoverContent } = this;
+        this.closeHoverOverlay = await OverlayTrigger.openOverlay(
+            targetContent,
+            'hover',
+            hoverContent,
+            this.overlayOptions
+        );
+        overlayReady();
     }
 
     public async onTriggerMouseLeave(): Promise<void> {
@@ -240,29 +300,28 @@ export class OverlayTrigger extends LitElement {
     private onClickSlotChange(
         event: Event & { target: HTMLSlotElement }
     ): void {
-        const content = this.extractSlotContentFromEvent(event);
-        this.clickContent = content;
+        this.clickContent = this.extractSlotContentFromEvent(event);
+        this.manageOpen();
     }
 
     private onLongpressSlotChange(
         event: Event & { target: HTMLSlotElement }
     ): void {
-        const content = this.extractSlotContentFromEvent(event);
-        this.longpressContent = content;
+        this.longpressContent = this.extractSlotContentFromEvent(event);
+        this.manageOpen();
     }
 
     private onHoverSlotChange(
         event: Event & { target: HTMLSlotElement }
     ): void {
-        const content = this.extractSlotContentFromEvent(event);
-        this.hoverContent = content;
+        this.hoverContent = this.extractSlotContentFromEvent(event);
+        this.manageOpen();
     }
 
     private onTargetSlotChange(
         event: Event & { target: HTMLSlotElement }
     ): void {
-        const content = this.extractSlotContentFromEvent(event);
-        this.targetContent = content;
+        this.targetContent = this.extractSlotContentFromEvent(event);
     }
 
     private extractSlotContentFromEvent(event: Event): HTMLElement | undefined {
@@ -274,6 +333,10 @@ export class OverlayTrigger extends LitElement {
     public disconnectedCallback(): void {
         if (this.closeClickOverlay) {
             this.closeClickOverlay();
+            delete this.closeClickOverlay;
+        }
+        if (this.closeHoverOverlay) {
+            this.closeHoverOverlay();
             delete this.closeClickOverlay;
         }
         super.disconnectedCallback();

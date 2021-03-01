@@ -108,6 +108,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
         var(--spectrum-colorarea-border-color);
 }
+.gradient {
+    /* .spectrum-ColorArea-gradient,
+   * .spectrum-ColorHandle-color */
+    forced-color-adjust: none;
+}
 :host([disabled]) {
     /* .spectrum-ColorArea.is-disabled */
     background: var(
@@ -130,4 +135,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([disabled]) .gradient {
     /* .spectrum-ColorArea.is-disabled .spectrum-ColorArea-gradient */
     display: none;
+}
+@media (forced-colors: active) {
+    :host {
+        --spectrum-colorarea-fill-color-disabled: GrayText;
+    }
+    :host([disabled]) {
+        forced-color-adjust: none;
+    }
 }
