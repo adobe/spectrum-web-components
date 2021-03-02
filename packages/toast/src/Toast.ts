@@ -19,12 +19,9 @@ import {
     PropertyValues,
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/button/sp-clear-button.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    AlertIcon,
-    InfoIcon,
-    CheckmarkCircleIcon,
-} from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 
 import toastStyles from './toast.css.js';
 
@@ -105,32 +102,31 @@ export class Toast extends SpectrumElement {
     private _variant: ToastVariants = '';
 
     private renderIcon(variant: string): TemplateResult {
-        let label = '';
-        let icon;
         switch (variant) {
             case 'info':
-                label = 'Information';
-                icon = InfoIcon;
-                break;
+                return html`
+                    <sp-icon-info
+                        label="Information"
+                        class="type"
+                    ></sp-icon-info>
+                `;
             case 'negative':
             case 'error': // deprecated
             case 'warning': // deprecated
-                label = 'Error';
-                icon = AlertIcon;
-                break;
+                return html`
+                    <sp-icon-alert label="Error" class="type"></sp-icon-alert>
+                `;
             case 'positive':
             case 'success': // deprecated
-                label = 'Success';
-                icon = CheckmarkCircleIcon;
-                break;
+                return html`
+                    <sp-icon-checkmark-circle
+                        label="Success"
+                        class="type"
+                    ></sp-icon-checkmark-circle>
+                `;
             default:
                 return html``;
         }
-        return html`
-            <sp-icon class="type" label=${label}>
-                ${icon({ hidden: true })}
-            </sp-icon>
-        `;
     }
 
     private countdownStart = 0;

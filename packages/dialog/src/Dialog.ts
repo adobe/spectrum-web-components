@@ -25,9 +25,8 @@ import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { Cross500Icon } from '@spectrum-web-components/icons-ui';
-import { AlertIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import {
     ObserveSlotPresence,
     FocusVisiblePolyfillMixin,
@@ -121,9 +120,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
                 ></slot>
                 ${this.error
                     ? html`
-                          <sp-icon class="type-icon">
-                              ${AlertIcon({ hidden: true })}
-                          </sp-icon>
+                          <sp-icon-alert class="type-icon"></sp-icon-alert>
                       `
                     : html``}
                 ${this.noDivider
@@ -161,12 +158,10 @@ export class Dialog extends FocusVisiblePolyfillMixin(
                               size="m"
                               @click=${this.close}
                           >
-                              <sp-icon
+                              <sp-icon-cross500
                                   class="spectrum-UIIcon-Cross500"
                                   slot="icon"
-                              >
-                                  ${Cross500Icon()}
-                              </sp-icon>
+                              ></sp-icon-cross500>
                           </sp-action-button>
                       `
                     : html``}

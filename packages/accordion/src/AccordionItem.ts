@@ -19,8 +19,7 @@ import {
     ifDefined,
 } from '@spectrum-web-components/base';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './accordion-item.css.js';
@@ -97,9 +96,10 @@ export class AccordionItem extends Focusable {
                 >
                     ${this.label}
                 </button>
-                <sp-icon id="indicator" class="spectrum-UIIcon-ChevronRight100">
-                    ${Chevron100Icon()}
-                </sp-icon>
+                <sp-icon-chevron100
+                    id="indicator"
+                    class="spectrum-UIIcon-ChevronRight100"
+                ></sp-icon-chevron100>
             </h3>
             <div id="content" role="region" aria-labelledby="header">
                 <slot></slot>

@@ -20,8 +20,7 @@ import {
     SizedMixin,
 } from '@spectrum-web-components/base';
 import type { Focusable } from '@spectrum-web-components/shared';
-import { Asterisk100Icon } from '@spectrum-web-components/icons-ui';
-import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
 
 import styles from './field-label.css.js';
@@ -102,11 +101,9 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
                 <slot></slot>
                 ${this.required
                     ? html`
-                          <sp-icon
+                          <sp-icon-asterisk100
                               class="requiredIcon spectrum-UIIcon-Asterisk100"
-                          >
-                              ${Asterisk100Icon()}
-                          </sp-icon>
+                          ></sp-icon-asterisk100>
                       `
                     : html``}
             </label>

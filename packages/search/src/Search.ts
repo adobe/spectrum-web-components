@@ -22,8 +22,7 @@ import {
 
 import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/button/sp-clear-button.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { MagnifyIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 
 import searchStyles from './search.css.js';
 
@@ -99,9 +98,9 @@ export class Search extends Textfield {
                 @reset=${this.reset}
                 @keydown=${this.handleKeydown}
             >
-                <sp-icon class="icon magnifier icon-workflow">
-                    ${MagnifyIcon({ hidden: true })}
-                </sp-icon>
+                <sp-icon-magnify
+                    class="icon magnifier icon-workflow"
+                ></sp-icon-magnify>
                 ${super.render()}
                 ${this.value
                     ? html`
