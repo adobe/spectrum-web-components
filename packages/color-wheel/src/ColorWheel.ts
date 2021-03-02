@@ -17,6 +17,7 @@ import {
     property,
     query,
     streamingListener,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -276,7 +277,8 @@ export class ColorWheel extends Focusable {
     }
 
     protected render(): TemplateResult {
-        const { width } = this.boundingClientRect;
+        const { width = 0 } = this.boundingClientRect || {};
+
         const radius = width / 2;
         const handleLocationStyles = `transform: translate(${
             (radius - 12.5) * Math.cos((this.value * Math.PI) / 180)
@@ -317,6 +319,14 @@ export class ColorWheel extends Focusable {
         `;
     }
 
+    protected firstUpdated(changed: PropertyValues): void {
+        super.firstUpdated(changed);
+
+        if (!this.boundingClientRect) {
+            this.boundingClientRect = this.getBoundingClientRect();
+        }
+    }
+
     private observer?: WithSWCResizeObserver['ResizeObserver'];
 
     public connectedCallback(): void {
@@ -330,10 +340,9 @@ export class ColorWheel extends Focusable {
                     for (const entry of entries) {
                         this.boundingClientRect = entry.contentRect;
                     }
-                    this.boundingClientRect = this.getBoundingClientRect();
+                    this.requestUpdate();
                 }
             );
-            this.boundingClientRect = this.getBoundingClientRect();
         }
         this.observer?.observe(this);
     }
