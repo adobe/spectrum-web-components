@@ -20,47 +20,70 @@ import {
     ElementSize,
 } from '@spectrum-web-components/base';
 import { CheckboxBase } from './CheckboxBase.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import {
-    Checkmark75Icon,
-    Checkmark100Icon,
-    Checkmark200Icon,
-    Checkmark300Icon,
-    Dash75Icon,
-    Dash100Icon,
-    Dash200Icon,
-    Dash300Icon,
-} from '@spectrum-web-components/icons-ui';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark200.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark300.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
 import checkboxStyles from './checkbox.css.js';
 import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
 
-const checkmarkClass = {
-    s: 'spectrum-UIIcon-Checkmark75',
-    m: 'spectrum-UIIcon-Checkmark100',
-    l: 'spectrum-UIIcon-Checkmark200',
-    xl: 'spectrum-UIIcon-Checkmark300',
-};
-
 const checkmarkIcon = {
-    s: Checkmark75Icon,
-    m: Checkmark100Icon,
-    l: Checkmark200Icon,
-    xl: Checkmark300Icon,
-};
-
-const dashClass = {
-    s: 'spectrum-UIIcon-Dash75',
-    m: 'spectrum-UIIcon-Dash100',
-    l: 'spectrum-UIIcon-Dash200',
-    xl: 'spectrum-UIIcon-Dash300',
+    s: html`
+        <sp-icon-checkmark75
+            id="checkmark"
+            class="spectrum-UIIcon-Checkmark75"
+        ></sp-icon-checkmark75>
+    `,
+    m: html`
+        <sp-icon-checkmark100
+            id="checkmark"
+            class="spectrum-UIIcon-Checkmark100"
+        ></sp-icon-checkmark100>
+    `,
+    l: html`
+        <sp-icon-checkmark200
+            id="checkmark"
+            class="spectrum-UIIcon-Checkmark200"
+        ></sp-icon-checkmark200>
+    `,
+    xl: html`
+        <sp-icon-checkmark300
+            id="checkmark"
+            class="spectrum-UIIcon-Checkmark300"
+        ></sp-icon-checkmark300>
+    `,
 };
 
 const dashIcon = {
-    s: Dash75Icon,
-    m: Dash100Icon,
-    l: Dash200Icon,
-    xl: Dash300Icon,
+    s: html`
+        <sp-icon-dash75
+            id="partialCheckmark"
+            class="spectrum-UIIcon-Dash75"
+        ></sp-icon-dash75>
+    `,
+    m: html`
+        <sp-icon-dash100
+            id="partialCheckmark"
+            class="spectrum-UIIcon-Dash100"
+        ></sp-icon-dash100>
+    `,
+    l: html`
+        <sp-icon-dash200
+            id="partialCheckmark"
+            class="spectrum-UIIcon-Dash200"
+        ></sp-icon-dash200>
+    `,
+    xl: html`
+        <sp-icon-dash300
+            id="partialCheckmark"
+            class="spectrum-UIIcon-Dash300"
+        ></sp-icon-dash300>
+    `,
 };
 
 type CheckboxSize = Exclude<ElementSize, 'xxl'>;
@@ -83,18 +106,8 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
         return html`
             ${super.render()}
             <span id="box">
-                <sp-icon
-                    id="checkmark"
-                    class=${checkmarkClass[this.size as CheckboxSize]}
-                >
-                    ${checkmarkIcon[this.size as CheckboxSize]()}
-                </sp-icon>
-                <sp-icon
-                    id="partialCheckmark"
-                    class=${dashClass[this.size as CheckboxSize]}
-                >
-                    ${dashIcon[this.size as CheckboxSize]()}
-                </sp-icon>
+                ${checkmarkIcon[this.size as CheckboxSize]}
+                ${dashIcon[this.size as CheckboxSize]}
             </span>
             <label id="label"><slot></slot></label>
         `;

@@ -23,9 +23,8 @@ import {
 } from '@spectrum-web-components/base';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { Checkmark100Icon } from '@spectrum-web-components/icons-ui';
-import { AlertIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
@@ -131,15 +130,14 @@ export class Textfield extends Focusable {
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
-                <sp-icon id="invalid" class="icon">
-                    ${AlertIcon()}
-                </sp-icon>
+                <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
             `;
         } else if (this.valid) {
             return html`
-                <sp-icon id="valid" class="icon spectrum-UIIcon-Checkmark100">
-                    ${Checkmark100Icon()}
-                </sp-icon>
+                <sp-icon-checkmark100
+                    id="valid"
+                    class="icon spectrum-UIIcon-Checkmark100"
+                ></sp-icon-checkmark100>
             `;
         }
         return nothing;

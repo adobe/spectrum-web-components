@@ -18,8 +18,7 @@ import {
     PropertyValues,
 } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/icon/sp-icon.js';
-import { Checkmark100Icon } from '@spectrum-web-components/icons-ui';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import { ActionButton } from '@spectrum-web-components/action-button';
 
 import menuItemStyles from './menu-item.css.js';
@@ -68,15 +67,23 @@ export class MenuItem extends ActionButton {
         const content = super.buttonContent;
         if (this.selected) {
             content.push(html`
-                <sp-icon
+                <sp-icon-checkmark100
                     id="selected"
                     class="spectrum-UIIcon-Checkmark100 icon"
-                >
-                    ${Checkmark100Icon()}
-                </sp-icon>
+                ></sp-icon-checkmark100>
             `);
         }
         return content;
+    }
+
+    public renderAnchor(): TemplateResult {
+        return html`
+            ${this.buttonContent}
+            ${super.renderAnchor({
+                id: 'button',
+                className: 'button anchor hidden',
+            })}
+        `;
     }
 
     protected renderButton(): TemplateResult {
