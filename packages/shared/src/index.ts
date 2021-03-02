@@ -16,4 +16,4 @@ export * from './get-active-element.js';
 export * from './like-anchor.js';
 export * from './observe-slot-presence.js';
 export * from './observe-slot-text.js';
-export * from './element-reparenter.js';
+export * from './reparent-children.js';
