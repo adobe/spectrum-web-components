@@ -17,6 +17,7 @@ import {
     property,
     query,
     streamingListener,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -286,7 +287,7 @@ export class ColorSlider extends Focusable {
         const percent = Math.max(0, Math.min(1, (offset - minOffset) / size));
         const sliderHandlePosition = 100 * percent;
 
-        return this.isLTR ? sliderHandlePosition : 100 - sliderHandlePosition;
+        return sliderHandlePosition;
     }
 
     private handleGradientPointerdown(event: PointerEvent): void {
@@ -341,6 +342,12 @@ export class ColorSlider extends Focusable {
         `;
     }
 
+    protected updated(changed: PropertyValues): void {
+        if (changed.has('dir')) {
+            this.boundingClientRect = this.getBoundingClientRect();
+        }
+    }
+
     private observer?: WithSWCResizeObserver['ResizeObserver'];
 
     public connectedCallback(): void {
@@ -354,10 +361,9 @@ export class ColorSlider extends Focusable {
                     for (const entry of entries) {
                         this.boundingClientRect = entry.contentRect;
                     }
-                    this.boundingClientRect = this.getBoundingClientRect();
+                    this.requestUpdate();
                 }
             );
-            this.boundingClientRect = this.getBoundingClientRect();
         }
         this.observer?.observe(this);
     }

@@ -112,7 +112,11 @@ export class ColorArea extends SpectrumElement {
         const oldValue = this._color;
         this._color = new TinyColor(color);
         const format = this._color.format;
-        const isString = typeof color === 'string' || color instanceof String;
+        let isString = typeof color === 'string' || color instanceof String;
+
+        if (format.startsWith('hex')) {
+            isString = (color as string).startsWith('#');
+        }
 
         this._format = {
             format,
@@ -295,7 +299,9 @@ export class ColorArea extends SpectrumElement {
      */
     private calculateHandlePosition(event: PointerEvent): [number, number] {
         /* c8 ignore next 3 */
+        console.log(this.boundingClientRect);
         if (!this.boundingClientRect) {
+            console.log('who am i?');
             return [this.x, this.y];
         }
         const rect = this.boundingClientRect;
@@ -326,7 +332,8 @@ export class ColorArea extends SpectrumElement {
     }
 
     protected render(): TemplateResult {
-        const { width, height } = this.boundingClientRect;
+        const { width = 0, height = 0 } = this.boundingClientRect || {};
+
         return html`
             <div
                 @pointerdown=${this.handleAreaPointerdown}
@@ -383,6 +390,11 @@ export class ColorArea extends SpectrumElement {
 
     protected firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
+
+        if (!this.boundingClientRect) {
+            this.boundingClientRect = this.getBoundingClientRect();
+        }
+
         this.addEventListener('focusin', this.handleFocusin);
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('keyup', this.handleKeyup);
@@ -402,10 +414,9 @@ export class ColorArea extends SpectrumElement {
                     for (const entry of entries) {
                         this.boundingClientRect = entry.contentRect;
                     }
-                    this.boundingClientRect = this.getBoundingClientRect();
+                    this.requestUpdate();
                 }
             );
-            this.boundingClientRect = this.getBoundingClientRect();
         }
         this.observer?.observe(this);
     }

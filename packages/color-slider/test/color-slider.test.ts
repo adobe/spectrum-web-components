@@ -212,7 +212,7 @@ describe('ColorSlider', () => {
         const el = await fixture<ColorSlider>(
             html`
                 <sp-color-slider
-                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px;"
+                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-default-height: 24px;"
                 ></sp-color-slider>
             `
         );
@@ -342,7 +342,7 @@ describe('ColorSlider', () => {
             html`
                 <sp-color-slider
                     dir="rtl"
-                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px;"
+                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-height: 24px;"
                 ></sp-color-slider>
             `
         );

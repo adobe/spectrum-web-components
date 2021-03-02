@@ -20,6 +20,10 @@ governing permissions and limitations under the License.
     overflow: hidden;
 }
 
+.handle {
+    transform: translate(var(--spectrum-colorarea-default-width), 0);
+}
+
 ::slotted(*) {
     width: 100%;
     height: 100%;
