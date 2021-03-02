@@ -23,6 +23,7 @@ import {
     arrowRightKeyupEvent,
     shiftKeyupEvent,
 } from '../../../test/testing-helpers.js';
+import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 
 import '../sp-color-area.js';
 import { ColorArea } from '..';
@@ -209,6 +210,7 @@ describe('ColorArea', () => {
         );
 
         await elementUpdated(el);
+        await elementUpdated(el);
 
         const { handle } = (el as unknown) as { handle: HTMLElement };
 
@@ -239,8 +241,8 @@ describe('ColorArea', () => {
         await elementUpdated(el);
 
         expect(el.hue).to.equal(0);
-        expect(el.x).to.equal(0.4791666666666667);
-        expect(el.y).to.equal(0.4791666666666667);
+        expect(el.x, 'pointerdown x').to.equal(0.4791666666666667);
+        expect(el.y, 'pointerdown y').to.equal(0.4791666666666667);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -268,5 +270,87 @@ describe('ColorArea', () => {
         expect(el.hue).to.equal(0);
         expect(el.x).to.equal(0.53125);
         expect(el.y).to.equal(0.53125);
+    });
+    const colorFormats: {
+        name: string;
+        color:
+            | string
+            | number
+            | TinyColor
+            | HSVA
+            | HSV
+            | RGB
+            | RGBA
+            | HSL
+            | HSLA;
+    }[] = [
+        //rgb
+        { name: 'RGB String', color: 'rgb(204, 51, 204)' },
+        { name: 'RGB', color: { r: 204, g: 51, b: 204, a: 1 } },
+        //prgb
+        { name: 'PRGB String', color: 'rgb(80%, 20%, 80%)' },
+        { name: 'PRGB', color: { r: '80%', g: '20%', b: '80%', a: 1 } },
+        // hex
+        { name: 'Hex', color: 'cc33cc' },
+        { name: 'Hex String', color: '#cc33cc' },
+        // hex8
+        { name: 'Hex8', color: 'cc33ccff' },
+        { name: 'Hex8 String', color: '#cc33ccff' },
+        // name
+        { name: 'string', color: 'red' },
+        // hsl
+        { name: 'HSL String', color: 'hsl(300, 60%, 50%)' },
+        { name: 'HSL', color: { h: 300, s: 0.6000000000000001, l: 0.5, a: 1 } },
+        // hsv
+        { name: 'HSV String', color: 'hsv(300, 75%, 100%)' },
+        { name: 'HSV', color: { h: 300, s: 0.75, v: 1, a: 1 } },
+    ];
+    colorFormats.map((format) => {
+        it(`maintains \`color\` format as ${format.name}`, async () => {
+            const el = await fixture<ColorArea>(
+                html`
+                    <sp-color-area></sp-color-area>
+                `
+            );
+
+            el.color = format.color;
+            if (format.name.startsWith('Hex')) {
+                expect(el.color).to.equal(format.color);
+            } else expect(el.color).to.deep.equal(format.color);
+        });
+    });
+    it(`maintains \`color\` format as TinyColor`, async () => {
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area></sp-color-area>
+            `
+        );
+        const color = new TinyColor('rgb(204, 51, 204)');
+        el.color = color;
+        expect(color.equals(el.color));
+    });
+    it(`resolves Hex3 format to Hex6 format`, async () => {
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area></sp-color-area>
+            `
+        );
+        el.color = '0f0';
+        expect(el.color).to.equal('00ff00');
+
+        el.color = '#1e0';
+        expect(el.color).to.equal('#11ee00');
+    });
+    it(`resolves Hex4 format to Hex8 format`, async () => {
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area></sp-color-area>
+            `
+        );
+        el.color = 'f3af';
+        expect(el.color).to.equal('ff33aaff');
+
+        el.color = '#f3af';
+        expect(el.color).to.equal('#ff33aaff');
     });
 });
