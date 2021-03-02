@@ -27,7 +27,8 @@ import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+import reparentChildren from '@spectrum-web-components/shared/src/reparent-children.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import {
     MenuItem,
@@ -92,6 +93,8 @@ export class PickerBase extends SizedMixin(Focusable) {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    private reparentableChildren?: Element[];
+    private restoreChildren?: Function;
     public optionsMenu?: Menu;
 
     /**
@@ -118,7 +121,6 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected listRole = 'listbox';
     protected itemRole = 'option';
-    private placeholder?: Comment;
 
     public constructor() {
         super();
@@ -230,17 +232,10 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected onOverlayClosed(): void {
         this.close();
-        if (this.optionsMenu && this.placeholder) {
-            const parentElement =
-                this.placeholder.parentElement ||
-                this.placeholder.getRootNode();
-
-            if (parentElement) {
-                parentElement.replaceChild(this.optionsMenu, this.placeholder);
-            }
+        if (this.restoreChildren) {
+            this.restoreChildren();
+            this.restoreChildren = undefined;
         }
-
-        delete this.placeholder;
 
         this.menuStateResolver();
     }
@@ -250,32 +245,27 @@ export class PickerBase extends SizedMixin(Focusable) {
         if (
             !this.popover ||
             !this.optionsMenu ||
-            this.optionsMenu.children.length === 0
+            !this.reparentableChildren ||
+            this.reparentableChildren.length === 0
         ) {
             this.menuStateResolver();
             return;
         }
 
-        this.placeholder = document.createComment(
-            'placeholder for optionsMenu'
+        this.restoreChildren = reparentChildren(
+            this.reparentableChildren,
+            this.optionsMenu
         );
 
         this.optionsMenu.selectable = true;
 
-        const parentElement =
-            this.optionsMenu.parentElement || this.optionsMenu.getRootNode();
-
-        if (parentElement) {
-            parentElement.replaceChild(this.placeholder, this.optionsMenu);
-        }
-
-        this.popover.append(this.optionsMenu);
         this.sizePopover(this.popover);
         const { popover } = this;
         this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
             placement: this.placement,
             receivesFocus: 'auto',
         });
+        await this.manageSelection();
         this.menuStateResolver();
     }
 
@@ -346,14 +336,26 @@ export class PickerBase extends SizedMixin(Focusable) {
                 id="popover"
                 @click=${this.onClick}
                 @sp-overlay-closed=${this.onOverlayClosed}
-            ></sp-popover>
+            >
+                <sp-menu id="menu" role="listbox"></sp-menu>
+            </sp-popover>
         `;
     }
 
     protected firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
 
-        this.optionsMenu = this.querySelector('sp-menu') as Menu;
+        this.optionsMenu = this.shadowRoot.querySelector('sp-menu') as Menu;
+
+        const deprecatedMenu = this.querySelector('sp-menu');
+        if (deprecatedMenu) {
+            console.warn(
+                `Deprecation Notice: You no longer need to provide an sp-menu child to ${this.tagName.toLowerCase()}. Any styling or attributes on the sp-menu will be ignored.`
+            );
+        }
+        this.reparentableChildren = Array.from(
+            (deprecatedMenu || this).children
+        );
     }
 
     protected updated(changedProperties: PropertyValues): void {
@@ -361,7 +363,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         if (
             changedProperties.has('value') &&
             !changedProperties.has('selectedItem') &&
-            this.optionsMenu
+            this.reparentableChildren
         ) {
             this.manageSelection();
         }
@@ -385,16 +387,18 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     private async manageSelection(): Promise<void> {
         /* c8 ignore next 3 */
-        if (!this.optionsMenu) {
+        if (!this.reparentableChildren) {
             return;
         }
-        if (this.optionsMenu.menuItems.length) {
+        if (this.reparentableChildren.length) {
             let selectedItem: MenuItem | undefined;
-            this.optionsMenu.menuItems.map((item) => {
-                if (this.value === item.value && !item.disabled) {
-                    selectedItem = item;
-                } else {
-                    item.selected = false;
+            this.reparentableChildren.map((item) => {
+                if (item instanceof MenuItem) {
+                    if (this.value === item.value && !item.disabled) {
+                        selectedItem = item;
+                    } else {
+                        item.selected = false;
+                    }
                 }
             });
             if (selectedItem) {
@@ -404,12 +408,16 @@ export class PickerBase extends SizedMixin(Focusable) {
                 this.value = '';
                 this.selectedItem = undefined;
             }
-            this.optionsMenu.updateSelectedItemIndex();
+            if (this.open && this.optionsMenu) {
+                this.optionsMenu.updateSelectedItemIndex();
+            }
             return;
         }
-        await this.optionsMenu.updateComplete;
-        if (this.optionsMenu.menuItems.length) {
-            this.manageSelection();
+        if (this.open && this.optionsMenu) {
+            await this.optionsMenu.updateComplete;
+            if (this.optionsMenu.menuItems.length) {
+                this.manageSelection();
+            }
         }
     }
 
