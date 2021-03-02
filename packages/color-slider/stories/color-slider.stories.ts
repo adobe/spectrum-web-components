@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-color-slider.js';
-
+import { gradient } from './images.js';
 export default {
     title: 'Color/Slider',
     component: 'sp-color-slider',
@@ -25,14 +25,14 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const alpha = (): TemplateResult => {
-    return html`
-        <sp-color-slider
-            style="--sp-color-slider-gradient: rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%;"
-            color="rgba(0, 0, 0, 1)"
-        ></sp-color-slider>
-    `;
-};
+// export const alpha = (): TemplateResult => {
+//     return html`
+//         <sp-color-slider
+//             style="--sp-color-slider-gradient: rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%;"
+//             color="rgba(0, 0, 0, 1)"
+//         ></sp-color-slider>
+//     `;
+// };
 
 export const disabled = (): TemplateResult => {
     return html`
@@ -86,7 +86,7 @@ export const canvas = (): TemplateResult => {
 export const image = (): TemplateResult => {
     return html`
         <sp-color-slider color="rgb(255, 0, 0)">
-            <img slot="gradient" role="presentation" src="./gradientimg.png" />
+            <img slot="gradient" role="presentation" src=${gradient} />
         </sp-color-slider>
     `;
 };

@@ -10,6 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    /* .spectrum-ColorHandle */
+    --spectrum-colorhandle-animation-duration: var(
+        --spectrum-global-animation-duration-100,
+        130ms
+    );
+    --spectrum-colorhandle-animation-easing: ease-in-out;
+    --spectrum-colorhandle-hitarea-size: var(
+        --spectrum-global-dimension-size-300
+    );
+}
 :host(:focus-visible),
 :host([focus]) {
     /* .spectrum-ColorHandle.focus-ring,
@@ -66,37 +77,34 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-style: solid;
     background-size: var(--spectrum-global-dimension-static-size-200, 16px)
         var(--spectrum-global-dimension-static-size-200, 16px);
-    background-position: calc(
-                -1 * var(--spectrum-global-dimension-static-size-25, 2px)
-            )
-            calc(-1 * var(--spectrum-global-dimension-static-size-25, 2px)),
-        calc(-1 * var(--spectrum-global-dimension-static-size-25, 2px))
+    background-position: var(--spectrum-colorhandle-background-offset)
+            var(--spectrum-colorhandle-background-offset),
+        var(--spectrum-colorhandle-background-offset)
             calc(
-                var(--spectrum-global-dimension-static-size-100, 8px) + -1 *
-                    var(--spectrum-global-dimension-static-size-25, 2px)
+                var(--spectrum-colorhandle-checkerboard-size) +
+                    var(--spectrum-colorhandle-background-offset)
             ),
         calc(
-                var(--spectrum-global-dimension-static-size-100, 8px) + -1 *
-                    var(--spectrum-global-dimension-static-size-25, 2px)
+                var(--spectrum-colorhandle-checkerboard-size) +
+                    var(--spectrum-colorhandle-background-offset)
             )
             calc(
-                -1 * var(--spectrum-global-dimension-static-size-100, 8px) + -1 *
-                    var(--spectrum-global-dimension-static-size-25, 2px)
+                -1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset)
             ),
         calc(
-                -1 * var(--spectrum-global-dimension-static-size-100, 8px) + -1 *
-                    var(--spectrum-global-dimension-static-size-25, 2px)
+                -1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset)
             )
-            calc(-1 * var(--spectrum-global-dimension-static-size-25, 2px));
-    transition: width var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out,
-        height var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
-        border-width var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out,
-        margin-left var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out,
-        margin-top var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out;
+            var(--spectrum-colorhandle-background-offset);
+    transition: width var(--spectrum-colorhandle-animation-duration)
+            var(--spectrum-colorhandle-animation-easing),
+        height var(--spectrum-colorhandle-animation-duration)
+            var(--spectrum-colorhandle-animation-easing),
+        border-width var(--spectrum-colorhandle-animation-duration)
+            var(--spectrum-colorhandle-animation-easing),
+        margin-left var(--spectrum-colorhandle-animation-duration)
+            var(--spectrum-colorhandle-animation-easing),
+        margin-top var(--spectrum-colorhandle-animation-duration)
+            var(--spectrum-colorhandle-animation-easing);
 }
 :host,
 :host:after {
@@ -107,12 +115,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host:after {
     /* .spectrum-ColorHandle:after */
     content: '';
-    left: calc(50% - var(--spectrum-global-dimension-size-300) / 2);
-    top: calc(50% - var(--spectrum-global-dimension-size-300) / 2);
+    left: calc(50% - var(--spectrum-colorhandle-hitarea-size) / 2);
+    top: calc(50% - var(--spectrum-colorhandle-hitarea-size) / 2);
     position: absolute;
     display: block;
-    width: var(--spectrum-global-dimension-size-300);
-    height: var(--spectrum-global-dimension-size-300);
+    width: var(--spectrum-colorhandle-hitarea-size);
+    height: var(--spectrum-colorhandle-hitarea-size);
 }
 :host([disabled]) {
     /* .spectrum-ColorHandle.is-disabled */
@@ -126,6 +134,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host {
     /* .spectrum-ColorHandle */
+    --spectrum-colorhandle-background-offset: calc(
+        -1 * var(--spectrum-global-dimension-static-size-25, 2px)
+    );
+    --spectrum-colorhandle-checkerboard-size: var(
+        --spectrum-global-dimension-static-size-100,
+        8px
+    );
+    --spectrum-colorhandle-outer-border-color: rgba(0, 0, 0, 0.42);
     border-color: var(
         --spectrum-colorhandle-inner-border-color,
         var(--spectrum-global-color-static-white)
@@ -135,7 +151,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-colorhandle-outer-border-size,
             var(--spectrum-global-dimension-static-size-10)
         )
-        rgba(0, 0, 0, 0.42);
+        var(
+            --spectrum-colorhandle-outer-border-color,
+            var(--spectrum-alias-colorhandle-outer-border-color)
+        );
     background-color: var(--spectrum-global-color-static-white, #fff);
     background-image: linear-gradient(
             -45deg,
@@ -181,5 +200,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-colorhandle-outer-border-size,
             var(--spectrum-global-dimension-static-size-10)
         )
-        rgba(0, 0, 0, 0.42);
+        var(
+            --spectrum-colorhandle-outer-border-color,
+            var(--spectrum-alias-colorhandle-outer-border-color)
+        );
+}
+@media (forced-colors: active) {
+    :host {
+        --spectrum-colorhandle-inner-border-color-disabled: GrayText;
+        --spectrum-colorhandle-fill-color-disabled: Canvas;
+        --spectrum-colorhandle-inner-border-color: CanvasText;
+    }
+    :host([disabled]) {
+        forced-color-adjust: none;
+    }
 }

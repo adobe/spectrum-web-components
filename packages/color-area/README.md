@@ -25,7 +25,7 @@ import { ColorArea } from '@spectrum-web-components/color-area';
 
 ## Color Formatting
 
-When using the color elements, use `el.color` to access the `color` property, which should manage itself in the colour format supplied. If you supply a color in `rgb()` format, `el.color` should return the color in `rgb()` format, as well.
+When using the color elements, use `el.color` to access the `color` property, which should manage itself in the colour format supplied. For example, If you supply a color in `rgb()` format, `el.color` should return the color in `rgb()` format, as well. In ColorArea, colours are formatted as hex values.
 
 The current color formats supported are as follows:
 
@@ -34,7 +34,6 @@ The current color formats supported are as follows:
 -   HSL, HSLA
 -   RGB, RGBA
 -   Strings (eg "red", "blue")
--   TinyColor
 
 **Please note for the following formats: HSV, HSVA, HSL, HSLA**
 When setting a color's lightness or value to 100%, the hue and saturation value are not preserved. This is detailed in the [TinyColor documentation](https://www.npmjs.com/package/@ctrl/tinycolor). Currently, the Spectrum Web Components has a workaround to support the preservation of the hue.
