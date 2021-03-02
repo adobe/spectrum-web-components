@@ -88,16 +88,14 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
 <sp-field-label for="birth-place">Birthplace</sp-field-label>
 <sp-picker id="birth-place">
     <span slot="label">Choose a location:</span>
-    <sp-menu>
-        <sp-menu-item>Istanbul</sp-menu-item>
-        <sp-menu-item>London</sp-menu-item>
-        <sp-menu-item>Maputo</sp-menu-item>
-        <sp-menu-item>Melbuorne</sp-menu-item>
-        <sp-menu-item>New York</sp-menu-item>
-        <sp-menu-item>San Fransisco</sp-menu-item>
-        <sp-menu-item>Santiago</sp-menu-item>
-        <sp-menu-item>Tokyo</sp-menu-item>
-    </sp-menu>
+    <sp-menu-item>Istanbul</sp-menu-item>
+    <sp-menu-item>London</sp-menu-item>
+    <sp-menu-item>Maputo</sp-menu-item>
+    <sp-menu-item>Melbuorne</sp-menu-item>
+    <sp-menu-item>New York</sp-menu-item>
+    <sp-menu-item>San Fransisco</sp-menu-item>
+    <sp-menu-item>Santiago</sp-menu-item>
+    <sp-menu-item>Tokyo</sp-menu-item>
 </sp-picker>
 ```
 
@@ -129,16 +127,14 @@ Use `side-aligned="start"` to display the `<sp-field-label>` inline and to align
 </sp-field-label>
 <sp-picker id="birth-place-1">
     <span slot="label">Choose a location:</span>
-    <sp-menu>
-        <sp-menu-item>Istanbul</sp-menu-item>
-        <sp-menu-item>London</sp-menu-item>
-        <sp-menu-item>Maputo</sp-menu-item>
-        <sp-menu-item>Melbuorne</sp-menu-item>
-        <sp-menu-item>New York</sp-menu-item>
-        <sp-menu-item>San Fransisco</sp-menu-item>
-        <sp-menu-item>Santiago</sp-menu-item>
-        <sp-menu-item>Tokyo</sp-menu-item>
-    </sp-menu>
+    <sp-menu-item>Istanbul</sp-menu-item>
+    <sp-menu-item>London</sp-menu-item>
+    <sp-menu-item>Maputo</sp-menu-item>
+    <sp-menu-item>Melbuorne</sp-menu-item>
+    <sp-menu-item>New York</sp-menu-item>
+    <sp-menu-item>San Fransisco</sp-menu-item>
+    <sp-menu-item>Santiago</sp-menu-item>
+    <sp-menu-item>Tokyo</sp-menu-item>
 </sp-picker>
 ```
 
@@ -166,15 +162,13 @@ Use `side-aligned="end"` to display the `<sp-field-label>` inline and to align t
 </sp-field-label>
 <sp-picker id="birth-place-1">
     <span slot="label">Choose a location:</span>
-    <sp-menu>
-        <sp-menu-item>Istanbul</sp-menu-item>
-        <sp-menu-item>London</sp-menu-item>
-        <sp-menu-item>Maputo</sp-menu-item>
-        <sp-menu-item>Melbuorne</sp-menu-item>
-        <sp-menu-item>New York</sp-menu-item>
-        <sp-menu-item>San Fransisco</sp-menu-item>
-        <sp-menu-item>Santiago</sp-menu-item>
-        <sp-menu-item>Tokyo</sp-menu-item>
-    </sp-menu>
+    <sp-menu-item>Istanbul</sp-menu-item>
+    <sp-menu-item>London</sp-menu-item>
+    <sp-menu-item>Maputo</sp-menu-item>
+    <sp-menu-item>Melbuorne</sp-menu-item>
+    <sp-menu-item>New York</sp-menu-item>
+    <sp-menu-item>San Fransisco</sp-menu-item>
+    <sp-menu-item>Santiago</sp-menu-item>
+    <sp-menu-item>Tokyo</sp-menu-item>
 </sp-picker>
 ```

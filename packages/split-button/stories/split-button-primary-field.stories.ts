@@ -14,7 +14,6 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { splitbutton } from './index.js';
 
 import '../sp-split-button.js';
-import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {

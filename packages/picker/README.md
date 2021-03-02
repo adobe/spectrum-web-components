@@ -1,6 +1,6 @@
 ## Description
 
-An `<sp-picker>` is an alternative to HTML's `<select>` element. Use an `<sp-menu>` element to outline the options that will be made available to the user when interacting with the `<sp-picker>` element.
+An `<sp-picker>` is an alternative to HTML's `<select>` element. Use `<sp-menu-item>` elements to outline the options that will be made available to the user when interacting with the `<sp-picker>` element.
 
 ### Usage
 
@@ -256,4 +256,4 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 
 ## Accessibility
 
-An `<sp-picker>` parent will ensure that the wrapped `<sp-menu>` features a role of `listbox` and contains children with the role `option`. Upon focusing the `<sp-picker>` using `ArrowDown` will also open the menu while throwing focus into first selected (or unselected when none are selected) menu item to assist in selecting of a new value.
+An `<sp-picker>` parent will ensure that the internal `<sp-menu>` features a role of `listbox` and contains children with the role `option`. Upon focusing the `<sp-picker>` using `ArrowDown` will also open the menu while throwing focus into first selected (or unselected when none are selected) menu item to assist in selecting of a new value.

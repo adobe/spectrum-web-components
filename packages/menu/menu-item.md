@@ -46,26 +46,22 @@ In the following example, the selected `<sp-menu-item>` represents a `value` of 
     label="Menu items examples"
     value="Text that is really long and useful to a visitor, but not exactly good to use in your application or component state."
 >
-    <sp-menu>
-        <sp-menu-item>
-            Text that is really long and useful to a visitor, but not exactly
-            good to use in your application or component state.
-        </sp-menu-item>
-        <sp-menu-item>Not selected</sp-menu-item>
-    </sp-menu>
+    <sp-menu-item>
+        Text that is really long and useful to a visitor, but not exactly good
+        to use in your application or component state.
+    </sp-menu-item>
+    <sp-menu-item>Not selected</sp-menu-item>
 </sp-picker>
 
 <sp-action-menu
     value="Text that is really long and useful to a visitor, but not exactly good to use in your application or component state."
 >
     <span slot="label">Menu items examples</span>
-    <sp-menu>
-        <sp-menu-item>
-            Text that is really long and useful to a visitor, but not exactly
-            good to use in your application or component state.
-        </sp-menu-item>
-        <sp-menu-item>Not selected</sp-menu-item>
-    </sp-menu>
+    <sp-menu-item>
+        Text that is really long and useful to a visitor, but not exactly good
+        to use in your application or component state.
+    </sp-menu-item>
+    <sp-menu-item>Not selected</sp-menu-item>
 </sp-action-menu>
 ```
 
@@ -74,22 +70,18 @@ When the `value` attribute is leveraged, the selected `<sp-menu-item>` represent
 ```html
 <sp-picker value="short-key">
     <span slot="label">Menu items examples</span>
-    <sp-menu>
-        <sp-menu-item value="not-selected">Not selected</sp-menu-item>
-        <sp-menu-item value="short-key">
-            Text that is really long and useful to a visitor, but not exactly
-            good to use in your application or component state.
-        </sp-menu-item>
-    </sp-menu>
+    <sp-menu-item value="not-selected">Not selected</sp-menu-item>
+    <sp-menu-item value="short-key">
+        Text that is really long and useful to a visitor, but not exactly good
+        to use in your application or component state.
+    </sp-menu-item>
 </sp-picker>
 <sp-action-menu value="short-key">
     <span slot="label">Menu items examples</span>
-    <sp-menu>
-        <sp-menu-item value="not-selected">Not selected</sp-menu-item>
-        <sp-menu-item value="short-key">
-            Text that is really long and useful to a visitor, but not exactly
-            good to use in your application or component state.
-        </sp-menu-item>
-    </sp-menu>
+    <sp-menu-item value="not-selected">Not selected</sp-menu-item>
+    <sp-menu-item value="short-key">
+        Text that is really long and useful to a visitor, but not exactly good
+        to use in your application or component state.
+    </sp-menu-item>
 </sp-action-menu>
 ```
