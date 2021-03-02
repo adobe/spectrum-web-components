@@ -48,28 +48,14 @@ export const Default = (): TemplateResult => {
                 Page with Really Long Name
             </sp-top-nav-item>
             <sp-action-menu label="Account" style="margin-inline-start: auto;">
-                <sp-icon slot="icon">
-                    ${SettingsIcon()}
-                </sp-icon>
-                <sp-menu>
-                    <sp-menu-item>
-                        Account Settings
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        My Profile
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Share
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Help
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Sign Out
-                    </sp-menu-item>
-                </sp-menu>
+                <sp-icon slot="icon">${SettingsIcon()}</sp-icon>
+                <sp-menu-item>Account Settings</sp-menu-item>
+                <sp-menu-item>My Profile</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Share</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Help</sp-menu-item>
+                <sp-menu-item>Sign Out</sp-menu-item>
             </sp-action-menu>
         </sp-top-nav>
     `;
@@ -89,28 +75,14 @@ export const Selected = (): TemplateResult => {
                 Page with Really Long Name
             </sp-top-nav-item>
             <sp-action-menu label="Account" style="margin-inline-start: auto;">
-                <sp-icon slot="icon">
-                    ${SettingsIcon()}
-                </sp-icon>
-                <sp-menu>
-                    <sp-menu-item>
-                        Account Settings
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        My Profile
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Share
-                    </sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Help
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Sign Out
-                    </sp-menu-item>
-                </sp-menu>
+                <sp-icon slot="icon">${SettingsIcon()}</sp-icon>
+                <sp-menu-item>Account Settings</sp-menu-item>
+                <sp-menu-item>My Profile</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Share</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Help</sp-menu-item>
+                <sp-menu-item>Sign Out</sp-menu-item>
             </sp-action-menu>
         </sp-top-nav>
     `;
@@ -147,15 +119,9 @@ export const Modes = (): TemplateResult => {
                         src=${avatar}
                         style="--spectrum-avatar-small-width: var(--spectrum-global-dimension-size-300); --spectrum-avatar-small-height: var(--spectrum-global-dimension-size-300);"
                     ></sp-avatar>
-                    <sp-menu>
-                        <sp-menu-item>
-                            Profile
-                        </sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>
-                            Sign Out
-                        </sp-menu-item>
-                    </sp-menu>
+                    <sp-menu-item>Profile</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Sign Out</sp-menu-item>
                 </sp-action-menu>
             </sp-action-group>
         </sp-top-nav>

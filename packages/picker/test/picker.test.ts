@@ -37,6 +37,10 @@ import {
     tEvent,
 } from '../../../test/testing-helpers.js';
 
+const isMenuActiveElement = function (): boolean {
+    return document.activeElement instanceof Menu;
+};
+
 describe('Picker', () => {
     const pickerFixture = async (): Promise<Picker> => {
         const el = await fixture<Picker>(
@@ -44,17 +48,13 @@ describe('Picker', () => {
                 <sp-picker
                     label="Select a Country with a very long label, too long in fact"
                 >
-                    <sp-menu>
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item value="option-2">
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-menu>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-picker>
             `
         );
@@ -74,17 +74,13 @@ describe('Picker', () => {
                         Select a Country with a very long label, too long in
                         fact
                     </span>
-                    <sp-menu>
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item value="option-2">
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-menu>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-picker>
             `
         );
@@ -459,15 +455,11 @@ describe('Picker', () => {
         const el = await pickerFixture();
 
         await elementUpdated(el);
-        const menu = el.querySelector('sp-menu') as Menu;
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
         el.open = true;
         await elementUpdated(el);
-        await waitUntil(
-            () => document.activeElement === menu,
-            'first item focused'
-        );
+        await waitUntil(() => isMenuActiveElement(), 'first item focused');
         expect(firstItem.focused).to.be.true;
 
         el.blur();
@@ -476,19 +468,15 @@ describe('Picker', () => {
         expect(el.open).to.be.true;
         el.focus();
         await elementUpdated(el);
-        await waitUntil(
-            () => document.activeElement === menu,
-            'first item refocused'
-        );
+        await waitUntil(() => isMenuActiveElement(), 'first item refocused');
         expect(el.open).to.be.true;
-        expect(document.activeElement === menu).to.be.true;
+        expect(isMenuActiveElement()).to.be.true;
         expect(firstItem.focused).to.be.true;
     });
     it('allows tabing to close', async () => {
         const el = await pickerFixture();
 
         await elementUpdated(el);
-        const menu = el.querySelector('sp-menu') as Menu;
 
         el.open = true;
         await elementUpdated(el);
@@ -496,15 +484,15 @@ describe('Picker', () => {
         expect(el.open).to.be.true;
         el.focus();
         await elementUpdated(el);
-        await waitUntil(() => document.activeElement === menu);
-        await waitUntil(
-            () => document.activeElement === menu,
-            'first item refocused'
-        );
+        await waitUntil(() => isMenuActiveElement(), 'first item refocused');
         expect(el.open).to.be.true;
-        expect(document.activeElement === menu).to.be.true;
+        expect(isMenuActiveElement()).to.be.true;
 
-        menu.dispatchEvent(tabEvent);
+        const menu = document.activeElement;
+        if (menu) {
+            // we know this is defined, but typescript doesn't
+            menu.dispatchEvent(tabEvent);
+        }
         await elementUpdated(el);
         await waitUntil(() => !el.open);
 
@@ -523,19 +511,13 @@ describe('Picker', () => {
                     value="inverse"
                     label="Select a Country with a very long label, too long in fact"
                 >
-                    <sp-menu>
-                        <sp-menu-item value="deselect">
-                            Deselect Text
-                        </sp-menu-item>
-                        <sp-menu-item value="inverse">
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-menu>
+                    <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
+                    <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-picker>
             `
         );
@@ -546,7 +528,6 @@ describe('Picker', () => {
             `Selected Item Text: ${el.selectedItem?.itemText}`
         );
 
-        const menu = el.querySelector('sp-menu') as Menu;
         const firstItem = el.querySelector(
             'sp-menu-item:nth-of-type(1)'
         ) as MenuItem;
@@ -563,8 +544,7 @@ describe('Picker', () => {
         const button = el.button as HTMLButtonElement;
         button.click();
 
-        await elementUpdated(menu);
-        await waitUntil(() => document.activeElement === menu, 'menu focused');
+        await waitUntil(() => isMenuActiveElement(), 'menu focused');
 
         expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
         expect(secondItem.focused, 'secondItem "focused"').to.be.true;
@@ -576,19 +556,13 @@ describe('Picker', () => {
                     value="missing"
                     label="Select a Country with a very long label, too long in fact"
                 >
-                    <sp-menu>
-                        <sp-menu-item value="deselect">
-                            Deselect Text
-                        </sp-menu-item>
-                        <sp-menu-item value="inverse">
-                            Select Inverse
-                        </sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                    </sp-menu>
+                    <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
+                    <sp-menu-item value="inverse">Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-picker>
             `
         );
@@ -608,14 +582,12 @@ describe('Picker', () => {
                 <sp-picker
                     label="Select a Country with a very long label, too long in fact"
                 >
-                    <sp-menu>
-                        <sp-menu-item
-                            value="deselect"
-                            @mouseenter=${handleMouseenter}
-                        >
-                            Deselect Text
-                        </sp-menu-item>
-                    </sp-menu>
+                    <sp-menu-item
+                        value="deselect"
+                        @mouseenter=${handleMouseenter}
+                    >
+                        Deselect Text
+                    </sp-menu-item>
                 </sp-picker>
             `
         );
@@ -652,24 +624,16 @@ describe('Picker', () => {
                     @sp-opened=${handleOpenedSpy}
                     @sp-closed=${handleClosedSpy}
                 >
-                    <sp-menu>
-                        <sp-menu-item value="deselect">
-                            Deselect Text
-                        </sp-menu-item>
-                    </sp-menu>
+                    <sp-menu-item value="deselect">Deselect Text</sp-menu-item>
                 </sp-picker>
             `
         );
 
         await elementUpdated(el);
-        const menu = el.querySelector('sp-menu') as Menu;
         el.open = true;
 
         await elementUpdated(el);
-        await waitUntil(
-            () => document.activeElement === menu,
-            'first item focused'
-        );
+        await waitUntil(() => isMenuActiveElement(), 'first item focused');
 
         expect(openedSpy.calledOnce).to.be.true;
         expect(closedSpy.calledOnce).to.be.false;

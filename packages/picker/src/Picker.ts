@@ -30,6 +30,7 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import reparentChildren from '@spectrum-web-components/shared/src/reparent-children.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import {
     MenuItem,
     MenuItemQueryRoleEventDetail,

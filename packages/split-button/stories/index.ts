@@ -14,7 +14,6 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { html, action } from '@open-wc/demoing-storybook';
 
 import '../sp-split-button.js';
-import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 const menu = ({
@@ -22,11 +21,9 @@ const menu = ({
     secondItemHandler = action('click "Option Extended"'),
     thirdItemHandler = action('click "Short"'),
 }): TemplateResult => html`
-    <sp-menu>
-        <sp-menu-item @click=${firstItemHandler}>Option 1</sp-menu-item>
-        <sp-menu-item @click=${secondItemHandler}>Option Extended</sp-menu-item>
-        <sp-menu-item @click=${thirdItemHandler}>Short</sp-menu-item>
-    </sp-menu>
+    <sp-menu-item @click=${firstItemHandler}>Option 1</sp-menu-item>
+    <sp-menu-item @click=${secondItemHandler}>Option Extended</sp-menu-item>
+    <sp-menu-item @click=${thirdItemHandler}>Short</sp-menu-item>
 `;
 
 interface Properties {
