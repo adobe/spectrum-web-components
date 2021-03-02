@@ -3004,25 +3004,25 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorarea/-/colorarea-1.0.0-beta.3.tgz#fe504408e68173c333023e18d0cd1bbe81f4eb3d"
   integrity sha512-dxMxSkztwqTSz8/TiSQvE8838BkH9hMqZxhmstYj/mEh9GhDLKETSn3NfJUUIkukV1vHaT/fjypMkZvFBejxkA==
 
-"@spectrum-css/colorhandle@^1.0.0-beta.3":
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorhandle/-/colorhandle-1.0.0-beta.3.tgz#5911b610285b1925512245c0e331e7d5955588ca"
-  integrity sha512-MGQ50rqfRvjc3LUoMfTEY/XwcIArfLLRU16wTb8e1G4WQANaRsGawGIBBfE7bWjEWkSPQHK+tgYXrHx/K9WXaA==
+"@spectrum-css/colorhandle@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorhandle/-/colorhandle-1.0.0.tgz#604685cc0b35961b485789e48592b8233aea4430"
+  integrity sha512-e8pE/p+DEakLe92mliQg20xMWfI7X3DgMclUTTWDo0pPtxXzwQIigbDIcrnrRLMBUbW3rehgBs59/SHsFNsyjw==
 
-"@spectrum-css/colorloupe@^1.0.0-beta.3":
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorloupe/-/colorloupe-1.0.0-beta.3.tgz#0e2a0a6d07df3e756998a9b7ba4f80eaeb588aef"
-  integrity sha512-a5Cl5FYr9bHVcNvxONf1aye33nEeOue73ptpANGpK344O2rO+vtlZQWRqTtUexEAKzWRHsW0fCp9CVEqmfwwAw==
+"@spectrum-css/colorloupe@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorloupe/-/colorloupe-1.0.0.tgz#766d34d1a38ec3e4b29c1c455642d2cb087475b7"
+  integrity sha512-SVz+oTB8zMBOtg3YALJ+qow57re4dwuwaaxlDStXUvnA/IhNkew2pTrCM6HNhwkQjRvUSyCF5UwcpMr6QSldwA==
 
-"@spectrum-css/colorslider@^1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorslider/-/colorslider-1.0.0-beta.4.tgz#e307a5afe62ba10946e4b8d68a91508b38442e0c"
-  integrity sha512-vq1d0A/UnrUz8frDqZRl4fgad4AVa6E9esmtZZiQFWbN1wcwt29IH4eegQoNRiU/qXd0pGTprmZZImX/z2T/6w==
+"@spectrum-css/colorslider@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorslider/-/colorslider-1.0.0.tgz#2454e8ffd433e2efa052f6fba63fb8e772cede31"
+  integrity sha512-SpD/bzqHmuRISqWP0v1ghjoLzYytpu9xGS2b3dRCVTfio9k01Ua1o/Uo0hoSiWE8QhIYMGxyzpJLmWlFbyHm9A==
 
-"@spectrum-css/colorwheel@^1.0.0-beta.3":
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-1.0.0-beta.3.tgz#424db11f73e12d12c3844250a5b6235618571c00"
-  integrity sha512-6BzHV4yZ/l8lYdx7OG9e/cQG63pf84yhnIpZu9X+mjXi+reH1qTU40BaT2tmcxATSnsfywrXte2ADI5SAR9QLg==
+"@spectrum-css/colorwheel@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-1.0.0.tgz#a619852eeb5b73f1b4f98c05b7a65adaf0c45ef3"
+  integrity sha512-xm4xOGQdEozGZaIlUUIOmBHU+y/zVH2S3YQt0al2d3W4wlm1Cep+hicYfkjc8073asa1Spo15GjPSmTAKY5hMg==
 
 "@spectrum-css/commons@^3.0.1":
   version "3.0.1"

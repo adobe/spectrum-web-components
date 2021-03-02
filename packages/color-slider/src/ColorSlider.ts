@@ -18,7 +18,7 @@ import {
     query,
     streamingListener,
 } from '@spectrum-web-components/base';
-
+import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import styles from './color-slider.css.js';
@@ -234,7 +234,6 @@ export class ColorSlider extends Focusable {
 
     private handlePointerdown(event: PointerEvent): void {
         this._previousColor = this._color.clone();
-        this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
     }
 
@@ -242,8 +241,7 @@ export class ColorSlider extends Focusable {
         this.sliderHandlePosition = this.calculateHandlePosition(event);
         this.value = 360 * (this.sliderHandlePosition / 100);
 
-        //this.color = `hsl(${this.value}, 100%, 50%)`;
-        this._color = new TinyColor({ h: this.value, s: '100%', l: '50%' });
+        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
 
         this.dispatchEvent(
             new Event('input', {
@@ -341,5 +339,31 @@ export class ColorSlider extends Focusable {
                 @blur=${this.handleBlur}
             />
         `;
+    }
+
+    private observer?: WithSWCResizeObserver['ResizeObserver'];
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        if (
+            !this.observer &&
+            ((window as unknown) as WithSWCResizeObserver).ResizeObserver
+        ) {
+            this.observer = new ((window as unknown) as WithSWCResizeObserver).ResizeObserver(
+                (entries: SWCResizeObserverEntry[]) => {
+                    for (const entry of entries) {
+                        this.boundingClientRect = entry.contentRect;
+                    }
+                    this.boundingClientRect = this.getBoundingClientRect();
+                }
+            );
+            this.boundingClientRect = this.getBoundingClientRect();
+        }
+        this.observer?.observe(this);
+    }
+
+    public disconnectedCallback(): void {
+        this.observer?.unobserve(this);
+        super.disconnectedCallback();
     }
 }

@@ -10,6 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    /* .spectrum-ColorSlider */
+    --spectrum-colorslider-handle-hitarea-border-radius: 0%;
+    --spectrum-colorslider-handle-hitarea-width: var(
+        --spectrum-global-dimension-size-300
+    );
+    --spectrum-colorslider-handle-hitarea-height: var(
+        --spectrum-global-dimension-size-300
+    );
+}
 :host([focused]) .handle {
     /* .spectrum-ColorSlider.is-focused .spectrum-ColorSlider-handle */
     width: calc(
@@ -91,9 +101,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 .handle:after {
     /* .spectrum-ColorSlider-handle:after */
-    border-radius: 0;
-    width: var(--spectrum-global-dimension-size-300);
-    height: var(--spectrum-global-dimension-size-300);
+    border-radius: var(--spectrum-colorslider-handle-hitarea-border-radius);
+    width: var(--spectrum-colorslider-handle-hitarea-width);
+    height: var(--spectrum-colorslider-handle-hitarea-height);
 }
 .checkerboard {
     /* .spectrum-ColorSlider-checkerboard */
@@ -130,6 +140,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-radius-regular)
     );
 }
+:host {
+    /* .spectrum-ColorSlider */
+    --spectrum-colorslider-border-color: var(--spectrum-colorarea-border-color);
+}
 .checkerboard {
     /* .spectrum-ColorSlider-checkerboard */
     background-color: var(--spectrum-global-color-static-white, #fff);
@@ -161,7 +175,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-colorslider-border-size,
             var(--spectrum-alias-border-size-thin)
         )
-        var(--spectrum-colorarea-border-color);
+        var(--spectrum-colorslider-border-color);
 }
 :host([disabled]) .checkerboard {
     /* .spectrum-ColorSlider.is-disabled .spectrum-ColorSlider-checkerboard */
@@ -185,4 +199,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([disabled]) .gradient {
     /* .spectrum-ColorSlider.is-disabled .spectrum-ColorSlider-gradient */
     display: none;
+}
+@media (forced-colors: active) {
+    :host {
+        --spectrum-colorslider-border-color-disabled: GrayText;
+        --spectrum-colorslider-fill-color-disabled: Canvas;
+        forced-color-adjust: none;
+    }
 }

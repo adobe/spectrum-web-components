@@ -1,6 +1,6 @@
 ## Description
 
-An `<sp-color-slider>` lets users visually change an individual channel of a color. The background of the `<sp-color-slider>` is a visual representation of the range of values a user can select from. This can represent color properties such as hues, color channel values (such as RGB or CMYK levels), or opacity.
+An `<sp-color-slider>` lets users visually change an individual channel of a color. The background of the `<sp-color-slider>` is a visual representation of the range of values a user can select from. This can represent color properties such as hues, color channel values (such as RGB or CMYK levels), or opacity. Currently, the slider only supports leveraging the `hue` property.
 
 ### Usage
 
@@ -34,7 +34,6 @@ The current color formats supported are as follows:
 -   HSL, HSLA
 -   RGB, RGBA
 -   Strings (eg "red", "blue")
--   TinyColor
 
 **Please note for the following formats: HSV, HSVA, HSL, HSLA**
 When setting a color's lightness or value to 100%, the hue and saturation value are not preserved. This is detailed in the [TinyColor documentation](https://www.npmjs.com/package/@ctrl/tinycolor). Currently, the Spectrum Web Components has a workaround to support the preservation of the hue.

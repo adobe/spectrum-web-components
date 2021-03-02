@@ -48,7 +48,6 @@ export const joint = (): TemplateResult => {
                 }}
             ></sp-color-area>
             <sp-color-slider
-                style="--sp-color-slider-gradient: rgb(255, 0, 0) 0%, rgb(255, 255, 0) 17%, rgb(0, 255, 0) 33%, rgb(0, 255, 255) 50%, rgb(0, 0, 255) 67%, rgb(255, 0, 255) 83%, rgb(255, 0, 0) 100%;"
                 @input=${({
                     target: { value, previousElementSibling },
                 }: Event & {

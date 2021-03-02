@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-ColorLoupe */
-    width: calc(
+    --spectrum-colorloupe-width-adjusted: calc(
         var(
                 --spectrum-colorloupe-width,
                 var(--spectrum-global-dimension-static-size-600)
@@ -22,7 +22,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-static-size-25)
             ) * 2
     );
-    height: calc(
+    --spectrum-colorloupe-height-adjusted: calc(
         var(
                 --spectrum-colorloupe-height,
                 var(--spectrum-global-dimension-static-size-800)
@@ -32,26 +32,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-static-size-25)
             ) * 2
     );
-    position: absolute;
-    transform: translateY(
-        var(--spectrum-global-dimension-static-size-100, 8px)
+    --spectrum-colorloupe-offset: var(
+        --spectrum-global-dimension-static-size-200,
+        16px
     );
+    --spectrum-colorloupe-animation-distance: var(
+        --spectrum-global-dimension-static-size-100,
+        8px
+    );
+    width: var(--spectrum-colorloupe-width-adjusted);
+    height: var(--spectrum-colorloupe-height-adjusted);
+    position: absolute;
+    transform: translateY(var(--spectrum-colorloupe-animation-distance));
     opacity: 0;
     transform-origin: bottom center;
-    bottom: calc(50% + var(--spectrum-global-dimension-static-size-200, 16px));
-    left: calc(
-        50% -
-            (
-                var(
-                        --spectrum-colorloupe-width,
-                        var(--spectrum-global-dimension-static-size-600)
-                    ) +
-                    var(
-                        --spectrum-colorhandle-inner-border-size,
-                        var(--spectrum-global-dimension-static-size-25)
-                    ) * 2
-            ) / 2
-    );
+    bottom: calc(50% + var(--spectrum-colorloupe-offset));
+    left: calc(50% - var(--spectrum-colorloupe-width-adjusted) / 2);
     transition: transform 0.1s ease-in-out, opacity 125ms ease-in-out;
     pointer-events: none;
 }
@@ -74,4 +70,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-colorloupe-outer-border-color,
         rgba(50, 50, 50, 0.1)
     );
+}
+@media (forced-colors: active) {
+    :host {
+        --spectrum-colorloupe-outer-border-color: CanvasText;
+    }
 }

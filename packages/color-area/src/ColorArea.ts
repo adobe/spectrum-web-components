@@ -20,6 +20,7 @@ import {
     query,
     streamingListener,
 } from '@spectrum-web-components/base';
+import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { ColorHandle, ColorValue } from '@spectrum-web-components/color-handle';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { TinyColor } from '@ctrl/tinycolor';
@@ -64,34 +65,33 @@ export class ColorArea extends SpectrumElement {
 
     @property({ type: String })
     public get value(): ColorValue {
-        return this._value.toHex();
+        //return this._value.toHex();
+        return this.color;
     }
-
-    private _value = new TinyColor({ h: 0, s: 1, v: 1 });
 
     @property({ type: String })
     public get color(): ColorValue {
-        switch (this._format[0]) {
+        switch (this._format.format) {
             case 'rgb':
-                return this._format[1]
+                return this._format.isString
                     ? this._color.toRgbString()
                     : this._color.toRgb();
             case 'prgb':
-                return this._format[1]
+                return this._format.isString
                     ? this._color.toPercentageRgbString()
                     : this._color.toPercentageRgb();
             case 'hex8':
-                return this._format[1]
+                return this._format.isString
                     ? this._color.toHex8String()
                     : this._color.toHex8();
             case 'name':
                 return this._color.toName() || this._color.toRgbString();
             case 'hsl':
-                return this._format[1]
+                return this._format.isString
                     ? this._color.toHslString()
                     : this._color.toHsl();
             case 'hsv':
-                return this._format[1]
+                return this._format.isString
                     ? this._color.toHsvString()
                     : this._color.toHsv();
             case 'hex':
@@ -99,7 +99,7 @@ export class ColorArea extends SpectrumElement {
             case 'hex4':
             case 'hex6':
             default:
-                return this._format[1]
+                return this._format.isString
                     ? this._color.toHexString()
                     : this._color.toHex();
         }
@@ -111,10 +111,13 @@ export class ColorArea extends SpectrumElement {
         }
         const oldValue = this._color;
         this._color = new TinyColor(color);
-        this._format = [
-            this._color.format,
-            typeof color === 'string' || color instanceof String,
-        ];
+        const format = this._color.format;
+        const isString = typeof color === 'string' || color instanceof String;
+
+        this._format = {
+            format,
+            isString,
+        };
         const { h, s, v } = this._color.toHsv();
         this.hue = h;
         this.x = s;
@@ -126,7 +129,10 @@ export class ColorArea extends SpectrumElement {
 
     private _previousColor = new TinyColor({ h: 0, s: 1, v: 1 });
 
-    private _format: [string, boolean] = ['', false];
+    private _format: { format: string; isString: boolean } = {
+        format: '',
+        isString: false,
+    };
 
     @property({ type: Number })
     public x = 1;
@@ -214,7 +220,6 @@ export class ColorArea extends SpectrumElement {
 
         this._previousColor = this._color.clone();
         this._color = new TinyColor({ h: this.hue, s: this.x, v: 1 - this.y });
-        this._value = this._color;
 
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -243,7 +248,6 @@ export class ColorArea extends SpectrumElement {
 
     private handlePointerdown(event: PointerEvent): void {
         this._previousColor = this._color.clone();
-        this.boundingClientRect = this.getBoundingClientRect();
 
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
         if (event.pointerType === 'mouse') {
@@ -254,7 +258,6 @@ export class ColorArea extends SpectrumElement {
     private handlePointermove(event: PointerEvent): void {
         const [x, y] = this.calculateHandlePosition(event);
         this._color = new TinyColor({ h: this.hue, s: x, v: 1 - y });
-        this._value = this._color;
 
         this.x = x;
         this.y = y;
@@ -323,7 +326,6 @@ export class ColorArea extends SpectrumElement {
     }
 
     protected render(): TemplateResult {
-        this.boundingClientRect = this.getBoundingClientRect();
         const { width, height } = this.boundingClientRect;
         return html`
             <div
@@ -362,7 +364,7 @@ export class ColorArea extends SpectrumElement {
                 min="0"
                 max="1"
                 step=${this.step}
-                .value=${String(this.x / 100)}
+                .value=${String(this.x)}
                 @keyup=${(event: KeyboardEvent) => event.preventDefault()}
             />
             <input
@@ -373,7 +375,7 @@ export class ColorArea extends SpectrumElement {
                 min="0"
                 max="1"
                 step=${this.step}
-                .value=${String(this.y / 100)}
+                .value=${String(this.y)}
                 @keyup=${(event: KeyboardEvent) => event.preventDefault()}
             />
         `;
@@ -385,5 +387,31 @@ export class ColorArea extends SpectrumElement {
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('keyup', this.handleKeyup);
         this.addEventListener('keydown', this.handleKeydown);
+    }
+
+    private observer?: WithSWCResizeObserver['ResizeObserver'];
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        if (
+            !this.observer &&
+            ((window as unknown) as WithSWCResizeObserver).ResizeObserver
+        ) {
+            this.observer = new ((window as unknown) as WithSWCResizeObserver).ResizeObserver(
+                (entries: SWCResizeObserverEntry[]) => {
+                    for (const entry of entries) {
+                        this.boundingClientRect = entry.contentRect;
+                    }
+                    this.boundingClientRect = this.getBoundingClientRect();
+                }
+            );
+            this.boundingClientRect = this.getBoundingClientRect();
+        }
+        this.observer?.observe(this);
+    }
+
+    public disconnectedCallback(): void {
+        this.observer?.unobserve(this);
+        super.disconnectedCallback();
     }
 }

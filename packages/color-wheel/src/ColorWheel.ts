@@ -18,6 +18,7 @@ import {
     query,
     streamingListener,
 } from '@spectrum-web-components/base';
+import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import styles from './color-wheel.css.js';
@@ -214,7 +215,6 @@ export class ColorWheel extends Focusable {
 
     private handlePointerdown(event: PointerEvent): void {
         this._previousColor = this._color.clone();
-        this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
     }
 
@@ -276,7 +276,6 @@ export class ColorWheel extends Focusable {
     }
 
     protected render(): TemplateResult {
-        this.boundingClientRect = this.getBoundingClientRect();
         const { width } = this.boundingClientRect;
         const radius = width / 2;
         const handleLocationStyles = `transform: translate(${
@@ -316,5 +315,31 @@ export class ColorWheel extends Focusable {
                 @blur=${this.handleBlur}
             />
         `;
+    }
+
+    private observer?: WithSWCResizeObserver['ResizeObserver'];
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        if (
+            !this.observer &&
+            ((window as unknown) as WithSWCResizeObserver).ResizeObserver
+        ) {
+            this.observer = new ((window as unknown) as WithSWCResizeObserver).ResizeObserver(
+                (entries: SWCResizeObserverEntry[]) => {
+                    for (const entry of entries) {
+                        this.boundingClientRect = entry.contentRect;
+                    }
+                    this.boundingClientRect = this.getBoundingClientRect();
+                }
+            );
+            this.boundingClientRect = this.getBoundingClientRect();
+        }
+        this.observer?.observe(this);
+    }
+
+    public disconnectedCallback(): void {
+        this.observer?.unobserve(this);
+        super.disconnectedCallback();
     }
 }
