@@ -11,13 +11,15 @@ governing permissions and limitations under the License.
 import { html, number, select, radios } from '@open-wc/demoing-storybook';
 import { TemplateResult } from '@spectrum-web-components/base';
 
-import { Placement } from '../';
+import { OverlayTrigger, Placement } from '../';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { DialogWrapper } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { Picker } from '@spectrum-web-components/picker';
+import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/radio/sp-radio.js';
@@ -482,6 +484,114 @@ export const longpress = (): TemplateResult => {
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>
                     </sp-action-button>
                 </sp-action-group>
+            </sp-popover>
+        </overlay-trigger>
+    `;
+};
+
+export const complexModal = (): TemplateResult => {
+    requestAnimationFrame(async () => {
+        const overlay = document.querySelector(
+            `overlay-trigger`
+        ) as OverlayTrigger;
+        const trigger = (overlay.shadowRoot as ShadowRoot).querySelector(
+            '#trigger'
+        ) as HTMLElement;
+        trigger.addEventListener('sp-opened', () => {
+            requestAnimationFrame(() => {
+                const picker = document.querySelector('#test-picker') as Picker;
+                picker.open = true;
+            });
+        });
+        trigger.click();
+    });
+    return html`
+        <style>
+            body {
+                --swc-margin-test: 10px;
+                margin: var(--swc-margin-test);
+            }
+            sp-story-decorator::part(container) {
+                min-height: calc(100vh - (2 * var(--swc-margin-test)));
+                padding: 0;
+                display: grid;
+                place-content: center;
+            }
+            active-overlay > * {
+                --spectrum-global-animation-duration-100: 0ms;
+                --spectrum-global-animation-duration-200: 0ms;
+                --spectrum-global-animation-duration-300: 0ms;
+                --spectrum-global-animation-duration-400: 0ms;
+                --spectrum-global-animation-duration-500: 0ms;
+                --spectrum-global-animation-duration-600: 0ms;
+                --spectrum-global-animation-duration-700: 0ms;
+                --spectrum-global-animation-duration-800: 0ms;
+                --spectrum-global-animation-duration-900: 0ms;
+                --spectrum-global-animation-duration-1000: 0ms;
+                --spectrum-global-animation-duration-2000: 0ms;
+                --spectrum-global-animation-duration-4000: 0ms;
+                --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
+            }
+        </style>
+        <overlay-trigger type="modal" placement="none">
+            <sp-dialog-wrapper
+                slot="click-content"
+                headline="Dialog title"
+                dismissable
+                underlay
+                footer="Content for footer"
+            >
+                <sp-picker id="test-picker">
+                    <sp-menu>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item>Select inverse</sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and mask...</sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>Save selection</sp-menu-item>
+                        <sp-menu-item disabled>Make work path</sp-menu-item>
+                    </sp-menu>
+                </sp-picker>
+            </sp-dialog-wrapper>
+            <sp-button slot="trigger" variant="primary">
+                Toggle Dialog
+            </sp-button>
+        </overlay-trigger>
+    `;
+};
+
+export const superComplexModal = (): TemplateResult => {
+    return html`
+        <overlay-trigger type="modal" placement="none">
+            <sp-button slot="trigger" variant="cta">Toggle Dialog</sp-button>
+            <sp-popover dialog slot="click-content">
+                <overlay-trigger>
+                    <sp-button slot="trigger" variant="primary">
+                        Toggle Dialog
+                    </sp-button>
+                    <sp-popover dialog slot="click-content">
+                        <overlay-trigger type="modal">
+                            <sp-button slot="trigger" variant="secondary">
+                                Toggle Dialog
+                            </sp-button>
+                            <sp-popover dialog slot="click-content">
+                                <p>
+                                    When you get this deep, this ActiveOverlay
+                                    should be the only one in [slot="open"].
+                                </p>
+                                <p>
+                                    All of the rest of the ActiveOverlay
+                                    elements should have had their [slot]
+                                    attribute removed.
+                                </p>
+                                <p>
+                                    Closing this ActiveOverlay should replace
+                                    them...
+                                </p>
+                            </sp-popover>
+                        </overlay-trigger>
+                    </sp-popover>
+                </overlay-trigger>
             </sp-popover>
         </overlay-trigger>
     `;

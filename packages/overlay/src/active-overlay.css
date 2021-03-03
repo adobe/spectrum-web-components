@@ -45,8 +45,14 @@ governing permissions and limitations under the License.
     outline: none;
 }
 
+:host([placement='none']) {
+    top: 0;
+    left: 0;
+}
+
 :host([placement='none']) ::slotted(*) {
-    height: 100vh;
+    /* 0 * 1px is a hack for the linter. It wants no units on 0, but units are needed for calc() */
+    height: calc(100vh - var(--swc-body-margins-block, 0 * 1px));
 }
 
 sp-theme,

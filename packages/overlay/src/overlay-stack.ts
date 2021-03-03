@@ -57,9 +57,9 @@ export class OverlayStack {
             <style>
             #actual {
                 position: relative;
-                height: 100%;
+                height: calc(100% - var(--swc-body-margins-block, 0px));
                 z-index: 0;
-                min-height: 100vh;
+                min-height: calc(100vh - var(--swc-body-margins-block, 0px));
             }
             #holder {
                 display: flex;
@@ -101,6 +101,17 @@ export class OverlayStack {
         this.tabTrapper.tabIndex = -1;
         this.tabTrapper.setAttribute('aria-hidden', 'true');
         this.overlayHolder.hidden = false;
+        requestAnimationFrame(() => {
+            const bodyStyles = getComputedStyle(document.body);
+            this.tabTrapper.style.setProperty(
+                '--swc-body-margins-inline',
+                `calc(${bodyStyles.marginLeft} + ${bodyStyles.marginRight})`
+            );
+            this.tabTrapper.style.setProperty(
+                '--swc-body-margins-block',
+                `calc(${bodyStyles.marginTop} + ${bodyStyles.marginBottom})`
+            );
+        });
     }
 
     private stopTabTrapping(): void {
@@ -176,12 +187,13 @@ export class OverlayStack {
             return true;
         }
 
+        const activeOverlay = ActiveOverlay.create(details);
+
         if (this.overlays.length) {
             const topOverlay = this.overlays[this.overlays.length - 1];
-            topOverlay.obscure();
+            topOverlay.obscure(activeOverlay.interaction);
         }
 
-        const activeOverlay = ActiveOverlay.create(details);
         document.body.appendChild(activeOverlay);
 
         /**
@@ -340,7 +352,10 @@ export class OverlayStack {
             if (this.overlays.length) {
                 const topOverlay = this.overlays[this.overlays.length - 1];
                 topOverlay.feature();
-                if (topOverlay.interaction === 'modal') {
+                if (
+                    topOverlay.interaction === 'modal' ||
+                    topOverlay.hasModalRoot
+                ) {
                     topOverlay.focus();
                 } else {
                     this.stopTabTrapping();
