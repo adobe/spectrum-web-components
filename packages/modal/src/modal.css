@@ -12,3 +12,9 @@ governing permissions and limitations under the License.
 
 @import './spectrum-modal-wrapper.css';
 @import './spectrum-modal.css';
+
+:host {
+    /* 0 * 1px is a hack for the linter. It wants no units on 0, but units are needed for calc() */
+    width: calc(100vw - var(--swc-body-margins-inline, 0 * 1px));
+    height: calc(100vh - var(--swc-body-margins-block, 0 * 1px));
+}
