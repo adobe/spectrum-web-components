@@ -177,7 +177,7 @@
         "postcss": "^8.2.4",
         "postcss-custom-properties": "^10.0.0",
         "postcss-focus-visible": "^5.0.0",
-        "postcss-import": "^12.0.1",
+        "postcss-import": "^14.0.0",
         "postcss-inherit": "^4.1.0",
         "postcss-loader": "^3.0.0",
         "postcss-mixins": "^6.2.3",
