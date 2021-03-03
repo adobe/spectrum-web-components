@@ -2,11 +2,6 @@ function restoreChildren(
     placeholderItems: Comment[],
     srcElements: Element[]
 ): void {
-    if (srcElements.length != placeholderItems.length) {
-        throw new Error(
-            'Unexpected length mismatch attempting to restore parent elements'
-        );
-    }
     for (let index = 0; index < srcElements.length; ++index) {
         const srcElement = srcElements[index];
         const placeholderItem = placeholderItems[index];
@@ -17,7 +12,10 @@ function restoreChildren(
     }
 }
 
-export default function (srcElements: Element[], newParent: Element): Function {
+export const reparentChildren = (
+    srcElements: Element[],
+    newParent: Element
+): Function => {
     let placeholderItems: Comment[] = [];
 
     for (let index = 0; index < srcElements.length; ++index) {
@@ -36,4 +34,4 @@ export default function (srcElements: Element[], newParent: Element): Function {
     return function () {
         restoreChildren(placeholderItems, srcElements);
     };
-}
+};

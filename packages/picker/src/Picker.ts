@@ -27,7 +27,7 @@ import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import reparentChildren from '@spectrum-web-components/shared/src/reparent-children.js';
+import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -38,6 +38,7 @@ import {
     MenuQueryRoleEventDetail,
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/popover/sp-popover.js';
+import { Popover } from '@spectrum-web-components/popover/src/popover.js';
 import {
     Placement,
     openOverlay,
@@ -94,9 +95,10 @@ export class PickerBase extends SizedMixin(Focusable) {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    private reparentableChildren?: Element[];
+    public menuItems: MenuItem[] = [];
     private restoreChildren?: Function;
-    public optionsMenu?: Menu;
+
+    public optionsMenu!: Menu;
 
     /**
      * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"}
@@ -118,7 +120,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     private closeOverlay?: () => void;
 
     @query('sp-popover')
-    private popover?: HTMLElement;
+    private popover!: Popover;
 
     protected listRole = 'listbox';
     protected itemRole = 'option';
@@ -144,7 +146,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     public get focusElement(): HTMLElement {
-        if (this.open && this.optionsMenu) {
+        if (this.open) {
             return this.optionsMenu;
         }
         return this.button;
@@ -192,10 +194,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             return;
         }
         event.preventDefault();
-        /* c8 ignore next 3 */
-        if (!this.optionsMenu) {
-            return;
-        }
         this.open = true;
     };
 
@@ -243,18 +241,26 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     private async openMenu(): Promise<void> {
         /* c8 ignore next 9 */
-        if (
-            !this.popover ||
-            !this.optionsMenu ||
-            !this.reparentableChildren ||
-            this.reparentableChildren.length === 0
-        ) {
+        let reparentableChildren: Element[] = [];
+
+        const deprecatedMenu = this.querySelector('sp-menu');
+        if (deprecatedMenu) {
+            reparentableChildren = Array.from(deprecatedMenu.children);
+        } else {
+            reparentableChildren = Array.from(this.children).filter(
+                (element) => {
+                    return !element.hasAttribute('slot');
+                }
+            );
+        }
+
+        if (reparentableChildren.length === 0) {
             this.menuStateResolver();
             return;
         }
 
         this.restoreChildren = reparentChildren(
-            this.reparentableChildren,
+            reparentableChildren,
             this.optionsMenu
         );
 
@@ -331,14 +337,19 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected render(): TemplateResult {
         return html`
-            ${this.renderButton}
+            ${this.renderButton} ${this.renderPopover}
+        `;
+    }
+
+    protected get renderPopover(): TemplateResult {
+        return html`
             <sp-popover
                 open
                 id="popover"
                 @click=${this.onClick}
                 @sp-overlay-closed=${this.onOverlayClosed}
             >
-                <sp-menu id="menu" role="listbox"></sp-menu>
+                <sp-menu id="menu" role="${this.listRole}"></sp-menu>
             </sp-popover>
         `;
     }
@@ -346,6 +357,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
 
+        // Since the sp-menu gets reparented by the popover, initialize it here
         this.optionsMenu = this.shadowRoot.querySelector('sp-menu') as Menu;
 
         const deprecatedMenu = this.querySelector('sp-menu');
@@ -354,18 +366,14 @@ export class PickerBase extends SizedMixin(Focusable) {
                 `Deprecation Notice: You no longer need to provide an sp-menu child to ${this.tagName.toLowerCase()}. Any styling or attributes on the sp-menu will be ignored.`
             );
         }
-        this.reparentableChildren = Array.from(
-            (deprecatedMenu || this).children
-        );
+        this.menuItems = [
+            ...this.querySelectorAll(`sp-menu-item`),
+        ] as MenuItem[];
     }
 
     protected updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
-        if (
-            changedProperties.has('value') &&
-            !changedProperties.has('selectedItem') &&
-            this.reparentableChildren
-        ) {
+        if (changedProperties.has('value') && !changedProperties.has('selectedItem')) {
             this.manageSelection();
         }
         if (changedProperties.has('disabled') && this.disabled) {
@@ -386,20 +394,15 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
     }
 
-    private async manageSelection(): Promise<void> {
+    protected async manageSelection(): Promise<void> {
         /* c8 ignore next 3 */
-        if (!this.reparentableChildren) {
-            return;
-        }
-        if (this.reparentableChildren.length) {
+        if (this.menuItems.length > 0) {
             let selectedItem: MenuItem | undefined;
-            this.reparentableChildren.map((item) => {
-                if (item instanceof MenuItem) {
-                    if (this.value === item.value && !item.disabled) {
-                        selectedItem = item;
-                    } else {
-                        item.selected = false;
-                    }
+            this.menuItems.forEach((item) => {
+                if (this.value === item.value && !item.disabled) {
+                    selectedItem = item;
+                } else {
+                    item.selected = false;
                 }
             });
             if (selectedItem) {
@@ -409,12 +412,12 @@ export class PickerBase extends SizedMixin(Focusable) {
                 this.value = '';
                 this.selectedItem = undefined;
             }
-            if (this.open && this.optionsMenu) {
+            if (this.open) {
                 this.optionsMenu.updateSelectedItemIndex();
             }
             return;
         }
-        if (this.open && this.optionsMenu) {
+        if (this.open) {
             await this.optionsMenu.updateComplete;
             if (this.optionsMenu.menuItems.length) {
                 this.manageSelection();

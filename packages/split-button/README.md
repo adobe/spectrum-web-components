@@ -37,10 +37,8 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 ```html
 <sp-split-button size="s">
     Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
 
@@ -51,10 +49,8 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 ```html
 <sp-split-button size="m">
     Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
 
@@ -64,11 +60,8 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 
 ```html
 <sp-split-button size="l">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
 
@@ -78,11 +71,8 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 
 ```html
 <sp-split-button size="xl">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
 
@@ -94,18 +84,12 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 
 ```html
 <sp-split-button>
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 <sp-split-button left>
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
 
@@ -113,18 +97,12 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 
 ```html
 <sp-split-button variant="primary">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 <sp-split-button left variant="primary">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
 
@@ -132,18 +110,12 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 
 ```html
 <sp-split-button variant="secondary">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 <sp-split-button left>
-    Split Button
-    <sp-popover slot="more" open variant="secondary">
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
 
@@ -155,18 +127,12 @@ When using the `more` value of the `type` attribute, an `<sp-split-button>` will
 
 ```html
 <sp-split-button type="more">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 <sp-split-button type="more" left>
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
 
@@ -174,18 +140,12 @@ When using the `more` value of the `type` attribute, an `<sp-split-button>` will
 
 ```html
 <sp-split-button type="more" variant="primary">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 <sp-split-button type="more" left variant="primary">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
 
@@ -193,17 +153,11 @@ When using the `more` value of the `type` attribute, an `<sp-split-button>` will
 
 ```html
 <sp-split-button type="more" variant="secondary">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 <sp-split-button type="more" left variant="secondary">
-    Split Button
-    <sp-popover slot="more" open>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-    </sp-popover>
+    <sp-menu-item>Option 1</sp-menu-item>
+    <sp-menu-item>Option Extended</sp-menu-item>
 </sp-split-button>
 ```
