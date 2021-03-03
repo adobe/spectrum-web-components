@@ -488,11 +488,9 @@ describe('Picker', () => {
         expect(el.open).to.be.true;
         expect(isMenuActiveElement()).to.be.true;
 
-        const menu = document.activeElement;
-        if (menu) {
-            // we know this is defined, but typescript doesn't
-            menu.dispatchEvent(tabEvent);
-        }
+        const menu = document.activeElement as Menu;
+        menu.dispatchEvent(tabEvent);
+
         await elementUpdated(el);
         await waitUntil(() => !el.open);
 
