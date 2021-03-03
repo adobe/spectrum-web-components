@@ -22,7 +22,12 @@ import {
 } from '@open-wc/testing';
 
 import '../overlay-trigger.js';
-import { OverlayTrigger, ActiveOverlay, TriggerInteractions, OverlayOpenCloseDetail } from '../';
+import {
+    OverlayTrigger,
+    ActiveOverlay,
+    TriggerInteractions,
+    OverlayOpenCloseDetail,
+} from '../';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -709,8 +714,8 @@ describe('Overlay Trigger', () => {
         ) as HTMLElement;
         const outerPopover = testDiv.querySelector('#outer-popover') as Popover;
 
-        el.addEventListener('sp-opened',openedSpy);
-        el.addEventListener('sp-closed',closedSpy);
+        el.addEventListener('sp-opened', openedSpy);
+        el.addEventListener('sp-closed', closedSpy);
 
         outerButton.click();
 
@@ -719,15 +724,13 @@ describe('Overlay Trigger', () => {
             'outer content stolen and reparented'
         );
 
-        await waitUntil(
-            () => openedSpy.calledOnce,
-            'opened event sent'
-        );
+        await waitUntil(() => openedSpy.calledOnce, 'opened event sent');
 
         expect(isVisible(outerPopover)).to.be.true;
         expect(closed).to.be.false;
 
-        const openedEvent = openedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        const openedEvent = openedSpy
+            .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
         expect(openedEvent.detail.interaction).to.equal('click');
 
         document.body.click();
@@ -738,14 +741,117 @@ describe('Overlay Trigger', () => {
             'inner content returned'
         );
 
-        await waitUntil(
-            () => closedSpy.calledOnce,
-            'closed event sent'
-        );
+        await waitUntil(() => closedSpy.calledOnce, 'closed event sent');
 
-        const closedEvent = closedSpy.args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
+        const closedEvent = closedSpy
+            .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
         expect(closedEvent.detail.interaction).to.equal('click');
 
         expect(isVisible(outerPopover)).to.be.false;
+    });
+    it('manages multiple layers of `type="modal"', async () => {
+        const el = await fixture(html`
+            <overlay-trigger type="modal" placement="none">
+                <sp-button slot="trigger" variant="cta">
+                    Toggle Dialog
+                </sp-button>
+                <sp-popover dialog slot="click-content">
+                    <overlay-trigger>
+                        <sp-button slot="trigger" variant="primary">
+                            Toggle Dialog
+                        </sp-button>
+                        <sp-popover dialog slot="click-content">
+                            <overlay-trigger type="modal">
+                                <sp-button slot="trigger" variant="secondary">
+                                    Toggle Dialog
+                                </sp-button>
+                                <sp-popover dialog slot="click-content">
+                                    <p>
+                                        When you get this deep, this
+                                        ActiveOverlay should be the only one in
+                                        [slot="open"].
+                                    </p>
+                                    <p>
+                                        All of the rest of the ActiveOverlay
+                                        elements should have had their [slot]
+                                        attribute removed.
+                                    </p>
+                                    <p>
+                                        Closing this ActiveOverlay should
+                                        replace them...
+                                    </p>
+                                </sp-popover>
+                            </overlay-trigger>
+                        </sp-popover>
+                    </overlay-trigger>
+                </sp-popover>
+            </overlay-trigger>
+        `);
+        const overlayTriggers = [...el.querySelectorAll('overlay-trigger')];
+        let activeOverlays = [...document.querySelectorAll('active-overlay')];
+        const triggers = [
+            ...el.querySelectorAll('sp-button[slot="trigger"]'),
+        ] as Button[];
+
+        expect(activeOverlays.length).to.equal(0);
+
+        triggers[0]?.click();
+        await elementUpdated(overlayTriggers[0]);
+        await waitUntil(() => {
+            activeOverlays = [...document.querySelectorAll('active-overlay')];
+            return activeOverlays.length === 1;
+        }, 'The first `active-overlay` element has been added.');
+
+        expect(activeOverlays.length).to.equal(1);
+        expect(activeOverlays[0].slot, 'first overlay, first time').to.equal(
+            'open'
+        );
+
+        triggers[1]?.click();
+        await elementUpdated(overlayTriggers[1]);
+        await waitUntil(() => {
+            activeOverlays = [...document.querySelectorAll('active-overlay')];
+            return activeOverlays.length === 2;
+        }, 'The second `active-overlay` element has been added.');
+
+        expect(activeOverlays[0].slot, 'first overlay, second time').to.equal(
+            'open'
+        );
+        expect(activeOverlays[1].slot, 'second overlay, second time').to.equal(
+            'open'
+        );
+
+        triggers[2]?.click();
+        await elementUpdated(overlayTriggers[2]);
+        await waitUntil(() => {
+            activeOverlays = [...document.querySelectorAll('active-overlay')];
+            return activeOverlays.length === 3;
+        }, 'The third `active-overlay` element has been added.');
+
+        expect(
+            activeOverlays[0].hasAttribute('slot'),
+            'first overlay, third time'
+        ).to.be.false;
+        expect(
+            activeOverlays[1].hasAttribute('slot'),
+            'second overlay, third time'
+        ).to.be.false;
+        expect(activeOverlays[2].slot, 'third overlay, third time').to.equal(
+            'open'
+        );
+
+        document.body.click();
+        await elementUpdated(overlayTriggers[1]);
+        await waitUntil(() => {
+            activeOverlays = [...document.querySelectorAll('active-overlay')];
+            return activeOverlays.length === 2;
+        }, 'The third `active-overlay` element has been removed.');
+
+        await waitUntil(() => {
+            return activeOverlays[0].slot === 'open';
+        }, 'first overlay, last time');
+        expect(activeOverlays[1].slot, 'second overlay, last time').to.equal(
+            'open'
+        );
     });
 });

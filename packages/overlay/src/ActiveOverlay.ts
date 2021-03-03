@@ -198,17 +198,44 @@ export class ActiveOverlay extends SpectrumElement {
         );
     }
 
+    private _modalRoot?: ActiveOverlay;
+
+    public get hasModalRoot(): boolean {
+        return !!this._modalRoot;
+    }
+
     public feature(): void {
         this.tabIndex = 0;
-        if (this.interaction === 'modal') {
+        const parentOverlay = this.trigger.closest('active-overlay');
+        const parentIsModal = parentOverlay && parentOverlay.slot === 'open';
+        // If an overlay it triggered from within a "modal" overlay, it needs to continue
+        // to act like one to get treated correctly in regards to tab trapping.
+        if (this.interaction === 'modal' || parentIsModal || this._modalRoot) {
             this.slot = 'open';
+            // If this isn't a modal root, walk up the overlays to the next modal root
+            // and "feature" each on of the intervening overlays.
+            if (this._modalRoot) {
+                parentOverlay?.feature();
+            }
         }
     }
 
-    public obscure(): void {
-        if (this.interaction === 'modal') {
+    public obscure(
+        nextOverlayInteraction: TriggerInteractions
+    ): ActiveOverlay | undefined {
+        if (this.slot && nextOverlayInteraction === 'modal') {
             this.removeAttribute('slot');
+            // Obscure upto and including the next modal root.
+            if (this.interaction !== 'modal') {
+                const parentOverlay = this.trigger.closest('active-overlay');
+                this._modalRoot = parentOverlay?.obscure(
+                    nextOverlayInteraction
+                );
+                return this._modalRoot;
+            }
+            return this;
         }
+        return undefined;
     }
 
     public firstUpdated(changedProperties: PropertyValues): void {
