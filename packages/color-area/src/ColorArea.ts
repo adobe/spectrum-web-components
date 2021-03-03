@@ -252,6 +252,7 @@ export class ColorArea extends SpectrumElement {
 
     private handlePointerdown(event: PointerEvent): void {
         this._previousColor = this._color.clone();
+        this.boundingClientRect = this.getBoundingClientRect();
 
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
         if (event.pointerType === 'mouse') {
@@ -390,10 +391,7 @@ export class ColorArea extends SpectrumElement {
 
     protected firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
-
-        if (!this.boundingClientRect) {
-            this.boundingClientRect = this.getBoundingClientRect();
-        }
+        this.boundingClientRect = this.getBoundingClientRect();
 
         this.addEventListener('focusin', this.handleFocusin);
         this.addEventListener('focusout', this.handleFocusout);

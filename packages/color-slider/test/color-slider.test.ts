@@ -337,7 +337,7 @@ describe('ColorSlider', () => {
 
         expect(el.sliderHandlePosition).to.equal(53.125);
     });
-    xit('accepts pointer events in dir="rtl"', async () => {
+    it('accepts pointer events in dir="rtl"', async () => {
         const el = await fixture<ColorSlider>(
             html`
                 <sp-color-slider
@@ -350,7 +350,7 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         const { handle } = (el as unknown) as { handle: HTMLElement };
-        const clientWidth = document.body.offsetWidth;
+        const clientWidth = document.documentElement.offsetWidth;
 
         handle.setPointerCapture = () => {
             return;
@@ -363,6 +363,7 @@ describe('ColorSlider', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('.gradient') as HTMLElement;
+        debugger;
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,
@@ -376,7 +377,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(56.25);
+        expect(el.sliderHandlePosition).to.equal(52.083333333333336);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -401,7 +402,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(61.45833333333333);
+        expect(el.sliderHandlePosition).to.equal(46.875);
     });
     const colorFormats: {
         name: string;

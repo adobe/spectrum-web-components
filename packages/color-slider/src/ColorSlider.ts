@@ -19,7 +19,6 @@ import {
     streamingListener,
     PropertyValues,
 } from '@spectrum-web-components/base';
-import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import styles from './color-slider.css.js';
@@ -235,6 +234,7 @@ export class ColorSlider extends Focusable {
 
     private handlePointerdown(event: PointerEvent): void {
         this._previousColor = this._color.clone();
+        this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
     }
 
@@ -342,34 +342,8 @@ export class ColorSlider extends Focusable {
         `;
     }
 
-    protected updated(changed: PropertyValues): void {
-        if (changed.has('dir')) {
-            this.boundingClientRect = this.getBoundingClientRect();
-        }
-    }
-
-    private observer?: WithSWCResizeObserver['ResizeObserver'];
-
-    public connectedCallback(): void {
-        super.connectedCallback();
-        if (
-            !this.observer &&
-            ((window as unknown) as WithSWCResizeObserver).ResizeObserver
-        ) {
-            this.observer = new ((window as unknown) as WithSWCResizeObserver).ResizeObserver(
-                (entries: SWCResizeObserverEntry[]) => {
-                    for (const entry of entries) {
-                        this.boundingClientRect = entry.contentRect;
-                    }
-                    this.requestUpdate();
-                }
-            );
-        }
-        this.observer?.observe(this);
-    }
-
-    public disconnectedCallback(): void {
-        this.observer?.unobserve(this);
-        super.disconnectedCallback();
+    protected firstUpdated(changed: PropertyValues): void {
+        super.firstUpdated(changed);
+        this.boundingClientRect = this.getBoundingClientRect();
     }
 }
