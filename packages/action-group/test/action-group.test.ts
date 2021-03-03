@@ -20,6 +20,8 @@ import {
 
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionGroup } from '..';
 import {
     arrowDownEvent,
@@ -298,16 +300,7 @@ describe('ActionGroup', () => {
         expect(!thirdElement.selected, 'third child not selected');
         expect(el.selected.length).to.equal(0);
     });
-    it('accepts keybord input', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="Selects Single Group" selects="single">
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button selected>Second</sp-action-button>
-                    <sp-action-button class="third">Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+    const acceptKeyboardInput = async (el: ActionGroup) => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
@@ -363,6 +356,49 @@ describe('ActionGroup', () => {
 
         expect(el.selected.length === 1);
         expect(el.selected.includes('Second'));
+    };
+    it('accepts keybord input', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group label="Selects Single Group" selects="single">
+                    <sp-action-button>First</sp-action-button>
+                    <sp-action-button selected>Second</sp-action-button>
+                    <sp-action-button class="third">Third</sp-action-button>
+                </sp-action-group>
+            `
+        );
+        await acceptKeyboardInput(el);
+    });
+    it('accepts keybord input with tooltip', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group label="Selects Single Group" selects="single">
+                    <overlay-trigger>
+                        <sp-action-button slot="trigger">
+                            First
+                        </sp-action-button>
+                        <sp-tooltip slot="hover-content">
+                            Definitely the first one.
+                        </sp-tooltip>
+                    </overlay-trigger>
+                    <overlay-trigger>
+                        <sp-action-button slot="trigger" selected>
+                            Second
+                        </sp-action-button>
+                        <sp-tooltip slot="hover-content">
+                            Not the first, not the last.
+                        </sp-tooltip>
+                    </overlay-trigger>
+                    <overlay-trigger>
+                        <sp-action-button slot="trigger" class="third">
+                            Third
+                        </sp-action-button>
+                        <sp-tooltip slot="hover-content">Select me.</sp-tooltip>
+                    </overlay-trigger>
+                </sp-action-group>
+            `
+        );
+        await acceptKeyboardInput(el);
     });
     it('accepts keybord input when [dir="ltr"]', async () => {
         const el = await fixture<ActionGroup>(
@@ -468,16 +504,3 @@ describe('ActionGroup', () => {
         expect(activeElement === secondElement);
     });
 });
-
-// action with [selected] by default
-// action with [selected] applied
-// action without [selected] clicked
-// group with `selected.length` by default
-// group with `selected.length` applied
-// group with [selects="one"] with `select.length > 1` by default
-// group with [selects="one"] with `select.length > 1` applied
-// tabIndex=-1 managed when tabbing past
-// tabIndex=-1 managed when using arrow keys
-// tabIndex=-1 managed when clicking with "mouse"
-// tabIndex=-1 managed when clicking with "keyboard"
-// selects="multiple"

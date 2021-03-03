@@ -17,7 +17,6 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-    queryAssignedNodes,
 } from '@spectrum-web-components/base';
 import type { ActionButton } from '@spectrum-web-components/action-button';
 
@@ -33,14 +32,8 @@ export class ActionGroup extends SpectrumElement {
         return [styles];
     }
 
-    @queryAssignedNodes('', true)
-    public defaultNodes!: Node[];
-
-    public get buttons(): ActionButton[] {
-        return this.defaultNodes.filter(
-            (node) => (node as HTMLElement).tagName === 'SP-ACTION-BUTTON'
-        ) as ActionButton[];
-    }
+    public buttons: ActionButton[] = [];
+    protected _buttonSelector = 'sp-action-button';
 
     @property({ type: Boolean, reflect: true })
     public compact = false;
@@ -197,9 +190,9 @@ export class ActionGroup extends SpectrumElement {
             case 'PageDown':
             default:
                 const tagsSiblings = [
-                    ...(this.getRootNode() as Document).querySelectorAll<
-                        ActionGroup
-                    >('sp-action-group'),
+                    ...(this.getRootNode() as Document).querySelectorAll<ActionGroup>(
+                        'sp-action-group'
+                    ),
                 ];
                 if (tagsSiblings.length < 2) {
                     return;
@@ -247,6 +240,9 @@ export class ActionGroup extends SpectrumElement {
     };
 
     private async manageSelects(): Promise<void> {
+        if (!this.buttons.length) {
+            return;
+        }
         switch (this.selects) {
             case 'single': {
                 this.setAttribute('role', 'radiogroup');
@@ -307,7 +303,7 @@ export class ActionGroup extends SpectrumElement {
 
     protected render(): TemplateResult {
         return html`
-            <slot @slotchange=${this.manageSelects} role="presentation"></slot>
+            <slot role="presentation"></slot>
         `;
     }
 
@@ -343,4 +339,31 @@ export class ActionGroup extends SpectrumElement {
             }
         }
     }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        if (!this.observer) {
+            const findButtons = (): void => {
+                const buttons = [
+                    ...this.querySelectorAll(this._buttonSelector),
+                ] as ActionButton[];
+                buttons.filter((button) => {
+                    const buttonParent = button.parentElement;
+                    return !buttonParent?.closest(this._buttonSelector);
+                });
+                this.buttons = buttons;
+                this.manageSelects();
+            };
+            this.observer = new MutationObserver(findButtons);
+            findButtons();
+        }
+        this.observer.observe(this, { childList: true, subtree: true });
+    }
+
+    public disconnectedCallback(): void {
+        this.observer.disconnect();
+        super.disconnectedCallback();
+    }
+
+    private observer!: MutationObserver;
 }
