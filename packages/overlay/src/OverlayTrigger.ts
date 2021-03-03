@@ -37,8 +37,8 @@ import overlayTriggerStyles from './overlay-trigger.css.js';
  * @slot click-content - The content that will be displayed on click
  * @slot longpress-content - The content that will be displayed on click
  *
- * @fires sp-open - Announces that the overlay has been opened
- * @fires sp-close - Announces that the overlay has been closed
+ * @fires sp-opened - Announces that the overlay has been opened
+ * @fires sp-closed - Announces that the overlay has been closed
  */
 export class OverlayTrigger extends LitElement {
     private closeClickOverlay?: () => void;
