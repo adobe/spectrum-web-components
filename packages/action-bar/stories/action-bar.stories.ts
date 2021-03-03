@@ -31,10 +31,10 @@ export const Default = (): TemplateResult => {
             <sp-checkbox indeterminate>228 Selected</sp-checkbox>
             <sp-action-group quiet>
                 <sp-action-button>
-                    <sp-icon-edit slot="icon"></sp-icon-edit>
+                    <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
                 </sp-action-button>
                 <sp-action-button>
-                    <sp-icon-more slot="icon"></sp-icon-more>
+                    <sp-icon-more slot="icon" label="More"></sp-icon-more>
                 </sp-action-button>
             </sp-action-group>
         </sp-action-bar>
