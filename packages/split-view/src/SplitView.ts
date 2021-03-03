@@ -377,9 +377,9 @@ export class SplitView extends SpectrumElement {
                 const size = window
                     .getComputedStyle(firstEl)
                     .getPropertyValue(this.vertical ? 'height' : 'width');
-                const size_i = parseInt(size, 10);
+                const size_i = parseFloat(size);
                 if (!isNaN(size_i)) {
-                    return this.getLimitedPosition(size_i);
+                    return this.getLimitedPosition(Math.ceil(size_i));
                 }
             }
         }
