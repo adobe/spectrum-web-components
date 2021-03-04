@@ -97,7 +97,6 @@ export class PickerBase extends SizedMixin(Focusable) {
     public menuItems: MenuItem[] = [];
     private restoreChildren?: Function;
 
-    @query('sp-menu', true) // important to cache since this can get reparented
     public optionsMenu!: Menu;
 
     /**
@@ -350,13 +349,24 @@ export class PickerBase extends SizedMixin(Focusable) {
                 @click=${this.onClick}
                 @sp-overlay-closed=${this.onOverlayClosed}
             >
-                <sp-menu id="menu" aria-role="${this.listRole}"></sp-menu>
+                <sp-menu id="menu" role="${this.listRole}"></sp-menu>
             </sp-popover>
         `;
     }
 
+    protected updateMenuItems(): void {
+        this.menuItems = [
+            ...this.querySelectorAll(`sp-menu-item`),
+        ] as MenuItem[];
+    }
+
     protected firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
+
+        // Since the sp-menu gets reparented by the popover, initialize it here
+        this.optionsMenu = this.shadowRoot.querySelector('sp-menu') as Menu;
+
+        this.updateMenuItems();
 
         const deprecatedMenu = this.querySelector('sp-menu');
         if (deprecatedMenu) {
@@ -427,9 +437,7 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     public connectedCallback(): void {
         if (!this.open) {
-            this.menuItems = [
-                ...this.querySelectorAll(`sp-menu-item`),
-            ] as MenuItem[];
+            this.updateMenuItems();
         }
         super.connectedCallback();
     }
