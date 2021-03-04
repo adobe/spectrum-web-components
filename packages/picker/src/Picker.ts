@@ -58,7 +58,6 @@ type PickerSize = Exclude<ElementSize, 'xxl'>;
 /**
  * @element sp-picker
  * @slot label - The placeholder content for the picker
- * @slot {"sp-menu"} - The menu of options that will display when the picker is open
  *
  * @fires sp-open - Announces that the overlay has been opened
  * @fires sp-close - Announces that the overlay has been closed

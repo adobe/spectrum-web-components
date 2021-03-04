@@ -38,11 +38,10 @@ const chevronClass = {
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
 
-type SplitButtonSize = Exclude<ElementSize, 'xxl'>;
-
 /**
- * @slot options - The menu with options that will display when the picker is open
- */
+ * @element sp-split-button
+ **/
+type SplitButtonSize = Exclude<ElementSize, 'xxl'>;
 export class SplitButton extends SizedMixin(PickerBase) {
     public static get styles(): CSSResultArray {
         return [styles, chevronStyles];
