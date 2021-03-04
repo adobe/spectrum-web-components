@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.6.3...@spectrum-web-components/menu@0.7.0) (2021-03-04)
+
+### Bug Fixes
+
+-   **menu:** ensure active descendant is in view when activated ([6edc351](https://github.com/adobe/spectrum-web-components/commit/6edc3518fd305cbd35b74f013546bb32aef7616b))
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 ## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.6.2...@spectrum-web-components/menu@0.6.3) (2021-02-11)
 
 ### Bug Fixes

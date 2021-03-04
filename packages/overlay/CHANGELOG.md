@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.9.0...@spectrum-web-components/overlay@0.10.0) (2021-03-04)
+
+### Bug Fixes
+
+-   **overlay:** correct overlay content sizing ([d9bcd6f](https://github.com/adobe/spectrum-web-components/commit/d9bcd6fd6b4eecae297c6e5cc5330e79a9e198ff))
+-   **overlay:** track "modalRoots" for expanded overlay management ([dceccb1](https://github.com/adobe/spectrum-web-components/commit/dceccb1617d54da4c0db8035954a4eb4e0367c30))
+-   wait for fonts ready before positioning overlays ([cb8026a](https://github.com/adobe/spectrum-web-components/commit/cb8026a1999a4458b442673291214269fc1e1cef))
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 # [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.8.2...@spectrum-web-components/overlay@0.9.0) (2021-02-11)
 
 ### Bug Fixes

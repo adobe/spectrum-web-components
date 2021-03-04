@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.18.0...@spectrum-web-components/bundle@0.19.0) (2021-03-04)
+
+### Features
+
+-   **thumbnail:** add the thumbnail package ([56935d5](https://github.com/adobe/spectrum-web-components/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 # [0.18.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.17.3...@spectrum-web-components/bundle@0.18.0) (2021-02-19)
 
 ### Bug Fixes

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.2.0...@spectrum-web-components/picker@0.3.0) (2021-03-04)
+
+### Bug Fixes
+
+-   **menu:** ensure active descendant is in view when activated ([6edc351](https://github.com/adobe/spectrum-web-components/commit/6edc3518fd305cbd35b74f013546bb32aef7616b))
+-   **picker:** add "quick select" action to right/left arrow keys ([21895ee](https://github.com/adobe/spectrum-web-components/commit/21895eed8d194b0a570cbb2bafeaa06c9511bf27))
+-   **picker:** ensure that width is customizable from the outside ([702b052](https://github.com/adobe/spectrum-web-components/commit/702b052f9ea1686d2a964648d4bb1d365178160f))
+-   support a wider number of sizes ([ee44978](https://github.com/adobe/spectrum-web-components/commit/ee4497830da0d3bc63d4414ad5548291a39588c7))
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.1.0...@spectrum-web-components/picker@0.2.0) (2021-02-11)
 
 ### Bug Fixes

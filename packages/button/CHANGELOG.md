@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.12.0...@spectrum-web-components/button@0.13.0) (2021-03-04)
+
+### Bug Fixes
+
+-   **button:** include "pointerleave" in management of the "active" state ([2e702e4](https://github.com/adobe/spectrum-web-components/commit/2e702e45516cb736ea930fdf927e457c10439e8e))
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 # [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.11.2...@spectrum-web-components/button@0.12.0) (2021-02-11)
 
 ### Bug Fixes

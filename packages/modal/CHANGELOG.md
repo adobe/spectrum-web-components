@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.2.1...@spectrum-web-components/modal@0.3.0) (2021-03-04)
+
+### Bug Fixes
+
+-   **overlay:** correct overlay content sizing ([d9bcd6f](https://github.com/adobe/spectrum-web-components/commit/d9bcd6fd6b4eecae297c6e5cc5330e79a9e198ff))
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 ## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.2.0...@spectrum-web-components/modal@0.2.1) (2021-02-11)
 
 ### Bug Fixes

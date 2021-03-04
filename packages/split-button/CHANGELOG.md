@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.3.4...@spectrum-web-components/split-button@0.4.0) (2021-03-04)
+
+### Bug Fixes
+
+-   support a wider number of sizes ([ee44978](https://github.com/adobe/spectrum-web-components/commit/ee4497830da0d3bc63d4414ad5548291a39588c7))
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 ## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.3.3...@spectrum-web-components/split-button@0.3.4) (2021-02-19)
 
 ### Bug Fixes

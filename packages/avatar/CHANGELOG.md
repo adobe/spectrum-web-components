@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/avatar@0.6.1...@spectrum-web-components/avatar@0.7.0) (2021-03-04)
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 ## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/avatar@0.6.0...@spectrum-web-components/avatar@0.6.1) (2021-02-11)
 
 ### Bug Fixes

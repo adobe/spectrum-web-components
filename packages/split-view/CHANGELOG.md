@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.1.0...@spectrum-web-components/split-view@0.2.0) (2021-03-04)
+
+### Bug Fixes
+
+-   correct calculation of height when using primary-size='auto' ([0ff67c0](https://github.com/adobe/spectrum-web-components/commit/0ff67c0c09fd8d2edf133fb2bf63476b49845794))
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
+### Reverts
+
+-   version update ([ab58bf9](https://github.com/adobe/spectrum-web-components/commit/ab58bf9721d0332460a20f260d500455c58bad47))
+
 # 0.1.0 (2021-02-19)
 
 ### Bug Fixes

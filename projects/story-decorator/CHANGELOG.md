@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.2.3...@spectrum-web-components/story-decorator@0.3.0) (2021-03-04)
+
+### Bug Fixes
+
+-   **story-decorator:** use sp-field-label ([5992c98](https://github.com/adobe/spectrum-web-components/commit/5992c98024bbb9476a18c4a69a024968c05cac17))
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 ## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.2.2...@spectrum-web-components/story-decorator@0.2.3) (2021-02-11)
 
 **Note:** Version bump only for package @spectrum-web-components/story-decorator

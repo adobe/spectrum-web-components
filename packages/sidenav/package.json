@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.8.1",
+    "version": "0.9.0",
     "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
@@ -56,8 +56,8 @@
         "@spectrum-css/sidenav": "^3.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/base": "^0.3.3",
-        "@spectrum-web-components/shared": "^0.10.0",
+        "@spectrum-web-components/base": "^0.4.0",
+        "@spectrum-web-components/shared": "^0.11.0",
         "tslib": "^2.0.0"
     }
 }

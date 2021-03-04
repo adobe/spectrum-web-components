@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.1.4...example-project-webpack@1.2.0) (2021-03-04)
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 ## [1.1.4](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.1.3...example-project-webpack@1.1.4) (2021-02-11)
 
 **Note:** Version bump only for package example-project-webpack

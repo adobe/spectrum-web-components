@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.3.3...@spectrum-web-components/action-group@0.4.0) (2021-03-04)
+
+### Bug Fixes
+
+-   **action-group:** support ActionButtons that are not direct children ([1d4efd5](https://github.com/adobe/spectrum-web-components/commit/1d4efd58386ebfb940763911cb90878cafcf6938))
+
+### Features
+
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.3.2...@spectrum-web-components/action-group@0.3.3) (2021-02-11)
 
 ### Bug Fixes
