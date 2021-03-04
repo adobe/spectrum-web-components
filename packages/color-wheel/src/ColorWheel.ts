@@ -47,6 +47,9 @@ export class ColorWheel extends Focusable {
     @query('.handle')
     private handle!: ColorHandle;
 
+    @property({ type: String })
+    public label = 'hue';
+
     @property({ type: Number })
     public step = 1;
 
@@ -204,6 +207,12 @@ export class ColorWheel extends Focusable {
         }
     }
 
+    private handleInput(event: Event & { target: HTMLInputElement }): void {
+        const { valueAsNumber } = event.target;
+
+        this.value = valueAsNumber;
+        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
+    }
     private handleFocus(): void {
         this.focused = true;
     }
@@ -307,11 +316,12 @@ export class ColorWheel extends Focusable {
             <input
                 type="range"
                 class="slider"
-                aria-label="hue"
+                aria-label=${this.label}
                 min="0"
                 max="360"
                 step=${this.step}
                 .value=${String(this.value)}
+                @input=${this.handleInput}
                 @keydown=${this.handleKeydown}
                 @keyup=${this.handleKeyup}
                 @focus=${this.handleFocus}

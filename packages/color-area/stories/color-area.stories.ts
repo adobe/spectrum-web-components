@@ -31,7 +31,7 @@ export const Default = (): TemplateResult => {
                 next.style.color = target.color as string;
             }}
         ></sp-color-area>
-        <div style="color: #ff0000">#ff0000</div>
+        <div style="color: #ff0000" aria-live="off">#ff0000</div>
     `;
 };
 
