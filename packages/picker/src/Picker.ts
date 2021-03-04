@@ -121,8 +121,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     @query('sp-popover')
     private popover!: Popover;
 
-    /* @type {"listbox" | "menu"} */
-    protected listRole: string = 'listbox';
+    protected listRole: 'listbox' | 'menu' = 'listbox';
     protected itemRole = 'option';
 
     public constructor() {
