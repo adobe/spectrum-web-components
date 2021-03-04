@@ -62,7 +62,9 @@ describe('ColorSlider', () => {
     it('accepts "Arrow*" keypresses', async () => {
         const el = await fixture<ColorSlider>(
             html`
-                <sp-color-slider></sp-color-slider>
+                <sp-color-slider
+                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-default-height: 24px;"
+                ></sp-color-slider>
             `
         );
 
@@ -88,7 +90,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(4);
+        expect(el.sliderHandlePosition).to.equal(3.9999999999999996);
 
         input.dispatchEvent(arrowDownEvent);
         input.dispatchEvent(arrowDownKeyupEvent);
@@ -97,7 +99,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(2);
+        expect(el.sliderHandlePosition).to.equal(1.9999999999999998);
 
         input.dispatchEvent(arrowLeftEvent);
         input.dispatchEvent(arrowLeftKeyupEvent);
@@ -363,7 +365,7 @@ describe('ColorSlider', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('.gradient') as HTMLElement;
-        debugger;
+
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,
