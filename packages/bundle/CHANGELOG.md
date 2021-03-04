@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.19.0...@spectrum-web-components/bundle@0.19.1) (2021-03-04)
+
+### Bug Fixes
+
+-   **bundle:** bundle does not export its own custom-elements.json ([a362886](https://github.com/adobe/spectrum-web-components/commit/a362886b19ae6878d4969d48bac07686f66e40bf))
+
 # [0.19.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.18.0...@spectrum-web-components/bundle@0.19.0) (2021-03-04)
 
 ### Features
