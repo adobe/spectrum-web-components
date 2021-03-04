@@ -41,6 +41,9 @@ export class ColorArea extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    @property({ type: String })
+    public label = 'saturation and luminosity';
+
     @query('.handle')
     private handle!: ColorHandle;
 
@@ -65,7 +68,6 @@ export class ColorArea extends SpectrumElement {
 
     @property({ type: String })
     public get value(): ColorValue {
-        //return this._value.toHex();
         return this.color;
     }
 
@@ -248,6 +250,13 @@ export class ColorArea extends SpectrumElement {
         }
     }
 
+    private handleInput(event: Event & { target: HTMLInputElement }): void {
+        const { valueAsNumber, name } = event.target;
+
+        this[name as 'x' | 'y'] = valueAsNumber;
+        this._color = new TinyColor({ h: this.hue, s: this.x, v: 1 - this.y });
+    }
+
     private boundingClientRect!: DOMRect;
 
     private handlePointerdown(event: PointerEvent): void {
@@ -300,9 +309,7 @@ export class ColorArea extends SpectrumElement {
      */
     private calculateHandlePosition(event: PointerEvent): [number, number] {
         /* c8 ignore next 3 */
-        console.log(this.boundingClientRect);
         if (!this.boundingClientRect) {
-            console.log('who am i?');
             return [this.x, this.y];
         }
         const rect = this.boundingClientRect;
@@ -368,22 +375,24 @@ export class ColorArea extends SpectrumElement {
                 type="range"
                 class="slider"
                 name="x"
-                aria-label="saturation and value"
+                aria-label=${this.label}
                 min="0"
                 max="1"
                 step=${this.step}
                 .value=${String(this.x)}
+                @input=${this.handleInput}
                 @keyup=${(event: KeyboardEvent) => event.preventDefault()}
             />
             <input
                 type="range"
                 class="slider"
                 name="y"
-                aria-label="saturation and value"
+                aria-label=${this.label}
                 min="0"
                 max="1"
                 step=${this.step}
                 .value=${String(this.y)}
+                @input=${this.handleInput}
                 @keyup=${(event: KeyboardEvent) => event.preventDefault()}
             />
         `;

@@ -45,6 +45,9 @@ export class ColorSlider extends Focusable {
     @query('.handle')
     private handle!: ColorHandle;
 
+    @property({ type: String })
+    public label = 'hue';
+
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
@@ -211,6 +214,8 @@ export class ColorSlider extends Focusable {
             100,
             Math.max(0, this.sliderHandlePosition + delta)
         );
+        this.value = 360 * (this.sliderHandlePosition / 100);
+        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
     }
 
     private handleKeyup(event: KeyboardEvent): void {
@@ -220,6 +225,14 @@ export class ColorSlider extends Focusable {
             this.altKeys.delete(key);
             this.altered = this.altKeys.size;
         }
+    }
+
+    private handleInput(event: Event & { target: HTMLInputElement }): void {
+        const { valueAsNumber } = event.target;
+
+        this.value = valueAsNumber;
+        this.sliderHandlePosition = 100 * (this.value / 360);
+        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
     }
 
     private handleFocus(): void {
@@ -332,8 +345,9 @@ export class ColorSlider extends Focusable {
                 min="0"
                 max="360"
                 step=${this.step}
-                aria-label="color"
-                .value=${String(this.sliderHandlePosition)}
+                aria-label=${this.label}
+                .value=${String(this.value)}
+                @input=${this.handleInput}
                 @keydown=${this.handleKeydown}
                 @keyup=${this.handleKeyup}
                 @focus=${this.handleFocus}
