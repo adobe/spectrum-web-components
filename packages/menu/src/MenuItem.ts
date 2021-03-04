@@ -76,16 +76,6 @@ export class MenuItem extends ActionButton {
         return content;
     }
 
-    public renderAnchor(): TemplateResult {
-        return html`
-            ${this.buttonContent}
-            ${super.renderAnchor({
-                id: 'button',
-                className: 'button anchor hidden',
-            })}
-        `;
-    }
-
     protected renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
