@@ -105,6 +105,18 @@ wIconButton.story = {
     name: 'w/ Icon button',
 };
 
+export const likeAnchor = (): TemplateResult => {
+    return html`
+        <sp-action-button
+            href="https://opensource.adobe.com/spectrum-web-components"
+            target="_blank"
+        >
+            <sp-icon-edit slot="icon"></sp-icon-edit>
+            Edit the Documentation Site
+        </sp-action-button>
+    `;
+};
+
 export const iconOnlyButton = (): TemplateResult => {
     return html`
         <sp-action-button label="Edit">

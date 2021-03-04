@@ -75,6 +75,7 @@ export class ButtonBase extends LikeAnchor(
 
     constructor() {
         super();
+        this.proxyFocus = this.proxyFocus.bind(this);
 
         this.addEventListener('click', this.handleClickCapture, {
             capture: true,
@@ -102,11 +103,16 @@ export class ButtonBase extends LikeAnchor(
         }
     }
 
+    private proxyFocus(): void {
+        this.focus();
+    }
+
     private shouldProxyClick(): boolean {
         let handled = false;
         if (this.anchorElement) {
             this.anchorElement.click();
             handled = true;
+            this.anchorElement.classList.remove('clicking');
         } else if (this.type !== 'button') {
             const proxy = document.createElement('button');
             proxy.type = this.type;
@@ -118,6 +124,16 @@ export class ButtonBase extends LikeAnchor(
         return handled;
     }
 
+    public renderAnchor(): TemplateResult {
+        return html`
+            ${this.buttonContent}
+            ${super.renderAnchor({
+                id: 'button',
+                className: 'button anchor hidden',
+            })}
+        `;
+    }
+
     protected renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
@@ -126,11 +142,7 @@ export class ButtonBase extends LikeAnchor(
 
     protected render(): TemplateResult {
         return this.href && this.href.length > 0
-            ? this.renderAnchor({
-                  id: 'button',
-                  className: 'button anchor',
-                  anchorContent: this.buttonContent,
-              })
+            ? this.renderAnchor()
             : this.renderButton();
     }
 
@@ -223,6 +235,7 @@ export class ButtonBase extends LikeAnchor(
             }
         }
         if (this.anchorElement) {
+            this.anchorElement.addEventListener('focus', this.proxyFocus);
             this.anchorElement.tabIndex = -1;
         }
     }
