@@ -98,6 +98,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     public menuItems: MenuItem[] = [];
     private restoreChildren?: Function;
 
+    @query('sp-menu', true) // important to cache since this can get reparented
     public optionsMenu!: Menu;
 
     /**
@@ -272,7 +273,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             placement: this.placement,
             receivesFocus: 'auto',
         });
-        await this.manageSelection();
+        this.manageSelection();
         this.menuStateResolver();
     }
 
@@ -357,23 +358,20 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
 
-        // Since the sp-menu gets reparented by the popover, initialize it here
-        this.optionsMenu = this.shadowRoot.querySelector('sp-menu') as Menu;
-
         const deprecatedMenu = this.querySelector('sp-menu');
         if (deprecatedMenu) {
             console.warn(
                 `Deprecation Notice: You no longer need to provide an sp-menu child to ${this.tagName.toLowerCase()}. Any styling or attributes on the sp-menu will be ignored.`
             );
         }
-        this.menuItems = [
-            ...this.querySelectorAll(`sp-menu-item`),
-        ] as MenuItem[];
     }
 
     protected updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
-        if (changedProperties.has('value') && !changedProperties.has('selectedItem')) {
+        if (
+            changedProperties.has('value') &&
+            !changedProperties.has('selectedItem')
+        ) {
             this.manageSelection();
         }
         if (changedProperties.has('disabled') && this.disabled) {
@@ -394,7 +392,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
     }
 
-    protected async manageSelection(): Promise<void> {
+    protected manageSelection(): void {
         /* c8 ignore next 3 */
         if (this.menuItems.length > 0) {
             let selectedItem: MenuItem | undefined;
@@ -417,12 +415,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             }
             return;
         }
-        if (this.open) {
-            await this.optionsMenu.updateComplete;
-            if (this.optionsMenu.menuItems.length) {
-                this.manageSelection();
-            }
-        }
     }
 
     private menuStatePromise = Promise.resolve();
@@ -431,6 +423,15 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected async _getUpdateComplete(): Promise<void> {
         await super._getUpdateComplete();
         await this.menuStatePromise;
+    }
+
+    public connectedCallback(): void {
+        if (!this.open) {
+            this.menuItems = [
+                ...this.querySelectorAll(`sp-menu-item`),
+            ] as MenuItem[];
+        }
+        super.connectedCallback();
     }
 
     public disconnectedCallback(): void {
@@ -451,32 +452,25 @@ export class Picker extends PickerBase {
             return;
         }
         event.preventDefault();
-        /* c8 ignore next 3 */
-        if (!this.optionsMenu) {
-            return;
-        }
         if (code === 'ArrowUp' || code === 'ArrowDown') {
             this.open = true;
             return;
         }
         const selectedIndex = this.selectedItem
-            ? this.optionsMenu.menuItems.indexOf(this.selectedItem)
+            ? this.menuItems.indexOf(this.selectedItem)
             : -1;
         // use a positive offset to find the first non-disabled item when no selection is available.
         const nextOffset = !this.value || code === 'ArrowRight' ? 1 : -1;
         let nextIndex = selectedIndex + nextOffset;
         while (
-            this.optionsMenu.menuItems[nextIndex] &&
-            this.optionsMenu.menuItems[nextIndex].disabled
+            this.menuItems[nextIndex] &&
+            this.menuItems[nextIndex].disabled
         ) {
             nextIndex += nextOffset;
         }
-        nextIndex = Math.max(
-            Math.min(nextIndex, this.optionsMenu.menuItems.length),
-            0
-        );
+        nextIndex = Math.max(Math.min(nextIndex, this.menuItems.length), 0);
         if (!this.value || nextIndex !== selectedIndex) {
-            this.setValueFromItem(this.optionsMenu.menuItems[nextIndex]);
+            this.setValueFromItem(this.menuItems[nextIndex]);
         }
     };
 }

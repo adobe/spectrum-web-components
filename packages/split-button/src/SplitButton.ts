@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
+    PropertyValues,
     html,
     query,
     ifDefined,
@@ -158,7 +159,14 @@ export class SplitButton extends SizedMixin(PickerBase) {
         `;
     }
 
-    protected async manageSelection(): Promise<void> {
+    protected updated(changedProperties: PropertyValues): void {
+        super.updated(changedProperties);
+        if (changedProperties.has('value')) {
+            this.manageSplitButtonItems();
+        }
+    }
+
+    protected manageSelection(): void {
         super.manageSelection();
         this.manageSplitButtonItems();
     }
@@ -167,14 +175,11 @@ export class SplitButton extends SizedMixin(PickerBase) {
         if (this.menuItems.length) {
             if (this.type === 'more') {
                 this.menuItems[0].hidden = true;
-                this.menuItems.forEach(
-                    (el) => (el.selected = false)
-                );
+                this.menuItems.forEach((el) => (el.selected = false));
                 this.menuItems[0].selected = true;
                 this.selectedItem = this.menuItems[0];
             } else {
-                this.selectedItem =
-                    this.selectedItem || this.menuItems[0];
+                this.selectedItem = this.selectedItem || this.menuItems[0];
                 this.selectedItem.selected = true;
             }
             return;
