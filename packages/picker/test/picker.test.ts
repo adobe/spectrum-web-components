@@ -66,6 +66,34 @@ describe('Picker', () => {
         return el;
     };
 
+    const deprecatedPickerFixture = async (): Promise<Picker> => {
+        const el = await fixture<Picker>(
+            html`
+                <sp-picker
+                    label="Select a Country with a very long label, too long in fact"
+                >
+                    <sp-menu>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item value="option-2">
+                            Select Inverse
+                        </sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                    </sp-menu>
+                </sp-picker>
+            `
+        );
+
+        await waitUntil(
+            () => !!window.applyFocusVisiblePolyfill,
+            'polyfill loaded'
+        );
+        return el;
+    };
+
     const slottedLabelFixture = async (): Promise<Picker> => {
         const el = await fixture<Picker>(
             html`
@@ -187,6 +215,30 @@ describe('Picker', () => {
         el1.click();
         await Promise.all([elementUpdated(el1), elementUpdated(el2)]);
         await waitUntil(() => el1.open && !el2.open, '1 open, 2 closed: again');
+    });
+    it('selects with deprecated syntax', async () => {
+        const el = await deprecatedPickerFixture();
+
+        await elementUpdated(el);
+
+        const secondItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+        const button = el.button as HTMLButtonElement;
+
+        button.click();
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        expect(el.selectedItem?.itemText).to.be.undefined;
+        expect(el.value).to.equal('');
+
+        secondItem.click();
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+        expect(el.selectedItem?.itemText).to.equal('Select Inverse');
+        expect(el.value).to.equal('option-2');
     });
     it('selects', async () => {
         const el = await pickerFixture();

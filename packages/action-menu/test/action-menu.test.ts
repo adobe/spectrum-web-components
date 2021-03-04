@@ -19,6 +19,23 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
+const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>
+    await fixture<ActionMenu>(
+        html`
+            <sp-action-menu>
+                <sp-menu>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-menu>
+            </sp-action-menu>
+        `
+    );
+
 const actionMenuFixture = async (): Promise<ActionMenu> =>
     await fixture<ActionMenu>(
         html`
@@ -107,6 +124,16 @@ describe('Action menu', () => {
     });
     it('opens unmeasured', async () => {
         const el = await actionMenuFixture();
+
+        await elementUpdated(el);
+        const button = el.button as HTMLButtonElement;
+
+        button.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+    });
+    it('opens unmeasured with deprecated syntax', async () => {
+        const el = await deprecatedActionMenuFixture();
 
         await elementUpdated(el);
         const button = el.button as HTMLButtonElement;

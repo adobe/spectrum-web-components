@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyrsght 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,17 +11,43 @@ governing permissions and limitations under the License.
 */
 
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { html } from '@open-wc/demoing-storybook';
 import { spy } from 'sinon';
 
 import '../sp-split-button.js';
 import { SplitButton } from '..';
 import { cta, moreCta } from '../stories/split-button.stories.js';
+import { TemplateResult } from '@spectrum-web-components/base';
 import { MenuItem } from '@spectrum-web-components/menu';
 import { arrowDownEvent } from '../../../test/testing-helpers.js';
+
+const deprecatedMenu = (): TemplateResult => html`
+    <sp-menu>
+        <sp-menu-item>Option 1</sp-menu-item>
+        <sp-menu-item>Option Extended</sp-menu-item>
+        <sp-menu-item>Short</sp-menu-item>
+    </sp-menu>
+`;
 
 describe('Splitbutton', () => {
     it('loads [type="field"] splitbutton accessibly', async () => {
         const test = await fixture<HTMLDivElement>(cta());
+        const el1 = test.querySelector('sp-split-button') as SplitButton;
+        const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
+
+        await elementUpdated(el1);
+        await elementUpdated(el2);
+
+        await expect(el1).to.be.accessible();
+        await expect(el2).to.be.accessible();
+    });
+    it('loads [type="field"] splitbutton accessibly with deprecated syntax', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-split-button>${deprecatedMenu()}</sp-split-button>
+                <sp-split-button left>${deprecatedMenu()}</sp-split-button>
+            </div>
+        `);
         const el1 = test.querySelector('sp-split-button') as SplitButton;
         const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
 
@@ -42,6 +68,27 @@ describe('Splitbutton', () => {
         await expect(el1).to.be.accessible();
         await expect(el2).to.be.accessible();
     });
+    it('loads [type="more"] splitbutton accessibly with deprecated syntax', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-split-button type="more">
+                    ${deprecatedMenu()}
+                </sp-split-button>
+                <sp-split-button type="more" left>
+                    ${deprecatedMenu()}
+                </sp-split-button>
+            </div>
+        `);
+        const el1 = test.querySelector('sp-split-button') as SplitButton;
+        const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
+
+        await elementUpdated(el1);
+        await elementUpdated(el2);
+
+        await expect(el1).to.be.accessible();
+        await expect(el2).to.be.accessible();
+    });
+
     it('receives "focus()"', async () => {
         const test = await fixture<HTMLDivElement>(cta());
         const el1 = test.querySelector('sp-split-button') as SplitButton;
