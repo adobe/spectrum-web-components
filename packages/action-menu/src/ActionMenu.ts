@@ -33,7 +33,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         return [actionMenuStyles];
     }
 
-    protected listRole = 'menu';
+    protected listRole: 'listbox' | 'menu' = 'menu';
     protected itemRole = 'menuitem';
     private get hasLabel(): boolean {
         return this.slotHasContent;
