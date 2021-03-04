@@ -122,7 +122,8 @@ export class PickerBase extends SizedMixin(Focusable) {
     @query('sp-popover')
     private popover!: Popover;
 
-    protected listRole = 'listbox';
+    /* @type {"listbox" | "menu"} */
+    protected listRole: string = 'listbox';
     protected itemRole = 'option';
 
     public constructor() {
@@ -349,7 +350,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 @click=${this.onClick}
                 @sp-overlay-closed=${this.onOverlayClosed}
             >
-                <sp-menu id="menu" role="${this.listRole}"></sp-menu>
+                <sp-menu id="menu" aria-role="${this.listRole}"></sp-menu>
             </sp-popover>
         `;
     }
