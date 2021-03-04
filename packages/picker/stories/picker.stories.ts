@@ -163,7 +163,7 @@ export const custom = (): TemplateResult => {
             style="width: 400px;"
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
-                action(`Change: ${picker.value}`)();
+                console.log(`Change: ${picker.value}`);
             }}"
             label="Pick a state"
         >

@@ -48,6 +48,60 @@ function renderButton(args: Properties): TemplateResult {
     `;
 }
 
+function renderButtonsSelected(args: Properties): TemplateResult {
+    const disabled = Object.assign({}, args, { disabled: true });
+    const selected = Object.assign({}, args, { selected: true });
+    return html`
+        <sp-action-group>
+            ${renderButton(args)} ${renderButton(selected)}
+            ${renderButton(disabled)}
+        </sp-action-group>
+    `;
+}
+
+function renderHoldAffordanceButton(args: Properties): TemplateResult {
+    return html`
+        <sp-action-group>
+            <sp-action-button
+                ?quiet="${!!args.quiet}"
+                ?emphasized="${!!args.emphasized}"
+                ?disabled=${!!args.disabled}
+                ?selected=${!!args.selected}
+                ?toggles=${!!args.toggles}
+                ?hold-affordance=${!!args.holdAffordance}
+                size=${args.size || 'm'}
+                label="Edit"
+            >
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+            </sp-action-button>
+            <sp-action-button
+                quiet
+                ?emphasized="${!!args.emphasized}"
+                ?disabled=${!!args.disabled}
+                ?selected=${!!args.selected}
+                ?toggles=${!!args.toggles}
+                ?hold-affordance=${!!args.holdAffordance}
+                size=${args.size || 'm'}
+                label="Settings"
+            >
+                <sp-icon-settings slot="icon"></sp-icon-settings>
+            </sp-action-button>
+            <sp-action-button
+                selected
+                ?quiet="${!!args.quiet}"
+                ?emphasized="${!!args.emphasized}"
+                ?disabled=${!!args.disabled}
+                ?toggles=${!!args.toggles}
+                ?hold-affordance=${!!args.holdAffordance}
+                size=${args.size || 'm'}
+                label="More"
+            >
+                <sp-icon-more slot="icon"></sp-icon-more>
+            </sp-action-button>
+        </sp-action-group>
+    `;
+}
+
 export default {
     component: 'sp-action-button',
     title: 'Action Button',
@@ -55,6 +109,7 @@ export default {
         emphasized: {
             name: 'emphasized',
             type: { name: 'boolean', required: false },
+            description: "Set the second button's state to emphasized.",
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: false },
@@ -114,17 +169,6 @@ export default {
     },
 };
 
-function renderButtonsSelected(args: Properties): TemplateResult {
-    const disabled = Object.assign({}, args, { disabled: true });
-    const selected = Object.assign({}, args, { selected: true });
-    return html`
-        <sp-action-group>
-            ${renderButton(args)} ${renderButton(selected)}
-            ${renderButton(disabled)}
-        </sp-action-group>
-    `;
-}
-
 export const emphasized = (args: Properties): TemplateResult =>
     renderButtonsSelected(args);
 emphasized.args = {
@@ -161,7 +205,7 @@ export const wIconButton = (args: Properties): TemplateResult => {
 };
 
 wIconButton.story = {
-    name: 'w/ Icon button',
+    name: 'Button with Icon',
 };
 
 export const iconOnlyButton = (args: Properties): TemplateResult => {
@@ -185,26 +229,8 @@ export const iconSizeOverridden = (): TemplateResult => {
         </p>
     `;
 };
-
-export const holdAffordance = ({
-    holdAffordance,
-}: Properties): TemplateResult => {
-    return html`
-        <sp-action-group>
-            <sp-action-button label="Edit" ?hold-affordance=${holdAffordance}>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-
-            <sp-action-button ?hold-affordance=${holdAffordance} quiet>
-                <sp-icon-settings slot="icon"></sp-icon-settings>
-            </sp-action-button>
-
-            <sp-action-button ?hold-affordance=${holdAffordance} selected>
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
-        </sp-action-group>
-    `;
-};
+export const holdAffordance = (args: Properties): TemplateResult =>
+    renderHoldAffordanceButton(args);
 holdAffordance.args = {
     holdAffordance: true,
 };
