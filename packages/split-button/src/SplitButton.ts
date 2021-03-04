@@ -66,7 +66,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
     @query('.trigger')
     private trigger!: HTMLButtonElement;
 
-    protected listRole: string = 'menu';
+    protected listRole: 'listbox' | 'menu' = 'menu';
     protected itemRole = 'menuitem';
 
     public focus(): void {
