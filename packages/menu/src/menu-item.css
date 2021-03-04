@@ -11,3 +11,8 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-menu-item.css';
+
+#button {
+    position: absolute;
+    inset: 0;
+}

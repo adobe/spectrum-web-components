@@ -36,3 +36,17 @@ export const noWrap = (): TemplateResult => {
         </sp-menu>
     `;
 };
+
+export const href = (): TemplateResult => {
+    return html`
+        <sp-menu style="width: 150px;">
+            <sp-menu-item
+                href="https://opensource.adobe.com/spectrum-web-components"
+                target="_blank"
+            >
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+                Edit the Documentation Site
+            </sp-menu-item>
+        </sp-menu>
+    `;
+};
