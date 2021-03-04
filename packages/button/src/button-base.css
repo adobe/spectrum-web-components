@@ -31,13 +31,8 @@ governing permissions and limitations under the License.
 }
 
 #button {
-    color: inherit;
-    text-decoration: inherit;
-    display: flex;
-}
-
-#button:focus {
-    outline: none;
+    position: absolute;
+    inset: 0;
 }
 
 :host:after {

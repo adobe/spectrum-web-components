@@ -29,6 +29,11 @@ governing permissions and limitations under the License.
     flex-shrink: 0;
 }
 
+#button {
+    position: absolute;
+    inset: 0;
+}
+
 #label {
     flex-grow: var(--spectrum-actionbutton-label-flex-grow);
     text-align: var(--spectrum-actionbutton-label-text-align);
