@@ -38,7 +38,7 @@ import {
     MenuQueryRoleEventDetail,
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { Popover } from '@spectrum-web-components/popover/src/popover.js';
+import { Popover } from '@spectrum-web-components/popover';
 import {
     Placement,
     openOverlay,
