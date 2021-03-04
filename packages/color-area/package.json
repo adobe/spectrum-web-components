@@ -52,7 +52,7 @@
     },
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@spectrum-web-components/base": "^0.3.0",
+        "@spectrum-web-components/base": "^0.4.0",
         "@spectrum-web-components/color-handle": "^0.0.1",
         "tslib": "^2.0.0"
     }
