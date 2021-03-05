@@ -88,7 +88,7 @@ const configuredVisualRegressionPlugin = () =>
         getDiffName: ({ browser, name }) => {
             const nameParts = name.split(' - ');
             return path.join(
-                'screenshots-current',
+                'screenshots-actual',
                 'diff',
                 browser,
                 ...nameParts
@@ -97,7 +97,7 @@ const configuredVisualRegressionPlugin = () =>
         getFailedName: ({ browser, name }) => {
             const nameParts = name.split(' - ');
             return path.join(
-                'screenshots-current',
+                'screenshots-actual',
                 'updates',
                 browser,
                 ...nameParts
