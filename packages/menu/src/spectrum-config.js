@@ -55,15 +55,23 @@ const config = {
                 },
                 {
                     replacement:
-                        ':host([dir="ltr"][selects]) ::slotted(sp-menu-item[selected])',
-                    selector:
-                        '.spectrum-Menu[dir=ltr].is-selectable .spectrum-Menu-item.is-selected',
+                        '.is-selectable ::slotted(sp-menu-item[selected])',
+                    selector: /\.is-selectable \.spectrum-Menu-item\.is-selected(?!\S)/,
                 },
                 {
                     replacement:
-                        ':host([dir="rtl"][selects]) ::slotted(sp-menu-item[selected])',
-                    selector:
-                        '.spectrum-Menu[dir=rtl].is-selectable .spectrum-Menu-item.is-selected',
+                        '.is-selectable ::slotted(sp-menu-item[selected])',
+                    selector: /\.is-selectable \.spectrum-Menu-item\.is-selected(?!\S)/,
+                },
+                {
+                    replacement:
+                        '.is-selectable ::slotted(sp-menu-item:not([selected]))',
+                    selector: /\.is-selectable \.spectrum-Menu-item(?!\S)/,
+                },
+                {
+                    replacement:
+                        '.is-selectable ::slotted(sp-menu-item:not([selected]))',
+                    selector: /\.is-selectable \.spectrum-Menu-item(?!\S)/,
                 },
             ],
         },

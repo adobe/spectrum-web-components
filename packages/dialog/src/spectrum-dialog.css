@@ -101,10 +101,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         );
     width: 100%;
 }
+:host(:dir(ltr)) ::slotted([slot='heading']) {
+    padding-right: var(
+        --spectrum-dialog-confirm-gap-size
+    ); /* [dir=ltr] .spectrum-Dialog-heading */
+}
 :host([dir='ltr']) ::slotted([slot='heading']) {
     padding-right: var(
         --spectrum-dialog-confirm-gap-size
     ); /* [dir=ltr] .spectrum-Dialog-heading */
+}
+:host(:dir(rtl)) ::slotted([slot='heading']) {
+    padding-left: var(
+        --spectrum-dialog-confirm-gap-size
+    ); /* [dir=rtl] .spectrum-Dialog-heading */
 }
 :host([dir='rtl']) ::slotted([slot='heading']) {
     padding-left: var(
@@ -125,8 +135,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin: 0;
     outline: none;
 }
+:host(:dir(ltr)) .no-header::slotted([slot='heading']) {
+    padding-right: 0; /* [dir=ltr] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
+}
 :host([dir='ltr']) .no-header::slotted([slot='heading']) {
     padding-right: 0; /* [dir=ltr] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
+}
+:host(:dir(rtl)) .no-header::slotted([slot='heading']) {
+    padding-left: 0; /* [dir=rtl] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
 }
 :host([dir='rtl']) .no-header::slotted([slot='heading']) {
     padding-left: 0; /* [dir=rtl] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
@@ -208,10 +224,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-bottom: 0; /* .spectrum-Dialog-footer>*,
    * .spectrum-Dialog-footer>.spectrum-Button+.spectrum-Button */
 }
+:host(:dir(ltr)) .button-group {
+    padding-left: var(
+        --spectrum-dialog-confirm-gap-size
+    ); /* [dir=ltr] .spectrum-Dialog-buttonGroup */
+}
 :host([dir='ltr']) .button-group {
     padding-left: var(
         --spectrum-dialog-confirm-gap-size
     ); /* [dir=ltr] .spectrum-Dialog-buttonGroup */
+}
+:host(:dir(rtl)) .button-group {
+    padding-right: var(
+        --spectrum-dialog-confirm-gap-size
+    ); /* [dir=rtl] .spectrum-Dialog-buttonGroup */
 }
 :host([dir='rtl']) .button-group {
     padding-right: var(
@@ -242,10 +268,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dismissable]) .grid .footer {
     grid-area: footer/footer/buttonGroup/buttonGroup; /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid .spectrum-Dialog-footer */
 }
+:host(:dir(ltr)) .close-button {
+    margin-right: var(
+        --spectrum-dialog-confirm-close-button-padding
+    ); /* [dir=ltr] .spectrum-Dialog-closeButton */
+}
 :host([dir='ltr']) .close-button {
     margin-right: var(
         --spectrum-dialog-confirm-close-button-padding
     ); /* [dir=ltr] .spectrum-Dialog-closeButton */
+}
+:host(:dir(rtl)) .close-button {
+    margin-left: var(
+        --spectrum-dialog-confirm-close-button-padding
+    ); /* [dir=rtl] .spectrum-Dialog-closeButton */
 }
 :host([dir='rtl']) .close-button {
     margin-left: var(

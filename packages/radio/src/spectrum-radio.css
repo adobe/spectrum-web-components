@@ -106,16 +106,32 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) * -1
     ); /* .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
 }
+:host(:dir(ltr)) #label {
+    text-align: left; /* [dir=ltr] .spectrum-Radio-label */
+}
 :host([dir='ltr']) #label {
     text-align: left; /* [dir=ltr] .spectrum-Radio-label */
 }
+:host(:dir(rtl)) #label {
+    text-align: right; /* [dir=rtl] .spectrum-Radio-label */
+}
 :host([dir='rtl']) #label {
     text-align: right; /* [dir=rtl] .spectrum-Radio-label */
+}
+:host(:dir(ltr)) #label {
+    margin-left: var(
+        --spectrum-radio-text-gap
+    ); /* [dir=ltr] .spectrum-Radio-label */
 }
 :host([dir='ltr']) #label {
     margin-left: var(
         --spectrum-radio-text-gap
     ); /* [dir=ltr] .spectrum-Radio-label */
+}
+:host(:dir(rtl)) #label {
+    margin-right: var(
+        --spectrum-radio-text-gap
+    ); /* [dir=rtl] .spectrum-Radio-label */
 }
 :host([dir='rtl']) #label {
     margin-right: var(

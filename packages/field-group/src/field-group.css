@@ -12,9 +12,20 @@ governing permissions and limitations under the License.
 
 @import './spectrum-field-group.css';
 
-:host([horizontal][dir='rtl']) slot:not([name])::slotted(*:not(:last-child)),
-:host([dir='rtl']:not([vertical]))
-    slot:not([name])::slotted(*:not(:last-child)) {
+:host([horizontal]:dir(rtl)) ::slotted(*:not(:last-child)),
+:host(:dir(rtl):not([vertical])) ::slotted(*:not(:last-child)) {
+    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
+    margin: 0 0 0 var(--spectrum-global-dimension-size-200);
+}
+
+:host([horizontal]:dir(ltr)) ::slotted(*:not(:last-child)),
+:host(:dir(ltr):not([vertical])) ::slotted(*:not(:last-child)) {
+    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
+    margin: 0 var(--spectrum-global-dimension-size-200) 0 0;
+}
+
+:host([horizontal][dir='rtl']) ::slotted(*:not(:last-child)),
+:host([dir='rtl']:not([vertical])) ::slotted(*:not(:last-child)) {
     /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
     margin: 0 0 0 var(--spectrum-fieldgroup-margin);
 }

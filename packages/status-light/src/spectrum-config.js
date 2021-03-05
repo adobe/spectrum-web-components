@@ -70,7 +70,7 @@ const config = {
             ],
             complexSelectors: [
                 {
-                    replacement: ':host([dir])',
+                    replacement: ':host([size])',
                     selector: /^.spectrum-StatusLight$/,
                 },
             ],

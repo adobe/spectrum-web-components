@@ -30,16 +30,34 @@ aside {
     aside {
         position: fixed;
         top: 0;
-        left: 0;
         transition: transform
             var(
                 --spectrum-dialog-confirm-background-entry-animation-duration,
                 var(--spectrum-global-animation-duration-600)
             )
             cubic-bezier(0, 0, 0.4, 1);
-        transform: translateX(-100%);
         z-index: 10;
         min-height: 100vh;
+    }
+
+    :host([dir='ltr']) aside {
+        left: 0;
+        transform: translateX(-100%);
+    }
+
+    :host(:dir(ltr)) aside {
+        left: 0;
+        transform: translateX(-100%);
+    }
+
+    :host([dir='rtl']) aside {
+        right: 0;
+        transform: translateX(100%);
+    }
+
+    :host(:dir(rtl)) aside {
+        right: 0;
+        transform: translateX(100%);
     }
 
     :host([open]) aside {
@@ -75,8 +93,16 @@ docs-spectrum-logo {
     padding-top: 7px;
 }
 
+:host(:dir(ltr)) docs-spectrum-logo {
+    margin-right: 16px;
+}
+
 :host([dir='ltr']) docs-spectrum-logo {
     margin-right: 16px;
+}
+
+:host(:dir(rtl)) docs-spectrum-logo {
+    margin-left: 16px;
 }
 
 :host([dir='rtl']) docs-spectrum-logo {

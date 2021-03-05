@@ -62,7 +62,7 @@ governing permissions and limitations under the License.
     height: 100%;
 }
 
-:host([dir][vertical]) slot[name='icon'] + #item-label {
+:host([vertical]) slot[name='icon'] + #item-label {
     font-size: var(
         --spectrum-tabs-text-size,
         var(--spectrum-alias-font-size-default)

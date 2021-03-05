@@ -18,11 +18,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin: 0;
     padding: 0;
 }
+:host(:dir(ltr)) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon {
+    margin-right: var(
+        --spectrum-sidenav-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=ltr] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
+}
 :host([dir='ltr']) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon {
     margin-right: var(
         --spectrum-sidenav-icon-gap,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=ltr] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
+}
+:host(:dir(rtl)) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon {
+    margin-left: var(
+        --spectrum-sidenav-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=rtl] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
 :host([dir='rtl']) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon {
     margin-left: var(
@@ -30,14 +42,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=rtl] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
+:host(:dir(ltr)) #heading {
+    margin-right: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+}
 :host([dir='ltr']) #heading {
     margin-right: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+}
+:host(:dir(rtl)) #heading {
+    margin-left: 0; /* [dir=rtl] .spectrum-SideNav-heading */
 }
 :host([dir='rtl']) #heading {
     margin-left: 0; /* [dir=rtl] .spectrum-SideNav-heading */
 }
+:host(:dir(ltr)) #heading {
+    margin-left: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+}
 :host([dir='ltr']) #heading {
     margin-left: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+}
+:host(:dir(rtl)) #heading {
+    margin-right: 0; /* [dir=rtl] .spectrum-SideNav-heading */
 }
 :host([dir='rtl']) #heading {
     margin-right: 0; /* [dir=rtl] .spectrum-SideNav-heading */
@@ -88,6 +112,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-top: 0;
     text-transform: uppercase;
 }
+:host(:dir(ltr))
+    .spectrum-SideNav--multiLevel
+    #list
+    .spectrum-SideNav-itemLink {
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
+}
 :host([dir='ltr'])
     .spectrum-SideNav--multiLevel
     #list
@@ -102,6 +141,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-150)
             )
     ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
+}
+:host(:dir(rtl))
+    .spectrum-SideNav--multiLevel
+    #list
+    .spectrum-SideNav-itemLink {
+    padding-right: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
 :host([dir='rtl'])
     .spectrum-SideNav--multiLevel
@@ -118,6 +172,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
+:host(:dir(ltr))
+    .spectrum-SideNav--multiLevel
+    #list
+    #list
+    .spectrum-SideNav-itemLink {
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
+}
 :host([dir='ltr'])
     .spectrum-SideNav--multiLevel
     #list
@@ -133,6 +203,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-150)
             )
     ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
+}
+:host(:dir(rtl))
+    .spectrum-SideNav--multiLevel
+    #list
+    #list
+    .spectrum-SideNav-itemLink {
+    padding-right: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
 :host([dir='rtl'])
     .spectrum-SideNav--multiLevel

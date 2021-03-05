@@ -30,8 +30,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-dialog-confirm-exit-animation-delay: 0ms; /* .spectrum-Tray */
     --spectrum-tray-margin-top: 64px;
 }
+:host(:dir(ltr)) .spectrum-Tray-wrapper {
+    left: 0; /* [dir=ltr] .spectrum-Tray-wrapper */
+}
 :host([dir='ltr']) .spectrum-Tray-wrapper {
     left: 0; /* [dir=ltr] .spectrum-Tray-wrapper */
+}
+:host(:dir(rtl)) .spectrum-Tray-wrapper {
+    right: 0; /* [dir=rtl] .spectrum-Tray-wrapper */
 }
 :host([dir='rtl']) .spectrum-Tray-wrapper {
     right: 0; /* [dir=rtl] .spectrum-Tray-wrapper */

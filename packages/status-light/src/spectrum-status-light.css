@@ -174,7 +174,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-600)
     );
 }
-:host([dir]) {
+:host([size]) {
     --spectrum-statuslight-info-dot-resolved-margin-top: calc(
         var(--spectrum-statuslight-info-dot-margin-top) -
             var(--spectrum-statuslight-info-text-padding-top)
@@ -192,11 +192,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-right: 0;
     padding-top: var(--spectrum-statuslight-info-text-padding-top);
 }
+:host(:dir(ltr)):before {
+    margin-left: var(
+        --spectrum-global-dimension-size-0
+    ); /* [dir=ltr] .spectrum-StatusLight:before */
+    margin-right: var(--spectrum-statuslight-info-text-gap);
+}
 :host([dir='ltr']):before {
     margin-left: var(
         --spectrum-global-dimension-size-0
     ); /* [dir=ltr] .spectrum-StatusLight:before */
     margin-right: var(--spectrum-statuslight-info-text-gap);
+}
+:host(:dir(rtl)):before {
+    margin-left: var(--spectrum-statuslight-info-text-gap);
+    margin-right: var(
+        --spectrum-global-dimension-size-0
+    ); /* [dir=rtl] .spectrum-StatusLight:before */
 }
 :host([dir='rtl']):before {
     margin-left: var(--spectrum-statuslight-info-text-gap);
@@ -220,7 +232,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='neutral']) {
     font-style: italic; /* .spectrum-StatusLight--neutral */
 }
-:host([dir]) {
+:host([size]) {
     color: var(
         --spectrum-statuslight-m-info-text-color,
         var(--spectrum-alias-text-color)

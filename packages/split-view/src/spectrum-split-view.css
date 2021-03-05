@@ -23,6 +23,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 ::slotted(*) {
     height: 100%; /* .spectrum-SplitView-pane */
 }
+:host(:dir(ltr)) #gripper {
+    left: calc(
+        (
+                var(
+                        --spectrum-dragbar-gripper-width,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) + 2 *
+                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
+                    var(
+                        --spectrum-dragbar-handle-width,
+                        var(--spectrum-global-dimension-static-size-25)
+                    )
+            ) / 2 * -1
+    ); /* [dir=ltr] .spectrum-SplitView-gripper */
+}
 :host([dir='ltr']) #gripper {
     left: calc(
         (
@@ -37,6 +52,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                     )
             ) / 2 * -1
     ); /* [dir=ltr] .spectrum-SplitView-gripper */
+}
+:host(:dir(rtl)) #gripper {
+    right: calc(
+        (
+                var(
+                        --spectrum-dragbar-gripper-width,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) + 2 *
+                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
+                    var(
+                        --spectrum-dragbar-handle-width,
+                        var(--spectrum-global-dimension-static-size-25)
+                    )
+            ) / 2 * -1
+    ); /* [dir=rtl] .spectrum-SplitView-gripper */
 }
 :host([dir='rtl']) #gripper {
     right: calc(
@@ -86,6 +116,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     z-index: 1;
 }
+:host(:dir(ltr)) #splitter.is-collapsed-end #gripper:before,
+:host(:dir(ltr)) #splitter.is-collapsed-start #gripper:before {
+    left: calc(
+        50% -
+            var(
+                --spectrum-dragbar-handle-width,
+                var(--spectrum-global-dimension-static-size-25)
+            ) / 2
+    ); /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * [dir=ltr]  .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+}
 :host([dir='ltr']) #splitter.is-collapsed-end #gripper:before,
 :host([dir='ltr']) #splitter.is-collapsed-start #gripper:before {
     left: calc(
@@ -96,6 +137,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2
     ); /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
    * [dir=ltr]  .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+}
+:host(:dir(rtl)) #splitter.is-collapsed-end #gripper:before,
+:host(:dir(rtl)) #splitter.is-collapsed-start #gripper:before {
+    right: calc(
+        50% -
+            var(
+                --spectrum-dragbar-handle-width,
+                var(--spectrum-global-dimension-static-size-25)
+            ) / 2
+    ); /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * [dir=rtl]  .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
 }
 :host([dir='rtl']) #splitter.is-collapsed-end #gripper:before,
 :host([dir='rtl']) #splitter.is-collapsed-start #gripper:before {
@@ -120,20 +172,38 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-static-size-25)
     );
 }
+:host(:dir(ltr)) #splitter.is-collapsed-start #gripper {
+    left: 0; /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
+}
 :host([dir='ltr']) #splitter.is-collapsed-start #gripper {
     left: 0; /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
+}
+:host(:dir(rtl)) #splitter.is-collapsed-start #gripper {
+    right: 0; /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
 }
 :host([dir='rtl']) #splitter.is-collapsed-start #gripper {
     right: 0; /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
 }
+:host(:dir(ltr)) #splitter.is-collapsed-end #gripper {
+    right: 0; /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
 :host([dir='ltr']) #splitter.is-collapsed-end #gripper {
     right: 0; /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+:host(:dir(rtl)) #splitter.is-collapsed-end #gripper {
+    left: 0; /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
 }
 :host([dir='rtl']) #splitter.is-collapsed-end #gripper {
     left: 0; /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
 }
+:host(:dir(ltr)) #splitter.is-collapsed-end #gripper {
+    left: auto; /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
 :host([dir='ltr']) #splitter.is-collapsed-end #gripper {
     left: auto; /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+:host(:dir(rtl)) #splitter.is-collapsed-end #gripper {
+    right: auto; /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
 }
 :host([dir='rtl']) #splitter.is-collapsed-end #gripper {
     right: auto; /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
@@ -145,10 +215,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     height: auto; /* .spectrum-SplitView--vertical .spectrum-SplitView-pane */
     width: var(--spectrum-splitview-vertical-width);
 }
+:host(:dir(ltr)[vertical]) #gripper {
+    left: var(
+        --spectrum-splitview-vertical-gripper-width
+    ); /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-gripper */
+}
 :host([dir='ltr'][vertical]) #gripper {
     left: var(
         --spectrum-splitview-vertical-gripper-width
     ); /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-gripper */
+}
+:host(:dir(rtl)[vertical]) #gripper {
+    right: var(
+        --spectrum-splitview-vertical-gripper-width
+    ); /* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-gripper */
 }
 :host([dir='rtl'][vertical]) #gripper {
     right: var(
@@ -192,12 +272,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-splitview-vertical-width
     ); /* .spectrum-SplitView--vertical .spectrum-SplitView-splitter */
 }
+:host(:dir(ltr)[vertical]) #splitter.is-collapsed-end #gripper,
+:host(:dir(ltr)[vertical]) #splitter.is-collapsed-start #gripper {
+    left: var(
+        --spectrum-splitview-vertical-gripper-width
+    ); /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper,
+   * [dir=ltr]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
 :host([dir='ltr'][vertical]) #splitter.is-collapsed-end #gripper,
 :host([dir='ltr'][vertical]) #splitter.is-collapsed-start #gripper {
     left: var(
         --spectrum-splitview-vertical-gripper-width
     ); /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper,
    * [dir=ltr]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+:host(:dir(rtl)[vertical]) #splitter.is-collapsed-end #gripper,
+:host(:dir(rtl)[vertical]) #splitter.is-collapsed-start #gripper {
+    right: var(
+        --spectrum-splitview-vertical-gripper-width
+    ); /* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper,
+   * [dir=rtl]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
 }
 :host([dir='rtl'][vertical]) #splitter.is-collapsed-end #gripper,
 :host([dir='rtl'][vertical]) #splitter.is-collapsed-start #gripper {
@@ -206,12 +300,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper,
    * [dir=rtl]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
 }
+:host(:dir(ltr)[vertical]) #splitter.is-collapsed-end #gripper:before,
+:host(:dir(ltr)[vertical]) #splitter.is-collapsed-start #gripper:before {
+    left: var(
+        --spectrum-splitview-vertical-gripper-reset
+    ); /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * [dir=ltr]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+}
 :host([dir='ltr'][vertical]) #splitter.is-collapsed-end #gripper:before,
 :host([dir='ltr'][vertical]) #splitter.is-collapsed-start #gripper:before {
     left: var(
         --spectrum-splitview-vertical-gripper-reset
     ); /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
    * [dir=ltr]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+}
+:host(:dir(rtl)[vertical]) #splitter.is-collapsed-end #gripper:before,
+:host(:dir(rtl)[vertical]) #splitter.is-collapsed-start #gripper:before {
+    right: var(
+        --spectrum-splitview-vertical-gripper-reset
+    ); /* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * [dir=rtl]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
 }
 :host([dir='rtl'][vertical]) #splitter.is-collapsed-end #gripper:before,
 :host([dir='rtl'][vertical]) #splitter.is-collapsed-start #gripper:before {

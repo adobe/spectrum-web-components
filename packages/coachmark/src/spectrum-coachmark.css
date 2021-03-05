@@ -71,8 +71,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         );
     }
 }
+:host(:dir(ltr)) .spectrum-CoachMarkPopover-footer {
+    text-align: right; /* [dir=ltr] .spectrum-CoachMarkPopover-footer */
+}
 :host([dir='ltr']) .spectrum-CoachMarkPopover-footer {
     text-align: right; /* [dir=ltr] .spectrum-CoachMarkPopover-footer */
+}
+:host(:dir(rtl)) .spectrum-CoachMarkPopover-footer {
+    text-align: left; /* [dir=rtl] .spectrum-CoachMarkPopover-footer */
 }
 :host([dir='rtl']) .spectrum-CoachMarkPopover-footer {
     text-align: left; /* [dir=rtl] .spectrum-CoachMarkPopover-footer */
@@ -126,6 +132,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) * 3
     ); /* .spectrum-CoachMarkIndicator */
 }
+:host(:dir(ltr)) .ring {
+    left: calc(
+        var(
+                --spectrum-coachmark-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-200)
+            ) * 0.75
+    ); /* [dir=ltr] .spectrum-CoachMarkIndicator-ring */
+}
 :host([dir='ltr']) .ring {
     left: calc(
         var(
@@ -133,6 +147,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-200)
             ) * 0.75
     ); /* [dir=ltr] .spectrum-CoachMarkIndicator-ring */
+}
+:host(:dir(rtl)) .ring {
+    right: calc(
+        var(
+                --spectrum-coachmark-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-200)
+            ) * 0.75
+    ); /* [dir=rtl] .spectrum-CoachMarkIndicator-ring */
 }
 :host([dir='rtl']) .ring {
     right: calc(
@@ -184,6 +206,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) * 2.75
     ); /* .spectrum-CoachMarkIndicator--quiet */
 }
+:host(:dir(ltr)[quiet]) .ring {
+    left: calc(
+        var(
+                --spectrum-coachmark-quiet-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-100)
+            ) * 0.75
+    ); /* [dir=ltr] .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring */
+}
 :host([dir='ltr'][quiet]) .ring {
     left: calc(
         var(
@@ -191,6 +221,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-100)
             ) * 0.75
     ); /* [dir=ltr] .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring */
+}
+:host(:dir(rtl)[quiet]) .ring {
+    right: calc(
+        var(
+                --spectrum-coachmark-quiet-indicator-ring-diameter,
+                var(--spectrum-global-dimension-size-100)
+            ) * 0.75
+    ); /* [dir=rtl] .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring */
 }
 :host([dir='rtl'][quiet]) .ring {
     right: calc(

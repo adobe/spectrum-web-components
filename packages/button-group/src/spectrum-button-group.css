@@ -19,11 +19,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 ::slotted(*) {
     flex-shrink: 0; /* .spectrum-ButtonGroup .spectrum-ButtonGroup-item */
 }
+:host(:dir(ltr)) ::slotted(:not(:first-of-type)) {
+    margin-left: var(
+        --spectrum-buttongroup-button-gap-x,
+        var(--spectrum-global-dimension-static-size-200)
+    ); /* [dir=ltr] .spectrum-ButtonGroup .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
+}
 :host([dir='ltr']) ::slotted(:not(:first-of-type)) {
     margin-left: var(
         --spectrum-buttongroup-button-gap-x,
         var(--spectrum-global-dimension-static-size-200)
     ); /* [dir=ltr] .spectrum-ButtonGroup .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
+}
+:host(:dir(rtl)) ::slotted(:not(:first-of-type)) {
+    margin-right: var(
+        --spectrum-buttongroup-button-gap-x,
+        var(--spectrum-global-dimension-static-size-200)
+    ); /* [dir=rtl] .spectrum-ButtonGroup .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
 }
 :host([dir='rtl']) ::slotted(:not(:first-of-type)) {
     margin-right: var(
@@ -35,10 +47,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: inline-flex; /* .spectrum-ButtonGroup--vertical */
     flex-direction: column;
 }
+:host(:dir(ltr)[vertical]) ::slotted(:not(:first-of-type)) {
+    margin-left: var(
+        --spectrum-buttongroup-button-gap-reset
+    ); /* [dir=ltr] .spectrum-ButtonGroup--vertical .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
+}
 :host([dir='ltr'][vertical]) ::slotted(:not(:first-of-type)) {
     margin-left: var(
         --spectrum-buttongroup-button-gap-reset
     ); /* [dir=ltr] .spectrum-ButtonGroup--vertical .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
+}
+:host(:dir(rtl)[vertical]) ::slotted(:not(:first-of-type)) {
+    margin-right: var(
+        --spectrum-buttongroup-button-gap-reset
+    ); /* [dir=rtl] .spectrum-ButtonGroup--vertical .spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item */
 }
 :host([dir='rtl'][vertical]) ::slotted(:not(:first-of-type)) {
     margin-right: var(

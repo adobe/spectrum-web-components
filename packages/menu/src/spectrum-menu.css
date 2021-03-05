@@ -114,15 +114,34 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     overflow: auto;
     padding: 0;
 }
-:host([dir='ltr'][selects]) ::slotted(sp-menu-item) {
+:host(:dir(ltr)[selects]) ::slotted(sp-menu-item:not([selected])) {
     padding-right: var(
         --spectrum-listitem-texticon-selectable-padding-right
     ); /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
 }
-:host([dir='rtl'][selects]) ::slotted(sp-menu-item) {
+:host([dir='ltr'][selects]) ::slotted(sp-menu-item:not([selected])) {
+    padding-right: var(
+        --spectrum-listitem-texticon-selectable-padding-right
+    ); /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
+}
+:host(:dir(rtl)[selects]) ::slotted(sp-menu-item:not([selected])) {
     padding-left: var(
         --spectrum-listitem-texticon-selectable-padding-right
     ); /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
+}
+:host([dir='rtl'][selects]) ::slotted(sp-menu-item:not([selected])) {
+    padding-left: var(
+        --spectrum-listitem-texticon-selectable-padding-right
+    ); /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
+}
+:host(:dir(ltr)[selects]) ::slotted(sp-menu-item[selected]) {
+    padding-right: calc(
+        var(--spectrum-listitem-texticon-padding-right) -
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    ); /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
 }
 :host([dir='ltr'][selects]) ::slotted(sp-menu-item[selected]) {
     padding-right: calc(
@@ -132,6 +151,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-alias-border-size-thin)
             )
     ); /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
+}
+:host(:dir(rtl)[selects]) ::slotted(sp-menu-item[selected]) {
+    padding-left: calc(
+        var(--spectrum-listitem-texticon-padding-right) -
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    ); /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
 }
 :host([dir='rtl'][selects]) ::slotted(sp-menu-item[selected]) {
     padding-left: calc(

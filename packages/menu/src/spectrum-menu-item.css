@@ -10,9 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host(:dir(ltr)) {
+    border-left: var(--spectrum-listitem-texticon-focus-indicator-size) solid
+        transparent; /* [dir=ltr] .spectrum-Menu-item */
+}
 :host([dir='ltr']) {
     border-left: var(--spectrum-listitem-texticon-focus-indicator-size) solid
         transparent; /* [dir=ltr] .spectrum-Menu-item */
+}
+:host(:dir(rtl)) {
+    border-right: var(--spectrum-listitem-texticon-focus-indicator-size) solid
+        transparent; /* [dir=rtl] .spectrum-Menu-item */
 }
 :host([dir='rtl']) {
     border-right: var(--spectrum-listitem-texticon-focus-indicator-size) solid
@@ -38,6 +46,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host(:focus) {
     outline: none; /* .spectrum-Menu-item:focus */
 }
+:host(:dir(ltr)[selected]) {
+    padding-right: calc(
+        var(--spectrum-listitem-texticon-padding-right) -
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    ); /* [dir=ltr] .spectrum-Menu-item.is-selected */
+}
 :host([dir='ltr'][selected]) {
     padding-right: calc(
         var(--spectrum-listitem-texticon-padding-right) -
@@ -46,6 +63,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-alias-border-size-thin)
             )
     ); /* [dir=ltr] .spectrum-Menu-item.is-selected */
+}
+:host(:dir(rtl)[selected]) {
+    padding-left: calc(
+        var(--spectrum-listitem-texticon-padding-right) -
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    ); /* [dir=rtl] .spectrum-Menu-item.is-selected */
 }
 :host([dir='rtl'][selected]) {
     padding-left: calc(
@@ -65,12 +91,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-shrink: 0; /* .spectrum-Menu-item .spectrum-Icon,
    * .spectrum-Menu-item .spectrum-Menu-itemIcon */
 }
+:host(:dir(ltr)) slot[name='icon'] + #label,
+:host([dir='ltr']) .icon + #label {
+    margin-left: var(
+        --spectrum-listitem-texticon-icon-gap
+    ); /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
+   * [dir=ltr] 
+  .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
+}
 :host([dir='ltr']) .icon + #label,
 :host([dir='ltr']) slot[name='icon'] + #label {
     margin-left: var(
         --spectrum-listitem-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=ltr] 
+  .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
+}
+:host(:dir(rtl)) slot[name='icon'] + #label,
+:host([dir='rtl']) .icon + #label {
+    margin-right: var(
+        --spectrum-listitem-texticon-icon-gap
+    ); /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
+   * [dir=rtl] 
   .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
 }
 :host([dir='rtl']) .icon + #label,
@@ -110,12 +152,28 @@ slot[name='icon'] + #label {
     text-overflow: ellipsis; /* .spectrum-Menu-itemLabel--wrapping */
     white-space: nowrap;
 }
+:host(:dir(ltr)) .checkmark,
+:host(:dir(ltr)) .chevron {
+    padding-left: var(
+        --spectrum-listitem-texticon-icon-gap
+    ); /* [dir=ltr] .spectrum-Menu-checkmark,
+   * [dir=ltr] 
+.spectrum-Menu-chevron */
+}
 :host([dir='ltr']) .checkmark,
 :host([dir='ltr']) .chevron {
     padding-left: var(
         --spectrum-listitem-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-Menu-checkmark,
    * [dir=ltr] 
+.spectrum-Menu-chevron */
+}
+:host(:dir(rtl)) .checkmark,
+:host(:dir(rtl)) .chevron {
+    padding-right: var(
+        --spectrum-listitem-texticon-icon-gap
+    ); /* [dir=rtl] .spectrum-Menu-checkmark,
+   * [dir=rtl] 
 .spectrum-Menu-chevron */
 }
 :host([dir='rtl']) .checkmark,
@@ -125,6 +183,9 @@ slot[name='icon'] + #label {
     ); /* [dir=rtl] .spectrum-Menu-checkmark,
    * [dir=rtl] 
 .spectrum-Menu-chevron */
+}
+:host(:dir(rtl)) .chevron {
+    transform: matrix(-1, 0, 0, 1, 0, 0); /* [dir=rtl] .spectrum-Menu-chevron */
 }
 :host([dir='rtl']) .chevron {
     transform: matrix(-1, 0, 0, 1, 0, 0); /* [dir=rtl] .spectrum-Menu-chevron */
@@ -138,6 +199,24 @@ slot[name='icon'] + #label {
         --spectrum-listitem-m-texticon-text-color,
         var(--spectrum-alias-component-text-color-default)
     );
+}
+:host(:dir(ltr).focus-visible),
+:host([dir='ltr'][focused]) {
+    border-left-color: var(
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
+    ); /* [dir=ltr] .spectrum-Menu-item.focus-ring,
+   * [dir=ltr] 
+  .spectrum-Menu-item.is-focused */
+}
+:host(:dir(ltr):focus-visible),
+:host([dir='ltr'][focused]) {
+    border-left-color: var(
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
+    ); /* [dir=ltr] .spectrum-Menu-item.focus-ring,
+   * [dir=ltr] 
+  .spectrum-Menu-item.is-focused */
 }
 :host([dir='ltr'].focus-visible),
 :host([dir='ltr'][focused]) {
@@ -155,6 +234,24 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-border-color-key-focus)
     ); /* [dir=ltr] .spectrum-Menu-item.focus-ring,
    * [dir=ltr] 
+  .spectrum-Menu-item.is-focused */
+}
+:host(:dir(rtl).focus-visible),
+:host([dir='rtl'][focused]) {
+    border-right-color: var(
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
+    ); /* [dir=rtl] .spectrum-Menu-item.focus-ring,
+   * [dir=rtl] 
+  .spectrum-Menu-item.is-focused */
+}
+:host(:dir(rtl):focus-visible),
+:host([dir='rtl'][focused]) {
+    border-right-color: var(
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
+    ); /* [dir=rtl] .spectrum-Menu-item.focus-ring,
+   * [dir=rtl] 
   .spectrum-Menu-item.is-focused */
 }
 :host([dir='rtl'].focus-visible),

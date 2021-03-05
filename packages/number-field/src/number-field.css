@@ -40,6 +40,38 @@ sp-field-button {
     );
 }
 
+:host(:dir(ltr)[invalid]:not([hide-stepper])) .icon {
+    /* [dir=ltr] .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
+    right: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host(:dir(rtl)[invalid]:not([hide-stepper])) .icon {
+    /* [dir=rtl] .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
+    left: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host(:dir(ltr)[valid]:not([hide-stepper])) .icon {
+    /* [dir=ltr] .spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
+    right: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host(:dir(rtl)[valid]:not([hide-stepper])) .icon {
+    /* [dir=rtl] .spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
+    left: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
 :host([dir='ltr'][invalid]:not([hide-stepper])) .icon {
     /* [dir=ltr] .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
     right: calc(
@@ -72,6 +104,26 @@ sp-field-button {
     );
 }
 
+:host(:dir(ltr)[quiet][invalid]:not([hide-stepper])) .icon {
+    /* [dir=ltr] .spectrum-Textfield--quiet.spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
+    right: var(--spectrum-stepper-button-width);
+}
+
+:host(:dir(rtl)[quiet][invalid]:not([hide-stepper])) .icon {
+    /* [dir=rtl] .spectrum-Textfield--quiet.spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
+    left: var(--spectrum-stepper-button-width);
+}
+
+:host(:dir(ltr)[quiet][valid]:not([hide-stepper])) .icon {
+    /* [dir=ltr] .spectrum-Textfield--quiet.spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
+    right: var(--spectrum-stepper-button-width);
+}
+
+:host(:dir(rtl)[quiet][valid]:not([hide-stepper])) .icon {
+    /* [dir=rtl] .spectrum-Textfield--quiet.spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
+    left: var(--spectrum-stepper-button-width);
+}
+
 :host([dir='ltr'][quiet][invalid]:not([hide-stepper])) .icon {
     /* [dir=ltr] .spectrum-Textfield--quiet.spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
     right: var(--spectrum-stepper-button-width);
@@ -92,6 +144,22 @@ sp-field-button {
     left: var(--spectrum-stepper-button-width);
 }
 
+:host(:dir(ltr):not([hide-stepper])) .icon-workflow {
+    /* [dir=ltr] .spectrum-Textfield-icon */
+    left: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host(:dir(rtl):not([hide-stepper])) .icon-workflow {
+    /* [dir=rtl] .spectrum-Textfield-icon */
+    right: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
 :host([dir='ltr']:not([hide-stepper])) .icon-workflow {
     /* [dir=ltr] .spectrum-Textfield-icon */
     left: calc(
@@ -106,6 +174,16 @@ sp-field-button {
         var(--spectrum-stepper-button-width) +
             var(--spectrum-textfield-error-icon-margin-left)
     );
+}
+
+:host(:dir(ltr)[quiet]:not([hide-stepper])) .icon-workflow {
+    /* [dir=ltr] .spectrum-Textfield--quiet .spectrum-Textfield-icon */
+    left: var(--spectrum-stepper-button-width);
+}
+
+:host(:dir(rtl)[quiet]:not([hide-stepper])) .icon-workflow {
+    /* [dir=rtl] .spectrum-Textfield--quiet .spectrum-Textfield-icon */
+    right: var(--spectrum-stepper-button-width);
 }
 
 :host([dir='ltr'][quiet]:not([hide-stepper])) .icon-workflow {

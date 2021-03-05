@@ -163,10 +163,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: flex; /* .spectrum-HelpText */
     font-size: var(--spectrum-helptext-neutral-texticon-text-size);
 }
+:host(:dir(ltr)) .icon {
+    margin-right: var(
+        --spectrum-helptext-neutral-texticon-icon-gap
+    ); /* [dir=ltr] .spectrum-HelpText .spectrum-HelpText-validationIcon */
+}
 :host([dir='ltr']) .icon {
     margin-right: var(
         --spectrum-helptext-neutral-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-HelpText .spectrum-HelpText-validationIcon */
+}
+:host(:dir(rtl)) .icon {
+    margin-left: var(
+        --spectrum-helptext-neutral-texticon-icon-gap
+    ); /* [dir=rtl] .spectrum-HelpText .spectrum-HelpText-validationIcon */
 }
 :host([dir='rtl']) .icon {
     margin-left: var(
@@ -182,10 +192,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-helptext-negative-texticon-icon-padding-top
     ); /* .spectrum-HelpText .spectrum-HelpText-validationIcon */
 }
+:host(:dir(ltr)) .text {
+    margin-right: var(
+        --spectrum-helptext-neutral-texticon-icon-gap
+    ); /* [dir=ltr] .spectrum-HelpText .spectrum-HelpText-text */
+}
 :host([dir='ltr']) .text {
     margin-right: var(
         --spectrum-helptext-neutral-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-HelpText .spectrum-HelpText-text */
+}
+:host(:dir(rtl)) .text {
+    margin-left: var(
+        --spectrum-helptext-neutral-texticon-icon-gap
+    ); /* [dir=rtl] .spectrum-HelpText .spectrum-HelpText-text */
 }
 :host([dir='rtl']) .text {
     margin-left: var(

@@ -138,10 +138,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border: none; /* .spectrum-ProgressBar-fill */
     transition: width 1s;
 }
+:host(:dir(ltr)) .label,
+:host(:dir(ltr)) .percentage {
+    text-align: left; /* [dir=ltr] .spectrum-ProgressBar-label,
+   * [dir=ltr] 
+.spectrum-ProgressBar-percentage */
+}
 :host([dir='ltr']) .label,
 :host([dir='ltr']) .percentage {
     text-align: left; /* [dir=ltr] .spectrum-ProgressBar-label,
    * [dir=ltr] 
+.spectrum-ProgressBar-percentage */
+}
+:host(:dir(rtl)) .label,
+:host(:dir(rtl)) .percentage {
+    text-align: right; /* [dir=rtl] .spectrum-ProgressBar-label,
+   * [dir=rtl] 
 .spectrum-ProgressBar-percentage */
 }
 :host([dir='rtl']) .label,
@@ -160,10 +172,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .label {
     flex: 1 1 0%; /* .spectrum-ProgressBar-label */
 }
+:host(:dir(ltr)) .percentage {
+    margin-left: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=ltr] .spectrum-ProgressBar-percentage */
+}
 :host([dir='ltr']) .percentage {
     margin-left: var(
         --spectrum-fieldlabel-side-padding-right
     ); /* [dir=ltr] .spectrum-ProgressBar-percentage */
+}
+:host(:dir(rtl)) .percentage {
+    margin-right: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=rtl] .spectrum-ProgressBar-percentage */
 }
 :host([dir='rtl']) .percentage {
     margin-right: var(
@@ -185,10 +207,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-progressbar-width
     ); /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-track */
 }
+:host(:dir(ltr)[side-label]) .label {
+    margin-right: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
+}
 :host([dir='ltr'][side-label]) .label {
     margin-right: var(
         --spectrum-fieldlabel-side-padding-right
     ); /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
+}
+:host(:dir(rtl)[side-label]) .label {
+    margin-left: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
 }
 :host([dir='rtl'][side-label]) .label {
     margin-left: var(
@@ -199,16 +231,32 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-grow: 0; /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
     margin-bottom: 0;
 }
+:host(:dir(ltr)[side-label]) .percentage {
+    text-align: right; /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
+}
 :host([dir='ltr'][side-label]) .percentage {
     text-align: right; /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
 }
+:host(:dir(rtl)[side-label]) .percentage {
+    text-align: left; /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
+}
 :host([dir='rtl'][side-label]) .percentage {
     text-align: left; /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
+}
+:host(:dir(ltr)[side-label]) .percentage {
+    margin-left: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
 }
 :host([dir='ltr'][side-label]) .percentage {
     margin-left: var(
         --spectrum-fieldlabel-side-padding-right
     ); /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
+}
+:host(:dir(rtl)[side-label]) .percentage {
+    margin-right: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
 }
 :host([dir='rtl'][side-label]) .percentage {
     margin-right: var(
@@ -229,9 +277,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
     will-change: transform;
 }
+:host(:dir(ltr)[indeterminate]) .fill {
+    animation: indeterminate-loop-ltr
+        var(--spectrum-progressbar-indeterminate-duration) infinite; /* [dir=ltr] .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
+}
 :host([dir='ltr'][indeterminate]) .fill {
     animation: indeterminate-loop-ltr
         var(--spectrum-progressbar-indeterminate-duration) infinite; /* [dir=ltr] .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
+}
+:host(:dir(rtl)[indeterminate]) .fill {
+    animation: indeterminate-loop-rtl
+        var(--spectrum-progressbar-indeterminate-duration) infinite; /* [dir=rtl] .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
 }
 :host([dir='rtl'][indeterminate]) .fill {
     animation: indeterminate-loop-rtl

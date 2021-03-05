@@ -20,10 +20,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-wrap: wrap;
     vertical-align: top;
 }
+:host(:dir(ltr)[horizontal]) slot:not([name])::slotted(:not(:last-child)) {
+    margin-right: var(
+        --spectrum-fieldgroup-margin
+    ); /* [dir=ltr] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
+}
 :host([dir='ltr'][horizontal]) slot:not([name])::slotted(:not(:last-child)) {
     margin-right: var(
         --spectrum-fieldgroup-margin
     ); /* [dir=ltr] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
+}
+:host(:dir(rtl)[horizontal]) slot:not([name])::slotted(:not(:last-child)) {
+    margin-left: var(
+        --spectrum-fieldgroup-margin
+    ); /* [dir=rtl] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
 }
 :host([dir='rtl'][horizontal]) slot:not([name])::slotted(:not(:last-child)) {
     margin-left: var(

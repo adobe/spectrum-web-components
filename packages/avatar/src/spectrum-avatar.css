@@ -184,14 +184,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     user-select: none;
     width: var(--spectrum-avatar-width);
 }
+:host(:dir(ltr)):after {
+    left: 0; /* [dir=ltr] .spectrum-Avatar:after */
+}
 :host([dir='ltr']):after {
     left: 0; /* [dir=ltr] .spectrum-Avatar:after */
+}
+:host(:dir(rtl)):after {
+    right: 0; /* [dir=rtl] .spectrum-Avatar:after */
 }
 :host([dir='rtl']):after {
     right: 0; /* [dir=rtl] .spectrum-Avatar:after */
 }
+:host(:dir(ltr)):after {
+    right: 0; /* [dir=ltr] .spectrum-Avatar:after */
+}
 :host([dir='ltr']):after {
     right: 0; /* [dir=ltr] .spectrum-Avatar:after */
+}
+:host(:dir(rtl)):after {
+    left: 0; /* [dir=rtl] .spectrum-Avatar:after */
 }
 :host([dir='rtl']):after {
     left: 0; /* [dir=rtl] .spectrum-Avatar:after */

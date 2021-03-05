@@ -92,11 +92,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: border var(--spectrum-global-animation-duration-100, 0.13s)
         ease-out;
 }
+:host(:dir(ltr)) #item-link ::slotted([slot='icon']) {
+    margin-right: var(
+        --spectrum-sidenav-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=ltr] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
+}
 :host([dir='ltr']) #item-link ::slotted([slot='icon']) {
     margin-right: var(
         --spectrum-sidenav-icon-gap,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=ltr] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
+}
+:host(:dir(rtl)) #item-link ::slotted([slot='icon']) {
+    margin-left: var(
+        --spectrum-sidenav-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=rtl] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
 :host([dir='rtl']) #item-link ::slotted([slot='icon']) {
     margin-left: var(
@@ -107,17 +119,41 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #item-link ::slotted([slot='icon']) {
     flex-shrink: 0; /* .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
+:host(:dir(ltr)) .spectrum-SideNav-heading {
+    margin-right: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+}
 :host([dir='ltr']) .spectrum-SideNav-heading {
     margin-right: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+}
+:host(:dir(rtl)) .spectrum-SideNav-heading {
+    margin-left: 0; /* [dir=rtl] .spectrum-SideNav-heading */
 }
 :host([dir='rtl']) .spectrum-SideNav-heading {
     margin-left: 0; /* [dir=rtl] .spectrum-SideNav-heading */
 }
+:host(:dir(ltr)) .spectrum-SideNav-heading {
+    margin-left: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+}
 :host([dir='ltr']) .spectrum-SideNav-heading {
     margin-left: 0; /* [dir=ltr] .spectrum-SideNav-heading */
 }
+:host(:dir(rtl)) .spectrum-SideNav-heading {
+    margin-right: 0; /* [dir=rtl] .spectrum-SideNav-heading */
+}
 :host([dir='rtl']) .spectrum-SideNav-heading {
     margin-right: 0; /* [dir=rtl] .spectrum-SideNav-heading */
+}
+:host(:dir(ltr)) .spectrum-SideNav--multiLevel #list #item-link {
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
 :host([dir='ltr']) .spectrum-SideNav--multiLevel #list #item-link {
     padding-left: calc(
@@ -131,6 +167,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
+:host(:dir(rtl)) .spectrum-SideNav--multiLevel #list #item-link {
+    padding-right: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
+}
 :host([dir='rtl']) .spectrum-SideNav--multiLevel #list #item-link {
     padding-right: calc(
         var(
@@ -143,6 +191,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
+:host(:dir(ltr)) .spectrum-SideNav--multiLevel #list #list #item-link {
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
+}
 :host([dir='ltr']) .spectrum-SideNav--multiLevel #list #list #item-link {
     padding-left: calc(
         var(
@@ -154,6 +214,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-150)
             )
     ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
+}
+:host(:dir(rtl)) .spectrum-SideNav--multiLevel #list #list #item-link {
+    padding-right: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-margin-left,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
 :host([dir='rtl']) .spectrum-SideNav--multiLevel #list #list #item-link {
     padding-right: calc(

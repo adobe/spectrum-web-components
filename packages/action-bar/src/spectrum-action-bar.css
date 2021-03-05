@@ -48,14 +48,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-ActionBar.is-open */
     opacity: 1;
 }
+:host(:dir(ltr)[variant='sticky']) {
+    left: 0; /* [dir=ltr] .spectrum-ActionBar--sticky */
+}
 :host([dir='ltr'][variant='sticky']) {
     left: 0; /* [dir=ltr] .spectrum-ActionBar--sticky */
+}
+:host(:dir(rtl)[variant='sticky']) {
+    right: 0; /* [dir=rtl] .spectrum-ActionBar--sticky */
 }
 :host([dir='rtl'][variant='sticky']) {
     right: 0; /* [dir=rtl] .spectrum-ActionBar--sticky */
 }
+:host(:dir(ltr)[variant='sticky']) {
+    right: 0; /* [dir=ltr] .spectrum-ActionBar--sticky */
+}
 :host([dir='ltr'][variant='sticky']) {
     right: 0; /* [dir=ltr] .spectrum-ActionBar--sticky */
+}
+:host(:dir(rtl)[variant='sticky']) {
+    left: 0; /* [dir=rtl] .spectrum-ActionBar--sticky */
 }
 :host([dir='rtl'][variant='sticky']) {
     left: 0; /* [dir=rtl] .spectrum-ActionBar--sticky */
@@ -69,20 +81,40 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='fixed']) {
     position: fixed; /* .spectrum-ActionBar--fixed */
 }
+:host(:dir(ltr)) #popover {
+    padding-left: var(
+        --spectrum-actionbar-padding-left
+    ); /* [dir=ltr] .spectrum-ActionBar-popover */
+}
 :host([dir='ltr']) #popover {
     padding-left: var(
         --spectrum-actionbar-padding-left
     ); /* [dir=ltr] .spectrum-ActionBar-popover */
+}
+:host(:dir(rtl)) #popover {
+    padding-right: var(
+        --spectrum-actionbar-padding-left
+    ); /* [dir=rtl] .spectrum-ActionBar-popover */
 }
 :host([dir='rtl']) #popover {
     padding-right: var(
         --spectrum-actionbar-padding-left
     ); /* [dir=rtl] .spectrum-ActionBar-popover */
 }
+:host(:dir(ltr)) #popover {
+    padding-right: var(
+        --spectrum-actionbar-padding-right
+    ); /* [dir=ltr] .spectrum-ActionBar-popover */
+}
 :host([dir='ltr']) #popover {
     padding-right: var(
         --spectrum-actionbar-padding-right
     ); /* [dir=ltr] .spectrum-ActionBar-popover */
+}
+:host(:dir(rtl)) #popover {
+    padding-left: var(
+        --spectrum-actionbar-padding-right
+    ); /* [dir=rtl] .spectrum-ActionBar-popover */
 }
 :host([dir='rtl']) #popover {
     padding-left: var(

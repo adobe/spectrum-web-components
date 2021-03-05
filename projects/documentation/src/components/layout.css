@@ -138,8 +138,16 @@ header svg {
     justify-content: flex-end;
 }
 
+:host(:dir(ltr)) .theme-control {
+    margin-left: var(--spectrum-global-dimension-size-400);
+}
+
 :host([dir='ltr']) .theme-control {
     margin-left: var(--spectrum-global-dimension-size-400);
+}
+
+:host(:dir(rtl)) .theme-control {
+    margin-right: var(--spectrum-global-dimension-size-400);
 }
 
 :host([dir='rtl']) .theme-control {

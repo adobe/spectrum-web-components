@@ -705,28 +705,54 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     vertical-align: top;
     z-index: 0;
 }
+:host(:dir(ltr)) ::slotted(:not([slot])):before {
+    left: calc(
+        var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
+    ); /* [dir=ltr] .spectrum-Tabs-item:before */
+}
 :host([dir='ltr']) ::slotted(:not([slot])):before {
     left: calc(
         var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
     ); /* [dir=ltr] .spectrum-Tabs-item:before */
+}
+:host(:dir(rtl)) ::slotted(:not([slot])):before {
+    right: calc(
+        var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
+    ); /* [dir=rtl] .spectrum-Tabs-item:before */
 }
 :host([dir='rtl']) ::slotted(:not([slot])):before {
     right: calc(
         var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
     ); /* [dir=rtl] .spectrum-Tabs-item:before */
 }
+:host(:dir(ltr)) ::slotted(:not([slot])):before {
+    right: calc(
+        var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
+    ); /* [dir=ltr] .spectrum-Tabs-item:before */
+}
 :host([dir='ltr']) ::slotted(:not([slot])):before {
     right: calc(
         var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
     ); /* [dir=ltr] .spectrum-Tabs-item:before */
 }
+:host(:dir(rtl)) ::slotted(:not([slot])):before {
+    left: calc(
+        var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
+    ); /* [dir=rtl] .spectrum-Tabs-item:before */
+}
 :host([dir='rtl']) ::slotted(:not([slot])):before {
     left: calc(
         var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
     ); /* [dir=rtl] .spectrum-Tabs-item:before */
+}
+:host(:dir(ltr)) #selection-indicator {
+    left: 0; /* [dir=ltr] .spectrum-Tabs-selectionIndicator */
 }
 :host([dir='ltr']) #selection-indicator {
     left: 0; /* [dir=ltr] .spectrum-Tabs-selectionIndicator */
+}
+:host(:dir(rtl)) #selection-indicator {
+    right: 0; /* [dir=rtl] .spectrum-Tabs-selectionIndicator */
 }
 :host([dir='rtl']) #selection-indicator {
     right: 0; /* [dir=rtl] .spectrum-Tabs-selectionIndicator */
@@ -755,11 +781,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([direction^='horizontal']) ::slotted(:not([slot])) {
     vertical-align: top; /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
 }
+:host(:dir(ltr)[direction^='horizontal'])
+    ::slotted(:not([slot]):not(:first-child)) {
+    margin-left: var(
+        --spectrum-tabs-textonly-tabitem-margin-right
+    ); /* [dir=ltr] .spectrum-Tabs--horizontal .spectrum-Tabs-item+*:not(.spectrum-Tabs-selectionIndicator) */
+}
 :host([dir='ltr'][direction^='horizontal'])
     ::slotted(:not([slot]):not(:first-child)) {
     margin-left: var(
         --spectrum-tabs-textonly-tabitem-margin-right
     ); /* [dir=ltr] .spectrum-Tabs--horizontal .spectrum-Tabs-item+*:not(.spectrum-Tabs-selectionIndicator) */
+}
+:host(:dir(rtl)[direction^='horizontal'])
+    ::slotted(:not([slot]):not(:first-child)) {
+    margin-right: var(
+        --spectrum-tabs-textonly-tabitem-margin-right
+    ); /* [dir=rtl] .spectrum-Tabs--horizontal .spectrum-Tabs-item+*:not(.spectrum-Tabs-selectionIndicator) */
 }
 :host([dir='rtl'][direction^='horizontal'])
     ::slotted(:not([slot]):not(:first-child)) {
@@ -781,8 +819,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([quiet]) #list {
     display: inline-flex; /* .spectrum-Tabs--quiet */
 }
+:host(:dir(ltr)[direction^='vertical']) #list {
+    border-left: var(--spectrum-tabs-quiet-textonly-divider-size) solid; /* [dir=ltr] .spectrum-Tabs--vertical */
+}
 :host([dir='ltr'][direction^='vertical']) #list {
     border-left: var(--spectrum-tabs-quiet-textonly-divider-size) solid; /* [dir=ltr] .spectrum-Tabs--vertical */
+}
+:host(:dir(rtl)[direction^='vertical']) #list {
+    border-right: var(--spectrum-tabs-quiet-textonly-divider-size) solid; /* [dir=rtl] .spectrum-Tabs--vertical */
 }
 :host([dir='rtl'][direction^='vertical']) #list {
     border-right: var(--spectrum-tabs-quiet-textonly-divider-size) solid; /* [dir=rtl] .spectrum-Tabs--vertical */
@@ -792,10 +836,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-direction: column;
     padding: 0;
 }
+:host(:dir(ltr)[direction^='vertical']) ::slotted(:not([slot])) {
+    margin-left: calc(
+        var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2
+    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item */
+}
 :host([dir='ltr'][direction^='vertical']) ::slotted(:not([slot])) {
     margin-left: calc(
         var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2
     ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item */
+}
+:host(:dir(rtl)[direction^='vertical']) ::slotted(:not([slot])) {
+    margin-right: calc(
+        var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2
+    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item */
 }
 :host([dir='rtl'][direction^='vertical']) ::slotted(:not([slot])) {
     margin-right: calc(
@@ -817,20 +871,40 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     padding-top: 0;
 }
+:host(:dir(ltr)[direction^='vertical']) ::slotted(:not([slot])):before {
+    left: calc(
+        var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
+    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+}
 :host([dir='ltr'][direction^='vertical']) ::slotted(:not([slot])):before {
     left: calc(
         var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
     ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+}
+:host(:dir(rtl)[direction^='vertical']) ::slotted(:not([slot])):before {
+    right: calc(
+        var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
+    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
 }
 :host([dir='rtl'][direction^='vertical']) ::slotted(:not([slot])):before {
     right: calc(
         var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
     ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
 }
+:host(:dir(ltr)[direction^='vertical']) ::slotted(:not([slot])):before {
+    right: calc(
+        var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
+    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+}
 :host([dir='ltr'][direction^='vertical']) ::slotted(:not([slot])):before {
     right: calc(
         var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
     ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+}
+:host(:dir(rtl)[direction^='vertical']) ::slotted(:not([slot])):before {
+    left: calc(
+        var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
+    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
 }
 :host([dir='rtl'][direction^='vertical']) ::slotted(:not([slot])):before {
     left: calc(
@@ -850,16 +924,32 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     line-height: var(--spectrum-tabs-compact-vertical-textonly-tabitem-height);
     margin-bottom: var(--spectrum-tabs-compact-vertical-textonly-tabitem-gap);
 }
+:host(:dir(ltr)[direction^='vertical']) #selection-indicator {
+    left: 0; /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+}
 :host([dir='ltr'][direction^='vertical']) #selection-indicator {
     left: 0; /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
+:host(:dir(rtl)[direction^='vertical']) #selection-indicator {
+    right: 0; /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+}
 :host([dir='rtl'][direction^='vertical']) #selection-indicator {
     right: 0; /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+}
+:host(:dir(ltr)[direction^='vertical']) #selection-indicator {
+    left: calc(
+        var(--spectrum-tabs-quiet-textonly-divider-size) * -1
+    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
 :host([dir='ltr'][direction^='vertical']) #selection-indicator {
     left: calc(
         var(--spectrum-tabs-quiet-textonly-divider-size) * -1
     ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+}
+:host(:dir(rtl)[direction^='vertical']) #selection-indicator {
+    right: calc(
+        var(--spectrum-tabs-quiet-textonly-divider-size) * -1
+    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
 :host([dir='rtl'][direction^='vertical']) #selection-indicator {
     right: calc(
@@ -875,10 +965,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tabs-textonly-divider-background-color
     ); /* .spectrum-Tabs */
 }
+:host(:dir(ltr)[direction^='vertical']) #list {
+    border-left-color: var(
+        --spectrum-tabs-vertical-textonly-divider-background-color
+    ); /* [dir=ltr] .spectrum-Tabs--vertical */
+}
 :host([dir='ltr'][direction^='vertical']) #list {
     border-left-color: var(
         --spectrum-tabs-vertical-textonly-divider-background-color
     ); /* [dir=ltr] .spectrum-Tabs--vertical */
+}
+:host(:dir(rtl)[direction^='vertical']) #list {
+    border-right-color: var(
+        --spectrum-tabs-vertical-textonly-divider-background-color
+    ); /* [dir=rtl] .spectrum-Tabs--vertical */
 }
 :host([dir='rtl'][direction^='vertical']) #list {
     border-right-color: var(
@@ -910,12 +1010,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
     ); /* .spectrum-Tabs--quiet.spectrum-Tabs--emphasized .spectrum-Tabs-selectionIndicator */
 }
+:host(:dir(ltr)[direction^='vertical'][compact]) #list,
+:host(:dir(ltr)[direction^='vertical'][quiet]) #list {
+    border-left-color: var(
+        --spectrum-tabs-vertical-quiet-textonly-divider-background-color
+    ); /* [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--quiet,
+   * [dir=ltr] 
+  .spectrum-Tabs--vertical.spectrum-Tabs--compact */
+}
 :host([dir='ltr'][direction^='vertical'][compact]) #list,
 :host([dir='ltr'][direction^='vertical'][quiet]) #list {
     border-left-color: var(
         --spectrum-tabs-vertical-quiet-textonly-divider-background-color
     ); /* [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--quiet,
    * [dir=ltr] 
+  .spectrum-Tabs--vertical.spectrum-Tabs--compact */
+}
+:host(:dir(rtl)[direction^='vertical'][compact]) #list,
+:host(:dir(rtl)[direction^='vertical'][quiet]) #list {
+    border-right-color: var(
+        --spectrum-tabs-vertical-quiet-textonly-divider-background-color
+    ); /* [dir=rtl] .spectrum-Tabs--vertical.spectrum-Tabs--quiet,
+   * [dir=rtl] 
   .spectrum-Tabs--vertical.spectrum-Tabs--compact */
 }
 :host([dir='rtl'][direction^='vertical'][compact]) #list,
@@ -933,10 +1049,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Tabs--vertical.spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator,
    * .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-selectionIndicator */
 }
+:host(:dir(ltr)[direction^='vertical']) .spectrum-Tabs--emphasized {
+    border-left-color: var(
+        --spectrum-tabs-emphasized-textonly-divider-background-color
+    ); /* [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--emphasized */
+}
 :host([dir='ltr'][direction^='vertical']) .spectrum-Tabs--emphasized {
     border-left-color: var(
         --spectrum-tabs-emphasized-textonly-divider-background-color
     ); /* [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--emphasized */
+}
+:host(:dir(rtl)[direction^='vertical']) .spectrum-Tabs--emphasized {
+    border-right-color: var(
+        --spectrum-tabs-emphasized-textonly-divider-background-color
+    ); /* [dir=rtl] .spectrum-Tabs--vertical.spectrum-Tabs--emphasized */
 }
 :host([dir='rtl'][direction^='vertical']) .spectrum-Tabs--emphasized {
     border-right-color: var(

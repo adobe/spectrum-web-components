@@ -10,16 +10,38 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host(:dir(ltr)) #indicator {
+    left: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    ); /* [dir=ltr] .spectrum-Accordion-itemIndicator */
+}
 :host([dir='ltr']) #indicator {
     left: var(
         --spectrum-accordion-item-padding-x,
         var(--spectrum-global-dimension-size-225)
     ); /* [dir=ltr] .spectrum-Accordion-itemIndicator */
 }
+:host(:dir(rtl)) #indicator {
+    right: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    ); /* [dir=rtl] .spectrum-Accordion-itemIndicator */
+}
 :host([dir='rtl']) #indicator {
     right: var(
         --spectrum-accordion-item-padding-x,
         var(--spectrum-global-dimension-size-225)
+    ); /* [dir=rtl] .spectrum-Accordion-itemIndicator */
+}
+:host(:dir(rtl)) #indicator {
+    transform: matrix(
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0
     ); /* [dir=rtl] .spectrum-Accordion-itemIndicator */
 }
 :host([dir='rtl']) #indicator {
@@ -67,6 +89,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin: 0; /* .spectrum-Accordion-itemHeading */
     position: relative;
 }
+:host(:dir(ltr)) #header {
+    padding-left: calc(
+        var(
+                --spectrum-accordion-item-padding-x,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-accordion-icon-height,
+                var(--spectrum-global-dimension-size-125)
+            ) +
+            var(
+                --spectrum-accordion-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) +
+            var(
+                --spectrum-accordion-item-border-left-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
+}
 :host([dir='ltr']) #header {
     padding-left: calc(
         var(
@@ -86,6 +128,26 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-alias-border-size-thick)
             )
     ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
+}
+:host(:dir(rtl)) #header {
+    padding-right: calc(
+        var(
+                --spectrum-accordion-item-padding-x,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-accordion-icon-height,
+                var(--spectrum-global-dimension-size-125)
+            ) +
+            var(
+                --spectrum-accordion-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) +
+            var(
+                --spectrum-accordion-item-border-left-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
 }
 :host([dir='rtl']) #header {
     padding-right: calc(
@@ -107,11 +169,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
 }
+:host(:dir(ltr)) #header {
+    padding-right: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
+}
 :host([dir='ltr']) #header {
     padding-right: var(
         --spectrum-accordion-item-padding-x,
         var(--spectrum-global-dimension-size-225)
     ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
+}
+:host(:dir(rtl)) #header {
+    padding-left: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
 }
 :host([dir='rtl']) #header {
     padding-left: var(
@@ -119,8 +193,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-225)
     ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
 }
+:host(:dir(ltr)) #header {
+    text-align: left; /* [dir=ltr] .spectrum-Accordion-itemHeader */
+}
 :host([dir='ltr']) #header {
     text-align: left; /* [dir=ltr] .spectrum-Accordion-itemHeader */
+}
+:host(:dir(rtl)) #header {
+    text-align: right; /* [dir=rtl] .spectrum-Accordion-itemHeader */
 }
 :host([dir='rtl']) #header {
     text-align: right; /* [dir=rtl] .spectrum-Accordion-itemHeader */
@@ -169,8 +249,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #header:focus {
     outline: none; /* .spectrum-Accordion-itemHeader:focus */
 }
+:host(:dir(ltr)) #header:focus:after {
+    left: 0; /* [dir=ltr] .spectrum-Accordion-itemHeader:focus:after */
+}
 :host([dir='ltr']) #header:focus:after {
     left: 0; /* [dir=ltr] .spectrum-Accordion-itemHeader:focus:after */
+}
+:host(:dir(rtl)) #header:focus:after {
+    right: 0; /* [dir=rtl] .spectrum-Accordion-itemHeader:focus:after */
 }
 :host([dir='rtl']) #header:focus:after {
     right: 0; /* [dir=rtl] .spectrum-Accordion-itemHeader:focus:after */
@@ -211,18 +297,34 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     padding-top: 0; /* .spectrum-Accordion-itemContent */
 }
+:host(:dir(ltr)[open]) > #heading > #indicator {
+    transform: rotate(
+        90deg
+    ); /* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */
+}
 :host([dir='ltr'][open]) > #heading > #indicator {
     transform: rotate(
         90deg
     ); /* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */
 }
+:host(:dir(rtl)[open]) > #heading > #indicator {
+    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg); /* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */
+}
 :host([dir='rtl'][open]) > #heading > #indicator {
     transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg); /* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */
+}
+:host(:dir(ltr)[open]) > #indicator {
+    transform: rotate(
+        90deg
+    ); /* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */
 }
 :host([dir='ltr'][open]) > #indicator {
     transform: rotate(
         90deg
     ); /* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */
+}
+:host(:dir(rtl)[open]) > #indicator {
+    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg); /* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */
 }
 :host([dir='rtl'][open]) > #indicator {
     transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg); /* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */

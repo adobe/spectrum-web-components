@@ -62,11 +62,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-dimension-size-50)
         );
 }
+:host(:dir(ltr)) slot[name='action'] + ::slotted([slot='action']) {
+    margin-left: var(
+        --spectrum-quickactions-button-gap-x,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=ltr] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
+}
 :host([dir='ltr']) slot[name='action'] + ::slotted([slot='action']) {
     margin-left: var(
         --spectrum-quickactions-button-gap-x,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=ltr] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
+}
+:host(:dir(rtl)) slot[name='action'] + ::slotted([slot='action']) {
+    margin-right: var(
+        --spectrum-quickactions-button-gap-x,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=rtl] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
 }
 :host([dir='rtl']) slot[name='action'] + ::slotted([slot='action']) {
     margin-right: var(
@@ -74,11 +86,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=rtl] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
 }
+:host(:dir(ltr)[text-only]) slot[name='action'] + ::slotted([slot='action']) {
+    margin-left: var(
+        --spectrum-quickactions-text-button-gap-x,
+        var(--spectrum-global-dimension-size-50)
+    ); /* [dir=ltr] .spectrum-QuickActions--textOnly .spectrum-ActionButton+.spectrum-ActionButton */
+}
 :host([dir='ltr'][text-only]) slot[name='action'] + ::slotted([slot='action']) {
     margin-left: var(
         --spectrum-quickactions-text-button-gap-x,
         var(--spectrum-global-dimension-size-50)
     ); /* [dir=ltr] .spectrum-QuickActions--textOnly .spectrum-ActionButton+.spectrum-ActionButton */
+}
+:host(:dir(rtl)[text-only]) slot[name='action'] + ::slotted([slot='action']) {
+    margin-right: var(
+        --spectrum-quickactions-text-button-gap-x,
+        var(--spectrum-global-dimension-size-50)
+    ); /* [dir=rtl] .spectrum-QuickActions--textOnly .spectrum-ActionButton+.spectrum-ActionButton */
 }
 :host([dir='rtl'][text-only]) slot[name='action'] + ::slotted([slot='action']) {
     margin-right: var(

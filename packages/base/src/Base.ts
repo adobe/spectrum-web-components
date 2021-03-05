@@ -27,7 +27,7 @@ export interface SpectrumInterface {
     shadowRoot: ShadowRoot;
     isLTR: boolean;
     hasVisibleFocusInTree(): boolean;
-    dir: 'ltr' | 'rtl';
+    dir: 'ltr' | 'rtl' | undefined;
 }
 
 const observedForElements: Set<HTMLElement> = new Set();
@@ -53,6 +53,15 @@ type ContentDirectionManager = HTMLElement & {
     startManagingContentDirection?(): void;
 };
 
+let hasDirSelector = true;
+
+try {
+    const dirContent = document.body.querySelector(':dir(ltr), :dir(rtl)');
+    hasDirSelector = dirContent !== null;
+} catch (error) {
+    hasDirSelector = false;
+}
+
 const canManageContentDirection = (el: ContentDirectionManager): boolean =>
     typeof el.startManagingContentDirection !== 'undefined' ||
     el.tagName === 'SP-THEME';
@@ -70,14 +79,31 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         /**
          * @private
          */
-        @property({ reflect: true })
-        public dir: 'ltr' | 'rtl' = 'ltr';
+        @property()
+        public get dir(): 'ltr' | 'rtl' {
+            if (hasDirSelector) {
+                return this.isLTR ? 'ltr' : 'rtl';
+            }
+            return this._dir;
+        }
+
+        public set dir(value) {
+            if (value !== this.dir) {
+                this.setAttribute('dir', value);
+                this._dir = value;
+            }
+        }
+
+        private _dir: 'ltr' | 'rtl' = 'ltr';
 
         /**
          * @private
          */
         public get isLTR(): boolean {
-            return this.dir === 'ltr';
+            if (hasDirSelector) {
+                return this.matches(':dir(ltr)');
+            }
+            return this._dir === 'ltr';
         }
 
         public hasVisibleFocusInTree(): boolean {
@@ -101,9 +127,12 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         }
 
         public connectedCallback(): void {
-            if (!this.hasAttribute('dir')) {
-                let dirParent = ((this as HTMLElement).assignedSlot ||
-                    this.parentNode) as HTMLElement;
+            if (
+                !hasDirSelector &&
+                (!this.hasAttribute('dir') ||
+                    this.getAttribute('dir') === 'null')
+            ) {
+                let dirParent = this as HTMLElement;
                 while (
                     dirParent !== document.documentElement &&
                     !canManageContentDirection(
@@ -115,10 +144,14 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         (dirParent as unknown as ShadowRoot)
                             .host) as HTMLElement;
                 }
-                this.dir =
-                    dirParent.dir === 'rtl' ? dirParent.dir : this.dir || 'ltr';
                 if (dirParent === document.documentElement) {
                     observedForElements.add(this);
+                    this.setAttribute(
+                        'dir',
+                        dirParent.dir === 'rtl'
+                            ? dirParent.dir
+                            : this.dir || 'ltr'
+                    );
                 } else {
                     const { localName } = dirParent;
                     if (
@@ -143,7 +176,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 
         public disconnectedCallback(): void {
             super.disconnectedCallback();
-            if (this._dirParent) {
+            if (!hasDirSelector && this._dirParent) {
                 if (this._dirParent === document.documentElement) {
                     observedForElements.delete(this);
                 } else {

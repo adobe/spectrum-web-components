@@ -52,11 +52,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #button:disabled {
     cursor: default; /* .spectrum-Picker:disabled */
 }
+:host(:dir(ltr)) #button {
+    padding-left: var(
+        --spectrum-picker-textonly-padding-left-adjusted
+    ); /* [dir=ltr] .spectrum-Picker */
+    padding-right: var(--spectrum-picker-textonly-padding-right-adjusted);
+}
 :host([dir='ltr']) #button {
     padding-left: var(
         --spectrum-picker-textonly-padding-left-adjusted
     ); /* [dir=ltr] .spectrum-Picker */
     padding-right: var(--spectrum-picker-textonly-padding-right-adjusted);
+}
+:host(:dir(rtl)) #button {
+    padding-left: var(--spectrum-picker-textonly-padding-right-adjusted);
+    padding-right: var(
+        --spectrum-picker-textonly-padding-left-adjusted
+    ); /* [dir=rtl] .spectrum-Picker */
 }
 :host([dir='rtl']) #button {
     padding-left: var(--spectrum-picker-textonly-padding-right-adjusted);
@@ -91,10 +103,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Picker.is-disabled */
     cursor: default;
 }
+:host(:dir(ltr)) #button .icon {
+    margin-right: var(
+        --spectrum-picker-texticon-icon-gap
+    ); /* [dir=ltr] .spectrum-Picker .spectrum-Picker-icon */
+}
 :host([dir='ltr']) #button .icon {
     margin-right: var(
         --spectrum-picker-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-Picker .spectrum-Picker-icon */
+}
+:host(:dir(rtl)) #button .icon {
+    margin-left: var(
+        --spectrum-picker-texticon-icon-gap
+    ); /* [dir=rtl] .spectrum-Picker .spectrum-Picker-icon */
 }
 :host([dir='rtl']) #button .icon {
     margin-left: var(
@@ -104,6 +126,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .icon {
     flex-shrink: 0; /* .spectrum-Picker .spectrum-Picker-icon */
 }
+:host(:dir(ltr)) #button #label + .icon {
+    margin-left: calc(
+        (
+                var(--spectrum-picker-textonly-padding-left-adjusted) -
+                    var(--spectrum-picker-padding-left-adjusted)
+            ) * -1
+    ); /* [dir=ltr] .spectrum-Picker .spectrum-Picker-label+.spectrum-Picker-icon */
+}
 :host([dir='ltr']) #button #label + .icon {
     margin-left: calc(
         (
@@ -111,6 +141,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                     var(--spectrum-picker-padding-left-adjusted)
             ) * -1
     ); /* [dir=ltr] .spectrum-Picker .spectrum-Picker-label+.spectrum-Picker-icon */
+}
+:host(:dir(rtl)) #button #label + .icon {
+    margin-right: calc(
+        (
+                var(--spectrum-picker-textonly-padding-left-adjusted) -
+                    var(--spectrum-picker-padding-left-adjusted)
+            ) * -1
+    ); /* [dir=rtl] .spectrum-Picker .spectrum-Picker-label+.spectrum-Picker-icon */
 }
 :host([dir='rtl']) #button #label + .icon {
     margin-right: calc(
@@ -498,8 +536,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-shadow: none; /* .spectrum-Picker--quiet:disabled.focus-ring,
    * .spectrum-Picker--quiet.is-disabled.focus-ring */
 }
+:host(:dir(ltr)) #label {
+    text-align: left; /* [dir=ltr] .spectrum-Picker-label */
+}
 :host([dir='ltr']) #label {
     text-align: left; /* [dir=ltr] .spectrum-Picker-label */
+}
+:host(:dir(rtl)) #label {
+    text-align: right; /* [dir=rtl] .spectrum-Picker-label */
 }
 :host([dir='rtl']) #label {
     text-align: right; /* [dir=rtl] .spectrum-Picker-label */
@@ -535,20 +579,40 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         ease-out;
     vertical-align: top;
 }
+:host(:dir(ltr)) .validation-icon {
+    margin-left: var(
+        --spectrum-picker-texticon-error-icon-margin-left
+    ); /* [dir=ltr] .spectrum-Picker-validationIcon */
+}
 :host([dir='ltr']) .validation-icon {
     margin-left: var(
         --spectrum-picker-texticon-error-icon-margin-left
     ); /* [dir=ltr] .spectrum-Picker-validationIcon */
+}
+:host(:dir(rtl)) .validation-icon {
+    margin-right: var(
+        --spectrum-picker-texticon-error-icon-margin-left
+    ); /* [dir=rtl] .spectrum-Picker-validationIcon */
 }
 :host([dir='rtl']) .validation-icon {
     margin-right: var(
         --spectrum-picker-texticon-error-icon-margin-left
     ); /* [dir=rtl] .spectrum-Picker-validationIcon */
 }
+:host(:dir(ltr)) #label ~ .picker {
+    margin-left: var(
+        --spectrum-picker-texticon-ui-icon-gap
+    ); /* [dir=ltr] .spectrum-Picker-label~.spectrum-Picker-menuIcon */
+}
 :host([dir='ltr']) #label ~ .picker {
     margin-left: var(
         --spectrum-picker-texticon-ui-icon-gap
     ); /* [dir=ltr] .spectrum-Picker-label~.spectrum-Picker-menuIcon */
+}
+:host(:dir(rtl)) #label ~ .picker {
+    margin-right: var(
+        --spectrum-picker-texticon-ui-icon-gap
+    ); /* [dir=rtl] .spectrum-Picker-label~.spectrum-Picker-menuIcon */
 }
 :host([dir='rtl']) #label ~ .picker {
     margin-right: var(
@@ -559,6 +623,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     max-width: var(
         --spectrum-picker-texticon-popover-max-width
     ); /* .spectrum-Picker-popover */
+}
+:host(:dir(ltr)) .spectrum-Picker-popover--quiet {
+    margin-left: calc(
+        (
+                var(
+                        --spectrum-picker-m-quiet-texticon-popover-offset-x,
+                        var(--spectrum-global-dimension-size-150)
+                    ) +
+                    var(
+                        --spectrum-popover-border-size,
+                        var(--spectrum-alias-border-size-thin)
+                    )
+            ) * -1
+    ); /* [dir=ltr] .spectrum-Picker-popover--quiet */
 }
 :host([dir='ltr']) .spectrum-Picker-popover--quiet {
     margin-left: calc(
@@ -573,6 +651,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                     )
             ) * -1
     ); /* [dir=ltr] .spectrum-Picker-popover--quiet */
+}
+:host(:dir(rtl)) .spectrum-Picker-popover--quiet {
+    margin-right: calc(
+        (
+                var(
+                        --spectrum-picker-m-quiet-texticon-popover-offset-x,
+                        var(--spectrum-global-dimension-size-150)
+                    ) +
+                    var(
+                        --spectrum-popover-border-size,
+                        var(--spectrum-alias-border-size-thin)
+                    )
+            ) * -1
+    ); /* [dir=rtl] .spectrum-Picker-popover--quiet */
 }
 :host([dir='rtl']) .spectrum-Picker-popover--quiet {
     margin-right: calc(

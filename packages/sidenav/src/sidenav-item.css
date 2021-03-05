@@ -39,6 +39,58 @@ governing permissions and limitations under the License.
     justify-content: start;
 }
 
+:host(:dir(ltr)) #item-link[data-level='1'] {
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level1,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
+}
+
+:host(:dir(ltr)) #item-link[data-level='2'] {
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level2,
+                var(--spectrum-global-dimension-size-300)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
+}
+
+:host(:dir(rtl)) #item-link[data-level='1'] {
+    padding-right: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level1,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
+}
+
+:host(:dir(rtl)) #item-link[data-level='2'] {
+    padding-right: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level2,
+                var(--spectrum-global-dimension-size-300)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
+}
+
 :host([dir='ltr']) #item-link[data-level='1'] {
     padding-left: calc(
         var(

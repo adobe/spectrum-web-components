@@ -416,8 +416,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-400)
     );
 }
+:host(:dir(ltr)) .fills {
+    left: 0; /* [dir=ltr] .spectrum-ProgressCircle-fills */
+}
 :host([dir='ltr']) .fills {
     left: 0; /* [dir=ltr] .spectrum-ProgressCircle-fills */
+}
+:host(:dir(rtl)) .fills {
+    right: 0; /* [dir=rtl] .spectrum-ProgressCircle-fills */
 }
 :host([dir='rtl']) .fills {
     right: 0; /* [dir=rtl] .spectrum-ProgressCircle-fills */

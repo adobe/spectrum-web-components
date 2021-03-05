@@ -661,13 +661,36 @@ class SpectrumProcessor {
             return;
         }
         const convertedSelectors = this.convertSelectors(rule);
+        const dirRegExp = /\[dir=(ltr|rtl)\]/;
+        const hasDirSelector = (selectors) => {
+            let hasDir = false;
+            selectors.forEach((selector) => {
+                if (selector.search(dirRegExp) > -1) {
+                    hasDir = true;
+                }
+            });
+            return hasDir;
+        };
+        if (hasDirSelector(convertedSelectors)) {
+            // When a selector includes `:host([dir="..."])` make a clone of it
+            // with the `:host(:dir(...))` selector for browsers with support for that.
+            const dirSelectorNode = rule.clone();
+            const clonedSelectors = convertedSelectors.map((selector) => {
+                return selector.replace(dirRegExp, ':dir($1)');
+            });
+            this.appendRule(
+                clonedSelectors,
+                dirSelectorNode.nodes,
+                `${rule.selectors.join(',\n   * ')}`
+            );
+        }
         if (
             convertedSelectors.length === 1 &&
             convertedSelectors[0] === this.component.hostShadowSelector &&
             this.component.hostShadowSelector !== ':host'
         ) {
             // In the case that custom property declarations are destined
-            // for `hostShadowSelector` selected rules, we need to hoise them
+            // for `hostShadowSelector` selected rules, we need to hoist them
             // back up to the :host so that they can be overriden from the outside
             // To do this:
             // - clone the rule

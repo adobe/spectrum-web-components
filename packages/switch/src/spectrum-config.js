@@ -49,20 +49,18 @@ const config = {
             ],
             complexSelectors: [
                 {
-                    replacement:
-                        ':host([disabled][checked][dir]) #input + #switch',
+                    replacement: ':host([disabled][checked]) #input + #switch',
                     selector:
                         '.spectrum-Switch .spectrum-Switch-input:disabled:checked + .spectrum-Switch-switch',
                 },
                 {
                     replacement:
-                        ':host([disabled][checked][dir]) #input + #switch:before',
+                        ':host([disabled][checked]) #input + #switch:before',
                     selector:
                         '.spectrum-Switch .spectrum-Switch-input:disabled:checked + .spectrum-Switch-switch::before',
                 },
                 {
-                    replacement:
-                        ':host([disabled][checked][dir]) #input ~ #label',
+                    replacement: ':host([disabled][checked]) #input ~ #label',
                     selector:
                         '.spectrum-Switch .spectrum-Switch-input:disabled:checked ~ .spectrum-Switch-label',
                 },

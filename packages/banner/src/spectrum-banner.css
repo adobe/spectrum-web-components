@@ -36,8 +36,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #header {
     font-weight: 700; /* .spectrum-Banner-header */
 }
+:host(:dir(ltr)[corner]) {
+    right: -10px; /* [dir=ltr] .spectrum-Banner--corner */
+}
 :host([dir='ltr'][corner]) {
     right: -10px; /* [dir=ltr] .spectrum-Banner--corner */
+}
+:host(:dir(rtl)[corner]) {
+    left: -10px; /* [dir=rtl] .spectrum-Banner--corner */
 }
 :host([dir='rtl'][corner]) {
     left: -10px; /* [dir=rtl] .spectrum-Banner--corner */
