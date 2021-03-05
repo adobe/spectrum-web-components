@@ -8,19 +8,19 @@
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/bundle?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/bundle)
 
 ```
-yarn add @spectrum-web-components/banner
+yarn add @spectrum-web-components/bundle
 ```
 
 Import the side effectful registrations of the bundled components:
 
 ```
-import '@spectrum-web-components/banner/elements.js';
+import '@spectrum-web-components/bundle/elements.js';
 ```
 
-When looking to leverage their base classes as a type and/or for extension purposes, do so via:
+When looking to leverage their base classes as a type and/or for extension purposes, do so via something like the following for the `ActionButton` base class:
 
 ```
-import { Banner } from '@spectrum-web-components/bundle';
+import { ActionButton } from '@spectrum-web-components/bundle';
 ```
 
 ### Icons
