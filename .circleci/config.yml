@@ -34,10 +34,18 @@ commands:
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run: |
                   yarn test:ci --config web-test-runner.config.ci.js --group vrt-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+            # store results and artifacts before rearranging things for the new cache.
+            - store_test_results:
+                  path: /root/project/results/
+            - store_artifacts:
+                  path: test/visual/screenshots-actual
+            - store_artifacts:
+                  path: test/visual/screenshots-baseline
+            # when there are "updated" screen shots move them into the baseline directory before making the new revision cache
             - run:
                   when: on_fail
                   command: |
-                      test -d test/visual/screenshots-current/updates/Chromium && cp -R test/visual/screenshots-current/updates/Chromium test/visual/screenshots-baseline/Chromium
+                      test -d test/visual/screenshots-actual/updates/Chromium && cp -R test/visual/screenshots-actual/updates/Chromium test/visual/screenshots-baseline
             - run:
                   when: on_success
                   name: Count current images
@@ -60,12 +68,6 @@ commands:
                   paths:
                       - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
-            - store_test_results:
-                  path: /root/project/results/
-            - store_artifacts:
-                  path: test/visual/screenshots-baseline
-            - store_artifacts:
-                  path: test/visual/screenshots-current
 
 jobs:
     commitlint:
