@@ -18,8 +18,8 @@ import {
     property,
     PropertyValues,
     query,
-    streamingListener,
 } from '@spectrum-web-components/base';
+import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { ColorHandle, ColorValue } from '@spectrum-web-components/color-handle';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';

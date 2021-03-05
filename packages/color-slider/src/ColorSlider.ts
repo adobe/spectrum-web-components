@@ -16,9 +16,9 @@ import {
     TemplateResult,
     property,
     query,
-    streamingListener,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import styles from './color-slider.css.js';
@@ -336,7 +336,10 @@ export class ColorSlider extends Focusable {
                 @manage=${streamingListener(
                     { type: 'pointerdown', fn: this.handlePointerdown },
                     { type: 'pointermove', fn: this.handlePointermove },
-                    { type: 'pointerup', fn: this.handlePointerup }
+                    {
+                        type: ['pointerup', 'pointercancel'],
+                        fn: this.handlePointerup,
+                    }
                 )}
             ></sp-color-handle>
             <input

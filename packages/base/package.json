@@ -27,6 +27,8 @@
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
+        "./streaming-listener": "./src/streaming-listener.js",
+        "./streaming-listener.js": "./src/streaming-listener.js",
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json"
     },

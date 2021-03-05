@@ -3196,15 +3196,6 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-3.0.0.tgz#c3ef4c2f07bd4f0d2734e730233ca81cb18106e7"
   integrity sha512-fNXU6qmcCbSiUoWGe/m9A8/THRHbpzwZ+iN8o/27tWIzcQIyZBZgjmV/kIMdF1dHpu5CuWik7mGV1Ex8tlzATg==
 
-"@spectrum-web-components/shared@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/shared/-/shared-0.9.0.tgz#754ff4ddd0001610caefa59c70c3fb14327075b7"
-  integrity sha512-9stqxnclX89NzMyaJN7CH9lCWpyfoq30hhmxFYEJwDECRrPDgpFpPZzmWs9uL0EAVDdLDmoSfh53mmx3owhMSA==
-  dependencies:
-    "@spectrum-web-components/base" "^0.3.0"
-    focus-visible "^5.1.0"
-    tslib "^2.0.0"
-
 "@stylelint/postcss-css-in-js@^0.37.2":
   version "0.37.2"
   resolved "https://registry.yarnpkg.com/@stylelint/postcss-css-in-js/-/postcss-css-in-js-0.37.2.tgz#7e5a84ad181f4234a2480803422a47b8749af3d2"
@@ -10680,6 +10671,11 @@ fsevents@^1.2.7:
   dependencies:
     bindings "^1.5.0"
     nan "^2.12.1"
+
+fsevents@~2.1.2:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.1.3.tgz#fb738703ae8d2f9fe900c33836ddebee8b97f23e"
+  integrity sha512-Auw9a4AxqWpa9GUfj370BMPzzyncfBABW8Mab7BGWBYDj4Isgq+cDKtx0i6u9jcX9pQDnswsaaOTgTmA5pEjuQ==
 
 fsevents@~2.3.1:
   version "2.3.1"
