@@ -25,7 +25,7 @@ import { ColorWheel } from '@spectrum-web-components/color-wheel';
 
 ## Color Formatting
 
-When using the color elements, use `el.color` to access the `color` property, which should manage itself in the colour format supplied. If you supply a color in `rgb()` format, `el.color` should return the color in `rgb()` format, as well.
+When using the color elements, use `el.color` to access the `color` property, which should manage itself in the color format supplied. If you supply a color in `rgb()` format, `el.color` should return the color in `rgb()` format, as well.
 
 The current color formats supported are as follows:
 
@@ -36,7 +36,7 @@ The current color formats supported are as follows:
 -   Strings (eg "red", "blue")
 
 **Please note for the following formats: HSV, HSVA, HSL, HSLA**
-When setting a color's lightness or value to 100%, the hue and saturation value are not preserved. This is detailed in the [TinyColor documentation](https://www.npmjs.com/package/@ctrl/tinycolor). Currently, the Spectrum Web Components has a workaround to support the preservation of the hue.
+When using the HSL or HSV formats, and a color's value (in HSV) is set to 0, or its luminosity (in HSL) is set to 0 or 1, the hue and saturation values may not be preserved by the element's `color` property. This is detailed in the [TinyColor documentation](https://www.npmjs.com/package/@ctrl/tinycolor). Seperately, the element's `value` property is directly managed by the hue as represented in the interface.
 
 ## Example
 
