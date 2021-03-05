@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.8.0",
+    "version": "0.8.1",
     "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
@@ -52,13 +52,13 @@
         "@spectrum-css/card": "^3.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/asset": "^0.4.0",
-        "@spectrum-web-components/base": "^0.4.0",
-        "@spectrum-web-components/checkbox": "^0.9.0",
-        "@spectrum-web-components/icons-workflow": "^0.6.0",
-        "@spectrum-web-components/quick-actions": "^0.4.0",
-        "@spectrum-web-components/shared": "^0.11.0",
-        "@spectrum-web-components/styles": "^0.9.0",
+        "@spectrum-web-components/asset": "^0.4.1",
+        "@spectrum-web-components/base": "^0.4.1",
+        "@spectrum-web-components/checkbox": "^0.9.1",
+        "@spectrum-web-components/icons-workflow": "^0.6.1",
+        "@spectrum-web-components/quick-actions": "^0.4.1",
+        "@spectrum-web-components/shared": "^0.11.1",
+        "@spectrum-web-components/styles": "^0.9.1",
         "tslib": "^2.0.0"
     }
 }
