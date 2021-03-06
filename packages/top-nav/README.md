@@ -15,6 +15,21 @@ npm install @spectrum-web-components/top-nav
 yarn add @spectrum-web-components/top-nav
 ```
 
+### Usage
+
+Import the side effectful registration of `<sp-top-nav>` and `<sp-top-nav-item>` as follows:
+
+```
+import '@spectrum-web-components/top-nav/sp-top-nav.js';
+import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
+```
+
+When looking to leverage the `TopNav` or `TopNavItem` base classes as a type and/or for extension purposes, do so via:
+
+```
+import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
+```
+
 ## Example
 
 ```html
