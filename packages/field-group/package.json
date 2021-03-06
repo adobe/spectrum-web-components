@@ -49,9 +49,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/fieldgroup": "^3.0.0",
-        "@spectrum-web-components/checkbox": "^0.9.1",
-        "@spectrum-web-components/radio": "^0.7.1"
+        "@spectrum-css/fieldgroup": "^3.0.0"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.1",
