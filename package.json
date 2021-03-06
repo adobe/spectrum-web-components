@@ -16,6 +16,7 @@
     },
     "scripts": {
         "analyze": "lit-analyzer 'packages/*/src/**/!(*.css).ts'",
+        "analyze:quick": "lit-analyzer \"packages/*/src/!(*.css).ts\"",
         "get-ready": "yarn build:clear-cache && run-p process-icons process-spectrum && yarn build",
         "postinstall": "yarn get-ready",
         "spectrum-vars": "node ./scripts/spectrum-vars.js",
@@ -77,12 +78,6 @@
         "new-package": "cd projects/templates && plop",
         "prepare": "husky install"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged && yarn lint",
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-        }
-    },
     "peerDependencies": {
         "common-tags": "^1.8.0",
         "prismjs": "^1.15.0"
@@ -110,8 +105,8 @@
         "@types/sinon": "^9.0.0",
         "@types/webpack": "^4.4.26",
         "@types/webpack-env": "^1.13.9",
-        "@typescript-eslint/eslint-plugin": "^4.2.0",
-        "@typescript-eslint/parser": "^4.2.0",
+        "@typescript-eslint/eslint-plugin": "^4.16.1",
+        "@typescript-eslint/parser": "^4.16.1",
         "@vaadin/router": "^1.2.0",
         "@web/dev-server": "^0.1.8",
         "@web/test-runner": "^0.12.15",
@@ -130,13 +125,13 @@
         "cssnano": "^4.1.10",
         "deepmerge": "^4.0.0",
         "element-closest": "^3.0.1",
-        "eslint": "^7.11.0",
-        "eslint-config-prettier": "^7.1.0",
+        "eslint": "^7.21.0",
+        "eslint-config-prettier": "^8.1.0",
         "eslint-formatter-pretty": "^4.0.0",
         "eslint-plugin-import": "^2.22.1",
-        "eslint-plugin-lit-a11y": "^1.0.0",
+        "eslint-plugin-lit-a11y": "^1.0.1",
         "eslint-plugin-notice": "^0.9.10",
-        "eslint-plugin-prettier": "^3.1.4",
+        "eslint-plugin-prettier": "^3.3.1",
         "eslint-plugin-spectrum-web-components": "file:./linters/eslint",
         "express": "^4.16.4",
         "extract-loader": "^5.0.1",
