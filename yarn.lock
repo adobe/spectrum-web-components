@@ -2850,6 +2850,18 @@
     is-module "^1.0.0"
     resolve "^1.19.0"
 
+"@rollup/plugin-node-resolve@^11.2.0":
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-11.2.0.tgz#a5ab88c35bb7622d115f44984dee305112b6f714"
+  integrity sha512-qHjNIKYt5pCcn+5RUBQxK8krhRvf1HnyVgUCcFFcweDS7fhkOLZeYh0mhHK6Ery8/bb9tvN/ubPzmfF0qjDCTA==
+  dependencies:
+    "@rollup/pluginutils" "^3.1.0"
+    "@types/resolve" "1.17.1"
+    builtin-modules "^3.1.0"
+    deepmerge "^4.2.2"
+    is-module "^1.0.0"
+    resolve "^1.19.0"
+
 "@rollup/plugin-node-resolve@^7.1.1":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-7.1.3.tgz#80de384edfbd7bfc9101164910f86078151a3eca"
@@ -4289,7 +4301,7 @@
     rollup "^2.35.1"
     whatwg-url "^8.4.0"
 
-"@web/dev-server@^0.1.7", "@web/dev-server@^0.1.8":
+"@web/dev-server@^0.1.8":
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.8.tgz#94db0637c60003c2dc1e03017377fa1640b58967"
   integrity sha512-HBxzKfRf2XENgTDgCRQ+dQ4F5TQFAMvsr5mB/KYBWKMJJ4PXHRYbfCFvhAgq6s2CrZzicGWp7VZpMHLEVjEqpQ==
@@ -4318,12 +4330,28 @@
     "@types/parse5" "^5.0.3"
     parse5 "^6.0.1"
 
-"@web/parse5-utils@^1.2.0":
+"@web/parse5-utils@^1.1.2", "@web/parse5-utils@^1.2.0":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@web/parse5-utils/-/parse5-utils-1.2.1.tgz#9e2a73fb12535f06c32af5a87836338a0d898651"
   integrity sha512-FX5evV+qf5GjnNtvyHhuVKPVFqnSSECp0MnMtRLL63GV3aygiKe6B+Iqt6Xn0n1NsfKyh7zo2pw/rk0JtG2Vpw==
   dependencies:
     "@types/parse5" "^5.0.3"
+    parse5 "^6.0.1"
+
+"@web/rollup-plugin-copy@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@web/rollup-plugin-copy/-/rollup-plugin-copy-0.2.0.tgz#425d32665fe06f39d81ae505ad0775c9354ba1ad"
+  integrity sha512-l3YInTLe/rbth6WuyoA7GY6DuXdt3iX6hQm6uoe5298fBzZfZPa3i0WVyUi3zPo6VttY0bjxPJyWK7JRQ37Cnw==
+  dependencies:
+    glob "^7.0.0"
+
+"@web/rollup-plugin-html@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@web/rollup-plugin-html/-/rollup-plugin-html-1.4.0.tgz#bf94d1ee525e5f41dc527bbff9f7e24973a82238"
+  integrity sha512-AYOeRuNsPXQmNpxlJRFLlfVMm4EazXcJEz0bbVd6wKQVcEBM71kRboGfupxhoIkDcVyThefw9gETcMZ4ntUcTw==
+  dependencies:
+    "@web/parse5-utils" "^1.1.2"
+    glob "^7.1.6"
     parse5 "^6.0.1"
 
 "@web/test-runner-chrome@^0.9.0", "@web/test-runner-chrome@^0.9.4":
@@ -4336,17 +4364,17 @@
     chrome-launcher "^0.13.4"
     puppeteer-core "^5.5.0"
 
-"@web/test-runner-commands@0.4.1", "@web/test-runner-commands@^0.4.1":
+"@web/test-runner-commands@^0.4.1":
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.4.1.tgz#2636a071d346f4593467bdd53d4e25d541f0db6b"
   integrity sha512-y1U9+jucQ1ZB9YRgMFIjXTUSu/in54yt4Lf4GcY9fHoSyGVWDub085ARWipmagsD9SRN1QnIYTkMk+jRa/EiLQ==
   dependencies:
     "@web/test-runner-core" "^0.10.8"
 
-"@web/test-runner-core@^0.10.11":
-  version "0.10.12"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.12.tgz#4b49668bea6592ace9110be10a3cc5498a871cfa"
-  integrity sha512-jAwkEtUPp1+oX32aok/L5aOaWt+H53g6t/ok1D/bzn4qdtnxlT9SaSO+n5vykbxbrnIfyzC3GvB3Jzv8Zcxl9w==
+"@web/test-runner-core@^0.10.13":
+  version "0.10.13"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.13.tgz#7c86939204f1b1e958fb21c866c06ca5edb54634"
+  integrity sha512-w6seztsj/UKUz9HP5KeMZ1JdUadt293SplsrKKaUJTZDMLO8+xvyo+vpt1Mv7zICu0wyuQN0AdD3GjKKX6dFHw==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/co-body" "^5.1.0"
@@ -4370,7 +4398,7 @@
     istanbul-lib-report "^3.0.0"
     istanbul-reports "^3.0.2"
     log-update "^4.0.0"
-    open "^7.3.0"
+    open "^8.0.2"
     picomatch "^2.2.2"
     source-map "^0.7.3"
     uuid "^8.3.2"
@@ -4438,31 +4466,31 @@
     "@web/test-runner-coverage-v8" "^0.4.5"
     playwright "^1.7.1"
 
-"@web/test-runner-visual-regression@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-visual-regression/-/test-runner-visual-regression-0.4.1.tgz#e44ebf8fb862d2211f0f8be2a67f9ef8f5235084"
-  integrity sha512-ZlsRzTqkW05O7sNvQgY9k1b3lebqf2wUNBnERt42Vv6B8MFx25F1/faxTTJccP69ORlPw6P5byobGh+K/KgquQ==
+"@web/test-runner-visual-regression@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-visual-regression/-/test-runner-visual-regression-0.5.0.tgz#0dafa6f7696be4aa990262ef47d1894ee540500a"
+  integrity sha512-xiiVbkNQUfMjR3nTeBuPyvIki1kBAKSUkCG894q5LNeB3+guDt/BI9E6eBj+vcembKQKNeiby9Yhy8C5NWt7fA==
   dependencies:
     "@types/mkdirp" "^1.0.1"
     "@types/pixelmatch" "^5.2.2"
     "@types/pngjs" "^6.0.0"
     "@web/test-runner-commands" "^0.4.1"
-    "@web/test-runner-core" "^0.10.8"
+    "@web/test-runner-core" "^0.10.13"
     mkdirp "^1.0.4"
     pixelmatch "^5.2.1"
     pngjs "^6.0.0"
 
-"@web/test-runner@^0.12.15":
-  version "0.12.15"
-  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.12.15.tgz#5989c6d00c8490247282c0e0fbf861e5674cc356"
-  integrity sha512-v9VehhdoELkPs9u0XQrXu8BKzIRlx/U8F8YLsz8tV/bi8Mb7Riqvku0OdFu1P4vjf4NnElpx9J97/WBXURBwLg==
+"@web/test-runner@^0.12.16":
+  version "0.12.16"
+  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.12.16.tgz#e5f863ae1d8e37646dca79ea51842842e764c715"
+  integrity sha512-Lz1lFgLsjOYaS0jcZs54TeWkq/qFUzuKNrmgO36RYr1AtReFbv/sDHEBCWL7uzpxBCHA0sT6KDkvuVaZWuinGA==
   dependencies:
     "@web/browser-logs" "^0.2.0"
     "@web/config-loader" "^0.1.3"
-    "@web/dev-server" "^0.1.7"
+    "@web/dev-server" "^0.1.8"
     "@web/test-runner-chrome" "^0.9.4"
     "@web/test-runner-commands" "^0.4.1"
-    "@web/test-runner-core" "^0.10.11"
+    "@web/test-runner-core" "^0.10.13"
     "@web/test-runner-mocha" "^0.7.2"
     camelcase "^6.2.0"
     chalk "^4.1.0"
@@ -8547,6 +8575,11 @@ defer-to-connect@^2.0.0:
   resolved "https://registry.yarnpkg.com/defer-to-connect/-/defer-to-connect-2.0.0.tgz#83d6b199db041593ac84d781b5222308ccf4c2c1"
   integrity sha512-bYL2d05vOSf1JEZNx5vSAtPuBMkX8K9EUutg7zlKvTqKXHt7RhWJFbmd7qakVuf13i+IkGmp6FwSsONOf6VYIg==
 
+define-lazy-prop@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/define-lazy-prop/-/define-lazy-prop-2.0.0.tgz#3f7ae421129bcaaac9bc74905c98a0009ec9ee7f"
+  integrity sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==
+
 define-properties@^1.1.2, define-properties@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/define-properties/-/define-properties-1.1.3.tgz#cf88da6cbee26fe6db7094f61d870cbd84cee9f1"
@@ -11124,7 +11157,7 @@ glob@7.1.3:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
+glob@^7.0.0, glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
   integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
@@ -12848,7 +12881,7 @@ is-directory@^0.3.1:
   resolved "https://registry.yarnpkg.com/is-directory/-/is-directory-0.3.1.tgz#61339b6f2475fc772fd9c9d83f5c8575dc154ae1"
   integrity sha1-YTObbyR1/Hcv2cnYP1yFddwVSuE=
 
-is-docker@^2.0.0:
+is-docker@^2.0.0, is-docker@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.1.1.tgz#4125a88e44e450d384e09047ede71adc2d144156"
   integrity sha512-ZOoqiXfEwtGknTiuDEy8pN2CfE3TxMHprvNer1mXiqwkOT77Rw3YVrUQ52EqAOU3QAWDQ+bQdx7HJzrv7LS2Hw==
@@ -16186,6 +16219,15 @@ open@^7.0.0, open@^7.0.3, open@^7.3.0:
   dependencies:
     is-docker "^2.0.0"
     is-wsl "^2.1.1"
+
+open@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/open/-/open-8.0.2.tgz#8c3e95cce93ba2fc8d99968ee8bfefecdb50b84f"
+  integrity sha512-NV5QmWJrTaNBLHABJyrb+nd5dXI5zfea/suWawBhkHzAbVhLLiJdrqMgxMypGK9Eznp2Ltoh7SAVkQ3XAucX7Q==
+  dependencies:
+    define-lazy-prop "^2.0.0"
+    is-docker "^2.1.1"
+    is-wsl "^2.2.0"
 
 opener@^1.5.1, opener@^1.5.2:
   version "1.5.2"

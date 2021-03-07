@@ -101,13 +101,21 @@ ActiveOverlay.prototype.renderTheme = function (
 export class StoryDecorator extends SpectrumElement {
     static styles = [
         css`
+            :host {
+                padding-bottom: var(--spectrum-alias-item-height-m);
+            }
             sp-theme {
                 overflow-x: hidden;
                 display: block;
                 box-sizing: border-box;
                 width: 100%;
                 min-height: 100vh;
-                padding: var(--spectrum-global-dimension-size-100);
+                padding: var(--spectrum-global-dimension-size-100)
+                    var(--spectrum-global-dimension-size-100)
+                    calc(
+                        2 * var(--spectrum-alias-focus-ring-size) +
+                            var(--spectrum-alias-item-height-m)
+                    );
                 box-sizing: border-box;
                 background-color: var(--spectrum-global-color-gray-100);
                 color: var(
@@ -121,6 +129,7 @@ export class StoryDecorator extends SpectrumElement {
             .manage-theme {
                 position: fixed;
                 bottom: 0;
+                padding-bottom: calc(2* var(--spectrum-alias-focus-ring-size));
                 left: var(--spectrum-global-dimension-size-200);
                 right: var(--spectrum-global-dimension-size-200);
                 display: flex;

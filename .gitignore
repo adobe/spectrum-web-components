@@ -25,6 +25,7 @@ documentation/dist
 test/**/*.js
 test/**/*.js.map
 test/**/*.d.ts
+test/visual/src/tests.json
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
 packages/**/*.js
@@ -53,6 +54,7 @@ test-results.xml
 /test/benchmark/**/*.js.map
 /test/benchmark/**/*.d.ts
 !test/visual/**/*.js
+test/visual/review/
 test/visual/screenshots-baseline/
 test/visual/screenshots-actual/
 test/visual/screenshots-current/

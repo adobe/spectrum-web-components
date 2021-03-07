@@ -81,6 +81,7 @@ const configuredVisualRegressionPlugin = () =>
             threshold: 0,
         },
         baseDir: 'test/visual',
+        buildCache: true,
         getBaselineName: ({ browser, name }) => {
             const nameParts = name.split(' - ');
             return path.join('screenshots-baseline', browser, ...nameParts);

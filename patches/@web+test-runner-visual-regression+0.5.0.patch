@@ -1,0 +1,163 @@
+diff --git a/node_modules/@web/test-runner-visual-regression/dist/config.d.ts b/node_modules/@web/test-runner-visual-regression/dist/config.d.ts
+index 3753d6d..ac3adcc 100644
+--- a/node_modules/@web/test-runner-visual-regression/dist/config.d.ts
++++ b/node_modules/@web/test-runner-visual-regression/dist/config.d.ts
+@@ -18,6 +18,7 @@ export declare type OptionalImage = Buffer | undefined | Promise<Buffer | undefi
+ export interface DiffResult {
+     diffPercentage: number;
+     diffImage: Buffer;
++    error: string;
+ }
+ export interface DiffArgs {
+     name: string;
+diff --git a/node_modules/@web/test-runner-visual-regression/dist/config.d.ts.map b/node_modules/@web/test-runner-visual-regression/dist/config.d.ts.map
+index d5861ee..701c3db 100644
+--- a/node_modules/@web/test-runner-visual-regression/dist/config.d.ts.map
++++ b/node_modules/@web/test-runner-visual-regression/dist/config.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"config.d.ts","sourceRoot":"","sources":["../src/config.ts"],"names":[],"mappings":";AAEA,OAAO,UAAU,MAAM,YAAY,CAAC;AAKpC,aAAK,gBAAgB,GAAG,UAAU,CAAC,OAAO,UAAU,CAAC,CAAC;AACtD,aAAK,iBAAiB,GAAG,gBAAgB,CAAC,CAAC,CAAC,CAAC;AAE7C,MAAM,WAAW,WAAW;IAC1B,OAAO,EAAE,MAAM,CAAC;IAChB,IAAI,EAAE,MAAM,CAAC;CACd;AAED,MAAM,WAAW,SAAS;IACxB,QAAQ,EAAE,MAAM,CAAC;IACjB,OAAO,EAAE,MAAM,CAAC;IAChB,IAAI,EAAE,MAAM,CAAC;CACd;AAED,MAAM,WAAW,aAAc,SAAQ,SAAS;IAC9C,OAAO,EAAE,MAAM,CAAC;CACjB;AAED,oBAAY,aAAa,GAAG,MAAM,GAAG,SAAS,GAAG,OAAO,CAAC,MAAM,GAAG,SAAS,CAAC,CAAC;AAE7E,MAAM,WAAW,UAAU;IACzB,cAAc,EAAE,MAAM,CAAC;IACvB,SAAS,EAAE,MAAM,CAAC;CACnB;AAED,MAAM,WAAW,QAAQ;IACvB,IAAI,EAAE,MAAM,CAAC;IACb,aAAa,EAAE,MAAM,CAAC;IACtB,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,EAAE,iBAAiB,CAAC;CAC5B;AAED,MAAM,WAAW,6BAA6B;IAC5C;;;OAGG;IACH,MAAM,EAAE,OAAO,CAAC;IAChB;;;;OAIG;IACH,UAAU,EAAE,OAAO,CAAC;IACpB;;OAEG;IACH,OAAO,EAAE,MAAM,CAAC;IAChB;;OAEG;IACH,WAAW,EAAE,iBAAiB,CAAC;IAE/B;;;OAGG;IACH,eAAe,EAAE,CAAC,IAAI,EAAE,WAAW,KAAK,MAAM,CAAC;IAC/C;;;;OAIG;IACH,WAAW,EAAE,CAAC,IAAI,EAAE,WAAW,KAAK,MAAM,CAAC;IAC3C;;;OAGG;IACH,aAAa,EAAE,CAAC,IAAI,EAAE,WAAW,KAAK,MAAM,CAAC;IAE7C;;OAEG;IACH,WAAW,EAAE,CAAC,IAAI,EAAE,SAAS,KAAK,aAAa,CAAC;IAChD;;OAEG;IACH,YAAY,EAAE,CAAC,IAAI,EAAE,aAAa,KAAK,IAAI,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;IAE5D;;;OAGG;IACH,QAAQ,EAAE,CAAC,IAAI,EAAE,aAAa,KAAK,IAAI,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;IACxD;;OAEG;IACH,UAAU,EAAE,CAAC,IAAI,EAAE,aAAa,KAAK,IAAI,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;IAE1D;;OAEG;IACH,YAAY,EAAE,CAAC,IAAI,EAAE,QAAQ,KAAK,UAAU,GAAG,OAAO,CAAC,UAAU,CAAC,CAAC;CACpE;AAaD,eAAO,MAAM,cAAc,EAAE,6BAiB5B,CAAC"}
+\ No newline at end of file
++{"version":3,"file":"config.d.ts","sourceRoot":"","sources":["../src/config.ts"],"names":[],"mappings":";AAEA,OAAO,UAAU,MAAM,YAAY,CAAC;AAKpC,aAAK,gBAAgB,GAAG,UAAU,CAAC,OAAO,UAAU,CAAC,CAAC;AACtD,aAAK,iBAAiB,GAAG,gBAAgB,CAAC,CAAC,CAAC,CAAC;AAE7C,MAAM,WAAW,WAAW;IAC1B,OAAO,EAAE,MAAM,CAAC;IAChB,IAAI,EAAE,MAAM,CAAC;CACd;AAED,MAAM,WAAW,SAAS;IACxB,QAAQ,EAAE,MAAM,CAAC;IACjB,OAAO,EAAE,MAAM,CAAC;IAChB,IAAI,EAAE,MAAM,CAAC;CACd;AAED,MAAM,WAAW,aAAc,SAAQ,SAAS;IAC9C,OAAO,EAAE,MAAM,CAAC;CACjB;AAED,oBAAY,aAAa,GAAG,MAAM,GAAG,SAAS,GAAG,OAAO,CAAC,MAAM,GAAG,SAAS,CAAC,CAAC;AAE7E,MAAM,WAAW,UAAU;IACzB,cAAc,EAAE,MAAM,CAAC;IACvB,SAAS,EAAE,MAAM,CAAC;IAClB,KAAK,EAAE,MAAM,CAAC;CACf;AAED,MAAM,WAAW,QAAQ;IACvB,IAAI,EAAE,MAAM,CAAC;IACb,aAAa,EAAE,MAAM,CAAC;IACtB,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,EAAE,iBAAiB,CAAC;CAC5B;AAED,MAAM,WAAW,6BAA6B;IAC5C;;;OAGG;IACH,MAAM,EAAE,OAAO,CAAC;IAChB;;;;OAIG;IACH,UAAU,EAAE,OAAO,CAAC;IACpB;;OAEG;IACH,OAAO,EAAE,MAAM,CAAC;IAChB;;OAEG;IACH,WAAW,EAAE,iBAAiB,CAAC;IAE/B;;;OAGG;IACH,eAAe,EAAE,CAAC,IAAI,EAAE,WAAW,KAAK,MAAM,CAAC;IAC/C;;;;OAIG;IACH,WAAW,EAAE,CAAC,IAAI,EAAE,WAAW,KAAK,MAAM,CAAC;IAC3C;;;OAGG;IACH,aAAa,EAAE,CAAC,IAAI,EAAE,WAAW,KAAK,MAAM,CAAC;IAE7C;;OAEG;IACH,WAAW,EAAE,CAAC,IAAI,EAAE,SAAS,KAAK,aAAa,CAAC;IAChD;;OAEG;IACH,YAAY,EAAE,CAAC,IAAI,EAAE,aAAa,KAAK,IAAI,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;IAE5D;;;OAGG;IACH,QAAQ,EAAE,CAAC,IAAI,EAAE,aAAa,KAAK,IAAI,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;IACxD;;OAEG;IACH,UAAU,EAAE,CAAC,IAAI,EAAE,aAAa,KAAK,IAAI,GAAG,OAAO,CAAC,IAAI,CAAC,CAAC;IAE1D;;OAEG;IACH,YAAY,EAAE,CAAC,IAAI,EAAE,QAAQ,KAAK,UAAU,GAAG,OAAO,CAAC,UAAU,CAAC,CAAC;CACpE;AAaD,eAAO,MAAM,cAAc,EAAE,6BAiB5B,CAAC"}
+\ No newline at end of file
+diff --git a/node_modules/@web/test-runner-visual-regression/dist/config.js.map b/node_modules/@web/test-runner-visual-regression/dist/config.js.map
+index 1485e64..cc134f9 100644
+--- a/node_modules/@web/test-runner-visual-regression/dist/config.js.map
++++ b/node_modules/@web/test-runner-visual-regression/dist/config.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"config.js","sourceRoot":"","sources":["../src/config.ts"],"names":[],"mappings":";;;;;;AAAA,gDAAwB;AACxB,oDAA4B;AAG5B,6BAAuD;AACvD,qDAAkD;AAiGlD,KAAK,UAAU,QAAQ,CAAC,EAAE,QAAQ,EAAa;IAC7C,IAAI,MAAM,eAAU,CAAC,QAAQ,CAAC,EAAE;QAC9B,OAAO,aAAQ,CAAC,QAAQ,CAAC,CAAC;KAC3B;AACH,CAAC;AAED,KAAK,UAAU,SAAS,CAAC,EAAE,QAAQ,EAAE,OAAO,EAAiB;IAC3D,MAAM,gBAAM,CAAC,cAAI,CAAC,OAAO,CAAC,QAAQ,CAAC,CAAC,CAAC;IACrC,MAAM,cAAS,CAAC,QAAQ,EAAE,OAAO,CAAC,CAAC;AACrC,CAAC;AAEY,QAAA,cAAc,GAAkC;IAC3D,MAAM,EAAE,KAAK;IACb,UAAU,EAAE,KAAK;IACjB,OAAO,EAAE,aAAa;IACtB,WAAW,EAAE,EAAE;IAEf,eAAe,EAAE,CAAC,EAAE,OAAO,EAAE,IAAI,EAAE,EAAE,EAAE,CAAC,cAAI,CAAC,IAAI,CAAC,OAAO,EAAE,UAAU,EAAE,IAAI,CAAC;IAC5E,WAAW,EAAE,CAAC,EAAE,OAAO,EAAE,IAAI,EAAE,EAAE,EAAE,CAAC,cAAI,CAAC,IAAI,CAAC,OAAO,EAAE,QAAQ,EAAE,GAAG,IAAI,OAAO,CAAC;IAChF,aAAa,EAAE,CAAC,EAAE,OAAO,EAAE,IAAI,EAAE,EAAE,EAAE,CAAC,cAAI,CAAC,IAAI,CAAC,OAAO,EAAE,QAAQ,EAAE,IAAI,CAAC;IAExE,WAAW,EAAE,QAAQ;IACrB,YAAY,EAAE,SAAS;IAEvB,QAAQ,EAAE,SAAS;IACnB,UAAU,EAAE,SAAS;IAErB,YAAY,EAAE,+BAAc;CAC7B,CAAC"}
+\ No newline at end of file
++{"version":3,"file":"config.js","sourceRoot":"","sources":["../src/config.ts"],"names":[],"mappings":";;;;;;AAAA,gDAAwB;AACxB,oDAA4B;AAG5B,6BAAuD;AACvD,qDAAkD;AAkGlD,KAAK,UAAU,QAAQ,CAAC,EAAE,QAAQ,EAAa;IAC7C,IAAI,MAAM,eAAU,CAAC,QAAQ,CAAC,EAAE;QAC9B,OAAO,aAAQ,CAAC,QAAQ,CAAC,CAAC;KAC3B;AACH,CAAC;AAED,KAAK,UAAU,SAAS,CAAC,EAAE,QAAQ,EAAE,OAAO,EAAiB;IAC3D,MAAM,gBAAM,CAAC,cAAI,CAAC,OAAO,CAAC,QAAQ,CAAC,CAAC,CAAC;IACrC,MAAM,cAAS,CAAC,QAAQ,EAAE,OAAO,CAAC,CAAC;AACrC,CAAC;AAEY,QAAA,cAAc,GAAkC;IAC3D,MAAM,EAAE,KAAK;IACb,UAAU,EAAE,KAAK;IACjB,OAAO,EAAE,aAAa;IACtB,WAAW,EAAE,EAAE;IAEf,eAAe,EAAE,CAAC,EAAE,OAAO,EAAE,IAAI,EAAE,EAAE,EAAE,CAAC,cAAI,CAAC,IAAI,CAAC,OAAO,EAAE,UAAU,EAAE,IAAI,CAAC;IAC5E,WAAW,EAAE,CAAC,EAAE,OAAO,EAAE,IAAI,EAAE,EAAE,EAAE,CAAC,cAAI,CAAC,IAAI,CAAC,OAAO,EAAE,QAAQ,EAAE,GAAG,IAAI,OAAO,CAAC;IAChF,aAAa,EAAE,CAAC,EAAE,OAAO,EAAE,IAAI,EAAE,EAAE,EAAE,CAAC,cAAI,CAAC,IAAI,CAAC,OAAO,EAAE,QAAQ,EAAE,IAAI,CAAC;IAExE,WAAW,EAAE,QAAQ;IACrB,YAAY,EAAE,SAAS;IAEvB,QAAQ,EAAE,SAAS;IACnB,UAAU,EAAE,SAAS;IAErB,YAAY,EAAE,+BAAc;CAC7B,CAAC"}
+\ No newline at end of file
+diff --git a/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.d.ts.map b/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.d.ts.map
+index 4bc2430..b538645 100644
+--- a/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.d.ts.map
++++ b/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"pixelMatchDiff.d.ts","sourceRoot":"","sources":["../src/pixelMatchDiff.ts"],"names":[],"mappings":"AAGA,OAAO,EAAE,QAAQ,EAAE,UAAU,EAAE,MAAM,UAAU,CAAC;AAGhD,wBAAgB,cAAc,CAAC,EAAE,aAAa,EAAE,KAAK,EAAE,OAAO,EAAE,EAAE,QAAQ,GAAG,UAAU,CAwBtF"}
+\ No newline at end of file
++{"version":3,"file":"pixelMatchDiff.d.ts","sourceRoot":"","sources":["../src/pixelMatchDiff.ts"],"names":[],"mappings":"AAGA,OAAO,EAAE,QAAQ,EAAE,UAAU,EAAE,MAAM,UAAU,CAAC;AAEhD,wBAAgB,cAAc,CAAC,EAAE,aAAa,EAAE,KAAK,EAAE,OAAO,EAAE,EAAE,QAAQ,GAAG,UAAU,CA+BtF"}
+\ No newline at end of file
+diff --git a/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.js b/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.js
+index 58a8e2c..eef2bd4 100644
+--- a/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.js
++++ b/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.js
+@@ -6,21 +6,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.pixelMatchDiff = void 0;
+ const pixelmatch_1 = __importDefault(require("pixelmatch"));
+ const pngjs_1 = require("pngjs");
+-const VisualRegressionError_1 = require("./VisualRegressionError");
+ function pixelMatchDiff({ baselineImage, image, options }) {
+-    const basePng = pngjs_1.PNG.sync.read(baselineImage);
+-    const png = pngjs_1.PNG.sync.read(image);
++    let error = '';
++    let basePng = pngjs_1.PNG.sync.read(baselineImage);
++    let png = pngjs_1.PNG.sync.read(image);
++    let { width, height } = png;
+     if (basePng.width !== png.width || basePng.height !== png.height) {
+-        throw new VisualRegressionError_1.VisualRegressionError(`Screenshot is not the same width and height as the baseline. ` +
++        error = `Screenshot is not the same width and height as the baseline. ` +
+             `Baseline: { width: ${basePng.width}, height: ${basePng.height} }` +
+-            `Screenshot: { width: ${png.width}, height: ${png.height} }`);
++            `Screenshot: { width: ${png.width}, height: ${png.height} }`;
++        width = Math.max(basePng.width, png.width);
++        height = Math.max(basePng.height, png.height);
++        let oldPng = basePng;
++        basePng = new pngjs_1.PNG({ width, height });
++        oldPng.data.copy(basePng.data, 0, 0, oldPng.data.length);
++        oldPng = png;
++        png = new pngjs_1.PNG({ width, height });
++        oldPng.data.copy(png.data, 0, 0, oldPng.data.length);
+     }
+-    const width = png.width;
+-    const height = png.height;
+     const diff = new pngjs_1.PNG({ width, height });
+     const numDiffPixels = pixelmatch_1.default(basePng.data, png.data, diff.data, width, height, options);
+     const diffPercentage = (numDiffPixels / (width * height)) * 100;
+     return {
++        error,
+         diffImage: pngjs_1.PNG.sync.write(diff),
+         diffPercentage,
+     };
+diff --git a/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.js.map b/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.js.map
+index bca2f26..ba532be 100644
+--- a/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.js.map
++++ b/node_modules/@web/test-runner-visual-regression/dist/pixelMatchDiff.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"pixelMatchDiff.js","sourceRoot":"","sources":["../src/pixelMatchDiff.ts"],"names":[],"mappings":";;;;;;AAAA,4DAAoC;AACpC,iCAA4B;AAG5B,mEAAgE;AAEhE,SAAgB,cAAc,CAAC,EAAE,aAAa,EAAE,KAAK,EAAE,OAAO,EAAY;IACxE,MAAM,OAAO,GAAG,WAAG,CAAC,IAAI,CAAC,IAAI,CAAC,aAAa,CAAC,CAAC;IAC7C,MAAM,GAAG,GAAG,WAAG,CAAC,IAAI,CAAC,IAAI,CAAC,KAAK,CAAC,CAAC;IAEjC,IAAI,OAAO,CAAC,KAAK,KAAK,GAAG,CAAC,KAAK,IAAI,OAAO,CAAC,MAAM,KAAK,GAAG,CAAC,MAAM,EAAE;QAChE,MAAM,IAAI,6CAAqB,CAC7B,+DAA+D;YAC7D,sBAAsB,OAAO,CAAC,KAAK,aAAa,OAAO,CAAC,MAAM,IAAI;YAClE,wBAAwB,GAAG,CAAC,KAAK,aAAa,GAAG,CAAC,MAAM,IAAI,CAC/D,CAAC;KACH;IAED,MAAM,KAAK,GAAG,GAAG,CAAC,KAAK,CAAC;IACxB,MAAM,MAAM,GAAG,GAAG,CAAC,MAAM,CAAC;IAE1B,MAAM,IAAI,GAAG,IAAI,WAAG,CAAC,EAAE,KAAK,EAAE,MAAM,EAAE,CAAC,CAAC;IAExC,MAAM,aAAa,GAAG,oBAAU,CAAC,OAAO,CAAC,IAAI,EAAE,GAAG,CAAC,IAAI,EAAE,IAAI,CAAC,IAAI,EAAE,KAAK,EAAE,MAAM,EAAE,OAAO,CAAC,CAAC;IAC5F,MAAM,cAAc,GAAG,CAAC,aAAa,GAAG,CAAC,KAAK,GAAG,MAAM,CAAC,CAAC,GAAG,GAAG,CAAC;IAEhE,OAAO;QACL,SAAS,EAAE,WAAG,CAAC,IAAI,CAAC,KAAK,CAAC,IAAI,CAAC;QAC/B,cAAc;KACf,CAAC;AACJ,CAAC;AAxBD,wCAwBC"}
+\ No newline at end of file
++{"version":3,"file":"pixelMatchDiff.js","sourceRoot":"","sources":["../src/pixelMatchDiff.ts"],"names":[],"mappings":";;;;;;AAAA,4DAAoC;AACpC,iCAA6C;AAI7C,SAAgB,cAAc,CAAC,EAAE,aAAa,EAAE,KAAK,EAAE,OAAO,EAAY;IACxE,IAAI,KAAK,GAAG,EAAE,CAAC;IACf,IAAI,OAAO,GAA0B,WAAG,CAAC,IAAI,CAAC,IAAI,CAAC,aAAa,CAAC,CAAC;IAClE,IAAI,GAAG,GAA0B,WAAG,CAAC,IAAI,CAAC,IAAI,CAAC,KAAK,CAAC,CAAC;IACtD,IAAI,EAAE,KAAK,EAAE,MAAM,EAAC,GAAG,GAAG,CAAC;IAE3B,IAAI,OAAO,CAAC,KAAK,KAAK,GAAG,CAAC,KAAK,IAAI,OAAO,CAAC,MAAM,KAAK,GAAG,CAAC,MAAM,EAAE;QAChE,KAAK,GAAG,+DAA+D;YACnE,sBAAsB,OAAO,CAAC,KAAK,aAAa,OAAO,CAAC,MAAM,IAAI;YAClE,wBAAwB,GAAG,CAAC,KAAK,aAAa,GAAG,CAAC,MAAM,IAAI,CAAC;QACjE,KAAK,GAAG,IAAI,CAAC,GAAG,CAAC,OAAO,CAAC,KAAK,EAAE,GAAG,CAAC,KAAK,CAAC,CAAC;QAC3C,MAAM,GAAG,IAAI,CAAC,GAAG,CAAC,OAAO,CAAC,MAAM,EAAE,GAAG,CAAC,MAAM,CAAC,CAAC;QAC9C,IAAI,MAAM,GAAG,OAAO,CAAC;QACrB,OAAO,GAAG,IAAI,WAAG,CAAC,EAAC,KAAK,EAAE,MAAM,EAAC,CAAC,CAAC;QACnC,OAAO,CAAC,IAAI,GAAG,MAAM,CAAC,IAAI,CAAC;QAC3B,MAAM,GAAG,GAAG,CAAC;QACb,GAAG,GAAG,IAAI,WAAG,CAAC,EAAC,KAAK,EAAE,MAAM,EAAC,CAAC,CAAC;QAC/B,GAAG,CAAC,IAAI,GAAG,MAAM,CAAC,IAAI,CAAC;KACxB;IAGD,MAAM,IAAI,GAAG,IAAI,WAAG,CAAC,EAAE,KAAK,EAAE,MAAM,EAAE,CAAC,CAAC;IAExC,MAAM,aAAa,GAAG,oBAAU,CAAC,OAAO,CAAC,IAAI,EAAE,GAAG,CAAC,IAAI,EAAE,IAAI,CAAC,IAAI,EAAE,KAAK,EAAE,MAAM,EAAE,OAAO,CAAC,CAAC;IAC5F,MAAM,cAAc,GAAG,CAAC,aAAa,GAAG,CAAC,KAAK,GAAG,MAAM,CAAC,CAAC,GAAG,GAAG,CAAC;IAEhE,OAAO;QACL,KAAK;QACL,SAAS,EAAE,WAAG,CAAC,IAAI,CAAC,KAAK,CAAC,IAAI,CAAC;QAC/B,cAAc;KACf,CAAC;AACJ,CAAC;AA/BD,wCA+BC"}
+\ No newline at end of file
+diff --git a/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.d.ts.map b/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.d.ts.map
+index 6b7d562..b57765f 100644
+--- a/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.d.ts.map
++++ b/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"visualDiffCommand.d.ts","sourceRoot":"","sources":["../src/visualDiffCommand.ts"],"names":[],"mappings":";AAEA,OAAO,EAAE,6BAA6B,EAAE,MAAM,UAAU,CAAC;AAUzD,MAAM,WAAW,uBAAuB;IACtC,YAAY,CAAC,EAAE,MAAM,CAAC;IACtB,cAAc,EAAE,MAAM,CAAC;IACvB,MAAM,EAAE,OAAO,CAAC;CACjB;AAED,wBAAsB,iBAAiB,CACrC,OAAO,EAAE,6BAA6B,EACtC,KAAK,EAAE,MAAM,EACb,OAAO,EAAE,MAAM,EACf,IAAI,EAAE,MAAM,GACX,OAAO,CAAC,uBAAuB,CAAC,CAsElC"}
+\ No newline at end of file
++{"version":3,"file":"visualDiffCommand.d.ts","sourceRoot":"","sources":["../src/visualDiffCommand.ts"],"names":[],"mappings":";AAEA,OAAO,EAAE,6BAA6B,EAAE,MAAM,UAAU,CAAC;AAWzD,MAAM,WAAW,uBAAuB;IACtC,YAAY,CAAC,EAAE,MAAM,CAAC;IACtB,cAAc,EAAE,MAAM,CAAC;IACvB,MAAM,EAAE,OAAO,CAAC;CACjB;AAED,wBAAsB,iBAAiB,CACrC,OAAO,EAAE,6BAA6B,EACtC,KAAK,EAAE,MAAM,EACb,OAAO,EAAE,MAAM,EACf,IAAI,EAAE,MAAM,GACX,OAAO,CAAC,uBAAuB,CAAC,CAmFlC"}
+\ No newline at end of file
+diff --git a/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.js b/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.js
+index e71ace6..2d49afd 100644
+--- a/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.js
++++ b/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.js
+@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.visualDiffCommand = void 0;
+ const path_1 = __importDefault(require("path"));
++const VisualRegressionError_1 = require("./VisualRegressionError");
+ function resolveImagePath(baseDir, name) {
+     const finalName = path_1.default.extname(name) ? name : `${name}.png`;
+     if (path_1.default.isAbsolute(finalName)) {
+@@ -39,6 +40,14 @@ async function visualDiffCommand(options, image, browser, name) {
+             content: image,
+         });
+     };
++    const saveDiff = async () => {
++        await options.saveDiff({
++            filePath: resolveImagePath(baseDir, diffName),
++            baseDir,
++            name: diffName,
++            content: diffImage,
++        });
++    };
+     if (!baselineImage) {
+         await saveFailed();
+         return {
+@@ -47,20 +56,21 @@ async function visualDiffCommand(options, image, browser, name) {
+             passed: false,
+         };
+     }
+-    const { diffImage, diffPercentage } = await options.getImageDiff({
++    const { diffImage, diffPercentage, error } = await options.getImageDiff({
+         name,
+         baselineImage,
+         image,
+         options: options.diffOptions,
+     });
++    if (error) {
++        // The diff has failed, be sure to save the new image.
++        await saveFailed();
++        await saveDiff();
++        throw new VisualRegressionError_1.VisualRegressionError(error);
++    }
+     const passed = diffPercentage === 0;
+     if (!passed) {
+-        await options.saveDiff({
+-            filePath: resolveImagePath(baseDir, diffName),
+-            baseDir,
+-            name: diffName,
+-            content: diffImage,
+-        });
++        await saveDiff();
+     }
+     if (!passed || options.buildCache) {
+         await saveFailed();
+diff --git a/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.js.map b/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.js.map
+index 8e77cd5..7e92736 100644
+--- a/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.js.map
++++ b/node_modules/@web/test-runner-visual-regression/dist/visualDiffCommand.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"visualDiffCommand.js","sourceRoot":"","sources":["../src/visualDiffCommand.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"visualDiffCommand.js","sourceRoot":"","sources":["../src/visualDiffCommand.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
