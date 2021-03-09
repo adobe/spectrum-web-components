@@ -79,6 +79,7 @@ interface StoryArgs {
     disabled?: boolean;
     emphasized?: boolean;
     invalid?: boolean;
+    readonly?: boolean
 }
 
 function renderRadio(args: StoryArgs): TemplateResult {
@@ -87,6 +88,14 @@ function renderRadio(args: StoryArgs): TemplateResult {
     `;
 }
 export const Default = (args: StoryArgs): TemplateResult => renderRadio(args);
+
+export const readonly = (args: StoryArgs): TemplateResult => renderRadio({
+    ...args,
+    readonly: true,
+});
+readonly.args = {
+    checked: true,
+};
 
 export const Emphasized = (args: StoryArgs): TemplateResult =>
     renderRadio(args);

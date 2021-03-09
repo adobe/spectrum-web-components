@@ -68,3 +68,12 @@ export const allowedKeys = (): TemplateResult => {
         ></sp-textfield>
     `;
 };
+
+export const readonly = (): TemplateResult => html`
+    <sp-textfield
+        label="Enter your life story"
+        value="A readonly textfield"
+        readonly
+        placeholder="Enter your life story"
+    ></sp-textfield>
+`;

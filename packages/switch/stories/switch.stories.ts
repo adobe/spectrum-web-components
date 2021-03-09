@@ -29,6 +29,12 @@ export const Checked = (): TemplateResult => {
     `;
 };
 
+export const readonly = (): TemplateResult => {
+    return html`
+        <sp-switch checked readonly>Switch</sp-switch>
+    `;
+};
+
 export const emphasized = (): TemplateResult => {
     return html`
         <sp-switch emphasized>Switch</sp-switch>

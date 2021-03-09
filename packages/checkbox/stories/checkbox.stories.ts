@@ -24,6 +24,12 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const readonly = (): TemplateResult => {
+    return html`
+        <sp-checkbox checked readonly>Checkbox</sp-checkbox>
+    `;
+};
+
 export const Indeterminate = (): TemplateResult => {
     return html`
         <sp-checkbox indeterminate>Checkbox</sp-checkbox>
