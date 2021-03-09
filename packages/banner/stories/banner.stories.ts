@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html } from 'lit-html';
+import { spreadProps } from '@open-wc/lit-helpers';
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-banner.js';
@@ -18,19 +19,57 @@ export default {
     component: 'sp-banner',
     title: 'Banner',
     argTypes: {
-        header: { control: 'text' },
-        content: { control: 'text' },
+        header: {
+            name: 'header',
+            description: 'Primary message of the banner.',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
+        },
+        content: {
+            name: 'content',
+            description:
+                'Secondary message of the banner. Used to provide a description.',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
+        },
         type: {
+            name: 'type',
+            description: 'Determines the style of the banner.',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: 'info' },
+            },
             control: {
                 type: 'inline-radio',
                 options: ['info', 'warning', 'error'],
             },
         },
-        inCorner: { control: 'boolean' },
+        inCorner: {
+            name: 'inCorner',
+            type: { name: 'boolean', required: false },
+            description:
+                'Determines if banner sets position at upper right corner or not.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
     args: {
         header: 'Header Text',
         content: 'Content of the banner!',
+        inCorner: false,
         type: 'info',
     },
 };
@@ -83,19 +122,24 @@ export const bannerTypes = (): TemplateResult => {
 
 bannerTypes.storyName = 'Banner Types';
 
-export const cornerPlacement = (): TemplateResult => {
+export const cornerPlacement = (args: StoryArgs): TemplateResult => {
     return html`
         <div style="margin: -8px 0;">
             <div
                 style="width: 300px; height: 200px; background-color: #ccc; position: relative; margin: 20px;"
             >
-                <sp-banner corner>
-                    <div slot="header">A corner banner!</div>
-                    <div slot="content">Content of the banner!</div>
+                <sp-banner ...=${spreadProps(args)}>
+                    <div slot="header">${args.header}</div>
+                    <div slot="content">${args.content}</div>
                 </sp-banner>
             </div>
         </div>
     `;
+};
+cornerPlacement.args = {
+    inCorner: true,
+    header: 'A corner banner!',
+    content: 'Content of the banner!',
 };
 
 cornerPlacement.storyName = 'Corner Placement';

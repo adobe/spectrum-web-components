@@ -191,7 +191,7 @@ export const selectsSingleWithTooltips = (): TemplateResult => {
     `;
 };
 
-export const selectsMultiple = (): TemplateResult => {
+export const selectsMultiple = (args: Properties): TemplateResult => {
     return html`
         <sp-action-group
             ...=${spreadProps(args)}
@@ -213,9 +213,12 @@ export const selectsMultiple = (): TemplateResult => {
     `;
 };
 
-export const selectsMultipleWithTooltips = (): TemplateResult => {
+export const selectsMultipleWithTooltips = (
+    args: Properties
+): TemplateResult => {
     return html`
         <sp-action-group
+            ...=${spreadProps(args)}
             label="Favorite Color"
             selects="multiple"
             @change=${({ target }: Event & { target: ActionGroup }) => {

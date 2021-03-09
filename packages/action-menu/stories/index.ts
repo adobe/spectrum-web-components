@@ -20,6 +20,7 @@ export const ActionMenuMarkup = ({
     ariaLabel = 'More Actions',
     changeHandler = (() => undefined) as (event: Event) => void,
     disabled = false,
+    open = false,
     visibleLabel = '',
     customIcon = '' as string | TemplateResult,
 } = {}): TemplateResult => {
@@ -27,6 +28,7 @@ export const ActionMenuMarkup = ({
         <sp-action-menu
             label=${ariaLabel}
             ?disabled=${disabled}
+            ?open=${open}
             @change="${changeHandler}"
         >
             ${customIcon
@@ -40,25 +42,13 @@ export const ActionMenuMarkup = ({
                   `
                 : html``}
             <sp-menu>
-                <sp-menu-item>
-                    Deselect
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select Inverse
-                </sp-menu-item>
-                <sp-menu-item>
-                    Feather...
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select and Mask...
-                </sp-menu-item>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
                 <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>
-                    Save Selection
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Make Work Path
-                </sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-menu>
         </sp-action-menu>
     `;

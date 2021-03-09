@@ -21,22 +21,51 @@ export default {
     component: 'sp-action-menu',
     title: 'Action menu',
     argTypes: {
-        ariaLabel: { control: 'string' },
-        visibleLabel: { control: 'string' },
-        disabled: { control: 'boolean' },
-        changeHandler: { action: 'change' },
+        disabled: {
+            name: 'disabled',
+            type: { name: 'boolean', required: false },
+            description:
+                'Disable this control. It will not receive focus or events.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the menu is open or not.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: 'boolean',
+        },
+        visibleLabel: {
+            name: 'Visible Label',
+            description: 'The placeholder content for the picker.',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
+        },
     },
     args: {
-        ariaLabel: 'More actions',
         visibleLabel: 'More Actions',
         disabled: false,
+        open: false,
     },
 };
 
 interface StoryArgs {
-    ariaLabel?: string;
     visibleLabel?: string;
     disabled?: boolean;
+    open?: boolean;
     customIcon?: string | TemplateResult;
 }
 
