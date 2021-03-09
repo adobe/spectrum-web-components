@@ -17,13 +17,74 @@ import { Picker } from '../';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { states } from './states.js';
+import { spreadProps } from '@open-wc/lit-helpers';
 
 export default {
     title: 'Picker',
     component: 'sp-picker',
+    args: {
+        disabled: false,
+        invalid: false,
+        open: false,
+        quiet: false,
+    },
+    argTypes: {
+        disabled: {
+            name: 'disabled',
+            type: { name: 'boolean', required: false },
+            description:
+                'Disable this control. It will not receive focus or events.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        invalid: {
+            name: 'invalid',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the menu is open or not.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: 'boolean',
+        },
+        quiet: {
+            name: 'quiet',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
-export const Default = (): TemplateResult => {
+interface StoryArgs {
+    disabled?: boolean;
+    invalid?: boolean;
+    open?: boolean;
+    quiet?: boolean;
+}
+
+export const Default = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-picker
             @change="${(event: Event): void => {
@@ -31,6 +92,7 @@ export const Default = (): TemplateResult => {
                 console.log(`Change: ${picker.value}`);
             }}"
             label="Select a Country with a very long label, too long, in fact"
+            ...=${spreadProps(args)}
         >
             <sp-menu>
                 <sp-menu-item>Deselect</sp-menu-item>
@@ -52,10 +114,10 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const quiet = (): TemplateResult => {
+export const quiet = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-picker
-            quiet
+            ...=${spreadProps(args)}
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
                 console.log(`Change: ${picker.value}`);
@@ -78,8 +140,11 @@ export const quiet = (): TemplateResult => {
         </p>
     `;
 };
+quiet.args = {
+    quiet: true,
+};
 
-export const Open = (): TemplateResult => {
+export const Open = (args: StoryArgs): TemplateResult => {
     return html`
         <style>
             fieldset {
@@ -91,7 +156,7 @@ export const Open = (): TemplateResult => {
         <fieldset>
             <sp-picker
                 label="Open picker"
-                open
+                ...=${spreadProps(args)}
                 @change="${(event: Event): void => {
                     const picker = event.target as Picker;
                     console.log(`Change: ${picker.value}`);
@@ -129,8 +194,11 @@ export const Open = (): TemplateResult => {
         </fieldset>
     `;
 };
+Open.args = {
+    open: true,
+};
 
-export const initialValue = (): TemplateResult => {
+export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-picker
             @change="${(event: Event): void => {
@@ -138,6 +206,7 @@ export const initialValue = (): TemplateResult => {
                 console.log(`Change: ${picker.value}`);
             }}"
             value="item-2"
+            ...=${spreadProps(args)}
         >
             <span slot="label">
                 Select a Country with a very long label, too long in fact
@@ -157,7 +226,7 @@ export const initialValue = (): TemplateResult => {
     `;
 };
 
-export const custom = (): TemplateResult => {
+export const custom = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-picker
             style="width: 400px;"
@@ -166,6 +235,7 @@ export const custom = (): TemplateResult => {
                 console.log(`Change: ${picker.value}`);
             }}"
             label="Pick a state"
+            ...=${spreadProps(args)}
         >
             <sp-menu style="max-height: 400px;">
                 ${states.map(
