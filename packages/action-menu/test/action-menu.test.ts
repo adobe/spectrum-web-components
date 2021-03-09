@@ -22,7 +22,7 @@ import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>
     await fixture<ActionMenu>(
         html`
-            <sp-action-menu>
+            <sp-action-menu label="More Actions">
                 <sp-menu>
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item>Select Inverse</sp-menu-item>
@@ -39,7 +39,7 @@ const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>
 const actionMenuFixture = async (): Promise<ActionMenu> =>
     await fixture<ActionMenu>(
         html`
-            <sp-action-menu>
+            <sp-action-menu label="More Actions">
                 <sp-menu-item>Deselect</sp-menu-item>
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item>Feather...</sp-menu-item>
@@ -60,10 +60,11 @@ describe('Action menu', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('loads - [label]', async () => {
+    it('loads - [slot="label"]', async () => {
         const el = await fixture<ActionMenu>(
             html`
-                <sp-action-menu label="More Actions">
+                <sp-action-menu>
+                    <span slot="label">More Actions</span>
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item>Select Inverse</sp-menu-item>
                     <sp-menu-item>Feather...</sp-menu-item>
