@@ -20,7 +20,7 @@ import {
 import { PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { MoreIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
 
 /**
@@ -43,9 +43,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         return [
             html`
                 <slot name="icon" slot="icon" ?icon-only=${!this.hasLabel}>
-                    <sp-icon class="icon">
-                        ${MoreIcon({ hidden: this.hasLabel })}
-                    </sp-icon>
+                    <sp-icon-more class="icon"></sp-icon-more>
                 </slot>
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
             `,
