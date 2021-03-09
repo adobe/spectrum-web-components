@@ -70,3 +70,13 @@ export const Default = (): TemplateResult => {
         ></sp-textfield>
     `;
 };
+
+export const readonly = (): TemplateResult => html`
+    <sp-textfield
+        multiline
+        label="Enter your life story"
+        value="A readonly textarea"
+        readonly
+        placeholder="Enter your life story"
+    ></sp-textfield>
+`;

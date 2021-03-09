@@ -94,6 +94,9 @@ export class PickerBase extends SizedMixin(Focusable) {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    @property({ type: Boolean, reflect: true })
+    public readonly = false;
+
     public menuItems: MenuItem[] = [];
     private restoreChildren?: Function;
 
@@ -193,7 +196,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             return;
         }
         event.preventDefault();
-        this.open = true;
+        this.toggle(true);
     };
 
     public async setValueFromItem(item: MenuItem): Promise<void> {
@@ -220,11 +223,17 @@ export class PickerBase extends SizedMixin(Focusable) {
         item.selected = true;
     }
 
-    public toggle(): void {
-        this.open = !this.open;
+    public toggle(target?: boolean): void {
+        if (this.readonly) {
+            return;
+        }
+        this.open = typeof target !== 'undefined' ? target : !this.open;
     }
 
     public close(): void {
+        if (this.readonly) {
+            return;
+        }
         this.open = false;
     }
 
@@ -455,12 +464,12 @@ export class Picker extends PickerBase {
 
     public onKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
-        if (!code.startsWith('Arrow')) {
+        if (!code.startsWith('Arrow') || this.readonly) {
             return;
         }
         event.preventDefault();
         if (code === 'ArrowUp' || code === 'ArrowDown') {
-            this.open = true;
+            this.toggle(true);
             return;
         }
         const selectedIndex = this.selectedItem

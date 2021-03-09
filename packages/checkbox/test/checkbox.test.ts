@@ -170,4 +170,16 @@ describe('Checkbox', () => {
 
         expect(el.checked).to.be.false;
     });
+
+    it('maintains its value when [readonly]', async () => {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox id="checkbox0" checked readonly>Component</sp-checkbox>
+        `);
+        expect(el.checked).to.be.true;
+
+        inputForCheckbox(el).click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.true;
+    });
 });

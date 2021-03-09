@@ -37,4 +37,16 @@ describe('Switch', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('maintains its value when [readonly]', async () => {
+        const el = await fixture<Switch>(html`
+            <sp-switch checked readonly>Component</sp-switch>
+        `);
+        expect(el.checked).to.be.true;
+
+        el.focusElement.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.true;
+    });
 });

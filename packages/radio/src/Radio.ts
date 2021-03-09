@@ -53,6 +53,9 @@ export class Radio extends Focusable {
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    @property({ type: Boolean, reflect: true })
+    public readonly = false;
+
     @query('#input')
     private inputElement!: HTMLInputElement;
 
@@ -61,6 +64,10 @@ export class Radio extends Focusable {
     }
 
     public handleChange(): void {
+        if (this.readonly) {
+            this.inputElement.checked = this.checked;
+            return;
+        }
         this.checked = this.inputElement.checked;
         this.dispatchEvent(
             new Event('change', {
