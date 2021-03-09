@@ -19,11 +19,31 @@ import '@spectrum-web-components/link/sp-link.js';
 export default {
     component: 'sp-dropzone',
     title: 'Dropzone',
+    args: {
+        isDragged: false,
+    },
+    argTypes: {
+        isDragged: {
+            name: 'isDragged',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
-export const Default = (): TemplateResult => {
+type StoryArgs = {
+    isDragged?: boolean;
+};
+
+export const Default = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-dropzone id="dropzone" tabindex="0">
+        <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
             <sp-illustrated-message heading="Drag and Drop Your File" cta>
                 ${illustration}
                 <div slot="description">
