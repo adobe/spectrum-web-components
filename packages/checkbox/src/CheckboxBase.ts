@@ -22,6 +22,9 @@ export class CheckboxBase extends Focusable {
     @property({ type: Boolean, reflect: true })
     public checked = false;
 
+    @property({ type: Boolean, reflect: true })
+    public readonly = false;
+
     @query('#input')
     protected inputElement!: HTMLInputElement;
 
@@ -30,6 +33,10 @@ export class CheckboxBase extends Focusable {
     }
 
     public handleChange(event: Event): void {
+        if (this.readonly) {
+            this.inputElement.checked = this.checked;
+            return;
+        }
         this.checked = this.inputElement.checked;
 
         // Change events from the shadow DOM are not transmitted into

@@ -131,3 +131,22 @@ export const deletable = (): TemplateResult => {
         </sp-tags>
     `;
 };
+
+export const readonly = (): TemplateResult => {
+    return html`
+        <sp-tags @delete=${action('delete')}>
+            <sp-tag deletable readonly>
+                Tag 1
+                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+            </sp-tag>
+            <sp-tag invalid deletable readonly>
+                Tag 2
+                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+            </sp-tag>
+            <sp-tag disabled deletable>
+                Tag 3
+                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+            </sp-tag>
+        </sp-tags>
+    `;
+};

@@ -703,4 +703,18 @@ describe('Picker', () => {
             .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
         expect(closedEvent.detail.interaction).to.equal('inline');
     });
+    it('does not open when [readonly]', async () => {
+        const el = await pickerFixture();
+
+        el.readonly = true;
+
+        await elementUpdated(el);
+
+        const button = el.button as HTMLButtonElement;
+
+        button.click();
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+    });
 });

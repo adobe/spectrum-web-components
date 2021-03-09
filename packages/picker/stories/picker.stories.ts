@@ -146,6 +146,30 @@ export const initialValue = (): TemplateResult => {
     `;
 };
 
+export const readonly = (): TemplateResult => {
+    return html`
+        <sp-picker
+            @change="${(event: Event): void => {
+                const picker = event.target as Picker;
+                action(`Change: ${picker.value}`)();
+            }}"
+            readonly
+            value="item-2"
+        >
+            <span slot="label">
+                Select a Country with a very long label, too long in fact
+            </span>
+            <sp-menu-item value="item-1">Deselect</sp-menu-item>
+            <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="item-3">Feather...</sp-menu-item>
+            <sp-menu-item value="item-4">Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item value="item-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="item-6">Make Work Path</sp-menu-item>
+        </sp-picker>
+    `;
+};
+
 export const custom = (): TemplateResult => {
     return html`
         <sp-picker

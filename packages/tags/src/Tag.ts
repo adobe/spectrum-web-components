@@ -37,6 +37,9 @@ export class Tag extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    @property({ type: Boolean, reflect: true })
+    public readonly = false;
+
     private get hasIcon(): boolean {
         return !!this.querySelector('[slot="icon"]');
     }
@@ -77,6 +80,9 @@ export class Tag extends SpectrumElement {
     };
 
     private delete(): void {
+        if (this.readonly) {
+            return;
+        }
         this.dispatchEvent(
             new Event('delete', {
                 bubbles: true,

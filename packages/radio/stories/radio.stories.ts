@@ -31,6 +31,12 @@ export const Checked = (): TemplateResult => {
     `;
 };
 
+export const readonly = (): TemplateResult => {
+    return html`
+        <sp-radio readonly>Radio</sp-radio>
+    `;
+};
+
 export const emphasized = (): TemplateResult => {
     return html`
         <sp-radio emphasized>Radio</sp-radio>
@@ -140,16 +146,10 @@ export const tabIndexExample = (): TemplateResult => {
             <sp-radio emphasized value="zero" tabindex="0">
                 Tab Index 0
             </sp-radio>
-            <sp-radio disabled value="three" tabindex="3">
-                Tab Index 3
-            </sp-radio>
-            <sp-radio value="one" tabindex="1" autofocus>
-                Tab Index 1
-            </sp-radio>
+            <sp-radio disabled value="three" tabindex="3">Tab Index 3</sp-radio>
+            <sp-radio value="one" tabindex="1" autofocus>Tab Index 1</sp-radio>
             <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
-            <sp-radio invalid value="two" tabindex="2">
-                Tab Index 2
-            </sp-radio>
+            <sp-radio invalid value="two" tabindex="2">Tab Index 2</sp-radio>
         </sp-radio-group>
     `;
 };
@@ -160,16 +160,10 @@ export const horizontalTabIndexExample = (): TemplateResult => {
             <sp-radio emphasized value="zero" tabindex="0">
                 Tab Index 0
             </sp-radio>
-            <sp-radio disabled value="three" tabindex="3">
-                Tab Index 3
-            </sp-radio>
-            <sp-radio value="one" tabindex="1" autofocus>
-                Tab Index 1
-            </sp-radio>
+            <sp-radio disabled value="three" tabindex="3">Tab Index 3</sp-radio>
+            <sp-radio value="one" tabindex="1" autofocus>Tab Index 1</sp-radio>
             <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
-            <sp-radio invalid value="two" tabindex="2">
-                Tab Index 2
-            </sp-radio>
+            <sp-radio invalid value="two" tabindex="2">Tab Index 2</sp-radio>
         </sp-radio-group>
     `;
 };

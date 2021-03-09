@@ -41,6 +41,10 @@ governing permissions and limitations under the License.
     max-width: 100%;
 }
 
+:host([readonly]) #button {
+    user-select: inherit;
+}
+
 sp-popover {
     display: none;
 }

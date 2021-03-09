@@ -118,4 +118,16 @@ describe('Radio', () => {
 
         expect(el.checked).to.be.false;
     });
+
+    it('maintains its value when [readonly]', async () => {
+        const el = await fixture<Radio>(html`
+            <sp-radio checked readonly>Component</sp-radio>
+        `);
+        expect(el.checked).to.be.true;
+
+        el.focusElement.click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.true;
+    });
 });

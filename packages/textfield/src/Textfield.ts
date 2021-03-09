@@ -68,6 +68,9 @@ export class Textfield extends Focusable {
     public multiline = false;
 
     @property({ type: Boolean, reflect: true })
+    public readonly = false;
+
+    @property({ type: Boolean, reflect: true })
     public valid = false;
 
     @property({ type: String })
@@ -169,6 +172,7 @@ export class Textfield extends Focusable {
                 @blur=${this.onBlur}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
+                ?readonly=${this.readonly}
                 autocomplete=${ifDefined(this.autocomplete)}
             ></textarea>
         `;
@@ -196,6 +200,7 @@ export class Textfield extends Focusable {
                 @blur=${this.onBlur}
                 ?disabled=${this.disabled}
                 ?required=${this.required}
+                ?readonly=${this.readonly}
                 autocomplete=${ifDefined(this.autocomplete)}
             />
         `;

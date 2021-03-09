@@ -39,6 +39,18 @@ export const Checked = (): TemplateResult => {
     `;
 };
 
+export const readonly = (): TemplateResult => {
+    return html`
+        <sp-switch
+            readonly
+            @click="${action('Click')}"
+            @change="${action('Change')}"
+        >
+            Switch
+        </sp-switch>
+    `;
+};
+
 export const emphasized = (): TemplateResult => {
     return html`
         <sp-switch

@@ -28,6 +28,18 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const readonly = (): TemplateResult => {
+    return html`
+        <sp-checkbox
+            readonly
+            @click="${action('Click')}"
+            @change="${action('Change')}"
+        >
+            Checkbox
+        </sp-checkbox>
+    `;
+};
+
 export const Indeterminate = (): TemplateResult => {
     return html`
         <sp-checkbox indeterminate>Checkbox</sp-checkbox>

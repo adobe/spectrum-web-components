@@ -87,6 +87,33 @@ describe('Tag', () => {
         expect(deleteSpy.called).to.be.true;
         expect(deleteSpy.callCount).to.equal(1);
     });
+    it('does not dispatch `delete` events when [readonly]', async () => {
+        const deleteSpy = spy();
+        const handleDelete = (): void => deleteSpy();
+        const el = await fixture<Tag>(
+            html`
+                <sp-tag @delete=${handleDelete} deletable readonly>
+                    Tag 1
+                </sp-tag>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(deleteSpy.called).to.be.false;
+
+        const root: HTMLElement | DocumentFragment = el.shadowRoot
+            ? el.shadowRoot
+            : el;
+        const deleteButton = root.querySelector(
+            'sp-clear-button'
+        ) as ClearButton;
+        deleteButton.click();
+
+        await elementUpdated(el);
+
+        expect(deleteSpy.called).to.be.false;
+    });
     it('dispatches `delete` events on keyboard input', async () => {
         const deleteSpy = spy();
         const handleDelete = (): void => deleteSpy();
