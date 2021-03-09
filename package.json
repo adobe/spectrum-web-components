@@ -207,7 +207,7 @@
         "webpack-dev-server": "^3.10.3",
         "webpack-merge": "^4.2.2",
         "webpackbar": "^4.0.0",
-        "yargs": "^15.1.0"
+        "yargs": "^16.2.0"
     },
     "resolutions": {
         "cssnano/**/postcss-calc": "7.0.0"
