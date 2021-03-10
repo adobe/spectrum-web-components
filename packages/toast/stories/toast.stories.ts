@@ -29,11 +29,32 @@ const toast = ({
 export default {
     component: 'sp-toast',
     title: 'Toast',
-    argTypes: {
-        content: { control: 'string' },
-    },
     args: {
         content: 'This is a toast message.',
+        open: true,
+    },
+    argTypes: {
+        content: {
+            name: 'content',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
+        },
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the toast is open.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
 };
 
