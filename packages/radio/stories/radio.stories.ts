@@ -13,92 +13,111 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-radio.js';
 import '../sp-radio-group.js';
+import { spreadProps } from '@open-wc/lit-helpers';
 
 export default {
     component: 'sp-radio',
     title: 'Radio',
+    argTypes: {
+        checked: {
+            name: 'checked',
+            type: { name: 'boolean', required: false },
+            description: 'Represents when the input is checked',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: 'boolean',
+        },
+        disabled: {
+            name: 'disabled',
+            type: { name: 'boolean', required: false },
+            description:
+                'Disable this control. It will not receive focus or events.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        emphasized: {
+            name: 'emphasized',
+            type: { name: 'boolean', required: false },
+            description: "Set the button's state to emphasized.",
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        invalid: {
+            name: 'invalid',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
+    args: {
+        checked: false,
+        disabled: false,
+        emphasized: false,
+        invalid: false,
+    },
 };
 
-export const Default = (): TemplateResult => {
+interface StoryArgs {
+    checked?: boolean;
+    disabled?: boolean;
+    emphasized?: boolean;
+    invalid?: boolean;
+}
+
+function renderRadio(args: StoryArgs): TemplateResult {
     return html`
-        <sp-radio>Radio</sp-radio>
+        <sp-radio ...=${spreadProps(args)}>Radio</sp-radio>
+    `;
+}
+export const Default = (args: StoryArgs): TemplateResult => renderRadio(args);
+
+export const Emphasized = (args: StoryArgs): TemplateResult =>
+    renderRadio(args);
+Emphasized.args = {
+    checked: true,
+    emphasized: true,
+};
+
+export const Autofocus = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-radio autofocus ...=${spreadProps(args)}>Radio</sp-radio>
     `;
 };
 
-export const Checked = (): TemplateResult => {
+export const Invalid = (args: StoryArgs): TemplateResult => renderRadio(args);
+Invalid.args = {
+    invalid: true,
+};
+
+export const Disabled = (args: StoryArgs): TemplateResult => renderRadio(args);
+Disabled.args = {
+    disabled: true,
+};
+
+export const labelBelow = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-radio checked>Radio</sp-radio>
+        <sp-radio label-below ...=${spreadProps(args)}>Radio</sp-radio>
     `;
 };
-
-export const emphasized = (): TemplateResult => {
-    return html`
-        <sp-radio emphasized>Radio</sp-radio>
-    `;
-};
-
-export const emphasizedChecked = (): TemplateResult => {
-    return html`
-        <sp-radio emphasized checked>Radio</sp-radio>
-    `;
-};
-
-export const Autofocus = (): TemplateResult => {
-    return html`
-        <sp-radio autofocus>Radio</sp-radio>
-    `;
-};
-
-export const Invalid = (): TemplateResult => {
-    return html`
-        <sp-radio invalid>Radio</sp-radio>
-    `;
-};
-
-export const invalidChecked = (): TemplateResult => {
-    return html`
-        <sp-radio invalid checked>Radio</sp-radio>
-    `;
-};
-
-invalidChecked.story = {
-    name: 'Invalid checked',
-};
-
-export const Disabled = (): TemplateResult => {
-    return html`
-        <sp-radio disabled>Radio</sp-radio>
-    `;
-};
-
-export const disabledChecked = (): TemplateResult => {
-    return html`
-        <sp-radio disabled checked>Radio</sp-radio>
-    `;
-};
-
-disabledChecked.story = {
-    name: 'Disabled checked',
-};
-
-export const labelBelow = (): TemplateResult => {
-    return html`
-        <sp-radio label-below>Radio</sp-radio>
-    `;
-};
-
 labelBelow.story = {
     name: 'Label below',
-};
-
-export const labelBelowChecked = (): TemplateResult => {
-    return html`
-        <sp-radio label-below checked>Radio</sp-radio>
-    `;
-};
-
-labelBelowChecked.story = {
-    name: 'Label below checked',
 };
 
 export const groupExample = (): TemplateResult => {
@@ -140,16 +159,10 @@ export const tabIndexExample = (): TemplateResult => {
             <sp-radio emphasized value="zero" tabindex="0">
                 Tab Index 0
             </sp-radio>
-            <sp-radio disabled value="three" tabindex="3">
-                Tab Index 3
-            </sp-radio>
-            <sp-radio value="one" tabindex="1" autofocus>
-                Tab Index 1
-            </sp-radio>
+            <sp-radio disabled value="three" tabindex="3">Tab Index 3</sp-radio>
+            <sp-radio value="one" tabindex="1" autofocus>Tab Index 1</sp-radio>
             <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
-            <sp-radio invalid value="two" tabindex="2">
-                Tab Index 2
-            </sp-radio>
+            <sp-radio invalid value="two" tabindex="2">Tab Index 2</sp-radio>
         </sp-radio-group>
     `;
 };
@@ -160,16 +173,10 @@ export const horizontalTabIndexExample = (): TemplateResult => {
             <sp-radio emphasized value="zero" tabindex="0">
                 Tab Index 0
             </sp-radio>
-            <sp-radio disabled value="three" tabindex="3">
-                Tab Index 3
-            </sp-radio>
-            <sp-radio value="one" tabindex="1" autofocus>
-                Tab Index 1
-            </sp-radio>
+            <sp-radio disabled value="three" tabindex="3">Tab Index 3</sp-radio>
+            <sp-radio value="one" tabindex="1" autofocus>Tab Index 1</sp-radio>
             <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
-            <sp-radio invalid value="two" tabindex="2">
-                Tab Index 2
-            </sp-radio>
+            <sp-radio invalid value="two" tabindex="2">Tab Index 2</sp-radio>
         </sp-radio-group>
     `;
 };
