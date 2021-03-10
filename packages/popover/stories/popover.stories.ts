@@ -16,10 +16,51 @@ export default {
     component: 'sp-popover',
     title: 'Popover',
     argTypes: {
-        content: { control: 'string' },
+        content: {
+            name: 'content',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
+        },
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the popover is open or not.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: 'boolean',
+        },
+        placement: {
+            name: 'placement',
+            type: { name: 'string', required: false },
+            description:
+                'The placement of the tooltip content in relation to the tip',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: 'none' },
+            },
+            control: 'text',
+        },
+        tip: {
+            name: 'tip',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: 'boolean',
+        },
     },
     args: {
         content: 'The quick brown fox jumps over the lazy dog',
+        open: true,
+        placement: 'none',
+        tip: false,
     },
 };
 
@@ -36,9 +77,10 @@ export const Default = ({ content }: { content: string }): TemplateResult => {
 interface StoryArgs {
     tip?: boolean;
     placement: Placement;
+    open?: boolean;
 }
 
-const Template = ({ tip, placement }: StoryArgs): TemplateResult => {
+const Template = ({ tip, placement, open }: StoryArgs): TemplateResult => {
     return html`
         <div
             style="color: var(--spectrum-global-color-gray-800); position: relative; display: contents"
@@ -46,7 +88,7 @@ const Template = ({ tip, placement }: StoryArgs): TemplateResult => {
             <sp-popover
                 variant="dialog"
                 placement=${placement}
-                open
+                ?open=${open}
                 style=" max-width: 320px"
                 .tip="${tip}"
             >
