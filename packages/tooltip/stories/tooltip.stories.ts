@@ -44,12 +44,6 @@ const iconOptions: {
 export default {
     component: 'sp-tooltip',
     title: 'Tooltip',
-    argTypes: {
-        text: { control: 'string' },
-    },
-    args: {
-        text: 'Tooltip',
-    },
 };
 
 interface Properties {
@@ -60,28 +54,78 @@ interface Properties {
 }
 
 export const Default = ({
+    open,
     placement,
     variant,
     text,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tooltip open placement=${placement} variant=${variant}>
+        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
             ${text}
         </sp-tooltip>
     `;
 };
 Default.args = {
+    open: true,
     placement: 'top',
     variant: '',
+    text: 'Tooltip',
+};
+Default.argTypes = {
+    open: {
+        name: 'open',
+        type: { name: 'boolean', required: false },
+        description: 'Whether the tooltip is open.',
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: {
+            type: 'boolean',
+        },
+    },
+    placement: {
+        name: 'placement',
+        type: { name: 'string', required: false },
+        description: 'The placement of the tooltip in relation to its parent',
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: 'top' },
+        },
+        control: 'text',
+    },
+    text: {
+        name: 'text',
+        type: { name: 'string', required: false },
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: '' },
+        },
+        control: 'text',
+    },
+    variant: {
+        name: 'variant',
+        type: { name: 'string', required: false },
+        description: 'The style of the tooltip.',
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: '' },
+        },
+        control: {
+            type: 'inline-radio',
+            options: ['info', 'positive', 'negative', ''],
+        },
+    },
 };
 
 export const wIcon = ({
+    open,
     placement,
     variant,
     text,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tooltip open placement=${placement} variant=${variant}>
+        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
             ${!!variant
                 ? html`
                       <sp-icon slot="icon">${iconOptions[variant]()}</sp-icon>
@@ -92,8 +136,55 @@ export const wIcon = ({
     `;
 };
 wIcon.args = {
+    open: true,
     placement: 'top',
+    text: 'Tooltip',
     variant: 'negative',
+};
+wIcon.argTypes = {
+    open: {
+        name: 'open',
+        type: { name: 'boolean', required: false },
+        description: 'Whether the tooltip is open.',
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: {
+            type: 'boolean',
+        },
+    },
+    placement: {
+        name: 'placement',
+        type: { name: 'string', required: false },
+        description: 'The placement of the tooltip in relation to its parent',
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: 'top' },
+        },
+        control: 'text',
+    },
+    text: {
+        name: 'text',
+        type: { name: 'string', required: false },
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: '' },
+        },
+        control: 'text',
+    },
+    variant: {
+        name: 'variant',
+        type: { name: 'string', required: false },
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: '' },
+        },
+        control: {
+            type: 'inline-radio',
+            options: ['info', 'positive', 'negative', ''],
+        },
+    },
 };
 
 const overlayStyles = html`
