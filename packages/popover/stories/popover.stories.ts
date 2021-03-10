@@ -39,7 +39,7 @@ export default {
             name: 'placement',
             type: { name: 'string', required: false },
             description:
-                'The placement of the tooltip content in relation to the tip',
+                'The placement of the popover content in relation to the tip',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'none' },
