@@ -2,20 +2,14 @@
 
 `<sp-top-nav>` delivers site navigation, particularly for when that navigation will change the majority of the page's content and/or the page's URL when selected. All primary elements of an `<sp-top-nav>` should be directly accessible in the tab order.
 
-### Installation
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/top-nav?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/top-nav)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/top-nav?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/top-nav)
 
 ```
-npm install @spectrum-web-components/top-nav
-
-# or
-
 yarn add @spectrum-web-components/top-nav
 ```
-
-### Usage
 
 Import the side effectful registration of `<sp-top-nav>` and `<sp-top-nav-item>` as follows:
 
@@ -30,7 +24,7 @@ When looking to leverage the `TopNav` or `TopNavItem` base classes as a type and
 import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
 ```
 
-## Example
+### Example
 
 ```html
 <sp-top-nav>
