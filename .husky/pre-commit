@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+yarn analyze:quick
+yarn lint:css
+yarn pretty-quick --staged

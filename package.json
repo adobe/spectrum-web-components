@@ -16,6 +16,7 @@
     },
     "scripts": {
         "analyze": "lit-analyzer 'packages/*/src/**/!(*.css).ts'",
+        "analyze:quick": "lit-analyzer \"packages/*/src/!(*.css).ts\"",
         "get-ready": "yarn build:clear-cache && run-p process-icons process-spectrum && yarn build",
         "postinstall": "yarn get-ready",
         "spectrum-vars": "node ./scripts/spectrum-vars.js",
@@ -74,13 +75,8 @@
         "test:visual:clean": "yarn test:visual:clean:baseline && yarn test:visual:clean:current",
         "test:visual:clean:baseline": "rm -rf test/visual/screenshots-baseline",
         "test:visual:clean:current": "rm -rf test/visual/screenshots-current",
-        "new-package": "cd projects/templates && plop"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged && yarn lint",
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-        }
+        "new-package": "cd projects/templates && plop",
+        "prepare": "husky install"
     },
     "peerDependencies": {
         "common-tags": "^1.8.0",
@@ -91,7 +87,7 @@
         "@babel/plugin-syntax-import-meta": "^7.10.4",
         "@babel/plugin-transform-modules-systemjs": "^7.10.5",
         "@babel/preset-env": "^7.10.4",
-        "@commitlint/cli": "^11.0.0",
+        "@commitlint/cli": "^12.0.1",
         "@commitlint/config-conventional": "^12.0.0",
         "@commitlint/config-lerna-scopes": "^9.1.2",
         "@open-wc/building-webpack": "^2.13.46",
@@ -109,8 +105,8 @@
         "@types/sinon": "^9.0.0",
         "@types/webpack": "^4.4.26",
         "@types/webpack-env": "^1.13.9",
-        "@typescript-eslint/eslint-plugin": "^4.2.0",
-        "@typescript-eslint/parser": "^4.2.0",
+        "@typescript-eslint/eslint-plugin": "^4.16.1",
+        "@typescript-eslint/parser": "^4.16.1",
         "@vaadin/router": "^1.2.0",
         "@web/dev-server": "^0.1.8",
         "@web/test-runner": "^0.12.15",
@@ -129,13 +125,13 @@
         "cssnano": "^4.1.10",
         "deepmerge": "^4.0.0",
         "element-closest": "^3.0.1",
-        "eslint": "^7.11.0",
-        "eslint-config-prettier": "^7.1.0",
+        "eslint": "^7.21.0",
+        "eslint-config-prettier": "^8.1.0",
         "eslint-formatter-pretty": "^4.0.0",
         "eslint-plugin-import": "^2.22.1",
-        "eslint-plugin-lit-a11y": "^1.0.0",
+        "eslint-plugin-lit-a11y": "^1.0.1",
         "eslint-plugin-notice": "^0.9.10",
-        "eslint-plugin-prettier": "^3.1.4",
+        "eslint-plugin-prettier": "^3.3.1",
         "eslint-plugin-spectrum-web-components": "file:./linters/eslint",
         "express": "^4.16.4",
         "extract-loader": "^5.0.1",
@@ -154,7 +150,7 @@
         "gulp-typescript": "^5.0.0",
         "gulp-wrap": "^0.15.0",
         "html-loader": "^1.3.0",
-        "husky": "^4.2.1",
+        "husky": "^5.1.3",
         "lerna": "^3.20.2",
         "linebyline": "^1.3.0",
         "lit-analyzer": "^1.2.1",
@@ -211,7 +207,7 @@
         "webpack-dev-server": "^3.10.3",
         "webpack-merge": "^4.2.2",
         "webpackbar": "^4.0.0",
-        "yargs": "^15.1.0"
+        "yargs": "^16.2.0"
     },
     "resolutions": {
         "cssnano/**/postcss-calc": "7.0.0"

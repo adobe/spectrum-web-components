@@ -14,7 +14,6 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { html, action } from '@open-wc/demoing-storybook';
 
 import '../sp-split-button.js';
-import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {
@@ -27,22 +26,16 @@ const menu = ({
     secondItemHandler = action('click "Option Extended"'),
     thirdItemHandler = action('click "Short"'),
 }): TemplateResult => html`
-    <sp-menu>
-        <sp-menu-item @click=${firstItemHandler}>Option 1</sp-menu-item>
-        <sp-menu-item @click=${secondItemHandler}>Option Extended</sp-menu-item>
-        <sp-menu-item @click=${thirdItemHandler}>Short</sp-menu-item>
-    </sp-menu>
+    <sp-menu-item @click=${firstItemHandler}>Option 1</sp-menu-item>
+    <sp-menu-item @click=${secondItemHandler}>Option Extended</sp-menu-item>
+    <sp-menu-item @click=${thirdItemHandler}>Short</sp-menu-item>
 `;
 
 export const cta = (options = {}): TemplateResult => {
     return html`
         <div>
-            <sp-split-button>
-                ${menu(options)}
-            </sp-split-button>
-            <sp-split-button left>
-                ${menu(options)}
-            </sp-split-button>
+            <sp-split-button>${menu(options)}</sp-split-button>
+            <sp-split-button left>${menu(options)}</sp-split-button>
         </div>
     `;
 };
@@ -54,9 +47,7 @@ cta.story = {
 export const ctaOpen = (options = {}): TemplateResult => {
     return html`
         <div>
-            <sp-split-button open>
-                ${menu(options)}
-            </sp-split-button>
+            <sp-split-button open>${menu(options)}</sp-split-button>
         </div>
     `;
 };
@@ -102,12 +93,8 @@ secondary.story = {
 export const moreCta = (options = {}): TemplateResult => {
     return html`
         <div>
-            <sp-split-button type="more">
-                ${menu(options)}
-            </sp-split-button>
-            <sp-split-button type="more" left>
-                ${menu(options)}
-            </sp-split-button>
+            <sp-split-button type="more">${menu(options)}</sp-split-button>
+            <sp-split-button type="more" left>${menu(options)}</sp-split-button>
         </div>
     `;
 };
@@ -119,9 +106,7 @@ moreCta.story = {
 export const moreCtaOpen = (options = {}): TemplateResult => {
     return html`
         <div>
-            <sp-split-button type="more" open>
-                ${menu(options)}
-            </sp-split-button>
+            <sp-split-button type="more" open>${menu(options)}</sp-split-button>
         </div>
     `;
 };

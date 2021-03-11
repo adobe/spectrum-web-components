@@ -54,6 +54,7 @@ test-results.xml
 /test/benchmark/**/*.d.ts
 !test/visual/**/*.js
 test/visual/screenshots-baseline/
+test/visual/screenshots-actual/
 test/visual/screenshots-current/
 
 package-lock.json

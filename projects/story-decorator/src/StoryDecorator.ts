@@ -250,12 +250,10 @@ export class StoryDecorator extends SpectrumElement {
                 .value=${this.color}
                 @change=${this.updateTheme}
             >
-                <sp-menu>
-                    <sp-menu-item value="lightest">Lightest</sp-menu-item>
-                    <sp-menu-item value="light">Light</sp-menu-item>
-                    <sp-menu-item value="dark">Dark</sp-menu-item>
-                    <sp-menu-item value="darkest">Darkest</sp-menu-item>
-                </sp-menu>
+                <sp-menu-item value="lightest">Lightest</sp-menu-item>
+                <sp-menu-item value="light">Light</sp-menu-item>
+                <sp-menu-item value="dark">Dark</sp-menu-item>
+                <sp-menu-item value="darkest">Darkest</sp-menu-item>
             </sp-picker>
         `;
     }
@@ -271,10 +269,8 @@ export class StoryDecorator extends SpectrumElement {
                 .value=${this.scale}
                 @change=${this.updateTheme}
             >
-                <sp-menu>
-                    <sp-menu-item value="medium">Medium</sp-menu-item>
-                    <sp-menu-item value="large">Large</sp-menu-item>
-                </sp-menu>
+                <sp-menu-item value="medium">Medium</sp-menu-item>
+                <sp-menu-item value="large">Large</sp-menu-item>
             </sp-picker>
         `;
     }
@@ -290,10 +286,8 @@ export class StoryDecorator extends SpectrumElement {
                 .value=${this.direction}
                 @change=${this.updateTheme}
             >
-                <sp-menu>
-                    <sp-menu-item value="ltr">LTR</sp-menu-item>
-                    <sp-menu-item value="rtl">RTL</sp-menu-item>
-                </sp-menu>
+                <sp-menu-item value="ltr">LTR</sp-menu-item>
+                <sp-menu-item value="rtl">RTL</sp-menu-item>
             </sp-picker>
         `;
     }

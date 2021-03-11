@@ -227,20 +227,18 @@ export class LayoutElement extends SpectrumElement {
                                     value=${this.color}
                                     @change=${this.updateColor}
                                 >
-                                    <sp-menu>
-                                        <sp-menu-item value="lightest">
-                                            Lightest
-                                        </sp-menu-item>
-                                        <sp-menu-item value="light">
-                                            Light
-                                        </sp-menu-item>
-                                        <sp-menu-item value="dark">
-                                            Dark
-                                        </sp-menu-item>
-                                        <sp-menu-item value="darkest">
-                                            Darkest
-                                        </sp-menu-item>
-                                    </sp-menu>
+                                    <sp-menu-item value="lightest">
+                                        Lightest
+                                    </sp-menu-item>
+                                    <sp-menu-item value="light">
+                                        Light
+                                    </sp-menu-item>
+                                    <sp-menu-item value="dark">
+                                        Dark
+                                    </sp-menu-item>
+                                    <sp-menu-item value="darkest">
+                                        Darkest
+                                    </sp-menu-item>
                                 </sp-picker>
                                 <sp-field-label
                                     for="theme-scale"
@@ -256,14 +254,12 @@ export class LayoutElement extends SpectrumElement {
                                     value=${this.scale}
                                     @change=${this.updateScale}
                                 >
-                                    <sp-menu>
-                                        <sp-menu-item value="medium">
-                                            Medium
-                                        </sp-menu-item>
-                                        <sp-menu-item value="large">
-                                            Large
-                                        </sp-menu-item>
-                                    </sp-menu>
+                                    <sp-menu-item value="medium">
+                                        Medium
+                                    </sp-menu-item>
+                                    <sp-menu-item value="large">
+                                        Large
+                                    </sp-menu-item>
                                 </sp-picker>
                                 <sp-field-label
                                     for="theme-direction"
@@ -279,14 +275,8 @@ export class LayoutElement extends SpectrumElement {
                                     value=${this.dir}
                                     @change=${this.updateDirection}
                                 >
-                                    <sp-menu>
-                                        <sp-menu-item value="ltr">
-                                            LTR
-                                        </sp-menu-item>
-                                        <sp-menu-item value="rtl">
-                                            RTL
-                                        </sp-menu-item>
-                                    </sp-menu>
+                                    <sp-menu-item value="ltr">LTR</sp-menu-item>
+                                    <sp-menu-item value="rtl">RTL</sp-menu-item>
                                 </sp-picker>
                             </div>
                             ${this.renderContent()}

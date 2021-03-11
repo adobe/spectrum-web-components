@@ -33,15 +33,13 @@ export const Default = (): TemplateResult => {
             }}"
             label="Select a Country with a very long label, too long, in fact"
         >
-            <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select Inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-item disabled>Make Work Path</sp-menu-item>
-            </sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-picker>
         <p>This is some text.</p>
         <p>This is some text.</p>
@@ -63,12 +61,10 @@ export const quiet = (): TemplateResult => {
             }}"
             label="Pick an item"
         >
-            <sp-menu>
-                <sp-menu-item value="1">Item 1</sp-menu-item>
-                <sp-menu-item value="2">Item 2</sp-menu-item>
-                <sp-menu-item value="3">Item 3</sp-menu-item>
-                <sp-menu-item value="4">Item 4</sp-menu-item>
-            </sp-menu>
+            <sp-menu-item value="1">Item 1</sp-menu-item>
+            <sp-menu-item value="2">Item 2</sp-menu-item>
+            <sp-menu-item value="3">Item 3</sp-menu-item>
+            <sp-menu-item value="4">Item 4</sp-menu-item>
         </sp-picker>
         <p>This is some text.</p>
         <p>This is some text.</p>
@@ -101,15 +97,13 @@ export const Open = (): TemplateResult => {
                 <span slot="label">
                     Select a Country with a very long label, too long, in fact
                 </span>
-                <sp-menu>
-                    <sp-menu-item>Deselect</sp-menu-item>
-                    <sp-menu-item>Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-menu>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-picker>
         </fieldset>
         <fieldset>
@@ -123,9 +117,7 @@ export const Open = (): TemplateResult => {
                 <span slot="label">
                     Other menu that goes behind the open one
                 </span>
-                <sp-menu>
-                    <sp-menu-item>Not so many options...</sp-menu-item>
-                </sp-menu>
+                <sp-menu-item>Not so many options...</sp-menu-item>
             </sp-picker>
         </fieldset>
     `;
@@ -143,17 +135,13 @@ export const initialValue = (): TemplateResult => {
             <span slot="label">
                 Select a Country with a very long label, too long in fact
             </span>
-            <sp-menu>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and Mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item value="item-5">Save Selection</sp-menu-item>
-                <sp-menu-item disabled value="item-6">
-                    Make Work Path
-                </sp-menu-item>
-            </sp-menu>
+            <sp-menu-item value="item-1">Deselect</sp-menu-item>
+            <sp-menu-item value="item-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="item-3">Feather...</sp-menu-item>
+            <sp-menu-item value="item-4">Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item value="item-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="item-6">Make Work Path</sp-menu-item>
         </sp-picker>
     `;
 };

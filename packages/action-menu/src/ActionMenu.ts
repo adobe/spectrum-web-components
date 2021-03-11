@@ -24,14 +24,16 @@ import { MoreIcon } from '@spectrum-web-components/icons-workflow';
 import actionMenuStyles from './action-menu.css.js';
 
 /**
- * @slot options - The menu with options that will display when the picker is open
+ * @element sp-action-menu
+ * @slot icon - The icon to use for action button
+ * @slot label - The label to use on for the action button
  */
 export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public static get styles(): CSSResultArray {
         return [actionMenuStyles];
     }
 
-    protected listRole = 'menu';
+    protected listRole: 'listbox' | 'menu' = 'menu';
     protected itemRole = 'menuitem';
     private get hasLabel(): boolean {
         return this.slotHasContent;

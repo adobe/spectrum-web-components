@@ -175,9 +175,7 @@ describe('FieldLabel', () => {
                 <div>
                     <sp-field-label required for="test"></sp-field-label>
                     <sp-picker id="test">
-                        <sp-menu>
-                            <sp-menu-item>Test</sp-menu-item>
-                        </sp-menu>
+                        <sp-menu-item>Test</sp-menu-item>
                     </sp-picker>
                 </div>
             `
