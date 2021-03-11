@@ -18,7 +18,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {
-    title: 'Split Button/CTA',
+    title: 'Split Button/Secondary',
     component: 'sp-split-button',
     args: {
         disabled: false,
@@ -26,7 +26,7 @@ export default {
         left: false,
         open: false,
         type: 'field',
-        variant: 'cta',
+        variant: 'secondary',
     },
     argTypes: {
         disabled: {

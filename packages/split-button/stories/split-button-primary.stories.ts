@@ -25,7 +25,6 @@ export default {
         invalid: false,
         left: false,
         open: false,
-        quiet: false,
         type: 'field',
         variant: 'primary',
     },
@@ -78,17 +77,6 @@ export default {
                 type: 'boolean',
             },
         },
-        quiet: {
-            name: 'quiet',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
         type: {
             name: 'type',
             type: { name: 'string', required: false },
@@ -130,7 +118,6 @@ interface Properties {
     invalid?: boolean;
     left?: boolean;
     open?: boolean;
-    quiet?: boolean;
     size?: 's' | 'm' | 'l' | 'xl';
     type?: 'field' | 'more';
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';

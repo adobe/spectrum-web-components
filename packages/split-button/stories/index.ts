@@ -39,7 +39,6 @@ interface Properties {
     invalid?: boolean;
     left?: boolean;
     open?: boolean;
-    quiet?: boolean;
     size?: 's' | 'm' | 'l' | 'xl';
     type?: 'field' | 'more';
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
@@ -55,7 +54,6 @@ export const splitbutton = (
         variant=${properties.variant || 'cta'}
         type=${properties.type || 'field'}
         ?open=${!!properties.open}
-        ?quiet=${properties.quiet}
         ?disabled=${properties.disabled}
     >
         ${menu(options)}
