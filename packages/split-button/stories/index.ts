@@ -35,13 +35,14 @@ const menu = ({
 `;
 
 interface Properties {
-    variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
-    quiet?: boolean;
     disabled?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    type?: 'field' | 'more';
+    invalid?: boolean;
     left?: boolean;
     open?: boolean;
+    quiet?: boolean;
+    size?: 's' | 'm' | 'l' | 'xl';
+    type?: 'field' | 'more';
+    variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
 }
 
 export const splitbutton = (
@@ -54,6 +55,8 @@ export const splitbutton = (
         variant=${properties.variant || 'cta'}
         type=${properties.type || 'field'}
         ?open=${!!properties.open}
+        ?quiet=${properties.quiet}
+        ?disabled=${properties.disabled}
     >
         ${menu(options)}
     </sp-split-button>
