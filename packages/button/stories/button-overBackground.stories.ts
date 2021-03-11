@@ -20,6 +20,7 @@ export default {
     decorators: [makeOverBackground],
     args: {
         disabled: false,
+        quiet: false,
         variant: 'overBackground',
     },
     argTypes: {
@@ -87,7 +88,7 @@ quiet.args = {
     quiet: true,
 };
 
-export const withIcon = (): TemplateResult => {
+export const withIcon = (props: Properties): TemplateResult => {
     return html`
         <style>
             .row {
@@ -96,7 +97,7 @@ export const withIcon = (): TemplateResult => {
         </style>
         <div class="row">
             ${renderButtonSet({
-                variant,
+                ...props,
                 content: html`
                     <sp-icon-help slot="icon"></sp-icon-help>
                     Help
@@ -105,7 +106,7 @@ export const withIcon = (): TemplateResult => {
         </div>
         <div class="row">
             ${renderButtonSet({
-                variant,
+                ...props,
                 content: html`
                     ${bellIcon} Custom SVG
                 `,
