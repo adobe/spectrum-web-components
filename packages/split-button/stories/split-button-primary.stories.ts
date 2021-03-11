@@ -11,14 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-import { renderSplitButtonSet, splitbutton } from './index.js';
+import { renderSplitButtonSet } from './index.js';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {
-    title: 'Split Button/CTA',
+    title: 'Split Button/Primary',
     component: 'sp-split-button',
     args: {
         disabled: false,
@@ -27,7 +27,7 @@ export default {
         open: false,
         quiet: false,
         type: 'field',
-        variant: 'cta',
+        variant: 'primary',
     },
     argTypes: {
         disabled: {
