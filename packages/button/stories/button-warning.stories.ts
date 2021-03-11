@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { renderButtonSet, bellIcon } from './index.js';
-import { HelpIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 
 export default {
     component: 'sp-button',
@@ -37,9 +37,7 @@ export const withIcon = (): TemplateResult => {
             ${renderButtonSet({
                 variant,
                 content: html`
-                    <sp-icon slot="icon">
-                        ${HelpIcon({ hidden: true })}
-                    </sp-icon>
+                    <sp-icon-help slot="icon"></sp-icon-help>
                     Help
                 `,
             })}
@@ -58,9 +56,7 @@ export const withIcon = (): TemplateResult => {
 export const iconSizeOverridden = (): TemplateResult => {
     return html`
         <sp-button label="Edit" size="xl" variant=${variant}>
-            <sp-icon slot="icon" size="s">
-                ${HelpIcon({ hidden: true })} Testing
-            </sp-icon>
+            <sp-icon-help slot="icon" size="s">Testing</sp-icon-help>
         </sp-button>
         <h1>For testing purposes only</h1>
         <p>
