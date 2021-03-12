@@ -19,6 +19,7 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { reparentChildren } from '@spectrum-web-components/shared';
 import { Color, Scale } from '@spectrum-web-components/theme';
 import styles from './active-overlay.css.js';
 import {
@@ -115,9 +116,7 @@ export class ActiveOverlay extends SpectrumElement {
     public overlayContentTip?: HTMLElement;
     public trigger!: HTMLElement;
 
-    private placeholder?: Comment;
     private popper?: Instance;
-    private originalSlot?: string;
 
     @property()
     public _state = stateTransition();
@@ -155,6 +154,7 @@ export class ActiveOverlay extends SpectrumElement {
 
     public tabbingAway = false;
     private originalPlacement?: Placement;
+    private restoreContent?: () => Element[];
 
     /**
      * @prop Used by the popper library to indicate where the overlay was
@@ -361,30 +361,8 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     private stealOverlayContent(element: HTMLElement): void {
-        /* c8 ignore next */
-        if (this.placeholder || !element) return;
-        if (!this.placeholder) {
-            this.placeholder = document.createComment(
-                'placeholder for ' + element.nodeName
-            );
-        }
-
-        const parentElement = element.parentElement || element.getRootNode();
-
-        if (parentElement) {
-            parentElement.replaceChild(this.placeholder, element);
-        }
-
-        this.overlayContent = element;
-        this.originalSlot =
-            this.overlayContent.getAttribute('slot') || undefined;
-        this.overlayContent.setAttribute('slot', 'overlay');
-        this.appendChild(this.overlayContent);
-
-        this.originalPlacement = this.overlayContent.getAttribute(
-            'placement'
-        ) as Placement;
-
+        this.originalPlacement = element.getAttribute('placement') as Placement;
+        this.restoreContent = reparentChildren([element], this);
         this.stealOverlayContentResolver();
     }
 
@@ -392,37 +370,16 @@ export class ActiveOverlay extends SpectrumElement {
 
     private returnOverlayContent(): void {
         /* c8 ignore next */
-        if (!this.overlayContent) return;
+        if (!this.restoreContent) return;
 
-        if (this.originalSlot) {
-            this.overlayContent.setAttribute('slot', this.originalSlot);
-            delete this.originalSlot;
-        } else {
-            this.overlayContent.removeAttribute('slot');
-        }
-
-        if (this.placeholder) {
-            const parentElement =
-                this.placeholder.parentElement ||
-                this.placeholder.getRootNode();
-            if (parentElement) {
-                parentElement.replaceChild(
-                    this.overlayContent,
-                    this.placeholder
-                );
-                this.willNotifyClosed = true;
-            }
-        }
+        const [element] = this.restoreContent();
+        this.restoreContent = undefined;
+        this.willNotifyClosed = true;
 
         if (this.originalPlacement) {
-            this.overlayContent.setAttribute(
-                'placement',
-                this.originalPlacement
-            );
+            element.setAttribute('placement', this.originalPlacement);
             delete this.originalPlacement;
         }
-
-        delete this.placeholder;
     }
 
     public async updateOverlayPosition(): Promise<void> {
@@ -506,7 +463,7 @@ export class ActiveOverlay extends SpectrumElement {
     public render(): TemplateResult {
         const content = html`
             <div id="contents">
-                <slot @slotchange=${this.onSlotChange} name="overlay"></slot>
+                <slot @slotchange=${this.onSlotChange}></slot>
             </div>
         `;
         return this.hasTheme ? this.renderTheme(content) : content;
