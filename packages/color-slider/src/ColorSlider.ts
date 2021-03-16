@@ -246,6 +246,10 @@ export class ColorSlider extends Focusable {
     private boundingClientRect!: DOMRect;
 
     private handlePointerdown(event: PointerEvent): void {
+        if (event.button !== 0) {
+            event.preventDefault();
+            return;
+        }
         this._previousColor = this._color.clone();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
@@ -304,6 +308,9 @@ export class ColorSlider extends Focusable {
     }
 
     private handleGradientPointerdown(event: PointerEvent): void {
+        if (event.button !== 0) {
+            return;
+        }
         event.stopPropagation();
         event.preventDefault();
         this.handle.dispatchEvent(new PointerEvent('pointerdown', event));
