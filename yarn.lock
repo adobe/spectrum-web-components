@@ -3056,9 +3056,9 @@
   integrity sha512-qK9EID9vTrgarGiI/nFfqqrBGUTPAJTWMTstADuQ+4w/VuJ6ALUW3jNJ6biGL/JoTOT80PAHl6PFSBGzSgCoUA==
 
 "@spectrum-css/dialog@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-3.0.0.tgz#0556fb3029906468e4afb9019798fa9649f3230b"
-  integrity sha512-1wTyq/Ikp6WWa6tJ4lTKNTSDjR2EZLcApY9ACaUSN9ueUmQ5HPbsgISbwA7Svoj5SiEnCyggihgmotuBBvZAuA==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-3.0.1.tgz#33aae036282159f6aa998848b8c0828640a9620a"
+  integrity sha512-hUFbRR6RGT63MNuP7wP+k9KU+uRuICsduMihskh700e+jiQ+Gsv53fBFDlB843FoZYlIXzFQXgtjMUC5a4Qibw==
 
 "@spectrum-css/divider@^1.0.0":
   version "1.0.0"
