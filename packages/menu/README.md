@@ -6,6 +6,7 @@ An `<sp-menu>` is used for creating a menu list. The various elements inside a m
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/menu?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/menu)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/menu?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/menu)
+[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/FikFeTXNsYhxAVmCz2f4/src/index.ts)
 
 ```
 yarn add @spectrum-web-components/menu
@@ -60,24 +61,12 @@ import {
 ```html
 <sp-popover open style="position: relative">
     <sp-menu>
-        <sp-menu-item value="item-1">
-            Deselect
-        </sp-menu-item>
-        <sp-menu-item value="item-2">
-            Select inverse
-        </sp-menu-item>
-        <sp-menu-item value="item-3">
-            Feather...
-        </sp-menu-item>
-        <sp-menu-item value="item-4">
-            Select and mask...
-        </sp-menu-item>
-        <sp-menu-item value="item-5">
-            Save selection
-        </sp-menu-item>
-        <sp-menu-item value="item-6" disabled>
-            Make work path
-        </sp-menu-item>
+        <sp-menu-item value="item-1">Deselect</sp-menu-item>
+        <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+        <sp-menu-item value="item-3">Feather...</sp-menu-item>
+        <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
+        <sp-menu-item value="item-5">Save selection</sp-menu-item>
+        <sp-menu-item value="item-6" disabled>Make work path</sp-menu-item>
     </sp-menu>
 </sp-popover>
 ```

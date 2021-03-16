@@ -6,6 +6,7 @@ An `<sp-picker>` is an alternative to HTML's `<select>` element. Use `<sp-menu-i
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/picker?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/picker)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/picker?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/picker)
+[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/guTpKeAjgecibF150Qbg/src/index.ts)
 
 ```
 yarn add @spectrum-web-components/picker

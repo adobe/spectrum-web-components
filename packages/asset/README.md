@@ -6,13 +6,22 @@ Use an `<sp-asset>` element to visually represent a file, folder or image in you
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/asset?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/asset)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/asset?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/asset)
+[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/CdMbDDjxdnvVyMlGrrJj/src/index.ts)
 
 ```
-npm install @spectrum-web-components/asset
-
-# or
-
 yarn add @spectrum-web-components/asset
+```
+
+Import the side effectful registration of `<sp-asset>` via:
+
+```
+import '@spectrum-web-components/asset/sp-asset.js';
+```
+
+When looking to leverage the `Asset` base class as a type and/or for extension purposes, do so via:
+
+```
+import { Asset } from '@spectrum-web-components/asset';
 ```
 
 ## Example
