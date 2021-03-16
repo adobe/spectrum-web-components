@@ -15,6 +15,7 @@ import { RouteComponent } from './route-component.js';
 import componentStyles from './markdown.css';
 import homeStyles from './home.css';
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/divider/sp-divider.js';
 
@@ -32,20 +33,22 @@ class HomeElement extends RouteComponent {
                         Spectrum Web Components
                     </h1>
                 </div>
-                <p class="spectrum-Body spectrum-Body--sizeXL">
+                <p class="spectrum-Body spectrum-Body--sizeXXL">
                     The Spectrum Web Components project is an implementation of <sp-link
                     href="https://spectrum.adobe.com/">Spectrum, Adobe’s design system</sp-link
                     >. It's designed to work with any web framework — or even
                     without one.
                 </p>
-                <div id="hero-buttons">
+                <sp-button-group id="hero-buttons">
                     <sp-button
                         href="https://github.com/adobe/spectrum-web-components"
+                        target="_blank"
                         variant="primary"
+                        size="xl"
                     >
                         View on GitHub
                     </sp-button>
-                </div>
+                </sp-button-group>
             </section>
             <section id="features">
                 <div class="feature">
