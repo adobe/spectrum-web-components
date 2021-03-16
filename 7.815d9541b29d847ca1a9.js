@@ -1127,4 +1127,4 @@ a{color:inherit}a:focus{outline:none}
 `));let n,d,u=e=>e;class m extends(Object(o.a)(s.a,{validSizes:["s","m","l"]})){constructor(){super(...arguments),this.vertical=!1}render(){return this.vertical?Object(i.d)(n||(n=u``)):Object(i.d)(d||(d=u`
             <hr />
         `))}}m.styles=[c],Object(a.a)([Object(i.e)({type:Boolean,reflect:!0})],m.prototype,"vertical",void 0),customElements.define("sp-divider",m)}}]);
-//# sourceMappingURL=7.a9f35dc2132d62d9f4fb.js.map
+//# sourceMappingURL=7.815d9541b29d847ca1a9.js.map
