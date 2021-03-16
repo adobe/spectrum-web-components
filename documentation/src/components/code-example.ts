@@ -27,6 +27,9 @@ import LightThemeStyles from 'prismjs/themes/prism.css';
 import Styles from './code-example.css';
 import { stripIndent } from 'common-tags';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
+import { copyNode } from './copy-to-clipboard.js';
 
 class Code extends LitElement {
     @property()
@@ -145,8 +148,22 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
                       </div>
                   `
                 : undefined}
-            <bdo id="markup" dir="ltr">${highlightedCode}</bdo>
+            <bdo id="markup" dir="ltr">
+                ${highlightedCode}
+                <sp-action-button
+                    class="copy"
+                    @click=${this.copyToClipboard}
+                    quiet
+                >
+                    <sp-icon-copy slot="icon"></sp-icon-copy>
+                    Copy to Clipboard
+                </sp-action-button>
+            </bdo>
         `;
+    }
+
+    private copyToClipboard(): void {
+        copyNode(this);
     }
 
     private shouldManageTabOrderForScrolling = (): void => {
