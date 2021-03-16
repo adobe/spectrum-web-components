@@ -229,8 +229,41 @@ describe('ColorWheel', () => {
         };
 
         expect(el.value).to.equal(0);
+
+        handle.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                button: 1,
+                pointerId: 1,
+                clientX: 80,
+                clientY: 15,
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(0);
+
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('[name="gradient"]') as HTMLElement;
+        gradient.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                button: 1,
+                pointerId: 1,
+                clientX: 80,
+                clientY: 15,
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(0);
+
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,

@@ -225,8 +225,44 @@ describe('ColorArea', () => {
         expect(el.x).to.equal(1);
         expect(el.y).to.equal(0);
 
+        handle.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                button: 1,
+                pointerId: 1,
+                clientX: 100,
+                clientY: 100,
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.hue).to.equal(0);
+        expect(el.x).to.equal(1);
+        expect(el.y).to.equal(0);
+
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('.gradient') as HTMLElement;
+        gradient.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                button: 1,
+                pointerId: 1,
+                clientX: 100,
+                clientY: 100,
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.hue).to.equal(0);
+        expect(el.x).to.equal(1);
+        expect(el.y).to.equal(0);
+
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,

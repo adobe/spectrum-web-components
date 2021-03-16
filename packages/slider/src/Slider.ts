@@ -20,6 +20,7 @@ import {
     styleMap,
     ifDefined,
 } from '@spectrum-web-components/base';
+import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 
 import sliderStyles from './slider.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -130,8 +131,6 @@ export class Slider extends Focusable {
     @query('#label')
     private labelEl!: HTMLLabelElement;
 
-    private supportsPointerEvent = 'setPointerCapture' in this;
-    private currentMouseEvent?: MouseEvent;
     private boundingClientRect?: DOMRect;
 
     public get focusElement(): HTMLElement {
@@ -254,11 +253,14 @@ export class Slider extends Focusable {
             <div
                 id="handle"
                 style=${this.handleStyle}
-                @pointermove=${this.onPointerMove}
-                @pointerdown=${this.onPointerDown}
-                @mousedown=${this.onMouseDown}
-                @pointerup=${this.onPointerUp}
-                @pointercancel=${this.onPointerCancel}
+                @manage=${streamingListener(
+                    { type: 'pointerdown', fn: this.handlePointerdown },
+                    { type: 'pointermove', fn: this.handlePointermove },
+                    {
+                        type: ['pointerup', 'pointercancel'],
+                        fn: this.handlePointerup,
+                    }
+                )}
                 role="presentation"
             >
                 <input
@@ -284,10 +286,7 @@ export class Slider extends Focusable {
 
     private renderTrack(): TemplateResult {
         return html`
-            <div
-                @pointerdown=${this.onTrackPointerDown}
-                @mousedown=${this.onTrackMouseDown}
-            >
+            <div @pointerdown=${this.handleTrackPointerdown}>
                 <div id="controls">
                     ${this.renderTrackLeft()} ${this.renderRamp()}
                     ${this.renderTicks()} ${this.renderHandle()}
@@ -297,8 +296,9 @@ export class Slider extends Focusable {
         `;
     }
 
-    private onPointerDown(event: PointerEvent): void {
-        if (this.disabled) {
+    private handlePointerdown(event: PointerEvent): void {
+        if (this.disabled || event.button !== 0) {
+            event.preventDefault();
             return;
         }
         this.boundingClientRect = this.getBoundingClientRect();
@@ -307,31 +307,7 @@ export class Slider extends Focusable {
         this.handle.setPointerCapture(event.pointerId);
     }
 
-    private onMouseDown(event: MouseEvent): void {
-        if (this.supportsPointerEvent) {
-            return;
-        }
-        if (this.disabled) {
-            return;
-        }
-        this.boundingClientRect = this.getBoundingClientRect();
-        document.addEventListener('mousemove', this.onMouseMove);
-        document.addEventListener('mouseup', this.onMouseUp);
-        this.labelEl.click();
-        this.dragging = true;
-        this.currentMouseEvent = event;
-        this._trackMouseEvent();
-    }
-
-    private _trackMouseEvent(): void {
-        if (!this.currentMouseEvent || !this.dragging) {
-            return;
-        }
-        this.value = this.calculateHandlePosition(this.currentMouseEvent);
-        requestAnimationFrame(() => this._trackMouseEvent());
-    }
-
-    private onPointerUp(event: PointerEvent): void {
+    private handlePointerup(event: PointerEvent): void {
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.labelEl.click();
         this.handleHighlight = false;
@@ -340,44 +316,27 @@ export class Slider extends Focusable {
         this.dispatchChangeEvent();
     }
 
-    private onMouseUp = (event: MouseEvent): void => {
-        // Retain focus on input element after mouse up to enable keyboard interactions
-        this.labelEl.click();
-        this.currentMouseEvent = event;
-        document.removeEventListener('mousemove', this.onMouseMove);
-        document.removeEventListener('mouseup', this.onMouseUp);
-        requestAnimationFrame(() => {
-            this.handleHighlight = false;
-            this.dragging = false;
-            this.dispatchChangeEvent();
-        });
-    };
-
-    private onPointerMove(event: PointerEvent): void {
+    private handlePointermove(event: PointerEvent): void {
         if (!this.dragging) {
             return;
         }
         this.value = this.calculateHandlePosition(event);
     }
 
-    private onMouseMove = (event: MouseEvent): void => {
-        this.currentMouseEvent = event;
-    };
-
-    private onPointerCancel(event: PointerEvent): void {
-        this.dragging = false;
-        this.handle.releasePointerCapture(event.pointerId);
-    }
-
     /**
      * Move the handle under the cursor and begin start a pointer capture when the track
      * is moused down
      */
-    private onTrackPointerDown(event: PointerEvent): void {
-        if (event.target === this.handle || this.disabled) {
+    private handleTrackPointerdown(event: PointerEvent): void {
+        if (
+            event.target === this.handle ||
+            this.disabled ||
+            event.button !== 0
+        ) {
             return;
         }
         this.boundingClientRect = this.getBoundingClientRect();
+
         this.dragging = true;
         this.handle.setPointerCapture(event.pointerId);
 
@@ -390,21 +349,6 @@ export class Slider extends Focusable {
         this.dispatchEvent(syntheticPointerEvent);
 
         this.value = this.calculateHandlePosition(event);
-    }
-
-    private onTrackMouseDown(event: MouseEvent): void {
-        if (this.supportsPointerEvent) {
-            return;
-        }
-        if (event.target === this.handle || this.disabled) {
-            return;
-        }
-        document.addEventListener('mousemove', this.onMouseMove);
-        document.addEventListener('mouseup', this.onMouseUp);
-        this.boundingClientRect = this.getBoundingClientRect();
-        this.dragging = true;
-        this.currentMouseEvent = event;
-        this._trackMouseEvent();
     }
 
     /**

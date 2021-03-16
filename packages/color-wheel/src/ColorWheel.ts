@@ -224,6 +224,10 @@ export class ColorWheel extends Focusable {
     private boundingClientRect!: DOMRect;
 
     private handlePointerdown(event: PointerEvent): void {
+        if (event.button !== 0) {
+            event.preventDefault();
+            return;
+        }
         this._previousColor = this._color.clone();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
@@ -280,6 +284,12 @@ export class ColorWheel extends Focusable {
     }
 
     private handleGradientPointerdown(event: PointerEvent): void {
+        if (
+            event.button !== 0 ||
+            (event.target as SVGElement).classList.contains('innerCircle')
+        ) {
+            return;
+        }
         event.stopPropagation();
         event.preventDefault();
         this.handle.dispatchEvent(new PointerEvent('pointerdown', event));

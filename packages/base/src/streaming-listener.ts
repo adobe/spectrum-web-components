@@ -85,11 +85,14 @@ const addEventListeners = (
     };
 
     const handleStart = (event: any): void => {
+        start.fn.call(eventContext || element, event);
+        if (event.defaultPrevented) {
+            return;
+        }
         removeListener(element, start.type, handleStart);
         addListener(element, stream.type, handleStream);
         addListener(element, end.type, handleEnd);
         stateMap.set(part, true);
-        start.fn.call(eventContext || element, event);
     };
 
     if (!isStreaming) {

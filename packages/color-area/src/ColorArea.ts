@@ -260,6 +260,10 @@ export class ColorArea extends SpectrumElement {
     private boundingClientRect!: DOMRect;
 
     private handlePointerdown(event: PointerEvent): void {
+        if (event.button !== 0) {
+            event.preventDefault();
+            return;
+        }
         this._previousColor = this._color.clone();
         this.boundingClientRect = this.getBoundingClientRect();
 
@@ -333,6 +337,9 @@ export class ColorArea extends SpectrumElement {
     }
 
     private handleAreaPointerdown(event: PointerEvent): void {
+        if (event.button !== 0) {
+            return;
+        }
         event.stopPropagation();
         event.preventDefault();
         this.handle.dispatchEvent(new PointerEvent('pointerdown', event));
