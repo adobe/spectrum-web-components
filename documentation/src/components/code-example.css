@@ -17,6 +17,7 @@ governing permissions and limitations under the License.
     border-radius: 6px;
     border: 1px solid var(--spectrum-global-color-gray-100);
     width: 100%;
+    position: relative;
 }
 
 .demo-example {
@@ -46,4 +47,10 @@ governing permissions and limitations under the License.
     overflow: hidden;
     line-height: 1.3em;
     overflow-x: auto;
+}
+
+.copy {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
 }
