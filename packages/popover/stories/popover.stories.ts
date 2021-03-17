@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 import '../sp-popover.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { Placement } from '@spectrum-web-components/overlay/src/popper';
+import { Placement } from '@spectrum-web-components/overlay';
 
 export default {
     component: 'sp-popover',
