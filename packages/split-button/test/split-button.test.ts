@@ -39,14 +39,6 @@ const deprecatedMenu = (): TemplateResult => html`
     </sp-menu>
 `;
 
-const deprecatedMenu = (): TemplateResult => html`
-    <sp-menu>
-        <sp-menu-item>Option 1</sp-menu-item>
-        <sp-menu-item>Option Extended</sp-menu-item>
-        <sp-menu-item>Short</sp-menu-item>
-    </sp-menu>
-`;
-
 describe('Splitbutton', () => {
     it('loads [type="field"] splitbutton accessibly', async () => {
         const test = await fixture<HTMLDivElement>(
