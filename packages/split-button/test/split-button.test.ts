@@ -69,22 +69,6 @@ describe('Splitbutton', () => {
         await expect(el1).to.be.accessible();
         await expect(el2).to.be.accessible();
     });
-    it('loads [type="field"] splitbutton accessibly with deprecated syntax', async () => {
-        const test = await fixture<HTMLDivElement>(html`
-            <div>
-                <sp-split-button>${deprecatedMenu()}</sp-split-button>
-                <sp-split-button left>${deprecatedMenu()}</sp-split-button>
-            </div>
-        `);
-        const el1 = test.querySelector('sp-split-button') as SplitButton;
-        const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
-
-        await elementUpdated(el1);
-        await elementUpdated(el2);
-
-        await expect(el1).to.be.accessible();
-        await expect(el2).to.be.accessible();
-    });
     it('loads [type="more"] splitbutton accessibly', async () => {
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(more({ ...splitButtonDefault.args, ...more.args }))
