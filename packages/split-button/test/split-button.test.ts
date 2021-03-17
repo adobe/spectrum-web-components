@@ -10,16 +10,34 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect } from '@open-wc/testing';
-import { html } from '@open-wc/demoing-storybook';
+import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 import { spy } from 'sinon';
 
 import '../sp-split-button.js';
 import { SplitButton } from '..';
-import { cta, moreCta } from '../stories/split-button.stories.js';
-import { TemplateResult } from '@spectrum-web-components/base';
+import splitButtonDefault, {
+    field,
+    more,
+} from '../stories/split-button-cta.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
 import { arrowDownEvent } from '../../../test/testing-helpers.js';
+import { TemplateResult } from '@spectrum-web-components/base';
+
+// wrap in div method
+
+function wrapInDiv(storyArgument: TemplateResult): TemplateResult {
+    return html`
+        <div>${storyArgument}</div>
+    `;
+}
+
+const deprecatedMenu = (): TemplateResult => html`
+    <sp-menu>
+        <sp-menu-item>Option 1</sp-menu-item>
+        <sp-menu-item>Option Extended</sp-menu-item>
+        <sp-menu-item>Short</sp-menu-item>
+    </sp-menu>
+`;
 
 const deprecatedMenu = (): TemplateResult => html`
     <sp-menu>
@@ -31,7 +49,25 @@ const deprecatedMenu = (): TemplateResult => html`
 
 describe('Splitbutton', () => {
     it('loads [type="field"] splitbutton accessibly', async () => {
-        const test = await fixture<HTMLDivElement>(cta());
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(field(splitButtonDefault.args))
+        );
+        const el1 = test.querySelector('sp-split-button') as SplitButton;
+        const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
+
+        await elementUpdated(el1);
+        await elementUpdated(el2);
+
+        await expect(el1).to.be.accessible();
+        await expect(el2).to.be.accessible();
+    });
+    it('loads [type="field"] splitbutton accessibly with deprecated syntax', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-split-button>${deprecatedMenu()}</sp-split-button>
+                <sp-split-button left>${deprecatedMenu()}</sp-split-button>
+            </div>
+        `);
         const el1 = test.querySelector('sp-split-button') as SplitButton;
         const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
 
@@ -58,7 +94,9 @@ describe('Splitbutton', () => {
         await expect(el2).to.be.accessible();
     });
     it('loads [type="more"] splitbutton accessibly', async () => {
-        const test = await fixture<HTMLDivElement>(moreCta());
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(more({ ...splitButtonDefault.args, ...more.args }))
+        );
         const el1 = test.querySelector('sp-split-button') as SplitButton;
         const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
 
@@ -90,7 +128,9 @@ describe('Splitbutton', () => {
     });
 
     it('receives "focus()"', async () => {
-        const test = await fixture<HTMLDivElement>(cta());
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(field(splitButtonDefault.args))
+        );
         const el1 = test.querySelector('sp-split-button') as SplitButton;
         const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
         const el1FocusElement = el1.focusElement;
@@ -114,7 +154,9 @@ describe('Splitbutton', () => {
         expect(el1.shadowRoot.activeElement === el2FocusElement);
     });
     it('[type="field"] manages `selectedItem`', async () => {
-        const test = await fixture<HTMLDivElement>(cta());
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(field(splitButtonDefault.args))
+        );
         const el = test.querySelector('sp-split-button') as SplitButton;
 
         await elementUpdated(el);
@@ -141,7 +183,9 @@ describe('Splitbutton', () => {
         expect(el.selectedItem?.itemText).to.equal('Short');
     });
     it('[type="more"] manages `selectedItem.itemText`', async () => {
-        const test = await fixture<HTMLDivElement>(moreCta());
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(more({ ...splitButtonDefault.args, ...more.args }))
+        );
         const el = test.querySelector('sp-split-button') as SplitButton;
 
         await elementUpdated(el);
@@ -172,11 +216,13 @@ describe('Splitbutton', () => {
         const secondItemSpy = spy();
         const thirdItemSpy = spy();
         const test = await fixture<HTMLDivElement>(
-            cta({
-                firstItemHandler: (): void => firstItemSpy(),
-                secondItemHandler: (): void => secondItemSpy(),
-                thirdItemHandler: (): void => thirdItemSpy(),
-            })
+            wrapInDiv(
+                field(splitButtonDefault.args, {
+                    firstItemHandler: (): void => firstItemSpy(),
+                    secondItemHandler: (): void => secondItemSpy(),
+                    thirdItemHandler: (): void => thirdItemSpy(),
+                })
+            )
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
 
@@ -265,11 +311,16 @@ describe('Splitbutton', () => {
         const secondItemSpy = spy();
         const thirdItemSpy = spy();
         const test = await fixture<HTMLDivElement>(
-            moreCta({
-                firstItemHandler: (): void => firstItemSpy(),
-                secondItemHandler: (): void => secondItemSpy(),
-                thirdItemHandler: (): void => thirdItemSpy(),
-            })
+            wrapInDiv(
+                more(
+                    { ...splitButtonDefault.args, ...more.args },
+                    {
+                        firstItemHandler: (): void => firstItemSpy(),
+                        secondItemHandler: (): void => secondItemSpy(),
+                        thirdItemHandler: (): void => thirdItemSpy(),
+                    }
+                )
+            )
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
 

@@ -9,13 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action, boolean } from '@open-wc/demoing-storybook';
+import { html } from 'lit-html';
 
 import '../sp-sidenav.js';
 import '../sp-sidenav-item.js';
 import '../sp-sidenav-heading.js';
 import { TemplateResult } from '@spectrum-web-components/base';
 
+const action = (msg1: string) => (msg2: string | number): void =>
+    console.log(msg1, msg2);
 export default {
     component: 'sp-sidenav',
     title: 'Sidenav',
@@ -23,11 +25,7 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-sidenav
-            @sidenav-select=${action('select')}
-            ?manage-tab-index=${boolean('Manage Tab Index', false, 'Element')}
-            value="Section 2"
-        >
+        <sp-sidenav @sidenav-select=${action('select')} value="Section 2">
             <sp-sidenav-item
                 value="Section 1"
                 label="Section 1"
@@ -59,10 +57,10 @@ export const Multilevel = (): TemplateResult => {
             @sidenav-select=${action('select')}
         >
             <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
-            <sp-sidenav-item value="baz" label="baz">
+            <sp-sidenav-item value="baz" label="baz" expanded>
                 <sp-sidenav-item value="2.1" label="2.1"></sp-sidenav-item>
                 <sp-sidenav-item value="2.2" label="2.2"></sp-sidenav-item>
-                <sp-sidenav-item value="2.3" label="2.3">
+                <sp-sidenav-item value="2.3" label="2.3" expanded>
                     <sp-sidenav-item
                         value="2.3.1"
                         label="2.3.1"
@@ -97,7 +95,7 @@ export const levelsAndDisabled = (): TemplateResult => {
                     label="Section 2"
                     disabled
                 ></sp-sidenav-item>
-                <sp-sidenav-item value="Section 3" label="Section 3">
+                <sp-sidenav-item value="Section 3" label="Section 3" expanded>
                     <sp-sidenav-item
                         value="Section 3a"
                         label="Section 3a"
@@ -126,7 +124,7 @@ export const manageTabIndex = (): TemplateResult => {
                     label="Section 2"
                     disabled
                 ></sp-sidenav-item>
-                <sp-sidenav-item value="Section 3" label="Section 3">
+                <sp-sidenav-item value="Section 3" label="Section 3" exoabnd>
                     <sp-sidenav-item
                         value="Section 3a"
                         label="Section 3a"

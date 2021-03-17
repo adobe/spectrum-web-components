@@ -11,10 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-import { html, action } from '@open-wc/demoing-storybook';
+import { html } from 'lit-html';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+
+const action = (msg: string) => (): void => console.log(msg);
 
 export default {
     title: 'Split Button',

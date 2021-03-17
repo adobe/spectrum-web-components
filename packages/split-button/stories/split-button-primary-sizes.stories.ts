@@ -17,11 +17,11 @@ import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {
-    title: 'Split Button/Secondary/Field/Sizes',
+    title: 'Split Button/Primary/Sizes',
     component: 'sp-split-button',
 };
 
-const variant = 'secondary';
+const variant = 'primary';
 const type = 'field';
 
 export const s = (): TemplateResult =>

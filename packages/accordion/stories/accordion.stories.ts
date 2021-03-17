@@ -10,8 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-import { html } from '@open-wc/demoing-storybook';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-accordion.js';
 import '../sp-accordion-item.js';
@@ -19,68 +18,69 @@ import '../sp-accordion-item.js';
 export default {
     title: 'Accordion',
     component: 'sp-accordion',
+    args: {
+        open: false,
+    },
+    argTypes: {
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the second accordion item is open.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
-export const Default = (): TemplateResult => {
+type Properties = {
+    allowMultiple?: boolean;
+    disabled?: boolean;
+    open?: boolean;
+};
+
+const Template = (
+    { allowMultiple, disabled, open }: Properties = {
+        allowMultiple: false,
+        disabled: false,
+        open: false,
+    }
+): TemplateResult => {
     return html`
-        <sp-accordion>
-            <sp-accordion-item label="Heading 1">
+        <sp-accordion
+            ?allow-multiple=${allowMultiple}
+            style="color: var(--spectrum-global-color-gray-800)"
+        >
+            <sp-accordion-item label="Heading 1" ?disabled=${disabled}>
                 <div>Item 1</div>
             </sp-accordion-item>
-            <sp-accordion-item label="Heading 2">
+            <sp-accordion-item label="Heading 2" ?open=${open}>
                 Item 2
             </sp-accordion-item>
-            <sp-accordion-item label="Heading 3">
-                Item 3
-            </sp-accordion-item>
+            <sp-accordion-item label="Heading 3">Item 3</sp-accordion-item>
         </sp-accordion>
     `;
 };
+export const Default = (args?: Properties): TemplateResult => Template(args);
 
-export const Open = (): TemplateResult => {
-    return html`
-        <sp-accordion>
-            <sp-accordion-item label="Heading 1">
-                <div>Item 1</div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 2" open>
-                Item 2
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 3">
-                Item 3
-            </sp-accordion-item>
-        </sp-accordion>
-    `;
+export const Open = (args?: Properties): TemplateResult => Template(args);
+Open.args = {
+    open: true,
+    allowMultiple: false,
+    disabled: false,
 };
 
-export const AllowMultiple = (): TemplateResult => {
-    return html`
-        <sp-accordion allow-multiple>
-            <sp-accordion-item label="Heading 1">
-                Item 1
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 2">
-                Item 2
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 3">
-                Item 3
-            </sp-accordion-item>
-        </sp-accordion>
-    `;
+export const AllowMultiple = (args?: Properties): TemplateResult =>
+    Template(args);
+AllowMultiple.args = {
+    allowMultiple: true,
 };
 
-export const Disabled = (): TemplateResult => {
-    return html`
-        <sp-accordion>
-            <sp-accordion-item disabled label="Heading 1">
-                <div>Item 1</div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 2">
-                Item 2
-            </sp-accordion-item>
-            <sp-accordion-item label="Heading 3">
-                Item 3
-            </sp-accordion-item>
-        </sp-accordion>
-    `;
+export const Disabled = (args?: Properties): TemplateResult => Template(args);
+Disabled.args = {
+    disabled: true,
 };

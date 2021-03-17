@@ -8,11 +8,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, number, select, radios } from '@open-wc/demoing-storybook';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import { OverlayTrigger, Placement } from '../';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { DialogWrapper } from '@spectrum-web-components/dialog';
@@ -80,34 +80,52 @@ const storyStyles = html`
 
 export default {
     title: 'Overlay',
+    argTypes: {
+        offset: { control: 'number' },
+        placement: {
+            control: {
+                type: 'inline-radio',
+                options: [
+                    'top',
+                    'top-start',
+                    'top-end',
+                    'bottom',
+                    'bottom-start',
+                    'bottom-end',
+                    'left',
+                    'left-start',
+                    'left-end',
+                    'right',
+                    'right-start',
+                    'right-end',
+                    'auto',
+                    'auto-start',
+                    'auto-end',
+                    'none',
+                ],
+            },
+        },
+        colorStop: {
+            control: {
+                type: 'inline-radio',
+                options: ['light', 'dark'],
+            },
+        },
+    },
+    args: {
+        placement: 'bottom',
+        offset: 0,
+        colorStop: 'light',
+    },
 };
 
-export const Default = (): TemplateResult => {
-    const placement = select(
-        'Placement',
-        [
-            'top',
-            'top-start',
-            'top-end',
-            'bottom',
-            'bottom-start',
-            'bottom-end',
-            'left',
-            'left-start',
-            'left-end',
-            'right',
-            'right-start',
-            'right-end',
-            'auto',
-            'auto-start',
-            'auto-end',
-            'none',
-        ],
-        'bottom'
-    ) as Placement;
-
-    const offset = number('Offset', 0);
-
+export const Default = ({
+    placement,
+    offset,
+}: {
+    placement: Placement;
+    offset: number;
+}): TemplateResult => {
     return html`
         ${storyStyles}
         <overlay-trigger
@@ -263,17 +281,8 @@ export const modal = (): TemplateResult => {
 };
 
 export const deepNesting = (): TemplateResult => {
-    const colorOptions = {
-        Lightest: 'lightest',
-        Light: 'light',
-        Dark: 'dark',
-        Darkest: 'darkest',
-    };
-    const color = radios(
-        'Color stop',
-        colorOptions,
-        window.__swc_hack_knobs__.defaultColor
-    ) as Color;
+    const color = window.__swc_hack_knobs__.defaultColor;
+    console.log(color);
     const outter = color === 'light' ? 'dark' : 'light';
     return html`
         ${storyStyles}

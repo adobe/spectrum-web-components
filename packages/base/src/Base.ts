@@ -59,6 +59,9 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
     class SlotTextObservingElement extends constructor {
+        /**
+         * @private
+         */
         public shadowRoot!: ShadowRoot;
         private _dirParent?: HTMLElement;
 
@@ -86,7 +89,7 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                     )
                 ) {
                     dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
-                    dirParent.parentNode || // DOM Element detected
+                        dirParent.parentNode || // DOM Element detected
                         ((dirParent as unknown) as ShadowRoot)
                             .host) as HTMLElement;
                 }

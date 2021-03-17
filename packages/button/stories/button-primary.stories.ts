@@ -12,21 +12,82 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { renderButtonSet, bellIcon } from './index.js';
 import { HelpIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 
 export default {
     component: 'sp-button',
     title: 'Button/Primary',
+    args: {
+        disabled: false,
+        quiet: false,
+        variant: 'primary',
+    },
+    argTypes: {
+        disabled: {
+            name: 'disabled',
+            type: { name: 'boolean', required: false },
+            description:
+                'Disable this control. It will not receive focus or events.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        quiet: {
+            name: 'quiet',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        variant: {
+            name: 'variant',
+            type: { name: 'string', required: false },
+            description: 'The visual variant to apply to the button.',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: 'cta' },
+            },
+            control: {
+                type: 'inline-radio',
+                options: [
+                    'cta',
+                    'primary',
+                    'secondary',
+                    'negative',
+                    'overBackground',
+                ],
+            },
+        },
+    },
 };
 
 const variant = 'primary';
 
-export const quiet = (): TemplateResult =>
-    renderButtonSet({
-        variant,
-        quiet: true,
-    });
+interface Properties {
+    content?: TemplateResult;
+    disabled?: boolean;
+    quiet?: boolean;
+    variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
+}
 
-export const withIcon = (): TemplateResult => {
+export const Default = (props: Properties): TemplateResult =>
+    renderButtonSet(props);
+
+export const quiet = (props: Properties): TemplateResult =>
+    renderButtonSet(props);
+quiet.args = {
+    quiet: true,
+};
+
+export const withIcon = (props: Properties): TemplateResult => {
     return html`
         <style>
             .row {
@@ -35,18 +96,16 @@ export const withIcon = (): TemplateResult => {
         </style>
         <div class="row">
             ${renderButtonSet({
-                variant,
+                ...props,
                 content: html`
-                    <sp-icon slot="icon">
-                        ${HelpIcon({ hidden: true })}
-                    </sp-icon>
+                    <sp-icon-help slot="icon"></sp-icon-help>
                     Help
                 `,
             })}
         </div>
         <div class="row">
             ${renderButtonSet({
-                variant,
+                ...props,
                 content: html`
                     ${bellIcon} Custom SVG
                 `,
@@ -71,42 +130,37 @@ export const iconSizeOverridden = (): TemplateResult => {
     `;
 };
 
-export const minWidthButton = (): TemplateResult => {
+export const minWidthButton = (props: Properties): TemplateResult => {
     return html`
         <style>
             sp-button {
                 min-width: 300px;
             }
         </style>
-        ${renderButtonSet({
-            variant,
-        })}
+        ${renderButtonSet(props)}
     `;
 };
-
 minWidthButton.story = {
     name: 'min-width',
 };
 
 const href = 'https://github.com/adobe/spectrum-web-components';
 
-export const link = (): TemplateResult =>
+export const link = (props: Properties): TemplateResult =>
     renderButtonSet({
-        variant,
+        ...props,
         href,
     });
-
 link.story = {
     name: 'href',
 };
 
-export const linkWithTarget = (): TemplateResult =>
+export const linkWithTarget = (props: Properties): TemplateResult =>
     renderButtonSet({
-        variant,
+        ...props,
         href,
         target: '_blank',
     });
-
 linkWithTarget.story = {
     name: 'href with target="_blank"',
 };

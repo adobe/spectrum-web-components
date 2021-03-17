@@ -10,26 +10,41 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '../../iconset/stories/icons-demo.js';
-import { html, color, select } from '@open-wc/demoing-storybook';
-import { TemplateResult } from '@spectrum-web-components/base';
-
-import '../';
-import * as icons from '../';
-import { iconManifest } from './icon-manifest.js';
+import { html, TemplateResult, until } from '@spectrum-web-components/base';
 
 export default {
-    title: 'Icons',
+    title: 'Icons/UI',
+    argTypes: {
+        color: { control: 'color' },
+        size: {
+            control: {
+                type: 'inline-radio',
+                options: ['s', 'm', 'l', 'xl'],
+            },
+        },
+    },
+    args: {
+        color: '#000000',
+        size: 'm',
+    },
 };
 
-export const uiElements = (): TemplateResult => {
-    const size = select(
-        'Icon Size',
-        ['s', 'm', 'l', 'xl', 'xxl'],
-        'm',
-        'Element'
+interface Properties {
+    color: string;
+    size: 's' | 'm' | 'l' | 'xl';
+}
+
+export const elements = ({ color, size }: Properties): TemplateResult => {
+    const content = import('./icon-manifest.js').then(
+        (iconManifest) => html`
+            <icons-demo
+                style="color: ${color}"
+                size=${size}
+                .icons=${iconManifest.iconManifest}
+            ></icons-demo>
+        `
     );
     return html`
         <style>
@@ -42,33 +57,42 @@ export const uiElements = (): TemplateResult => {
                 margin-bottom: 10px;
             }
         </style>
-        <icons-demo
-            style="color: ${color('Color', '#000', 'Element')}"
-            size=${size}
-            .icons=${iconManifest}
-        ></icons-demo>
+        ${until(
+            content,
+            html`
+                Loading...
+            `
+        )}
     `;
 };
 
-export const ui = (): TemplateResult => {
-    const iconTemplates: {
-        template: typeof html;
-        name: string;
-    }[] = [];
-    for (const icon in icons) {
-        if (icon === 'setCustomTemplateLiteralTag') continue;
-        iconTemplates.push({
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            template: (icons as any)[icon],
-            name: icon,
-        });
-    }
-    const size = select(
-        'Icon Size',
-        ['s', 'm', 'l', 'xl', 'xxl'],
-        'm',
-        'Element'
-    );
+export const Icons = ({ color, size }: Properties): TemplateResult => {
+    const content = import('../').then((icons) => {
+        const iconTemplates: {
+            template: () => TemplateResult;
+            name: string;
+        }[] = [];
+        for (const icon in icons) {
+            if (icon === 'setCustomTemplateLiteralTag') continue;
+            iconTemplates.push({
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                template: (icons as any)[icon],
+                name: icon,
+            });
+        }
+        return html`
+            <icons-demo style="color: ${color}">
+                ${iconTemplates.map(
+                    (icon) => html`
+                        <div class="icon">
+                            <sp-icon size=${size}>${icon.template()}</sp-icon>
+                            ${icon.name}
+                        </div>
+                    `
+                )}
+            </icons-demo>
+        `;
+    });
     return html`
         <style>
             .icon {
@@ -80,19 +104,11 @@ export const ui = (): TemplateResult => {
                 margin-bottom: 10px;
             }
         </style>
-        <icons-demo style="color: ${color('Color', '#000', 'Element')}">
-            ${iconTemplates.map(
-                (icon) => html`
-                    <div class="icon">
-                        <sp-icon size=${size}>${icon.template()}</sp-icon>
-                        ${icon.name}
-                    </div>
-                `
-            )}
-        </icons-demo>
+        ${until(
+            content,
+            html`
+                Loading...
+            `
+        )}
     `;
-};
-
-ui.story = {
-    name: 'UI Icons',
 };

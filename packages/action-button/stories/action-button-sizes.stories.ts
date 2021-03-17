@@ -9,15 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action } from '@open-wc/demoing-storybook';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { EditIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 
 import '../src';
 import '../sp-action-button.js';
 
 interface Properties {
+    active?: boolean;
     quiet?: boolean;
     disabled?: boolean;
     selected?: boolean;
@@ -37,9 +37,9 @@ function renderButton(properties: Properties): TemplateResult {
             ?disabled=${!!properties.disabled}
             ?selected=${!!properties.selected}
             ?toggles=${!!properties.toggles}
-            @click=${action(`Action`)}
             size=${properties.size || 'm'}
             ?hold-affordance=${!!properties.holdAffordance}
+            ?active=${!!properties.active}
         >
             ${properties.icon}${properties.label}
         </sp-action-button>
@@ -48,9 +48,7 @@ function renderButton(properties: Properties): TemplateResult {
 
 function renderButtonsSelected(properties: Properties): TemplateResult {
     const icon = html`
-        <sp-icon slot="icon">
-            ${EditIcon({ hidden: true })}
-        </sp-icon>
+        <sp-icon-edit hidden slot="icon"></sp-icon-edit>
     `;
     const label = 'Edit';
     const emphasized = true;
@@ -105,26 +103,26 @@ export default {
     title: 'Action Button/Sizes',
 };
 
-export const s = (): TemplateResult => {
-    return renderButtonsSelected({
-        size: 's',
-    });
+export const s = (args: Properties): TemplateResult =>
+    renderButtonsSelected(args);
+s.args = {
+    size: 's',
 };
 
-export const m = (): TemplateResult => {
-    return renderButtonsSelected({
-        size: 'm',
-    });
+export const m = (args: Properties): TemplateResult =>
+    renderButtonsSelected(args);
+m.args = {
+    size: 'm',
 };
 
-export const l = (): TemplateResult => {
-    return renderButtonsSelected({
-        size: 'l',
-    });
+export const l = (args: Properties): TemplateResult =>
+    renderButtonsSelected(args);
+l.args = {
+    size: 'l',
 };
 
-export const XL = (): TemplateResult => {
-    return renderButtonsSelected({
-        size: 'xl',
-    });
+export const XL = (args: Properties): TemplateResult =>
+    renderButtonsSelected(args);
+XL.args = {
+    size: 'xl',
 };

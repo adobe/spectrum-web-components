@@ -16,6 +16,7 @@ import {
     query,
     CSSResultArray,
     TemplateResult,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 
 import radioStyles from './radio.css.js';
@@ -49,6 +50,9 @@ export class Radio extends Focusable {
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    @property({ type: Boolean, reflect: true })
+    public invalid = false;
+
     @query('#input')
     private inputElement!: HTMLInputElement;
 
@@ -80,5 +84,16 @@ export class Radio extends Focusable {
             <span id="button"></span>
             <label id="label"><slot></slot></label>
         `;
+    }
+
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (changes.has('invalid')) {
+            if (this.invalid) {
+                this.inputElement.setAttribute('aria-invalid', 'true');
+            } else {
+                this.inputElement.removeAttribute('aria-invalid');
+            }
+        }
     }
 }

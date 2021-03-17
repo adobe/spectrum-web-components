@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 import '../sp-accordion.js';
-import { Default, AllowMultiple } from '../stories/accordion.stories.js';
+import { Default } from '../stories/accordion.stories.js';
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 import {
     arrowUpEvent,
@@ -119,9 +119,10 @@ describe('Accordion', () => {
         expect(!secondItem.open);
     });
     it('allows more than one open item when `[allow-multiple]`', async () => {
-        const el = await fixture<Accordion>(AllowMultiple());
-
+        const el = await fixture<Accordion>(Default());
+        el.allowMultiple = true;
         await elementUpdated(el);
+
         const firstItem = el.querySelector(
             'sp-accordion-item:nth-of-type(1)'
         ) as AccordionItem;
@@ -175,9 +176,10 @@ describe('Accordion', () => {
     });
 
     it('ensures that the correct item is open and that items can be closed when [allow-multiple]', async () => {
-        const el = await fixture<Accordion>(AllowMultiple());
-
+        const el = await fixture<Accordion>(Default());
+        el.allowMultiple = true;
         await elementUpdated(el);
+
         const firstItem = el.querySelector(
             'sp-accordion-item:nth-of-type(1)'
         ) as AccordionItem;
@@ -190,18 +192,21 @@ describe('Accordion', () => {
 
         firstButton.click();
         await elementUpdated(el);
-        expect(firstItem.open);
-        expect(!secondItem.open);
+
+        expect(firstItem.open).to.be.true;
+        expect(secondItem.open).to.be.false;
 
         secondButton.click();
         await elementUpdated(el);
-        expect(firstItem.open);
-        expect(secondItem.open);
+
+        expect(firstItem.open).to.be.true;
+        expect(secondItem.open).to.be.true;
 
         secondButton.click();
         await elementUpdated(el);
-        expect(firstItem.open);
-        expect(!secondItem.open);
+
+        expect(firstItem.open).to.be.true;
+        expect(secondItem.open).to.be.false;
     });
     it('handles focus and keyboard input and ignores disabled items', async () => {
         const el = await fixture<Accordion>(

@@ -9,8 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action } from '@open-wc/demoing-storybook';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { spreadProps } from '@open-wc/lit-helpers';
 import '@spectrum-web-components/action-group';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
@@ -21,24 +21,27 @@ import '../src';
 import '../sp-action-button.js';
 
 interface Properties {
+    active?: boolean;
     quiet?: boolean;
     disabled?: boolean;
     selected?: boolean;
     toggles?: boolean;
     emphasized?: boolean;
     size?: 's' | 'm' | 'l' | 'xl';
+    holdAffordance?: boolean;
+    icon?: TemplateResult;
+    label?: string;
 }
 
-function renderButton(properties: Properties): TemplateResult {
+function renderButton(args: Properties): TemplateResult {
     return html`
         <sp-action-button
-            ?quiet="${!!properties.quiet}"
-            ?emphasized="${!!properties.emphasized}"
-            ?disabled=${!!properties.disabled}
-            ?selected=${!!properties.selected}
-            ?toggles=${!!properties.toggles}
-            @click=${action(`Action`)}
-            size=${properties.size || 'm'}
+            ?quiet="${!!args.quiet}"
+            ?emphasized="${!!args.emphasized}"
+            ?disabled=${!!args.disabled}
+            ?selected=${!!args.selected}
+            ?toggles=${!!args.toggles}
+            size=${args.size || 'm'}
         >
             Action
         </sp-action-button>
@@ -50,51 +53,45 @@ export default {
     title: 'Action Button',
 };
 
-function renderButtonsSelected(properties: Properties): TemplateResult {
-    const disabled = Object.assign({}, properties, { disabled: true });
-    const selected = Object.assign({}, properties, { selected: true });
+function renderButtonsSelected(args: Properties): TemplateResult {
+    const disabled = Object.assign({}, args, { disabled: true });
+    const selected = Object.assign({}, args, { selected: true });
     return html`
-        <div>
-            ${renderButton(properties)} ${renderButton(selected)}
+        <sp-action-group>
+            ${renderButton(args)} ${renderButton(selected)}
             ${renderButton(disabled)}
-        </div>
+        </sp-action-group>
     `;
 }
 
-export const emphasized = (): TemplateResult => {
-    return renderButtonsSelected({
-        emphasized: true,
-        disabled: false,
-        selected: false,
-    });
+export const emphasized = (args: Properties): TemplateResult =>
+    renderButtonsSelected(args);
+emphasized.args = {
+    emphasized: true,
 };
 
-export const emphasizedAndQuiet = (): TemplateResult => {
-    return renderButtonsSelected({
-        emphasized: true,
-        quiet: true,
-        disabled: false,
-        selected: false,
-    });
+export const emphasizedAndQuiet = (args: Properties): TemplateResult =>
+    renderButtonsSelected(args);
+emphasizedAndQuiet.args = {
+    emphasized: true,
+    quiet: true,
 };
 
-export const quiet = (): TemplateResult => {
-    return renderButtonsSelected({
-        quiet: true,
-        disabled: false,
-        selected: false,
-    });
+export const quiet = (args: Properties): TemplateResult =>
+    renderButtonsSelected(args);
+quiet.args = {
+    quiet: true,
 };
 
-export const toggles = (): TemplateResult => {
-    return renderButtonsSelected({
-        toggles: true,
-    });
+export const toggles = (args: Properties): TemplateResult =>
+    renderButtonsSelected(args);
+toggles.args = {
+    toggles: true,
 };
 
-export const wIconButton = (): TemplateResult => {
+export const wIconButton = (args: Properties): TemplateResult => {
     return html`
-        <sp-action-button>
+        <sp-action-button ...=${spreadProps(args)}>
             <sp-icon-edit slot="icon"></sp-icon-edit>
             This is an action button
         </sp-action-button>
@@ -105,21 +102,9 @@ wIconButton.story = {
     name: 'w/ Icon button',
 };
 
-export const likeAnchor = (): TemplateResult => {
+export const iconOnlyButton = (args: Properties): TemplateResult => {
     return html`
-        <sp-action-button
-            href="https://opensource.adobe.com/spectrum-web-components"
-            target="_blank"
-        >
-            <sp-icon-edit slot="icon"></sp-icon-edit>
-            Edit the Documentation Site
-        </sp-action-button>
-    `;
-};
-
-export const iconOnlyButton = (): TemplateResult => {
-    return html`
-        <sp-action-button label="Edit">
+        <sp-action-button label="Edit" ...=${spreadProps(args)}>
             <sp-icon-edit slot="icon"></sp-icon-edit>
         </sp-action-button>
     `;
@@ -139,20 +124,25 @@ export const iconSizeOverridden = (): TemplateResult => {
     `;
 };
 
-export const holdAffordance = (): TemplateResult => {
+export const holdAffordance = ({
+    holdAffordance,
+}: Properties): TemplateResult => {
     return html`
         <sp-action-group>
-            <sp-action-button label="Edit" hold-affordance>
+            <sp-action-button label="Edit" ?hold-affordance=${holdAffordance}>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
 
-            <sp-action-button hold-affordance quiet>
+            <sp-action-button ?hold-affordance=${holdAffordance} quiet>
                 <sp-icon-settings slot="icon"></sp-icon-settings>
             </sp-action-button>
 
-            <sp-action-button hold-affordance selected>
+            <sp-action-button ?hold-affordance=${holdAffordance} selected>
                 <sp-icon-more slot="icon"></sp-icon-more>
             </sp-action-button>
         </sp-action-group>
     `;
+};
+holdAffordance.args = {
+    holdAffordance: true,
 };
