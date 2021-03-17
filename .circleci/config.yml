@@ -323,7 +323,10 @@ jobs:
             - downstream
             - run: yarn docs:build
             - run: echo '/*    /index.html   200' > documentation/dist/_redirects
-            - run: yarn netlify deploy
+            - run: |
+                  branch=$(git symbolic-ref --short HEAD)
+                  branch=$(npx slugify-cli $branch)
+                  yarn netlify deploy --alias=$branch
 
 workflows:
     version: 2
