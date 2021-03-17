@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { spreadProps } from '@open-wc/lit-helpers';
 
 import '../sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -24,21 +25,122 @@ import { ActionGroup } from '../src/ActionGroup.js';
 export default {
     title: 'Action Group',
     component: 'sp-action-group',
+    args: {
+        compact: false,
+        emphasized: false,
+        justified: false,
+        quiet: false,
+        vertical: false,
+    },
+    argTypes: {
+        compact: {
+            name: 'compact',
+            description:
+                'Visually joins the buttons together to clarify their relationship to one another.',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        emphasized: {
+            name: 'emphasized',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        justified: {
+            name: 'justified',
+            description:
+                'Aligns the action group items to use all the available space on that line.',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        quiet: {
+            name: 'quiet',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        vertical: {
+            name: 'vertical',
+            description: 'Changes the orientation of the action group.',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
-export const Default = (): TemplateResult => {
+interface Properties {
+    compact?: boolean;
+    emphasized?: boolean;
+    justified?: boolean;
+    quiet?: boolean;
+    vertical?: boolean;
+}
+
+function renderIconButtons(args: Properties): TemplateResult {
     return html`
-        <sp-action-group>
+        <sp-action-group ...=${spreadProps(args)}>
+            <sp-action-button label="Properties">
+                <sp-icon-properties slot="icon"></sp-icon-properties>
+            </sp-action-button>
+            <sp-action-button label="Info">
+                <sp-icon-info slot="icon"></sp-icon-info>
+            </sp-action-button>
+            <sp-action-button label="View All Tags">
+                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
+            </sp-action-button>
+        </sp-action-group>
+    `;
+}
+
+function renderButtons(args: Properties): TemplateResult {
+    return html`
+        <sp-action-group ...=${spreadProps(args)}>
             <sp-action-button>Button 1</sp-action-button>
             <sp-action-button>Longer Button 2</sp-action-button>
             <sp-action-button>Short 3</sp-action-button>
         </sp-action-group>
     `;
-};
+}
 
-export const selectsSingle = (): TemplateResult => {
+export const Default = (args: Properties): TemplateResult =>
+    renderButtons(args);
+
+export const selectsSingle = (args: Properties): TemplateResult => {
     return html`
         <sp-action-group
+            ?compact=${args.compact}
+            ?emphasized=${args.emphasized}
+            ?quiet=${args.quiet}
+            ?justified=${args.justified}
+            ?vertical=${args.vertical}
             label="Favorite Color"
             selects="single"
             @change=${({ target }: Event & { target: ActionGroup }) => {
@@ -94,12 +196,12 @@ export const selectsSingleWithTooltips = (): TemplateResult => {
     `;
 };
 
-export const selectsMultiple = (): TemplateResult => {
+export const selectsMultiple = (args: Properties): TemplateResult => {
     return html`
         <sp-action-group
+            ...=${spreadProps(args)}
             label="Favorite Colors"
             selects="multiple"
-            emphasized
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
                 next.textContent = `Selected: ${JSON.stringify(
@@ -116,9 +218,12 @@ export const selectsMultiple = (): TemplateResult => {
     `;
 };
 
-export const selectsMultipleWithTooltips = (): TemplateResult => {
+export const selectsMultipleWithTooltips = (
+    args: Properties
+): TemplateResult => {
     return html`
         <sp-action-group
+            ...=${spreadProps(args)}
             label="Favorite Color"
             selects="multiple"
             @change=${({ target }: Event & { target: ActionGroup }) => {
@@ -153,202 +258,91 @@ export const selectsMultipleWithTooltips = (): TemplateResult => {
     `;
 };
 
-export const iconsOnly = (): TemplateResult => {
-    return html`
-        <sp-action-group>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
+export const iconsOnly = (args: Properties): TemplateResult =>
+    renderIconButtons(args);
+
+export const quietIconsOnly = (args: Properties): TemplateResult =>
+    renderIconButtons(args);
+quietIconsOnly.args = {
+    quiet: true,
 };
 
-export const quietIconsOnly = (): TemplateResult => {
-    return html`
-        <sp-action-group quiet>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
+export const compact = (args: Properties): TemplateResult =>
+    renderButtons(args);
+compact.args = {
+    compact: true,
 };
 
-export const compact = (): TemplateResult => {
-    return html`
-        <sp-action-group compact>
-            <sp-action-button>Button 1</sp-action-button>
-            <sp-action-button>Longer Button 2</sp-action-button>
-            <sp-action-button>Short 3</sp-action-button>
-        </sp-action-group>
-    `;
+export const compactIconsOnly = (args: Properties): TemplateResult =>
+    renderIconButtons(args);
+compactIconsOnly.args = {
+    compact: true,
 };
 
-export const compactIconsOnly = (): TemplateResult => {
-    return html`
-        <sp-action-group compact>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
+export const compactQuietIconsOnly = (args: Properties): TemplateResult =>
+    renderIconButtons(args);
+compactQuietIconsOnly.args = {
+    compact: true,
+    quiet: true,
 };
 
-export const compactQuietIconsOnly = (): TemplateResult => {
-    return html`
-        <sp-action-group compact quiet>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
+export const vertical = (args: Properties): TemplateResult =>
+    renderButtons(args);
+vertical.args = {
+    vertical: true,
 };
 
-export const vertical = (): TemplateResult => {
-    return html`
-        <sp-action-group vertical>
-            <sp-action-button>Button 1</sp-action-button>
-            <sp-action-button>Longer Button 2</sp-action-button>
-            <sp-action-button>Short 3</sp-action-button>
-        </sp-action-group>
-    `;
+export const verticalIconsOnly = (args: Properties): TemplateResult =>
+    renderIconButtons(args);
+verticalIconsOnly.args = {
+    vertical: true,
 };
 
-export const iconsOnlyVertical = (): TemplateResult => {
-    return html`
-        <sp-action-group vertical>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
+export const verticalQuietIconsOnly = (args: Properties): TemplateResult =>
+    renderIconButtons(args);
+verticalQuietIconsOnly.args = {
+    quiet: true,
+    vertical: true,
 };
 
-export const quietIconsOnlyVertical = (): TemplateResult => {
-    return html`
-        <sp-action-group vertical quiet>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
+export const compactVertical = (args: Properties): TemplateResult =>
+    renderButtons(args);
+compactVertical.args = {
+    compact: true,
+    vertical: true,
 };
 
-export const compactVertical = (): TemplateResult => {
-    return html`
-        <sp-action-group vertical compact>
-            <sp-action-button>Button 1</sp-action-button>
-            <sp-action-button>Longer Button 2</sp-action-button>
-            <sp-action-button>Short 3</sp-action-button>
-        </sp-action-group>
-    `;
+export const compactVerticalIconsOnly = (args: Properties): TemplateResult =>
+    renderIconButtons(args);
+compactVerticalIconsOnly.args = {
+    compact: true,
+    vertical: true,
 };
 
-export const compactIconsOnlyVertical = (): TemplateResult => {
-    return html`
-        <sp-action-group vertical compact>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
+export const compactQuietVerticalIconsOnly = (
+    args: Properties
+): TemplateResult => renderIconButtons(args);
+compactQuietVerticalIconsOnly.args = {
+    compact: true,
+    quiet: true,
+    vertical: true,
 };
 
-export const compactQuietIconsOnlyVertical = (): TemplateResult => {
-    return html`
-        <sp-action-group vertical compact quiet>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
+export const justified = (args: Properties): TemplateResult =>
+    renderButtons(args);
+justified.args = {
+    justified: true,
 };
 
-export const justified = (): TemplateResult => {
-    return html`
-        <sp-action-group justified>
-            <sp-action-button>Button 1</sp-action-button>
-            <sp-action-button>Longer Button 2</sp-action-button>
-            <sp-action-button>Short 3</sp-action-button>
-        </sp-action-group>
-    `;
+export const justifiedIconsOnly = (args: Properties): TemplateResult =>
+    renderIconButtons(args);
+justifiedIconsOnly.args = {
+    justified: true,
 };
 
-export const iconsOnlyJustified = (): TemplateResult => {
-    return html`
-        <sp-action-group justified>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
-};
-
-export const compactIconsOnlyJustified = (): TemplateResult => {
-    return html`
-        <sp-action-group compact justified>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
+export const compactJustifiedIconsOnly = (args: Properties): TemplateResult =>
+    renderIconButtons(args);
+compactJustifiedIconsOnly.args = {
+    compact: true,
+    justified: true,
 };

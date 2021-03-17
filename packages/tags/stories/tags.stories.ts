@@ -9,8 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action } from '@open-wc/demoing-storybook';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-tag.js';
 import '../sp-tags.js';
@@ -80,14 +79,14 @@ export const Default = (): TemplateResult => {
 
 export const deletable = (): TemplateResult => {
     return html`
-        <sp-tags @delete=${action('delete')}>
+        <sp-tags>
             <sp-tag deletable>Tag 1</sp-tag>
             <sp-tag invalid deletable>Tag 2</sp-tag>
             <sp-tag disabled deletable>Tag 3</sp-tag>
         </sp-tags>
         <br />
         <br />
-        <sp-tags @delete=${action('delete')}>
+        <sp-tags>
             <sp-tag deletable>
                 Tag 1
                 <sp-avatar
@@ -115,7 +114,7 @@ export const deletable = (): TemplateResult => {
         </sp-tags>
         <br />
         <br />
-        <sp-tags @delete=${action('delete')}>
+        <sp-tags>
             <sp-tag deletable>
                 Tag 1
                 <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>

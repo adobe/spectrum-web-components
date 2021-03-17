@@ -15,7 +15,7 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import * as stories from './story-imports.js';
 
-const wrap = (story) => () => html`
+const wrap = (story) => (args) => html`
     <sp-story-decorator reduce-motion>
         <style>
             body {
@@ -25,7 +25,7 @@ const wrap = (story) => () => html`
                 display: block;
             }
         </style>
-        ${story()}
+        ${story(args)}
     </sp-story-decorator>
 `;
 
@@ -47,7 +47,10 @@ describe('Visual Regressions', () => {
                 if (story !== 'default') {
                     it(story, async () => {
                         const test = await fixture(
-                            wrap(stories[packageStories][story])()
+                            wrap(stories[packageStories][story])({
+                                ...(stories[packageStories].default.args || {}), // take default args from the general file
+                                ...(stories[packageStories][story].args || {}), // overlay custom args from a specific story
+                            })
                         );
                         await waitUntil(
                             () => test.ready,

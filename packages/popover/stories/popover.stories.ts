@@ -8,19 +8,54 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, boolean, text, radios } from '@open-wc/demoing-storybook';
-
 import '../sp-popover.js';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { Placement } from '@spectrum-web-components/overlay/src/popper';
 
 export default {
     component: 'sp-popover',
     title: 'Popover',
+    argTypes: {
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the popover is open or not.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: 'boolean',
+        },
+        placement: {
+            name: 'placement',
+            type: { name: 'string', required: false },
+            description:
+                'The placement of the popover content in relation to the tip',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: 'none' },
+            },
+            control: 'text',
+        },
+        tip: {
+            name: 'tip',
+            description: 'Whether the popover has a tip.',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: 'boolean',
+        },
+    },
+    args: {
+        open: true,
+        placement: 'none',
+        tip: false,
+    },
 };
 
-export const Default = (): TemplateResult => {
-    const loremIpsum = 'The quick brown fox jumps over the lazy dog';
-    const content = text('Text content', loremIpsum);
+export const Default = ({ content }: { content: string }): TemplateResult => {
     return html`
         <div style="color: var(--spectrum-global-color-gray-800)">
             <sp-popover variant="default" open style="max-width: 320px">
@@ -29,22 +64,28 @@ export const Default = (): TemplateResult => {
         </div>
     `;
 };
+Default.args = {
+    content: 'The quick brown fox jumps over the lazy dog',
+};
+Default.argTypes = {
+    content: {
+        name: 'content',
+        type: { name: 'string', required: false },
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: '' },
+        },
+        control: 'text',
+    },
+};
 
-const dialog = (
-    placementStart: 'top' | 'bottom' | 'left' | 'right'
-): TemplateResult => {
-    const tip = boolean('Has Tip', true);
-    const placements = {
-        top: 'top',
-        bottom: 'bottom',
-        left: 'left',
-        right: 'right',
-    };
-    const placement = radios(
-        'Placement',
-        placements,
-        placements[placementStart]
-    );
+interface StoryArgs {
+    tip?: boolean;
+    placement: Placement;
+    open?: boolean;
+}
+
+const Template = ({ tip, placement, open }: StoryArgs): TemplateResult => {
     return html`
         <div
             style="color: var(--spectrum-global-color-gray-800); position: relative; display: contents"
@@ -52,7 +93,7 @@ const dialog = (
             <sp-popover
                 variant="dialog"
                 placement=${placement}
-                open
+                ?open=${open}
                 style=" max-width: 320px"
                 .tip="${tip}"
             >
@@ -72,7 +113,23 @@ const dialog = (
     `;
 };
 
-export const dialogTop = (): TemplateResult => dialog('top');
-export const dialogRight = (): TemplateResult => dialog('right');
-export const dialogBottom = (): TemplateResult => dialog('bottom');
-export const dialogLeft = (): TemplateResult => dialog('left');
+export const dialogTop = (args: StoryArgs): TemplateResult => Template(args);
+dialogTop.args = {
+    tip: true,
+    placement: 'top',
+};
+export const dialogRight = (args: StoryArgs): TemplateResult => Template(args);
+dialogRight.args = {
+    tip: true,
+    placement: 'right',
+};
+export const dialogBottom = (args: StoryArgs): TemplateResult => Template(args);
+dialogBottom.args = {
+    tip: true,
+    placement: 'bottom',
+};
+export const dialogLeft = (args: StoryArgs): TemplateResult => Template(args);
+dialogLeft.args = {
+    tip: true,
+    placement: 'left',
+};

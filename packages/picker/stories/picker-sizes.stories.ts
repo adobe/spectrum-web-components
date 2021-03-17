@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { action } from '@open-wc/demoing-storybook';
 
 import '../sp-picker.js';
 import { Picker } from '../';
@@ -29,7 +28,7 @@ const picker = ({ size }: { size: 's' | 'm' | 'l' | 'xl' }): TemplateResult => {
             size=${size}
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
-                action(`Change: ${picker.value}`)();
+                console.log(`Change: ${picker.value}`);
             }}"
             label="Select a Country with a very long label, too long, in fact"
         >

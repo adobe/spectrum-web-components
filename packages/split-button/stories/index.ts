@@ -10,16 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-import { html, action } from '@open-wc/demoing-storybook';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 const menu = ({
-    firstItemHandler = action('click "Option 1"'),
-    secondItemHandler = action('click "Option Extended"'),
-    thirdItemHandler = action('click "Short"'),
+    firstItemHandler = function () {
+        return;
+    },
+    secondItemHandler = function () {
+        return;
+    },
+    thirdItemHandler = function () {
+        return;
+    },
 }): TemplateResult => html`
     <sp-menu-item @click=${firstItemHandler}>Option 1</sp-menu-item>
     <sp-menu-item @click=${secondItemHandler}>Option Extended</sp-menu-item>
@@ -27,13 +32,13 @@ const menu = ({
 `;
 
 interface Properties {
-    variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
-    quiet?: boolean;
     disabled?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    type?: 'field' | 'more';
+    invalid?: boolean;
     left?: boolean;
     open?: boolean;
+    size?: 's' | 'm' | 'l' | 'xl';
+    type?: 'field' | 'more';
+    variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
 }
 
 export const splitbutton = (
@@ -46,6 +51,7 @@ export const splitbutton = (
         variant=${properties.variant || 'cta'}
         type=${properties.type || 'field'}
         ?open=${!!properties.open}
+        ?disabled=${properties.disabled}
     >
         ${menu(options)}
     </sp-split-button>

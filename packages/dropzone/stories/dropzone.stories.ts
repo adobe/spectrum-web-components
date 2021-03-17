@@ -19,11 +19,31 @@ import '@spectrum-web-components/link/sp-link.js';
 export default {
     component: 'sp-dropzone',
     title: 'Dropzone',
+    args: {
+        isDragged: false,
+    },
+    argTypes: {
+        isDragged: {
+            name: 'isDragged',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
-export const Default = (): TemplateResult => {
+type StoryArgs = {
+    isDragged?: boolean;
+};
+
+export const Default = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-dropzone id="dropzone" tabindex="0">
+        <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
             <sp-illustrated-message heading="Drag and Drop Your File" cta>
                 ${illustration}
                 <div slot="description">
@@ -42,4 +62,30 @@ export const Default = (): TemplateResult => {
             </sp-illustrated-message>
         </sp-dropzone>
     `;
+};
+
+export const Dragged = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
+            <sp-illustrated-message heading="Drag and Drop Your File" cta>
+                ${illustration}
+                <div slot="description">
+                    <label for="file-input">
+                        <sp-link>Select a File</sp-link>
+                        from your computer
+                    </label>
+                    <input type="file" id="file-input" style="display: none" />
+                </div>
+                <div slot="description">
+                    or
+                    <sp-link href="http://stock.adobe.com" target="blank">
+                        Search Adobe Stock
+                    </sp-link>
+                </div>
+            </sp-illustrated-message>
+        </sp-dropzone>
+    `;
+};
+Dragged.args = {
+    isDragged: true,
 };

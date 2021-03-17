@@ -36,6 +36,18 @@ async function main() {
                     })
                 );
                 tag.cssProperties = cssProperties;
+                const sortAlpha = (a, b) => {
+                    if (a.name > b.name) {
+                        return 1;
+                    }
+                    if (a.name < b.name) {
+                        return -1;
+                    }
+                    return 0;
+                };
+                tag.attributes.sort(sortAlpha);
+                tag.properties.sort(sortAlpha);
+                tag.events.sort(sortAlpha);
             } catch (error) {}
         });
         customElementJsonString = JSON.stringify(customElementJson);

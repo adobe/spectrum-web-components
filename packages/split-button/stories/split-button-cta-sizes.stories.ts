@@ -11,24 +11,24 @@ governing permissions and limitations under the License.
 */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-import { splitbutton } from './index.js';
+import { renderSplitButtonSet } from './index.js';
 
 import '../sp-split-button.js';
-import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export default {
-    title: 'Split Button/CTA/Field',
+    title: 'Split Button/CTA/Sizes',
     component: 'sp-split-button',
 };
 
 const variant = 'cta';
 const type = 'field';
-const open = true;
-const left = true;
 
-export const openMenu = (options = {}): TemplateResult =>
-    splitbutton({ size: 's', variant, type, open }, options);
-
-export const openMenuLeft = (options = {}): TemplateResult =>
-    splitbutton({ size: 's', variant, type, open, left }, options);
+export const s = (): TemplateResult =>
+    renderSplitButtonSet({ size: 's', variant, type });
+export const m = (): TemplateResult =>
+    renderSplitButtonSet({ size: 'm', variant, type });
+export const l = (): TemplateResult =>
+    renderSplitButtonSet({ size: 'l', variant, type });
+export const XL = (): TemplateResult =>
+    renderSplitButtonSet({ size: 'xl', variant, type });

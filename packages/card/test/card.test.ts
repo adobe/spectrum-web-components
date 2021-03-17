@@ -83,13 +83,15 @@ describe('card', () => {
                     />
                     <div slot="footer">Footer</div>
                     <sp-action-menu slot="actions" placement="bottom-end">
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item>Select Inverse</sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and Mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save Selection</sp-menu-item>
-                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                        <sp-menu>
+                            <sp-menu-item>Deselect</sp-menu-item>
+                            <sp-menu-item>Select Inverse</sp-menu-item>
+                            <sp-menu-item>Feather...</sp-menu-item>
+                            <sp-menu-item>Select and Mask...</sp-menu-item>
+                            <sp-menu-divider></sp-menu-divider>
+                            <sp-menu-item>Save Selection</sp-menu-item>
+                            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                        </sp-menu>
                     </sp-action-menu>
                 </sp-card>
             `
@@ -123,7 +125,7 @@ describe('card', () => {
         await expect(el).to.be.accessible();
     });
     it('loads - [horizontal]', async () => {
-        const el = await fixture<Card>(smallHorizontal());
+        const el = await fixture<Card>(smallHorizontal(smallHorizontal.args));
 
         await elementUpdated(el);
 
@@ -132,7 +134,7 @@ describe('card', () => {
     it('converts `Space` to `click` event', async () => {
         const clickSpy = spy();
         const handleClick = (): void => clickSpy();
-        const test = await fixture<HTMLDivElement>(Default());
+        const test = await fixture<HTMLDivElement>(Default(Default.args));
         const el = test.querySelector('sp-card') as Card;
         el.addEventListener('click', handleClick);
 
@@ -150,7 +152,7 @@ describe('card', () => {
         expect(clickSpy.calledOnce).to.be.true;
     });
     it('can be `[toggles]`', async () => {
-        const test = await fixture<HTMLDivElement>(Default());
+        const test = await fixture<HTMLDivElement>(Default(Default.args));
         const el = test.querySelector('sp-card') as Card;
         el.toggles = true;
 
@@ -216,7 +218,7 @@ describe('card', () => {
 
     it('announces when `[toggles]`', async () => {
         const changeSpy = spy();
-        const test = await fixture<HTMLDivElement>(Default());
+        const test = await fixture<HTMLDivElement>(Default(Default.args));
         const el = test.querySelector('sp-card') as Card;
         el.toggles = true;
         el.addEventListener('change', changeSpy);

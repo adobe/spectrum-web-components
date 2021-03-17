@@ -9,13 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { action } from '@open-wc/demoing-storybook';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import '../sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { HelpIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 
 interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
@@ -25,6 +24,7 @@ interface Properties {
     size?: 's' | 'm' | 'l' | 'xl';
     href?: string;
     target?: '_blank' | '_parent' | '_self' | '_top';
+    warning?: boolean;
 }
 
 export const makeOverBackground = (
@@ -44,10 +44,10 @@ export function renderButton(properties: Properties): TemplateResult {
                 variant="${properties.variant}"
                 ?quiet="${!!properties.quiet}"
                 ?disabled=${!!properties.disabled}
-                @click=${action(`Click ${properties.variant}`)}
                 size=${properties.size || 'm'}
                 href=${ifDefined(properties.href)}
                 target=${ifDefined(properties.target)}
+                ?warning=${properties.warning}
             >
                 ${properties.content || 'Click Me'}
             </sp-button>
@@ -57,7 +57,6 @@ export function renderButton(properties: Properties): TemplateResult {
             <sp-button
                 ?quiet="${!!properties.quiet}"
                 ?disabled=${!!properties.disabled}
-                @click=${action(`Click ${properties.variant}`)}
                 size=${properties.size}
             >
                 ${properties.content || 'Click Me'}
@@ -70,7 +69,7 @@ export function renderButtonSet(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
     const icon = Object.assign({}, properties, {
         content: html`
-            <sp-icon slot="icon">${HelpIcon({ hidden: true })}</sp-icon>
+            <sp-icon-help slot="icon"></sp-icon-help>
             Click Me
         `,
     });

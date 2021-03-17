@@ -9,11 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, action } from '@open-wc/demoing-storybook';
-
 import '../sp-search.js';
-import { Search } from '../';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {
     component: 'sp-search',
@@ -21,24 +18,11 @@ export default {
 };
 
 export const Default = (): TemplateResult => html`
-    <sp-search
-        @submit=${(event: Event): void => {
-            event.preventDefault();
-            const search = event.target as Search;
-            action(`Search: ${search.value}`)();
-        }}
-    ></sp-search>
+    <sp-search></sp-search>
     <sp-search disabled></sp-search>
 `;
 
 export const Quiet = (): TemplateResult => html`
-    <sp-search
-        quiet
-        @submit=${(event: Event): void => {
-            event.preventDefault();
-            const search = event.target as Search;
-            action(`Search: ${search.value}`)();
-        }}
-    ></sp-search>
+    <sp-search quiet></sp-search>
     <sp-search quiet disabled></sp-search>
 `;
