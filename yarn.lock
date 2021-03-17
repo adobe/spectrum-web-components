@@ -3021,9 +3021,9 @@
   integrity sha512-FpxxftMzuWT8qq3XB4oBQgWglXuCCEGBfgX82EI9VtrJmw9j0Lm/nThMLX353p9awM4GfT3l2LNOneHbNetaRQ==
 
 "@spectrum-css/coachmark@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-3.0.0.tgz#7e2424695377a2d98636cc96c13b003a067d3813"
-  integrity sha512-i4ZN3f6F/vRNDiHZo3vfxVtIaxw5mu5Dh6eEY24JCyLOpHvCZX0HGQpQMwca+Hnd/TNXv1/jJpZ7rRtombubAw==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-3.0.1.tgz#ec94930586f4f5a287888dce6fe03ef37014aab4"
+  integrity sha512-UdwnGLd51jgN9k1mbNT4WM0OLtPAwbF/h6uSTAmUldLKTRIViMLJpQ8UsZdtnurYLMkWmEgc2bwW4khp3SSwBg==
 
 "@spectrum-css/colorarea@^1.0.0-beta.3":
   version "1.0.1"
