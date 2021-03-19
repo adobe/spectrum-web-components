@@ -483,6 +483,7 @@ export const longpress = (): TemplateResult => {
             <sp-action-button slot="trigger" hold-affordance>
                 <sp-icon-magnify slot="icon"></sp-icon-magnify>
             </sp-action-button>
+            <sp-tooltip slot="hover-content">Search real hard...</sp-tooltip>
             <sp-popover slot="longpress-content" tip>
                 <sp-action-group
                     @change=${(event: Event & { target: HTMLElement }) =>

@@ -24,6 +24,7 @@ import {
     Placement,
     TriggerInteractions,
     OverlayOptions,
+    OverlayOpenCloseDetail,
 } from './overlay-types';
 import { openOverlay } from './loader.js';
 import overlayTriggerStyles from './overlay-trigger.css.js';
@@ -75,8 +76,10 @@ export class OverlayTrigger extends LitElement {
     private hoverContent?: HTMLElement;
     private targetContent?: HTMLElement;
 
-    private handleClose(): void {
-        this.removeAttribute('open');
+    private handleClose(event?: CustomEvent<OverlayOpenCloseDetail>): void {
+        if (!event || this.open === event.detail.interaction) {
+            this.removeAttribute('open');
+        }
     }
 
     protected render(): TemplateResult {
@@ -145,6 +148,7 @@ export class OverlayTrigger extends LitElement {
             case 'longpress':
                 if (!this.closeLongpressOverlay) {
                     this.onTriggerLongpress();
+                    this.onTriggerMouseLeave();
                 }
                 break;
             default:
@@ -209,6 +213,8 @@ export class OverlayTrigger extends LitElement {
             case 'click':
                 if (this.clickContent) {
                     this.open = event.type;
+                } else if (this.closeHoverOverlay) {
+                    event.preventDefault();
                 }
                 return;
             case 'longpress':
