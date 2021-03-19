@@ -840,6 +840,7 @@ describe('Overlay Trigger', () => {
             'open'
         );
 
+        await nextFrame();
         document.body.click();
         await elementUpdated(overlayTriggers[1]);
         await waitUntil(() => {

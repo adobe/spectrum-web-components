@@ -411,14 +411,15 @@ export class OverlayStack {
 
     private initialLongpressClick = false;
 
-    private handleMouse = (): void => {
+    private handleMouse = (event: Event): void => {
         if (this.initialLongpressClick) {
             this.initialLongpressClick = false;
             return;
         }
-        if (!this.preventMouseRootClose) {
-            this.closeTopOverlay();
+        if (this.preventMouseRootClose || event.defaultPrevented) {
+            return;
         }
+        this.closeTopOverlay();
     };
 
     private handleKeyUp = (event: KeyboardEvent): void => {
