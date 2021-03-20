@@ -60,7 +60,7 @@ describe('Slider', () => {
     it('receives value from the outside', async () => {
         const el = await fixture<Slider>(
             html`
-                <sp-slider></sp-slider>
+                <sp-slider max="20"></sp-slider>
             `
         );
 
@@ -321,6 +321,7 @@ describe('Slider', () => {
             html`
                 <sp-slider
                     step="0"
+                    max="20"
                     @input=${handleInput}
                     style="width: 500px; float: left;"
                 ></sp-slider>
