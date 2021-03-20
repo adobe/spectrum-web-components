@@ -31,11 +31,16 @@ export const Default = (): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
-                max="100"
+                max="1"
                 min="0"
-                value="50"
+                value=".5"
+                step="0.01"
                 @input=${handleEvent}
                 @change=${handleEvent}
+                .getAriaValueText=${(value: number) =>
+                    new Intl.NumberFormat('en-US', { style: 'percent' }).format(
+                        value
+                    )}
             >
                 Opacity
             </sp-slider>

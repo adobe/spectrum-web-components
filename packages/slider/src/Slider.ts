@@ -99,7 +99,7 @@ export class Slider extends Focusable {
     public ariaLabel?: string;
 
     @property({ type: Number })
-    public max = 20;
+    public max = 100;
 
     @property({ type: Number })
     public min = 0;
@@ -153,14 +153,9 @@ export class Slider extends Focusable {
         return html`
             <div id="labelContainer">
                 <label id="label" for="input"><slot>${this.label}</slot></label>
-                <div
-                    id="value"
-                    role="textbox"
-                    aria-readonly="true"
-                    aria-labelledby="label"
-                >
+                <output id="value" aria-live="off" for="input">
                     ${this.ariaValueText}
-                </div>
+                </output>
             </div>
         `;
     }
@@ -270,11 +265,9 @@ export class Slider extends Focusable {
                     step=${this.step}
                     min=${this.min}
                     max=${this.max}
-                    aria-disabled=${this.disabled ? 'true' : 'false'}
-                    aria-labelledby="label"
-                    aria-valuenow=${this.value}
-                    aria-valuemin=${this.min}
-                    aria-valuemax=${this.max}
+                    aria-disabled=${ifDefined(
+                        this.disabled ? 'true' : undefined
+                    )}
                     aria-valuetext=${this.ariaValueText}
                     @change=${this.onInputChange}
                     @focus=${this.onInputFocus}
