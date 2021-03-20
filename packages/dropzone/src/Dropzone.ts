@@ -25,16 +25,27 @@ export type DropzoneEventDetail = DragEvent;
 export type DropEffects = 'copy' | 'move' | 'link' | 'none';
 
 /**
- * @slot default - This is the illustrated message slot
+ * @slot - The default slot on an `sp-dropzone` is a great place to place upload instructions
+ * built with an `sp-illustrated-message` or other information, possibly even built from data
+ * provided by the upload, to support users successfully interacting with the drag and drop
+ * based features of your application
+ *
+ * @fires sp-dropzone-should-accept - A cancellable event that confirms whether or not
+ * a file dropped on the UI should be accepted.
+ * @fires sp-dropzone-dragover - Announces when files have been dragged over the UI, but not yet dropped.
+ * @fires sp-dropzone-dragleave - Announces when dragged files have been moved out of the UI without having been dropped.
+ * @fires sp-dropzone-drop - Announces when dragged files have been dropped on the UI.
  */
 export class Dropzone extends SpectrumElement {
-    public static readonly is = 'sp-dropzone';
-
     public static get styles(): CSSResultArray {
         return [dropzoneStyles];
     }
 
-    private _dropEffect: DropEffects = 'copy';
+    /**
+     * Controls the feedback (typically visual) the user is given during a drag and drop operation
+     * @attr
+     * @type {'copy' | 'move' | 'link' | 'none'}
+     */
     public get dropEffect(): DropEffects {
         return this._dropEffect;
     }
@@ -43,6 +54,7 @@ export class Dropzone extends SpectrumElement {
             this._dropEffect = value;
         }
     }
+    private _dropEffect: DropEffects = 'copy';
 
     @property({ type: Boolean, reflect: true, attribute: 'dragged' })
     public isDragged = false;
@@ -72,7 +84,6 @@ export class Dropzone extends SpectrumElement {
             composed: true,
             detail: event,
         });
-        // dispatch event returns true if preventDefault() is not called
         const shouldAccept = this.dispatchEvent(shouldAcceptEvent);
         if (!event.dataTransfer) {
             return;
