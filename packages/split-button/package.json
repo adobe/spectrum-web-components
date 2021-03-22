@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
@@ -50,16 +50,16 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "@spectrum-css/splitbutton": "^3.0.0",
-        "@spectrum-web-components/menu": "^0.7.1"
+        "@spectrum-web-components/menu": "^0.8.0"
     },
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.1",
-        "@spectrum-web-components/button": "^0.13.1",
-        "@spectrum-web-components/icon": "^0.9.1",
-        "@spectrum-web-components/icons-ui": "^0.6.1",
-        "@spectrum-web-components/icons-workflow": "^0.6.1",
-        "@spectrum-web-components/overlay": "^0.10.1",
-        "@spectrum-web-components/picker": "^0.3.1",
+        "@spectrum-web-components/base": "^0.4.2",
+        "@spectrum-web-components/button": "^0.13.2",
+        "@spectrum-web-components/icon": "^0.9.2",
+        "@spectrum-web-components/icons-ui": "^0.6.2",
+        "@spectrum-web-components/icons-workflow": "^0.6.2",
+        "@spectrum-web-components/overlay": "^0.11.0",
+        "@spectrum-web-components/picker": "^0.4.0",
         "tslib": "^2.0.0"
     }
 }

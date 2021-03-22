@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.3.1...@spectrum-web-components/picker@0.4.0) (2021-03-22)
+
+### Bug Fixes
+
+-   add support for "readonly" attribute ([4bce3b7](https://github.com/adobe/spectrum-web-components/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
+-   analyze errors, properly this time ([df685a2](https://github.com/adobe/spectrum-web-components/commit/df685a20f57379442d54f026b8ad7cef474a067b))
+-   analyze type errors, and add deprecated syntax tests ([b7e67a1](https://github.com/adobe/spectrum-web-components/commit/b7e67a103d5a3bb355a8ee4682ef9621d8d59872))
+-   bad merge conflict resolution ([e408d61](https://github.com/adobe/spectrum-web-components/commit/e408d61c82ee4ea8463be7d76f480b260fd5aa30))
+-   hopefully fix CI ([ea87245](https://github.com/adobe/spectrum-web-components/commit/ea87245359128ad4f9d790d2dc5d5dd36208bc25))
+-   issues with optionsMenu & menuItems ([01a7e35](https://github.com/adobe/spectrum-web-components/commit/01a7e35099cef1d8185e79ee94dfad36ece7ba8d))
+-   remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+-   simplify optionsMenu usage and fix tests ([91241b7](https://github.com/adobe/spectrum-web-components/commit/91241b7bddc434c7220fc0fbd65389d0ca38f674))
+-   slot documentation ([0ebd260](https://github.com/adobe/spectrum-web-components/commit/0ebd2609bad9e95ee24428cb2fa666d23bdb85f8))
+-   split-button tests & lots of cleanup based on review feedback ([10b4a04](https://github.com/adobe/spectrum-web-components/commit/10b4a04c5791d1acd9e59d48a8960b9c17aa89c7)), closes [#1189](https://github.com/adobe/spectrum-web-components/issues/1189)
+
+### Features
+
+-   **picker:** process field-label content for more accurate a11y tree ([dc9df54](https://github.com/adobe/spectrum-web-components/commit/dc9df54d052edc46c2399f0f7b12d3b5d4aff740))
+-   deprecate sp-menu in PickerBase derived classes ([bbb773c](https://github.com/adobe/spectrum-web-components/commit/bbb773c915587b9d92875e333a6b422ec878a8ea))
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.3.0...@spectrum-web-components/picker@0.3.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/picker

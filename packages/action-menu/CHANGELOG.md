@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.9.1...@spectrum-web-components/action-menu@0.9.2) (2021-03-22)
+
+### Bug Fixes
+
+-   analyze type errors, and add deprecated syntax tests ([b7e67a1](https://github.com/adobe/spectrum-web-components/commit/b7e67a103d5a3bb355a8ee4682ef9621d8d59872))
+-   missed ActionMenu for type changes ([fa66d56](https://github.com/adobe/spectrum-web-components/commit/fa66d56ea2296270bcba87e62d12a7837d1c3417))
+-   remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+-   slot documentation ([0ebd260](https://github.com/adobe/spectrum-web-components/commit/0ebd2609bad9e95ee24428cb2fa666d23bdb85f8))
+
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.9.0...@spectrum-web-components/action-menu@0.9.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

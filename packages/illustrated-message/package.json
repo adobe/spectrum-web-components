@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.6.1",
+    "version": "0.6.2",
     "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
@@ -52,8 +52,8 @@
         "@spectrum-css/illustratedmessage": "^3.0.0"
     },
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.1",
-        "@spectrum-web-components/styles": "^0.9.1",
+        "@spectrum-web-components/base": "^0.4.2",
+        "@spectrum-web-components/styles": "^0.9.2",
         "tslib": "^2.0.0"
     }
 }

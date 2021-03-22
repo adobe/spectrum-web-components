@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.2.6...example-project-rollup@0.3.0) (2021-03-22)
+
+### Bug Fixes
+
+- remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+
+### Features
+
+- **picker:** process field-label content for more accurate a11y tree ([dc9df54](https://github.com/adobe/spectrum-web-components/commit/dc9df54d052edc46c2399f0f7b12d3b5d4aff740))
+
 ## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.2.5...example-project-rollup@0.2.6) (2021-03-05)
 
 **Note:** Version bump only for package example-project-rollup

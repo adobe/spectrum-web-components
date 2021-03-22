@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
@@ -50,12 +50,12 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "@spectrum-css/actionbar": "^3.0.0",
-        "@spectrum-web-components/action-button": "^0.4.1",
-        "@spectrum-web-components/icon": "^0.9.1"
+        "@spectrum-web-components/action-button": "^0.4.2",
+        "@spectrum-web-components/icon": "^0.9.2"
     },
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.1",
-        "@spectrum-web-components/popover": "^0.9.1",
+        "@spectrum-web-components/base": "^0.4.2",
+        "@spectrum-web-components/popover": "^0.9.2",
         "tslib": "^2.0.0"
     }
 }

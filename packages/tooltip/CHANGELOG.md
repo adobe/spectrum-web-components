@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.8.1...@spectrum-web-components/tooltip@0.8.2) (2021-03-22)
+
+### Bug Fixes
+
+-   **overlay:** allow overlay-trigger to declaratively open overlay content ([194a44e](https://github.com/adobe/spectrum-web-components/commit/194a44e78df73ca4a5520e24b308667c23331880))
+
 ## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.8.0...@spectrum-web-components/tooltip@0.8.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/tooltip

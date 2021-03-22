@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.1...@spectrum-web-components/story-decorator@0.3.2) (2021-03-22)
+
+### Bug Fixes
+
+-   remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.0...@spectrum-web-components/story-decorator@0.3.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/story-decorator

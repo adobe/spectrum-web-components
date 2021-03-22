@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.7.1...@spectrum-web-components/radio@0.7.2) (2021-03-22)
+
+### Bug Fixes
+
+-   add support for "readonly" attribute ([4bce3b7](https://github.com/adobe/spectrum-web-components/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
+
 ## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.7.0...@spectrum-web-components/radio@0.7.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/radio

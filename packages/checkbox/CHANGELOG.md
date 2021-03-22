@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.9.1...@spectrum-web-components/checkbox@0.9.2) (2021-03-22)
+
+### Bug Fixes
+
+-   add support for "readonly" attribute ([4bce3b7](https://github.com/adobe/spectrum-web-components/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
+-   reduce cycles ([66a4efb](https://github.com/adobe/spectrum-web-components/commit/66a4efbc55c108e886699ce9dd0eb1c7e57e5a7d))
+
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.9.0...@spectrum-web-components/checkbox@0.9.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/checkbox

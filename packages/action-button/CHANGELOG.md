@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.4.1...@spectrum-web-components/action-button@0.4.2) (2021-03-22)
+
+### Bug Fixes
+
+-   correctly delivery visuals and mouse interactions for litAnchor and extensions ([0ae889a](https://github.com/adobe/spectrum-web-components/commit/0ae889a8aab9b3417a021b917dfc817a8310f50f))
+
 ## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.4.0...@spectrum-web-components/action-button@0.4.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/action-button

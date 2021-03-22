@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.9.1...@spectrum-web-components/slider@0.9.2) (2021-03-22)
+
+### Bug Fixes
+
+-   remove right click value setting ([a44968d](https://github.com/adobe/spectrum-web-components/commit/a44968d09120ad9b54915438fb5a134f306fdab2))
+
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.9.0...@spectrum-web-components/slider@0.9.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

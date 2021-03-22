@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.3.1...@spectrum-web-components/field-group@0.3.2) (2021-03-22)
+
+### Bug Fixes
+
+-   reduce cycles ([66a4efb](https://github.com/adobe/spectrum-web-components/commit/66a4efbc55c108e886699ce9dd0eb1c7e57e5a7d))
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.3.0...@spectrum-web-components/field-group@0.3.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/field-group

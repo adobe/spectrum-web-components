@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.10.1...@spectrum-web-components/overlay@0.11.0) (2021-03-22)
+
+### Bug Fixes
+
+-   **overlay:** allow overlay-trigger to declaratively open overlay content ([194a44e](https://github.com/adobe/spectrum-web-components/commit/194a44e78df73ca4a5520e24b308667c23331880))
+-   **overlay:** persist hover overlay when there is not click content ([27111a9](https://github.com/adobe/spectrum-web-components/commit/27111a95831dc0dc846af8f889a9479294ab8515))
+
+### Features
+
+-   **picker:** process field-label content for more accurate a11y tree ([dc9df54](https://github.com/adobe/spectrum-web-components/commit/dc9df54d052edc46c2399f0f7b12d3b5d4aff740))
+
 ## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.10.0...@spectrum-web-components/overlay@0.10.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

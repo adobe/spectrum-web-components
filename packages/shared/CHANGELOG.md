@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.11.1...@spectrum-web-components/shared@0.12.0) (2021-03-22)
+
+### Bug Fixes
+
+-   renamed the file but not this ([ad94e53](https://github.com/adobe/spectrum-web-components/commit/ad94e53a8932b395d916693b147eee3eef4ca043))
+-   split-button tests & lots of cleanup based on review feedback ([10b4a04](https://github.com/adobe/spectrum-web-components/commit/10b4a04c5791d1acd9e59d48a8960b9c17aa89c7)), closes [#1189](https://github.com/adobe/spectrum-web-components/issues/1189)
+
+### Features
+
+-   **picker:** process field-label content for more accurate a11y tree ([dc9df54](https://github.com/adobe/spectrum-web-components/commit/dc9df54d052edc46c2399f0f7b12d3b5d4aff740))
+-   deprecate sp-menu in PickerBase derived classes ([bbb773c](https://github.com/adobe/spectrum-web-components/commit/bbb773c915587b9d92875e333a6b422ec878a8ea))
+
 ## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.11.0...@spectrum-web-components/shared@0.11.1) (2021-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/shared
