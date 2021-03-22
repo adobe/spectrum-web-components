@@ -1128,4 +1128,4 @@ a{color:inherit}a:focus{outline:none}
 `));let n,d,u=e=>e;class m extends(Object(o.a)(s.a,{validSizes:["s","m","l"]})){constructor(){super(...arguments),this.vertical=!1}render(){return this.vertical?Object(i.d)(n||(n=u``)):Object(i.d)(d||(d=u`
             <hr />
         `))}}m.styles=[c],Object(a.a)([Object(i.e)({type:Boolean,reflect:!0})],m.prototype,"vertical",void 0),customElements.define("sp-divider",m)}}]);
-//# sourceMappingURL=6.444fd1cf3f4b14af6d2b.js.map
+//# sourceMappingURL=6.b106c7f5394c80da8643.js.map
