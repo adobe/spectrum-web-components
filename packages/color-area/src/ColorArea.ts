@@ -27,6 +27,8 @@ import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';
 
+const preventDefault = (event: KeyboardEvent) => event.preventDefault();
+
 /**
  * @element sp-color-area
  */
@@ -197,11 +199,11 @@ export class ColorArea extends SpectrumElement {
             switch (code) {
                 case 'ArrowUp':
                 case 'Up':
-                    deltaY = -this.step;
+                    deltaY = this.step * -1;
                     break;
                 case 'ArrowDown':
                 case 'Down':
-                    deltaY = this.step;
+                    deltaY = this.step * 1;
                     break;
                 case 'ArrowLeft':
                 case 'Left':
@@ -388,7 +390,7 @@ export class ColorArea extends SpectrumElement {
                 step=${this.step}
                 .value=${String(this.x)}
                 @input=${this.handleInput}
-                @keyup=${(event: KeyboardEvent) => event.preventDefault()}
+                @keydown=${preventDefault}
             />
             <input
                 type="range"
@@ -400,7 +402,7 @@ export class ColorArea extends SpectrumElement {
                 step=${this.step}
                 .value=${String(this.y)}
                 @input=${this.handleInput}
-                @keyup=${(event: KeyboardEvent) => event.preventDefault()}
+                @keydown=${preventDefault}
             />
         `;
     }
