@@ -76,9 +76,8 @@ describe('Overlay Trigger - Longpress', () => {
             () => !(content.parentElement instanceof OverlayTrigger)
         );
         await waitUntil(() => content.open, 'opens for `Space`');
-        await executeServerCommand('send-keys', {
-            press: 'Escape',
-        });
+        document.body.click();
+
         await waitUntil(() => !content.open, 'closes for `Space`');
         await elementUpdated(el);
 

@@ -77,9 +77,13 @@ export class OverlayTrigger extends LitElement {
     private targetContent?: HTMLElement;
 
     private handleClose(event?: CustomEvent<OverlayOpenCloseDetail>): void {
-        if (!event || this.open === event.detail.interaction) {
-            this.removeAttribute('open');
+        if (
+            event?.detail.interaction !== this.open &&
+            event?.detail.interaction !== this.type
+        ) {
+            return;
         }
+        this.removeAttribute('open');
     }
 
     protected render(): TemplateResult {
@@ -200,7 +204,7 @@ export class OverlayTrigger extends LitElement {
         switch (event.type) {
             case 'mouseenter':
             case 'focusin':
-                if (this.hoverContent) {
+                if (!this.open && this.hoverContent) {
                     this.open = 'hover';
                 }
                 return;
@@ -219,6 +223,7 @@ export class OverlayTrigger extends LitElement {
                 return;
             case 'longpress':
                 if (this.longpressContent) {
+                    this._longpressEvent = event;
                     this.open = event.type;
                 }
                 return;
@@ -251,26 +256,27 @@ export class OverlayTrigger extends LitElement {
         );
     }
 
-    private async onTriggerLongpress(
-        event?: CustomEvent<LongpressEvent>
-    ): Promise<void> {
+    private _longpressEvent?: CustomEvent<LongpressEvent>;
+
+    private async onTriggerLongpress(): Promise<void> {
         if (!this.targetContent || !this.longpressContent) {
             return;
         }
         const { targetContent, longpressContent } = this;
         this.prepareToFocusOverlayContent(longpressContent);
-        const type =
-            event && event.detail.source === 'keyboard' ? 'click' : 'longpress';
-        const interaction = this.type ? this.type : type || 'longpress';
+        const notImmediatelyClosable =
+            this._longpressEvent?.detail.source !== 'keyboard';
         this.closeLongpressOverlay = await OverlayTrigger.openOverlay(
             targetContent,
-            interaction,
+            this.type ? this.type : 'longpress',
             longpressContent,
             {
                 ...this.overlayOptions,
                 receivesFocus: 'auto',
+                notImmediatelyClosable,
             }
         );
+        this._longpressEvent = undefined;
     }
 
     private hoverOverlayReady = Promise.resolve();

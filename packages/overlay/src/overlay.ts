@@ -94,6 +94,7 @@ export class Overlay {
         offset = 0,
         placement = 'top',
         receivesFocus,
+        notImmediatelyClosable,
     }: OverlayOptions): Promise<boolean> {
         /* c8 ignore next */
         if (this.isOpen) return true;
@@ -115,14 +116,15 @@ export class Overlay {
         this.owner.dispatchEvent(queryThemeEvent);
 
         const overlayDetailQuery: OverlayDisplayQueryDetail = {};
-        const queryOverlayDetailEvent = new CustomEvent<
-            OverlayDisplayQueryDetail
-        >('sp-overlay-query', {
-            bubbles: true,
-            composed: true,
-            detail: overlayDetailQuery,
-            cancelable: true,
-        });
+        const queryOverlayDetailEvent = new CustomEvent<OverlayDisplayQueryDetail>(
+            'sp-overlay-query',
+            {
+                bubbles: true,
+                composed: true,
+                detail: overlayDetailQuery,
+                cancelable: true,
+            }
+        );
         this.overlayElement.dispatchEvent(queryOverlayDetailEvent);
 
         await Overlay.overlayStack.openOverlay({
@@ -135,6 +137,7 @@ export class Overlay {
             interaction: this.interaction,
             theme: queryThemeDetail,
             receivesFocus,
+            notImmediatelyClosable,
             ...overlayDetailQuery,
         });
         this.isOpen = true;
@@ -150,15 +153,15 @@ export class Overlay {
 }
 
 /**
-* Announces that an overlay-based UI element has opened
-* @event sp-open
-* @type {object}
-* @property {TriggerInteractions} interaction type of interaction that triggered the opening
-*/
+ * Announces that an overlay-based UI element has opened
+ * @event sp-open
+ * @type {object}
+ * @property {TriggerInteractions} interaction type of interaction that triggered the opening
+ */
 
 /**
-* Announces that an overlay-based UI element has opened
-* @event sp-close
-* @type {object}
-* @property {TriggerInteractions} interaction type of interaction that triggered the closing
-*/
+ * Announces that an overlay-based UI element has opened
+ * @event sp-close
+ * @type {object}
+ * @property {TriggerInteractions} interaction type of interaction that triggered the closing
+ */
