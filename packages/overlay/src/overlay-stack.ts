@@ -162,8 +162,8 @@ export class OverlayStack {
         if (this.findOverlayForContent(details.content)) {
             return false;
         }
-        if (details.interaction === 'longpress') {
-            this.initialLongpressClick = true;
+        if (details.notImmediatelyClosable) {
+            this._doesNotCloseOnFirstClick = true;
         }
         if (details.interaction === 'modal') {
             this.startTabTrapping();
@@ -409,11 +409,16 @@ export class OverlayStack {
         return this.hideAndCloseOverlay(this.topOverlay);
     }
 
-    private initialLongpressClick = false;
+    /**
+     * A "longpress" occurs before the "click" that creates it has occured.
+     * In that way the first click will still be part of the "longpress" and
+     * not part of closing the overlay.
+     */
+    private _doesNotCloseOnFirstClick = false;
 
     private handleMouse = (event: Event): void => {
-        if (this.initialLongpressClick) {
-            this.initialLongpressClick = false;
+        if (this._doesNotCloseOnFirstClick) {
+            this._doesNotCloseOnFirstClick = false;
             return;
         }
         if (this.preventMouseRootClose || event.defaultPrevented) {

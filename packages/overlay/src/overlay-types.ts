@@ -32,6 +32,7 @@ export interface OverlayOpenDetail {
     trigger: HTMLElement;
     interaction: TriggerInteractions;
     theme: ThemeData;
+    notImmediatelyClosable?: boolean;
 }
 
 export interface OverlayOpenCloseDetail {
@@ -55,6 +56,7 @@ export type OverlayOptions = {
     placement?: Placement;
     offset?: number;
     receivesFocus?: 'auto';
+    notImmediatelyClosable?: boolean;
 };
 
 declare global {
