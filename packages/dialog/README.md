@@ -126,7 +126,7 @@ Note: the `dissmissable` attribute will not be followed when `mode="fullscreen"`
 <sp-dialog size="medium" dismissable no-divider>
     <div
         slot="hero"
-        style="background-image: url(https://placedog.net/500/280)"
+        style="background-image: url(https://place.dog/500/280)"
     ></div>
     <h2 slot="heading">Disclaimer</h2>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

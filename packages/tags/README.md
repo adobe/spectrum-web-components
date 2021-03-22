@@ -45,7 +45,7 @@ import {
         <sp-avatar
             slot="avatar"
             label="Tag 1"
-            src=https://placedog.net/500/500
+            src=https://place.dog/500/500
         ></sp-avatar>
     </sp-tag>
     <sp-tag invalid>
@@ -53,7 +53,7 @@ import {
         <sp-avatar
             slot="avatar"
             label="Tag 1"
-            src=https://placedog.net/500/500
+            src=https://place.dog/500/500
         ></sp-avatar>
     </sp-tag>
     <sp-tag disabled>
@@ -61,7 +61,7 @@ import {
         <sp-avatar
             slot="avatar"
             label="Tag 1"
-            src=https://placedog.net/500/500
+            src=https://place.dog/500/500
         ></sp-avatar>
     </sp-tag>
 </sp-tags>
@@ -103,7 +103,7 @@ Use the `deletable` attribute to signify `sp-tags` elements that can be removed.
         <sp-avatar
             slot="avatar"
             label="Tag 1"
-            src=https://placedog.net/500/500
+            src=https://place.dog/500/500
         ></sp-avatar>
     </sp-tag>
     <sp-tag invalid deletable>
@@ -111,7 +111,7 @@ Use the `deletable` attribute to signify `sp-tags` elements that can be removed.
         <sp-avatar
             slot="avatar"
             label="Tag 1"
-            src=https://placedog.net/500/500
+            src=https://place.dog/500/500
         ></sp-avatar>
     </sp-tag>
     <sp-tag disabled deletable>
@@ -119,7 +119,7 @@ Use the `deletable` attribute to signify `sp-tags` elements that can be removed.
         <sp-avatar
             slot="avatar"
             label="Tag 1"
-            src=https://placedog.net/500/500
+            src=https://place.dog/500/500
         ></sp-avatar>
     </sp-tag>
 </sp-tags>

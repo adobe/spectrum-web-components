@@ -27,7 +27,7 @@ import { Avatar } from '@spectrum-web-components/avatar';
 ## Example
 
 ```html
-<sp-avatar label="Dog the User" src="https://placedog.net/500/500"></sp-avatar>
+<sp-avatar label="Dog the User" src="https://place.dog/500/500"></sp-avatar>
 ```
 
 ## Accessibility
