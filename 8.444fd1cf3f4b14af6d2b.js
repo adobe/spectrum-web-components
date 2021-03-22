@@ -9,4 +9,4 @@
 `));let l,d,p=e=>e;class u extends(Object(i.a)(o.a,{validSizes:["s","m","l"]})){constructor(){super(...arguments),this.vertical=!1}render(){return this.vertical?Object(a.d)(l||(l=p``)):Object(a.d)(d||(d=p`
             <hr />
         `))}}u.styles=[n],Object(s.a)([Object(a.e)({type:Boolean,reflect:!0})],u.prototype,"vertical",void 0),customElements.define("sp-divider",u)}}]);
-//# sourceMappingURL=8.ca0356085e592523ad73.js.map
+//# sourceMappingURL=8.444fd1cf3f4b14af6d2b.js.map
