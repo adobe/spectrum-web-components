@@ -37,7 +37,7 @@ import { Thumbnail } from '@spectrum-web-components/thumbnail';
 
 ```html
 <sp-thumbnail size="s">
-    <img src="https://placedog.net/100/100" alt="Demo Image" />
+    <img src="https://place.dog/100/100" alt="Demo Image" />
 </sp-thumbnail>
 ```
 
@@ -47,7 +47,7 @@ import { Thumbnail } from '@spectrum-web-components/thumbnail';
 
 ```html
 <sp-thumbnail size="m">
-    <img src="https://placedog.net/100/100" alt="Demo Image" />
+    <img src="https://place.dog/100/100" alt="Demo Image" />
 </sp-thumbnail>
 ```
 
@@ -57,7 +57,7 @@ import { Thumbnail } from '@spectrum-web-components/thumbnail';
 
 ```html
 <sp-thumbnail size="l">
-    <img src="https://placedog.net/100/100" alt="Demo Image" />
+    <img src="https://place.dog/100/100" alt="Demo Image" />
 </sp-thumbnail>
 ```
 
@@ -67,7 +67,7 @@ import { Thumbnail } from '@spectrum-web-components/thumbnail';
 
 ```html
 <sp-thumbnail size="xl">
-    <img src="https://placedog.net/100/100" alt="Demo Image" />
+    <img src="https://place.dog/100/100" alt="Demo Image" />
 </sp-thumbnail>
 ```
 
@@ -80,10 +80,10 @@ When `focused` or `selected` the `sp-thumbnail` element will be displayed as fol
 ```html
 <div style="display: flex; gap: var(--spectrum-global-dimension-size-100);">
     <sp-thumbnail focused>
-        <img src="https://placedog.net/100/100" alt="Demo Image" />
+        <img src="https://place.dog/100/100" alt="Demo Image" />
     </sp-thumbnail>
     <sp-thumbnail selected>
-        <img src="https://placedog.net/100/100" alt="Demo Image" />
+        <img src="https://place.dog/100/100" alt="Demo Image" />
     </sp-thumbnail>
 </div>
 ```
@@ -95,12 +95,12 @@ By default, an `sp-thumbnail` will ensure that the entirety of the content that 
 ```html
 <div style="display: flex; gap: var(--spectrum-global-dimension-size-100);">
     <sp-thumbnail>
-        <img src="https://placedog.net/300/400" alt="Eiffel Tower at night" />
+        <img src="https://place.dog/300/400" alt="Eiffel Tower at night" />
     </sp-thumbnail>
 
     <sp-thumbnail>
         <img
-            src="https://placedog.net/500/100"
+            src="https://place.dog/500/100"
             alt="Landscape with mountains and lake"
         />
     </sp-thumbnail>
@@ -112,12 +112,12 @@ The `background` attribute takes a string value of the CSS "background" property
 ```html
 <div style="display: flex; gap: var(--spectrum-global-dimension-size-100);">
     <sp-thumbnail background="red">
-        <img src="https://placedog.net/300/400" alt="Eiffel Tower at night" />
+        <img src="https://place.dog/300/400" alt="Eiffel Tower at night" />
     </sp-thumbnail>
 
     <sp-thumbnail background="#00ff00">
         <img
-            src="https://placedog.net/500/100"
+            src="https://place.dog/500/100"
             alt="Landscape with mountains and lake"
         />
     </sp-thumbnail>
@@ -129,12 +129,12 @@ The `cover` attribute will cause the content to fill the space provided by the `
 ```html
 <div style="display: flex; gap: var(--spectrum-global-dimension-size-100);">
     <sp-thumbnail cover>
-        <img src="https://placedog.net/300/400" alt="Eiffel Tower at night" />
+        <img src="https://place.dog/300/400" alt="Eiffel Tower at night" />
     </sp-thumbnail>
 
     <sp-thumbnail cover>
         <img
-            src="https://placedog.net/500/100"
+            src="https://place.dog/500/100"
             alt="Landscape with mountains and lake"
         />
     </sp-thumbnail>
