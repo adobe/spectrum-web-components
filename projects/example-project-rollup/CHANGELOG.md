@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.0...example-project-rollup@0.3.1) (2021-03-22)
+
+**Note:** Version bump only for package example-project-rollup
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.2.6...example-project-rollup@0.3.0) (2021-03-22)
 
 ### Bug Fixes

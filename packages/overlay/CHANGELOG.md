@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.0...@spectrum-web-components/overlay@0.11.1) (2021-03-22)
+
+### Bug Fixes
+
+-   **overlay:** handle hover/longpress more directly via the "open" attribute ([7b2b64b](https://github.com/adobe/spectrum-web-components/commit/7b2b64b6be931381a1ca1c83f941677fa06750ff))
+
 # [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.10.1...@spectrum-web-components/overlay@0.11.0) (2021-03-22)
 
 ### Bug Fixes
