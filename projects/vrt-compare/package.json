@@ -1,0 +1,64 @@
+{
+    "name": "@spectrum-web-components/vrt-compare",
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/vrt-compare"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/vrt-compare",
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "version": "0.0.1",
+    "description": "",
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "types": "./src/index.d.ts",
+    "exports": {
+        ".": "./src/index.js",
+        "./src/*": "./src/*.js",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./vrt-compare": "./vrt-compare.js",
+        "./vrt-compare.js": "./vrt-compare.js"
+    },
+    "files": [
+        "custom-elements.json",
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/"
+    ],
+    "sideEffects": [
+        "./onion-skinner.js",
+        "./onion-skinner.ts",
+        "./vrt-compare.js",
+        "./vrt-compare.ts"
+    ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.4.1",
+        "@spectrum-web-components/shared": "^0.11.1",
+        "@spectrum-web-components/styles": "^0.9.1",
+        "@spectrum-web-components/action-button": "^0.4.1",
+        "@spectrum-web-components/action-group": "^0.4.1",
+        "@spectrum-web-components/split-view": "^0.2.1",
+        "@spectrum-web-components/icons-workflow": "^0.6.1",
+        "@spectrum-web-components/action-bar": "^0.2.1",
+        "tslib": "^2.0.0"
+    }
+}

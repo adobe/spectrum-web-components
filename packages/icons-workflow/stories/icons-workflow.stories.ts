@@ -56,12 +56,14 @@ export const elements = ({ color, size }: Properties): TemplateResult => {
                 margin-bottom: 10px;
             }
         </style>
-        ${until(
-            content,
-            html`
-                Loading...
-            `
-        )}
+        <delayed-ready>
+            ${until(
+                content,
+                html`
+                    Loading...
+                `
+            )}
+        </delayed-ready>
     `;
 };
 
@@ -103,11 +105,13 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
                 margin-bottom: 10px;
             }
         </style>
-        ${until(
-            content,
-            html`
-                Loading...
-            `
-        )}
+        <delayed-ready>
+            ${until(
+                content,
+                html`
+                    Loading...
+                `
+            )}
+        </delayed-ready>
     `;
 };

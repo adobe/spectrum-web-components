@@ -9,6 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
 export * as AccordionStories from '../../packages/accordion/stories/accordion.stories.js';
 export * as ActionBarStories from '../../packages/action-bar/stories/action-bar.stories.js';
 export * as ActionButtonSizesStories from '../../packages/action-button/stories/action-button-sizes.stories.js';
@@ -46,7 +47,9 @@ export * as FieldGroupStories from '../../packages/field-group/stories/field-gro
 export * as FieldLabelStories from '../../packages/field-label/stories/field-label.stories.js';
 export * as IconStories from '../../packages/icon/stories/icon.stories.js';
 export * as IconsStories from '../../packages/icons/stories/icons.stories.js';
+import '../../packages/icons-ui/stories/icon-manifest.js';
 export * as IconsUIStories from '../../packages/icons-ui/stories/icons-ui.stories.js';
+import '../../packages/icons-workflow/stories/icon-manifest.js';
 export * as IconsWorkflowStories from '../../packages/icons-workflow/stories/icons-workflow.stories.js';
 export * as IllustratedMessageStories from '../../packages/illustrated-message/stories/illustrated-message.stories.js';
 export * as LinkSizesStories from '../../packages/link/stories/link-sizes.stories.js';
@@ -87,4 +90,3 @@ export * as ToastStories from '../../packages/toast/stories/toast.stories.js';
 export * as TooltipStories from '../../packages/tooltip/stories/tooltip.stories.js';
 export * as TopNavStories from '../../packages/top-nav/stories/top-nav.stories.js';
 export * as UnderlayStories from '../../packages/underlay/stories/underlay.stories.js';
-//# sourceMappingURL=story-imports.js.map

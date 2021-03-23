@@ -23,7 +23,7 @@ governing permissions and limitations under the License.
     );
 }
 
-::slotted(sp-sidenav-item) {
+::slotted(sp-sidenav-item:not([multiLevel])) {
     --spectrum-web-component-sidenav-font-weight: var(
         --spectrum-sidenav-item-font-weight,
         400

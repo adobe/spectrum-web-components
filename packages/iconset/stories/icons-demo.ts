@@ -25,6 +25,37 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 
+@customElement('delayed-ready')
+export class DelayedReady extends SpectrumElement {
+    _delayedReady!: Promise<void>;
+    _resolveDelayedReady!: () => void;
+
+    protected render() {
+        return html`
+            <slot @slotchange=${this.handleSlotchange}></slot>
+        `;
+    }
+
+    protected firstUpdated(): void {
+        this._delayedReady = new Promise(
+            (res) => (this._resolveDelayedReady = res)
+        );
+    }
+
+    protected async _getUpdateComplete(): Promise<void> {
+        await super._getUpdateComplete();
+        await this._delayedReady;
+    }
+
+    public handleSlotchange({
+        target,
+    }: Event & { target: HTMLSlotElement }): void {
+        if (target.assignedElements({ flatten: true }).length) {
+            this._resolveDelayedReady();
+        }
+    }
+}
+
 @customElement('icons-demo')
 export class IconsDemo extends SpectrumElement {
     @property()
@@ -119,9 +150,7 @@ export class IconsDemo extends SpectrumElement {
             </div>
             ${matchingIcons.map((icon) => {
                 return html`
-                    <div class="icon">
-                        ${icon.story(this.size)} ${icon.tag}
-                    </div>
+                    <div class="icon">${icon.story(this.size)} ${icon.tag}</div>
                 `;
             })}
         `;

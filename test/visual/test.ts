@@ -14,19 +14,11 @@ import { fixture, html, waitUntil } from '@open-wc/testing';
 import { visualDiff } from '@web/test-runner-visual-regression';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import * as stories from './story-imports.js';
+import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
+import { TemplateResult } from '@spectrum-web-components/base';
 
-const wrap = (story) => (args) => html`
-    <sp-story-decorator reduce-motion>
-        <style>
-            body {
-                margin: 0;
-            }
-            sp-story-decorator {
-                display: block;
-            }
-        </style>
-        ${story(args)}
-    </sp-story-decorator>
+const wrap = (story: TemplateResult) => html`
+    <sp-story-decorator reduce-motion screenshot>${story}</sp-story-decorator>
 `;
 
 describe('Visual Regressions', () => {
@@ -43,14 +35,37 @@ describe('Visual Regressions', () => {
     });
     Object.keys(stories).map((packageStories) => {
         describe(packageStories, () => {
-            Object.keys(stories[packageStories]).map((story) => {
+            const tests = (stories as any)[packageStories];
+            Object.keys(tests).map((story) => {
                 if (story !== 'default') {
                     it(story, async () => {
-                        const test = await fixture(
-                            wrap(stories[packageStories][story])({
-                                ...(stories[packageStories].default.args || {}), // take default args from the general file
-                                ...(stories[packageStories][story].args || {}), // overlay custom args from a specific story
-                            })
+                        const testsDefault = tests.default;
+                        const args = {
+                            ...(testsDefault.args || {}),
+                            ...(tests[story].args || {}),
+                        };
+                        let decoratedStory:
+                            | (() => TemplateResult)
+                            | TemplateResult = () =>
+                            html`
+                                ${tests[story](args)}
+                            `;
+                        let storyResult = decoratedStory();
+                        if (
+                            testsDefault.decorators &&
+                            testsDefault.decorators.length
+                        ) {
+                            let decoratorCount = testsDefault.decorators.length;
+                            while (decoratorCount) {
+                                decoratorCount -= 1;
+                                decoratedStory = testsDefault.decorators[
+                                    decoratorCount
+                                ](decoratedStory);
+                            }
+                            storyResult = decoratedStory as TemplateResult;
+                        }
+                        const test = await fixture<StoryDecorator>(
+                            wrap(storyResult)
                         );
                         await waitUntil(
                             () => test.ready,

@@ -17,6 +17,7 @@ import {
     property,
     TemplateResult,
     ifDefined,
+    nothing,
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -29,6 +30,7 @@ import { Picker } from '@spectrum-web-components/picker';
 import { Switch } from '@spectrum-web-components/switch';
 import { Scale, Color } from '@spectrum-web-components/theme';
 import { ActiveOverlay } from '@spectrum-web-components/overlay';
+import './types.js';
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -38,22 +40,6 @@ export let dir: 'ltr' | 'rtl' =
 export let color: Color = (urlParams.get('sp_color') as Color) || 'light';
 export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
-
-declare global {
-    interface Window {
-        __swc_hack_knobs__: {
-            defaultColor: Color;
-            defaultScale: Scale;
-            defaultDirection: 'ltr' | 'rtl';
-            defaultReduceMotion: boolean;
-        };
-    }
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
-}
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultColor: color,
@@ -107,13 +93,21 @@ export class StoryDecorator extends SpectrumElement {
                 box-sizing: border-box;
                 width: 100%;
                 min-height: 100vh;
-                padding: var(--spectrum-global-dimension-size-100);
+                padding: var(--spectrum-global-dimension-size-100)
+                    var(--spectrum-global-dimension-size-100)
+                    calc(
+                        2 * var(--spectrum-alias-focus-ring-size) +
+                            var(--spectrum-alias-item-height-m)
+                    );
                 box-sizing: border-box;
                 background-color: var(--spectrum-global-color-gray-100);
                 color: var(
                     --spectrum-body-text-color,
                     var(--spectrum-alias-text-color)
                 );
+            }
+            :host([screenshot]) sp-theme {
+                padding: var(--spectrum-global-dimension-size-100);
             }
             :host([reduce-motion]) sp-theme {
                 ${reduceMotionProperties}
@@ -128,6 +122,7 @@ export class StoryDecorator extends SpectrumElement {
                 justify-content: flex-end;
                 box-sizing: border-box;
                 background-color: var(--spectrum-global-color-gray-100);
+                padding-bottom: calc(2 * var(--spectrum-alias-focus-ring-size));
             }
             [dir='ltr'] sp-field-label {
                 padding-left: 0;
@@ -171,6 +166,9 @@ export class StoryDecorator extends SpectrumElement {
     @property({ type: Boolean, attribute: 'reduce-motion', reflect: true })
     public reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion;
 
+    @property({ type: Boolean, reflect: true })
+    public screenshot = false;
+
     public ready = false;
 
     private updateTheme({ target }: Event & { target: Picker | Switch }): void {
@@ -204,27 +202,18 @@ export class StoryDecorator extends SpectrumElement {
                 part="container"
             >
                 <slot @slotchange=${this.checkReady}></slot>
-                ${this.reduceMotion
-                    ? html`
-                          <style>
-                              sp-theme {
-                              }
-                          </style>
-                      `
-                    : html``}
-                <div class="manage-theme">
-                    ${this.colorControl} ${this.scaleControl} ${this.dirControl}
-                    ${this.reduceMotionControl}
-                </div>
+                ${this.screenshot ? nothing : this.manageTheme}
             </sp-theme>
         `;
     }
 
-    protected async checkReady(): Promise<void> {
+    protected async checkReady({
+        target,
+    }: Event & { target: HTMLSlotElement }): Promise<void> {
         this.ready = false;
-        const descendents = [
-            ...this.querySelectorAll('*'),
-        ] as SpectrumElement[];
+        const descendents = target.assignedElements({
+            flatten: true,
+        }) as SpectrumElement[];
         const litElementDescendents = descendents.filter(
             (el) =>
                 el.tagName.search('-') !== -1 &&
@@ -238,6 +227,15 @@ export class StoryDecorator extends SpectrumElement {
             await (document.fonts ? document.fonts.ready : Promise.resolve());
             setTimeout(() => (this.ready = true));
         });
+    }
+
+    private get manageTheme(): TemplateResult {
+        return html`
+            <div class="manage-theme">
+                ${this.colorControl} ${this.scaleControl} ${this.dirControl}
+                ${this.reduceMotionControl}
+            </div>
+        `;
     }
 
     private get colorControl(): TemplateResult {

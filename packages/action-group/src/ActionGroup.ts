@@ -288,10 +288,7 @@ export class ActionGroup extends SpectrumElement {
                 break;
             }
             default:
-                const options = [
-                    ...this.querySelectorAll('sp-action-button'),
-                ] as ActionButton[];
-                options.forEach((option) => {
+                this.buttons.forEach((option) => {
                     option.removeAttribute('role');
                     option.tabIndex = 0;
                 });
@@ -322,14 +319,7 @@ export class ActionGroup extends SpectrumElement {
             (changes.has('quiet') && this.quiet) ||
             (changes.has('emphasized') && this.emphasized)
         ) {
-            [...this.children].forEach((button) => {
-                if (changes.has('quiet')) {
-                    (button as ActionButton).quiet = this.quiet;
-                }
-                if (changes.has('emphasized')) {
-                    (button as ActionButton).emphasized = this.emphasized;
-                }
-            });
+            this.manageChildren();
         }
         if (changes.has('label')) {
             if (this.label.length) {
@@ -338,6 +328,13 @@ export class ActionGroup extends SpectrumElement {
                 this.removeAttribute('aria-label');
             }
         }
+    }
+
+    private manageChildren(): void {
+        this.buttons.forEach((button) => {
+            button.quiet = this.quiet;
+            button.emphasized = this.emphasized;
+        });
     }
 
     public connectedCallback(): void {
@@ -352,6 +349,7 @@ export class ActionGroup extends SpectrumElement {
                     return !buttonParent?.closest(this._buttonSelector);
                 });
                 this.buttons = buttons;
+                this.manageChildren();
                 this.manageSelects();
             };
             this.observer = new MutationObserver(findButtons);
