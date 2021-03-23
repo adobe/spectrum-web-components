@@ -3355,9 +3355,9 @@
   integrity sha512-lnRmBC50BbhS2vOTzzB5C3WHbayMqVR5yR2VnvvoYYUmYAtIgjN5Y5jPN7dgxePmHLTANvVrkdUYLViFvhDd2Q==
 
 "@spectrum-css/fieldgroup@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-3.0.0.tgz#4477ed565d9547450b9dcfe6ebdc6e37d068affa"
-  integrity sha512-Cnw/bu4480IKns49I5mt7QwVylCuEyJhzl4o7lQ9NeBGhxdRi4Hu+zNv/LeKN69084QIb6pAZyF1cTqv1bq8Gg==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-3.0.1.tgz#cff6cdfd5daefeba7939885b3e7545064e7b3a05"
+  integrity sha512-JB4VE7HEpSmk4x68CS4e8cIW4g8aVFBhx2XYZklh9VlPLuWfKSogDyMEfSvgyXIbs1qqI20Wiz25QR6fQP1b0g==
 
 "@spectrum-css/fieldlabel@^3.0.0":
   version "3.0.0"
