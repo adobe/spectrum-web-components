@@ -3490,9 +3490,9 @@
   integrity sha512-DtnvtAyolI5jWhgdHTB/AVX3ytk60WZYUnU0f6ZqNGcpU9yNt5Y9uI0NOzGesKvpTML4y6iYansTTn9M2rfSJA==
 
 "@spectrum-css/typography@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-3.0.0.tgz#f744b9671577dc668d14d933a5d5092d5b5c60e0"
-  integrity sha512-Q4GqJUUVdkD7v9aTnukyKTnxhFrJR7wn/VME/pez1i6Svuj+BckZ//uOlbwO9I/E9EZcdubQpQiPvfzyBSviDA==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-3.0.1.tgz#957dafd9b18c314fa37a88b549042ba2175f5b3f"
+  integrity sha512-XyR68K2rIZX3u4j7HhMLOqLVHDJZcapp3XUqgYMzMWccBFleA0qPxKpfRWqVIA5DzTMSIw0wEcZPYKWFZ2e6dA==
 
 "@spectrum-css/underlay@^2.0.8":
   version "2.0.8"
