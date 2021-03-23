@@ -27,6 +27,7 @@ import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 
 import '../sp-color-area.js';
 import { ColorArea } from '..';
+import { executeServerCommand } from '@web/test-runner-commands';
 
 describe('ColorArea', () => {
     it('loads default color-area accessibly', async () => {
@@ -105,40 +106,55 @@ describe('ColorArea', () => {
         expect(el.x, 'x').to.equal(0.6666666666666666);
         expect(el.y, 'y').to.equal(0.25);
 
-        el.dispatchEvent(arrowUpEvent);
-        el.dispatchEvent(arrowUpKeyupEvent);
-        el.dispatchEvent(arrowUpEvent);
-        el.dispatchEvent(arrowUpKeyupEvent);
+        el.inputX.focus();
+
+        await executeServerCommand('send-keys', {
+            press: 'ArrowUp',
+        });
+        await executeServerCommand('send-keys', {
+            press: 'ArrowUp',
+        });
+
+        // el.inputY.dispatchEvent(arrowUpEvent);
+        // el.inputY.dispatchEvent(arrowUpKeyupEvent);
+        // el.inputY.dispatchEvent(arrowUpEvent);
+        // el.inputY.dispatchEvent(arrowUpKeyupEvent);
 
         await elementUpdated(el);
 
         expect(el.x).to.equal(0.6666666666666666);
         expect(el.y).to.equal(0.22999999999999998);
 
-        el.dispatchEvent(arrowRightEvent);
-        el.dispatchEvent(arrowRightKeyupEvent);
-        el.dispatchEvent(arrowRightEvent);
-        el.dispatchEvent(arrowRightKeyupEvent);
+        await executeServerCommand('send-keys', {
+            press: 'ArrowRight',
+        });
+        await executeServerCommand('send-keys', {
+            press: 'ArrowRight',
+        });
 
         await elementUpdated(el);
 
         expect(el.x).to.equal(0.6866666666666666);
         expect(el.y).to.equal(0.22999999999999998);
 
-        el.dispatchEvent(arrowDownEvent);
-        el.dispatchEvent(arrowDownKeyupEvent);
-        el.dispatchEvent(arrowDownEvent);
-        el.dispatchEvent(arrowDownKeyupEvent);
+        await executeServerCommand('send-keys', {
+            press: 'ArrowDown',
+        });
+        await executeServerCommand('send-keys', {
+            press: 'ArrowDown',
+        });
 
         await elementUpdated(el);
 
         expect(el.x).to.equal(0.6866666666666666);
         expect(el.y).to.equal(0.25);
 
-        el.dispatchEvent(arrowLeftEvent);
-        el.dispatchEvent(arrowLeftKeyupEvent);
-        el.dispatchEvent(arrowLeftEvent);
-        el.dispatchEvent(arrowLeftKeyupEvent);
+        await executeServerCommand('send-keys', {
+            press: 'ArrowLeft',
+        });
+        await executeServerCommand('send-keys', {
+            press: 'ArrowLeft',
+        });
 
         await elementUpdated(el);
 

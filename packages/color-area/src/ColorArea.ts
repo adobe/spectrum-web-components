@@ -152,10 +152,10 @@ export class ColorArea extends SpectrumElement {
     public step = 0.01;
 
     @query('[name="x"]')
-    private inputX!: HTMLInputElement;
+    public inputX!: HTMLInputElement;
 
     @query('[name="y"]')
-    private inputY!: HTMLInputElement;
+    public inputY!: HTMLInputElement;
 
     private get altered(): number {
         return this._altered;
