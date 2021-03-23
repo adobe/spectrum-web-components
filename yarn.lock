@@ -3350,9 +3350,9 @@
     "@spectrum-css/vars" "^3.0.0"
 
 "@spectrum-css/dropzone@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-3.0.0.tgz#f7c64234cadbba3fbc76e0f4792d664fb4eadc77"
-  integrity sha512-lnRmBC50BbhS2vOTzzB5C3WHbayMqVR5yR2VnvvoYYUmYAtIgjN5Y5jPN7dgxePmHLTANvVrkdUYLViFvhDd2Q==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-3.0.1.tgz#af43feeedf0316ad11acb2c356ab769c65106194"
+  integrity sha512-w6caXN/Qi9Yztx4fCwnEutmZO43sPbigF8m6YR15HPxiV/Xhk2lw6GUB4mBa1U/eZNKWZlOnqvMQMBPsRk7sdQ==
 
 "@spectrum-css/fieldgroup@^3.0.0":
   version "3.0.0"
