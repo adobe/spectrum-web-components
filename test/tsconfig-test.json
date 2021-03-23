@@ -9,6 +9,8 @@
         "../packages/**/*.ts",
         "../packages/*/stories/*.ts",
         "./testing-helpers.ts",
+        "./visual/story-imports.ts",
+        "./visual/test.ts",
         "../global.d.ts"
     ],
     "exclude": [

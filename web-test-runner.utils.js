@@ -33,16 +33,16 @@ const vrtHTML = ({ color, scale, dir, reduceMotion }) => (testFramework) =>
                     margin: 0;
                 }
                 sp-story-decorator {
-                    display:block;
+                    display: block;
                 }
             </style>
         </head>
         <body>
         <script>
             window.__swc_hack_knobs__ = {
-                defaultColor: "${color}",
-                defaultScale: "${scale}",
-                defaultDirection: "${dir}",
+                defaultColor: "${color || ''}",
+                defaultScale: "${scale || ''}",
+                defaultDirection: "${dir || ''}",
                 defaultReduceMotion: ${reduceMotion},
             };
         </script>
@@ -50,7 +50,7 @@ const vrtHTML = ({ color, scale, dir, reduceMotion }) => (testFramework) =>
         </body>
     </html>`;
 
-const vrtGroups = [];
+let vrtGroups = [];
 const colors = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
@@ -81,6 +81,7 @@ const configuredVisualRegressionPlugin = () =>
             threshold: 0,
         },
         baseDir: 'test/visual',
+        buildCache: true,
         getBaselineName: ({ browser, name }) => {
             const nameParts = name.split(' - ');
             return path.join('screenshots-baseline', browser, ...nameParts);

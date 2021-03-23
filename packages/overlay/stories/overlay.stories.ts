@@ -30,19 +30,9 @@ import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { Color, Scale } from '@spectrum-web-components/theme';
+import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components';
-
-declare global {
-    interface Window {
-        __swc_hack_knobs__: {
-            defaultScale: Scale;
-            defaultDirection: 'ltr' | 'rtl' | 'auto';
-            defaultColor: Color;
-        };
-    }
-}
 
 const storyStyles = html`
     <style>
@@ -291,7 +281,6 @@ export const modal = (): TemplateResult => {
 
 export const deepNesting = (): TemplateResult => {
     const color = window.__swc_hack_knobs__.defaultColor;
-    console.log(color);
     const outter = color === 'light' ? 'dark' : 'light';
     return html`
         ${storyStyles}

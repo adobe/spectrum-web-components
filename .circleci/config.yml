@@ -8,7 +8,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 0f3e165906e60caafc12753714be46fccc8d7d70
+        default: 61db33a3625c22a428700abcbaed8414de34692a
 commands:
     downstream:
         steps:
@@ -37,19 +37,30 @@ commands:
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
+            # build diff review site
+            - run:
+                  when: always
+                  name: Create review site
+                  command: |
+                      node test/visual/review.js
+                      yarn rollup -c test/visual/rollup.config.js
+            - store_artifacts:
+                  path: test/visual/review
             - store_artifacts:
                   path: test/visual/screenshots-actual
             - store_artifacts:
                   path: test/visual/screenshots-baseline
-            # when there are "updated" screen shots move them into the baseline directory before making the new revision cache
+            # move "updated" screenshot into the baseline directory before making the new cache
             - run:
-                  when: on_fail
+                  when: always
                   command: |
-                      test -d test/visual/screenshots-actual/updates/Chromium && cp -R test/visual/screenshots-actual/updates/Chromium test/visual/screenshots-baseline
+                      rm -rf test/visual/screenshots-baseline
+                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
             - run:
                   when: on_success
                   name: Count current images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_end.txt
+            # prevent removing regression tests without requiring a new golden cache
             - run:
                   when: on_success
                   name: Fail if there are a different number of images...
@@ -115,6 +126,7 @@ jobs:
                       - root/project/node_modules
                       - root/project/packages
                       - root/project/projects/story-decorator
+                      - root/project/projects/vrt-compare
 
     test:
         executor: node

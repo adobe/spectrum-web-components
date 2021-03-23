@@ -33,7 +33,7 @@ export class Thumbnail extends SizedMixin(SpectrumElement, {
     }
 
     @property({ type: String, reflect: true })
-    public background = '';
+    public background?: string;
 
     protected render(): TemplateResult {
         return html`

@@ -18,7 +18,8 @@ import {
     InfoIcon,
 } from '@spectrum-web-components/icons-workflow';
 import '@spectrum-web-components/button/sp-button.js';
-import { Placement } from '@spectrum-web-components/overlay/src/popper';
+import { Placement } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 const iconOptions: {
     [key: string]: ({
@@ -276,7 +277,7 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                         Hover for ${variant ? variant : 'tooltip'} on the
                         ${placement}
                     </sp-button>
-                    <sp-tooltip slot="hover-content" variant=${variant} open>
+                    <sp-tooltip slot="hover-content" variant=${variant}>
                         ${placement}
                     </sp-tooltip>
                 </overlay-trigger>
