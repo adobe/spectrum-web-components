@@ -42,7 +42,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     line-height: var(--spectrum-button-line-height);
     user-select: none;
     -webkit-user-select: none;
-    touch-action: none;
     cursor: pointer;
 }
 :host(:focus) {

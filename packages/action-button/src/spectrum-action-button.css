@@ -39,7 +39,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     line-height: var(--spectrum-button-line-height);
     user-select: none;
     -webkit-user-select: none;
-    touch-action: none;
     cursor: pointer;
 }
 :host(:focus) {
@@ -127,10 +126,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-actionbutton-s-padding-left,
         var(--spectrum-alias-item-workflow-padding-left-s)
     );
-    --spectrum-actionbutton-padding-right: var(
-        --spectrum-actionbutton-s-padding-right,
-        var(--spectrum-alias-item-padding-s)
-    );
     --spectrum-actionbutton-icononly-padding-left: var(
         --spectrum-actionbutton-s-icononly-padding-left,
         var(--spectrum-alias-item-icononly-padding-s)
@@ -207,10 +202,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-actionbutton-padding-left: var(
         --spectrum-actionbutton-m-padding-left,
         var(--spectrum-alias-item-workflow-padding-left-m)
-    );
-    --spectrum-actionbutton-padding-right: var(
-        --spectrum-actionbutton-m-padding-right,
-        var(--spectrum-alias-item-padding-m)
     );
     --spectrum-actionbutton-icononly-padding-left: var(
         --spectrum-actionbutton-m-icononly-padding-left,
@@ -289,10 +280,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-actionbutton-l-padding-left,
         var(--spectrum-alias-item-workflow-padding-left-l)
     );
-    --spectrum-actionbutton-padding-right: var(
-        --spectrum-actionbutton-l-padding-right,
-        var(--spectrum-alias-item-padding-l)
-    );
     --spectrum-actionbutton-icononly-padding-left: var(
         --spectrum-actionbutton-l-icononly-padding-left,
         var(--spectrum-alias-item-icononly-padding-l)
@@ -369,10 +356,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-actionbutton-padding-left: var(
         --spectrum-actionbutton-xl-padding-left,
         var(--spectrum-alias-item-workflow-padding-left-xl)
-    );
-    --spectrum-actionbutton-padding-right: var(
-        --spectrum-actionbutton-xl-padding-right,
-        var(--spectrum-alias-item-padding-xl)
     );
     --spectrum-actionbutton-icononly-padding-left: var(
         --spectrum-actionbutton-xl-icononly-padding-left,

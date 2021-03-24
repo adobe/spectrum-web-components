@@ -51,7 +51,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/radio": "^3.0.0"
+        "@spectrum-css/radio": "^3.0.1"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",

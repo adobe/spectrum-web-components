@@ -47,7 +47,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/colorhandle": "^1.0.0"
+        "@spectrum-css/colorhandle": "^1.0.1"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",

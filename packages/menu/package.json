@@ -55,7 +55,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/menu": "^3.0.0"
+        "@spectrum-css/menu": "^3.0.1"
     },
     "dependencies": {
         "@spectrum-web-components/action-button": "^0.4.3",
