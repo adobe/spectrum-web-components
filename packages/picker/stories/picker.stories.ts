@@ -269,15 +269,13 @@ export const custom = (args: StoryArgs): TemplateResult => {
             label="Pick a state"
             ...=${spreadProps(args)}
         >
-            <sp-menu style="max-height: 400px;">
-                ${states.map(
-                    (state) => html`
-                        <sp-menu-item id=${state.id} value=${state.id}>
-                            ${state.label}
-                        </sp-menu-item>
-                    `
-                )}
-            </sp-menu>
+            ${states.map(
+                (state) => html`
+                    <sp-menu-item id=${state.id} value=${state.id}>
+                        ${state.label}
+                    </sp-menu-item>
+                `
+            )}
         </sp-picker>
         <p>This is some text.</p>
         <p>This is some text.</p>
@@ -287,4 +285,8 @@ export const custom = (args: StoryArgs): TemplateResult => {
             .
         </p>
     `;
+};
+
+custom.args = {
+    open: true,
 };
