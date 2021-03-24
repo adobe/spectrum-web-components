@@ -43,9 +43,9 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/commons": "^3.0.1",
-        "@spectrum-css/typography": "^3.0.0",
-        "@spectrum-css/vars": "^3.0.0"
+        "@spectrum-css/commons": "^3.0.2",
+        "@spectrum-css/typography": "^3.0.1",
+        "@spectrum-css/vars": "^3.0.1"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2"

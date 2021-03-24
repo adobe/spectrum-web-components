@@ -46,7 +46,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/modal": "^3.0.0"
+        "@spectrum-css/modal": "^3.0.1"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",

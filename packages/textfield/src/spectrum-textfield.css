@@ -571,7 +571,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Textfield-input::placeholder */
     color: var(
         --spectrum-textfield-m-placeholder-text-color,
-        var(--spectrum-global-color-gray-600)
+        var(--spectrum-alias-placeholder-text-color)
     );
 }
 #input:focus,

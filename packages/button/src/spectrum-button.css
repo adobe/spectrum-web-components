@@ -59,10 +59,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-button-primary-s-padding-left,
         var(--spectrum-alias-item-rounded-workflow-padding-left-s)
     );
-    --spectrum-button-primary-padding-right: var(
-        --spectrum-button-primary-s-padding-right,
-        var(--spectrum-alias-item-rounded-padding-s)
-    );
     --spectrum-button-primary-border-radius: var(
         --spectrum-button-primary-s-border-radius,
         var(--spectrum-alias-item-rounded-border-radius-s)
@@ -127,10 +123,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-button-primary-m-padding-left,
         var(--spectrum-alias-item-rounded-workflow-padding-left-m)
     );
-    --spectrum-button-primary-padding-right: var(
-        --spectrum-button-primary-m-padding-right,
-        var(--spectrum-alias-item-rounded-padding-m)
-    );
     --spectrum-button-primary-border-radius: var(
         --spectrum-button-primary-m-border-radius,
         var(--spectrum-alias-item-rounded-border-radius-m)
@@ -181,10 +173,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-button-primary-padding-left: var(
         --spectrum-button-primary-l-padding-left,
         var(--spectrum-alias-item-rounded-workflow-padding-left-l)
-    );
-    --spectrum-button-primary-padding-right: var(
-        --spectrum-button-primary-l-padding-right,
-        var(--spectrum-alias-item-rounded-padding-l)
     );
     --spectrum-button-primary-border-radius: var(
         --spectrum-button-primary-l-border-radius,
@@ -240,10 +228,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-button-primary-padding-left: var(
         --spectrum-button-primary-xl-padding-left,
         var(--spectrum-alias-item-rounded-workflow-padding-left-xl)
-    );
-    --spectrum-button-primary-padding-right: var(
-        --spectrum-button-primary-xl-padding-right,
-        var(--spectrum-alias-item-rounded-padding-xl)
     );
     --spectrum-button-primary-border-radius: var(
         --spectrum-button-primary-xl-border-radius,
