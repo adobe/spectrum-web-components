@@ -115,11 +115,6 @@ describe('ColorArea', () => {
             press: 'ArrowUp',
         });
 
-        // el.inputY.dispatchEvent(arrowUpEvent);
-        // el.inputY.dispatchEvent(arrowUpKeyupEvent);
-        // el.inputY.dispatchEvent(arrowUpEvent);
-        // el.inputY.dispatchEvent(arrowUpKeyupEvent);
-
         await elementUpdated(el);
 
         expect(el.x).to.equal(0.6666666666666666);
