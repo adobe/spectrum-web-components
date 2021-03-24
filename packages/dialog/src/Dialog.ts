@@ -37,6 +37,11 @@ import styles from './dialog.css.js';
 /**
  * @element sp-dialog
  *
+ * @slot hero - Accepts a hero image to display at the top of the dialog
+ * @slot heading - Acts as the heading of the dialog. This should be an actual heading tag `<h1-6 />`
+ * @slot - Content not addressed to a specific slot will be interpreted as the main content of the dialog
+ * @slot footer - Content addressed to the `footer` will be placed below the main content and to the side of any `[slot='button']` content
+ * @slot button - Button elements addressed to this slot may be placed below the content when not delivered in a fullscreen mode
  * @fires close - Announces that the dialog has been closed.
  */
 export class Dialog extends FocusVisiblePolyfillMixin(
