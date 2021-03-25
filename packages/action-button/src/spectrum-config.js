@@ -40,6 +40,11 @@ const config = {
                 },
                 {
                     type: 'boolean',
+                    selector: '.is-active',
+                    name: 'active',
+                },
+                {
+                    type: 'boolean',
                     name: 'emphasized',
                     selector: '.spectrum-ActionButton--emphasized',
                 },
