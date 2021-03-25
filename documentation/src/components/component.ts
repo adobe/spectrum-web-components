@@ -26,6 +26,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.j
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import { RouteComponent } from './route-component.js';
 import markdownStyles from './markdown.css';
 import componentStyles from './component.css';
