@@ -156,6 +156,7 @@ export class Textfield extends Focusable {
             <!-- @ts-ignore -->
             <textarea
                 aria-label=${this.label || this.placeholder}
+                aria-invalid=${ifDefined(this.invalid || undefined)}
                 id="input"
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
@@ -184,6 +185,7 @@ export class Textfield extends Focusable {
             <input
                 type="text"
                 aria-label=${this.label || this.placeholder}
+                aria-invalid=${ifDefined(this.invalid || undefined)}
                 id="input"
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
