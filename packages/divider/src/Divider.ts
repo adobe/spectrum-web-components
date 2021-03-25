@@ -17,6 +17,7 @@ import {
     TemplateResult,
     property,
     SizedMixin,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 
 import styles from './divider.css.js';
@@ -33,9 +34,22 @@ export class Divider extends SizedMixin(SpectrumElement, {
     public vertical = false;
 
     protected render(): TemplateResult {
-        if (this.vertical) return html``;
-        return html`
-            <hr />
-        `;
+        return html``;
+    }
+
+    protected firstUpdated(changed: PropertyValues<this>): void {
+        super.firstUpdated(changed);
+        this.setAttribute('role', 'separator');
+    }
+
+    protected updated(changed: PropertyValues<this>): void {
+        super.updated(changed);
+        if (changed.has('vertical')) {
+            if (this.vertical) {
+                this.setAttribute('aria-orientation', 'vertical');
+            } else {
+                this.removeAttribute('aria-orientation');
+            }
+        }
     }
 }
