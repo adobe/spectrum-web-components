@@ -886,7 +886,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-hover)
     );
 }
-:host([emphasized]) .is-active {
+:host([emphasized][active]) {
     /* .spectrum-ActionButton--emphasized.is-active */
     background-color: var(
         --spectrum-actionbutton-m-emphasized-background-color-down,
@@ -902,7 +902,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-down)
     );
 }
-:host([emphasized]) .is-active #hold-affordance {
+:host([emphasized][active]) #hold-affordance {
     /* .spectrum-ActionButton--emphasized.is-active .spectrum-ActionButton-hold */
     color: var(
         --spectrum-actionbutton-m-emphasized-hold-icon-color-down,
@@ -1022,8 +1022,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-:host([emphasized][selected]) .is-active,
-:host([emphasized][quiet][selected]) .is-active {
+:host([emphasized][selected][active]),
+:host([emphasized][quiet][selected][active]) {
     /* .spectrum-ActionButton--emphasized.is-selected.is-active,
    * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.is-active */
     background-color: var(
@@ -1039,8 +1039,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-:host([emphasized][selected]) .is-active ::slotted([slot='icon']),
-:host([emphasized][quiet][selected]) .is-active ::slotted([slot='icon']) {
+:host([emphasized][selected][active]) ::slotted([slot='icon']),
+:host([emphasized][quiet][selected][active]) ::slotted([slot='icon']) {
     /* .spectrum-ActionButton--emphasized.is-selected.is-active .spectrum-Icon,
    * .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.is-active .spectrum-Icon */
     color: var(
