@@ -150,6 +150,7 @@ export class ButtonBase extends LikeAnchor(
         const { code } = event;
         switch (code) {
             case 'Space':
+                event.preventDefault();
                 if (typeof this.href === 'undefined') {
                     this.addEventListener('keyup', this.handleKeyup);
                     this.active = true;
