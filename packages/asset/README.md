@@ -35,11 +35,17 @@ import { Asset } from '@spectrum-web-components/asset';
 ### File
 
 ```html
-<sp-asset variant="file"></sp-asset>
+<div class="flex">
+    <sp-asset variant="file"></sp-asset>
+    <sp-asset variant="file" label="Named File Asset"></sp-asset>
+</div>
 ```
 
 ### Folder
 
 ```html
-<sp-asset variant="folder"></sp-asset>
+<div class="flex">
+    <sp-asset variant="folder"></sp-asset>
+    <sp-asset variant="folder" label="Named Folder Asset"></sp-asset>
+</div>
 ```

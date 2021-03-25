@@ -30,6 +30,10 @@ governing permissions and limitations under the License.
     background: var(--spectrum-global-color-gray-100);
 }
 
+.demo-example .flex {
+    display: flex;
+}
+
 @media (max-width: 768px) {
     .demo-example {
         padding: var(--spectrum-global-dimension-size-200)
