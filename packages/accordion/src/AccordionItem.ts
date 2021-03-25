@@ -16,7 +16,6 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-    ifDefined,
 } from '@spectrum-web-components/base';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
@@ -90,7 +89,6 @@ export class AccordionItem extends Focusable {
                 <button
                     id="header"
                     @click=${this.onClick}
-                    aria-label=${ifDefined(this.label || undefined)}
                     aria-expanded=${this.open}
                     aria-controls="content"
                 >
