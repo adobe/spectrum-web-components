@@ -46,7 +46,9 @@ export * as FieldGroupStories from '../../packages/field-group/stories/field-gro
 export * as FieldLabelStories from '../../packages/field-label/stories/field-label.stories.js';
 export * as IconStories from '../../packages/icon/stories/icon.stories.js';
 export * as IconsStories from '../../packages/icons/stories/icons.stories.js';
+import '../../packages/icons-ui/stories/icon-manifest.js';
 export * as IconsUIStories from '../../packages/icons-ui/stories/icons-ui.stories.js';
+import '../../packages/icons-workflow/stories/icon-manifest.js';
 export * as IconsWorkflowStories from '../../packages/icons-workflow/stories/icons-workflow.stories.js';
 export * as IllustratedMessageStories from '../../packages/illustrated-message/stories/illustrated-message.stories.js';
 export * as LinkSizesStories from '../../packages/link/stories/link-sizes.stories.js';

@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const postHTMLSpectrumTypeography = require('./posthtml-spectrum-typography');
+import postHTMLSpectrumTypeography from './posthtml-spectrum-typography.js';
 
 // Add a few doc-specific transforms for code examples
 
-module.exports = postHTMLSpectrumTypeography({
+export default postHTMLSpectrumTypeography({
     customTransforms: [
         {
             selector: 'pre',

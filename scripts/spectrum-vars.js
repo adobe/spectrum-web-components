@@ -12,10 +12,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const path = require('path');
-const fs = require('fs-extra');
-const postcss = require('postcss');
-const { postCSSPlugins } = require('./css-processing');
+import path from 'path';
+import fs from 'fs-extra';
+import postcss from 'postcss';
+import { postCSSPlugins } from './css-processing.cjs';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // load our license file
 const license = fs.readFileSync(
@@ -65,7 +68,7 @@ const processCSSData = async (data, identifier) => {
 };
 
 const writeProcessedCSSToFile = (dstPath, contents) => {
-    result = `${license}\n/* stylelint-disable */\n${contents}\n/* stylelint-enable */`;
+    const result = `${license}\n/* stylelint-disable */\n${contents}\n/* stylelint-enable */`;
     fs.writeFile(dstPath, result, 'utf8');
 };
 

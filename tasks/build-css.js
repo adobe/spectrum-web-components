@@ -10,20 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
 
-const gulp = require('gulp');
-const cached = require('gulp-cached');
-const debug = require('gulp-debug');
-const header = require('gulp-header');
-const postcss = require('gulp-postcss');
-const rename = require('gulp-rename');
-const wrap = require('gulp-wrap');
-const merge = require('merge2');
-const tap = require('gulp-tap');
+import gulp from 'gulp';
+import cached from 'gulp-cached';
+import debug from 'gulp-debug';
+import header from 'gulp-header';
+import postcss from 'gulp-postcss';
+import rename from 'gulp-rename';
+import wrap from 'gulp-wrap';
+import merge from 'merge2';
+import tap from 'gulp-tap';
+import { postCSSPlugins, wrapCSSResult } from '../scripts/css-processing.cjs';
+import { fileURLToPath } from 'url';
 
-const stripIndent = require('common-tags').stripIndents;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const srcPath = path.resolve(path.join(__dirname, '..'));
 
@@ -36,11 +38,6 @@ function whichDst(file, t) {
     t.through(gulp.dest, ['packages/' + component + '/src/']);
 }
 const configPath = path.resolve(path.join(__dirname, '..', 'config'));
-
-const { postCSSPlugins, wrapCSSResult } = require('../scripts/css-processing');
-
-const ts = require('gulp-typescript');
-const tsProject = ts.createProject('tsconfig.json');
 
 const buildCSS = () => {
     const tsResult = merge([
@@ -79,4 +76,4 @@ const watchBuildCSS = () => {
     return gulp.watch(path.join(srcPath, '**/*.css'), buildCSS);
 };
 
-module.exports = { buildCSS, watchBuildCSS };
+export { buildCSS, watchBuildCSS };

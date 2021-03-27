@@ -1,10 +1,7 @@
 {
+    "extends": "../tsconfig.json",
     "compilerOptions": {
-        "module": "commonjs",
-        "target": "ES2017",
-        "rootDir": ".",
-        "sourceMap": false,
-        "strict": true
+        "rootDir": "."
     },
     "include": ["./send-keys-plugin.ts", "./a11y-snapshot-plugin.ts"],
     "exclude": []

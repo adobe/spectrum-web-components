@@ -25,7 +25,7 @@ export function a11ySnapshotPlugin() {
                 id: string;
                 browser: { type: string; getPage: (id: string) => Page };
             };
-        }) {
+        }): Promise<any> {
             if (command === 'a11y-snapshot') {
                 // handle specific behavior for playwright
                 if (session.browser.type === 'playwright') {

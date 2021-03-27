@@ -10,22 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const path = require('path');
-const merge = require('webpack-merge');
-const { createDefaultConfig } = require('@open-wc/building-webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-    .BundleAnalyzerPlugin;
-const WebpackBar = require('webpackbar');
+import path from 'path';
+import merge from 'webpack-merge';
+import { createDefaultConfig } from '@open-wc/building-webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import WebpackBar from 'webpackbar';
+import postCSSImport from 'postcss-import';
+import postCSSInherit from 'postcss-inherit';
+import postCSSPresetEnv from 'postcss-preset-env';
+import cssnano from 'cssnano';
+import postCSSFocusVisible from 'postcss-focus-visible';
+import postHTMLSpectrumPlugin from './src/utils/posthtml-spectrum-docs-markdown.js';
+import { fileURLToPath } from 'url';
 
-const srcPath = path.resolve(__dirname, '../src');
-const componentDir = path.resolve(__dirname, 'src/components');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// const srcPath = path.resolve(__dirname, '../src');
+// const componentDir = path.resolve(__dirname, 'src/components');
 const apiDocPath = path.resolve(__dirname, 'api-docs');
 
-const litComponentDirectories = [
-    componentDir,
-    srcPath,
-    path.dirname(require.resolve('prismjs/themes/prism-okaidia.css')),
-];
+// const litComponentDirectories = [
+//     componentDir,
+//     srcPath,
+//     path.dirname('/node_module/prismjs/themes/prism-okaidia.css'),
+//     path.dirname('/node_module/prismjs/themes/prism.css'),
+// ];
+
+const mainCSS = [path.resolve(__dirname, '/src/main.css')];
 
 const openWcConfig = createDefaultConfig({
     input: path.resolve(__dirname, './index.html'),
@@ -40,7 +51,7 @@ const babelLoader = openWcConfig.module.rules.find(
     (rule) => rule.use.loader === 'babel-loader'
 );
 
-module.exports = merge(openWcConfig, {
+export default merge(openWcConfig, {
     output: {
         path: path.join(__dirname, 'dist'),
         filename: '[name].[hash].bundle.js',
@@ -62,7 +73,7 @@ module.exports = merge(openWcConfig, {
         rules: [
             {
                 test: /\.css$/,
-                exclude: litComponentDirectories,
+                include: mainCSS,
                 use: [
                     {
                         loader: 'style-loader',
@@ -75,15 +86,10 @@ module.exports = merge(openWcConfig, {
             {
                 // Package CSS up so that it can be consumed directly by lit-element
                 test: /\.css$/,
-                include: litComponentDirectories,
+                exclude: mainCSS,
                 use: [
                     babelLoader.use,
-                    {
-                        loader: path.resolve(
-                            __dirname,
-                            '../utils/lit-css-typed-loader'
-                        ),
-                    },
+                    './utils/lit-css-typed-loader.cjs',
                     'extract-loader',
                     {
                         loader: 'css-loader',
@@ -94,15 +100,21 @@ module.exports = merge(openWcConfig, {
                         options: {
                             ident: 'postcss',
                             plugins: (loader) => [
-                                require('postcss-import')({
+                                postCSSImport({
                                     root: loader.resourcePath,
                                 }),
-                                require('postcss-inherit')(),
-                                require('postcss-preset-env')({
+                                postCSSInherit(),
+                                postCSSPresetEnv({
                                     stage: 0,
+                                    browsers: [
+                                        'last 2 Chrome versions',
+                                        'last 2 Firefox versions',
+                                        'last 4 Safari versions',
+                                        'last 4 iOS versions',
+                                    ],
                                 }),
                                 // minify the css with cssnano presets
-                                require('cssnano')({
+                                cssnano({
                                     preset: [
                                         'default',
                                         {
@@ -110,6 +122,7 @@ module.exports = merge(openWcConfig, {
                                         },
                                     ],
                                 }),
+                                postCSSFocusVisible(),
                             ],
                         },
                     },
@@ -138,9 +151,7 @@ module.exports = merge(openWcConfig, {
                         loader: 'posthtml-loader',
                         options: {
                             ident: 'posthtml',
-                            plugins: [
-                                require('./src/utils/posthtml-spectrum-docs-markdown'),
-                            ],
+                            plugins: [postHTMLSpectrumPlugin],
                         },
                     },
                     {

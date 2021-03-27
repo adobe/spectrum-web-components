@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const path = require('path');
-const { postCSSPlugins } = require('../scripts/css-processing');
+import path from 'path';
+import { postCSSPlugins } from '../scripts/css-processing.cjs';
 const transpilePackages = ['lit-html', 'lit-element'];
 
-module.exports = function (
+export default function (
     includeRegex,
     excludeRegex,
     tsconfigLocation = 'tsconfig.json'
@@ -84,4 +84,4 @@ module.exports = function (
             ],
         },
     };
-};
+}

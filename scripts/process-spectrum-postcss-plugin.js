@@ -10,11 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const postcss = require('postcss');
-const { re } = require('re-template-tag');
-const path = require('path');
-const fs = require('fs');
-const parser = require('postcss-selector-parser');
+import postcss from 'postcss';
+import { re } from 're-template-tag';
+import path from 'path';
+import fs from 'fs';
+import parser from 'postcss-selector-parser';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const astProcessor = parser();
 
@@ -758,7 +761,7 @@ class SpectrumProcessor {
     }
 }
 
-module.exports = postcss.plugin('postcss-process-spectrum', (opts) => {
+export default postcss.plugin('postcss-process-spectrum', (opts) => {
     const { component } = opts;
     return (root, result) => {
         const processor = new SpectrumProcessor(component);

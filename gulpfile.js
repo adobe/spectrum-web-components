@@ -9,26 +9,30 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const gulp = require('gulp');
+import gulp from 'gulp';
 
 // import the tasks
-const { buildCSS, watchBuildCSS } = require('./tasks/build-css');
-const {
+import { buildCSS, watchBuildCSS } from './tasks/build-css.js';
+import {
     docsBuildProduction,
     docsBuildStaging,
     docsWatchCompile,
     buildSearchIndex,
-} = require('./tasks/documentation');
+} from './tasks/documentation.js';
 
 // default is to compile, build and copy
 const defaultTasks = gulp.series(buildCSS);
 // watch variations of default task
 const watchTasks = gulp.parallel(watchBuildCSS);
 
-exports.default = defaultTasks;
-exports.css = buildCSS;
-exports.watch = watchTasks;
-exports.docsBuildProduction = docsBuildProduction;
-exports.docsBuildStaging = docsBuildStaging;
-exports.docsWatchCompile = docsWatchCompile;
-exports.buildSearchIndex = buildSearchIndex;
+export default defaultTasks;
+const css = buildCSS;
+const watch = watchTasks;
+export {
+    buildSearchIndex,
+    css,
+    docsBuildProduction,
+    docsBuildStaging,
+    docsWatchCompile,
+    watch,
+};

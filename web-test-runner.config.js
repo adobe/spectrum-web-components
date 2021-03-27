@@ -1,6 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
+This file is licensed to you under the Apache License, Version 2.0 (the "License")
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -9,16 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const { playwrightLauncher } = require('@web/test-runner-playwright');
-const { a11ySnapshotPlugin } = require('./test/a11y-snapshot-plugin.js');
-const { sendKeysPlugin } = require('./test/send-keys-plugin.js');
-const {
+import { playwrightLauncher } from '@web/test-runner-playwright';
+import { a11ySnapshotPlugin } from './test/a11y-snapshot-plugin.js';
+import { sendKeysPlugin } from './test/send-keys-plugin.js';
+import {
     packages,
     vrtGroups,
     configuredVisualRegressionPlugin,
-} = require('./web-test-runner.utils.js');
+} from './web-test-runner.utils.js';
 
-module.exports = {
+export default {
     plugins: [
         sendKeysPlugin(),
         a11ySnapshotPlugin(),

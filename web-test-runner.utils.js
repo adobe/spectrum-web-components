@@ -9,14 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const { playwrightLauncher } = require('@web/test-runner-playwright');
-const {
-    visualRegressionPlugin,
-} = require('@web/test-runner-visual-regression/plugin');
-const fs = require('fs');
-const path = require('path');
+import { playwrightLauncher } from '@web/test-runner-playwright';
+import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
+import fs from 'fs';
+import path from 'path';
 
-const packages = fs
+export const packages = fs
     .readdirSync('packages')
     .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory());
 
@@ -50,7 +48,7 @@ const vrtHTML = ({ color, scale, dir, reduceMotion }) => (testFramework) =>
         </body>
     </html>`;
 
-let vrtGroups = [];
+export const vrtGroups = [];
 const colors = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
@@ -74,7 +72,7 @@ colors.forEach((color) => {
     });
 });
 
-const configuredVisualRegressionPlugin = () =>
+export const configuredVisualRegressionPlugin = () =>
     visualRegressionPlugin({
         update: process.argv.includes('--update-visual-baseline'),
         diffOptions: {
@@ -105,9 +103,3 @@ const configuredVisualRegressionPlugin = () =>
             );
         },
     });
-
-module.exports = {
-    packages,
-    vrtGroups,
-    configuredVisualRegressionPlugin,
-};

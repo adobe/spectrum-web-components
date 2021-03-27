@@ -9,8 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const fs = require('fs');
-const globby = require('globby');
+import fs from 'fs';
+import globby from 'globby';
 
 function cleanURL(url) {
     return url.replace('test/visual/', '../');

@@ -25,7 +25,7 @@ export function sendKeysPlugin() {
                 id: string;
                 browser: { type: string; getPage: (id: string) => Page };
             };
-        }) {
+        }): Promise<any> {
             if (command === 'send-keys') {
                 // handle specific behavior for playwright
                 if (session.browser.type === 'playwright') {

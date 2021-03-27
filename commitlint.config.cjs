@@ -9,18 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import standard from './web-test-runner.config.js';
-import { defaultReporter } from '@web/test-runner';
-import { junitReporter } from '@web/test-runner-junit-reporter';
-
-standard.reporters = [
-    // use the default reporter only for reporting test progress
-    defaultReporter({ reportTestResults: false, reportTestProgress: true }),
-    // use another reporter to report test results
-    junitReporter({
-        outputPath: './results/test-results.xml', // default `'./test-results.xml'`
-        reportLogs: true, // default `false`
-    }),
-];
-
-export default standard;
+module.exports = {
+    extends: [
+        '@commitlint/config-conventional',
+        '@commitlint/config-lerna-scopes',
+    ],
+};
