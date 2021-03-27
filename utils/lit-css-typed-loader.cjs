@@ -14,7 +14,7 @@ governing permissions and limitations under the License.
 // exports a default CSSResult containing the compiled CSS
 
 const path = require('path');
-const { wrapCSSResult } = require('../scripts/css-processing');
+const { wrapCSSResult } = require('../scripts/css-processing.cjs');
 
 const filenameToOutputFilename = (filename) => {
     const dirName = path.dirname(filename);

@@ -22,6 +22,7 @@
     "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
+    "type": "module",
     "types": "./src/index.d.ts",
     "exports": {
         ".": "./src/index.js",

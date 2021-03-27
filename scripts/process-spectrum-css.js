@@ -12,29 +12,29 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const Walker = require('walker');
-const path = require('path');
-const chalk = require('chalk');
-const fs = require('fs-extra');
-const postcss = require('postcss');
-const { postCSSPlugins } = require('./css-processing');
-const postcssSpectrumPlugin = require('./process-spectrum-postcss-plugin');
-const reporter = require('postcss-reporter');
-const postcssCustomProperties = require('postcss-custom-properties');
+import Walker from 'walker';
+import path from 'path';
+import chalk from 'chalk';
+import fs from 'fs-extra';
+import postcss from 'postcss';
+import { postCSSPlugins } from './css-processing.cjs';
+import postcssSpectrumPlugin from './process-spectrum-postcss-plugin.js';
+import reporter from 'postcss-reporter';
+import postcssCustomProperties from 'postcss-custom-properties';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const componentRoot = path.resolve(__dirname, '../packages');
 
 async function processComponent(componentPath) {
     const configPath = path.join(componentPath, 'spectrum-config.js');
     const { default: spectrumConfig } = await import(configPath);
-    let inputCssPath;
+    const inputCssPath = `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/index-vars.css`;
     let packageCss = false;
-    try {
-        inputCssPath = require.resolve(
-            `@spectrum-css/${spectrumConfig.spectrum}/dist/index-vars.css`
-        );
+    if (fs.existsSync(inputCssPath)) {
         packageCss = true;
-    } catch (error) {
+    } else {
         console.error(
             chalk.bold.red(
                 `!!! '${spectrumConfig.spectrum}' does not have a local Spectrum CSS dependency !!!`
@@ -44,9 +44,7 @@ async function processComponent(componentPath) {
     }
     const inputCss = await fs.readFile(inputCssPath);
     let inputCustomProperties = await fs.readFile(
-        require.resolve(
-            `@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`
-        ),
+        `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`,
         'utf8'
     );
     inputCustomProperties = inputCustomProperties.replace(
@@ -75,9 +73,7 @@ async function processComponent(componentPath) {
             await postcssCustomProperties.process(
                 inputCustomProperties,
                 {
-                    from: require.resolve(
-                        `@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`
-                    ),
+                    from: `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`,
                 },
                 {
                     exportTo: [outputJsonPath],

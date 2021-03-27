@@ -9,10 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-const lunr = require('lunr');
-const globby = require('globby');
-const path = require('path');
-const fs = require('fs-extra');
+import lunr from 'lunr';
+import globby from 'globby';
+import path from 'path';
+import fs from 'fs-extra';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectDir = path.resolve(__dirname, '..', '..');
 const indexPath = path.resolve(

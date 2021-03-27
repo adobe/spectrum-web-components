@@ -11,12 +11,16 @@ governing permissions and limitations under the License.
 */
 'use strict';
 
-const { resolve, join } = require('path');
+import { resolve, join } from 'path';
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const ENV = process.argv.find((arg) => arg.includes('NODE_ENV=production'))
     ? 'production'
@@ -129,6 +133,6 @@ const shared = (env) => {
     };
 };
 
-module.exports = (env = {}) => {
+export default (env = {}) => {
     return [shared(env)];
 };

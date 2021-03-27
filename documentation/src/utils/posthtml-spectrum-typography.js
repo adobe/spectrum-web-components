@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 // Apply spectrum typography tags to HTML (e.g. from rendered Markdown)
 
-const parseAttrs = require('posthtml-attrs-parser');
-const matchHelper = require('posthtml-match-helper');
+import parseAttrs from 'posthtml-attrs-parser';
+import matchHelper from 'posthtml-match-helper';
 
 const transformations = [
     {
@@ -137,7 +137,7 @@ const transformations = [
     },
 ];
 
-module.exports = (options = {}) => {
+export default (options = {}) => {
     const htmlTransforms = options.customTransforms
         ? options.customTransforms.concat(transformations)
         : transformations;

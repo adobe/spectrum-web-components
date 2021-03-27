@@ -12,9 +12,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const path = require('path');
-const fs = require('fs');
-const { src } = require('yargs').argv;
+import path from 'path';
+import fs from 'fs';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const { src } = yargs(hideBin(process.argv)).argv;
+// const { src } = require('yargs').argv;
 
 async function main() {
     const inputCEJPath = path.join(process.cwd(), src);

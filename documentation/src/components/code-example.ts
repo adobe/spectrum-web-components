@@ -87,7 +87,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
     private demo?: HTMLDivElement;
 
     @property()
-    protected codeTheme: 'dark' | 'light' = 'light';
+    protected codeTheme: 'dark' | 'light' = 'dark';
 
     public static get styles(): CSSResultArray {
         return [Styles];

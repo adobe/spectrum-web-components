@@ -10,12 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const cheerio = require('cheerio');
-const prettier = require('prettier');
-const Case = require('case');
+import fs from 'fs';
+import glob from 'glob';
+import path from 'path';
+import cheerio from 'cheerio';
+import prettier from 'prettier';
+import Case from 'case';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const rootDir = path.join(__dirname, '../../../');
 

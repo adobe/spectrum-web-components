@@ -10,15 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const gulp = require('gulp');
-const path = require('path');
-const fs = require('fs-extra');
-const { exec } = require('child_process');
-const PluginError = require('plugin-error');
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server/lib/Server');
-const webpackConfig = require('../documentation/webpack.config');
-const merge = require('webpack-merge');
+import gulp from 'gulp';
+import path from 'path';
+import fs from 'fs-extra';
+import { exec } from 'child_process';
+import PluginError from 'plugin-error';
+import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server/lib/Server.js';
+import webpackConfig from '../documentation/webpack.config.js';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectDir = path.dirname(__dirname);
 
@@ -69,10 +71,17 @@ const webpackBuild = (baseUrl) => async () => {
     });
 };
 
-module.exports = {
-    docsBuildProduction: gulp.series(buildSearchIndex, webpackBuild(BASE_URL)),
-    docsBuildStaging: gulp.series(buildSearchIndex, webpackBuild('/')),
-    docsWatchCompile: gulp.series(buildSearchIndex, webpackDevServer),
-    webpackBuild,
+const docsBuildProduction = gulp.series(
     buildSearchIndex,
+    webpackBuild(BASE_URL)
+);
+const docsBuildStaging = gulp.series(buildSearchIndex, webpackBuild('/'));
+const docsWatchCompile = gulp.series(buildSearchIndex, webpackDevServer);
+
+export {
+    buildSearchIndex,
+    docsBuildProduction,
+    docsBuildStaging,
+    docsWatchCompile,
+    webpackBuild,
 };
