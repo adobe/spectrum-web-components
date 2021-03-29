@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.3...@spectrum-web-components/textfield@0.8.4) (2021-03-29)
+
+### Bug Fixes
+
+-   **textfield:** leverage aria-invalid attribute ([e718c0a](https://github.com/adobe/spectrum-web-components/commit/e718c0ac0d9f037b2bb9c6fb53ffc2121298731a))
+
 ## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.2...@spectrum-web-components/textfield@0.8.3) (2021-03-22)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield

@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
@@ -53,7 +53,7 @@
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
         "@spectrum-web-components/base": "^0.4.2",
-        "@spectrum-web-components/color-handle": "^0.1.1",
+        "@spectrum-web-components/color-handle": "^0.1.2",
         "tslib": "^2.0.0"
     }
 }

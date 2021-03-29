@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.1...@spectrum-web-components/color-area@0.1.2) (2021-03-29)
+
+### Bug Fixes
+
+-   **color-area:** up and down arrows now work properly ([44b9f74](https://github.com/adobe/spectrum-web-components/commit/44b9f741a3bc4d746505a8ad3ca2e0f3ef6bfc05))
+
 ## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.0...@spectrum-web-components/color-area@0.1.1) (2021-03-22)
 
 ### Bug Fixes

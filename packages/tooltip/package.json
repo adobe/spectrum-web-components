@@ -18,7 +18,7 @@
         "lit-element",
         "lit-html"
     ],
-    "version": "0.8.3",
+    "version": "0.8.4",
     "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
@@ -50,11 +50,11 @@
     "license": "Apache-2.0",
     "devDependencies": {
         "@spectrum-css/tooltip": "^3.0.1",
-        "@spectrum-web-components/icons-workflow": "^0.6.3"
+        "@spectrum-web-components/icons-workflow": "^0.6.4"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",
-        "@spectrum-web-components/overlay": "^0.11.1",
+        "@spectrum-web-components/overlay": "^0.11.2",
         "tslib": "^2.0.0"
     }
 }

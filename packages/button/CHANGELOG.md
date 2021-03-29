@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.13.3...@spectrum-web-components/button@0.13.4) (2021-03-29)
+
+### Bug Fixes
+
+-   **button:** prevent default on "space" based activations ([708d587](https://github.com/adobe/spectrum-web-components/commit/708d587385147b02dcb71932c0472b134f15038f))
+
 ## [0.13.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.13.2...@spectrum-web-components/button@0.13.3) (2021-03-22)
 
 **Note:** Version bump only for package @spectrum-web-components/button

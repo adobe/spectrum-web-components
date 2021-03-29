@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.3...@spectrum-web-components/accordion@0.4.4) (2021-03-29)
+
+### Bug Fixes
+
+-   **accordion:** update a11y tree to not double label ([cc91a6b](https://github.com/adobe/spectrum-web-components/commit/cc91a6bc597582ef08a5d3cf1a329b9866b3cbf1))
+
 ## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.2...@spectrum-web-components/accordion@0.4.3) (2021-03-22)
 
 **Note:** Version bump only for package @spectrum-web-components/accordion

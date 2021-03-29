@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.2...@spectrum-web-components/divider@0.2.3) (2021-03-29)
+
+### Bug Fixes
+
+-   **divider:** update a11y semantics ([46e6a12](https://github.com/adobe/spectrum-web-components/commit/46e6a1257135389e72a09f376f6b9149573873e6))
+
 ## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.1...@spectrum-web-components/divider@0.2.2) (2021-03-22)
 
 **Note:** Version bump only for package @spectrum-web-components/divider

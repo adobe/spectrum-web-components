@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.9.2...@spectrum-web-components/slider@0.9.3) (2021-03-29)
+
+### Bug Fixes
+
+-   **slider:** update a11y tree and default max value ([3cbf222](https://github.com/adobe/spectrum-web-components/commit/3cbf222386d53cdd77847bb9093f494e542c9195))
+
 ## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.9.1...@spectrum-web-components/slider@0.9.2) (2021-03-22)
 
 ### Bug Fixes
