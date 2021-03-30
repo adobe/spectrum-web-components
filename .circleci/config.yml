@@ -416,3 +416,4 @@ workflows:
                               - main
                   requires:
                       - test
+                      - docs
