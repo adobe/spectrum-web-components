@@ -13,6 +13,16 @@ commands:
     downstream:
         steps:
             - checkout
+            - restore_cache:
+                  keys:
+                      - v3a-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Installing Dependencies
+                  command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+            - save_cache:
+                  paths:
+                      - ~/.cache/yarn
+                  key: v3a-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - attach_workspace:
                   at: /
     run-regressions:
@@ -88,15 +98,14 @@ jobs:
             - checkout
             - restore_cache:
                   keys:
-                      - v3-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v3a-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
                   name: Installing Dependencies
                   command: yarn --ignore-scripts --frozen-lockfile --cache-folder ~/.cache/yarn
             - save_cache:
                   paths:
                       - ~/.cache/yarn
-                      - node_modules
-                  key: v3-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                  key: v3a-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
                   name: Define environment variable with lastest commit's message
                   command: |
@@ -105,30 +114,6 @@ jobs:
             - run:
                   name: Lint commit message
                   command: echo "$COMMIT_MESSAGE" | npx commitlint
-    build:
-        executor: node
-
-        steps:
-            - checkout
-            - restore_cache:
-                  keys:
-                      - v3-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - run:
-                  name: Installing Dependencies
-                  command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
-            - save_cache:
-                  paths:
-                      - ~/.cache/yarn
-                      - node_modules
-                  key: v3-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - persist_to_workspace:
-                  root: /
-                  paths:
-                      - ms-playwright
-                      - root/project/node_modules
-                      - root/project/packages
-                      - root/project/projects/story-decorator
-                      - root/project/projects/vrt-compare
 
     test:
         executor: node
@@ -159,6 +144,11 @@ jobs:
                   root: /
                   paths:
                       - root/project/documentation/dist
+            - run: echo '/*    /index.html   200' > documentation/dist/_redirects
+            - run: |
+                  branch=$(git symbolic-ref --short HEAD)
+                  branch=$(npx slugify-cli $branch)
+                  yarn netlify deploy --alias=$branch
 
     visual-lightest-medium-ltr:
         executor: node
@@ -330,18 +320,6 @@ jobs:
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
             - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site" -t
 
-    publish-preview:
-        executor: node
-
-        steps:
-            - downstream
-            - run: yarn docs:build
-            - run: echo '/*    /index.html   200' > documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch
-
 workflows:
     version: 2
     commitlint:
@@ -349,77 +327,88 @@ workflows:
             - commitlint
     build:
         jobs:
-            - build
-            - test:
-                  requires:
-                      - build
-            - docs:
-                  requires:
-                      - build
+            - test
+            - docs
             - visual-lightest-medium-ltr:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-lightest-large-ltr:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-light-medium-ltr:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-light-large-ltr:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-dark-medium-ltr:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-dark-large-ltr:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-darkest-medium-ltr:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-darkest-large-ltr:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-lightest-medium-rtl:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-lightest-large-rtl:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-light-medium-rtl:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-light-large-rtl:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-dark-medium-rtl:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-dark-large-rtl:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-darkest-medium-rtl:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - visual-darkest-large-rtl:
-                  requires:
-                      - test
-                      - docs
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - publish-docs:
                   filters:
                       branches:
@@ -427,12 +416,3 @@ workflows:
                               - main
                   requires:
                       - test
-                      - docs
-            - publish-preview:
-                  requires:
-                      - test
-                      - docs
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
