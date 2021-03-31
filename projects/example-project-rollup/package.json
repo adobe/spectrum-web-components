@@ -23,7 +23,7 @@
     "@types/node": "13.11.1",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^2.20.0",
-    "concurrently": "^5.1.0",
+    "concurrently": "^6.0.0",
     "es-dev-server": "^1.5.0",
     "eslint": "^7.8.0",
     "eslint-config-prettier": "^7.1.0",
