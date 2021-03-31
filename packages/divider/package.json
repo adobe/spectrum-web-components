@@ -1,29 +1,24 @@
 {
     "name": "@spectrum-web-components/divider",
+    "version": "0.2.3",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/divider"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/divider",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/divider",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.2.3",
-    "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
-    "types": "./src/index.d.ts",
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
@@ -32,29 +27,34 @@
         "./sp-divider": "./sp-divider.js",
         "./sp-divider.js": "./sp-divider.js"
     },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
     "files": [
-        "custom-elements.json",
         "*.d.ts",
         "*.js",
         "*.js.map",
-        "/src/"
+        "/src/",
+        "custom-elements.json"
     ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.4.2",
+        "tslib": "^2.0.0"
+    },
+    "devDependencies": {
+        "@spectrum-css/divider": "^1.0.1"
+    },
+    "types": "./src/index.d.ts",
     "sideEffects": [
         "./sp-*.js",
         "./sp-*.ts",
         "./stories/typography-decorator.js",
         "./stories/typography-decorator.ts"
-    ],
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
-    "author": "",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "@spectrum-css/divider": "^1.0.1"
-    },
-    "dependencies": {
-        "@spectrum-web-components/base": "^0.4.2",
-        "tslib": "^2.0.0"
-    }
+    ]
 }

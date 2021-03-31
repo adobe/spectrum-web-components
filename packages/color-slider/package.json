@@ -1,25 +1,21 @@
 {
     "name": "@spectrum-web-components/color-slider",
+    "version": "0.1.2",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/color-slider"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/color-slider",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/color-slider",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.1.2",
-    "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
@@ -30,30 +26,34 @@
         "./sp-color-slider": "./sp-color-slider.js",
         "./sp-color-slider.js": "./sp-color-slider.js"
     },
-    "files": [
-        "custom-elements.json",
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/"
-    ],
-    "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
-    ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "author": "",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "@spectrum-css/colorslider": "^1.0.1"
-    },
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
         "@spectrum-web-components/base": "^0.4.2",
         "@spectrum-web-components/color-handle": "^0.1.2",
         "@spectrum-web-components/shared": "^0.12.1",
         "tslib": "^2.0.0"
-    }
+    },
+    "devDependencies": {
+        "@spectrum-css/colorslider": "^1.0.1"
+    },
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ]
 }

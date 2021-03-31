@@ -1,21 +1,30 @@
 {
   "name": "example-project-rollup",
-  "private": true,
   "version": "0.3.2",
+  "private": true,
   "description": "An example project that uses the web components and gives an example of how to bundle them minimally with rollup.",
+  "license": "Apache-2.0",
+  "author": "example-app",
   "main": "index.js",
   "scripts": {
-    "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
-    "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
-    "lint:prettier": "prettier \"**/*.js\" \"**/*.ts\" --check --ignore-path .gitignore",
-    "format:prettier": "prettier \"**/*.js\" \"**/*.ts\" --write --ignore-path .gitignore",
-    "format": "npm run format:eslint && npm run format:prettier",
     "build": "rimraf dist && yarn build:tsc && rollup -c rollup.config.js",
-    "postbuild": "mv dist/*.css dist/styles.css",
     "build:tsc": "tsc && cp src/styles.css out-tsc/src",
-    "start:build": "npm run build && es-dev-server --root-dir dist --app-index index.html --open --compatibility none",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
+    "format:prettier": "prettier \"**/*.js\" \"**/*.ts\" --write --ignore-path .gitignore",
+    "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
+    "lint:prettier": "prettier \"**/*.js\" \"**/*.ts\" --check --ignore-path .gitignore",
+    "postbuild": "mv dist/*.css dist/styles.css",
     "start": "concurrently --kill-others --names tsc,es-dev-server \"npm run tsc:watch\" \"es-dev-server --app-index index.html --node-resolve --open --watch\"",
+    "start:build": "npm run build && es-dev-server --root-dir dist --app-index index.html --open --compatibility none",
     "tsc:watch": "tsc --watch"
+  },
+  "dependencies": {
+    "@spectrum-web-components/button": "^0.13.4",
+    "@spectrum-web-components/field-label": "^0.4.2",
+    "@spectrum-web-components/menu": "^0.8.2",
+    "@spectrum-web-components/picker": "^0.4.2",
+    "@spectrum-web-components/styles": "^0.9.3"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.6.3",
@@ -39,14 +48,5 @@
   "prettier": {
     "singleQuote": true,
     "arrowParens": "avoid"
-  },
-  "author": "example-app",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "@spectrum-web-components/button": "^0.13.4",
-    "@spectrum-web-components/field-label": "^0.4.2",
-    "@spectrum-web-components/menu": "^0.8.2",
-    "@spectrum-web-components/picker": "^0.4.2",
-    "@spectrum-web-components/styles": "^0.9.3"
   }
 }

@@ -1,28 +1,23 @@
 {
     "name": "@spectrum-web-components/search",
+    "version": "0.8.4",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/search"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/search",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/search",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.8.4",
-    "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
-    "types": "./src/index.d.ts",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
@@ -32,25 +27,22 @@
         "./sp-search": "./sp-search.js",
         "./sp-search.js": "./sp-search.js"
     },
-    "files": [
-        "custom-elements.json",
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/"
-    ],
-    "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
-    ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "author": "",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "@spectrum-css/search": "^3.0.1"
-    },
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",
         "@spectrum-web-components/button": "^0.13.4",
@@ -58,5 +50,13 @@
         "@spectrum-web-components/icons-workflow": "^0.6.4",
         "@spectrum-web-components/textfield": "^0.8.4",
         "tslib": "^2.0.0"
-    }
+    },
+    "devDependencies": {
+        "@spectrum-css/search": "^3.0.1"
+    },
+    "types": "./src/index.d.ts",
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ]
 }

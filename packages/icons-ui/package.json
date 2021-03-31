@@ -1,29 +1,24 @@
 {
     "name": "@spectrum-web-components/icons-ui",
+    "version": "0.6.4",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/icons-ui"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/icons-ui",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/icons-ui",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.6.4",
-    "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
     "type": "module",
-    "types": "./src/index.d.ts",
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
@@ -31,22 +26,27 @@
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json"
     },
-    "files": [
-        "custom-elements.json",
-        "/lib/",
-        "/src/",
-        "/icons/"
-    ],
-    "sideEffects": [
-        "./src/index.js",
-        "./src/index.ts",
-        "./icons/*"
-    ],
     "scripts": {
         "build": "node ./bin/build @spectrum-css/icon/medium"
     },
-    "author": "",
-    "license": "Apache-2.0",
+    "files": [
+        "/icons/",
+        "/lib/",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.4.2",
+        "@spectrum-web-components/icon": "^0.9.4",
+        "@spectrum-web-components/iconset": "^0.5.4",
+        "tslib": "^2.0.0"
+    },
     "devDependencies": {
         "@spectrum-css/icon": "^3.0.1",
         "case": "^1.6.1",
@@ -56,10 +56,10 @@
         "path": "^0.12.7",
         "prettier": "^2.2.1"
     },
-    "dependencies": {
-        "@spectrum-web-components/base": "^0.4.2",
-        "@spectrum-web-components/icon": "^0.9.4",
-        "@spectrum-web-components/iconset": "^0.5.4",
-        "tslib": "^2.0.0"
-    }
+    "types": "./src/index.d.ts",
+    "sideEffects": [
+        "./src/index.js",
+        "./src/index.ts",
+        "./icons/*"
+    ]
 }

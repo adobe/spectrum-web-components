@@ -1,29 +1,24 @@
 {
     "name": "@spectrum-web-components/{{ name }}",
+    "version": "0.0.1",
     "publishConfig": {
         "access": "public"
     },
+    "description": "Web component implementation of a Spectrum design {{className name}}",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/{{ name }}"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/{{ name }}",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/{{ name }}",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.0.1",
-    "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
-    "types": "./src/index.d.ts",
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*.js",
@@ -32,6 +27,9 @@
         "./{{> tagnamePartial }}": "./{{> tagnamePartial }}.js",
         "./{{> tagnamePartial }}.js": "./{{> tagnamePartial }}.js"
     },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
     "files": [
         "custom-elements.json",
         "*.d.ts",
@@ -39,20 +37,22 @@
         "*.js.map",
         "/src/"
     ],
-    "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
     ],
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
-    "author": "",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "@spectrum-css/{{spectrumCSS name}}": "^2.0.0"
-    },
     "dependencies": {
         "@spectrum-web-components/base": "^0.1.0",
         "tslib": "^2.0.0"
-    }
+    },
+    "devDependencies": {
+        "@spectrum-css/{{spectrumCSS name}}": "^2.0.0"
+    },
+    "types": "./src/index.d.ts",
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ]
 }

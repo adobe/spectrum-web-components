@@ -1,28 +1,23 @@
 {
     "name": "@spectrum-web-components/bundle",
+    "version": "0.19.5",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/bundle"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/bundle",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/bundle",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.19.5",
-    "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
-    "types": "./src/index.d.ts",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
@@ -33,22 +28,22 @@
         "./icons": "./src/icons.js",
         "./icons.js": "./src/icons.js"
     },
-    "files": [
-        "custom-elements.json",
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/"
-    ],
-    "sideEffects": [
-        "./elements.js",
-        "./elements.ts"
-    ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "author": "",
-    "license": "Apache-2.0",
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
     "dependencies": {
         "@spectrum-web-components/accordion": "^0.4.4",
         "@spectrum-web-components/action-bar": "^0.2.4",
@@ -104,5 +99,10 @@
         "@spectrum-web-components/tooltip": "^0.8.4",
         "@spectrum-web-components/underlay": "^0.6.3",
         "tslib": "^2.0.0"
-    }
+    },
+    "types": "./src/index.d.ts",
+    "sideEffects": [
+        "./elements.js",
+        "./elements.ts"
+    ]
 }
