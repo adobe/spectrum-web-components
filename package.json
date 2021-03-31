@@ -91,7 +91,7 @@
         "@babel/preset-env": "^7.10.4",
         "@commitlint/cli": "^12.0.1",
         "@commitlint/config-conventional": "^12.0.0",
-        "@commitlint/config-lerna-scopes": "^9.1.2",
+        "@commitlint/config-lerna-scopes": "^12.0.1",
         "@open-wc/building-webpack": "^2.13.46",
         "@open-wc/dev-server-hmr": "^0.1.1",
         "@open-wc/lit-helpers": "^0.3.12",
