@@ -30,6 +30,7 @@ import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
 import { copyNode } from './copy-to-clipboard.js';
+import { ThemeData } from '@spectrum-web-components/theme';
 
 class Code extends LitElement {
     @property()
@@ -139,6 +140,20 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
     }
 
     protected render(): TemplateResult {
+        const queryThemeDetail: ThemeData = {
+            color: undefined,
+            scale: undefined,
+        };
+        const queryThemeEvent = new CustomEvent<ThemeData>('sp-query-theme', {
+            bubbles: true,
+            composed: true,
+            detail: queryThemeDetail,
+            cancelable: true,
+        });
+        this.dispatchEvent(queryThemeEvent);
+        this.codeTheme = queryThemeDetail.color?.startsWith('light')
+            ? 'light'
+            : 'dark';
         const { highlightedCode, renderedCode } = this;
         return html`
             ${this.showDemo
