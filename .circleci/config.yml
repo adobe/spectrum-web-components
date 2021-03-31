@@ -132,18 +132,14 @@ jobs:
             - store_artifacts:
                   path: coverage
 
-    docs:
+    docs-preview:
         executor: node
 
         steps:
             - downstream
             - run:
                   name: Generate Docs
-                  command: yarn docs:ci
-            - persist_to_workspace:
-                  root: /
-                  paths:
-                      - root/project/documentation/dist
+                  command: yarn docs:build
             - run: echo '/*    /index.html   200' > documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
@@ -310,11 +306,14 @@ jobs:
                   regression_scale: large
                   regression_dir: rtl
 
-    publish-docs:
+    docs-publish:
         executor: node
 
         steps:
             - downstream
+            - run:
+                  name: Generate Docs
+                  command: yarn docs:ci
             - run: cp documentation/404.html documentation/dist/
             - run: touch documentation/dist/.nojekyll
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
@@ -328,7 +327,7 @@ workflows:
     build:
         jobs:
             - test
-            - docs
+            - docs-preview
             - visual-lightest-medium-ltr:
                   filters:
                       branches:
@@ -409,11 +408,10 @@ workflows:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - publish-docs:
+            - docs-publish:
                   filters:
                       branches:
                           only:
                               - main
                   requires:
                       - test
-                      - docs
