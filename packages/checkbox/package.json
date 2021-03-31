@@ -1,28 +1,23 @@
 {
     "name": "@spectrum-web-components/checkbox",
+    "version": "0.9.4",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/checkbox"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/checkbox",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/checkbox",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.9.4",
-    "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
-    "types": "./src/index.d.ts",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
@@ -32,30 +27,35 @@
         "./sp-checkbox": "./sp-checkbox.js",
         "./sp-checkbox.js": "./sp-checkbox.js"
     },
-    "files": [
-        "custom-elements.json",
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/"
-    ],
-    "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
-    ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "author": "",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "@spectrum-css/checkbox": "^3.0.1"
-    },
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",
         "@spectrum-web-components/icon": "^0.9.4",
         "@spectrum-web-components/icons-ui": "^0.6.4",
         "@spectrum-web-components/shared": "^0.12.1",
         "tslib": "^2.0.0"
-    }
+    },
+    "devDependencies": {
+        "@spectrum-css/checkbox": "^3.0.1"
+    },
+    "types": "./src/index.d.ts",
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ]
 }

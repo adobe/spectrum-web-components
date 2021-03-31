@@ -1,28 +1,23 @@
 {
     "name": "@spectrum-web-components/overlay",
+    "version": "0.11.2",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/overlay"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/overlay",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/overlay",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.11.2",
-    "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
-    "types": "./src/index.d.ts",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
@@ -36,14 +31,33 @@
         "./sync/overlay-trigger": "./sync/overlay-trigger.js",
         "./sync/overlay-trigger.js": "./sync/overlay-trigger.js"
     },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
     "files": [
-        "custom-elements.json",
         "*.d.ts",
         "*.js",
         "*.js.map",
         "/src/",
-        "/sync/"
+        "/sync/",
+        "custom-elements.json"
     ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@popperjs/core": "^2.2.2",
+        "@spectrum-web-components/action-button": "^0.4.4",
+        "@spectrum-web-components/base": "^0.4.2",
+        "@spectrum-web-components/shared": "^0.12.1",
+        "@spectrum-web-components/theme": "^0.8.4",
+        "popper-max-size-modifier": "^0.2.0",
+        "tslib": "^2.0.0"
+    },
+    "types": "./src/index.d.ts",
     "sideEffects": [
         "./active-overlay.js",
         "./active-overlay.ts",
@@ -53,19 +67,5 @@
         "./sync/overlay-trigger.ts",
         "./stories/overlay-story-components.js",
         "./stories/overlay-story-components.ts"
-    ],
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
-    "author": "",
-    "license": "Apache-2.0",
-    "dependencies": {
-        "@popperjs/core": "^2.2.2",
-        "@spectrum-web-components/action-button": "^0.4.4",
-        "@spectrum-web-components/base": "^0.4.2",
-        "@spectrum-web-components/shared": "^0.12.1",
-        "@spectrum-web-components/theme": "^0.8.4",
-        "popper-max-size-modifier": "^0.2.0",
-        "tslib": "^2.0.0"
-    }
+    ]
 }

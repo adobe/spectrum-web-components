@@ -1,28 +1,23 @@
 {
     "name": "@spectrum-web-components/theme",
+    "version": "0.8.4",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "ISC",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/theme"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/theme",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/theme",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.8.4",
-    "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
-    "types": "./src/index.d.ts",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
@@ -44,13 +39,28 @@
         "./theme-darkest": "./theme-darkest.js",
         "./theme-darkest.js": "./theme-darkest.js"
     },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
     "files": [
-        "custom-elements.json",
         "*.d.ts",
         "*.js",
         "*.js.map",
-        "/src/"
+        "/src/",
+        "custom-elements.json"
     ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.4.2",
+        "@spectrum-web-components/styles": "^0.9.3",
+        "tslib": "^2.0.0"
+    },
+    "types": "./src/index.d.ts",
     "sideEffects": [
         "./sp-*.js",
         "./sp-*.ts",
@@ -60,15 +70,5 @@
         "./scale-*.ts",
         "./src/themes.js",
         "./src/themes.ts"
-    ],
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "@spectrum-web-components/base": "^0.4.2",
-        "@spectrum-web-components/styles": "^0.9.3",
-        "tslib": "^2.0.0"
-    }
+    ]
 }

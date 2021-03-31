@@ -1,29 +1,24 @@
 {
     "name": "@spectrum-web-components/picker",
+    "version": "0.4.2",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/picker"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/picker",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/picker",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.4.2",
-    "description": "",
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
-    "types": "./src/index.d.ts",
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
@@ -34,28 +29,23 @@
         "./sync/sp-picker": "./sync/sp-picker.js",
         "./sync/sp-picker.js": "./sync/sp-picker.js"
     },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
     "files": [
-        "custom-elements.json",
         "*.d.ts",
         "*.js",
         "*.js.map",
         "/src/",
-        "/sync/"
+        "/sync/",
+        "custom-elements.json"
     ],
-    "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts",
-        "./sync/sp-*.js",
-        "./sync/sp-*.ts"
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
     ],
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
-    "author": "",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "@spectrum-css/picker": "^1.0.1"
-    },
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",
         "@spectrum-web-components/button": "^0.13.4",
@@ -67,5 +57,15 @@
         "@spectrum-web-components/popover": "^0.9.4",
         "@spectrum-web-components/shared": "^0.12.1",
         "tslib": "^2.0.0"
-    }
+    },
+    "devDependencies": {
+        "@spectrum-css/picker": "^1.0.1"
+    },
+    "types": "./src/index.d.ts",
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts",
+        "./sync/sp-*.js",
+        "./sync/sp-*.ts"
+    ]
 }

@@ -1,25 +1,21 @@
 {
     "name": "@spectrum-web-components/modal",
+    "version": "0.3.3",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/modal"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/modal",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/modal",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.3.3",
-    "description": "",
     "main": "src/modal.css.js",
     "module": "src/modal.css.js",
     "type": "module",
@@ -29,27 +25,31 @@
         "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json"
     },
-    "files": [
-        "custom-elements.json",
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/"
-    ],
-    "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
-    ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "author": "",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "@spectrum-css/modal": "^3.0.1"
-    },
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",
         "tslib": "^2.0.0"
-    }
+    },
+    "devDependencies": {
+        "@spectrum-css/modal": "^3.0.1"
+    },
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ]
 }

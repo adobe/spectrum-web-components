@@ -1,28 +1,23 @@
 {
     "name": "@spectrum-web-components/banner",
+    "version": "0.6.2",
     "publishConfig": {
         "access": "public"
     },
+    "description": "",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/banner"
     },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/banner",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/banner",
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "version": "0.6.2",
-    "description": "",
     "main": "./src/index.js",
     "module": "./src/index.js",
-    "types": "./src/index.d.ts",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
@@ -32,27 +27,32 @@
         "./sp-banner": "./sp-banner.js",
         "./sp-banner.js": "./sp-banner.js"
     },
-    "files": [
-        "custom-elements.json",
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/"
-    ],
-    "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
-    ],
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "author": "",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "@spectrum-css/banner": "^3.0.0-beta.2"
-    },
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",
         "tslib": "^2.0.0"
-    }
+    },
+    "devDependencies": {
+        "@spectrum-css/banner": "^3.0.0-beta.2"
+    },
+    "types": "./src/index.d.ts",
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ]
 }
