@@ -51,6 +51,10 @@ const DEFAULT_DIR = (window.localStorage
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
+export interface TrackTheme {
+    callback: (color: Color) => void;
+}
+
 export class LayoutElement extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [layoutStyles];
@@ -81,6 +85,8 @@ export class LayoutElement extends SpectrumElement {
     @property({ attribute: false })
     public scale: Scale = DEFAULT_SCALE;
 
+    private _themeTrackers = new Map<HTMLElement, TrackTheme['callback']>();
+
     handleMatchMediaChange = (event: MediaQueryListEvent) => {
         this.isNarrow = event.matches;
     };
@@ -95,6 +101,7 @@ export class LayoutElement extends SpectrumElement {
 
     private updateColor(event: Event) {
         this.color = (event.target as Picker).value as Color;
+        this._themeTrackers.forEach((tracker) => tracker(this.color));
     }
 
     private updateScale(event: Event) {
@@ -104,6 +111,19 @@ export class LayoutElement extends SpectrumElement {
     private updateDirection(event: Event) {
         const dir = (event.target as Picker).value;
         this.dir = dir === 'rtl' ? dir : 'ltr';
+    }
+
+    private handleTrackTheme(event: CustomEvent<TrackTheme>): void {
+        const target = event.composedPath()[0] as HTMLElement;
+        if (this._themeTrackers.has(target)) {
+            this._themeTrackers.delete(target);
+        } else {
+            this._themeTrackers.set(target, event.detail.callback);
+            const callback = this._themeTrackers.get(target);
+            if (callback) {
+                callback(this.color);
+            }
+        }
     }
 
     private addAlert(event: CustomEvent<{ message: string }>): void {
@@ -157,6 +177,7 @@ export class LayoutElement extends SpectrumElement {
                 scale=${this.scale}
                 dir=${this.dir}
                 id="app"
+                @sp-track-theme=${this.handleTrackTheme}
             >
                 <header>
                     <sp-action-button

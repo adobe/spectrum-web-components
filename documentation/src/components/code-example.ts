@@ -17,67 +17,20 @@ import {
     TemplateResult,
     CSSResultArray,
     property,
-    css,
     query,
 } from 'lit-element';
 import * as Prism from 'prismjs';
 import { toHtmlTemplateString } from '../utils/templates.js';
-import DarkThemeStyles from 'prismjs/themes/prism-okaidia.css';
-import LightThemeStyles from 'prismjs/themes/prism.css';
 import Styles from './code-example.css';
+import StylesLight from './code-example-light.css';
+import StylesDark from './code-example-dark.css';
 import { stripIndent } from 'common-tags';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
 import { copyNode } from './copy-to-clipboard.js';
-import { ThemeData } from '@spectrum-web-components/theme';
-
-class Code extends LitElement {
-    @property()
-    public code: string = '';
-
-    get highlightedCode(): TemplateResult {
-        return toHtmlTemplateString(this.code);
-    }
-
-    protected render(): TemplateResult {
-        return html`
-            <pre><code>${this.highlightedCode}</code></pre>
-        `;
-    }
-}
-
-@customElement('dark-code')
-export class DarkCode extends Code {
-    public static get styles(): CSSResultArray {
-        return [DarkThemeStyles];
-    }
-}
-
-@customElement('light-code')
-export class LightCode extends Code {
-    public static get styles(): CSSResultArray {
-        return [
-            LightThemeStyles,
-            css`
-                .token.attr-name,
-                .token.builtin,
-                .token.char,
-                .token.inserted,
-                .token.selector,
-                .token.string {
-                    color: #567f01;
-                }
-                .token.punctuation {
-                    color: #737373;
-                }
-                .language-css .token.function {
-                    color: inherit;
-                }
-            `,
-        ];
-    }
-}
+import { TrackTheme } from './layout.js';
+import { Color } from '@spectrum-web-components/theme';
 
 @customElement('code-example')
 export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
@@ -91,7 +44,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
     protected codeTheme: 'dark' | 'light' = 'dark';
 
     public static get styles(): CSSResultArray {
-        return [Styles];
+        return [Styles, StylesLight, StylesDark];
     }
 
     public get code(): string {
@@ -119,13 +72,10 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
             this.language
         );
 
-        if (this.codeTheme === 'dark') {
-            return html`
-                <dark-code .code=${highlightedHtml}></dark-code>
-            `;
-        }
+        const code = toHtmlTemplateString(highlightedHtml);
+
         return html`
-            <light-code .code=${highlightedHtml}></light-code>
+            <pre><code>${code}</code></pre>
         `;
     }
 
@@ -140,20 +90,6 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
     }
 
     protected render(): TemplateResult {
-        const queryThemeDetail: ThemeData = {
-            color: undefined,
-            scale: undefined,
-        };
-        const queryThemeEvent = new CustomEvent<ThemeData>('sp-query-theme', {
-            bubbles: true,
-            composed: true,
-            detail: queryThemeDetail,
-            cancelable: true,
-        });
-        this.dispatchEvent(queryThemeEvent);
-        this.codeTheme = queryThemeDetail.color?.startsWith('light')
-            ? 'light'
-            : 'dark';
         const { highlightedCode, renderedCode } = this;
         return html`
             ${this.showDemo
@@ -163,7 +99,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
                       </div>
                   `
                 : undefined}
-            <bdo id="markup" dir="ltr">
+            <bdo id="markup" dir="ltr" class=${this.codeTheme}>
                 ${highlightedCode}
                 <sp-action-button
                     class="copy"
@@ -199,12 +135,29 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         });
     }
 
+    private trackTheme(): void {
+        const queryThemeEvent = new CustomEvent<TrackTheme>('sp-track-theme', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                callback: (color: Color) => {
+                    this.codeTheme = color.startsWith('light')
+                        ? 'light'
+                        : 'dark';
+                },
+            },
+            cancelable: true,
+        });
+        this.dispatchEvent(queryThemeEvent);
+    }
+
     public connectedCallback(): void {
         super.connectedCallback();
         window.addEventListener(
             'resize',
             this.shouldManageTabOrderForScrolling
         );
+        this.trackTheme();
     }
 
     public disconnectedCallback(): void {
@@ -212,6 +165,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
             'resize',
             this.shouldManageTabOrderForScrolling
         );
+        this.trackTheme();
         super.disconnectedCallback();
     }
 }

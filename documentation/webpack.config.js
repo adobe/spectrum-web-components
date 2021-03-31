@@ -18,6 +18,7 @@ import WebpackBar from 'webpackbar';
 import postCSSImport from 'postcss-import';
 import postCSSInherit from 'postcss-inherit';
 import postCSSPresetEnv from 'postcss-preset-env';
+import postCSSPrefixwrap from 'postcss-prefixwrap';
 import cssnano from 'cssnano';
 import postCSSFocusVisible from 'postcss-focus-visible';
 import postHTMLSpectrumPlugin from './src/utils/posthtml-spectrum-docs-markdown.js';
@@ -98,32 +99,37 @@ export default merge(openWcConfig, {
                     {
                         loader: 'postcss-loader',
                         options: {
-                            ident: 'postcss',
-                            plugins: (loader) => [
-                                postCSSImport({
-                                    root: loader.resourcePath,
-                                }),
-                                postCSSInherit(),
-                                postCSSPresetEnv({
-                                    stage: 0,
-                                    browsers: [
-                                        'last 2 Chrome versions',
-                                        'last 2 Firefox versions',
-                                        'last 4 Safari versions',
-                                        'last 4 iOS versions',
-                                    ],
-                                }),
-                                // minify the css with cssnano presets
-                                cssnano({
-                                    preset: [
-                                        'default',
-                                        {
-                                            svgo: false,
-                                        },
-                                    ],
-                                }),
-                                postCSSFocusVisible(),
-                            ],
+                            postcssOptions: {
+                                plugins: [
+                                    postCSSImport(),
+                                    postCSSPrefixwrap('.light', {
+                                        whitelist: ['code-example-light.css'],
+                                    }),
+                                    postCSSPrefixwrap('.dark', {
+                                        whitelist: ['code-example-dark.css'],
+                                    }),
+                                    postCSSInherit(),
+                                    postCSSPresetEnv({
+                                        stage: 0,
+                                        browsers: [
+                                            'last 2 Chrome versions',
+                                            'last 2 Firefox versions',
+                                            'last 4 Safari versions',
+                                            'last 4 iOS versions',
+                                        ],
+                                    }),
+                                    // minify the css with cssnano presets
+                                    cssnano({
+                                        preset: [
+                                            'default',
+                                            {
+                                                svgo: false,
+                                            },
+                                        ],
+                                    }),
+                                    postCSSFocusVisible(),
+                                ],
+                            },
                         },
                     },
                 ],
