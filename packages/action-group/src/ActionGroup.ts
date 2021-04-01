@@ -247,6 +247,7 @@ export class ActionGroup extends SpectrumElement {
             case 'single': {
                 this.setAttribute('role', 'radiogroup');
                 let selection: ActionButton | undefined;
+                let firstEnabled: ActionButton | undefined;
                 const options = this.buttons;
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
@@ -259,9 +260,14 @@ export class ActionGroup extends SpectrumElement {
                     if (option.selected) {
                         selection = option;
                     }
+                    if (!firstEnabled && !option.disabled) {
+                        firstEnabled = option;
+                    }
                 });
                 await Promise.all(updates);
-                (selection || options[0]).tabIndex = 0;
+                if (selection || firstEnabled) {
+                    ((selection || firstEnabled) as ActionButton).tabIndex = 0;
+                }
                 this.selected = selection ? [selection.value] : EMPTY_SELECTION;
                 break;
             }

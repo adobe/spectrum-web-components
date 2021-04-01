@@ -129,6 +129,23 @@ describe('ActionGroup', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('sets tab stop when [selects="single"] and the initial button is [disabled]', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group label="Selects Single Group" selects="single">
+                    <sp-action-button disabled>First</sp-action-button>
+                    <sp-action-button class="second">Second</sp-action-button>
+                    <sp-action-button>Third</sp-action-button>
+                </sp-action-group>
+            `
+        );
+        const secondButton = el.querySelector('.second') as ActionButton;
+
+        await elementUpdated(el);
+
+        expect(secondButton.hasAttribute('tabindex'));
+        expect(secondButton.getAttribute('tabindex')).to.equal('0');
+    });
     it('surfaces [selects="single"] selection', async () => {
         const el = await fixture<ActionGroup>(
             html`
