@@ -70,7 +70,7 @@ async function processComponent(componentPath) {
                 from: inputCssPath,
                 to: outputCssPath,
             });
-            await postcssCustomProperties.process(
+            await postcss([postcssCustomProperties]).process(
                 inputCustomProperties,
                 {
                     from: `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`,

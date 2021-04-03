@@ -761,13 +761,17 @@ class SpectrumProcessor {
     }
 }
 
-export default postcss.plugin('postcss-process-spectrum', (opts) => {
+const plugin = (opts) => {
     const { component } = opts;
     return (root, result) => {
         const processor = new SpectrumProcessor(component);
         processor.run(root, result);
     };
-});
+};
+
+plugin.postcss = true;
+
+export default plugin;
 
 class ComponentConfig {
     constructor(config) {
