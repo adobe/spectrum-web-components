@@ -191,7 +191,7 @@
         "postcss-selector-parser": "^6.0.4",
         "posthtml": "^0.15.1",
         "posthtml-attrs-parser": "^0.1.1",
-        "posthtml-loader": "^1.0.2",
+        "posthtml-loader": "^2.0.1",
         "posthtml-match-helper": "^1.0.1",
         "prettier": "^2.0.5",
         "pretty-quick": "^3.1.0",
