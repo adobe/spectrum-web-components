@@ -49,8 +49,7 @@
     "author": "",
     "license": "Apache-2.0",
     "devDependencies": {
-        "@spectrum-css/splitbutton": "^3.0.1",
-        "@spectrum-web-components/menu": "^0.8.2"
+        "@spectrum-css/splitbutton": "^3.0.1"
     },
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",

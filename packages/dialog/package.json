@@ -56,6 +56,7 @@
     "dependencies": {
         "@spectrum-web-components/action-button": "^0.4.4",
         "@spectrum-web-components/base": "^0.4.2",
+        "@spectrum-web-components/button": "^0.13.4",
         "@spectrum-web-components/button-group": "^0.6.4",
         "@spectrum-web-components/divider": "^0.2.3",
         "@spectrum-web-components/icon": "^0.9.4",
