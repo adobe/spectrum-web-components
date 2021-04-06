@@ -22,7 +22,6 @@
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
-        "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json",
         "./sp-quick-actions": "./sp-quick-actions.js",
         "./sp-quick-actions.js": "./sp-quick-actions.js"
@@ -30,6 +29,7 @@
     "scripts": {
         "test": "karma start --coverage"
     },
+    "customElementsManifest": "custom-elements.json",
     "files": [
         "*.d.ts",
         "*.js",
