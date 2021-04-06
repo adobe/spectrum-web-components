@@ -22,7 +22,7 @@
     "@open-wc/eslint-config": "^2.1.0",
     "@types/node": "14.14.37",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
-    "@typescript-eslint/parser": "^2.20.0",
+    "@typescript-eslint/parser": "^4.21.0",
     "concurrently": "^6.0.0",
     "es-dev-server": "^1.5.0",
     "eslint": "^7.8.0",
