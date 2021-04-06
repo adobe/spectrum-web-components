@@ -29,7 +29,9 @@
         "./src/*": "./src/*",
         "./package.json": "./package.json",
         "./elements": "./elements.js",
-        "./elements.js": "./elements.js"
+        "./elements.js": "./elements.js",
+        "./icons": "./src/icons.js",
+        "./icons.js": "./src/icons.js"
     },
     "files": [
         "custom-elements.json",
