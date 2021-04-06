@@ -211,9 +211,11 @@ describe('ColorSlider', () => {
         expect(el.sliderHandlePosition).to.equal(0);
     });
     it('accepts pointer events', async () => {
+        const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
         const el = await fixture<ColorSlider>(
             html`
                 <sp-color-slider
+                    .color=${color}
                     style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-default-height: 24px;"
                 ></sp-color-slider>
             `
@@ -231,6 +233,8 @@ describe('ColorSlider', () => {
         };
 
         expect(el.sliderHandlePosition).to.equal(0);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
 
         handle.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -246,6 +250,8 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
         expect(el.sliderHandlePosition).to.equal(0);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('.gradient') as HTMLElement;
@@ -263,6 +269,8 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
         expect(el.sliderHandlePosition).to.equal(0);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
 
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -278,6 +286,8 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(47.91666666666667);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -303,6 +313,8 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(53.125);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
     });
     it('accepts pointer events while [vertical]', async () => {
         const el = await fixture<ColorSlider>(

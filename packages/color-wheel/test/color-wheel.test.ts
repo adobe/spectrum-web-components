@@ -209,9 +209,11 @@ describe('ColorWheel', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts pointer events', async () => {
+        const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
         const el = await fixture<ColorWheel>(
             html`
                 <sp-color-wheel
+                    .color=${color}
                     style="--spectrum-global-dimension-size-125: 10px;"
                 ></sp-color-wheel>
             `
@@ -229,6 +231,8 @@ describe('ColorWheel', () => {
         };
 
         expect(el.value).to.equal(0);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
 
         handle.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -245,6 +249,8 @@ describe('ColorWheel', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(0);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('[name="gradient"]') as HTMLElement;
@@ -263,6 +269,8 @@ describe('ColorWheel', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(0);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
 
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -278,6 +286,8 @@ describe('ColorWheel', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(263.74596725608353);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -303,6 +313,8 @@ describe('ColorWheel', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(96.34019174590992);
+        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
+        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
     });
     const colorFormats: {
         name: string;
