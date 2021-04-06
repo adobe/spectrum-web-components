@@ -98,9 +98,21 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                 if (dirParent === document.documentElement) {
                     observedForElements.add(this);
                 } else {
-                    (dirParent as ThemeRoot).startManagingContentDirection(
-                        this
-                    );
+                    const { localName } = dirParent;
+                    if (
+                        localName.search('-') > -1 &&
+                        !customElements.get(localName)
+                    ) {
+                        customElements.whenDefined(localName).then(() => {
+                            (dirParent as ThemeRoot).startManagingContentDirection(
+                                this
+                            );
+                        });
+                    } else {
+                        (dirParent as ThemeRoot).startManagingContentDirection(
+                            this
+                        );
+                    }
                 }
                 this._dirParent = dirParent as HTMLElement;
             }
