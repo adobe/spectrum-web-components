@@ -29,10 +29,10 @@ While this bundle directly re-exports the majority of functionality as they woul
 
 #### UI
 
-`@spectrum-web-components/icons-ui` is renamed to `UIIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@spectrum-web-components/bundle` like the following:
+`@spectrum-web-components/icons-ui` is renamed to `UIIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@spectrum-web-components/bundle/icons.js` like the following:
 
 ```
-import { UIIcons } from '@spectrum-web-components/bundle';
+import { UIIcons } from '@spectrum-web-components/bundle/icons.js';
 
 console.log(UIIcons.AsteriskIcon());
 
@@ -43,10 +43,10 @@ TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: De
 
 #### Workflow
 
-`@spectrum-web-components/icons-workflow` is namespaced to `WorkflowIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@spectrum-web-components/bundle` like the following:
+`@spectrum-web-components/icons-workflow` is namespaced to `WorkflowIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@spectrum-web-components/bundle/icons.js` like the following:
 
 ```
-import { IconsWorkflow } from '@spectrum-web-components/bundle';
+import { IconsWorkflow } from '@spectrum-web-components/bundle/icons.js';
 
 console.log(IconsWorkflow.CircleIcon());
 
