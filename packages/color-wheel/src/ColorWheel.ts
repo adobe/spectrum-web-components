@@ -196,6 +196,7 @@ export class ColorWheel extends Focusable {
                 break;
         }
         this.value = (360 + this.value + delta) % 360;
+        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
     }
 
     private handleKeyup(event: KeyboardEvent): void {
@@ -235,7 +236,7 @@ export class ColorWheel extends Focusable {
 
     private handlePointermove(event: PointerEvent): void {
         this.value = this.calculateHandlePosition(event);
-        this._color = new TinyColor({ h: this.value, s: '100%', l: '50%' });
+        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
 
         this.dispatchEvent(
             new Event('input', {
