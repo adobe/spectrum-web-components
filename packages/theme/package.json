@@ -66,12 +66,6 @@
     },
     "author": "",
     "license": "ISC",
-    "devDependencies": {
-        "@spectrum-web-components/button": "^0.13.4",
-        "@spectrum-web-components/button-group": "^0.6.4",
-        "@spectrum-web-components/slider": "^0.9.3",
-        "@spectrum-web-components/switch": "^0.7.4"
-    },
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.2",
         "@spectrum-web-components/styles": "^0.9.3",

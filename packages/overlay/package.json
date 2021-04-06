@@ -63,6 +63,7 @@
         "@popperjs/core": "^2.2.2",
         "@spectrum-web-components/action-button": "^0.4.4",
         "@spectrum-web-components/base": "^0.4.2",
+        "@spectrum-web-components/shared": "^0.12.1",
         "@spectrum-web-components/theme": "^0.8.4",
         "popper-max-size-modifier": "^0.2.0",
         "tslib": "^2.0.0"

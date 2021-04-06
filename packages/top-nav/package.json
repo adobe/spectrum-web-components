@@ -51,6 +51,8 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
+        "@spectrum-web-components/base": "^0.4.2",
+        "@spectrum-web-components/shared": "^0.12.1",
         "@spectrum-web-components/tabs": "^0.5.4",
         "tslib": "^2.0.0"
     }
