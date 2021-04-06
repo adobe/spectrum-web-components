@@ -20,8 +20,8 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        "./src/": "./src/index.js",
-        "./custom-elements.json": "./custom-elements.json",
+        ".": "./src/index.js",
+        "./src/*": "./src/*",
         "./package.json": "./package.json",
         "./sp-color-loupe": "./sp-color-loupe.js",
         "./sp-color-loupe.js": "./sp-color-loupe.js"
@@ -29,6 +29,7 @@
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
+    "customElementsManifest": "custom-elements.json",
     "files": [
         "*.d.ts",
         "*.js",

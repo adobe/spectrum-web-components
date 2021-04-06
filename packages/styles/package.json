@@ -20,7 +20,8 @@
     "module": "src/spectrum-base.css.js",
     "type": "module",
     "exports": {
-        "./*": "./*"
+        "./*": "./*",
+        "./src/*": "./src/*"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

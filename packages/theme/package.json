@@ -22,7 +22,6 @@
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
-        "./custom-elements.json": "./custom-elements.json",
         "./package.json": "./package.json",
         "./sp-theme": "./sp-theme.js",
         "./sp-theme.js": "./sp-theme.js",
@@ -42,6 +41,7 @@
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
+    "customElementsManifest": "custom-elements.json",
     "files": [
         "*.d.ts",
         "*.js",
