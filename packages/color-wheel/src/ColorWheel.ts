@@ -232,6 +232,9 @@ export class ColorWheel extends Focusable {
         this._previousColor = this._color.clone();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
+        if (event.pointerType === 'mouse') {
+            this.handleFocus();
+        }
     }
 
     private handlePointermove(event: PointerEvent): void {
@@ -260,6 +263,9 @@ export class ColorWheel extends Focusable {
         );
         if (!applyDefault) {
             this._color = this._previousColor;
+        }
+        if (event.pointerType === 'mouse') {
+            this.handleBlur();
         }
     }
 
@@ -314,7 +320,7 @@ export class ColorWheel extends Focusable {
 
             <sp-color-handle
                 class="handle"
-                color=${this._color.toHslString()}
+                color="hsl(${this._color.toHsl().h}, 100%, 50%)"
                 ?disabled=${this.disabled}
                 style=${handleLocationStyles}
                 @manage=${streamingListener(

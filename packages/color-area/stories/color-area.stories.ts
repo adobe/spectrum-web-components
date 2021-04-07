@@ -41,22 +41,23 @@ export const joint = (): TemplateResult => {
             <sp-color-area
                 color="#7f3e3e"
                 @input=${({ target }: Event & { target: ColorArea }) => {
-                    const display = (target.nextElementSibling as HTMLElement)
-                        .nextElementSibling as HTMLElement;
+                    const next = target.nextElementSibling as ColorSlider;
+                    const display = next.nextElementSibling as HTMLElement;
                     display.textContent = target.color as string;
                     display.style.color = target.color as string;
+                    next.color = target.color;
                 }}
             ></sp-color-area>
             <sp-color-slider
+                color="#7f3e3e"
                 @input=${({
-                    target: { value, previousElementSibling },
+                    target: { color, previousElementSibling },
                 }: Event & {
                     target: ColorSlider & {
-                        value: number;
                         previousElementSibling: ColorArea;
                     };
                 }): void => {
-                    previousElementSibling.hue = value;
+                    previousElementSibling.color = color;
                 }}
             ></sp-color-slider>
             <div style="color: #7f3e3e">#7f3e3e</div>
