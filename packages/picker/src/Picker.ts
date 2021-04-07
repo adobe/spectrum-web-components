@@ -414,6 +414,9 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     protected manageSelection(): void {
+        if (!this.open) {
+            this.updateMenuItems();
+        }
         /* c8 ignore next 3 */
         if (this.menuItems.length > 0) {
             let selectedItem: MenuItem | undefined;

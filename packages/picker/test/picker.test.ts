@@ -157,6 +157,27 @@ describe('Picker', () => {
         await expect(el).to.be.accessible();
     });
 
+    it('accepts a new item and value at the same time', async () => {
+        const el = await pickerFixture();
+
+        await elementUpdated(el);
+
+        el.value = 'option-2';
+
+        await elementUpdated(el);
+        expect(el.value).to.equal('option-2');
+
+        const item = document.createElement('sp-menu-item');
+        item.value = 'option-new';
+        item.textContent = 'New Option';
+
+        el.append(item);
+        el.value = 'option-new';
+
+        await elementUpdated(el);
+        expect(el.value).to.equal('option-new');
+    });
+
     it('manages its "name" value in the accessibility tree', async () => {
         const el = await pickerFixture();
 
