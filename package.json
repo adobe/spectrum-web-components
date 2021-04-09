@@ -76,7 +76,8 @@
         "test:visual:clean": "yarn test:visual:clean:baseline && yarn test:visual:clean:current",
         "test:visual:clean:baseline": "rm -rf test/visual/screenshots-baseline",
         "test:visual:clean:current": "rm -rf test/visual/screenshots-current",
-        "test:watch": "run-p watch 'test:build -w' 'test:start --watch --group unit'",
+        "test:watch": "test:watch:focus unit",
+        "test:watch:focus": "run-p watch 'test:build -w' 'test:start --watch --group {1}' --",
         "watch": "gulp watch"
     },
     "peerDependencies": {
