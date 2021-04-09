@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.2...@spectrum-web-components/color-wheel@0.1.3) (2021-04-09)
+
+### Bug Fixes
+
+-   ensure color wheel in not opinionated about saturation and lightness ([8e0fd9c](https://github.com/adobe/spectrum-web-components/commit/8e0fd9ca4b341d497b1fd6092ba88e321ee7044a))
+-   use hue normalized color in handle and allow focus ([f9e1fa2](https://github.com/adobe/spectrum-web-components/commit/f9e1fa24afd091334341610a49331fc0ec5f8573))
+
 ## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.1...@spectrum-web-components/color-wheel@0.1.2) (2021-03-29)
 
 **Note:** Version bump only for package @spectrum-web-components/color-wheel

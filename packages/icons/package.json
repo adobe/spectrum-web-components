@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons",
-    "version": "0.7.4",
+    "version": "0.7.5",
     "publishConfig": {
         "access": "public"
     },
@@ -31,7 +31,6 @@
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "customElementsManifest": "custom-elements.json",
     "files": [
         "*.d.ts",
         "*.js",
@@ -46,11 +45,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.2",
-        "@spectrum-web-components/iconset": "^0.5.4",
+        "@spectrum-web-components/base": "^0.4.3",
+        "@spectrum-web-components/iconset": "^0.5.5",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
+    "customElementsManifest": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
         "./sp-*.ts"

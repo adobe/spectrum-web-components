@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.2...@spectrum-web-components/base@0.4.3) (2021-04-09)
+
+### Bug Fixes
+
+-   allow for late loading theme scopes ([4c7a124](https://github.com/adobe/spectrum-web-components/commit/4c7a1248c4b3917de97b0f34d3cebdf1505cc2dc))
+
 ## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.1...@spectrum-web-components/base@0.4.2) (2021-03-22)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.4.2...@spectrum-web-components/picker@0.4.3) (2021-04-09)
+
+### Bug Fixes
+
+-   **picker:** accept new "value" and new option post first render ([8f8c93f](https://github.com/adobe/spectrum-web-components/commit/8f8c93f1045b07d5e108769c4efffa54213d20e3))
+
 ## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.4.1...@spectrum-web-components/picker@0.4.2) (2021-03-29)
 
 ### Bug Fixes

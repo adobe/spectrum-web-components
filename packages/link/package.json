@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/link",
-    "version": "0.8.3",
+    "version": "0.8.4",
     "publishConfig": {
         "access": "public"
     },
@@ -29,7 +29,6 @@
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "customElementsManifest": "custom-elements.json",
     "files": [
         "*.d.ts",
         "*.js",
@@ -44,14 +43,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.2",
-        "@spectrum-web-components/shared": "^0.12.1",
+        "@spectrum-web-components/base": "^0.4.3",
+        "@spectrum-web-components/shared": "^0.12.2",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@spectrum-css/link": "^3.1.1"
     },
     "types": "./src/index.d.ts",
+    "customElementsManifest": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
         "./sp-*.ts"

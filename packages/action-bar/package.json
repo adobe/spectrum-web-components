@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-bar",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "publishConfig": {
         "access": "public"
     },
@@ -29,7 +29,6 @@
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "customElementsManifest": "custom-elements.json",
     "files": [
         "*.d.ts",
         "*.js",
@@ -44,14 +43,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.2",
-        "@spectrum-web-components/popover": "^0.9.4",
+        "@spectrum-web-components/base": "^0.4.3",
+        "@spectrum-web-components/popover": "^0.9.5",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@spectrum-css/actionbar": "^3.0.1"
     },
     "types": "./src/index.d.ts",
+    "customElementsManifest": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
         "./sp-*.ts"

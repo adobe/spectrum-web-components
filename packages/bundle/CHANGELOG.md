@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.19.5...@spectrum-web-components/bundle@0.20.0) (2021-04-09)
+
+### Features
+
+-   split icons into their own export ([98dac4c](https://github.com/adobe/spectrum-web-components/commit/98dac4ce935082a54074c8b57276dce2cf2b20e1))
+
 ## [0.19.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.19.4...@spectrum-web-components/bundle@0.19.5) (2021-03-29)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle

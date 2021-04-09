@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/menu",
-    "version": "0.8.2",
+    "version": "0.8.3",
     "publishConfig": {
         "access": "public"
     },
@@ -35,7 +35,6 @@
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
-    "customElementsManifest": "custom-elements.json",
     "files": [
         "*.d.ts",
         "*.js",
@@ -50,17 +49,18 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.4.4",
-        "@spectrum-web-components/base": "^0.4.2",
-        "@spectrum-web-components/icon": "^0.9.4",
-        "@spectrum-web-components/icons-ui": "^0.6.4",
-        "@spectrum-web-components/shared": "^0.12.1",
+        "@spectrum-web-components/action-button": "^0.4.5",
+        "@spectrum-web-components/base": "^0.4.3",
+        "@spectrum-web-components/icon": "^0.9.5",
+        "@spectrum-web-components/icons-ui": "^0.6.5",
+        "@spectrum-web-components/shared": "^0.12.2",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@spectrum-css/menu": "^3.0.1"
     },
     "types": "./src/index.d.ts",
+    "customElementsManifest": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
         "./sp-*.ts"

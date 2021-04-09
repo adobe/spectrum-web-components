@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.4...@spectrum-web-components/action-group@0.4.5) (2021-04-09)
+
+### Bug Fixes
+
+-   **action-group:** allow for initial button being "disabled" ([a1e3939](https://github.com/adobe/spectrum-web-components/commit/a1e393940daf5d0bb7783511d7b5255e24611033))
+
 ## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.3...@spectrum-web-components/action-group@0.4.4) (2021-03-29)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group

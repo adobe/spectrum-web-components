@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.2...@spectrum-web-components/color-area@0.1.3) (2021-04-09)
+
+### Bug Fixes
+
+-   use hue normalized color in handle and allow focus ([f9e1fa2](https://github.com/adobe/spectrum-web-components/commit/f9e1fa24afd091334341610a49331fc0ec5f8573))
+
 ## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.1...@spectrum-web-components/color-area@0.1.2) (2021-03-29)
 
 ### Bug Fixes
