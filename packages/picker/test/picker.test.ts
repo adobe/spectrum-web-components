@@ -26,6 +26,7 @@ import {
     html,
     expect,
     waitUntil,
+    nextFrame,
 } from '@open-wc/testing';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
@@ -796,5 +797,47 @@ describe('Picker', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
+    });
+    it('scrolls selected into view on open', async () => {
+        const el = await pickerFixture();
+
+        const popover = el.shadowRoot.querySelector(
+            'sp-popover'
+        ) as HTMLElement;
+        popover.style.height = '40px';
+
+        const firstItem = el.querySelector(
+            'sp-menu-item:first-child'
+        ) as MenuItem;
+        const lastItem = el.querySelector(
+            'sp-menu-item:last-child'
+        ) as MenuItem;
+        lastItem.disabled = false;
+        el.value = lastItem.value;
+
+        await elementUpdated(el);
+
+        el.open = true;
+
+        await elementUpdated(el);
+        await nextFrame();
+        const getParentOffset = (el: HTMLElement): number => {
+            const parentScroll = (el.parentElement as HTMLElement).scrollTop;
+            const parentOffset = el.offsetTop - parentScroll;
+            return parentOffset;
+        };
+        expect(lastItem.focused, 'last focused').to.be.true;
+        expect(firstItem.focused, 'first not focused').to.be.false;
+        expect(getParentOffset(lastItem)).to.be.lessThan(40);
+        expect(getParentOffset(firstItem)).to.be.lessThan(-1);
+
+        lastItem.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+        lastItem.dispatchEvent(arrowDownEvent);
+        await elementUpdated(el);
+        await nextFrame();
+        expect(lastItem.focused, 'last not focused').to.be.false;
+        expect(firstItem.focused, 'first focused').to.be.true;
+        expect(getParentOffset(lastItem)).to.be.greaterThan(40);
+        expect(getParentOffset(firstItem)).to.be.greaterThan(-1);
     });
 });
