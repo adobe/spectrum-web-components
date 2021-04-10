@@ -29,6 +29,7 @@ export interface MenuQueryRoleEventDetail {
 /**
  * Spectrum Menu Component
  * @element sp-menu
+ * @fires change - Announces that the `value` of the element has changed
  *
  */
 export class Menu extends SpectrumElement {
@@ -36,12 +37,21 @@ export class Menu extends SpectrumElement {
         return [menuStyles];
     }
 
-    @property({ type: Boolean, reflect: true })
-    public selectable = false;
+    @property({ type: String, reflect: true })
+    public selects: undefined | 'single' | 'multiple';
+
+    @property({ type: String })
+    public value = '';
+
+    // TODO: allow setting this in the API to change the values
+    @property({ attribute: false })
+    public selected = [] as string[];
 
     public menuItems = [] as MenuItem[];
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
+
+    private selectedItemsMap = new Map() as Map<MenuItem, boolean>;
 
     /**
      * Hide this getter from web-component-analyzer until
@@ -88,7 +98,9 @@ export class Menu extends SpectrumElement {
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
         /* c8 ignore next 3 */
-        if (!target) {
+        if (target) {
+            this.selectOrToggleItem(target);
+        } else {
             return;
         }
         this.prepareToCleanUp();
@@ -123,6 +135,67 @@ export class Menu extends SpectrumElement {
 
     public stopListeningToKeyboard(): void {
         this.removeEventListener('keydown', this.handleKeydown);
+    }
+
+    public async selectOrToggleItem(item: MenuItem): Promise<void> {
+        if (this.selects == null) {
+            return;
+        }
+
+        const oldSelectedItemsMap = new Map(this.selectedItemsMap);
+        const oldSelected = this.selected.slice();
+        const oldValue = this.value;
+
+        if (this.selects === 'single') {
+            this.selectedItemsMap.clear();
+            this.selectedItemsMap.set(item, true);
+            this.value = item.value;
+        } else {
+            if (this.selectedItemsMap.has(item)) {
+                this.selectedItemsMap.delete(item);
+            } else {
+                this.selectedItemsMap.set(item, true);
+            }
+
+            // Match HTML select and set the first selected
+            // item as the value. Also set the selected array
+            // in the order of the menu items.
+            let valueSet: boolean = false;
+            let selected: string[] = [];
+            for (const menuItem of this.menuItems) {
+                if (this.selectedItemsMap.has(menuItem)) {
+                    if (!valueSet) {
+                        this.value = menuItem.value;
+                        valueSet = true;
+                    }
+                    selected.push(item.value);
+                }
+            }
+            this.selected = selected;
+        }
+
+        await this.updateComplete;
+        const applyDefault = this.dispatchEvent(
+            new Event('change', {
+                cancelable: true,
+            })
+        );
+        if (!applyDefault) {
+            this.selected = oldSelected;
+            this.selectedItemsMap = oldSelectedItemsMap;
+            this.value = oldValue;
+            return;
+        }
+        if (this.selects === 'single' && oldSelected) {
+            for (const oldItem of oldSelectedItemsMap.keys()) {
+                if (oldItem !== item) {
+                    oldItem.selected = false;
+                }
+            }
+            item.selected = true;
+        } else if (this.selects === 'multiple') {
+            item.selected = !item.selected;
+        }
     }
 
     public handleKeydown(event: KeyboardEvent): void {
