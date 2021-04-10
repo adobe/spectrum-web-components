@@ -30,7 +30,7 @@ const config = {
                 {
                     selector: '.is-selectable',
                     type: 'boolean',
-                    name: 'selectable',
+                    name: 'selects',
                 },
             ],
             slots: [
@@ -55,13 +55,13 @@ const config = {
                 },
                 {
                     replacement:
-                        ':host([dir="ltr"][selectable]) ::slotted(sp-menu-item[selected])',
+                        ':host([dir="ltr"][selects]) ::slotted(sp-menu-item[selected])',
                     selector:
                         '.spectrum-Menu[dir=ltr].is-selectable .spectrum-Menu-item.is-selected',
                 },
                 {
                     replacement:
-                        ':host([dir="rtl"][selectable]) ::slotted(sp-menu-item[selected])',
+                        ':host([dir="rtl"][selects]) ::slotted(sp-menu-item[selected])',
                     selector:
                         '.spectrum-Menu[dir=rtl].is-selectable .spectrum-Menu-item.is-selected',
                 },

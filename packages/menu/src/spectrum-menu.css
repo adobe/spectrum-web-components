@@ -89,15 +89,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     list-style-type: none;
     overflow: auto;
 }
-:host([dir='ltr'][selectable]) ::slotted(sp-menu-item) {
+:host([dir='ltr'][selects]) ::slotted(sp-menu-item) {
     /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
     padding-right: var(--spectrum-listitem-selectable-padding-right);
 }
-:host([dir='rtl'][selectable]) ::slotted(sp-menu-item) {
+:host([dir='rtl'][selects]) ::slotted(sp-menu-item) {
     /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
     padding-left: var(--spectrum-listitem-selectable-padding-right);
 }
-:host([dir='ltr'][selectable]) ::slotted(sp-menu-item[selected]) {
+:host([dir='ltr'][selects]) ::slotted(sp-menu-item[selected]) {
     /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-right: calc(
         var(--spectrum-listitem-padding-right) -
@@ -107,7 +107,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     );
 }
-:host([dir='rtl'][selectable]) ::slotted(sp-menu-item[selected]) {
+:host([dir='rtl'][selects]) ::slotted(sp-menu-item[selected]) {
     /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-left: calc(
         var(--spectrum-listitem-padding-right) -

@@ -276,8 +276,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             this.optionsMenu
         );
 
-        this.optionsMenu.selectable = true;
-
         this.sizePopover(this.popover);
         const { popover } = this;
         this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
@@ -360,7 +358,11 @@ export class PickerBase extends SizedMixin(Focusable) {
                 @click=${this.onClick}
                 @sp-overlay-closed=${this.onOverlayClosed}
             >
-                <sp-menu id="menu" role="${this.listRole}"></sp-menu>
+                <sp-menu
+                    id="menu"
+                    selects="single"
+                    role="${this.listRole}"
+                ></sp-menu>
             </sp-popover>
         `;
     }
