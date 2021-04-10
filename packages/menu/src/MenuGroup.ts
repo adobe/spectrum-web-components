@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 
 import {
     html,
+    ifDefined,
+    property,
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
@@ -32,6 +34,9 @@ export class MenuGroup extends SpectrumElement {
         return [menuGroupStyles];
     }
 
+    @property({ type: String, reflect: true })
+    public selects: undefined | 'single' | 'multiple';
+
     private instanceCount = MenuGroup.instances;
 
     private static instances = 0;
@@ -41,13 +46,24 @@ export class MenuGroup extends SpectrumElement {
         MenuGroup.instances += 1;
     }
 
+    private get menuRole() {
+        if (this.selects) {
+            return 'menu';
+        } else {
+            return 'presentation';
+        }
+    }
+
     public render(): TemplateResult {
         const labelledby = `menu-heading-category-${this.instanceCount}`;
         return html`
             <span class="header" id=${labelledby} aria-hidden="true">
                 <slot name="header"></slot>
             </span>
-            <sp-menu role="presentation">
+            <sp-menu
+                selects=${ifDefined(this.selects ? this.selects : undefined)}
+                role=${this.menuRole}
+            >
                 <slot></slot>
             </sp-menu>
         `;
