@@ -98,6 +98,8 @@ export class Menu extends SpectrumElement {
         }) as MenuItem;
         /* c8 ignore next 3 */
         if (target) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
             this.selectOrToggleItem(target);
         } else {
             return;
