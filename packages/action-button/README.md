@@ -26,60 +26,56 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 
 ## Sizes
 
-<sp-tabs selected="m">
-    <sp-tab value="s">Small</sp-tab>
-    <sp-tab value="m">Medium</sp-tab>
-    <sp-tab value="l">Large</sp-tab>
-    <sp-tab value="xl">Extra Large</sp-tab>
-</sp-tabs>
-
-<div class="tabs--s">
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 ```html demo
-<sp-button-group>
+<sp-action-group>
     <sp-action-button size="s">Do action</sp-action-button>
     <sp-action-button size="s" selected>Do action</sp-action-button>
     <sp-action-button size="s" disabled>Do action</sp-action-button>
-</sp-button-group>
+</sp-action-group>
 ```
 
-</div>
-
-<div class="tabs--m">
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
 
 ```html demo
-<sp-button-group>
+<sp-action-group>
     <sp-action-button size="m">Do action</sp-action-button>
     <sp-action-button size="m" selected>Do action</sp-action-button>
     <sp-action-button size="m" disabled>Do action</sp-action-button>
-</sp-button-group>
+</sp-action-group>
 ```
 
-</div>
-
-<div class="tabs--l">
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
 
 ```html demo
-<sp-button-group>
+<sp-action-group>
     <sp-action-button size="l">Do action</sp-action-button>
     <sp-action-button size="l" selected>Do action</sp-action-button>
     <sp-action-button size="l" disabled>Do action</sp-action-button>
-</sp-button-group>
+</sp-action-group>
 ```
 
-</div>
-
-<div class="tabs--xl">
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
 
 ```html demo
-<sp-button-group>
+<sp-action-group>
     <sp-action-button size="xl">Do action</sp-action-button>
     <sp-action-button size="xl" selected>Do action</sp-action-button>
     <sp-action-button size="xl" disabled>Do action</sp-action-button>
-</sp-button-group>
+</sp-action-group>
 ```
 
-</div>
+</sp-tab-panel>
+</sp-tabs>
 
 ## Variants
 

@@ -45,11 +45,6 @@ export class TopNav extends SpectrumElement {
     @property()
     public selectionIndicatorStyle = '';
 
-    public constructor() {
-        super();
-        this.addEventListener('click', this.onClick);
-    }
-
     private onClick = (event: Event): void => {
         const target = event.target as TopNavItem;
         this.selectTarget(target);
@@ -90,11 +85,13 @@ export class TopNav extends SpectrumElement {
 
     protected render(): TemplateResult {
         return html`
-            <slot @slotchange=${this.onSlotChange}></slot>
-            <div
-                id="selectionIndicator"
-                style=${this.selectionIndicatorStyle}
-            ></div>
+            <div @click=${this.onClick} id="list">
+                <slot @slotchange=${this.onSlotChange}></slot>
+                <div
+                    id="selectionIndicator"
+                    style=${this.selectionIndicatorStyle}
+                ></div>
+            </div>
         `;
     }
 

@@ -24,11 +24,15 @@ When looking to leverage the `ActionMenu` base class as a type and/or for extens
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 ```
 
-## Example
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 <!-- prettier-ignore -->
 ```html
-<sp-action-menu>
+<sp-action-menu size="s">
     <span slot="label">More Actions</span>
     <sp-menu-item>
         Deselect
@@ -51,6 +55,99 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
     </sp-menu-item>
 </sp-action-menu>
 ```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+<!-- prettier-ignore -->
+```html
+<sp-action-menu size="m">
+    <span slot="label">More Actions</span>
+    <sp-menu-item>
+        Deselect
+    </sp-menu-item>
+    <sp-menu-item>
+        Select inverse
+    </sp-menu-item>
+    <sp-menu-item>
+        Feather...
+    </sp-menu-item>
+    <sp-menu-item>
+        Select and mask...
+    </sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>
+        Save selection
+    </sp-menu-item>
+    <sp-menu-item disabled>
+        Make work path
+    </sp-menu-item>
+</sp-action-menu>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+<!-- prettier-ignore -->
+```html
+<sp-action-menu size="l">
+    <span slot="label">More Actions</span>
+    <sp-menu-item>
+        Deselect
+    </sp-menu-item>
+    <sp-menu-item>
+        Select inverse
+    </sp-menu-item>
+    <sp-menu-item>
+        Feather...
+    </sp-menu-item>
+    <sp-menu-item>
+        Select and mask...
+    </sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>
+        Save selection
+    </sp-menu-item>
+    <sp-menu-item disabled>
+        Make work path
+    </sp-menu-item>
+</sp-action-menu>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+<!-- prettier-ignore -->
+```html
+<sp-action-menu size="xl">
+    <span slot="label">More Actions</span>
+    <sp-menu-item>
+        Deselect
+    </sp-menu-item>
+    <sp-menu-item>
+        Select inverse
+    </sp-menu-item>
+    <sp-menu-item>
+        Feather...
+    </sp-menu-item>
+    <sp-menu-item>
+        Select and mask...
+    </sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>
+        Save selection
+    </sp-menu-item>
+    <sp-menu-item disabled>
+        Make work path
+    </sp-menu-item>
+</sp-action-menu>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ## Variants
 

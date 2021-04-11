@@ -16,11 +16,13 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
+    ifDefined,
 } from '@spectrum-web-components/base';
 import { Tab } from './Tab.js';
 import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 
 import tabStyles from './tabs.css.js';
+import { TabPanel } from './TabPanel.js';
 
 const availableArrowsByDirection = {
     vertical: ['ArrowUp', 'ArrowDown'],
@@ -47,11 +49,25 @@ export class Tabs extends Focusable {
         return [tabStyles];
     }
 
+    /**
+     * Whether to activate a tab on keyboard focus or not.
+     *
+     * By default a tab is activated via a "click" interaction. This is specifically intended for when
+     * tab content cannot be displayed instantly, e.g. not all of the DOM content is available, etc.
+     * To learn more about "Deciding When to Make Selection Automatically Follow Focus", visit:
+     * https://w3c.github.io/aria-practices/#kbd_selection_follows_focus
+     */
+    @property({ type: Boolean })
+    public auto = false;
+
     @property({ reflect: true })
     public direction: 'vertical' | 'vertical-right' | 'horizontal' =
         'horizontal';
 
     @property()
+    public label = '';
+
+    @property({ attribute: false })
     public selectionIndicatorStyle = '';
 
     @property({ reflect: true })
@@ -75,6 +91,9 @@ export class Tabs extends Focusable {
 
     private tabs: Tab[] = [];
 
+    /**
+     * @private
+     */
     public get focusElement(): Tab {
         const focusElement = this.tabs.find(
             (tab) => tab.selected || tab.value === this.selected
@@ -83,15 +102,6 @@ export class Tabs extends Focusable {
             return focusElement;
         }
         return this.tabs[0];
-    }
-
-    constructor() {
-        super();
-
-        // These can be added as @click and @keydown handlers on the
-        // slot once we no longer need web component polyfills
-        this.addEventListener('click', this.onClick);
-        this.addEventListener('keydown', this.onKeyDown);
     }
 
     protected manageAutoFocus(): void {
@@ -105,21 +115,45 @@ export class Tabs extends Focusable {
         Promise.all(tabUpdateCompletes).then(() => super.manageAutoFocus());
     }
 
+    protected managePanels({
+        target,
+    }: Event & { target: HTMLSlotElement }): void {
+        const panels = target.assignedElements() as TabPanel[];
+        panels.map((panel) => {
+            const { value, id } = panel;
+            const tab = this.querySelector(`[role="tab"][value="${value}"]`);
+            if (tab) {
+                tab.setAttribute('aria-controls', id);
+                panel.setAttribute('aria-labelledby', tab.id);
+            }
+            panel.selected = value === this.selected;
+        });
+    }
+
     protected render(): TemplateResult {
         return html`
-            <slot @slotchange=${this.onSlotChange}></slot>
             <div
-                id="selectionIndicator"
-                style=${this.selectionIndicatorStyle}
-            ></div>
+                aria-label=${ifDefined(this.label ? this.label : undefined)}
+                @click=${this.onClick}
+                @keydown=${this.onKeyDown}
+                @mousedown=${this.manageFocusinType}
+                @focusin=${this.startListeningToKeyboard}
+                id="list"
+                role="tablist"
+            >
+                <slot @slotchange=${this.onSlotChange}></slot>
+                <div
+                    id="selectionIndicator"
+                    style=${this.selectionIndicatorStyle}
+                    role="presentation"
+                ></div>
+            </div>
+            <slot name="tab-panel" @slotchange=${this.managePanels}></slot>
         `;
     }
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        this.setAttribute('role', 'tablist');
-        this.addEventListener('mousedown', this.manageFocusinType);
-        this.addEventListener('focusin', this.startListeningToKeyboard);
         const selectedChild = this.querySelector('[selected]') as Tab;
         if (selectedChild) {
             this.selectTarget(selectedChild);
@@ -128,6 +162,18 @@ export class Tabs extends Focusable {
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
+        if (changes.has('selected')) {
+            if (changes.get('selected')) {
+                const previous = this.querySelector(
+                    `[role="tabpanel"][value="${changes.get('selected')}"]`
+                ) as TabPanel;
+                if (previous) previous.selected = false;
+            }
+            const next = this.querySelector(
+                `[role="tabpanel"][value="${this.selected}"]`
+            ) as TabPanel;
+            if (next) next.selected = true;
+        }
         if (changes.has('direction')) {
             if (this.direction === 'horizontal') {
                 this.removeAttribute('aria-orientation');
@@ -158,7 +204,7 @@ export class Tabs extends Focusable {
         this.addEventListener('focusin', handleFocusin);
     };
 
-    public startListeningToKeyboard = (): void => {
+    public startListeningToKeyboard(): void {
         this.addEventListener('keydown', this.handleKeydown);
         this.shouldApplyFocusVisible = true;
         const selected = this.querySelector('[selected]') as Tab;
@@ -176,7 +222,7 @@ export class Tabs extends Focusable {
             this.removeEventListener('focusout', stopListeningToKeyboard);
         };
         this.addEventListener('focusout', stopListeningToKeyboard);
-    };
+    }
 
     public handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
@@ -191,9 +237,13 @@ export class Tabs extends Focusable {
         const currentFocusedTab = getActiveElement(this) as Tab;
         let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
         currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
-        this.tabs[
+        const nextTab = this.tabs[
             (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
-        ].focus();
+        ];
+        nextTab.focus();
+        if (this.auto) {
+            this.selected = nextTab.value;
+        }
     }
 
     private onClick = (event: Event): void => {

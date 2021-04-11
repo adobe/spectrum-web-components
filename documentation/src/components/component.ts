@@ -33,6 +33,7 @@ import componentStyles from './component.css';
 import { AppRouter } from '../router.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import { Tabs } from '@spectrum-web-components/tabs';
 import docs from '../../custom-elements.json';
 
@@ -193,6 +194,7 @@ class ComponentElement extends RouteComponent {
                     <div id="title-header">
                         <h1
                             class="spectrum-Heading spectrum-Heading--sizeXXL spectrum-Heading--serif"
+                            id="component-name"
                         >
                             ${APIdocs ? APIdocs.name : this.componentName}
                         </h1>
@@ -203,6 +205,7 @@ class ComponentElement extends RouteComponent {
                                   selected="${this.tab}"
                                   @change="${this.handleTabChange}"
                                   direction="horizontal"
+                                  aria-labelledby="component-name"
                               >
                                   <sp-tab
                                       value="examples"

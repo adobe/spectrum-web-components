@@ -26,14 +26,9 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 
 ## Sizes
 
-<sp-tabs selected="m">
-    <sp-tab value="s">Small</sp-tab>
-    <sp-tab value="m">Medium</sp-tab>
-    <sp-tab value="l">Large</sp-tab>
-    <sp-tab value="xl">Extra Large</sp-tab>
-</sp-tabs>
-
-<div class="tabs--s">
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 ```html
 <div
@@ -47,9 +42,9 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 </div>
 ```
 
-</div>
-
-<div class="tabs--m">
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
 
 ```html
 <div
@@ -63,9 +58,9 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 </div>
 ```
 
-</div>
-
-<div class="tabs--l">
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
 
 ```html
 <div
@@ -79,9 +74,9 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 </div>
 ```
 
-</div>
-
-<div class="tabs--xl">
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
 
 ```html
 <div
@@ -95,7 +90,8 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 </div>
 ```
 
-</div>
+</sp-tab-panel>
+</sp-tabs>
 
 ## Variants
 

@@ -1,6 +1,6 @@
 ## Description
 
-The `<sp-tabs>` displays a list of `<sp-tab>` element children which accept both a `label` attribute and a `[slot="icon"]` child to define their contents. `<sp-tab>` content can be further customized with the `vertical` attribute which stacks them in the UI rather than listing them in a row. `<sp-tabs>` is typically used as the interface for controlling a set of layered sections of content that display one panel of content at a time
+The `<sp-tabs>` displays a list of `<sp-tab>` element children as `role="tablist"`. An `<sp-tab>` element is associated with a sibling `<sp-tab-panel>` element via their `value` attribute. When an `<sp-tab>` element is `selected`, the associated `<sp-tab-panel>` will also be selected, showing that panel and hiding the others.
 
 ### Usage
 
@@ -12,19 +12,21 @@ The `<sp-tabs>` displays a list of `<sp-tab>` element children which accept both
 yarn add @spectrum-web-components/tabs
 ```
 
-Import the side effectful registration of `<sp-tabs>` or `<sp-tab>` via:
+Import the side effectful registration of `<sp-tabs>`, `<sp-tab>` or `<sp-tab-panel>` via:
 
 ```
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-panel.js';
 ```
 
-When looking to leverage the `Tabs` or `Tab` base class as a type and/or for extension purposes, do so via:
+When looking to leverage the `Tabs`, `Tab`, or `TabPanel` base class as a type and/or for extension purposes, do so via:
 
 ```
 import {
     Tabs,
-    Tab
+    Tab,
+    TabPanel
 } from '@spectrum-web-components/tabs';
 ```
 
@@ -36,6 +38,10 @@ import {
     <sp-tab label="Tab 2" value="2"></sp-tab>
     <sp-tab label="Tab 3" value="3"></sp-tab>
     <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
 </sp-tabs>
 ```
 
@@ -47,6 +53,10 @@ import {
     <sp-tab label="Tab 2" value="2"></sp-tab>
     <sp-tab label="Tab 3" value="3"></sp-tab>
     <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
 </sp-tabs>
 ```
 
@@ -60,6 +70,10 @@ import {
     <sp-tab label="Tab 2" value="2"></sp-tab>
     <sp-tab label="Tab 3" value="3"></sp-tab>
     <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
 </sp-tabs>
 ```
 
@@ -71,6 +85,10 @@ import {
     <sp-tab label="Tab 2" value="2"></sp-tab>
     <sp-tab label="Tab 3" value="3"></sp-tab>
     <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
 </sp-tabs>
 ```
 
@@ -92,6 +110,10 @@ import {
         <sp-tab label="Tab 4" value="4">
             <sp-icon-help slot="icon"></sp-icon-help>
         </sp-tab>
+        <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+        <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+        <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+        <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
     </sp-tabs>
 </div>
 ```

@@ -101,14 +101,16 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
                 : undefined}
             <bdo id="markup" dir="ltr" class=${this.codeTheme}>
                 ${highlightedCode}
-                <sp-action-button
-                    class="copy"
-                    @click=${this.copyToClipboard}
-                    quiet
-                >
-                    <sp-icon-copy slot="icon"></sp-icon-copy>
-                    Copy to Clipboard
-                </sp-action-button>
+                <div class="copy-holder">
+                    <sp-action-button
+                        class="copy"
+                        @click=${this.copyToClipboard}
+                        quiet
+                    >
+                        <sp-icon-copy slot="icon"></sp-icon-copy>
+                        Copy to Clipboard
+                    </sp-action-button>
+                </div>
             </bdo>
         `;
     }

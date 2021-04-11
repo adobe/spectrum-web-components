@@ -37,6 +37,11 @@ export class Tab extends FocusVisiblePolyfillMixin(
         return [tabItemStyles];
     }
 
+    /**
+     * @private
+     */
+    static instanceCount = 0;
+
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
     }
@@ -80,6 +85,9 @@ export class Tab extends FocusVisiblePolyfillMixin(
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'tab');
+        if (!this.hasAttribute('id')) {
+            this.id = `sp-tab-${Tab.instanceCount++}`;
+        }
     }
 
     protected updated(changes: PropertyValues): void {

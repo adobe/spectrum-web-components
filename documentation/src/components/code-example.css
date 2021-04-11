@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 :host {
     display: flex;
-    margin: 1rem -4px 2rem -4px;
+    margin: 1rem 0 2rem 0;
     flex-direction: column;
     border-radius: 6px;
     border: 1px solid var(--spectrum-global-color-gray-100);
@@ -42,19 +42,37 @@ governing permissions and limitations under the License.
 }
 
 #markup {
-    position: relative;
-    max-width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
     padding: 0.75rem 1.5rem;
     border-radius: 0 0 6px 6px;
     border-top: 1px solid var(--spectrum-global-color-gray-100);
     background: var(--spectrum-global-color-gray-75);
-    overflow: hidden;
     line-height: 1.3em;
-    overflow-x: auto;
+    position: relative;
+    overflow: auto;
+}
+
+pre {
+    grid-area: 1/1/1/1;
+}
+
+.copy-holder {
+    grid-area: 1/1/1/1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: grid;
+    position: sticky;
+    left: 0;
+    top: 0;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
 }
 
 .copy {
-    position: absolute;
-    bottom: 1px;
-    right: 1px;
+    place-self: end;
+    pointer-events: all;
+    margin: 0 -1em -0.25em 0;
 }
