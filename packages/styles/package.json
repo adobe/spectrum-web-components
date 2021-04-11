@@ -20,7 +20,18 @@
     "module": "src/spectrum-base.css.js",
     "type": "module",
     "exports": {
-        "./*": "./*",
+        ".": "./src/spectrum-base.css.js",
+        "./*.css": "./*.css",
+        "./body": "./body.js",
+        "./body.js": "./body.js",
+        "./code": "./code.js",
+        "./code.js": "./code.js",
+        "./detail": "./detail.js",
+        "./detail.js": "./detail.js",
+        "./heading": "./heading.js",
+        "./heading.js": "./heading.js",
+        "./typography": "./typography.js",
+        "./typography.js": "./typography.js",
         "./src/*": "./src/*"
     },
     "scripts": {
