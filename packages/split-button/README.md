@@ -26,14 +26,9 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 
 ## Sizes
 
-<sp-tabs selected="m">
-    <sp-tab value="s">Small</sp-tab>
-    <sp-tab value="m">Medium</sp-tab>
-    <sp-tab value="l">Large</sp-tab>
-    <sp-tab value="xl">Extra Large</sp-tab>
-</sp-tabs>
-
-<div class="tabs--s">
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 ```html
 <sp-split-button size="s">
@@ -43,9 +38,9 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-</div>
-
-<div class="tabs--m">
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
 
 ```html
 <sp-split-button size="m">
@@ -55,9 +50,9 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-</div>
-
-<div class="tabs--l">
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
 
 ```html
 <sp-split-button size="l">
@@ -66,9 +61,9 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-</div>
-
-<div class="tabs--xl">
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
 
 ```html
 <sp-split-button size="xl">
@@ -77,7 +72,8 @@ import { SplitButton } from '@spectrum-web-components/split-button';
 </sp-split-button>
 ```
 
-</div>
+</sp-tab-panel>
+</sp-tabs>
 
 ## Variants
 

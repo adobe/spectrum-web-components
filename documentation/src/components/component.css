@@ -14,26 +14,27 @@ governing permissions and limitations under the License.
     margin: 1.2em 0 1.5em 0;
 }
 
-[class^='tabs--'] {
-    display: none;
+sp-tab-panel[selected] {
+    display: flex;
 }
 
-sp-tabs[selected='s'] ~ .tabs--s {
-    display: block;
+sp-tab-panel:focus {
+    outline: none;
 }
 
-sp-tabs[selected='m'] ~ .tabs--m {
-    display: block;
-}
-
-sp-tabs[selected='l'] ~ .tabs--l {
-    display: block;
-}
-
-sp-tabs[selected='xl'] ~ .tabs--xl {
-    display: block;
+sp-tab-panel:focus code-example:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: var(--spectrum-global-dimension-static-size-25) solid
+        var(--spectrum-global-color-static-blue-600);
 }
 
 code-example {
+    overflow: hidden;
     --spectrum-dialog-confirm-min-width: 0;
 }

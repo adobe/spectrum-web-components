@@ -15,7 +15,10 @@ const config = {
     components: [
         {
             name: 'tabs',
-            host: '.spectrum-Tabs',
+            host: {
+                selector: '.spectrum-Tabs',
+                shadowSelector: '#list',
+            },
             attributes: [
                 {
                     type: 'boolean',
@@ -47,7 +50,7 @@ const config = {
             ],
             complexSelectors: [
                 {
-                    replacement: '::slotted(:not(:first-child))',
+                    replacement: '::slotted(:not([slot]):not(:first-child))',
                     selector:
                         '.spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator)',
                 },

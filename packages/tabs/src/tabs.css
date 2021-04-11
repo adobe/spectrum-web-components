@@ -35,7 +35,7 @@ governing permissions and limitations under the License.
  * The shorthand border declaration in :host([direction='horizontal']) was overiding
  * the border-bottom-color declared in :host 
  */
-:host([direction='horizontal']:not([quiet])) {
+:host([direction='horizontal']:not([quiet])) #list {
     border-bottom-color: var(
         --spectrum-tabs-rule-color,
         var(--spectrum-global-color-gray-200)
@@ -58,7 +58,7 @@ governing permissions and limitations under the License.
  * In the interim, if there are ever Visual Regression failures to the 'Vertical' tabs story
  * then it is likely that this CSS will need to be updated with changes in @spectrum-css/tabs
  */
-:host([dir='ltr'][direction='vertical-right']) {
+:host([dir='ltr'][direction='vertical-right']) #list {
     /* .spectrum-Tabs--vertical */
     display: inline-flex;
     flex-direction: column;
@@ -74,7 +74,7 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-gray-200)
     );
 }
-:host([dir='rtl'][direction='vertical-right']) {
+:host([dir='rtl'][direction='vertical-right']) #list {
     /* .spectrum-Tabs--vertical */
     display: inline-flex;
     flex-direction: column;
@@ -183,8 +183,8 @@ governing permissions and limitations under the License.
         -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
     );
 }
-:host([dir='ltr'][direction='vertical-right'][compact]),
-:host([dir='ltr'][direction='vertical-right'][quiet]) {
+:host([dir='ltr'][direction='vertical-right'][compact]) #list,
+:host([dir='ltr'][direction='vertical-right'][quiet]) #list {
     /* .spectrum-Tabs--vertical.spectrum-Tabs--compact,
    * .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
     border-right-color: var(
@@ -192,8 +192,8 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-border-color-transparent)
     );
 }
-:host([dir='rtl'][direction='vertical-right'][compact]),
-:host([dir='rtl'][direction='vertical-right'][quiet]) {
+:host([dir='rtl'][direction='vertical-right'][compact]) #list,
+:host([dir='rtl'][direction='vertical-right'][quiet]) #list {
     /* .spectrum-Tabs--vertical.spectrum-Tabs--compact,
    * .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
     border-left-color: var(

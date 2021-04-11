@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import '../sp-tabs.js';
 import '../sp-tab.js';
-import { Tabs, Tab } from '../';
+import '../sp-tab-panel.js';
+import { Tabs, Tab, TabPanel } from '../';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import {
@@ -39,6 +40,9 @@ const createTabs = async (): Promise<Tabs> => {
                 <sp-tab label="Tab 1" value="first"></sp-tab>
                 <sp-tab label="Tab 2" value="second"></sp-tab>
                 <sp-tab label="Tab 3" value="third"></sp-tab>
+                <sp-tab-panel value="first">First tab content</sp-tab-panel>
+                <sp-tab-panel value="second">Second tab content</sp-tab-panel>
+                <sp-tab-panel value="third">Third tab content</sp-tab-panel>
             </sp-tabs>
         `
     );
@@ -80,36 +84,49 @@ describe('Tabs', () => {
     it('reflects selected tab with selected property', async () => {
         const tabs = await createTabs();
 
-        const firstTab = tabs.querySelector('sp-tab[value=first]');
-        const secondTab = tabs.querySelector('sp-tab[value=second]');
-        const thirdTab = tabs.querySelector('sp-tab[value=third]');
-
-        if (!(firstTab instanceof Tab))
-            throw new Error('firstTab not of type Tab');
-        if (!(secondTab instanceof Tab))
-            throw new Error('secondTab not of type Tab');
-        if (!(thirdTab instanceof Tab))
-            throw new Error('thirdTab not of type Tab');
+        const firstTab = tabs.querySelector('sp-tab[value=first]') as Tab;
+        const secondTab = tabs.querySelector('sp-tab[value=second]') as Tab;
+        const thirdTab = tabs.querySelector('sp-tab[value=third]') as Tab;
+        const firstPanel = tabs.querySelector(
+            'sp-tab-panel[value=first]'
+        ) as TabPanel;
+        const secondPanel = tabs.querySelector(
+            'sp-tab-panel[value=second]'
+        ) as TabPanel;
+        const thirdPanel = tabs.querySelector(
+            'sp-tab-panel[value=third]'
+        ) as TabPanel;
 
         expect(firstTab.selected, 'first: 1, selected').to.be.true;
+        expect(firstPanel.selected, 'first panel: 1, selected').to.be.true;
         expect(secondTab.selected, 'second: 1, not selected').to.be.false;
+        expect(secondPanel.selected, 'second panel: 1, not selected').to.be
+            .false;
         expect(thirdTab.selected, 'third: 1, not selected').to.be.false;
+        expect(thirdPanel.selected, 'third panel: 1, not selected').to.be.false;
         expect(tabs.selected).to.equal(firstTab.value);
 
         secondTab.click();
         await elementUpdated(tabs);
 
         expect(firstTab.selected, 'first: 2, not selected').to.be.false;
+        expect(firstPanel.selected, 'first panel: 2, not selected').to.be.false;
         expect(secondTab.selected, 'second: 2, selected').to.be.true;
+        expect(secondTab.selected, 'first panel: 2, selected').to.be.true;
         expect(thirdTab.selected, 'third: 2, not selected').to.be.false;
+        expect(thirdTab.selected, 'first panel: 2, not selected').to.be.false;
         expect(tabs.selected).to.equal(secondTab.value);
 
         thirdTab.click();
         await elementUpdated(tabs);
 
         expect(firstTab.selected, 'first: 3, not selected').to.be.false;
+        expect(firstPanel.selected, 'first panel: 3, not selected').to.be.false;
         expect(secondTab.selected, 'second: 3, not selected').to.be.false;
+        expect(secondPanel.selected, 'second panel: 3, not selected').to.be
+            .false;
         expect(thirdTab.selected, 'third: 3, selected').to.be.true;
+        expect(thirdTab.selected, 'first panel: 3, selected').to.be.true;
         expect(tabs.selected).to.equal(thirdTab.value);
     });
 
@@ -302,14 +319,14 @@ describe('Tabs', () => {
         expect(el.selected).to.equal('first');
         expect(selected.tabIndex).to.equal(0);
 
-        el.dispatchEvent(new Event('focusin'));
+        toBeSelected.dispatchEvent(new Event('focusin', { bubbles: true }));
 
         await elementUpdated(el);
 
         expect(el.selected).to.equal('first');
         expect(selected.tabIndex).to.equal(-1);
 
-        el.dispatchEvent(new Event('focusout'));
+        toBeSelected.dispatchEvent(new Event('focusout', { bubbles: true }));
 
         await elementUpdated(el);
 

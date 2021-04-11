@@ -26,14 +26,9 @@ import { Link } from '@spectrum-web-components/link';
 
 ## Sizes
 
-<sp-tabs selected="m">
-    <sp-tab value="s">Small</sp-tab>
-    <sp-tab value="m">Medium</sp-tab>
-    <sp-tab value="l">Large</sp-tab>
-    <sp-tab value="xl">Extra Large</sp-tab>
-</sp-tabs>
-
-<div class="tabs--s">
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 ```html
 This is an
@@ -41,9 +36,9 @@ This is an
 .
 ```
 
-</div>
-
-<div class="tabs--m">
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
 
 ```html
 This is an
@@ -51,9 +46,9 @@ This is an
 .
 ```
 
-</div>
-
-<div class="tabs--l">
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
 
 ```html
 This is an
@@ -61,9 +56,9 @@ This is an
 .
 ```
 
-</div>
-
-<div class="tabs--xl">
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
 
 ```html
 This is an
@@ -71,7 +66,8 @@ This is an
 .
 ```
 
-</div>
+</sp-tab-panel>
+</sp-tabs>
 
 ## Variants
 
