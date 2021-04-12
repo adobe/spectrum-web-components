@@ -8,7 +8,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: e901c4315b23d767cce88a36a4dea231d60ba53f
+        default: a224033903fc62de316fdea7f9c849e0378b4bfc
 commands:
     downstream:
         steps:
@@ -88,7 +88,7 @@ commands:
                   name: Build Golden Images Branch Cache
                   paths:
                       - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+                  key: v2-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
     commitlint:
