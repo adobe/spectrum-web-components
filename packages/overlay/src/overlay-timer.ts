@@ -38,7 +38,7 @@ export class OverlayTimer {
     public async openTimer(component: HTMLElement): Promise<boolean> {
         this.cancelCooldownTimer();
 
-        if (!this.component || !component.isSameNode(this.component)) {
+        if (!this.component || component !== this.component) {
             if (this.component) {
                 this.close(this.component);
                 this.cancelCooldownTimer();
@@ -68,7 +68,7 @@ export class OverlayTimer {
     }
 
     public close(component: HTMLElement): void {
-        if (this.component && this.component.isSameNode(component)) {
+        if (this.component && this.component === component) {
             this.resetCooldownTimer();
             if (this.timeout > 0) {
                 clearTimeout(this.timeout);
