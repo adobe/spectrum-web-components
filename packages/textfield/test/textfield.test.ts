@@ -319,7 +319,7 @@ describe('Textfield', () => {
 
         expect(el.value).to.equal(testValue);
         const testSource = eventSource as Textfield;
-        expect(testSource.isSameNode(el)).to.be.true;
+        expect(testSource).to.equal(el);
     });
     it('passes through `autocomplete` attribute', async () => {
         let el = await litFixture<Textfield>(

@@ -49,7 +49,7 @@ export class SideNav extends Focusable {
     }
 
     public focus(): void {
-        if (this.focusElement.isSameNode(this)) {
+        if (this.focusElement === this) {
             return;
         }
 
@@ -57,7 +57,7 @@ export class SideNav extends Focusable {
     }
 
     public blur(): void {
-        if (this.focusElement.isSameNode(this)) {
+        if (this.focusElement === this) {
             return;
         }
 
@@ -65,7 +65,7 @@ export class SideNav extends Focusable {
     }
 
     public click(): void {
-        if (this.focusElement.isSameNode(this)) {
+        if (this.focusElement === this) {
             return;
         }
 

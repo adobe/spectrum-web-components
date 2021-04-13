@@ -84,7 +84,7 @@ export class Tooltip extends SpectrumElement {
 
         const target = event.target as Node;
         /* c8 ignore next */
-        if (!target.isSameNode(this)) return;
+        if (target !== this) return;
 
         event.detail.overlayContentTipElement = this.tipElement;
     }

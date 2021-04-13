@@ -64,7 +64,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
         const target = this.target as AcceptsFocusVisisble;
         const targetParent = target.getRootNode() as ShadowRoot;
         const targetHost = targetParent.host as AcceptsFocusVisisble;
-        if (targetParent.isSameNode(parent) && target.forceFocusVisible) {
+        if (targetParent === parent && target.forceFocusVisible) {
             target.forceFocusVisible();
         } else if (targetHost && targetHost.forceFocusVisible) {
             targetHost.forceFocusVisible();
@@ -86,7 +86,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
         this.target = target.focusElement || target;
         if (this.target) {
             const targetParent = this.target.getRootNode() as HTMLElement;
-            if (targetParent.isSameNode(parent)) {
+            if (targetParent === parent) {
                 this.target.setAttribute('aria-labelledby', this.id);
             } else {
                 this.target.setAttribute(

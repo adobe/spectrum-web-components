@@ -80,7 +80,7 @@ export class Popover extends SpectrumElement {
 
         const target = event.target as Node;
         /* c8 ignore next */
-        if (!target.isSameNode(this)) return;
+        if (target !== this) return;
 
         const tipElement = this.shadowRoot.querySelector('#tip') as HTMLElement;
         if (tipElement) {

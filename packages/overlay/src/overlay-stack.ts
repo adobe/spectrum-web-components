@@ -136,7 +136,7 @@ export class OverlayStack {
         overlayContent: HTMLElement
     ): ActiveOverlay | undefined {
         for (const item of this.overlays) {
-            if (overlayContent.isSameNode(item.overlayContent as HTMLElement)) {
+            if (overlayContent === item.overlayContent) {
                 return item;
             }
         }
@@ -153,7 +153,7 @@ export class OverlayStack {
     private isClickOverlayActiveForTrigger(trigger: HTMLElement): boolean {
         return this.overlays.some(
             (item) =>
-                trigger.isSameNode(item.trigger as HTMLElement) &&
+                trigger === item.trigger &&
                 item.interaction === 'click'
         );
     }
@@ -381,7 +381,7 @@ export class OverlayStack {
                             .getRootNode()
                             .contains(triggerActiveElement) ||
                         (triggerRoot.host &&
-                            triggerRoot.host.isSameNode(triggerActiveElement))
+                            triggerRoot.host === triggerActiveElement)
                     ) {
                         overlay.trigger.focus();
                     }
