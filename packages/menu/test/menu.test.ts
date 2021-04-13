@@ -112,31 +112,23 @@ describe('Menu', () => {
         const el = await fixture<Menu>(
             html`
                 <sp-menu>
-                    <sp-menu-item>
-                        Deselect
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Select Inverse
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Feather...
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Select and Mask...
-                    </sp-menu-item>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
                     <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Save Selection
-                    </sp-menu-item>
-                    <sp-menu-item disabled>
-                        Make Work Path
-                    </sp-menu-item>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-menu>
             `
         );
 
         await elementUpdated(el);
 
+        const inTabindexElement = el.querySelector(
+            '[tabindex]:not([tabindex="-1"])'
+        );
+        expect(inTabindexElement).to.be.null;
         await expect(el).to.be.accessible();
     });
 
@@ -144,15 +136,9 @@ describe('Menu', () => {
         const el = await fixture<Menu>(
             html`
                 <sp-menu>
-                    <sp-menu-item>
-                        Not Selected
-                    </sp-menu-item>
-                    <sp-menu-item selected>
-                        Selected
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Other
-                    </sp-menu-item>
+                    <sp-menu-item>Not Selected</sp-menu-item>
+                    <sp-menu-item selected>Selected</sp-menu-item>
+                    <sp-menu-item>Other</sp-menu-item>
                 </sp-menu>
             `
         );
@@ -166,25 +152,13 @@ describe('Menu', () => {
         const el = await fixture<Menu>(
             html`
                 <sp-menu>
-                    <sp-menu-item>
-                        Deselect
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Select Inverse
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Feather...
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Select and Mask...
-                    </sp-menu-item>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
                     <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>
-                        Save Selection
-                    </sp-menu-item>
-                    <sp-menu-item disabled>
-                        Make Work Path
-                    </sp-menu-item>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-menu>
             `
         );
@@ -225,9 +199,7 @@ describe('Menu', () => {
                 <sp-menu>
                     <sp-menu-group>
                         <span slot="header">Options</span>
-                        <sp-menu-item>
-                            Deselect
-                        </sp-menu-item>
+                        <sp-menu-item>Deselect</sp-menu-item>
                     </sp-menu-group>
                 </sp-menu>
             `
@@ -274,15 +246,9 @@ describe('Menu', () => {
         const el = await fixture<Menu>(
             html`
                 <sp-menu tabindex="0">
-                    <sp-menu-item>
-                        Deselect
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Select Inverse
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Third Item
-                    </sp-menu-item>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Third Item</sp-menu-item>
                 </sp-menu>
             `
         );
@@ -324,18 +290,10 @@ describe('Menu', () => {
         const el = await fixture<Menu>(
             html`
                 <sp-menu id="test">
-                    <sp-menu-item class="first">
-                        Deselect
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Invert Selection
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Feather...
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Select and Mask...
-                    </sp-menu-item>
+                    <sp-menu-item class="first">Deselect</sp-menu-item>
+                    <sp-menu-item>Invert Selection</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
                     <sp-menu-item selected class="selected">
                         Save Selection
                     </sp-menu-item>

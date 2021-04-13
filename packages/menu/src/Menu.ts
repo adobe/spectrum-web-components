@@ -64,6 +64,7 @@ export class Menu extends SpectrumElement {
         this.onClick = this.onClick.bind(this);
         this.addEventListener('click', this.onClick);
         this.addEventListener('focusin', this.startListeningToKeyboard);
+        this.addEventListener('focus', this.focus);
     }
 
     public focus(): void {
@@ -166,7 +167,6 @@ export class Menu extends SpectrumElement {
         itemToFocus.focused = true;
         itemToFocus.scrollIntoView({ block: 'nearest' });
         this.setAttribute('aria-activedescendant', itemToFocus.id);
-        focusedItem.tabIndex = -1;
     }
 
     private prepareToCleanUp(): void {
@@ -182,17 +182,7 @@ export class Menu extends SpectrumElement {
                         this.focusedItemIndex
                     ] as MenuItem;
                     focusedItem.focused = false;
-                    if (this.querySelector('[selected]')) {
-                        const itemToBlur = this.menuItems[
-                            this.focusInItemIndex
-                        ] as MenuItem;
-                        itemToBlur.tabIndex = -1;
-                    }
                     this.updateSelectedItemIndex();
-                    const itemToFocus = this.menuItems[
-                        this.focusInItemIndex
-                    ] as MenuItem;
-                    itemToFocus.tabIndex = 0;
                 });
             },
             { once: true }
@@ -225,7 +215,6 @@ export class Menu extends SpectrumElement {
         }
         this.updateSelectedItemIndex();
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
-        focusInItem.tabIndex = 0;
         if ((this.getRootNode() as Document).activeElement === this) {
             focusInItem.focused = true;
         }
