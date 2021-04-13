@@ -83,6 +83,7 @@ export class MenuItem extends ActionButton {
     }
 
     protected firstUpdated(changes: PropertyValues): void {
+        this.setAttribute('tabindex', '-1');
         super.firstUpdated(changes);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${MenuItem.instanceCount++}`;
