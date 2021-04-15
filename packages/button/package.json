@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/button",
-    "version": "0.13.5",
+    "version": "0.13.6",
     "publishConfig": {
         "access": "public"
     },

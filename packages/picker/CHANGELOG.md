@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.4.3...@spectrum-web-components/picker@0.4.4) (2021-04-15)
+
+### Bug Fixes
+
+-   **menu:** only scrollIntoView when keyboard navigating ([f4e9278](https://github.com/adobe/spectrum-web-components/commit/f4e9278048287a45bba2da25144834b0b8297c66))
+
 ## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.4.2...@spectrum-web-components/picker@0.4.3) (2021-04-09)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.13.5...@spectrum-web-components/button@0.13.6) (2021-04-15)
+
+### Bug Fixes
+
+-   **button:** no double link clicks ([02d576c](https://github.com/adobe/spectrum-web-components/commit/02d576c89561ba9459feb1efdba613ea289e808c))
+
 ## [0.13.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.13.4...@spectrum-web-components/button@0.13.5) (2021-04-09)
 
 **Note:** Version bump only for package @spectrum-web-components/button

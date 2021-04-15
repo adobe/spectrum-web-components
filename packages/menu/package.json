@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/menu",
-    "version": "0.8.3",
+    "version": "0.8.4",
     "publishConfig": {
         "access": "public"
     },
@@ -49,7 +49,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.4.5",
+        "@spectrum-web-components/action-button": "^0.4.6",
         "@spectrum-web-components/base": "^0.4.3",
         "@spectrum-web-components/icon": "^0.9.5",
         "@spectrum-web-components/icons-ui": "^0.6.5",

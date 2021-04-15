@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/dialog",
-    "version": "0.6.5",
+    "version": "0.6.6",
     "publishConfig": {
         "access": "public"
     },
@@ -45,9 +45,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.4.5",
+        "@spectrum-web-components/action-button": "^0.4.6",
         "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/button": "^0.13.5",
+        "@spectrum-web-components/button": "^0.13.6",
         "@spectrum-web-components/button-group": "^0.6.5",
         "@spectrum-web-components/divider": "^0.2.4",
         "@spectrum-web-components/icon": "^0.9.5",

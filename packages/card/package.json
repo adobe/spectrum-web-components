@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/card",
-    "version": "0.8.5",
+    "version": "0.8.6",
     "publishConfig": {
         "access": "public"
     },
@@ -49,7 +49,7 @@
         "@spectrum-web-components/icons-workflow": "^0.6.5",
         "@spectrum-web-components/quick-actions": "^0.4.4",
         "@spectrum-web-components/shared": "^0.12.2",
-        "@spectrum-web-components/styles": "^0.9.4",
+        "@spectrum-web-components/styles": "^0.9.5",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

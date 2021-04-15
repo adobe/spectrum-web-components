@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/vrt-compare",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publishConfig": {
         "access": "public"
     },
@@ -43,14 +43,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-bar": "^0.2.5",
-        "@spectrum-web-components/action-button": "^0.4.5",
-        "@spectrum-web-components/action-group": "^0.4.5",
+        "@spectrum-web-components/action-bar": "^0.2.6",
+        "@spectrum-web-components/action-button": "^0.4.6",
+        "@spectrum-web-components/action-group": "^0.4.6",
         "@spectrum-web-components/base": "^0.4.3",
         "@spectrum-web-components/icons-workflow": "^0.6.5",
         "@spectrum-web-components/shared": "^0.11.1",
         "@spectrum-web-components/split-view": "^0.2.4",
-        "@spectrum-web-components/styles": "^0.9.4",
+        "@spectrum-web-components/styles": "^0.9.5",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

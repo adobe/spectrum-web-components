@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.3...@spectrum-web-components/menu@0.8.4) (2021-04-15)
+
+### Bug Fixes
+
+-   **menu:** manage tabindex and focus entry correctly ([3b1a250](https://github.com/adobe/spectrum-web-components/commit/3b1a250c0ec4ad2b3553bbf100c8c7015ff3cbc6))
+-   **menu:** only scrollIntoView when keyboard navigating ([f4e9278](https://github.com/adobe/spectrum-web-components/commit/f4e9278048287a45bba2da25144834b0b8297c66))
+
 ## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.2...@spectrum-web-components/menu@0.8.3) (2021-04-09)
 
 **Note:** Version bump only for package @spectrum-web-components/menu
