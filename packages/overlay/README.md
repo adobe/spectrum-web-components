@@ -95,6 +95,10 @@ type OverlayOptions = {
 
 `receivesFocus` tells the overlay stack to throw focus into the overlay after it has opened.
 
+### Events
+
+The work to both open and close an overlay is asynchronous. This asynchrony is surfaced into the application via DOM events dispatched from the `trigger` element of your overlay. An `sp-opened` event will be dispatched once the overlay has finished opening, and an `sp-closed` event will be dispatched once the overlay has finished closing. In both cases, the dispatched event will include a `detail` property with an `interaction: TriggerInteractions` key to support associating the event/overlay with its originating `interaction`.
+
 ## Example
 
 ```html
