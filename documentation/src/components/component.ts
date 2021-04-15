@@ -309,3 +309,24 @@ class ComponentElement extends RouteComponent {
     }
 }
 customElements.define('docs-component', ComponentElement);
+
+class StyledElement extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        (this.shadowRoot as ShadowRoot).innerHTML = `
+            <style>
+                :host {
+                    display: block;
+                    background-color: var(--spectrum-global-color-gray-50);
+                    color: var(--spectrum-global-color-gray-800);
+                    border: 1px solid;
+                    padding: 2em;
+                }
+            </style>
+            <slot></slot>
+        `;
+    }
+}
+
+customElements.define('styled-element', StyledElement);
