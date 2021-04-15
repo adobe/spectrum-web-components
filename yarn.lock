@@ -21444,7 +21444,7 @@ table@^6.0.4, table@^6.0.7:
     slice-ansi "^4.0.0"
     string-width "^4.2.0"
 
-tachometer@^0.5.5:
+tachometer@^0.5.8:
   version "0.5.8"
   resolved "https://registry.yarnpkg.com/tachometer/-/tachometer-0.5.8.tgz#7679a1e0334be360e8fc7229004a04f6899a94d3"
   integrity sha512-CttguFunKN/qlK2HXwzbEDGPOVCIKjTTKVzGyR3evV0/IimSryOeNgWOZzvVkURKlg86znsOHn+Ne2DHgknp6A==
