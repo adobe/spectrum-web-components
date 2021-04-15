@@ -112,7 +112,6 @@ export class ButtonBase extends LikeAnchor(
         if (this.anchorElement) {
             this.anchorElement.click();
             handled = true;
-            this.anchorElement.classList.remove('clicking');
         } else if (this.type !== 'button') {
             const proxy = document.createElement('button');
             proxy.type = this.type;
@@ -193,11 +192,13 @@ export class ButtonBase extends LikeAnchor(
         this.active = true;
     }
 
-    private manageRole(): void {
+    private manageAnchor(): void {
         if (this.href && this.href.length > 0) {
             this.removeAttribute('role');
+            this.removeEventListener('click', this.shouldProxyClick);
         } else if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'button');
+            this.addEventListener('click', this.shouldProxyClick);
         }
     }
 
@@ -206,8 +207,7 @@ export class ButtonBase extends LikeAnchor(
         if (!this.hasAttribute('tabindex')) {
             this.tabIndex = 0;
         }
-        this.manageRole();
-        this.addEventListener('click', this.shouldProxyClick);
+        this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
         this.addEventListener('pointerdown', this.handlePointerdown);
@@ -216,7 +216,7 @@ export class ButtonBase extends LikeAnchor(
     protected updated(changed: PropertyValues): void {
         super.updated(changed);
         if (changed.has('href')) {
-            this.manageRole();
+            this.manageAnchor();
         }
         if (changed.has('label')) {
             this.setAttribute('aria-label', this.label || '');
