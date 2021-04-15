@@ -4306,10 +4306,10 @@
   dependencies:
     "@web/dev-server-core" "^0.3.0"
 
-"@web/dev-server-rollup@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.2.tgz#8cf0df70fdca6f92f085f2840472677d29cf5862"
-  integrity sha512-c5ROnMAUrOJPXTQFFXZiOy0ta4Y5yXLA2QkD71htNhIcqeOI4yx6ueDtuFqovRxVI0qcWGk46UdfZ0UGT/9MIg==
+"@web/dev-server-rollup@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.3.tgz#784235a58ce4585bc353a26aba82b3d4466bbb1f"
+  integrity sha512-3v+PG9xC+Q07NOVTqqYuab/XqDQfWXltVzOI6HstBD0RWP7u7Bk4G0BwSjD3RNdIzyrTW//zCwyCN7UkHNhIBA==
   dependencies:
     "@web/dev-server-core" "^0.3.3"
     chalk "^4.1.0"
@@ -4343,17 +4343,17 @@
     rollup-plugin-terser "^7.0.2"
     storybook-addon-markdown-docs "^1.0.1"
 
-"@web/dev-server@^0.1.8":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.10.tgz#108636507c4a4f1fe9194468ac264c0d9a7d82f4"
-  integrity sha512-5Pj2GPNKO6Uq2aQCq1+/fkXdZ5guALevUb6M324oiTr1srBXHod6QunbzqXovO5Bcgmo79ZOneHMgoQNwxtIYA==
+"@web/dev-server@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.11.tgz#211858264ee386a695ed4faccab8d790981824ef"
+  integrity sha512-4yqxfL2FBbHxHlu2+KFIF+iXN7f9MiGu8j/gNT6gnTPruCL6AUBm+skT5kRqaA6DYnmd4qbVc3EWnJvZY3RvGQ==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@rollup/plugin-node-resolve" "^11.0.1"
     "@types/command-line-args" "^5.0.0"
     "@web/config-loader" "^0.1.3"
     "@web/dev-server-core" "^0.3.8"
-    "@web/dev-server-rollup" "^0.3.2"
+    "@web/dev-server-rollup" "^0.3.3"
     camelcase "^6.2.0"
     chalk "^4.1.0"
     command-line-args "^5.1.1"
@@ -4437,10 +4437,49 @@
   dependencies:
     "@web/test-runner-core" "^0.10.8"
 
+"@web/test-runner-commands@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.4.2.tgz#d4d6f17f56286932c4292acc6ed44913d81e3bbd"
+  integrity sha512-6Wb7rkb2dxbGTjs/VHLFTEp9OOo01B82YYG1260E4baMSt8UMw/eF9NJpOjxC7Z8ySURphJYW/Riwi0bWWwIeQ==
+  dependencies:
+    "@web/test-runner-core" "^0.10.14"
+
 "@web/test-runner-core@^0.10.13", "@web/test-runner-core@^0.10.8", "@web/test-runner-core@^0.10.9":
   version "0.10.13"
   resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.13.tgz#7c86939204f1b1e958fb21c866c06ca5edb54634"
   integrity sha512-w6seztsj/UKUz9HP5KeMZ1JdUadt293SplsrKKaUJTZDMLO8+xvyo+vpt1Mv7zICu0wyuQN0AdD3GjKKX6dFHw==
+  dependencies:
+    "@babel/code-frame" "^7.12.11"
+    "@types/co-body" "^5.1.0"
+    "@types/convert-source-map" "^1.5.1"
+    "@types/debounce" "^1.2.0"
+    "@types/istanbul-lib-coverage" "^2.0.3"
+    "@types/istanbul-reports" "^3.0.0"
+    "@types/uuid" "^8.3.0"
+    "@web/browser-logs" "^0.2.1"
+    "@web/dev-server-core" "^0.3.6"
+    chalk "^4.1.0"
+    chokidar "^3.4.3"
+    cli-cursor "^3.1.0"
+    co-body "^6.1.0"
+    convert-source-map "^1.7.0"
+    debounce "^1.2.0"
+    dependency-graph "^0.10.0"
+    globby "^11.0.1"
+    ip "^1.1.5"
+    istanbul-lib-coverage "^3.0.0"
+    istanbul-lib-report "^3.0.0"
+    istanbul-reports "^3.0.2"
+    log-update "^4.0.0"
+    open "^8.0.2"
+    picomatch "^2.2.2"
+    source-map "^0.7.3"
+    uuid "^8.3.2"
+
+"@web/test-runner-core@^0.10.14":
+  version "0.10.14"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.14.tgz#5794ded17f673d9839e5a5e36ead505df92962af"
+  integrity sha512-RfY6KAtWHBZvfS/JGAkvp6zprFROd3m7gPJJAUFkfYXyMUQZQnNGI5nI+Shft1FcsST16/ivPog6TPNka55+ig==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/co-body" "^5.1.0"
@@ -4520,24 +4559,23 @@
     pixelmatch "^5.2.1"
     pngjs "^6.0.0"
 
-"@web/test-runner@^0.12.17":
-  version "0.12.17"
-  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.12.17.tgz#37994ddc53e0dab8c282f1d595826ac309db89fe"
-  integrity sha512-wTpczsz+GLh6QRGWNLDTYhXtcj/lr8rsEVHSXvFUDmVzhoGrt0AZJktnPiNJHplgFJ/LbSIiQvXKWk48ogZY5g==
+"@web/test-runner@^0.12.19":
+  version "0.12.19"
+  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.12.19.tgz#1ab4a2658c76dfc384747c187d8ab81123606dae"
+  integrity sha512-7uOBWfhVaJStLDEua1qVPdRsE+vZ3ljDIFql60hse6ml+ZG7we3XjWs5fsuNMBK9SIRaSFdPBGLp4H1kq5Ying==
   dependencies:
     "@web/browser-logs" "^0.2.0"
     "@web/config-loader" "^0.1.3"
-    "@web/dev-server" "^0.1.8"
+    "@web/dev-server" "^0.1.11"
     "@web/test-runner-chrome" "^0.9.4"
-    "@web/test-runner-commands" "^0.4.1"
-    "@web/test-runner-core" "^0.10.13"
+    "@web/test-runner-commands" "^0.4.2"
+    "@web/test-runner-core" "^0.10.14"
     "@web/test-runner-mocha" "^0.7.2"
     camelcase "^6.2.0"
     chalk "^4.1.0"
     command-line-args "^5.1.1"
     command-line-usage "^6.1.1"
     convert-source-map "^1.7.0"
-    deepmerge "^4.2.2"
     diff "^5.0.0"
     globby "^11.0.1"
     portfinder "^1.0.28"
