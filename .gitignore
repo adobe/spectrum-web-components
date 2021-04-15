@@ -54,6 +54,7 @@ test-results.xml
 /test/benchmark/**/*.js
 /test/benchmark/**/*.js.map
 /test/benchmark/**/*.d.ts
+test/benchmark/cli.cjs
 !test/visual/**/*.js
 test/visual/test.js
 test/visual/story-imports.js

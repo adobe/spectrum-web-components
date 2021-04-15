@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/icon/sp-icon.js';
 import { AbcIcon } from '@spectrum-web-components/icons-workflow/src/icons/ABC.js';
 import { ActionsIcon } from '@spectrum-web-components/icons-workflow/src/icons/Actions.js';
-import { AdDisplayIcon } from '@spectrum-web-components/icons-workflow/src/icons/AdDisplay.js';
-import { AdPrintIcon } from '@spectrum-web-components/icons-workflow/src/icons/AdPrint.js';
+import { DisplayAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/DisplayAdvert.js';
+import { PrintAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/PrintAdvert.js';
 import { AddIcon } from '@spectrum-web-components/icons-workflow/src/icons/Add.js';
 import { AddCircleIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddCircle.js';
 import { AddToIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddTo.js';
@@ -56,8 +56,8 @@ setCustomTemplateLiteralTag(html);
 measureFixtureCreation(html`
     <sp-icon>${AbcIcon({ hidden: true })}</sp-icon>
     <sp-icon>${ActionsIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AdDisplayIcon({ hidden: true })}</sp-icon>
-    <sp-icon>${AdPrintIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${DisplayAdvertIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${PrintAdvertIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AddIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AddCircleIcon({ hidden: true })}</sp-icon>
     <sp-icon>${AddToIcon({ hidden: true })}</sp-icon>
