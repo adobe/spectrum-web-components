@@ -123,6 +123,79 @@ The delivery of hover content can be customized via the `placement` attribute. H
 </overlay-trigger>
 ```
 
+## Styling
+
+Content that is thrown into an overlay (e.g. `[slot="*-content"]`) will be moved out of the CSS scope created by its parent `<overlay-trigger>` and other related elements within the same DOM/shadow tree. In this way styling rules that rely on that scope will not travel with the content into its overlay context. In order to ensure that your overlay content is styled as you would like you will need to bind those styles by applying them inline, including a `<style>` element _inside_ of your content element, or by making your content its own custom element.
+
+**Inline Styles**
+
+```html
+<overlay-trigger placement="top-start">
+    <sp-button slot="trigger" variant="primary">Trigger Element</sp-button>
+    <div
+        slot="click-content"
+        style="
+        background-color: var(--spectrum-global-color-gray-50);
+        color: var(--spectrum-global-color-gray-800);
+        border: 1px solid;
+        padding: 2em;
+    "
+    >
+        This content is delivered with inline styles.
+    </div>
+</overlay-trigger>
+```
+
+**Style Element**
+
+```html
+<overlay-trigger placement="top-start">
+    <sp-button slot="trigger" variant="primary">Trigger Element</sp-button>
+    <div slot="click-content" id="styled-content">
+        <style>
+            #styled-content {
+                background-color: var(--spectrum-global-color-gray-50);
+                color: var(--spectrum-global-color-gray-800);
+                border: 1px solid;
+                padding: 2em;
+            }
+        </style>
+        This content is delivered with a style element defining its styles.
+    </div>
+</overlay-trigger>
+```
+
+**Custom Element**
+
+```html
+<overlay-trigger placement="top-start">
+    <sp-button slot="trigger" variant="primary">Trigger Element</sp-button>
+    <styled-element slot="click-content">
+        This content is delivered as its own custom element.
+    </styled-element>
+</overlay-trigger>
+<script>
+    class StyledElement extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({ mode: 'open' });
+            this.shadowRoot.innerHTML = `
+                <style>
+                    :host {
+                        background-color: var(--spectrum-global-color-gray-50);
+                        color: var(--spectrum-global-color-gray-800);
+                        border: 1px solid;
+                        padding: 2em;
+                    }
+                </style>
+                <slot></slot>
+            `;
+        }
+    }
+    customElements.define('styled-element', StyledElement);
+</script>
+```
+
 ## Accessibility
 
 When using an `<overlay-trigger>` element, it is important to be sure the that content you project into `slot="trigger"` is "interactive". This means that an element within that branch of DOM will be able to receive focus, and said element will appropriately convert keyboard interactions to `click` events, similar to what you'd find with `<a href="#">Anchors</a>`, `<button>Buttons</button>`, etc. You can find further reading on the subject of accessible keyboard interactions at [https://www.w3.org/WAI/WCAG21/Understanding/keyboard](https://www.w3.org/WAI/WCAG21/Understanding/keyboard).
