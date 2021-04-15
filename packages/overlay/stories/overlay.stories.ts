@@ -238,18 +238,47 @@ export const replace = (): TemplateResult => {
     `;
 };
 
-export const modal = (): TemplateResult => {
+export const modalLoose = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="modal" placement="none">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-dialog
+                size="small"
+                dismissable
+                slot="click-content"
+                @closed=${(event: Event & { target: DialogWrapper }) =>
+                    event.target.dispatchEvent(closeEvent)}
+            >
+                <h2 slot="heading">Loose Dialog</h2>
+                <p>
+                    The
+                    <code>sp-dialog</code>
+                    element is not "meant" to be a modal alone. In that way it
+                    does not manage its own
+                    <code>open</code>
+                    attribute or outline when it should have
+                    <code>pointer-events: auto</code>
+                    . It's a part of this test suite to prove that content in
+                    this way can be used in an
+                    <code>overlay-trigger</code>
+                    element.
+                </p>
+            </sp-dialog>
+        </overlay-trigger>
+        ${extraText}
+    `;
+};
+
+export const modalManaged = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
         <overlay-trigger type="modal" placement="none">
             <sp-button slot="trigger">Open</sp-button>
             <sp-dialog-wrapper
-                tabindex="0"
                 underlay
-                open
                 slot="click-content"
                 headline="Wrapped Dialog w/ Hero Image"
-                style="width: 100vw; height: 100vh;"
                 confirm-label="Keep Both"
                 secondary-label="Replace"
                 cancel-label="Cancel"
@@ -265,13 +294,15 @@ export const modal = (): TemplateResult => {
                 @cancel=${(event: Event & { target: DialogWrapper }): void => {
                     event.target.dispatchEvent(closeEvent);
                 }}
-                @sp-overlay-closed=${(
-                    event: Event & { target: DialogWrapper }
-                ): void => {
-                    event.target.open = true;
-                }}
             >
-                Content of the dialog
+                <p>
+                    The
+                    <code>sp-dialog-wrapper</code>
+                    element has been prepared for use in an
+                    <code>overlay-trigger</code>
+                    element by it's combination of modal, underlay, etc. styles
+                    and features.
+                </p>
             </sp-dialog-wrapper>
         </overlay-trigger>
         ${extraText}
