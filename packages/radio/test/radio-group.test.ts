@@ -45,12 +45,13 @@ describe('Radio Group - focus control', () => {
         expect(document.activeElement === el).to.be.false;
     });
     it('focuses selected before first', async () => {
+        const values = ['first', 'second', 'third'];
         const el = await fixture<RadioGroup>(
             html`
                 <sp-radio-group selected="second">
-                    <sp-radio value="first">Option 1</sp-radio>
-                    <sp-radio value="second">Option 2</sp-radio>
-                    <sp-radio value="third">Option 3</sp-radio>
+                    <sp-radio value=${values[0]}>Option 1</sp-radio>
+                    <sp-radio value=${values[1]}>Option 2</sp-radio>
+                    <sp-radio value=${values[2]}>Option 3</sp-radio>
                 </sp-radio-group>
             `
         );
@@ -296,7 +297,7 @@ describe('Radio Group', () => {
                         <sp-radio value="third">Option 3</sp-radio>
                     </sp-radio-group>
                     <sp-radio-group
-                        id="test-selected-prioritized"
+                        id="test-checked-prioritized"
                         selected="second"
                     >
                         <sp-radio value="first" checked>Option 1</sp-radio>
@@ -330,13 +331,14 @@ describe('Radio Group', () => {
         await expect(testDiv).to.be.accessible();
     });
 
-    it('validates selection', () => {
+    it('validates selection', async () => {
         const radioGroup = testDiv.querySelector(
             'sp-radio-group#test-none-selected'
         ) as RadioGroup;
         expect(radioGroup.selected).to.equal('');
 
         radioGroup.selected = 'missing';
+        await elementUpdated(radioGroup);
 
         expect(radioGroup.selected).to.equal('');
     });
@@ -345,18 +347,20 @@ describe('Radio Group', () => {
         const el = testDiv.querySelector(
             'sp-radio-group#test-default'
         ) as RadioGroup;
+        const secondRadio = el.querySelector('sp-radio[value=second]') as Radio;
+        const thirdRadio = el.querySelector('sp-radio[value=third]') as Radio;
 
         await elementUpdated(el);
         expect(el.selected).to.equal('first');
 
-        el.selected = 'second';
+        secondRadio.click();
 
         await elementUpdated(el);
         expect(el.selected).to.equal('second');
 
         el.addEventListener('change', (event) => event.preventDefault());
 
-        el.selected = 'third';
+        thirdRadio.click();
 
         await elementUpdated(el);
         expect(el.selected).to.equal('second');
@@ -460,20 +464,21 @@ describe('Radio Group', () => {
         expect(radioGroup.selected).to.equal('third');
         expect(radio1.checked).to.be.false;
         expect(radio2.checked).to.be.false;
-        expect(radio3.checked).to.be.true;
+        expect(radio3.checked, 'initial').to.be.true;
 
         radioGroup.selected = 'second';
         await elementUpdated(radioGroup);
 
         expect(radioGroup.selected).to.equal('second');
         expect(radio1.checked).to.be.false;
-        expect(radio2.checked).to.be.true;
+        expect(radio2.checked, 'second').to.be.true;
         expect(radio3.checked).to.be.false;
 
         radioGroup.selected = 'first';
+        await elementUpdated(radioGroup);
 
         expect(radioGroup.selected).to.equal('first');
-        expect(radio1.checked).to.be.true;
+        expect(radio1.checked, 'third').to.be.true;
         expect(radio2.checked).to.be.false;
         expect(radio3.checked).to.be.false;
     });
@@ -492,6 +497,7 @@ describe('Radio Group', () => {
             'sp-radio[value=third]'
         ) as Radio;
 
+        expect(radioGroup.selected).to.equal('third');
         inputForRadio(radio2).click();
         await elementUpdated(radioGroup);
 
@@ -504,14 +510,14 @@ describe('Radio Group', () => {
         await elementUpdated(radioGroup);
 
         expect(radioGroup.selected).to.equal('first');
-        expect(radio1.checked).to.be.true;
+        expect(radio1.checked, 'moved to checked').to.be.true;
         expect(radio2.checked).to.be.false;
         expect(radio3.checked).to.be.false;
     });
 
-    it('prioritizes selected over checked on initialization when conflicting', () => {
+    it('prioritizes checked over selected on initialization when conflicting', () => {
         const radioGroup = testDiv.querySelector(
-            'sp-radio-group#test-selected-prioritized'
+            'sp-radio-group#test-checked-prioritized'
         ) as RadioGroup;
         const radio1 = radioGroup.querySelector(
             'sp-radio[value=first]'
@@ -520,9 +526,9 @@ describe('Radio Group', () => {
             'sp-radio[value=second]'
         ) as Radio;
 
-        expect(radioGroup.selected).to.equal('second');
-        expect(radio1.checked).to.be.false;
-        expect(radio2.checked).to.be.true;
+        expect(radioGroup.selected).to.equal('first');
+        expect(radio1.checked).to.be.true;
+        expect(radio2.checked).to.be.false;
     });
 
     it('handles integer values for radio buttons', () => {

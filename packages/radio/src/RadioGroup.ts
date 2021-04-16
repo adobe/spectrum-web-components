@@ -15,6 +15,7 @@ import {
     property,
     TemplateResult,
     queryAssignedNodes,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 import { FieldGroup } from '@spectrum-web-components/field-group';
 
@@ -118,9 +119,9 @@ export class RadioGroup extends FieldGroup {
             case 'PageUp':
             case 'PageDown':
                 const tagsSiblings = [
-                    ...(this.getRootNode() as Document).querySelectorAll<
-                        RadioGroup
-                    >('sp-radio-group'),
+                    ...(this.getRootNode() as Document).querySelectorAll<RadioGroup>(
+                        'sp-radio-group'
+                    ),
                 ];
                 if (tagsSiblings.length < 2) {
                     return;
@@ -148,7 +149,7 @@ export class RadioGroup extends FieldGroup {
         event.preventDefault();
         const nextRadio = circularIndexedElement(this.buttons, nextIndex);
         nextRadio.focus();
-        this.selected = nextRadio.value;
+        this._setSelected(nextRadio.value);
     };
 
     private handleFocusout = (): void => {
@@ -165,21 +166,17 @@ export class RadioGroup extends FieldGroup {
         this.removeEventListener('focusout', this.handleFocusout);
     };
 
-    private _selected = '';
-
-    @property({ reflect: true })
-    public get selected(): string {
-        return this._selected;
-    }
-
-    public set selected(value: string) {
-        const old = this.selected;
+    private _setSelected(value: string): void {
+        if (value === this.selected) {
+            return;
+        }
+        const oldValue = this.selected;
         const radio = value
             ? (this.querySelector(`sp-radio[value="${value}"]`) as Radio)
             : undefined;
 
         // If no matching radio, selected is reset to empty string
-        this._selected = radio ? value : '';
+        this.selected = radio ? value : '';
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
@@ -188,13 +185,14 @@ export class RadioGroup extends FieldGroup {
             })
         );
         if (!applyDefault) {
-            this._selected = old;
+            this.selected = oldValue;
             return;
         }
-        this.deselectChecked();
-        if (radio) radio.checked = true;
-        this.requestUpdate('selected', old);
+        this.validateRadios();
     }
+
+    @property({ reflect: true })
+    public selected = '';
 
     protected render(): TemplateResult {
         return html`
@@ -205,20 +203,31 @@ export class RadioGroup extends FieldGroup {
     protected firstUpdated(): void {
         const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
         const checkedRadioValue = checkedRadio ? checkedRadio.value : '';
+        // Prefer the checked item over the selected value
+        this.selected = checkedRadioValue || this.selected;
+        // Validate the selected value is actual a radio option
+        if (this.selected && this.selected !== checkedRadioValue) {
+            const selectedRadio = this.querySelector(
+                `sp-radio[value="${this.selected}"]`
+            ) as Radio;
+            if (!selectedRadio) {
+                this.selected = '';
+            } else {
+                selectedRadio.checked = true;
+            }
+        }
 
-        // If selected already assigned, don't overwrite
-        this.selected = this.selected || checkedRadioValue;
-
-        this.buttons.map((button) => {
-            button.addEventListener('change', (event: Event) => {
-                event.stopPropagation();
-                const target = event.target as Radio;
-                this.selected = target.value;
-            });
+        this.addEventListener('change', (event: Event) => {
+            if (event.target === this) {
+                return;
+            }
+            event.stopPropagation();
+            const target = event.target as Radio;
+            this._setSelected(target.value);
         });
     }
 
-    protected updated(): void {
+    protected updated(changes: PropertyValues<this>): void {
         this.buttons.map((button, index) => {
             const focusable = this.selected
                 ? !button.disabled && button.value === this.selected
@@ -229,14 +238,19 @@ export class RadioGroup extends FieldGroup {
                 : '-1';
             button.setAttribute('tabindex', focusable);
         });
+        if (changes.has('selected')) {
+            this.validateRadios();
+        }
     }
 
-    private deselectChecked(): void {
-        const previousChecked = this.querySelectorAll('sp-radio[checked]');
-
-        previousChecked.forEach((element) => {
-            const radio = element as Radio;
-            radio.checked = false;
+    private validateRadios(): void {
+        let validSelection = false;
+        this.buttons.map((button) => {
+            button.checked = this.selected === button.value;
+            validSelection = validSelection || button.checked;
         });
+        if (!validSelection) {
+            this.selected = '';
+        }
     }
 }

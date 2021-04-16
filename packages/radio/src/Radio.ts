@@ -63,18 +63,14 @@ export class Radio extends Focusable {
         return this.inputElement;
     }
 
-    public handleChange(): void {
+    public handleChange(event: Event): void {
+        event.stopPropagation();
         if (this.readonly) {
             this.inputElement.checked = this.checked;
             return;
         }
         this.checked = this.inputElement.checked;
-        this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                composed: true,
-            })
-        );
+        this.dispatchEvent(new Event('change', event));
     }
 
     protected render(): TemplateResult {
