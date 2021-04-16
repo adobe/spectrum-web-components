@@ -43,8 +43,15 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     public expanded = false;
 
     protected get parentSideNav(): SideNav | undefined {
-        return this.closest('sp-sidenav') as SideNav | undefined;
+        if (!this._parentSidenav) {
+            this._parentSidenav = this.closest('sp-sidenav') as
+                | SideNav
+                | undefined;
+        }
+        return this._parentSidenav;
     }
+
+    protected _parentSidenav?: SideNav;
 
     protected get hasChildren(): boolean {
         return !!this.querySelector('sp-sidenav-item');
@@ -60,19 +67,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         return depth;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        const parentSideNav = this.parentSideNav;
-        if (parentSideNav) {
-            parentSideNav.addEventListener('sidenav-select', (event) =>
-                this.handleSideNavSelect(event)
-            );
-            this.selected =
-                this.value != null && this.value === parentSideNav.value;
-        }
-    }
-
-    protected handleSideNavSelect(event: Event): void {
+    public handleSideNavSelect(event: Event): void {
         this.selected = event.target === this;
     }
 
@@ -146,13 +141,30 @@ export class SideNavItem extends LikeAnchor(Focusable) {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        const manageTabIndex = this.dispatchEvent(
-            new Event('manage-tab-index', {
-                cancelable: true,
-            })
-        );
-        if (manageTabIndex) {
-            this.manageTabIndex = true;
+        this.startTrackingSelection();
+    }
+
+    public disconnectedCallback(): void {
+        this.stopTrackingSelection();
+        super.disconnectedCallback();
+    }
+
+    private async startTrackingSelection(): Promise<void> {
+        const parentSideNav = this.parentSideNav;
+        if (parentSideNav) {
+            await parentSideNav.updateComplete;
+            this.manageTabIndex = parentSideNav.manageTabIndex;
+            parentSideNav.startTrackingSelectionForItem(this);
+            this.selected =
+                this.value != null && this.value === parentSideNav.value;
         }
+    }
+
+    private stopTrackingSelection(): void {
+        const parentSideNav = this.parentSideNav;
+        if (parentSideNav) {
+            parentSideNav.stopTrackingSelectionForItem(this);
+        }
+        this._parentSidenav = undefined;
     }
 }

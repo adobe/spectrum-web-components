@@ -27,9 +27,25 @@ export interface SidenavSelectDetail {
     value: string;
 }
 
+/**
+ * @element sp-sidenav
+ *
+ * @fires change - Announces a change in the `value` property of the navigation element.
+ * This change can be "canceled" via `event.preventDefault()`.
+ */
 export class SideNav extends Focusable {
     public static get styles(): CSSResultArray {
         return [sidenavStyles];
+    }
+
+    private items = new Set<SideNavItem>();
+
+    public startTrackingSelectionForItem(item: SideNavItem): void {
+        this.items.add(item);
+    }
+
+    public stopTrackingSelectionForItem(item: SideNavItem): void {
+        this.items.delete(item);
     }
 
     @property({ type: Boolean, reflect: true, attribute: 'manage-tab-index' })
@@ -38,14 +54,34 @@ export class SideNav extends Focusable {
     @property({ reflect: true })
     public value: string | undefined = undefined;
 
-    private handleSelect(event: CustomEvent<SidenavSelectDetail>): void {
+    private handleSelect(
+        event: CustomEvent<SidenavSelectDetail> & { target: SideNavItem }
+    ): void {
+        event.stopPropagation();
+        if (this.value === event.detail.value) {
+            return;
+        }
+        const oldValue = this.value;
         this.value = event.detail.value;
+        const applyDefault = this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+        if (!applyDefault) {
+            this.value = oldValue;
+            event.target.selected = false;
+            event.preventDefault();
+        } else {
+            this.items.forEach((item) => item.handleSideNavSelect(event));
+        }
     }
 
     public constructor() {
         super();
         this.addEventListener('focusin', this.startListeningToKeyboard);
-        this.addEventListener('focusout', this.stopListeningToKeyboard);
     }
 
     public focus(): void {
@@ -95,6 +131,7 @@ export class SideNav extends Focusable {
 
     private startListeningToKeyboard(): void {
         this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('focusout', this.stopListeningToKeyboard);
         if (this.value && this.manageTabIndex) {
             const selected = this.querySelector(
                 `[value="${this.value}"]`
@@ -107,6 +144,7 @@ export class SideNav extends Focusable {
 
     private stopListeningToKeyboard(): void {
         this.removeEventListener('keydown', this.handleKeydown);
+        this.removeEventListener('focusout', this.stopListeningToKeyboard);
         if (this.value && this.manageTabIndex) {
             const selected = this.querySelector(
                 `[value="${this.value}"]`
@@ -211,24 +249,7 @@ export class SideNav extends Focusable {
         if (changes.has('manageTabIndex')) {
             const items = [...this.querySelectorAll('sp-sidenav-item')];
             items.map((item) => (item.manageTabIndex = this.manageTabIndex));
-            if (this.manageTabIndex) {
-                this.removeEventListener(
-                    'manage-tab-index',
-                    this.handleManageTabIndex,
-                    true
-                );
-            } else {
-                this.addEventListener(
-                    'manage-tab-index',
-                    this.handleManageTabIndex,
-                    true
-                );
-            }
         }
-    }
-
-    private handleManageTabIndex(event: Event): void {
-        event.preventDefault();
     }
 }
 

@@ -25,7 +25,7 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-sidenav @sidenav-select=${action('select')} value="Section 2">
+        <sp-sidenav @change=${action('select')} value="Section 2">
             <sp-sidenav-item
                 value="Section 1"
                 label="Section 1"
@@ -54,7 +54,7 @@ export const Multilevel = (): TemplateResult => {
         <sp-sidenav
             variant="multilevel"
             value="2.3.1"
-            @sidenav-select=${action('select')}
+            @change=${action('select')}
         >
             <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
             <sp-sidenav-item value="baz" label="baz" expanded>
@@ -124,7 +124,7 @@ export const manageTabIndex = (): TemplateResult => {
                     label="Section 2"
                     disabled
                 ></sp-sidenav-item>
-                <sp-sidenav-item value="Section 3" label="Section 3" exoabnd>
+                <sp-sidenav-item value="Section 3" label="Section 3">
                     <sp-sidenav-item
                         value="Section 3a"
                         label="Section 3a"
@@ -137,7 +137,7 @@ export const manageTabIndex = (): TemplateResult => {
 
 export const Hrefs = (): TemplateResult => {
     return html`
-        <sp-sidenav @sidenav-select=${action('select')} value="current">
+        <sp-sidenav @change=${action('select')} value="current">
             <sp-sidenav-heading label="GITHUB">
                 <sp-sidenav-item
                     href=${window.location.href}
