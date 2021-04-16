@@ -79,7 +79,7 @@ interface StoryArgs {
     disabled?: boolean;
     emphasized?: boolean;
     invalid?: boolean;
-    readonly?: boolean
+    readonly?: boolean;
 }
 
 function renderRadio(args: StoryArgs): TemplateResult {
@@ -89,10 +89,11 @@ function renderRadio(args: StoryArgs): TemplateResult {
 }
 export const Default = (args: StoryArgs): TemplateResult => renderRadio(args);
 
-export const readonly = (args: StoryArgs): TemplateResult => renderRadio({
-    ...args,
-    readonly: true,
-});
+export const readonly = (args: StoryArgs): TemplateResult =>
+    renderRadio({
+        ...args,
+        readonly: true,
+    });
 readonly.args = {
     checked: true,
 };
@@ -129,13 +130,20 @@ labelBelow.story = {
     name: 'Label below',
 };
 
+const values = {
+    first: 1,
+    second: 2,
+    third: 3,
+    fourth: 4,
+};
+
 export const groupExample = (): TemplateResult => {
     return html`
-        <sp-radio-group vertical selected="first" name="group-example">
-            <sp-radio value="first">Option 1</sp-radio>
-            <sp-radio value="second">Option 2</sp-radio>
-            <sp-radio value="third">Option 3</sp-radio>
-            <sp-radio value="fourth">Option 4</sp-radio>
+        <sp-radio-group vertical selected="1" name="group-example">
+            <sp-radio value=${values.first}>Option 1</sp-radio>
+            <sp-radio value=${values.second}>Option 2</sp-radio>
+            <sp-radio value=${values.third}>Option 3</sp-radio>
+            <sp-radio value=${values.fourth}>Option 4</sp-radio>
         </sp-radio-group>
     `;
 };
