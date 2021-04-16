@@ -53,7 +53,7 @@ describe('Sidenav', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('does not accept focus when empty', async () => {
+    it('does not accept focus/click/blur when empty', async () => {
         const el = await fixture<SideNav>(
             html`
                 <sp-sidenav></sp-sidenav>
@@ -65,6 +65,16 @@ describe('Sidenav', () => {
         expect(document.activeElement === el).to.be.false;
 
         el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+
+        el.blur();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+
+        el.click();
         await elementUpdated(el);
 
         expect(document.activeElement === el).to.be.false;
@@ -168,9 +178,10 @@ describe('Sidenav', () => {
         expect(typeof outsideFocused).not.to.equal(SideNavItem);
     });
     it('handles select', async () => {
+        const changeSpy = spy();
         const el = await fixture<SideNav>(
             html`
-                <sp-sidenav>
+                <sp-sidenav @change=${() => changeSpy()}>
                     <sp-sidenav-heading label="CATEGORY 1">
                         <sp-sidenav-item
                             value="Section 1"
@@ -206,6 +217,7 @@ describe('Sidenav', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 2');
+        expect(changeSpy.callCount).to.equal(1);
 
         sidenavItem.click();
 
@@ -219,6 +231,48 @@ describe('Sidenav', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 2a');
+        expect(changeSpy.callCount).to.equal(2);
+    });
+    it('prevents selection', async () => {
+        const changeSpy = spy();
+        const el = await fixture<SideNav>(
+            html`
+                <sp-sidenav
+                    @change=${(event: Event) => {
+                        event.preventDefault();
+                        changeSpy();
+                    }}
+                >
+                    <sp-sidenav-heading label="CATEGORY 1">
+                        <sp-sidenav-item
+                            value="Section 1"
+                            label="Section 1"
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item
+                            value="Section 2"
+                            label="Section 2"
+                            opened
+                        >
+                            <sp-sidenav-item
+                                value="Section 2a"
+                                label="Section 2a"
+                            ></sp-sidenav-item>
+                        </sp-sidenav-item>
+                    </sp-sidenav-heading>
+                </sp-sidenav>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.be.undefined;
+
+        el.click();
+
+        await elementUpdated(el);
+
+        expect(el.value).to.be.undefined;
+        expect(changeSpy.callCount).to.equal(1);
     });
     it('prevents [tabindex=0] while `focusin`', async () => {
         const el = await fixture<SideNav>(manageTabIndex());
@@ -276,12 +330,12 @@ describe('Sidenav', () => {
         el.dispatchEvent(arrowDownEvent);
         el.dispatchEvent(arrowDownEvent);
         focused = document.activeElement as SideNavItem;
-        expect(focused.expanded).to.be.false;
+        expect(focused.expanded, 'not expanded').to.be.false;
         focused.focusElement.click();
 
         await elementUpdated(el);
 
-        expect(focused.expanded).to.be.true;
+        expect(focused.expanded, 'expanded').to.be.true;
 
         el.dispatchEvent(arrowDownEvent);
         await elementUpdated(el);
@@ -296,7 +350,7 @@ describe('Sidenav', () => {
 
         el.focus();
         focused = document.activeElement as SideNavItem;
-        expect(focused.selected).to.be.true;
+        expect(focused.selected, 'selected').to.be.true;
 
         el.dispatchEvent(shiftTabEvent);
         const outsideFocused = document.activeElement as HTMLElement;
@@ -402,6 +456,6 @@ describe('Sidenav', () => {
         await elementUpdated(item3);
 
         expect(item3.manageTabIndex).to.be.true;
-        expect(item3.tabIndex, 'after').to.equal(-1);
+        await waitUntil(() => item3.tabIndex === -1, 'after');
     });
 });

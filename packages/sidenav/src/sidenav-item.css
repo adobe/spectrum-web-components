@@ -16,6 +16,10 @@ governing permissions and limitations under the License.
     display: block;
 }
 
+:host([disabled]) {
+    pointer-events: none;
+}
+
 :host([multiLevel]) {
     --spectrum-web-component-sidenav-font-weight: var(
         --spectrum-sidenav-item-font-weight,
