@@ -9,7 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './Button.js';
-export * from './ClearButton.js';
-export * from './ButtonBase.js';
-export * from './StyledButton.js';
+
+import { CSSResultArray } from '@spectrum-web-components/base';
+import { ButtonBase } from './ButtonBase.js';
+import buttonStyles from './button-base.css.js';
+
+export class StyledButton extends ButtonBase {
+    public static get styles(): CSSResultArray {
+        return [buttonStyles];
+    }
+}
