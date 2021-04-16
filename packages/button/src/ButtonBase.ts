@@ -14,7 +14,6 @@ import {
     property,
     html,
     TemplateResult,
-    CSSResultArray,
     query,
     PropertyValues,
 } from '@spectrum-web-components/base';
@@ -24,15 +23,10 @@ import {
     ObserveSlotText,
     ObserveSlotPresence,
 } from '@spectrum-web-components/shared';
-import buttonStyles from './button-base.css.js';
 
 export class ButtonBase extends LikeAnchor(
     ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
 ) {
-    public static get styles(): CSSResultArray {
-        return [buttonStyles];
-    }
-
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
     }

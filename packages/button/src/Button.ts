@@ -15,7 +15,7 @@ import {
     property,
     SizedMixin,
 } from '@spectrum-web-components/base';
-import { ButtonBase } from './ButtonBase.js';
+import { StyledButton } from './StyledButton.js';
 import buttonStyles from './button.css.js';
 
 export type ButtonVariants =
@@ -29,7 +29,7 @@ export type ButtonVariants =
  * A Spectrum button control.
  * @element sp-button
  */
-export class Button extends SizedMixin(ButtonBase) {
+export class Button extends SizedMixin(StyledButton) {
     public static get styles(): CSSResultArray {
         return [...super.styles, buttonStyles];
     }
