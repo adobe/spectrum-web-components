@@ -24,7 +24,7 @@ import {
     elementUpdated,
     waitUntil,
 } from '@open-wc/testing';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
@@ -407,26 +407,26 @@ describe('Overlays', () => {
         openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
 
         trigger.focus();
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Tab',
         });
 
         expect(document.activeElement === input);
         expect(input.closest('active-overlay') !== null);
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Shift+Tab',
         });
 
         expect(document.activeElement === trigger);
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Tab',
         });
 
         expect(document.activeElement === input);
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Tab',
         });
 
@@ -458,20 +458,20 @@ describe('Overlays', () => {
         openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
 
         trigger.focus();
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Tab',
         });
 
         expect(document.activeElement === input);
         expect(input.closest('active-overlay') !== null);
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Shift+Tab',
         });
 
         expect(document.activeElement === trigger);
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Shift+Tab',
         });
 

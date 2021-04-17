@@ -24,7 +24,7 @@ import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { OverlayTrigger } from '..';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 import { waitForPredicate } from '../../../test/testing-helpers';
 import { spy } from 'sinon';
 
@@ -69,7 +69,7 @@ describe('Overlay Trigger - Longpress', () => {
         expect(content.open).to.be.false;
 
         trigger.focus();
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Space',
         });
         await waitForPredicate(
@@ -82,11 +82,11 @@ describe('Overlay Trigger - Longpress', () => {
         await elementUpdated(el);
 
         trigger.focus();
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Alt+ArrowDown',
         });
         await waitUntil(() => content.open, 'opens for `Alt+ArrowDown`');
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Escape',
         });
         await waitUntil(() => !content.open, 'closes for `Alt+ArrowDown`');
@@ -94,7 +94,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         trigger.dispatchEvent(new Event('pointerdown'));
         await waitUntil(() => content.open, 'opens for `pointerdown`');
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Escape',
         });
         await waitUntil(() => !content.open, 'closes for `pointerdown`');

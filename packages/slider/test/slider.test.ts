@@ -14,7 +14,7 @@ import '../sp-slider.js';
 import { Slider } from '../';
 import { tick } from '../stories/slider.stories.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 describe('Slider', () => {
@@ -88,14 +88,14 @@ describe('Slider', () => {
         expect(el.handleHighlight).to.be.false;
 
         el.focus();
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowDown',
         });
         await elementUpdated(el);
 
         expect(el.value).to.equal(9);
         expect(el.handleHighlight).to.be.true;
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowUp',
         });
         await elementUpdated(el);

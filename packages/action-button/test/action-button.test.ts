@@ -19,7 +19,7 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 describe('ActionButton', () => {
@@ -78,12 +78,12 @@ describe('ActionButton', () => {
         await elementUpdated(el);
 
         el.focus();
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Space',
         });
 
         expect(longpressSpy.callCount).to.equal(1);
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Alt+ArrowDown',
         });
 
@@ -129,7 +129,7 @@ describe('ActionButton', () => {
         expect(button.getAttribute('aria-pressed')).to.equal('false');
 
         el.focus();
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Space',
         });
         await elementUpdated(el);
