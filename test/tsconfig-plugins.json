@@ -3,10 +3,6 @@
     "compilerOptions": {
         "rootDir": "."
     },
-    "include": [
-        "./send-keys-plugin.ts",
-        "./send-mouse-plugin.ts",
-        "./a11y-snapshot-plugin.ts"
-    ],
+    "include": ["./plugins/*.ts"],
     "exclude": []
 }

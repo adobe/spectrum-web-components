@@ -74,18 +74,3 @@ export const arrowRightKeyupEvent = keyboardEvent('ArrowRight', {}, 'keyup');
 export const arrowLeftKeyupEvent = keyboardEvent('ArrowLeft', {}, 'keyup');
 export const arrowUpKeyupEvent = keyboardEvent('ArrowUp', {}, 'keyup');
 export const arrowDownKeyupEvent = keyboardEvent('ArrowDown', {}, 'keyup');
-
-export const findAccessibilityNode = <TNode>(
-    node: TNode & { children: TNode[] },
-    test: (node: TNode) => boolean
-): TNode | null => {
-    if (test(node)) return node;
-    for (const child of node.children || []) {
-        const foundNode = findAccessibilityNode<TNode>(
-            child as TNode & { children: TNode[] },
-            test
-        );
-        return foundNode;
-    }
-    return null;
-};

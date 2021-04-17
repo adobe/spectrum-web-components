@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import '../sp-textfield.js';
 import { Textfield } from '../';
 import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 
 describe('Textfield', () => {
     it('loads default textfield accessibly', async () => {
@@ -255,42 +255,42 @@ describe('Textfield', () => {
         await elementUpdated(el);
         el.focus();
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             type: 'a',
         });
         await elementUpdated(el);
         expect(el.value).to.equal('a');
         expect(el.checkValidity()).to.be.false;
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             type: 'b',
         });
         await elementUpdated(el);
         expect(el.value).to.equal('ab');
         expect(el.checkValidity());
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             type: 'c',
         });
         await elementUpdated(el);
         expect(el.value).to.equal('abc');
         expect(el.checkValidity());
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             type: 'd',
         });
         await elementUpdated(el);
         expect(el.value).to.equal('abc');
         expect(el.checkValidity());
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Backspace',
         });
         await elementUpdated(el);
         expect(el.value).to.equal('ab');
         expect(el.checkValidity());
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'Backspace',
         });
         await elementUpdated(el);

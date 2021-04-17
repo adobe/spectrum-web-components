@@ -27,7 +27,7 @@ import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 
 import '../sp-color-area.js';
 import { ColorArea } from '..';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 
 describe('ColorArea', () => {
     it('loads default color-area accessibly', async () => {
@@ -108,10 +108,10 @@ describe('ColorArea', () => {
 
         el.inputX.focus();
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowUp',
         });
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowUp',
         });
 
@@ -120,10 +120,10 @@ describe('ColorArea', () => {
         expect(el.x).to.equal(0.6666666666666666);
         expect(el.y).to.equal(0.22999999999999998);
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowRight',
         });
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowRight',
         });
 
@@ -132,10 +132,10 @@ describe('ColorArea', () => {
         expect(el.x).to.equal(0.6866666666666666);
         expect(el.y).to.equal(0.22999999999999998);
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowDown',
         });
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowDown',
         });
 
@@ -144,10 +144,10 @@ describe('ColorArea', () => {
         expect(el.x).to.equal(0.6866666666666666);
         expect(el.y).to.equal(0.25);
 
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowLeft',
         });
-        await executeServerCommand('send-keys', {
+        await sendKeys({
             press: 'ArrowLeft',
         });
 

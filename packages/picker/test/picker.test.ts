@@ -35,11 +35,10 @@ import {
     arrowUpEvent,
     arrowLeftEvent,
     arrowRightEvent,
-    findAccessibilityNode,
     tabEvent,
     tEvent,
 } from '../../../test/testing-helpers.js';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
 const isMenuActiveElement = function (): boolean {
     return document.activeElement instanceof Menu;
@@ -184,9 +183,9 @@ describe('Picker', () => {
 
         await elementUpdated(el);
         type NamedNode = { name: string };
-        let snapshot = (await executeServerCommand(
-            'a11y-snapshot'
-        )) as NamedNode & { children: NamedNode[] };
+        let snapshot = ((await a11ySnapshot({})) as unknown) as NamedNode & {
+            children: NamedNode[];
+        };
 
         expect(
             findAccessibilityNode<NamedNode>(
@@ -200,9 +199,9 @@ describe('Picker', () => {
 
         el.value = 'option-2';
         await elementUpdated(el);
-        snapshot = (await executeServerCommand(
-            'a11y-snapshot'
-        )) as NamedNode & { children: NamedNode[] };
+        snapshot = ((await a11ySnapshot({})) as unknown) as NamedNode & {
+            children: NamedNode[];
+        };
 
         expect(
             findAccessibilityNode<NamedNode>(
