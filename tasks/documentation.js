@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import gulp from 'gulp';
 import path from 'path';
 import fs from 'fs-extra';
 import { exec } from 'child_process';
@@ -24,9 +23,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectDir = path.dirname(__dirname);
 
-const BASE_URL = 'https://opensource.adobe.com/spectrum-web-components/';
-
-const buildSearchIndex = () => {
+export const buildSearchIndex = () => {
     return exec(
         `node "${path.join(
             projectDir,
@@ -35,7 +32,7 @@ const buildSearchIndex = () => {
     );
 };
 
-const webpackDevServer = () => {
+export const webpackDevServer = () => {
     const config = Object.assign(webpackConfig, { mode: 'development' });
     const compiler = webpack(config);
     const devServer = new WebpackDevServer(compiler, config.devServer).listen(
@@ -49,7 +46,7 @@ const webpackDevServer = () => {
     );
 };
 
-const webpackBuild = (baseUrl) => async () => {
+export const webpackBuild = (baseUrl) => async () => {
     await new Promise((resolve, reject) => {
         webpack(webpackConfig, (errors, stats) => {
             if (errors) {
@@ -69,19 +66,4 @@ const webpackBuild = (baseUrl) => async () => {
     return fs.writeFile(indexPath, indexHtml, {
         encoding: 'utf8',
     });
-};
-
-const docsBuildProduction = gulp.series(
-    buildSearchIndex,
-    webpackBuild(BASE_URL)
-);
-const docsBuildStaging = gulp.series(buildSearchIndex, webpackBuild('/'));
-const docsWatchCompile = gulp.series(buildSearchIndex, webpackDevServer);
-
-export {
-    buildSearchIndex,
-    docsBuildProduction,
-    docsBuildStaging,
-    docsWatchCompile,
-    webpackBuild,
 };
