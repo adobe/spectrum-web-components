@@ -90,6 +90,7 @@ export class Overlay {
      * @returns a Promise that resolves to true if this operation was cancelled
      */
     public async open({
+        abortPromise,
         delayed,
         offset = 0,
         placement = 'top',
@@ -128,6 +129,7 @@ export class Overlay {
         this.overlayElement.dispatchEvent(queryOverlayDetailEvent);
 
         await Overlay.overlayStack.openOverlay({
+            abortPromise,
             content: this.overlayElement,
             contentTip: overlayDetailQuery.overlayContentTipElement,
             delayed,

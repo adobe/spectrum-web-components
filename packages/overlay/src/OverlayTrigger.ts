@@ -265,7 +265,7 @@ export class OverlayTrigger extends LitElement {
         const { targetContent, longpressContent } = this;
         this.prepareToFocusOverlayContent(longpressContent);
         const notImmediatelyClosable =
-            this._longpressEvent?.detail.source !== 'keyboard';
+            this._longpressEvent?.detail?.source !== 'keyboard';
         this.closeLongpressOverlay = await OverlayTrigger.openOverlay(
             targetContent,
             this.type ? this.type : 'longpress',
@@ -280,6 +280,9 @@ export class OverlayTrigger extends LitElement {
     }
 
     private hoverOverlayReady = Promise.resolve();
+    private abortOverlay: (cancelled: boolean) => void = () => {
+        return;
+    };
 
     public async onTriggerMouseEnter(): Promise<void> {
         if (!this.targetContent || !this.hoverContent) {
@@ -291,17 +294,24 @@ export class OverlayTrigger extends LitElement {
         this.hoverOverlayReady = new Promise((res) => {
             overlayReady = res;
         });
+        const abortPromise: Promise<boolean> = new Promise((res) => {
+            this.abortOverlay = res;
+        });
         const { targetContent, hoverContent } = this;
         this.closeHoverOverlay = await OverlayTrigger.openOverlay(
             targetContent,
             'hover',
             hoverContent,
-            this.overlayOptions
+            {
+                abortPromise,
+                ...this.overlayOptions,
+            }
         );
         overlayReady();
     }
 
     public async onTriggerMouseLeave(): Promise<void> {
+        if (this.abortOverlay) this.abortOverlay(true);
         await this.hoverOverlayReady;
         if (this.closeHoverOverlay) {
             this.closeHoverOverlay();
