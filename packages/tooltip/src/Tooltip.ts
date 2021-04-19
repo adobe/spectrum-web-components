@@ -35,6 +35,13 @@ export class Tooltip extends SpectrumElement {
         return [tooltipStyles];
     }
 
+    /**
+     * @private
+     */
+    static instanceCount = 0;
+
+    private _tooltipId = `sp-tooltip-describedby-helper-${Tooltip.instanceCount++}`;
+
     @property({ type: Boolean, reflect: true })
     public open = false;
 
@@ -68,14 +75,9 @@ export class Tooltip extends SpectrumElement {
         this._variant = '';
     }
 
-    public connectedCallback(): void {
-        super.connectedCallback();
+    public constructor() {
+        super();
         this.addEventListener('sp-overlay-query', this.onOverlayQuery);
-    }
-
-    public disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.removeEventListener('sp-overlay-query', this.onOverlayQuery);
     }
 
     public onOverlayQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {
@@ -95,5 +97,45 @@ export class Tooltip extends SpectrumElement {
             <span id="label"><slot></slot></span>
             <span id="tip"></span>
         `;
+    }
+
+    private _proxy?: HTMLElement;
+
+    public overlayWillOpenCallback({
+        trigger,
+    }: {
+        trigger: HTMLElement;
+    }): void {
+        this.setAttribute('aria-hidden', 'true');
+        if (!this._proxy) {
+            this._proxy = document.createElement('span');
+            this._proxy.textContent = this.textContent;
+            this._proxy.id = this._tooltipId;
+            this._proxy.hidden = true;
+            this._proxy.setAttribute('role', 'tooltip');
+        }
+        trigger.setAttribute('aria-describedby', this._tooltipId);
+        trigger.insertAdjacentElement('beforebegin', this._proxy);
+    }
+
+    public overlayOpenCancelledCallback({
+        trigger,
+    }: {
+        trigger: HTMLElement;
+    }): void {
+        this.overlayCloseCallback({ trigger });
+    }
+
+    public overlayCloseCallback({ trigger }: { trigger: HTMLElement }): void {
+        trigger.removeAttribute('aria-describedby');
+        this.removeAttribute('aria-hidden');
+        this.removeProxy();
+    }
+
+    private removeProxy(): void {
+        if (this._proxy) {
+            this._proxy.remove();
+            this._proxy = undefined;
+        }
     }
 }

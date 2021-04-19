@@ -33,6 +33,7 @@ export interface OverlayOpenDetail {
     interaction: TriggerInteractions;
     theme: ThemeData;
     notImmediatelyClosable?: boolean;
+    abortPromise?: Promise<boolean>;
 }
 
 export interface OverlayOpenCloseDetail {
@@ -57,6 +58,7 @@ export type OverlayOptions = {
     offset?: number;
     receivesFocus?: 'auto';
     notImmediatelyClosable?: boolean;
+    abortPromise?: Promise<boolean>;
 };
 
 declare global {
