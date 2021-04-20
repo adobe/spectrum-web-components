@@ -4400,9 +4400,9 @@
     glob "^7.0.0"
 
 "@web/rollup-plugin-html@^1.3.2", "@web/rollup-plugin-html@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@web/rollup-plugin-html/-/rollup-plugin-html-1.5.0.tgz#28606f432c19f0758469ff4dc349d559f3f73d7d"
-  integrity sha512-rsP6TKlks6dNP29nY14Gf1taQxXOP845TJ6u3gFy0dzfqGOCFOgSSYLeyAO7gZIflKWCbuZNrII34qyB2Xkw1w==
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@web/rollup-plugin-html/-/rollup-plugin-html-1.6.0.tgz#fd3f406fd6d74a0cded581953a3146fe9f0454ad"
+  integrity sha512-m5xDI6ZhdAI2nfHwU3NXJ/dcDWghR+g/RrlAtIWYlj8NvXk/ZNqVVK1NbJrI/e5RlgDQ/+OycjmKgyAP9W1tWA==
   dependencies:
     "@web/parse5-utils" "^1.2.2"
     glob "^7.1.6"
