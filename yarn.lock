@@ -3294,9 +3294,9 @@
   integrity sha512-jov++S358BrN2tmMfaoYk1N6u9HojgeuQk61keXrK2m3VE5/n94x7Lg3kIPeSWO0odyDfBlMqT9jacbRey3QTg==
 
 "@spectrum-css/tooltip@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-3.0.1.tgz#bc7513c49344f8983c83ad8a0a45bf19470d9e78"
-  integrity sha512-y5OG3lVidizxKrgvaXQrq9+7n6AxqPUoFDBdBEgrngeZnLmZirYgTqA9kB7EDDivStJhSdqLDRFn0ZrYpwdaNA==
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-3.0.2.tgz#8b1e5083230a74a1adfc5377c3034e303fa0edbf"
+  integrity sha512-LzwtL5KJwuiInXDgFo01vuId4Ht5ok268+nNh0+Va3lXNG/cipI+hBpdunseTVhzwn0o1q4VKn3YEqqPZfW97Q==
 
 "@spectrum-css/typography@^3.0.1":
   version "3.0.1"
