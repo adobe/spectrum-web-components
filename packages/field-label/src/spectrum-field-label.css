@@ -171,7 +171,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-left: 0;
     padding-right: var(
         --spectrum-fieldlabel-side-m-padding-right,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-global-dimension-size-150)
     );
 }
 :host([dir='rtl'][side-aligned='start']) {
@@ -179,7 +179,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-right: 0;
     padding-left: var(
         --spectrum-fieldlabel-side-m-padding-right,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-global-dimension-size-150)
     );
 }
 :host([side-aligned='start']) {
@@ -222,7 +222,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-left: 0;
     padding-right: var(
         --spectrum-fieldlabel-side-m-padding-right,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-global-dimension-size-150)
     );
 }
 :host([dir='rtl'][side-aligned='end']) {
@@ -230,7 +230,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-right: 0;
     padding-left: var(
         --spectrum-fieldlabel-side-m-padding-right,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-global-dimension-size-150)
     );
 }
 :host([side-aligned='end']) {

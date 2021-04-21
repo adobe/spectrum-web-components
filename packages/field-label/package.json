@@ -50,7 +50,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/fieldlabel": "^3.0.1"
+        "@spectrum-css/fieldlabel": "^3.0.2"
     },
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [

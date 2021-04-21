@@ -31,21 +31,37 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     --spectrum-splitbutton-cta-trigger-flat-edge-padding: calc(
         var(--spectrum-splitbutton-trigger-flat-edge-padding) -
-            var(--spectrum-button-primary-border-size)
+            var(
+                --spectrum-button-primary-m-border-size,
+                var(--spectrum-alias-border-size-thick)
+            )
     );
 }
 #button {
     /* .spectrum-SplitButton-action */
     --spectrum-splitbutton-flat-edge-padding: calc(
-        var(--spectrum-button-primary-padding-left) -
-            var(--spectrum-button-primary-border-size) * 2
+        var(
+                --spectrum-button-primary-m-padding-left,
+                var(--spectrum-alias-item-rounded-workflow-padding-left-m)
+            ) -
+            var(
+                --spectrum-button-primary-m-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) * 2
     );
     --spectrum-splitbutton-round-edge-padding: var(
-        --spectrum-button-primary-padding-right
+        --spectrum-button-primary-m-padding-right,
+        var(--spectrum-alias-item-rounded-padding-m)
     );
     --spectrum-splitbutton-cta-flat-edge-padding: calc(
-        var(--spectrum-button-primary-padding-left) -
-            var(--spectrum-button-primary-border-size) * 3
+        var(
+                --spectrum-button-primary-m-padding-left,
+                var(--spectrum-alias-item-rounded-workflow-padding-left-m)
+            ) -
+            var(
+                --spectrum-button-primary-m-border-size,
+                var(--spectrum-alias-border-size-thick)
+            ) * 3
     );
 }
 :host {
@@ -65,11 +81,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #button {
     /* [dir=ltr] .spectrum-SplitButton-action */
-    border-top-left-radius: var(--spectrum-button-primary-border-radius);
+    border-top-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl']) #button {
     /* [dir=rtl] .spectrum-SplitButton-action */
-    border-top-right-radius: var(--spectrum-button-primary-border-radius);
+    border-top-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr']) #button {
     /* [dir=ltr] .spectrum-SplitButton-action */
@@ -89,11 +111,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #button {
     /* [dir=ltr] .spectrum-SplitButton-action */
-    border-bottom-left-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl']) #button {
     /* [dir=rtl] .spectrum-SplitButton-action */
-    border-bottom-right-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr']) #button {
     /* [dir=ltr] .spectrum-SplitButton-action */
@@ -121,11 +149,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][variant='cta']) #button {
     /* [dir=ltr] .spectrum-SplitButton-action.spectrum-Button--cta */
-    margin-right: var(--spectrum-button-primary-border-size);
+    margin-right: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 :host([dir='rtl'][variant='cta']) #button {
     /* [dir=rtl] .spectrum-SplitButton-action.spectrum-Button--cta */
-    margin-left: var(--spectrum-button-primary-border-size);
+    margin-left: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 :host([dir='ltr']) #button:after {
     /* [dir=ltr] .spectrum-SplitButton-action:after */
@@ -161,19 +195,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .trigger {
     /* [dir=ltr] .spectrum-SplitButton-trigger */
-    border-top-right-radius: var(--spectrum-button-primary-border-radius);
+    border-top-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl']) .trigger {
     /* [dir=rtl] .spectrum-SplitButton-trigger */
-    border-top-left-radius: var(--spectrum-button-primary-border-radius);
+    border-top-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr']) .trigger {
     /* [dir=ltr] .spectrum-SplitButton-trigger */
-    border-bottom-right-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl']) .trigger {
     /* [dir=rtl] .spectrum-SplitButton-trigger */
-    border-bottom-left-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr']) .trigger {
     /* [dir=ltr] .spectrum-SplitButton-trigger */
@@ -221,11 +267,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][variant='cta']) .trigger {
     /* [dir=ltr] .spectrum-SplitButton-trigger.spectrum-Button--cta */
-    border-left-width: var(--spectrum-button-primary-border-size);
+    border-left-width: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 :host([dir='rtl'][variant='cta']) .trigger {
     /* [dir=rtl] .spectrum-SplitButton-trigger.spectrum-Button--cta */
-    border-right-width: var(--spectrum-button-primary-border-size);
+    border-right-width: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 .trigger:focus-visible {
     /* .spectrum-SplitButton-trigger.focus-ring */
@@ -282,19 +334,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) #button {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-top-right-radius: var(--spectrum-button-primary-border-radius);
+    border-top-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl'][left]) #button {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-top-left-radius: var(--spectrum-button-primary-border-radius);
+    border-top-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr'][left]) #button {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-bottom-right-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl'][left]) #button {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
-    border-bottom-left-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr'][left]) #button {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
@@ -346,11 +410,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left][variant='cta']) #button {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
-    margin-left: var(--spectrum-button-primary-border-size);
+    margin-left: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 :host([dir='rtl'][left][variant='cta']) #button {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
-    margin-right: var(--spectrum-button-primary-border-size);
+    margin-right: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 :host([dir='ltr'][left]) #button:after {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
@@ -362,19 +432,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) #button:after {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
-    border-top-right-radius: var(--spectrum-button-primary-border-radius);
+    border-top-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl'][left]) #button:after {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
-    border-top-left-radius: var(--spectrum-button-primary-border-radius);
+    border-top-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr'][left]) #button:after {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
-    border-bottom-right-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl'][left]) #button:after {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
-    border-bottom-left-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr'][left]) #button:after {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
@@ -394,11 +476,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) .trigger {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-top-left-radius: var(--spectrum-button-primary-border-radius);
+    border-top-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl'][left]) .trigger {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-top-right-radius: var(--spectrum-button-primary-border-radius);
+    border-top-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr'][left]) .trigger {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
@@ -418,19 +506,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) .trigger {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-bottom-left-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl'][left]) .trigger {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-bottom-right-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr'][left]) .trigger {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-left-width: var(--spectrum-button-primary-border-size);
+    border-left-width: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 :host([dir='rtl'][left]) .trigger {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
-    border-right-width: var(--spectrum-button-primary-border-size);
+    border-right-width: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 :host([dir='ltr'][left]) .trigger {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
@@ -466,19 +566,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left][variant='cta']) .trigger {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--cta */
-    border-right-width: var(--spectrum-button-primary-border-size);
+    border-right-width: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 :host([dir='rtl'][left][variant='cta']) .trigger {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--cta */
-    border-left-width: var(--spectrum-button-primary-border-size);
+    border-left-width: var(
+        --spectrum-button-primary-m-border-size,
+        var(--spectrum-alias-border-size-thick)
+    );
 }
 :host([dir='ltr'][left]) .trigger:after {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
-    border-top-left-radius: var(--spectrum-button-primary-border-radius);
+    border-top-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl'][left]) .trigger:after {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
-    border-top-right-radius: var(--spectrum-button-primary-border-radius);
+    border-top-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='ltr'][left]) .trigger:after {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
@@ -498,9 +610,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) .trigger:after {
     /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
-    border-bottom-left-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-left-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
 :host([dir='rtl'][left]) .trigger:after {
     /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
-    border-bottom-right-radius: var(--spectrum-button-primary-border-radius);
+    border-bottom-right-radius: var(
+        --spectrum-button-primary-m-border-radius,
+        var(--spectrum-alias-item-rounded-border-radius-m)
+    );
 }
