@@ -13,38 +13,18 @@ governing permissions and limitations under the License.
 @import './spectrum-split-button.css';
 
 /**
- * Begin work around for https://github.com/adobe/spectrum-css/issues/1157
+ * Begin workaround for SplitButton not natively supporting t-shirt sizes.
  */
-:host([size='s']) {
-    --spectrum-button-primary-padding-right: var(
-        --spectrum-button-primary-s-padding-right,
-        var(--spectrum-alias-item-rounded-padding-s)
-    );
-}
-
-:host([size='m']) {
-    --spectrum-button-primary-padding-right: var(
-        --spectrum-button-primary-m-padding-right,
-        var(--spectrum-alias-item-rounded-padding-m)
-    );
-}
-
-:host([size='l']) {
-    --spectrum-button-primary-padding-right: var(
-        --spectrum-button-primary-l-padding-right,
-        var(--spectrum-alias-item-rounded-padding-l)
-    );
-}
-
-:host([size='xl']) {
-    --spectrum-button-primary-padding-right: var(
-        --spectrum-button-primary-xl-padding-right,
-        var(--spectrum-alias-item-rounded-padding-xl)
+sp-button {
+    --spectrum-button-primary-m-border-radius: calc(
+        var(--spectrum-button-padding-y) +
+            var(--spectrum-icon-tshirt-size-height) / 2 +
+            var(--spectrum-alias-border-size-thick)
     );
 }
 
 /**
- * End work around for https://github.com/adobe/spectrum-css/issues/1157
+ * End workaround for SplitButton not natively supporting t-shirt sizes.
  */
 
 sp-popover {

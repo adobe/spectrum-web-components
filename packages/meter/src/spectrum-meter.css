@@ -37,7 +37,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     --spectrum-fieldlabel-side-padding-right: var(
         --spectrum-fieldlabel-side-s-padding-right,
-        var(--spectrum-global-dimension-size-75)
+        var(--spectrum-global-dimension-size-130)
     );
 }
 :host([size='m']) {
@@ -67,7 +67,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     --spectrum-fieldlabel-side-padding-right: var(
         --spectrum-fieldlabel-side-m-padding-right,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-global-dimension-size-150)
     );
 }
 :host([size='l']) {
@@ -98,7 +98,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     --spectrum-fieldlabel-side-padding-right: var(
         --spectrum-fieldlabel-side-l-padding-right,
-        var(--spectrum-global-dimension-size-150)
+        var(--spectrum-global-dimension-size-175)
     );
 }
 :host([size='xl']) {
@@ -128,7 +128,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     --spectrum-fieldlabel-side-padding-right: var(
         --spectrum-fieldlabel-side-xl-padding-right,
-        var(--spectrum-global-dimension-size-200)
+        var(--spectrum-global-dimension-size-185)
     );
 }
 :host {

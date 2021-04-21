@@ -75,7 +75,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-toast-neutral-text-font-weight,
-        var(--spectrum-global-font-weight-bold)
+        var(--spectrum-global-font-weight-regular)
     );
     -webkit-font-smoothing: antialiased;
 }
@@ -154,11 +154,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-toast-info-text-font-weight,
-        var(--spectrum-global-font-weight-bold)
+        var(--spectrum-global-font-weight-regular)
     );
     line-height: var(
         --spectrum-toast-info-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-component-text-line-height)
     );
 }
 .buttons {

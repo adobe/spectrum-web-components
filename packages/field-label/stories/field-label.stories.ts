@@ -84,7 +84,7 @@ export const required = (): TemplateResult => {
         <sp-field-label
             for="lifestory-3"
             side-aligned="start"
-            style="width: 72px;"
+            style="width: 80px;"
             required
         >
             Life Story
@@ -98,7 +98,7 @@ export const required = (): TemplateResult => {
         <sp-field-label
             for="lifestory-4"
             side-aligned="end"
-            style="width: 72px;"
+            style="width: 80px;"
             required
         >
             Life Story
