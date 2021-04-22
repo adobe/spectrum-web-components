@@ -132,12 +132,6 @@ export class Tag extends SpectrumElement {
         if (!this.disabled) {
             this.setAttribute('tabindex', this.deletable ? '0' : '-1');
         }
-        // this.setAttribute(
-        //     'tabindex',
-        //     !this.disabled && this.matches(':first-of-type:[disabled]')
-        //         ? '0'
-        //         : '-1'
-        // );
     }
 
     protected updated(changes: PropertyValues): void {
