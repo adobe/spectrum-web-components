@@ -177,7 +177,7 @@ describe('Tags', () => {
 
         expect(document.activeElement === tag2).to.be.true;
     });
-    it('will only focus [deletable] children', async () => {
+    it('will only tab index [deletable] children', async () => {
         const el = await fixture<Tags>(
             html`
                 <sp-tags>
