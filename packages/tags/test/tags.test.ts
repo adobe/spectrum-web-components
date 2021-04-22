@@ -177,6 +177,48 @@ describe('Tags', () => {
 
         expect(document.activeElement === tag2).to.be.true;
     });
+    it('will only focus [deletable] children', async () => {
+        const el = await fixture<Tags>(
+            html`
+                <sp-tags>
+                    <sp-tag deletable>Tag 1</sp-tag>
+                    <sp-tag>Tag 2</sp-tag>
+                    <sp-tag>Tag 3</sp-tag>
+                    <sp-tag>Tag 4</sp-tag>
+                    <sp-tag deletable>Tag 5</sp-tag>
+                </sp-tags>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const tag1 = el.querySelector('sp-tag:nth-child(1)') as Tag;
+        const tag5 = el.querySelector('sp-tag:nth-child(5)') as Tag;
+
+        tag1.focus();
+        await elementUpdated(el);
+
+        el.dispatchEvent(enterEvent);
+        el.dispatchEvent(endEvent);
+        await elementUpdated(el);
+
+        expect(document.activeElement === tag5).to.be.true;
+
+        el.dispatchEvent(homeEvent);
+        await elementUpdated(el);
+
+        expect(document.activeElement === tag1).to.be.true;
+
+        el.dispatchEvent(arrowUpEvent);
+        await elementUpdated(el);
+
+        expect(document.activeElement === tag5).to.be.true;
+
+        el.dispatchEvent(arrowDownEvent);
+        await elementUpdated(el);
+
+        expect(document.activeElement === tag1).to.be.true;
+    });
     it('loads accepts "PageUp" and "PageDown" keys', async () => {
         const el = await fixture<HTMLDivElement>(
             html`
