@@ -15,6 +15,7 @@ import { Slider } from '../';
 import { tick } from '../stories/slider.stories.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { executeServerCommand } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 describe('Slider', () => {
     it('loads', async () => {
@@ -182,7 +183,7 @@ describe('Slider', () => {
         let pointerId = -1;
         const el = await fixture<Slider>(
             html`
-                <sp-slider></sp-slider>
+                <sp-slider style="width: 500px" max="70"></sp-slider>
             `
         );
 
@@ -195,6 +196,7 @@ describe('Slider', () => {
         ) as HTMLDivElement;
         const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
+        handle.releasePointerCapture = (id: number) => (pointerId = id);
 
         controls.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -210,6 +212,7 @@ describe('Slider', () => {
 
         expect(pointerId).to.equal(-1);
         expect(el.value).to.equal(10);
+        expect(el.dragging, 'handle is not yet being dragged').to.be.false;
 
         controls.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -225,6 +228,38 @@ describe('Slider', () => {
 
         expect(pointerId).to.equal(4);
         expect(el.value).to.equal(0);
+        expect(el.dragging, 'handle is being dragged').to.be.true;
+        handle.dispatchEvent(
+            new PointerEvent('pointermove', {
+                button: 0,
+                // account for 8px <body> margin by default
+                clientX: 508,
+                pointerId: 4,
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.dragging, 'handle is still being dragged').to.be.true;
+        expect(pointerId).to.equal(4);
+        expect(el.value).to.equal(70);
+
+        handle.dispatchEvent(
+            new PointerEvent('pointerup', {
+                button: 0,
+                // account for 8px <body> margin by default
+                clientX: 9,
+                pointerId: 4,
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(pointerId).to.equal(4);
+        expect(el.value).to.equal(70);
+        expect(el.dragging, 'handle is no longer being dragged').to.be.false;
     });
     it('can be disabled', async () => {
         let pointerId = -1;
@@ -273,33 +308,31 @@ describe('Slider', () => {
         expect(el.value).to.equal(10);
     });
     it('accepts pointermove events', async () => {
-        let pointerId = -1;
         const el = await fixture<Slider>(
             html`
                 <sp-slider></sp-slider>
             `
         );
-
         await elementUpdated(el);
 
         expect(el.value).to.equal(10);
 
         const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
-        handle.setPointerCapture = (id: number) => (pointerId = id);
-        handle.releasePointerCapture = (id: number) => (pointerId = id);
-
-        handle.dispatchEvent(
-            new PointerEvent('pointerdown', {
-                button: 0,
-                pointerId: 1,
-                cancelable: true,
-            })
-        );
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [9, 30],
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
         await elementUpdated(el);
 
-        expect(el.dragging).to.be.true;
-        expect(el.handleHighlight).to.be.false;
-        expect(pointerId).to.equal(1);
+        expect(el.dragging, 'is dragging').to.be.true;
+        expect(el.handleHighlight, 'not highlighted').to.be.false;
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -313,16 +346,13 @@ describe('Slider', () => {
     });
     it('accepts pointermove events - [step=0]', async () => {
         let pointerId = -1;
-        let inputsHandled = 0;
-        const handleInput = (): void => {
-            inputsHandled += 1;
-        };
+        const inputSpy = spy();
         const el = await fixture<Slider>(
             html`
                 <sp-slider
                     step="0"
                     max="20"
-                    @input=${handleInput}
+                    @input=${() => inputSpy()}
                     style="width: 500px; float: left;"
                 ></sp-slider>
             `
@@ -331,12 +361,11 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(10);
-        expect(inputsHandled).to.equal(0);
+        expect(inputSpy.callCount).to.equal(0);
 
         const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
         handle.releasePointerCapture = (id: number) => (pointerId = id);
-
         handle.dispatchEvent(
             new PointerEvent('pointerdown', {
                 button: 0,
@@ -344,11 +373,12 @@ describe('Slider', () => {
                 cancelable: true,
             })
         );
+
         await elementUpdated(el);
 
         expect(el.dragging).to.be.true;
         expect(el.handleHighlight).to.be.false;
-        expect(pointerId).to.equal(1);
+        expect(pointerId, 'pointer id').to.equal(1);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -359,7 +389,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(8);
-        expect(inputsHandled).to.equal(1);
+        expect(inputSpy.callCount, 'call count').to.equal(1);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -370,7 +400,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(5);
-        expect(inputsHandled).to.equal(2);
+        expect(inputSpy.callCount).to.equal(2);
     });
     it('will not pointermove unless `pointerdown`', async () => {
         const el = await fixture<Slider>(

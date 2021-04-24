@@ -321,27 +321,18 @@ export class Slider extends Focusable {
      * is moused down
      */
     private handleTrackPointerdown(event: PointerEvent): void {
-        if (
-            event.target === this.handle ||
-            this.disabled ||
-            event.button !== 0
-        ) {
+        if (event.target === this.handle) {
             return;
         }
-        this.boundingClientRect = this.getBoundingClientRect();
 
-        this.dragging = true;
-        this.handle.setPointerCapture(event.pointerId);
-
-        /**
-         * Dispatch a synthetic pointerdown event to ensure that pointerdown
-         * handlers attached to the slider are invoked before input handlers
-         */
         event.stopPropagation();
-        const syntheticPointerEvent = new PointerEvent('pointerdown', event);
-        this.dispatchEvent(syntheticPointerEvent);
-
-        this.value = this.calculateHandlePosition(event);
+        event.preventDefault();
+        const applyDefault = this.handle.dispatchEvent(
+            new PointerEvent('pointerdown', event)
+        );
+        if (applyDefault) {
+            this.handlePointermove(event);
+        }
     }
 
     /**
