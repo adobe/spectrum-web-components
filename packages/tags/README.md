@@ -86,7 +86,7 @@ import {
 
 ### Deletable
 
-Use the `deletable` attribute to signify `sp-tags` elements that can be removed. The tags should only be focusable when they have the `deletable` attribute.
+Use the `deletable` attribute to signify `sp-tags` elements that can be removed. The tags will only be focusable when they have the `deletable` attribute.
 
 ```html-live
 <sp-tags>
