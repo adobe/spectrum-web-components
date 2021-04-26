@@ -129,8 +129,13 @@ export class Tag extends SpectrumElement {
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'listitem');
         }
-        if (!this.disabled) {
-            this.setAttribute('tabindex', this.deletable ? '0' : '-1');
+        if (this.deletable) {
+            this.setAttribute(
+                'tabindex',
+                !this.disabled && this.matches(':first-of-type:not([disabled])')
+                    ? '0'
+                    : '-1'
+            );
         }
     }
 

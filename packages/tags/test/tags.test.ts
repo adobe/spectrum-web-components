@@ -26,6 +26,7 @@ import {
     pageDownEvent,
     enterEvent,
 } from '../../../test/testing-helpers.js';
+import { executeServerCommand } from '@web/test-runner-commands';
 
 describe('Tags', () => {
     it('loads default tags accessibly', async () => {
@@ -61,6 +62,32 @@ describe('Tags', () => {
 
         expect(document.activeElement === el).to.be.false;
     });
+    it('does not accept focus when no tag has `deletable`', async () => {
+        const el = await fixture<Tags>(
+            html`
+                <sp-tags>
+                    <sp-tag>Tag 1</sp-tag>
+                    <sp-tag invalid>Tag 2</sp-tag>
+                    <sp-tag disabled>Tag 3</sp-tag>
+                </sp-tags>
+            `
+        );
+        await elementUpdated(el);
+
+        const tag1 = el.querySelector('sp-tag:nth-child(1)') as Tag;
+        const tag2 = el.querySelector('sp-tag:nth-child(2)') as Tag;
+        const tag3 = el.querySelector('sp-tag:nth-child(3)') as Tag;
+
+        expect(document.activeElement === el).to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+        expect(document.activeElement === tag1).to.be.false;
+        expect(document.activeElement === tag2).to.be.false;
+        expect(document.activeElement === tag3).to.be.false;
+    });
     it('loads default tags with `role` and `aria-label` from the outside', async () => {
         const el = await fixture<Tags>(
             html`
@@ -82,11 +109,11 @@ describe('Tags', () => {
         const el = await fixture<Tags>(
             html`
                 <sp-tags>
-                    <sp-tag>Tag 1</sp-tag>
-                    <sp-tag>Tag 2</sp-tag>
-                    <sp-tag>Tag 3</sp-tag>
-                    <sp-tag>Tag 4</sp-tag>
-                    <sp-tag>Tag 5</sp-tag>
+                    <sp-tag deletable>Tag 1</sp-tag>
+                    <sp-tag deletable>Tag 2</sp-tag>
+                    <sp-tag deletable>Tag 3</sp-tag>
+                    <sp-tag deletable>Tag 4</sp-tag>
+                    <sp-tag deletable>Tag 5</sp-tag>
                 </sp-tags>
             `
         );
@@ -135,15 +162,15 @@ describe('Tags', () => {
 
         tag1.blur();
     });
-    it('will no focus [disabled] children', async () => {
+    it('will not focus [disabled] children', async () => {
         const el = await fixture<Tags>(
             html`
                 <sp-tags>
-                    <sp-tag disabled>Tag 1</sp-tag>
-                    <sp-tag>Tag 2</sp-tag>
-                    <sp-tag>Tag 3</sp-tag>
-                    <sp-tag>Tag 4</sp-tag>
-                    <sp-tag disabled>Tag 5</sp-tag>
+                    <sp-tag disabled deletable>Tag 1</sp-tag>
+                    <sp-tag deletable>Tag 2</sp-tag>
+                    <sp-tag deletable>Tag 3</sp-tag>
+                    <sp-tag deletable>Tag 4</sp-tag>
+                    <sp-tag disabled deletable>Tag 5</sp-tag>
                 </sp-tags>
             `
         );
@@ -214,25 +241,65 @@ describe('Tags', () => {
 
         expect(document.activeElement === tag5).to.be.true;
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowUpEvent);
         await elementUpdated(el);
 
         expect(document.activeElement === tag1).to.be.true;
+    });
+    it('utilises floating tab index for [deletable] children', async () => {
+        const el = await fixture<Tags>(
+            html`
+                <div>
+                    <a href="#">Heyo</a>
+                    <sp-tags>
+                        <sp-tag deletable>Tag 1</sp-tag>
+                        <sp-tag deletable>Tag 2</sp-tag>
+                    </sp-tags>
+                    <sp-tags>
+                        <sp-tag deletable>Tag A</sp-tag>
+                        <sp-tag deletable>Tag B</sp-tag>
+                    </sp-tags>
+                </div>
+            `
+        );
+        const anchor = el.querySelector('a') as HTMLElement;
+
+        anchor.focus();
+
+        const tagset1 = el.querySelector('sp-tags:nth-child(2)') as Tags;
+        const tagset2 = el.querySelector('sp-tags:nth-child(3)') as Tags;
+
+        const tag1 = tagset1.querySelector('sp-tag:nth-child(1)') as Tag;
+        const tagA = tagset2.querySelector('sp-tag:nth-child(1)') as Tag;
+        const tagB = tagset2.querySelector('sp-tag:nth-child(2)') as Tag;
+
+        await executeServerCommand('send-keys', {
+            press: 'Tab',
+        });
+        expect(document.activeElement === tag1).to.be.true;
+
+        await executeServerCommand('send-keys', {
+            press: 'Tab',
+        });
+        expect(document.activeElement === tagA).to.be.true;
+
+        tagset2.dispatchEvent(arrowDownEvent);
+        expect(document.activeElement === tagB).to.be.true;
     });
     it('loads accepts "PageUp" and "PageDown" keys', async () => {
         const el = await fixture<HTMLDivElement>(
             html`
                 <div>
                     <sp-tags>
-                        <sp-tag>Tag 1</sp-tag>
+                        <sp-tag deletable>Tag 1</sp-tag>
                     </sp-tags>
                     <sp-tags>
-                        <sp-tag>Tag 2</sp-tag>
+                        <sp-tag deletable>Tag 2</sp-tag>
                     </sp-tags>
                     <sp-tags></sp-tags>
                     <sp-tags>
-                        <sp-tag disabled>Tag 3</sp-tag>
-                        <sp-tag>Tag 4</sp-tag>
+                        <sp-tag disabled deletable>Tag 3</sp-tag>
+                        <sp-tag deletable>Tag 4</sp-tag>
                     </sp-tags>
                 </div>
             `
