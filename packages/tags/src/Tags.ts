@@ -49,9 +49,11 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (!this.tags.length) {
             return;
         }
-        const firstTagNonDisabled = this.tags.find((tag) => !tag.disabled);
-        if (firstTagNonDisabled) {
-            firstTagNonDisabled.focus();
+        const firstFocusableTag = this.tags.find(
+            (tag) => !tag.disabled && tag.deletable
+        );
+        if (firstFocusableTag) {
+            firstFocusableTag.focus();
         }
     }
 
@@ -87,8 +89,10 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
         ): T => list[(list.length + index) % list.length];
         const tagFromDelta = (delta: number): void => {
             nextIndex += delta;
-            while (circularIndexedElement(this.tags, nextIndex).disabled) {
+            let nextTag = circularIndexedElement(this.tags, nextIndex);
+            while (nextTag.disabled || !nextTag.deletable) {
                 nextIndex += delta;
+                nextTag = circularIndexedElement(this.tags, nextIndex);
             }
         };
         switch (code) {
@@ -147,9 +151,11 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     };
 
     private handleFocusout = (): void => {
-        const firstTagNonDisabled = this.tags.find((tag) => !tag.disabled);
-        if (firstTagNonDisabled) {
-            firstTagNonDisabled.tabIndex = 0;
+        const firstFocusableTag = this.tags.find(
+            (tag) => !tag.disabled && tag.deletable
+        );
+        if (firstFocusableTag) {
+            firstFocusableTag.tabIndex = 0;
         }
         this.removeEventListener('keydown', this.handleKeydown);
         this.removeEventListener('focusout', this.handleFocusout);
