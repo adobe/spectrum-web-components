@@ -3177,9 +3177,9 @@
   integrity sha512-dODJ3fqsZtds2RNcozqUPR/aIqgjaWnFOpUxd8olwyDTMoFJjZ9Ts1WAHSEBM2NwUIr2nm9Hu5AgWH+6cmuowg==
 
 "@spectrum-css/menu@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-3.0.2.tgz#1d133a433f71aeb4722ef98be00a11371276821d"
-  integrity sha512-r3Fom1+SB06iv7jxVebiR+rFgqS4qzoPSXiPt41MhdLznQ0L+9FWBid4eX4dLmPfBNsYdWjnK8Py+7uYCLmkAA==
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-3.0.3.tgz#46a9b221bb5f470a2f8a934bdfd512d84d2fdc4d"
+  integrity sha512-qKA9J/MrikNKIpCEHsAazG2vY3im5tjGCmo6p9Pdnu8/aQMsiuZDHZayukeCttJUZkrb9guDVL9OIHlK5RZvcQ==
 
 "@spectrum-css/modal@^3.0.2":
   version "3.0.2"
