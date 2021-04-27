@@ -54,8 +54,10 @@ function renderButtonsSelected(properties: Properties): TemplateResult {
     const emphasized = true;
     const holdAffordance = true;
     const quiet = true;
-    const disabled = Object.assign({}, properties, { disabled: true });
-    const selected = Object.assign({}, properties, { selected: true });
+    const selected = true;
+    const disabled = true;
+    const disabledArgs = Object.assign({}, properties, { disabled: true });
+    const selectedArgs = Object.assign({}, properties, { selected: true });
     return html`
         <div>
             ${renderButton({
@@ -82,16 +84,29 @@ function renderButtonsSelected(properties: Properties): TemplateResult {
                 quiet,
             })}
             ${renderButton({
-                ...selected,
+                ...properties,
+                icon,
+                quiet,
+                disabled,
+            })}
+            ${renderButton({
+                ...properties,
+                icon,
+                quiet,
+                disabled,
+                selected,
+            })}
+            ${renderButton({
+                ...selectedArgs,
                 icon,
             })}
             ${renderButton({
-                ...selected,
+                ...selectedArgs,
                 emphasized,
                 icon,
             })}
             ${renderButton({
-                ...disabled,
+                ...disabledArgs,
                 icon,
             })}
         </div>

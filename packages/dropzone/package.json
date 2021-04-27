@@ -47,7 +47,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/dropzone": "^3.0.2"
+        "@spectrum-css/dropzone": "^3.0.3"
     },
     "types": "./src/index.d.ts",
     "customElementsManifest": "custom-elements.json",
