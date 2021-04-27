@@ -2832,22 +2832,22 @@
     lit-html "^1.0.0"
 
 "@open-wc/testing@^2.5.32":
-  version "2.5.32"
-  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-2.5.32.tgz#8bbb65773f650deff06b06277df8cdacd4d6806f"
-  integrity sha512-vl8VwTG3CVLwLcd1mpts8D9xPptc6xPL/9AHEbQxX1IQsFBEiFQdARSp1+V/i7gK2+peXeotqrZ5NvoHxl/lLw==
+  version "2.5.33"
+  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-2.5.33.tgz#909e676df02f3c020bfc99c31d9b09f39fa5555e"
+  integrity sha512-+EJNs0i+VV4nE+BrG70l2DNGXOZTSrluruaaU06HUSk57ZlKa+kIxWmkLxCOLlbgnQgrPrQWxbs3lgB1tIx/YA==
   dependencies:
     "@open-wc/chai-dom-equals" "^0.12.36"
     "@open-wc/semantic-dom-diff" "^0.19.3"
     "@open-wc/testing-helpers" "^1.8.12"
     "@types/chai" "^4.2.11"
     "@types/chai-dom" "^0.0.9"
-    "@types/mocha" "^5.0.0"
+    "@types/mocha" "^5.2.7"
     "@types/sinon-chai" "^3.2.3"
     chai "^4.2.0"
     chai-a11y-axe "^1.3.1"
     chai-dom "^1.8.1"
     mocha "^6.2.2"
-    sinon-chai "^3.3.0"
+    sinon-chai "^3.5.0"
 
 "@open-wc/webpack-index-html-plugin@^1.7.14":
   version "1.7.14"
@@ -3814,7 +3814,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/mocha@^5.0.0":
+"@types/mocha@^5.2.7":
   version "5.2.7"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.7.tgz#315d570ccb56c53452ff8638738df60726d5b6ea"
   integrity sha512-NYrtPht0wGzhwe9+/idPaBB+TqkY9AhTvOLMkThm0IoEfLaiVQZwBwyJ5puCkO3AUCWrmcoePjp2mbFocKy4SQ==
@@ -19633,7 +19633,7 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sinon-chai@^3.3.0:
+sinon-chai@^3.5.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/sinon-chai/-/sinon-chai-3.6.0.tgz#25bd59a37ef8990245e085a40f1f79d6bf023b7a"
   integrity sha512-bk2h+0xyKnmvazAnc7HE5esttqmCerSMcBtuB2PS2T4tG6x8woXAxZeJaOJWD+8reXHngnXn0RtIbfEW9OTHFg==
