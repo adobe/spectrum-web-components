@@ -124,7 +124,7 @@
         "@web/test-runner-commands": "^0.4.2",
         "@web/test-runner-junit-reporter": "^0.4.1",
         "@web/test-runner-playwright": "^0.8.4",
-        "@web/test-runner-visual-regression": "^0.5.1",
+        "@web/test-runner-visual-regression": "^0.6.0",
         "@webcomponents/webcomponentsjs": "^2.4.4",
         "alex": "^9.0.1",
         "babel-loader": "^8.0.5",

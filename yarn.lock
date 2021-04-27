@@ -4413,53 +4413,15 @@
     chrome-launcher "^0.13.4"
     puppeteer-core "^5.5.0"
 
-"@web/test-runner-commands@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.4.1.tgz#2636a071d346f4593467bdd53d4e25d541f0db6b"
-  integrity sha512-y1U9+jucQ1ZB9YRgMFIjXTUSu/in54yt4Lf4GcY9fHoSyGVWDub085ARWipmagsD9SRN1QnIYTkMk+jRa/EiLQ==
-  dependencies:
-    "@web/test-runner-core" "^0.10.8"
-
-"@web/test-runner-commands@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.4.2.tgz#d4d6f17f56286932c4292acc6ed44913d81e3bbd"
-  integrity sha512-6Wb7rkb2dxbGTjs/VHLFTEp9OOo01B82YYG1260E4baMSt8UMw/eF9NJpOjxC7Z8ySURphJYW/Riwi0bWWwIeQ==
+"@web/test-runner-commands@^0.4.2", "@web/test-runner-commands@^0.4.4":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.4.5.tgz#b2a39e64177cafbd7f4fbe7d2b28816ef2c86501"
+  integrity sha512-jbhsS+nZmnbZPj/XL/g4se1c9TRtIgwrlYpaIIcWkHhCu5mKbdipgZ/nlFIhFS9UaVY52NiulmVj6dhAx7w4SA==
   dependencies:
     "@web/test-runner-core" "^0.10.14"
+    mkdirp "^1.0.4"
 
-"@web/test-runner-core@^0.10.13", "@web/test-runner-core@^0.10.8", "@web/test-runner-core@^0.10.9":
-  version "0.10.13"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.13.tgz#7c86939204f1b1e958fb21c866c06ca5edb54634"
-  integrity sha512-w6seztsj/UKUz9HP5KeMZ1JdUadt293SplsrKKaUJTZDMLO8+xvyo+vpt1Mv7zICu0wyuQN0AdD3GjKKX6dFHw==
-  dependencies:
-    "@babel/code-frame" "^7.12.11"
-    "@types/co-body" "^5.1.0"
-    "@types/convert-source-map" "^1.5.1"
-    "@types/debounce" "^1.2.0"
-    "@types/istanbul-lib-coverage" "^2.0.3"
-    "@types/istanbul-reports" "^3.0.0"
-    "@types/uuid" "^8.3.0"
-    "@web/browser-logs" "^0.2.1"
-    "@web/dev-server-core" "^0.3.6"
-    chalk "^4.1.0"
-    chokidar "^3.4.3"
-    cli-cursor "^3.1.0"
-    co-body "^6.1.0"
-    convert-source-map "^1.7.0"
-    debounce "^1.2.0"
-    dependency-graph "^0.10.0"
-    globby "^11.0.1"
-    ip "^1.1.5"
-    istanbul-lib-coverage "^3.0.0"
-    istanbul-lib-report "^3.0.0"
-    istanbul-reports "^3.0.2"
-    log-update "^4.0.0"
-    open "^8.0.2"
-    picomatch "^2.2.2"
-    source-map "^0.7.3"
-    uuid "^8.3.2"
-
-"@web/test-runner-core@^0.10.14":
+"@web/test-runner-core@^0.10.13", "@web/test-runner-core@^0.10.14", "@web/test-runner-core@^0.10.8", "@web/test-runner-core@^0.10.9":
   version "0.10.14"
   resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.14.tgz#5794ded17f673d9839e5a5e36ead505df92962af"
   integrity sha512-RfY6KAtWHBZvfS/JGAkvp6zprFROd3m7gPJJAUFkfYXyMUQZQnNGI5nI+Shft1FcsST16/ivPog6TPNka55+ig==
@@ -4528,15 +4490,15 @@
     "@web/test-runner-coverage-v8" "^0.4.5"
     playwright "^1.7.1"
 
-"@web/test-runner-visual-regression@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-visual-regression/-/test-runner-visual-regression-0.5.1.tgz#d9ec3b18c16b5ca1ee9f6ba33c76ec09356d24b6"
-  integrity sha512-DmGAcHLoOGFd40KjzYmEzplJZ1KDMY5z9yl8k5WAsNYPuAwuatf6AHp2Hw0t8YSPxuR04gCTtV8U2crwfyUWTw==
+"@web/test-runner-visual-regression@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-visual-regression/-/test-runner-visual-regression-0.6.0.tgz#16e625ef850bdaacb6248a3a8fd581548d28218a"
+  integrity sha512-y+btmC2IobV9lLN7aYQkTGBEnn41PSCyBTBEXfBFAQScSyZoRXfNa076J6jshB0nPc4wcQXasZpK5kYxeycwXA==
   dependencies:
     "@types/mkdirp" "^1.0.1"
     "@types/pixelmatch" "^5.2.2"
     "@types/pngjs" "^6.0.0"
-    "@web/test-runner-commands" "^0.4.1"
+    "@web/test-runner-commands" "^0.4.4"
     "@web/test-runner-core" "^0.10.13"
     mkdirp "^1.0.4"
     pixelmatch "^5.2.1"
