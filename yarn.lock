@@ -3192,9 +3192,9 @@
   integrity sha512-wfOtS6CdSba5GkN/i8WeCHpfROq2jW4MNWmRWc4tjfaBm23ASJYQhPsKINqWLE02Cr8E65kVoXy2EBpPY+w7pg==
 
 "@spectrum-css/popover@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-3.0.2.tgz#b031b07ed4b927aa67d082a71ebed08bd7ab28b3"
-  integrity sha512-5YiZh4iD8Abw02o0bZNccU59nEYzAsP5c8GO1/J5c7/PwxUzcrAlmzGNPXdsqyz5sm7QMeFZcgp4lr44TEnV5A==
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-3.0.3.tgz#6fb69873474fb968afb738eacb9e121f93e83a09"
+  integrity sha512-KvmXv4TV19FBx39KfmgVlDYtvtBqv/8RRK7RRLDDHGViTxZtShjVsVpwIgfkfgn4iJztCnXpWzFqRXWUu2XCpQ==
 
 "@spectrum-css/progressbar@^1.0.2":
   version "1.0.2"
