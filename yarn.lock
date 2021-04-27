@@ -3060,9 +3060,9 @@
   integrity sha512-laDWk7PCgy2I0AGsMjTmYKkiMVYVoF1B4tffJf4cIp66znTiqPHEbLDh5EDNU88JLTY2bWoCOY4cJxvXk5gERw==
 
 "@spectrum-css/actiongroup@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actiongroup/-/actiongroup-1.0.2.tgz#37f6593c1defdeda682b9e196bcd8cce38c574aa"
-  integrity sha512-YHKYruXsJteXlkCvfOoQ1cqc3tV7LbmMmbRpyp2vh0ah9CF5ImyGmBRYOOROtZx7VqfDJ5645rdwB2YfJcCBMw==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actiongroup/-/actiongroup-1.0.3.tgz#4713ce65e6f5c72c404a7b638fbc3b4fd7e3874f"
+  integrity sha512-NlB9Q4ZlWixXxymoPIYG6g2hkwAGKFodHWPFfxHD8ddkjXWRB9G2akUP7cfsJ4DcYn4VisUORCOYQwqDiSmboQ==
 
 "@spectrum-css/asset@^3.0.2":
   version "3.0.2"
