@@ -142,3 +142,20 @@ a:focus-visible {
         var(--spectrum-alias-text-color-over-background)
     );
 }
+@media (forced-colors: active) {
+    .spectrum-Link--secondary,
+    .spectrum-Link--secondary:active,
+    .spectrum-Link--secondary:focus,
+    .spectrum-Link--secondary:hover {
+    }
+}
+.spectrum-Link--secondary,
+.spectrum-Link--secondary:active,
+.spectrum-Link--secondary:focus,
+.spectrum-Link--secondary:hover {
+    /* .spectrum-Link--secondary,
+   * .spectrum-Link--secondary:active,
+   * .spectrum-Link--secondary:focus,
+   * .spectrum-Link--secondary:hover */
+    color: linktext;
+}
