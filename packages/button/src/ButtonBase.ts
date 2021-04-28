@@ -122,6 +122,7 @@ export class ButtonBase extends LikeAnchor(
             ${this.buttonContent}
             ${super.renderAnchor({
                 id: 'button',
+                ariaHidden: true,
                 className: 'button anchor hidden',
             })}
         `;

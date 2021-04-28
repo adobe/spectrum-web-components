@@ -23,17 +23,20 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
+type RenderAnchorOptions = {
+    id: string;
+    className?: string;
+    ariaHidden?: boolean;
+    anchorContent?: TemplateResult | TemplateResult[];
+};
+
 export interface LikeAnchorInterface {
     download?: string;
     label?: string;
     href?: string;
     rel?: string;
     target?: '_blank' | '_parent' | '_self' | '_top';
-    renderAnchor(options: {
-        id: string;
-        className?: string;
-        anchorContent?: TemplateResult | TemplateResult[];
-    }): TemplateResult;
+    renderAnchor(options: RenderAnchorOptions): TemplateResult;
 }
 
 export function LikeAnchor<T extends Constructor<UpdatingElement>>(
@@ -58,13 +61,10 @@ export function LikeAnchor<T extends Constructor<UpdatingElement>>(
         public renderAnchor({
             id,
             className,
+            ariaHidden,
             // prettier-ignore
-            anchorContent = html`<slot></slot>`
-        }: {
-            id: string;
-            className?: string;
-            anchorContent: TemplateResult | TemplateResult[];
-        }): TemplateResult {
+            anchorContent = html`<slot></slot>`,
+        }: RenderAnchorOptions): TemplateResult {
             // prettier-ignore
             return html
                 `<a
@@ -74,6 +74,7 @@ export function LikeAnchor<T extends Constructor<UpdatingElement>>(
                     download=${ifDefined(this.download)}
                     target=${ifDefined(this.target)}
                     aria-label=${ifDefined(this.label)}
+                    aria-hidden=${ifDefined(ariaHidden ? 'true' : undefined)}
                     rel=${ifDefined(this.rel)}
                 >${anchorContent}</a>`;
         }
