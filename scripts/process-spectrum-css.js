@@ -49,7 +49,7 @@ async function processComponent(componentPath) {
     );
     inputCustomProperties = inputCustomProperties.replace(
         /(.|\n)*\{/,
-        ':root{'
+        ':root {'
     );
     console.log(chalk.bold.green(`- ${spectrumConfig.spectrum}`));
     return Promise.all(
@@ -70,15 +70,14 @@ async function processComponent(componentPath) {
                 from: inputCssPath,
                 to: outputCssPath,
             });
-            await postcss([postcssCustomProperties]).process(
-                inputCustomProperties,
-                {
-                    from: `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`,
-                },
-                {
+            const srcPath = `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`;
+            await postcss([
+                postcssCustomProperties({
                     exportTo: [outputJsonPath],
-                }
-            );
+                }),
+            ]).process(inputCustomProperties, {
+                from: srcPath,
+            });
             console.log(chalk.bold.green(`  o ${component.name}`));
             // await fs.writeFile(outputJsonPath, outputJson, { encoding: 'utf8' });
             return fs.writeFile(outputCssPath, outputCss.css, {

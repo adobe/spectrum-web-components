@@ -204,14 +204,7 @@ cores.forEach(async (core) => {
             );
             console.log(`processing fonts from commons & typography`);
             processes.push(
-                processMultiSourceCSS(
-                    [
-                        // srcPath1,
-                        srcPath2,
-                    ],
-                    dstPath,
-                    ':root '
-                )
+                processMultiSourceCSS([srcPath2], dstPath, ':root ')
             );
         }
     }
