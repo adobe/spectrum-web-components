@@ -10,7 +10,6 @@
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "prettier",
-        "prettier/@typescript-eslint",
         "plugin:lit-a11y/recommended"
     ],
     "rules": {

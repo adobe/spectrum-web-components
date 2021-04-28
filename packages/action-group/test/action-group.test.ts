@@ -317,7 +317,7 @@ describe('ActionGroup', () => {
         expect(!thirdElement.selected, 'third child not selected');
         expect(el.selected.length).to.equal(0);
     });
-    const acceptKeyboardInput = async (el: ActionGroup) => {
+    const acceptKeyboardInput = async (el: ActionGroup): Promise<void> => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
