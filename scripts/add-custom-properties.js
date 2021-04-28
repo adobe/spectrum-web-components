@@ -17,7 +17,6 @@ import fs from 'fs';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 const { src } = yargs(hideBin(process.argv)).argv;
-// const { src } = require('yargs').argv;
 
 async function main() {
     const inputCEJPath = path.join(process.cwd(), src);
@@ -30,7 +29,8 @@ async function main() {
                 .replace(/sp-[a-z-]*\.d\.ts/, 'src/spectrum-vars.json');
             try {
                 const vars = fs.readFileSync(varsPath, 'utf8');
-                const properties = JSON.parse(vars)['custom-properties'];
+                const varsJSON = JSON.parse(vars);
+                const properties = varsJSON['custom-properties'];
                 const cssProperties = Object.keys(properties).map(
                     (property) => ({
                         name: property,
@@ -48,16 +48,22 @@ async function main() {
                     }
                     return 0;
                 };
-                tag.attributes.sort(sortAlpha);
-                tag.properties.sort(sortAlpha);
-                tag.events.sort(sortAlpha);
-            } catch (error) {}
+                tag.attributes && tag.attributes.sort(sortAlpha);
+                tag.properties && tag.properties.sort(sortAlpha);
+                tag.events && tag.events.sort(sortAlpha);
+            } catch (error) {
+                // Toggle the following commented logging for debuggering the processing herein:
+                // console.log('Package level error:', tag.name, error);
+            }
         });
         customElementJsonString = JSON.stringify(customElementJson);
         fs.writeFileSync(inputCEJPath, customElementJsonString, {
             encoding: 'utf8',
         });
-    } catch (error) {}
+    } catch (error) {
+        // Toggle the following commented logging for debuggering the processing herein:
+        // console.log('Top level error:', error);
+    }
 }
 
 main();
