@@ -87,8 +87,6 @@ export default {
         playwrightLauncher({
             product: 'firefox',
             launchOptions: {
-                headless: false,
-                args: ['-headless'],
                 firefoxUserPrefs: {
                     'toolkit.telemetry.reportingpolicy.firstRun': false,
                     'browser.shell.checkDefaultBrowser': false,
