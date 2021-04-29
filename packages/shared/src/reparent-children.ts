@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-function restoreChildren(
+function restoreChildren<T extends Element>(
     placeholderItems: Comment[],
-    srcElements: Element[],
-    cleanupCallbacks: ((el: Element) => void)[] = []
-): Element[] {
+    srcElements: T[],
+    cleanupCallbacks: ((el: T) => void)[] = []
+): T[] {
     for (let index = 0; index < srcElements.length; ++index) {
         const srcElement = srcElements[index];
         const placeholderItem = placeholderItems[index];
@@ -28,13 +28,13 @@ function restoreChildren(
     return srcElements;
 }
 
-export const reparentChildren = (
-    srcElements: Element[],
+export const reparentChildren = <T extends Element>(
+    srcElements: T[],
     newParent: Element,
-    prepareCallback?: (el: Element) => ((el: Element) => void) | void
+    prepareCallback?: (el: T) => ((el: T) => void) | void
 ): (() => Element[]) => {
     const placeholderItems: Comment[] = [];
-    const cleanupCallbacks: ((el: Element) => void)[] = [];
+    const cleanupCallbacks: ((el: T) => void)[] = [];
 
     for (let index = 0; index < srcElements.length; ++index) {
         const placeholderItem: Comment = document.createComment(
@@ -58,6 +58,10 @@ export const reparentChildren = (
     }
 
     return function (): Element[] {
-        return restoreChildren(placeholderItems, srcElements, cleanupCallbacks);
+        return restoreChildren<T>(
+            placeholderItems,
+            srcElements,
+            cleanupCallbacks
+        );
     };
 };
