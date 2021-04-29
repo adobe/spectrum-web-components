@@ -16,6 +16,7 @@ import {
     TemplateResult,
     SpectrumElement,
     property,
+    internalProperty,
     PropertyValues,
 } from '@spectrum-web-components/base';
 
@@ -33,7 +34,7 @@ export class TreeView extends SpectrumElement {
     }
 
     @property({ attribute: false })
-    public selectedChild?: TreeViewItem;
+    public selectedChildren: TreeViewItem[] = [];
 
     @property({ type: Boolean, reflect: true })
     public standalone = false;
@@ -41,42 +42,52 @@ export class TreeView extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    @property({ type: Boolean, reflect: true, attribute: 'allow-multiple' })
+    public allowMultiple = false;
+
+    @internalProperty()
+    public isRoot = false;
+
     constructor() {
         super();
-        this.addEventListener('selected', this.manageSelected);
-        this.addEventListener('deselected', this.manageDeselected);
+        this.addEventListener('toggled', this.manageSelected);
     }
 
     private manageSelected(event: Event): void {
-        const { target } = event;
-        if (!target) {
-            return;
-        }
-        if (this.selectedChild && this.selectedChild !== target) {
-            this.selectedChild.selected = false;
-        }
-        this.selectedChild = target as TreeViewItem;
-    }
+        if (!this.isRoot) return;
 
-    private manageDeselected(event: Event): void {
-        const { target } = event;
-        if (!target) {
-            return;
+        event.stopPropagation();
+        const { target, detail } = event as CustomEvent;
+        if (!target) return;
+
+        const targetItem = target as TreeViewItem;
+        if (!this.allowMultiple || !detail.multiselect) {
+            this.selectedChildren = this.selectedChildren.filter((item) => {
+                if (item !== targetItem) item.selected = false;
+                return item.selected;
+            });
         }
-        if (this.selectedChild && this.selectedChild === target) {
-            this.selectedChild = undefined;
-        }
+        if (targetItem.selected) this.selectedChildren.push(targetItem);
     }
 
     protected render(): TemplateResult {
         return html`
-            <slot></slot>
+            <slot @slotchange=${this.onSlotChange}></slot>
         `;
     }
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        const isRoot = this.parentElement?.tagName !== 'SP-TREE-VIEW-ITEM';
-        this.setAttribute('role', isRoot ? 'tree' : 'group');
+        this.isRoot = this.parentElement?.tagName !== 'SP-TREE-VIEW-ITEM';
+        this.setAttribute('role', this.isRoot ? 'tree' : 'group');
+    }
+
+    protected onSlotChange(): void {
+        if (this.isRoot) {
+            const selectedChildren = Array.prototype.slice.call(
+                document.querySelectorAll('[selected]')
+            );
+            this.selectedChildren = selectedChildren as TreeViewItem[];
+        }
     }
 }

@@ -94,9 +94,19 @@ export class TreeViewItem extends ObserveSlotPresence(
         this.open = !this.open;
     }
 
-    public toggleSelected(event: Event): void {
+    public toggleSelected(event: MouseEvent): void {
         event.preventDefault();
         this.selected = !this.selected;
+        const multiselect = event.shiftKey || event.metaKey;
+        const applyDefault = this.dispatchEvent(
+            new CustomEvent('toggled', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                detail: { multiselect },
+            })
+        );
+        if (!applyDefault) this.selected = !this.selected;
     }
 
     protected render(): TemplateResult {

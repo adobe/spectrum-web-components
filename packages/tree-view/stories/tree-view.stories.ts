@@ -77,6 +77,23 @@ export const selected = (): TemplateResult => {
     `;
 };
 
+export const allowMultiple = (): TemplateResult => {
+    return html`
+        <sp-tree-view allow-multiple style="width: 250px;">
+            <sp-tree-view-item>Layer 1</sp-tree-view-item>
+            <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
+            <sp-tree-view-item selected>Layer 3</sp-tree-view-item>
+            <sp-tree-view-item open>
+                Group 1
+                <sp-tree-view slot="children">
+                    <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
+                    <sp-tree-view-item>Layer 3</sp-tree-view-item>
+                </sp-tree-view>
+            </sp-tree-view-item>
+        </sp-tree-view>
+    `;
+};
+
 export const quiet = (): TemplateResult => {
     return html`
         <sp-tree-view quiet style="width: 250px;">
