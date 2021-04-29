@@ -27,6 +27,7 @@ import {
     expect,
     waitUntil,
     nextFrame,
+    oneEvent,
 } from '@open-wc/testing';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
@@ -38,7 +39,12 @@ import {
     tabEvent,
     tEvent,
 } from '../../../test/testing-helpers.js';
-import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+import {
+    a11ySnapshot,
+    executeServerCommand,
+    findAccessibilityNode,
+    sendKeys,
+} from '@web/test-runner-commands';
 
 const isMenuActiveElement = function (): boolean {
     return document.activeElement instanceof Menu;
@@ -52,7 +58,10 @@ describe('Picker', () => {
                     <sp-field-label for="picker">
                         Where do you live?
                     </sp-field-label>
-                    <sp-picker id="picker">
+                    <sp-picker
+                        id="picker"
+                        style="width: 200px; --spectrum-alias-ui-icon-chevron-size-100: 10px;"
+                    >
                         <sp-menu-item>Deselect</sp-menu-item>
                         <sp-menu-item value="option-2">
                             Select Inverse
@@ -177,7 +186,6 @@ describe('Picker', () => {
         await elementUpdated(el);
         expect(el.value).to.equal('option-new');
     });
-
     it('manages its "name" value in the accessibility tree', async () => {
         const el = await pickerFixture();
 
@@ -240,11 +248,119 @@ describe('Picker', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('opens with visible focus on a menu item on `DownArrow`', async () => {
+        const el = await pickerFixture();
+
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
+        await elementUpdated(el);
+
+        expect(firstItem.focused, 'not visually focused').to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+        const opened = oneEvent(el, 'sp-opened');
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await opened;
+
+        expect(el.open).to.be.true;
+        expect(firstItem.focused, 'not visually focused').to.be.true;
+
+        const closed = oneEvent(el, 'sp-closed');
+        await sendKeys({
+            press: 'Escape',
+        });
+        await closed;
+
+        expect(el.open).to.be.false;
+        await waitUntil(() => !firstItem.focused, 'not visually focused');
+    });
+    it('opens without visible focus on a menu item on click', async () => {
+        const el = await pickerFixture();
+
+        /**
+         * Firefox will not accept a single "click" from Playwright as deactivating the
+         * :focus-visible heuristic. So, to trick it, we "click" three times! Once to
+         * open, once to close, and once to open again before taking the operative test
+         * that the first item in the menu is to given the `focused` attribute immediately.
+         */
+
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
+        await elementUpdated(el);
+        const boundingRect = el.getBoundingClientRect();
+
+        expect(firstItem.focused, 'not visually focused').to.be.false;
+        let opened = oneEvent(el, 'sp-opened');
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        boundingRect.x + boundingRect.width / 2,
+                        boundingRect.y + boundingRect.height / 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+        await opened;
+        expect(el.open).to.be.true;
+        const closed = oneEvent(el, 'sp-closed');
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        boundingRect.x + boundingRect.width / 2,
+                        boundingRect.y + boundingRect.height / 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+        await closed;
+
+        expect(el.open).to.be.false;
+        opened = oneEvent(el, 'sp-opened');
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        boundingRect.x + boundingRect.width / 2,
+                        boundingRect.y + boundingRect.height / 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+        await opened;
+
+        expect(el.open).to.be.true;
+        expect(firstItem.focused, 'still not visually focused').to.be.false;
+    });
     it('closes when becoming disabled', async () => {
         const el = await pickerFixture();
 
         await elementUpdated(el);
-
         expect(el.open).to.be.false;
         el.click();
         await elementUpdated(el);

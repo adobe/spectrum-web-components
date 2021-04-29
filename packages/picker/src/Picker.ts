@@ -271,10 +271,15 @@ export class PickerBase extends SizedMixin(Focusable) {
             return;
         }
 
-        this.restoreChildren = reparentChildren(
-            reparentableChildren,
-            this.optionsMenu
-        );
+        this.restoreChildren = reparentChildren<
+            Element & { focused?: boolean }
+        >(reparentableChildren, this.optionsMenu, () => {
+            return (el) => {
+                if (typeof el.focused !== 'undefined') {
+                    el.focused = false;
+                }
+            };
+        });
 
         this.optionsMenu.selectable = true;
 
