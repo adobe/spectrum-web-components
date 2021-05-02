@@ -157,14 +157,151 @@ describe('Textfield', () => {
             : null;
         expect(input).to.not.be.null;
     });
-    it('invalid', async () => {
+    it('valid - boundary-type assertions', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    pattern="^[\\d]+$"
+                    value="123"
+                    required
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('#valid')
+            : null;
+        expect(input).to.not.be.null;
+    });
+    it('valid - multiline - boundary-type assertions', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    pattern="^[\\d]+$"
+                    value="123"
+                    required
+                    multiline
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('#valid')
+            : null;
+        expect(input).to.not.be.null;
+    });
+    it('valid - unicode', async () => {
         const el = await litFixture<Textfield>(
             html`
                 <sp-textfield
                     placeholder="Enter your name"
+                    value="你的名字"
+                    pattern="\\p{L}{4,8}"
+                    required
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('#valid')
+            : null;
+        expect(input).to.not.be.null;
+    });
+    it('valid - multiline - unicode', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    pattern="\\p{N}+"
+                    value="123"
+                    required
+                    multiline
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('#valid')
+            : null;
+        expect(input).to.not.be.null;
+    });
+    it('invalid', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
                     pattern="[\\d]+"
                     required
-                    value="Not a valid input"
+                    value="123 not valid"
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('#invalid')
+            : null;
+        expect(input).to.not.be.null;
+    });
+    it('invalid - multiline', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    pattern="[\\d]+"
+                    required
+                    multiline
+                    value="123 not valid"
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('#invalid')
+            : null;
+        expect(input).to.not.be.null;
+    });
+    it('invalid - unicode', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    pattern="\\p{N}+"
+                    required
+                    value="123 not valid"
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('#invalid')
+            : null;
+        expect(input).to.not.be.null;
+    });
+    it('invalid - multiline - unicode', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    pattern="\\p{N}+"
+                    required
+                    multiline
+                    value="123 not valid"
                 ></sp-textfield>
             `
         );
