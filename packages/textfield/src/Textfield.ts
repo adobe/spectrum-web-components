@@ -93,7 +93,7 @@ export class Textfield extends Focusable {
 
     protected onInput(): void {
         if (this.allowedKeys && this.inputElement.value) {
-            const regExp = new RegExp(`^[${this.allowedKeys}]*$`);
+            const regExp = new RegExp(`^[${this.allowedKeys}]*$`, 'u');
             if (!regExp.test(this.inputElement.value)) {
                 const selectionStart = this.inputElement
                     .selectionStart as number;
@@ -228,7 +228,7 @@ export class Textfield extends Focusable {
         let validity = this.inputElement.checkValidity();
         if (this.required || (this.value && this.pattern)) {
             if ((this.disabled || this.multiline) && this.pattern) {
-                const regex = new RegExp(this.pattern);
+                const regex = new RegExp(`^${this.pattern}$`, 'u');
                 validity = regex.test(this.value);
             }
             if (typeof this.minlength !== 'undefined') {

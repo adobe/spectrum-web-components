@@ -21,7 +21,7 @@ import { postCSSPlugins } from './css-processing.cjs';
 import postcssSpectrumPlugin from './process-spectrum-postcss-plugin.js';
 import reporter from 'postcss-reporter';
 import postcssCustomProperties from 'postcss-custom-properties';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,7 +29,7 @@ const componentRoot = path.resolve(__dirname, '../packages');
 
 async function processComponent(componentPath) {
     const configPath = path.join(componentPath, 'spectrum-config.js');
-    const { default: spectrumConfig } = await import(configPath);
+    const { default: spectrumConfig } = await import(pathToFileURL(configPath));
     const inputCssPath = `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/index-vars.css`;
     let packageCss = false;
     if (fs.existsSync(inputCssPath)) {
