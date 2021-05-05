@@ -159,43 +159,6 @@ export const selectsSingle = (args: Properties): TemplateResult => {
     `;
 };
 
-export const selectsSingleWithTooltips = (): TemplateResult => {
-    return html`
-        <sp-action-group
-            label="Favorite Color"
-            selects="single"
-            @change=${({ target }: Event & { target: ActionGroup }) => {
-                const next = target.nextElementSibling as HTMLDivElement;
-                next.textContent = `Selected: ${JSON.stringify(
-                    target.selected
-                )}`;
-            }}
-        >
-            <overlay-trigger>
-                <sp-action-button slot="trigger">Red</sp-action-button>
-                <sp-tooltip slot="hover-content">
-                    This is a cool color.
-                </sp-tooltip>
-            </overlay-trigger>
-            <overlay-trigger>
-                <sp-action-button slot="trigger">Green</sp-action-button>
-                <sp-tooltip slot="hover-content">
-                    You wouldn't be wrong.
-                </sp-tooltip>
-            </overlay-trigger>
-            <overlay-trigger>
-                <sp-action-button slot="trigger">Blue</sp-action-button>
-                <sp-tooltip slot="hover-content">The sky in spring.</sp-tooltip>
-            </overlay-trigger>
-            <overlay-trigger>
-                <sp-action-button slot="trigger">Yellow</sp-action-button>
-                <sp-tooltip slot="hover-content">The sun at noon.</sp-tooltip>
-            </overlay-trigger>
-        </sp-action-group>
-        <div>Selected:</div>
-    `;
-};
-
 export const selectsMultiple = (args: Properties): TemplateResult => {
     return html`
         <sp-action-group
