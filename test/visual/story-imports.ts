@@ -14,6 +14,7 @@ export * as AccordionStories from '../../packages/accordion/stories/accordion.st
 export * as ActionBarStories from '../../packages/action-bar/stories/action-bar.stories.js';
 export * as ActionButtonSizesStories from '../../packages/action-button/stories/action-button-sizes.stories.js';
 export * as ActionButtonStories from '../../packages/action-button/stories/action-button.stories.js';
+export * as ActionGroupTooltipStories from '../../packages/action-group/stories/action-group-tooltips.stories.js';
 export * as ActionGroupStories from '../../packages/action-group/stories/action-group.stories.js';
 export * as ActionMenuSizesStories from '../../packages/action-menu/stories/action-menu-sizes.stories.js';
 export * as ActionMenuStories from '../../packages/action-menu/stories/action-menu.stories.js';

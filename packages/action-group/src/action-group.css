@@ -21,3 +21,81 @@ governing permissions and limitations under the License.
     margin-right: 0;
     margin-left: 0;
 }
+
+/**
+ * End Spectrum CSS #795 fixes.
+ */
+
+/**
+ * The following styles correct realities outlined in https://github.com/adobe/spectrum-web-components/issues/1434
+ */
+
+:host([justified]) ::slotted(:not([role])),
+:host([vertical]) ::slotted(:not([role])) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+:host([compact]:not([quiet])) ::slotted(:not([role])) {
+    /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item */
+    --spectrum-actionbutton-m-border-radius: 0;
+    --spectrum-actionbutton-s-border-radius: var(
+        --spectrum-actionbutton-m-border-radius
+    );
+    --spectrum-actionbutton-l-border-radius: var(
+        --spectrum-actionbutton-m-border-radius
+    );
+    --spectrum-actionbutton-xl-border-radius: var(
+        --spectrum-actionbutton-m-border-radius
+    );
+}
+
+:host([compact][vertical]:not([quiet])) ::slotted(:not([role]):first-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    --spectrum-actionbutton-m-border-radius: var(
+            --spectrum-alias-border-radius-regular
+        )
+        var(--spectrum-alias-border-radius-regular) 0 0;
+}
+
+:host([compact][vertical]:not([quiet])) ::slotted(:not([role]):last-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    --spectrum-actionbutton-m-border-radius: 0 0
+        var(--spectrum-alias-border-radius-regular)
+        var(--spectrum-alias-border-radius-regular);
+}
+
+:host([dir='ltr'][compact]:not([quiet]):not([vertical]))
+    ::slotted(:not([role]):first-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    --spectrum-actionbutton-m-border-radius: var(
+            --spectrum-alias-border-radius-regular
+        )
+        0 0 var(--spectrum-alias-border-radius-regular);
+}
+
+:host([dir='rtl'][compact]:not([quiet]):not([vertical]))
+    ::slotted(:not([role]):first-child) {
+    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    --spectrum-actionbutton-m-border-radius: 0
+        var(--spectrum-alias-border-radius-regular)
+        var(--spectrum-alias-border-radius-regular) 0;
+}
+
+:host([dir='ltr'][compact]:not([quiet]):not([vertical]))
+    ::slotted(:not([role]):last-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    --spectrum-actionbutton-m-border-radius: 0
+        var(--spectrum-alias-border-radius-regular)
+        var(--spectrum-alias-border-radius-regular) 0;
+}
+
+:host([dir='rtl'][compact]:not([quiet]):not([vertical]))
+    ::slotted(:not([role]):last-child) {
+    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    --spectrum-actionbutton-m-border-radius: var(
+            --spectrum-alias-border-radius-regular
+        )
+        0 0 var(--spectrum-alias-border-radius-regular);
+}
