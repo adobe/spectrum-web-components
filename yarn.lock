@@ -4335,10 +4335,10 @@
     picomatch "^2.2.2"
     ws "^7.4.2"
 
-"@web/dev-server-core@^0.3.11":
-  version "0.3.11"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.11.tgz#0bd7ea3d59fbe7155832140969d5f7fe5200114e"
-  integrity sha512-6CXO4eoW7UIicXFWDP3pocwVliyiTFqqqGg+DN4xexBLiP9sWH4WYb57RwKEnd9/K+DjWbSu0D0tvjVzcftUIw==
+"@web/dev-server-core@^0.3.12":
+  version "0.3.12"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.12.tgz#99b8ed1a3b6a797dd52e08b3e8d5e499e5c017b2"
+  integrity sha512-PI7neqHvsgsE+GJnJNSjMGeWHSo8MgO99CAzVm6UtFeAjShmMGWp6WQTDJPzvsE4jnYhIg8EPwz2cqDIGnkU6A==
   dependencies:
     "@types/koa" "^2.11.6"
     "@types/ws" "^7.4.0"
@@ -4403,16 +4403,16 @@
     rollup-plugin-terser "^7.0.2"
     storybook-addon-markdown-docs "^1.0.1"
 
-"@web/dev-server@^0.1.16":
-  version "0.1.16"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.16.tgz#8eb5f3304c77d949ad9dcb574e0dee6d3752f74a"
-  integrity sha512-5NFhx8lU4NXFn4fmXxJTwjurezmf3tJ3XOq30f/Zx6A7oQoViWPqjK0sp6PKzyR29tcn1/i+Ex5BTo9IHrW3jQ==
+"@web/dev-server@^0.1.17":
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.17.tgz#3fad6d96f72f902c04ff27fef1c2ba5cc0eaf5e0"
+  integrity sha512-2gdOjkQp97uaORkOL8X90f4retqZ2lA9YqHDljpf4SFg0JWoY8X7EJA9XQG1jJ2x46oQ5zqJX7AiSWc47B2k6A==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@rollup/plugin-node-resolve" "^11.0.1"
     "@types/command-line-args" "^5.0.0"
     "@web/config-loader" "^0.1.3"
-    "@web/dev-server-core" "^0.3.11"
+    "@web/dev-server-core" "^0.3.12"
     "@web/dev-server-rollup" "^0.3.3"
     camelcase "^6.2.0"
     chalk "^4.1.0"
@@ -4539,10 +4539,10 @@
     source-map "^0.7.3"
     uuid "^8.3.2"
 
-"@web/test-runner-core@^0.10.15":
-  version "0.10.15"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.15.tgz#a47543519f6149e4716af138ce2055ceefdb6de0"
-  integrity sha512-R/jxVPuX/qstERLi9yBjS2QmwC2gfbczwrbS5Uw5L+BKqhfEwEmUDDUxWBMdB56AmjmtmstBxGvHGsDW+UrJ1A==
+"@web/test-runner-core@^0.10.17":
+  version "0.10.17"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.17.tgz#bae17071d1e5a5fd9fa01cf759644352c243c513"
+  integrity sha512-T8yLQ6W4tHwREEYlAvAMYXpNkRE4XBynuWQQVq1qf5hf/IFNdYkOVELkgsHevtYLRElxi9/wHeRrn1SkDgj0Ug==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/co-body" "^5.1.0"
@@ -4552,7 +4552,7 @@
     "@types/istanbul-reports" "^3.0.0"
     "@types/uuid" "^8.3.0"
     "@web/browser-logs" "^0.2.1"
-    "@web/dev-server-core" "^0.3.11"
+    "@web/dev-server-core" "^0.3.12"
     chalk "^4.1.0"
     chokidar "^3.4.3"
     cli-cursor "^3.1.0"
@@ -4654,17 +4654,17 @@
     pixelmatch "^5.2.1"
     pngjs "^6.0.0"
 
-"@web/test-runner@^0.13.2":
-  version "0.13.2"
-  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.13.2.tgz#ccbcf9e1a503043c3d88dc48ac3bf01826357be5"
-  integrity sha512-/5yFSEVd01zkIzD/kulc+2lRdtwFImS2bqxPhUjuCNg8NZcIJ2n19n7HhDXGQFEYuwW0yopluvoVT/ZdSgEf6A==
+"@web/test-runner@^0.13.4":
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.13.4.tgz#e0cd1dcf24b4aa53284b5fa8c099a6b00108f447"
+  integrity sha512-TuS8UnW+bdY0K2RoqldyORJime4R1cnARvUtxsXJDbHq78Dcfud2xCgrOepQbbxbniF77OShuEEwCXNULftobw==
   dependencies:
     "@web/browser-logs" "^0.2.2"
     "@web/config-loader" "^0.1.3"
-    "@web/dev-server" "^0.1.16"
+    "@web/dev-server" "^0.1.17"
     "@web/test-runner-chrome" "^0.10.0"
     "@web/test-runner-commands" "^0.4.5"
-    "@web/test-runner-core" "^0.10.15"
+    "@web/test-runner-core" "^0.10.17"
     "@web/test-runner-mocha" "^0.7.2"
     camelcase "^6.2.0"
     chalk "^4.1.0"
