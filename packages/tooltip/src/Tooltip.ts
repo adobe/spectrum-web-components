@@ -17,11 +17,13 @@ import {
     SpectrumElement,
     property,
     query,
+    PropertyValues,
 } from '@spectrum-web-components/base';
-import {
+import type {
     OverlayDisplayQueryDetail,
     Placement,
 } from '@spectrum-web-components/overlay';
+import { openOverlay } from '@spectrum-web-components/overlay/src/loader.js';
 
 import tooltipStyles from './tooltip.css.js';
 
@@ -43,6 +45,12 @@ export class Tooltip extends SpectrumElement {
     static instanceCount = 0;
 
     private _tooltipId = `sp-tooltip-describedby-helper-${Tooltip.instanceCount++}`;
+
+    @property({ type: Boolean, attribute: 'self-managed' })
+    public selfManaged = false;
+
+    @property({ type: Number, reflect: true })
+    public offset = 6;
 
     @property({ type: Boolean, reflect: true })
     public open = false;
@@ -93,14 +101,6 @@ export class Tooltip extends SpectrumElement {
         event.detail.overlayContentTipElement = this.tipElement;
     }
 
-    render(): TemplateResult {
-        return html`
-            <slot name="icon"></slot>
-            <span id="label"><slot></slot></span>
-            <span id="tip"></span>
-        `;
-    }
-
     private _proxy?: HTMLElement;
 
     public overlayWillOpenCallback({
@@ -138,6 +138,74 @@ export class Tooltip extends SpectrumElement {
         if (this._proxy) {
             this._proxy.remove();
             this._proxy = undefined;
+        }
+    }
+
+    private closeOverlayCallback?: Promise<() => void>;
+    private abortOverlay: (cancelled: boolean) => void = () => {
+        return;
+    };
+
+    private openOverlay = (): void => {
+        const parentElement = this.parentElement as HTMLElement;
+        const abortPromise: Promise<boolean> = new Promise((res) => {
+            this.abortOverlay = res;
+        });
+        this.closeOverlayCallback = openOverlay(parentElement, 'hover', this, {
+            abortPromise,
+            offset: this.offset,
+            placement: this.placement,
+        });
+    };
+
+    private closeOverlay = async (): Promise<void> => {
+        if (this.abortOverlay) this.abortOverlay(true);
+        if (!this.closeOverlayCallback) return;
+        (await this.closeOverlayCallback)();
+        delete this.closeOverlayCallback;
+    };
+
+    private manageTooltip(): void {
+        const parentElement = this.parentElement as HTMLElement;
+        if (this.selfManaged) {
+            parentElement.addEventListener('pointerenter', this.openOverlay);
+            parentElement.addEventListener('focusin', this.openOverlay);
+            parentElement.addEventListener('pointerleave', this.closeOverlay);
+            parentElement.addEventListener('focusout', this.closeOverlay);
+        } else {
+            parentElement.removeEventListener('pointerenter', this.openOverlay);
+            parentElement.removeEventListener('focusin', this.openOverlay);
+            parentElement.removeEventListener(
+                'pointerleave',
+                this.closeOverlay
+            );
+            parentElement.removeEventListener('focusout', this.closeOverlay);
+        }
+    }
+
+    render(): TemplateResult {
+        return html`
+            <slot name="icon"></slot>
+            <span id="label"><slot></slot></span>
+            <span id="tip"></span>
+        `;
+    }
+
+    protected async update(changed: PropertyValues<this>): Promise<void> {
+        if (changed.has('open') && this.selfManaged) {
+            if (this.open) {
+                this.openOverlay();
+            } else {
+                this.closeOverlay();
+            }
+        }
+        super.update(changed);
+    }
+
+    protected updated(changed: PropertyValues<this>): void {
+        super.updated(changed);
+        if (changed.has('selfManaged')) {
+            this.manageTooltip();
         }
     }
 }
