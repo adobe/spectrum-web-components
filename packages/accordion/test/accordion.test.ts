@@ -20,6 +20,7 @@ import {
     arrowDownEvent,
     shiftTabEvent,
 } from '../../../test/testing-helpers.js';
+import { spy } from 'sinon';
 
 describe('Accordion', () => {
     it('renders with items accessibly', async () => {
@@ -44,6 +45,32 @@ describe('Accordion', () => {
         await elementUpdated(el);
 
         expect(document.activeElement === el).to.be.false;
+    });
+    it('does not accept keyboard events when items are not present', async () => {
+        const errorSpy = spy();
+        const el = await fixture<Accordion>(
+            html`
+                <sp-accordion>
+                    <sp-accordion-item disabled label="Heading 2">
+                        <div>Item 2</div>
+                    </sp-accordion-item>
+                </sp-accordion>
+            `
+        );
+
+        await elementUpdated(el);
+        const item = el.querySelector('sp-accordion-item') as AccordionItem;
+        window.addEventListener('error', () => errorSpy());
+
+        el.dispatchEvent(new FocusEvent('focusin'));
+        item.remove();
+        el.dispatchEvent(
+            new KeyboardEvent('keydown', {
+                code: 'ArrowDown',
+            })
+        );
+
+        expect(errorSpy.callCount).to.equal(0);
     });
     it('does not accept focus when all children [disabled]', async () => {
         const el = await fixture<Accordion>(
