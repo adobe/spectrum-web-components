@@ -102,17 +102,17 @@ export class Accordion extends Focusable {
         const items = this.items;
         const focused = items.indexOf(getActiveElement(this) as AccordionItem);
         let next = focused;
-        let availableItems = items.length;
+        let nextItem = items[next];
         // cycle through the available items in the directions of the offset to find the next non-disabled item
-        while ((items[next].disabled || next === focused) && availableItems) {
-            availableItems -= 1;
+        while (nextItem && (nextItem.disabled || next === focused)) {
             next = (items.length + next + direction) % items.length;
+            nextItem = items[next];
         }
         // if there are no non-disabled items, skip the work to focus a child
-        if (items[next].disabled || next === focused) {
+        if (!nextItem || nextItem.disabled || next === focused) {
             return;
         }
-        items[next].focus();
+        nextItem.focus();
     }
 
     private onToggle(event: Event): void {

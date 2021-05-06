@@ -28,6 +28,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { TemplateResult, LitElement } from '@spectrum-web-components/base';
+import { spy } from 'sinon';
 
 describe('Sidenav', () => {
     it('loads', async () => {
@@ -67,6 +68,33 @@ describe('Sidenav', () => {
         await elementUpdated(el);
 
         expect(document.activeElement === el).to.be.false;
+    });
+    it('does not accept keyboard events when items are not present', async () => {
+        const errorSpy = spy();
+        const el = await fixture<SideNav>(
+            html`
+                <sp-sidenav>
+                    <sp-sidenav-item
+                        value="Section 1"
+                        label="Section 1"
+                    ></sp-sidenav-item>
+                </sp-sidenav>
+            `
+        );
+
+        await elementUpdated(el);
+        const item = el.querySelector('sp-sidenav-item') as SideNavItem;
+        window.addEventListener('error', () => errorSpy());
+
+        el.dispatchEvent(new FocusEvent('focusin'));
+        item.remove();
+        el.dispatchEvent(
+            new KeyboardEvent('keydown', {
+                code: 'ArrowDown',
+            })
+        );
+
+        expect(errorSpy.callCount).to.equal(0);
     });
     it('does not accept focus when all children [disabled]', async () => {
         const el = await fixture<SideNav>(
