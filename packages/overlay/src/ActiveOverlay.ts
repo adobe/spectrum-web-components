@@ -389,8 +389,8 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     public async updateOverlayPosition(): Promise<void> {
+        await (document.fonts ? document.fonts.ready : Promise.resolve());
         if (this.popper) {
-            await (document.fonts ? document.fonts.ready : Promise.resolve());
             await this.popper.update();
         }
     }
