@@ -29,6 +29,7 @@ import {
 } from '@open-wc/testing';
 import { TemplateResult, LitElement } from '@spectrum-web-components/base';
 import { spy } from 'sinon';
+import { executeServerCommand } from '@web/test-runner-commands';
 
 describe('Sidenav', () => {
     it('loads', async () => {
@@ -356,6 +357,33 @@ describe('Sidenav', () => {
         const outsideFocused = document.activeElement as HTMLElement;
 
         expect(typeof outsideFocused).not.to.equal(SideNavItem);
+    });
+    it('focuses the child anchor not the root when [tabindex=-1]', async () => {
+        const el = await fixture<SideNav>(manageTabIndex());
+
+        await elementUpdated(el);
+        const firstItem = el.querySelector(
+            '[value="Section 0"]'
+        ) as SideNavItem;
+        const selected = el.querySelector('[selected]') as SideNavItem;
+        expect(selected.tabIndex).to.equal(0);
+        expect(firstItem.tabIndex).to.equal(-1);
+
+        const firstRect = firstItem.getBoundingClientRect();
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [firstRect.x + 2, firstRect.y + 2],
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
+        await elementUpdated(el);
+
+        expect(firstItem.focusElement.matches(':focus')).to.be.true;
     });
     it('manage tab index through shadow DOM', async () => {
         class SideNavTestEl extends LitElement {

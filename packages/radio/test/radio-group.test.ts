@@ -26,6 +26,7 @@ import {
     pageDownEvent,
     enterEvent,
 } from '../../../test/testing-helpers.js';
+import { executeServerCommand } from '@web/test-runner-commands';
 
 describe('Radio Group - focus control', () => {
     it('does not accept focus when empty', async () => {
@@ -65,6 +66,45 @@ describe('Radio Group - focus control', () => {
         await elementUpdated(el);
 
         expect(document.activeElement === selected).to.be.true;
+    });
+    it('focuses the child input not the root when [tabindex=-1]', async () => {
+        const values = ['first', 'second', 'third'];
+        const el = await fixture<RadioGroup>(
+            html`
+                <sp-radio-group selected="second">
+                    <sp-radio value=${values[0]}>Option 1</sp-radio>
+                    <sp-radio value=${values[1]}>Option 2</sp-radio>
+                    <sp-radio value=${values[2]}>Option 3</sp-radio>
+                </sp-radio-group>
+            `
+        );
+
+        await elementUpdated(el);
+        const first = el.querySelector('[value="first"]') as Radio;
+        const selected = el.querySelector('[value="second"]') as Radio;
+        expect(selected.tabIndex).to.equal(0);
+        expect(first.tabIndex).to.equal(-1);
+
+        const firstRect = first.getBoundingClientRect();
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [firstRect.x + 2, firstRect.y + 2],
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
+        await elementUpdated(el);
+
+        // Safari can have a situation where it thinks the root is focused, but really something inside of the
+        // element is focused instead, this tests for both no focus on the root or focus inside of the element.
+        expect(
+            !first.matches(':focus') || first.matches(':focus-within'),
+            'root should not'
+        ).to.be.true;
     });
     it('does not select on focus', async () => {
         const el = await fixture<RadioGroup>(

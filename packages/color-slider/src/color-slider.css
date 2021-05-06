@@ -20,6 +20,10 @@ governing permissions and limitations under the License.
     touch-action: none;
 }
 
+:host(:focus) {
+    outline: none;
+}
+
 :host(:not([vertical])) {
     touch-action: pan-y;
 }

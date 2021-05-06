@@ -44,7 +44,7 @@ governing permissions and limitations under the License.
 #markup {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 100%;
+    grid-template-rows: minmax(60px, 100%);
     padding: 0.75rem 1.5rem;
     border-radius: 0 0 6px 6px;
     border-top: 1px solid var(--spectrum-global-color-gray-100);

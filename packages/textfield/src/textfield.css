@@ -67,3 +67,8 @@ governing permissions and limitations under the License.
     border-right-width: 0;
     border-left-width: 0;
 }
+
+.icon,
+.icon-workflow {
+    pointer-events: none;
+}
