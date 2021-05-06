@@ -19,6 +19,10 @@ governing permissions and limitations under the License.
     border: none;
 }
 
+:host([self-managed]:not([aria-hidden])) {
+    display: none;
+}
+
 :host([placement*='right']) #tip,
 :host([placement*='left']) #tip,
 :host([placement*='bottom']) #tip {
