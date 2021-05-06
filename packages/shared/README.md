@@ -7,19 +7,19 @@ Shared mixins, tools, etc. that support developing Spectrum Web Components.
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/shared?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/shared)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/shared?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/shared)
 
-```
+```bash
 npm install @spectrum-web-components/shared
 ```
 
 Individual base classes and mixins can be imported as follows:
 
-```
+```javascript
 import {
     Focusable,
     FocusVisiblePolyfillMixin,
     getActiveElement,
     LikeAnchor,
-    ObserveSlotText
+    ObserveSlotText,
 } from '@spectrum-web-components/shared';
 ```
 
@@ -27,7 +27,7 @@ import {
 
 The `Focusable` subclass of `LitElement` adds some helpers method and lifecycle coverage in order to support passing focus to a container element inside of a custom element. The Focusable base class handles tabindex setting into shadowed elements automatically and is based heavily on the aybolit delegate-focus-mixin at https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
 
-```js
+```javascript
 import { Focusable } from '@spectrum-web-components/shared';
 import { html } from 'lit-element';
 
@@ -36,10 +36,6 @@ class FocusableButton extends Focusable {
         return [...super.styles];
     }
     public get focusElement(): HTMLElement {
-        /* c8 ignore next 3 */
-        if (!this.shadowRoot) {
-            return this;
-        }
         return this.shadowRoot.querySelector('#button') as HTMLElement;
     }
 
@@ -71,7 +67,7 @@ Mix `download`, `label`, `href`, and `target` properties into your element to al
 
 When working with styles that are driven by the conditional presence of `<slot>`s in a component's shadow DOM, you will need to track whether light DOM that is meant for that slot exists. Use the `ObserveSlotPresence` mixin to target specific light DOM to observe the presence of and trigger `this.requestUpdate()` calls when content fulfilling that selector comes in and out of availability.
 
-```js
+```javascript
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 import { LitElement, html } from 'lit-element';
 class ObserveSlotPresenceElement extends ObserveSlotPresence(LitElement, '[slot="conditional-slot"]') {
@@ -106,7 +102,7 @@ customElements.define('observing-slot-presence-element', ObserveSlotPresenceElem
 
 When working with `<slot>`s and their `slotchange` event, you will have the opportunity to capture when the nodes and/or elements in your element are added or removed. However, if the `textContent` of a text node changes, you will not receive the `slotchange` event because the slot hasn't actually received new nodes and/or elements in the exchange. When working with a lit-html binding `<your-element>${text}</your-element>` that means you will not receive a `slotchange` event when the value of `text` goes from `text = ''` to `text = 'something'` or the other way. In these cases the `ObserveSlotText` can be leverages to apply a mutation observe onto your element that tracks `characterData` mutations so that you can resspond as desired.
 
-```js
+```javascript
 import { ObserveSlotText } from '@spectrum-web-components/shared';
 import { LitElement, html } from 'lit-element';
 

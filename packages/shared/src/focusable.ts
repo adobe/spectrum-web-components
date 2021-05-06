@@ -87,8 +87,19 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             }
             return;
         }
-        // All code paths are about to address the host tabindex without side effect.
-        this.manipulatingTabindex = true;
+        if (tabIndex === -1) {
+            this.addEventListener(
+                'pointerdown',
+                this.onPointerdownManagementOfTabIndex
+            );
+        } else {
+            // All code paths are about to address the host tabindex without side effect.
+            this.manipulatingTabindex = true;
+            this.removeEventListener(
+                'pointerdown',
+                this.onPointerdownManagementOfTabIndex
+            );
+        }
         if (tabIndex === -1 || this.disabled) {
             // Do not cange the tabindex of `focusElement` as it is the "old" value cache.
             // Make element NOT focusable.
@@ -111,6 +122,13 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this.manageFocusElementTabindex(tabIndex);
     }
     private _tabIndex = 0;
+
+    private onPointerdownManagementOfTabIndex(): void {
+        if (this.tabIndex === -1) {
+            this.tabIndex = 0;
+            this.focus();
+        }
+    }
 
     private async manageFocusElementTabindex(tabIndex: number): Promise<void> {
         if (!this.focusElement) {

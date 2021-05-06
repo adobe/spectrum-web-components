@@ -45,6 +45,7 @@ export class RadioGroup extends FieldGroup {
     }
 
     public focus(): void {
+        debugger;
         if (!this.buttons.length) {
             return;
         }
@@ -148,11 +149,15 @@ export class RadioGroup extends FieldGroup {
         }
         event.preventDefault();
         const nextRadio = circularIndexedElement(this.buttons, nextIndex);
-        nextRadio.focus();
         this._setSelected(nextRadio.value);
+        nextRadio.focus();
     };
 
-    private handleFocusout = (): void => {
+    private handleFocusout = (event: FocusEvent): void => {
+        const nextActiveElement = event.relatedTarget as Node;
+        if (nextActiveElement && this.contains(nextActiveElement)) {
+            return;
+        }
         const firstButtonNonDisabled = this.buttons.find((button) => {
             if (this.selected) {
                 return button.checked;
@@ -200,7 +205,8 @@ export class RadioGroup extends FieldGroup {
         `;
     }
 
-    protected firstUpdated(): void {
+    protected firstUpdated(changes: PropertyValues<this>): void {
+        super.firstUpdated(changes);
         const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
         const checkedRadioValue = checkedRadio ? checkedRadio.value : '';
         // Prefer the checked item over the selected value
@@ -225,9 +231,6 @@ export class RadioGroup extends FieldGroup {
             const target = event.target as Radio;
             this._setSelected(target.value);
         });
-    }
-
-    protected updated(changes: PropertyValues<this>): void {
         this.buttons.map((button, index) => {
             const focusable = this.selected
                 ? !button.disabled && button.value === this.selected
@@ -238,6 +241,10 @@ export class RadioGroup extends FieldGroup {
                 : '-1';
             button.setAttribute('tabindex', focusable);
         });
+    }
+
+    protected updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
         if (changes.has('selected')) {
             this.validateRadios();
         }
