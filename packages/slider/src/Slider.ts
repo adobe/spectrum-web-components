@@ -37,26 +37,7 @@ export class Slider extends Focusable {
     public type = '';
 
     @property({ type: Number, reflect: true })
-    public get value(): number {
-        return this._value;
-    }
-
-    public set value(value: number) {
-        const oldValue = this.value;
-        if (this.input) {
-            this.input.value = String(value);
-        }
-        const newValue = this.input ? parseFloat(this.input.value) : value;
-
-        if (newValue === oldValue) {
-            return;
-        }
-
-        this._value = newValue;
-        this.requestUpdate('value', oldValue);
-    }
-
-    private _value = 10;
+    public value = 10;
 
     @property({ type: String })
     public set variant(variant: string) {
@@ -145,7 +126,11 @@ export class Slider extends Focusable {
 
     protected updated(changedProperties: PropertyValues): void {
         if (changedProperties.has('value')) {
-            this.dispatchInputEvent();
+            if (this.value === this.input.valueAsNumber) {
+                this.dispatchInputEvent();
+            } else {
+                this.value = this.input.valueAsNumber;
+            }
         }
     }
 
@@ -261,10 +246,10 @@ export class Slider extends Focusable {
                 <input
                     type="range"
                     id="input"
-                    value=${this.value}
-                    step=${this.step}
                     min=${this.min}
                     max=${this.max}
+                    step=${this.step}
+                    value=${this.value}
                     aria-disabled=${ifDefined(
                         this.disabled ? 'true' : undefined
                     )}

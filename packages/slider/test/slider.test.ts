@@ -555,4 +555,39 @@ describe('Slider', () => {
 
         expect(input.getAttribute('aria-valuetext')).to.equal('50');
     });
+    it('accepts min/max/value in the same timing', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(10);
+
+        el.min = 0;
+        el.max = 200;
+        el.value = 200;
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(200);
+
+        el.value = 500;
+        el.min = 0;
+        el.max = 500;
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(500);
+
+        el.value = -100;
+        el.min = -100;
+        el.max = 500;
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(-100);
+    });
 });
