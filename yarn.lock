@@ -4403,7 +4403,7 @@
     rollup-plugin-terser "^7.0.2"
     storybook-addon-markdown-docs "^1.0.1"
 
-"@web/dev-server@^0.1.17":
+"@web/dev-server@0.1.17", "@web/dev-server@^0.1.17":
   version "0.1.17"
   resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.17.tgz#3fad6d96f72f902c04ff27fef1c2ba5cc0eaf5e0"
   integrity sha512-2gdOjkQp97uaORkOL8X90f4retqZ2lA9YqHDljpf4SFg0JWoY8X7EJA9XQG1jJ2x46oQ5zqJX7AiSWc47B2k6A==
@@ -9344,7 +9344,7 @@ es-abstract@^1.17.2, es-abstract@^1.18.0-next.1, es-abstract@^1.18.0-next.2:
     string.prototype.trimstart "^1.0.4"
     unbox-primitive "^1.0.0"
 
-es-dev-server@^1.5.0, es-dev-server@^1.57.8:
+es-dev-server@^1.57.8:
   version "1.60.2"
   resolved "https://registry.yarnpkg.com/es-dev-server/-/es-dev-server-1.60.2.tgz#cca56fe452d46c3ec531c19745e0aa9d7b71e1b3"
   integrity sha512-Lp9kZzawJ35HDKiqLNb/YbD2VufF+3tdxHgbP/kfdLI5JLgDJV4SuKTWWny3ZuBUAlZKGre7a0iXUByGQqfdPA==

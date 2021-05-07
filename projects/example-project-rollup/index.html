@@ -10,42 +10,179 @@
     <base href="/" />
 
     <title>example-app</title>
-    <link rel="stylesheet" href="styles.css" />
+    <!-- To use the following you must have a full build of the app to draw the styles from... -->
+    <!-- <link rel="stylesheet" href="dist/styles.css" /> -->
   </head>
 
   <body>
-    <sp-button variant="primary">Primary</sp-button>
-    <br /><br />
-    <sp-button variant="secondary" quiet>secondary</sp-button>
-    <br /><br />
-    <sp-field-label for="picker">Where do you live?</sp-field-label>
-    <sp-picker id="picker">
-      <span slot="label">
-        Select a Country with a very long label, too long in fact
-      </span>
-      <sp-menu-item> Deselect </sp-menu-item>
-      <sp-menu-item> Select Inverse </sp-menu-item>
-      <sp-menu-item> Feather... </sp-menu-item>
-      <sp-menu-item> Select and Mask... </sp-menu-item>
-      <sp-menu-divider></sp-menu-divider>
-      <sp-menu-item> Save Selection </sp-menu-item>
-      <sp-menu-item disabled> Make Work Path </sp-menu-item>
-    </sp-picker>
-
-    <sp-picker dir="rtl">
-      <span slot="label">
-        Select a Country with a very long label, too long in fact
-      </span>
-      <sp-menu dir="rtl">
-        <sp-menu-item dir="rtl"> Deselect </sp-menu-item>
-        <sp-menu-item dir="rtl"> Select Inverse </sp-menu-item>
-        <sp-menu-item dir="rtl"> Feather... </sp-menu-item>
-        <sp-menu-item dir="rtl"> Select and Mask... </sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item dir="rtl"> Save Selection </sp-menu-item>
-        <sp-menu-item disabled dir="rtl"> Make Work Path </sp-menu-item>
-      </sp-menu>
-    </sp-picker>
+    <sp-theme color="light" scale="large">
+      <div>
+        <sp-button variant="primary">Primary</sp-button>
+        <sp-button variant="secondary" autofocus>secondary</sp-button>
+        <sp-button variant="cta">cta</sp-button>
+        <sp-button variant="negative">negative</sp-button>
+        <sp-button variant="action">action</sp-button>
+        <sp-button disabled>disabled</sp-button>
+      </div>
+      <div>
+        <sp-checkbox checked>checked</sp-checkbox>
+        <sp-checkbox indeterminate>indeterminate</sp-checkbox>
+        <sp-checkbox invalid>invalid</sp-checkbox>
+        <sp-checkbox disabled>disabled</sp-checkbox>
+      </div>
+      <div>
+        <sp-radio-group name="example">
+          <sp-radio invalid value="first">Option 1</sp-radio>
+          <sp-radio value="second">Option 2</sp-radio>
+          <sp-radio disabled value="third">Option 3</sp-radio>
+          <sp-radio checked value="fourth">Option 4</sp-radio>
+        </sp-radio-group>
+      </div>
+      <div>
+        <sp-picker
+          label="Select a Country with a very long label, too long in fact"
+        >
+          <sp-menu-item> Deselect </sp-menu-item>
+          <sp-menu-item> Select inverse </sp-menu-item>
+          <sp-menu-item> Feather... </sp-menu-item>
+          <sp-menu-item> Select and mask... </sp-menu-item>
+          <sp-menu-divider></sp-menu-divider>
+          <sp-menu-item> Save selection </sp-menu-item>
+          <sp-menu-item disabled> Make work path </sp-menu-item>
+        </sp-picker>
+        <sp-picker invalid label="Invalid">
+          <sp-menu-item> Deselect </sp-menu-item>
+          <sp-menu-item> Select inverse </sp-menu-item>
+          <sp-menu-item> Feather... </sp-menu-item>
+          <sp-menu-item> Select and mask... </sp-menu-item>
+          <sp-menu-divider></sp-menu-divider>
+          <sp-menu-item> Save selection </sp-menu-item>
+          <sp-menu-item disabled> Make work path </sp-menu-item>
+        </sp-picker>
+        <sp-picker disabled label="Disabled">
+          <sp-menu-item> Deselect </sp-menu-item>
+          <sp-menu-item> Select inverse </sp-menu-item>
+          <sp-menu-item> Feather... </sp-menu-item>
+          <sp-menu-item> Select and mask... </sp-menu-item>
+          <sp-menu-divider></sp-menu-divider>
+          <sp-menu-item> Save selection </sp-menu-item>
+          <sp-menu-item disabled> Make work path </sp-menu-item>
+        </sp-picker>
+      </div>
+      <div>
+        This is a
+        <sp-link href="#">standard link</sp-link>
+        . This is a
+        <sp-link quiet href="#">quiet link</sp-link>
+        . This is a
+        <sp-link download="myfile.txt" href="#">download link</sp-link>
+        .
+      </div>
+      <div>
+        <sp-slider label="Slider Label"></sp-slider>
+        <sp-slider label="Slider Label - Disabled" disabled></sp-slider>
+        <sp-slider
+          label="Slider Label"
+          variant="tick"
+          tick-step="5"
+          tick-labels
+        ></sp-slider>
+        <sp-slider
+          label="Slider Label - Disabled"
+          variant="tick"
+          tick-step="5"
+          tick-labels
+          disabled
+        ></sp-slider>
+      </div>
+      <div>
+        <sp-textfield label="Name" placeholder="Enter your name"></sp-textfield>
+        <sp-textfield
+          label="Name"
+          placeholder="Enter your name"
+          invalid
+        ></sp-textfield>
+        <sp-textfield
+          label="Name"
+          placeholder="Enter your name"
+          valid
+        ></sp-textfield>
+        <sp-textfield label="Name"></sp-textfield>
+        <sp-textfield invalid label="invalid name"></sp-textfield>
+        <sp-textfield valid label="valid name"></sp-textfield>
+        <sp-textfield multiline label="multiline Name"></sp-textfield>
+        <sp-textfield
+          multiline
+          invalid
+          label="multiline invalid name"
+        ></sp-textfield>
+        <sp-textfield
+          multiline
+          valid
+          label="multiline valid name"
+        ></sp-textfield>
+      </div>
+      <div>
+        <sp-dialog-wrapper
+          id="dialog-wrapper-demo"
+          headline="Dialog title"
+          dismissible
+          underlay
+          footer="Content for footer"
+          hidden
+        >
+          Content of the dialog
+        </sp-dialog-wrapper>
+        <sp-button
+          onClick="
+    const dialogWrapper = this.previousElementSibling;
+    dialogWrapper.hidden = false;
+    dialogWrapper.open = true;
+    const handleEvent = ({type}) => {
+        alert(`Handling '${type}' event.`);
+        dialogWrapper.open = false;
+        dialogWrapper.removeEventListener('close', handleEvent);
+    }
+    dialogWrapper.addEventListener('close', handleEvent);
+  "
+          variant="primary"
+        >
+          Toggle Dialog
+        </sp-button>
+        <sp-dialog-wrapper
+          id="dialog-wrapper-demo"
+          headline="Dialog title"
+          mode="fullscreen"
+          confirm-label="Keep Both"
+          secondary-label="Replace"
+          cancel-label="Cancel"
+          footer="Content for footer"
+          hidden
+        >
+          Content of the dialog
+        </sp-dialog-wrapper>
+        <sp-button
+          onClick="
+    const dialogWrapper = this.previousElementSibling;
+    dialogWrapper.hidden = false;
+    dialogWrapper.open = true;
+    const handleEvent = ({type}) => {
+        alert(`Handling '${type}' event.`);
+        dialogWrapper.open = false;
+        dialogWrapper.removeEventListener('confirm', handleEvent);
+        dialogWrapper.removeEventListener('secondary', handleEvent);
+        dialogWrapper.removeEventListener('cancel', handleEvent);
+    }
+    dialogWrapper.addEventListener('confirm', handleEvent);
+    dialogWrapper.addEventListener('secondary', handleEvent);
+    dialogWrapper.addEventListener('cancel', handleEvent);
+  "
+          variant="primary"
+        >
+          Toggle Dialog
+        </sp-button>
+      </div>
+    </sp-theme>
 
     <script type="module" src="./out-tsc/src/example-app.js"></script>
   </body>

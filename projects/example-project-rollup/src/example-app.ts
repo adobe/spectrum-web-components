@@ -11,14 +11,19 @@ governing permissions and limitations under the License.
 */
 
 // import our stylesheets
-import './styles.css';
+// import './styles.css';
 
 // import the components we'll use in this page
-import '@spectrum-web-components/button/sp-button';
-import '@spectrum-web-components/field-label/sp-field-label';
-// use the following import to chunk your build at the async boundary infront of the Overlay package
-import '@spectrum-web-components/picker/sp-picker';
-// use the following import to chunk your build as defaulted in the Rollup config.
-// import '@spectrum-web-components/picker/sync/sp-picker';
-import '@spectrum-web-components/menu/sp-menu';
-import '@spectrum-web-components/menu/sp-menu-item';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/link/sp-link.js';
+import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';

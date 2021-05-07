@@ -15,8 +15,8 @@
     "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
     "lint:prettier": "prettier \"**/*.js\" \"**/*.ts\" --check --ignore-path .gitignore",
     "postbuild": "mv dist/*.css dist/styles.css",
-    "start": "concurrently --kill-others --names tsc,es-dev-server \"npm run tsc:watch\" \"es-dev-server --app-index index.html --node-resolve --open --watch\"",
-    "start:build": "npm run build && es-dev-server --root-dir dist --app-index index.html --open --compatibility none",
+    "start": "concurrently --kill-others --names tsc,wds \"npm run tsc:watch\" \"wds --app-index index.html --node-resolve --open --watch\"",
+    "start:build": "npm run build && wds --root-dir dist --app-index index.html --open --compatibility none",
     "tsc:watch": "tsc --watch"
   },
   "dependencies": {
@@ -32,8 +32,8 @@
     "@types/node": "14.14.37",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.21.0",
+    "@web/dev-server": "0.1.17",
     "concurrently": "^6.0.0",
-    "es-dev-server": "^1.5.0",
     "eslint": "^7.8.0",
     "eslint-config-prettier": "^7.1.0",
     "prettier": "^2.0.4",
