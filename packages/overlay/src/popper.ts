@@ -25,6 +25,7 @@ import {
     popperGenerator,
 } from '@popperjs/core/dist/esm/popper-lite.js';
 import type { Instance } from '@popperjs/core/dist/esm/types.js';
+import type { VirtualElement } from '@popperjs/core/lib/types';
 import maxSize from 'popper-max-size-modifier';
 import { applyMaxSize } from './apply-max-size.js';
 
@@ -38,5 +39,5 @@ export const createPopper = popperGenerator({
     ],
 });
 
-export type { Instance, Placement };
+export type { Instance, Placement, VirtualElement };
 export { maxSize, applyMaxSize };
