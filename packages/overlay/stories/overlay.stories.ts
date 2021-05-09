@@ -20,7 +20,6 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -439,6 +438,7 @@ export const updated = (): TemplateResult => {
 
 export const sideHoverDraggable = (): TemplateResult => {
     return html`
+        ${storyStyles}
         <style>
             sp-tooltip {
                 transition: none;
@@ -554,15 +554,13 @@ export const complexModal = (): TemplateResult => {
                     Selection type:
                 </sp-field-label>
                 <sp-picker id="test-picker">
-                    <sp-menu>
-                        <sp-menu-item>Deselect</sp-menu-item>
-                        <sp-menu-item>Select inverse</sp-menu-item>
-                        <sp-menu-item>Feather...</sp-menu-item>
-                        <sp-menu-item>Select and mask...</sp-menu-item>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-item>Save selection</sp-menu-item>
-                        <sp-menu-item disabled>Make work path</sp-menu-item>
-                    </sp-menu>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save selection</sp-menu-item>
+                    <sp-menu-item disabled>Make work path</sp-menu-item>
                 </sp-picker>
             </sp-dialog-wrapper>
             <sp-button slot="trigger" variant="primary">
