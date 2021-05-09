@@ -41,6 +41,8 @@ class OverlayTargetIcon extends LitElement {
                 color: var(--spectrum-global-color-magenta-700);
                 width: 64px;
                 height: 64px;
+                top: 0;
+                left: 0;
             }
         `;
     }
