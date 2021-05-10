@@ -31,12 +31,13 @@ describe('Overlay Trigger - Click', () => {
         const closedSpy = spy();
         const el = await fixture<OverlayTrigger>(
             (() => html`
-                <overlay-trigger placement="right-start" open="click">
-                    <sp-action-button
-                        slot="trigger"
-                        @sp-opened=${() => openedSpy()}
-                        @sp-closed=${() => closedSpy()}
-                    >
+                <overlay-trigger
+                    placement="right-start"
+                    open="click"
+                    @sp-opened=${() => openedSpy()}
+                    @sp-closed=${() => closedSpy()}
+                >
+                    <sp-action-button slot="trigger">
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>
                     </sp-action-button>
                     <sp-popover slot="click-content" tip></sp-popover>
@@ -62,12 +63,14 @@ describe('Overlay Trigger - Click', () => {
         const openedSpy = spy();
         const closedSpy = spy();
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start" type="modal" open="click">
-                <sp-action-button
-                    slot="trigger"
-                    @sp-opened=${() => openedSpy()}
-                    @sp-closed=${() => closedSpy()}
-                >
+            <overlay-trigger
+                placement="right-start"
+                type="modal"
+                open="click"
+                @sp-opened=${() => openedSpy()}
+                @sp-closed=${() => closedSpy()}
+            >
+                <sp-action-button slot="trigger">
                     <sp-icon-magnify slot="icon"></sp-icon-magnify>
                 </sp-action-button>
                 <sp-popover slot="click-content" tip></sp-popover>
