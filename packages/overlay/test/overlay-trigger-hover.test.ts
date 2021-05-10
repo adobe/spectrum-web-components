@@ -30,12 +30,13 @@ describe('Overlay Trigger - Hover', () => {
         const closedSpy = spy();
         const el = await fixture<OverlayTrigger>(
             (() => html`
-                <overlay-trigger placement="right-start" open="hover">
-                    <sp-action-button
-                        slot="trigger"
-                        @sp-opened=${() => openedSpy()}
-                        @sp-closed=${() => closedSpy()}
-                    >
+                <overlay-trigger
+                    placement="right-start"
+                    open="hover"
+                    @sp-opened=${() => openedSpy()}
+                    @sp-closed=${() => closedSpy()}
+                >
+                    <sp-action-button slot="trigger">
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>
                     </sp-action-button>
                     <sp-popover slot="hover-content" tip></sp-popover>

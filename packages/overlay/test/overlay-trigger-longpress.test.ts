@@ -104,13 +104,13 @@ describe('Overlay Trigger - Longpress', () => {
         const closedSpy = spy();
         const el = await fixture<OverlayTrigger>(
             (() => html`
-                <overlay-trigger placement="right-start" open="longpress">
-                    <sp-action-button
-                        slot="trigger"
-                        hold-affordance
-                        @sp-opened=${() => openedSpy()}
-                        @sp-closed=${() => closedSpy()}
-                    >
+                <overlay-trigger
+                    placement="right-start"
+                    open="longpress"
+                    @sp-opened=${() => openedSpy()}
+                    @sp-closed=${() => closedSpy()}
+                >
+                    <sp-action-button slot="trigger" hold-affordance>
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>
                     </sp-action-button>
                     <sp-popover slot="longpress-content" tip></sp-popover>
