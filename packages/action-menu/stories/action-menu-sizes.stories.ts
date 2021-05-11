@@ -15,6 +15,11 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { ActionMenuMarkup } from './';
 
+export default {
+    title: 'Action menu/Sizes',
+    component: 'sp-action-menu',
+};
+
 export const s = (): TemplateResult => ActionMenuMarkup({ size: 's' });
 export const m = (): TemplateResult => ActionMenuMarkup({ size: 'm' });
 export const l = (): TemplateResult => ActionMenuMarkup({ size: 'l' });
