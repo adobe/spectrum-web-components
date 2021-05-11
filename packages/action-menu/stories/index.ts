@@ -23,12 +23,14 @@ export const ActionMenuMarkup = ({
     open = false,
     visibleLabel = '',
     customIcon = '' as string | TemplateResult,
+    size = 'm',
 } = {}): TemplateResult => {
     return html`
         <sp-action-menu
             label=${ariaLabel}
             ?disabled=${disabled}
             ?open=${open}
+            size=${size}
             @change="${changeHandler}"
         >
             ${customIcon
