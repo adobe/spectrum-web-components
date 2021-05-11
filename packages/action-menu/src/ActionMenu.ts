@@ -61,6 +61,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
                 aria-label=${ifDefined(this.label || undefined)}
                 id="button"
                 class="button"
+                size=${this.size}
                 @blur=${this.onButtonBlur}
                 @click=${this.onButtonClick}
                 @focus=${this.onButtonFocus}
