@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 @import './spectrum-color-area.css';
 
+:host {
+    touch-action: none;
+}
+
 :host:before {
     pointer-events: none;
 }
