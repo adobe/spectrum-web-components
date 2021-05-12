@@ -344,6 +344,103 @@ describe('Slider', () => {
 
         expect(el.value).to.equal(0);
     });
+    it('accepts pointermove events in separate interactions', async () => {
+        let pointerId = -1;
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider style="width: 100px"></sp-slider>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el.value, 'initial').to.equal(10);
+
+        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        handle.setPointerCapture = (id: number) => (pointerId = id);
+        handle.releasePointerCapture = (id: number) => (pointerId = id);
+        handle.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                clientX: 58,
+                cancelable: true,
+                button: 0,
+                pointerId: 100,
+            })
+        );
+        await elementUpdated(el);
+        handle.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: 58,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value, 'first pointerdown').to.equal(50);
+        expect(el.dragging, 'is dragging').to.be.true;
+        expect(el.handleHighlight, 'not highlighted').to.be.false;
+        expect(pointerId).to.equal(100);
+
+        handle.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: 0,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value, 'first pointermove').to.equal(0);
+
+        handle.dispatchEvent(
+            new PointerEvent('pointerup', {
+                clientX: 0,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value, 'first pointerup').to.equal(0);
+        expect(el.dragging, 'is dragging').to.be.false;
+        handle.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                clientX: 58,
+                cancelable: true,
+                button: 0,
+            })
+        );
+        await elementUpdated(el);
+        handle.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: 58,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value, 'second pointerdown').to.equal(50);
+        expect(el.dragging, 'is dragging').to.be.true;
+        expect(el.handleHighlight, 'not highlighted').to.be.false;
+
+        handle.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: 0,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value, 'second pointermove').to.equal(0);
+
+        handle.dispatchEvent(
+            new PointerEvent('pointerup', {
+                clientX: 0,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value, 'second pointerup').to.equal(0);
+        expect(el.dragging, 'is dragging').to.be.false;
+    });
     it('accepts pointermove events - [step=0]', async () => {
         let pointerId = -1;
         const inputSpy = spy();
