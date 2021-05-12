@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons-ui",
-    "version": "0.6.5",
+    "version": "0.6.6",
     "publishConfig": {
         "access": "public"
     },
@@ -42,7 +42,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/icon": "^0.9.5",
+        "@spectrum-web-components/icon": "^0.9.6",
         "@spectrum-web-components/iconset": "^0.5.5",
         "tslib": "^2.0.0"
     },

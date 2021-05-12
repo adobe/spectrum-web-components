@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tags@0.6.6...@spectrum-web-components/tags@0.6.7) (2021-05-12)
+
+### Bug Fixes
+
+-   **tags:** gate focus with deletable attribute ([d5e79f6](https://github.com/adobe/spectrum-web-components/commit/d5e79f667daaac9cde47a4fa717cb42edb73332e))
+
 ## [0.6.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tags@0.6.5...@spectrum-web-components/tags@0.6.6) (2021-04-15)
 
 **Note:** Version bump only for package @spectrum-web-components/tags

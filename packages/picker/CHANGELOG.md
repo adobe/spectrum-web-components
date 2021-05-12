@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.4.4...@spectrum-web-components/picker@0.4.5) (2021-05-12)
+
+### Bug Fixes
+
+-   **picker:** ensure focus visibility application ([2679081](https://github.com/adobe/spectrum-web-components/commit/2679081978788bd68b5e2c9cd1c05161cc571446))
+
 ## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.4.3...@spectrum-web-components/picker@0.4.4) (2021-04-15)
 
 ### Bug Fixes

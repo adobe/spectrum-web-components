@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.13.6...@spectrum-web-components/button@0.13.7) (2021-05-12)
+
+### Bug Fixes
+
+-   allow rendered anchors to be aria-hidden ([2e9aa23](https://github.com/adobe/spectrum-web-components/commit/2e9aa2324013e1d2311a8d4307dafe17912328ee))
+
 ## [0.13.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.13.5...@spectrum-web-components/button@0.13.6) (2021-04-15)
 
 ### Bug Fixes

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.9.5...@spectrum-web-components/sidenav@0.10.0) (2021-05-12)
+
+### Bug Fixes
+
+-   ensure item exists when attempting to acquire next item to focus ([fb52cea](https://github.com/adobe/spectrum-web-components/commit/fb52ceac75f76943788411b206fd39739ff66a54))
+
+### Features
+
+-   **sidenav:** add a "change" event to track the "value" property ([8d3a0bd](https://github.com/adobe/spectrum-web-components/commit/8d3a0bd93bdd9dbad66df0b895ff8101128776fa))
+
 ## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.9.4...@spectrum-web-components/sidenav@0.9.5) (2021-04-15)
 
 **Note:** Version bump only for package @spectrum-web-components/sidenav

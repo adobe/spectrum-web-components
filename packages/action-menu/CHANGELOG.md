@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.9.6...@spectrum-web-components/action-menu@0.9.7) (2021-05-12)
+
+### Bug Fixes
+
+-   **action-menu:** provide action menu size to action button ([b963f57](https://github.com/adobe/spectrum-web-components/commit/b963f5799ebd4ef8bba61cc57d6da668d2c8bf89))
+
 ## [0.9.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.9.5...@spectrum-web-components/action-menu@0.9.6) (2021-04-15)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

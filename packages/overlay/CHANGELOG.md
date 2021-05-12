@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.4...@spectrum-web-components/overlay@0.11.5) (2021-05-12)
+
+### Bug Fixes
+
+-   **overlay:** reduce the control active-overlay places on its content ([9d12571](https://github.com/adobe/spectrum-web-components/commit/9d12571e59dfc7afa52ce14b70f2fdad1b607de1))
+-   update "reparentChildren" types for flexibility ([2d358be](https://github.com/adobe/spectrum-web-components/commit/2d358be094cf73785d0858545ccd0f9ca2aa8db0))
+-   update presence confirmation so popper is available on update ([24f8380](https://github.com/adobe/spectrum-web-components/commit/24f83800a2011f9181947795d9249b87be99f8ab))
+
 ## [0.11.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.3...@spectrum-web-components/overlay@0.11.4) (2021-04-15)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

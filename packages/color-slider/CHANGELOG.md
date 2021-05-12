@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.1.3...@spectrum-web-components/color-slider@0.1.4) (2021-05-12)
+
+### Bug Fixes
+
+-   include touch-action rule for draggable content ([53221da](https://github.com/adobe/spectrum-web-components/commit/53221dabc8911749372994cc0fabe55f36858680))
+-   include touch-action rule for draggable content ([3f507e6](https://github.com/adobe/spectrum-web-components/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
+
 ## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.1.2...@spectrum-web-components/color-slider@0.1.3) (2021-04-09)
 
 ### Bug Fixes

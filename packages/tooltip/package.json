@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tooltip",
-    "version": "0.8.6",
+    "version": "0.8.7",
     "publishConfig": {
         "access": "public"
     },
@@ -44,7 +44,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/overlay": "^0.11.4",
+        "@spectrum-web-components/overlay": "^0.11.5",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

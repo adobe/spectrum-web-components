@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/radio",
-    "version": "0.7.4",
+    "version": "0.7.5",
     "publishConfig": {
         "access": "public"
     },
@@ -46,8 +46,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/field-group": "^0.3.4",
-        "@spectrum-web-components/shared": "^0.12.2",
+        "@spectrum-web-components/field-group": "^0.3.5",
+        "@spectrum-web-components/shared": "^0.12.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

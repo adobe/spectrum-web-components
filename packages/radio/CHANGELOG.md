@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.7.4...@spectrum-web-components/radio@0.7.5) (2021-05-12)
+
+### Bug Fixes
+
+-   **radio:** ensure radio-group first selected value is followed ([074bff8](https://github.com/adobe/spectrum-web-components/commit/074bff8466a4bb546c675fb301782bac4c735da5))
+
 ## [0.7.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.7.3...@spectrum-web-components/radio@0.7.4) (2021-04-09)
 
 **Note:** Version bump only for package @spectrum-web-components/radio

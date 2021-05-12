@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/card",
-    "version": "0.8.6",
+    "version": "0.8.7",
     "publishConfig": {
         "access": "public"
     },
@@ -43,13 +43,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/asset": "^0.4.4",
+        "@spectrum-web-components/asset": "^0.4.5",
         "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/checkbox": "^0.9.5",
-        "@spectrum-web-components/icons-workflow": "^0.6.5",
-        "@spectrum-web-components/quick-actions": "^0.4.4",
-        "@spectrum-web-components/shared": "^0.12.2",
-        "@spectrum-web-components/styles": "^0.9.5",
+        "@spectrum-web-components/checkbox": "^0.9.6",
+        "@spectrum-web-components/icons-workflow": "^0.6.6",
+        "@spectrum-web-components/quick-actions": "^0.4.5",
+        "@spectrum-web-components/shared": "^0.12.3",
+        "@spectrum-web-components/styles": "^0.9.6",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

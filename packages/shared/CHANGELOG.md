@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.2...@spectrum-web-components/shared@0.12.3) (2021-05-12)
+
+### Bug Fixes
+
+-   allow rendered anchors to be aria-hidden ([2e9aa23](https://github.com/adobe/spectrum-web-components/commit/2e9aa2324013e1d2311a8d4307dafe17912328ee))
+-   update "reparentChildren" types for flexibility ([2d358be](https://github.com/adobe/spectrum-web-components/commit/2d358be094cf73785d0858545ccd0f9ca2aa8db0))
+
 ## [0.12.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.1...@spectrum-web-components/shared@0.12.2) (2021-04-09)
 
 **Note:** Version bump only for package @spectrum-web-components/shared
