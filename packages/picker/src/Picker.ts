@@ -160,6 +160,28 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.toggle();
     }
 
+    public focus(options?: FocusOptions): void {
+        super.focus(options);
+
+        if (!this.disabled && this.focusElement) {
+            const activeElement = (this.getRootNode() as Document)
+                .activeElement as HTMLElement;
+            let shouldFocus = false;
+            try {
+                // Browsers without support for the `:focus-visible`
+                // selector will throw on the following test (Safari, older things).
+                // Some won't throw, but will be focusing item rather than the menu and
+                // will rely on the polyfill to know whether focus is "visible" or not.
+                shouldFocus =
+                    activeElement.matches(':focus-visible') ||
+                    activeElement.matches('.focus-visible');
+            } catch (error) {
+                shouldFocus = activeElement.matches('.focus-visible');
+            }
+            this.focused = shouldFocus;
+        }
+    }
+
     public onHelperFocus(): void {
         // set focused to true here instead of onButtonFocus so clicks don't flash a focus outline
         this.focused = true;
@@ -181,6 +203,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     protected onKeydown = (event: KeyboardEvent): void => {
+        this.focused = true;
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp') {
             return;
         }
@@ -236,6 +259,10 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.open = false;
     }
 
+    public overlayCloseCallback = (): void => {
+        this.open = false;
+    };
+
     protected onOverlayClosed(): void {
         this.close();
         if (this.restoreChildren) {
@@ -290,7 +317,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             },
             { once: true }
         );
-        this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
+        this.closeOverlay = await Picker.openOverlay(this, 'modal', popover, {
             placement: this.placement,
             receivesFocus: 'auto',
         });
@@ -406,7 +433,11 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected get renderPopover(): TemplateResult {
         return html`
-            <sp-popover id="popover" @sp-overlay-closed=${this.onOverlayClosed}>
+            <sp-popover
+                id="popover"
+                @sp-overlay-closed=${this.onOverlayClosed}
+                .overlayCloseCallback=${this.overlayCloseCallback}
+            >
                 <sp-menu
                     id="menu"
                     role="${this.listRole}"
@@ -546,6 +577,7 @@ export class Picker extends PickerBase {
 
     protected onKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
+        this.focused = true;
         if (!code.startsWith('Arrow') || this.readonly) {
             return;
         }
