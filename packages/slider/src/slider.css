@@ -23,8 +23,8 @@ governing permissions and limitations under the License.
     outline-width: 0;
 }
 
-:host {
-    touch-action: pan-y;
+.track {
+    touch-action: none;
 }
 
 .not-exact.ticks {
