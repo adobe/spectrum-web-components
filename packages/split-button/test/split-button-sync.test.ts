@@ -26,8 +26,9 @@ import splitButtonDefault, {
     more,
 } from '../stories/split-button-cta.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
-import { arrowDownEvent } from '../../../test/testing-helpers.js';
 import { TemplateResult } from '@spectrum-web-components/base';
+import { sendKeys } from '@web/test-runner-commands';
+import type { Button } from '@spectrum-web-components/button';
 
 // wrap in div method
 
@@ -201,6 +202,7 @@ describe('Splitbutton', () => {
         expect(el.open).to.be.false;
         expect(el.selectedItem?.itemText).to.equal('Option 1');
     });
+
     it('passes click events as [type="field"]', async () => {
         const firstItemSpy = spy();
         const secondItemSpy = spy();
@@ -215,7 +217,6 @@ describe('Splitbutton', () => {
             )
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
-
         await elementUpdated(el);
 
         expect(el.selectedItem?.itemText).to.equal('Option 1');
@@ -224,8 +225,7 @@ describe('Splitbutton', () => {
         const item1 = el.querySelector('sp-menu-item:nth-child(1)') as MenuItem;
         const item2 = el.querySelector('sp-menu-item:nth-child(2)') as MenuItem;
         const item3 = el.querySelector('sp-menu-item:nth-child(3)') as MenuItem;
-        const root = el.shadowRoot ? el.shadowRoot : el;
-        const main = root.querySelector('#button') as HTMLButtonElement;
+        const main = el.button;
 
         main.click();
 
@@ -234,7 +234,7 @@ describe('Splitbutton', () => {
         expect(firstItemSpy.called, 'first called').to.be.true;
         expect(firstItemSpy.calledOnce, 'first calledOnce').to.be.true;
 
-        const trigger = root.querySelector('.trigger') as HTMLButtonElement;
+        const trigger = (el as unknown as { trigger: Button }).trigger;
         let opened = oneEvent(el, 'sp-opened');
         trigger.click();
         await opened;
@@ -254,7 +254,6 @@ describe('Splitbutton', () => {
         expect(thirdItemSpy.calledOnce, 'third calledOnce').to.be.true;
 
         main.click();
-
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
@@ -263,9 +262,13 @@ describe('Splitbutton', () => {
         expect(thirdItemSpy.callCount, 'third callCount').to.equal(2);
         expect(thirdItemSpy.calledTwice, 'third calledTwice').to.be.true;
 
-        trigger.focus();
+        await sendKeys({
+            press: 'Tab',
+        });
         opened = oneEvent(el, 'sp-opened');
-        trigger.dispatchEvent(arrowDownEvent);
+        sendKeys({
+            press: 'ArrowDown',
+        });
         await opened;
 
         await elementUpdated(el);

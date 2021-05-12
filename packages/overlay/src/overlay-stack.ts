@@ -391,83 +391,98 @@ export class OverlayStack {
         }
     }
 
+    private manageFocusAfterCloseWhenOverlaysRemain(): void {
+        const topOverlay = this.overlays[this.overlays.length - 1];
+        topOverlay.feature();
+        // Push focus in the the next remaining overlay as needed when a `type="modal"` overlay exists.
+        if (topOverlay.interaction === 'modal' || topOverlay.hasModalRoot) {
+            topOverlay.focus();
+        } else {
+            this.stopTabTrapping();
+        }
+    }
+
+    private manageFocusAfterCloseWhenLastOverlay(overlay: ActiveOverlay): void {
+        this.stopTabTrapping();
+        const isModal = overlay.interaction === 'modal';
+        const isReplace = overlay.interaction === 'replace';
+        const isInline = overlay.interaction === 'inline';
+        const isTabbingAwayFromInlineOrReplace =
+            (isReplace || isInline) && !overlay.tabbingAway;
+        overlay.tabbingAway = false;
+        if (!isModal && !isTabbingAwayFromInlineOrReplace) {
+            return;
+        }
+        // Manage post closure focus when needed.
+        const overlayRoot = overlay.overlayContent.getRootNode() as ShadowRoot;
+        const overlayContentActiveElement = overlayRoot.activeElement;
+        let triggerRoot: ShadowRoot;
+        let triggerActiveElement: Element | null;
+        const contentContainsActiveElement = (): boolean =>
+            overlay.overlayContent.contains(overlayContentActiveElement);
+        const triggerRootContainsActiveElement = (): boolean => {
+            triggerRoot = overlay.trigger.getRootNode() as ShadowRoot;
+            triggerActiveElement = triggerRoot.activeElement;
+            return triggerRoot.contains(triggerActiveElement);
+        };
+        const triggerHostIsActiveElement = (): boolean =>
+            triggerRoot.host && triggerRoot.host === triggerActiveElement;
+        // Return focus to the trigger as long as the user hasn't actively focused
+        // something outside of the current overlay interface; trigger, root, host.
+        if (
+            isModal ||
+            contentContainsActiveElement() ||
+            triggerRootContainsActiveElement() ||
+            triggerHostIsActiveElement()
+        ) {
+            overlay.trigger.focus();
+        }
+    }
+
     private async hideAndCloseOverlay(
         overlay?: ActiveOverlay,
         animated?: boolean
     ): Promise<void> {
-        if (overlay) {
-            await overlay.hide(animated);
-            const contentWithLifecycle =
-                overlay.overlayContent as unknown as ManagedOverlayContent;
-            if (typeof contentWithLifecycle.open !== 'undefined') {
-                contentWithLifecycle.open = false;
-            }
-            if (contentWithLifecycle.overlayCloseCallback) {
-                const { trigger } = overlay;
-                contentWithLifecycle.overlayCloseCallback({ trigger });
-            }
-            if (overlay.state != 'dispose') return;
-
-            const index = this.overlays.indexOf(overlay);
-            if (index >= 0) {
-                this.overlays.splice(index, 1);
-            }
-            if (this.overlays.length) {
-                const topOverlay = this.overlays[this.overlays.length - 1];
-                topOverlay.feature();
-                if (
-                    topOverlay.interaction === 'modal' ||
-                    topOverlay.hasModalRoot
-                ) {
-                    topOverlay.focus();
-                } else {
-                    this.stopTabTrapping();
-                }
-            } else {
-                this.stopTabTrapping();
-                if (
-                    overlay.interaction === 'modal' ||
-                    ((overlay.interaction === 'replace' ||
-                        overlay.interaction === 'inline') &&
-                        !overlay.tabbingAway)
-                ) {
-                    const overlayRoot =
-                        overlay.overlayContent.getRootNode() as ShadowRoot;
-                    const overlayContentActiveElement =
-                        overlayRoot.activeElement;
-                    const triggerRoot =
-                        overlay.trigger.getRootNode() as ShadowRoot;
-                    const triggerActiveElement = triggerRoot.activeElement;
-                    if (
-                        overlay.overlayContent.contains(
-                            overlayContentActiveElement
-                        ) ||
-                        overlay.trigger
-                            .getRootNode()
-                            .contains(triggerActiveElement) ||
-                        (triggerRoot.host &&
-                            triggerRoot.host === triggerActiveElement)
-                    ) {
-                        overlay.trigger.focus();
-                    }
-                }
-                overlay.tabbingAway = false;
-            }
-
-            overlay.remove();
-            overlay.dispose();
-
-            overlay.trigger.dispatchEvent(
-                new CustomEvent<OverlayOpenCloseDetail>('sp-closed', {
-                    bubbles: true,
-                    composed: true,
-                    cancelable: true,
-                    detail: {
-                        interaction: overlay.interaction,
-                    },
-                })
-            );
+        if (!overlay) {
+            return;
         }
+        await overlay.hide(animated);
+        const contentWithLifecycle =
+            overlay.overlayContent as unknown as ManagedOverlayContent;
+        if (typeof contentWithLifecycle.open !== 'undefined') {
+            contentWithLifecycle.open = false;
+        }
+        if (contentWithLifecycle.overlayCloseCallback) {
+            const { trigger } = overlay;
+            contentWithLifecycle.overlayCloseCallback({ trigger });
+        }
+
+        if (overlay.state != 'dispose') return;
+
+        const index = this.overlays.indexOf(overlay);
+        if (index >= 0) {
+            this.overlays.splice(index, 1);
+        }
+
+        if (this.overlays.length) {
+            this.manageFocusAfterCloseWhenOverlaysRemain();
+        } else {
+            this.manageFocusAfterCloseWhenLastOverlay(overlay);
+        }
+
+        overlay.remove();
+        overlay.dispose();
+
+        overlay.trigger.dispatchEvent(
+            new CustomEvent<OverlayOpenCloseDetail>('sp-closed', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                detail: {
+                    interaction: overlay.interaction,
+                },
+            })
+        );
     }
 
     private closeTopOverlay(): Promise<void> {
@@ -494,9 +509,7 @@ export class OverlayStack {
 
     private handleKeyUp = (event: KeyboardEvent): void => {
         if (event.code === 'Escape') {
-            const overlay = this.topOverlay as ActiveOverlay;
             this.closeTopOverlay();
-            overlay && overlay.trigger.focus();
         }
     };
 
