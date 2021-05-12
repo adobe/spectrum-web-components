@@ -18,6 +18,14 @@ governing permissions and limitations under the License.
         rgb(255, 0, 255) 83%, rgb(255, 0, 0) 100%;
 }
 
+:host(:not([vertical])) {
+    touch-action: pan-y;
+}
+
+:host([vertical]) {
+    touch-action: pan-x;
+}
+
 .gradient {
     overflow: hidden;
 }

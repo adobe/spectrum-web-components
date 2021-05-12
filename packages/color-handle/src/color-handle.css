@@ -11,3 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-color-handle.css';
+
+:host {
+    touch-action: none;
+}
