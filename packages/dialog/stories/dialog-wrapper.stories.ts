@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 import '../sp-dialog-wrapper.js';
 import { landscape } from './images.js';

@@ -48,7 +48,7 @@ const vrtHTML = ({ color, scale, dir, reduceMotion }) => (testFramework) =>
         </body>
     </html>`;
 
-export const vrtGroups = [];
+export let vrtGroups = [];
 const colors = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
@@ -64,13 +64,31 @@ colors.forEach((color) => {
             });
             vrtGroups.push({
                 name: `vrt-${color}-${scale}-${dir}`,
-                files: 'test/visual/test.js',
+                files: 'packages/*/test/*.test-vrt.js',
                 testRunnerHtml: testHTML,
                 browsers: [playwrightLauncher({ product: 'chromium' })],
             });
         });
     });
 });
+
+vrtGroups = [
+    ...vrtGroups,
+    ...packages.reduce((acc, pkg) => {
+        const skipPkgs = ['bundle', 'modal', 'styles'];
+        if (!skipPkgs.includes(pkg)) {
+            acc.push({
+                name: `vrt-${pkg}`,
+                files: `packages/${pkg}/test/*.test-vrt.js`,
+                testRunnerHtml: vrtHTML({
+                    reduceMotion: true,
+                }),
+                browsers: [playwrightLauncher({ product: 'chromium' })],
+            });
+        }
+        return acc;
+    }, []),
+];
 
 export const configuredVisualRegressionPlugin = () =>
     visualRegressionPlugin({

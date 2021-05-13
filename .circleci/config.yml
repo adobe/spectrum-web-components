@@ -43,7 +43,7 @@ commands:
                   name: Count baseline images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run: |
-                  yarn test:ci --config web-test-runner.config.ci.js --group vrt-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                  yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/

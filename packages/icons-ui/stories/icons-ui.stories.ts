@@ -29,6 +29,11 @@ export default {
         color: '#000000',
         size: 'm',
     },
+    swc_vrt: {
+        preload: async (): Promise<void> => {
+            await import('./icon-manifest.js');
+        },
+    },
 };
 
 interface Properties {
