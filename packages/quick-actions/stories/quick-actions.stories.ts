@@ -13,11 +13,10 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-quick-actions.js';
-import {
-    EditIcon,
-    CopyIcon,
-    DeleteIcon,
-} from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
 
 export default {
@@ -32,19 +31,13 @@ export const iconButtons = (): TemplateResult => {
         >
             <sp-quick-actions opened>
                 <sp-action-button quiet label="Edit">
-                    <sp-icon slot="icon">
-                        ${EditIcon({ hidden: true })}
-                    </sp-icon>
+                    <sp-icon-edit slot="icon"></sp-icon-edit>
                 </sp-action-button>
                 <sp-action-button quiet label="Copy">
-                    <sp-icon slot="icon">
-                        ${CopyIcon({ hidden: true })}
-                    </sp-icon>
+                    <sp-icon-copy slot="icon"></sp-icon-copy>
                 </sp-action-button>
                 <sp-action-button quiet label="Delete">
-                    <sp-icon slot="icon">
-                        ${DeleteIcon({ hidden: true })}
-                    </sp-icon>
+                    <sp-icon-delete slot="icon"></sp-icon-delete>
                 </sp-action-button>
             </sp-quick-actions>
         </div>

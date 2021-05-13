@@ -13,7 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-card.js';
 import { landscape, portrait } from './images';
-import { FileTxtIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-file-txt.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -253,9 +253,10 @@ export const smallHorizontal = (args: StoryArgs): TemplateResult => {
                 heading="Card Heading"
                 subheading="JPG"
             >
-                <sp-icon slot="preview" style="width: 36px; height: 36px;">
-                    ${FileTxtIcon({ hidden: false })}
-                </sp-icon>
+                <sp-icon-file-txt
+                    slot="preview"
+                    style="width: 36px; height: 36px;"
+                ></sp-icon-file-txt>
             </sp-card>
         </div>
         .

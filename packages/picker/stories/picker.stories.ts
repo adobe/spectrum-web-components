@@ -14,8 +14,8 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-picker.js';
 import { Picker } from '../';
-import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { states } from './states.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '@open-wc/lit-helpers';
