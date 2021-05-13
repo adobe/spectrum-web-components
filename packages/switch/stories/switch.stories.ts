@@ -64,7 +64,3 @@ export const disabledChecked = (): TemplateResult => {
         <sp-switch disabled checked>Switch</sp-switch>
     `;
 };
-
-disabledChecked.story = {
-    name: 'Disabled checked',
-};
