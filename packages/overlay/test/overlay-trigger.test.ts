@@ -19,6 +19,7 @@ import {
     nextFrame,
     elementUpdated,
     waitUntil,
+    oneEvent,
 } from '@open-wc/testing';
 
 import '../overlay-trigger.js';
@@ -427,7 +428,9 @@ describe('Overlay Trigger', () => {
             .false;
 
         expect(button).to.exist;
+        const outerOpen = oneEvent(button, 'sp-opened');
         button.click();
+        await outerOpen;
 
         await waitUntil(
             () => !(outerPopover.parentElement instanceof OverlayTrigger),
@@ -445,7 +448,9 @@ describe('Overlay Trigger', () => {
             '#inner-button'
         ) as HTMLElement;
 
+        const innerOpen = oneEvent(innerButton, 'sp-opened');
         innerButton.click();
+        await innerOpen;
 
         await waitUntil(
             () => !(innerPopover.parentElement instanceof OverlayTrigger),
@@ -455,7 +460,9 @@ describe('Overlay Trigger', () => {
         expect(isVisible(outerPopover), 'outer popover stays open').to.be.true;
         expect(isVisible(innerPopover), 'inner popover opens').to.be.true;
 
+        const innerClose = oneEvent(innerButton, 'sp-closed');
         pressEscape();
+        await innerClose;
 
         await waitUntil(
             () => innerPopover.parentElement instanceof OverlayTrigger,
