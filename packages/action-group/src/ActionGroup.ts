@@ -295,7 +295,7 @@ export class ActionGroup extends SpectrumElement {
             }
             default:
                 this.buttons.forEach((option) => {
-                    option.removeAttribute('role');
+                    option.setAttribute('role', 'button');
                     option.tabIndex = 0;
                 });
                 this.removeAttribute('role');

@@ -62,6 +62,9 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+        expect(el.getAttribute('aria-label')).to.equal('Default Group');
+        expect(el.hasAttribute('role')).to.be.false;
+        expect(el.children[0].getAttribute('role')).to.equal('button');
     });
     it('loads [selects="single"] action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(
@@ -77,6 +80,9 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+        expect(el.getAttribute('aria-label')).to.equal('Selects Single Group');
+        expect(el.getAttribute('role')).to.equal('radiogroup');
+        expect(el.children[0].getAttribute('role')).to.equal('radio');
     });
     it('loads [selects="single"] action-group w/ selection accessibly', async () => {
         const el = await fixture<ActionGroup>(
@@ -110,6 +116,11 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+        expect(el.getAttribute('aria-label')).to.equal(
+            'Selects Multiple Group'
+        );
+        expect(el.getAttribute('role')).to.equal('group');
+        expect(el.children[0].getAttribute('role')).to.equal('checkbox');
     });
     it('loads [selects="multiple"] action-group w/ selection accessibly', async () => {
         const el = await fixture<ActionGroup>(
