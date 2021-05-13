@@ -327,7 +327,11 @@ export class ActionGroup extends SpectrumElement {
         ) {
             this.manageChildren();
         }
-        if (changes.has('label')) {
+        // Update `aria-label` when `label` available or not first `updated`
+        if (
+            changes.has('label') &&
+            (this.label || typeof changes.get('label') !== 'undefined')
+        ) {
             if (this.label.length) {
                 this.setAttribute('aria-label', this.label);
             } else {
