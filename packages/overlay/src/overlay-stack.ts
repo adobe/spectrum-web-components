@@ -237,19 +237,7 @@ export class OverlayStack {
                     const { trigger } = activeOverlay;
                     contentWithLifecycle.overlayOpenCallback({ trigger });
                 }
-                if (details.receivesFocus === 'auto') {
-                    activeOverlay.focus();
-                }
-                details.trigger.dispatchEvent(
-                    new CustomEvent<OverlayOpenCloseDetail>('sp-opened', {
-                        bubbles: true,
-                        composed: true,
-                        cancelable: true,
-                        detail: {
-                            interaction: details.interaction,
-                        },
-                    })
-                );
+                // NOTE: ActiveOverlay will trigger sp-opened after focus has resolved
                 return false;
             }
         );
