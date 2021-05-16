@@ -11,13 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
-    SpectrumElement,
+    html,
     property,
-    internalProperty,
     PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 
 import { TreeViewItem } from './TreeViewItem.js';
@@ -34,7 +33,7 @@ export class TreeView extends SpectrumElement {
     }
 
     @property({ attribute: false })
-    public selectedChildren: TreeViewItem[] = [];
+    public selected!: Set<TreeViewItem>;
 
     @property({ type: Boolean, reflect: true })
     public standalone = false;
@@ -42,32 +41,74 @@ export class TreeView extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
-    @property({ type: Boolean, reflect: true, attribute: 'allow-multiple' })
-    public allowMultiple = false;
+    @property({ type: String })
+    public selects: undefined | 'single' | 'multiple';
 
-    @internalProperty()
-    public isRoot = false;
+    private isRoot: boolean = false;
+
+    private descendants!: TreeViewItem[];
+
+    private lastSelectedIndex: number = -1;
 
     constructor() {
         super();
-        this.addEventListener('toggled', this.manageSelected);
+        this.addEventListener('toggled', this.toggleSelected);
     }
 
-    private manageSelected(event: Event): void {
+    private toggleSelected(event: Event): void {
         if (!this.isRoot) return;
 
         event.stopPropagation();
+        if (this.selects === undefined) {
+            event.preventDefault();
+            return;
+        }
+
         const { target, detail } = event as CustomEvent;
         if (!target) return;
 
         const targetItem = target as TreeViewItem;
-        if (!this.allowMultiple || !detail.multiselect) {
-            this.selectedChildren = this.selectedChildren.filter((item) => {
-                if (item !== targetItem) item.selected = false;
-                return item.selected;
-            });
+        if (!detail.multiselect || this.selects !== 'multiple') {
+            this.selected = new Set(
+                [...this.selected].filter((item) => {
+                    if (item !== targetItem) item.selected = false;
+                    return item.selected;
+                })
+            );
+        } else if (detail.contiguous && this.lastSelectedIndex >= 0) {
+            this.selectContiguous(targetItem);
         }
-        if (targetItem.selected) this.selectedChildren.push(targetItem);
+        this.manageSelected(targetItem);
+        if (targetItem.selected) {
+            this.lastSelectedIndex = this.descendants.indexOf(targetItem);
+        }
+        this.dispatchEvent(
+            new CustomEvent('changed', {
+                bubbles: true,
+                composed: true,
+                cancelable: false,
+            })
+        );
+    }
+
+    protected manageSelected(targetItem: TreeViewItem): void {
+        if (targetItem.selected) {
+            this.selected.add(targetItem);
+        } else {
+            this.selected.delete(targetItem);
+        }
+    }
+
+    protected selectContiguous(target: TreeViewItem) {
+        const targetIndex = this.descendants.indexOf(target);
+        const start = Math.min(this.lastSelectedIndex, targetIndex);
+        const end = Math.max(this.lastSelectedIndex, targetIndex);
+        this.descendants.slice(start, end + 1).forEach((item) => {
+            if (!item.disabled) {
+                item.selected = target.selected;
+                this.manageSelected(item);
+            }
+        });
     }
 
     protected render(): TemplateResult {
@@ -80,14 +121,40 @@ export class TreeView extends SpectrumElement {
         super.firstUpdated(changes);
         this.isRoot = this.parentElement?.tagName !== 'SP-TREE-VIEW-ITEM';
         this.setAttribute('role', this.isRoot ? 'tree' : 'group');
+        if (this.isRoot && this.selects === 'multiple') {
+            this.setAttribute('aria-multiselectable', 'true');
+        }
+    }
+
+    protected manageChildren(): void {
+        const children = this.querySelectorAll(':scope > sp-tree-view-item');
+        children.forEach((child, index) => {
+            if (this.isRoot) {
+                child.setAttribute('aria-level', '1');
+            } else {
+                child.setAttribute(
+                    'aria-level',
+                    (
+                        Number(this.parentElement!.getAttribute('aria-level')) +
+                        1
+                    ).toString()
+                );
+            }
+            child.setAttribute('aria-posinset', (index + 1).toString());
+            child.setAttribute('aria-setsize', children.length.toString());
+        });
+
+        if (this.isRoot) {
+            this.descendants = [
+                ...this.querySelectorAll('sp-tree-view-item'),
+            ] as TreeViewItem[];
+            this.selected = new Set(
+                this.descendants.filter((d) => d.hasAttribute('selected'))
+            );
+        }
     }
 
     protected onSlotChange(): void {
-        if (this.isRoot) {
-            const selectedChildren = Array.prototype.slice.call(
-                document.querySelectorAll('[selected]')
-            );
-            this.selectedChildren = selectedChildren as TreeViewItem[];
-        }
+        this.manageChildren();
     }
 }

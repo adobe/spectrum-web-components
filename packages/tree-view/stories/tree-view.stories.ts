@@ -70,7 +70,7 @@ export const Default = (): TemplateResult => {
 
 export const selected = (): TemplateResult => {
     return html`
-        <sp-tree-view style="width: 250px;">
+        <sp-tree-view selects="single" style="width: 250px;">
             <sp-tree-view-item>Layer 1</sp-tree-view-item>
             <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
         </sp-tree-view>
@@ -79,7 +79,7 @@ export const selected = (): TemplateResult => {
 
 export const allowMultiple = (): TemplateResult => {
     return html`
-        <sp-tree-view allow-multiple style="width: 250px;">
+        <sp-tree-view selects="multiple" style="width: 250px;">
             <sp-tree-view-item>Layer 1</sp-tree-view-item>
             <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
             <sp-tree-view-item selected>Layer 3</sp-tree-view-item>
@@ -96,7 +96,7 @@ export const allowMultiple = (): TemplateResult => {
 
 export const quiet = (): TemplateResult => {
     return html`
-        <sp-tree-view quiet style="width: 250px;">
+        <sp-tree-view quiet selects="single" style="width: 250px;">
             <sp-tree-view-item>Layer 1</sp-tree-view-item>
             <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
         </sp-tree-view>
@@ -105,7 +105,7 @@ export const quiet = (): TemplateResult => {
 
 export const standalone = (): TemplateResult => {
     return html`
-        <sp-tree-view standalone style="width: 250px;">
+        <sp-tree-view standalone selects="single" style="width: 250px;">
             <sp-tree-view-item>Layer 1</sp-tree-view-item>
             <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
         </sp-tree-view>
@@ -114,7 +114,7 @@ export const standalone = (): TemplateResult => {
 
 export const standaloneQuiet = (): TemplateResult => {
     return html`
-        <sp-tree-view standalone quiet style="width: 250px;">
+        <sp-tree-view standalone quiet selects="single" style="width: 250px;">
             <sp-tree-view-item>Layer 1</sp-tree-view-item>
             <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
         </sp-tree-view>

@@ -103,7 +103,10 @@ export class TreeViewItem extends ObserveSlotPresence(
                 bubbles: true,
                 composed: true,
                 cancelable: true,
-                detail: { multiselect },
+                detail: {
+                    multiselect,
+                    contiguous: event.shiftKey,
+                },
             })
         );
         if (!applyDefault) this.selected = !this.selected;
@@ -147,7 +150,15 @@ export class TreeViewItem extends ObserveSlotPresence(
 
     protected updated(changed: PropertyValues): void {
         super.updated(changed);
-        this.setAttribute('aria-expanded', this.open ? 'true' : 'false');
+        if (this.hasChildren || this.canOpen) {
+            this.setAttribute('aria-expanded', this.open ? 'true' : 'false');
+        }
+        if (!this.disabled) {
+            this.setAttribute(
+                'aria-selected',
+                this.selected ? 'true' : 'false'
+            );
+        }
         if (changed.has('selected')) {
             if (this.thumbnail) {
                 this.thumbnail.selected = this.selected;
