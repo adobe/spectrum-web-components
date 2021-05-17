@@ -45,10 +45,6 @@
         "./src/tree-view-item.css.js": "./src/tree-view-item.css.js",
         "./src/tree-view-label.css.js": "./src/tree-view-label.css.js",
         "./src/tree-view.css.js": "./src/tree-view.css.js",
-        "./src/~spectrum-config.js": {
-            "development": "./src/~spectrum-config.dev.js",
-            "default": "./src/~spectrum-config.js"
-        },
         "./sp-tree-view-heading.js": {
             "development": "./sp-tree-view-heading.dev.js",
             "default": "./sp-tree-view-heading.js"
@@ -63,11 +59,12 @@
         }
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -86,7 +83,6 @@
     },
     "types": "src/index.d.ts",
     "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.js"
     ]
 }
