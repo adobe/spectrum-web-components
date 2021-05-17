@@ -11,3 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-tree-view-item-label.css';
+
+:host([hidden]) {
+    display: none;
+}
