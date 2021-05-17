@@ -113,11 +113,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-dimension-static-size-25)
         )
         solid transparent;
-    background-color: initial;
+    background-color: transparent;
 }
 .link:focus-visible:before {
-    /* .spectrum-TreeView--standalone .spectrum-TreeView-itemLink:before,
-   * .spectrum-TreeView-itemLink.focus-ring:before */
+    /* .spectrum-TreeView-itemLink.focus-ring:before */
     border-width: var(
         --spectrum-treeview-item-border-size,
         var(--spectrum-global-dimension-static-size-25)
@@ -162,12 +161,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) #indicator {
     /* [dir=rtl] .spectrum-TreeView-itemIndicator */
     margin-left: var(--spectrum-global-dimension-size-85);
+}
+:host([dir='rtl']) #indicator {
+    /* [dir=rtl] .spectrum-TreeView-itemIndicator */
     transform: matrix(-1, 0, 0, 1, 0, 0);
 }
 #indicator {
     /* .spectrum-TreeView-itemIndicator */
     display: block;
-    box-sizing: initial;
+    box-sizing: content-box;
     position: relative;
     z-index: 1;
     top: calc(-1 * var(--spectrum-global-dimension-size-65));

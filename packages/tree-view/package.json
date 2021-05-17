@@ -46,7 +46,7 @@
         "@spectrum-web-components/base": "^0.4.3",
         "@spectrum-web-components/icons-ui": "^0.6.6",
         "@spectrum-web-components/shared": "^0.12.4",
-        "@spectrum-web-components/thumbnail": "^0.1.5",
+        "@spectrum-web-components/thumbnail": "^0.2.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

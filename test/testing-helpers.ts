@@ -48,6 +48,7 @@ const keyboardEvent = (
     });
 };
 export const shiftTabEvent = keyboardEvent('Tab', { shiftKey: true });
+export const shiftSpaceEvent = keyboardEvent('Space', { shiftKey: true });
 export const shiftEvent = keyboardEvent('Shift', { shiftKey: true });
 export const enterEvent = keyboardEvent('Enter');
 export const escapeEvent = keyboardEvent('Escape');

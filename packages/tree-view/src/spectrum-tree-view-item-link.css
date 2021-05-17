@@ -10,9 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.has-thumbnail,
+.has-thumbnail {
+    /* .spectrum-TreeView--thumbnail .spectrum-TreeView-itemLink */
+    height: var(--spectrum-treeview-item-height-layers);
+}
 .has-thumbnail:before {
-    /* .spectrum-TreeView--thumbnail .spectrum-TreeView-itemLink,
-   * .spectrum-TreeView--thumbnail .spectrum-TreeView-itemLink:before */
+    /* .spectrum-TreeView--thumbnail .spectrum-TreeView-itemLink:before */
     height: var(--spectrum-treeview-item-height-layers);
 }

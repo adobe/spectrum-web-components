@@ -70,16 +70,67 @@ export const Default = (): TemplateResult => {
 
 export const selected = (): TemplateResult => {
     return html`
-        <sp-tree-view style="width: 250px;">
+        <sp-tree-view selects="single" style="width: 250px;">
             <sp-tree-view-item>Layer 1</sp-tree-view-item>
             <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
         </sp-tree-view>
     `;
 };
 
+export const selectsSingle = (): TemplateResult => {
+    return html`
+        <sp-tree-view selects="single" style="width: 250px;">
+            <sp-tree-view-item>Layer 1</sp-tree-view-item>
+            <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
+            <sp-tree-view-item>Layer 3</sp-tree-view-item>
+            <sp-tree-view-item>
+                Group 1
+                <sp-tree-view slot="children">
+                    <sp-tree-view-item>Layer 2</sp-tree-view-item>
+                    <sp-tree-view-item>Layer 3</sp-tree-view-item>
+                </sp-tree-view>
+            </sp-tree-view-item>
+        </sp-tree-view>
+    `;
+};
+
+export const selectsMultiple = (): TemplateResult => {
+    return html`
+        <sp-tree-view selects="multiple" style="width: 250px;">
+            <sp-tree-view-item>Layer 1</sp-tree-view-item>
+            <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
+            <sp-tree-view-item selected>Layer 3</sp-tree-view-item>
+            <sp-tree-view-item open>
+                Group 1
+                <sp-tree-view slot="children">
+                    <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
+                    <sp-tree-view-item>Layer 3</sp-tree-view-item>
+                </sp-tree-view>
+            </sp-tree-view-item>
+        </sp-tree-view>
+    `;
+};
+
+export const manageTabIndex = (): TemplateResult => {
+    return html`
+        <sp-tree-view manage-tab-index selects="single" style="width: 250px;">
+            <sp-tree-view-item>Layer 1</sp-tree-view-item>
+            <sp-tree-view-item>Layer 2</sp-tree-view-item>
+            <sp-tree-view-item selected>Layer 3</sp-tree-view-item>
+            <sp-tree-view-item open>
+                Group 1
+                <sp-tree-view slot="children">
+                    <sp-tree-view-item>Layer 2</sp-tree-view-item>
+                    <sp-tree-view-item>Layer 3</sp-tree-view-item>
+                </sp-tree-view>
+            </sp-tree-view-item>
+        </sp-tree-view>
+    `;
+};
+
 export const quiet = (): TemplateResult => {
     return html`
-        <sp-tree-view quiet style="width: 250px;">
+        <sp-tree-view quiet selects="single" style="width: 250px;">
             <sp-tree-view-item>Layer 1</sp-tree-view-item>
             <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
         </sp-tree-view>
@@ -88,7 +139,7 @@ export const quiet = (): TemplateResult => {
 
 export const standalone = (): TemplateResult => {
     return html`
-        <sp-tree-view standalone style="width: 250px;">
+        <sp-tree-view standalone selects="single" style="width: 250px;">
             <sp-tree-view-item>Layer 1</sp-tree-view-item>
             <sp-tree-view-item selected>Layer 2</sp-tree-view-item>
         </sp-tree-view>

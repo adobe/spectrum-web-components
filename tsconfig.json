@@ -18,7 +18,7 @@
         "strict": true,
         "sourceMap": true,
         "target": "es2017",
-        "types": ["chai", "sinon", "webpack-env", "node"]
+        "types": ["chai", "sinon", "webpack-env", "node", "mocha"]
     },
     "include": ["./global.d.ts"]
 }
