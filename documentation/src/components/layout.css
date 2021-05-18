@@ -41,7 +41,7 @@ sp-theme {
     display: flex;
     flex-direction: row;
     flex: 1 1 auto;
-    height: 100%;
+    height: calc(100% - var(--spectrum-global-dimension-size-600) - 1px);
     color: var(--spectrum-global-color-gray-800);
 }
 
