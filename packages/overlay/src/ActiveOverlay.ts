@@ -170,11 +170,11 @@ export class ActiveOverlay extends SpectrumElement {
         ) as HTMLElement;
         if (firstFocusable) {
             firstFocusable.focus();
-            this.removeAttribute('tabindex');
             /* c8 ignore next 3 */
         } else {
             super.focus();
         }
+        this.removeAttribute('tabindex');
     }
 
     private get hasTheme(): boolean {
@@ -205,7 +205,7 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     public feature(): void {
-        this.tabIndex = 0;
+        this.tabIndex = -1;
         const parentOverlay = this.trigger.closest('active-overlay');
         const parentIsModal = parentOverlay && parentOverlay.slot === 'open';
         // If an overlay it triggered from within a "modal" overlay, it needs to continue
