@@ -38,6 +38,7 @@ export * from '@spectrum-web-components/illustrated-message';
 export * from '@spectrum-web-components/link';
 export * from '@spectrum-web-components/menu';
 export * from '@spectrum-web-components/meter';
+export * from '@spectrum-web-components/number-field';
 export * from '@spectrum-web-components/overlay';
 export * from '@spectrum-web-components/picker';
 export * from '@spectrum-web-components/popover';

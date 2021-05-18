@@ -20,14 +20,27 @@ import {
     vrtGroups,
     configuredVisualRegressionPlugin,
 } from './web-test-runner.utils.js';
+import { fromRollup } from '@web/dev-server-rollup';
+import rollupJson from '@rollup/plugin-json';
+import rollupCommonjs from '@rollup/plugin-commonjs';
+
+const commonjs = fromRollup(rollupCommonjs);
+const json = fromRollup(rollupJson);
 
 export default {
     plugins: [
+        commonjs({
+            include: ['**/node_modules/@formatjs/intl-numberformat/**/*.js'],
+        }),
         sendKeysPlugin(),
         sendMousePlugin(),
         a11ySnapshotPlugin(),
         configuredVisualRegressionPlugin(),
+        json({}),
     ],
+    mimeTypes: {
+        '**/*.json': 'js',
+    },
     nodeResolve: true,
     concurrency: 4,
     concurrentBrowsers: 1,

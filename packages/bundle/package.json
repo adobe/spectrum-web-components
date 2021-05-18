@@ -76,6 +76,7 @@
         "@spectrum-web-components/link": "^0.8.5",
         "@spectrum-web-components/menu": "^0.8.5",
         "@spectrum-web-components/meter": "^0.3.7",
+        "@spectrum-web-components/number-field": "^0.0.1",
         "@spectrum-web-components/overlay": "^0.11.5",
         "@spectrum-web-components/picker": "^0.4.5",
         "@spectrum-web-components/popover": "^0.9.7",

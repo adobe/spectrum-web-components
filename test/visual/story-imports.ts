@@ -59,6 +59,7 @@ export * as MenuItemStories from '../../packages/menu/stories/menu-item.stories.
 export * as MenuStories from '../../packages/menu/stories/menu.stories.js';
 export * as MeterSizesStories from '../../packages/meter/stories/meter-sizes.stories.js';
 export * as MeterStories from '../../packages/meter/stories/meter.stories.js';
+export * as NumberFieldStories from '../../packages/number-field/stories/number-field.stories.js';
 export * as OverlayStories from '../../packages/overlay/stories/overlay.stories.js';
 export * as PickerSizesStories from '../../packages/picker/stories/picker-sizes.stories.js';
 export * as PickerStories from '../../packages/picker/stories/picker.stories.js';

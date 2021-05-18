@@ -1,0 +1,106 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+@import './spectrum-number-field.css';
+
+sp-field-button {
+    --spectrum-dropdown-height: 100%;
+    --spectrum-dropdown-padding-x: 0;
+}
+
+.input {
+    font-variant-numeric: tabular-nums;
+}
+
+:host([hide-stepper]) .input {
+    border-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    );
+}
+
+:host([dir='ltr'][invalid]:not([hide-stepper])) .icon {
+    /* [dir=ltr] .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
+    right: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host([dir='rtl'][invalid]:not([hide-stepper])) .icon {
+    /* [dir=rtl] .spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
+    left: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host([dir='ltr'][valid]:not([hide-stepper])) .icon {
+    /* [dir=ltr] .spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
+    right: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host([dir='rtl'][valid]:not([hide-stepper])) .icon {
+    /* [dir=rtl] .spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
+    left: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host([dir='ltr'][quiet][invalid]:not([hide-stepper])) .icon {
+    /* [dir=ltr] .spectrum-Textfield--quiet.spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
+    right: var(--spectrum-stepper-button-width);
+}
+
+:host([dir='rtl'][quiet][invalid]:not([hide-stepper])) .icon {
+    /* [dir=rtl] .spectrum-Textfield--quiet.spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon */
+    left: var(--spectrum-stepper-button-width);
+}
+
+:host([dir='ltr'][quiet][valid]:not([hide-stepper])) .icon {
+    /* [dir=ltr] .spectrum-Textfield--quiet.spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
+    right: var(--spectrum-stepper-button-width);
+}
+:host([dir='rtl'][quiet][valid]:not([hide-stepper])) .icon {
+    /* [dir=rtl] .spectrum-Textfield--quiet.spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
+    left: var(--spectrum-stepper-button-width);
+}
+
+:host([dir='ltr']:not([hide-stepper])) .icon-workflow {
+    /* [dir=ltr] .spectrum-Textfield-icon */
+    left: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host([dir='rtl']:not([hide-stepper])) .icon-workflow {
+    /* [dir=rtl] .spectrum-Textfield-icon */
+    right: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-error-icon-margin-left)
+    );
+}
+
+:host([dir='ltr'][quiet]:not([hide-stepper])) .icon-workflow {
+    /* [dir=ltr] .spectrum-Textfield--quiet .spectrum-Textfield-icon */
+    left: var(--spectrum-stepper-button-width);
+}
+
+:host([dir='rtl'][quiet]:not([hide-stepper])) .icon-workflow {
+    /* [dir=rtl] .spectrum-Textfield--quiet .spectrum-Textfield-icon */
+    right: var(--spectrum-stepper-button-width);
+}
