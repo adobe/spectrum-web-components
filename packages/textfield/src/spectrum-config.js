@@ -18,13 +18,11 @@ const config = {
             host: {
                 selector: '.spectrum-Textfield',
             },
-            ids: [
+            classes: [
                 {
                     selector: '.spectrum-Textfield-input',
                     name: 'input',
                 },
-            ],
-            classes: [
                 {
                     selector: '.spectrum-Textfield-validationIcon',
                     name: 'icon',

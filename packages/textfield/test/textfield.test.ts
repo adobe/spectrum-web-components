@@ -619,11 +619,9 @@ describe('Textfield', () => {
         await elementUpdated(el);
         expect(el.value).to.equal('');
 
-        const inputElement = (el.shadowRoot
-            ? el.shadowRoot.querySelector('#input')
-            : el.querySelector('#input')) as HTMLInputElement;
+        const inputElement = el.focusElement;
 
-        inputElement.value = 'asdf';
+        el.focusElement.value = 'asdf';
         inputElement.dispatchEvent(new InputEvent('input'));
 
         await elementUpdated(el);
