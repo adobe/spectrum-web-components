@@ -9,7 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export default function (plop) {
+
+const { execSync } = require('child_process');
+
+module.exports = function (plop) {
     // name of custom element tag
     plop.setPartial('tagnamePartial', 'sp-{{name}}');
     // name of LitElement class
@@ -34,13 +37,26 @@ export default function (plop) {
         const capitalized = camel.charAt(0).toUpperCase() + camel.substring(1);
         return capitalized;
     });
+    plop.setActionType('install deps', function (answers) {
+        execSync(
+            `cd ../../ && yarn lerna add @spectrum-web-components/base --scope=@spectrum-web-components/${answers.name} --no-bootstrap`
+        );
+        execSync(
+            `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@spectrum-web-components/${answers.name} --dev --no-bootstrap`
+        );
+    });
     plop.setGenerator('component', {
         description: 'application controller logic',
         prompts: [
             {
                 type: 'input',
                 name: 'name',
-                message: 'component name please',
+                message: 'SWC package name please',
+            },
+            {
+                type: 'input',
+                name: 'spectrum',
+                message: 'Spectrum CSS package name please',
             },
         ],
         actions: [
@@ -99,6 +115,9 @@ export default function (plop) {
                 path: '../../packages/{{name}}/package.json',
                 templateFile: 'plop-templates/package.json.hbs',
             },
+            {
+                type: 'install deps',
+            },
         ],
     });
-}
+};
