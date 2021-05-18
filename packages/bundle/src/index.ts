@@ -60,4 +60,5 @@ export * from '@spectrum-web-components/theme';
 export * from '@spectrum-web-components/thumbnail';
 export * from '@spectrum-web-components/toast';
 export * from '@spectrum-web-components/tooltip';
+export * from '@spectrum-web-components/tray';
 export * from '@spectrum-web-components/underlay';

@@ -75,4 +75,5 @@ import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/tray/sp-tray.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';

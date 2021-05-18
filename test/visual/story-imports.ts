@@ -91,4 +91,5 @@ export * as ThumbnailStories from '../../packages/thumbnail/stories/thumbnail.st
 export * as ToastStories from '../../packages/toast/stories/toast.stories.js';
 export * as TooltipStories from '../../packages/tooltip/stories/tooltip.stories.js';
 export * as TopNavStories from '../../packages/top-nav/stories/top-nav.stories.js';
+export * as TrayStories from '../../packages/tray/stories/tray.stories.js';
 export * as UnderlayStories from '../../packages/underlay/stories/underlay.stories.js';

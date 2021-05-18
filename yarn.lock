@@ -3473,6 +3473,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-3.0.3.tgz#26b8ca3b3d30e29630244d85eb4fc11d0c841281"
   integrity sha512-ztRF7WW1FzyNavXBRc+80z67UoOrY9wl3cMYsVD3MpDnyxdzP8cjza1pCcolKBaFqRTcQKkxKw3GWtGICRKR5A==
 
+"@spectrum-css/tray@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-1.0.3.tgz#5a1071a561cb339f9f93422c655dccce54201002"
+  integrity sha512-Sw7FUw7bDbSDaEMjnJulZIefFQ2GI+JY+h1Jh6vEgLRzMNAwuGHg2Zjy/B3Znah4NhkEN1033VyEfiGQMxtf3A==
+
 "@spectrum-css/typography@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-3.0.2.tgz#ea3ca0a60e18064527819d48c8c4364cab4fcd38"
