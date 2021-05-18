@@ -17,6 +17,11 @@ governing permissions and limitations under the License.
     flex-direction: row;
 }
 
+:host([disabled]) {
+    pointer-events: none;
+    cursor: auto;
+}
+
 :host([dir]) {
     /* spectrum-css uses "-webkit-appearance: button" to workaround an
      * iOS and Safari issue. However, it results in incorrect styling
