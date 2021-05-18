@@ -331,7 +331,7 @@ export class LayoutElement extends SpectrumElement {
 
     connectedCallback() {
         super.connectedCallback();
-        import('./code-example');
+        import('./code-example.js');
         isNarrowMediaQuery.addEventListener(
             'change',
             this.handleMatchMediaChange

@@ -168,7 +168,7 @@ class ComponentElement extends RouteComponent {
     }
 
     loadDocs() {
-        import('../../components').then((module) => {
+        import('../../components/index.js').then((module) => {
             ComponentDocs = module.ComponentDocs;
             this.docsLoaded = true;
             this.requestUpdate();
