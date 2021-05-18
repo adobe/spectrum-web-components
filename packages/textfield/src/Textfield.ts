@@ -29,7 +29,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
-export class Textfield extends Focusable {
+export class TextfieldBase extends Focusable {
     public static get styles(): CSSResultArray {
         return [textfieldStyles, checkmarkStyles];
     }
@@ -40,8 +40,8 @@ export class Textfield extends Focusable {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    @query('#input')
-    private inputElement!: HTMLInputElement | HTMLTextAreaElement;
+    @query('.input')
+    protected inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
@@ -74,7 +74,20 @@ export class Textfield extends Focusable {
     public valid = false;
 
     @property({ type: String })
-    public value = '';
+    public set value(value: string | number) {
+        if (value === this.value) {
+            return;
+        }
+        const oldValue = this._value;
+        this._value = value;
+        this.requestUpdate('value', oldValue);
+    }
+
+    public get value(): string | number {
+        return this._value;
+    }
+
+    protected _value: string | number = '';
 
     @property({ type: Boolean, reflect: true })
     public quiet = false;
@@ -98,7 +111,7 @@ export class Textfield extends Focusable {
                 const selectionStart = this.inputElement
                     .selectionStart as number;
                 const nextSelectStart = selectionStart - 1;
-                this.inputElement.value = this.value;
+                this.inputElement.value = this.value.toString();
                 this.inputElement.setSelectionRange(
                     nextSelectStart,
                     nextSelectStart
@@ -122,11 +135,11 @@ export class Textfield extends Focusable {
         );
     }
 
-    private onFocus(): void {
+    protected onFocus(): void {
         this.focused = true;
     }
 
-    private onBlur(): void {
+    protected onBlur(): void {
         this.focused = false;
     }
 
@@ -146,6 +159,10 @@ export class Textfield extends Focusable {
         return nothing;
     }
 
+    protected get displayValue(): string {
+        return this.value.toString();
+    }
+
     private get renderMultiline(): TemplateResult {
         return html`
             ${this.grows && !this.quiet
@@ -157,7 +174,7 @@ export class Textfield extends Focusable {
             <textarea
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
-                id="input"
+                class="input"
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
                 )}
@@ -166,7 +183,7 @@ export class Textfield extends Focusable {
                 )}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
-                .value=${this.value}
+                .value=${this.displayValue}
                 @change=${this.onChange}
                 @input=${this.onInput}
                 @focus=${this.onFocus}
@@ -186,7 +203,7 @@ export class Textfield extends Focusable {
                 type="text"
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
-                id="input"
+                class="input"
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
                 )}
@@ -195,7 +212,7 @@ export class Textfield extends Focusable {
                 )}
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
-                .value=${live(this.value)}
+                .value=${live(this.displayValue)}
                 @change=${this.onChange}
                 @input=${this.onInput}
                 @focus=${this.onFocus}
@@ -229,14 +246,33 @@ export class Textfield extends Focusable {
         if (this.required || (this.value && this.pattern)) {
             if ((this.disabled || this.multiline) && this.pattern) {
                 const regex = new RegExp(`^${this.pattern}$`, 'u');
-                validity = regex.test(this.value);
+                validity = regex.test(this.value.toString());
             }
             if (typeof this.minlength !== 'undefined') {
-                validity = validity && this.value.length > this.minlength;
+                validity =
+                    validity && this.value.toString().length > this.minlength;
             }
             this.valid = validity;
             this.invalid = !validity;
         }
         return validity;
     }
+}
+
+export class Textfield extends TextfieldBase {
+    @property({ type: String })
+    public set value(value: string) {
+        if (value === this.value) {
+            return;
+        }
+        const oldValue = this._value;
+        this._value = value;
+        this.requestUpdate('value', oldValue);
+    }
+
+    public get value(): string {
+        return this._value;
+    }
+
+    protected _value = '';
 }
