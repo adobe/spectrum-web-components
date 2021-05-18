@@ -61,6 +61,7 @@
         { "path": "../thumbnail" },
         { "path": "../toast" },
         { "path": "../tooltip" },
+        { "path": "../tray" },
         { "path": "../underlay" }
     ]
 }
