@@ -39,6 +39,7 @@
         { "path": "../link" },
         { "path": "../menu" },
         { "path": "../meter" },
+        { "path": "../number-field" },
         { "path": "../picker" },
         { "path": "../popover" },
         { "path": "../progress-bar" },

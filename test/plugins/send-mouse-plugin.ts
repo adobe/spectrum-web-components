@@ -14,6 +14,7 @@ import type { Page } from 'playwright';
 type Step = {
     type: 'move' | 'down' | 'up' | 'click';
     position?: [number, number];
+    options?: { button?: 'left' | 'right' | 'middle' };
 };
 
 export function sendMousePlugin() {
@@ -36,13 +37,17 @@ export function sendMousePlugin() {
                 if (session.browser.type === 'playwright') {
                     const page = session.browser.getPage(session.id);
                     for (const step of payload.steps) {
+                        step.options = step.options || {};
                         if (step.position) {
                             await page.mouse[step.type](
                                 step.position[0],
-                                step.position[1]
+                                step.position[1],
+                                step.options
                             );
                         } else {
-                            await page.mouse[step.type as 'down' | 'up']();
+                            await page.mouse[step.type as 'down' | 'up'](
+                                step.options
+                            );
                         }
                     }
                     return true;

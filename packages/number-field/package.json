@@ -1,0 +1,60 @@
+{
+    "name": "@spectrum-web-components/number-field",
+    "version": "0.0.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "Web component implementation of a Spectrum design NumberField",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/number-field"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/number-field",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js",
+        "./src/*": "./src/*.js",
+        "./package.json": "./package.json",
+        "./sp-number-field": "./sp-number-field.js",
+        "./sp-number-field.js": "./sp-number-field.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@internationalized/number": "^3.0.0",
+        "@spectrum-web-components/base": "^0.4.3",
+        "tslib": "^2.0.0"
+    },
+    "devDependencies": {
+        "@formatjs/intl-numberformat": "^7.1.0",
+        "@spectrum-css/stepper": "^3.0.3"
+    },
+    "types": "./src/index.d.ts",
+    "customElementsManifest": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ]
+}
