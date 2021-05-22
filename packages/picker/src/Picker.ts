@@ -355,6 +355,8 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
+    // TODO: switch sp-menu to `selects="inherit"`. This will involve working through
+    // issues around reparenting, selection, & focus.
     protected get renderPopover(): TemplateResult {
         return html`
             <sp-popover
@@ -365,7 +367,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             >
                 <sp-menu
                     id="menu"
-                    selects="single"
+                    selects="inherit"
                     role="${this.listRole}"
                 ></sp-menu>
             </sp-popover>

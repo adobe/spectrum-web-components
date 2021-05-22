@@ -92,26 +92,41 @@ export class MenuItem extends ActionButton {
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (this.getAttribute('role') === 'option' && changes.has('selected')) {
-            this.setAttribute(
-                'aria-selected',
-                this.selected ? 'true' : 'false'
-            );
+        const role = this.getAttribute('role');
+        if (changes.has('selected')) {
+            if (role === 'option') {
+                this.setAttribute(
+                    'aria-selected',
+                    this.selected ? 'true' : 'false'
+                );
+            } else if (
+                role === 'menuitemcheckbox' ||
+                role === 'menuitemradio'
+            ) {
+                this.setAttribute(
+                    'aria-checked',
+                    this.selected ? 'true' : 'false'
+                );
+            }
         }
+    }
+
+    public updateRole(): void {
+        const queryRoleEvent = new CustomEvent('sp-menu-item-query-role', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                role: '',
+            },
+        });
+        this.dispatchEvent(queryRoleEvent);
+        this.setAttribute('role', queryRoleEvent.detail.role || 'menuitem');
     }
 
     public connectedCallback(): void {
         super.connectedCallback();
         if (!this.hasAttribute('role')) {
-            const queryRoleEvent = new CustomEvent('sp-menu-item-query-role', {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    role: '',
-                },
-            });
-            this.dispatchEvent(queryRoleEvent);
-            this.setAttribute('role', queryRoleEvent.detail.role || 'menuitem');
+            this.updateRole();
         }
     }
 }

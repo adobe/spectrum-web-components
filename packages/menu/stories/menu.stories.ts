@@ -199,3 +199,41 @@ export const MenuGroupSelects = (): TemplateResult => {
         </sp-popover>
     `;
 };
+
+export const MenuGroupSelectsMultiple = (): TemplateResult => {
+    return html`
+        <sp-popover open style="width: 200px;">
+            <sp-menu selects="multiple">
+                <sp-menu-group>
+                    <span slot="header">Minneapolis</span>
+                    <sp-menu-item>Camden</sp-menu-item>
+                    <sp-menu-item>Cedar Riverside</sp-menu-item>
+                    <sp-menu-item>Downtown</sp-menu-item>
+                    <sp-menu-item>Northeast Arts District</sp-menu-item>
+                    <sp-menu-item>Uptown</sp-menu-item>
+                </sp-menu-group>
+                <sp-menu-group>
+                    <span slot="header">St. Paul</span>
+                    <sp-menu-item>Lowertown</sp-menu-item>
+                    <sp-menu-item>Grand Ave</sp-menu-item>
+                </sp-menu-group>
+                <sp-menu-group selects="none">
+                    <span slot="header">San Francisco</span>
+                    <sp-menu-item>Financial District</sp-menu-item>
+                    <sp-menu-item>South of Market</sp-menu-item>
+                    <sp-menu-item>North Beach</sp-menu-item>
+                </sp-menu-group>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-group selects="single">
+                    <span slot="header">Oakland</span>
+                    <sp-menu-item>City Center</sp-menu-item>
+                    <sp-menu-item disabled>Jack London Square</sp-menu-item>
+                    <sp-menu-item selected>
+                        My best friend's mom's house in the burbs just off
+                        Silverado street
+                    </sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        </sp-popover>
+    `;
+};

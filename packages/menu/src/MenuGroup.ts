@@ -35,7 +35,7 @@ export class MenuGroup extends SpectrumElement {
     }
 
     @property({ type: String, reflect: true })
-    public selects: undefined | 'single' | 'multiple';
+    public selects: undefined | 'none' | 'single' | 'multiple';
 
     private instanceCount = MenuGroup.instances;
 
@@ -54,6 +54,18 @@ export class MenuGroup extends SpectrumElement {
         }
     }
 
+    // Menu defaults to no selection, while MenuGroup defaults to inherit.
+    private get menuSelects(): void | String {
+        switch (this.selects) {
+            case undefined:
+                return 'inherit';
+            case 'none':
+                return undefined;
+            default:
+                return this.selects;
+        }
+    }
+
     public render(): TemplateResult {
         const labelledby = `menu-heading-category-${this.instanceCount}`;
         return html`
@@ -61,7 +73,9 @@ export class MenuGroup extends SpectrumElement {
                 <slot name="header"></slot>
             </span>
             <sp-menu
-                selects=${ifDefined(this.selects ? this.selects : undefined)}
+                selects=${ifDefined(
+                    this.menuSelects ? this.menuSelects : undefined
+                )}
                 role=${this.menuRole}
             >
                 <slot></slot>
