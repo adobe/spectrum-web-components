@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.20.2...@spectrum-web-components/bundle@0.21.0) (2021-05-24)
+
+### Bug Fixes
+
+-   **tray:** add tray pattern ([0915fa5](https://github.com/adobe/spectrum-web-components/commit/0915fa5e3c7eecc1608ce3b706fbae01b3ee3608))
+
+### Features
+
+-   **number-field:** add number field pattern ([384ab34](https://github.com/adobe/spectrum-web-components/commit/384ab34d5aafe54e3206ff6802eb642c4df556c6))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+
 ## [0.20.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.20.1...@spectrum-web-components/bundle@0.20.2) (2021-05-12)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle

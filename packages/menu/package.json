@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/menu",
-    "version": "0.8.5",
+    "version": "0.8.6",
     "publishConfig": {
         "access": "public"
     },
@@ -49,11 +49,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.4.7",
+        "@spectrum-web-components/action-button": "^0.5.0",
         "@spectrum-web-components/base": "^0.4.3",
         "@spectrum-web-components/icon": "^0.9.6",
         "@spectrum-web-components/icons-ui": "^0.6.6",
-        "@spectrum-web-components/shared": "^0.12.3",
+        "@spectrum-web-components/shared": "^0.12.4",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

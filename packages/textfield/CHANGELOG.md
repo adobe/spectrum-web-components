@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.6...@spectrum-web-components/textfield@0.8.7) (2021-05-24)
+
+### Bug Fixes
+
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/adobe/spectrum-web-components/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+-   **textfield:** update for easier extensibility ([9deaf9e](https://github.com/adobe/spectrum-web-components/commit/9deaf9e4f5a476593378f8feaaae352fd8bb80d7))
+
 ## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.5...@spectrum-web-components/textfield@0.8.6) (2021-05-12)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/button",
-    "version": "0.13.7",
+    "version": "0.14.0",
     "publishConfig": {
         "access": "public"
     },
@@ -48,7 +48,7 @@
         "@spectrum-web-components/base": "^0.4.3",
         "@spectrum-web-components/icon": "^0.9.6",
         "@spectrum-web-components/icons-ui": "^0.6.6",
-        "@spectrum-web-components/shared": "^0.12.3",
+        "@spectrum-web-components/shared": "^0.12.4",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

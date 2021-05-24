@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.3...@spectrum-web-components/shared@0.12.4) (2021-05-24)
+
+### Bug Fixes
+
+-   no scroll update when managing elements outside of the tab order ([144c548](https://github.com/adobe/spectrum-web-components/commit/144c548d3eeeaec6054057f124e73bbb8928c73b))
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/adobe/spectrum-web-components/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+
 ## [0.12.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.2...@spectrum-web-components/shared@0.12.3) (2021-05-12)
 
 ### Bug Fixes

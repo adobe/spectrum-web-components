@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.0...@spectrum-web-components/sidenav@0.10.1) (2021-05-24)
+
+### Bug Fixes
+
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/adobe/spectrum-web-components/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+
 # [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.9.5...@spectrum-web-components/sidenav@0.10.0) (2021-05-12)
 
 ### Bug Fixes

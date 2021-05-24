@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.13.7...@spectrum-web-components/button@0.14.0) (2021-05-24)
+
+### Features
+
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+
 ## [0.13.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.13.6...@spectrum-web-components/button@0.13.7) (2021-05-12)
 
 ### Bug Fixes

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.4.7...@spectrum-web-components/action-button@0.5.0) (2021-05-24)
+
+### Bug Fixes
+
+-   **action-button:** ensure disabled buttons are not interactable ([b81c3ba](https://github.com/adobe/spectrum-web-components/commit/b81c3ba7961234ebfe83caec3e2b43d0d885cfbb))
+
+### Features
+
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+
 ## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.4.6...@spectrum-web-components/action-button@0.4.7) (2021-05-12)
 
 **Note:** Version bump only for package @spectrum-web-components/action-button

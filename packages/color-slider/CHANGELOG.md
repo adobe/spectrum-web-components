@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.1.4...@spectrum-web-components/color-slider@0.1.5) (2021-05-24)
+
+### Bug Fixes
+
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/adobe/spectrum-web-components/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+
 ## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.1.3...@spectrum-web-components/color-slider@0.1.4) (2021-05-12)
 
 ### Bug Fixes

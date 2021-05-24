@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.7...@spectrum-web-components/action-group@0.4.8) (2021-05-24)
+
+### Bug Fixes
+
+-   **action-group:** allow direct setting aria-label on first update ([84f7fdd](https://github.com/adobe/spectrum-web-components/commit/84f7fdd17145208055b685b6bdf3a6d2e986f21b))
+-   **action-group:** use the correct role for buttons when not selects ([0aae8ed](https://github.com/adobe/spectrum-web-components/commit/0aae8edcf582858c6dc0168942383ff9116bb319))
+
 ## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.6...@spectrum-web-components/action-group@0.4.7) (2021-05-12)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group

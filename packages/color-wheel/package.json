@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-wheel",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "publishConfig": {
         "access": "public"
     },
@@ -46,7 +46,7 @@
         "@ctrl/tinycolor": "^3.3.3",
         "@spectrum-web-components/base": "^0.4.3",
         "@spectrum-web-components/color-handle": "^0.1.4",
-        "@spectrum-web-components/shared": "^0.12.3",
+        "@spectrum-web-components/shared": "^0.12.4",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

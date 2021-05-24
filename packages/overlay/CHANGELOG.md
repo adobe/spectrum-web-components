@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.5...@spectrum-web-components/overlay@0.11.6) (2021-05-24)
+
+### Bug Fixes
+
+-   **overlay:** add overlay lifecycle methods to stack management ([9361527](https://github.com/adobe/spectrum-web-components/commit/9361527bc63896bcee2933d96b5021aa74386057))
+-   **overlay:** use tabindex=-1 but always remove it on open ([6047003](https://github.com/adobe/spectrum-web-components/commit/6047003eca58232f90a0c6b2ab0e5bd9fb678eb7))
+
 ## [0.11.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.4...@spectrum-web-components/overlay@0.11.5) (2021-05-12)
 
 ### Bug Fixes
