@@ -20,9 +20,9 @@ declare module '@popperjs/core/dist/esm/popper-lite.js' {
 }
 
 declare module '@popperjs/core/dist/esm/types.js' {
-    import { Instance } from '@popperjs/core/lib/types.js';
+    import { Instance, VirtualElement } from '@popperjs/core/lib/types.js';
 
-    export { Instance };
+    export { Instance, VirtualElement };
 }
 
 declare module '@popperjs/core/dist/esm/enums.js' {

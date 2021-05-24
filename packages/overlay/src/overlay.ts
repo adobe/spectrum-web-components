@@ -96,6 +96,7 @@ export class Overlay {
         placement = 'top',
         receivesFocus,
         notImmediatelyClosable,
+        virtualTrigger,
     }: OverlayOptions): Promise<boolean> {
         /* c8 ignore next */
         if (this.isOpen) return true;
@@ -140,6 +141,7 @@ export class Overlay {
             theme: queryThemeDetail,
             receivesFocus,
             notImmediatelyClosable,
+            virtualTrigger,
             ...overlayDetailQuery,
         });
         this.isOpen = true;

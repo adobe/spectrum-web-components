@@ -9,7 +9,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult, ifDefined } from '@spectrum-web-components/base';
-import { OverlayContentTypes, OverlayTrigger, Placement } from '../';
+import {
+    openOverlay,
+    OverlayContentTypes,
+    OverlayTrigger,
+    Placement,
+    VirtualTrigger,
+} from '../';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/button/sp-button.js';
@@ -20,6 +26,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -636,4 +643,52 @@ export const superComplexModal = (): TemplateResult => {
             </sp-popover>
         </overlay-trigger>
     `;
+};
+
+export const virtualElement = (args: Properties): TemplateResult => {
+    const pointerenter = async (event: PointerEvent): Promise<void> => {
+        event.preventDefault();
+        const trigger = event.target as HTMLElement;
+        const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
+        openOverlay(
+            trigger,
+            'modal',
+            trigger.nextElementSibling as HTMLElement,
+            {
+                placement: args.placement,
+                receivesFocus: 'auto',
+                virtualTrigger,
+            }
+        );
+    };
+    return html`
+        <style>
+            .app-root {
+                position: absolute;
+                inset: 0;
+            }
+        </style>
+        <div class="app-root" @contextmenu=${pointerenter}></div>
+        <sp-popover
+            style="max-width: 33vw;"
+            @click=${(event: Event) =>
+                event.target?.dispatchEvent(
+                    new Event('close', { bubbles: true })
+                )}
+        >
+            <sp-menu>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save selection</sp-menu-item>
+                <sp-menu-item disabled>Make work path</sp-menu-item>
+            </sp-menu>
+        </sp-popover>
+    `;
+};
+
+virtualElement.args = {
+    placement: 'right-end',
 };
