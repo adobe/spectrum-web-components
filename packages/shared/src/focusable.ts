@@ -126,7 +126,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     private onPointerdownManagementOfTabIndex(): void {
         if (this.tabIndex === -1) {
             this.tabIndex = 0;
-            this.focus();
+            this.focus({ preventScroll: true });
         }
     }
 
@@ -151,15 +151,15 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         throw new Error('Must implement focusElement getter!');
     }
 
-    public focus(): void {
+    public focus(options?: FocusOptions): void {
         if (this.disabled || !this.focusElement) {
             return;
         }
 
         if (this.focusElement !== this) {
-            this.focusElement.focus();
+            this.focusElement.focus(options);
         } else {
-            HTMLElement.prototype.focus.apply(this);
+            HTMLElement.prototype.focus.apply(this, [options]);
         }
     }
 
