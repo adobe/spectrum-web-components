@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import { ThemeData } from '@spectrum-web-components/theme';
 import { Placement as PopperPlacement } from './popper';
+import { VirtualTrigger } from './VirtualTrigger.js';
 
 export type TriggerInteractions =
     | 'click'
@@ -29,6 +30,7 @@ export interface OverlayOpenDetail {
     offset: number;
     placement?: Placement;
     receivesFocus?: 'auto';
+    virtualTrigger?: VirtualTrigger;
     trigger: HTMLElement;
     interaction: TriggerInteractions;
     theme: ThemeData;
@@ -59,6 +61,7 @@ export type OverlayOptions = {
     receivesFocus?: 'auto';
     notImmediatelyClosable?: boolean;
     abortPromise?: Promise<boolean>;
+    virtualTrigger?: VirtualTrigger;
 };
 
 declare global {

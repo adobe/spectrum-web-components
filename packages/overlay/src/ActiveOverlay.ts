@@ -28,6 +28,7 @@ import {
     TriggerInteractions,
 } from './overlay-types.js';
 import { applyMaxSize, createPopper, Instance, maxSize } from './popper.js';
+import { VirtualTrigger } from './VirtualTrigger.js';
 
 export interface PositionResult {
     arrowOffsetLeft: number;
@@ -115,6 +116,7 @@ export class ActiveOverlay extends SpectrumElement {
     public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;
     public trigger!: HTMLElement;
+    public virtualTrigger?: VirtualTrigger;
 
     private popper?: Instance;
 
@@ -250,25 +252,29 @@ export class ActiveOverlay extends SpectrumElement {
         if (!this.overlayContent || !this.trigger) return;
 
         if (this.placement && this.placement !== 'none') {
-            this.popper = createPopper(this.trigger, this, {
-                placement: this.placement,
-                modifiers: [
-                    maxSize,
-                    applyMaxSize,
-                    {
-                        name: 'arrow',
-                        options: {
-                            element: this.overlayContentTip,
+            this.popper = createPopper(
+                this.virtualTrigger || this.trigger,
+                this,
+                {
+                    placement: this.placement,
+                    modifiers: [
+                        maxSize,
+                        applyMaxSize,
+                        {
+                            name: 'arrow',
+                            options: {
+                                element: this.overlayContentTip,
+                            },
                         },
-                    },
-                    {
-                        name: 'offset',
-                        options: {
-                            offset: [0, this.offset],
+                        {
+                            name: 'offset',
+                            options: {
+                                offset: [0, this.offset],
+                            },
                         },
-                    },
-                ],
-            });
+                    ],
+                }
+            );
         }
 
         this.state = 'active';
@@ -324,6 +330,7 @@ export class ActiveOverlay extends SpectrumElement {
         this.overlayContent = detail.content;
         this.overlayContentTip = detail.contentTip;
         this.trigger = detail.trigger;
+        this.virtualTrigger = detail.virtualTrigger;
         this.placement = detail.placement;
         this.offset = detail.offset;
         this.interaction = detail.interaction;

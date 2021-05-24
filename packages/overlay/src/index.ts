@@ -14,3 +14,4 @@ export * from './OverlayTrigger.js';
 export * from './overlay-types.js';
 export * from './ActiveOverlay.js';
 export * from './loader.js';
+export * from './VirtualTrigger.js';
