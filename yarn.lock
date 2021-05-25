@@ -3,9 +3,9 @@
 
 
 "@adobe/spectrum-css-workflow-icons@^1.1.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.2.0.tgz#cda8bbe873ba9317160458858ae979e5393e5550"
-  integrity sha512-STSQQHvoBM0kf1JrNL3KEt88RklIctaGyGOzwUTnhtTkT1jHLaF4FgxrPDCvr1AT8VOq1nGplKUCeyZ9vdUUmA==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.2.1.tgz#7e2cb3fcfb5c8b12d7275afafbb6ec44913551b4"
+  integrity sha512-uVgekyBXnOVkxp+CUssjN/gefARtudZC8duEn1vm0lBQFwGRZFlDEzU1QC+aIRWCrD1Z8OgRpmBYlSZ7QS003w==
 
 "@babel/code-frame@7.12.11":
   version "7.12.11"
