@@ -26,7 +26,9 @@
         "./sp-tabs": "./sp-tabs.js",
         "./sp-tabs.js": "./sp-tabs.js",
         "./sp-tab": "./sp-tab.js",
-        "./sp-tab.js": "./sp-tab.js"
+        "./sp-tab.js": "./sp-tab.js",
+        "./sp-tab-panel": "./sp-tab-panel.js",
+        "./sp-tab-panel.js": "./sp-tab-panel.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
