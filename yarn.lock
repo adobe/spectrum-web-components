@@ -11365,7 +11365,7 @@ globby@^10.0.1, globby@^10.0.2:
     merge2 "^1.2.3"
     slash "^3.0.0"
 
-globby@^11.0.1, globby@^11.0.2, globby@^11.0.3:
+globby@^11.0.1, globby@^11.0.3:
   version "11.0.3"
   resolved "https://registry.yarnpkg.com/globby/-/globby-11.0.3.tgz#9b1f0cb523e171dd1ad8c7b2a9fb4b644b9593cb"
   integrity sha512-ffdmosjA807y7+lA1NM0jELARVmYul/715xiILEjo3hBLPTcirgQNnXECn5g3mtR8TOLCVbkfua1Hpen25/Xcg==
@@ -17513,12 +17513,12 @@ postcss-minify-selectors@^4.0.2:
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
 
-postcss-mixins@^7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/postcss-mixins/-/postcss-mixins-7.0.3.tgz#99dd2671b4f7f118d176e7b358f98fc3527439ba"
-  integrity sha512-YLiJbOBiFmj3dX0gfo74fPDKtRvcQSntzgyqwD1noW1dne6sAJkuCtoOlGaFX8dLxcv9+qkOA6Uh1Ae0/6C56w==
+postcss-mixins@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/postcss-mixins/-/postcss-mixins-8.0.0.tgz#ec8afcaeb00b51ab5d927698e43c9b142f312ed9"
+  integrity sha512-HHpxAs3MfwwwAyd7Mu/+lFTQXb+04VoGPogEwFbzKxAFlCDumjd6y8xixyPDpC5qihzaoKfk7aDdz11NbVxepg==
   dependencies:
-    globby "^11.0.2"
+    globby "^11.0.3"
     postcss-js "^3.0.3"
     postcss-simple-vars "^6.0.3"
     sugarss "^3.0.3"
