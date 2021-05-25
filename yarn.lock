@@ -4614,12 +4614,12 @@
     terser "^5.5.1"
     whatwg-fetch "^3.5.0"
 
-"@web/rollup-plugin-copy@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@web/rollup-plugin-copy/-/rollup-plugin-copy-0.2.0.tgz#425d32665fe06f39d81ae505ad0775c9354ba1ad"
-  integrity sha512-l3YInTLe/rbth6WuyoA7GY6DuXdt3iX6hQm6uoe5298fBzZfZPa3i0WVyUi3zPo6VttY0bjxPJyWK7JRQ37Cnw==
+"@web/rollup-plugin-copy@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@web/rollup-plugin-copy/-/rollup-plugin-copy-0.3.0.tgz#fe999b2ea3dd71c8e663e6947fc2eb92a221e8e8"
+  integrity sha512-QNNtE7Svhk0/p21etaR0JQXYhlMgTAg/HmRXDMmQHMf3uOUWsWMGiJa96P49RRVJut1ECB5FDFeBUgFEmegysQ==
   dependencies:
-    glob "^7.0.0"
+    glob "^7.1.6"
 
 "@web/rollup-plugin-html@^1.3.2":
   version "1.5.0"
@@ -11248,7 +11248,7 @@ glob@7.1.3:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.0, glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
+glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
   version "7.1.7"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.7.tgz#3b193e9233f01d42d0b3f78294bbeeb418f94a90"
   integrity sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==

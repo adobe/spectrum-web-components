@@ -121,7 +121,7 @@
         "@web/dev-server": "^0.1.17",
         "@web/dev-server-rollup": "^0.3.4",
         "@web/dev-server-storybook": "^0.3.5",
-        "@web/rollup-plugin-copy": "^0.2.0",
+        "@web/rollup-plugin-copy": "^0.3.0",
         "@web/rollup-plugin-html": "^1.6.0",
         "@web/test-runner": "^0.13.4",
         "@web/test-runner-commands": "^0.4.5",
