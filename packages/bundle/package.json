@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/bundle",
-    "version": "0.21.0",
+    "version": "0.21.1",
     "publishConfig": {
         "access": "public"
     },
@@ -91,7 +91,7 @@
         "@spectrum-web-components/split-view": "^0.2.5",
         "@spectrum-web-components/status-light": "^0.7.5",
         "@spectrum-web-components/switch": "^0.7.7",
-        "@spectrum-web-components/tabs": "^0.6.0",
+        "@spectrum-web-components/tabs": "^0.6.1",
         "@spectrum-web-components/tags": "^0.6.8",
         "@spectrum-web-components/textfield": "^0.8.7",
         "@spectrum-web-components/theme": "^0.8.7",

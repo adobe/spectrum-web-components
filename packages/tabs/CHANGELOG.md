@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.0...@spectrum-web-components/tabs@0.6.1) (2021-05-25)
+
+### Bug Fixes
+
+-   **tabs:** include sp-tab-panel.js in the export map ([1619ae8](https://github.com/adobe/spectrum-web-components/commit/1619ae876d70d35eaff38aa955f3cd307f4a5c54))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.5.6...@spectrum-web-components/tabs@0.6.0) (2021-05-24)
 
 ### Features
