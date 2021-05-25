@@ -178,7 +178,7 @@
         "postcss-import": "^14.0.0",
         "postcss-inherit": "^4.1.0",
         "postcss-loader": "4.2.0",
-        "postcss-mixins": "^7.0.3",
+        "postcss-mixins": "^8.0.0",
         "postcss-prefixwrap": "^1.22.1",
         "postcss-preset-env": "^6.7.0",
         "postcss-reporter": "^7.0.2",
