@@ -199,9 +199,6 @@ export class NumberField extends TextfieldBase {
 
     private doChange(): void {
         this.change();
-        this.dispatchEvent(
-            new Event('input', { bubbles: true, composed: true })
-        );
     }
 
     private handlePointermove(event: PointerEvent): void {
@@ -212,6 +209,9 @@ export class NumberField extends TextfieldBase {
         this.buttons.releasePointerCapture(event.pointerId);
         cancelAnimationFrame(this.nextChange);
         clearTimeout(this.safty);
+        this.dispatchEvent(
+            new Event('change', { bubbles: true, composed: true })
+        );
     }
 
     private doNextChange(): number {
@@ -233,6 +233,9 @@ export class NumberField extends TextfieldBase {
         } else {
             this.value = value;
         }
+        this.dispatchEvent(
+            new Event('input', { bubbles: true, composed: true })
+        );
         this.focus();
     }
 
@@ -253,10 +256,16 @@ export class NumberField extends TextfieldBase {
             case 'ArrowUp':
                 event.preventDefault();
                 this.increment();
+                this.dispatchEvent(
+                    new Event('change', { bubbles: true, composed: true })
+                );
                 break;
             case 'ArrowDown':
                 event.preventDefault();
                 this.decrement();
+                this.dispatchEvent(
+                    new Event('change', { bubbles: true, composed: true })
+                );
                 break;
         }
     }
@@ -289,13 +298,49 @@ export class NumberField extends TextfieldBase {
     }
 
     protected onChange(): void {
+        console.log('onchange');
         const value = this.convertValueToNumber(this.inputElement.value);
         this.value = value;
         super.onChange();
     }
 
     protected onInput(): void {
-        return;
+        const value = this.convertValueToNumber(this.inputElement.value);
+        this._value = this.validateInput(value);
+    }
+
+    private validateInput(value: number): number {
+        if (typeof this.min !== 'undefined') {
+            value = Math.max(this.min, value);
+        }
+        if (typeof this.step !== 'undefined') {
+            const min = typeof this.min !== 'undefined' ? this.min : 0;
+            const moduloStep = (value - min) % this.step;
+            const fallsOnStep = moduloStep === 0;
+            if (!fallsOnStep) {
+                const overUnder = Math.round(moduloStep / this.step);
+                if (overUnder === 1) {
+                    value += this.step - moduloStep;
+                } else {
+                    value -= moduloStep;
+                }
+            }
+            if (typeof this.max !== 'undefined') {
+                while (value > this.max) {
+                    value -= this.step;
+                }
+            }
+        }
+        if (typeof this.max !== 'undefined') {
+            if (typeof this.step !== 'undefined') {
+                while (value > this.max) {
+                    value -= this.step;
+                }
+            } else {
+                value = Math.min(this.max, value);
+            }
+        }
+        return value;
     }
 
     protected get displayValue(): string {
@@ -382,41 +427,11 @@ export class NumberField extends TextfieldBase {
             changes.has('min') ||
             changes.has('min')
         ) {
-            let value = new NumberParser(
+            const value = new NumberParser(
                 navigator.language,
                 this.formatOptions
             ).parse(this.inputElement.value);
-            if (typeof this.min !== 'undefined') {
-                value = Math.max(this.min, value);
-            }
-            if (typeof this.step !== 'undefined') {
-                const min = typeof this.min !== 'undefined' ? this.min : 0;
-                const moduloStep = (value - min) % this.step;
-                const fallsOnStep = moduloStep === 0;
-                if (!fallsOnStep) {
-                    const overUnder = Math.round(moduloStep / this.step);
-                    if (overUnder === 1) {
-                        value += this.step - moduloStep;
-                    } else {
-                        value -= moduloStep;
-                    }
-                }
-                if (typeof this.max !== 'undefined') {
-                    while (value > this.max) {
-                        value -= this.step;
-                    }
-                }
-            }
-            if (typeof this.max !== 'undefined') {
-                if (typeof this.step !== 'undefined') {
-                    while (value > this.max) {
-                        value -= this.step;
-                    }
-                } else {
-                    value = Math.min(this.max, value);
-                }
-            }
-            this.value = value;
+            this.value = this.validateInput(value);
         }
         if (changes.has('min') || changes.has('formatOptions')) {
             let inputMode = 'numeric';
