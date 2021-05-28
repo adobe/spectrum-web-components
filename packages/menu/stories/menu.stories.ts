@@ -28,48 +28,24 @@ export default {
 export const Default = (): TemplateResult => {
     return html`
         <sp-menu>
-            <sp-menu-item>
-                Deselect
-            </sp-menu-item>
-            <sp-menu-item>
-                Select Inverse
-            </sp-menu-item>
-            <sp-menu-item>
-                Feather...
-            </sp-menu-item>
-            <sp-menu-item>
-                Select and Mask...
-            </sp-menu-item>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
             <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>
-                Save Selection
-            </sp-menu-item>
-            <sp-menu-item disabled>
-                Make Work Path
-            </sp-menu-item>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-menu>
 
         <sp-popover open>
             <sp-menu>
-                <sp-menu-item>
-                    Deselect
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select Inverse
-                </sp-menu-item>
-                <sp-menu-item>
-                    Feather...
-                </sp-menu-item>
-                <sp-menu-item>
-                    Select and Mask...
-                </sp-menu-item>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
                 <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>
-                    Save Selection
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Make Work Path
-                </sp-menu-item>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-menu>
         </sp-popover>
     `;
@@ -80,24 +56,14 @@ export const headersAndIcons = (): TemplateResult => {
         <sp-popover open>
             <sp-menu>
                 <sp-menu-group>
-                    <span slot="header">
-                        Section Heading
-                    </span>
-                    <sp-menu-item>
-                        Action 1
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Action 2
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        Action 3
-                    </sp-menu-item>
+                    <span slot="header">Section Heading</span>
+                    <sp-menu-item>Action 1</sp-menu-item>
+                    <sp-menu-item>Action 2</sp-menu-item>
+                    <sp-menu-item>Action 3</sp-menu-item>
                 </sp-menu-group>
                 <sp-menu-divider></sp-menu-divider>
                 <sp-menu-group>
-                    <span slot="header">
-                        Section Heading
-                    </span>
+                    <span slot="header">Section Heading</span>
                     <sp-menu-item>
                         <sp-icon-checkmark-circle
                             slot="icon"
@@ -125,30 +91,16 @@ export const Selected = (): TemplateResult => {
         <sp-popover open style="width: 200px;">
             <sp-menu>
                 <sp-menu-group>
-                    <span slot="header">
-                        San Francisco
-                    </span>
-                    <sp-menu-item>
-                        Financial District
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        South of Market
-                    </sp-menu-item>
-                    <sp-menu-item>
-                        North Beach
-                    </sp-menu-item>
+                    <span slot="header">San Francisco</span>
+                    <sp-menu-item>Financial District</sp-menu-item>
+                    <sp-menu-item>South of Market</sp-menu-item>
+                    <sp-menu-item>North Beach</sp-menu-item>
                 </sp-menu-group>
                 <sp-menu-divider></sp-menu-divider>
                 <sp-menu-group>
-                    <span slot="header">
-                        Oakland
-                    </span>
-                    <sp-menu-item>
-                        City Center
-                    </sp-menu-item>
-                    <sp-menu-item disabled>
-                        Jack London Square
-                    </sp-menu-item>
+                    <span slot="header">Oakland</span>
+                    <sp-menu-item>City Center</sp-menu-item>
+                    <sp-menu-item disabled>Jack London Square</sp-menu-item>
                     <sp-menu-item selected>
                         My best friend's mom's house in the burbs just off
                         Silverado street
@@ -156,5 +108,21 @@ export const Selected = (): TemplateResult => {
                 </sp-menu-group>
             </sp-menu>
         </sp-popover>
+    `;
+};
+
+export const selectedOffPage = (): TemplateResult => {
+    return html`
+        <p style="height: 100vh; padding-bottom: 50px;">
+            In this example the \`&lt;sp-menu-item selected&gt;\` element is off
+            the visible page by default, but does not alter the page scroll on
+            load.
+        </p>
+        <sp-menu>
+            <sp-menu-item selected style="padding-bottom: 50px;">
+                My best friend's mom's house in the burbs just off Silverado
+                street
+            </sp-menu-item>
+        </sp-menu>
     `;
 };

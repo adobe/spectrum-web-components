@@ -255,6 +255,7 @@ export const readonly = (args: StoryArgs): TemplateResult => {
 };
 
 export const custom = (args: StoryArgs): TemplateResult => {
+    const initialState = 'lb1-mo';
     return html`
         <sp-field-label for="picker-state">
             What state do you live in?
@@ -268,10 +269,15 @@ export const custom = (args: StoryArgs): TemplateResult => {
             id="picker-state"
             label="Pick a state"
             ...=${spreadProps(args)}
+            value=${initialState}
         >
             ${states.map(
                 (state) => html`
-                    <sp-menu-item id=${state.id} value=${state.id}>
+                    <sp-menu-item
+                        id=${state.id}
+                        value=${state.id}
+                        ?selected=${state.id === initialState}
+                    >
                         ${state.label}
                     </sp-menu-item>
                 `

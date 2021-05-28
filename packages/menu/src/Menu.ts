@@ -64,10 +64,12 @@ export class Menu extends SpectrumElement {
         this.onClick = this.onClick.bind(this);
         this.addEventListener('click', this.onClick);
         this.addEventListener('focusin', this.startListeningToKeyboard);
-        this.addEventListener('focus', this.focus);
+        this.addEventListener('focus', () =>
+            this.focus({ preventScroll: true })
+        );
     }
 
-    public focus(): void {
+    public focus({ preventScroll }: FocusOptions = {}): void {
         if (
             !this.menuItems.length ||
             this.menuItems.every((item) => item.disabled)
@@ -75,7 +77,11 @@ export class Menu extends SpectrumElement {
             return;
         }
         this.focusMenuItemByOffset(0);
-        super.focus();
+        super.focus({ preventScroll });
+        const selectedItem = this.querySelector('[selected]');
+        if (selectedItem && !preventScroll) {
+            selectedItem.scrollIntoView({ block: 'nearest' });
+        }
     }
 
     private onClick(event: Event): void {
@@ -99,7 +105,7 @@ export class Menu extends SpectrumElement {
             | MenuItem
             | Menu;
         if (activeElement !== this) {
-            this.focus();
+            this.focus({ preventScroll: true });
             if (activeElement && this.focusedItemIndex === 0) {
                 const offset = this.menuItems.indexOf(
                     activeElement as MenuItem
@@ -271,12 +277,6 @@ export class Menu extends SpectrumElement {
         }
         this.observer.observe(this, { childList: true, subtree: true });
         this.updateComplete.then(() => this.prepItems());
-        const selectedItem = this.querySelector('[selected]');
-        if (selectedItem) {
-            requestAnimationFrame(() => {
-                selectedItem.scrollIntoView({ block: 'nearest' });
-            });
-        }
     }
 
     public disconnectedCallback(): void {
