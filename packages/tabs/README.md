@@ -17,7 +17,7 @@ Import the side effectful registration of `<sp-tabs>`, `<sp-tab>` or `<sp-tab-pa
 ```
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
-import '@spectrum-web-components/tabs/sp-panel.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
 ```
 
 When looking to leverage the `Tabs`, `Tab`, or `TabPanel` base class as a type and/or for extension purposes, do so via:
