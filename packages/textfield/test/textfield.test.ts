@@ -492,6 +492,21 @@ describe('Textfield', () => {
 
         expect(el.value).to.equal(testValue);
     });
+    it('selects', async () => {
+        const testValue = 'Test Name';
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield value=${testValue}></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+        expect(el.value).to.equal(testValue);
+
+        el.focus();
+        el.select();
+        await sendKeys({ press: 'Backspace' });
+        expect(el.value).to.equal('');
+    });
     it('accepts maxlength', async () => {
         const el = await litFixture<Textfield>(
             html`

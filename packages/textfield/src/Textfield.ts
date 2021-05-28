@@ -163,6 +163,10 @@ export class TextfieldBase extends Focusable {
         return this.value.toString();
     }
 
+    public select(): void {
+        this.inputElement.select();
+    }
+
     private get renderMultiline(): TemplateResult {
         return html`
             ${this.grows && !this.quiet
