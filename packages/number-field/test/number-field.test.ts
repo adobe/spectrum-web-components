@@ -34,6 +34,7 @@ import {
     sendKeys,
     setUserAgent,
 } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 async function getElFrom(test: TemplateResult): Promise<NumberField> {
     const wrapped = await fixture<HTMLDivElement>(html`
@@ -219,6 +220,170 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('-1');
             expect(el.valueAsString).to.equal('-1');
             expect(el.value).to.equal(-1);
+        });
+    });
+    describe('dispatched events', () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        let el: NumberField;
+        beforeEach(async () => {
+            inputSpy.resetHistory();
+            changeSpy.resetHistory();
+            el = await getElFrom(Default({ value: 50 }));
+            el.addEventListener('input', (event: Event) => {
+                console.log(
+                    'input event',
+                    (event.target as NumberField)?.value
+                );
+                inputSpy((event.target as NumberField)?.value);
+            });
+            el.addEventListener('change', (event: Event) => {
+                console.log(
+                    'change event',
+                    (event.target as NumberField)?.value
+                );
+                changeSpy((event.target as NumberField)?.value);
+            });
+        });
+        it('has a useful `value`', async () => {
+            el.focus();
+            await sendKeys({ type: '7' });
+            await sendKeys({ press: 'Enter' });
+            expect(inputSpy.calledWith(507), 'input').to.be.true;
+            expect(changeSpy.calledWith(507), 'change').to.be.true;
+            await sendKeys({ type: ',00' });
+            await sendKeys({ press: 'Enter' });
+            expect(inputSpy.calledWith(5070), 'input').to.be.true;
+            expect(inputSpy.calledWith(50700), 'input').to.be.true;
+            expect(changeSpy.calledWith(50700), 'change').to.be.true;
+        });
+        it('has a useful `value` - percent', async () => {
+            el.formatOptions = { style: 'percent' };
+            el.value = 0.45;
+            expect(el.value).to.equal(0.45);
+            el.focus();
+            await sendKeys({ type: '7' }); // Visible text: 45%7
+            expect(inputSpy.calledWith(4.57), 'first input').to.be.true;
+            await sendKeys({ press: 'Backspace' }); // Visible text: 45%
+            await sendKeys({ press: 'Backspace' }); // Visible text: 45
+            await sendKeys({ press: 'Backspace' }); // Visible text: 4
+            await sendKeys({ press: 'Enter' });
+            expect(el.value).to.equal(0.04);
+            expect(inputSpy.calledWith(0.45), 'second input').to.be.true;
+            expect(inputSpy.calledWith(0.04), 'third input').to.be.true;
+            expect(changeSpy.calledWith(0.04), 'change').to.be.true;
+        });
+        it('has a useful `value` - currency', async () => {
+            el.formatOptions = {
+                style: 'currency',
+                currency: 'EUR',
+                currencyDisplay: 'code',
+                currencySign: 'accounting',
+            };
+            el.value = 45;
+            expect(el.value).to.equal(45);
+            el.focus();
+            await sendKeys({ type: '7' }); // Visible text: EUR 45.007
+            expect(el.value).to.equal(45.007);
+            expect(inputSpy.calledWith(el.value), 'first input').to.be.true;
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ type: '1' }); // Visible text: 1EUR 45.007
+            await sendKeys({ press: 'Enter' }); // Visible text: EUR 145.01
+            expect(el.value).to.equal(145.007);
+            expect(inputSpy.calledWith(145.007), 'second input').to.be.true;
+            expect(changeSpy.calledWith(145.007), 'change').to.be.true;
+        });
+        it('one input/one change for each Arrow*', async () => {
+            el.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            expect(inputSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(1);
+            expect(el.value).to.equal(51);
+            await sendKeys({ press: 'ArrowDown' });
+            expect(inputSpy.callCount).to.equal(2);
+            expect(changeSpy.callCount).to.equal(2);
+            expect(el.value).to.equal(50);
+        });
+        it('one input/one change for each click', async () => {
+            await clickBySelector(el, '.stepUp');
+            expect(inputSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(1);
+            expect(el.value).to.equal(51);
+            await clickBySelector(el, '.stepDown');
+            expect(inputSpy.callCount).to.equal(2);
+            expect(changeSpy.callCount).to.equal(2);
+            expect(el.value).to.equal(50);
+        });
+        it('many input, but one change', async () => {
+            const buttonUp = el.shadowRoot.querySelector(
+                '.stepUp'
+            ) as HTMLElement;
+            const buttonUpRect = buttonUp.getBoundingClientRect();
+            const buttonUpPosition = [
+                buttonUpRect.x + buttonUpRect.width / 2,
+                buttonUpRect.y + buttonUpRect.height / 2,
+            ];
+            const buttonDown = el.shadowRoot.querySelector(
+                '.stepDown'
+            ) as HTMLElement;
+            const buttonDownRect = buttonDown.getBoundingClientRect();
+            const buttonDownPosition = [
+                buttonDownRect.x + buttonDownRect.width / 2,
+                buttonDownRect.y + buttonDownRect.height / 2,
+            ];
+            executeServerCommand('send-mouse', {
+                steps: [
+                    {
+                        type: 'move',
+                        position: buttonUpPosition,
+                    },
+                    {
+                        type: 'down',
+                    },
+                ],
+            });
+            await oneEvent(el, 'input');
+            expect(el.value).to.equal(51);
+            expect(inputSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(0);
+            await oneEvent(el, 'input');
+            expect(el.value).to.equal(52);
+            expect(inputSpy.callCount).to.equal(2);
+            expect(changeSpy.callCount).to.equal(0);
+            executeServerCommand('send-mouse', {
+                steps: [
+                    {
+                        type: 'move',
+                        position: buttonDownPosition,
+                    },
+                ],
+            });
+            let framesToWait = FRAMES_PER_CHANGE * 2;
+            while (framesToWait) {
+                // input is only processed onces per FRAMES_PER_CHANGE number of frames
+                framesToWait -= 1;
+                await nextFrame();
+            }
+            expect(inputSpy.callCount).to.equal(4);
+            expect(changeSpy.callCount).to.equal(0);
+            await executeServerCommand('send-mouse', {
+                steps: [
+                    {
+                        type: 'up',
+                    },
+                ],
+            });
+            expect(inputSpy.callCount).to.equal(4);
+            expect(changeSpy.callCount).to.equal(1);
         });
     });
     it('accepts pointer interactions with the stepper UI', async () => {
