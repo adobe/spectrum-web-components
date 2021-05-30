@@ -23,12 +23,13 @@ import {
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 
 import sliderStyles from './slider.css.js';
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { StyleInfo } from 'lit-html/directives/style-map';
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 
-export class Slider extends Focusable {
+export class Slider extends ObserveSlotText(Focusable, '') {
     public static get styles(): CSSResultArray {
         return [sliderStyles];
     }
@@ -137,7 +138,10 @@ export class Slider extends Focusable {
     private renderLabel(): TemplateResult {
         return html`
             <div id="labelContainer">
-                <label id="label" for="input"><slot>${this.label}</slot></label>
+                <label id="label" for="input">
+                    ${this.slotHasContent ? html`` : this.label}
+                    <slot>${this.label}</slot>
+                </label>
                 <output id="value" aria-live="off" for="input">
                     ${this.ariaValueText}
                 </output>
