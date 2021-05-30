@@ -20,13 +20,14 @@ import {
     SizedMixin,
 } from '@spectrum-web-components/base';
 
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './meter.css.js';
 
 /**
  * @element sp-meter
  */
-export class Meter extends SizedMixin(SpectrumElement) {
+export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     public static get styles(): CSSResultArray {
         return [styles];
     }
@@ -56,6 +57,7 @@ export class Meter extends SizedMixin(SpectrumElement) {
     protected render(): TemplateResult {
         return html`
             <sp-field-label size=${this.size} class="label">
+                ${this.slotHasContent ? html`` : this.label}
                 <slot>${this.label}</slot>
             </sp-field-label>
             <sp-field-label size=${this.size} class="percentage">
