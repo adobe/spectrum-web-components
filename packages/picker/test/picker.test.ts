@@ -746,6 +746,38 @@ describe('Picker', () => {
         expect(document.activeElement === menu, 'focuses something else').to.be
             .false;
     });
+    it('opens its menu inline of the tab order', async () => {
+        const el = await pickerFixture();
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.tabIndex = 0;
+
+        document.body.append(input);
+
+        await elementUpdated(el);
+
+        el.focus();
+        await elementUpdated(el);
+
+        await sendKeys({ press: 'Tab' });
+        expect(el.open, 'closes').to.be.false;
+        expect(document.activeElement, 'focuses input 1').to.equal(input);
+        await sendKeys({ press: 'Shift+Tab' });
+
+        const opened = oneEvent(el, 'sp-opened');
+        sendKeys({ press: 'ArrowDown' });
+        await opened;
+
+        await waitUntil(() => isMenuActiveElement(), 'first item focused');
+
+        const closed = oneEvent(el, 'sp-closed');
+        sendKeys({ press: 'Tab' });
+        await closed;
+
+        expect(el.open, 'closes').to.be.false;
+        expect(document.activeElement, 'focuses input 2').to.equal(input);
+        input.remove();
+    });
     it('displays selected item text by default', async () => {
         const focusSelectedSpy = spy();
         const focusFirstSpy = spy();
@@ -879,7 +911,7 @@ describe('Picker', () => {
         el.open = true;
 
         await elementUpdated(el);
-        await waitUntil(() => isMenuActiveElement(), 'first item focused');
+        await oneEvent(el, 'sp-opened');
 
         expect(openedSpy.calledOnce).to.be.true;
         expect(closedSpy.calledOnce).to.be.false;

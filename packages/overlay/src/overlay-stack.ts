@@ -240,16 +240,6 @@ export class OverlayStack {
                 if (details.receivesFocus === 'auto') {
                     activeOverlay.focus();
                 }
-                details.trigger.dispatchEvent(
-                    new CustomEvent<OverlayOpenCloseDetail>('sp-opened', {
-                        bubbles: true,
-                        composed: true,
-                        cancelable: true,
-                        detail: {
-                            interaction: details.interaction,
-                        },
-                    })
-                );
                 return false;
             }
         );
@@ -312,6 +302,10 @@ export class OverlayStack {
             }
 
             event.stopPropagation();
+            const triggerWithLifecycle = (activeOverlay.trigger as unknown) as ManagedOverlayContent;
+            if (typeof triggerWithLifecycle.open !== 'undefined') {
+                triggerWithLifecycle.open = false;
+            }
             this.closeOverlay(activeOverlay.overlayContent);
             activeOverlay.trigger.focus();
         });

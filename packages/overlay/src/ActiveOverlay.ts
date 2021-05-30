@@ -26,6 +26,7 @@ import {
     OverlayOpenDetail,
     Placement,
     TriggerInteractions,
+    OverlayOpenCloseDetail,
 } from './overlay-types.js';
 import { applyMaxSize, createPopper, Instance, maxSize } from './popper.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
@@ -291,6 +292,16 @@ export class ActiveOverlay extends SpectrumElement {
                 if (this.receivesFocus) {
                     this.focus();
                 }
+                this.trigger.dispatchEvent(
+                    new CustomEvent<OverlayOpenCloseDetail>('sp-opened', {
+                        bubbles: true,
+                        composed: true,
+                        cancelable: true,
+                        detail: {
+                            interaction: this.interaction,
+                        },
+                    })
+                );
             });
     }
 
