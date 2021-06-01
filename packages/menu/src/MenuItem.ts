@@ -91,7 +91,6 @@ export class MenuItem extends ActionButton {
         // so we need to wait a frame before announcing ourselves
         // or the right menu might not pick this up
         await new Promise((ready) => requestAnimationFrame(ready));
-        await new Promise((ready) => setTimeout(ready, 500));
         const addedEvent = new CustomEvent('sp-menu-item-added', {
             bubbles: true,
             composed: true,
