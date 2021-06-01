@@ -19,6 +19,8 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 
+import { MenuItem } from './MenuItem.js';
+import { Menu } from './Menu.js';
 import '../sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
@@ -38,6 +40,7 @@ export class MenuGroup extends SpectrumElement {
     public selects: undefined | 'none' | 'single' | 'multiple';
 
     private instanceCount = MenuGroup.instances;
+    private menu!: Menu;
 
     private static instances = 0;
 
@@ -66,6 +69,14 @@ export class MenuGroup extends SpectrumElement {
         }
     }
 
+    public get menuItems(): MenuItem[] {
+        return this.menu.menuItems;
+    }
+
+    public get selectedItems(): MenuItem[] {
+        return this.menu.selectedItems;
+    }
+
     public render(): TemplateResult {
         const labelledby = `menu-heading-category-${this.instanceCount}`;
         return html`
@@ -85,5 +96,6 @@ export class MenuGroup extends SpectrumElement {
 
     protected firstUpdated(): void {
         this.setAttribute('role', 'none');
+        this.menu = this.shadowRoot.querySelector('sp-menu') as Menu;
     }
 }

@@ -17,9 +17,10 @@ import {
     TemplateResult,
     property,
     PropertyValues,
+    query,
 } from '@spectrum-web-components/base';
 
-import { MenuItem, MenuItemQueryRoleEventDetail } from './MenuItem.js';
+import { MenuItem, MenuItemUpdateEvent } from './MenuItem.js';
 import menuStyles from './menu.css.js';
 
 export interface MenuQueryRoleEventDetail {
@@ -56,11 +57,17 @@ export class Menu extends SpectrumElement {
     @property({ attribute: false })
     public selectedItems = [] as MenuItem[];
 
+    @query('slot')
+    private menuSlot!: HTMLSlotElement;
+
     public menuItems = [] as MenuItem[];
+    private menuItemSet = new Set() as Set<MenuItem>;
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
     private selectedItemsMap = new Map() as Map<MenuItem, boolean>;
+
+    private itemsChanged: boolean = false;
 
     /**
      * Hide this getter from web-component-analyzer until
@@ -118,10 +125,28 @@ export class Menu extends SpectrumElement {
         super();
 
         this.addEventListener(
-            'sp-menu-item-query-role',
-            (event: CustomEvent<MenuItemQueryRoleEventDetail>) => {
+            'sp-menu-item-added',
+            (event: CustomEvent<MenuItemUpdateEvent>) => {
+                const item = event.detail.item;
+                if (this.selects === 'inherit') {
+                    // We still track children for focus
+                    if (!event.detail.inherited) {
+                        event.detail.inherited = true;
+                        this.addItem(item);
+                    }
+                    return;
+                }
                 event.stopPropagation();
-                event.detail.role = this.childRole;
+                item.setRole(this.childRole);
+                this.addItem(item);
+            }
+        );
+
+        this.addEventListener(
+            'sp-menu-item-removed',
+            (event: CustomEvent<MenuItemUpdateEvent>) => {
+                event.stopPropagation();
+                this.removeItem(event.detail.item);
             }
         );
 
@@ -365,30 +390,62 @@ export class Menu extends SpectrumElement {
         this.focusInItemIndex = index;
     }
 
-    private async updateItemRoles() {
-        const childMenuItems = [
-            ...this.querySelectorAll(`sp-menu-item`),
-        ] as MenuItem[];
+    // debounce update this.menuItems so they're in DOM order
+    private async updateMenuItems(): Promise<void> {
+        this.itemsChanged = true;
 
-        const promises: Promise<any>[] = [];
+        return new Promise((resolve) => {
+            // debounce so we only actually update once
+            requestAnimationFrame(() => {
+                if (!this.itemsChanged) {
+                    resolve();
+                }
 
-        for (const item of childMenuItems) {
-            item.updateRole();
-            promises.push(item.updateComplete);
-        }
-        await Promise.all(promises);
+                this.menuItems = [];
+
+                const slotElements =
+                    this.menuSlot.assignedElements({ flatten: true }) || [];
+                for (const slotElement of slotElements) {
+                    const childItems: MenuItem[] =
+                        slotElement instanceof MenuItem
+                            ? [slotElement as MenuItem]
+                            : ([
+                                  ...slotElement.querySelectorAll(
+                                      `[role="${this.childRole}"]`
+                                  ),
+                              ] as MenuItem[]);
+                    for (const childItem of childItems) {
+                        if (this.menuItemSet.has(childItem)) {
+                            this.menuItems.push(childItem);
+                        }
+                    }
+                }
+
+                this.updateSelectedItemIndex();
+                this.updateItemFocus();
+                this.itemsChanged = false;
+                resolve();
+            });
+        });
     }
 
-    private async prepItems() {
-        await this.updateItemRoles();
+    private addItem(item: MenuItem) {
+        this.menuItemSet.add(item);
+        this.updateMenuItems();
+    }
 
-        this.menuItems = [
-            ...this.querySelectorAll(`[role="${this.childRole}"]`),
-        ] as MenuItem[];
-        if (!this.menuItems || this.menuItems.length === 0) {
-            return;
+    private removeItem(itemToRemove: MenuItem) {
+        const newMenuItems: MenuItem[] = [];
+        for (const item of this.menuItems) {
+            if (item !== itemToRemove) {
+                newMenuItems.push(item);
+            }
         }
-        this.updateSelectedItemIndex();
+        this.menuItemSet.delete(itemToRemove);
+        this.updateMenuItems();
+    }
+
+    private async updateItemFocus() {
         const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
         if ((this.getRootNode() as Document).activeElement === this) {
             this.forwardFocusVisibleToitem(focusInItem);
@@ -396,6 +453,7 @@ export class Menu extends SpectrumElement {
     }
 
     private forwardFocusVisibleToitem(item: MenuItem): void {
+        console.log('forwarding focus');
         let shouldFocus = false;
         try {
             // Browsers without support for the `:focus-visible`
@@ -429,11 +487,7 @@ export class Menu extends SpectrumElement {
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'menu');
         }
-        if (!this.observer) {
-            this.observer = new MutationObserver(this.prepItems.bind(this));
-        }
-        this.observer.observe(this, { childList: true, subtree: true });
-        this.updateComplete.then(() => this.prepItems());
+        this.updateComplete.then(() => this.updateItemFocus());
         const selectedItem = this.querySelector('[selected]');
         if (selectedItem) {
             requestAnimationFrame(() => {
@@ -442,18 +496,12 @@ export class Menu extends SpectrumElement {
         }
     }
 
-    public disconnectedCallback(): void {
-        this.observer.disconnect();
-        super.disconnectedCallback();
-    }
-
     protected updated(changes: PropertyValues): void {
         if (changes.has('selects')) {
-            this.prepItems();
+            // TODO: update roles/selection and announce ownership change if
+            // we're going to/from inherits
         }
     }
-
-    private observer!: MutationObserver;
 }
 
 declare global {

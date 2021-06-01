@@ -33,7 +33,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import {
     MenuItem,
-    MenuItemQueryRoleEventDetail,
+    MenuItemUpdateEvent,
     Menu,
     MenuQueryRoleEventDetail,
 } from '@spectrum-web-components/menu';
@@ -135,13 +135,15 @@ export class PickerBase extends SizedMixin(Focusable) {
         super();
         this.onKeydown = this.onKeydown.bind(this);
 
+        // TODO: once we switch away from inherits, the underlying sp-menu should manage this.
         this.addEventListener(
-            'sp-menu-item-query-role',
-            (event: CustomEvent<MenuItemQueryRoleEventDetail>) => {
+            'sp-menu-item-added',
+            (event: CustomEvent<MenuItemUpdateEvent>) => {
                 event.stopPropagation();
-                event.detail.role = this.itemRole;
+                event.detail.item.setAttribute('role', this.itemRole);
             }
         );
+
         this.addEventListener(
             'sp-menu-query-role',
             (event: CustomEvent<MenuQueryRoleEventDetail>) => {

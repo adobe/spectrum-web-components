@@ -253,6 +253,10 @@ describe('Picker', () => {
 
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
+        await waitUntil(
+            () => el.menuItems.length == 6,
+            'picker should manage 6 menu items'
+        );
         await elementUpdated(el);
 
         expect(firstItem.focused, 'not visually focused').to.be.false;

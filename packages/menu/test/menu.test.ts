@@ -125,6 +125,10 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(
+            () => el.menuItems.length == 6,
+            'expected menu to manage 6 menu items'
+        );
         await elementUpdated(el);
 
         const inTabindexElement = el.querySelector(
@@ -145,6 +149,7 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(() => el.menuItems.length == 3);
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
@@ -167,6 +172,7 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(() => el.menuItems.length == 6);
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -209,6 +215,7 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(() => el.menuItems.length == 1);
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -230,6 +237,7 @@ describe('Menu', () => {
         group.prepend(prependedItem);
         group.append(appendedItem);
 
+        await waitUntil(() => el.menuItems.length == 3);
         await elementUpdated(el);
 
         expect(document.activeElement === el).to.be.false;
@@ -257,6 +265,7 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(() => el.menuItems.length == 3);
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -331,6 +340,8 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(() => el.menuItems.length == 3);
+        await waitUntil(() => el.selectedItems.length == 1);
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -371,6 +382,7 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(() => el.menuItems.length == 3);
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
