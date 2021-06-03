@@ -171,22 +171,18 @@ describe('Menu group', () => {
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
 
         secondItem.click();
-
         await elementUpdated(el);
         await elementUpdated(firstItem);
         await elementUpdated(secondItem);
-
         expect(firstItem.selected).to.be.false;
         expect(secondItem.selected).to.be.true;
         expect(firstItem.getAttribute('aria-checked')).to.equal('false');
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
 
         inheritItem1.click();
-
         await elementUpdated(el);
         await elementUpdated(inheritItem1);
         await elementUpdated(secondItem);
-
         expect(secondItem.selected).to.be.false;
         expect(inheritItem1.selected).to.be.true;
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
@@ -216,5 +212,55 @@ describe('Menu group', () => {
         expect(inheritItem1.selected).to.be.true;
         expect(multiItem1.getAttribute('aria-checked')).to.equal('true');
         expect(multiItem2.getAttribute('aria-checked')).to.equal('true');
+    });
+
+    it('handles changing managed items for selects changes', async () => {
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu selects="multiple">
+                    <sp-menu-item selected>First</sp-menu-item>
+                    <sp-menu-item>Second</sp-menu-item>
+                    <sp-menu-group id="mg-inherit">
+                        <sp-menu-item>Inherit1</sp-menu-item>
+                        <sp-menu-item>Inherit2</sp-menu-item>
+                    </sp-menu-group>
+                </sp-menu>
+            `
+        );
+
+        await waitUntil(
+            () => el.menuItems.length == 4,
+            'expected outer menu to manage 4 items (2 are inherited)'
+        );
+        await waitUntil(
+            () => el.selectedItems.length == 1,
+            'expected 1 selected item'
+        );
+        await elementUpdated(el);
+
+        const inheritGroup = el.querySelector(
+            'sp-menu-group#mg-inherit'
+        ) as MenuGroup;
+        const inheritItem1 = inheritGroup.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+        const inheritItem2 = inheritGroup.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
+        expect(inheritItem1.getAttribute('role')).to.equal('menuitemcheckbox');
+        expect(inheritItem2.getAttribute('role')).to.equal('menuitemcheckbox');
+
+        inheritGroup.setAttribute('selects', 'single');
+
+        await elementUpdated(inheritGroup);
+
+        await waitUntil(
+            () => el.menuItems.length == 2,
+            'expected outer menu to manage 2 items and no longer inherit'
+        );
+
+        expect(inheritItem1.getAttribute('role')).to.equal('menuitemradio');
+        expect(inheritItem2.getAttribute('role')).to.equal('menuitemradio');
     });
 });

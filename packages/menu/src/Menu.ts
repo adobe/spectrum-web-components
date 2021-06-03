@@ -65,6 +65,11 @@ export class Menu extends SpectrumElement {
 
     private itemsChanged: boolean = false;
 
+    private cachedResolvedSelects:
+        | undefined
+        | [string | undefined, string | null];
+    private parentSelectsObservers: MutationObserver[] = [];
+
     /**
      * Hide this getter from web-component-analyzer until
      * https://github.com/runem/web-component-analyzer/issues/131
@@ -92,10 +97,37 @@ export class Menu extends SpectrumElement {
         return this.resolvedSelectsAndRole[0];
     }
 
-    // TODO: cache!
+    private clearParentSelectsObservers() {
+        for (const observer of this.parentSelectsObservers) {
+            observer.disconnect();
+        }
+        this.parentSelectsObservers = [];
+    }
+
+    private addParentSelectsObserver(parentMenu: Menu) {
+        const observer = new MutationObserver((mutationList) => {
+            for (const mutation of mutationList) {
+                if (mutation.attributeName === 'selects') {
+                    // TODO: update menu items as well
+                    this.cachedResolvedSelects = undefined;
+                    this.clearParentSelectsObservers();
+                    return;
+                }
+            }
+        });
+        observer.observe(parentMenu, { attributes: true });
+        this.parentSelectsObservers.push(observer);
+    }
+
     private get resolvedSelectsAndRole(): [string | undefined, string | null] {
+        if (this.cachedResolvedSelects) {
+            return this.cachedResolvedSelects;
+        }
         if (this.selects) {
-            return [this.selects, this.getAttribute('role')];
+            this.cachedResolvedSelects = [
+                this.selects,
+                this.getAttribute('role'),
+            ];
         } else {
             // when unspecified, we inherit `selects` from a parent menu if present
             let parent = this.parentElement;
@@ -104,19 +136,28 @@ export class Menu extends SpectrumElement {
                 parent = shadowRoot?.host as HTMLElement;
             }
             while (parent != null) {
-                if (parent.localName === 'sp-menu') {
+                if (parent instanceof Menu) {
+                    this.addParentSelectsObserver(parent);
                     const selects = parent.getAttribute('selects');
                     const role = parent.getAttribute('role');
                     if (selects === 'single' || selects === 'multiple') {
-                        return [selects, role];
+                        this.cachedResolvedSelects = [selects, role];
+                        break;
                     } else if (selects === 'none') {
-                        return ['none', role];
+                        this.cachedResolvedSelects = ['none', role];
+                        break;
                     }
                 }
                 parent = parent.parentElement;
             }
-            return [undefined, this.getAttribute('role')];
+            if (!this.cachedResolvedSelects) {
+                this.cachedResolvedSelects = [
+                    undefined,
+                    this.getAttribute('role'),
+                ];
+            }
         }
+        return this.cachedResolvedSelects;
     }
 
     public constructor() {
@@ -488,6 +529,7 @@ export class Menu extends SpectrumElement {
 
     protected updated(changes: PropertyValues): void {
         if (changes.has('selects')) {
+            this.cachedResolvedSelects = undefined;
             // TODO: update roles/selection and announce ownership change if
             // we're going to/from inherits
         }

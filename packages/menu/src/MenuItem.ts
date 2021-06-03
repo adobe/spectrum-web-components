@@ -89,7 +89,8 @@ export class MenuItem extends ActionButton {
 
         // Slot updates happens after the connected callback,
         // so we need to wait a frame before announcing ourselves
-        // or the right menu might not pick this up
+        // or the right menu might not pick this up. E.g. without this
+        // the underlying menu in sp-menu-group won't see this.
         await new Promise((ready) => requestAnimationFrame(ready));
         const addedEvent = new CustomEvent('sp-menu-item-added', {
             bubbles: true,
