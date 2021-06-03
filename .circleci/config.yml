@@ -131,6 +131,9 @@ jobs:
                   path: /root/project/results/
             - store_artifacts:
                   path: coverage
+            - run:
+                  name: Are there changes?
+                  command: git diff-files --quiet
 
     docs-preview:
         executor: node
