@@ -91,9 +91,13 @@ export class ColorArea extends SpectrumElement {
             case 'name':
                 return this._color.toName() || this._color.toRgbString();
             case 'hsl':
-                return this._format.isString
-                    ? this._color.toHslString()
-                    : this._color.toHsl();
+                if (this._format.isString) {
+                    const hueExp = /(^hs[v|va|l|la]\()\d{1,3}/;
+                    const hslString = this._color.toHslString();
+                    return hslString.replace(hueExp, `$1${this.hue}`);
+                } else {
+                    return this._color.toHsl();
+                }
             case 'hsv':
                 return this._format.isString
                     ? this._color.toHsvString()
@@ -126,8 +130,25 @@ export class ColorArea extends SpectrumElement {
             format,
             isString,
         };
+
         const { h, s, v } = this._color.toHsv();
-        this.hue = h;
+        let originalHue: number | undefined = undefined;
+
+        if (isString && format.startsWith('hs')) {
+            const hueExp = /^hs[v|va|l|la]\((\d{1,3})/;
+            const values = hueExp.exec(color as string);
+
+            if (values !== null) {
+                const [, h] = values;
+                originalHue = Number(h);
+            }
+        } else if (!isString && format.startsWith('hs')) {
+            const colorInput = this._color.originalInput;
+            const colorValues = Object.values(colorInput);
+            originalHue = colorValues[0];
+        }
+
+        this.hue = originalHue || h;
         this.x = s;
         this.y = 1 - v;
         this.requestUpdate('color', oldValue);
