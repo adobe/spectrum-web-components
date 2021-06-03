@@ -25,7 +25,7 @@ describe('Menu group', () => {
     it('renders', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu>
+                <sp-menu selects="none">
                     <sp-menu-group>
                         <span slot="header">Section Heading</span>
                         <sp-menu-item>Action 1</sp-menu-item>

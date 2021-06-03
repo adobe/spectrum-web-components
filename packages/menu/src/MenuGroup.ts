@@ -57,18 +57,6 @@ export class MenuGroup extends SpectrumElement {
         }
     }
 
-    // Menu defaults to no selection, while MenuGroup defaults to inherit.
-    private get menuSelects(): void | String {
-        switch (this.selects) {
-            case undefined:
-                return 'inherit';
-            case 'none':
-                return undefined;
-            default:
-                return this.selects;
-        }
-    }
-
     public get menuItems(): MenuItem[] {
         return this.menu.menuItems;
     }
@@ -83,12 +71,7 @@ export class MenuGroup extends SpectrumElement {
             <span class="header" id=${labelledby} aria-hidden="true">
                 <slot name="header"></slot>
             </span>
-            <sp-menu
-                selects=${ifDefined(
-                    this.menuSelects ? this.menuSelects : undefined
-                )}
-                role=${this.menuRole}
-            >
+            <sp-menu selects=${ifDefined(this.selects)} role=${this.menuRole}>
                 <slot></slot>
             </sp-menu>
         `;

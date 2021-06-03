@@ -149,7 +149,10 @@ describe('Menu', () => {
             `
         );
 
-        await waitUntil(() => el.menuItems.length == 3);
+        await waitUntil(
+            () => el.menuItems.length == 3,
+            'expected menu to manage 3 items'
+        );
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
@@ -172,7 +175,10 @@ describe('Menu', () => {
             `
         );
 
-        await waitUntil(() => el.menuItems.length == 6);
+        await waitUntil(
+            () => el.menuItems.length == 6,
+            'expected menu to manage 6 items'
+        );
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -206,7 +212,7 @@ describe('Menu', () => {
     it('handle focus and late descendent additions', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu>
+                <sp-menu selects="none">
                     <sp-menu-group>
                         <span slot="header">Options</span>
                         <sp-menu-item>Deselect</sp-menu-item>
@@ -215,7 +221,10 @@ describe('Menu', () => {
             `
         );
 
-        await waitUntil(() => el.menuItems.length == 1);
+        await waitUntil(
+            () => el.menuItems.length == 1,
+            'expected menu to manage 1 item'
+        );
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -237,7 +246,10 @@ describe('Menu', () => {
         group.prepend(prependedItem);
         group.append(appendedItem);
 
-        await waitUntil(() => el.menuItems.length == 3);
+        await waitUntil(
+            () => el.menuItems.length == 3,
+            'expected menu to manage 3 items'
+        );
         await elementUpdated(el);
 
         expect(document.activeElement === el).to.be.false;
@@ -265,7 +277,10 @@ describe('Menu', () => {
             `
         );
 
-        await waitUntil(() => el.menuItems.length == 3);
+        await waitUntil(
+            () => el.menuItems.length == 3,
+            'expected menu to manage 3 items'
+        );
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -340,8 +355,14 @@ describe('Menu', () => {
             `
         );
 
-        await waitUntil(() => el.menuItems.length == 3);
-        await waitUntil(() => el.selectedItems.length == 1);
+        await waitUntil(
+            () => el.menuItems.length == 3,
+            'expected menu to manage 3 items'
+        );
+        await waitUntil(
+            () => el.selectedItems.length == 1,
+            'expected menu to have 1 selected item'
+        );
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -382,7 +403,10 @@ describe('Menu', () => {
             `
         );
 
-        await waitUntil(() => el.menuItems.length == 3);
+        await waitUntil(
+            () => el.menuItems.length == 3,
+            'expected menu to manage 3 items'
+        );
         await elementUpdated(el);
 
         const firstItem = el.querySelector(

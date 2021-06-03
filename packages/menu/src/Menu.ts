@@ -35,7 +35,7 @@ export class Menu extends SpectrumElement {
     }
 
     @property({ type: String, reflect: true })
-    public selects: undefined | 'inherit' | 'single' | 'multiple';
+    public selects: undefined | 'none' | 'single' | 'multiple';
 
     @property({ type: String })
     public value = '';
@@ -88,12 +88,16 @@ export class Menu extends SpectrumElement {
         }
     }
 
-    private get resolvedSelects(): undefined | String {
+    private get resolvedSelects(): undefined | string {
         return this.resolvedSelectsAndRole[0];
     }
 
-    private get resolvedSelectsAndRole(): [String | undefined, String | null] {
-        if (this.selects === 'inherit') {
+    // TODO: cache!
+    private get resolvedSelectsAndRole(): [string | undefined, string | null] {
+        if (this.selects) {
+            return [this.selects, this.getAttribute('role')];
+        } else {
+            // when unspecified, we inherit `selects` from a parent menu if present
             let parent = this.parentElement;
             if (parent == null) {
                 const shadowRoot = this.getRootNode() as ShadowRoot;
@@ -105,15 +109,13 @@ export class Menu extends SpectrumElement {
                     const role = parent.getAttribute('role');
                     if (selects === 'single' || selects === 'multiple') {
                         return [selects, role];
-                    } else if (selects !== 'inherit') {
-                        return [undefined, role];
+                    } else if (selects === 'none') {
+                        return ['none', role];
                     }
                 }
                 parent = parent.parentElement;
             }
             return [undefined, this.getAttribute('role')];
-        } else {
-            return [this.selects, this.getAttribute('role')];
         }
     }
 
@@ -124,7 +126,7 @@ export class Menu extends SpectrumElement {
             'sp-menu-item-added',
             (event: CustomEvent<MenuItemUpdateEvent>) => {
                 const item = event.detail.item;
-                if (this.selects === 'inherit') {
+                if (!this.selects && this.resolvedSelects) {
                     // We still track children for focus
                     if (!event.detail.inherited) {
                         event.detail.inherited = true;
@@ -177,7 +179,7 @@ export class Menu extends SpectrumElement {
             }
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
-        if (target && this.selects !== 'inherit') {
+        if (target && this.selects) {
             event.preventDefault();
             event.stopImmediatePropagation();
             this.selectOrToggleItem(target);
@@ -220,7 +222,7 @@ export class Menu extends SpectrumElement {
 
     public async selectOrToggleItem(item: MenuItem): Promise<void> {
         const resolvedSelects = this.resolvedSelects;
-        if (resolvedSelects == null) {
+        if (resolvedSelects === 'none') {
             return;
         }
 
