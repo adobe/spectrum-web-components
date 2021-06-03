@@ -96,12 +96,18 @@ export class ColorArea extends SpectrumElement {
                     const hslString = this._color.toHslString();
                     return hslString.replace(hueExp, `$1${this.hue}`);
                 } else {
-                    return this._color.toHsl();
+                    const { s, l, a } = this._color.toHsl();
+                    return { h: this.hue, s, l, a };
                 }
             case 'hsv':
-                return this._format.isString
-                    ? this._color.toHsvString()
-                    : this._color.toHsv();
+                if (this._format.isString) {
+                    const hueExp = /(^hs[v|va|l|la]\()\d{1,3}/;
+                    const hsvString = this._color.toHsvString();
+                    return hsvString.replace(hueExp, `$1${this.hue}`);
+                } else {
+                    const { s, v, a } = this._color.toHsv();
+                    return { h: this.hue, s, v, a };
+                }
             case 'hex':
             case 'hex3':
             case 'hex4':
