@@ -318,7 +318,7 @@ describe('ColorArea', () => {
         expect(el.x).to.equal(0.53125);
         expect(el.y).to.equal(0.53125);
     });
-    it('retains `hue` value when s = 0 in HSL format', async () => {
+    it('retains `hue` value when s = 0 in HSL string format', async () => {
         const el = await fixture<ColorArea>(
             html`
                 <sp-color-area color="hsl(100, 50%, 50%)"></sp-color-area>
@@ -339,22 +339,100 @@ describe('ColorArea', () => {
         expect(el.x, 'new x').to.equal(0);
         expect(el.y, 'new y').to.equal(0.5);
         expect(el.color).to.equal('hsl(100, 0%, 50%)');
+    });
+    it('retains `hue` value when s = 0 in HSL object format', async () => {
+        let inputColor = { h: 100, s: 0.5, l: 0.5 };
 
-        el.color = { h: 100, s: 0.5, l: 0.5 };
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area .color=${inputColor}></sp-color-area>
+            `
+        );
+
         await elementUpdated(el);
+
+        let outputColor = el.color as { h: number; s: number; l: number };
+        const variance = 0.00005;
 
         expect(el.hue).to.equal(100);
         expect(el.x, 'x').to.equal(0.6666666666666666);
         expect(el.y, 'y').to.equal(0.25);
-        expect(el.color).to.deep.equal({ h: 100, s: 0.5, l: 0.5, a: 1 });
 
-        el.color = { h: 100, s: 0, l: 0.5 };
+        expect(Math.abs(outputColor.h - inputColor.h)).to.be.lessThan(variance);
+        expect(Math.abs(outputColor.s - inputColor.s)).to.be.lessThan(variance);
+        expect(Math.abs(outputColor.l - inputColor.l)).to.be.lessThan(variance);
+
+        inputColor = { h: 100, s: 0, l: 0.5 };
+        el.color = inputColor;
+
         await elementUpdated(el);
+        outputColor = el.color as { h: number; s: number; l: number };
 
         expect(el.hue).to.equal(100);
         expect(el.x, 'x').to.equal(0);
         expect(el.y, 'y').to.equal(0.5);
-        expect(el.color).to.deep.equal({ h: 100, s: 0, l: 0.5, a: 1 });
+
+        expect(Math.abs(outputColor.h - inputColor.h)).to.be.lessThan(variance);
+        expect(Math.abs(outputColor.s - inputColor.s)).to.be.lessThan(variance);
+        expect(Math.abs(outputColor.l - inputColor.l)).to.be.lessThan(variance);
+    });
+    it('retains `hue` value when s = 0 in HSV string format', async () => {
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area color="hsv(100, 50%, 50%)"></sp-color-area>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.hue, 'hue').to.equal(100);
+        expect(el.x, 'x').to.equal(0.5);
+        expect(el.y, 'y').to.equal(0.5);
+        expect(el.color).to.equal('hsv(100, 50%, 50%)');
+
+        el.color = 'hsv(100, 0%, 50%)';
+        await elementUpdated(el);
+
+        expect(el.hue, 'new hue').to.equal(100);
+        expect(el.x, 'new x').to.equal(0);
+        expect(el.y, 'new y').to.equal(0.5);
+        expect(el.color).to.equal('hsv(100, 0%, 50%)');
+    });
+    it('retains `hue` value when s = 0 in HSV object format', async () => {
+        let inputColor = { h: 100, s: 0.5, v: 0.5 };
+
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area .color=${inputColor}></sp-color-area>
+            `
+        );
+
+        await elementUpdated(el);
+
+        let outputColor = el.color as { h: number; s: number; v: number };
+        const variance = 0.00005;
+
+        expect(el.hue).to.equal(100);
+        expect(el.x, 'x').to.equal(0.5);
+        expect(el.y, 'y').to.equal(0.5);
+
+        expect(Math.abs(outputColor.h - inputColor.h)).to.be.lessThan(variance);
+        expect(Math.abs(outputColor.s - inputColor.s)).to.be.lessThan(variance);
+        expect(Math.abs(outputColor.v - inputColor.v)).to.be.lessThan(variance);
+
+        inputColor = { h: 100, s: 0, v: 0.5 };
+        el.color = inputColor;
+
+        await elementUpdated(el);
+        outputColor = el.color as { h: number; s: number; v: number };
+
+        expect(el.hue).to.equal(100);
+        expect(el.x, 'x').to.equal(0);
+        expect(el.y, 'y').to.equal(0.5);
+
+        expect(Math.abs(outputColor.h - inputColor.h)).to.be.lessThan(variance);
+        expect(Math.abs(outputColor.s - inputColor.s)).to.be.lessThan(variance);
+        expect(Math.abs(outputColor.v - inputColor.v)).to.be.lessThan(variance);
     });
     const colorFormats: {
         name: string;
