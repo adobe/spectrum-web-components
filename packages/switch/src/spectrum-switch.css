@@ -130,10 +130,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Switch-switch */
     left: 0;
 }
-:host([dir='ltr']) #switch,
 :host([dir='rtl']) #switch {
-    /* [dir=ltr] .spectrum-Switch-switch,
-   * [dir=rtl] .spectrum-Switch-switch */
+    /* [dir=rtl] .spectrum-Switch-switch */
+    right: 0;
+}
+:host([dir='ltr']) #switch {
+    /* [dir=ltr] .spectrum-Switch-switch */
     right: 0;
 }
 :host([dir='rtl']) #switch {
@@ -200,10 +202,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Switch-switch:after */
     left: 0;
 }
-:host([dir='ltr']) #switch:after,
 :host([dir='rtl']) #switch:after {
-    /* [dir=ltr] .spectrum-Switch-switch:after,
-   * [dir=rtl] .spectrum-Switch-switch:after */
+    /* [dir=rtl] .spectrum-Switch-switch:after */
+    right: 0;
+}
+:host([dir='ltr']) #switch:after {
+    /* [dir=ltr] .spectrum-Switch-switch:after */
     right: 0;
 }
 :host([dir='rtl']) #switch:after {

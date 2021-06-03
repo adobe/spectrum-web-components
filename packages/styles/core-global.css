@@ -721,6 +721,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-loupe-exit-animation-duration: var(
         --spectrum-global-animation-duration-300
     );
+}
+:host,
+:root {
     --spectrum-alias-dropshadow-blur: var(--spectrum-global-dimension-size-50);
     --spectrum-alias-dropshadow-offset-y: var(
         --spectrum-global-dimension-size-10
@@ -1114,6 +1117,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-avatar-size-300: var(--spectrum-global-dimension-size-325);
     --spectrum-alias-avatar-size-500: var(--spectrum-global-dimension-size-400);
     --spectrum-alias-avatar-size-700: var(--spectrum-global-dimension-size-500);
+}
+:host,
+:root {
     --spectrum-alias-background-color-default: var(
         --spectrum-global-color-gray-100
     );

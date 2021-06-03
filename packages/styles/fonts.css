@@ -29,10 +29,12 @@ governing permissions and limitations under the License.
 :root:lang(zh-Hans) {
     font-family: var(--spectrum-alias-font-family-zhhans);
 }
-:host:lang(zh),
 :host:lang(zh-Hant),
-:root:lang(zh),
 :root:lang(zh-Hant) {
+    font-family: var(--spectrum-alias-font-family-zh);
+}
+:host:lang(zh),
+:root:lang(zh) {
     font-family: var(--spectrum-alias-font-family-zh);
 }
 :host:lang(ko),

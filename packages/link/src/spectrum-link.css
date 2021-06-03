@@ -50,7 +50,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 a {
     /* .spectrum-Link */
-    background-color: initial;
+    background-color: transparent;
     -webkit-text-decoration-skip: objects;
     text-decoration: underline;
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
@@ -104,14 +104,20 @@ a:focus-visible {
         var(--spectrum-alias-text-color-key-focus)
     );
 }
-.spectrum-Link--secondary,
-.spectrum-Link--secondary:active,
-.spectrum-Link--secondary:focus,
+.spectrum-Link--secondary {
+    /* .spectrum-Link--secondary */
+    color: inherit;
+}
 .spectrum-Link--secondary:hover {
-    /* .spectrum-Link--secondary,
-   * .spectrum-Link--secondary:active,
-   * .spectrum-Link--secondary:focus,
-   * .spectrum-Link--secondary:hover */
+    /* .spectrum-Link--secondary:hover */
+    color: inherit;
+}
+.spectrum-Link--secondary:active {
+    /* .spectrum-Link--secondary:active */
+    color: inherit;
+}
+.spectrum-Link--secondary:focus {
+    /* .spectrum-Link--secondary:focus */
     color: inherit;
 }
 :host([over-background]) a {
@@ -143,19 +149,28 @@ a:focus-visible {
     );
 }
 @media (forced-colors: active) {
-    .spectrum-Link--secondary,
-    .spectrum-Link--secondary:active,
-    .spectrum-Link--secondary:focus,
+    .spectrum-Link--secondary {
+    }
     .spectrum-Link--secondary:hover {
     }
+    .spectrum-Link--secondary:active {
+    }
+    .spectrum-Link--secondary:focus {
+    }
 }
-.spectrum-Link--secondary,
-.spectrum-Link--secondary:active,
-.spectrum-Link--secondary:focus,
+.spectrum-Link--secondary {
+    /* .spectrum-Link--secondary */
+    color: linktext;
+}
 .spectrum-Link--secondary:hover {
-    /* .spectrum-Link--secondary,
-   * .spectrum-Link--secondary:active,
-   * .spectrum-Link--secondary:focus,
-   * .spectrum-Link--secondary:hover */
+    /* .spectrum-Link--secondary:hover */
+    color: linktext;
+}
+.spectrum-Link--secondary:active {
+    /* .spectrum-Link--secondary:active */
+    color: linktext;
+}
+.spectrum-Link--secondary:focus {
+    /* .spectrum-Link--secondary:focus */
     color: linktext;
 }

@@ -50,10 +50,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-ActionBar--sticky */
     left: 0;
 }
-:host([dir='ltr'][variant='sticky']),
 :host([dir='rtl'][variant='sticky']) {
-    /* [dir=ltr] .spectrum-ActionBar--sticky,
-   * [dir=rtl] .spectrum-ActionBar--sticky */
+    /* [dir=rtl] .spectrum-ActionBar--sticky */
+    right: 0;
+}
+:host([dir='ltr'][variant='sticky']) {
+    /* [dir=ltr] .spectrum-ActionBar--sticky */
     right: 0;
 }
 :host([dir='rtl'][variant='sticky']) {
@@ -62,7 +64,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([variant='sticky']) {
     /* .spectrum-ActionBar--sticky */
-    position: -webkit-sticky;
     position: sticky;
 }
 :host([flexible]) #popover {

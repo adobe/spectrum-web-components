@@ -668,10 +668,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-:host([variant='overBackground']:focus-visible),
 :host([variant='overBackground']:hover) {
-    /* .spectrum-Button--overBackground.focus-ring,
-   * .spectrum-Button--overBackground:hover */
+    /* .spectrum-Button--overBackground:hover */
+    background-color: var(
+        --spectrum-button-over-background-m-background-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    border-color: var(
+        --spectrum-button-over-background-m-border-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    color: inherit;
+}
+:host([variant='overBackground']:focus-visible) {
+    /* .spectrum-Button--overBackground.focus-ring */
     background-color: var(
         --spectrum-button-over-background-m-background-color-hover,
         var(--spectrum-global-color-static-white)
@@ -739,11 +749,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-:host([variant='overBackground'][quiet]:focus-visible),
 :host([variant='overBackground'][quiet]:hover) {
-    /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
-   * .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
-   * .spectrum-ClearButton--overBackground.focus-ring,
+    /* .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
    * .spectrum-ClearButton--overBackground:hover */
     background-color: var(
         --spectrum-button-quiet-over-background-m-background-color-hover,
@@ -761,6 +768,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='overBackground'][quiet]:focus-visible) {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-ClearButton--overBackground.focus-ring */
+    background-color: var(
+        --spectrum-button-quiet-over-background-m-background-color-hover,
+        hsla(0, 0%, 100%, 0.1)
+    );
+    border-color: var(
+        --spectrum-button-quiet-over-background-m-border-color-hover,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    color: var(
+        --spectrum-button-quiet-over-background-m-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
     box-shadow: none;
 }
 :host([variant='overBackground'][quiet]:focus-visible):after {

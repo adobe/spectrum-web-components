@@ -356,14 +356,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * [dir=ltr] [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track */
     left: auto;
 }
-:host([dir='ltr'][variant='range']) [dir='ltr'] .track,
-:host([dir='ltr'][variant='range']) [dir='rtl'] .track,
 :host([dir='ltr'][variant='range']) [dir='rtl'] .track,
 :host([dir='rtl'][variant='range']) [dir='rtl'] .track {
-    /* [dir=ltr] [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track,
-   * [dir=ltr] [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track,
-   * [dir=rtl] [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track,
+    /* [dir=rtl] [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track,
    * [dir=rtl] [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track */
+    right: auto;
+}
+:host([dir='ltr'][variant='range']) [dir='ltr'] .track,
+:host([dir='ltr'][variant='range']) [dir='rtl'] .track {
+    /* [dir=ltr] [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track,
+   * [dir=ltr] [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track */
     right: auto;
 }
 :host([dir='ltr'][variant='range']) [dir='rtl'] .track,
@@ -425,10 +427,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Slider-ramp */
     left: var(--spectrum-slider-track-margin-offset);
 }
-:host([dir='ltr']) #ramp,
 :host([dir='rtl']) #ramp {
-    /* [dir=ltr] .spectrum-Slider-ramp,
-   * [dir=rtl] .spectrum-Slider-ramp */
+    /* [dir=rtl] .spectrum-Slider-ramp */
+    right: var(--spectrum-slider-track-margin-offset);
+}
+:host([dir='ltr']) #ramp {
+    /* [dir=ltr] .spectrum-Slider-ramp */
     right: var(--spectrum-slider-track-margin-offset);
 }
 :host([dir='rtl']) #ramp {
@@ -689,10 +693,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Slider-tick:first-of-type .spectrum-Slider-tickLabel */
     left: 0;
 }
-:host([dir='ltr']) .tick:last-of-type .tickLabel,
 :host([dir='rtl']) .tick:first-of-type .tickLabel {
-    /* [dir=ltr] .spectrum-Slider-tick:last-of-type .spectrum-Slider-tickLabel,
-   * [dir=rtl] .spectrum-Slider-tick:first-of-type .spectrum-Slider-tickLabel */
+    /* [dir=rtl] .spectrum-Slider-tick:first-of-type .spectrum-Slider-tickLabel */
+    right: 0;
+}
+:host([dir='ltr']) .tick:last-of-type .tickLabel {
+    /* [dir=ltr] .spectrum-Slider-tick:last-of-type .spectrum-Slider-tickLabel */
     right: 0;
 }
 :host([dir='rtl']) .tick:last-of-type .tickLabel {
@@ -741,10 +747,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Slider-labelContainer */
     color: var(--spectrum-slider-m-label-text-color);
 }
-:host([variant='filled']) .track:first-child:before,
+:host([variant='filled']) .track:first-child:before {
+    /* .spectrum-Slider--filled .spectrum-Slider-track:first-child:before */
+    background: var(
+        --spectrum-slider-m-track-fill-color,
+        var(--spectrum-global-color-gray-700)
+    );
+}
 #fill:before {
-    /* .spectrum-Slider--filled .spectrum-Slider-track:first-child:before,
-   * .spectrum-Slider-fill:before */
+    /* .spectrum-Slider-fill:before */
     background: var(
         --spectrum-slider-m-track-fill-color,
         var(--spectrum-global-color-gray-700)
@@ -872,10 +883,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-300)
     );
 }
-:host([disabled][variant='filled']) .track:first-child:before,
+:host([disabled][variant='filled']) .track:first-child:before {
+    /* .spectrum-Slider.is-disabled.spectrum-Slider--filled .spectrum-Slider-track:first-child:before */
+    background: var(
+        --spectrum-slider-m-track-fill-color-disabled,
+        var(--spectrum-global-color-gray-300)
+    );
+}
 :host([disabled]) #fill:before {
-    /* .spectrum-Slider.is-disabled.spectrum-Slider--filled .spectrum-Slider-track:first-child:before,
-   * .spectrum-Slider.is-disabled .spectrum-Slider-fill:before */
+    /* .spectrum-Slider.is-disabled .spectrum-Slider-fill:before */
     background: var(
         --spectrum-slider-m-track-fill-color-disabled,
         var(--spectrum-global-color-gray-300)

@@ -128,6 +128,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #button {
     /* .spectrum-Radio-button */
     position: relative;
+    box-sizing: border-box;
+    width: var(--spectrum-radio-circle-diameter);
+    height: var(--spectrum-radio-circle-diameter);
     margin: calc(
             (
                     var(--spectrum-radio-height) -
@@ -138,20 +141,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-grow: 0;
     flex-shrink: 0;
 }
-#button,
-#button:before {
-    /* .spectrum-Radio-button,
-   * .spectrum-Radio-button:before */
-    box-sizing: border-box;
-    width: var(--spectrum-radio-circle-diameter);
-    height: var(--spectrum-radio-circle-diameter);
-}
 #button:before {
     /* .spectrum-Radio-button:before */
     display: block;
     z-index: 0;
     content: '';
+    box-sizing: border-box;
     position: absolute;
+    width: var(--spectrum-radio-circle-diameter);
+    height: var(--spectrum-radio-circle-diameter);
     border-radius: var(--spectrum-radio-radius);
     border-width: var(--spectrum-radio-circle-border-size);
     border-style: solid;

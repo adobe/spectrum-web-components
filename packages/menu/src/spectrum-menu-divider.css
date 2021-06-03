@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Menu-divider */
-    box-sizing: initial;
+    box-sizing: content-box;
     overflow: visible;
     height: var(--spectrum-listitem-divider-size);
     margin: calc(var(--spectrum-listitem-divider-padding) / 2)

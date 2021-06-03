@@ -294,6 +294,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #box {
     /* .spectrum-Checkbox-box */
     position: relative;
+    box-sizing: border-box;
+    width: var(--spectrum-checkbox-box-size);
+    height: var(--spectrum-checkbox-box-size);
     margin: calc(
             (
                     var(--spectrum-checkbox-height) -
@@ -304,20 +307,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-grow: 0;
     flex-shrink: 0;
 }
-#box,
-#box:before {
-    /* .spectrum-Checkbox-box,
-   * .spectrum-Checkbox-box:before */
-    box-sizing: border-box;
-    width: var(--spectrum-checkbox-box-size);
-    height: var(--spectrum-checkbox-box-size);
-}
 #box:before {
     /* .spectrum-Checkbox-box:before */
     display: block;
     z-index: 0;
     content: '';
+    box-sizing: border-box;
     position: absolute;
+    width: var(--spectrum-checkbox-box-size);
+    height: var(--spectrum-checkbox-box-size);
     border-radius: var(--spectrum-checkbox-box-border-radius);
     border-width: var(--spectrum-checkbox-box-border-size);
     border-style: solid;
@@ -688,7 +686,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-gray-600)
         );
     }
-    :host([invalid][indeterminate]) #box:before,
+    :host([invalid][indeterminate]) #box:before {
+        border-color: var(
+            --spectrum-checkbox-m-box-border-color-error,
+            var(--spectrum-global-color-red-500)
+        );
+    }
     :host([invalid][dir]) #input:checked + #box:before {
         border-color: var(
             --spectrum-checkbox-m-box-border-color-error,

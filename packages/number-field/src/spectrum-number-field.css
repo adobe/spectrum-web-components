@@ -120,14 +120,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * [dir=ltr] .spectrum-Stepper-stepUp */
     padding-left: var(--spectrum-stepper-button-padding);
 }
-:host([dir='ltr']) .stepDown,
-:host([dir='ltr']) .stepUp,
 :host([dir='rtl']) .stepDown,
 :host([dir='rtl']) .stepUp {
-    /* [dir=ltr] .spectrum-Stepper-stepDown,
-   * [dir=ltr] .spectrum-Stepper-stepUp,
-   * [dir=rtl] .spectrum-Stepper-stepDown,
+    /* [dir=rtl] .spectrum-Stepper-stepDown,
    * [dir=rtl] .spectrum-Stepper-stepUp */
+    padding-right: var(--spectrum-stepper-button-padding);
+}
+:host([dir='ltr']) .stepDown,
+:host([dir='ltr']) .stepUp {
+    /* [dir=ltr] .spectrum-Stepper-stepDown,
+   * [dir=ltr] .spectrum-Stepper-stepUp */
     padding-right: var(--spectrum-stepper-button-padding);
 }
 :host([dir='rtl']) .stepDown,

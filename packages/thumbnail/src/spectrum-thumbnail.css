@@ -29,6 +29,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     justify-content: center;
     width: var(--spectrum-thumbnail-size-M);
     height: var(--spectrum-thumbnail-size-M);
+    border-radius: var(--spectrum-thumbnail-border-radius);
     vertical-align: top;
     overflow: hidden;
     background-size: var(--spectrum-global-dimension-static-size-200, 16px)
@@ -39,12 +40,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)),
         calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)) 0;
 }
-:host,
-:host:before {
-    /* .spectrum-Thumbnail,
-   * .spectrum-Thumbnail:before */
-    border-radius: var(--spectrum-thumbnail-border-radius);
-}
 :host:before {
     /* .spectrum-Thumbnail:before */
     content: '';
@@ -52,6 +47,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: absolute;
     width: 100%;
     height: 100%;
+    border-radius: var(--spectrum-thumbnail-border-radius);
 }
 :host([size='s']) {
     /* .spectrum-Thumbnail--S */
