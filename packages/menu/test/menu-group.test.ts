@@ -223,14 +223,18 @@ describe('Menu group', () => {
                     <sp-menu-group id="mg-inherit">
                         <sp-menu-item>Inherit1</sp-menu-item>
                         <sp-menu-item>Inherit2</sp-menu-item>
+                        <sp-menu-group id="mg-sub-inherit">
+                            <sp-menu-item>SubInherit1</sp-menu-item>
+                            <sp-menu-item>SubInherit2</sp-menu-item>
+                        </sp-menu-group>
                     </sp-menu-group>
                 </sp-menu>
             `
         );
 
         await waitUntil(
-            () => el.menuItems.length == 4,
-            'expected outer menu to manage 4 items (2 are inherited)'
+            () => el.menuItems.length == 6,
+            'expected outer menu to manage 6 items (4 are inherited)'
         );
         await waitUntil(
             () => el.selectedItems.length == 1,
@@ -248,12 +252,33 @@ describe('Menu group', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
 
+        const subInheritGroup = el.querySelector(
+            'sp-menu-group#mg-sub-inherit'
+        ) as MenuGroup;
+        const subInheritItem1 = subInheritGroup.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+        const subInheritItem2 = subInheritGroup.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
         expect(inheritItem1.getAttribute('role')).to.equal('menuitemcheckbox');
         expect(inheritItem2.getAttribute('role')).to.equal('menuitemcheckbox');
+        expect(subInheritItem1.getAttribute('role')).to.equal(
+            'menuitemcheckbox'
+        );
+        expect(subInheritItem2.getAttribute('role')).to.equal(
+            'menuitemcheckbox'
+        );
 
         inheritGroup.setAttribute('selects', 'single');
 
         await elementUpdated(inheritGroup);
+
+        await waitUntil(
+            () => inheritGroup.menuItems.length == 4,
+            'expected new single sub-group to manage 4 items'
+        );
 
         await waitUntil(
             () => el.menuItems.length == 2,
@@ -262,5 +287,7 @@ describe('Menu group', () => {
 
         expect(inheritItem1.getAttribute('role')).to.equal('menuitemradio');
         expect(inheritItem2.getAttribute('role')).to.equal('menuitemradio');
+        expect(subInheritItem1.getAttribute('role')).to.equal('menuitemradio');
+        expect(subInheritItem2.getAttribute('role')).to.equal('menuitemradio');
     });
 });

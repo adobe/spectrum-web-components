@@ -138,16 +138,32 @@ export class MenuItem extends ActionButton {
         });
         this.dispatchEvent(removedEvent);
     }
+
+    public async triggerUpdate(): Promise<void> {
+        await new Promise((ready) => requestAnimationFrame(ready));
+        const updatedEvent = new CustomEvent('sp-menu-item-update', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                item: this,
+                inherited: false,
+                owned: false,
+            },
+        });
+        this.dispatchEvent(updatedEvent);
+    }
 }
 
 export interface MenuItemUpdateEvent {
     item: MenuItem;
     inherited: boolean;
+    owned: boolean;
 }
 
 declare global {
     interface GlobalEventHandlersEventMap {
         'sp-menu-item-added': CustomEvent<MenuItemUpdateEvent>;
+        'sp-menu-item-update': CustomEvent<MenuItemUpdateEvent>;
         'sp-menu-item-removed': CustomEvent<MenuItemUpdateEvent>;
     }
 }

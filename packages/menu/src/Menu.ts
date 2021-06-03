@@ -56,19 +56,28 @@ export class Menu extends SpectrumElement {
     @query('slot')
     private menuSlot!: HTMLSlotElement;
 
-    public menuItems = [] as MenuItem[];
+    @property({ attribute: false, type: String, reflect: true })
+    public get menuItems(): MenuItem[] {
+        if (this.cachedMenuItems !== undefined) {
+            return this.cachedMenuItems;
+        } else {
+            this.updateCachedMenuItems();
+            return this.cachedMenuItems || [];
+        }
+    }
+
     private menuItemSet = new Set() as Set<MenuItem>;
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
     private selectedItemsMap = new Map() as Map<MenuItem, boolean>;
 
-    private itemsChanged: boolean = false;
-
     private cachedResolvedSelects:
         | undefined
         | [string | undefined, string | null];
     private parentSelectsObservers: MutationObserver[] = [];
+
+    private cachedMenuItems: undefined | MenuItem[] = [];
 
     /**
      * Hide this getter from web-component-analyzer until
@@ -104,11 +113,13 @@ export class Menu extends SpectrumElement {
         this.parentSelectsObservers = [];
     }
 
-    private addParentSelectsObserver(parentMenu: Menu) {
+    private addParentSelectsObserver(parentMenu: HTMLElement) {
         const observer = new MutationObserver((mutationList) => {
             for (const mutation of mutationList) {
                 if (mutation.attributeName === 'selects') {
-                    // TODO: update menu items as well
+                    for (const item of this.menuItems) {
+                        item.triggerUpdate();
+                    }
                     this.cachedResolvedSelects = undefined;
                     this.clearParentSelectsObservers();
                     return;
@@ -136,7 +147,10 @@ export class Menu extends SpectrumElement {
                 parent = shadowRoot?.host as HTMLElement;
             }
             while (parent != null) {
-                if (parent instanceof Menu) {
+                if (
+                    parent instanceof Menu ||
+                    parent.localName == 'sp-menu-group'
+                ) {
                     this.addParentSelectsObserver(parent);
                     const selects = parent.getAttribute('selects');
                     const role = parent.getAttribute('role');
@@ -176,6 +190,32 @@ export class Menu extends SpectrumElement {
                     return;
                 }
                 event.stopPropagation();
+                item.setRole(this.childRole);
+                this.addItem(item);
+            }
+        );
+
+        this.addEventListener(
+            'sp-menu-item-update',
+            (event: CustomEvent<MenuItemUpdateEvent>) => {
+                const item = event.detail.item;
+                if (event.detail.owned) {
+                    // a child menu now owns this. Remove if we do now.
+                    this.removeItem(item);
+                    return;
+                }
+                if (!this.selects && this.resolvedSelects) {
+                    // We still track direct children for focus
+                    // TODO: need to be smarter about managing the focus list
+                    if (!event.detail.inherited) {
+                        event.detail.inherited = true;
+                        this.addItem(item);
+                    } else {
+                        this.removeItem(item);
+                    }
+                    return;
+                }
+                event.detail.owned = true;
                 item.setRole(this.childRole);
                 this.addItem(item);
             }
@@ -429,52 +469,48 @@ export class Menu extends SpectrumElement {
     }
 
     // debounce update this.menuItems so they're in DOM order
-    private async updateMenuItems(): Promise<void> {
-        this.itemsChanged = true;
+    private updateCachedMenuItems(): void {
+        this.cachedMenuItems = [];
 
-        return new Promise((resolve) => {
-            // debounce so we only actually update once
-            requestAnimationFrame(() => {
-                if (!this.itemsChanged) {
-                    resolve();
+        const slotElements =
+            this.menuSlot.assignedElements({ flatten: true }) || [];
+        for (const slotElement of slotElements) {
+            const childItems: MenuItem[] =
+                slotElement instanceof MenuItem
+                    ? [slotElement as MenuItem]
+                    : ([
+                          ...slotElement.querySelectorAll(
+                              `[role="${this.childRole}"]`
+                          ),
+                      ] as MenuItem[]);
+            for (const childItem of childItems) {
+                if (this.menuItemSet.has(childItem)) {
+                    this.cachedMenuItems.push(childItem);
                 }
+            }
+        }
+    }
 
-                this.menuItems = [];
-
-                const slotElements =
-                    this.menuSlot.assignedElements({ flatten: true }) || [];
-                for (const slotElement of slotElements) {
-                    const childItems: MenuItem[] =
-                        slotElement instanceof MenuItem
-                            ? [slotElement as MenuItem]
-                            : ([
-                                  ...slotElement.querySelectorAll(
-                                      `[role="${this.childRole}"]`
-                                  ),
-                              ] as MenuItem[]);
-                    for (const childItem of childItems) {
-                        if (this.menuItemSet.has(childItem)) {
-                            this.menuItems.push(childItem);
-                        }
-                    }
-                }
-
+    private handleItemsChanged() {
+        this.cachedMenuItems = undefined;
+        // Debounce the update so we only update once
+        // if multiple items have changed
+        window.requestAnimationFrame(() => {
+            if (this.cachedMenuItems === undefined) {
                 this.updateSelectedItemIndex();
                 this.updateItemFocus();
-                this.itemsChanged = false;
-                resolve();
-            });
+            }
         });
     }
 
     private addItem(item: MenuItem) {
         this.menuItemSet.add(item);
-        this.updateMenuItems();
+        this.handleItemsChanged();
     }
 
     private removeItem(itemToRemove: MenuItem) {
         this.menuItemSet.delete(itemToRemove);
-        this.updateMenuItems();
+        this.cachedMenuItems = undefined;
     }
 
     private async updateItemFocus() {
@@ -530,8 +566,9 @@ export class Menu extends SpectrumElement {
     protected updated(changes: PropertyValues): void {
         if (changes.has('selects')) {
             this.cachedResolvedSelects = undefined;
-            // TODO: update roles/selection and announce ownership change if
-            // we're going to/from inherits
+            for (const item of this.menuItems) {
+                item.triggerUpdate();
+            }
         }
     }
 }
