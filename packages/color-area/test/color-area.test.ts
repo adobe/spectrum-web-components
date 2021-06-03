@@ -50,11 +50,11 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.hue, 'hue').to.equal(100.00000000000003);
+        expect(el.hue, 'hue').to.equal(100);
         expect(el.x, 'x').to.equal(0.6666666666666666);
         expect(el.y, 'y').to.equal(0.25);
     });
-    it('accepts "color" values as hsls', async () => {
+    it('accepts "color" values as hsla', async () => {
         const el = await fixture<ColorArea>(
             html`
                 <sp-color-area color="hsla(100, 50%, 50%, 1)"></sp-color-area>
@@ -317,6 +317,44 @@ describe('ColorArea', () => {
         expect(el.hue).to.equal(0);
         expect(el.x).to.equal(0.53125);
         expect(el.y).to.equal(0.53125);
+    });
+    it('retains `hue` value when s = 0 in HSL format', async () => {
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area color="hsl(100, 50%, 50%)"></sp-color-area>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.hue, 'hue').to.equal(100);
+        expect(el.x, 'x').to.equal(0.6666666666666666);
+        expect(el.y, 'y').to.equal(0.25);
+        expect(el.color).to.equal('hsl(100, 50%, 50%)');
+
+        el.color = 'hsl(100, 0%, 50%)';
+        await elementUpdated(el);
+
+        expect(el.hue, 'new hue').to.equal(100);
+        expect(el.x, 'new x').to.equal(0);
+        expect(el.y, 'new y').to.equal(0.5);
+        expect(el.color).to.equal('hsl(100, 0%, 50%)');
+
+        el.color = { h: 100, s: 0.5, l: 0.5 };
+        await elementUpdated(el);
+
+        expect(el.hue).to.equal(100);
+        expect(el.x, 'x').to.equal(0.6666666666666666);
+        expect(el.y, 'y').to.equal(0.25);
+        expect(el.color).to.deep.equal({ h: 100, s: 0.5, l: 0.5, a: 1 });
+
+        el.color = { h: 100, s: 0, l: 0.5 };
+        await elementUpdated(el);
+
+        expect(el.hue).to.equal(100);
+        expect(el.x, 'x').to.equal(0);
+        expect(el.y, 'y').to.equal(0.5);
+        expect(el.color).to.deep.equal({ h: 100, s: 0, l: 0.5, a: 1 });
     });
     const colorFormats: {
         name: string;
