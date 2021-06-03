@@ -320,18 +320,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([invalid]:hover) {
     /* .spectrum-Tags-item.is-invalid:hover */
+    color: var(
+        --spectrum-tag-m-icon-color-error-hover,
+        var(--spectrum-semantic-negative-color-icon)
+    );
     border-color: var(
         --spectrum-tag-m-border-color-error-hover,
         var(--spectrum-semantic-negative-color-state-hover)
     );
 }
-:host([invalid]:focus-visible),
-:host([invalid]:hover),
 :host([invalid]:hover) .spectrum-Tags-itemClearButton,
 :host([invalid]:hover) .itemIcon {
-    /* .spectrum-Tags-item.is-invalid.focus-ring,
-   * .spectrum-Tags-item.is-invalid:hover,
-   * .spectrum-Tags-item.is-invalid:hover .spectrum-Tags-itemClearButton,
+    /* .spectrum-Tags-item.is-invalid:hover .spectrum-Tags-itemClearButton,
    * .spectrum-Tags-item.is-invalid:hover .spectrum-Tags-itemIcon */
     color: var(
         --spectrum-tag-m-icon-color-error-hover,
@@ -340,6 +340,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([invalid]:focus-visible) {
     /* .spectrum-Tags-item.is-invalid.focus-ring */
+    color: var(
+        --spectrum-tag-m-icon-color-error-hover,
+        var(--spectrum-semantic-negative-color-icon)
+    );
     border-color: var(
         --spectrum-tag-m-border-color-key-focus,
         var(--spectrum-alias-border-color-focus)

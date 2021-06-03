@@ -50,10 +50,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Tabs-item:before */
     left: calc(-1 * var(--spectrum-tabs-focus-ring-padding-x));
 }
-:host([dir='ltr']):before,
 :host([dir='rtl']):before {
-    /* [dir=ltr] .spectrum-Tabs-item:before,
-   * [dir=rtl] .spectrum-Tabs-item:before */
+    /* [dir=rtl] .spectrum-Tabs-item:before */
+    right: calc(-1 * var(--spectrum-tabs-focus-ring-padding-x));
+}
+:host([dir='ltr']):before {
+    /* [dir=ltr] .spectrum-Tabs-item:before */
     right: calc(-1 * var(--spectrum-tabs-focus-ring-padding-x));
 }
 :host([dir='rtl']):before {

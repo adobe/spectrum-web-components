@@ -123,10 +123,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Tabs-item:before */
     left: calc(-1 * var(--spectrum-tabs-focus-ring-padding-x));
 }
-:host([dir='ltr']) ::slotted(*):before,
 :host([dir='rtl']) ::slotted(*):before {
-    /* [dir=ltr] .spectrum-Tabs-item:before,
-   * [dir=rtl] .spectrum-Tabs-item:before */
+    /* [dir=rtl] .spectrum-Tabs-item:before */
+    right: calc(-1 * var(--spectrum-tabs-focus-ring-padding-x));
+}
+:host([dir='ltr']) ::slotted(*):before {
+    /* [dir=ltr] .spectrum-Tabs-item:before */
     right: calc(-1 * var(--spectrum-tabs-focus-ring-padding-x));
 }
 :host([dir='rtl']) ::slotted(*):before {
@@ -187,7 +189,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([direction='horizontal'][compact]) #list {
     /* .spectrum-Tabs--horizontal.spectrum-Tabs--compact */
-    box-sizing: initial;
+    box-sizing: content-box;
     height: var(--spectrum-tabs-compact-item-height);
     align-items: end;
 }
@@ -236,10 +238,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
     left: calc(-1 * var(--spectrum-tabs-focus-ring-size));
 }
-:host([dir='ltr'][direction='vertical']) ::slotted(*):before,
 :host([dir='rtl'][direction='vertical']) ::slotted(*):before {
-    /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before,
-   * [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+    /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+    right: calc(-1 * var(--spectrum-tabs-focus-ring-size));
+}
+:host([dir='ltr'][direction='vertical']) ::slotted(*):before {
+    /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
     right: calc(-1 * var(--spectrum-tabs-focus-ring-size));
 }
 :host([dir='rtl'][direction='vertical']) ::slotted(*):before {

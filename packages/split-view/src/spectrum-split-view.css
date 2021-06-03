@@ -131,10 +131,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
     left: 0;
 }
-:host([dir='ltr']) #splitter.is-collapsed-end #gripper,
 :host([dir='rtl']) #splitter.is-collapsed-start #gripper {
-    /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper,
-   * [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
+    /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
+    right: 0;
+}
+:host([dir='ltr']) #splitter.is-collapsed-end #gripper {
+    /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
     right: 0;
 }
 :host([dir='rtl']) #splitter.is-collapsed-end #gripper {

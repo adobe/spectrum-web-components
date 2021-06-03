@@ -686,7 +686,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card--gallery,
    * .spectrum-Card--quiet */
     border-color: transparent;
-    background-color: initial;
+    background-color: transparent;
 }
 :host([variant='gallery']) #preview,
 :host([variant='quiet']) #preview {
@@ -759,7 +759,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card--gallery.is-drop-target,
    * .spectrum-Card--quiet.is-drop-target */
     border-color: transparent;
-    background-color: initial;
+    background-color: transparent;
     box-shadow: none;
 }
 :host([variant='gallery'][drop-target]) #preview,
