@@ -23,10 +23,6 @@ import {
 import { MenuItem, MenuItemUpdateEvent } from './MenuItem.js';
 import menuStyles from './menu.css.js';
 
-export interface MenuQueryRoleEventDetail {
-    role: string;
-}
-
 /**
  * Spectrum Menu Component
  * @element sp-menu
@@ -104,7 +100,7 @@ export class Menu extends SpectrumElement {
                 parent = shadowRoot?.host as HTMLElement;
             }
             while (parent != null) {
-                if (parent.tagName === 'SP-MENU') {
+                if (parent.localName === 'sp-menu') {
                     const selects = parent.getAttribute('selects');
                     const role = parent.getAttribute('role');
                     if (selects === 'single' || selects === 'multiple') {
@@ -181,7 +177,6 @@ export class Menu extends SpectrumElement {
             }
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
-        /* c8 ignore next 3 */
         if (target && this.selects !== 'inherit') {
             event.preventDefault();
             event.stopImmediatePropagation();
@@ -435,12 +430,6 @@ export class Menu extends SpectrumElement {
     }
 
     private removeItem(itemToRemove: MenuItem) {
-        const newMenuItems: MenuItem[] = [];
-        for (const item of this.menuItems) {
-            if (item !== itemToRemove) {
-                newMenuItems.push(item);
-            }
-        }
         this.menuItemSet.delete(itemToRemove);
         this.updateMenuItems();
     }
@@ -453,7 +442,6 @@ export class Menu extends SpectrumElement {
     }
 
     private forwardFocusVisibleToitem(item: MenuItem): void {
-        console.log('forwarding focus');
         let shouldFocus = false;
         try {
             // Browsers without support for the `:focus-visible`
@@ -501,11 +489,5 @@ export class Menu extends SpectrumElement {
             // TODO: update roles/selection and announce ownership change if
             // we're going to/from inherits
         }
-    }
-}
-
-declare global {
-    interface GlobalEventHandlersEventMap {
-        'sp-menu-query-role': CustomEvent<MenuQueryRoleEventDetail>;
     }
 }

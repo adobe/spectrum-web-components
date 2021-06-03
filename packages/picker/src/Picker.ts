@@ -35,7 +35,6 @@ import {
     MenuItem,
     MenuItemUpdateEvent,
     Menu,
-    MenuQueryRoleEventDetail,
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
@@ -140,15 +139,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             'sp-menu-item-added',
             (event: CustomEvent<MenuItemUpdateEvent>) => {
                 event.stopPropagation();
-                event.detail.item.setAttribute('role', this.itemRole);
-            }
-        );
-
-        this.addEventListener(
-            'sp-menu-query-role',
-            (event: CustomEvent<MenuQueryRoleEventDetail>) => {
-                event.stopPropagation();
-                event.detail.role = this.listRole;
+                event.detail.item.setRole(this.itemRole);
             }
         );
     }
