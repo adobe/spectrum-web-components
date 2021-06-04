@@ -49,6 +49,7 @@
         "@internationalized/number": "^3.0.0",
         "@spectrum-web-components/base": "^0.4.4",
         "@spectrum-web-components/shared": "^0.12.5",
+        "@spectrum-web-components/theme": "^0.8.9",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

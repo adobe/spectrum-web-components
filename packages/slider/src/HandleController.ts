@@ -90,10 +90,6 @@ export class HandleController implements Controller {
         this.host.requestUpdate();
     }
 
-    public get language(): string {
-        return this.host.language;
-    }
-
     /**
      * It is possible for value attributes to be set programmatically. The <input>
      * for a particular slider needs to have an opportunity to validate any such
@@ -581,5 +577,12 @@ export class HandleController implements Controller {
         });
 
         this.model = modelValues;
+    }
+
+    public async handleUpdatesComplete(): Promise<void> {
+        const updates = [...this.handles.values()]
+            .filter((handle) => handle !== this.host)
+            .map((handle) => handle.updateComplete);
+        await Promise.all(updates);
     }
 }

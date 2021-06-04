@@ -83,6 +83,10 @@ updateTheme('light', 'medium');
 
 When bundling your application, be sure to consult the documentation of your bundler for the correct way to ensure proper packaging of the sort of programattic dependancy graph that this will create.
 
+### Language Context
+
+The `<sp-theme>` element provides a language context for its descendents in the DOM. Descendents can resolve this context by dispatching a `sp-language-context` DOM event and supplying a `callback(lang: string) => void` method in the `detail` entry of the Custom Event. These callbacks will be reactively envoked when the `lang` attribute on the `<sp-theme>` element is updated. In this way you can control the resolved language in [`<sp-number-field>`](./components/number-field), [`<sp-slider>`](./components/slider), and more elements in one centralized place.
+
 ## Light theme
 
 ```html demo

@@ -786,8 +786,8 @@ describe('Overlay Trigger', () => {
             ) as ActiveOverlay;
 
             expect(overlay).to.exist;
-            expect(overlay.color).to.not.equal('dark');
-            expect(overlay.color).to.equal('light');
+            expect(overlay.theme.color).to.not.equal('dark');
+            expect(overlay.theme.color).to.equal('light');
         });
         it('manages multiple layers of `type="modal"', async () => {
             const el = await fixture(html`

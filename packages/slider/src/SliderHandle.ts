@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import { property, PropertyValues } from '@spectrum-web-components/base';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { ProvideLang } from '@spectrum-web-components/theme';
 import {
     NumberFormatter,
     NumberFormatOptions,
@@ -30,7 +31,6 @@ export interface Controller {
     requestUpdate(): void;
     setValueFromHandle(handle: SliderHandle): void;
     handleHasChanged(handle: SliderHandle): void;
-    language: string;
 }
 
 export type SliderNormalization = {
@@ -97,6 +97,10 @@ export class SliderHandle extends Focusable {
     @property({ reflect: true, converter: MaxConverter })
     public max?: number | 'next';
 
+    @property({ attribute: false })
+    private resolvedLanguage =
+        document.documentElement.lang || navigator.language;
+
     @property({ type: Number, reflect: true })
     public step?: number;
 
@@ -114,19 +118,20 @@ export class SliderHandle extends Focusable {
         return numberFormat.format(value);
     };
 
-    protected updated(changedProperties: PropertyValues): void {
+    protected update(changes: PropertyValues): void {
+        if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
+            delete this._numberFormatCache;
+        }
+        super.update(changes);
+    }
+
+    protected updated(changedProperties: PropertyValues<this>): void {
         if (changedProperties.has('value')) {
             const oldValue = changedProperties.get('value');
             if (oldValue != null) {
                 this.handleController /* c8 ignore next */
                     ?.setValueFromHandle(this);
             }
-        }
-        if (
-            changedProperties.has('numberFormat') ||
-            changedProperties.has('language')
-        ) {
-            delete this._numberFormatCache;
         }
         this.handleController?.handleHasChanged(this);
         super.updated(changedProperties);
@@ -152,14 +157,16 @@ export class SliderHandle extends Focusable {
         | undefined;
     protected getNumberFormat(): Intl.NumberFormat {
         /* c8 ignore next */
-        const language = this.handleController?.language ?? navigator.language;
         if (
             !this._numberFormatCache ||
-            language !== this._numberFormatCache.language
+            this.resolvedLanguage !== this._numberFormatCache.language
         ) {
             this._numberFormatCache = {
-                language,
-                numberFormat: new NumberFormatter(language, this.formatOptions),
+                language: this.resolvedLanguage,
+                numberFormat: new NumberFormatter(
+                    this.resolvedLanguage,
+                    this.formatOptions
+                ),
             };
         }
         /* c8 ignore next */
@@ -169,5 +176,32 @@ export class SliderHandle extends Focusable {
     public get numberFormat(): NumberFormatter | undefined {
         if (!this.formatOptions) return;
         return this.getNumberFormat();
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.resolveLanguage();
+    }
+
+    public disconnectedCallback(): void {
+        this.resolveLanguage();
+        super.disconnectedCallback();
+    }
+
+    private resolveLanguage(): void {
+        const queryThemeEvent = new CustomEvent<ProvideLang>(
+            'sp-language-context',
+            {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    callback: (lang: string) => {
+                        this.resolvedLanguage = lang;
+                    },
+                },
+                cancelable: true,
+            }
+        );
+        this.dispatchEvent(queryThemeEvent);
     }
 }
