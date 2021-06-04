@@ -14,12 +14,26 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { ColorSlider } from '@spectrum-web-components/color-slider/src/ColorSlider';
+import { text } from 'express';
+import { string } from 'yargs';
 import '../sp-color-area.js';
 import { ColorArea } from '../src/ColorArea.js';
 
 export default {
     title: 'Color/Area',
     component: 'sp-color-area',
+    argTypes: {
+        color: {
+            name: 'color',
+            type: { name: 'ColorValue', required: 'true' },
+            description: 'The color displayed by the ColorArea.',
+            table: {
+                type: { summary: 'ColorValue' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
+        },
+    },
 };
 
 export const Default = (): TemplateResult => {
@@ -39,7 +53,7 @@ export const joint = (): TemplateResult => {
     return html`
         <div>
             <sp-color-area
-                color="#7f3e3e"
+                color="hsv(120, 0, 1)"
                 @input=${({ target }: Event & { target: ColorArea }) => {
                     const next = target.nextElementSibling as ColorSlider;
                     const display = next.nextElementSibling as HTMLElement;
@@ -49,7 +63,7 @@ export const joint = (): TemplateResult => {
                 }}
             ></sp-color-area>
             <sp-color-slider
-                color="#7f3e3e"
+                color="hsv(120, 0, 1)"
                 @input=${({
                     target: { color, previousElementSibling },
                 }: Event & {
@@ -60,7 +74,7 @@ export const joint = (): TemplateResult => {
                     previousElementSibling.color = color;
                 }}
             ></sp-color-slider>
-            <div style="color: #7f3e3e">#7f3e3e</div>
+            <div style="color: hsv(120, 0, 1)">hsv(120, 0, 1)</div>
         </div>
     `;
 };
