@@ -1385,7 +1385,7 @@
   dependencies:
     tslib "^2.1.0"
 
-"@formatjs/intl-numberformat@^7.1.0":
+"@formatjs/intl-numberformat@^7.1.4":
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/@formatjs/intl-numberformat/-/intl-numberformat-7.1.4.tgz#67f35b2c1f22d126879c7c7fb048cc627b2f38a3"
   integrity sha512-rOFMlx1oLaQ7tLUwWWaqMvjQ8n4Z/C7jUlBG0qfM4oSOksluKO4MEyJZZeYjRVuNEMipIj34h12t8KicXj6gKg==

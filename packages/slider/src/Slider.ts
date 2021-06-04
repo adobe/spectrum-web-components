@@ -71,9 +71,6 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
     private _variant = '';
 
-    @property({ type: String })
-    public language: string = navigator.language;
-
     @property({ attribute: false })
     public getAriaValueText: (values: Map<string, string>) => string = (
         values
@@ -284,5 +281,10 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
             '--spectrum-slider-track-segment-position': `${start * 100}%`,
         };
         return styles;
+    }
+
+    protected async _getUpdateComplete(): Promise<void> {
+        await super._getUpdateComplete();
+        await this.handleController.handleUpdatesComplete();
     }
 }

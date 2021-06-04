@@ -18,6 +18,7 @@ import {
     PropertyValues,
     query,
 } from '@spectrum-web-components/base';
+import { ProvideLang } from '@spectrum-web-components/theme';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
@@ -67,7 +68,7 @@ export class NumberField extends TextfieldBase {
 
     /**
      * An `<sp-number-field>` element will process its numeric value with
-     * `new Intl.NumberFormat(navigator.language, this.formatOptions).format(this.valueAsNumber)`
+     * `new Intl.NumberFormat(this.resolvedLanguage, this.formatOptions).format(this.valueAsNumber)`
      * in order to prepare it for visual delivery in the input. In order to customize this
      * processing supply your own `Intl.NumberFormatOptions` object here.
      *
@@ -90,6 +91,10 @@ export class NumberField extends TextfieldBase {
 
     @property({ type: Number })
     public min?: number;
+
+    @property({ attribute: false })
+    private resolvedLanguage =
+        document.documentElement.lang || navigator.language;
 
     /**
      * The distance by which to alter the value of the element when taking a "step".
@@ -124,24 +129,16 @@ export class NumberField extends TextfieldBase {
     }
 
     public set valueAsString(value: string) {
-        this.value = new NumberParser(
-            navigator.language,
-            this.formatOptions
-        ).parse(value);
+        this.value = this.numberParser.parse(value);
     }
 
     public get formattedValue(): string {
         if (isNaN(this.value)) return '';
-        return new NumberFormatter(
-            navigator.language,
-            this.formatOptions
-        ).format(this.value);
+        return this.numberFormatter.format(this.value);
     }
 
     private convertValueToNumber(value: string): number {
-        return new NumberParser(navigator.language, this.formatOptions).parse(
-            value
-        );
+        return this.numberParser.parse(value);
     }
 
     private get _step(): number {
@@ -331,13 +328,7 @@ export class NumberField extends TextfieldBase {
             }
         }
         if (typeof this.max !== 'undefined') {
-            if (typeof this.step !== 'undefined') {
-                while (value > this.max) {
-                    value -= this.step;
-                }
-            } else {
-                value = Math.min(this.max, value);
-            }
+            value = Math.min(this.max, value);
         }
         return value;
     }
@@ -345,6 +336,35 @@ export class NumberField extends TextfieldBase {
     protected get displayValue(): string {
         return this.formattedValue;
     }
+
+    protected clearNumberFormatterCache(): void {
+        this._numberFormatter = undefined;
+        this._numberParser = undefined;
+    }
+
+    protected get numberFormatter(): NumberFormatter {
+        if (!this._numberFormatter) {
+            this._numberFormatter = new NumberFormatter(
+                this.resolvedLanguage,
+                this.formatOptions
+            );
+        }
+        return this._numberFormatter;
+    }
+
+    private _numberFormatter?: NumberFormatter;
+
+    protected get numberParser(): NumberParser {
+        if (!this._numberParser) {
+            this._numberParser = new NumberParser(
+                this.resolvedLanguage,
+                this.formatOptions
+            );
+        }
+        return this._numberParser;
+    }
+
+    private _numberParser?: NumberParser;
 
     protected render(): TemplateResult {
         this.autocomplete = 'off';
@@ -413,6 +433,13 @@ export class NumberField extends TextfieldBase {
         `;
     }
 
+    protected update(changes: PropertyValues): void {
+        if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
+            this.clearNumberFormatterCache();
+        }
+        super.update(changes);
+    }
+
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.multiline = false;
@@ -426,10 +453,7 @@ export class NumberField extends TextfieldBase {
             changes.has('min') ||
             changes.has('min')
         ) {
-            const value = new NumberParser(
-                navigator.language,
-                this.formatOptions
-            ).parse(this.inputElement.value);
+            const value = this.numberParser.parse(this.inputElement.value);
             this.value = this.validateInput(value);
         }
         if (changes.has('min') || changes.has('formatOptions')) {
@@ -438,6 +462,7 @@ export class NumberField extends TextfieldBase {
             const { maximumFractionDigits } = this.formatOptions;
             const hasDecimals =
                 maximumFractionDigits && maximumFractionDigits > 0;
+            /* c8 ignore next 18 */
             if (isIPhone()) {
                 // iPhone doesn't have a minus sign in either numeric or decimal.
                 // Note this is only for iPhone, not iPad, which always has both
@@ -458,5 +483,32 @@ export class NumberField extends TextfieldBase {
             }
             this.inputElement.inputMode = inputMode;
         }
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.resolveLanguage();
+    }
+
+    public disconnectedCallback(): void {
+        this.resolveLanguage();
+        super.disconnectedCallback();
+    }
+
+    private resolveLanguage(): void {
+        const queryThemeEvent = new CustomEvent<ProvideLang>(
+            'sp-language-context',
+            {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    callback: (lang: string) => {
+                        this.resolvedLanguage = lang;
+                    },
+                },
+                cancelable: true,
+            }
+        );
+        this.dispatchEvent(queryThemeEvent);
     }
 }

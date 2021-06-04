@@ -17,6 +17,7 @@ import { tick } from '../stories/slider.stories.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { ProvideLang } from '@spectrum-web-components/theme';
 
 describe('Slider', () => {
     it('loads', async () => {
@@ -665,7 +666,16 @@ describe('Slider', () => {
 
         expect(input.getAttribute('aria-valuetext')).to.equal('100%');
     });
-    it('obeys lnaguage property', async () => {
+    it('obeys language property', async () => {
+        let lang = 'de';
+        const langResolvers: ProvideLang['callback'][] = [];
+        const createLangResolver = (event: CustomEvent<ProvideLang>): void => {
+            langResolvers.push(event.detail.callback);
+            resolveLanguage();
+        };
+        const resolveLanguage = (): void => {
+            langResolvers.forEach((resolver) => resolver(lang));
+        };
         let el = await fixture<Slider>(
             html`
                 <sp-slider
@@ -673,7 +683,7 @@ describe('Slider', () => {
                     min="0"
                     max="10"
                     step="0.01"
-                    language="de"
+                    @sp-language-context=${createLangResolver}
                     .formatOptions=${{ maximumFractionDigits: 2 }}
                 ></sp-slider>
             `
@@ -682,21 +692,35 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         let input = el.focusElement as HTMLInputElement;
-        expect(input.getAttribute('aria-valuetext')).to.equal('2,44');
+        expect(
+            input.getAttribute('aria-valuetext'),
+            'First German number'
+        ).to.equal('2,44');
 
-        el.language = 'en';
+        lang = 'en';
+        resolveLanguage();
         await elementUpdated(el);
 
-        expect(input.getAttribute('aria-valuetext')).to.equal('2.44');
+        expect(
+            input.getAttribute('aria-valuetext'),
+            'First English number'
+        ).to.equal('2.44');
 
+        lang = 'de';
+        resolveLanguage();
         el = await fixture<Slider>(
             html`
-                <sp-slider min="0" max="10" language="de">
+                <sp-slider
+                    min="0"
+                    max="10"
+                    @sp-language-context=${createLangResolver}
+                >
                     <sp-slider-handle
                         slot="handle"
                         step="0.01"
                         value="2.44"
                         .formatOptions=${{ maximumFractionDigits: 2 }}
+                        @sp-language-context=${createLangResolver}
                     ></sp-slider-handle>
                 </sp-slider>
             `
@@ -705,12 +729,19 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         input = el.focusElement as HTMLInputElement;
-        expect(input.getAttribute('aria-valuetext')).to.equal('2,44');
+        expect(
+            input.getAttribute('aria-valuetext'),
+            'Second German number'
+        ).to.equal('2,44');
 
-        el.language = 'en';
+        lang = 'en';
+        resolveLanguage();
         await elementUpdated(el);
 
-        expect(input.getAttribute('aria-valuetext')).to.equal('2.44');
+        expect(
+            input.getAttribute('aria-valuetext'),
+            'Second English number'
+        ).to.equal('2.44');
     });
     it('uses fallback ariaValueText', async () => {
         const el = await fixture<Slider>(
