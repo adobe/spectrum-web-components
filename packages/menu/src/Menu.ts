@@ -56,7 +56,6 @@ export class Menu extends SpectrumElement {
     @query('slot')
     private menuSlot!: HTMLSlotElement;
 
-    @property({ attribute: false, type: String, reflect: true })
     public get menuItems(): MenuItem[] {
         if (this.cachedMenuItems !== undefined) {
             return this.cachedMenuItems;
