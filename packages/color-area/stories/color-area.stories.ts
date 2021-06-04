@@ -14,8 +14,6 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { ColorSlider } from '@spectrum-web-components/color-slider/src/ColorSlider';
-import { text } from 'express';
-import { string } from 'yargs';
 import '../sp-color-area.js';
 import { ColorArea } from '../src/ColorArea.js';
 
