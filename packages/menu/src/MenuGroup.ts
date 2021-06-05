@@ -20,7 +20,7 @@ import {
 } from '@spectrum-web-components/base';
 
 import { MenuItem } from './MenuItem.js';
-import { Menu } from './Menu.js';
+import { Menu, MenuChildItem } from './Menu.js';
 import '../sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
@@ -57,8 +57,8 @@ export class MenuGroup extends SpectrumElement {
         }
     }
 
-    public get menuItems(): MenuItem[] {
-        return this.menu.menuItems;
+    public get childItems(): MenuChildItem[] {
+        return this.menu.childItems;
     }
 
     public get selectedItems(): MenuItem[] {

@@ -21,6 +21,10 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 
+const managedItems = (menu: Menu | MenuGroup) => {
+    return menu.childItems.filter((item: any) => item.managed);
+};
+
 describe('Menu group', () => {
     it('renders', async () => {
         const el = await fixture<Menu>(
@@ -43,14 +47,14 @@ describe('Menu group', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 5,
+            () => managedItems(el).length === 5,
             'expected menu group to manage 5 children'
         );
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
-    it('handles selects for nested menu groups', async () => {
+    it.only('handles selects for nested menu groups', async () => {
         const el = await fixture<Menu>(
             html`
                 <sp-menu selects="single">
@@ -81,11 +85,13 @@ describe('Menu group', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 4,
-            'expected outer menu to manage 4 items (2 are inherited)'
+            () => managedItems(el).length === 4,
+            `expected outer menu to manage 4 items (2 are inherited), got ${
+                managedItems(el).length
+            }, with ${el.childItems.length} total`
         );
         await waitUntil(
-            () => el.selectedItems.length == 1,
+            () => el.selectedItems.length === 1,
             'expected 1 selected item'
         );
         await elementUpdated(el);
@@ -108,7 +114,7 @@ describe('Menu group', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
         await waitUntil(
-            () => multiGroup.menuItems.length == 4,
+            () => managedItems(multiGroup).length === 4,
             'selects="#mg-multi should manage 4 items (2 are inherited)'
         );
 
@@ -123,7 +129,7 @@ describe('Menu group', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
         await waitUntil(
-            () => singleGroup.menuItems.length == 2,
+            () => managedItems(singleGroup).length === 2,
             'selects="#mg-none should manage 4 items (2 are inherited)'
         );
 
@@ -137,7 +143,7 @@ describe('Menu group', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
         await waitUntil(
-            () => noneGroup.menuItems.length == 2,
+            () => managedItems(noneGroup).length === 2,
             'selects="#mg-none should manage 4 items (2 are inherited)'
         );
 
@@ -233,8 +239,8 @@ describe('Menu group', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 6,
-            'expected outer menu to manage 6 items (4 are inherited)'
+            () => managedItems(el).length == 6,
+            'expected outer menu to manage 6 items'
         );
         await waitUntil(
             () => el.selectedItems.length == 1,
@@ -276,12 +282,12 @@ describe('Menu group', () => {
         await elementUpdated(inheritGroup);
 
         await waitUntil(
-            () => inheritGroup.menuItems.length == 4,
+            () => managedItems(inheritGroup).length === 4,
             'expected new single sub-group to manage 4 items'
         );
 
         await waitUntil(
-            () => el.menuItems.length == 2,
+            () => managedItems(el).length === 2,
             'expected outer menu to manage 2 items and no longer inherit'
         );
 

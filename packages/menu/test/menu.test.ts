@@ -126,7 +126,7 @@ describe('Menu', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 6,
+            () => el.childItems.length == 6,
             'expected menu to manage 6 menu items'
         );
         await elementUpdated(el);
@@ -150,7 +150,7 @@ describe('Menu', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 3,
+            () => el.childItems.length == 3,
             'expected menu to manage 3 items'
         );
         await elementUpdated(el);
@@ -176,7 +176,7 @@ describe('Menu', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 6,
+            () => el.childItems.length == 6,
             'expected menu to manage 6 items'
         );
         await elementUpdated(el);
@@ -222,7 +222,7 @@ describe('Menu', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 1,
+            () => el.childItems.length == 1,
             'expected menu to manage 1 item'
         );
         await elementUpdated(el);
@@ -247,7 +247,7 @@ describe('Menu', () => {
         group.append(appendedItem);
 
         await waitUntil(
-            () => el.menuItems.length == 3,
+            () => el.childItems.length == 3,
             'expected menu to manage 3 items'
         );
         await elementUpdated(el);
@@ -278,7 +278,7 @@ describe('Menu', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 3,
+            () => el.childItems.length == 3,
             'expected menu to manage 3 items'
         );
         await elementUpdated(el);
@@ -356,7 +356,7 @@ describe('Menu', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 3,
+            () => el.childItems.length == 3,
             'expected menu to manage 3 items'
         );
         await waitUntil(
@@ -404,7 +404,7 @@ describe('Menu', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 3,
+            () => el.childItems.length == 3,
             'expected menu to manage 3 items'
         );
         await elementUpdated(el);

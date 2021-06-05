@@ -34,7 +34,7 @@ describe('Menu item', () => {
         );
 
         await waitUntil(
-            () => el.menuItems.length == 1,
+            () => el.childItems.length == 1,
             'expected menu group to manage 1 child'
         );
         await elementUpdated(el);

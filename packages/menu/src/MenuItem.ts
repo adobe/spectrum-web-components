@@ -146,7 +146,6 @@ export class MenuItem extends ActionButton {
             composed: true,
             detail: {
                 item: this,
-                inherited: false,
                 owned: false,
             },
         });
@@ -156,7 +155,6 @@ export class MenuItem extends ActionButton {
 
 export interface MenuItemUpdateEvent {
     item: MenuItem;
-    inherited: boolean;
     owned: boolean;
 }
 

@@ -23,6 +23,12 @@ import {
 import { MenuItem, MenuItemUpdateEvent } from './MenuItem.js';
 import menuStyles from './menu.css.js';
 
+export interface MenuChildItem {
+    menuItem: MenuItem;
+    managed: boolean;
+    active: boolean;
+}
+
 /**
  * Spectrum Menu Component
  * @element sp-menu
@@ -56,16 +62,16 @@ export class Menu extends SpectrumElement {
     @query('slot')
     private menuSlot!: HTMLSlotElement;
 
-    public get menuItems(): MenuItem[] {
-        if (this.cachedMenuItems !== undefined) {
-            return this.cachedMenuItems;
+    public get childItems(): MenuChildItem[] {
+        if (this.cachedChildItems !== undefined) {
+            return this.cachedChildItems;
         } else {
             this.updateCachedMenuItems();
-            return this.cachedMenuItems || [];
+            return this.cachedChildItems || [];
         }
     }
 
-    private menuItemSet = new Set() as Set<MenuItem>;
+    private childItemMap = new Map() as Map<MenuItem, MenuChildItem>;
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
@@ -76,7 +82,7 @@ export class Menu extends SpectrumElement {
         | [string | undefined, string | null];
     private parentSelectsObservers: MutationObserver[] = [];
 
-    private cachedMenuItems: undefined | MenuItem[] = [];
+    private cachedChildItems: undefined | MenuChildItem[] = [];
 
     /**
      * Hide this getter from web-component-analyzer until
@@ -116,8 +122,8 @@ export class Menu extends SpectrumElement {
         const observer = new MutationObserver((mutationList) => {
             for (const mutation of mutationList) {
                 if (mutation.attributeName === 'selects') {
-                    for (const item of this.menuItems) {
-                        item.triggerUpdate();
+                    for (const child of this.childItems) {
+                        child.menuItem.triggerUpdate();
                     }
                     this.cachedResolvedSelects = undefined;
                     this.clearParentSelectsObservers();
@@ -173,58 +179,41 @@ export class Menu extends SpectrumElement {
         return this.cachedResolvedSelects;
     }
 
+    private onItemAdded(event: CustomEvent<MenuItemUpdateEvent>): void {
+        const item = event.detail.item;
+        let managed = !!this.selects;
+        if (event.detail.owned) {
+            managed = false;
+        } else if (this.selects) {
+            event.detail.owned = true;
+            item.setRole(this.childRole);
+        } else if (!this.resolvedSelects) {
+            item.setRole(this.childRole);
+        }
+        this.addChildItem({
+            menuItem: item,
+            managed: managed,
+            active: false,
+        });
+    }
+
     public constructor() {
         super();
 
         this.addEventListener(
             'sp-menu-item-added',
-            (event: CustomEvent<MenuItemUpdateEvent>) => {
-                const item = event.detail.item;
-                if (!this.selects && this.resolvedSelects) {
-                    // We still track children for focus
-                    if (!event.detail.inherited) {
-                        event.detail.inherited = true;
-                        this.addItem(item);
-                    }
-                    return;
-                }
-                event.stopPropagation();
-                item.setRole(this.childRole);
-                this.addItem(item);
-            }
+            (event: CustomEvent<MenuItemUpdateEvent>) => this.onItemAdded(event)
         );
 
         this.addEventListener(
             'sp-menu-item-update',
-            (event: CustomEvent<MenuItemUpdateEvent>) => {
-                const item = event.detail.item;
-                if (event.detail.owned) {
-                    // a child menu now owns this. Remove if we do now.
-                    this.removeItem(item);
-                    return;
-                }
-                if (!this.selects && this.resolvedSelects) {
-                    // We still track direct children for focus
-                    // TODO: need to be smarter about managing the focus list
-                    if (!event.detail.inherited) {
-                        event.detail.inherited = true;
-                        this.addItem(item);
-                    } else {
-                        this.removeItem(item);
-                    }
-                    return;
-                }
-                event.detail.owned = true;
-                item.setRole(this.childRole);
-                this.addItem(item);
-            }
+            (event: CustomEvent<MenuItemUpdateEvent>) => this.onItemAdded(event)
         );
 
         this.addEventListener(
             'sp-menu-item-removed',
             (event: CustomEvent<MenuItemUpdateEvent>) => {
-                event.stopPropagation();
-                this.removeItem(event.detail.item);
+                this.removeChildItem(event.detail.item);
             }
         );
 
@@ -241,8 +230,8 @@ export class Menu extends SpectrumElement {
 
     public focus(): void {
         if (
-            !this.menuItems.length ||
-            this.menuItems.every((item) => item.disabled)
+            !this.childItems.length ||
+            this.childItems.every((childItem) => childItem.menuItem.disabled)
         ) {
             return;
         }
@@ -259,7 +248,8 @@ export class Menu extends SpectrumElement {
             }
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
-        if (target && this.selects) {
+        const childItem = this.childItemMap.get(target);
+        if (childItem?.managed && this.selects) {
             event.preventDefault();
             event.stopImmediatePropagation();
             this.selectOrToggleItem(target);
@@ -276,8 +266,8 @@ export class Menu extends SpectrumElement {
         if (activeElement !== this) {
             this.focus();
             if (activeElement && this.focusedItemIndex === 0) {
-                const offset = this.menuItems.indexOf(
-                    activeElement as MenuItem
+                const offset = this.childItems.findIndex(
+                    (childItem) => childItem.menuItem === activeElement
                 );
                 if (offset > 0) {
                     this.focusMenuItemByOffset(offset);
@@ -290,7 +280,7 @@ export class Menu extends SpectrumElement {
 
     public handleFocusout(): void {
         this.stopListeningToKeyboard();
-        const focusedItem = this.menuItems[this.focusedItemIndex] as MenuItem;
+        const focusedItem = this.childItems[this.focusedItemIndex]?.menuItem;
         if (focusedItem) {
             focusedItem.focused = false;
         }
@@ -330,10 +320,13 @@ export class Menu extends SpectrumElement {
             let valueSet: boolean = false;
             let selected: string[] = [];
             let selectedItems: MenuItem[] = [];
-            for (const menuItem of this.menuItems) {
-                if (this.selectedItemsMap.has(menuItem)) {
+
+            for (const childItem of this.childItems) {
+                if (!childItem.managed) continue;
+
+                if (this.selectedItemsMap.has(childItem.menuItem)) {
                     if (!valueSet) {
-                        this.value = menuItem.value;
+                        this.value = childItem.menuItem.value;
                         valueSet = true;
                     }
                     selected.push(item.value);
@@ -378,13 +371,14 @@ export class Menu extends SpectrumElement {
             return;
         }
         if (code === 'Space' || code === 'Enter') {
-            this.menuItems[this.focusedItemIndex].click();
+            this.childItems[this.focusedItemIndex]?.menuItem.click();
             return;
         }
         if (code !== 'ArrowDown' && code !== 'ArrowUp') {
             return;
         }
-        const lastFocusedItem = this.menuItems[this.focusedItemIndex];
+        const lastFocusedItem = this.childItems[this.focusedItemIndex]
+            ?.menuItem;
         const direction = code === 'ArrowDown' ? 1 : -1;
         const itemToFocus = this.focusMenuItemByOffset(direction);
         if (itemToFocus === lastFocusedItem) {
@@ -396,20 +390,20 @@ export class Menu extends SpectrumElement {
 
     public focusMenuItemByOffset(offset: number): MenuItem {
         const step = offset || 1;
-        const focusedItem = this.menuItems[this.focusedItemIndex] as MenuItem;
+        const focusedItem = this.childItems[this.focusedItemIndex]?.menuItem;
         focusedItem.focused = false;
         this.focusedItemIndex =
-            (this.menuItems.length + this.focusedItemIndex + offset) %
-            this.menuItems.length;
-        let itemToFocus = this.menuItems[this.focusedItemIndex] as MenuItem;
-        let availableItems = this.menuItems.length;
+            (this.childItems.length + this.focusedItemIndex + offset) %
+            this.childItems.length;
+        let itemToFocus = this.childItems[this.focusedItemIndex]?.menuItem;
+        let availableItems = this.childItems.length;
         // cycle through the available items in the directions of the offset to find the next non-disabled item
         while (itemToFocus.disabled && availableItems) {
             availableItems -= 1;
             this.focusedItemIndex =
-                (this.menuItems.length + this.focusedItemIndex + step) %
-                this.menuItems.length;
-            itemToFocus = this.menuItems[this.focusedItemIndex] as MenuItem;
+                (this.childItems.length + this.focusedItemIndex + step) %
+                this.childItems.length;
+            itemToFocus = this.childItems[this.focusedItemIndex]?.menuItem;
         }
         // if there are no non-disabled items, skip the work to focus a child
         if (!itemToFocus.disabled) {
@@ -424,15 +418,12 @@ export class Menu extends SpectrumElement {
             'focusout',
             () => {
                 requestAnimationFrame(() => {
-                    /* c8 ignore next 3 */
-                    if (this.menuItems.length === 0) {
-                        return;
+                    const focusedItem = this.childItems[this.focusedItemIndex]
+                        ?.menuItem;
+                    if (focusedItem) {
+                        focusedItem.focused = false;
+                        this.updateSelectedItemIndex();
                     }
-                    const focusedItem = this.menuItems[
-                        this.focusedItemIndex
-                    ] as MenuItem;
-                    focusedItem.focused = false;
-                    this.updateSelectedItemIndex();
                 });
             },
             { once: true }
@@ -440,21 +431,24 @@ export class Menu extends SpectrumElement {
     }
 
     public updateSelectedItemIndex(): void {
-        let index = this.menuItems.length - 1;
-        let item = this.menuItems[index] as MenuItem;
+        let index = this.childItems.length - 1;
+        let item = this.childItems[index]?.menuItem;
         while (index && item && !item.selected) {
             index -= 1;
-            item = this.menuItems[index] as MenuItem;
+            item = this.childItems[index].menuItem;
         }
         index = Math.max(index, 0);
         const selectedItemsMap = new Map<MenuItem, boolean>();
         const selected: string[] = [];
         const selectedItems: MenuItem[] = [];
-        this.menuItems.forEach((item, i) => {
-            if (item.selected) {
-                selectedItemsMap.set(item, true);
-                selected.push(item.value);
-                selectedItems.push(item);
+        this.childItems.forEach((childItem, i) => {
+            if (!childItem.managed) return;
+
+            const menuItem = childItem.menuItem;
+            if (menuItem.selected) {
+                selectedItemsMap.set(menuItem, true);
+                selected.push(menuItem.value);
+                selectedItems.push(menuItem);
             }
             if (i !== index) {
                 item.focused = false;
@@ -469,12 +463,12 @@ export class Menu extends SpectrumElement {
 
     // debounce update this.menuItems so they're in DOM order
     private updateCachedMenuItems(): void {
-        this.cachedMenuItems = [];
+        this.cachedChildItems = [];
 
         const slotElements =
             this.menuSlot.assignedElements({ flatten: true }) || [];
         for (const slotElement of slotElements) {
-            const childItems: MenuItem[] =
+            const childMenuItems: MenuItem[] =
                 slotElement instanceof MenuItem
                     ? [slotElement as MenuItem]
                     : ([
@@ -482,38 +476,44 @@ export class Menu extends SpectrumElement {
                               `[role="${this.childRole}"]`
                           ),
                       ] as MenuItem[]);
-            for (const childItem of childItems) {
-                if (this.menuItemSet.has(childItem)) {
-                    this.cachedMenuItems.push(childItem);
+
+            for (const childMenuItem of childMenuItems) {
+                if (this.childItemMap.has(childMenuItem)) {
+                    this.cachedChildItems.push(
+                        this.childItemMap.get(childMenuItem) as MenuChildItem
+                    );
                 }
             }
         }
     }
 
     private handleItemsChanged() {
-        this.cachedMenuItems = undefined;
+        this.cachedChildItems = undefined;
         // Debounce the update so we only update once
         // if multiple items have changed
         window.requestAnimationFrame(() => {
-            if (this.cachedMenuItems === undefined) {
+            if (this.cachedChildItems === undefined) {
                 this.updateSelectedItemIndex();
                 this.updateItemFocus();
             }
         });
     }
 
-    private addItem(item: MenuItem) {
-        this.menuItemSet.add(item);
+    private addChildItem(item: MenuChildItem) {
+        this.childItemMap.set(item.menuItem, item);
         this.handleItemsChanged();
     }
 
-    private removeItem(itemToRemove: MenuItem) {
-        this.menuItemSet.delete(itemToRemove);
-        this.cachedMenuItems = undefined;
+    private removeChildItem(itemToRemove: MenuItem) {
+        this.childItemMap.delete(itemToRemove);
+        this.cachedChildItems = undefined;
     }
 
     private async updateItemFocus() {
-        const focusInItem = this.menuItems[this.focusInItemIndex] as MenuItem;
+        if (this.childItems.length == 0) {
+            return;
+        }
+        const focusInItem = this.childItems[this.focusInItemIndex].menuItem;
         if ((this.getRootNode() as Document).activeElement === this) {
             this.forwardFocusVisibleToitem(focusInItem);
         }
@@ -565,8 +565,8 @@ export class Menu extends SpectrumElement {
     protected updated(changes: PropertyValues): void {
         if (changes.has('selects')) {
             this.cachedResolvedSelects = undefined;
-            for (const item of this.menuItems) {
-                item.triggerUpdate();
+            for (const childItem of this.childItems) {
+                childItem.menuItem.triggerUpdate();
             }
         }
     }
