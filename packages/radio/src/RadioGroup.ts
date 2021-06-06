@@ -17,6 +17,7 @@ import {
     queryAssignedNodes,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { FieldGroup } from '@spectrum-web-components/field-group';
 
 import { Radio } from './Radio.js';
@@ -26,12 +27,15 @@ import { Radio } from './Radio.js';
  * @slot - The `sp-radio` elements to display/manage in the group.
  *
  */
-export class RadioGroup extends FieldGroup {
+export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ type: String })
     public name = '';
 
     @queryAssignedNodes('')
     public defaultNodes!: Node[];
+
+    @property()
+    public label = '';
 
     public get buttons(): Radio[] {
         return this.defaultNodes.filter(
@@ -206,6 +210,7 @@ export class RadioGroup extends FieldGroup {
 
     protected firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
+        this.setAttribute('role', 'radiogroup');
         const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
         const checkedRadioValue = checkedRadio ? checkedRadio.value : '';
         // Prefer the checked item over the selected value
@@ -246,6 +251,13 @@ export class RadioGroup extends FieldGroup {
         super.updated(changes);
         if (changes.has('selected')) {
             this.validateRadios();
+        }
+        if (changes.has('label')) {
+            if (this.label) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
         }
     }
 
