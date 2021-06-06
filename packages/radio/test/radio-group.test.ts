@@ -26,7 +26,11 @@ import {
     pageDownEvent,
     enterEvent,
 } from '../../../test/testing-helpers.js';
-import { executeServerCommand } from '@web/test-runner-commands';
+import {
+    a11ySnapshot,
+    executeServerCommand,
+    findAccessibilityNode,
+} from '@web/test-runner-commands';
 
 describe('Radio Group - focus control', () => {
     it('does not accept focus when empty', async () => {
@@ -218,27 +222,28 @@ describe('Radio Group - focus control', () => {
 
         radio2.focus();
         await elementUpdated(el);
+        expect(document.activeElement === radio2, 'start 2').to.be.true;
 
         el.dispatchEvent(enterEvent);
         el.dispatchEvent(endEvent);
         await elementUpdated(el);
 
-        expect(document.activeElement === radio4).to.be.true;
+        expect(document.activeElement === radio4, 'first 4').to.be.true;
 
         el.dispatchEvent(homeEvent);
         await elementUpdated(el);
 
-        expect(document.activeElement === radio2).to.be.true;
+        expect(document.activeElement === radio2, 'second 2').to.be.true;
 
         el.dispatchEvent(arrowUpEvent);
         await elementUpdated(el);
 
-        expect(document.activeElement === radio4).to.be.true;
+        expect(document.activeElement === radio4, 'third 4').to.be.true;
 
         el.dispatchEvent(arrowDownEvent);
         await elementUpdated(el);
 
-        expect(document.activeElement === radio2).to.be.true;
+        expect(document.activeElement === radio2, 'fourth 2').to.be.true;
     });
     it('loads accepts "PageUp" and "PageDown" keys', async () => {
         const el = await fixture<HTMLDivElement>(
@@ -295,11 +300,58 @@ describe('Radio Group - focus control', () => {
     });
 });
 
-function inputForRadio(radio: Radio): HTMLInputElement {
-    if (!radio.shadowRoot) throw new Error('No shadowRoot');
+describe('Group Accessibility', () => {
+    it('created the expected accessibility tree', async () => {
+        await fixture(html`
+            <sp-radio-group label="Testing Label" tabindex="0">
+                <sp-radio value="first">Option 1</sp-radio>
+                <sp-radio value="second" checked>Option 2</sp-radio>
+                <sp-radio value="third">Option 3</sp-radio>
+            </sp-radio-group>
+        `);
 
-    return radio.shadowRoot.querySelector('#input') as HTMLInputElement;
-}
+        type NamedRoledAndCheckedNode = {
+            name: string;
+            role: string;
+            checked: boolean;
+        };
+        const snapshot = ((await a11ySnapshot(
+            {}
+        )) as unknown) as NamedRoledAndCheckedNode & {
+            children: NamedRoledAndCheckedNode[];
+        };
+
+        expect(
+            findAccessibilityNode<NamedRoledAndCheckedNode>(
+                snapshot,
+                (
+                    node // Firefox uses 'group' instead of 'radiogroup' here.
+                ) =>
+                    (node.role === 'radiogroup' || node.role === 'group') &&
+                    node.name === 'Testing Label'
+            ),
+            'Has a "radiogroup" with the supplied name'
+        ).to.not.be.null;
+        expect(
+            findAccessibilityNode<NamedRoledAndCheckedNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'radio' &&
+                    node.checked &&
+                    node.name === 'Option 2'
+            ),
+            'Has a named and checked "radio" element'
+        ).to.not.be.null;
+        expect(
+            findAccessibilityNode<NamedRoledAndCheckedNode>(
+                snapshot,
+                (node) =>
+                    node.name === 'Option 2' && node.role.startsWith('text')
+            ),
+            'Does not have a text leaf named like the "radio" element'
+        ).to.be.null;
+    });
+});
 
 describe('Radio Group', () => {
     let testDiv!: HTMLDivElement;
@@ -425,7 +477,7 @@ describe('Radio Group', () => {
         expect(thirdRadio.checked).to.be.false;
         expect(radioGroup.selected).to.equal(firstRadio.value);
 
-        inputForRadio(secondRadio).click();
+        secondRadio.click();
         await elementUpdated(radioGroup);
 
         expect(firstRadio.checked).to.be.false;
@@ -433,7 +485,7 @@ describe('Radio Group', () => {
         expect(thirdRadio.checked).to.be.false;
         expect(radioGroup.selected).to.equal(secondRadio.value);
 
-        inputForRadio(thirdRadio).click();
+        thirdRadio.click();
         await elementUpdated(radioGroup);
 
         expect(firstRadio.checked).to.be.false;
@@ -463,7 +515,7 @@ describe('Radio Group', () => {
             'sp-radio[disabled]'
         ) as Radio;
 
-        inputForRadio(disabledRadio).click();
+        disabledRadio.click();
         await elementUpdated(radioGroup);
 
         expect(disabledRadio.checked).to.be.false;
@@ -538,7 +590,7 @@ describe('Radio Group', () => {
         ) as Radio;
 
         expect(radioGroup.selected).to.equal('third');
-        inputForRadio(radio2).click();
+        radio2.click();
         await elementUpdated(radioGroup);
 
         expect(radioGroup.selected).to.equal('second');
