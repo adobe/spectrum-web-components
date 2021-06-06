@@ -30,7 +30,7 @@ export class DelayedReady extends SpectrumElement {
     _delayedReady!: Promise<void>;
     _resolveDelayedReady!: () => void;
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
             <slot @slotchange=${this.handleSlotchange}></slot>
         `;

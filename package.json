@@ -42,7 +42,7 @@
         "lint:docs": "eslint -f pretty \"documentation/**/*.ts\"",
         "lint:js": "pretty-quick --pattern \"tasks/**/*.js\" && pretty-quick --pattern \"scripts/**/*.js\"",
         "lint:packagejson": "pretty-quick --pattern package.json packages/*/package.json projects/*/package.json",
-        "lint:ts": "pretty-quick --pattern \"packages/**/*.ts\"",
+        "lint:ts": "pretty-quick --pattern \"packages/**/*.ts\" && eslint -f pretty \"packages/**/*.ts\"",
         "lint:versions": "node ./scripts/lint-versions.js",
         "new-package": "cd projects/templates && plop",
         "postcustom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,icons-ui,icons-workflow,iconset,modal,shared,styles},example-project-rollup,example-project-webpack,swc-templates}\" -- test -f custom-elements.json",

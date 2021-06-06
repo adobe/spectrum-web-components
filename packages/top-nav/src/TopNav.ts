@@ -1,3 +1,4 @@
+/* eslint-disable lit-a11y/click-events-have-key-events */
 /*
 Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");

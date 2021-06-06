@@ -12,6 +12,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "no-debugger": 2,
         "import/extensions": ["error", "ignorePackages", { "ts": "never" }],
         "import/prefer-default-export": "off",
         "spectrum-web-components/prevent-argument-names": [
