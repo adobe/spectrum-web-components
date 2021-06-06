@@ -13,6 +13,7 @@
         "plugin:lit-a11y/recommended"
     ],
     "rules": {
+        "no-debugger": 2,
         "spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]

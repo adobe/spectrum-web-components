@@ -27,7 +27,7 @@ import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';
 
-const preventDefault = (event: KeyboardEvent) => event.preventDefault();
+const preventDefault = (event: KeyboardEvent): void => event.preventDefault();
 
 /**
  * @element sp-color-area

@@ -45,7 +45,6 @@ export class RadioGroup extends FieldGroup {
     }
 
     public focus(): void {
-        debugger;
         if (!this.buttons.length) {
             return;
         }
