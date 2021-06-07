@@ -365,7 +365,7 @@ export class ColorSlider extends Focusable {
                 step=${this.step}
                 aria-label=${this.label}
                 .value=${String(this.value)}
-                @input=${this.handleInputChange}
+                @change=${this.handleInputChange}
                 @keydown=${this.handleKeydown}
                 @keyup=${this.handleKeyup}
                 @focus=${this.handleFocus}

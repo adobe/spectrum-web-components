@@ -448,6 +448,26 @@ describe('ColorSlider', () => {
 
         expect(el.sliderHandlePosition).to.equal(46.875);
     });
+    it('accepts change events', async () => {
+        const el = await fixture<ColorSlider>(
+            html`
+                <sp-color-slider></sp-color-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(0);
+
+        const input = el.shadowRoot.querySelector('input') as HTMLInputElement;
+        input.value = '300';
+        input.dispatchEvent(new Event('change'));
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(300);
+    });
+
     const colorFormats: {
         name: string;
         color:
