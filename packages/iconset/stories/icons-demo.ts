@@ -15,7 +15,7 @@ import {
     css,
     html,
     TemplateResult,
-    CSSResult,
+    CSSResultGroup,
     property,
     customElement,
 } from '@spectrum-web-components/base';
@@ -42,9 +42,10 @@ export class DelayedReady extends SpectrumElement {
         );
     }
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        const update = await super.getUpdateComplete();
         await this._delayedReady;
+        return update;
     }
 
     public handleSlotchange({
@@ -93,7 +94,7 @@ export class IconsDemo extends SpectrumElement {
         this.iconset = iconset.getIconList();
         this.requestUpdate();
     }
-    public static get styles(): CSSResult[] {
+    public static get styles(): CSSResultGroup {
         return [
             ...bodyStyles,
             css`

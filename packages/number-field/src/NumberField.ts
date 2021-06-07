@@ -383,26 +383,23 @@ export class NumberField extends TextfieldBase {
                           class="buttons"
                           @focusin=${this.handleFocusin}
                           @focusout=${this.handleFocusout}
-                          @manage=${streamingListener(
-                              {
-                                  type: 'pointerdown',
-                                  fn: this.handlePointerdown,
-                              },
-                              {
-                                  type: [
+                          ${streamingListener({
+                              start: ['pointerdown', this.handlePointerdown],
+                              streamInside: [
+                                  [
                                       'pointermove',
                                       'pointerenter',
                                       'pointerleave',
                                       'pointerover',
                                       'pointerout',
                                   ],
-                                  fn: this.handlePointermove,
-                              },
-                              {
-                                  type: ['pointerup', 'pointercancel'],
-                                  fn: this.handlePointerup,
-                              }
-                          )}
+                                  this.handlePointermove,
+                              ],
+                              end: [
+                                  ['pointerup', 'pointercancel'],
+                                  this.handlePointerup,
+                              ],
+                          })}
                       >
                           <sp-action-button
                               class="stepUp"

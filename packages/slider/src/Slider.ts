@@ -17,6 +17,7 @@ import {
     TemplateResult,
     query,
     styleMap,
+    StyleInfo,
     ifDefined,
     repeat,
     classMap,
@@ -24,7 +25,6 @@ import {
 
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { StyleInfo } from 'lit-html/directives/style-map';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
 import { SliderHandle } from './SliderHandle.js';
 
@@ -283,8 +283,9 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         return styles;
     }
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = await super.getUpdateComplete();
         await this.handleController.handleUpdatesComplete();
+        return complete;
     }
 }

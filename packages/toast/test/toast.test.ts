@@ -221,15 +221,14 @@ describe('Toast', () => {
 
         await elementUpdated(el);
         expect(el.variant).to.equal('positive');
+        const parent = el.parentElement as HTMLElement;
 
         el.remove();
 
-        await elementUpdated(el);
         expect(el.variant).to.equal('positive');
 
-        document.body.append(el);
+        parent.append(el);
 
-        await elementUpdated(el);
         expect(el.variant).to.equal('positive');
     });
     it('reopens', async () => {

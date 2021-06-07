@@ -401,14 +401,11 @@ export class ColorArea extends SpectrumElement {
                 ?disabled=${this.disabled}
                 style="transform: translate(${this.x * width}px, ${this.y *
                 height}px);"
-                @manage=${streamingListener(
-                    { type: 'pointerdown', fn: this.handlePointerdown },
-                    { type: 'pointermove', fn: this.handlePointermove },
-                    {
-                        type: ['pointerup', 'pointercancel'],
-                        fn: this.handlePointerup,
-                    }
-                )}
+                ${streamingListener({
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                })}
             ></sp-color-handle>
 
             <input

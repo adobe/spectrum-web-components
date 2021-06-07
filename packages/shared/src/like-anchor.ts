@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    UpdatingElement,
+    ReactiveElement,
     property,
     TemplateResult,
     html,
@@ -39,7 +39,7 @@ export interface LikeAnchorInterface {
     renderAnchor(options: RenderAnchorOptions): TemplateResult;
 }
 
-export function LikeAnchor<T extends Constructor<UpdatingElement>>(
+export function LikeAnchor<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<LikeAnchorInterface> {
     class LikeAnchorElement extends constructor {

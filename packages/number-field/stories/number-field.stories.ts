@@ -14,7 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Number Field',
@@ -168,6 +168,7 @@ interface StoryArgs {
     hideStepper?: boolean;
     readonly?: boolean;
     step?: number;
+    [prop: string]: any;
 }
 
 export const Default = (args: StoryArgs): TemplateResult => {

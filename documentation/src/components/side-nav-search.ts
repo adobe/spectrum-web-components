@@ -17,7 +17,7 @@ import {
     TemplateResult,
     property,
     query,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import sideNavSearchMenuStyles from './side-nav-search.css';
 import { Search } from '@spectrum-web-components/search';
 import { Overlay } from '@spectrum-web-components/overlay';

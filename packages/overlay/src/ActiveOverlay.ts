@@ -512,8 +512,9 @@ export class ActiveOverlay extends SpectrumElement {
     private stealOverlayContentPromise = Promise.resolve();
     private stealOverlayContentResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        await super.getUpdateComplete();
         await this.stealOverlayContentPromise;
+        return true;
     }
 }

@@ -9,12 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html } from 'lit-html';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-sidenav.js';
 import '../sp-sidenav-item.js';
 import '../sp-sidenav-heading.js';
-import { TemplateResult } from '@spectrum-web-components/base';
 
 const action = (msg1: string) => (msg2: string | number): void =>
     console.log(msg1, msg2);

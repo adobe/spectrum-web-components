@@ -23,6 +23,7 @@ import {
     LitElement,
     classMap,
 } from '@spectrum-web-components/base';
+import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 
 import { WithSWCResizeObserver } from './types';
 
@@ -190,8 +191,14 @@ export class SplitView extends SpectrumElement {
                               this.resizable ? '0' : undefined
                           )}
                           @keydown=${this.onKeydown}
-                          @pointerdown=${this.onPointerdown}
-                          @pointerup=${this.onPointerup}
+                          ${streamingListener({
+                              start: ['pointerdown', this.onPointerdown],
+                              streamInside: ['pointermove', this.onPointermove],
+                              end: [
+                                  ['pointerup', 'pointercancel'],
+                                  this.onPointerup,
+                              ],
+                          })}
                       >
                           ${this.resizable
                               ? html`
@@ -211,10 +218,10 @@ export class SplitView extends SpectrumElement {
 
     private onPointerdown(event: PointerEvent): void {
         if (!this.resizable || (event.button && event.button !== 0)) {
+            event.preventDefault();
             return;
         }
         this.splitter.setPointerCapture(event.pointerId);
-        this.onpointermove = this.onPointermove;
         this.offset = this.getOffset();
     }
 
@@ -235,7 +242,6 @@ export class SplitView extends SpectrumElement {
 
     private onPointerup(event: PointerEvent): void {
         this.splitter.releasePointerCapture(event.pointerId);
-        this.onpointermove = null;
     }
 
     private getOffset(): number {

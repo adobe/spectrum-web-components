@@ -44,8 +44,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "lit-element": "^2.4.0",
-        "lit-html": "^1.0.0",
+        "lit": "^2.0.0-rc.2",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

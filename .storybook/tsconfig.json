@@ -5,7 +5,11 @@
         "noUnusedLocals": false,
         "declaration": false
     },
-    "include": ["../global.d.ts", "../packages/*/stories/**/*.ts"],
+    "include": [
+        "../global.d.ts",
+        "../packages/*/stories/**/*.ts",
+        "../test/lit-helpers.ts"
+    ],
     "exclude": [
         "../packages/*/src/**/*.ts",
         "../packages/*/icons/**/*.ts",

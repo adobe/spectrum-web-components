@@ -116,7 +116,7 @@ export class Tabs extends Focusable {
             if (typeof tab.updateComplete !== 'undefined') {
                 return tab.updateComplete;
             }
-            return Promise.resolve();
+            return Promise.resolve(true);
         });
         Promise.all(tabUpdateCompletes).then(() => super.manageAutoFocus());
     }
@@ -392,9 +392,10 @@ export class Tabs extends Focusable {
         return;
     };
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = await super.getUpdateComplete();
         await this.tabChangePromise;
+        return complete;
     }
 
     public connectedCallback(): void {

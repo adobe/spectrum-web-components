@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement } from 'lit-element';
+import { LitElement } from '@spectrum-web-components/base';
 
 export class RouteComponent extends LitElement {
     location?: {

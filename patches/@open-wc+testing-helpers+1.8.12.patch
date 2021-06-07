@@ -1,0 +1,1294 @@
+diff --git a/node_modules/@open-wc/testing-helpers/src/fixture-no-side-effect.js b/node_modules/@open-wc/testing-helpers/src/fixture-no-side-effect.js
+index 3dd8f0e..870f6d7 100644
+--- a/node_modules/@open-wc/testing-helpers/src/fixture-no-side-effect.js
++++ b/node_modules/@open-wc/testing-helpers/src/fixture-no-side-effect.js
+@@ -16,7 +16,7 @@ import { isValidRenderArg } from './lib.js';
+  * const el = fixtureSync('<my-el><span></span></my-el>');
+  *
+  * @template {Element} T
+- * @param {import('./litFixture').LitHTMLRenderable} template Either a string or lit-html TemplateResult
++ * @param {import('lit').TemplateResult} template Either a string or lit-html TemplateResult
+  * @param {FixtureOptions} [options]
+  * @returns {T} First child of the rendered DOM
+  */
+@@ -49,7 +49,7 @@ export function fixtureSync(template, options) {
+  * expect(el.fullyRendered).to.be.true;
+  *
+  * @template {Element} T
+- * @param {import('./litFixture').LitHTMLRenderable} template Either a string or lit-html TemplateResult
++ * @param {import('lit').TemplateResult} template Either a string or lit-html TemplateResult
+  * @param {FixtureOptions} [options]
+  * @returns {Promise<T>} A Promise that will resolve to the first child of the rendered DOM
+  */
+diff --git a/node_modules/@open-wc/testing-helpers/src/lib.js b/node_modules/@open-wc/testing-helpers/src/lib.js
+index b47b358..b32c76d 100644
+--- a/node_modules/@open-wc/testing-helpers/src/lib.js
++++ b/node_modules/@open-wc/testing-helpers/src/lib.js
+@@ -1,10 +1,10 @@
+-import { TemplateResult } from 'lit-html';
++import { isTemplateResult } from 'lit/directive-helpers.js';
+ 
+ export const isIterable = object => object != null && typeof object[Symbol.iterator] === 'function';
+ 
+ function isValidNonIterableRenderArg(x) {
+   return (
+-    x instanceof TemplateResult ||
++    isTemplateResult(x) ||
+     x instanceof Node ||
+     typeof x === 'number' ||
+     typeof x === 'boolean' ||
+diff --git a/node_modules/@open-wc/testing-helpers/src/lit-html.js b/node_modules/@open-wc/testing-helpers/src/lit-html.js
+index fb8c39a..2effa87 100644
+--- a/node_modules/@open-wc/testing-helpers/src/lit-html.js
++++ b/node_modules/@open-wc/testing-helpers/src/lit-html.js
+@@ -1,6 +1,6 @@
+-import { html as litHtml } from 'lit-html/lit-html.js';
++import { html as litHtml } from 'lit';
+ 
+-export { render } from 'lit-html/lit-html.js';
++export { render } from 'lit';
+ 
+ /**
+  * This is a wrapper around lit-html that supports dynamic strings to be added as a preprocessing
+@@ -21,7 +21,7 @@ export { render } from 'lit-html/lit-html.js';
+  *
+  * @param {TemplateStringsArray} strings Static Parts
+  * @param {Array.<any>} values Dynamic Parts
+- * @returns {import('lit-html').TemplateResult}
++ * @returns {import('lit').TemplateResult}
+  */
+ export function html(strings, ...values) {
+   const newVal = []; // result values to be passed on to lit-html
+diff --git a/node_modules/@open-wc/testing-helpers/src/litFixture.js b/node_modules/@open-wc/testing-helpers/src/litFixture.js
+index 2e4fa7d..adcc0e4 100644
+--- a/node_modules/@open-wc/testing-helpers/src/litFixture.js
++++ b/node_modules/@open-wc/testing-helpers/src/litFixture.js
+@@ -1,14 +1,13 @@
+-import { TemplateResult } from 'lit-html';
++import { isTemplateResult } from 'lit/directive-helpers.js';
+ import { fixtureWrapper } from './fixtureWrapper.js';
+ import { render } from './lit-html.js';
+ import { elementUpdated } from './elementUpdated.js';
+ import { NODE_TYPES } from './lib.js';
+-import { getScopedElementsTemplate } from './scopedElementsWrapper.js';
+ 
+ /**
+  * @typedef {
+-     import('lit-html').TemplateResult
+-   | import('lit-html').TemplateResult[]
++     import('lit').TemplateResult
++   | import('lit').TemplateResult[]
+    | Node | Node[]
+    | string | string[]
+    | number | number[]
+@@ -31,7 +30,7 @@ const isUsefulNode = ({ nodeType, textContent }) => {
+  * Setups an element synchronously from the provided lit-html template and puts it in the DOM.
+  *
+  * @template {Element} T - Is an element or a node
+- * @param {LitHTMLRenderable} template
++ * @param {import('lit').TemplateResult} template
+  * @param {import('./fixture-no-side-effect.js').FixtureOptions} [options]
+  * @returns {T}
+  */
+@@ -43,7 +42,7 @@ export function litFixtureSync(template, options = {}) {
+     wrapper,
+   );
+ 
+-  if (template instanceof TemplateResult) {
++  if (isTemplateResult(template)) {
+     return /** @type {T} */ (wrapper.firstElementChild);
+   }
+   const [node] = Array.from(wrapper.childNodes).filter(isUsefulNode);
+@@ -66,14 +65,5 @@ export async function litFixture(template, options = {}) {
+   const el = litFixtureSync(template, options);
+   await elementUpdated(el);
+ 
+-  if (options.scopedElements) {
+-    const [node] =
+-      /** @type {T[]} */
+-      (Array.from(el.shadowRoot.childNodes).filter(isUsefulNode));
+-    await elementUpdated(node);
+-
+-    return node;
+-  }
+-
+   return el;
+ }
+diff --git a/node_modules/@open-wc/testing-helpers/types/index-no-side-effects.d.ts b/node_modules/@open-wc/testing-helpers/types/index-no-side-effects.d.ts
+deleted file mode 100644
+index 0b9e459..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/index-no-side-effects.d.ts
++++ /dev/null
+@@ -1,8 +0,0 @@
+-export { elementUpdated } from "./src/elementUpdated.js";
+-export { fixture, fixtureSync } from "./src/fixture-no-side-effect.js";
+-export { cachedWrappers, fixtureCleanup, fixtureWrapper } from "./src/fixtureWrapper.js";
+-export { aTimeout, defineCE, isIE, nextFrame, oneEvent, triggerBlurFor, triggerFocusFor, waitUntil } from "./src/helpers.js";
+-export { html, unsafeStatic } from "./src/lit-html.js";
+-export { litFixture, litFixtureSync } from "./src/litFixture.js";
+-export { stringFixture, stringFixtureSync } from "./src/stringFixture.js";
+-//# sourceMappingURL=index-no-side-effects.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/index-no-side-effects.d.ts.map b/node_modules/@open-wc/testing-helpers/types/index-no-side-effects.d.ts.map
+deleted file mode 100644
+index 2ef618f..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/index-no-side-effects.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"index-no-side-effects.d.ts","sourceRoot":"","sources":["../index-no-side-effects.js"],"names":[],"mappings":""}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/index.d.ts b/node_modules/@open-wc/testing-helpers/types/index.d.ts
+deleted file mode 100644
+index d442d8c..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/index.d.ts
++++ /dev/null
+@@ -1,8 +0,0 @@
+-export { elementUpdated } from "./src/elementUpdated.js";
+-export { fixture, fixtureSync } from "./src/fixture.js";
+-export { cachedWrappers, fixtureCleanup, fixtureWrapper } from "./src/fixtureWrapper.js";
+-export { aTimeout, defineCE, isIE, nextFrame, oneEvent, triggerBlurFor, triggerFocusFor, waitUntil } from "./src/helpers.js";
+-export { html, unsafeStatic } from "./src/lit-html.js";
+-export { litFixture, litFixtureSync } from "./src/litFixture.js";
+-export { stringFixture, stringFixtureSync } from "./src/stringFixture.js";
+-//# sourceMappingURL=index.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/index.d.ts.map b/node_modules/@open-wc/testing-helpers/types/index.d.ts.map
+deleted file mode 100644
+index 653c749..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/index.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../index.js"],"names":[],"mappings":""}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/elementUpdated.d.ts b/node_modules/@open-wc/testing-helpers/types/src/elementUpdated.d.ts
+deleted file mode 100644
+index 05309ae..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/elementUpdated.d.ts
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/**
+- * Awaits for "update complete promises" of elements
+- * - for [lit-element](https://github.com/polymer/lit-element) that is `el.updateComplete`;
+- * - for [stencil](https://github.com/ionic-team/stencil/) that is `el.componentOnReady()`;
+- *
+- * If none of those specfic Promise hooks are found, it will wait for one frame via
+- * `await nextFrame()`.
+- *
+- * Ensures that ShadyDOM finished its job if available.
+- *
+- * @template {Element} T
+- * @param {T} el
+- * @returns {Promise<T>}
+- */
+-export function elementUpdated<T extends Element>(el: T): Promise<T>;
+-//# sourceMappingURL=elementUpdated.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/elementUpdated.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/elementUpdated.d.ts.map
+deleted file mode 100644
+index e534f68..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/elementUpdated.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"elementUpdated.d.ts","sourceRoot":"","sources":["../../src/elementUpdated.js"],"names":[],"mappings":"AAIA;;;;;;;;;;;;;GAaG;AACH,qEA2BC"}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/fixture-no-side-effect.d.ts b/node_modules/@open-wc/testing-helpers/types/src/fixture-no-side-effect.d.ts
+deleted file mode 100644
+index 5c0399b..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/fixture-no-side-effect.d.ts
++++ /dev/null
+@@ -1,52 +0,0 @@
+-/**
+- * @typedef {object} FixtureOptions
+- * @property {Element} [parentNode] optional parent node to render the fixture's template to
+- * @property {import('@open-wc/scoped-elements').ScopedElementsMap} [scopedElements] optional scoped-elements
+- * definition map
+- */
+-/**
+- * Renders a string/TemplateResult and puts it in the DOM via a fixtureWrapper.
+- *
+- * @example
+- * const el = fixtureSync('<my-el><span></span></my-el>');
+- *
+- * @template {Element} T
+- * @param {import('./litFixture').LitHTMLRenderable} template Either a string or lit-html TemplateResult
+- * @param {FixtureOptions} [options]
+- * @returns {T} First child of the rendered DOM
+- */
+-export function fixtureSync<T extends Element>(template: import('./litFixture').LitHTMLRenderable, options?: FixtureOptions): T;
+-/**
+- * Renders a string/TemplateResult and puts it in the DOM via a fixtureWrapper.
+- * By default fixture awaits the elements "update complete" Promise.
+- * - for [lit-element](https://github.com/polymer/lit-element) that is `el.updateComplete`;
+- * - for [stencil](https://github.com/ionic-team/stencil/) that is `el.componentOnReady()`;
+- *
+- * If none of those specfic Promise hooks are found, it will wait for one frame via
+- * `await nextFrame()`.
+- *
+- * **Note**: this does not guarantee that the element is done rendering -
+- * it just waits for the next JavaScript tick.
+- *
+- * @example
+- * const el = await fixture('<my-el><span></span></my-el>');
+- * expect(el.fullyRendered).to.be.true;
+- *
+- * @template {Element} T
+- * @param {import('./litFixture').LitHTMLRenderable} template Either a string or lit-html TemplateResult
+- * @param {FixtureOptions} [options]
+- * @returns {Promise<T>} A Promise that will resolve to the first child of the rendered DOM
+- */
+-export function fixture<T extends Element>(template: import('./litFixture').LitHTMLRenderable, options?: FixtureOptions): Promise<T>;
+-export type FixtureOptions = {
+-    /**
+-     * optional parent node to render the fixture's template to
+-     */
+-    parentNode?: Element;
+-    /**
+-     * optional scoped-elements
+-     * definition map
+-     */
+-    scopedElements?: import('@open-wc/scoped-elements').ScopedElementsMap;
+-};
+-//# sourceMappingURL=fixture-no-side-effect.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/fixture-no-side-effect.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/fixture-no-side-effect.d.ts.map
+deleted file mode 100644
+index de7cd03..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/fixture-no-side-effect.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"fixture-no-side-effect.d.ts","sourceRoot":"","sources":["../../src/fixture-no-side-effect.js"],"names":[],"mappings":"AAIA;;;;;GAKG;AAEH;;;;;;;;;;GAUG;AACH,yDAJW,OAAO,cAAc,EAAE,iBAAiB,YACxC,cAAc,KAaxB;AAED;;;;;;;;;;;;;;;;;;;;GAoBG;AACH,qDAJW,OAAO,cAAc,EAAE,iBAAiB,YACxC,cAAc,cAWxB;;;;;iBAzDa,OAAO;;;;;qBACP,OAAO,0BAA0B,EAAE,iBAAiB"}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/fixture.d.ts b/node_modules/@open-wc/testing-helpers/types/src/fixture.d.ts
+deleted file mode 100644
+index 791ea38..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/fixture.d.ts
++++ /dev/null
+@@ -1,2 +0,0 @@
+-export { fixture, fixtureSync } from "./fixture-no-side-effect.js";
+-//# sourceMappingURL=fixture.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/fixture.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/fixture.d.ts.map
+deleted file mode 100644
+index 56aa781..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/fixture.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"fixture.d.ts","sourceRoot":"","sources":["../../src/fixture.js"],"names":[],"mappings":""}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/fixtureWrapper.d.ts b/node_modules/@open-wc/testing-helpers/types/src/fixtureWrapper.d.ts
+deleted file mode 100644
+index 6f5bdd2..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/fixtureWrapper.d.ts
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/**
+- * Creates a wrapper as a direct child of `<body>` to put the tested element into.
+- * Need to be in the DOM to test for example `connectedCallback()` on elements.
+- *
+- * @param {Element} [parentNode]
+- * @returns {Element} wrapping node
+- */
+-export function fixtureWrapper(parentNode?: Element): Element;
+-/**
+- * Cleans up all defined fixtures by removing the actual wrapper nodes.
+- * Common usecase is at the end of each test.
+- */
+-export function fixtureCleanup(): void;
+-/** @type Array<Node> */
+-export const cachedWrappers: Array<Node>;
+-//# sourceMappingURL=fixtureWrapper.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/fixtureWrapper.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/fixtureWrapper.d.ts.map
+deleted file mode 100644
+index be3ffc8..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/fixtureWrapper.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"fixtureWrapper.d.ts","sourceRoot":"","sources":["../../src/fixtureWrapper.js"],"names":[],"mappings":"AAGA;;;;;;GAMG;AACH,4CAHW,OAAO,GACL,OAAO,CAMnB;AAED;;;GAGG;AACH,uCAOC;AA3BD,wBAAwB;AACxB,6BADU,MAAM,IAAI,CAAC,CACY"}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/helpers.d.ts b/node_modules/@open-wc/testing-helpers/types/src/helpers.d.ts
+deleted file mode 100644
+index 617983f..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/helpers.d.ts
++++ /dev/null
+@@ -1,105 +0,0 @@
+-/**
+- * Registers a new element with an automatically generated unique name.
+- * Helps to make a test fully isolated.
+- *
+- * @example
+- * const tag = defineCE(class extends MyMixin(HTMLElement) {
+- *   // define custom element class body
+- * });
+- * const el = fixture(`<${tag}></${tag}>`);
+- * // test el
+- *
+- * @template {HTMLElement} T
+- * @param {import("@open-wc/dedupe-mixin").Constructor<T>} klass Class which extends HTMLElement
+- * @returns {string} Tag name of the registered element
+- */
+-export function defineCE<T extends HTMLElement>(klass: import("@open-wc/dedupe-mixin").Constructor<T>): string;
+-/**
+- * Indicates that this is Internet Explorer.
+- *
+- * @returns {boolean}
+- */
+-export function isIE(): boolean;
+-/**
+- * Resolves after provided amount of miliseconds.
+- *
+- * @example
+- * await aTimeout(100);
+- *
+- * @param {number} ms Miliseconds.
+- * @returns {Promise<void>} Promise to await until time is up
+- */
+-export function aTimeout(ms: number): Promise<void>;
+-/**
+- * Resolves after requestAnimationFrame.
+- *
+- * @example
+- * await nextFrame();
+- *
+- * @returns {Promise<void>} Promise that resolved after requestAnimationFrame
+- */
+-export function nextFrame(): Promise<void>;
+-/**
+- * Blurs the provided element and await time before and after it on IE.
+- *
+- * @example
+- * const el = await fixture('<input type="text" autofocus />');
+- * await triggerBlurFor(el);
+- * // el is no longer focused
+- *
+- * @param {HTMLElement} element Element/Node to blur
+- * @returns {Promise<void>} Promise to await until blur is done (for IE)
+- */
+-export function triggerBlurFor(element: HTMLElement): Promise<void>;
+-/**
+- * Focuses the provided element and await time before and after it on IE.
+- *
+- * Background info:
+- * Adding an event and immediately trigger it fails in IE.
+- * Also before checking the effects of a trigger IE needs some time.
+- *
+- * @example
+- * const el = await fixture('<input type="text" />');
+- * await triggerFocusFor(el);
+- * // el is now focused
+- *
+- * @param {HTMLElement} element Element/Node to focus
+- * @returns {Promise<void>} Promise to await until focus is done (for IE)
+- */
+-export function triggerFocusFor(element: HTMLElement): Promise<void>;
+-/**
+- * Listens for one event and resolves with this event object after it was fired.
+- *
+- * @example
+- * setTimeout(() => el.fireDone());
+- * await oneEvent(el, 'done');
+- * expect(el.done).to.be.true;
+- *
+- * @param {EventTarget} eventTarget Target of the event, usually an Element
+- * @param {string} eventName Name of the event
+- * @returns {Promise<CustomEvent>} Promise to await until the event has been fired
+- */
+-export function oneEvent(eventTarget: EventTarget, eventName: string): Promise<CustomEvent>;
+-/**
+- * Waits until the given predicate returns a truthy value. Calls and awaits the predicate
+- * function at the given interval time. Can be used to poll until a certain condition is true.
+- *
+- * @example
+- * ```js
+- * import { fixture, waitUntil } from '@open-wc/testing-helpers';
+- *
+- * const element = await fixture(html`<my-element></my-element>`);
+- *
+- * await waitUntil(() => element.someAsyncProperty, 'element should become ready');
+- * ```
+- *
+- * @param {() => boolean | Promise<boolean>} predicate - predicate function which is called each poll interval.
+- *   The predicate is awaited, so it can return a promise.
+- * @param {string} [message] an optional message to display when the condition timed out
+- * @param {{ interval?: number, timeout?: number }} [options] timeout and polling interval
+- */
+-export function waitUntil(predicate: () => boolean | Promise<boolean>, message?: string, options?: {
+-    interval?: number;
+-    timeout?: number;
+-}): Promise<any>;
+-//# sourceMappingURL=helpers.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/helpers.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/helpers.d.ts.map
+deleted file mode 100644
+index 6b25465..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/helpers.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"helpers.d.ts","sourceRoot":"","sources":["../../src/helpers.js"],"names":[],"mappings":"AAEA;;;;;;;;;;;;;;GAcG;AACH,wGAFa,MAAM,CAOlB;AAED;;;;GAIG;AACH,wBAFa,OAAO,CAInB;AAED;;;;;;;;GAQG;AACH,6BAHW,MAAM,GACJ,QAAQ,IAAI,CAAC,CAMzB;AAED;;;;;;;GAOG;AACH,6BAFa,QAAQ,IAAI,CAAC,CAIzB;AAED;;;;;;;;;;GAUG;AACH,wCAHW,WAAW,GACT,QAAQ,IAAI,CAAC,CAazB;AAED;;;;;;;;;;;;;;GAcG;AACH,yCAHW,WAAW,GACT,QAAQ,IAAI,CAAC,CAazB;AAED;;;;;;;;;;;GAWG;AACH,sCAJW,WAAW,aACX,MAAM,GACJ,QAAQ,WAAW,CAAC,CAUhC;AAED;;;;;;;;;;;;;;;;;GAiBG;AACH,qCALW,MAAM,OAAO,GAAG,QAAQ,OAAO,CAAC,YAEhC,MAAM;eACO,MAAM;cAAY,MAAM;iBA4B/C"}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/lib.d.ts b/node_modules/@open-wc/testing-helpers/types/src/lib.d.ts
+deleted file mode 100644
+index 78c687c..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/lib.d.ts
++++ /dev/null
+@@ -1,18 +0,0 @@
+-export function isValidRenderArg(x: any): boolean;
+-export function isIterable(object: any): boolean;
+-/**
+- * Node#nodeType enum
+- */
+-export type NODE_TYPES = number;
+-/**
+- * Node#nodeType enum
+- * @readonly
+- * @enum {number}
+- */
+-export const NODE_TYPES: Readonly<{
+-    ELEMENT_NODE: number;
+-    TEXT_NODE: number;
+-    COMMENT_NODE: number;
+-    DOCUMENT_FRAGMENT_NODE: number;
+-}>;
+-//# sourceMappingURL=lib.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/lib.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/lib.d.ts.map
+deleted file mode 100644
+index a4c3184..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/lib.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"lib.d.ts","sourceRoot":"","sources":["../../src/lib.js"],"names":[],"mappings":"AAcA,kDAEC;AAdM,iDAA4F;;;;;AAgBnG;;;;GAIG;AACH;;;;;GAKG"}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/lit-html.d.ts b/node_modules/@open-wc/testing-helpers/types/src/lit-html.d.ts
+deleted file mode 100644
+index 0f4f334..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/lit-html.d.ts
++++ /dev/null
+@@ -1,27 +0,0 @@
+-/**
+- * This is a wrapper around lit-html that supports dynamic strings to be added as a preprocessing
+- * step, before a template is passed to lit's html function.
+- * A dynamic string will be evaluated one time (on init) and passed to lit-html as being
+- * part of the static string.
+- *
+- * WARNING: do not use in production!!! has a huge performance penalty as every string is
+- * different from lit-htmls perspective so a new tag is created every time.
+- *
+- * A valid use case for this would be to create dynamic tag names.
+- *
+- * @example:
+- * const tag = unsafeStatic('my-tag');
+- * html`<${tag} prop="${prop}"></${tag>`
+- * // will in turn calls lit-html html function as:
+- * html`<my-tag prop="${prop}"></my-tag>`
+- *
+- * @param {TemplateStringsArray} strings Static Parts
+- * @param {Array.<any>} values Dynamic Parts
+- * @returns {import('lit-html').TemplateResult}
+- */
+-export function html(strings: TemplateStringsArray, ...values: Array<any>): import('lit-html').TemplateResult;
+-export function unsafeStatic(options: any): {
+-    d: any;
+-};
+-export { render } from "lit-html/lit-html.js";
+-//# sourceMappingURL=lit-html.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/lit-html.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/lit-html.d.ts.map
+deleted file mode 100644
+index d5f19d4..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/lit-html.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"lit-html.d.ts","sourceRoot":"","sources":["../../src/lit-html.js"],"names":[],"mappings":"AAIA;;;;;;;;;;;;;;;;;;;;GAoBG;AACH,8BAJW,oBAAoB,aACpB,MAAO,GAAG,CAAC,GACT,OAAO,UAAU,EAAE,cAAc,CAoC7C;AAED;;EAIC"}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/litFixture.d.ts b/node_modules/@open-wc/testing-helpers/types/src/litFixture.d.ts
+deleted file mode 100644
+index 496e88b..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/litFixture.d.ts
++++ /dev/null
+@@ -1,21 +0,0 @@
+-/**
+- * Setups an element synchronously from the provided lit-html template and puts it in the DOM.
+- *
+- * @template {Element} T - Is an element or a node
+- * @param {LitHTMLRenderable} template
+- * @param {import('./fixture-no-side-effect.js').FixtureOptions} [options]
+- * @returns {T}
+- */
+-export function litFixtureSync<T extends Element>(template: LitHTMLRenderable, options?: import('./fixture-no-side-effect.js').FixtureOptions): T;
+-/**
+- * Setups an element asynchronously from the provided lit-html template and puts it in the DOM.
+- *
+- * @template {Element} T - Is an element or a node
+- * @param {LitHTMLRenderable} template
+- * @param {import('./fixture-no-side-effect.js').FixtureOptions} [options]
+- * @returns {Promise<T>}
+- */
+-export function litFixture<T extends Element>(template: LitHTMLRenderable, options?: import('./fixture-no-side-effect.js').FixtureOptions): Promise<T>;
+-export type LitHTMLRenderable = string | number | boolean | Node | string[] | TemplateResult | Node[] | TemplateResult[] | number[] | boolean[];
+-import { TemplateResult } from "lit-html";
+-//# sourceMappingURL=litFixture.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/litFixture.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/litFixture.d.ts.map
+deleted file mode 100644
+index d834f00..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/litFixture.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"litFixture.d.ts","sourceRoot":"","sources":["../../src/litFixture.js"],"names":[],"mappings":"AA6BA;;;;;;;GAOG;AACH,4DAJW,iBAAiB,YACjB,OAAO,6BAA6B,EAAE,cAAc,KAiB9D;AAED;;;;;;;GAOG;AACH,wDAJW,iBAAiB,YACjB,OAAO,6BAA6B,EAAE,cAAc,cAoB9D"}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/scopedElementsWrapper.d.ts b/node_modules/@open-wc/testing-helpers/types/src/scopedElementsWrapper.d.ts
+deleted file mode 100644
+index 64a8bb4..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/scopedElementsWrapper.d.ts
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/**
+- * Wraps the template inside a scopedElements component
+- *
+- * @param {import('./litFixture').LitHTMLRenderable} template
+- * @param {ScopedElementsMap} scopedElements
+- * @returns {TemplateResult}
+- */
+-export function getScopedElementsTemplate(template: import('./litFixture').LitHTMLRenderable, scopedElements: ScopedElementsMap): TemplateResult;
+-export type ScopedElementsMap = {
+-    [key: string]: {
+-        new (): HTMLElement;
+-        prototype: HTMLElement;
+-    };
+-};
+-import { TemplateResult } from "lit-element";
+-//# sourceMappingURL=scopedElementsWrapper.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/scopedElementsWrapper.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/scopedElementsWrapper.d.ts.map
+deleted file mode 100644
+index 549a229..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/scopedElementsWrapper.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"scopedElementsWrapper.d.ts","sourceRoot":"","sources":["../../src/scopedElementsWrapper.js"],"names":[],"mappings":"AAqFA;;;;;;GAMG;AACH,oDAJW,OAAO,cAAc,EAAE,iBAAiB,kBACxC,iBAAiB,GACf,cAAc,CAW1B"}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/stringFixture.d.ts b/node_modules/@open-wc/testing-helpers/types/src/stringFixture.d.ts
+deleted file mode 100644
+index 7805919..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/stringFixture.d.ts
++++ /dev/null
+@@ -1,21 +0,0 @@
+-/**
+- * Setups an element synchronously from the provided string template and puts it in the DOM.
+- * Allows to specify properties via an object or a function taking the element as an argument.
+- *
+- * @template {Element} T - Is an element or a node
+- * @param {string} template
+- * @param {import('./fixture-no-side-effect.js').FixtureOptions} [options={}]
+- * @returns {T}
+- */
+-export function stringFixtureSync<T extends Element>(template: string, options?: import('./fixture-no-side-effect.js').FixtureOptions): T;
+-/**
+- * Setups an element asynchronously from the provided string template and puts it in the DOM.
+- * Allows to specify properties via an object or a function taking the element as an argument.
+- *
+- * @template {Element} T - Is an element or a node
+- * @param {string} template
+- * @param {import('./fixture-no-side-effect.js').FixtureOptions} [options]
+- * @returns {Promise<T>}
+- */
+-export function stringFixture<T extends Element>(template: string, options?: import('./fixture-no-side-effect.js').FixtureOptions): Promise<T>;
+-//# sourceMappingURL=stringFixture.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/src/stringFixture.d.ts.map b/node_modules/@open-wc/testing-helpers/types/src/stringFixture.d.ts.map
+deleted file mode 100644
+index 7865605..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/src/stringFixture.d.ts.map
++++ /dev/null
+@@ -1 +0,0 @@
+-{"version":3,"file":"stringFixture.d.ts","sourceRoot":"","sources":["../../src/stringFixture.js"],"names":[],"mappings":"AAKA;;;;;;;;GAQG;AACH,+DAJW,MAAM,YACN,OAAO,6BAA6B,EAAE,cAAc,KAO9D;AAED;;;;;;;;GAQG;AACH,2DAJW,MAAM,YACN,OAAO,6BAA6B,EAAE,cAAc,cAa9D"}
+\ No newline at end of file
+diff --git a/node_modules/@open-wc/testing-helpers/types/tsconfig.tsbuildinfo b/node_modules/@open-wc/testing-helpers/types/tsconfig.tsbuildinfo
+deleted file mode 100644
+index d5f9170..0000000
+--- a/node_modules/@open-wc/testing-helpers/types/tsconfig.tsbuildinfo
++++ /dev/null
+@@ -1,681 +0,0 @@
+-{
+-  "program": {
+-    "fileInfos": {
+-      "../../../node_modules/typescript/lib/lib.es5.d.ts": {
+-        "version": "c9a1f03d6ba0fe3c871eb0dd81622e78fbb61ade70878b34d48a341a690c59e9",
+-        "signature": "c9a1f03d6ba0fe3c871eb0dd81622e78fbb61ade70878b34d48a341a690c59e9",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.d.ts": {
+-        "version": "dc47c4fa66b9b9890cf076304de2a9c5201e94b740cffdf09f87296d877d71f6",
+-        "signature": "dc47c4fa66b9b9890cf076304de2a9c5201e94b740cffdf09f87296d877d71f6",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2016.d.ts": {
+-        "version": "7a387c58583dfca701b6c85e0adaf43fb17d590fb16d5b2dc0a2fbd89f35c467",
+-        "signature": "7a387c58583dfca701b6c85e0adaf43fb17d590fb16d5b2dc0a2fbd89f35c467",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2017.d.ts": {
+-        "version": "8a12173c586e95f4433e0c6dc446bc88346be73ffe9ca6eec7aa63c8f3dca7f9",
+-        "signature": "8a12173c586e95f4433e0c6dc446bc88346be73ffe9ca6eec7aa63c8f3dca7f9",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2018.d.ts": {
+-        "version": "5f4e733ced4e129482ae2186aae29fde948ab7182844c3a5a51dd346182c7b06",
+-        "signature": "5f4e733ced4e129482ae2186aae29fde948ab7182844c3a5a51dd346182c7b06",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/typescript/lib/lib.dom.d.ts": {
+-        "version": "38130cdd16bd2318b9362f9d60dd9670f7e38708bb6131cf11fc78a41b2c34a0",
+-        "signature": "38130cdd16bd2318b9362f9d60dd9670f7e38708bb6131cf11fc78a41b2c34a0",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.dom.iterable.d.ts": {
+-        "version": "fb0c09b697dc42afa84d1587e3c994a2f554d2a45635e4f0618768d16a86b69a",
+-        "signature": "fb0c09b697dc42afa84d1587e3c994a2f554d2a45635e4f0618768d16a86b69a",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.webworker.importscripts.d.ts": {
+-        "version": "7fac8cb5fc820bc2a59ae11ef1c5b38d3832c6d0dfaec5acdb5569137d09a481",
+-        "signature": "7fac8cb5fc820bc2a59ae11ef1c5b38d3832c6d0dfaec5acdb5569137d09a481",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.scripthost.d.ts": {
+-        "version": "097a57355ded99c68e6df1b738990448e0bf170e606707df5a7c0481ff2427cd",
+-        "signature": "097a57355ded99c68e6df1b738990448e0bf170e606707df5a7c0481ff2427cd",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.core.d.ts": {
+-        "version": "46ee15e9fefa913333b61eaf6b18885900b139867d89832a515059b62cf16a17",
+-        "signature": "46ee15e9fefa913333b61eaf6b18885900b139867d89832a515059b62cf16a17",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.collection.d.ts": {
+-        "version": "43fb1d932e4966a39a41b464a12a81899d9ae5f2c829063f5571b6b87e6d2f9c",
+-        "signature": "43fb1d932e4966a39a41b464a12a81899d9ae5f2c829063f5571b6b87e6d2f9c",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.generator.d.ts": {
+-        "version": "cdccba9a388c2ee3fd6ad4018c640a471a6c060e96f1232062223063b0a5ac6a",
+-        "signature": "cdccba9a388c2ee3fd6ad4018c640a471a6c060e96f1232062223063b0a5ac6a",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.iterable.d.ts": {
+-        "version": "42f5e41e5893da663dbf0394268f54f1da4b43dc0ddd2ea4bf471fe5361d6faf",
+-        "signature": "42f5e41e5893da663dbf0394268f54f1da4b43dc0ddd2ea4bf471fe5361d6faf",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.promise.d.ts": {
+-        "version": "0b7a905675e6cb4211c128f0a3aa47d414b275180a299a9aad5d3ec298abbfc4",
+-        "signature": "0b7a905675e6cb4211c128f0a3aa47d414b275180a299a9aad5d3ec298abbfc4",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.proxy.d.ts": {
+-        "version": "dfff68b3c34338f6b307a25d4566de15eed7973b0dc5d69f9fde2bcac1c25315",
+-        "signature": "dfff68b3c34338f6b307a25d4566de15eed7973b0dc5d69f9fde2bcac1c25315",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.reflect.d.ts": {
+-        "version": "cb609802a8698aa28b9c56331d4b53f590ca3c1c3a255350304ae3d06017779d",
+-        "signature": "cb609802a8698aa28b9c56331d4b53f590ca3c1c3a255350304ae3d06017779d",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.symbol.d.ts": {
+-        "version": "3013574108c36fd3aaca79764002b3717da09725a36a6fc02eac386593110f93",
+-        "signature": "3013574108c36fd3aaca79764002b3717da09725a36a6fc02eac386593110f93",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": {
+-        "version": "4670208dd7da9d6c774ab1b75c1527a810388c7989c4905de6aaea8561cb9dce",
+-        "signature": "4670208dd7da9d6c774ab1b75c1527a810388c7989c4905de6aaea8561cb9dce",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2016.array.include.d.ts": {
+-        "version": "3be5a1453daa63e031d266bf342f3943603873d890ab8b9ada95e22389389006",
+-        "signature": "3be5a1453daa63e031d266bf342f3943603873d890ab8b9ada95e22389389006",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2017.object.d.ts": {
+-        "version": "17bb1fc99591b00515502d264fa55dc8370c45c5298f4a5c2083557dccba5a2a",
+-        "signature": "17bb1fc99591b00515502d264fa55dc8370c45c5298f4a5c2083557dccba5a2a",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts": {
+-        "version": "b5e4c2d67aa844ed503b29cd4ca2ede1a229ac7fe874613b2c996fa9c581a25f",
+-        "signature": "b5e4c2d67aa844ed503b29cd4ca2ede1a229ac7fe874613b2c996fa9c581a25f",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2017.string.d.ts": {
+-        "version": "6a6b173e739a6a99629a8594bfb294cc7329bfb7b227f12e1f7c11bc163b8577",
+-        "signature": "6a6b173e739a6a99629a8594bfb294cc7329bfb7b227f12e1f7c11bc163b8577",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2017.intl.d.ts": {
+-        "version": "12a310447c5d23c7d0d5ca2af606e3bd08afda69100166730ab92c62999ebb9d",
+-        "signature": "12a310447c5d23c7d0d5ca2af606e3bd08afda69100166730ab92c62999ebb9d",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2017.typedarrays.d.ts": {
+-        "version": "b0124885ef82641903d232172577f2ceb5d3e60aed4da1153bab4221e1f6dd4e",
+-        "signature": "b0124885ef82641903d232172577f2ceb5d3e60aed4da1153bab4221e1f6dd4e",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts": {
+-        "version": "0eb85d6c590b0d577919a79e0084fa1744c1beba6fd0d4e951432fa1ede5510a",
+-        "signature": "0eb85d6c590b0d577919a79e0084fa1744c1beba6fd0d4e951432fa1ede5510a",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2018.asynciterable.d.ts": {
+-        "version": "a40c4d82bf13fcded295ac29f354eb7d40249613c15e07b53f2fc75e45e16359",
+-        "signature": "a40c4d82bf13fcded295ac29f354eb7d40249613c15e07b53f2fc75e45e16359",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2018.intl.d.ts": {
+-        "version": "df9c8a72ca8b0ed62f5470b41208a0587f0f73f0a7db28e5a1272cf92537518e",
+-        "signature": "df9c8a72ca8b0ed62f5470b41208a0587f0f73f0a7db28e5a1272cf92537518e",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2018.promise.d.ts": {
+-        "version": "bb2d3fb05a1d2ffbca947cc7cbc95d23e1d053d6595391bd325deb265a18d36c",
+-        "signature": "bb2d3fb05a1d2ffbca947cc7cbc95d23e1d053d6595391bd325deb265a18d36c",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2018.regexp.d.ts": {
+-        "version": "c80df75850fea5caa2afe43b9949338ce4e2de086f91713e9af1a06f973872b8",
+-        "signature": "c80df75850fea5caa2afe43b9949338ce4e2de086f91713e9af1a06f973872b8",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/typescript/lib/lib.es2018.full.d.ts": {
+-        "version": "32b8443be144970b813b9dd72dcdba2059fbdfdae4d3a50c4d8a158ed6057bbe",
+-        "signature": "32b8443be144970b813b9dd72dcdba2059fbdfdae4d3a50c4d8a158ed6057bbe",
+-        "affectsGlobalScope": false
+-      },
+-      "../../dedupe-mixin/index.d.ts": {
+-        "version": "88cda4269c54f0803834fd62b2fac61af8bff7a085693f7ca9df85c1f19dee8a",
+-        "signature": "88cda4269c54f0803834fd62b2fac61af8bff7a085693f7ca9df85c1f19dee8a",
+-        "affectsGlobalScope": false
+-      },
+-      "../src/helpers.js": {
+-        "version": "450517968e606bdf63f6f630751a1a4a3bea38ecadf9258f22614115ca2b8445",
+-        "signature": "2c387828a523cc77a4300f5deb063651c9346c5a36ccfbfc127c38df8ab45b0c",
+-        "affectsGlobalScope": false
+-      },
+-      "../src/elementUpdated.js": {
+-        "version": "261f281faf2204c35bd5979cef758ec5107d5512021280a44988ba3123c7d2ff",
+-        "signature": "a11181f6d68200e83ccb1fb48b262a7132a3257e0a230f41c9dc4c351964297a",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/part.d.ts": {
+-        "version": "4cffbce0e6607ff338517892c7257bb2b9fbb402dfcb958181dd064e80a4da02",
+-        "signature": "4cffbce0e6607ff338517892c7257bb2b9fbb402dfcb958181dd064e80a4da02",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/template.d.ts": {
+-        "version": "8ee215f5baaf2c963050a50559319f494a75d09bf5011771b74286306343f239",
+-        "signature": "8ee215f5baaf2c963050a50559319f494a75d09bf5011771b74286306343f239",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/template-factory.d.ts": {
+-        "version": "766cdc4635287b1a5eb1cd3e4cea6afa30bafea0558f667f33cb36246f79a406",
+-        "signature": "766cdc4635287b1a5eb1cd3e4cea6afa30bafea0558f667f33cb36246f79a406",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/render-options.d.ts": {
+-        "version": "ed006217b8cd57d2cbc36a15cb54802688a4bd58d99266d53b1ba3173542d03f",
+-        "signature": "ed006217b8cd57d2cbc36a15cb54802688a4bd58d99266d53b1ba3173542d03f",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/parts.d.ts": {
+-        "version": "462c24ab9ab2d1e4a5e4e39712e4ee0f21f98503f0a47693efd9021ac20de213",
+-        "signature": "462c24ab9ab2d1e4a5e4e39712e4ee0f21f98503f0a47693efd9021ac20de213",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/template-processor.d.ts": {
+-        "version": "23a1574da23f232ecb27ba6c0794c9efc5820a55a032755dddf38af896e343fb",
+-        "signature": "23a1574da23f232ecb27ba6c0794c9efc5820a55a032755dddf38af896e343fb",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/template-result.d.ts": {
+-        "version": "1d5238003ef4188c37bf66a0010426ef80323ae121b4d7fd71b1e4d3f2468072",
+-        "signature": "1d5238003ef4188c37bf66a0010426ef80323ae121b4d7fd71b1e4d3f2468072",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/default-template-processor.d.ts": {
+-        "version": "db0353beffb699d76939ab4efb3123beae1d936abc16e858fca38728fd7b9a1f",
+-        "signature": "db0353beffb699d76939ab4efb3123beae1d936abc16e858fca38728fd7b9a1f",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/directive.d.ts": {
+-        "version": "65cc17e6a285f6c1762ea2bdc0eeb0069bcdb9cdedc077af743443a5b6184437",
+-        "signature": "65cc17e6a285f6c1762ea2bdc0eeb0069bcdb9cdedc077af743443a5b6184437",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/dom.d.ts": {
+-        "version": "07e68e3257ac03612286e959aa0269ea39701caaee6ba00b07efdd8295ffc3f1",
+-        "signature": "07e68e3257ac03612286e959aa0269ea39701caaee6ba00b07efdd8295ffc3f1",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/render.d.ts": {
+-        "version": "681860c201a35c8b30b08dcf2850cd936decea0141c7d3b7021bbf611a8b0102",
+-        "signature": "681860c201a35c8b30b08dcf2850cd936decea0141c7d3b7021bbf611a8b0102",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/template-instance.d.ts": {
+-        "version": "2150ad4f8930ebdbdd90b76b0a82bb6696193515534d7cd4dc7bc1ef3a661f70",
+-        "signature": "2150ad4f8930ebdbdd90b76b0a82bb6696193515534d7cd4dc7bc1ef3a661f70",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lit-html.d.ts": {
+-        "version": "98a780cce6e0c824539a52b0d983c54bbdd75d06caf8ab2166e90c721458fd8b",
+-        "signature": "98a780cce6e0c824539a52b0d983c54bbdd75d06caf8ab2166e90c721458fd8b",
+-        "affectsGlobalScope": true
+-      },
+-      "../src/fixtureWrapper.js": {
+-        "version": "183b40995b0de246f284529d92217d331d5762e453e57652db06916829631911",
+-        "signature": "ae91c9161caf0af81c89e780a045fc5ea8382407e516342e409c5db9161d3b32",
+-        "affectsGlobalScope": false
+-      },
+-      "../src/lit-html.js": {
+-        "version": "6d4fa8e29554820bd39d3bc024981fe4d35aa824eb259a0c39d4db37feba59bc",
+-        "signature": "6bec322c4ada7c942e133a70f0b7e0ca275d7f289a2bd6c63894002e82ce4bfd",
+-        "affectsGlobalScope": false
+-      },
+-      "../src/lib.js": {
+-        "version": "6767214244a9aa2ffa64518fe24b8ed3f38395c88571236fe0e87471b671778c",
+-        "signature": "5e6cf69c953638bd6057a7bc2e22df5ca7578f050eb631adcc0a5c8f635acce8",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-html/lib/shady-render.d.ts": {
+-        "version": "902c258141d855d3400fc191a672732e894c0c1d7a41b312a30cd3c23663c9d1",
+-        "signature": "902c258141d855d3400fc191a672732e894c0c1d7a41b312a30cd3c23663c9d1",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-element/lib/updating-element.d.ts": {
+-        "version": "8fa77f899fcb701843bf8729b14156795cb378fda2b2b4575098ea005a8974eb",
+-        "signature": "8fa77f899fcb701843bf8729b14156795cb378fda2b2b4575098ea005a8974eb",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/lit-element/lib/decorators.d.ts": {
+-        "version": "551150009753bc462f8972e68bfdb91ce20e7267b5127a073039d037c2f86dbb",
+-        "signature": "551150009753bc462f8972e68bfdb91ce20e7267b5127a073039d037c2f86dbb",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-element/lib/css-tag.d.ts": {
+-        "version": "465d97142bead1082b7aacdc99799ab1679d38c46d7c2bc42d481074d4078904",
+-        "signature": "465d97142bead1082b7aacdc99799ab1679d38c46d7c2bc42d481074d4078904",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/lit-element/lit-element.d.ts": {
+-        "version": "a7f7fc346a860e35acde0ab27430c381b0c90127f6dfaedb104dd0500b9f7eb8",
+-        "signature": "a7f7fc346a860e35acde0ab27430c381b0c90127f6dfaedb104dd0500b9f7eb8",
+-        "affectsGlobalScope": true
+-      },
+-      "../../scoped-elements/types/src/types.d.ts": {
+-        "version": "d296bc84a400c5279c1bcfe029218af2124eb56aecd9540825bf4b9fc6b27605",
+-        "signature": "d296bc84a400c5279c1bcfe029218af2124eb56aecd9540825bf4b9fc6b27605",
+-        "affectsGlobalScope": false
+-      },
+-      "../../scoped-elements/types/src/ScopedElementsMixin.d.ts": {
+-        "version": "4e2089b7fd3fc16e38918c6b84289694cd519f9f52fab3f0c29a022f35c2da92",
+-        "signature": "4e2089b7fd3fc16e38918c6b84289694cd519f9f52fab3f0c29a022f35c2da92",
+-        "affectsGlobalScope": false
+-      },
+-      "../../scoped-elements/types/index.d.ts": {
+-        "version": "fdf0aa1a72ff0188a9013926201a391116ef6701cd439b89850786abdf755fb8",
+-        "signature": "fdf0aa1a72ff0188a9013926201a391116ef6701cd439b89850786abdf755fb8",
+-        "affectsGlobalScope": false
+-      },
+-      "../src/scopedElementsWrapper.js": {
+-        "version": "171c4770f60c83157fa12d092a7244023da876d9b3d6157701b6f3960f41b8cb",
+-        "signature": "c913abff7f094cdd6bca0fca9fc1f8981ab251850d10a4a9af83bea3979e5b56",
+-        "affectsGlobalScope": false
+-      },
+-      "../src/litFixture.js": {
+-        "version": "038ba851422e5348c980a7791ddcf45adff8fc13f35c6e6b256e620af06bad10",
+-        "signature": "32c936b21a904ffa8f97d35fe11ba2b1c29903d12235a025312207b6d1eb9a99",
+-        "affectsGlobalScope": false
+-      },
+-      "../src/stringFixture.js": {
+-        "version": "964456ddb822c252d7b79ba3fa4d6a39e357554f8674d3f5f132c2930a420651",
+-        "signature": "d598157512ae6e0d3aa6bb0dd261ae34845831dccf7bc7739695ee2589eb76f5",
+-        "affectsGlobalScope": false
+-      },
+-      "../src/fixture-no-side-effect.js": {
+-        "version": "477bbae8b2662d51b8b5c404eb27243ddbbb5fd3ba6c3d852cbb10d1e38a0c58",
+-        "signature": "f0b43f422b01042dd784bee89f9c67330001a575258bb49d28fd56e1a581e92e",
+-        "affectsGlobalScope": false
+-      },
+-      "../src/fixture.js": {
+-        "version": "743d8ed84ca72c711b0a00f2b07fa5e88c8bd75357104f45b8a80c51fecc406a",
+-        "signature": "abf9ea97b78a7b239186cf5b7ed59c4a593abac3c408c8c95fc5e604cfdfdb43",
+-        "affectsGlobalScope": false
+-      },
+-      "../index-no-side-effects.js": {
+-        "version": "8f2a1d255605ac166d2f31286a3ce27350d2e202d9a70e90d1c728fae715e061",
+-        "signature": "d46972665df13a4160803e6fe3d573de2664ebca0a0b183d0050053f6b4ab612",
+-        "affectsGlobalScope": false
+-      },
+-      "../index.js": {
+-        "version": "b854a6229ce1d7d04f2fe12ae99e55b88471e6c946c284a55c219e7c18cd2401",
+-        "signature": "0a7d16e19e1b337fea85b71ceef9205a9d83ecd4865963d3fd0f6f3bc5f91785",
+-        "affectsGlobalScope": false
+-      },
+-      "../../../node_modules/@types/mocha/index.d.ts": {
+-        "version": "c4c03cf65951d980ba618ae9601d10438730803fc9c8a1f7b34af8739981e205",
+-        "signature": "c4c03cf65951d980ba618ae9601d10438730803fc9c8a1f7b34af8739981e205",
+-        "affectsGlobalScope": true
+-      },
+-      "../../../node_modules/@types/chai/index.d.ts": {
+-        "version": "1df845885d8bd29132f67f47b7a64ec35f4b83962274ee9fb38ae40a82305a72",
+-        "signature": "1df845885d8bd29132f67f47b7a64ec35f4b83962274ee9fb38ae40a82305a72",
+-        "affectsGlobalScope": true
+-      }
+-    },
+-    "options": {
+-      "target": 5,
+-      "declaration": true,
+-      "declarationMap": true,
+-      "sourceMap": true,
+-      "downlevelIteration": true,
+-      "strict": false,
+-      "moduleResolution": 2,
+-      "typeRoots": [
+-        "../../../@types",
+-        "../../../types-global",
+-        "../../../types"
+-      ],
+-      "types": [
+-        "mocha",
+-        "chai"
+-      ],
+-      "allowSyntheticDefaultImports": true,
+-      "esModuleInterop": true,
+-      "forceConsistentCasingInFileNames": true,
+-      "module": 99,
+-      "outDir": "./",
+-      "rootDir": "..",
+-      "composite": true,
+-      "allowJs": true,
+-      "checkJs": true,
+-      "emitDeclarationOnly": true,
+-      "configFilePath": "../tsconfig.json"
+-    },
+-    "referencedMap": {
+-      "../../../node_modules/lit-element/lib/decorators.d.ts": [
+-        "../../../node_modules/lit-element/lib/updating-element.d.ts"
+-      ],
+-      "../../../node_modules/lit-element/lit-element.d.ts": [
+-        "../../../node_modules/lit-element/lib/css-tag.d.ts",
+-        "../../../node_modules/lit-element/lib/decorators.d.ts",
+-        "../../../node_modules/lit-element/lib/updating-element.d.ts",
+-        "../../../node_modules/lit-html/lib/shady-render.d.ts",
+-        "../../../node_modules/lit-html/lit-html.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/default-template-processor.d.ts": [
+-        "../../../node_modules/lit-html/lib/part.d.ts",
+-        "../../../node_modules/lit-html/lib/parts.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts",
+-        "../../../node_modules/lit-html/lib/template-processor.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/directive.d.ts": [
+-        "../../../node_modules/lit-html/lib/part.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/parts.d.ts": [
+-        "../../../node_modules/lit-html/lib/part.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/render-options.d.ts": [
+-        "../../../node_modules/lit-html/lib/template-factory.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/render.d.ts": [
+-        "../../../node_modules/lit-html/lib/parts.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/shady-render.d.ts": [
+-        "../../../node_modules/lit-html/lib/render-options.d.ts",
+-        "../../../node_modules/lit-html/lit-html.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template-factory.d.ts": [
+-        "../../../node_modules/lit-html/lib/template-result.d.ts",
+-        "../../../node_modules/lit-html/lib/template.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template-instance.d.ts": [
+-        "../../../node_modules/lit-html/lib/render-options.d.ts",
+-        "../../../node_modules/lit-html/lib/template-processor.d.ts",
+-        "../../../node_modules/lit-html/lib/template.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template-processor.d.ts": [
+-        "../../../node_modules/lit-html/lib/part.d.ts",
+-        "../../../node_modules/lit-html/lib/parts.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template-result.d.ts": [
+-        "../../../node_modules/lit-html/lib/template-processor.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template.d.ts": [
+-        "../../../node_modules/lit-html/lib/template-result.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lit-html.d.ts": [
+-        "../../../node_modules/lit-html/lib/default-template-processor.d.ts",
+-        "../../../node_modules/lit-html/lib/directive.d.ts",
+-        "../../../node_modules/lit-html/lib/dom.d.ts",
+-        "../../../node_modules/lit-html/lib/part.d.ts",
+-        "../../../node_modules/lit-html/lib/parts.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts",
+-        "../../../node_modules/lit-html/lib/render.d.ts",
+-        "../../../node_modules/lit-html/lib/template-factory.d.ts",
+-        "../../../node_modules/lit-html/lib/template-instance.d.ts",
+-        "../../../node_modules/lit-html/lib/template-processor.d.ts",
+-        "../../../node_modules/lit-html/lib/template-result.d.ts",
+-        "../../../node_modules/lit-html/lib/template.d.ts"
+-      ],
+-      "../../scoped-elements/types/index.d.ts": [
+-        "../../scoped-elements/types/src/ScopedElementsMixin.d.ts"
+-      ],
+-      "../../scoped-elements/types/src/ScopedElementsMixin.d.ts": [
+-        "../../../node_modules/lit-element/lit-element.d.ts",
+-        "../../../node_modules/lit-html/lib/shady-render.d.ts",
+-        "../../../node_modules/lit-html/lit-html.d.ts",
+-        "../../scoped-elements/types/src/types.d.ts"
+-      ],
+-      "../../scoped-elements/types/src/types.d.ts": [
+-        "../../../node_modules/lit-element/lit-element.d.ts",
+-        "../../dedupe-mixin/index.d.ts"
+-      ],
+-      "../index-no-side-effects.js": [
+-        "../src/elementUpdated.js",
+-        "../src/fixture-no-side-effect.js",
+-        "../src/fixtureWrapper.js",
+-        "../src/helpers.js",
+-        "../src/lit-html.js",
+-        "../src/litFixture.js",
+-        "../src/stringFixture.js"
+-      ],
+-      "../index.js": [
+-        "../src/elementUpdated.js",
+-        "../src/fixture.js",
+-        "../src/fixtureWrapper.js",
+-        "../src/helpers.js",
+-        "../src/lit-html.js",
+-        "../src/litFixture.js",
+-        "../src/stringFixture.js"
+-      ],
+-      "../src/elementUpdated.js": [
+-        "../src/helpers.js"
+-      ],
+-      "../src/fixture-no-side-effect.js": [
+-        "../../scoped-elements/types/index.d.ts",
+-        "../src/lib.js",
+-        "../src/litFixture.js",
+-        "../src/stringFixture.js"
+-      ],
+-      "../src/fixture.js": [
+-        "../src/fixture-no-side-effect.js",
+-        "../src/fixtureWrapper.js"
+-      ],
+-      "../src/helpers.js": [
+-        "../../dedupe-mixin/index.d.ts"
+-      ],
+-      "../src/lib.js": [
+-        "../../../node_modules/lit-html/lit-html.d.ts"
+-      ],
+-      "../src/lit-html.js": [
+-        "../../../node_modules/lit-html/lit-html.d.ts"
+-      ],
+-      "../src/litFixture.js": [
+-        "../../../node_modules/lit-html/lit-html.d.ts",
+-        "../src/elementUpdated.js",
+-        "../src/fixture-no-side-effect.js",
+-        "../src/fixtureWrapper.js",
+-        "../src/lib.js",
+-        "../src/lit-html.js",
+-        "../src/scopedElementsWrapper.js"
+-      ],
+-      "../src/scopedElementsWrapper.js": [
+-        "../../../node_modules/lit-element/lit-element.d.ts",
+-        "../../scoped-elements/types/index.d.ts",
+-        "../src/lib.js",
+-        "../src/litFixture.js"
+-      ],
+-      "../src/stringFixture.js": [
+-        "../../../node_modules/lit-html/lit-html.d.ts",
+-        "../src/elementUpdated.js",
+-        "../src/fixture-no-side-effect.js",
+-        "../src/fixtureWrapper.js",
+-        "../src/litFixture.js"
+-      ]
+-    },
+-    "exportedModulesMap": {
+-      "../../../node_modules/lit-element/lib/decorators.d.ts": [
+-        "../../../node_modules/lit-element/lib/updating-element.d.ts"
+-      ],
+-      "../../../node_modules/lit-element/lit-element.d.ts": [
+-        "../../../node_modules/lit-element/lib/css-tag.d.ts",
+-        "../../../node_modules/lit-element/lib/decorators.d.ts",
+-        "../../../node_modules/lit-element/lib/updating-element.d.ts",
+-        "../../../node_modules/lit-html/lib/shady-render.d.ts",
+-        "../../../node_modules/lit-html/lit-html.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/default-template-processor.d.ts": [
+-        "../../../node_modules/lit-html/lib/part.d.ts",
+-        "../../../node_modules/lit-html/lib/parts.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts",
+-        "../../../node_modules/lit-html/lib/template-processor.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/directive.d.ts": [
+-        "../../../node_modules/lit-html/lib/part.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/parts.d.ts": [
+-        "../../../node_modules/lit-html/lib/part.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/render-options.d.ts": [
+-        "../../../node_modules/lit-html/lib/template-factory.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/render.d.ts": [
+-        "../../../node_modules/lit-html/lib/parts.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/shady-render.d.ts": [
+-        "../../../node_modules/lit-html/lib/render-options.d.ts",
+-        "../../../node_modules/lit-html/lit-html.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template-factory.d.ts": [
+-        "../../../node_modules/lit-html/lib/template-result.d.ts",
+-        "../../../node_modules/lit-html/lib/template.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template-instance.d.ts": [
+-        "../../../node_modules/lit-html/lib/render-options.d.ts",
+-        "../../../node_modules/lit-html/lib/template-processor.d.ts",
+-        "../../../node_modules/lit-html/lib/template.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template-processor.d.ts": [
+-        "../../../node_modules/lit-html/lib/part.d.ts",
+-        "../../../node_modules/lit-html/lib/parts.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template-result.d.ts": [
+-        "../../../node_modules/lit-html/lib/template-processor.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lib/template.d.ts": [
+-        "../../../node_modules/lit-html/lib/template-result.d.ts"
+-      ],
+-      "../../../node_modules/lit-html/lit-html.d.ts": [
+-        "../../../node_modules/lit-html/lib/default-template-processor.d.ts",
+-        "../../../node_modules/lit-html/lib/directive.d.ts",
+-        "../../../node_modules/lit-html/lib/dom.d.ts",
+-        "../../../node_modules/lit-html/lib/part.d.ts",
+-        "../../../node_modules/lit-html/lib/parts.d.ts",
+-        "../../../node_modules/lit-html/lib/render-options.d.ts",
+-        "../../../node_modules/lit-html/lib/render.d.ts",
+-        "../../../node_modules/lit-html/lib/template-factory.d.ts",
+-        "../../../node_modules/lit-html/lib/template-instance.d.ts",
+-        "../../../node_modules/lit-html/lib/template-processor.d.ts",
+-        "../../../node_modules/lit-html/lib/template-result.d.ts",
+-        "../../../node_modules/lit-html/lib/template.d.ts"
+-      ],
+-      "../../scoped-elements/types/index.d.ts": [
+-        "../../scoped-elements/types/src/ScopedElementsMixin.d.ts"
+-      ],
+-      "../../scoped-elements/types/src/ScopedElementsMixin.d.ts": [
+-        "../../../node_modules/lit-element/lit-element.d.ts",
+-        "../../../node_modules/lit-html/lib/shady-render.d.ts",
+-        "../../../node_modules/lit-html/lit-html.d.ts",
+-        "../../scoped-elements/types/src/types.d.ts"
+-      ],
+-      "../../scoped-elements/types/src/types.d.ts": [
+-        "../../../node_modules/lit-element/lit-element.d.ts",
+-        "../../dedupe-mixin/index.d.ts"
+-      ],
+-      "../src/fixture-no-side-effect.js": [
+-        "../../scoped-elements/types/index.d.ts",
+-        "../src/litFixture.js"
+-      ],
+-      "../src/helpers.js": [
+-        "../../dedupe-mixin/index.d.ts"
+-      ],
+-      "../src/lit-html.js": [
+-        "../../../node_modules/lit-html/lit-html.d.ts"
+-      ],
+-      "../src/litFixture.js": [
+-        "../src/fixture-no-side-effect.js"
+-      ],
+-      "../src/scopedElementsWrapper.js": [
+-        "../src/litFixture.js"
+-      ],
+-      "../src/stringFixture.js": [
+-        "../src/fixture-no-side-effect.js"
+-      ]
+-    },
+-    "semanticDiagnosticsPerFile": [
+-      "../../../node_modules/@types/chai/index.d.ts",
+-      "../../../node_modules/@types/mocha/index.d.ts",
+-      "../../../node_modules/lit-element/lib/css-tag.d.ts",
+-      "../../../node_modules/lit-element/lib/decorators.d.ts",
+-      "../../../node_modules/lit-element/lib/updating-element.d.ts",
+-      "../../../node_modules/lit-element/lit-element.d.ts",
+-      "../../../node_modules/lit-html/lib/default-template-processor.d.ts",
+-      "../../../node_modules/lit-html/lib/directive.d.ts",
+-      "../../../node_modules/lit-html/lib/dom.d.ts",
+-      "../../../node_modules/lit-html/lib/part.d.ts",
+-      "../../../node_modules/lit-html/lib/parts.d.ts",
+-      "../../../node_modules/lit-html/lib/render-options.d.ts",
+-      "../../../node_modules/lit-html/lib/render.d.ts",
+-      "../../../node_modules/lit-html/lib/shady-render.d.ts",
+-      "../../../node_modules/lit-html/lib/template-factory.d.ts",
+-      "../../../node_modules/lit-html/lib/template-instance.d.ts",
+-      "../../../node_modules/lit-html/lib/template-processor.d.ts",
+-      "../../../node_modules/lit-html/lib/template-result.d.ts",
+-      "../../../node_modules/lit-html/lib/template.d.ts",
+-      "../../../node_modules/lit-html/lit-html.d.ts",
+-      "../../../node_modules/typescript/lib/lib.dom.d.ts",
+-      "../../../node_modules/typescript/lib/lib.dom.iterable.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.collection.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.core.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.generator.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.iterable.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.promise.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.proxy.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.reflect.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.symbol.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2016.array.include.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2016.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2017.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2017.intl.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2017.object.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2017.string.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2017.typedarrays.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2018.asynciterable.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2018.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2018.full.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2018.intl.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2018.promise.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es2018.regexp.d.ts",
+-      "../../../node_modules/typescript/lib/lib.es5.d.ts",
+-      "../../../node_modules/typescript/lib/lib.scripthost.d.ts",
+-      "../../../node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+-      "../../dedupe-mixin/index.d.ts",
+-      "../../scoped-elements/types/index.d.ts",
+-      "../../scoped-elements/types/src/ScopedElementsMixin.d.ts",
+-      "../../scoped-elements/types/src/types.d.ts",
+-      "../index-no-side-effects.js",
+-      "../index.js",
+-      "../src/elementUpdated.js",
+-      "../src/fixture-no-side-effect.js",
+-      "../src/fixture.js",
+-      "../src/fixtureWrapper.js",
+-      "../src/helpers.js",
+-      "../src/lib.js",
+-      "../src/lit-html.js",
+-      "../src/litFixture.js",
+-      "../src/scopedElementsWrapper.js",
+-      "../src/stringFixture.js"
+-    ]
+-  },
+-  "version": "4.0.3"
+-}
+\ No newline at end of file

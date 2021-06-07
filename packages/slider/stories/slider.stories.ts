@@ -9,13 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html } from 'lit-html';
-
 import '../sp-slider.js';
 import '../sp-slider-handle.js';
 import { Slider, SliderHandle, HandleValues, variants } from '../';
-import { TemplateResult } from '@spectrum-web-components/base';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { TemplateResult, html } from '@spectrum-web-components/base';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 const action = (msg1: string) => (msg2: string | HandleValues): void => {
     const message =
@@ -60,6 +58,7 @@ export default {
 interface StoryArgs {
     variant?: string;
     tickStep?: number;
+    [prop: string]: any;
 }
 
 export const Default = (args: StoryArgs): TemplateResult => {

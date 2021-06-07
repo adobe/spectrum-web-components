@@ -85,13 +85,6 @@ export class Card extends ObserveSlotPresence(
         return this.getSlotContentPresence('[slot="preview"]');
     }
 
-    public constructor() {
-        super();
-        this.addEventListener('focusin', this.handleFocusin);
-        this.shadowRoot.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
-    }
-
     private handleFocusin = (event: Event): void => {
         this.focused = true;
         const target = event.composedPath()[0];
@@ -152,9 +145,7 @@ export class Card extends ObserveSlotPresence(
     protected get renderHeading(): TemplateResult {
         return html`
             <div class="title spectrum-Heading spectrum-Heading--sizeXS">
-                <slot name="heading">
-                    ${this.heading}
-                </slot>
+                <slot name="heading">${this.heading}</slot>
             </div>
         `;
     }
@@ -195,9 +186,7 @@ export class Card extends ObserveSlotPresence(
     private get renderSubtitleAndDescription(): TemplateResult {
         return html`
             <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
-                <slot name="subheading">
-                    ${this.subheading}
-                </slot>
+                <slot name="subheading">${this.subheading}</slot>
             </div>
             <slot name="description"></slot>
         `;
@@ -259,5 +248,8 @@ export class Card extends ObserveSlotPresence(
         super.firstUpdated(changes);
         this.setAttribute('role', 'figure');
         this.tabIndex = 0;
+        this.addEventListener('focusin', this.handleFocusin);
+        this.shadowRoot.addEventListener('focusin', this.handleFocusin);
+        this.addEventListener('focusout', this.handleFocusout);
     }
 }

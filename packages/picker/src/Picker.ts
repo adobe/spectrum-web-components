@@ -481,9 +481,10 @@ export class PickerBase extends SizedMixin(Focusable) {
     private menuStatePromise = Promise.resolve();
     private menuStateResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        await super.getUpdateComplete();
         await this.menuStatePromise;
+        return true;
     }
 
     public connectedCallback(): void {
