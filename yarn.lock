@@ -4680,6 +4680,14 @@
     "@web/test-runner-core" "^0.10.14"
     mkdirp "^1.0.4"
 
+"@web/test-runner-commands@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.5.2.tgz#563b451427440fece15266eadf0d39708a0235db"
+  integrity sha512-axgYk5lpCTz6COaKs0gFI3u1MpwKv7sk/lFEoBnsbEKm++qEVTgBOKqnubNTPY7GNqga9CFDeRqFDSjeurVCIA==
+  dependencies:
+    "@web/test-runner-core" "^0.10.14"
+    mkdirp "^1.0.4"
+
 "@web/test-runner-core@^0.10.13", "@web/test-runner-core@^0.10.14":
   version "0.10.14"
   resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.14.tgz#5794ded17f673d9839e5a5e36ead505df92962af"
@@ -4786,10 +4794,10 @@
     picomatch "^2.2.2"
     v8-to-istanbul "^7.1.0"
 
-"@web/test-runner-junit-reporter@^0.4.3":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-junit-reporter/-/test-runner-junit-reporter-0.4.3.tgz#9e5132595525634a22fb31c51c29d2ffc55bca51"
-  integrity sha512-9iz9eq8TJ9Nmf44JFfnEmtFUQdI5iYKZ3ZtU/NMGYAGrNBHe5AevtTbtxU6pkHm9EzrEZp4QHM36q/bf1ZgONA==
+"@web/test-runner-junit-reporter@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-junit-reporter/-/test-runner-junit-reporter-0.4.4.tgz#2ae29b5c8315af3f11a1d0ff8664006703f9c10c"
+  integrity sha512-/IhhRq5tAAS6QHYnXAh1M7a4Lrfj/a8mKX00Qt1ugePNkWsewWu5huIq3QKIF72KRO6QprMnxDjilm5azF8N8Q==
   dependencies:
     "@web/test-runner-chrome" "^0.10.0"
     "@web/test-runner-core" "^0.10.8"
@@ -4827,16 +4835,16 @@
     pixelmatch "^5.2.1"
     pngjs "^6.0.0"
 
-"@web/test-runner@^0.13.5":
-  version "0.13.5"
-  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.13.5.tgz#87c225f7b7b3c9c4eb95442bd909e9dfe6c9bc74"
-  integrity sha512-S1/fAE1aIJEbKSptinP/m8jvl4PA+RCF2tt7EAyvvucpSzeKo05prht2NLgoJhZJGhSvgdw1BCayOVNXMFfB9A==
+"@web/test-runner@^0.13.8":
+  version "0.13.8"
+  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.13.8.tgz#c019f9be812bd631bf3b327cd5f947dec8d5f599"
+  integrity sha512-6l+5hQx+gdQaRqxs/PJxOZ3MtCQw/SdhoAtpsntgQhtfyBOdah4W1sDteJ4+i3T4URG6CPEboPMYS3NC+y4hpw==
   dependencies:
     "@web/browser-logs" "^0.2.2"
     "@web/config-loader" "^0.1.3"
     "@web/dev-server" "^0.1.17"
     "@web/test-runner-chrome" "^0.10.0"
-    "@web/test-runner-commands" "^0.5.0"
+    "@web/test-runner-commands" "^0.5.2"
     "@web/test-runner-core" "^0.10.17"
     "@web/test-runner-mocha" "^0.7.2"
     camelcase "^6.2.0"
