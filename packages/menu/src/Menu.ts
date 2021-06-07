@@ -48,7 +48,7 @@ export class Menu extends SpectrumElement {
 
     // For the multiple select case, we'll join the value strings together
     // for the value property with this separator
-    @property({ type: String })
+    @property({ type: String, attribute: 'value-separator' })
     public valueSeparator = ',';
 
     // TODO: which of these to keep?
@@ -318,8 +318,8 @@ export class Menu extends SpectrumElement {
             // item as the value. Also set the selected array
             // in the order of the menu items.
             let valueSet: boolean = false;
-            let selected: string[] = [];
-            let selectedItems: MenuItem[] = [];
+            const selected: string[] = [];
+            const selectedItems: MenuItem[] = [];
 
             for (const childItem of this.childItems) {
                 if (!childItem.managed) continue;
@@ -346,12 +346,14 @@ export class Menu extends SpectrumElement {
             })
         );
         if (!applyDefault) {
+            // Cancel the event & don't apply the selection
             this.selected = oldSelected;
             this.selectedItems = oldSelectedItems;
             this.selectedItemsMap = oldSelectedItemsMap;
             this.value = oldValue;
             return;
         }
+        // Apply the selection changes to the menu items
         if (resolvedSelects === 'single') {
             for (const oldItem of oldSelectedItemsMap.keys()) {
                 if (oldItem !== item) {
