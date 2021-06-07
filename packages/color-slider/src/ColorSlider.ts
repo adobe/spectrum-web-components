@@ -227,7 +227,9 @@ export class ColorSlider extends Focusable {
         }
     }
 
-    private handleInput(event: Event & { target: HTMLInputElement }): void {
+    private handleInputChange(
+        event: Event & { target: HTMLInputElement }
+    ): void {
         const { valueAsNumber } = event.target;
 
         this.value = valueAsNumber;
@@ -342,7 +344,7 @@ export class ColorSlider extends Focusable {
             </div>
             <sp-color-handle
                 class="handle"
-                color="hsl(${this._color.toHsl().h}, 100%, 50%)"
+                color="hsl(${this.value}, 100%, 50%)"
                 ?disabled=${this.disabled}
                 style="${this.vertical ? 'top' : 'left'}: ${this
                     .sliderHandlePosition}%"
@@ -363,7 +365,7 @@ export class ColorSlider extends Focusable {
                 step=${this.step}
                 aria-label=${this.label}
                 .value=${String(this.value)}
-                @input=${this.handleInput}
+                @input=${this.handleInputChange}
                 @keydown=${this.handleKeydown}
                 @keyup=${this.handleKeyup}
                 @focus=${this.handleFocus}
