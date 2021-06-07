@@ -103,13 +103,23 @@ export class ColorSlider extends Focusable {
             case 'name':
                 return this._color.toName() || this._color.toRgbString();
             case 'hsl':
-                return this._format.isString
-                    ? this._color.toHslString()
-                    : this._color.toHsl();
+                if (this._format.isString) {
+                    const hueExp = /(^hs[v|va|l|la]\()\d{1,3}/;
+                    const hslString = this._color.toHslString();
+                    return hslString.replace(hueExp, `$1${this.value}`);
+                } else {
+                    const { s, l, a } = this._color.toHsl();
+                    return { h: this.value, s, l, a };
+                }
             case 'hsv':
-                return this._format.isString
-                    ? this._color.toHsvString()
-                    : this._color.toHsv();
+                if (this._format.isString) {
+                    const hueExp = /(^hs[v|va|l|la]\()\d{1,3}/;
+                    const hsvString = this._color.toHsvString();
+                    return hsvString.replace(hueExp, `$1${this.value}`);
+                } else {
+                    const { s, v, a } = this._color.toHsv();
+                    return { h: this.value, s, v, a };
+                }
             default:
                 return 'No color format applied.';
         }
@@ -145,9 +155,6 @@ export class ColorSlider extends Focusable {
             const colorInput = this._color.originalInput;
             const colorValues = Object.values(colorInput);
             this.value = colorValues[0];
-
-            // The below code line causes some tests to fail
-            //this.value = parseFloat((color as HSV).h.toString());
         } else {
             const { h } = this._color.toHsv();
             this.value = h;
