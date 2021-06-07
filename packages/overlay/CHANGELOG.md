@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.6...@spectrum-web-components/overlay@0.11.7) (2021-06-07)
+
+### Bug Fixes
+
+-   ensure focus is managed when tabbing out of a menu ([9bfa81d](https://github.com/adobe/spectrum-web-components/commit/9bfa81d8a677d6c0ab5ac5cd618498496761c69b))
+-   **overlay:** vend a VirtualTrigger for overlays with no element trigger ([a359c60](https://github.com/adobe/spectrum-web-components/commit/a359c6078aa4fac3c9a7bd140609acd4d9aed81d))
+
 ## [0.11.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.5...@spectrum-web-components/overlay@0.11.6) (2021-05-24)
 
 ### Bug Fixes

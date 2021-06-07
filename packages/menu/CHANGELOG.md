@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.6...@spectrum-web-components/menu@0.8.7) (2021-06-07)
+
+### Bug Fixes
+
+-   **menu:** clarify menu internal focus management via preventScroll option ([9ae092c](https://github.com/adobe/spectrum-web-components/commit/9ae092c7d09ef9359dbf9ed9373aef0650967f40))
+
 ## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.5...@spectrum-web-components/menu@0.8.6) (2021-05-24)
 
 **Note:** Version bump only for package @spectrum-web-components/menu

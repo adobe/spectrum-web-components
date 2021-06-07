@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.1...@spectrum-web-components/tabs@0.6.2) (2021-06-07)
+
+### Bug Fixes
+
+-   use ObserveSlotText mixin to prevent white space from overriding label attribute ([610fb4b](https://github.com/adobe/spectrum-web-components/commit/610fb4b5b392b7e3673c7d46bf8f9f5f79f27ca9))
+
 ## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.0...@spectrum-web-components/tabs@0.6.1) (2021-05-25)
 
 ### Bug Fixes

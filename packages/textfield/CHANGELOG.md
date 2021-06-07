@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.7...@spectrum-web-components/textfield@0.8.8) (2021-06-07)
+
+### Bug Fixes
+
+-   **textfield:** add select() API mapping to shadow DOM element ([d467a34](https://github.com/adobe/spectrum-web-components/commit/d467a3463f326d839c9d51ffacd24f8fdfb1aff1))
+
 ## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.6...@spectrum-web-components/textfield@0.8.7) (2021-05-24)
 
 ### Bug Fixes

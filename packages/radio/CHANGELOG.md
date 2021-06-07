@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.7.6...@spectrum-web-components/radio@0.7.7) (2021-06-07)
+
+### Bug Fixes
+
+-   lint away debugger statements ([34a498e](https://github.com/adobe/spectrum-web-components/commit/34a498e784221f98dbf26e9366114c82fabc9c5b))
+
 ## [0.7.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.7.5...@spectrum-web-components/radio@0.7.6) (2021-05-24)
 
 ### Bug Fixes

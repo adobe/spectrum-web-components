@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.4...@spectrum-web-components/color-area@0.1.5) (2021-06-07)
+
+### Bug Fixes
+
+-   lint away debugger statements ([34a498e](https://github.com/adobe/spectrum-web-components/commit/34a498e784221f98dbf26e9366114c82fabc9c5b))
+-   **color-area:** fix hue value for hsv and hsl ([a66e111](https://github.com/adobe/spectrum-web-components/commit/a66e111c05571e3abac8f2940f11442e6f9e67b2))
+
 ## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.3...@spectrum-web-components/color-area@0.1.4) (2021-05-12)
 
 ### Bug Fixes

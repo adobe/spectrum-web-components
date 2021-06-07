@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-group",
-    "version": "0.4.8",
+    "version": "0.4.9",
     "publishConfig": {
         "access": "public"
     },
@@ -43,7 +43,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.5.0",
+        "@spectrum-web-components/action-button": "^0.5.1",
         "@spectrum-web-components/base": "^0.4.3",
         "tslib": "^2.0.0"
     },

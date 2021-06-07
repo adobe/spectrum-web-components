@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.8...@spectrum-web-components/action-group@0.4.9) (2021-06-07)
+
+### Bug Fixes
+
+-   **action-group:** pass styles to nested children, too ([12f1be3](https://github.com/adobe/spectrum-web-components/commit/12f1be3cfd932b10e4b9aa18f8a89aeed6a09df4))
+
 ## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.7...@spectrum-web-components/action-group@0.4.8) (2021-05-24)
 
 ### Bug Fixes
