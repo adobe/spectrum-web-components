@@ -259,7 +259,7 @@ describe('Picker', () => {
         );
         await elementUpdated(el);
 
-        expect(firstItem.focused, 'not visually focused').to.be.false;
+        expect(firstItem.focused, 'should not visually focused').to.be.false;
 
         el.focus();
         await elementUpdated(el);
@@ -270,7 +270,7 @@ describe('Picker', () => {
         await opened;
 
         expect(el.open).to.be.true;
-        expect(firstItem.focused, 'not visually focused').to.be.true;
+        expect(firstItem.focused, 'should be visually focused').to.be.true;
 
         const closed = oneEvent(el, 'sp-closed');
         await sendKeys({

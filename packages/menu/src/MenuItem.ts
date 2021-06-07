@@ -80,13 +80,16 @@ export class MenuItem extends ActionButton {
         `;
     }
 
-    protected async firstUpdated(changes: PropertyValues) {
+    protected firstUpdated(changes: PropertyValues): void {
         this.setAttribute('tabindex', '-1');
         super.firstUpdated(changes);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${MenuItem.instanceCount++}`;
         }
+    }
 
+    public async connectedCallback(): Promise<void> {
+        super.connectedCallback();
         // Slot updates happens after the connected callback,
         // so we need to wait a frame before announcing ourselves
         // or the right menu might not pick this up. E.g. without this
@@ -97,7 +100,7 @@ export class MenuItem extends ActionButton {
             composed: true,
             detail: {
                 item: this,
-                inherited: false,
+                owned: false,
             },
         });
         this.dispatchEvent(addedEvent);
