@@ -103,7 +103,7 @@
         "@open-wc/testing": "^2.5.33",
         "@rollup/plugin-commonjs": "^19.0.0",
         "@rollup/plugin-json": "^4.1.0",
-        "@rollup/plugin-node-resolve": "^11.2.0",
+        "@rollup/plugin-node-resolve": "^13.0.0",
         "@spectrum-css/table": "^3.0.3",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",
