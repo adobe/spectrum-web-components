@@ -193,6 +193,14 @@ export class StoryDecorator extends SpectrumElement {
         }
     }
 
+    protected handleKeydown(event: KeyboardEvent): void {
+        const path = event.composedPath();
+        const hasInput = path.some((node) => node instanceof HTMLInputElement);
+        if (hasInput) {
+            event.stopPropagation();
+        }
+    }
+
     protected render(): TemplateResult {
         return html`
             <sp-theme
@@ -200,6 +208,7 @@ export class StoryDecorator extends SpectrumElement {
                 scale=${this.scale}
                 dir=${this.direction}
                 part="container"
+                @keydown=${this.handleKeydown}
             >
                 <slot @slotchange=${this.checkReady}></slot>
                 ${this.screenshot ? nothing : this.manageTheme}
