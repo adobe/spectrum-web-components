@@ -121,7 +121,7 @@
         "@vaadin/router": "^1.2.0",
         "@web/dev-server": "^0.1.17",
         "@web/dev-server-rollup": "^0.3.4",
-        "@web/dev-server-storybook": "^0.3.5",
+        "@web/dev-server-storybook": "^0.3.6-next.0",
         "@web/rollup-plugin-copy": "^0.3.0",
         "@web/rollup-plugin-html": "^1.7.0",
         "@web/test-runner": "^0.13.8",
