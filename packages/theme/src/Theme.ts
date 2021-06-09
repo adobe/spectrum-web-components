@@ -40,7 +40,7 @@ declare global {
     }
 }
 
-type FragmentType = 'color' | 'scale' | 'core';
+type FragmentType = 'color' | 'scale' | 'core' | 'app';
 type SettableFragmentTypes = 'color' | 'scale';
 type FragmentMap = Map<string, { name: string; styles: CSSResult }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
@@ -48,7 +48,7 @@ export type Color = 'light' | 'lightest' | 'dark' | 'darkest';
 export type Scale = 'medium' | 'large';
 const ScaleValues = ['medium', 'large'];
 const ColorValues = ['light', 'lightest', 'dark', 'darkest'];
-type FragmentName = Color | Scale | 'core';
+type FragmentName = Color | Scale | 'core' | 'app';
 
 export interface ThemeData {
     color?: Color;
@@ -65,7 +65,6 @@ export interface ProvideLang {
 }
 
 export class Theme extends HTMLElement implements ThemeKindProvider {
-    private hasAdoptedStyles = false;
     private static themeFragmentsByKind: ThemeFragmentMap = new Map();
     private static defaultFragments: Set<FragmentName> = new Set(['core']);
     private static templateElement?: HTMLTemplateElement;
@@ -94,7 +93,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     private requestUpdate(): void {
-        this.hasAdoptedStyles = false;
         if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
             window.ShadyCSS.styleElement(this);
         } else {
@@ -103,10 +101,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     public shadowRoot!: ShadowRoot;
-
-    get core(): 'core' {
-        return 'core';
-    }
 
     private _color: Color | '' = '';
 
@@ -168,10 +162,20 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             const kindFragments = Theme.themeFragmentsByKind.get(
                 kind
             ) as FragmentMap;
-            const { [kind]: name } = this;
-            const currentStyles = kindFragments.get(name);
-            if (currentStyles) {
-                acc.push(currentStyles.styles);
+            const addStyles = (
+                name: FragmentName,
+                kind?: FragmentType
+            ): void => {
+                const currentStyles = kindFragments.get(name);
+                if (currentStyles && (!kind || this.hasAttribute(kind))) {
+                    acc.push(currentStyles.styles);
+                }
+            };
+            if (kind === 'app' || kind === 'core') {
+                addStyles(kind);
+            } else {
+                const { [kind]: name } = this;
+                addStyles(<FragmentName>name, kind);
             }
             return acc;
         }, [] as CSSResult[]);
@@ -200,6 +204,16 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             'sp-language-context',
             this._handleContextPresence as EventListener
         );
+        this.updateComplete = this.__createDeferredPromise();
+    }
+
+    public updateComplete!: Promise<void>;
+    private __resolve!: () => void;
+
+    private __createDeferredPromise(): Promise<void> {
+        return new Promise((resolve) => {
+            this.__resolve = resolve;
+        });
     }
 
     private onQueryTheme(event: CustomEvent<ThemeData>): void {
@@ -274,21 +288,20 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     private trackedChildren: Set<HTMLElement> = new Set();
 
-    private shouldAdoptStyles(): void {
-        /* c8 ignore next 3 */
-        if (!this.hasAdoptedStyles) {
-            this.adoptStyles();
-        }
-    }
+    private _updateRequested = false;
 
-    private get expectedFragments(): number {
-        // color, scale and core
-        return 3;
+    private async shouldAdoptStyles(): Promise<void> {
+        if (!this._updateRequested) {
+            this.updateComplete = this.__createDeferredPromise();
+            this._updateRequested = true;
+            this._updateRequested = await false;
+            this.adoptStyles();
+            this.__resolve();
+        }
     }
 
     protected adoptStyles(): void {
         const styles = this.styles; // No test coverage on Edge
-        if (styles.length < this.expectedFragments) return;
 
         // There are three separate cases here based on Shadow DOM support.
         // (1) shadowRoot polyfilled: use ShadyCSS
@@ -338,7 +351,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 this.shadowRoot.appendChild(style);
             });
         }
-        this.hasAdoptedStyles = true;
     }
 
     static registerThemeFragment(
