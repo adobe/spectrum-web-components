@@ -148,6 +148,24 @@ describe('Menu', () => {
         await expect(el).to.be.accessible();
     });
 
+    it('renders w/ hrefs', async () => {
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu>
+                    <sp-menu-item href="not-selected.html">
+                        Not Selected
+                    </sp-menu-item>
+                    <sp-menu-item href="selected.html">Selected</sp-menu-item>
+                    <sp-menu-item href="other.html">Other</sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+
     it('handle focus and keyboard input', async () => {
         const el = await fixture<Menu>(
             html`

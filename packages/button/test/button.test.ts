@@ -92,7 +92,12 @@ describe('Button', () => {
         el.href = '#';
 
         await elementUpdated(el);
-        expect(el.hasAttribute('role')).to.be.false;
+        expect(el.getAttribute('role')).to.equal('link');
+
+        el.removeAttribute('href');
+
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('button');
     });
     it('allows label to be toggled', async () => {
         const testNode = document.createTextNode('Button');
@@ -178,9 +183,7 @@ describe('Button', () => {
         const clickSpy = spy();
         const el = await fixture<Button>(
             html`
-                <sp-button @click=${() => clickSpy()}>
-                    Button
-                </sp-button>
+                <sp-button @click=${() => clickSpy()}>Button</sp-button>
             `
         );
 
