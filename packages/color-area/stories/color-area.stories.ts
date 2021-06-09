@@ -62,7 +62,7 @@ export const joint = (): TemplateResult => {
             ></sp-color-area>
             <sp-color-slider
                 color="hsv(0, 0, 1)"
-                @change=${({
+                @input=${({
                     target: { color, previousElementSibling },
                 }: Event & {
                     target: ColorSlider & {

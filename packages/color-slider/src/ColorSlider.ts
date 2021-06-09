@@ -242,6 +242,14 @@ export class ColorSlider extends Focusable {
         this.value = valueAsNumber;
         this.sliderHandlePosition = 100 * (this.value / 360);
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
+
+        this.dispatchEvent(
+            new Event('input', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
     }
 
     private handleFocus(): void {
@@ -255,6 +263,7 @@ export class ColorSlider extends Focusable {
     private boundingClientRect!: DOMRect;
 
     private handlePointerdown(event: PointerEvent): void {
+        console.log('pointer down');
         if (event.button !== 0) {
             event.preventDefault();
             return;
@@ -268,6 +277,8 @@ export class ColorSlider extends Focusable {
     }
 
     private handlePointermove(event: PointerEvent): void {
+        console.log('pointer move');
+
         this.sliderHandlePosition = this.calculateHandlePosition(event);
         this.value = 360 * (this.sliderHandlePosition / 100);
 
@@ -283,6 +294,8 @@ export class ColorSlider extends Focusable {
     }
 
     private handlePointerup(event: PointerEvent): void {
+        console.log('pointer up');
+
         // Retain focus on input element after mouse up to enable keyboard interactions
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
 
@@ -384,5 +397,21 @@ export class ColorSlider extends Focusable {
     protected firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
+    }
+
+    protected updated(changed: PropertyValues): void {
+        super.updated(changed);
+        if (changed.has('value')) {
+            if (this.value === this.input.valueAsNumber) {
+                this.dispatchEvent(
+                    new Event('input', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+            } else {
+                this.value = this.input.valueAsNumber;
+            }
+        }
     }
 }
