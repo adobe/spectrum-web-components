@@ -52,7 +52,7 @@
         "postdocs:analyze": "node ./scripts/add-custom-properties.js --src=\"documentation/custom-elements.json\"",
         "postdocs:build": "cp documentation/favicon.ico documentation/dist",
         "postdocs:ci": "cp documentation/favicon.ico documentation/dist && cp documentation/custom-elements.json documentation/dist/storybook",
-        "postinstall": "patch-package && yarn get-ready",
+        "postinstall": "yarn get-ready",
         "postprocess-spectrum": "pretty-quick --pattern \"packages/**/*.css\"",
         "precustom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,iconset,modal,shared,styles},example-project-rollup,example-project-webpack,swc-templates}\" -- rm custom-elements.json ||:",
         "predocs:ts": "rm -f documentation/components/searchIndex.json && cp documentation/components/_searchIndex.json documentation/components/searchIndex.json",
