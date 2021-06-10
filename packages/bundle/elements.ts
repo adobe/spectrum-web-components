@@ -60,6 +60,7 @@ import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/slider/sp-slider-handle.js';
 import '@spectrum-web-components/split-button/sp-split-button.js';
 import '@spectrum-web-components/split-view/sp-split-view.js';
 import '@spectrum-web-components/status-light/sp-status-light.js';

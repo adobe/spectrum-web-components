@@ -463,25 +463,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     width: 100%;
     height: 100%;
 }
-:host([dir='ltr']) #handle {
+:host([dir='ltr']) .handle {
     /* [dir=ltr] .spectrum-Slider-handle */
     left: 0;
 }
-:host([dir='rtl']) #handle {
+:host([dir='rtl']) .handle {
     /* [dir=rtl] .spectrum-Slider-handle */
     right: 0;
 }
-:host([dir='ltr']) #handle {
+:host([dir='ltr']) .handle {
     /* [dir=ltr] .spectrum-Slider-handle */
     margin-left: calc(var(--spectrum-slider-handle-width) / -2);
     margin-right: 0;
 }
-:host([dir='rtl']) #handle {
+:host([dir='rtl']) .handle {
     /* [dir=rtl] .spectrum-Slider-handle */
     margin-right: calc(var(--spectrum-slider-handle-width) / -2);
     margin-left: 0;
 }
-#handle {
+.handle {
     /* .spectrum-Slider-handle */
     position: absolute;
     top: calc(var(--spectrum-slider-height) / 2);
@@ -499,25 +499,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         ease-in-out;
     outline: none;
 }
-:host([dragging]) #handle,
-:host([handle-highlight]) #handle,
-#handle:active {
+.handle.dragging,
+.handle.handle-highlight,
+.handle:active {
     /* .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle.is-focused,
    * .spectrum-Slider-handle:active */
     border-width: var(--spectrum-slider-handle-border-size-down);
 }
-:host([dragging]) #handle,
-:host([handle-highlight]) #handle,
-#handle.is-tophandle,
-#handle:active {
+.handle.dragging,
+.handle.handle-highlight,
+.handle.is-tophandle,
+.handle:active {
     /* .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle.is-focused,
    * .spectrum-Slider-handle.is-tophandle,
    * .spectrum-Slider-handle:active */
     z-index: 3;
 }
-#handle:before {
+.handle:before {
     /* .spectrum-Slider-handle:before */
     content: ' ';
     display: block;
@@ -533,7 +533,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transform: translate(-50%, -50%);
     border-radius: 100%;
 }
-:host([handle-highlight]) #handle:before {
+.handle.handle-highlight:before {
     /* .spectrum-Slider-handle.is-focused:before */
     width: calc(
         var(--spectrum-slider-handle-width) +
@@ -550,15 +550,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) * 2
     );
 }
-:host([dir='ltr']) #input {
+:host([dir='ltr']) .input {
     /* [dir=ltr] .spectrum-Slider-input */
     left: var(--spectrum-slider-input-left);
 }
-:host([dir='rtl']) #input {
+:host([dir='rtl']) .input {
     /* [dir=rtl] .spectrum-Slider-input */
     right: var(--spectrum-slider-input-left);
 }
-#input {
+.input {
     /* .spectrum-Slider-input */
     margin: 0;
     width: var(--spectrum-slider-handle-width);
@@ -573,7 +573,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border: 0;
     pointer-events: none;
 }
-#input:focus {
+.input:focus {
     /* .spectrum-Slider-input:focus */
     outline: none;
 }
@@ -709,7 +709,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Slider.is-disabled */
     cursor: default;
 }
-:host([disabled]) #handle {
+:host([disabled]) .handle {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-handle */
     cursor: default;
     pointer-events: none;
@@ -768,7 +768,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-400)
     );
 }
-#handle {
+.handle {
     /* .spectrum-Slider-handle */
     border-color: var(
         --spectrum-slider-m-handle-border-color,
@@ -779,21 +779,21 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-background-color-transparent)
     );
 }
-#handle:hover {
+.handle:hover {
     /* .spectrum-Slider-handle:hover */
     border-color: var(
         --spectrum-slider-m-handle-border-color-hover,
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([handle-highlight]) #handle {
+.handle.handle-highlight {
     /* .spectrum-Slider-handle.is-focused */
     border-color: var(
         --spectrum-slider-m-handle-border-color-key-focus,
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([handle-highlight]) #handle:before {
+.handle.handle-highlight:before {
     /* .spectrum-Slider-handle.is-focused:before */
     box-shadow: 0 0 0
         var(
@@ -802,8 +802,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
         var(--spectrum-slider-m-handle-focus-ring-color-key-focus);
 }
-:host([dragging]) #handle,
-#handle:active {
+.handle.dragging,
+.handle:active {
     /* .spectrum-Slider-handle.is-dragged,
    * .spectrum-Slider-handle:active */
     border-color: var(
@@ -811,7 +811,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
-:host([variant='ramp']) #handle {
+:host([variant='ramp']) .handle {
     /* .spectrum-Slider--ramp .spectrum-Slider-handle */
     box-shadow: 0 0 0 4px
         var(
@@ -819,7 +819,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-gray-100)
         );
 }
-#input {
+.input {
     /* .spectrum-Slider-input */
     background: transparent;
 }
@@ -830,7 +830,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-track-color-default)
     );
 }
-:host([dragging]) #handle {
+.handle.dragging {
     /* .spectrum-Slider-handle.is-dragged */
     border-color: var(
         --spectrum-slider-m-handle-border-color-down,
@@ -852,7 +852,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Slider.is-disabled .spectrum-Slider-labelContainer */
     color: var(--spectrum-slider-m-label-text-color-disabled);
 }
-:host([disabled]) #handle {
+:host([disabled]) .handle {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-handle */
     border-color: var(
         --spectrum-slider-m-handle-border-color-disabled,
@@ -863,8 +863,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-100)
     );
 }
-:host([disabled]) #handle:active,
-:host([disabled]) #handle:hover {
+:host([disabled]) .handle:active,
+:host([disabled]) .handle:hover {
     /* .spectrum-Slider.is-disabled .spectrum-Slider-handle:active,
    * .spectrum-Slider.is-disabled .spectrum-Slider-handle:hover */
     border-color: var(
