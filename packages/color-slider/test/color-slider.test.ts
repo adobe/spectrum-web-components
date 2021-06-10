@@ -80,6 +80,8 @@ describe('ColorSlider', () => {
         input.dispatchEvent(arrowUpKeyupEvent);
 
         await elementUpdated(el);
+        await elementUpdated(el);
+        await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(2);
 
@@ -448,7 +450,7 @@ describe('ColorSlider', () => {
 
         expect(el.sliderHandlePosition).to.equal(46.875);
     });
-    it('accepts change events', async () => {
+    it('accepts input events', async () => {
         const el = await fixture<ColorSlider>(
             html`
                 <sp-color-slider></sp-color-slider>
@@ -461,7 +463,7 @@ describe('ColorSlider', () => {
 
         const input = el.shadowRoot.querySelector('input') as HTMLInputElement;
         input.value = '300';
-        input.dispatchEvent(new Event('change'));
+        input.dispatchEvent(new Event('input'));
 
         await elementUpdated(el);
 
