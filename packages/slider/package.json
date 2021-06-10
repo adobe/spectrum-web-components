@@ -24,7 +24,9 @@
         "./src/*": "./src/*",
         "./package.json": "./package.json",
         "./sp-slider": "./sp-slider.js",
-        "./sp-slider.js": "./sp-slider.js"
+        "./sp-slider.js": "./sp-slider.js",
+        "./sp-slider-handle": "./sp-slider-handle.js",
+        "./sp-slider-handle.js": "./sp-slider-handle.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
@@ -43,6 +45,7 @@
         "lit-html"
     ],
     "dependencies": {
+        "@internationalized/number": "^3.0.0",
         "@spectrum-web-components/base": "^0.4.3",
         "@spectrum-web-components/shared": "^0.12.4",
         "tslib": "^2.0.0"

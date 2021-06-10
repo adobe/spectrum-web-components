@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import '../sp-slider.js';
-import { Slider } from '../';
+import '../sp-slider-handle.js';
+import { Slider, SliderHandle } from '../';
 import { tick } from '../stories/slider.stories.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
@@ -80,12 +81,17 @@ describe('Slider', () => {
         expect(el.value).to.equal(20);
     });
     it('accepts keyboard events', async () => {
-        const el = await fixture<Slider>(tick());
+        const el = await fixture<Slider>(
+            tick({
+                variant: 'tick',
+                tickStep: 5,
+            })
+        );
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(10);
-        expect(el.handleHighlight).to.be.false;
+        expect(el.highlight).to.be.false;
 
         el.focus();
         await sendKeys({
@@ -94,14 +100,14 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(9);
-        expect(el.handleHighlight).to.be.true;
+        expect(el.highlight).to.be.true;
         await sendKeys({
             press: 'ArrowUp',
         });
         await elementUpdated(el);
 
         expect(el.value).to.equal(10);
-        expect(el.handleHighlight).to.be.true;
+        expect(el.highlight).to.be.true;
     });
     it('accepts pointer events', async () => {
         let pointerId = -1;
@@ -114,10 +120,10 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.dragging).to.be.false;
-        expect(el.handleHighlight).to.be.false;
+        expect(el.highlight).to.be.false;
         expect(pointerId).to.equal(-1);
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
         handle.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
@@ -153,7 +159,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.dragging).to.be.false;
-        expect(el.handleHighlight).to.be.false;
+        expect(el.highlight).to.be.false;
         expect(pointerId, '3').to.equal(2);
 
         handle.dispatchEvent(
@@ -194,7 +200,7 @@ describe('Slider', () => {
         const controls = el.shadowRoot.querySelector(
             '#controls'
         ) as HTMLDivElement;
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
         handle.releasePointerCapture = (id: number) => (pointerId = id);
 
@@ -275,7 +281,7 @@ describe('Slider', () => {
         expect(pointerId).to.equal(-1);
         expect(el.value).to.equal(10);
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
 
         handle.dispatchEvent(
@@ -317,7 +323,7 @@ describe('Slider', () => {
 
         expect(el.value).to.equal(10);
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         await executeServerCommand('send-mouse', {
             steps: [
                 {
@@ -332,7 +338,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.dragging, 'is dragging').to.be.true;
-        expect(el.handleHighlight, 'not highlighted').to.be.false;
+        expect(el.highlight, 'not highlighted').to.be.false;
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -355,7 +361,7 @@ describe('Slider', () => {
 
         expect(el.value, 'initial').to.equal(10);
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
         handle.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
@@ -377,7 +383,8 @@ describe('Slider', () => {
 
         expect(el.value, 'first pointerdown').to.equal(50);
         expect(el.dragging, 'is dragging').to.be.true;
-        expect(el.handleHighlight, 'not highlighted').to.be.false;
+        expect(el.classList.contains('handle-highlight'), 'not highlighted').to
+            .be.false;
         expect(pointerId).to.equal(100);
 
         handle.dispatchEvent(
@@ -418,7 +425,8 @@ describe('Slider', () => {
 
         expect(el.value, 'second pointerdown').to.equal(50);
         expect(el.dragging, 'is dragging').to.be.true;
-        expect(el.handleHighlight, 'not highlighted').to.be.false;
+        expect(el.classList.contains('handle-highlight'), 'not highlighted').to
+            .be.false;
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -460,7 +468,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(10);
         expect(inputSpy.callCount).to.equal(0);
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
         handle.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
@@ -474,7 +482,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.dragging).to.be.true;
-        expect(el.handleHighlight).to.be.false;
+        expect(el.highlight).to.be.false;
         expect(pointerId, 'pointer id').to.equal(1);
 
         handle.dispatchEvent(
@@ -511,7 +519,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(10);
         expect(el.dragging).to.be.false;
 
-        const handle = el.shadowRoot.querySelector('#handle') as HTMLDivElement;
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -534,7 +542,7 @@ describe('Slider', () => {
 
         expect(el.value).to.equal(10);
 
-        const input = el.shadowRoot.querySelector('#input') as HTMLInputElement;
+        const input = el.shadowRoot.querySelector('.input') as HTMLInputElement;
 
         input.value = '0';
         input.dispatchEvent(new Event('change'));
@@ -620,7 +628,7 @@ describe('Slider', () => {
                     value="50"
                     min="0"
                     max="100"
-                    .getAriaValueText=${(value: number) => `${value}%`}
+                    .getAriaHandleText=${(value: number) => `${value}%`}
                 ></sp-slider>
             `
         );
@@ -634,6 +642,75 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(input.getAttribute('aria-valuetext')).to.equal('100%');
+    });
+    it('displays Intl.formatNumber results', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    value=".5"
+                    min="0"
+                    max="1"
+                    .formatOptions=${{ style: 'percent' }}
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const input = el.focusElement as HTMLInputElement;
+        expect(input.getAttribute('aria-valuetext')).to.equal('50%');
+
+        el.value = 100;
+        await elementUpdated(el);
+
+        expect(input.getAttribute('aria-valuetext')).to.equal('100%');
+    });
+    it('obeys lnaguage property', async () => {
+        let el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    value="2.44"
+                    min="0"
+                    max="10"
+                    step="0.01"
+                    language="de"
+                    .formatOptions=${{ maximumFractionDigits: 2 }}
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        let input = el.focusElement as HTMLInputElement;
+        expect(input.getAttribute('aria-valuetext')).to.equal('2,44');
+
+        el.language = 'en';
+        await elementUpdated(el);
+
+        expect(input.getAttribute('aria-valuetext')).to.equal('2.44');
+
+        el = await fixture<Slider>(
+            html`
+                <sp-slider min="0" max="10" language="de">
+                    <sp-slider-handle
+                        slot="handle"
+                        step="0.01"
+                        value="2.44"
+                        .formatOptions=${{ maximumFractionDigits: 2 }}
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        input = el.focusElement as HTMLInputElement;
+        expect(input.getAttribute('aria-valuetext')).to.equal('2,44');
+
+        el.language = 'en';
+        await elementUpdated(el);
+
+        expect(input.getAttribute('aria-valuetext')).to.equal('2.44');
     });
     it('uses fallback ariaValueText', async () => {
         const el = await fixture<Slider>(
@@ -686,5 +763,297 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal(-100);
+    });
+    it('returns values for handles', async () => {
+        let el = await fixture<Slider>(
+            html`
+                <sp-slider>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="a"
+                        min="0"
+                        value="10"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="middle-handle"
+                        slot="handle"
+                        name="b"
+                        value="20"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        slot="handle"
+                        name="c"
+                        value="30"
+                        max="100"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.values).to.deep.equal({ a: 10, b: 20, c: 30 });
+
+        const middleHandle = el.querySelector('#middle-handle') as SliderHandle;
+        middleHandle.value = 22;
+
+        await elementUpdated(el);
+
+        expect(el.values).to.deep.equal({ a: 10, b: 22, c: 30 });
+
+        el = await fixture<Slider>(
+            html`
+                <sp-slider value="10" min="0" max="100"></sp-slider>
+            `
+        );
+        expect(el.values).to.deep.equal({ value: 10 });
+
+        el = await fixture<Slider>(
+            html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        slot="handle"
+                        value="10"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+        expect(el.values).to.deep.equal({ handle1: 10 });
+    });
+    it('clamps values for multi-handle slider', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        id="first-handle"
+                        max="next"
+                        slot="handle"
+                        name="a"
+                        value="10"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="middle-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="b"
+                        value="20"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="last-handle"
+                        min="previous"
+                        slot="handle"
+                        name="c"
+                        value="30"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.values).to.deep.equal({ a: 10, b: 20, c: 30 });
+
+        const firstHandle = el.querySelector('#first-handle') as SliderHandle;
+        const middleHandle = el.querySelector('#middle-handle') as SliderHandle;
+        const lastHandle = el.querySelector('#last-handle') as SliderHandle;
+
+        firstHandle.value = 25;
+        await elementUpdated(el);
+        expect(el.values).to.deep.equal({ a: 20, b: 20, c: 30 });
+
+        firstHandle.value = 10;
+        await elementUpdated(el);
+        middleHandle.value = 5;
+        await elementUpdated(el);
+        expect(el.values).to.deep.equal({ a: 10, b: 10, c: 30 });
+
+        lastHandle.value = 11;
+        await elementUpdated(el);
+        expect(el.values).to.deep.equal({ a: 10, b: 10, c: 11 });
+
+        lastHandle.value = 7;
+        await elementUpdated(el);
+        expect(el.values).to.deep.equal({ a: 10, b: 10, c: 10 });
+    });
+    it('enforces next/previous max/min', async () => {
+        let el = await fixture<Slider>(
+            html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        id="first-handle"
+                        max="next"
+                        slot="handle"
+                        name="a"
+                        value="10"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="middle-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="b"
+                        value="20"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="last-handle"
+                        min="previous"
+                        slot="handle"
+                        name="c"
+                        value="30"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.values).to.deep.equal({ a: 10, b: 20, c: 30 });
+
+        let firstHandle = el.querySelector('#first-handle') as SliderHandle;
+        let lastHandle = el.querySelector('#last-handle') as SliderHandle;
+
+        let firstInput = el.shadowRoot.querySelector(
+            '.handle[name="a"] > input'
+        ) as HTMLInputElement;
+        let middleInput = el.shadowRoot.querySelector(
+            '.handle[name="b"] > input'
+        ) as HTMLInputElement;
+        let lastInput = el.shadowRoot.querySelector(
+            '.handle[name="c"] > input'
+        ) as HTMLInputElement;
+
+        expect(firstInput.min).to.equal('0');
+        expect(firstInput.max).to.equal('20');
+
+        expect(middleInput.min).to.equal('10');
+        expect(middleInput.max).to.equal('30');
+
+        expect(lastInput.min).to.equal('20');
+        expect(lastInput.max).to.equal('100');
+
+        firstHandle.value = 15;
+        lastHandle.value = 85;
+
+        await elementUpdated(el);
+        await elementUpdated(el);
+
+        expect(firstInput.min).to.equal('0');
+        expect(firstInput.max).to.equal('20');
+
+        expect(middleInput.min).to.equal('15');
+        expect(middleInput.max).to.equal('85');
+
+        expect(lastInput.min).to.equal('20');
+        expect(lastInput.max).to.equal('100');
+
+        el = await fixture<Slider>(
+            html`
+                <sp-slider>
+                    <sp-slider-handle
+                        id="first-handle"
+                        min="0"
+                        max="next"
+                        slot="handle"
+                        name="a"
+                        value="10"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="middle-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="b"
+                        value="20"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="last-handle"
+                        min="previous"
+                        max="100"
+                        slot="handle"
+                        name="c"
+                        value="30"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        firstInput = el.shadowRoot.querySelector(
+            '.handle[name="a"] > input'
+        ) as HTMLInputElement;
+        middleInput = el.shadowRoot.querySelector(
+            '.handle[name="b"] > input'
+        ) as HTMLInputElement;
+        lastInput = el.shadowRoot.querySelector(
+            '.handle[name="c"] > input'
+        ) as HTMLInputElement;
+
+        expect(firstInput.min).to.equal('0');
+        expect(firstInput.max).to.equal('20');
+
+        expect(middleInput.min).to.equal('10');
+        expect(middleInput.max).to.equal('30');
+
+        expect(lastInput.min).to.equal('20');
+        expect(lastInput.max).to.equal('100');
+
+        firstHandle = el.querySelector('#first-handle') as SliderHandle;
+        lastHandle = el.querySelector('#last-handle') as SliderHandle;
+
+        firstHandle.min = 5;
+        lastHandle.max = 95;
+
+        await elementUpdated(el);
+        await elementUpdated(el);
+
+        expect(firstInput.min).to.equal('5');
+        expect(firstInput.max).to.equal('20');
+
+        expect(lastInput.min).to.equal('20');
+        expect(lastInput.max).to.equal('95');
+    });
+    it('sends keyboard events to active handle', async () => {
+        // let pointerId = -1;
+
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider step="1" min="0" max="100">
+                    <sp-slider-handle
+                        id="first-handle"
+                        max="next"
+                        slot="handle"
+                        name="a"
+                        value="10"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="middle-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="b"
+                        value="20"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="last-handle"
+                        min="previous"
+                        slot="handle"
+                        name="c"
+                        value="30"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.values).to.deep.equal({ a: 10, b: 20, c: 30 });
+
+        const lastHandle = el.querySelector('#last-handle') as SliderHandle;
+        lastHandle.focus();
+
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await elementUpdated(el);
+        expect(el.values).to.deep.equal({ a: 10, b: 20, c: 29 });
     });
 });
