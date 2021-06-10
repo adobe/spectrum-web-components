@@ -19,7 +19,7 @@ import {
     ifDefined,
 } from '@spectrum-web-components/base';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import { Focusable } from '@spectrum-web-components/shared';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import { SidenavSelectDetail, SideNav } from './Sidenav.js';
 
@@ -106,6 +106,13 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         return this.shadowRoot.querySelector('#itemLink') as HTMLElement;
     }
 
+    protected update(changes: PropertyValues): void {
+        if (!this.hasAttribute('slot')) {
+            this.slot = 'descendant';
+        }
+        super.update(changes);
+    }
+
     protected render(): TemplateResult {
         return html`
             <a
@@ -122,21 +129,22 @@ export class SideNavItem extends LikeAnchor(Focusable) {
             >
                 <slot name="icon"></slot>
                 ${this.label}
+                <slot></slot>
             </a>
             ${this.expanded
                 ? html`
-                      <slot></slot>
+                      <slot name="descendant"></slot>
                   `
                 : html``}
         `;
     }
 
     protected updated(changes: PropertyValues): void {
-        super.updated(changes);
         if (changes.has('selected') || changes.has('manageTabIndex')) {
             const tabIndexForSelectedState = this.selected ? 0 : -1;
             this.tabIndex = this.manageTabIndex ? tabIndexForSelectedState : 0;
         }
+        super.updated(changes);
     }
 
     public connectedCallback(): void {

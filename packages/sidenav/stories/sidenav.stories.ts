@@ -86,20 +86,15 @@ export const levelsAndDisabled = (): TemplateResult => {
     return html`
         <sp-sidenav>
             <sp-sidenav-heading label="CATEGORY 1">
-                <sp-sidenav-item
-                    value="Section 1"
-                    label="Section 1"
-                ></sp-sidenav-item>
-                <sp-sidenav-item
-                    value="Section 2"
-                    label="Section 2"
-                    disabled
-                ></sp-sidenav-item>
-                <sp-sidenav-item value="Section 3" label="Section 3" expanded>
-                    <sp-sidenav-item
-                        value="Section 3a"
-                        label="Section 3a"
-                    ></sp-sidenav-item>
+                <sp-sidenav-item value="Section 1">Section 1</sp-sidenav-item>
+                <sp-sidenav-item value="Section 2" disabled>
+                    Section 2
+                </sp-sidenav-item>
+                <sp-sidenav-item value="Section 3" expanded>
+                    Section 3
+                    <sp-sidenav-item value="Section 3a">
+                        Section 3a
+                    </sp-sidenav-item>
                 </sp-sidenav-item>
             </sp-sidenav-heading>
         </sp-sidenav>

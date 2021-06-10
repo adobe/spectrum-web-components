@@ -73,7 +73,7 @@ describe('Sidenav Item', () => {
         if (!el.shadowRoot) return;
 
         let slot: HTMLSlotElement | null = el.shadowRoot.querySelector(
-            'slot:not([name])'
+            'slot[name="descendant"]'
         );
         expect(slot).not.to.exist;
 
@@ -86,7 +86,7 @@ describe('Sidenav Item', () => {
         expect(el.expanded).to.be.true;
 
         slot = el.shadowRoot.querySelector(
-            'slot:not([name])'
+            'slot[name="descendant"]'
         ) as HTMLSlotElement;
         expect(slot).to.exist;
         if (!slot) return;
