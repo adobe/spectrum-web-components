@@ -81,6 +81,18 @@ export default {
                 type: 'boolean',
             },
         },
+        scrubbable: {
+            name: 'scrubbable',
+            type: { name: 'boolean', required: false },
+            description: 'Whether to make input field scrubbable',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
         value: {
             name: 'value',
             type: { name: 'number', required: false },
@@ -100,6 +112,32 @@ export default {
                 'Amount to change the value by when using the stepper or arrow key interactions.',
             table: {
                 type: { summary: 'string' },
+                defaultValue: { summary: undefined },
+            },
+            control: {
+                type: 'number',
+            },
+        },
+        shiftmultiply: {
+            name: 'shiftmultiply',
+            type: { name: 'number', required: false },
+            description:
+                'Amount to scale the step increment/decrement when holding the shift key',
+            table: {
+                type: { summary: 'number' },
+                defaultValue: { summary: 10 },
+            },
+            control: {
+                type: 'number',
+            },
+        },
+        stepperpixel: {
+            name: 'stepperpixel',
+            type: { name: 'number', required: false },
+            description:
+                'Amount to increment/decrement when scrubbable per each pixel (defaults to step value)',
+            table: {
+                type: { summary: 'number' },
                 defaultValue: { summary: undefined },
             },
             control: {
@@ -155,6 +193,7 @@ interface StoryArgs {
     hideStepper?: boolean;
     readonly?: boolean;
     step?: number;
+    scrubbable?: boolean;
 }
 
 export const Default = (args: StoryArgs): TemplateResult => {
@@ -260,6 +299,21 @@ export const hideStepper = (args: StoryArgs): TemplateResult => {
 };
 hideStepper.args = {
     hideStepper: true,
+};
+
+export const scrubbable = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="scrubbable">
+            Use your mouse to drag right and left to increment or decrement
+        </sp-field-label>
+        <sp-number-field
+            id="scrubbable"
+            ...=${spreadProps(args)}
+        ></sp-number-field>
+    `;
+};
+scrubbable.args = {
+    scrubbable: true,
 };
 
 export const disabled = (args: StoryArgs): TemplateResult => {

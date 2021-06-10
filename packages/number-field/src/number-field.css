@@ -21,6 +21,14 @@ sp-field-button {
     font-variant-numeric: tabular-nums;
 }
 
+:host(:not([focused]):not([disabled])[scrubbable]) {
+    cursor: ew-resize;
+}
+
+:host(:not([focused]):not([disabled])[scrubbable]) input {
+    cursor: ew-resize;
+}
+
 :host([hide-stepper]) .input {
     border-radius: var(
         --spectrum-alias-border-radius-regular,
