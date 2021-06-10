@@ -229,7 +229,10 @@ export class SideNav extends Focusable {
     protected render(): TemplateResult {
         return html`
             <nav @sidenav-select=${this.handleSelect}>
-                <slot @slotchange=${this.handleSlotchange}></slot>
+                <slot
+                    name="descendant"
+                    @slotchange=${this.handleSlotchange}
+                ></slot>
             </nav>
         `;
     }
