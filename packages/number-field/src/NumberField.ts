@@ -100,6 +100,9 @@ export class NumberField extends TextfieldBase {
     @property({ type: Number })
     public step?: number;
 
+    @property({ type: Number, reflect: true, attribute: 'step-modifier' })
+    public stepModifier = 10;
+
     @property({ type: Number })
     public set value(value: number) {
         if (value === this.value) {
@@ -239,30 +242,26 @@ export class NumberField extends TextfieldBase {
         this.focus();
     }
 
-    private increment(): void {
-        this.stepBy(1);
+    private increment(factor = 1): void {
+        this.stepBy(1 * factor);
     }
 
-    private decrement(): void {
-        this.stepBy(-1);
+    private decrement(factor = 1): void {
+        this.stepBy(-1 * factor);
     }
 
     private handleKeydown(event: KeyboardEvent): void {
-        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
-            // Don't do work when modifiers are present.
-            return;
-        }
         switch (event.code) {
             case 'ArrowUp':
                 event.preventDefault();
-                this.increment();
+                this.increment(event.shiftKey ? this.stepModifier : 1);
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
                 break;
             case 'ArrowDown':
                 event.preventDefault();
-                this.decrement();
+                this.decrement(event.shiftKey ? this.stepModifier : 1);
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
