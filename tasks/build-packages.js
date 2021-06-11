@@ -11,11 +11,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { exec } from 'child_process';
+import { execSync } from 'child_process';
 import globby from 'globby';
 
 const buildPackage = async (paths, watch) => {
-    return exec(`yarn tsc --build ${paths}${watch ? ' -w' : ''}`);
+    return execSync(`yarn tsc --build ${paths} --verbose${watch ? ' -w' : ''}`);
 };
 
 export const buildPackages = async (watch) => {
