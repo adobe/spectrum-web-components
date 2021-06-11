@@ -110,6 +110,22 @@ governing permissions and limitations under the License.
     ) !important;
 }
 
+/**
+ * Begin workaround for https://github.com/adobe/spectrum-css/issues/1205
+ */
+
+:host([dir='ltr'][variant='range']) .track,
+:host([dir='rtl'][variant='range']) .track {
+    /* [dir=ltr] .spectrum-Slider--range .spectrum-Slider-track,
+   * [dir=rtl] .spectrum-Slider--range .spectrum-Slider-track */
+    margin: var(--spectrum-slider-range-track-reset);
+    margin-top: calc(var(--spectrum-slider-track-height) / -2);
+}
+
+/**
+ * End workaround for https://github.com/adobe/spectrum-css/issues/1205
+ */
+
 :host([dir='ltr']) .track:not(:first-of-type):not(:last-of-type) {
     left: var(--spectrum-slider-track-segment-position);
 }
