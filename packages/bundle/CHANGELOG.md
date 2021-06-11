@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.21.2...@spectrum-web-components/bundle@0.22.0) (2021-06-11)
+
+### Features
+
+-   multi-handle slider implementation ([8d5a743](https://github.com/adobe/spectrum-web-components/commit/8d5a74309ec171107a9504695216cb90abe39023)), closes [#1385](https://github.com/adobe/spectrum-web-components/issues/1385)
+
 ## [0.21.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.21.1...@spectrum-web-components/bundle@0.21.2) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle

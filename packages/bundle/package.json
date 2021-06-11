@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/bundle",
-    "version": "0.21.2",
+    "version": "0.22.0",
     "publishConfig": {
         "access": "public"
     },
@@ -86,7 +86,7 @@
         "@spectrum-web-components/radio": "^0.7.7",
         "@spectrum-web-components/search": "^0.8.9",
         "@spectrum-web-components/sidenav": "^0.10.2",
-        "@spectrum-web-components/slider": "^0.9.7",
+        "@spectrum-web-components/slider": "^0.10.0",
         "@spectrum-web-components/split-button": "^0.5.1",
         "@spectrum-web-components/split-view": "^0.2.6",
         "@spectrum-web-components/status-light": "^0.7.5",
