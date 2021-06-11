@@ -172,6 +172,8 @@ describe('Menu group', () => {
         expect(singleItem1.selected).to.be.true;
         expect(firstItem.selected).to.be.true;
         expect(secondItem.selected).to.be.false;
+        expect(el.value).to.equal('First');
+        expect(el.selectedItems.length).to.equal(1);
 
         expect(firstItem.getAttribute('aria-checked')).to.equal('true');
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
@@ -184,6 +186,8 @@ describe('Menu group', () => {
         expect(secondItem.selected).to.be.true;
         expect(firstItem.getAttribute('aria-checked')).to.equal('false');
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
+        expect(el.value).to.equal('Second');
+        expect(el.selectedItems.length).to.equal(1);
 
         inheritItem1.click();
         await elementUpdated(el);
@@ -193,12 +197,16 @@ describe('Menu group', () => {
         expect(inheritItem1.selected).to.be.true;
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
         expect(inheritItem1.getAttribute('aria-checked')).to.equal('true');
+        expect(el.value).to.equal('Inherit1');
+        expect(el.selectedItems.length).to.equal(1);
 
         noneItem2.click();
         await elementUpdated(el);
         await elementUpdated(noneItem2);
         expect(inheritItem1.selected).to.be.true;
         expect(noneItem2.selected).to.be.false;
+        expect(el.value).to.equal('Inherit1');
+        expect(el.selectedItems.length).to.equal(1);
 
         singleItem2.click();
         await elementUpdated(el);
@@ -209,6 +217,10 @@ describe('Menu group', () => {
         expect(inheritItem1.selected).to.be.true;
         expect(singleItem1.getAttribute('aria-checked')).to.equal('false');
         expect(singleItem2.getAttribute('aria-checked')).to.equal('true');
+        expect(el.value).to.equal('Inherit1');
+        expect(el.selectedItems.length).to.equal(1);
+        //expect(singleGroup.value).to.equal('Inherit1')
+        expect(singleGroup.selectedItems.length).to.equal(1);
 
         multiItem2.click();
         await elementUpdated(el);
@@ -218,6 +230,8 @@ describe('Menu group', () => {
         expect(inheritItem1.selected).to.be.true;
         expect(multiItem1.getAttribute('aria-checked')).to.equal('true');
         expect(multiItem2.getAttribute('aria-checked')).to.equal('true');
+        //expect(multiGroup.value).to.equal('Inherit1')
+        expect(multiGroup.selectedItems.length).to.equal(2);
     });
 
     it('handles changing managed items for selects changes', async () => {

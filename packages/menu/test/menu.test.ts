@@ -398,6 +398,7 @@ describe('Menu', () => {
         expect(secondItem.selected).to.be.false;
         expect(firstItem.getAttribute('aria-checked')).to.equal('true');
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
+        expect(el.value).to.equal('First');
 
         secondItem.click();
 
@@ -409,6 +410,7 @@ describe('Menu', () => {
         expect(secondItem.selected).to.be.true;
         expect(firstItem.getAttribute('aria-checked')).to.equal('false');
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
+        expect(el.value).to.equal('Second');
     });
     it('handles multiple selection', async () => {
         const el = await fixture<Menu>(
@@ -442,6 +444,8 @@ describe('Menu', () => {
         expect(secondItem.selected).to.be.false;
         expect(firstItem.getAttribute('aria-checked')).to.equal('true');
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
+        expect(el.value).to.equal('First');
+        expect(el.selectedItems.length).to.equal(1);
 
         secondItem.click();
 
@@ -453,6 +457,8 @@ describe('Menu', () => {
         expect(secondItem.selected).to.be.true;
         expect(firstItem.getAttribute('aria-checked')).to.equal('true');
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
+        expect(el.value).to.equal('First,Second');
+        expect(el.selectedItems.length).to.equal(2);
 
         firstItem.click();
 
@@ -464,5 +470,7 @@ describe('Menu', () => {
         expect(secondItem.selected).to.be.true;
         expect(firstItem.getAttribute('aria-checked')).to.equal('false');
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
+        expect(el.value).to.equal('Second');
+        expect(el.selectedItems.length).to.equal(1);
     });
 });
