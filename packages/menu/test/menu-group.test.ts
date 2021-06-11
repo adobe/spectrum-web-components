@@ -237,7 +237,7 @@ describe('Menu group', () => {
     it('handles changing managed items for selects changes', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu selects="multiple">
+                <sp-menu selects="multiple" value-separator="--">
                     <sp-menu-item selected>First</sp-menu-item>
                     <sp-menu-item>Second</sp-menu-item>
                     <sp-menu-group id="mg-inherit">
@@ -245,7 +245,7 @@ describe('Menu group', () => {
                         <sp-menu-item>Inherit2</sp-menu-item>
                         <sp-menu-group id="mg-sub-inherit">
                             <sp-menu-item>SubInherit1</sp-menu-item>
-                            <sp-menu-item>SubInherit2</sp-menu-item>
+                            <sp-menu-item selected>SubInherit2</sp-menu-item>
                         </sp-menu-group>
                     </sp-menu-group>
                 </sp-menu>
@@ -257,8 +257,8 @@ describe('Menu group', () => {
             'expected outer menu to manage 6 items'
         );
         await waitUntil(
-            () => el.selectedItems.length == 1,
-            'expected 1 selected item'
+            () => el.selectedItems.length == 2,
+            'expected 2 selected item'
         );
         await elementUpdated(el);
 
@@ -290,6 +290,8 @@ describe('Menu group', () => {
         expect(subInheritItem2.getAttribute('role')).to.equal(
             'menuitemcheckbox'
         );
+        expect(el.value).to.equal('First--SubInherit2');
+        expect(el.selectedItems.length).to.equal(2);
 
         inheritGroup.setAttribute('selects', 'single');
 
@@ -309,5 +311,8 @@ describe('Menu group', () => {
         expect(inheritItem2.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem1.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem2.getAttribute('role')).to.equal('menuitemradio');
+        expect(el.value).to.equal('First');
+        //expect(inheritGroup.value).to.equal('SubInherit2')
+        expect(inheritGroup.selectedItems.length).to.equal(1);
     });
 });
