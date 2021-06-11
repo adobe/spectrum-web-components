@@ -348,6 +348,12 @@ export class HandleController implements Controller {
         this.requestUpdate();
     };
 
+    private onInputKeydown = (event: Event): void => {
+        const input = event.target as InputWithModel;
+        input.model.handle.highlight = true;
+        this.requestUpdate();
+    };
+
     private dispatchChangeEvent(
         input: HTMLInputElement,
         handle: SliderHandle
@@ -446,6 +452,7 @@ export class HandleController implements Controller {
                     @change=${this.onInputChange}
                     @focus=${this.onInputFocus}
                     @blur=${this.onInputBlur}
+                    @keydown=${this.onInputKeydown}
                     .model=${model}
                 />
             </div>
