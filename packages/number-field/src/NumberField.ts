@@ -169,6 +169,7 @@ export class NumberField extends TextfieldBase {
     private change!: () => void;
     private safty!: number;
     private pointerDragXLocation?: number;
+    private pointerDownTime?: number;
     private scrubDistance = 0;
 
     private handlePointerdown(event: PointerEvent): void {
@@ -294,6 +295,7 @@ export class NumberField extends TextfieldBase {
             case 'pointerdown':
                 this.scrubbing = true;
                 this.pointerDragXLocation = event.clientX;
+                this.pointerDownTime = Date.now();
                 document.body.addEventListener(
                     'pointermove',
                     this.documentMoveListener
@@ -310,7 +312,11 @@ export class NumberField extends TextfieldBase {
                 break;
 
             case 'pointermove':
-                if (this.pointerDragXLocation) {
+                if (
+                    this.pointerDragXLocation &&
+                    this.pointerDownTime &&
+                    Date.now() - this.pointerDownTime > 250
+                ) {
                     const amtPerPixel = this.stepperpixel || this._step;
                     const dist: number =
                         event.clientX - this.pointerDragXLocation;
@@ -342,7 +348,11 @@ export class NumberField extends TextfieldBase {
 
                 // if user has scrubbed, disallow focus of field
                 const bounds = this.getBoundingClientRect();
-                if (this.scrubDistance > 0) {
+                if (
+                    this.scrubDistance > 0 &&
+                    this.pointerDownTime &&
+                    Date.now() - this.pointerDownTime > 250
+                ) {
                     this.inputElement.blur();
                     event.preventDefault();
                 } else if (
@@ -354,6 +364,7 @@ export class NumberField extends TextfieldBase {
                     this.focus();
                 }
                 this.scrubDistance = 0;
+                this.pointerDownTime = undefined;
                 break;
         }
     }
