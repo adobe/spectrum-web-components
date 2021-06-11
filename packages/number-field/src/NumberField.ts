@@ -173,12 +173,12 @@ export class NumberField extends TextfieldBase {
             event.preventDefault();
             return;
         }
-        this.buttons.setPointerCapture(event.pointerId);
-        const stepUpRect = this.buttons.children[0].getBoundingClientRect();
-        const stepDownRect = this.buttons.children[1].getBoundingClientRect();
+        this.buttons?.setPointerCapture(event.pointerId);
+        const stepUpRect = this.buttons?.children[0].getBoundingClientRect();
+        const stepDownRect = this.buttons?.children[1].getBoundingClientRect();
         if (
-            event.target === this.buttons.children[0] ||
-            event.target === this.buttons.children[1]
+            event.target === this.buttons?.children[0] ||
+            event.target === this.buttons?.children[1]
         ) {
             this.findChange = (event: PointerEvent) => {
                 if (
@@ -224,8 +224,8 @@ export class NumberField extends TextfieldBase {
 
     private handlePointermove(event: PointerEvent): void {
         if (
-            event.target === this.buttons.children[0] ||
-            event.target === this.buttons.children[1]
+            event.target === this.buttons?.children[0] ||
+            event.target === this.buttons?.children[1]
         ) {
             this.findChange(event);
         } else {
@@ -234,7 +234,7 @@ export class NumberField extends TextfieldBase {
     }
 
     private handlePointerup(event: PointerEvent): void {
-        this.buttons.releasePointerCapture(event.pointerId);
+        this.buttons?.releasePointerCapture(event.pointerId);
         this.scrub(event);
         cancelAnimationFrame(this.nextChange);
         clearTimeout(this.safty);
@@ -408,7 +408,6 @@ export class NumberField extends TextfieldBase {
     }
 
     protected onChange(): void {
-        console.log('onchange');
         const value = this.convertValueToNumber(this.inputElement.value);
         this.value = value;
         super.onChange();
