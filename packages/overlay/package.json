@@ -34,12 +34,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "/sync/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -60,12 +60,8 @@
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [
         "./active-overlay.js",
-        "./active-overlay.ts",
         "./overlay-trigger.js",
-        "./overlay-trigger.ts",
         "./sync/overlay-trigger.js",
-        "./sync/overlay-trigger.ts",
-        "./stories/overlay-story-components.js",
-        "./stories/overlay-story-components.ts"
+        "./stories/overlay-story-components.js"
     ]
 }

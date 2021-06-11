@@ -29,10 +29,13 @@
         "build": "node ./bin/build @adobe/spectrum-css-workflow-icons/dist/18"
     },
     "files": [
-        "/icons/",
-        "/lib/",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "!bin/",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -58,7 +61,6 @@
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [
         "./src/index.js",
-        "./src/index.ts",
         "./icons/*"
     ]
 }

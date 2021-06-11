@@ -30,11 +30,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -48,7 +49,7 @@
         "@spectrum-web-components/action-group": "^0.4.9",
         "@spectrum-web-components/base": "^0.4.3",
         "@spectrum-web-components/icons-workflow": "^0.6.6",
-        "@spectrum-web-components/shared": "^0.11.1",
+        "@spectrum-web-components/shared": "^0.12.4",
         "@spectrum-web-components/split-view": "^0.2.6",
         "@spectrum-web-components/styles": "^0.9.7",
         "tslib": "^2.0.0"

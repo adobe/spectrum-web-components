@@ -116,6 +116,11 @@ module.exports = function (plop) {
                 templateFile: 'plop-templates/package.json.hbs',
             },
             {
+                type: 'add',
+                path: '../../packages/{{name}}/.npmignore',
+                templateFile: 'plop-templates/.npmignore.hbs',
+            },
+            {
                 type: 'install deps',
             },
         ],
