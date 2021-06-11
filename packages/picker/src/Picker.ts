@@ -33,9 +33,8 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import {
     MenuItem,
-    MenuItemQueryRoleEventDetail,
+    MenuItemUpdateEvent,
     Menu,
-    MenuQueryRoleEventDetail,
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
@@ -138,18 +137,12 @@ export class PickerBase extends SizedMixin(Focusable) {
         super();
         this.onKeydown = this.onKeydown.bind(this);
 
+        // TODO: once we switch away from inherits, the underlying sp-menu should manage this.
         this.addEventListener(
-            'sp-menu-item-query-role',
-            (event: CustomEvent<MenuItemQueryRoleEventDetail>) => {
+            'sp-menu-item-added',
+            (event: CustomEvent<MenuItemUpdateEvent>) => {
                 event.stopPropagation();
-                event.detail.role = this.itemRole;
-            }
-        );
-        this.addEventListener(
-            'sp-menu-query-role',
-            (event: CustomEvent<MenuQueryRoleEventDetail>) => {
-                event.stopPropagation();
-                event.detail.role = this.listRole;
+                event.detail.item.setRole(this.itemRole);
             }
         );
     }
@@ -284,8 +277,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             };
         });
 
-        this.optionsMenu.selectable = true;
-
         this.sizePopover(this.popover);
         const { popover } = this;
         this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
@@ -389,6 +380,8 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
+    // TODO: switch sp-menu to `selects="inherit"`. This will involve working through
+    // issues around reparenting, selection, & focus.
     protected get renderPopover(): TemplateResult {
         return html`
             <sp-popover
