@@ -177,13 +177,13 @@ export class NumberField extends TextfieldBase {
             event.preventDefault();
             return;
         }
-        this.buttons?.setPointerCapture(event.pointerId);
-        const stepUpRect = this.buttons?.children[0].getBoundingClientRect();
-        const stepDownRect = this.buttons?.children[1].getBoundingClientRect();
         if (
             event.target === this.buttons?.children[0] ||
             event.target === this.buttons?.children[1]
         ) {
+            this.buttons?.setPointerCapture(event.pointerId);
+            const stepUpRect = this.buttons?.children[0].getBoundingClientRect();
+            const stepDownRect = this.buttons?.children[1].getBoundingClientRect();
             this.findChange = (event: PointerEvent) => {
                 if (
                     event.clientX >= stepUpRect.x &&
@@ -210,6 +210,7 @@ export class NumberField extends TextfieldBase {
             this.findChange(event);
             this.startChange();
         } else if (!this.focused) {
+            this.setPointerCapture(event.pointerId);
             this.scrub(event);
         }
     }
@@ -239,6 +240,7 @@ export class NumberField extends TextfieldBase {
 
     private handlePointerup(event: PointerEvent): void {
         this.buttons?.releasePointerCapture(event.pointerId);
+        this.releasePointerCapture(event.pointerId);
         this.scrub(event);
         cancelAnimationFrame(this.nextChange);
         clearTimeout(this.safty);
