@@ -296,7 +296,7 @@ export class Menu extends SpectrumElement {
         this.removeEventListener('keydown', this.handleKeydown);
     }
 
-    public async selectOrToggleItem(item: MenuItem): Promise<void> {
+    public async selectOrToggleItem(targetItem: MenuItem): Promise<void> {
         const resolvedSelects = this.resolvedSelects;
         if (resolvedSelects === 'none') {
             return;
@@ -309,21 +309,20 @@ export class Menu extends SpectrumElement {
 
         if (resolvedSelects === 'single') {
             this.selectedItemsMap.clear();
-            this.selectedItemsMap.set(item, true);
-            this.value = item.value;
-            this.selected = [item.value];
-            this.selectedItems = [item];
+            this.selectedItemsMap.set(targetItem, true);
+            this.value = targetItem.value;
+            this.selected = [targetItem.value];
+            this.selectedItems = [targetItem];
         } else {
-            if (this.selectedItemsMap.has(item)) {
-                this.selectedItemsMap.delete(item);
+            if (this.selectedItemsMap.has(targetItem)) {
+                this.selectedItemsMap.delete(targetItem);
             } else {
-                this.selectedItemsMap.set(item, true);
+                this.selectedItemsMap.set(targetItem, true);
             }
 
             // Match HTML select and set the first selected
             // item as the value. Also set the selected array
             // in the order of the menu items.
-            let valueSet = false;
             const selected: string[] = [];
             const selectedItems: MenuItem[] = [];
 
@@ -331,10 +330,7 @@ export class Menu extends SpectrumElement {
                 if (!childItem.managed) continue;
 
                 if (this.selectedItemsMap.has(childItem.menuItem)) {
-                    if (!valueSet) {
-                        this.value = childItem.menuItem.value;
-                        valueSet = true;
-                    }
+                    const item = childItem.menuItem;
                     selected.push(item.value);
                     selectedItems.push(item);
                 }
@@ -362,13 +358,13 @@ export class Menu extends SpectrumElement {
         // Apply the selection changes to the menu items
         if (resolvedSelects === 'single') {
             for (const oldItem of oldSelectedItemsMap.keys()) {
-                if (oldItem !== item) {
+                if (oldItem !== targetItem) {
                     oldItem.selected = false;
                 }
             }
-            item.selected = true;
+            targetItem.selected = true;
         } else if (resolvedSelects === 'multiple') {
-            item.selected = !item.selected;
+            targetItem.selected = !targetItem.selected;
         }
     }
 
@@ -465,6 +461,7 @@ export class Menu extends SpectrumElement {
         this.selectedItemsMap = selectedItemsMap;
         this.selected = selected;
         this.selectedItems = selectedItems;
+        this.value = this.selected.join(this.valueSeparator);
         this.focusedItemIndex = index;
         this.focusInItemIndex = index;
     }
