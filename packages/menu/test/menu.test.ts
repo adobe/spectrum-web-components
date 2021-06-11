@@ -48,6 +48,8 @@ describe('Menu', () => {
         expect(document.activeElement === anchor, 'child not focused, 1').to.be
             .false;
 
+        expect(el.getAttribute('role')).to.equal('menu');
+
         el.focus();
         await elementUpdated(el);
         expect(document.activeElement === el, 'self not focused, 2').to.be
@@ -123,6 +125,10 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(
+            () => el.childItems.length == 6,
+            'expected menu to manage 6 menu items'
+        );
         await elementUpdated(el);
 
         const inTabindexElement = el.querySelector(
@@ -135,7 +141,7 @@ describe('Menu', () => {
     it('renders w/ selected', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu>
+                <sp-menu selects="single">
                     <sp-menu-item>Not Selected</sp-menu-item>
                     <sp-menu-item selected>Selected</sp-menu-item>
                     <sp-menu-item>Other</sp-menu-item>
@@ -161,9 +167,15 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(
+            () => el.childItems.length == 3,
+            'expected menu to manage 3 items'
+        );
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+
+        expect(el.getAttribute('role')).to.equal('menu');
     });
 
     it('handle focus and keyboard input', async () => {
@@ -181,6 +193,10 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(
+            () => el.childItems.length == 6,
+            'expected menu to manage 6 items'
+        );
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -214,7 +230,7 @@ describe('Menu', () => {
     it('handle focus and late descendent additions', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu>
+                <sp-menu selects="none">
                     <sp-menu-group>
                         <span slot="header">Options</span>
                         <sp-menu-item>Deselect</sp-menu-item>
@@ -223,6 +239,10 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(
+            () => el.childItems.length == 1,
+            'expected menu to manage 1 item'
+        );
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -244,6 +264,10 @@ describe('Menu', () => {
         group.prepend(prependedItem);
         group.append(appendedItem);
 
+        await waitUntil(
+            () => el.childItems.length == 3,
+            'expected menu to manage 3 items'
+        );
         await elementUpdated(el);
 
         expect(document.activeElement === el).to.be.false;
@@ -271,6 +295,10 @@ describe('Menu', () => {
             `
         );
 
+        await waitUntil(
+            () => el.childItems.length == 3,
+            'expected menu to manage 3 items'
+        );
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
@@ -333,5 +361,108 @@ describe('Menu', () => {
 
         expect(document.activeElement === el);
         expect(firstItem.focused);
+    });
+    it('handles single selection', async () => {
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu selects="single">
+                    <sp-menu-item selected>First</sp-menu-item>
+                    <sp-menu-item>Second</sp-menu-item>
+                    <sp-menu-item>Third</sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await waitUntil(
+            () => el.childItems.length == 3,
+            'expected menu to manage 3 items'
+        );
+        await waitUntil(
+            () => el.selectedItems.length == 1,
+            'expected menu to have 1 selected item'
+        );
+        await elementUpdated(el);
+
+        const firstItem = el.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+
+        const secondItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
+        expect(firstItem.getAttribute('role')).to.equal('menuitemradio');
+        expect(secondItem.getAttribute('role')).to.equal('menuitemradio');
+
+        expect(firstItem.selected).to.be.true;
+        expect(secondItem.selected).to.be.false;
+        expect(firstItem.getAttribute('aria-checked')).to.equal('true');
+        expect(secondItem.getAttribute('aria-checked')).to.equal('false');
+
+        secondItem.click();
+
+        await elementUpdated(el);
+        await elementUpdated(firstItem);
+        await elementUpdated(secondItem);
+
+        expect(firstItem.selected).to.be.false;
+        expect(secondItem.selected).to.be.true;
+        expect(firstItem.getAttribute('aria-checked')).to.equal('false');
+        expect(secondItem.getAttribute('aria-checked')).to.equal('true');
+    });
+    it('handles multiple selection', async () => {
+        const el = await fixture<Menu>(
+            html`
+                <sp-menu selects="multiple">
+                    <sp-menu-item selected>First</sp-menu-item>
+                    <sp-menu-item>Second</sp-menu-item>
+                    <sp-menu-item>Third</sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await waitUntil(
+            () => el.childItems.length == 3,
+            'expected menu to manage 3 items'
+        );
+        await elementUpdated(el);
+
+        const firstItem = el.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+
+        const secondItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
+        expect(firstItem.getAttribute('role')).to.equal('menuitemcheckbox');
+        expect(secondItem.getAttribute('role')).to.equal('menuitemcheckbox');
+
+        expect(firstItem.selected).to.be.true;
+        expect(secondItem.selected).to.be.false;
+        expect(firstItem.getAttribute('aria-checked')).to.equal('true');
+        expect(secondItem.getAttribute('aria-checked')).to.equal('false');
+
+        secondItem.click();
+
+        await elementUpdated(el);
+        await elementUpdated(firstItem);
+        await elementUpdated(secondItem);
+
+        expect(firstItem.selected).to.be.true;
+        expect(secondItem.selected).to.be.true;
+        expect(firstItem.getAttribute('aria-checked')).to.equal('true');
+        expect(secondItem.getAttribute('aria-checked')).to.equal('true');
+
+        firstItem.click();
+
+        await elementUpdated(el);
+        await elementUpdated(firstItem);
+        await elementUpdated(secondItem);
+
+        expect(firstItem.selected).to.be.false;
+        expect(secondItem.selected).to.be.true;
+        expect(firstItem.getAttribute('aria-checked')).to.equal('false');
+        expect(secondItem.getAttribute('aria-checked')).to.equal('true');
     });
 });
