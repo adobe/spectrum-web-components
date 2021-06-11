@@ -65,6 +65,9 @@ export class NumberField extends TextfieldBase {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    @property({ type: Boolean, reflect: true })
+    public scrubbing = false;
+
     /**
      * An `<sp-number-field>` element will process its numeric value with
      * `new Intl.NumberFormat(navigator.language, this.formatOptions).format(this.valueAsNumber)`
@@ -289,6 +292,7 @@ export class NumberField extends TextfieldBase {
     private scrub(event: PointerEvent): void {
         switch (event.type) {
             case 'pointerdown':
+                this.scrubbing = true;
                 this.pointerDragXLocation = event.clientX;
                 document.body.addEventListener(
                     'pointermove',
@@ -322,6 +326,7 @@ export class NumberField extends TextfieldBase {
 
             default:
                 this.pointerDragXLocation = undefined;
+                this.scrubbing = false;
                 document.body.removeEventListener(
                     'pointermove',
                     this.documentMoveListener
