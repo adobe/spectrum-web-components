@@ -21,11 +21,11 @@ sp-field-button {
     font-variant-numeric: tabular-nums;
 }
 
-:host(:not([focused]):not([disabled])[scrubbable]) {
+:host(:not([focused]):not([disabled])) {
     cursor: ew-resize;
 }
 
-:host(:not([focused]):not([disabled])[scrubbable]) input {
+:host(:not([focused]):not([disabled])) input {
     cursor: ew-resize;
 }
 

@@ -82,12 +82,6 @@ export class NumberField extends TextfieldBase {
     @property({ type: Boolean, reflect: true, attribute: 'hide-stepper' })
     public hideStepper = false;
 
-    /**
-     * Whether the component is scrubbable (drag left/right to increment/decrement)
-     */
-    @property({ type: Boolean, reflect: true })
-    public scrubbable = false;
-
     @property({ type: Boolean, reflect: true, attribute: 'keyboard-focused' })
     public keyboardFocused = false;
 
@@ -106,8 +100,8 @@ export class NumberField extends TextfieldBase {
     @property({ type: Number })
     public step?: number;
 
-    @property({ type: Number })
-    public shiftmultiply = 10;
+    @property({ type: Number, reflect: true, attribute: 'step-modifier' })
+    public stepModifier = 10;
 
     @property({ type: Number })
     public stepperpixel?: number;
@@ -127,11 +121,6 @@ export class NumberField extends TextfieldBase {
     }
 
     public _value = NaN;
-
-    constructor() {
-        super();
-        this.onpointerdown = this.handlePointerdown;
-    }
 
     /**
      * Retreive the value of the element parsed to a Number.
@@ -198,19 +187,25 @@ export class NumberField extends TextfieldBase {
                     event.clientX <= stepUpRect.x + stepUpRect.width &&
                     event.clientY <= stepUpRect.y + stepUpRect.height
                 ) {
-                    this.change = () => this.increment();
+                    this.change = () =>
+                        this.increment(
+                            this.shiftPressed ? this.stepModifier : 1
+                        );
                 } else if (
                     event.clientX >= stepDownRect.x &&
                     event.clientY >= stepDownRect.y &&
                     event.clientX <= stepDownRect.x + stepDownRect.width &&
                     event.clientY <= stepDownRect.y + stepDownRect.height
                 ) {
-                    this.change = () => this.decrement();
+                    this.change = () =>
+                        this.decrement(
+                            this.shiftPressed ? this.stepModifier : 1
+                        );
                 }
             };
             this.findChange(event);
             this.startChange();
-        } else if (!this.focused && this.scrubbable) {
+        } else if (!this.focused) {
             this.scrub(event);
         }
     }
@@ -281,6 +276,8 @@ export class NumberField extends TextfieldBase {
         this.stepBy(-1 * factor);
     }
 
+    private shiftPressed = false;
+
     private documentMoveListener = (event: PointerEvent): void => {
         this.handlePointermove(event);
     };
@@ -315,7 +312,7 @@ export class NumberField extends TextfieldBase {
                         event.clientX - this.pointerDragXLocation;
                     const delta =
                         Math.round(dist * amtPerPixel) *
-                        (event.shiftKey ? this.shiftmultiply : 1);
+                        (event.shiftKey ? this.stepModifier : 1);
                     this.scrubDistance += dist;
                     this.pointerDragXLocation = event.clientX;
                     this.stepBy(delta);
@@ -357,26 +354,27 @@ export class NumberField extends TextfieldBase {
     }
 
     private handleKeydown(event: KeyboardEvent): void {
-        if (event.ctrlKey || event.metaKey || event.altKey) {
-            // Don't do work when modifiers are present.
-            return;
-        }
+        this.shiftPressed = event.shiftKey;
         switch (event.code) {
             case 'ArrowUp':
                 event.preventDefault();
-                this.increment(event.shiftKey ? this.shiftmultiply : 1);
+                this.increment(this.shiftPressed ? this.stepModifier : 1);
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
                 break;
             case 'ArrowDown':
                 event.preventDefault();
-                this.decrement(event.shiftKey ? this.shiftmultiply : 1);
+                this.decrement(this.shiftPressed ? this.stepModifier : 1);
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
                 break;
         }
+    }
+
+    private handleKeyup(event: KeyboardEvent): void {
+        this.shiftPressed = event.shiftKey;
     }
 
     protected onScroll(event: WheelEvent): void {
@@ -410,6 +408,7 @@ export class NumberField extends TextfieldBase {
     }
 
     protected onChange(): void {
+        console.log('onchange');
         const value = this.convertValueToNumber(this.inputElement.value);
         this.value = value;
         super.onChange();
@@ -529,6 +528,8 @@ export class NumberField extends TextfieldBase {
         super.firstUpdated(changes);
         this.multiline = false;
         this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('keydown', this.handleKeyup);
+        this.onpointerdown = this.handlePointerdown;
     }
 
     protected updated(changes: PropertyValues<this>): void {
