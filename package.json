@@ -80,7 +80,7 @@
         "test:visual:clean": "yarn test:visual:clean:baseline && yarn test:visual:clean:current",
         "test:visual:clean:baseline": "rimraf test/visual/screenshots-baseline",
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
-        "test:watch": "test:watch:focus unit",
+        "test:watch": "yarn test:watch:focus unit",
         "test:watch:focus": "run-p watch:css \"test:build -w\" \"test:start --watch --group {1}\" --",
         "watch:css": "node ./tasks/watch-css.js"
     },

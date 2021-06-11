@@ -15,20 +15,28 @@ import '../sp-menu-item.js';
 import { MenuItem } from '../';
 import '@spectrum-web-components/menu';
 import { Menu } from '@spectrum-web-components/menu';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    html,
+    expect,
+    waitUntil,
+} from '@open-wc/testing';
 
 describe('Menu item', () => {
     it('renders', async () => {
         const el = await fixture<Menu>(
             html`
                 <sp-menu>
-                    <sp-menu-item selected>
-                        Selected
-                    </sp-menu-item>
+                    <sp-menu-item selected>Selected</sp-menu-item>
                 </sp-menu>
             `
         );
 
+        await waitUntil(
+            () => el.childItems.length == 1,
+            'expected menu group to manage 1 child'
+        );
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
@@ -47,9 +55,7 @@ describe('Menu item', () => {
     it('no value attribute', async () => {
         const el = await fixture<MenuItem>(
             html`
-                <sp-menu-item selected>
-                    Selected Text
-                </sp-menu-item>
+                <sp-menu-item selected>Selected Text</sp-menu-item>
             `
         );
         expect(el.itemText).to.equal('Selected Text');
@@ -58,9 +64,7 @@ describe('Menu item', () => {
     it('value property', async () => {
         const el = await fixture<MenuItem>(
             html`
-                <sp-menu-item selected>
-                    Selected Text
-                </sp-menu-item>
+                <sp-menu-item selected>Selected Text</sp-menu-item>
             `
         );
         expect(el.itemText).to.equal('Selected Text');

@@ -24,13 +24,11 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
-export interface MenuItemQueryRoleEventDetail {
-    role: string;
-}
-
 /**
  * Spectrum Menu Item Component
  * @element sp-menu-item
+ * @fires sp-menu-item-added - announces the item has been added so a parent menu can take ownerships
+ * @fires sp-menu-item-removed - announces when removed from the DOM so the parent menu can remove ownership and update selected state
  */
 export class MenuItem extends ActionButton {
     public static get styles(): CSSResultArray {
@@ -90,34 +88,83 @@ export class MenuItem extends ActionButton {
         }
     }
 
-    protected updated(changes: PropertyValues): void {
-        super.updated(changes);
-        if (this.getAttribute('role') === 'option' && changes.has('selected')) {
+    public async connectedCallback(): Promise<void> {
+        super.connectedCallback();
+        // Slot updates happens after the connected callback,
+        // so we need to wait a frame before announcing ourselves
+        // or the right menu might not pick this up. E.g. without this
+        // the underlying menu in sp-menu-group won't see this.
+        await new Promise((ready) => requestAnimationFrame(ready));
+        const addedEvent = new CustomEvent('sp-menu-item-added', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                item: this,
+                owned: false,
+            },
+        });
+        this.dispatchEvent(addedEvent);
+    }
+
+    updateAriaSelected(): void {
+        const role = this.getAttribute('role');
+        if (role === 'option') {
             this.setAttribute(
                 'aria-selected',
                 this.selected ? 'true' : 'false'
             );
+        } else if (role === 'menuitemcheckbox' || role === 'menuitemradio') {
+            this.setAttribute('aria-checked', this.selected ? 'true' : 'false');
         }
     }
 
-    public connectedCallback(): void {
-        super.connectedCallback();
-        if (!this.hasAttribute('role')) {
-            const queryRoleEvent = new CustomEvent('sp-menu-item-query-role', {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    role: '',
-                },
-            });
-            this.dispatchEvent(queryRoleEvent);
-            this.setAttribute('role', queryRoleEvent.detail.role || 'menuitem');
+    public setRole(role: string): void {
+        this.setAttribute('role', role);
+        this.updateAriaSelected();
+    }
+
+    protected updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (changes.has('selected')) {
+            this.updateAriaSelected();
         }
     }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        const removedEvent = new CustomEvent('sp-menu-item-removed', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                item: this,
+            },
+        });
+        this.dispatchEvent(removedEvent);
+    }
+
+    public async triggerUpdate(): Promise<void> {
+        await new Promise((ready) => requestAnimationFrame(ready));
+        const updatedEvent = new CustomEvent('sp-menu-item-update', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                item: this,
+                owned: false,
+            },
+        });
+        this.dispatchEvent(updatedEvent);
+    }
+}
+
+export interface MenuItemUpdateEvent {
+    item: MenuItem;
+    owned: boolean;
 }
 
 declare global {
     interface GlobalEventHandlersEventMap {
-        'sp-menu-item-query-role': CustomEvent<MenuItemQueryRoleEventDetail>;
+        'sp-menu-item-added': CustomEvent<MenuItemUpdateEvent>;
+        'sp-menu-item-update': CustomEvent<MenuItemUpdateEvent>;
+        'sp-menu-item-removed': CustomEvent<MenuItemUpdateEvent>;
     }
 }
