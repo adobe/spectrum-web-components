@@ -298,7 +298,6 @@ export class NumberField extends TextfieldBase {
     }
 
     protected onChange(): void {
-        console.log('onchange');
         const value = this.convertValueToNumber(this.inputElement.value);
         this.value = value;
         super.onChange();

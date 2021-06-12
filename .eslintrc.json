@@ -13,6 +13,7 @@
     },
     "rules": {
         "no-debugger": 2,
+        "no-console": ["error", { "allow": ["warn", "error"] }],
         "import/extensions": ["error", "ignorePackages", { "ts": "never" }],
         "import/prefer-default-export": "off",
         "spectrum-web-components/prevent-argument-names": [
