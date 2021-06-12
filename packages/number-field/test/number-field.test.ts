@@ -231,17 +231,9 @@ describe('NumberField', () => {
             changeSpy.resetHistory();
             el = await getElFrom(Default({ value: 50 }));
             el.addEventListener('input', (event: Event) => {
-                console.log(
-                    'input event',
-                    (event.target as NumberField)?.value
-                );
                 inputSpy((event.target as NumberField)?.value);
             });
             el.addEventListener('change', (event: Event) => {
-                console.log(
-                    'change event',
-                    (event.target as NumberField)?.value
-                );
                 changeSpy((event.target as NumberField)?.value);
             });
         });

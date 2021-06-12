@@ -642,7 +642,6 @@ describe('Picker', () => {
         const el = await pickerFixture();
         el.addEventListener('change', (event: Event) => {
             const { value } = event.target as Picker;
-            console.log('change', value);
             selectionSpy(value);
         });
         const button = el.button as HTMLButtonElement;
@@ -679,7 +678,6 @@ describe('Picker', () => {
         const el = await pickerFixture();
         el.addEventListener('change', (event: Event) => {
             const { value } = event.target as Picker;
-            console.log('change', value);
             selectionSpy(value);
         });
         const button = el.button as HTMLButtonElement;

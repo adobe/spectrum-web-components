@@ -14,6 +14,7 @@
     ],
     "rules": {
         "no-debugger": 2,
+        "no-console": ["error", { "allow": ["warn", "error"] }],
         "spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
@@ -55,6 +56,12 @@
                 "spectrum-web-components/document-active-element": ["off"],
                 "lit-a11y/no-autofocus": ["off"],
                 "lit-a11y/tabindex-no-positive": ["off"]
+            }
+        },
+        {
+            "files": ["*.stories.ts"],
+            "rules": {
+                "no-console": ["off"]
             }
         },
         {
