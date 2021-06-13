@@ -269,7 +269,10 @@ export class NumberField extends TextfieldBase {
 
     protected onScroll(event: WheelEvent): void {
         event.preventDefault();
-        this.stepBy(event.deltaY);
+        const { deltaY } = event;
+        if (deltaY !== 0) {
+            this.stepBy(deltaY / Math.abs(deltaY));
+        }
     }
 
     protected onFocus(): void {
