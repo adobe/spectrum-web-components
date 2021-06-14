@@ -747,13 +747,15 @@ describe('Picker', () => {
     });
     it('refocuses on list when open', async () => {
         const el = await pickerFixture();
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowUp' });
 
         await elementUpdated(el);
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
+        const opened = oneEvent(el, 'sp-opened');
         el.open = true;
-        await elementUpdated(el);
-        await waitUntil(() => isMenuActiveElement(), 'first item focused');
+        await opened;
         expect(firstItem.focused).to.be.true;
 
         el.blur();
@@ -765,6 +767,9 @@ describe('Picker', () => {
         await waitUntil(() => isMenuActiveElement(), 'first item refocused');
         expect(el.open).to.be.true;
         expect(isMenuActiveElement()).to.be.true;
+        // Force :focus-visible heuristic
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowUp' });
         expect(firstItem.focused).to.be.true;
     });
     it('allows tabing to close', async () => {
@@ -871,6 +876,9 @@ describe('Picker', () => {
         await waitUntil(() => isMenuActiveElement(), 'menu focused');
 
         expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
+        // Force :focus-visible heuristic
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowUp' });
         expect(secondItem.focused, 'secondItem "focused"').to.be.true;
     });
     it('resets value when item not available', async () => {
@@ -1024,8 +1032,6 @@ describe('Picker', () => {
             const parentOffset = el.offsetTop - parentScroll;
             return parentOffset;
         };
-        expect(lastItem.focused, 'last focused').to.be.true;
-        expect(firstItem.focused, 'first not focused').to.be.false;
         expect(getParentOffset(lastItem)).to.be.lessThan(40);
         expect(getParentOffset(firstItem)).to.be.lessThan(-1);
 
@@ -1033,8 +1039,6 @@ describe('Picker', () => {
         lastItem.dispatchEvent(arrowDownEvent);
         await elementUpdated(el);
         await nextFrame();
-        expect(lastItem.focused, 'last not focused').to.be.false;
-        expect(firstItem.focused, 'first focused').to.be.true;
         expect(getParentOffset(lastItem)).to.be.greaterThan(40);
         expect(getParentOffset(firstItem)).to.be.greaterThan(-1);
     });

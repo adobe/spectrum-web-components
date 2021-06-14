@@ -12,15 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    ifDefined,
-    property,
-    SpectrumElement,
     CSSResultArray,
     TemplateResult,
 } from '@spectrum-web-components/base';
 
-import { MenuItem } from './MenuItem.js';
-import { Menu, MenuChildItem } from './Menu.js';
+import { Menu } from './Menu.js';
 import '../sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
@@ -31,54 +27,30 @@ import menuGroupStyles from './menu-group.css.js';
  * @slot header - headline of the menu group
  * @slot - menu items to be listed in the group
  */
-export class MenuGroup extends SpectrumElement {
+export class MenuGroup extends Menu {
     public static get styles(): CSSResultArray {
-        return [menuGroupStyles];
+        return [...super.styles, menuGroupStyles];
     }
 
-    @property({ type: String, reflect: true })
-    public selects: undefined | 'none' | 'single' | 'multiple';
-
-    private instanceCount = MenuGroup.instances;
-    private menu!: Menu;
-
-    private static instances = 0;
-
-    public constructor() {
-        super();
-        MenuGroup.instances += 1;
-    }
-
-    private get menuRole(): 'menu' | 'presentation' {
-        if (this.selects) {
-            return 'menu';
-        } else {
-            return 'presentation';
+    protected get ownRole(): string {
+        switch (this.selects) {
+            case 'multiple':
+            case 'single':
+            case 'inherit':
+                return 'group';
+            default:
+                return 'menu';
         }
     }
 
-    public get childItems(): MenuChildItem[] {
-        return this.menu.childItems;
-    }
-
-    public get selectedItems(): MenuItem[] {
-        return this.menu.selectedItems;
-    }
-
     public render(): TemplateResult {
-        const labelledby = `menu-heading-category-${this.instanceCount}`;
         return html`
-            <span class="header" id=${labelledby} aria-hidden="true">
+            <span class="header" aria-hidden="true">
                 <slot name="header"></slot>
             </span>
-            <sp-menu selects=${ifDefined(this.selects)} role=${this.menuRole}>
+            <sp-menu role="none">
                 <slot></slot>
             </sp-menu>
         `;
-    }
-
-    protected firstUpdated(): void {
-        this.setAttribute('role', 'none');
-        this.menu = this.shadowRoot.querySelector('sp-menu') as Menu;
     }
 }
