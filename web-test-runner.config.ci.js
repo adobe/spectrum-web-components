@@ -23,4 +23,8 @@ standard.reporters = [
     }),
 ];
 
+standard.testsFinishTimeout = 200000;
+
+standard.testFramework.config.timeout = 100000;
+
 export default standard;

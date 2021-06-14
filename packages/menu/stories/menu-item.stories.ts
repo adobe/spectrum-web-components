@@ -47,7 +47,7 @@ export const valueSlot = (): TemplateResult => {
                 white-space: nowrap;
             }
         </style>
-        <sp-menu style="width: 150px;" selectable>
+        <sp-menu style="width: 150px;" selects="single">
             <sp-menu-item>
                 Save
                 <kbd slot="value">⌘​S</kbd>
