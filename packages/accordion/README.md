@@ -1,6 +1,6 @@
 ## Description
 
-The `<sp-accordion>` element contians a list of items that can be expanded or collapsed to reveal additional content or information associated with each item. There can be zero expanded items, exactly one expanded item, or more than one item expanded at a time, depending on the configuration. This list of items is defined by child [`<sp-accordion-item>`](./components/accordion-item) children that are targetted to the default slot of their `<sp-accordion>` parent.
+The `<sp-accordion>` element contains a list of items that can be expanded or collapsed to reveal additional content or information associated with each item. There can be zero expanded items, exactly one expanded item, or more than one item expanded at a time, depending on the configuration. This list of items is defined by child [`<sp-accordion-item>`](./components/accordion-item) elements that are targetted to the default slot of their `<sp-accordion>` parent.
 
 ### Usage
 
