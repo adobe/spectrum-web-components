@@ -7,7 +7,7 @@ prioritize content or features based on your users’ needs in a way that
 maintains clear, persistent visibility. Use side navigation within the context
 of larger elements and mechanisms within the app frame.
 
-`<sp-sidenav>` elements accept both `<sp-sidenav-item>` and `<sp-sidenv-heading>` elements as children in order to costruct a higherarchy of navigations elements. [`<sp-sidenav-item>`](./components/sidenav-item) elements will place themselves as a togglable child of their `<sp-sidenav>` element parent. `<sp-sidenav-heading>` elements will grat visible structure by grouping their child `<sp-sidenav-item>` children under a non-interactive heading.
+`<sp-sidenav>` elements accept both `<sp-sidenav-item>` and `<sp-sidenav-heading>` elements as children in order to construct a hierarchy of navigations elements. [`<sp-sidenav-item>`](./components/sidenav-item) elements will place themselves as a togglable child of their `<sp-sidenav>` element parent. `<sp-sidenav-heading>` elements will create visible structure by grouping their child `<sp-sidenav-item>` children under a non-interactive heading.
 
 ### Usage
 
