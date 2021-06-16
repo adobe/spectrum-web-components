@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/accordion",
-    "version": "0.4.9",
+    "version": "0.4.10",
     "publishConfig": {
         "access": "public"
     },
@@ -46,10 +46,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/icon": "^0.9.6",
-        "@spectrum-web-components/icons-ui": "^0.6.6",
-        "@spectrum-web-components/shared": "^0.12.4",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/icon": "^0.9.7",
+        "@spectrum-web-components/icons-ui": "^0.6.7",
+        "@spectrum-web-components/shared": "^0.12.5",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

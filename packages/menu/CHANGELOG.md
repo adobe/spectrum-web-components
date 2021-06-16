@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.7...@spectrum-web-components/menu@0.8.8) (2021-06-16)
+
+### Bug Fixes
+
+-   update role application logic to not overwrite menu\* roles ([94b6aec](https://github.com/adobe/spectrum-web-components/commit/94b6aecffc1e5686feab09361d4e07ec3e854726))
+
 ## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.6...@spectrum-web-components/menu@0.8.7) (2021-06-07)
 
 ### Bug Fixes

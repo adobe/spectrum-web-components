@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.3.0...@spectrum-web-components/progress-bar@0.3.1) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/progress-bar
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.2.7...@spectrum-web-components/progress-bar@0.3.0) (2021-05-24)
 
 ### Features

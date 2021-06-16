@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/illustrated-message",
-    "version": "0.6.7",
+    "version": "0.6.8",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/styles": "^0.9.7",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/styles": "^0.9.8",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/slider",
-    "version": "0.10.0",
+    "version": "0.10.1",
     "publishConfig": {
         "access": "public"
     },
@@ -47,8 +47,8 @@
     ],
     "dependencies": {
         "@internationalized/number": "^3.0.0",
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/shared": "^0.12.4",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/shared": "^0.12.5",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/overlay",
-    "version": "0.11.7",
+    "version": "0.11.8",
     "publishConfig": {
         "access": "public"
     },
@@ -49,10 +49,10 @@
     ],
     "dependencies": {
         "@popperjs/core": "^2.2.2",
-        "@spectrum-web-components/action-button": "^0.5.1",
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/shared": "^0.12.4",
-        "@spectrum-web-components/theme": "^0.8.8",
+        "@spectrum-web-components/action-button": "^0.5.2",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/shared": "^0.12.5",
+        "@spectrum-web-components/theme": "^0.8.9",
         "popper-max-size-modifier": "^0.2.0",
         "tslib": "^2.0.0"
     },
