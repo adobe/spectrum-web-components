@@ -298,6 +298,7 @@ export class NumberField extends TextfieldBase {
                 this.scrubbing = true;
                 this.pointerDragXLocation = event.clientX;
                 this.pointerDownTime = Date.now();
+                this.inputElement.disabled = true;
                 document.body.addEventListener(
                     'pointermove',
                     this.documentMoveListener
@@ -325,7 +326,7 @@ export class NumberField extends TextfieldBase {
                     const delta =
                         Math.round(dist * amtPerPixel) *
                         (event.shiftKey ? this.stepModifier : 1);
-                    this.scrubDistance += dist;
+                    this.scrubDistance += Math.abs(dist);
                     this.pointerDragXLocation = event.clientX;
                     this.stepBy(delta);
                     event.preventDefault();
@@ -335,6 +336,7 @@ export class NumberField extends TextfieldBase {
             default:
                 this.pointerDragXLocation = undefined;
                 this.scrubbing = false;
+                this.inputElement.disabled = false;
                 document.body.removeEventListener(
                     'pointermove',
                     this.documentMoveListener
@@ -355,7 +357,6 @@ export class NumberField extends TextfieldBase {
                     this.pointerDownTime &&
                     Date.now() - this.pointerDownTime > 250
                 ) {
-                    this.inputElement.blur();
                     event.preventDefault();
                 } else if (
                     event.clientX >= bounds.x &&
