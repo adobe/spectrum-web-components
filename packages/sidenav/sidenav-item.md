@@ -1,6 +1,6 @@
 ## Description
 
-An `<sp-sidenav-item>` stands as both a child item of an `<sp-sidenav>` element, as well as a parent for further subdivisions of that navigation. An `<sp-sidenav-item>` with further `<sp-sidenav-item>` children will count as a toggle for the visibility of this never level of navigation items, while also updating the parent `<sp-sidenav>` element to its value when selected.
+An `<sp-sidenav-item>` stands as both a child item of an `<sp-sidenav>` element, as well as a parent for further subdivisions of that navigation. An `<sp-sidenav-item>` with further `<sp-sidenav-item>` children will count as a toggle for the visibility of this next level of navigation items, while also updating the parent `<sp-sidenav>` element to its value when selected.
 
 ### Usage
 
