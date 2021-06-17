@@ -31,6 +31,7 @@ export interface MenuItemQueryRoleEventDetail {
 /**
  * Spectrum Menu Item Component
  * @element sp-menu-item
+ * @slot value - content placed at the end of the Menu Item like values, keyboard shortcuts, etc.
  */
 export class MenuItem extends ActionButton {
     public static get styles(): CSSResultArray {
@@ -65,6 +66,11 @@ export class MenuItem extends ActionButton {
 
     protected get buttonContent(): TemplateResult[] {
         const content = super.buttonContent;
+        content.push(
+            html`
+                <slot name="value"></slot>
+            `
+        );
         if (this.selected) {
             content.push(html`
                 <sp-icon-checkmark100
