@@ -16,3 +16,11 @@ governing permissions and limitations under the License.
     position: absolute;
     inset: 0;
 }
+
+:host([dir='ltr']) ::slotted([slot='value']) {
+    margin-left: var(--spectrum-listitem-icon-gap);
+}
+
+:host([dir='rtl']) ::slotted([slot='value']) {
+    margin-right: var(--spectrum-listitem-icon-gap);
+}
