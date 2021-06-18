@@ -170,7 +170,7 @@ interface StoryArgs {
     step?: number;
 }
 
-export const Default = (args: StoryArgs): TemplateResult => {
+export const Default = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="default">Enter a number</sp-field-label>
         <sp-number-field
@@ -199,19 +199,22 @@ export const decimals = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const percents = (args: StoryArgs): TemplateResult => {
+export const percents = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="percents">Enter a percentage</sp-field-label>
         <sp-number-field
             id="percents"
             style="width: 200px"
             ...=${spreadProps(args)}
-            .formatOptions=${{ style: 'percent' }}
+            .formatOptions=${{
+                style: 'percent',
+                unitDisplay: 'narrow',
+            }}
         ></sp-number-field>
     `;
 };
 
-export const currency = (args: StoryArgs): TemplateResult => {
+export const currency = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="currency">Enter a value in Euros</sp-field-label>
         <sp-number-field

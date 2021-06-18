@@ -10,14 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult, html } from '@spectrum-web-components/base';
-import {
-    fixture,
-    elementUpdated,
-    expect,
-    nextFrame,
-    oneEvent,
-} from '@open-wc/testing';
+import { html } from '@spectrum-web-components/base';
+import { elementUpdated, expect, nextFrame, oneEvent } from '@open-wc/testing';
 import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import {
@@ -35,53 +29,11 @@ import {
     setUserAgent,
 } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { ProvideLang } from '@spectrum-web-components/theme';
-
-async function getElFrom(test: TemplateResult): Promise<NumberField> {
-    const wrapped = await fixture<HTMLDivElement>(html`
-        <div style="--spectrum-alias-ui-icon-chevron-size-75: 20px;">
-            ${test}
-        </div>
-    `);
-    const el = wrapped.querySelector('sp-number-field') as NumberField;
-    await elementUpdated(el);
-    return el;
-}
-
-async function clickBySelector(
-    el: NumberField,
-    selector: string,
-    options: { button?: 'left' | 'right' | 'middle' } = {}
-): Promise<void> {
-    const target = el.shadowRoot.querySelector(selector) as HTMLElement;
-    const targetRect = target.getBoundingClientRect();
-    await executeServerCommand('send-mouse', {
-        steps: [
-            {
-                type: 'move',
-                position: [
-                    targetRect.x + targetRect.width / 2,
-                    targetRect.y + targetRect.height / 2,
-                ],
-                options,
-            },
-            {
-                type: 'down',
-                options,
-            },
-        ],
-    });
-    await nextFrame();
-    await executeServerCommand('send-mouse', {
-        steps: [
-            {
-                type: 'up',
-                options,
-            },
-        ],
-    });
-    await elementUpdated(el);
-}
+import {
+    getElFrom,
+    createLanguageContext,
+    clickBySelector,
+} from './helpers.js';
 
 describe('NumberField', () => {
     before(async () => {
@@ -118,19 +70,9 @@ describe('NumberField', () => {
             expect(el.value).to.equal(13377331);
         });
         it('with language context', async () => {
-            const lang = 'fr';
-            const langResolvers: ProvideLang['callback'][] = [];
-            const createLangResolver = (
-                event: CustomEvent<ProvideLang>
-            ): void => {
-                langResolvers.push(event.detail.callback);
-                resolveLanguage();
-            };
-            const resolveLanguage = (): void => {
-                langResolvers.forEach((resolver) => resolver(lang));
-            };
+            const languageContext = createLanguageContext('fr');
             const el = await getElFrom(html`
-                <div @sp-language-context=${createLangResolver}>
+                <div @sp-language-context=${languageContext}>
                     ${Default({ value: 1337 })}
                 </div>
             `);

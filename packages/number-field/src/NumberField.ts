@@ -125,6 +125,7 @@ export class NumberField extends TextfieldBase {
     }
 
     public _value = NaN;
+    private _trackingValue = '';
 
     /**
      * Retreive the value of the element parsed to a Number.
@@ -284,6 +285,7 @@ export class NumberField extends TextfieldBase {
 
     protected onFocus(): void {
         super.onFocus();
+        this._trackingValue = this.inputElement.value;
         this.keyboardFocused = true;
         this.addEventListener('wheel', this.onScroll);
     }
@@ -311,8 +313,20 @@ export class NumberField extends TextfieldBase {
     }
 
     protected onInput(): void {
-        const value = this.convertValueToNumber(this.inputElement.value);
-        this._value = this.validateInput(value);
+        const { value, selectionStart } = this.inputElement;
+        if (this.numberParser.isValidPartialNumber(value)) {
+            const valueAsNumber = this.convertValueToNumber(value);
+            this._value = this.validateInput(valueAsNumber);
+            this._trackingValue = value;
+            return;
+        }
+        const currentLength = value.length;
+        const previousLength = this._trackingValue.length;
+        const nextSelectStart =
+            (selectionStart || currentLength) -
+            (currentLength - previousLength);
+        this.inputElement.value = this._trackingValue;
+        this.inputElement.setSelectionRange(nextSelectStart, nextSelectStart);
     }
 
     private validateInput(value: number): number {

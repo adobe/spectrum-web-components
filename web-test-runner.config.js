@@ -56,7 +56,7 @@ export default {
             'packages/shared/src/focus-visible.*',
             'packages/styles/**',
             'test/**',
-            'node_modules/**',
+            '**/node_modules/**',
         ],
         threshold: {
             statements: 98,
