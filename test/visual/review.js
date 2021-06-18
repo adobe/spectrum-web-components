@@ -88,15 +88,20 @@ async function main() {
             );
             const { width, height } = actual;
             const result = new PNG({ width, height });
-            const numpixels = pixelmatch(
-                actual.data,
-                baseline.data,
-                result.data,
-                width,
-                height,
-                { threshold: 0 }
-            );
-            if (numpixels > 0) {
+            try {
+                const numpixels = pixelmatch(
+                    actual.data,
+                    baseline.data,
+                    result.data,
+                    width,
+                    height,
+                    { threshold: 0 }
+                );
+                if (numpixels > 0) {
+                    existingTest.diff = diff;
+                }
+            } catch (error) {
+                // This likely means that the two images where of different sizes.
                 existingTest.diff = diff;
             }
             delete existingTest.actualPath;
@@ -133,16 +138,14 @@ async function main() {
     if (!fs.existsSync('test/visual/review')) {
         fs.mkdirSync('test/visual/review');
     }
-    fs.writeFileSync(
-        'test/visual/src/data.json',
-        JSON.stringify({
-            meta: {
-                commit,
-                theme,
-            },
-            tests,
-        })
-    );
+    const data = JSON.stringify({
+        meta: {
+            commit,
+            theme,
+        },
+        tests,
+    });
+    fs.writeFileSync('test/visual/src/data.json', data);
 }
 
 main();
