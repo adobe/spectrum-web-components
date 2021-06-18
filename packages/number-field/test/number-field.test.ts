@@ -585,6 +585,7 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('0.45');
             expect(el.value).to.equal(0.45);
             el.focus();
+            el.value = 0;
             await sendKeys({ type: '54' });
             await sendKeys({ press: 'Enter' });
             expect(el.formattedValue).to.equal('54%');
@@ -719,9 +720,9 @@ describe('NumberField', () => {
             await sendKeys({ press: '0' });
             await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
-            expect(el.formattedValue).to.equal('10');
-            expect(el.valueAsString).to.equal('10');
-            expect(el.value).to.equal(10);
+            expect(el.formattedValue).to.equal('100');
+            expect(el.valueAsString).to.equal('100');
+            expect(el.value).to.equal(100);
         });
         it('disabled `stepDown` button', async () => {
             await clickBySelector(el, '.stepDown');
