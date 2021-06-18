@@ -152,6 +152,36 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('1');
             expect(el.value).to.equal(1);
         });
+        it('via arrow up (shift modified)', async () => {
+            el.focus();
+            await elementUpdated(el);
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('0');
+            expect(el.valueAsString).to.equal('0');
+            expect(el.value).to.equal(0);
+            await sendKeys({ press: 'Shift+ArrowUp' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('10');
+            expect(el.valueAsString).to.equal('10');
+            expect(el.value).to.equal(10);
+        });
+        it('via arrow up (custom shift modified value)', async () => {
+            el.focus();
+            (el as NumberField).stepModifier = 5;
+            (el as NumberField).step = 3;
+            await elementUpdated(el);
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('0');
+            expect(el.valueAsString).to.equal('0');
+            expect(el.value).to.equal(0);
+            await sendKeys({ press: 'Shift+ArrowUp' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('15');
+            expect(el.valueAsString).to.equal('15');
+            expect(el.value).to.equal(15);
+        });
         it('via scroll', async () => {
             el.focus();
             await elementUpdated(el);
@@ -192,7 +222,7 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('-1');
             expect(el.value).to.equal(-1);
         });
-        it('via arrow up', async () => {
+        it('via arrow down', async () => {
             el.focus();
             await elementUpdated(el);
             await sendKeys({ press: 'ArrowDown' });
@@ -205,6 +235,36 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('-1');
             expect(el.valueAsString).to.equal('-1');
             expect(el.value).to.equal(-1);
+        });
+        it('via arrow down (shift modified)', async () => {
+            el.focus();
+            await elementUpdated(el);
+            await sendKeys({ press: 'ArrowDown' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('0');
+            expect(el.valueAsString).to.equal('0');
+            expect(el.value).to.equal(0);
+            await sendKeys({ press: 'Shift+ArrowDown' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('-10');
+            expect(el.valueAsString).to.equal('-10');
+            expect(el.value).to.equal(-10);
+        });
+        it('via arrow up (custom shift modified value)', async () => {
+            el.focus();
+            (el as NumberField).stepModifier = 5;
+            (el as NumberField).step = 3;
+            await elementUpdated(el);
+            await sendKeys({ press: 'ArrowDown' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('0');
+            expect(el.valueAsString).to.equal('0');
+            expect(el.value).to.equal(0);
+            await sendKeys({ press: 'Shift+ArrowDown' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('-15');
+            expect(el.valueAsString).to.equal('-15');
+            expect(el.value).to.equal(-15);
         });
         it('via scroll', async () => {
             el.focus();
@@ -525,12 +585,6 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('0.45');
             expect(el.value).to.equal(0.45);
             el.focus();
-            await sendKeys({ press: 'Shift+ArrowUp' });
-            await sendKeys({ press: 'Delete' });
-            await sendKeys({ press: 'Enter' });
-            expect(el.formattedValue).to.equal('');
-            expect(el.valueAsString).to.equal('NaN');
-            expect(el.value).to.be.NaN;
             await sendKeys({ type: '54' });
             await sendKeys({ press: 'Enter' });
             expect(el.formattedValue).to.equal('54%');
@@ -586,12 +640,6 @@ describe('NumberField', () => {
         });
         it('validates on commit', async () => {
             el.focus();
-            await sendKeys({ press: 'Shift+ArrowUp' });
-            await sendKeys({ press: 'Delete' });
-            await sendKeys({ press: 'Enter' });
-            expect(el.formattedValue).to.equal('');
-            expect(el.valueAsString).to.equal('NaN');
-            expect(el.value).to.be.NaN;
             await sendKeys({ type: '15' });
             await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
@@ -668,12 +716,6 @@ describe('NumberField', () => {
         });
         it('validates on commit', async () => {
             el.focus();
-            await sendKeys({ press: 'Shift+ArrowUp' });
-            await sendKeys({ press: 'Delete' });
-            await sendKeys({ press: 'Enter' });
-            expect(el.formattedValue).to.equal('');
-            expect(el.valueAsString).to.equal('NaN');
-            expect(el.value).to.be.NaN;
             await sendKeys({ press: '0' });
             await sendKeys({ press: 'Enter' });
             await elementUpdated(el);

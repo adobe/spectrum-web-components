@@ -160,7 +160,7 @@ export class NumberField extends TextfieldBase {
     private nextChange!: number;
     private changeCount = 0;
     private findChange!: (event: PointerEvent) => void;
-    private change!: () => void;
+    private change!: (event: PointerEvent) => void;
     private safty!: number;
 
     private handlePointerdown(event: PointerEvent): void {
@@ -178,32 +178,32 @@ export class NumberField extends TextfieldBase {
                 event.clientX <= stepUpRect.x + stepUpRect.width &&
                 event.clientY <= stepUpRect.y + stepUpRect.height
             ) {
-                this.change = () =>
-                    this.increment(this.shiftPressed ? this.stepModifier : 1);
+                this.change = (event: PointerEvent) =>
+                    this.increment(event.shiftKey ? this.stepModifier : 1);
             } else if (
                 event.clientX >= stepDownRect.x &&
                 event.clientY >= stepDownRect.y &&
                 event.clientX <= stepDownRect.x + stepDownRect.width &&
                 event.clientY <= stepDownRect.y + stepDownRect.height
             ) {
-                this.change = () =>
-                    this.decrement(this.shiftPressed ? this.stepModifier : 1);
+                this.change = (event: PointerEvent) =>
+                    this.decrement(event.shiftKey ? this.stepModifier : 1);
             }
         };
         this.findChange(event);
-        this.startChange();
+        this.startChange(event);
     }
 
-    private startChange(): void {
+    private startChange(event: PointerEvent): void {
         this.changeCount = 0;
-        this.doChange();
+        this.doChange(event);
         this.safty = (setTimeout(() => {
-            this.doNextChange();
+            this.doNextChange(event);
         }, 400) as unknown) as number;
     }
 
-    private doChange(): void {
-        this.change();
+    private doChange(event: PointerEvent): void {
+        this.change(event);
     }
 
     private handlePointermove(event: PointerEvent): void {
@@ -219,13 +219,13 @@ export class NumberField extends TextfieldBase {
         );
     }
 
-    private doNextChange(): number {
+    private doNextChange(event: PointerEvent): number {
         this.changeCount += 1;
         if (this.changeCount % FRAMES_PER_CHANGE === 0) {
-            this.doChange();
+            this.doChange(event);
         }
         return requestAnimationFrame(() => {
-            this.nextChange = this.doNextChange();
+            this.nextChange = this.doNextChange(event);
         });
     }
 
@@ -252,21 +252,18 @@ export class NumberField extends TextfieldBase {
         this.stepBy(-1 * factor);
     }
 
-    private shiftPressed = false;
-
     private handleKeydown(event: KeyboardEvent): void {
-        this.shiftPressed = event.shiftKey;
         switch (event.code) {
             case 'ArrowUp':
                 event.preventDefault();
-                this.increment(this.shiftPressed ? this.stepModifier : 1);
+                this.increment(event.shiftKey ? this.stepModifier : 1);
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
                 break;
             case 'ArrowDown':
                 event.preventDefault();
-                this.decrement(this.shiftPressed ? this.stepModifier : 1);
+                this.decrement(event.shiftKey ? this.stepModifier : 1);
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
@@ -274,13 +271,12 @@ export class NumberField extends TextfieldBase {
         }
     }
 
-    private handleKeyup(event: KeyboardEvent): void {
-        this.shiftPressed = event.shiftKey;
-    }
-
     protected onScroll(event: WheelEvent): void {
         event.preventDefault();
-        this.stepBy(event.deltaY);
+        const direction = event.shiftKey
+            ? event.deltaX / Math.abs(event.deltaX)
+            : event.deltaY / Math.abs(event.deltaY);
+        this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
     }
 
     protected onFocus(): void {
@@ -306,7 +302,6 @@ export class NumberField extends TextfieldBase {
     }
 
     protected onChange(): void {
-        console.log('onchange');
         const value = this.convertValueToNumber(this.inputElement.value);
         this.value = value;
         super.onChange();
@@ -426,7 +421,6 @@ export class NumberField extends TextfieldBase {
         super.firstUpdated(changes);
         this.multiline = false;
         this.addEventListener('keydown', this.handleKeydown);
-        this.addEventListener('keydown', this.handleKeyup);
     }
 
     protected updated(changes: PropertyValues<this>): void {
