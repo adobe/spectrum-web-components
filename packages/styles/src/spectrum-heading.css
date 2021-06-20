@@ -229,8 +229,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-heading-text-font-weight-regular)
     );
 }
-.spectrum-Heading-emphasis,
-em {
+.spectrum-Heading .spectrum-Heading-emphasis,
+.spectrum-Heading em {
     /* .spectrum-Heading .spectrum-Heading-emphasis,
    * .spectrum-Heading em */
     font-style: var(
@@ -238,8 +238,8 @@ em {
         var(--spectrum-global-font-style-italic)
     );
 }
-.spectrum-Heading-strong,
-strong {
+.spectrum-Heading .spectrum-Heading-strong,
+.spectrum-Heading strong {
     /* .spectrum-Heading .spectrum-Heading-strong,
    * .spectrum-Heading strong */
     font-weight: var(

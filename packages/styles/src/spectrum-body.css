@@ -199,8 +199,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-body-text-font-family)
     );
 }
-.spectrum-Body-strong,
-strong {
+.spectrum-Body .spectrum-Body-strong,
+.spectrum-Body strong {
     /* .spectrum-Body .spectrum-Body-strong,
    * .spectrum-Body strong */
     font-weight: var(
@@ -208,8 +208,8 @@ strong {
         var(--spectrum-global-font-weight-bold)
     );
 }
-.spectrum-Body-emphasis,
-em {
+.spectrum-Body .spectrum-Body-emphasis,
+.spectrum-Body em {
     /* .spectrum-Body .spectrum-Body-emphasis,
    * .spectrum-Body em */
     font-style: var(

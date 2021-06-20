@@ -17,8 +17,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-body-text-font-family)
     );
 }
-.spectrum-Code-strong,
-strong {
+.spectrum-Code .spectrum-Code-strong,
+.spectrum-Code strong {
     /* .spectrum-Code .spectrum-Code-strong,
    * .spectrum-Code strong */
     font-weight: var(
@@ -26,8 +26,8 @@ strong {
         var(--spectrum-global-font-weight-bold)
     );
 }
-.spectrum-Code-emphasis,
-em {
+.spectrum-Code .spectrum-Code-emphasis,
+.spectrum-Code em {
     /* .spectrum-Code .spectrum-Code-emphasis,
    * .spectrum-Code em */
     font-style: var(
