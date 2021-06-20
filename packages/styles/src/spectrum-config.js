@@ -22,6 +22,7 @@ const config = {
         },
         {
             name: 'typography',
+            keepHostSelector: true,
             host: {
                 selector: '.spectrum-Typography',
                 shadowSelector: '.spectrum-Typography',
@@ -29,6 +30,7 @@ const config = {
         },
         {
             name: 'heading',
+            keepHostSelector: true,
             host: {
                 selector: '.spectrum-Heading',
                 shadowSelector: '.spectrum-Heading',
@@ -36,6 +38,7 @@ const config = {
         },
         {
             name: 'body',
+            keepHostSelector: true,
             host: {
                 selector: '.spectrum-Body',
                 shadowSelector: '.spectrum-Body',
@@ -43,6 +46,7 @@ const config = {
         },
         {
             name: 'detail',
+            keepHostSelector: true,
             host: {
                 selector: '.spectrum-Detail',
                 shadowSelector: '.spectrum-Detail',
@@ -50,6 +54,7 @@ const config = {
         },
         {
             name: 'code',
+            keepHostSelector: true,
             host: {
                 selector: '.spectrum-Code',
                 shadowSelector: '.spectrum-Code',

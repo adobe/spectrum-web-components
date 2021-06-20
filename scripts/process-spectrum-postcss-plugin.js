@@ -86,6 +86,9 @@ class SpectrumProcessor {
         // e.g. ".spectrum-Button .spectrum-Button-label" -> ".spectrum-Button-label"
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
+            if (this.component.keepHostSelector) {
+                return result;
+            }
             if (
                 result.length > 1 &&
                 this.component.isRootSpectrumClass(result.first) &&

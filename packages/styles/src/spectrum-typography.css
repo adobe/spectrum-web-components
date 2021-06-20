@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-Heading--sizeXXXL {
+.spectrum-Typography .spectrum-Heading--sizeXXXL {
     /* .spectrum-Typography .spectrum-Heading--sizeXXXL */
     margin-top: var(
         --spectrum-heading-xxxl-margin-top,
@@ -21,7 +21,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-130)
     );
 }
-.spectrum-Heading--sizeXXL {
+.spectrum-Typography .spectrum-Heading--sizeXXL {
     /* .spectrum-Typography .spectrum-Heading--sizeXXL */
     margin-top: var(
         --spectrum-heading-xxl-margin-top,
@@ -32,7 +32,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-125)
     );
 }
-.spectrum-Heading--sizeXL {
+.spectrum-Typography .spectrum-Heading--sizeXL {
     /* .spectrum-Typography .spectrum-Heading--sizeXL */
     margin-top: var(
         --spectrum-heading-xl-margin-top,
@@ -43,7 +43,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-115)
     );
 }
-.spectrum-Heading--sizeL {
+.spectrum-Typography .spectrum-Heading--sizeL {
     /* .spectrum-Typography .spectrum-Heading--sizeL */
     margin-top: var(
         --spectrum-heading-l-margin-top,
@@ -54,7 +54,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-85)
     );
 }
-.spectrum-Heading--sizeM {
+.spectrum-Typography .spectrum-Heading--sizeM {
     /* .spectrum-Typography .spectrum-Heading--sizeM */
     margin-top: var(
         --spectrum-heading-m-margin-top,
@@ -65,7 +65,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-75)
     );
 }
-.spectrum-Heading--sizeS {
+.spectrum-Typography .spectrum-Heading--sizeS {
     /* .spectrum-Typography .spectrum-Heading--sizeS */
     margin-top: var(
         --spectrum-heading-s-margin-top,
@@ -76,7 +76,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-65)
     );
 }
-.spectrum-Heading--sizeXS {
+.spectrum-Typography .spectrum-Heading--sizeXS {
     /* .spectrum-Typography .spectrum-Heading--sizeXS */
     margin-top: var(
         --spectrum-heading-xs-margin-top,
@@ -87,7 +87,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-50)
     );
 }
-.spectrum-Heading--sizeXXS {
+.spectrum-Typography .spectrum-Heading--sizeXXS {
     /* .spectrum-Typography .spectrum-Heading--sizeXXS */
     margin-top: var(
         --spectrum-heading-xxs-margin-top,
@@ -98,7 +98,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-40)
     );
 }
-.spectrum-Body--sizeXXXL {
+.spectrum-Typography .spectrum-Body--sizeXXXL {
     /* .spectrum-Typography .spectrum-Body--sizeXXXL */
     margin-top: var(--spectrum-body-xxxl-margin-top, 0);
     margin-bottom: var(
@@ -106,7 +106,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-400)
     );
 }
-.spectrum-Body--sizeXXL {
+.spectrum-Typography .spectrum-Body--sizeXXL {
     /* .spectrum-Typography .spectrum-Body--sizeXXL */
     margin-top: var(--spectrum-body-xxl-margin-top, 0);
     margin-bottom: var(
@@ -114,7 +114,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-300)
     );
 }
-.spectrum-Body--sizeXL {
+.spectrum-Typography .spectrum-Body--sizeXL {
     /* .spectrum-Typography .spectrum-Body--sizeXL */
     margin-top: var(--spectrum-body-xl-margin-top, 0);
     margin-bottom: var(
@@ -122,7 +122,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-200)
     );
 }
-.spectrum-Body--sizeL {
+.spectrum-Typography .spectrum-Body--sizeL {
     /* .spectrum-Typography .spectrum-Body--sizeL */
     margin-top: var(--spectrum-body-l-margin-top, 0);
     margin-bottom: var(
@@ -130,7 +130,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-160)
     );
 }
-.spectrum-Body--sizeM {
+.spectrum-Typography .spectrum-Body--sizeM {
     /* .spectrum-Typography .spectrum-Body--sizeM */
     margin-top: var(--spectrum-body-m-margin-top, 0);
     margin-bottom: var(
@@ -138,7 +138,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-150)
     );
 }
-.spectrum-Body--sizeS {
+.spectrum-Typography .spectrum-Body--sizeS {
     /* .spectrum-Typography .spectrum-Body--sizeS */
     margin-top: var(--spectrum-body-s-margin-top, 0);
     margin-bottom: var(
@@ -146,7 +146,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-125)
     );
 }
-.spectrum-Body--sizeXS {
+.spectrum-Typography .spectrum-Body--sizeXS {
     /* .spectrum-Typography .spectrum-Body--sizeXS */
     margin-top: var(--spectrum-body-xs-margin-top, 0);
     margin-bottom: var(
