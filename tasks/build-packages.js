@@ -16,11 +16,11 @@ import globby from 'globby';
 
 const buildPackage = (paths, watch) => {
     const args = ['tsc', '--build', ...paths];
-    if (watch) {
-        args.push('-w');
-    }
     try {
         execSync(`yarn ${args.join(' ')} --clean`);
+        if (watch) {
+            args.push('-w');
+        }
         execSync(`yarn ${args.join(' ')}`);
     } catch (error) {
         console.log(error.stdout.toString('utf8'));
