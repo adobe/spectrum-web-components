@@ -43,5 +43,13 @@
             }
         ]
     },
-    "extends": ["plugin:prettier/recommended", "plugin:lit-a11y/recommended"]
+    "extends": ["plugin:prettier/recommended", "plugin:lit-a11y/recommended"],
+    "overrides": [
+        {
+            "files": ["tasks/*"],
+            "rules": {
+                "no-console": ["off"]
+            }
+        }
+    ]
 }

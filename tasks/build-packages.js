@@ -14,25 +14,29 @@ governing permissions and limitations under the License.
 import { execSync } from 'child_process';
 import globby from 'globby';
 
-const buildPackage = (paths, watch) => {
+const buildPackage = (paths, options) => {
     const args = ['tsc', '--build', ...paths];
     try {
-        execSync(`yarn ${args.join(' ')} --clean`);
-        if (watch) {
+        if (options.watch) {
             args.push('-w');
+        } else if (options.clean) {
+            execSync(`yarn ${args.join(' ')} --clean`);
         }
         execSync(`yarn ${args.join(' ')}`);
     } catch (error) {
-        console.log(error.stdout.toString('utf8'));
+        if (error.stdout) {
+            console.log(error.stdout.toString('utf8'));
+        }
     }
 };
 
-export const buildPackages = async (watch) => {
+export const buildPackages = async (options) => {
     const paths = [];
     for await (const config of globby.stream(`./packages/*/tsconfig.json`)) {
         paths.push(config);
     }
-    buildPackage(paths, watch);
+    paths.push('.storybook/tsconfig.json');
+    buildPackage(paths, options);
 };
 
 buildPackages();

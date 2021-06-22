@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 
 import { buildPackages } from './build-packages.js';
 
-async function watchPackages() {
-    await buildPackages({ watch: true });
+async function buildPackagesClean() {
+    await buildPackages({ clean: true });
 }
 
-watchPackages();
+buildPackagesClean();
