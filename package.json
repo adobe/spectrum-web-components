@@ -81,7 +81,7 @@
         "test:visual:clean:baseline": "rimraf test/visual/screenshots-baseline",
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
         "test:watch": "test:watch:focus unit",
-        "test:watch:focus": "run-p watch:css \"test:build -w\" \"test:start --watch --group {1}\" --",
+        "test:watch:focus": "yarn test:build && yarn test:build:plugins && run-p watch:css \"test:build -w\" \"test:start --watch --group {1}\" --",
         "watch:css": "node ./tasks/watch-css.js"
     },
     "peerDependencies": {
