@@ -163,9 +163,13 @@ export class TopNav extends SpectrumElement {
 
         const width = itemBoundingClientRect.width;
         const offset =
-            itemBoundingClientRect.left - parentBoundingClientRect.left;
+            this.dir === 'ltr'
+                ? itemBoundingClientRect.left - parentBoundingClientRect.left
+                : itemBoundingClientRect.right - parentBoundingClientRect.right;
 
-        this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
+        this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${
+            this.dir === 'ltr' ? width : -1 * width
+        });`;
     };
 
     public connectedCallback(): void {
