@@ -168,7 +168,7 @@
         "netlify-cli": "^3.13.1",
         "node-fetch": "^2.6.0",
         "npm-run-all": "^4.1.5",
-        "playwright": "^1.9.2",
+        "playwright": "^1.12.2",
         "plugin-error": "^1.0.1",
         "pngjs": "^6.0.0",
         "polymer-webpack-loader": "^2.0.3",
