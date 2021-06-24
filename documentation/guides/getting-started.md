@@ -29,8 +29,8 @@ The code above renders to the browser as follows (be patient while the JS is loa
 
 ## What it's doing
 
-Visually, all Spectrum Web Components are an expression of the design tokens that are specified by Spectrum, Adobe's design system. On the web, these tokens are applied as CSS Custom Properties. Not only do these properties ensure that each element is delivered according to your application’s specifications, but for all colour/scale/content direction specifications across Spectrum.
-When you're ready to look into more advanced usage of the components and themes in your application, there are vanilla CSS implementations of these tokens available in the `@spectrum-web-components/styles` package. However, to get started immediately, the `<sp-theme>` element delivers these tokens to a scoped HTML context and is what’s used in the code above. You'll notice the usage of `scale="large"` and `color="dark"` to outline the scale and color applied to this theme context, respectively. To make a theme context with `scale="medium"` and `color="lightest"`, you can use the following code sample:
+Visually, all Spectrum Web Components are an expression of the design tokens that are specified by Spectrum, Adobe's design system. On the web, these tokens are applied as CSS Custom Properties. Not only do these properties ensure that each element is delivered according to your application’s specifications, but for all color/scale/content direction specifications across Spectrum.
+When you're ready to look into more advanced usage of the components and themes in your application, there are vanilla CSS implementations of these tokens available in the `@spectrum-web-components/styles` package. However, to get started immediately, the `<sp-theme>` element delivers these tokens to a scoped HTML context and is what is used in the code above. You'll notice the usage of `scale="large"` and `color="dark"` to outline the scale and color applied to this theme context, respectively. To make a theme context with `scale="medium"` and `color="lightest"`, you can use the following code sample:
 
 ```html
 <sp-theme
