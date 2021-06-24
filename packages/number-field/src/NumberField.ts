@@ -106,6 +106,9 @@ export class NumberField extends TextfieldBase {
 
     _forcedUnit = '';
 
+    @property({ type: Boolean, reflect: true })
+    public scrubbing = false;
+
     /**
      * An `&lt;sp-number-field&gt;` element will process its numeric value with
      * `new Intl.NumberFormat(this.resolvedLanguage, this.formatOptions).format(this.valueAsNumber)`
@@ -148,6 +151,9 @@ export class NumberField extends TextfieldBase {
 
     @property({ type: Number, reflect: true, attribute: 'step-modifier' })
     public stepModifier = 10;
+
+    @property({ type: Number })
+    public stepperpixel?: number;
 
     @property({ type: Number })
     public override set value(rawValue: number) {
@@ -242,8 +248,24 @@ export class NumberField extends TextfieldBase {
     private change!: (event: PointerEvent) => void;
     private safty!: number;
     private languageResolver = new LanguageResolutionController(this);
+    private pointerDragXLocation?: number;
+    private pointerDownTime?: number;
+    private scrubDistance = 0;
 
     private handlePointerdown(event: PointerEvent): void {
+        if (event.button !== 0) {
+            event.preventDefault();
+            return;
+        }
+        this.managedInput = true;
+
+        if (!this.focused) {
+            this.setPointerCapture(event.pointerId);
+            this.scrub(event);
+        }
+    }
+
+    private handleButtonPointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
             return;
@@ -287,11 +309,11 @@ export class NumberField extends TextfieldBase {
         this.change(event);
     }
 
-    private handlePointermove(event: PointerEvent): void {
+    private handleButtonPointermove(event: PointerEvent): void {
         this.findChange(event);
     }
 
-    private handlePointerup(event: PointerEvent): void {
+    private handleButtonPointerup(event: PointerEvent): void {
         this.buttons.releasePointerCapture(event.pointerId);
         cancelAnimationFrame(this.nextChange);
         clearTimeout(this.safty);
@@ -340,6 +362,81 @@ export class NumberField extends TextfieldBase {
         this.stepBy(-1 * factor);
     }
 
+    private handlePointermove(event: PointerEvent): void {
+        this.scrub(event);
+    }
+
+    private handlePointerup(event: PointerEvent): void {
+        this.releasePointerCapture(event.pointerId);
+        this.scrub(event);
+        cancelAnimationFrame(this.nextChange);
+        clearTimeout(this.safty);
+        this.managedInput = false;
+        this.setValue();
+    }
+
+    private scrub(event: PointerEvent): void {
+        switch (event.type) {
+            case 'pointerdown':
+                this.scrubbing = true;
+                this.pointerDragXLocation = event.clientX;
+                this.pointerDownTime = Date.now();
+                this.inputElement.disabled = true;
+                this.addEventListener('pointermove', this.handlePointermove);
+                this.addEventListener('pointerup', this.handlePointerup);
+                this.addEventListener('pointercancel', this.handlePointerup);
+                event.preventDefault();
+                break;
+
+            case 'pointermove':
+                if (
+                    this.pointerDragXLocation &&
+                    this.pointerDownTime &&
+                    Date.now() - this.pointerDownTime > 250
+                ) {
+                    const amtPerPixel = this.stepperpixel || this._step;
+                    const dist: number =
+                        event.clientX - this.pointerDragXLocation;
+                    const delta =
+                        Math.round(dist * amtPerPixel) *
+                        (event.shiftKey ? this.stepModifier : 1);
+                    this.scrubDistance += Math.abs(dist);
+                    this.pointerDragXLocation = event.clientX;
+                    this.stepBy(delta);
+                    event.preventDefault();
+                }
+                break;
+
+            default:
+                this.pointerDragXLocation = undefined;
+                this.scrubbing = false;
+                this.inputElement.disabled = false;
+                this.removeEventListener('pointermove', this.handlePointermove);
+                this.removeEventListener('pointerup', this.handlePointerup);
+                this.removeEventListener('pointercancel', this.handlePointerup);
+
+                // if user has scrubbed, disallow focus of field
+                const bounds = this.getBoundingClientRect();
+                if (
+                    this.scrubDistance > 0 &&
+                    this.pointerDownTime &&
+                    Date.now() - this.pointerDownTime > 250
+                ) {
+                    event.preventDefault();
+                } else if (
+                    event.clientX >= bounds.x &&
+                    event.clientX <= bounds.x + bounds.width &&
+                    event.clientY >= bounds.y &&
+                    event.clientY <= bounds.y + bounds.height
+                ) {
+                    this.focus();
+                }
+                this.scrubDistance = 0;
+                this.pointerDownTime = undefined;
+                break;
+        }
+    }
+
     private handleKeydown(event: KeyboardEvent): void {
         if (this.isComposing) return;
         switch (event.code) {
@@ -375,6 +472,9 @@ export class NumberField extends TextfieldBase {
     }
 
     protected override onFocus(): void {
+        if (this.pointerDragXLocation) {
+            return;
+        }
         super.onFocus();
         this._trackingValue = this.inputValue;
         this.keyboardFocused = !this.readonly && true;
@@ -639,7 +739,10 @@ export class NumberField extends TextfieldBase {
                           @focusin=${this.handleFocusin}
                           @focusout=${this.handleFocusout}
                           ${streamingListener({
-                              start: ['pointerdown', this.handlePointerdown],
+                              start: [
+                                  'pointerdown',
+                                  this.handleButtonPointerdown,
+                              ],
                               streamInside: [
                                   [
                                       'pointermove',
@@ -648,7 +751,7 @@ export class NumberField extends TextfieldBase {
                                       'pointerover',
                                       'pointerout',
                                   ],
-                                  this.handlePointermove,
+                                  this.handleButtonPointermove,
                               ],
                               end: [
                                   [
@@ -656,7 +759,7 @@ export class NumberField extends TextfieldBase {
                                       'pointercancel',
                                       'pointerleave',
                                   ],
-                                  this.handlePointerup,
+                                  this.handleButtonPointerup,
                               ],
                           })}
                       >
@@ -729,6 +832,7 @@ export class NumberField extends TextfieldBase {
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('compositionstart', this.handleCompositionStart);
         this.addEventListener('compositionend', this.handleCompositionEnd);
+        this.addEventListener('pointerdown', this.handlePointerdown);
     }
 
     protected override updated(changes: PropertyValues<this>): void {

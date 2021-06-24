@@ -557,6 +557,12 @@ describe('NumberField', () => {
                 clientX: stepUpRect.x + 1,
                 clientY: stepUpRect.y + 1,
             };
+            el.setPointerCapture = () => {
+                return;
+            };
+            el.releasePointerCapture = () => {
+                return;
+            };
             (
                 el as unknown as {
                     buttons: HTMLDivElement;
@@ -656,7 +662,7 @@ describe('NumberField', () => {
             expect(inputSpy.callCount).to.equal(5);
             expect(changeSpy.callCount).to.equal(1);
         });
-        it('no change in committed value - using buttons', async () => {
+        it('no change in committed value - using buttons', async function () {
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
             ) as HTMLElement;
@@ -673,6 +679,7 @@ describe('NumberField', () => {
                 buttonDownRect.x + buttonDownRect.width / 2,
                 buttonDownRect.y + buttonDownRect.height / 2,
             ];
+            const initialVaue = el.value;
             sendMouse({
                 steps: [
                     {
@@ -686,13 +693,19 @@ describe('NumberField', () => {
             });
             await oneEvent(el, 'input');
             expect(el.value).to.equal(51);
-            expect(inputSpy.callCount).to.equal(1);
+            expect(inputSpy.callCount).to.equal(
+                Math.abs(el.value - initialVaue)
+            );
             expect(changeSpy.callCount).to.equal(0);
             await oneEvent(el, 'input');
             expect(el.value).to.equal(52);
-            expect(inputSpy.callCount).to.equal(2);
+            expect(inputSpy.callCount).to.equal(
+                Math.abs(el.value - initialVaue)
+            );
             expect(changeSpy.callCount).to.equal(0);
-            sendMouse({
+            const inputs = inputSpy.callCount;
+            const intermediateValue = el.value;
+            await sendMouse({
                 steps: [
                     {
                         type: 'move',
@@ -700,13 +713,12 @@ describe('NumberField', () => {
                     },
                 ],
             });
-            let framesToWait = FRAMES_PER_CHANGE * 2;
-            while (framesToWait) {
-                // input is only processed onces per FRAMES_PER_CHANGE number of frames
-                framesToWait -= 1;
-                await nextFrame();
+            while (el.value > 50) {
+                await oneEvent(el, 'input');
             }
-            expect(inputSpy.callCount).to.equal(4);
+            expect(inputSpy.callCount).to.equal(
+                inputs + Math.abs(el.value - intermediateValue)
+            );
             expect(changeSpy.callCount).to.equal(0);
             await sendMouse({
                 steps: [
@@ -715,14 +727,17 @@ describe('NumberField', () => {
                     },
                 ],
             });
-            expect(inputSpy.callCount).to.equal(4);
+            expect(el.value).to.equal(50);
+            expect(inputSpy.callCount).to.equal(
+                inputs + Math.abs(el.value - intermediateValue)
+            );
             expect(
                 changeSpy.callCount,
                 'value does not change from initial value so no "change" event is dispatched'
             ).to.equal(0);
         });
     });
-    it('accepts pointer interactions with the stepper UI', async () => {
+    it('accepts pointer interactions with the stepper UI', async function () {
         const inputSpy = spy();
         const el = await getElFrom(Default({ value: 50 }));
         el.addEventListener('input', () => inputSpy());
