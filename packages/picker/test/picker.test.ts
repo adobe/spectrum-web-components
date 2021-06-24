@@ -872,7 +872,9 @@ describe('Picker', () => {
 
         const hoverEl = el.querySelector('sp-menu-item') as MenuItem;
 
+        const opened = oneEvent(el, 'sp-opened');
         el.open = true;
+        await opened;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
@@ -880,7 +882,10 @@ describe('Picker', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
+
+        const closed = oneEvent(el, 'sp-closed');
         el.open = false;
+        await closed;
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
