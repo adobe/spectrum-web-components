@@ -26,7 +26,9 @@
         "./sp-slider": "./sp-slider.js",
         "./sp-slider.js": "./sp-slider.js",
         "./sp-slider-handle": "./sp-slider-handle.js",
-        "./sp-slider-handle.js": "./sp-slider-handle.js"
+        "./sp-slider-handle.js": "./sp-slider-handle.js",
+        "./sync/sp-slider": "./sync/sp-slider.js",
+        "./sync/sp-slider.js": "./sync/sp-slider.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
@@ -48,6 +50,8 @@
     "dependencies": {
         "@internationalized/number": "^3.0.0",
         "@spectrum-web-components/base": "^0.4.5",
+        "@spectrum-web-components/field-label": "^0.5.3",
+        "@spectrum-web-components/number-field": "^0.1.4",
         "@spectrum-web-components/shared": "^0.12.7",
         "@spectrum-web-components/theme": "^0.8.12",
         "tslib": "^2.0.0"
@@ -58,6 +62,7 @@
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js"
+        "./sp-*.js",
+        "./sync/sp-*.js"
     ]
 }

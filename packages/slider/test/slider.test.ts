@@ -460,7 +460,9 @@ describe('Slider', () => {
                     max="20"
                     @input=${() => inputSpy()}
                     style="width: 500px; float: left;"
-                ></sp-slider>
+                >
+                    Step = 0
+                </sp-slider>
             `
         );
 
@@ -479,11 +481,27 @@ describe('Slider', () => {
                 cancelable: true,
             })
         );
+        const handleBoundingRect = handle.getBoundingClientRect();
+        const position = [
+            handleBoundingRect.x + handleBoundingRect.width / 2,
+            handleBoundingRect.y + handleBoundingRect.height / 2,
+        ];
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position,
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
 
         await elementUpdated(el);
 
-        expect(el.dragging).to.be.true;
-        expect(el.highlight).to.be.false;
+        expect(el.dragging, 'dragging').to.be.true;
+        expect(el.highlight, 'with no highlight').to.be.false;
         expect(pointerId, 'pointer id').to.equal(1);
 
         handle.dispatchEvent(
@@ -492,10 +510,18 @@ describe('Slider', () => {
                 cancelable: true,
             })
         );
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [200, position[1]],
+                },
+            ],
+        });
         await elementUpdated(el);
 
         expect(el.value).to.equal(8);
-        expect(inputSpy.callCount, 'call count').to.equal(1);
+        expect(inputSpy.callCount, 'call count').to.equal(2);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -503,10 +529,18 @@ describe('Slider', () => {
                 cancelable: true,
             })
         );
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [125, position[1]],
+                },
+            ],
+        });
         await elementUpdated(el);
 
         expect(el.value).to.equal(5);
-        expect(inputSpy.callCount).to.equal(2);
+        expect(inputSpy.callCount).to.equal(3);
     });
     it('will not pointermove unless `pointerdown`', async () => {
         const el = await fixture<Slider>(
