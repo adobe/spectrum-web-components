@@ -106,6 +106,19 @@ export default {
                 type: 'number',
             },
         },
+        stepModifier: {
+            name: 'step modifier',
+            type: { name: 'number', required: false },
+            description:
+                'Amount to scale the step increment/decrement when holding the shift key',
+            table: {
+                type: { summary: 'number' },
+                defaultValue: { summary: 10 },
+            },
+            control: {
+                type: 'number',
+            },
+        },
         placeholder: {
             name: 'placeholder',
             type: { name: 'string', required: false },
