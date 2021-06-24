@@ -23,6 +23,11 @@ governing permissions and limitations under the License.
     );
 }
 
+sp-field-label {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 /*
  * Removes blue outline from :host when it is being focused.
  * This situation is not addressed in spectrum-css because the slider element itself
@@ -32,6 +37,50 @@ governing permissions and limitations under the License.
 */
 :host(:focus) {
     outline: 0;
+}
+
+:host([editable]) {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        'label .'
+        'slider number';
+}
+
+:host([editable]) #labelContainer {
+    grid-area: label;
+}
+
+:host([editable]) #labelContainer + div {
+    grid-area: slider;
+}
+
+:host([editable]) sp-number-field {
+    grid-area: number;
+
+    --spectrum-stepper-width: var(
+        --spectrum-slider-editable-number-field-width,
+        var(--spectrum-global-dimension-size-1000)
+    );
+}
+
+:host([hide-stepper]) sp-number-field {
+    --spectrum-stepper-width: var(
+        --spectrum-slider-editable-number-field-width,
+        var(--spectrum-global-dimension-size-900)
+    );
+}
+
+:host([editable][dir='ltr']) sp-number-field {
+    margin-left: var(--spectrum-global-dimension-size-200);
+}
+
+:host([editable][dir='rtl']) sp-number-field {
+    margin-right: var(--spectrum-global-dimension-size-200);
+}
+
+:host([editable]) output {
+    opacity: 0;
 }
 
 :host([disabled]) {

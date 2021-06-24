@@ -18,6 +18,7 @@ import {
     property,
     PropertyValues,
     SizedMixin,
+    query,
 } from '@spectrum-web-components/base';
 import type { Focusable } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
@@ -52,13 +53,16 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
     @property({ type: Boolean, reflect: true })
     public required = false;
 
+    @query('slot')
+    public slotEl!: HTMLSlotElement;
+
     @property({ type: String, reflect: true, attribute: 'side-aligned' })
     public sideAligned?: 'start' | 'end';
 
     private target?: HTMLElement;
 
-    private handleClick(): void {
-        if (!this.target || this.disabled) return;
+    private handleClick(event: Event): void {
+        if (!this.target || this.disabled || event.defaultPrevented) return;
         this.target.focus();
         const parent = this.getRootNode() as ShadowRoot;
         const target = this.target as AcceptsFocusVisisble;
@@ -80,6 +84,9 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
         if (!target) {
             return;
         }
+        if (target.localName.search('-') > 0) {
+            await customElements.whenDefined(target.localName);
+        }
         if (typeof target.updateComplete !== 'undefined') {
             await target.updateComplete;
         }
@@ -89,19 +96,27 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
             if (targetParent === parent) {
                 this.target.setAttribute('aria-labelledby', this.id);
             } else {
-                this.target.setAttribute(
-                    'aria-label',
-                    (this.textContent || /* c8 ignore next */ '').trim()
-                );
+                this.target.setAttribute('aria-label', this.labelText);
             }
         }
         return Promise.resolve();
     }
 
+    private get labelText(): string {
+        const assignedNodes = this.slotEl.assignedNodes({ flatten: true });
+        if (!assignedNodes.length) {
+            return '';
+        }
+        const labelText = assignedNodes.map((node) =>
+            (node.textContent || /* c8 ignore next */ '').trim()
+        );
+        return labelText.join(' ');
+    }
+
     protected render(): TemplateResult {
         return html`
             <label>
-                <slot></slot>
+                <slot @slotchange=${this.manageFor}></slot>
                 ${this.required
                     ? html`
                           <sp-icon-asterisk100

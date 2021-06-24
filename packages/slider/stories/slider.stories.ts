@@ -69,7 +69,7 @@ export default {
     },
 };
 
-interface StoryArgs {
+export interface StoryArgs {
     variant?: string;
     tickStep?: number;
     labelVisibility?: string;
@@ -183,6 +183,137 @@ export const noVisibleLabels = (args: StoryArgs): TemplateResult => {
 noVisibleLabels.args = {
     labelVisibility: 'none',
 };
+
+class NumberFieldDefined extends HTMLElement {
+    constructor() {
+        super();
+        this.numberFieldLoaderPromise = new Promise((res) => {
+            customElements.whenDefined('sp-number-field').then(() => {
+                res(true);
+            });
+        });
+    }
+
+    private numberFieldLoaderPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.numberFieldLoaderPromise;
+    }
+}
+
+customElements.define('number-field-defined', NumberFieldDefined);
+
+export const editable = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as Slider;
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                max="360"
+                min="0"
+                value="90"
+                step="1"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{
+                    style: 'unit',
+                    unit: 'degree',
+                    unitDisplay: 'narrow',
+                }}
+                ...=${spreadProps(args)}
+            >
+                Angle
+            </sp-slider>
+        </div>
+    `;
+};
+
+editable.decorators = [
+    (story: () => TemplateResult): TemplateResult => {
+        return html`
+            ${story()}
+            <number-field-defined></number-field-defined>
+        `;
+    },
+];
+
+export const editableCustom = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as Slider;
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
+    };
+    return html`
+        <div
+            style="width: 500px; margin: 12px 20px; --spectrum-slider-editable-number-field-width: 150px;"
+        >
+            <sp-slider
+                editable
+                max="24"
+                min="0"
+                value="12.75"
+                step="0.25"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{ style: 'unit', unit: 'hour' }}
+                ...=${spreadProps(args)}
+            >
+                Hours
+            </sp-slider>
+        </div>
+    `;
+};
+
+editableCustom.decorators = [
+    (story: () => TemplateResult): TemplateResult => {
+        return html`
+            ${story()}
+            <number-field-defined></number-field-defined>
+        `;
+    },
+];
+
+export const hideStepper = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as Slider;
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                hide-stepper
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Opacity
+            </sp-slider>
+        </div>
+    `;
+};
+
+hideStepper.decorators = [
+    (story: () => TemplateResult): TemplateResult => {
+        return html`
+            ${story()}
+            <number-field-defined></number-field-defined>
+        `;
+    },
+];
 
 export const Gradient = (args: StoryArgs): TemplateResult => {
     const handleEvent = (event: Event): void => {

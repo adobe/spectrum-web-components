@@ -18,6 +18,12 @@ Import the side effectful registration of `<sp-slider>` via:
 import '@spectrum-web-components/slider/sp-slider.js';
 ```
 
+When leveraging the `editable` attribute, the `@spectrum-web-components/number-field/sp-number-field.js` dependency will be asynchronously loaded via a dynamic import to reduce JS payload for applications not leveraging this feature. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-slider>` as follows:
+
+```
+import '@spectrum-web-components/slider/sync/sp-slider.js';
+```
+
 When looking to leverage the `Slider` base class as a type and/or for extension purposes, do so via:
 
 ```
@@ -79,6 +85,38 @@ import { Slider } from '@spectrum-web-components/slider';
 ```html
 <sp-slider label="Slider Label" variant="ramp"></sp-slider>
 <sp-slider label="Slider Label - Disabled" variant="ramp" disabled></sp-slider>
+```
+
+### Editable
+
+An `<sp-slider>` element can be paired with an `<sp-number-field>` element via the `editable` attribute. The `<sp-number-field>` will be passed all of the standard options from the `<sp-slider>` element (e.g. `min`, `max`, `formatOptions`, etc.) and will also accept the `hide-stepper` attribute in order to prevent the display of its stepper UI.
+
+```html
+<sp-slider
+    label="Angle (editable)"
+    editable
+    hide-stepper
+    min="0"
+    max="360"
+    format-options='{
+        "style": "unit",
+        "unit": "degree",
+        "unitDisplay": "narrow"
+    }'
+></sp-slider>
+<sp-slider
+    label="Hours of the day (editable)"
+    editable
+    max="24"
+    min="0"
+    value="7.25"
+    step="0.25"
+    style="--spectrum-slider-editable-number-field-width: 100px;"
+    format-options='{
+        "style": "unit",
+        "unit": "hour"
+    }'
+></sp-slider>
 ```
 
 ## Advanced normalization

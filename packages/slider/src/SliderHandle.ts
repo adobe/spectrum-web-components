@@ -141,9 +141,6 @@ export class SliderHandle extends Focusable {
     public normalization: SliderNormalization = defaultNormalization;
 
     public dispatchInputEvent(): void {
-        if (!this.dragging) {
-            return;
-        }
         const inputEvent = new Event('input', {
             bubbles: true,
             composed: true,
