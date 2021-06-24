@@ -18,7 +18,7 @@ The `@spectrum-web-components/bundle` package is literally _everything_ that Spe
         onclick="alert('I was clicked');"
     >Click me!</sp-button>
     <!-- End content requiring theme application. -->
-</sp-theme>ß
+</sp-theme>
 ```
 
 The code above renders to the browser as follows (be patient while the JS is loaded from the JSPM CDN...):
@@ -50,4 +50,4 @@ When you're ready to look into more advanced usage of the components and themes 
 
 Now that you have a starting point, visit the documentation for each package and find some components that are right for your project. You can take a look at our examples on webcomponents.dev to get an idea of how these components behave in a development environment, or browse through our <sp-link href="https://opensource.adobe.com/spectrum-web-components/storybook/" target="_blank">storybook</sp-link>. Once you start developing, you’ll find that rapid, component-based prototyping brings your designs to life faster than ever.
 
-When you find a component or two you’d like to use, take a look at our <sp-link href="https://github.com/adobe/spectrum-web-components/tree/main/projects/example-project-rollup" target="_blank">Rollup</sp-link> and/or <sp-link href="https://github.com/adobe/spectrum-web-components/tree/main/projects/example-project-webpack" target="_blank">Webpack</sp-link> example projects for recommendations on how to start preparing your project for production. Leverage the listings under the “Usage” section on each component’s documentation page to support the patterns you'll find therein. And then, when you're ready... ship, ship, ship! We look forward to seeing what you bring to life.
+When you're ready to deploy your app to production, take a look at our <sp-link href="https://github.com/adobe/spectrum-web-components/tree/main/projects/example-project-rollup" target="_blank">Rollup</sp-link> and/or <sp-link href="https://github.com/adobe/spectrum-web-components/tree/main/projects/example-project-webpack" target="_blank">Webpack</sp-link> example projects for recommendations on how to optimize your project for that environment. Leverage the listings under the “Usage” section on each component’s documentation page to support the patterns you'll find therein. And then, when you're ready... ship, ship, ship! We look forward to seeing what you bring to life.
