@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tray",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -30,11 +30,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -43,9 +44,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/modal": "^0.3.5",
-        "@spectrum-web-components/underlay": "^0.6.5",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/modal": "^0.3.6",
+        "@spectrum-web-components/underlay": "^0.6.6",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -54,7 +55,6 @@
     "types": "./src/index.d.ts",
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.js"
     ]
 }

@@ -23,16 +23,6 @@ const config = {
                     selector: '.is-disabled',
                 },
                 {
-                    type: 'boolean',
-                    selector: '.is-focused',
-                    name: 'handle-highlight',
-                },
-                {
-                    type: 'boolean',
-                    selector: '.is-dragged',
-                    name: 'dragging',
-                },
-                {
                     type: 'enum',
                     name: 'variant',
                     values: [
@@ -50,16 +40,8 @@ const config = {
                     name: 'buffer',
                 },
                 {
-                    selector: '.spectrum-Slider-handle',
-                    name: 'handle',
-                },
-                {
                     selector: '.spectrum-Slider-ramp',
                     name: 'ramp',
-                },
-                {
-                    selector: '.spectrum-Slider-input',
-                    name: 'input',
                 },
                 {
                     selector: '.spectrum-Slider-controls',
@@ -83,6 +65,22 @@ const config = {
                 },
             ],
             classes: [
+                {
+                    selector: '.spectrum-Slider-handle',
+                    name: 'handle',
+                },
+                {
+                    selector: '.is-focused',
+                    name: 'handle-highlight',
+                },
+                {
+                    selector: '.is-dragged',
+                    name: 'dragging',
+                },
+                {
+                    selector: '.spectrum-Slider-input',
+                    name: 'input',
+                },
                 {
                     selector: '.spectrum-Slider-track',
                     name: 'track',

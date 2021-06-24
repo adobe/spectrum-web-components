@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/meter",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "publishConfig": {
         "access": "public"
     },
@@ -30,11 +30,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -43,17 +44,17 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/field-label": "^0.5.0",
-        "@spectrum-web-components/shared": "^0.12.4",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/field-label": "^0.5.1",
+        "@spectrum-web-components/shared": "^0.12.5",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@spectrum-css/progressbar": "^1.0.3"
     },
+    "types": "./src/index.d.ts",
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.js"
     ]
 }

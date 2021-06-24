@@ -29,14 +29,26 @@ import { MenuItem } from '@spectrum-web-components/menu';
 Menus are a collection of `<sp-menu-item>`s that can be modified via a `disabled` or `selected` attribute to represent an item in that state.
 
 ```html
-<sp-menu>
+<sp-menu selectable>
     <sp-menu-item>Active Menu Item</sp-menu-item>
     <sp-menu-item disabled>Disabled Menu Item</sp-menu-item>
     <sp-menu-item selected>Selected Menu Item</sp-menu-item>
 </sp-menu>
 ```
 
-### Value
+### Value slot
+
+Content assigned to the `value` slot will be placed at the end of the `<sp-menu-item>`, like values, keyboard shortcuts, etc., based on the current text direction.
+
+```html
+<sp-menu style="width: 200px;">
+    <sp-menu-item>Save<kbd slot="value">⌘S</kbd></sp-menu-item>
+    <sp-menu-item>Completed<span slot="value">47%</apn></sp-menu-item>
+    <sp-menu-item>Activity<sp-link slot="value" href="#">More&nbsp;info</sp-link></sp-menu-item>
+</sp-menu>
+```
+
+### Value attribute
 
 When displayed as a descendent of an element that manages selection (e.g. `<sp-action-menu>`, `<sp-picker>`, `<sp-split-button>`, etc.), an `<sp-menu-item>` will represent the "selected" value of that ancestor when its `value` attribute or the trimmed `textContent` (represeted by `el.itemText`) matches the `value` of the ancestor element.
 

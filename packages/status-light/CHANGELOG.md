@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.7.5...@spectrum-web-components/status-light@0.8.0) (2021-06-16)
+
+### Features
+
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+
 ## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.7.4...@spectrum-web-components/status-light@0.7.5) (2021-05-12)
 
 **Note:** Version bump only for package @spectrum-web-components/status-light

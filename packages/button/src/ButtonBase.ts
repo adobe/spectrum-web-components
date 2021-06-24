@@ -189,10 +189,17 @@ export class ButtonBase extends LikeAnchor(
 
     private manageAnchor(): void {
         if (this.href && this.href.length > 0) {
-            this.removeAttribute('role');
+            if (this.getAttribute('role') === 'button') {
+                this.setAttribute('role', 'link');
+            }
             this.removeEventListener('click', this.shouldProxyClick);
-        } else if (!this.hasAttribute('role')) {
-            this.setAttribute('role', 'button');
+        } else {
+            if (
+                !this.hasAttribute('role') ||
+                this.getAttribute('role') === 'link'
+            ) {
+                this.setAttribute('role', 'button');
+            }
             this.addEventListener('click', this.shouldProxyClick);
         }
     }

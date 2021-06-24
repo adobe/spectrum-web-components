@@ -25,6 +25,10 @@ governing permissions and limitations under the License.
 
 /* End work around. */
 
+:host(:focus) {
+    outline: none;
+}
+
 :host([disabled]) {
     pointer-events: none;
 }

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/overlay",
-    "version": "0.11.7",
+    "version": "0.11.8",
     "publishConfig": {
         "access": "public"
     },
@@ -34,12 +34,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "/sync/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -49,10 +49,10 @@
     ],
     "dependencies": {
         "@popperjs/core": "^2.2.2",
-        "@spectrum-web-components/action-button": "^0.5.1",
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/shared": "^0.12.4",
-        "@spectrum-web-components/theme": "^0.8.8",
+        "@spectrum-web-components/action-button": "^0.5.2",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/shared": "^0.12.5",
+        "@spectrum-web-components/theme": "^0.8.9",
         "popper-max-size-modifier": "^0.2.0",
         "tslib": "^2.0.0"
     },
@@ -60,12 +60,8 @@
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [
         "./active-overlay.js",
-        "./active-overlay.ts",
         "./overlay-trigger.js",
-        "./overlay-trigger.ts",
         "./sync/overlay-trigger.js",
-        "./sync/overlay-trigger.ts",
-        "./stories/overlay-story-components.js",
-        "./stories/overlay-story-components.ts"
+        "./stories/overlay-story-components.js"
     ]
 }

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/number-field",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "publishConfig": {
         "access": "public"
     },
@@ -30,11 +30,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -44,21 +45,20 @@
     ],
     "dependencies": {
         "@internationalized/number": "^3.0.0",
-        "@spectrum-web-components/action-button": "^0.5.1",
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/icon": "^0.9.6",
-        "@spectrum-web-components/icons-ui": "^0.6.6",
-        "@spectrum-web-components/textfield": "^0.8.8",
+        "@spectrum-web-components/action-button": "^0.5.2",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/icon": "^0.9.7",
+        "@spectrum-web-components/icons-ui": "^0.6.7",
+        "@spectrum-web-components/textfield": "^0.8.9",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@formatjs/intl-numberformat": "^7.1.0",
+        "@formatjs/intl-numberformat": "^7.1.4",
         "@spectrum-css/stepper": "^3.0.3"
     },
     "types": "./src/index.d.ts",
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.js"
     ]
 }

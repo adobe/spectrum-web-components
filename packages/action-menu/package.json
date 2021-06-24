@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-menu",
-    "version": "0.10.1",
+    "version": "0.10.2",
     "publishConfig": {
         "access": "public"
     },
@@ -30,11 +30,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -43,19 +44,18 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.5.1",
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/icon": "^0.9.6",
-        "@spectrum-web-components/icons-workflow": "^0.6.6",
-        "@spectrum-web-components/menu": "^0.8.7",
-        "@spectrum-web-components/picker": "^0.5.1",
-        "@spectrum-web-components/shared": "^0.12.4",
+        "@spectrum-web-components/action-button": "^0.5.2",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/icon": "^0.9.7",
+        "@spectrum-web-components/icons-workflow": "^0.6.7",
+        "@spectrum-web-components/menu": "^0.8.8",
+        "@spectrum-web-components/picker": "^0.5.2",
+        "@spectrum-web-components/shared": "^0.12.5",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.js"
     ]
 }

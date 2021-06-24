@@ -35,6 +35,7 @@ import {
     setUserAgent,
 } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { ProvideLang } from '@spectrum-web-components/theme';
 
 async function getElFrom(test: TemplateResult): Promise<NumberField> {
     const wrapped = await fixture<HTMLDivElement>(html`
@@ -92,6 +93,7 @@ describe('NumberField', () => {
                 .polyfilled
         ) {
             await import('@formatjs/intl-numberformat/locale-data/en.js');
+            await import('@formatjs/intl-numberformat/locale-data/fr.js');
         }
     });
     it('loads default number-field accessibly', async () => {
@@ -100,19 +102,50 @@ describe('NumberField', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('receives input', async () => {
-        const el = await getElFrom(Default({ value: 1337 }));
-        expect(el.formattedValue).to.equal('1,337');
-        expect(el.valueAsString).to.equal('1337');
-        expect(el.value).to.equal(1337);
-        el.focus();
-        await sendKeys({ type: '7331' });
-        await elementUpdated(el);
-        await sendKeys({ press: 'Enter' });
-        await elementUpdated(el);
-        expect(el.formattedValue).to.equal('13,377,331');
-        expect(el.valueAsString).to.equal('13377331');
-        expect(el.value).to.equal(13377331);
+    describe('receives input', () => {
+        it('without language context', async () => {
+            const el = await getElFrom(Default({ value: 1337 }));
+            expect(el.formattedValue).to.equal('1,337');
+            expect(el.valueAsString).to.equal('1337');
+            expect(el.value).to.equal(1337);
+            el.focus();
+            await sendKeys({ type: '7331' });
+            await elementUpdated(el);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('13,377,331');
+            expect(el.valueAsString).to.equal('13377331');
+            expect(el.value).to.equal(13377331);
+        });
+        it('with language context', async () => {
+            const lang = 'fr';
+            const langResolvers: ProvideLang['callback'][] = [];
+            const createLangResolver = (
+                event: CustomEvent<ProvideLang>
+            ): void => {
+                langResolvers.push(event.detail.callback);
+                resolveLanguage();
+            };
+            const resolveLanguage = (): void => {
+                langResolvers.forEach((resolver) => resolver(lang));
+            };
+            const el = await getElFrom(html`
+                <div @sp-language-context=${createLangResolver}>
+                    ${Default({ value: 1337 })}
+                </div>
+            `);
+            expect(el.formattedValue).to.equal('1 337');
+            expect(el.valueAsString).to.equal('1337');
+            expect(el.value).to.equal(1337);
+            el.focus();
+            await sendKeys({ type: '7331' });
+            await elementUpdated(el);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('13 377 331');
+            expect(el.valueAsString).to.equal('13377331');
+            expect(el.value).to.equal(13377331);
+        });
     });
     describe('Increments', () => {
         let el: NumberField;
@@ -191,7 +224,7 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
-            el.dispatchEvent(new WheelEvent('wheel', { deltaY: 1 }));
+            el.dispatchEvent(new WheelEvent('wheel', { deltaY: 100 }));
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('1');
             expect(el.valueAsString).to.equal('1');
@@ -275,7 +308,7 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('0');
             expect(el.valueAsString).to.equal('0');
             expect(el.value).to.equal(0);
-            el.dispatchEvent(new WheelEvent('wheel', { deltaY: -1 }));
+            el.dispatchEvent(new WheelEvent('wheel', { deltaY: -100 }));
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('-1');
             expect(el.valueAsString).to.equal('-1');
@@ -291,17 +324,9 @@ describe('NumberField', () => {
             changeSpy.resetHistory();
             el = await getElFrom(Default({ value: 50 }));
             el.addEventListener('input', (event: Event) => {
-                console.log(
-                    'input event',
-                    (event.target as NumberField)?.value
-                );
                 inputSpy((event.target as NumberField)?.value);
             });
             el.addEventListener('change', (event: Event) => {
-                console.log(
-                    'change event',
-                    (event.target as NumberField)?.value
-                );
                 changeSpy((event.target as NumberField)?.value);
             });
         });
@@ -340,6 +365,7 @@ describe('NumberField', () => {
                 currencyDisplay: 'code',
                 currencySign: 'accounting',
             };
+            await elementUpdated(el);
             el.value = 45;
             expect(el.value).to.equal(45);
             el.focus();
@@ -877,6 +903,11 @@ describe('NumberField', () => {
             expect(el.valueAsString).to.equal('2');
             expect(el.value).to.equal(2);
             el.value = 11;
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('7');
+            expect(el.valueAsString).to.equal('7');
+            expect(el.value).to.equal(7);
+            el.value = 27;
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('7');
             expect(el.valueAsString).to.equal('7');

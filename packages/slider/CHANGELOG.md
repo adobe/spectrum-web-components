@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.0...@spectrum-web-components/slider@0.10.1) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.9.7...@spectrum-web-components/slider@0.10.0) (2021-06-11)
+
+### Bug Fixes
+
+-   **slider:** apply "handle.highlight = true" when using the keyboard to interact with handles ([94e6349](https://github.com/adobe/spectrum-web-components/commit/94e6349a7750b43c455377cb096a24072d668056))
+-   **slider:** work around Spectrum CSS bug in variant="range" styling ([e5810a9](https://github.com/adobe/spectrum-web-components/commit/e5810a9c8304f90a2d6f78ea9f1c911fb37d037f))
+
+### Features
+
+-   multi-handle slider implementation ([8d5a743](https://github.com/adobe/spectrum-web-components/commit/8d5a74309ec171107a9504695216cb90abe39023)), closes [#1385](https://github.com/adobe/spectrum-web-components/issues/1385)
+
 ## [0.9.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.9.6...@spectrum-web-components/slider@0.9.7) (2021-06-07)
 
 ### Bug Fixes

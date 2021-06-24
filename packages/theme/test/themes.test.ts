@@ -12,15 +12,13 @@ governing permissions and limitations under the License.
 
 import '../sp-theme.js';
 import '../src/themes.js';
-import { Theme } from '../';
+import { Theme, ThemeFragmentMap } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
-
-type TestableTheme = {
-    hasAdoptedStyles: boolean;
-};
+import { css } from '@spectrum-web-components/base';
 
 type TestableThemeConstructor = {
     instances: Set<Theme>;
+    themeFragmentsByKind: ThemeFragmentMap;
 };
 
 describe('Themes', () => {
@@ -112,6 +110,47 @@ describe('Medium', () => {
     });
 });
 
+describe('App styles', () => {
+    it('applies app fragments', async () => {
+        const el = await fixture<Theme>(
+            html`
+                <sp-theme color="light">
+                    <style>
+                        div {
+                            padding: var(--app-padding);
+                        }
+                    </style>
+                    <div></div>
+                </sp-theme>
+            `
+        );
+        const div = el.querySelector('div') as HTMLDivElement;
+
+        await elementUpdated(el);
+
+        const preStylesDiv = getComputedStyle(div);
+        expect(preStylesDiv.paddingBlockStart).to.equal('0px');
+
+        Theme.registerThemeFragment(
+            'app',
+            'app',
+            css`
+                :host {
+                    --app-padding: 10px;
+                }
+            `
+        );
+        await elementUpdated(el);
+
+        const postStylesDiv = getComputedStyle(div);
+        expect(postStylesDiv.paddingBlockStart).to.equal('10px');
+
+        ((Theme as unknown) as TestableThemeConstructor).themeFragmentsByKind.delete(
+            'app'
+        );
+    });
+});
+
 describe('Setting attributes', () => {
     it('loads', async () => {
         const el = await fixture<Theme>(
@@ -123,34 +162,57 @@ describe('Setting attributes', () => {
         await elementUpdated(el);
 
         expect(el).to.not.be.undefined;
-        expect(
-            ((el as unknown) as TestableTheme).hasAdoptedStyles,
-            'Color with default'
-        ).to.be.true;
+        expect(el.hasAttribute('scale')).to.be.false;
+
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(2);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(2);
+        }
+
+        await elementUpdated(el);
 
         // Invalid initial value falls back to default
         el.setAttribute('scale', 'fish');
         expect(el.getAttribute('scale')).to.equal('medium');
-        expect(
-            ((el as unknown) as TestableTheme).hasAdoptedStyles,
-            'Color with default, afer invalid scale'
-        ).to.be.true;
+
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(2);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(2);
+        }
 
         el.color = 'dark';
         el.scale = 'medium';
+
+        await elementUpdated(el);
         expect(el.getAttribute('color')).to.equal('dark');
         expect(el.getAttribute('scale')).to.equal('medium');
-        expect(
-            ((el as unknown) as TestableTheme).hasAdoptedStyles,
-            'Both as properties'
-        ).to.be.true;
+
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length, 'all').to.equal(3);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(3);
+        }
 
         // Invalid second + value fallsback to previous
         el.setAttribute('color', 'fish');
+
+        await elementUpdated(el);
         expect(el.getAttribute('color')).to.equal('dark');
-        expect(
-            ((el as unknown) as TestableTheme).hasAdoptedStyles,
-            'Both after invalid value fallback'
-        ).to.be.true;
+
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length, 'last').to.equal(3);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(3);
+        }
     });
 });

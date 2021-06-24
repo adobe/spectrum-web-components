@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/story-decorator",
-    "version": "0.3.9",
+    "version": "0.3.11",
     "publishConfig": {
         "access": "public"
     },
@@ -31,11 +31,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.js",
-        "*.js.map",
-        "*.ts",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -44,13 +45,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/field-label": "^0.5.0",
-        "@spectrum-web-components/menu": "^0.8.7",
-        "@spectrum-web-components/overlay": "^0.11.7",
-        "@spectrum-web-components/picker": "^0.5.1",
-        "@spectrum-web-components/switch": "^0.7.8",
-        "@spectrum-web-components/theme": "^0.8.8",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/field-label": "^0.5.1",
+        "@spectrum-web-components/menu": "^0.8.8",
+        "@spectrum-web-components/overlay": "^0.11.8",
+        "@spectrum-web-components/picker": "^0.5.2",
+        "@spectrum-web-components/switch": "^0.7.9",
+        "@spectrum-web-components/theme": "^0.8.9",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.10...@spectrum-web-components/story-decorator@0.3.11) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.9...@spectrum-web-components/story-decorator@0.3.10) (2021-06-11)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
 ## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.8...@spectrum-web-components/story-decorator@0.3.9) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/story-decorator

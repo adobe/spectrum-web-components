@@ -149,11 +149,13 @@ export class ActiveOverlay extends SpectrumElement {
     @property({ reflect: true })
     public placement?: Placement;
     @property({ attribute: false })
-    public color?: Color;
+    public theme: {
+        color?: Color;
+        scale?: Scale;
+        lang?: string;
+    } = {};
     @property({ attribute: false })
     public receivesFocus?: 'auto';
-    @property({ attribute: false })
-    public scale?: Scale;
 
     public tabbingAway = false;
     private originalPlacement?: Placement;
@@ -181,7 +183,7 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     private get hasTheme(): boolean {
-        return !!this.color || !!this.scale;
+        return !!this.theme.color || !!this.theme.scale || !!this.theme.lang;
     }
 
     public offset = 6;
@@ -345,8 +347,7 @@ export class ActiveOverlay extends SpectrumElement {
         this.placement = detail.placement;
         this.offset = detail.offset;
         this.interaction = detail.interaction;
-        this.color = detail.theme.color;
-        this.scale = detail.theme.scale;
+        this.theme = detail.theme;
         this.receivesFocus = detail.receivesFocus;
     }
 
@@ -476,9 +477,13 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     public renderTheme(content: TemplateResult): TemplateResult {
-        const { color, scale } = this;
+        const { color, scale, lang } = this.theme;
         return html`
-            <sp-theme color=${ifDefined(color)} scale=${ifDefined(scale)}>
+            <sp-theme
+                color=${ifDefined(color)}
+                scale=${ifDefined(scale)}
+                lang=${ifDefined(lang)}
+            >
                 ${content}
             </sp-theme>
         `;

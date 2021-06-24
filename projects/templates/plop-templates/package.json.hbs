@@ -31,11 +31,12 @@
     },
     "customElementsManifest": "custom-elements.json",
     "files": [
-        "custom-elements.json",
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "!test/",
+        "!stories/",
+        "custom-elements.json"
     ],
     "keywords": [
         "spectrum css",
@@ -48,7 +49,6 @@
     },
     "types": "./src/index.d.ts",
     "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.js"
     ]
 }

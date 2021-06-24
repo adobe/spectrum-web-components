@@ -13,6 +13,7 @@
     },
     "rules": {
         "no-debugger": 2,
+        "no-console": ["error", { "allow": ["warn", "error"] }],
         "import/extensions": ["error", "ignorePackages", { "ts": "never" }],
         "import/prefer-default-export": "off",
         "spectrum-web-components/prevent-argument-names": [
@@ -42,5 +43,13 @@
             }
         ]
     },
-    "extends": ["plugin:prettier/recommended", "plugin:lit-a11y/recommended"]
+    "extends": ["plugin:prettier/recommended", "plugin:lit-a11y/recommended"],
+    "overrides": [
+        {
+            "files": ["tasks/*"],
+            "rules": {
+                "no-console": ["off"]
+            }
+        }
+    ]
 }

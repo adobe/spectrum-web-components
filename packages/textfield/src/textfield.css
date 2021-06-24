@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 @import './spectrum-textfield.css';
 
-:host([grows]) #input {
+:host([grows]) .input {
     position: absolute;
     top: 0;
     left: 0;
@@ -31,18 +31,10 @@ governing permissions and limitations under the License.
         --spectrum-textfield-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
-    padding: 3px
-        var(
-            --spectrum-textfield-padding-x,
-            var(--spectrum-global-dimension-size-150)
-        )
-        5px
-        calc(
-            var(
-                    --spectrum-textfield-padding-x,
-                    var(--spectrum-global-dimension-size-150)
-                ) - 1px
-        );
+    padding: var(--spectrum-textarea-padding-top)
+        var(--spectrum-textarea-padding-right)
+        var(--spectrum-textarea-padding-bottom)
+        calc(var(--spectrum-textarea-padding-left) - 1px);
     text-indent: 0;
     width: 100%;
     vertical-align: top;

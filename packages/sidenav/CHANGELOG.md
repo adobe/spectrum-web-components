@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.2...@spectrum-web-components/sidenav@0.10.3) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
 ## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.1...@spectrum-web-components/sidenav@0.10.2) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/sidenav

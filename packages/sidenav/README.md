@@ -7,6 +7,8 @@ prioritize content or features based on your users’ needs in a way that
 maintains clear, persistent visibility. Use side navigation within the context
 of larger elements and mechanisms within the app frame.
 
+`<sp-sidenav>` elements accept both `<sp-sidenav-item>` and `<sp-sidenav-heading>` elements as children in order to construct a hierarchy of navigation elements. [`<sp-sidenav-item>`](./components/sidenav-item) elements will place themselves as a togglable child of their `<sp-sidenav>` element parent. `<sp-sidenav-heading>` elements will create visible structure by grouping their child `<sp-sidenav-item>` children under a non-interactive heading.
+
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/sidenav?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/sidenav)
@@ -103,7 +105,6 @@ will send the user to the location of the item.
 ## Icon
 
 ```html
-<sp-icons-medium></sp-icons-medium>
 <sp-sidenav>
     <sp-sidenav-item value="Section Title 1" label="Section Title 1">
         <sp-icon-star slot="icon"></sp-icon-star>

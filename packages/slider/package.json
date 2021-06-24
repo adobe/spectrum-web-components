@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/slider",
-    "version": "0.9.7",
+    "version": "0.10.1",
     "publishConfig": {
         "access": "public"
     },
@@ -24,17 +24,20 @@
         "./src/*": "./src/*",
         "./package.json": "./package.json",
         "./sp-slider": "./sp-slider.js",
-        "./sp-slider.js": "./sp-slider.js"
+        "./sp-slider.js": "./sp-slider.js",
+        "./sp-slider-handle": "./sp-slider-handle.js",
+        "./sp-slider-handle.js": "./sp-slider-handle.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -43,8 +46,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/shared": "^0.12.4",
+        "@internationalized/number": "^3.0.0",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/shared": "^0.12.5",
+        "@spectrum-web-components/theme": "^0.8.9",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -53,7 +58,6 @@
     "types": "./src/index.d.ts",
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.js"
     ]
 }

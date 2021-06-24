@@ -40,7 +40,7 @@ declare global {
     }
 }
 
-type FragmentType = 'color' | 'scale' | 'core';
+type FragmentType = 'color' | 'scale' | 'core' | 'app';
 type SettableFragmentTypes = 'color' | 'scale';
 type FragmentMap = Map<string, { name: string; styles: CSSResult }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
@@ -48,26 +48,30 @@ export type Color = 'light' | 'lightest' | 'dark' | 'darkest';
 export type Scale = 'medium' | 'large';
 const ScaleValues = ['medium', 'large'];
 const ColorValues = ['light', 'lightest', 'dark', 'darkest'];
-type FragmentName = Color | Scale | 'core';
+type FragmentName = Color | Scale | 'core' | 'app';
 
 export interface ThemeData {
     color?: Color;
     scale?: Scale;
+    lang?: string;
 }
 
 type ThemeKindProvider = {
     [P in SettableFragmentTypes]: Color | Scale | '';
 };
 
+export interface ProvideLang {
+    callback: (lang: string) => void;
+}
+
 export class Theme extends HTMLElement implements ThemeKindProvider {
-    private hasAdoptedStyles = false;
     private static themeFragmentsByKind: ThemeFragmentMap = new Map();
     private static defaultFragments: Set<FragmentName> = new Set(['core']);
     private static templateElement?: HTMLTemplateElement;
     private static instances: Set<Theme> = new Set();
 
     static get observedAttributes(): string[] {
-        return ['color', 'scale'];
+        return ['color', 'scale', 'lang'];
     }
 
     protected attributeChangedCallback(
@@ -82,11 +86,13 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.color = value as Color;
         } else if (attrName === 'scale') {
             this.scale = value as Scale;
+        } else if (attrName === 'lang' && !!value) {
+            this.lang = value;
+            this._provideContext();
         }
     }
 
     private requestUpdate(): void {
-        this.hasAdoptedStyles = false;
         if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
             window.ShadyCSS.styleElement(this);
         } else {
@@ -95,10 +101,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     public shadowRoot!: ShadowRoot;
-
-    get core(): 'core' {
-        return 'core';
-    }
 
     private _color: Color | '' = '';
 
@@ -160,10 +162,20 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             const kindFragments = Theme.themeFragmentsByKind.get(
                 kind
             ) as FragmentMap;
-            const { [kind]: name } = this;
-            const currentStyles = kindFragments.get(name);
-            if (currentStyles) {
-                acc.push(currentStyles.styles);
+            const addStyles = (
+                name: FragmentName,
+                kind?: FragmentType
+            ): void => {
+                const currentStyles = kindFragments.get(name);
+                if (currentStyles && (!kind || this.hasAttribute(kind))) {
+                    acc.push(currentStyles.styles);
+                }
+            };
+            if (kind === 'app' || kind === 'core') {
+                addStyles(kind);
+            } else {
+                const { [kind]: name } = this;
+                addStyles(<FragmentName>name, kind);
             }
             return acc;
         }, [] as CSSResult[]);
@@ -188,6 +200,20 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             'sp-query-theme',
             this.onQueryTheme as EventListener
         );
+        this.addEventListener(
+            'sp-language-context',
+            this._handleContextPresence as EventListener
+        );
+        this.updateComplete = this.__createDeferredPromise();
+    }
+
+    public updateComplete!: Promise<void>;
+    private __resolve!: () => void;
+
+    private __createDeferredPromise(): Promise<void> {
+        return new Promise((resolve) => {
+            this.__resolve = resolve;
+        });
     }
 
     private onQueryTheme(event: CustomEvent<ThemeData>): void {
@@ -198,6 +224,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         const { detail: theme } = event;
         theme.color = this.color || undefined;
         theme.scale = this.scale || undefined;
+        theme.lang =
+            this.lang || document.documentElement.lang || navigator.language;
     }
 
     protected connectedCallback(): void {
@@ -231,7 +259,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 !(dirParent instanceof Theme)
             ) {
                 dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
-                dirParent.parentNode || // DOM Element detected
+                    dirParent.parentNode || // DOM Element detected
                     (dirParent as ShadowRoot).host) as
                     | HTMLElement
                     | DocumentFragment
@@ -260,21 +288,20 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     private trackedChildren: Set<HTMLElement> = new Set();
 
-    private shouldAdoptStyles(): void {
-        /* c8 ignore next 3 */
-        if (!this.hasAdoptedStyles) {
-            this.adoptStyles();
-        }
-    }
+    private _updateRequested = false;
 
-    private get expectedFragments(): number {
-        // color, scale and core
-        return 3;
+    private async shouldAdoptStyles(): Promise<void> {
+        if (!this._updateRequested) {
+            this.updateComplete = this.__createDeferredPromise();
+            this._updateRequested = true;
+            this._updateRequested = await false;
+            this.adoptStyles();
+            this.__resolve();
+        }
     }
 
     protected adoptStyles(): void {
         const styles = this.styles; // No test coverage on Edge
-        if (styles.length < this.expectedFragments) return;
 
         // There are three separate cases here based on Shadow DOM support.
         // (1) shadowRoot polyfilled: use ShadyCSS
@@ -324,7 +351,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 this.shadowRoot.appendChild(style);
             });
         }
-        this.hasAdoptedStyles = true;
     }
 
     static registerThemeFragment(
@@ -341,6 +367,29 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         fragmentMap.set(name, { name, styles });
         Theme.instances.forEach((instance) => instance.shouldAdoptStyles());
+    }
+
+    private _contextConsumers = new Map<HTMLElement, ProvideLang['callback']>();
+
+    private _provideContext(): void {
+        this._contextConsumers.forEach((consume) => consume(this.lang));
+    }
+
+    private _handleContextPresence(event: CustomEvent<ProvideLang>): void {
+        const target = event.composedPath()[0] as HTMLElement;
+        if (this._contextConsumers.has(target)) {
+            this._contextConsumers.delete(target);
+        } else {
+            this._contextConsumers.set(target, event.detail.callback);
+            const callback = this._contextConsumers.get(target);
+            if (callback) {
+                callback(
+                    this.lang ||
+                        document.documentElement.lang ||
+                        navigator.language
+                );
+            }
+        }
     }
 }
 

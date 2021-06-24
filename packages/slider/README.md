@@ -81,6 +81,47 @@ import { Slider } from '@spectrum-web-components/slider';
 <sp-slider label="Slider Label - Disabled" variant="ramp" disabled></sp-slider>
 ```
 
+## Advanced normalization
+
+By default, `sp-slider` assumes a linear scale between the `min` and `max` values.
+For advanced applications, it is sometimes necessary to specify a custom
+"normalization."
+
+Normalization is the process of converting a slider to a value between 0 and 1 where
+0 represents the minimum and 1 represents the maximum. See the <a href="storybook/index.html?path=/story/slider--three-handles-complex" target="_blank">"Three Handles Complex" example in the playground</a>.
+
+## Labels and Formatting
+
+An `<sp-slider>` or `<sp-slider-handle>` element will process its numeric value with `new Intl.NumberFormat(this.resolvedLanguage, this.formatOptions).format(this.value)` in order to prepare it for visual delivery in the input. In order to customize this processing supply your own `Intl.NumberFormatOptions` via the `formatOptions` property, or `format-options` attribute as seen below.
+
+`this.resolvedLanguage` represents the language in which the `<sp-slider>` or `<sp-slider-handle>` element is currently being delivered. By default, this value will represent the language established by the `lang` attribute on the root `<html>` element while falling back to `navigator.language` when that is not present. This value can be customized via a language context provided by a parent element that listens for the `sp-language-context` event and supplies update language settings to the `callback` function contained therein. Applications leveraging the [`<sp-theme>`](./components/theme) element to manage the visual delivery or text direcdirectiontion of their content will be also be provided a reactive context for supplying language information to its descendants.
+
+```html
+<sp-slider
+    min="0"
+    max="1"
+    step="0.01"
+    value="0.5"
+    label="Slider Label"
+    format-options='{
+        "style": "percent"
+    }'
+></sp-slider>
+```
+
+More advanced formatting is avialable by specifying a formatting function to
+the `getAriaHandleText` property on an `sp-slider` or `sp-slider-handle`. Or,
+for a multi-handle slider, you can format the combined value label for all
+handles by passing a formatting function to the `getAriaValueText` property
+on the parent `sp-slider`.
+
+You can suppress the value label altogether using the `hide-value-label`
+attribute.
+
+```html
+<sp-slider label="No value label" hide-value-label></sp-slider>
+```
+
 ## Events
 
 Like the `<input type="range">` element after which the `<sp-slider>` is fashioned it will dispatch `input` events in a stream culminating with a `change` event (representing the final comit of the `value` to the element) once the user has discontinued with the element. Both other these events can access the `value` of their dispatching target via `event.target.value`. In this way a steaming listener patters similar to the following can prove useful:

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-area",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "publishConfig": {
         "access": "public"
     },
@@ -30,11 +30,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -44,16 +45,16 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/color-handle": "^0.1.4",
+        "@spectrum-web-components/base": "^0.4.4",
+        "@spectrum-web-components/color-handle": "^0.1.5",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
         "@spectrum-css/colorarea": "^1.0.2"
     },
+    "types": "./src/index.d.ts",
     "customElementsManifest": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.js"
     ]
 }

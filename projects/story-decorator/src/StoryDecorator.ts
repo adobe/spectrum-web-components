@@ -67,7 +67,7 @@ const reduceMotionProperties = css`
 ActiveOverlay.prototype.renderTheme = function (
     content: TemplateResult
 ): TemplateResult {
-    const { color, scale } = this;
+    const { color, scale, lang } = this.theme;
     return html`
         ${window.__swc_hack_knobs__.defaultReduceMotion
             ? html`
@@ -78,7 +78,11 @@ ActiveOverlay.prototype.renderTheme = function (
                   </style>
               `
             : html``}
-        <sp-theme color=${ifDefined(color)} scale=${ifDefined(scale)}>
+        <sp-theme
+            color=${ifDefined(color)}
+            scale=${ifDefined(scale)}
+            lang=${ifDefined(lang)}
+        >
             ${content}
         </sp-theme>
     `;
@@ -193,6 +197,14 @@ export class StoryDecorator extends SpectrumElement {
         }
     }
 
+    protected handleKeydown(event: KeyboardEvent): void {
+        const path = event.composedPath();
+        const hasInput = path.some((node) => node instanceof HTMLInputElement);
+        if (hasInput) {
+            event.stopPropagation();
+        }
+    }
+
     protected render(): TemplateResult {
         return html`
             <sp-theme
@@ -200,6 +212,7 @@ export class StoryDecorator extends SpectrumElement {
                 scale=${this.scale}
                 dir=${this.direction}
                 part="container"
+                @keydown=${this.handleKeydown}
             >
                 <slot @slotchange=${this.checkReady}></slot>
                 ${this.screenshot ? nothing : this.manageTheme}
