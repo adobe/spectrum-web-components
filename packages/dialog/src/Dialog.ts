@@ -174,7 +174,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
         `;
     }
 
-    private shouldManageTabOrderForScrolling = (): void => {
+    public shouldManageTabOrderForScrolling = (): void => {
         const { offsetHeight, scrollHeight } = this.contentElement;
         if (offsetHeight < scrollHeight) {
             this.contentElement.tabIndex = 0;

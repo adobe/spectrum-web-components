@@ -18,6 +18,7 @@ import {
     CSSResultArray,
     query,
     ifDefined,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/underlay/sp-underlay.js';
@@ -235,5 +236,13 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 </sp-dialog>
             </div>
         `;
+    }
+
+    protected updated(changes: PropertyValues<this>): void {
+        if (changes.has('open') && this.open) {
+            this.dialog.updateComplete.then(() => {
+                this.dialog.shouldManageTabOrderForScrolling();
+            });
+        }
     }
 }
