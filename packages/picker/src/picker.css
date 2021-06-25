@@ -75,3 +75,21 @@ sp-popover {
         var(--spectrum-alias-icon-color-focus)
     );
 }
+
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+:host([dir='ltr']) #label.visually-hidden + .picker {
+    margin-left: auto;
+}
+
+:host([dir='rtl']) #label.visually-hidden + .picker {
+    margin-right: auto;
+}

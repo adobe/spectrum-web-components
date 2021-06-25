@@ -45,6 +45,7 @@ import {
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
+import { iconsOnly } from '../stories/picker.stories.js';
 
 const isMenuActiveElement = function (): boolean {
     return document.activeElement instanceof Menu;
@@ -198,12 +199,10 @@ describe('Picker', () => {
         expect(
             findAccessibilityNode<NamedNode>(
                 snapshot,
-                (node) =>
-                    node.name ===
-                    'Where do you live? Select a Country with a very long label, too long in fact'
+                (node) => node.name === 'Where do you live?'
             ),
             '`name` is the label text'
-        );
+        ).to.not.be.null;
 
         el.value = 'option-2';
         await elementUpdated(el);
@@ -217,7 +216,42 @@ describe('Picker', () => {
                 (node) => node.name === 'Where do you live? Select Inverse'
             ),
             '`name` is the label text plus the selected item text'
-        );
+        ).to.not.be.null;
+    });
+
+    it('manages its "name" value in the accessibility tree when [icons-only]', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${iconsOnly({})}</div>
+        `);
+        const el = test.querySelector('sp-picker') as Picker;
+
+        await elementUpdated(el);
+        type NamedNode = { name: string };
+        let snapshot = ((await a11ySnapshot({})) as unknown) as NamedNode & {
+            children: NamedNode[];
+        };
+
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'Choose an action type... Delete'
+            ),
+            '`name` is the label text'
+        ).to.not.be.null;
+
+        el.value = '2';
+        await elementUpdated(el);
+        snapshot = ((await a11ySnapshot({})) as unknown) as NamedNode & {
+            children: NamedNode[];
+        };
+
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'Choose an action type... Copy'
+            ),
+            '`name` is the label text plus the selected item text'
+        ).to.not.be.null;
     });
 
     it('loads accessibly w/ slotted label', async () => {

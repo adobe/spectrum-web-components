@@ -24,3 +24,11 @@ governing permissions and limitations under the License.
 :host([dir='rtl']) ::slotted([slot='value']) {
     margin-right: var(--spectrum-listitem-icon-gap);
 }
+
+:host([dir='ltr']) [icon-only]::slotted(:last-of-type) {
+    margin-right: auto;
+}
+
+:host([dir='rtl']) [icon-only]::slotted(:last-of-type) {
+    margin-left: auto;
+}

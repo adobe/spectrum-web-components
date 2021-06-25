@@ -94,23 +94,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-width: var(--spectrum-picker-disabled-border-size);
     cursor: default;
 }
-:host([dir='ltr']) #button .spectrum-Picker-icon {
+:host([dir='ltr']) #button .icon {
     /* [dir=ltr] .spectrum-Picker .spectrum-Picker-icon */
     margin-right: var(--spectrum-picker-icon-gap);
 }
-:host([dir='rtl']) #button .spectrum-Picker-icon {
+:host([dir='rtl']) #button .icon {
     /* [dir=rtl] .spectrum-Picker .spectrum-Picker-icon */
     margin-left: var(--spectrum-picker-icon-gap);
 }
-.spectrum-Picker-icon {
+.icon {
     /* .spectrum-Picker .spectrum-Picker-icon */
     flex-shrink: 0;
 }
-:host([dir='ltr']) #button #label + .spectrum-Picker-icon {
+:host([dir='ltr']) #button #label + .icon {
     /* [dir=ltr] .spectrum-Picker .spectrum-Picker-label+.spectrum-Picker-icon */
     margin-left: var(--spectrum-picker-icon-gap);
 }
-:host([dir='rtl']) #button #label + .spectrum-Picker-icon {
+:host([dir='rtl']) #button #label + .icon {
     /* [dir=rtl] .spectrum-Picker .spectrum-Picker-label+.spectrum-Picker-icon */
     margin-right: var(--spectrum-picker-icon-gap);
 }
@@ -606,10 +606,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-disabled)
     );
 }
-:host([disabled]) #button .spectrum-Picker-icon,
+:host([disabled]) #button .icon,
 :host([disabled]) #button .picker,
 :host([disabled]) #button .validationIcon,
-#button:disabled .spectrum-Picker-icon,
+#button:disabled .icon,
 #button:disabled .picker,
 #button:disabled .validationIcon {
     /* .spectrum-Picker.is-disabled .spectrum-Picker-icon,
