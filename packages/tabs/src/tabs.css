@@ -44,12 +44,9 @@ governing permissions and limitations under the License.
 
 /*
  * Power scale based indicator transitions
- * Enforce left centric positioning to allow for shared position scripting.
  */
 :host([dir][direction='horizontal']) #selectionIndicator {
     width: 1px;
-    left: 0;
-    right: auto;
 }
 
 /*
@@ -209,4 +206,8 @@ governing permissions and limitations under the License.
         --spectrum-tabs-quiet-selection-indicator-color,
         var(--spectrum-global-color-gray-900)
     );
+}
+
+#selectionIndicator.first-position {
+    transition: none;
 }

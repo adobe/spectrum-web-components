@@ -18,6 +18,7 @@ import {
     TemplateResult,
     PropertyValues,
     SpectrumElement,
+    ifDefined,
 } from '@spectrum-web-components/base';
 import { TopNavItem } from './TopNavItem.js';
 
@@ -30,6 +31,8 @@ declare global {
         };
     }
 }
+
+const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
 /**
  * @element sp-top-nav
@@ -44,10 +47,14 @@ export class TopNav extends SpectrumElement {
     }
 
     @property()
-    public selectionIndicatorStyle = '';
+    public selectionIndicatorStyle = noSelectionStyle;
+
+    @property({ attribute: false })
+    public shouldAnimate = false;
 
     private onClick = (event: Event): void => {
         const target = event.target as TopNavItem;
+        this.shouldAnimate = true;
         this.selectTarget(target);
     };
 
@@ -90,6 +97,9 @@ export class TopNav extends SpectrumElement {
                 <slot @slotchange=${this.onSlotChange}></slot>
                 <div
                     id="selectionIndicator"
+                    class=${ifDefined(
+                        this.shouldAnimate ? undefined : 'first-position'
+                    )}
                     style=${this.selectionIndicatorStyle}
                 ></div>
             </div>
@@ -106,6 +116,12 @@ export class TopNav extends SpectrumElement {
         super.updated(changes);
         if (changes.has('dir')) {
             this.updateSelectionIndicator();
+        }
+        if (
+            !this.shouldAnimate &&
+            typeof changes.get('shouldAnimate') !== 'undefined'
+        ) {
+            this.shouldAnimate = true;
         }
     }
 
@@ -151,7 +167,7 @@ export class TopNav extends SpectrumElement {
                 item.value === window.location.href
         );
         if (!selectedItem) {
-            this.selectionIndicatorStyle = `transform: translateX(0px) scaleX(0) scaleY(0);`;
+            this.selectionIndicatorStyle = noSelectionStyle;
             return;
         }
         await Promise.all([
@@ -163,9 +179,13 @@ export class TopNav extends SpectrumElement {
 
         const width = itemBoundingClientRect.width;
         const offset =
-            itemBoundingClientRect.left - parentBoundingClientRect.left;
+            this.dir === 'ltr'
+                ? itemBoundingClientRect.left - parentBoundingClientRect.left
+                : itemBoundingClientRect.right - parentBoundingClientRect.right;
 
-        this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
+        this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${
+            this.dir === 'ltr' ? width : -1 * width
+        });`;
     };
 
     public connectedCallback(): void {
