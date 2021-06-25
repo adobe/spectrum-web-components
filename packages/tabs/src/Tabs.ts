@@ -38,12 +38,13 @@ declare global {
     }
 }
 
+const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
+
 /**
  * @slot - Child tab elements
  * @attr {Boolean} quiet - The tabs border is a lot smaller
  * @attr {Boolean} compact - The collection of tabs take up less space
  */
-
 export class Tabs extends Focusable {
     public static get styles(): CSSResultArray {
         return [tabStyles];
@@ -68,7 +69,10 @@ export class Tabs extends Focusable {
     public label = '';
 
     @property({ attribute: false })
-    public selectionIndicatorStyle = '';
+    public selectionIndicatorStyle = noSelectionStyle;
+
+    @property({ attribute: false })
+    public shouldAnimate = false;
 
     @property({ reflect: true })
     public get selected(): string {
@@ -144,6 +148,9 @@ export class Tabs extends Focusable {
                 <slot @slotchange=${this.onSlotChange}></slot>
                 <div
                     id="selectionIndicator"
+                    class=${ifDefined(
+                        this.shouldAnimate ? undefined : 'first-position'
+                    )}
                     style=${this.selectionIndicatorStyle}
                     role="presentation"
                 ></div>
@@ -160,7 +167,7 @@ export class Tabs extends Focusable {
         }
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('selected')) {
             if (changes.get('selected')) {
@@ -183,6 +190,12 @@ export class Tabs extends Focusable {
         }
         if (changes.has('dir')) {
             this.updateSelectionIndicator();
+        }
+        if (
+            !this.shouldAnimate &&
+            typeof changes.get('shouldAnimate') !== 'undefined'
+        ) {
+            this.shouldAnimate = true;
         }
     }
 
@@ -248,6 +261,7 @@ export class Tabs extends Focusable {
 
     private onClick = (event: Event): void => {
         const target = event.target as HTMLElement;
+        this.shouldAnimate = true;
         this.selectTarget(target);
         if (this.shouldApplyFocusVisible && event.composedPath()[0] !== this) {
             /* Trick :focus-visible polyfill into thinking keyboard based focus */
@@ -331,7 +345,7 @@ export class Tabs extends Focusable {
     private updateSelectionIndicator = async (): Promise<void> => {
         const selectedElement = this.tabs.find((el) => el.selected);
         if (!selectedElement) {
-            this.selectionIndicatorStyle = `transform: translateX(0px) scaleX(0) scaleY(0);`;
+            this.selectionIndicatorStyle = noSelectionStyle;
             return;
         }
         await Promise.all([
@@ -344,9 +358,14 @@ export class Tabs extends Focusable {
         if (this.direction === 'horizontal') {
             const width = tabBoundingClientRect.width;
             const offset =
-                tabBoundingClientRect.left - parentBoundingClientRect.left;
+                this.dir === 'ltr'
+                    ? tabBoundingClientRect.left - parentBoundingClientRect.left
+                    : tabBoundingClientRect.right -
+                      parentBoundingClientRect.right;
 
-            this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
+            this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${
+                this.dir === 'ltr' ? width : -1 * width
+            });`;
         } else {
             const height = tabBoundingClientRect.height;
             const offset =
