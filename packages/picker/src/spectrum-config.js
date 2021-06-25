@@ -70,10 +70,6 @@ const config = {
             ],
             classes: [
                 {
-                    selector: '.spectrum-Icon',
-                    name: 'icon',
-                },
-                {
                     selector: '.spectrum-Picker-menuIcon',
                     name: 'picker',
                 },
@@ -88,6 +84,10 @@ const config = {
                 {
                     selector: '.spectrum-Picker-validationIcon',
                     name: 'validationIcon',
+                },
+                {
+                    selector: '.spectrum-Picker-icon',
+                    name: 'icon',
                 },
             ],
             ids: [

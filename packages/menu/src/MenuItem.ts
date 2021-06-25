@@ -53,15 +53,25 @@ export class MenuItem extends ActionButton {
     })
     public noWrap = false;
 
-    /**
-     * Hide this getter from web-component-analyzer until
-     * https://github.com/runem/web-component-analyzer/issues/131
-     * has been addressed.
-     *
-     * @private
-     */
-    public get itemText(): string {
-        return (this.textContent || /* c8 ignore next */ '').trim();
+    public get itemChildren(): { icon: Element[]; content: Node[] } {
+        const iconSlot = this.shadowRoot.querySelector(
+            'slot[name="icon"]'
+        ) as HTMLSlotElement;
+        const icon = !iconSlot
+            ? []
+            : iconSlot.assignedElements().map((element) => {
+                  const newElement = element.cloneNode(true) as HTMLElement;
+                  newElement.removeAttribute('slot');
+                  newElement.classList.toggle('icon');
+                  return newElement;
+              });
+        const contentSlot = this.shadowRoot.querySelector(
+            'slot:not([name])'
+        ) as HTMLSlotElement;
+        const content = !contentSlot
+            ? []
+            : contentSlot.assignedNodes().map((node) => node.cloneNode(true));
+        return { icon, content };
     }
 
     protected get buttonContent(): TemplateResult[] {

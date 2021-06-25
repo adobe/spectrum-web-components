@@ -36,6 +36,27 @@ Menus are a collection of `<sp-menu-item>`s that can be modified via a `disabled
 </sp-menu>
 ```
 
+### Icon slot
+
+Content assigned to the `icon` slot will be placed at the beginning of the `<sp-menu-item>`.
+
+```html
+<sp-menu style="width: 200px;">
+    <sp-menu-item>
+        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
+        Save
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
+        Finish
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
+        Review
+    </sp-menu-item>
+</sp-menu>
+```
+
 ### Value slot
 
 Content assigned to the `value` slot will be placed at the end of the `<sp-menu-item>`, like values, keyboard shortcuts, etc., based on the current text direction.

@@ -14,7 +14,8 @@
     "scripts": {
         "analyze": "lit-analyzer \"packages/*/src/**/!(*.css).ts\"",
         "analyze:quick": "lit-analyzer \"packages/*/src/!(*.css).ts\"",
-        "build": "yarn build:css && yarn build:ts:clean && yarn build:decorator && yarn build:compare",
+        "build": "yarn build:css && yarn build:ts && yarn build:decorator && yarn build:compare",
+        "build:clean": "yarn build:css && yarn build:ts:clean && yarn build:decorator && yarn build:compare",
         "build:clear-cache": "rimraf packages/*/lib && rimraf packages/*/tsconfig.tsbuildinfo",
         "build:compare": "tsc --build projects/vrt-compare/tsconfig.json",
         "build:css": "node ./tasks/build-css.js",
@@ -35,7 +36,7 @@
         "docs:start": "yarn docs:analyze && run-p watch:css build:watch \"docs:ts -w\" docs:start:watch",
         "docs:start:watch": "node ./tasks/watch-documentation.js",
         "docs:ts": "tsc --build documentation/tsconfig.json",
-        "get-ready": "yarn build:clear-cache && run-p process-icons process-spectrum && yarn build",
+        "get-ready": "yarn build:clear-cache && run-p process-icons process-spectrum && yarn build:clean",
         "icons": "node ./scripts/process-icons.js && pretty-quick --pattern \"packages/**/*.svg.ts\"",
         "icons:ui": "lerna run --scope @spectrum-web-components/icons-ui build",
         "icons:workflow": "lerna run --scope @spectrum-web-components/icons-workflow build",

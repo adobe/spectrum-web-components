@@ -18,9 +18,9 @@ import {
     PropertyValues,
     query,
     nothing,
-    ifDefined,
     SizedMixin,
     ElementSize,
+    classMap,
 } from '@spectrum-web-components/base';
 
 import pickerStyles from './picker.css.js';
@@ -88,6 +88,9 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
+
+    @property({ type: Boolean, reflect: true, attribute: 'icons-only' })
+    public iconsOnly = false;
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
@@ -297,7 +300,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         // only use `this.offsetWidth` when Standard variant
         const menuWidth = !this.quiet && `${this.offsetWidth}px`;
         if (menuWidth) {
-            popover.style.setProperty('width', menuWidth);
+            popover.style.setProperty('min-width', menuWidth);
         }
     }
 
@@ -308,18 +311,40 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
     }
 
+    protected get selectedItemContent(): {
+        icon: Element[];
+        content: Node[];
+    } {
+        if (!this._selectedItemContent && this.selectedItem) {
+            this._selectedItemContent = this.selectedItem.itemChildren;
+        }
+        return this._selectedItemContent || { icon: [], content: [] };
+    }
+
+    private _selectedItemContent?: {
+        icon: Element[];
+        content: Node[];
+    };
+
+    protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
+        if (this.value && this.selectedItem) {
+            return content;
+        }
+        return html`
+            <slot name="label">${this.label}</slot>
+        `;
+    }
+
     protected get buttonContent(): TemplateResult[] {
+        const labelClasses = {
+            'visually-hidden': this.iconsOnly && !!this.value,
+            placeholder: !this.value,
+        };
         return [
             html`
-                <span
-                    id="label"
-                    class=${ifDefined(this.value ? undefined : 'placeholder')}
-                >
-                    ${this.value && this.selectedItem
-                        ? this.selectedItem.itemText
-                        : html`
-                              <slot name="label">${this.label}</slot>
-                          `}
+                <span id="icon">${this.selectedItemContent.icon}</span>
+                <span id="label" class=${classMap(labelClasses)}>
+                    ${this.renderLabelContent(this.selectedItemContent.content)}
                 </span>
                 ${this.invalid
                     ? html`
@@ -327,7 +352,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                       `
                     : nothing}
                 <sp-icon-chevron100
-                    class="icon picker ${chevronClass[this.size as PickerSize]}"
+                    class="picker ${chevronClass[this.size as PickerSize]}"
                 ></sp-icon-chevron100>
             `,
         ];
@@ -338,7 +363,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             <button
                 aria-haspopup="true"
                 aria-expanded=${this.open ? 'true' : 'false'}
-                aria-labelledby="button label"
+                aria-labelledby="button icon label"
                 id="button"
                 class="button"
                 @blur=${this.onButtonBlur}
@@ -349,6 +374,13 @@ export class PickerBase extends SizedMixin(Focusable) {
                 ${this.buttonContent}
             </button>
         `;
+    }
+
+    protected update(changes: PropertyValues<this>): void {
+        if (changes.has('selectedItem')) {
+            this._selectedItemContent = undefined;
+        }
+        super.update(changes);
     }
 
     protected render(): TemplateResult {

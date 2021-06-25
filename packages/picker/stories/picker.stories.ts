@@ -16,6 +16,9 @@ import '../sp-picker.js';
 import { Picker } from '../';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 import { states } from './states.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '@open-wc/lit-helpers';
@@ -83,6 +86,7 @@ interface StoryArgs {
     invalid?: boolean;
     open?: boolean;
     quiet?: boolean;
+    showText?: boolean;
 }
 
 export const Default = (args: StoryArgs): TemplateResult => {
@@ -143,6 +147,103 @@ export const quiet = (args: StoryArgs): TemplateResult => {
 };
 quiet.args = {
     quiet: true,
+};
+
+export const icons = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-quiet">
+            Choose an action type...
+        </sp-field-label>
+        <sp-picker
+            ...=${spreadProps(args)}
+            id="picker-quiet"
+            @change="${(event: Event): void => {
+                const picker = event.target as Picker;
+                console.log(`Change: ${picker.value}`);
+            }}"
+            label="Pick an action"
+            value="1"
+        >
+            <sp-menu-item value="1">
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+                Edit
+            </sp-menu-item>
+            <sp-menu-item value="2">
+                <sp-icon-copy slot="icon"></sp-icon-copy>
+                Copy
+            </sp-menu-item>
+            <sp-menu-item value="3">
+                <sp-icon-delete slot="icon"></sp-icon-delete>
+                Delete
+            </sp-menu-item>
+        </sp-picker>
+    `;
+};
+
+export const iconValue = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-quiet">
+            Choose an action type...
+        </sp-field-label>
+        <sp-picker
+            ...=${spreadProps(args)}
+            id="picker-quiet"
+            @change="${(event: Event): void => {
+                const picker = event.target as Picker;
+                console.log(`Change: ${picker.value}`);
+            }}"
+            label="Pick an action"
+            icons-only
+            style="--spectrum-picker-width: 100px"
+            value="2"
+        >
+            <sp-menu-item value="1">
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+                Edit
+            </sp-menu-item>
+            <sp-menu-item value="2">
+                <sp-icon-copy slot="icon"></sp-icon-copy>
+                Copy
+            </sp-menu-item>
+            <sp-menu-item value="3">
+                <sp-icon-delete slot="icon"></sp-icon-delete>
+                Delete
+            </sp-menu-item>
+        </sp-picker>
+    `;
+};
+
+export const iconsOnly = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-quiet">
+            Choose an action type...
+        </sp-field-label>
+        <sp-picker
+            ...=${spreadProps(args)}
+            id="picker-quiet"
+            @change="${(event: Event): void => {
+                const picker = event.target as Picker;
+                console.log(`Change: ${picker.value}`);
+            }}"
+            label="Pick an action"
+            icons-only
+            style="--spectrum-picker-width: 100px"
+            value="3"
+        >
+            <sp-menu-item value="1">
+                <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
+            </sp-menu-item>
+            <sp-menu-item value="2">
+                <sp-icon-copy slot="icon" label="Copy"></sp-icon-copy>
+            </sp-menu-item>
+            <sp-menu-item value="3">
+                <sp-icon-delete slot="icon" label="Delete"></sp-icon-delete>
+            </sp-menu-item>
+        </sp-picker>
+    `;
+};
+iconsOnly.args = {
+    open: true,
 };
 
 export const Open = (args: StoryArgs): TemplateResult => {

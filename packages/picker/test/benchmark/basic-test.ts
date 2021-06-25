@@ -269,7 +269,7 @@ const countryList = [
 
 measureFixtureCreation(
     html`
-        <sp-picker>
+        <sp-picker value="Zimbabwe">
             ${countryList.map(
                 (country) => html`
                     <sp-menu-item>${country}</sp-menu-item>
@@ -277,5 +277,5 @@ measureFixtureCreation(
             )}
         </sp-picker>
     `,
-    { numRenders: 1 }
+    { numRenders: 10 }
 );
