@@ -56,7 +56,7 @@
         "@spectrum-css/slider": "^3.0.2"
     },
     "types": "./src/index.d.ts",
-    "customElementsManifest": "custom-elements.json",
+    "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js"
     ]

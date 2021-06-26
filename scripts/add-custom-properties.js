@@ -15,7 +15,13 @@ governing permissions and limitations under the License.
 import path from 'path';
 import fs from 'fs';
 import yargs from 'yargs';
+import globby from 'globby';
 import { hideBin } from 'yargs/helpers';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const projectDir = path.resolve(__dirname, '..');
 const { src } = yargs(hideBin(process.argv)).argv;
 
 async function main() {
@@ -23,40 +29,35 @@ async function main() {
     try {
         let customElementJsonString = fs.readFileSync(inputCEJPath, 'utf8');
         const customElementJson = JSON.parse(customElementJsonString);
-        customElementJson.tags.map((tag) => {
-            const varsPath = tag.path
-                .replace('./../', '')
-                .replace(/sp-[a-z-]*\.d\.ts/, 'src/spectrum-vars.json');
-            try {
-                const vars = fs.readFileSync(varsPath, 'utf8');
-                const varsJSON = JSON.parse(vars);
-                const properties = varsJSON['custom-properties'];
-                const cssProperties = Object.keys(properties).map(
-                    (property) => ({
-                        name: property,
-                        default: properties[property],
-                        type: '',
-                    })
-                );
-                tag.cssProperties = cssProperties;
-                const sortAlpha = (a, b) => {
-                    if (a.name > b.name) {
-                        return 1;
-                    }
-                    if (a.name < b.name) {
-                        return -1;
-                    }
-                    return 0;
-                };
-                tag.attributes && tag.attributes.sort(sortAlpha);
-                tag.properties && tag.properties.sort(sortAlpha);
-                tag.events && tag.events.sort(sortAlpha);
-            } catch (error) {
-                // Toggle the following commented logging for debuggering the processing herein:
-                // console.log('Package level error:', tag.name, error);
+        const customVarsMap = new Map();
+        for await (const path of globby.stream(
+            `${projectDir}/packages/*/src/spectrum-vars.json`
+        )) {
+            const componentName = path.split('packages/')[1].split('/src')[0];
+            const vars = fs.readFileSync(path, 'utf8');
+            const varsJSON = JSON.parse(vars)['custom-properties'];
+            const cssProperties = [];
+            for (const [key, value] of Object.entries(varsJSON)) {
+                cssProperties.push({
+                    name: key,
+                    default: value,
+                });
             }
+            customVarsMap.set(`sp-${componentName}`, cssProperties);
+        }
+        customElementJson.modules.map((jsModule) => {
+            jsModule.declarations.map((declaration) => {
+                const { tagName } = declaration;
+                if (
+                    !declaration.cssProperties &&
+                    tagName &&
+                    customVarsMap.has(tagName)
+                ) {
+                    declaration.cssProperties = customVarsMap.get(tagName);
+                }
+            });
         });
-        customElementJsonString = JSON.stringify(customElementJson);
+        customElementJsonString = JSON.stringify(customElementJson.modules);
         fs.writeFileSync(inputCEJPath, customElementJsonString, {
             encoding: 'utf8',
         });

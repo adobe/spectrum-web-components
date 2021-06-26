@@ -24,7 +24,7 @@ import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-c
 import styles from './accordion-item.css.js';
 
 /**
- * @element sp-accordion
+ * @element sp-accordion-item
  * @slot - The content of the item that is hidden when the item is not open
  */
 export class AccordionItem extends Focusable {

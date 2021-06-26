@@ -11,5 +11,6 @@
     },
     "devDependencies": {
         "plop": "^2.6.0"
-    }
+    },
+    "customElements": "custom-elements.json"
 }
