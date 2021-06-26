@@ -76,6 +76,7 @@
         "@spectrum-css/typography": "^3.0.2",
         "@spectrum-css/vars": "^3.0.2"
     },
+    "customElements": "custom-elements.json",
     "sideEffects": [
         "./*.css"
     ],

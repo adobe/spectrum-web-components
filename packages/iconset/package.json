@@ -45,6 +45,7 @@
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
     "sideEffects": [
         "./src/index.js",
         "./stories/icons-demo.js"

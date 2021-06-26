@@ -53,7 +53,7 @@
         "@spectrum-css/progressbar": "^1.0.3"
     },
     "types": "./src/index.d.ts",
-    "customElementsManifest": "custom-elements.json",
+    "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js"
     ]

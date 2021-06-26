@@ -45,6 +45,7 @@
     "tslib": "^1.11.0",
     "typescript": "^4.0.2"
   },
+  "customElements": "custom-elements.json",
   "prettier": {
     "singleQuote": true,
     "arrowParens": "avoid"

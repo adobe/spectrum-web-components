@@ -59,7 +59,7 @@
         "prettier": "^2.2.1"
     },
     "types": "./src/index.d.ts",
-    "customElementsManifest": "custom-elements.json",
+    "customElements": "custom-elements.json",
     "sideEffects": [
         "./src/index.js",
         "./icons/*"

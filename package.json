@@ -25,9 +25,9 @@
         "build:ts:clean": "node ./tasks/build-packages-clean.js",
         "build:watch": "node ./tasks/watch-packages.js",
         "custom-element-json": "yarn custom-element-json:elements && yarn custom-element-json:icons",
-        "custom-element-json:elements": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,icons-ui,icons-workflow,modal,iconset,shared,styles},example-project-rollup,example-project-webpack,swc-templates}\" -- wca analyze \"*.d.ts\" --format json --outFile custom-elements.json",
-        "custom-element-json:icons": "lerna exec --scope \"@spectrum-web-components/{icons-ui,icons-workflow}\" -- wca analyze \"icons/*.d.ts\" --format json --outFile custom-elements.json",
-        "docs:analyze": "wca analyze \"packages/*/*.d.ts\" --format json --outFile documentation/custom-elements.json",
+        "custom-element-json:elements": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,icons-ui,icons-workflow,modal,iconset,shared,styles},example-project-rollup,example-project-webpack,swc-templates}\" -- cem analyze --globs \"**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/elements/**\" --outdir . --litelement",
+        "custom-element-json:icons": "lerna exec --scope \"@spectrum-web-components/{icons-ui,icons-workflow}\" -- cem analyze --globs \"**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --outdir . --litelement",
+        "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir documentation --litelement",
         "docs:build": "run-p build docs:analyze && yarn docs:ts && run-p docs:build:staging storybook:build",
         "docs:build:production": "node ./tasks/build-documentation-production.js",
         "docs:build:staging": "node ./tasks/build-documentation-staging.js",
@@ -45,7 +45,7 @@
         "lint:css": "stylelint \"packages/**/*.css\"",
         "lint:docs": "eslint -f pretty \"documentation/**/*.ts\"",
         "lint:js": "pretty-quick --pattern \"tasks/**/*.js\" && pretty-quick --pattern \"scripts/**/*.js\"",
-        "lint:packagejson": "pretty-quick --pattern package.json packages/*/package.json projects/*/package.json",
+        "lint:packagejson": "pretty-quick --pattern package.json && pretty-quick --pattern \"packages/*/package.json\" && pretty-quick --pattern \"projects/*/package.json\"",
         "lint:ts": "pretty-quick --pattern \"packages/**/*.ts\" && eslint -f pretty \"packages/**/*.ts\"",
         "lint:versions": "node ./scripts/lint-versions.js",
         "new-package": "cd projects/templates && plop",
@@ -96,6 +96,7 @@
         "@commitlint/cli": "^12.0.1",
         "@commitlint/config-conventional": "^12.0.0",
         "@commitlint/config-lerna-scopes": "^12.0.1",
+        "@custom-elements-manifest/analyzer": "^0.4.12",
         "@open-wc/building-webpack": "^2.13.46",
         "@open-wc/dev-server-hmr": "^0.1.1",
         "@open-wc/lit-helpers": "^0.3.12",
@@ -137,6 +138,7 @@
         "common-tags": "^1.8.0",
         "css-loader": "^5.2.0",
         "cssnano": "^4.1.10",
+        "custom-elements-manifest": "^1.0.0",
         "deepmerge": "^4.0.0",
         "element-closest": "^3.0.1",
         "eslint": "^7.21.0",
@@ -204,7 +206,6 @@
         "ts-loader": "^8.0.0",
         "typescript": "^4.3.2",
         "walker": "^1.0.7",
-        "web-component-analyzer": "^1.1.6",
         "webpack": "^4.41.6",
         "webpack-bundle-analyzer": "^4.3.0",
         "webpack-cli": "^4.3.1",
@@ -216,6 +217,7 @@
     "resolutions": {
         "cssnano/**/postcss-calc": "7.0.0"
     },
+    "customElements": "documentation/custom-elements.json",
     "workspaces": [
         "packages/*",
         "projects/*"
