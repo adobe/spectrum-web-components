@@ -21,7 +21,12 @@ import {
 } from '@spectrum-web-components/base';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
-import { ColorHandle, ColorValue } from '@spectrum-web-components/color-handle';
+import {
+    ColorHandle,
+    ColorValue,
+    extractHueAndSaturationRegExp,
+    replaceHueRegExp,
+} from '@spectrum-web-components/color-handle';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { TinyColor } from '@ctrl/tinycolor';
 
@@ -92,18 +97,16 @@ export class ColorArea extends SpectrumElement {
                 return this._color.toName() || this._color.toRgbString();
             case 'hsl':
                 if (this._format.isString) {
-                    const hueExp = /(^hs[v|va|l|la]\()\d{1,3}/;
                     const hslString = this._color.toHslString();
-                    return hslString.replace(hueExp, `$1${this.hue}`);
+                    return hslString.replace(replaceHueRegExp, `$1${this.hue}`);
                 } else {
                     const { s, l, a } = this._color.toHsl();
                     return { h: this.hue, s, l, a };
                 }
             case 'hsv':
                 if (this._format.isString) {
-                    const hueExp = /(^hs[v|va|l|la]\()\d{1,3}/;
                     const hsvString = this._color.toHsvString();
-                    return hsvString.replace(hueExp, `$1${this.hue}`);
+                    return hsvString.replace(replaceHueRegExp, `$1${this.hue}`);
                 } else {
                     const { s, v, a } = this._color.toHsv();
                     return { h: this.hue, s, v, a };
@@ -141,8 +144,7 @@ export class ColorArea extends SpectrumElement {
         let originalHue: number | undefined = undefined;
 
         if (isString && format.startsWith('hs')) {
-            const hueExp = /^hs[v|va|l|la]\((\d{1,3})/;
-            const values = hueExp.exec(color as string);
+            const values = extractHueAndSaturationRegExp.exec(color as string);
 
             if (values !== null) {
                 const [, h] = values;

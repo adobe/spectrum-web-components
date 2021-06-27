@@ -34,6 +34,10 @@ export type ColorValue =
     | HSL
     | HSLA;
 
+export const extractHueAndSaturationRegExp = /^hs[v|l]a?\s?\((\d{1,3}\.?\d*?),?\s?(\d{1,3})/;
+export const replaceHueAndSaturationRegExp = /(^hs[v|l]a?\s?\()\d{1,3}\.?\d*?(,?\s?)\d{1,3}/;
+export const replaceHueRegExp = /(^hs[v|l]a?\()\d{1,3}/;
+
 /**
  * @element sp-color-handle
  */
