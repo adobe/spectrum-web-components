@@ -63,13 +63,20 @@ export const joint = (): TemplateResult => {
             <sp-color-slider
                 color="hsv(120 0% 1)"
                 @input=${({
-                    target: { color, previousElementSibling },
+                    target: {
+                        color,
+                        previousElementSibling,
+                        nextElementSibling,
+                    },
                 }: Event & {
                     target: ColorSlider & {
                         previousElementSibling: ColorArea;
+                        nextElementSibling: HTMLDivElement;
                     };
                 }): void => {
                     previousElementSibling.color = color;
+                    nextElementSibling.textContent = color as string;
+                    nextElementSibling.style.color = color as string;
                 }}
             ></sp-color-slider>
             <div style="color: hsv(120, 0, 1)">hsv(120, 0, 1)</div>

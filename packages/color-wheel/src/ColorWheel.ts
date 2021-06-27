@@ -233,11 +233,11 @@ export class ColorWheel extends Focusable {
         this.value = valueAsNumber;
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
     }
-    private handleFocus(): void {
+    private handleFocusin(): void {
         this.focused = true;
     }
 
-    private handleBlur(): void {
+    private handleFocusout(): void {
         this.focused = false;
     }
 
@@ -252,7 +252,7 @@ export class ColorWheel extends Focusable {
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
         if (event.pointerType === 'mouse') {
-            this.handleFocus();
+            this.handleFocusin();
         }
     }
 
@@ -283,8 +283,9 @@ export class ColorWheel extends Focusable {
         if (!applyDefault) {
             this._color = this._previousColor;
         }
+        this.focus();
         if (event.pointerType === 'mouse') {
-            this.handleBlur();
+            this.handleFocusout();
         }
     }
 
@@ -338,6 +339,7 @@ export class ColorWheel extends Focusable {
             </slot>
 
             <sp-color-handle
+                tabindex="-1"
                 class="handle"
                 color="hsl(${this.value}, 100%, 50%)"
                 ?disabled=${this.disabled}
@@ -363,8 +365,6 @@ export class ColorWheel extends Focusable {
                 @input=${this.handleInput}
                 @keydown=${this.handleKeydown}
                 @keyup=${this.handleKeyup}
-                @focus=${this.handleFocus}
-                @blur=${this.handleBlur}
             />
         `;
     }
@@ -372,6 +372,8 @@ export class ColorWheel extends Focusable {
     protected firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
+        this.addEventListener('focusin', this.handleFocusin);
+        this.addEventListener('focusout', this.handleFocusout);
     }
 
     private observer?: WithSWCResizeObserver['ResizeObserver'];
