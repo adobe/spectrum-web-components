@@ -322,9 +322,6 @@ export class ColorArea extends SpectrumElement {
     private handlePointerup(event: PointerEvent): void {
         event.preventDefault();
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
-        if (event.pointerType === 'mouse') {
-            this.handleFocusout();
-        }
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 bubbles: true,
@@ -332,6 +329,10 @@ export class ColorArea extends SpectrumElement {
                 cancelable: true,
             })
         );
+        this.inputX.focus();
+        if (event.pointerType === 'mouse') {
+            this.handleFocusout();
+        }
         if (!applyDefault) {
             this._color = this._previousColor;
         }
@@ -394,6 +395,7 @@ export class ColorArea extends SpectrumElement {
             </div>
 
             <sp-color-handle
+                tabindex="-1"
                 class="handle"
                 color=${this._color.toHslString()}
                 ?disabled=${this.disabled}
