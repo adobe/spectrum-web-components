@@ -25,7 +25,9 @@ import styles from './color-slider.css.js';
 import {
     ColorHandle,
     ColorValue,
-} from '@spectrum-web-components/color-handle/src/ColorHandle';
+    extractHueAndSaturationRegExp,
+    replaceHueAndSaturationRegExp,
+} from '@spectrum-web-components/color-handle';
 import { TinyColor } from '@ctrl/tinycolor';
 
 /**
@@ -103,13 +105,27 @@ export class ColorSlider extends Focusable {
             case 'name':
                 return this._color.toName() || this._color.toRgbString();
             case 'hsl':
-                return this._format.isString
-                    ? this._color.toHslString()
-                    : this._color.toHsl();
+                if (this._format.isString) {
+                    const hslString = this._color.toHslString();
+                    return hslString.replace(
+                        replaceHueAndSaturationRegExp,
+                        `$1${this.value}$2${this._saturation}`
+                    );
+                } else {
+                    const { s, l, a } = this._color.toHsl();
+                    return { h: this.value, s, l, a };
+                }
             case 'hsv':
-                return this._format.isString
-                    ? this._color.toHsvString()
-                    : this._color.toHsv();
+                if (this._format.isString) {
+                    const hsvString = this._color.toHsvString();
+                    return hsvString.replace(
+                        replaceHueAndSaturationRegExp,
+                        `$1${this.value}$2${this._saturation}`
+                    );
+                } else {
+                    const { s, v, a } = this._color.toHsv();
+                    return { h: this.value, s, v, a };
+                }
             default:
                 return 'No color format applied.';
         }
@@ -134,20 +150,17 @@ export class ColorSlider extends Focusable {
         };
 
         if (isString && format.startsWith('hs')) {
-            const hueExp = /^hs[v|va|l|la]\((\d{1,3})/;
-            const values = hueExp.exec(color as string);
-
+            const values = extractHueAndSaturationRegExp.exec(color as string);
             if (values !== null) {
-                const [, h] = values;
+                const [, h, s] = values;
                 this.value = Number(h);
+                this._saturation = Number(s);
             }
         } else if (!isString && format.startsWith('hs')) {
             const colorInput = this._color.originalInput;
             const colorValues = Object.values(colorInput);
             this.value = colorValues[0];
-
-            // The below code line causes some tests to fail
-            //this.value = parseFloat((color as HSV).h.toString());
+            this._saturation = colorValues[1];
         } else {
             const { h } = this._color.toHsv();
             this.value = h;
@@ -159,6 +172,8 @@ export class ColorSlider extends Focusable {
     private _color = new TinyColor({ h: 0, s: 1, v: 1 });
 
     private _previousColor = new TinyColor({ h: 0, s: 1, v: 1 });
+
+    private _saturation!: number;
 
     private _format: { format: string; isString: boolean } = {
         format: '',
@@ -342,7 +357,7 @@ export class ColorSlider extends Focusable {
             </div>
             <sp-color-handle
                 class="handle"
-                color="hsl(${this._color.toHsl().h}, 100%, 50%)"
+                color="hsl(${this.value}, 100%, 50%)"
                 ?disabled=${this.disabled}
                 style="${this.vertical ? 'top' : 'left'}: ${this
                     .sliderHandlePosition}%"

@@ -63,9 +63,16 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.hue, 'hugh').to.equal(100.00000000000003);
+        expect(el.hue, 'hugh').to.equal(100);
         expect(el.x, 'ex').to.equal(0.6666666666666666);
         expect(el.y, 'why').to.equal(0.25);
+
+        el.color = 'hsla(120, 100%, 0, 1)';
+        await elementUpdated(el);
+
+        expect(el.hue, 'hue 2').to.equal(120);
+        expect(el.x, 'x 2').to.equal(0);
+        expect(el.y, 'y 2').to.equal(1);
     });
     it('accepts "color" values as rgb', async () => {
         const el = await fixture<ColorArea>(
@@ -102,7 +109,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.hue, 'hue').to.equal(100.00000000000003);
+        expect(el.hue, 'hue').to.equal(100);
         expect(el.x, 'x').to.equal(0.6666666666666666);
         expect(el.y, 'y').to.equal(0.25);
 
@@ -165,7 +172,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.hue, 'hue').to.equal(100.00000000000003);
+        expect(el.hue, 'hue').to.equal(100);
         expect(el.x, 'x').to.equal(0.6666666666666666);
         expect(el.y, 'y').to.equal(0.25);
 

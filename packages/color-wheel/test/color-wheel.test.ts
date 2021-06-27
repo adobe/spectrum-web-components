@@ -374,4 +374,51 @@ describe('ColorWheel', () => {
         el.color = color;
         expect(color.equals(el.color));
     });
+    it(`maintains hue value`, async () => {
+        const el = await fixture<ColorWheel>(
+            html`
+                <sp-color-wheel></sp-color-wheel>
+            `
+        );
+        const hue = 300;
+        const hsl = `hsl(${hue}, 60%, 100%)`;
+        el.color = hsl;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsl);
+
+        const hsla = `hsla(${hue}, 60%, 100%, 0.9)`;
+        el.color = hsla;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsla);
+
+        const hsv = `hsv(${hue}, 60%, 100%)`;
+        el.color = hsv;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsv);
+
+        const hsva = `hsva(${hue}, 60%, 100%, 0.9)`;
+        el.color = hsva;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsva);
+
+        const tinyHSV = new TinyColor({ h: hue, s: 60, v: 100 });
+        el.color = tinyHSV;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSV.equals(el.color)).to.be.true;
+
+        const tinyHSVA = new TinyColor({ h: hue, s: 60, v: 100, a: 1 });
+        el.color = tinyHSVA;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSVA.equals(el.color)).to.be.true;
+
+        const tinyHSL = new TinyColor({ h: hue, s: 60, l: 100 });
+        el.color = tinyHSL;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSL.equals(el.color)).to.be.true;
+
+        const tinyHSLA = new TinyColor({ h: hue, s: 60, l: 100, a: 1 });
+        el.color = tinyHSLA;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSLA.equals(el.color)).to.be.true;
+    });
 });

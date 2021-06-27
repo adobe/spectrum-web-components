@@ -536,28 +536,45 @@ describe('ColorSlider', () => {
                 <sp-color-slider></sp-color-slider>
             `
         );
-        el.color = 'hsl(300, 60%, 100%)';
-        expect(el.value).to.equal(300);
+        const hue = 300;
+        const hsl = `hsl(${hue}, 60%, 100%)`;
+        el.color = hsl;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsl);
 
-        el.color = 'hsla(300, 60%, 100%, 1)';
-        expect(el.value).to.equal(300);
+        const hsla = `hsla(${hue}, 60%, 100%, 0.9)`;
+        el.color = hsla;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsla);
 
-        el.color = 'hsv(300, 60%, 100%)';
-        expect(el.value).to.equal(300);
+        const hsv = `hsv(${hue}, 60%, 100%)`;
+        el.color = hsv;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsv);
 
-        el.color = 'hsva(300, 60%, 100%, 1)';
-        expect(el.value).to.equal(300);
+        const hsva = `hsva(${hue}, 60%, 100%, 0.9)`;
+        el.color = hsva;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsva);
 
-        el.color = new TinyColor({ h: 300, s: 60, v: 100 });
-        expect(el.value).to.equal(300);
+        const tinyHSV = new TinyColor({ h: hue, s: 60, v: 100 });
+        el.color = tinyHSV;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSV.equals(el.color)).to.be.true;
 
-        el.color = new TinyColor({ h: 300, s: 60, v: 100, a: 1 });
-        expect(el.value).to.equal(300);
+        const tinyHSVA = new TinyColor({ h: hue, s: 60, v: 100, a: 1 });
+        el.color = tinyHSVA;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSVA.equals(el.color)).to.be.true;
 
-        el.color = new TinyColor({ h: 300, s: 60, l: 100 });
-        expect(el.value).to.equal(300);
+        const tinyHSL = new TinyColor({ h: hue, s: 60, l: 100 });
+        el.color = tinyHSL;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSL.equals(el.color)).to.be.true;
 
-        el.color = new TinyColor({ h: 300, s: 60, l: 100, a: 1 });
-        expect(el.value).to.equal(300);
+        const tinyHSLA = new TinyColor({ h: hue, s: 60, l: 100, a: 1 });
+        el.color = tinyHSLA;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSLA.equals(el.color)).to.be.true;
     });
 });
