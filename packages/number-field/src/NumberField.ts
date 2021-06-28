@@ -273,8 +273,8 @@ export class NumberField extends TextfieldBase {
         const direction = event.shiftKey
             ? event.deltaX / Math.abs(event.deltaX)
             : event.deltaY / Math.abs(event.deltaY);
-        if (direction !== 0) {
-          this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
+        if (direction !== 0 && !isNaN(direction)) {
+            this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
         }
     }
 
