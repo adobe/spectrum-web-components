@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult, ifDefined } from '@spectrum-web-components/base';
 import {
     openOverlay,
+    Overlay,
     OverlayContentTypes,
     OverlayTrigger,
     Placement,
@@ -23,6 +24,7 @@ import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { DialogWrapper } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -691,4 +693,53 @@ export const virtualElement = (args: Properties): TemplateResult => {
 
 virtualElement.args = {
     placement: 'right-end',
+};
+
+export const detachedElement = (): TemplateResult => {
+    let closeOverlay: (() => void) | undefined;
+    const openDetachedOverlayContent = async ({
+        target,
+    }: {
+        target: HTMLElement;
+    }): Promise<void> => {
+        if (closeOverlay) {
+            closeOverlay();
+            closeOverlay = undefined;
+            return;
+        }
+        const div = document.createElement('div');
+        div.textContent = 'This div is overlaid';
+        div.setAttribute(
+            'style',
+            `
+            background-color: var(--spectrum-global-color-gray-50);
+            color: var(--spectrum-global-color-gray-800);
+            border: 1px solid;
+            padding: 2em;
+        `
+        );
+        closeOverlay = await Overlay.open(target, 'click', div, {
+            offset: 0,
+            placement: 'bottom',
+        });
+    };
+    requestAnimationFrame(() => {
+        openDetachedOverlayContent({
+            target: document.querySelector(
+                '#detached-content-trigger'
+            ) as HTMLElement,
+        });
+    });
+    return html`
+        <sp-action-button
+            id="detached-content-trigger"
+            @click=${openDetachedOverlayContent}
+            @sp-closed=${() => (closeOverlay = undefined)}
+        >
+            <sp-icon-open-in
+                slot="icon"
+                label="Open in overlay"
+            ></sp-icon-open-in>
+        </sp-action-button>
+    `;
 };
