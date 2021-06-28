@@ -23,6 +23,7 @@ import {
     expect,
     elementUpdated,
     waitUntil,
+    oneEvent,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 
@@ -479,5 +480,41 @@ describe('Overlays', () => {
         await waitUntil(
             () => document.querySelector('active-element') === null
         );
+    });
+
+    it('opens detached content', async () => {
+        const textContent = 'This is a detached element that has been overlaid';
+        const el = await fixture<HTMLButtonElement>(
+            html`
+                <button>Trigger</button>
+            `
+        );
+
+        const content = document.createElement('div');
+        content.textContent = textContent;
+
+        const opened = oneEvent(el, 'sp-opened');
+        const closeOverlay = await Overlay.open(el, 'click', content, {
+            placement: 'bottom',
+        });
+        await opened;
+
+        let activeOverlay = document.querySelector('active-overlay');
+
+        if (activeOverlay) {
+            expect(activeOverlay.textContent).to.equal(textContent);
+        } else {
+            expect(activeOverlay).to.not.be.null;
+        }
+
+        const closed = oneEvent(el, 'sp-closed');
+        closeOverlay();
+        await closed;
+
+        activeOverlay = document.querySelector('active-overlay');
+
+        expect(activeOverlay).to.be.null;
+
+        content.remove();
     });
 });
