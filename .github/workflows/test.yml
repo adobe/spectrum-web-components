@@ -1,0 +1,64 @@
+name: Performance check
+
+on: pull_request
+
+jobs:
+    compare:
+        name: Compare performance to latest release
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: main
+
+            - uses: actions/checkout@v2
+
+            - name: Setup Node 14.x
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 14.x
+
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+
+            - uses: actions/cache@v2
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+            - name: Install dependencies
+              run: yarn --frozen-lockfile
+
+            - name: Tachometer the changed packages
+              run: yarn test:changed
+
+            - uses: actions/github-script@v4
+              with:
+                  script: |
+                      const buildTachometerComment = require('./tasks/build-tachometer-comment.cjs').buildTachometerComment;
+                      const body = buildTachometerComment();
+                      github.issues.listComments({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                      }).then(({data}) => {
+                        const priorComment = data.find(comment => comment.body.startsWith('# Tachometer results for changed packages'));
+                        if (priorComment) {
+                          github.issues.updateComment({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            comment_id: priorComment.id,
+                            body
+                          });
+                        } else {
+                          github.issues.createComment({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            issue_number: context.issue.number,
+                            body
+                          });
+                        }
+                      });

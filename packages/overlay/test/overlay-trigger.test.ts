@@ -203,28 +203,19 @@ describe('Overlay Trigger', () => {
             expect(outerTrigger.disabled).to.be.false;
 
             expect(outerButton).to.exist;
-            outerButton.click();
 
-            await waitUntil(
-                () =>
-                    !(
-                        outerClickContent.parentElement instanceof
-                        OverlayTrigger
-                    ),
-                'Wait for the DOM node to be stolen and reparented into the overlay'
-            );
+            const opened = oneEvent(outerButton, 'sp-opened');
+            outerButton.click();
+            await opened;
 
             expect(outerClickContent.parentElement).to.not.be.an.instanceOf(
                 OverlayTrigger
             );
             expect(isVisible(outerClickContent)).to.be.true;
 
+            const closed = oneEvent(outerButton, 'sp-closed');
             outerTrigger.disabled = true;
-
-            await waitUntil(
-                () => outerClickContent.parentElement instanceof OverlayTrigger,
-                'Wait for the DOM node to be returned to the overlay trigger'
-            );
+            await closed;
 
             expect(isVisible(outerClickContent)).to.be.false;
             expect(outerTrigger.disabled).to.be.true;
