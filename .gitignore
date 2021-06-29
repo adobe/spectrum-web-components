@@ -15,6 +15,7 @@ yarn-error.log
 .tsbuildinfo
 .rush
 .devcontainer
+tach-results.*
 
 documentation/components/searchIndex.json
 

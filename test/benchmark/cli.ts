@@ -85,6 +85,13 @@ const optionDefinitions: commandLineUsage.OptionDefinition[] = [
         type: String,
         defaultValue: 'element',
     },
+    {
+        name: 'json',
+        description: 'Save output to json.',
+        alias: 'j',
+        type: Boolean,
+        defaultValue: false,
+    },
 ];
 
 interface Options {
@@ -96,6 +103,7 @@ interface Options {
     browser: string;
     compare: string;
     start: string;
+    json: boolean;
 }
 
 (async () => {
@@ -238,11 +246,13 @@ $ node test/benchmark/cli -n 20
             }
         );
 
-        const statResults = await main([
-            ...runCommands,
-            `--config=./test/benchmark/config.json`,
-            `--force-clean-npm-install`,
-        ]);
+        if (opts.json) {
+            runCommands.push(`--json-file=tach-results.${packageName}.json`);
+        }
+        runCommands.push(`--config=./test/benchmark/config.json`);
+        runCommands.push(`--force-clean-npm-install`);
+
+        const statResults = await main(runCommands);
 
         if (!statResults) {
             return;
