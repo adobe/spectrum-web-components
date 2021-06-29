@@ -4521,7 +4521,7 @@
     picomatch "^2.2.2"
     ws "^7.4.0"
 
-"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.3", "@web/dev-server-core@^0.3.6":
+"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.3":
   version "0.3.8"
   resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.8.tgz#63035c28b051ec5f18742814a85736b9a7d78ba5"
   integrity sha512-Qbo2ZVUopmjEP8ZDc8v0N/nTW9LbmycuC+uoTwp62PfHfqSN9RgXGzuGMmp5sBPRXi/E1oi1GQ+lMoDWXLjKYA==
@@ -4721,55 +4721,15 @@
     chrome-launcher "^0.13.4"
     puppeteer-core "^8.0.0"
 
-"@web/test-runner-commands@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.5.0.tgz#8692855054321b876ff5f1a53a656cc38796fdb1"
-  integrity sha512-yVYJ869/csbDgCNrN2cEwFoX8ZfdAeCXC72CgddKO3jBut2OsFaEy4RWe1uP9Pz9vffiAlV3st3IsnWwTHMLYQ==
+"@web/test-runner-commands@^0.5.0", "@web/test-runner-commands@^0.5.2":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.5.4.tgz#54ee2defb60b7da0bf08fdc968ea78a22e2a2404"
+  integrity sha512-nCMRkxgDfo5JjB1wWyy8C4ZAcq26VXpx20zM/MAXE2nPz5LwHqUT80wbHqCamsPU78iMt9d246Ii8aRHmUWvuw==
   dependencies:
     "@web/test-runner-core" "^0.10.14"
     mkdirp "^1.0.4"
 
-"@web/test-runner-commands@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.5.2.tgz#563b451427440fece15266eadf0d39708a0235db"
-  integrity sha512-axgYk5lpCTz6COaKs0gFI3u1MpwKv7sk/lFEoBnsbEKm++qEVTgBOKqnubNTPY7GNqga9CFDeRqFDSjeurVCIA==
-  dependencies:
-    "@web/test-runner-core" "^0.10.14"
-    mkdirp "^1.0.4"
-
-"@web/test-runner-core@^0.10.13", "@web/test-runner-core@^0.10.14":
-  version "0.10.14"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.14.tgz#5794ded17f673d9839e5a5e36ead505df92962af"
-  integrity sha512-RfY6KAtWHBZvfS/JGAkvp6zprFROd3m7gPJJAUFkfYXyMUQZQnNGI5nI+Shft1FcsST16/ivPog6TPNka55+ig==
-  dependencies:
-    "@babel/code-frame" "^7.12.11"
-    "@types/co-body" "^5.1.0"
-    "@types/convert-source-map" "^1.5.1"
-    "@types/debounce" "^1.2.0"
-    "@types/istanbul-lib-coverage" "^2.0.3"
-    "@types/istanbul-reports" "^3.0.0"
-    "@types/uuid" "^8.3.0"
-    "@web/browser-logs" "^0.2.1"
-    "@web/dev-server-core" "^0.3.6"
-    chalk "^4.1.0"
-    chokidar "^3.4.3"
-    cli-cursor "^3.1.0"
-    co-body "^6.1.0"
-    convert-source-map "^1.7.0"
-    debounce "^1.2.0"
-    dependency-graph "^0.10.0"
-    globby "^11.0.1"
-    ip "^1.1.5"
-    istanbul-lib-coverage "^3.0.0"
-    istanbul-lib-report "^3.0.0"
-    istanbul-reports "^3.0.2"
-    log-update "^4.0.0"
-    open "^8.0.2"
-    picomatch "^2.2.2"
-    source-map "^0.7.3"
-    uuid "^8.3.2"
-
-"@web/test-runner-core@^0.10.17":
+"@web/test-runner-core@^0.10.13", "@web/test-runner-core@^0.10.14", "@web/test-runner-core@^0.10.17", "@web/test-runner-core@^0.10.8", "@web/test-runner-core@^0.10.9":
   version "0.10.17"
   resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.17.tgz#bae17071d1e5a5fd9fa01cf759644352c243c513"
   integrity sha512-T8yLQ6W4tHwREEYlAvAMYXpNkRE4XBynuWQQVq1qf5hf/IFNdYkOVELkgsHevtYLRElxi9/wHeRrn1SkDgj0Ug==
@@ -4790,38 +4750,6 @@
     convert-source-map "^1.7.0"
     debounce "^1.2.0"
     dependency-graph "^0.11.0"
-    globby "^11.0.1"
-    ip "^1.1.5"
-    istanbul-lib-coverage "^3.0.0"
-    istanbul-lib-report "^3.0.0"
-    istanbul-reports "^3.0.2"
-    log-update "^4.0.0"
-    open "^8.0.2"
-    picomatch "^2.2.2"
-    source-map "^0.7.3"
-    uuid "^8.3.2"
-
-"@web/test-runner-core@^0.10.8", "@web/test-runner-core@^0.10.9":
-  version "0.10.13"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.13.tgz#7c86939204f1b1e958fb21c866c06ca5edb54634"
-  integrity sha512-w6seztsj/UKUz9HP5KeMZ1JdUadt293SplsrKKaUJTZDMLO8+xvyo+vpt1Mv7zICu0wyuQN0AdD3GjKKX6dFHw==
-  dependencies:
-    "@babel/code-frame" "^7.12.11"
-    "@types/co-body" "^5.1.0"
-    "@types/convert-source-map" "^1.5.1"
-    "@types/debounce" "^1.2.0"
-    "@types/istanbul-lib-coverage" "^2.0.3"
-    "@types/istanbul-reports" "^3.0.0"
-    "@types/uuid" "^8.3.0"
-    "@web/browser-logs" "^0.2.1"
-    "@web/dev-server-core" "^0.3.6"
-    chalk "^4.1.0"
-    chokidar "^3.4.3"
-    cli-cursor "^3.1.0"
-    co-body "^6.1.0"
-    convert-source-map "^1.7.0"
-    debounce "^1.2.0"
-    dependency-graph "^0.10.0"
     globby "^11.0.1"
     ip "^1.1.5"
     istanbul-lib-coverage "^3.0.0"
@@ -8951,11 +8879,6 @@ depd@^2.0.0, depd@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/depd/-/depd-2.0.0.tgz#b696163cc757560d09cf22cc8fad1571b79e76df"
   integrity sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==
-
-dependency-graph@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-0.10.0.tgz#dfebe384f1f36faf7782be203a7a71102a6335a6"
-  integrity sha512-c9amUgpgxSi1bE5/sbLwcs5diLD0ygCQYmhfM5H1s5VH1mCsYkcmAL3CcNdv4kdSw6JuMoHeDGzLgj/gAXdWVg==
 
 dependency-graph@^0.11.0:
   version "0.11.0"
