@@ -72,6 +72,7 @@
         "test": "yarn test:focus unit",
         "test:bench": "node test/benchmark/cli.cjs",
         "test:build": "node test/visual/create.js && tsc --build test/tsconfig-plugins.json && tsc --build test/tsconfig-test.json",
+        "test:changed": "node ./tasks/test-changes.js",
         "test:ci": "yarn test:build && yarn test:start",
         "test:focus": "yarn build && yarn test:ci --coverage --group",
         "test:start": "web-test-runner",
@@ -81,7 +82,7 @@
         "test:visual:clean:baseline": "rimraf test/visual/screenshots-baseline",
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
         "test:watch": "test:watch:focus unit",
-        "test:watch:focus": "yarn test:build && yarn test:build:plugins && run-p watch:css \"test:build -w\" \"test:start --watch --group {1}\" --",
+        "test:watch:focus": "yarn test:build && run-p watch:css \"test:build -w\" \"test:start --watch --group {1}\" --",
         "watch:css": "node ./tasks/watch-css.js"
     },
     "peerDependencies": {
@@ -170,7 +171,7 @@
         "netlify-cli": "^3.13.1",
         "node-fetch": "^2.6.0",
         "npm-run-all": "^4.1.5",
-        "playwright": "^1.12.2",
+        "playwright": "^1.13.0",
         "plugin-error": "^1.0.1",
         "pngjs": "^6.0.0",
         "polymer-webpack-loader": "^2.0.3",
@@ -191,6 +192,7 @@
         "posthtml-match-helper": "^1.0.1",
         "prettier": "^2.2.1",
         "prettier-plugin-package": "^1.3.0",
+        "pretty-bytes": "^5.6.0",
         "pretty-quick": "^3.1.0",
         "prismjs": "^1.15.0",
         "raw-loader": "^4.0.0",

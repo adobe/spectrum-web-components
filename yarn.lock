@@ -17219,10 +17219,10 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-playwright@^1.12.2, playwright@^1.8.1:
-  version "1.12.2"
-  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.12.2.tgz#a484447177b061dd76247734fe65d77e3fb139fa"
-  integrity sha512-tSZGeILY70T4imhCMCsvzhoaDm9baosIG5fQncSWprpjVc/X4yYdBQCLBMvOi98H50hvu9fhgy2hpsgFKCsUaw==
+playwright@^1.13.0, playwright@^1.8.1:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.13.0.tgz#aadb3b992763253ef40f29ae887df8d67a142fc5"
+  integrity sha512-GA5OyEeKx1v/pRcANmYncCT67Y7Y4N5zLRU5E690dn/Id10sooR5hQZmCDYsjXlutZb/1q0R3sITALnvhEjCjg==
   dependencies:
     commander "^6.1.0"
     debug "^4.1.1"
@@ -18277,7 +18277,7 @@ prettier@^2.0.4, prettier@^2.2.1:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
   integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
 
-pretty-bytes@^5.1.0, pretty-bytes@^5.3.0:
+pretty-bytes@^5.1.0, pretty-bytes@^5.3.0, pretty-bytes@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
   integrity sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==
