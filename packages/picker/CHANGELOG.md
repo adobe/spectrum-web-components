@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.5.2...@spectrum-web-components/picker@0.5.3) (2021-07-01)
+
+### Bug Fixes
+
+-   add icon present and icon-only support to Picker ([f6887a3](https://github.com/adobe/spectrum-web-components/commit/f6887a34e228473e33893c81017492bf3e8fd6c3))
+
 ## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.5.1...@spectrum-web-components/picker@0.5.2) (2021-06-16)
 
 ### Bug Fixes

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.2...@spectrum-web-components/number-field@0.1.3) (2021-07-01)
+
+### Bug Fixes
+
+-   **number-field:** add support for modified stepping ([#1534](https://github.com/adobe/spectrum-web-components/issues/1534)) ([f8ec763](https://github.com/adobe/spectrum-web-components/commit/f8ec7635e0771097df592df9f60d042113533c4a))
+-   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
+-   normalize wheel input directionally for more predictable input ([e4383a8](https://github.com/adobe/spectrum-web-components/commit/e4383a82a5c287e45ea1b22e592ce5e022125739))
+
 ## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.1...@spectrum-web-components/number-field@0.1.2) (2021-06-16)
 
 ### Bug Fixes

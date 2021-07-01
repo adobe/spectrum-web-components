@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.6...@spectrum-web-components/color-area@0.1.7) (2021-07-01)
+
+### Bug Fixes
+
+-   expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
+-   normalize focus passing during and after pointer events ([357931b](https://github.com/adobe/spectrum-web-components/commit/357931b6eb803759925b10b629d21878e8249678))
+
 ## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.5...@spectrum-web-components/color-area@0.1.6) (2021-06-16)
 
 **Note:** Version bump only for package @spectrum-web-components/color-area

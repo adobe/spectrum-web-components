@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.7.8...@spectrum-web-components/radio@0.7.9) (2021-07-01)
+
+### Bug Fixes
+
+-   correct a11y representation of a radio group ([24ed0b8](https://github.com/adobe/spectrum-web-components/commit/24ed0b8850efc5ff8b2dc3c9916554f6907d2469))
+
 ## [0.7.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.7.7...@spectrum-web-components/radio@0.7.8) (2021-06-16)
 
 **Note:** Version bump only for package @spectrum-web-components/radio

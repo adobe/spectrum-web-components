@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.9.8...@spectrum-web-components/styles@0.9.9) (2021-07-01)
+
+### Bug Fixes
+
+-   export CSS with appropriate scoping ([3cf9f40](https://github.com/adobe/spectrum-web-components/commit/3cf9f40c504c827e14231db23c0f8b9b189b222e))
+
 ## [0.9.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.9.7...@spectrum-web-components/styles@0.9.8) (2021-06-16)
 
 **Note:** Version bump only for package @spectrum-web-components/styles

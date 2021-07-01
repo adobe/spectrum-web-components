@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.3...@spectrum-web-components/top-nav@0.3.4) (2021-07-01)
+
+### Bug Fixes
+
+-   update indicator animation for loading and content direction ([f607f8b](https://github.com/adobe/spectrum-web-components/commit/f607f8b4fca280b7aa5eae835554ea62845abd1c))
+
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.2...@spectrum-web-components/top-nav@0.3.3) (2021-06-16)
 
 **Note:** Version bump only for package @spectrum-web-components/top-nav

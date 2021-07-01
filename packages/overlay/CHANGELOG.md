@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.8...@spectrum-web-components/overlay@0.11.9) (2021-07-01)
+
+### Bug Fixes
+
+-   allow detached elements to be used as content for an overlay ([3ad8383](https://github.com/adobe/spectrum-web-components/commit/3ad83837b6c9a693a4fc24501e3fc7fb2383a12b))
+-   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
+
 ## [0.11.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.7...@spectrum-web-components/overlay@0.11.8) (2021-06-16)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

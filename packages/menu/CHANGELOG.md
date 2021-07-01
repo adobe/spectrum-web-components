@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.8...@spectrum-web-components/menu@0.8.9) (2021-07-01)
+
+### Bug Fixes
+
+-   add "value" slot to sp-menu-item ([e1bd264](https://github.com/adobe/spectrum-web-components/commit/e1bd2646a5198d9ef64710ad0a3749606f08c74e))
+-   add icon present and icon-only support to Picker ([f6887a3](https://github.com/adobe/spectrum-web-components/commit/f6887a34e228473e33893c81017492bf3e8fd6c3))
+
 ## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.7...@spectrum-web-components/menu@0.8.8) (2021-06-16)
 
 ### Bug Fixes

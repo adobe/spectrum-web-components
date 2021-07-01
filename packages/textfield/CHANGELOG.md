@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.9...@spectrum-web-components/textfield@0.8.10) (2021-07-01)
+
+### Bug Fixes
+
+-   correct sp-textfield[multiline][grows] styling and add story for regression testing ([58c9331](https://github.com/adobe/spectrum-web-components/commit/58c9331b75c94d2bcbe1742b023e1bd884c52bb3))
+
 ## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.8...@spectrum-web-components/textfield@0.8.9) (2021-06-16)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield

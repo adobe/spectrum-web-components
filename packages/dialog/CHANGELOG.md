@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.10...@spectrum-web-components/dialog@0.6.11) (2021-07-01)
+
+### Bug Fixes
+
+-   have sp-dialog-wrapper confirm scroll management of its dialog when opening ([fed9536](https://github.com/adobe/spectrum-web-components/commit/fed953672722dde152b66614141bfd1c3bb824a1))
+-   match footer default color to content ([fd2b6f9](https://github.com/adobe/spectrum-web-components/commit/fd2b6f9552662365a982f534eac8f9d535a123f6))
+
 ## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.9...@spectrum-web-components/dialog@0.6.10) (2021-06-16)
 
 **Note:** Version bump only for package @spectrum-web-components/dialog
