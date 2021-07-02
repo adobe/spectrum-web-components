@@ -94,6 +94,37 @@ describe('ColorSlider', () => {
         expect(inputSpy.callCount).to.equal(4);
         expect(changeSpy.callCount).to.equal(4);
     });
+    it('responds to events on the internal input element', async () => {
+        // screen reader interactions dispatch events as found in the following test
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const el = await fixture<ColorSlider>(
+            html`
+                <sp-color-slider
+                    @change=${() => changeSpy()}
+                    @input=${() => inputSpy()}
+                ></sp-color-slider>
+            `
+        );
+        await elementUpdated(el);
+
+        el.focus();
+        el.focusElement.dispatchEvent(
+            new Event('input', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        el.focusElement.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: false, // native change events do not compose themselves by default
+            })
+        );
+
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
+    });
     it('manages value on "Arrow*" keypresses', async () => {
         const el = await fixture<ColorSlider>(
             html`
