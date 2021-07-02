@@ -27,6 +27,8 @@ import {
 import '../sp-color-slider.js';
 import { ColorSlider } from '..';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 describe('ColorSlider', () => {
     it('loads default color-slider accessibly', async () => {
@@ -59,7 +61,40 @@ describe('ColorSlider', () => {
 
         expect(!el.focused);
     });
-    it('accepts "Arrow*" keypresses', async () => {
+    it('dispatches input and change events in response to "Arrow*" keypresses', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const el = await fixture<ColorSlider>(
+            html`
+                <sp-color-slider
+                    @change=${() => changeSpy()}
+                    @input=${() => inputSpy()}
+                ></sp-color-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        el.focus();
+
+        await sendKeys({ press: 'ArrowRight' });
+
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
+
+        await sendKeys({ press: 'ArrowLeft' });
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+
+        await sendKeys({ press: 'ArrowUp' });
+        expect(inputSpy.callCount).to.equal(3);
+        expect(changeSpy.callCount).to.equal(3);
+
+        await sendKeys({ press: 'ArrowDown' });
+        expect(inputSpy.callCount).to.equal(4);
+        expect(changeSpy.callCount).to.equal(4);
+    });
+    it('manages value on "Arrow*" keypresses', async () => {
         const el = await fixture<ColorSlider>(
             html`
                 <sp-color-slider

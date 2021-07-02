@@ -225,12 +225,28 @@ export class ColorSlider extends Focusable {
                 delta = this.step * (this.isLTR ? 1 : -1);
                 break;
         }
+
         this.sliderHandlePosition = Math.min(
             100,
             Math.max(0, this.sliderHandlePosition + delta)
         );
         this.value = 360 * (this.sliderHandlePosition / 100);
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
+
+        if (delta != 0) {
+            this.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            this.dispatchEvent(
+                new Event('change', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+        }
     }
 
     private handleKeyup(event: KeyboardEvent): void {
