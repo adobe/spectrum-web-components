@@ -233,6 +233,16 @@ export class ColorWheel extends Focusable {
         this.value = valueAsNumber;
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
     }
+
+    private handleChange(): void {
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
     private handleFocusin(): void {
         this.focused = true;
     }
@@ -363,6 +373,7 @@ export class ColorWheel extends Focusable {
                 step=${this.step}
                 .value=${String(this.value)}
                 @input=${this.handleInput}
+                @change=${this.handleChange}
                 @keydown=${this.handleKeydown}
                 @keyup=${this.handleKeyup}
             />

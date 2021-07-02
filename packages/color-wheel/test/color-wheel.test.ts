@@ -27,6 +27,8 @@ import {
 import '../sp-color-wheel.js';
 import { ColorWheel } from '..';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 describe('ColorWheel', () => {
     it('loads default color-wheel accessibly', async () => {
@@ -58,6 +60,37 @@ describe('ColorWheel', () => {
         await elementUpdated(el);
 
         expect(!el.focused);
+    });
+    it('dispatches input and change events in response to "Arrow*" keypresses', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const el = await fixture<ColorWheel>(
+            html`
+                <sp-color-wheel
+                    @change=${() => changeSpy()}
+                    @input=${() => inputSpy()}
+                ></sp-color-wheel>
+            `
+        );
+
+        await elementUpdated(el);
+        el.focus();
+
+        await sendKeys({ press: 'ArrowRight' });
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
+
+        await sendKeys({ press: 'ArrowLeft' });
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+
+        await sendKeys({ press: 'ArrowUp' });
+        expect(inputSpy.callCount).to.equal(3);
+        expect(changeSpy.callCount).to.equal(3);
+
+        await sendKeys({ press: 'ArrowDown' });
+        expect(inputSpy.callCount).to.equal(4);
+        expect(changeSpy.callCount).to.equal(4);
     });
     it('accepts "Arrow*" keypresses', async () => {
         const el = await fixture<ColorWheel>(
