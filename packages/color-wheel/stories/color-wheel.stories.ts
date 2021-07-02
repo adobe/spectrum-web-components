@@ -21,7 +21,10 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-color-wheel></sp-color-wheel>
+        <sp-color-wheel
+            @input=${() => console.log('inpoot')}
+            @change=${() => console.log('cabbage')}
+        ></sp-color-wheel>
     `;
 };
 
