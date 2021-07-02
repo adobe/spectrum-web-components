@@ -266,6 +266,15 @@ export class ColorSlider extends Focusable {
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
     }
 
+    private handleChange(): void {
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
     private handleFocusin(): void {
         this.focused = true;
     }
@@ -397,6 +406,7 @@ export class ColorSlider extends Focusable {
                 aria-label=${this.label}
                 .value=${String(this.value)}
                 @input=${this.handleInput}
+                @change=${this.handleChange}
                 @keydown=${this.handleKeydown}
                 @keyup=${this.handleKeyup}
             />
