@@ -244,7 +244,7 @@ export class StoryDecorator extends SpectrumElement {
 
     private get manageTheme(): TemplateResult {
         return html`
-            <div class="manage-theme">
+            <div class="manage-theme" part="controls">
                 ${this.colorControl} ${this.scaleControl} ${this.dirControl}
                 ${this.reduceMotionControl}
             </div>
