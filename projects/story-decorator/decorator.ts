@@ -18,6 +18,13 @@ export const themeStyles = html`
         #root {
             padding: 0;
         }
+        .docs-story sp-story-decorator::part(container) {
+            min-height: auto;
+            position: relative;
+        }
+        .docs-story sp-story-decorator::part(controls) {
+            position: absolute;
+        }
     </style>
 `;
 
@@ -34,9 +41,7 @@ export const swcThemeDecoratorWithConfig = (
     }
     return html`
         ${themeStyles}
-        <sp-story-decorator>
-            ${bundled ? story() : html``}
-        </sp-story-decorator>
+        <sp-story-decorator>${bundled ? story() : html``}</sp-story-decorator>
     `;
 };
 
