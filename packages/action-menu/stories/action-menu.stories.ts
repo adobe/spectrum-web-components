@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult, html } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { ActionMenuMarkup } from './';
 
-import { SettingsIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 
 export default {
     component: 'sp-action-menu',
@@ -82,6 +82,8 @@ iconOnly.args = {
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {
-    customIcon: SettingsIcon(),
+    customIcon: html`
+        <sp-icon-settings slot="icon"></sp-icon-settings>
+    `,
     visibleLabel: '',
 };

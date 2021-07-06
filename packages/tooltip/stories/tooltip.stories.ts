@@ -10,13 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-tooltip.js';
-import '@spectrum-web-components/icon/sp-icon';
 import { html, ifDefined, TemplateResult } from '@spectrum-web-components/base';
-import {
-    AlertIcon,
-    CheckmarkIcon,
-    InfoIcon,
-} from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/button/sp-button.js';
 import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
@@ -35,9 +32,18 @@ const iconOptions: {
     }) => TemplateResult | string;
 } = {
     '': () => html``,
-    negative: AlertIcon,
-    positive: CheckmarkIcon,
-    info: InfoIcon,
+    negative: () =>
+        html`
+            <sp-icon-alert slot="icon"></sp-icon-alert>
+        `,
+    positive: () =>
+        html`
+            <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+        `,
+    info: () =>
+        html`
+            <sp-icon-info slot="icon"></sp-icon-info>
+        `,
 };
 
 export default {
@@ -145,12 +151,7 @@ export const wIcon = ({
 }: Properties): TemplateResult => {
     return html`
         <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
-            ${!!variant
-                ? html`
-                      <sp-icon slot="icon">${iconOptions[variant]()}</sp-icon>
-                  `
-                : html``}
-            ${text}
+            ${!!variant ? iconOptions[variant]() : html``} ${text}
         </sp-tooltip>
     `;
 };

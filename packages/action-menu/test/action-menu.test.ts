@@ -12,8 +12,7 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { SettingsIcon } from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
@@ -84,7 +83,7 @@ describe('Action menu', () => {
         const el = await fixture<ActionMenu>(
             html`
                 <sp-action-menu label="More Actions">
-                    <sp-icon slot="icon">${SettingsIcon()}</sp-icon>
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item>Select Inverse</sp-menu-item>
                     <sp-menu-item>Feather...</sp-menu-item>
