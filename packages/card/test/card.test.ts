@@ -134,8 +134,7 @@ describe('card', () => {
     it('converts `Space` to `click` event', async () => {
         const clickSpy = spy();
         const handleClick = (): void => clickSpy();
-        const test = await fixture<HTMLDivElement>(Default(Default.args));
-        const el = test.querySelector('sp-card') as Card;
+        const el = await fixture<Card>(Default(Default.args));
         el.addEventListener('click', handleClick);
 
         await elementUpdated(el);
@@ -152,8 +151,7 @@ describe('card', () => {
         expect(clickSpy.calledOnce).to.be.true;
     });
     it('can be `[toggles]`', async () => {
-        const test = await fixture<HTMLDivElement>(Default(Default.args));
-        const el = test.querySelector('sp-card') as Card;
+        const el = await fixture<Card>(Default(Default.args));
         el.toggles = true;
 
         await elementUpdated(el);
@@ -218,8 +216,7 @@ describe('card', () => {
 
     it('announces when `[toggles]`', async () => {
         const changeSpy = spy();
-        const test = await fixture<HTMLDivElement>(Default(Default.args));
-        const el = test.querySelector('sp-card') as Card;
+        const el = await fixture<Card>(Default(Default.args));
         el.toggles = true;
         el.addEventListener('change', changeSpy);
 

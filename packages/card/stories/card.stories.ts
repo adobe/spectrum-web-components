@@ -58,43 +58,39 @@ interface StoryArgs {
 
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
-        <div>
-            <sp-card
-                heading="Card Heading"
-                subheading="JPG"
-                ?small=${args.small}
-                ?horizontal=${args.horizontal}
-            >
-                <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
-                <div slot="footer">Footer</div>
-            </sp-card>
-        </div>
+        <sp-card
+            heading="Card Heading"
+            subheading="JPG"
+            ?small=${args.small}
+            ?horizontal=${args.horizontal}
+        >
+            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+            <div slot="footer">Footer</div>
+        </sp-card>
     `;
 };
 Default.args = {};
 
 export const actions = (args: StoryArgs): TemplateResult => {
     return html`
-        <div>
-            <sp-card
-                heading="Card Heading"
-                subheading="JPG"
-                ?small=${args.small}
-                ?horizontal=${args.horizontal}
-            >
-                <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
-                <div slot="footer">Footer</div>
-                <sp-action-menu slot="actions" placement="bottom-end">
-                    <sp-menu-item>Deselect</sp-menu-item>
-                    <sp-menu-item>Select Inverse</sp-menu-item>
-                    <sp-menu-item>Feather...</sp-menu-item>
-                    <sp-menu-item>Select and Mask...</sp-menu-item>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-item>Save Selection</sp-menu-item>
-                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-action-menu>
-            </sp-card>
-        </div>
+        <sp-card
+            heading="Card Heading"
+            subheading="JPG"
+            ?small=${args.small}
+            ?horizontal=${args.horizontal}
+        >
+            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+            <div slot="footer">Footer</div>
+            <sp-action-menu slot="actions" placement="bottom-end">
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-action-menu>
+        </sp-card>
     `;
 };
 
@@ -122,16 +118,14 @@ export const Gallery = (args: StoryArgs): TemplateResult => {
 
 export const noPreviewImage = (args: StoryArgs): TemplateResult => {
     return html`
-        <div>
-            <sp-card
-                heading="Card Heading"
-                subheading="No preview image"
-                ?small=${args.small}
-                ?horizontal=${args.horizontal}
-            >
-                <div slot="footer">Footer</div>
-            </sp-card>
-        </div>
+        <sp-card
+            heading="Card Heading"
+            subheading="No preview image"
+            ?small=${args.small}
+            ?horizontal=${args.horizontal}
+        >
+            <div slot="footer">Footer</div>
+        </sp-card>
     `;
 };
 
@@ -246,20 +240,17 @@ small.args = {
 
 export const smallHorizontal = (args: StoryArgs): TemplateResult => {
     return html`
-        <div>
-            <sp-card
-                ?small=${args.small}
-                ?horizontal=${args.horizontal}
-                heading="Card Heading"
-                subheading="JPG"
-            >
-                <sp-icon-file-txt
-                    slot="preview"
-                    style="width: 36px; height: 36px;"
-                ></sp-icon-file-txt>
-            </sp-card>
-        </div>
-        .
+        <sp-card
+            ?small=${args.small}
+            ?horizontal=${args.horizontal}
+            heading="Card Heading"
+            subheading="JPG"
+        >
+            <sp-icon-file-txt
+                slot="preview"
+                style="width: 36px; height: 36px;"
+            ></sp-icon-file-txt>
+        </sp-card>
     `;
 };
 smallHorizontal.args = {

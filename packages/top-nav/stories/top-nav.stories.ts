@@ -18,16 +18,13 @@ import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
-import {
-    SettingsIcon,
-    DownloadIcon,
-    LinkIcon,
-    SearchIcon,
-} from '@spectrum-web-components/icons-workflow';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-download.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-link.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-search.js';
 import { logo, avatar } from './images';
 
 export default {
@@ -48,7 +45,7 @@ export const Default = (): TemplateResult => {
                 Page with Really Long Name
             </sp-top-nav-item>
             <sp-action-menu label="Account" style="margin-inline-start: auto;">
-                <sp-icon slot="icon">${SettingsIcon()}</sp-icon>
+                <sp-icon-settings slot="icon"></sp-icon-settings>
                 <sp-menu-item>Account Settings</sp-menu-item>
                 <sp-menu-item>My Profile</sp-menu-item>
                 <sp-menu-divider></sp-menu-divider>
@@ -75,7 +72,7 @@ export const Selected = (): TemplateResult => {
                 Page with Really Long Name
             </sp-top-nav-item>
             <sp-action-menu label="Account" style="margin-inline-start: auto;">
-                <sp-icon slot="icon">${SettingsIcon()}</sp-icon>
+                <sp-icon-settings slot="icon"></sp-icon-settings>
                 <sp-menu-item>Account Settings</sp-menu-item>
                 <sp-menu-item>My Profile</sp-menu-item>
                 <sp-menu-divider></sp-menu-divider>
@@ -104,13 +101,13 @@ export const Modes = (): TemplateResult => {
             </span>
             <sp-action-group style="margin-inline-start: auto;">
                 <sp-action-button quiet label="Search">
-                    <sp-icon size="s" slot="icon">${SearchIcon()}</sp-icon>
+                    <sp-icon-search slot="icon"></sp-icon-search>
                 </sp-action-button>
                 <sp-action-button quiet label="Download">
-                    <sp-icon size="s" slot="icon">${DownloadIcon()}</sp-icon>
+                    <sp-icon-download slot="icon"></sp-icon-download>
                 </sp-action-button>
                 <sp-action-button quiet label="Link">
-                    <sp-icon size="s" slot="icon">${LinkIcon()}</sp-icon>
+                    <sp-icon-link slot="icon"></sp-icon-link>
                 </sp-action-button>
                 <sp-action-menu label="User">
                     <sp-avatar
