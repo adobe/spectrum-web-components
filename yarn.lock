@@ -4721,9 +4721,9 @@
     puppeteer-core "^8.0.0"
 
 "@web/test-runner-commands@^0.5.0", "@web/test-runner-commands@^0.5.2":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.5.4.tgz#54ee2defb60b7da0bf08fdc968ea78a22e2a2404"
-  integrity sha512-nCMRkxgDfo5JjB1wWyy8C4ZAcq26VXpx20zM/MAXE2nPz5LwHqUT80wbHqCamsPU78iMt9d246Ii8aRHmUWvuw==
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.5.5.tgz#c7311932d4903cae13945e36d6dc4809acb172fe"
+  integrity sha512-tWHez95kqJbtcO79eIVtpJcznqGf4OMVo4fWdJhPVdp2GY81SeE2WAE7RLFgZuFxW33p/ycP7LmotELqU0JLIg==
   dependencies:
     "@web/test-runner-core" "^0.10.14"
     mkdirp "^1.0.4"
