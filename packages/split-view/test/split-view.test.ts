@@ -1031,4 +1031,24 @@ describe('SplitView', () => {
         expect(el.splitterPos || 0).to.equal(pos - 10);
         expect(changeSpy.callCount).to.equal(1);
     });
+
+    it('resizes when primarySize changes', async () => {
+        const el = await fixture<SplitView>(
+            html`
+                <sp-split-view
+                    resizable
+                    primary-size="100"
+                    style=${`height: 200px; width: 500px;`}
+                >
+                    <div>First panel</div>
+                    <div>Second panel</div>
+                </sp-split-view>
+            `
+        );
+        await elementUpdated(el);
+        expect(el.splitterPos || 0).to.equal(100);
+        el.primarySize = '300';
+        await elementUpdated(el);
+        expect(el.splitterPos || 0).to.equal(300);
+    });
 });
