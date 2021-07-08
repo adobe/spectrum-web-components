@@ -401,6 +401,10 @@ export class SplitView extends SpectrumElement {
 
     protected updated(changed: PropertyValues): void {
         super.updated(changed);
+        if (changed.has('primarySize')) {
+            this.splitterPos = undefined;
+            this.checkResize();
+        }
         if (
             changed.has('splitterPos') &&
             this.splitterPos !== undefined &&

@@ -19,13 +19,20 @@ export default {
     component: 'sp-split-view',
 };
 
-export const Horizontal = (): TemplateResult => {
+interface Properties {
+    primarySize?: string;
+}
+
+export const Horizontal = (args: Properties): TemplateResult => {
     return html`
-        <sp-split-view style="height: 200px" primary-size="100">
+        <sp-split-view style="height: 200px" primary-size="${args.primarySize}">
             <div>First panel</div>
             <div>Second panel</div>
         </sp-split-view>
     `;
+};
+Horizontal.args = {
+    primarySize: '100',
 };
 
 export const HorizontalResizable = (): TemplateResult => {
