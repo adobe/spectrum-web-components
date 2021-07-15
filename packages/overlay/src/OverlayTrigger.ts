@@ -359,7 +359,7 @@ export class OverlayTrigger extends LitElement {
         }
         if (this.closeHoverOverlay) {
             this.closeHoverOverlay();
-            delete this.closeClickOverlay;
+            delete this.closeHoverOverlay;
         }
         super.disconnectedCallback();
     }
