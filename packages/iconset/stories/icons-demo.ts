@@ -106,6 +106,7 @@ export class IconsDemo extends SpectrumElement {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
+                    text-align: center;
                 }
                 sp-icon {
                     margin-bottom: 10px;
@@ -150,7 +151,9 @@ export class IconsDemo extends SpectrumElement {
             </div>
             ${matchingIcons.map((icon) => {
                 return html`
-                    <div class="icon">${icon.story(this.size)} ${icon.tag}</div>
+                    <bdo class="icon" dir="ltr" class="icon">
+                        ${icon.story(this.size)} ${icon.tag}
+                    </bdo>
                 `;
             })}
         `;
@@ -164,13 +167,13 @@ export class IconsDemo extends SpectrumElement {
                   `}
             ${this.iconset.map(
                 (icon) => html`
-                    <div class="icon">
+                    <bdo class="icon" dir="ltr">
                         <sp-icon
                             size="xl"
                             name=${`${this.name}:${icon}`}
                         ></sp-icon>
                         ${icon}
-                    </div>
+                    </bdo>
                 `
             )}
         `;

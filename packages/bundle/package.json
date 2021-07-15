@@ -71,6 +71,7 @@
         "@spectrum-web-components/field-label": "^0.5.2",
         "@spectrum-web-components/icon": "^0.9.7",
         "@spectrum-web-components/icons": "^0.7.6",
+        "@spectrum-web-components/icons-ui": "^0.6.7",
         "@spectrum-web-components/icons-workflow": "^0.6.7",
         "@spectrum-web-components/iconset": "^0.5.6",
         "@spectrum-web-components/illustrated-message": "^0.6.9",
