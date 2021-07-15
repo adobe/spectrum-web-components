@@ -51,6 +51,7 @@ export const elements = ({ color, size }: Properties): TemplateResult => {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                text-align: center;
             }
             sp-icon {
                 margin-bottom: 10px;
@@ -85,10 +86,10 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
             <icons-demo style="color: ${color}">
                 ${iconTemplates.map(
                     (icon) => html`
-                        <div class="icon">
+                        <bdo class="icon" dir="ltr">
                             <sp-icon size=${size}>${icon.template()}</sp-icon>
                             ${icon.name}
-                        </div>
+                        </bdo>
                     `
                 )}
             </icons-demo>
@@ -100,6 +101,7 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                text-align: center;
             }
             sp-icon {
                 margin-bottom: 10px;
