@@ -281,6 +281,9 @@ export class Menu extends SpectrumElement {
     }
 
     private onClick(event: Event): void {
+        if (event.defaultPrevented) {
+            return;
+        }
         const path = event.composedPath();
         const target = path.find((el) => {
             /* c8 ignore next 3 */
@@ -292,7 +295,6 @@ export class Menu extends SpectrumElement {
         const childItem = this.childItemMap.get(target);
         if (childItem?.managed && this.selects) {
             event.preventDefault();
-            event.stopImmediatePropagation();
             this.selectOrToggleItem(target);
         } else {
             return;

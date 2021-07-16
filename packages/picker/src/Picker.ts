@@ -177,18 +177,10 @@ export class PickerBase extends SizedMixin(Focusable) {
         );
     }
 
-    public onClick(event: Event): void {
-        const target = event.target as MenuItem;
-        /* c8 ignore 6 */
-        if (!target || target.disabled) {
-            if (target) {
-                this.focus();
-            }
-            return;
-        }
-        if (target.value) {
-            this.setValueFromItem(target);
-        }
+    public handleChange(event: Event): void {
+        const target = event.target as Menu;
+        const [selected] = target.selectedItems;
+        this.setValueFromItem(selected);
     }
 
     protected onKeydown = (event: KeyboardEvent): void => {
@@ -380,20 +372,14 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
-    // TODO: switch sp-menu to `selects="inherit"`. This will involve working through
-    // issues around reparenting, selection, & focus.
     protected get renderPopover(): TemplateResult {
         return html`
-            <sp-popover
-                open
-                id="popover"
-                @click=${this.onClick}
-                @sp-overlay-closed=${this.onOverlayClosed}
-            >
+            <sp-popover id="popover" @sp-overlay-closed=${this.onOverlayClosed}>
                 <sp-menu
                     id="menu"
                     role="${this.listRole}"
-                    selects="inherit"
+                    selects="single"
+                    @change=${this.handleChange}
                 ></sp-menu>
             </sp-popover>
         `;

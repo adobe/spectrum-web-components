@@ -14,6 +14,7 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
+    queryAssignedNodes,
 } from '@spectrum-web-components/base';
 
 import { Menu } from './Menu.js';
@@ -32,6 +33,21 @@ export class MenuGroup extends Menu {
         return [...super.styles, menuGroupStyles];
     }
 
+    private static instances = 0;
+
+    private headerId!: string;
+
+    public constructor() {
+        super();
+        MenuGroup.instances += 1;
+        this.headerId = `sp-menu-group-label-${MenuGroup.instances}`;
+    }
+
+    @queryAssignedNodes('header', true)
+    private headerElements!: NodeListOf<HTMLElement>;
+
+    private headerElement?: HTMLElement;
+
     protected get ownRole(): string {
         switch (this.selects) {
             case 'multiple':
@@ -43,10 +59,28 @@ export class MenuGroup extends Menu {
         }
     }
 
+    protected updateLabel(): void {
+        const headerElement = this.headerElements.length
+            ? this.headerElements[0]
+            : undefined;
+        if (headerElement !== this.headerElement) {
+            if (this.headerElement && this.headerElement.id === this.headerId) {
+                this.headerElement.removeAttribute('id');
+            }
+            if (headerElement) {
+                headerElement.id = this.headerId;
+                this.setAttribute('aria-labelledby', this.headerId);
+            } else {
+                this.removeAttribute('aria-labelledby');
+            }
+        }
+        this.headerElement = headerElement;
+    }
+
     public render(): TemplateResult {
         return html`
             <span class="header" aria-hidden="true">
-                <slot name="header"></slot>
+                <slot name="header" @slotchange=${this.updateLabel}></slot>
             </span>
             <sp-menu role="none">
                 <slot></slot>
