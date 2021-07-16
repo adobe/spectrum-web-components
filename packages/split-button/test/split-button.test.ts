@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    expect,
+    html,
+    oneEvent,
+} from '@open-wc/testing';
 import { spy } from 'sinon';
 
 import '../sp-split-button.js';
@@ -145,18 +151,22 @@ describe('Splitbutton', () => {
         const toggleButton = root.querySelector(
             '.trigger'
         ) as HTMLButtonElement;
+        const opened = oneEvent(el, 'sp-opened');
         toggleButton.click();
+        await opened;
 
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
 
+        const closed = oneEvent(el, 'sp-closed');
         item3.click();
+        await closed;
 
         await elementUpdated(el);
 
-        expect(el.open).to.be.false;
         expect(el.selectedItem?.itemText).to.equal('Short');
+        expect(el.open).to.be.false;
     });
     it('[type="more"] manages `selectedItem.itemText`', async () => {
         const test = await fixture<HTMLDivElement>(

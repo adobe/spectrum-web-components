@@ -154,7 +154,7 @@ describe('Menu [selects] w/ group', () => {
         el = await fixture<Menu>(
             html`
                 <sp-menu selects="single">
-                    <sp-menu-group>
+                    <sp-menu-group selects="inherit">
                         <sp-menu-item value="1">Option 1</sp-menu-item>
                         <sp-menu-item value="2">Option 2</sp-menu-item>
                         <sp-menu-item value="3">Option 3</sp-menu-item>
