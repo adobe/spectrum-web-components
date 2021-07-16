@@ -116,7 +116,7 @@
 </style>
 
   
-<link rel="preload" href="./54a4935f.js" as="script">
+<link rel="preload" href="./824e98cf.js" as="script">
 </head>
 
   <body>
@@ -133,7 +133,7 @@
   
 <script>(function () {
   function polyfillsLoader() {
-    function loadScript(src, type) {
+    function loadScript(src, type, attributes = []) {
       return new Promise(function (resolve) {
         var script = document.createElement('script');
 
@@ -147,6 +147,9 @@
 
         script.src = src;
         script.onload = onLoaded;
+        attributes.forEach(att => {
+          script.setAttribute(att.name, att.value);
+        });
 
         script.onerror = function () {
           console.error('[polyfills-loader] failed to load: ' + src + ' check the network tab for HTTP status.');
@@ -162,10 +165,10 @@
     polyfills.push(loadScript('./polyfills/regenerator-runtime.ebfd7b154777d0fed9fa79f20e07b8fc.js'));
 
     if (!('fetch' in window) || !('Request' in window) || !('signal' in window.Request.prototype)) {
-      polyfills.push(loadScript('./polyfills/fetch.bae39a1356d8c63423817676729b9861.js'));
+      polyfills.push(loadScript('./polyfills/fetch.39185127fcf42e3e1035b245de5024df.js'));
     }
 
-    polyfills.push(loadScript('./polyfills/systemjs.c80aa2992e2de3b6e03317286a7104c8.js'));
+    polyfills.push(loadScript('./polyfills/systemjs.b6ad53205d8657841448f9c91e83f589.js'));
 
     if (!('IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype)) {
       polyfills.push(loadScript('./polyfills/intersection-observer.e09cbb4189f6808e65aaf9f27b007c02.js'));
@@ -184,7 +187,7 @@
     }
 
     function loadFiles() {
-      System.import('./54a4935f.js');
+      System.import('./824e98cf.js');
     }
 
     if (polyfills.length) {
@@ -202,7 +205,7 @@
       polyfillsLoader();
     }
 
-    s.src = "./polyfills/core-js.27722d0d6eb8f845a39c56ba85b10fe9.js";
+    s.src = "./polyfills/core-js.67b886accf8610d6a8546fefc03312e0.js";
     s.onload = onLoaded;
 
     s.onerror = function () {
