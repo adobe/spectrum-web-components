@@ -67,7 +67,7 @@ const storyStyles = html`
         }
 
         #styled-div {
-            background-color: blue;
+            background-color: var(--styled-div-background-color, blue);
             color: white;
             padding: 4px 10px;
             margin-bottom: 10px;
@@ -141,7 +141,6 @@ const template = ({ placement, offset, open }: Properties): TemplateResult => {
                 slot="click-content"
                 placement="${placement}"
                 tip
-                open
             >
                 <div class="options-popover-content">
                     <sp-slider
@@ -198,6 +197,22 @@ export const openClickContent = (args: Properties): TemplateResult =>
         ...args,
         open: 'click',
     });
+
+export const customizedClickContent = (
+    args: Properties
+): TemplateResult => html`
+    <style>
+        active-overlay::part(theme) {
+            --styled-div-background-color: var(--spectrum-semantic-cta-color-background-default);
+            --spectrum-button-cta-m-background-color: rebeccapurple;
+        }
+    </style>
+    </style>
+    ${template({
+        ...args,
+        open: 'click',
+    })}
+`;
 
 const extraText = html`
     <p>This is some text.</p>
