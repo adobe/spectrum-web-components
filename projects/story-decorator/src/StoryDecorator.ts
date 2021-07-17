@@ -82,6 +82,7 @@ ActiveOverlay.prototype.renderTheme = function (
             color=${ifDefined(color)}
             scale=${ifDefined(scale)}
             lang=${ifDefined(lang)}
+            part="theme"
         >
             ${content}
         </sp-theme>

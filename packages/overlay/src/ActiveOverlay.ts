@@ -483,6 +483,7 @@ export class ActiveOverlay extends SpectrumElement {
                 color=${ifDefined(color)}
                 scale=${ifDefined(scale)}
                 lang=${ifDefined(lang)}
+                part="theme"
             >
                 ${content}
             </sp-theme>
