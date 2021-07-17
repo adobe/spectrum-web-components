@@ -105,13 +105,6 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
         );
     }
 
-    protected handleClick(event: Event): void {
-        const target = event.composedPath()[0];
-        if (target === this && !this.checked) {
-            this.activate();
-        }
-    }
-
     protected activate(): void {
         this.checked = true;
         this.dispatchEvent(
@@ -122,18 +115,15 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
         );
     }
 
+    protected handleKeyup(event: KeyboardEvent): void {
+        if (event.code === 'Space') {
+            this.activate();
+        }
+    }
+
     protected render(): TemplateResult {
         return html`
-            <input
-                id="input"
-                type="radio"
-                value=${this.value}
-                .checked=${this.checked}
-                @change=${this.handleChange}
-                aria-hidden="true"
-                tabindex="-1"
-                ?disabled=${this.disabled}
-            />
+            <div id="input"></div>
             <span id="button"></span>
             <span id="label" role="presentation"><slot></slot></span>
         `;
@@ -146,7 +136,8 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
             this.tabIndex = 0;
         }
         this.manageAutoFocus();
-        this.addEventListener('click', this.handleClick);
+        this.addEventListener('click', this.activate);
+        this.addEventListener('keyup', this.handleKeyup);
     }
 
     protected updated(changes: PropertyValues): void {
@@ -163,6 +154,13 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 this.setAttribute('aria-checked', 'true');
             } else {
                 this.setAttribute('aria-checked', 'false');
+            }
+        }
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabeld');
             }
         }
     }
