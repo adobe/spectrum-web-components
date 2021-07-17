@@ -50,6 +50,9 @@ export class Tab extends FocusVisiblePolyfillMixin(
         return !!this.label || this.slotHasContent;
     }
 
+    @property({ type: Boolean, reflect: true })
+    public disabled = false;
+
     @property({ reflect: true })
     public label = '';
 
@@ -92,6 +95,13 @@ export class Tab extends FocusVisiblePolyfillMixin(
                 this.selected ? 'true' : 'false'
             );
             this.setAttribute('tabindex', this.selected ? '0' : '-1');
+        }
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabled');
+            }
         }
     }
 }

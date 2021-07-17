@@ -45,6 +45,23 @@ import {
 </sp-tabs>
 ```
 
+### Disabled
+
+When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` children will be disabled as well, preventing a visitor from changing the selected tab. By default, `<sp-tab-panel>` children will not be addressed and the available content of the currently selected tab will be fully visible.
+
+```html
+<sp-tabs selected="2" disabled>
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1 is not selectable</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2 is selected</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3 is not selectable</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4 is not selectable</sp-tab-panel>
+</sp-tabs>
+```
+
 ### Vertical
 
 ```html
