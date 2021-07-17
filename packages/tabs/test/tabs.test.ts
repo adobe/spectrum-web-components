@@ -81,6 +81,32 @@ describe('Tabs', () => {
         await expect(tabs).to.be.accessible();
     });
 
+    it('can be disabled', async () => {
+        const tabs = await createTabs();
+        const tab = tabs.querySelector('[label="Tab 3"]') as Tab;
+        tabs.disabled = true;
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('first');
+        tab.click();
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('first');
+    });
+
+    it('can have disabled sp-tab children', async () => {
+        const tabs = await createTabs();
+        const tab2 = tabs.querySelector('[label="Tab 2"]') as Tab;
+        const tab3 = tabs.querySelector('[label="Tab 3"]') as Tab;
+        tab3.disabled = true;
+        await elementUpdated(tab3);
+        expect(tabs.selected).to.equal('first');
+        tab3.click();
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('first');
+        tab2.click();
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('second');
+    });
+
     it('reflects selected tab with selected property', async () => {
         const tabs = await createTabs();
 

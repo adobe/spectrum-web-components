@@ -103,6 +103,30 @@ export const Autofocus = (args: Properties): TemplateResult => {
     `;
 };
 
+export const disabledTabs = (args: Properties): TemplateResult => {
+    return html`
+        <sp-tabs selected="1" disabled ?auto=${args.auto} label="Disabled Tabs">
+            <sp-tab label="Tab 1" value="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            ${panels()}
+        </sp-tabs>
+    `;
+};
+
+export const disabledTab = (args: Properties): TemplateResult => {
+    return html`
+        <sp-tabs selected="1" ?auto=${args.auto} label="Disabled Tab">
+            <sp-tab label="Tab 1" value="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2" disabled></sp-tab>
+            <sp-tab label="Tab 3" value="3" disabled></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            ${panels()}
+        </sp-tabs>
+    `;
+};
+
 export const Vertical = (args: Properties): TemplateResult => {
     return html`
         <sp-tabs

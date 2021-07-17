@@ -98,14 +98,16 @@ export class Tabs extends Focusable {
     /**
      * @private
      */
-    public get focusElement(): Tab {
+    public get focusElement(): Tab | this {
         const focusElement = this.tabs.find(
-            (tab) => tab.selected || tab.value === this.selected
+            (tab) =>
+                !tab.disabled && (tab.selected || tab.value === this.selected)
         );
         if (focusElement) {
             return focusElement;
         }
-        return this.tabs[0];
+        const fallback = this.tabs.find((tab) => !tab.disabled);
+        return fallback || this;
     }
 
     protected manageAutoFocus(): void {
@@ -191,6 +193,13 @@ export class Tabs extends Focusable {
         if (changes.has('dir')) {
             this.updateSelectionIndicator();
         }
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabled');
+            }
+        }
         if (
             !this.shouldAnimate &&
             typeof changes.get('shouldAnimate') !== 'undefined'
@@ -260,7 +269,10 @@ export class Tabs extends Focusable {
     }
 
     private onClick = (event: Event): void => {
-        const target = event.target as HTMLElement;
+        const target = event.target as Tab;
+        if (this.disabled || target.disabled) {
+            return;
+        }
         this.shouldAnimate = true;
         this.selectTarget(target);
         if (this.shouldApplyFocusVisible && event.composedPath()[0] !== this) {

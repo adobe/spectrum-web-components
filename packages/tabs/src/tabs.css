@@ -20,8 +20,26 @@ governing permissions and limitations under the License.
     grid-template-columns: auto 1fr;
 }
 
+:host([disabled]) #selectionIndicator {
+    background-color: var(
+        --spectrum-tabs-m-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    );
+}
+
+:host([disabled]) ::slotted(sp-tab) {
+    color: var(
+        --spectrum-tabs-m-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    );
+}
+
 #list {
     justify-content: var(--swc-tabs-list-justify-content);
+}
+
+:host([disabled]) #list {
+    pointer-events: none;
 }
 
 /*
