@@ -125,8 +125,7 @@ export const VerticalSized = (args: Properties): TemplateResult => {
         <style>
             sp-tabs {
                 height: 75vh;
-                flex-direction: column;
-                justify-content: center;
+                --swc-tabs-list-justify-content: center;
             }
         </style>
         <sp-tabs
@@ -149,8 +148,7 @@ export const VerticalRight = (args: Properties): TemplateResult => {
         <style>
             sp-tabs {
                 height: 75vh;
-                flex-direction: column;
-                justify-content: center;
+                --swc-tabs-list-justify-content: center;
             }
         </style>
         <sp-tabs

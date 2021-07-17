@@ -12,6 +12,18 @@ governing permissions and limitations under the License.
 
 @import './spectrum-tabs.css';
 
+:host {
+    display: grid;
+}
+
+:host([direction^='vertical']) {
+    grid-template-columns: auto 1fr;
+}
+
+#list {
+    justify-content: var(--swc-tabs-list-justify-content);
+}
+
 /*
  * While https://github.com/adobe/spectrum-css/issues/641 goes unaddressed,
  * then we'll need to place this at `top: 0;` ourselves.
