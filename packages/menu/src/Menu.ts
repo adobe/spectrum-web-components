@@ -63,6 +63,8 @@ export class Menu extends SpectrumElement {
         return [menuStyles];
     }
 
+    public isSubMenu?: (leave?: boolean) => void;
+
     @property({ type: String, reflect: true })
     public label = '';
 
@@ -166,7 +168,6 @@ export class Menu extends SpectrumElement {
             this.tabIndex = -1;
         }
         event.focusRoot = this;
-        this.addChildItem(event.item);
 
         if (this.selects === 'inherit') {
             this.resolvedSelects = 'inherit';
@@ -198,6 +199,9 @@ export class Menu extends SpectrumElement {
     private onSelectableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent
     ): void {
+        if (event.focusRoot === this) {
+            this.addChildItem(event.item);
+        }
         const selects =
             this.resolvedSelects === 'single' ||
             this.resolvedSelects === 'multiple';
@@ -268,6 +272,10 @@ export class Menu extends SpectrumElement {
         }
     }
 
+    public submenuClosed(menuItem: MenuItem): void {
+        this.focusInItemIndex = this.childItems.indexOf(menuItem);
+    }
+
     private onClick(event: Event): void {
         if (event.defaultPrevented) {
             return;
@@ -282,10 +290,14 @@ export class Menu extends SpectrumElement {
         }) as MenuItem;
         if (target?.href && target.href.length) {
             return;
-        }
-        if (target?.menuData.selectionRoot === this) {
+        } else if (target?.hasSubMenu) {
+            target.openOverlay();
+        } else if (target?.menuData.selectionRoot === this) {
             event.preventDefault();
             this.selectOrToggleItem(target);
+            if (this.isSubMenu) {
+                this.isSubMenu();
+            }
         } else {
             return;
         }
@@ -436,17 +448,30 @@ export class Menu extends SpectrumElement {
             this.childItems[this.focusedItemIndex]?.click();
             return;
         }
-        if (code !== 'ArrowDown' && code !== 'ArrowUp') {
+        if (code === 'ArrowDown' || code === 'ArrowUp') {
+            const lastFocusedItem = this.childItems[this.focusedItemIndex];
+            const direction = code === 'ArrowDown' ? 1 : -1;
+            const itemToFocus = this.focusMenuItemByOffset(direction);
+            if (itemToFocus === lastFocusedItem) {
+                return;
+            }
+            event.preventDefault();
+            itemToFocus.scrollIntoView({ block: 'nearest' });
             return;
         }
-        const lastFocusedItem = this.childItems[this.focusedItemIndex];
-        const direction = code === 'ArrowDown' ? 1 : -1;
-        const itemToFocus = this.focusMenuItemByOffset(direction);
-        if (itemToFocus === lastFocusedItem) {
-            return;
+        if (code === 'ArrowRight') {
+            const lastFocusedItem = this.childItems[this.focusedItemIndex];
+            if (lastFocusedItem.hasSubMenu) {
+                if (lastFocusedItem.open) {
+                    lastFocusedItem.submenu?.focus();
+                } else {
+                    lastFocusedItem.openOverlay();
+                }
+            }
+        } else if (code === 'ArrowLeft' && this.isSubMenu) {
+            this.isSubMenu(true);
+            delete this.isSubMenu;
         }
-        event.preventDefault();
-        itemToFocus.scrollIntoView({ block: 'nearest' });
     }
 
     public focusMenuItemByOffset(offset: number): MenuItem {
