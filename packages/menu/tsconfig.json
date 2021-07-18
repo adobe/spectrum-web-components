@@ -6,5 +6,9 @@
     },
     "include": ["*.ts", "src/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../base" }, { "path": "../action-button" }]
+    "references": [
+        { "path": "../base" },
+        { "path": "../action-button" },
+        { "path": "../overlay" }
+    ]
 }

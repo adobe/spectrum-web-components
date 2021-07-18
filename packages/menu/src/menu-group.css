@@ -14,8 +14,9 @@ governing permissions and limitations under the License.
 
 :host {
     margin: 0;
-    display: inline;
+    display: inline-flex;
     overflow: visible;
+    flex-direction: column;
 }
 
 /**
@@ -36,5 +37,17 @@ governing permissions and limitations under the License.
 }
 
 sp-menu {
-    display: block;
+    --swc-menu-width: 100%;
+}
+
+:host(:last-child) sp-menu {
+    margin-bottom: 0;
+}
+
+:host(:first-child) .header[hidden] + sp-menu {
+    margin-top: 0;
+}
+
+[hidden] {
+    display: none !important;
 }

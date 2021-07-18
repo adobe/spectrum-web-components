@@ -294,7 +294,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     private async openMenu(): Promise<void> {
         /* c8 ignore next 9 */
         let reparentableChildren: Element[] = [];
-        const deprecatedMenu = this.querySelector('sp-menu');
+        const deprecatedMenu = this.querySelector(':scope > sp-menu') as Menu;
 
         await this.generatePopover(deprecatedMenu);
         if (deprecatedMenu) {

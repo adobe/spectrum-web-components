@@ -62,10 +62,10 @@ export default {
             '**/node_modules/**',
         ],
         threshold: {
-            statements: 98,
-            branches: 93,
+            statements: 99,
+            branches: 96,
             functions: 98,
-            lines: 98,
+            lines: 99,
         },
     },
     testFramework: {

@@ -18,10 +18,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import {
+import type {
     OverlayDisplayQueryDetail,
     Placement,
-} from '@spectrum-web-components/overlay';
+} from '@spectrum-web-components/overlay/src/overlay-types.js';
 import popoverStyles from './popover.css.js';
 
 /**
@@ -76,12 +76,18 @@ export class Popover extends SpectrumElement {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener('sp-overlay-query', this.onOverlayQuery);
+        this.addEventListener(
+            'sp-overlay-query',
+            this.onOverlayQuery as EventListener
+        );
     }
 
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        this.removeEventListener('sp-overlay-query', this.onOverlayQuery);
+        this.removeEventListener(
+            'sp-overlay-query',
+            this.onOverlayQuery as EventListener
+        );
     }
 
     public onOverlayQuery(event: CustomEvent<OverlayDisplayQueryDetail>): void {

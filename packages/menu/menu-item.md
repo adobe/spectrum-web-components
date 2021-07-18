@@ -69,6 +69,22 @@ Content assigned to the `value` slot will be placed at the end of the `<sp-menu-
 </sp-menu>
 ```
 
+### Submenu
+
+An `<sp-menu-item>` can also accept content addressed to its `submenu` slot. Using the `<sp-menu>` element with this slot name the options will be surfaced in flyout menu that can be activated by hovering over the root menu item with your pointer or focusing the menu item and pressing the appropriate `ArrowRight` or `ArrowLeft` key based on text direction to move into the submenu.
+
+```html
+<sp-menu style="width: 200px;">
+    <sp-menu-item>
+        Item with submenu
+        <sp-menu slot="submenu">
+            <sp-menu-item>Additional options</sp-menu-item>
+            <sp-menu-item>Available on request</sp-menu-item>
+        </sp-menu>
+    </sp-menu-item>
+</sp-menu>
+```
+
 ### Value attribute
 
 When displayed as a descendent of an element that manages selection (e.g. `<sp-action-menu>`, `<sp-picker>`, `<sp-split-button>`, etc.), an `<sp-menu-item>` will represent the "selected" value of that ancestor when its `value` attribute or the trimmed `textContent` (represeted by `el.itemText`) matches the `value` of the ancestor element.

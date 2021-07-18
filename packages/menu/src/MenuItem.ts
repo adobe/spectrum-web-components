@@ -24,10 +24,20 @@ import {
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import { openOverlay } from '@spectrum-web-components/overlay/src/loader.js';
 
 import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
-import { Menu } from './Menu.js';
+import type { Menu } from './Menu.js';
+import type { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
+
+/**
+ * Duration during which a pointing device can leave an `<sp-menu-item>` element
+ * and return to it or to the submenu opened from it before closing that submenu.
+ **/
+const POINTERLEAVE_TIMEOUT = 100;
 
 export class MenuItemRemovedEvent extends Event {
     constructor() {
@@ -53,7 +63,7 @@ export class MenuItemAddedOrUpdatedEvent extends Event {
             composed: true,
         });
     }
-    set focusRoot(root: Menu) {
+    set focusRoot(root: Menu | undefined) {
         this.item.menuData.focusRoot = this.item.menuData.focusRoot || root;
     }
     set selectionRoot(root: Menu) {
@@ -97,7 +107,7 @@ const removeEvent = new MenuItemRemovedEvent();
  */
 export class MenuItem extends LikeAnchor(Focusable) {
     public static get styles(): CSSResultArray {
-        return [menuItemStyles, checkmarkStyles];
+        return [menuItemStyles, checkmarkStyles, chevronStyles];
     }
 
     static instanceCount = 0;
@@ -134,8 +144,14 @@ export class MenuItem extends LikeAnchor(Focusable) {
      * @private
      */
     public get itemText(): string {
-        return (this.textContent || /* c8 ignore next */ '').trim();
+        return this.itemChildren.content.reduce(
+            (acc, node) => acc + (node.textContent || '').trim(),
+            ''
+        );
     }
+
+    @property({ type: Boolean })
+    public hasSubmenu = false;
 
     @property({
         type: Boolean,
@@ -191,6 +207,19 @@ export class MenuItem extends LikeAnchor(Focusable) {
             capture: true,
         });
     }
+
+    @property({ type: Boolean })
+    public open = false;
+
+    public set submenu(submenu: Menu | undefined) {
+        this._submenu = submenu;
+    }
+
+    public get submenu(): Menu | undefined {
+        return this._submenu;
+    }
+
+    private _submenu?: Menu;
 
     public click(): void {
         if (this.disabled) {
@@ -256,7 +285,26 @@ export class MenuItem extends LikeAnchor(Focusable) {
                       className: 'button anchor hidden',
                   })
                 : html``}
+            <slot
+                hidden
+                name="submenu"
+                @slotchange=${this.manageSubmenu}
+            ></slot>
+            ${this.hasSubmenu
+                ? html`
+                      <sp-icon-chevron100
+                          class="spectrum-UIIcon-ChevronRight100 chevron icon"
+                      ></sp-icon-chevron100>
+                  `
+                : html``}
         `;
+    }
+
+    protected manageSubmenu(event: Event & { target: HTMLSlotElement }): void {
+        const assignedElements = event.target.assignedElements({
+            flatten: true,
+        });
+        this.hasSubmenu = this.open || !!assignedElements.length;
     }
 
     private handleRemoveActive(): void {
@@ -273,6 +321,108 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.addEventListener('pointerdown', this.handlePointerdown);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${MenuItem.instanceCount++}`;
+        }
+    }
+
+    public closeOverlay?: (leave?: boolean) => Promise<void>;
+
+    protected handleSubmenuClick(): void {
+        this.openOverlay({ immediate: true });
+    }
+
+    protected handlePointerenter(): void {
+        if (this.leaveTimeout) {
+            clearTimeout(this.leaveTimeout);
+            delete this.leaveTimeout;
+        } else {
+            this.openOverlay();
+        }
+    }
+
+    protected leaveTimeout?: ReturnType<typeof setTimeout>;
+
+    protected handlePointerleave(): void {
+        if (this.hasSubmenu && this.open) {
+            this.active = true;
+            this.leaveTimeout = setTimeout(() => {
+                delete this.leaveTimeout;
+                if (this.closeOverlay) this.closeOverlay(true);
+            }, POINTERLEAVE_TIMEOUT);
+        }
+    }
+
+    protected handleSubmenuChange = (): void => {
+        this.click();
+    };
+
+    protected handleSubmenuPointerenter = (): void => {
+        if (this.leaveTimeout) {
+            clearTimeout(this.leaveTimeout);
+            delete this.leaveTimeout;
+        }
+    };
+
+    public async openOverlay({
+        immediate,
+    }: { immediate?: boolean } = {}): Promise<void> {
+        if (this.hasSubmenu && !this.open) {
+            this.open = true;
+            this.submenu = (
+                this.shadowRoot.querySelector(
+                    'slot[name="submenu"]'
+                ) as HTMLSlotElement
+            ).assignedElements()[0] as Menu;
+            this.submenu.addEventListener(
+                'pointerenter',
+                this.handleSubmenuPointerenter
+            );
+            this.submenu.addEventListener('change', this.handleSubmenuChange);
+            const popover = document.createElement('sp-popover');
+            popover.append(this.submenu);
+            this.submenu.tabIndex = 0;
+            this.submenu.removeAttribute('slot');
+            this.menuData.focusRoot?.submenuOpened(this);
+            const closeOverlay = openOverlay(this, 'click', popover, {
+                placement: this.isLTR ? 'right-start' : 'left-start',
+                receivesFocus: 'auto',
+                delayed: !immediate && false,
+            });
+            let closing = false;
+            this.closeOverlay = async (leave = false): Promise<void> => {
+                delete this.closeOverlay;
+                this.active = false;
+                if (this.submenu) {
+                    this.submenu.tabIndex = -1;
+                }
+                if (!leave) {
+                    closing = true;
+                }
+                (await closeOverlay)();
+            };
+            this.submenu.isSubmenu = this.closeOverlay;
+            const cleanup = (
+                event: CustomEvent<OverlayOpenCloseDetail>
+            ): void => {
+                if (this.submenu) {
+                    event.stopPropagation();
+                    this.submenu.slot = 'submenu';
+                    delete this.submenu.isSubmenu;
+                    this.append(this.submenu);
+                    this.open = false;
+                }
+                if (closing || event.detail.reason === 'external-click') {
+                    this.menuData.focusRoot?.dispatchEvent(
+                        new CustomEvent('close', {
+                            bubbles: true,
+                            composed: true,
+                            detail: { reason: 'external-click' },
+                        })
+                    );
+                }
+            };
+            this.addEventListener('sp-closed', cleanup as EventListener, {
+                once: true,
+            });
         }
     }
 
@@ -317,13 +467,32 @@ export class MenuItem extends LikeAnchor(Focusable) {
         if (changes.has('selected')) {
             this.updateAriaSelected();
         }
+        if (changes.has('hasSubmenu')) {
+            if (this.hasSubmenu) {
+                this.addEventListener('click', this.handleSubmenuClick);
+                this.addEventListener('pointerenter', this.handlePointerenter);
+                this.addEventListener('pointerleave', this.handlePointerleave);
+            } else if (!this.submenu) {
+                this.removeEventListener('click', this.handleSubmenuClick);
+                this.removeEventListener(
+                    'pointerenter',
+                    this.handlePointerenter
+                );
+                this.removeEventListener(
+                    'pointerleave',
+                    this.handlePointerleave
+                );
+            }
+        }
     }
 
     public connectedCallback(): void {
         super.connectedCallback();
-        addOrUpdateEvent.reset(this);
-        this.dispatchEvent(addOrUpdateEvent);
-        this._parentElement = this.parentElement as HTMLElement;
+        if (!this.closest('[slot="submenu"]')) {
+            addOrUpdateEvent.reset(this);
+            this.dispatchEvent(addOrUpdateEvent);
+            this._parentElement = this.parentElement as HTMLElement;
+        }
     }
 
     _parentElement!: HTMLElement;

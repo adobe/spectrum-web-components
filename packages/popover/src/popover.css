@@ -13,6 +13,8 @@ governing permissions and limitations under the License.
 
 :host {
     --sp-popover-tip-size: 24px;
+
+    min-width: min-content;
 }
 
 :host([placement*='top']),

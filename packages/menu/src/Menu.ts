@@ -65,6 +65,8 @@ export class Menu extends SpectrumElement {
         return [menuStyles];
     }
 
+    public isSubmenu?: (leave?: boolean) => void;
+
     @property({ type: String, reflect: true })
     public label = '';
 
@@ -272,6 +274,10 @@ export class Menu extends SpectrumElement {
         }
     }
 
+    public submenuOpened(menuItem: MenuItem): void {
+        this.focusInItemIndex = this.childItems.indexOf(menuItem);
+    }
+
     private onClick(event: Event): void {
         if (event.defaultPrevented) {
             return;
@@ -286,10 +292,15 @@ export class Menu extends SpectrumElement {
         }) as MenuItem;
         if (target?.href && target.href.length) {
             return;
-        }
-        if (target?.menuData.selectionRoot === this) {
+        } else if (
+            target?.menuData.selectionRoot === this &&
+            this.childItems.length
+        ) {
             event.preventDefault();
             this.selectOrToggleItem(target);
+            if (this.isSubmenu) {
+                this.isSubmenu();
+            }
         } else {
             return;
         }
@@ -440,17 +451,37 @@ export class Menu extends SpectrumElement {
             this.childItems[this.focusedItemIndex]?.click();
             return;
         }
-        if (code !== 'ArrowDown' && code !== 'ArrowUp') {
+        if (code === 'ArrowDown' || code === 'ArrowUp') {
+            const lastFocusedItem = this.childItems[this.focusedItemIndex];
+            const direction = code === 'ArrowDown' ? 1 : -1;
+            const itemToFocus = this.focusMenuItemByOffset(direction);
+            if (itemToFocus === lastFocusedItem) {
+                return;
+            }
+            event.preventDefault();
+            itemToFocus.scrollIntoView({ block: 'nearest' });
             return;
         }
-        const lastFocusedItem = this.childItems[this.focusedItemIndex];
-        const direction = code === 'ArrowDown' ? 1 : -1;
-        const itemToFocus = this.focusMenuItemByOffset(direction);
-        if (itemToFocus === lastFocusedItem) {
-            return;
+        if (
+            (this.isLTR && code === 'ArrowRight') ||
+            (!this.isLTR && code === 'ArrowLeft')
+        ) {
+            const lastFocusedItem = this.childItems[this.focusedItemIndex];
+            if (lastFocusedItem.hasSubmenu) {
+                if (lastFocusedItem.open) {
+                    lastFocusedItem.submenu?.focus();
+                } else {
+                    lastFocusedItem.openOverlay({ immediate: true });
+                }
+            }
+        } else if (
+            this.isSubmenu &&
+            ((this.isLTR && code === 'ArrowLeft') ||
+                (!this.isLTR && code === 'ArrowRight'))
+        ) {
+            this.isSubmenu(true);
+            delete this.isSubmenu;
         }
-        event.preventDefault();
-        itemToFocus.scrollIntoView({ block: 'nearest' });
     }
 
     public focusMenuItemByOffset(offset: number): MenuItem {

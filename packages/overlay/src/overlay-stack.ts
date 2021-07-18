@@ -11,7 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import { ActiveOverlay } from './ActiveOverlay.js';
-import { OverlayOpenCloseDetail, OverlayOpenDetail } from './overlay-types';
+import type {
+    OverlayCloseReasonDetail,
+    OverlayOpenCloseDetail,
+    OverlayOpenDetail,
+} from './overlay-types';
 import { OverlayTimer } from './overlay-timer.js';
 import '../active-overlay.js';
 
@@ -307,9 +311,15 @@ export class OverlayStack {
     }
 
     public addOverlayEventListeners(activeOverlay: ActiveOverlay): void {
-        activeOverlay.addEventListener('close', () => {
-            this.hideAndCloseOverlay(activeOverlay);
-        });
+        activeOverlay.addEventListener('close', ((
+            event: CustomEvent<OverlayCloseReasonDetail>
+        ) => {
+            this.hideAndCloseOverlay(
+                activeOverlay,
+                true,
+                !!event.detail?.reason
+            );
+        }) as EventListener);
         switch (activeOverlay.interaction) {
             case 'replace':
                 this.addReplaceOverlayEventListeners(activeOverlay);
@@ -426,12 +436,13 @@ export class OverlayStack {
     private manageFocusAfterCloseWhenLastOverlay(overlay: ActiveOverlay): void {
         this.stopTabTrapping();
         const isModal = overlay.interaction === 'modal';
+        const isReceivesFocus = overlay.receivesFocus === 'auto';
         const isReplace = overlay.interaction === 'replace';
         const isInline = overlay.interaction === 'inline';
         const isTabbingAwayFromInlineOrReplace =
             (isReplace || isInline) && !overlay.tabbingAway;
         overlay.tabbingAway = false;
-        if (!isModal && !isTabbingAwayFromInlineOrReplace) {
+        if (!isModal && !isReceivesFocus && !isTabbingAwayFromInlineOrReplace) {
             return;
         }
         // Manage post closure focus when needed.
@@ -462,7 +473,8 @@ export class OverlayStack {
 
     private async hideAndCloseOverlay(
         overlay?: ActiveOverlay,
-        animated?: boolean
+        animated?: boolean,
+        clickAway?: boolean
     ): Promise<void> {
         if (!overlay) {
             return;
@@ -509,13 +521,14 @@ export class OverlayStack {
                 cancelable: true,
                 detail: {
                     interaction: overlay.interaction,
+                    reason: clickAway ? 'external-click' : undefined,
                 },
             })
         );
     }
 
-    private closeTopOverlay(): Promise<void> {
-        return this.hideAndCloseOverlay(this.topOverlay);
+    private closeTopOverlay(clickAway?: boolean): Promise<void> {
+        return this.hideAndCloseOverlay(this.topOverlay, true, clickAway);
     }
 
     /**
@@ -533,7 +546,7 @@ export class OverlayStack {
         if (this.preventMouseRootClose || event.defaultPrevented) {
             return;
         }
-        this.closeTopOverlay();
+        this.closeTopOverlay(true);
     };
 
     private handleKeyUp = (event: KeyboardEvent): void => {
