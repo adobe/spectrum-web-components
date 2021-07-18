@@ -153,6 +153,7 @@ export class LayoutElement extends LitElement {
     private updateDirection(event: Event) {
         const dir = (event.target as Picker).value;
         this.dir = dir === 'rtl' ? dir : 'ltr';
+        document.documentElement.dir = this.dir;
     }
 
     private handleTrackTheme(event: CustomEvent<TrackTheme>): void {

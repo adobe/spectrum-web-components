@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ThemeData } from '@spectrum-web-components/theme';
-import {
+import type { ThemeData } from '@spectrum-web-components/theme/src/Theme.js';
+import type {
     OverlayDisplayQueryDetail,
     OverlayOptions,
     TriggerInteractions,

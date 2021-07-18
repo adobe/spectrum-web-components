@@ -21,7 +21,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { reparentChildren } from '@spectrum-web-components/shared';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
-import { Color, Scale } from '@spectrum-web-components/theme';
+import type { Color, Scale } from '@spectrum-web-components/theme/src/Theme.js';
 import styles from './active-overlay.css.js';
 import {
     OverlayOpenCloseDetail,
@@ -177,6 +177,7 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     public offset = 6;
+    public skidding = 0;
     public interaction: TriggerInteractions = 'hover';
     private positionAnimationFrame = 0;
 
@@ -203,9 +204,12 @@ export class ActiveOverlay extends SpectrumElement {
         this.tabIndex = -1;
         const parentOverlay = parentOverlayOf(this.trigger);
         const parentIsModal = parentOverlay && parentOverlay.slot === 'open';
+        if (parentIsModal) {
+            this._modalRoot = parentOverlay._modalRoot || parentOverlay;
+        }
         // If an overlay it triggered from within a "modal" overlay, it needs to continue
         // to act like one to get treated correctly in regards to tab trapping.
-        if (this.interaction === 'modal' || parentIsModal || this._modalRoot) {
+        if (this.interaction === 'modal' || this._modalRoot) {
             this.slot = 'open';
             if (this.interaction === 'modal') {
                 this.setAttribute('aria-modal', 'true');
@@ -308,6 +312,7 @@ export class ActiveOverlay extends SpectrumElement {
         this.virtualTrigger = detail.virtualTrigger;
         this.placement = detail.placement;
         this.offset = detail.offset;
+        this.skidding = detail.skidding || 0;
         this.interaction = detail.interaction;
         this.theme = detail.theme;
         this.receivesFocus = detail.receivesFocus;
@@ -389,7 +394,10 @@ export class ActiveOverlay extends SpectrumElement {
         const MIN_OVERLAY_HEIGHT = 100;
 
         const middleware = [
-            offset(this.offset),
+            offset({
+                mainAxis: this.offset,
+                crossAxis: this.skidding,
+            }),
             flip({
                 fallbackStrategy: 'initialPlacement',
             }),

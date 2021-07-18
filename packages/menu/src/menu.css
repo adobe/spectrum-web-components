@@ -33,7 +33,6 @@ governing permissions and limitations under the License.
     outline: none;
 }
 
-:host sp-menu {
-    /* .spectrum-Menu .spectrum-Menu */
-    display: block;
+::slotted(*) {
+    --swc-menu-width: 100%;
 }

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ThemeData } from '@spectrum-web-components/theme';
+import type { ThemeData } from '@spectrum-web-components/theme/src/Theme.js';
 import type { Placement as FloatingUIPlacement } from '@floating-ui/dom';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 
@@ -28,6 +28,7 @@ export interface OverlayOpenDetail {
     contentTip?: HTMLElement;
     delayed: boolean;
     offset: number;
+    skidding?: number;
     placement?: Placement;
     receivesFocus?: 'auto';
     virtualTrigger?: VirtualTrigger;
@@ -40,6 +41,11 @@ export interface OverlayOpenDetail {
 
 export interface OverlayOpenCloseDetail {
     interaction: TriggerInteractions;
+    reason?: 'external-click';
+}
+
+export interface OverlayCloseReasonDetail {
+    reason?: 'external-click';
 }
 
 /**

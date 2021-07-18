@@ -28,7 +28,7 @@ import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/theme/sp-theme.js';
-import { Theme } from '@spectrum-web-components/theme';
+import { Theme } from '@spectrum-web-components/theme/src/Theme.js';
 
 function pressKey(code: string): void {
     const up = new KeyboardEvent('keyup', {

@@ -657,9 +657,8 @@ describe('Menu w/ groups [selects]', () => {
         await sendKeys({ press: 'ArrowUp' });
         for (const option of options) {
             const parentElement = option.parentElement as Menu;
-            expect(document.activeElement, 'parent focused').to.equal(
-                parentElement
-            );
+            expect(document.activeElement === parentElement, 'parent focused')
+                .to.be.true;
             expect(option.focused, 'option visually focused').to.be.true;
             await sendKeys({ press: 'Space' });
             expect(parentElement.value).to.equal(option.value);

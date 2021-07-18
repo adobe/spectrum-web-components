@@ -15,7 +15,10 @@ import {
     html,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    queryAssignedNodes,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import { Menu } from './Menu.js';
 import '../sp-menu.js';
@@ -45,6 +48,7 @@ export class MenuGroup extends Menu {
     @queryAssignedNodes('header', true)
     private headerElements!: NodeListOf<HTMLElement>;
 
+    @state()
     private headerElement?: HTMLElement;
 
     protected get ownRole(): string {
@@ -81,7 +85,11 @@ export class MenuGroup extends Menu {
 
     public render(): TemplateResult {
         return html`
-            <span class="header" aria-hidden="true">
+            <span
+                class="header"
+                aria-hidden="true"
+                ?hidden=${!this.headerElement}
+            >
                 <slot name="header" @slotchange=${this.updateLabel}></slot>
             </span>
             <sp-menu role="none">

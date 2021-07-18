@@ -120,6 +120,12 @@ describe('Menu item', () => {
         const { anchorElement } = item as unknown as {
             anchorElement: HTMLAnchorElement;
         };
+        (
+            item as unknown as { anchorElement: HTMLAnchorElement }
+        ).anchorElement.dispatchEvent(new FocusEvent('focus'));
+
+        await elementUpdated(item);
+        expect(el === document.activeElement).to.be.true;
         item.click();
 
         expect(clickTargetSpy.calledWith(anchorElement)).to.be.true;
