@@ -21,6 +21,7 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 describe('Menu [selects]', () => {
     let el!: Menu;
@@ -493,6 +494,24 @@ describe('Menu w/ groups [selects]', () => {
             await change;
             expect(groupB.value).to.equal('1b');
         });
+        it('can have them `preventDefault()`ed', async () => {
+            const preventSpy = spy();
+            expect(groupA.value).to.equal('');
+            expect(groupB.value).to.equal('');
+            const item1a = options[0];
+            const item1b = options[3];
+            groupA.addEventListener('change', (event: Event) => {
+                event.preventDefault();
+                preventSpy();
+            });
+            const change = oneEvent(el, 'change');
+            item1a.click();
+            item1b.click();
+            await change;
+            expect(preventSpy.callCount).to.equal(1);
+            expect(groupA.value).to.equal('');
+            expect(groupB.value).to.equal('1b');
+        });
     });
 
     it('manages a single selection when [selects="single"]', async () => {
@@ -628,17 +647,20 @@ describe('Menu w/ groups [selects]', () => {
         expect(groupB.value).to.equal('');
     });
     it('manages focus', async () => {
-        el.focus();
+        await elementUpdated(groupA);
+        await elementUpdated(groupB);
+        options[0].focus();
 
         await elementUpdated(el);
         await sendKeys({ press: 'ArrowDown' });
         await sendKeys({ press: 'ArrowUp' });
-
         for (const option of options) {
             const parentElement = option.parentElement as Menu;
             expect(document.activeElement === parentElement, 'parent focused')
                 .to.be.true;
             expect(option.focused, 'option visually focused').to.be.true;
+            await sendKeys({ press: 'Space' });
+            expect(parentElement.value).to.equal(option.value);
             await sendKeys({ press: 'ArrowDown' });
         }
     });

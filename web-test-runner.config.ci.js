@@ -13,18 +13,14 @@ import standard from './web-test-runner.config.js';
 import { defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
 
-standard.reporters = [
-    // use the default reporter only for reporting test progress
-    defaultReporter({ reportTestResults: false, reportTestProgress: true }),
-    // use another reporter to report test results
-    junitReporter({
-        outputPath: './results/test-results.xml', // default `'./test-results.xml'`
-        reportLogs: true, // default `false`
-    }),
-];
-
-standard.testsFinishTimeout = 200000;
-
-standard.testFramework.config.timeout = 100000;
+// standard.reporters = [
+//     // use the default reporter only for reporting test progress
+//     defaultReporter({ reportTestResults: false, reportTestProgress: true }),
+//     // use another reporter to report test results
+//     junitReporter({
+//         outputPath: './results/test-results.xml', // default `'./test-results.xml'`
+//         reportLogs: true, // default `false`
+//     }),
+// ];
 
 export default standard;

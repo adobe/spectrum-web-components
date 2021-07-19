@@ -97,35 +97,56 @@ export const sized = (): TemplateResult => {
 };
 
 export const canvas = (): TemplateResult => {
-    requestAnimationFrame(() => {
-        const canvas = document.querySelector(
-            'canvas[slot="gradient"]'
-        ) as HTMLCanvasElement;
+    customElements.whenDefined('sp-color-area').then(() => {
+        requestAnimationFrame(() => {
+            const canvas = document.querySelector(
+                'canvas[slot="gradient"]'
+            ) as HTMLCanvasElement;
 
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        const context = canvas.getContext('2d');
-        if (context) {
-            context.rect(0, 0, canvas.width, canvas.height);
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            const context = canvas.getContext('2d');
+            if (context) {
+                context.rect(0, 0, canvas.width, canvas.height);
 
-            const gradB = context.createLinearGradient(0, 0, 0, canvas.height);
-            gradB.addColorStop(0, 'white');
-            gradB.addColorStop(1, 'black');
-            const gradC = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradC.addColorStop(0, 'hsla(0,100%,50%,0)');
-            gradC.addColorStop(1, 'hsla(0,100%,50%,1)');
+                const gradB = context.createLinearGradient(
+                    0,
+                    0,
+                    0,
+                    canvas.height
+                );
+                gradB.addColorStop(0, 'white');
+                gradB.addColorStop(1, 'black');
+                const gradC = context.createLinearGradient(
+                    0,
+                    0,
+                    canvas.width,
+                    0
+                );
+                gradC.addColorStop(0, 'hsla(0,100%,50%,0)');
+                gradC.addColorStop(1, 'hsla(0,100%,50%,1)');
 
-            context.fillStyle = gradB;
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.fillStyle = gradC;
-            context.globalCompositeOperation = 'multiply';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.globalCompositeOperation = 'source-over';
-        }
+                context.fillStyle = gradB;
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                context.fillStyle = gradC;
+                context.globalCompositeOperation = 'multiply';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                context.globalCompositeOperation = 'source-over';
+            }
+        });
     });
     return html`
         <sp-color-area>
             <canvas slot="gradient"></canvas>
         </sp-color-area>
     `;
+};
+
+canvas.swcVRTTestReady = () => {
+    let resolve!: (value: unknown) => void;
+    const promise = new Promise((res) => (resolve = res));
+    customElements.whenDefined('sp-color-area').then(() => {
+        requestAnimationFrame(resolve);
+    });
+    return promise;
 };

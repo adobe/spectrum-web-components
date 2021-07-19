@@ -31,11 +31,7 @@ import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-c
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import {
-    MenuItem,
-    MenuItemUpdateEvent,
-    Menu,
-} from '@spectrum-web-components/menu';
+import { MenuItem, Menu } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import {
@@ -138,15 +134,6 @@ export class PickerBase extends SizedMixin(Focusable) {
     public constructor() {
         super();
         this.onKeydown = this.onKeydown.bind(this);
-
-        // TODO: once we switch away from inherits, the underlying sp-menu should manage this.
-        this.addEventListener(
-            'sp-menu-item-added',
-            (event: CustomEvent<MenuItemUpdateEvent>) => {
-                event.stopPropagation();
-                event.detail.item.setRole(this.itemRole);
-            }
-        );
     }
 
     public get focusElement(): HTMLElement {
@@ -183,7 +170,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         event.stopPropagation();
         const target = event.target as Menu;
         const [selected] = target.selectedItems;
-        this.setValueFromItem(selected);
+        this.setValueFromItem(selected, event);
     }
 
     protected onKeydown = (event: KeyboardEvent): void => {
@@ -194,7 +181,10 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.toggle(true);
     };
 
-    public async setValueFromItem(item: MenuItem): Promise<void> {
+    public async setValueFromItem(
+        item: MenuItem,
+        menuChangeEvent?: Event
+    ): Promise<void> {
         const oldSelectedItem = this.selectedItem;
         const oldValue = this.value;
         this.selectedItem = item;
@@ -207,6 +197,9 @@ export class PickerBase extends SizedMixin(Focusable) {
             })
         );
         if (!applyDefault) {
+            if (menuChangeEvent) {
+                menuChangeEvent.preventDefault();
+            }
             this.selectedItem = oldSelectedItem;
             this.value = oldValue;
             this.open = true;
@@ -274,12 +267,20 @@ export class PickerBase extends SizedMixin(Focusable) {
 
         this.sizePopover(this.popover);
         const { popover } = this;
+        this.addEventListener(
+            'sp-opened',
+            () => {
+                this.manageSelection();
+                this.optionsMenu.updateComplete.then(() => {
+                    this.menuStateResolver();
+                });
+            },
+            { once: true }
+        );
         this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
             placement: this.placement,
             receivesFocus: 'auto',
         });
-        this.manageSelection();
-        this.menuStateResolver();
     }
 
     protected sizePopover(popover: HTMLElement): void {
@@ -458,7 +459,9 @@ export class PickerBase extends SizedMixin(Focusable) {
                 this.selectedItem = undefined;
             }
             if (this.open) {
-                this.optionsMenu.updateSelectedItemIndex();
+                this.optionsMenu.updateComplete.then(() => {
+                    this.optionsMenu.updateSelectedItemIndex();
+                });
             }
             return;
         }
@@ -467,9 +470,10 @@ export class PickerBase extends SizedMixin(Focusable) {
     private menuStatePromise = Promise.resolve();
     private menuStateResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async _getUpdateComplete(): Promise<boolean> {
+        const complete = (await super._getUpdateComplete()) as boolean;
         await this.menuStatePromise;
+        return complete;
     }
 
     public connectedCallback(): void {

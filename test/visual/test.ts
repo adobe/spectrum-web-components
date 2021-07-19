@@ -17,9 +17,15 @@ import { Color, Scale } from '@spectrum-web-components/theme';
 import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { render } from 'lit-html';
+import { sendKeys } from '@web/test-runner-commands';
 
-const wrap = () => html`
-    <sp-story-decorator reduce-motion screenshot></sp-story-decorator>
+const wrap = (testReady?: (root: HTMLElement) => Promise<unknown>) => html`
+    <sp-story-decorator
+        reduce-motion
+        screenshot
+        tabindex="-1"
+        .testReady=${testReady}
+    ></sp-story-decorator>
 `;
 
 type StoriesType = {
@@ -47,6 +53,13 @@ export const test = (
                     ...(testsDefault.args || {}),
                     ...(tests[story].args || {}),
                 };
+                const test = await fixture<StoryDecorator>(
+                    wrap(tests[story].swcVRTTestReady)
+                );
+                await elementUpdated(test);
+                test.focus();
+                await sendKeys({ press: 'ArrowUp' });
+                await sendKeys({ press: 'ArrowDown' });
                 let decoratedStory:
                     | (() => TemplateResult)
                     | TemplateResult = () =>
@@ -64,8 +77,6 @@ export const test = (
                     }
                     storyResult = decoratedStory as TemplateResult;
                 }
-                const test = await fixture<StoryDecorator>(wrap());
-                await elementUpdated(test);
                 render(storyResult, test);
                 await waitUntil(
                     () => test.ready,
@@ -78,21 +89,24 @@ export const test = (
                         `${color} - ${scale} - ${dir} - ${name} - ${story}`
                     );
                 } catch (error) {
+                    test.remove();
                     /**
                      * _Sometimes_ the browser will fail on weird renderings of rounded edges.
                      * This retry allows it another change to render the test from scratch before
                      * actually failing on this story.
                      **/
-                    const test = await fixture<StoryDecorator>(wrap());
-                    await elementUpdated(test);
-                    render(storyResult, test);
+                    const retest = await fixture<StoryDecorator>(
+                        wrap(tests[story].swcVRTTestReady)
+                    );
+                    await elementUpdated(retest);
+                    render(storyResult, retest);
                     await waitUntil(
-                        () => test.ready,
+                        () => retest.ready,
                         'Wait for decorator to become ready...',
                         { timeout: 15000 }
                     );
                     await visualDiff(
-                        test,
+                        retest,
                         `${color} - ${scale} - ${dir} - ${name} - ${story}`
                     );
                 }

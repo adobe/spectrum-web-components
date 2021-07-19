@@ -18,6 +18,7 @@ import {
     VirtualTrigger,
 } from '../';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
@@ -126,6 +127,14 @@ interface Properties {
     open?: OverlayContentTypes;
 }
 
+const overlayOpenedTest = (root: HTMLElement): Promise<unknown> => {
+    console.log('get');
+    return new Promise((res) => {
+        console.log('ready');
+        root.addEventListener('sp-opened', () => res(true), { once: true });
+    });
+};
+
 const template = ({ placement, offset, open }: Properties): TemplateResult => {
     return html`
         ${storyStyles}
@@ -192,11 +201,15 @@ export const openHoverContent = (args: Properties): TemplateResult =>
         open: 'hover',
     });
 
+openHoverContent.swcVRTTestReady = overlayOpenedTest;
+
 export const openClickContent = (args: Properties): TemplateResult =>
     template({
         ...args,
         open: 'click',
     });
+
+openClickContent.swcVRTTestReady = overlayOpenedTest;
 
 export const customizedClickContent = (
     args: Properties
@@ -213,6 +226,8 @@ export const customizedClickContent = (
         open: 'click',
     })}
 `;
+
+customizedClickContent.swcVRTTestReady = overlayOpenedTest;
 
 const extraText = html`
     <p>This is some text.</p>
@@ -555,10 +570,11 @@ export const longpress = (): TemplateResult => {
 };
 
 export const complexModal = (): TemplateResult => {
-    requestAnimationFrame(() => {
+    customElements.whenDefined('overlay-trigger').then(async () => {
         const overlay = document.querySelector(
             `overlay-trigger`
         ) as OverlayTrigger;
+        await overlay.updateComplete;
         const trigger = (overlay.shadowRoot as ShadowRoot).querySelector(
             '#trigger'
         ) as HTMLElement;
@@ -623,6 +639,20 @@ export const complexModal = (): TemplateResult => {
             </sp-button>
         </overlay-trigger>
     `;
+};
+
+complexModal.swcVRTTestReady = async (root: HTMLElement): Promise<unknown> => {
+    let resolve!: (value: unknown) => void;
+    const promise = new Promise((res) => (resolve = res));
+    const picker = root.querySelector('sp-picker') as Picker;
+    root.addEventListener('sp-opened', () => {
+        console.log('overlay');
+        picker.addEventListener('sp-opened', () => {
+            console.log('picker');
+            resolve(true);
+        });
+    });
+    return promise;
 };
 
 export const superComplexModal = (): TemplateResult => {
@@ -723,6 +753,7 @@ export const detachedElement = (): TemplateResult => {
             return;
         }
         const div = document.createElement('div');
+        div.id = 'detached-content';
         div.textContent = 'This div is overlaid';
         div.setAttribute(
             'style',
@@ -738,18 +769,28 @@ export const detachedElement = (): TemplateResult => {
             placement: 'bottom',
         });
     };
-    requestAnimationFrame(() => {
-        openDetachedOverlayContent({
-            target: document.querySelector(
-                '#detached-content-trigger'
-            ) as HTMLElement,
+    customElements.whenDefined('sp-action-button').then(() => {
+        requestAnimationFrame(() => {
+            openDetachedOverlayContent({
+                target: document.querySelector(
+                    '#detached-content-trigger'
+                ) as HTMLElement,
+            });
         });
     });
     return html`
         <sp-action-button
             id="detached-content-trigger"
             @click=${openDetachedOverlayContent}
-            @sp-closed=${() => (closeOverlay = undefined)}
+            @sp-closed=${(event: Event & { target: ActionButton }) => {
+                const { target } = event;
+                target.selected = false;
+                closeOverlay = undefined;
+            }}
+            @sp-opened=${(event: Event & { target: ActionButton }) => {
+                const { target } = event;
+                target.selected = true;
+            }}
         >
             <sp-icon-open-in
                 slot="icon"
@@ -758,3 +799,5 @@ export const detachedElement = (): TemplateResult => {
         </sp-action-button>
     `;
 };
+
+detachedElement.swcVRTTestReady = overlayOpenedTest;

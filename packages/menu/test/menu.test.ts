@@ -114,7 +114,7 @@ describe('Menu', () => {
     it('renders w/ menu items', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu>
+                <sp-menu label="Pick an action:">
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item>Select Inverse</sp-menu-item>
                     <sp-menu-item>Feather...</sp-menu-item>
@@ -236,7 +236,7 @@ describe('Menu', () => {
         const el = await fixture<Menu>(
             html`
                 <sp-menu>
-                    <sp-menu-group>
+                    <sp-menu-group selects="inherit">
                         <span slot="header">Options</span>
                         <sp-menu-item>Deselect</sp-menu-item>
                     </sp-menu-group>
@@ -261,8 +261,8 @@ describe('Menu', () => {
         await sendKeys({ press: 'ArrowDown' });
         await sendKeys({ press: 'ArrowUp' });
 
-        expect(document.activeElement === el).to.be.true;
-        expect(firstItem.focused).to.be.true;
+        expect(document.activeElement === el, 'active element').to.be.true;
+        expect(firstItem.focused, 'visually focused').to.be.true;
 
         el.blur();
 
@@ -289,13 +289,14 @@ describe('Menu', () => {
         await sendKeys({ press: 'ArrowDown' });
         await sendKeys({ press: 'ArrowUp' });
 
-        expect(document.activeElement === el).to.be.true;
-        expect(prependedItem.focused).to.be.true;
+        expect(document.activeElement === el, 'another active element').to.be
+            .true;
+        expect(prependedItem.focused, 'another visibly focused').to.be.true;
 
         el.dispatchEvent(arrowUpEvent);
 
-        expect(document.activeElement === el).to.be.true;
-        expect(appendedItem.focused).to.be.true;
+        expect(document.activeElement === el, 'last active element').to.be.true;
+        expect(appendedItem.focused, 'last visibly focused').to.be.true;
     });
     it('cleans up when tabbing away', async () => {
         const el = await fixture<Menu>(

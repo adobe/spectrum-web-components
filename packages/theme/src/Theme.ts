@@ -207,10 +207,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         this.updateComplete = this.__createDeferredPromise();
     }
 
-    public updateComplete!: Promise<void>;
-    private __resolve!: () => void;
+    public updateComplete!: Promise<boolean>;
+    private __resolve!: (compelted: boolean) => void;
 
-    private __createDeferredPromise(): Promise<void> {
+    private __createDeferredPromise(): Promise<boolean> {
         return new Promise((resolve) => {
             this.__resolve = resolve;
         });
@@ -296,7 +296,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this._updateRequested = true;
             this._updateRequested = await false;
             this.adoptStyles();
-            this.__resolve();
+            this.__resolve(true);
         }
     }
 

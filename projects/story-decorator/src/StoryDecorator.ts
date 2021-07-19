@@ -176,6 +176,8 @@ export class StoryDecorator extends SpectrumElement {
 
     public ready = false;
 
+    public testReady?: (root: HTMLElement) => Promise<unknown>;
+
     private updateTheme({ target }: Event & { target: Picker | Switch }): void {
         const { id } = target;
         const { value } = target as Picker;
@@ -225,16 +227,51 @@ export class StoryDecorator extends SpectrumElement {
         target,
     }: Event & { target: HTMLSlotElement }): Promise<void> {
         this.ready = false;
-        const descendents = target.assignedElements({
+        const assignedElements = target.assignedElements({
             flatten: true,
         }) as SpectrumElement[];
-        const litElementDescendents = descendents.filter(
-            (el) =>
+        if (assignedElements.length) {
+            if (typeof this.testReady !== 'undefined') {
+                await this.testReady(this);
+            }
+            this.resolveReady(target);
+        }
+    }
+
+    private async resolveReady(target: HTMLSlotElement): Promise<void> {
+        const assignedElements = target.assignedElements({
+            flatten: true,
+        }) as SpectrumElement[];
+        const isLitElement = (el: SpectrumElement) => {
+            return (
                 el.tagName.search('-') !== -1 &&
                 typeof el.updateComplete !== 'undefined'
-        );
-        const updates = litElementDescendents.map((el) => el.updateComplete);
-        await Promise.all(updates);
+            );
+        };
+        const litElementDescendents = assignedElements.reduce((acc, el) => {
+            if (isLitElement(el)) {
+                acc.push(el);
+            }
+            const descendants = [
+                ...(el.querySelectorAll('*') || []),
+            ] as SpectrumElement[];
+            descendants.forEach((descendant) => {
+                if (isLitElement(descendant)) {
+                    acc.push(descendant);
+                }
+            });
+            return acc;
+        }, [] as SpectrumElement[]);
+        const getUpdatesComplete = async () => {
+            const updates = litElementDescendents.map(
+                (el) => el.updateComplete
+            );
+            const updateds = await Promise.all(updates);
+            if (updateds.some((updated) => !updated)) {
+                await getUpdatesComplete();
+            }
+        };
+        await getUpdatesComplete();
         new Promise((res) => {
             setTimeout(res);
         }).then(async () => {

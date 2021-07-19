@@ -107,9 +107,7 @@ moreCta.story = {
 
 export const moreCtaOpen = (options = {}): TemplateResult => {
     return html`
-        <div>
-            <sp-split-button type="more" open>${menu(options)}</sp-split-button>
-        </div>
+        <sp-split-button type="more" open>${menu(options)}</sp-split-button>
     `;
 };
 

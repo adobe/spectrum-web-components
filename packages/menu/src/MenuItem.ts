@@ -25,6 +25,66 @@ import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import { Menu } from './Menu.js';
 
+export class MenuItemRemovedEvent extends Event {
+    constructor() {
+        super('sp-menu-item-removed', {
+            bubbles: true,
+            composed: true,
+        });
+    }
+    get item(): MenuItem {
+        if (!this._item) {
+            this._item = this.composedPath()[0] as MenuItem;
+        }
+        return this._item;
+    }
+    _item?: MenuItem;
+    reset(): void {
+        this._item = undefined;
+    }
+}
+
+export class MenuItemAddedOrUpdatedEvent extends Event {
+    constructor() {
+        super('sp-menu-item-added', {
+            bubbles: true,
+            composed: true,
+        });
+    }
+    set focusRoot(root: Menu) {
+        this.item.menuData.focusRoot = this.item.menuData.focusRoot || root;
+    }
+    set selectionRoot(root: Menu) {
+        this.item.menuData.selectionRoot =
+            this.item.menuData.selectionRoot || root;
+    }
+    get item(): MenuItem {
+        if (!this._item) {
+            this._item = this.composedPath()[0] as MenuItem;
+        }
+        return this._item;
+    }
+    _item?: MenuItem;
+    set currentAncestorWithSelects(ancestor: Menu | undefined) {
+        this._currentAncestorWithSelects = ancestor;
+    }
+    get currentAncestorWithSelects(): Menu | undefined {
+        return this._currentAncestorWithSelects;
+    }
+    _currentAncestorWithSelects?: Menu;
+    reset(item: MenuItem): void {
+        this._item = undefined;
+        this._currentAncestorWithSelects = undefined;
+        item.menuData = {
+            focusRoot: undefined,
+            selectionRoot: undefined,
+        };
+    }
+}
+
+const addOrUpdateEvent = new MenuItemAddedOrUpdatedEvent();
+const removeEvent = new MenuItemRemovedEvent();
+
 /**
  * Spectrum Menu Item Component
  * @element sp-menu-item
@@ -131,64 +191,35 @@ export class MenuItem extends ActionButton {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        const addedEvent = new CustomEvent('sp-menu-item-added', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                item: this,
-                owned: false,
-                focusable: true,
-            },
-        });
-        this.dispatchEvent(addedEvent);
+        addOrUpdateEvent.reset(this);
+        this.dispatchEvent(addOrUpdateEvent);
     }
 
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        const removedEvent = new CustomEvent('sp-menu-item-removed', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                item: this,
-            },
-        });
-        this.dispatchEvent(removedEvent);
-    }
-
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+        removeEvent.reset();
+        this.dispatchEvent(removeEvent);
     }
 
     public async triggerUpdate(): Promise<void> {
         await new Promise((ready) => requestAnimationFrame(ready));
-        const updatedEvent = new CustomEvent<MenuItemUpdateEvent>(
-            'sp-menu-item-update',
-            {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    item: this,
-                    owned: false,
-                    focusable: true,
-                    focusRoot: undefined,
-                },
-            }
-        );
-        this.dispatchEvent(updatedEvent);
+        addOrUpdateEvent.reset(this);
+        this.dispatchEvent(addOrUpdateEvent);
     }
-}
 
-export interface MenuItemUpdateEvent {
-    item: MenuItem;
-    owned: boolean;
-    focusable: boolean;
-    focusRoot?: Menu;
+    public menuData: {
+        focusRoot?: Menu;
+        selectionRoot?: Menu;
+    } = {
+        focusRoot: undefined,
+        selectionRoot: undefined,
+    };
 }
 
 declare global {
     interface GlobalEventHandlersEventMap {
-        'sp-menu-item-added': CustomEvent<MenuItemUpdateEvent>;
-        'sp-menu-item-update': CustomEvent<MenuItemUpdateEvent>;
-        'sp-menu-item-removed': CustomEvent<MenuItemUpdateEvent>;
+        'sp-menu-item-added': MenuItemAddedOrUpdatedEvent;
+        'sp-menu-item-update': MenuItemAddedOrUpdatedEvent;
+        'sp-menu-item-removed': MenuItemRemovedEvent;
     }
 }

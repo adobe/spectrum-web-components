@@ -19,5 +19,5 @@ const iconset = document.createElement('sp-icons-medium');
 document.body.append(iconset);
 
 measureFixtureCreation(html`
-    <sp-icon name="ui:CheckmarkMedium"></sp-icon>
+    <sp-icon name="ui:Arrow100"></sp-icon>
 `);

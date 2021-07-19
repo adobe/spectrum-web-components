@@ -40,6 +40,21 @@ interface Properties {
     size: 's' | 'm' | 'l' | 'xl';
 }
 
+const testReady = (root: HTMLElement): Promise<unknown> => {
+    const promise = new Promise((res) => {
+        const test = (): void => {
+            const delayedReady = root.querySelector('delayed-ready');
+            if (!!delayedReady && !!delayedReady.children.length) {
+                requestAnimationFrame(res);
+            } else {
+                requestAnimationFrame(test);
+            }
+        };
+        test();
+    });
+    return promise;
+};
+
 export const elements = ({ color, size }: Properties): TemplateResult => {
     const content = import('./icon-manifest.js').then(
         (iconManifest) => html`
@@ -72,6 +87,8 @@ export const elements = ({ color, size }: Properties): TemplateResult => {
         </delayed-ready>
     `;
 };
+
+elements.swcVRTTestReady = testReady;
 
 export const Icons = ({ color, size }: Properties): TemplateResult => {
     const content = import('../').then((icons) => {
@@ -122,3 +139,5 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
         </delayed-ready>
     `;
 };
+
+Icons.swcVRTTestReady = testReady;

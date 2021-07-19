@@ -47,40 +47,51 @@ export const vertical = (): TemplateResult => {
 };
 
 export const canvas = (): TemplateResult => {
-    requestAnimationFrame(() => {
-        const canvas = document.querySelector(
-            'canvas[slot="gradient"]'
-        ) as HTMLCanvasElement;
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        const context = canvas.getContext('2d');
-        if (context) {
-            context.rect(0, 0, canvas.width, canvas.height);
+    customElements.whenDefined('sp-color-slider').then(() => {
+        requestAnimationFrame(() => {
+            const canvas = document.querySelector(
+                'canvas[slot="gradient"]'
+            ) as HTMLCanvasElement;
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            const context = canvas.getContext('2d');
+            if (context) {
+                context.rect(0, 0, canvas.width, canvas.height);
 
-            const gradient = context.createLinearGradient(
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
+                const gradient = context.createLinearGradient(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
 
-            gradient.addColorStop(0, 'rgb(255, 0, 0)');
-            gradient.addColorStop(0.17, 'rgb(255, 255, 0)');
-            gradient.addColorStop(0.33, 'rgb(0, 255, 0)');
-            gradient.addColorStop(0.5, 'rgb(0, 255, 255)');
-            gradient.addColorStop(0.67, 'rgb(0, 0, 255)');
-            gradient.addColorStop(0.83, 'rgb(255, 0, 255)');
-            gradient.addColorStop(1, 'rgb(255, 0, 0)');
+                gradient.addColorStop(0, 'rgb(255, 0, 0)');
+                gradient.addColorStop(0.17, 'rgb(255, 255, 0)');
+                gradient.addColorStop(0.33, 'rgb(0, 255, 0)');
+                gradient.addColorStop(0.5, 'rgb(0, 255, 255)');
+                gradient.addColorStop(0.67, 'rgb(0, 0, 255)');
+                gradient.addColorStop(0.83, 'rgb(255, 0, 255)');
+                gradient.addColorStop(1, 'rgb(255, 0, 0)');
 
-            context.fillStyle = gradient;
-            context.fill();
-        }
+                context.fillStyle = gradient;
+                context.fill();
+            }
+        });
     });
     return html`
         <sp-color-slider color="rgb(255, 0, 0)">
             <canvas slot="gradient" role="presentation"></canvas>
         </sp-color-slider>
     `;
+};
+
+canvas.swcVRTTestReady = () => {
+    let resolve!: (value: unknown) => void;
+    const promise = new Promise((res) => (resolve = res));
+    customElements.whenDefined('sp-color-slider').then(() => {
+        requestAnimationFrame(resolve);
+    });
+    return promise;
 };
 
 export const image = (): TemplateResult => {

@@ -30,7 +30,16 @@ export const themeStyles = html`
 
 export const swcThemeDecoratorWithConfig = (
     { bundled } = { bundled: true }
-) => (story: () => TemplateResult) => {
+) => (
+    story: () => TemplateResult,
+    {
+        originalStoryFn,
+    }: {
+        originalStoryFn: {
+            swcVRTTestReady?: (root: HTMLElement) => Promise<unknown>;
+        };
+    }
+) => {
     if (!bundled) {
         requestAnimationFrame(() => {
             const decorator = document.querySelector(
@@ -41,7 +50,9 @@ export const swcThemeDecoratorWithConfig = (
     }
     return html`
         ${themeStyles}
-        <sp-story-decorator>${bundled ? story() : html``}</sp-story-decorator>
+        <sp-story-decorator .testReady=${originalStoryFn.swcVRTTestReady}>
+            ${bundled ? story() : html``}
+        </sp-story-decorator>
     `;
 };
 

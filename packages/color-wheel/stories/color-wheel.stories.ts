@@ -38,42 +38,56 @@ export const wheelDisabled = (): TemplateResult => {
 };
 
 export const canvas = (): TemplateResult => {
-    requestAnimationFrame(() => {
-        const canvas = document.querySelector(
-            'canvas[slot="gradient"]'
-        ) as HTMLCanvasElement;
+    customElements.whenDefined('sp-color-wheel').then(() => {
+        requestAnimationFrame(() => {
+            const canvas = document.querySelector(
+                'canvas[slot="gradient"]'
+            ) as HTMLCanvasElement;
 
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        const context = canvas.getContext('2d');
-        if (context) {
-            context.rect(0, 0, canvas.width, canvas.height);
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            const context = canvas.getContext('2d');
+            if (context) {
+                context.rect(0, 0, canvas.width, canvas.height);
 
-            const width = canvas.width;
-            const height = canvas.height;
-            const centerX = width / 2;
-            const centerY = height / 2;
-            const ringSize = 57;
+                const width = canvas.width;
+                const height = canvas.height;
+                const centerX = width / 2;
+                const centerY = height / 2;
+                const ringSize = 57;
 
-            for (let i = 0; i < 360; i += Math.PI / 8) {
-                const rad = (i * (2 * Math.PI)) / 360;
-                context.strokeStyle = `hsla(${i}, 100%, 50%, 1.0)`;
-                context.beginPath();
-                context.moveTo(
-                    centerX + ringSize * Math.cos(rad),
-                    centerY + ringSize * Math.sin(rad)
-                );
-                context.lineTo(
-                    centerX + centerX * Math.cos(rad),
-                    centerY + centerY * Math.sin(rad)
-                );
-                context.stroke();
+                for (let i = 0; i < 360; i += Math.PI / 8) {
+                    const rad = (i * (2 * Math.PI)) / 360;
+                    context.strokeStyle = `hsla(${i}, 100%, 50%, 1.0)`;
+                    context.beginPath();
+                    context.moveTo(
+                        centerX + ringSize * Math.cos(rad),
+                        centerY + ringSize * Math.sin(rad)
+                    );
+                    context.lineTo(
+                        centerX + centerX * Math.cos(rad),
+                        centerY + centerY * Math.sin(rad)
+                    );
+                    context.stroke();
+                }
             }
-        }
+            requestAnimationFrame(() => {
+                canvas.dispatchEvent(
+                    new Event('swc-ready', { bubbles: true, composed: true })
+                );
+            });
+        });
     });
     return html`
         <sp-color-wheel>
             <canvas slot="gradient"></canvas>
         </sp-color-wheel>
     `;
+};
+
+canvas.swcVRTTestReady = (root: HTMLElement) => {
+    let resolve!: (value: unknown) => void;
+    const promise = new Promise((res) => (resolve = res));
+    root.addEventListener('swc-ready', resolve);
+    return promise;
 };

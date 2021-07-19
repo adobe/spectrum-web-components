@@ -13,17 +13,20 @@ import '../sp-menu-group.js';
 import '../sp-menu.js';
 import '../sp-menu-item.js';
 import '../sp-menu-divider.js';
-import { Menu, MenuItem, MenuGroup, MenuChildItem } from '../';
+import { Menu, MenuItem, MenuGroup } from '../';
 import {
     fixture,
     elementUpdated,
     html,
     expect,
     waitUntil,
+    oneEvent,
 } from '@open-wc/testing';
 
-const managedItems = (menu: Menu | MenuGroup): MenuChildItem[] => {
-    return menu.childItems.filter((item: MenuChildItem) => item.managed);
+const managedItems = (menu: Menu | MenuGroup): MenuItem[] => {
+    return menu.childItems.filter(
+        (item: MenuItem) => item.menuData.selectionRoot === menu
+    );
 };
 
 describe('Menu group', () => {
@@ -49,10 +52,36 @@ describe('Menu group', () => {
 
         await waitUntil(() => {
             return managedItems(el).length === 5;
-        }, `expected menu group to manage 5 children, received ${managedItems(el).length}`);
+        }, `expected menu group to manage 5 children, received ${managedItems(el).length} of ${el.childItems.length}`);
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('manages [slot="header"] content', async () => {
+        const el = await fixture<MenuGroup>(
+            html`
+                <sp-menu-group></sp-menu-group>
+            `
+        );
+        await elementUpdated(el);
+        const slot = el.shadowRoot.querySelector(
+            '[name="header"'
+        ) as HTMLSlotElement;
+        const header = document.createElement('span');
+        header.textContent = 'Header';
+        header.slot = 'header';
+        expect(header.id).to.equal('');
+        let slotchanged = oneEvent(slot, 'slotchange');
+        el.append(header);
+        await slotchanged;
+        expect(header.id).to.equal(
+            ((el as unknown) as { headerId: string }).headerId
+        );
+
+        slotchanged = oneEvent(slot, 'slotchange');
+        header.remove();
+        await slotchanged;
+        expect(header.id).to.equal('');
     });
     it('handles selects for nested menu groups', async () => {
         const el = await fixture<Menu>(
@@ -175,7 +204,7 @@ describe('Menu group', () => {
         await elementUpdated(firstItem);
         expect(singleItem1.selected).to.be.true;
         expect(firstItem.selected).to.be.true;
-        expect(secondItem.selected).to.be.false;
+        expect(secondItem.selected, 'second item not selected').to.be.false;
         expect(el.value).to.equal('First');
         expect(el.selectedItems.length).to.equal(1);
 
@@ -186,7 +215,7 @@ describe('Menu group', () => {
         await elementUpdated(el);
         await elementUpdated(firstItem);
         await elementUpdated(secondItem);
-        expect(firstItem.selected).to.be.false;
+        expect(firstItem.selected, 'first item not selected').to.be.false;
         expect(secondItem.selected).to.be.true;
         expect(firstItem.getAttribute('aria-checked')).to.equal('false');
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
@@ -197,7 +226,8 @@ describe('Menu group', () => {
         await elementUpdated(el);
         await elementUpdated(inheritItem1);
         await elementUpdated(secondItem);
-        expect(secondItem.selected).to.be.false;
+        expect(secondItem.selected, 'second item not selected again').to.be
+            .false;
         expect(inheritItem1.selected).to.be.true;
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
         expect(inheritItem1.getAttribute('aria-checked')).to.equal('true');
@@ -205,18 +235,18 @@ describe('Menu group', () => {
         expect(el.selectedItems.length).to.equal(1);
 
         noneItem2.click();
-        await elementUpdated(el);
+        await elementUpdated(noneGroup);
         await elementUpdated(noneItem2);
         expect(inheritItem1.selected).to.be.true;
-        expect(noneItem2.selected).to.be.false;
+        expect(noneItem2.selected, 'none item not selected').to.be.false;
         expect(el.value).to.equal('Inherit1');
         expect(el.selectedItems.length).to.equal(1);
 
         singleItem2.click();
-        await elementUpdated(el);
+        await elementUpdated(singleGroup);
         await elementUpdated(singleItem1);
         await elementUpdated(singleItem2);
-        expect(singleItem1.selected).to.be.false;
+        expect(singleItem1.selected, 'first item not selected').to.be.false;
         expect(singleItem2.selected).to.be.true;
         expect(inheritItem1.selected).to.be.true;
         expect(singleItem1.getAttribute('aria-checked')).to.equal('false');

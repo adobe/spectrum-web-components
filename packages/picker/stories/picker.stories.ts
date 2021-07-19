@@ -89,6 +89,12 @@ interface StoryArgs {
     showText?: boolean;
 }
 
+const overlayOpenedTest = (root: HTMLElement): Promise<unknown> => {
+    return new Promise((res) => {
+        root.addEventListener('sp-opened', res, { once: true });
+    });
+};
+
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-1">Where do you live?</sp-field-label>
@@ -245,6 +251,7 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
 iconsOnly.args = {
     open: true,
 };
+iconsOnly.swcVRTTestReady = overlayOpenedTest;
 
 export const Open = (args: StoryArgs): TemplateResult => {
     return html`
@@ -303,6 +310,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
 Open.args = {
     open: true,
 };
+Open.swcVRTTestReady = overlayOpenedTest;
 
 export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
@@ -397,3 +405,5 @@ export const custom = (args: StoryArgs): TemplateResult => {
 custom.args = {
     open: true,
 };
+
+custom.swcVRTTestReady = overlayOpenedTest;
