@@ -31,6 +31,11 @@ export interface MenuChildItem {
     focusRoot: Menu;
 }
 
+type SelectsType = 'none' | 'ignore' | 'inherit' | 'multiple' | 'single';
+type RoleType = 'group' | 'menu' | 'listbox' | 'none';
+
+type SelectsAndRoleType = [SelectsType, RoleType];
+
 /**
  * Spectrum Menu Component
  * @element sp-menu
@@ -85,9 +90,7 @@ export class Menu extends SpectrumElement {
 
     private selectedItemsMap = new Map() as Map<MenuItem, boolean>;
 
-    private cachedResolvedSelects:
-        | undefined
-        | [string | undefined, string | null];
+    private cachedResolvedSelects: undefined | SelectsAndRoleType;
     private parentSelectsObservers: MutationObserver[] = [];
 
     private cachedChildItems: undefined | MenuChildItem[] = [];
@@ -146,12 +149,12 @@ export class Menu extends SpectrumElement {
         this.parentSelectsObservers.push(observer);
     }
 
-    private get resolvedSelectsAndRole(): [string | undefined, string | null] {
+    private get resolvedSelectsAndRole(): SelectsAndRoleType {
         if (this.cachedResolvedSelects) {
             return this.cachedResolvedSelects;
         }
-        let selects = 'none';
-        let role = this.getAttribute('role');
+        let selects: SelectsType = 'none';
+        let role: RoleType = this.getAttribute('role') as RoleType;
         if (role === 'none') {
             // This menu is not part of the accessibility tree, it is
             // likely a child of an <sp-menu-group> and should not
@@ -173,8 +176,9 @@ export class Menu extends SpectrumElement {
                     this.addParentSelectsObserver(parent);
                     const parentSelects = parent.getAttribute('selects');
                     if (!!parentSelects && parentSelects !== 'inheirt') {
-                        selects = 'inherits';
-                        role = parent.getAttribute('role') || role;
+                        selects = 'inherit';
+                        role =
+                            (parent.getAttribute('role') as RoleType) || role;
                     }
                 }
                 parent = parent.parentElement;
@@ -203,7 +207,7 @@ export class Menu extends SpectrumElement {
         const selects =
             this.resolvedSelects === 'single' ||
             this.resolvedSelects === 'multiple';
-        let managed = selects;
+        let managed = selects || this.resolvedSelects === 'none';
         if (event.detail.owned || this.resolvedSelects === 'ignore') {
             managed = false;
         } else if (selects || !this.selects) {
@@ -293,7 +297,7 @@ export class Menu extends SpectrumElement {
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
         const childItem = this.childItemMap.get(target);
-        if (childItem?.managed && this.selects) {
+        if (childItem?.managed) {
             event.preventDefault();
             this.selectOrToggleItem(target);
         } else {
@@ -345,22 +349,15 @@ export class Menu extends SpectrumElement {
 
     public async selectOrToggleItem(targetItem: MenuItem): Promise<void> {
         const resolvedSelects = this.resolvedSelects;
-        if (resolvedSelects === 'none') {
+        if (resolvedSelects === 'ignore') {
             return;
         }
-
         const oldSelectedItemsMap = new Map(this.selectedItemsMap);
         const oldSelected = this.selected.slice();
         const oldSelectedItems = this.selectedItems.slice();
         const oldValue = this.value;
 
-        if (resolvedSelects === 'single') {
-            this.selectedItemsMap.clear();
-            this.selectedItemsMap.set(targetItem, true);
-            this.value = targetItem.value;
-            this.selected = [targetItem.value];
-            this.selectedItems = [targetItem];
-        } else {
+        if (resolvedSelects === 'multiple') {
             if (this.selectedItemsMap.has(targetItem)) {
                 this.selectedItemsMap.delete(targetItem);
             } else {
@@ -385,6 +382,12 @@ export class Menu extends SpectrumElement {
             this.selected = selected;
             this.selectedItems = selectedItems;
             this.value = this.selected.join(this.valueSeparator);
+        } else {
+            this.selectedItemsMap.clear();
+            this.selectedItemsMap.set(targetItem, true);
+            this.value = targetItem.value;
+            this.selected = [targetItem.value];
+            this.selectedItems = [targetItem];
         }
 
         await this.updateComplete;

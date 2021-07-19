@@ -145,8 +145,10 @@ describe('Menu group', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
         await waitUntil(
-            () => managedItems(noneGroup).length === 0,
-            'selects="#mg-none should manage no items'
+            () => managedItems(noneGroup).length === 2,
+            `selects="#mg-none" should manage 2 items, received ${
+                managedItems(noneGroup).length
+            }`
         );
 
         const inheritGroup = el.querySelector(

@@ -13,7 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-action-menu.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export const ActionMenuMarkup = ({
@@ -39,15 +39,13 @@ export const ActionMenuMarkup = ({
                       <span slot="label">${visibleLabel}</span>
                   `
                 : html``}
-            <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select Inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-item disabled>Make Work Path</sp-menu-item>
-            </sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-action-menu>
     `;
 };
