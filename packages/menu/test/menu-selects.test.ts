@@ -199,7 +199,6 @@ describe('Menu [selects] w/ group', () => {
     });
     it('manages a single selection when [selects="single"]', async () => {
         expect(el.value).to.equal('');
-
         let change = oneEvent(el, 'change');
         options[0].click();
         await change;
