@@ -274,12 +274,18 @@ export class PickerBase extends SizedMixin(Focusable) {
 
         this.sizePopover(this.popover);
         const { popover } = this;
+        this.addEventListener(
+            'sp-opened',
+            () => {
+                this.manageSelection();
+                this.menuStateResolver();
+            },
+            { once: true }
+        );
         this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
             placement: this.placement,
             receivesFocus: 'auto',
         });
-        this.manageSelection();
-        this.menuStateResolver();
     }
 
     protected sizePopover(popover: HTMLElement): void {

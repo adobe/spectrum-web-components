@@ -419,7 +419,7 @@ describe('Radio Group', () => {
         expect(radioChildren.length).to.equal(3);
     });
 
-    xit('loads accessibly', async () => {
+    it('loads accessibly', async () => {
         await expect(testDiv).to.be.accessible();
     });
 
