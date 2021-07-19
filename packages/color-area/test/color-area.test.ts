@@ -28,6 +28,7 @@ import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import '../sp-color-area.js';
 import { ColorArea } from '..';
 import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 describe('ColorArea', () => {
     it('loads default color-area accessibly', async () => {
@@ -324,6 +325,40 @@ describe('ColorArea', () => {
         expect(el.hue).to.equal(0);
         expect(el.x).to.equal(0.53125);
         expect(el.y).to.equal(0.53125);
+    });
+    it('dispatches input and change events in response to "Arrow*" keypresses', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const el = await fixture<ColorArea>(
+            html`
+                <sp-color-area
+                    color="hsla(100, 50%, 50%, 1)"
+                    @change=${() => changeSpy()}
+                    @input=${() => inputSpy()}
+                ></sp-color-area>
+            `
+        );
+
+        await elementUpdated(el);
+
+        el.focus();
+        const { handle } = (el as unknown) as { handle: HTMLElement };
+
+        handle.dispatchEvent(
+            new Event('input', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        handle.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: false, // native change events do not compose themselves by default
+            })
+        );
+
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
     });
     it('retains `hue` value when s = 0 in HSL string format', async () => {
         const el = await fixture<ColorArea>(
