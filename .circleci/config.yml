@@ -49,17 +49,19 @@ commands:
                   path: /root/project/results/
             # build diff review site
             - run:
-                  when: always
+                  when: on_fail
                   name: Create review site
                   command: |
-                      node test/visual/review.js
+                      node test/visual/review.js --commit=<< pipeline.git.revision >> --theme="<< parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
-            - store_artifacts:
-                  path: test/visual/review
-            - store_artifacts:
-                  path: test/visual/screenshots-actual
-            - store_artifacts:
-                  path: test/visual/screenshots-baseline
+            - run:
+                  when: on_fail
+                  name: Publish review site
+                  command: |
+                      cp documentation/favicon.ico test/visual
+                      branch=$(git symbolic-ref --short HEAD)
+                      branch=$(npx slugify-cli $branch)
+                      yarn netlify deploy --alias=$branch-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> --dir=test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
