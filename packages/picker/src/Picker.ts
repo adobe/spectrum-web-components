@@ -103,6 +103,8 @@ export class PickerBase extends SizedMixin(Focusable) {
     @property({ type: Boolean, reflect: true })
     public readonly = false;
 
+    public selects: undefined | 'single' | 'multiple' = 'single';
+
     public menuItems: MenuItem[] = [];
     private restoreChildren?: () => void;
 
@@ -178,6 +180,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     public handleChange(event: Event): void {
+        event.stopPropagation();
         const target = event.target as Menu;
         const [selected] = target.selectedItems;
         this.setValueFromItem(selected);
@@ -210,9 +213,9 @@ export class PickerBase extends SizedMixin(Focusable) {
             return;
         }
         if (oldSelectedItem) {
-            oldSelectedItem.selected = false;
+            oldSelectedItem.selected = !!this.selects ? false : false;
         }
-        item.selected = true;
+        item.selected = !!this.selects ? true : false;
     }
 
     public toggle(target?: boolean): void {
@@ -444,11 +447,11 @@ export class PickerBase extends SizedMixin(Focusable) {
                 if (this.value === item.value && !item.disabled) {
                     selectedItem = item;
                 } else {
-                    item.selected = false;
+                    item.selected = !!this.selects ? false : false;
                 }
             });
             if (selectedItem) {
-                selectedItem.selected = true;
+                selectedItem.selected = !!this.selects ? true : false;
                 this.selectedItem = selectedItem;
             } else {
                 this.value = '';

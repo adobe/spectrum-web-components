@@ -592,7 +592,9 @@ describe('Picker', () => {
         ) as MenuItem;
         const button = el.button as HTMLButtonElement;
 
+        const opened = oneEvent(el, 'sp-opened');
         button.click();
+        await opened;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
@@ -604,7 +606,9 @@ describe('Picker', () => {
             input.focus();
         });
 
+        const closed = oneEvent(el, 'sp-closed');
         secondItem.click();
+        await closed;
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
@@ -671,14 +675,18 @@ describe('Picker', () => {
 
         expect(el.open, 'inially closed').to.be.false;
 
+        const opened = oneEvent(el, 'sp-opened');
         button.dispatchEvent(arrowDownEvent);
+        await opened;
         await elementUpdated(el);
 
         expect(el.open, 'open by ArrowDown').to.be.true;
         expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
 
+        const closed = oneEvent(el, 'sp-closed');
         firstItem.click();
+        await closed;
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
@@ -747,8 +755,6 @@ describe('Picker', () => {
     });
     it('refocuses on list when open', async () => {
         const el = await pickerFixture();
-        await sendKeys({ press: 'ArrowDown' });
-        await sendKeys({ press: 'ArrowUp' });
 
         await elementUpdated(el);
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
@@ -756,7 +762,14 @@ describe('Picker', () => {
         const opened = oneEvent(el, 'sp-opened');
         el.open = true;
         await opened;
-        expect(firstItem.focused).to.be.true;
+        await elementUpdated(el);
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowUp' });
+
+        await waitUntil(
+            () => firstItem.focused,
+            'The first items should have become focused visually.'
+        );
 
         el.blur();
         await elementUpdated(el);
