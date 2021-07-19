@@ -11,6 +11,12 @@ governing permissions and limitations under the License.
 */
 import fs from 'fs';
 import globby from 'globby';
+import { PNG } from 'pngjs';
+import pixelmatch from 'pixelmatch';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+const { commit, theme } = yargs(hideBin(process.argv)).argv;
 
 function cleanURL(url) {
     return url.replace('test/visual/', '../');
@@ -33,8 +39,30 @@ async function main() {
             id,
             name,
             baseline,
+            baselinePath: path,
         };
         allTests.push(test);
+    }
+    for await (const path of globby.stream(
+        `test/visual/screenshots-actual/updates/**/*.png`
+    )) {
+        const pathParts = path.split('/');
+        const name = pathParts[pathParts.length - 1];
+        const actual = cleanURL(path);
+        const id = cleanID(path, 'screenshots-actual/updates');
+        const test = {
+            id,
+            name,
+            actual,
+            actualPath: path,
+        };
+        const existingTest = allTests.find((test) => test.id === id);
+        if (existingTest) {
+            existingTest.actual = actual;
+            existingTest.actualPath = path;
+        } else {
+            allTests.push(test);
+        }
     }
     for await (const path of globby.stream(
         `test/visual/screenshots-actual/diff/**/*.png`
@@ -50,26 +78,29 @@ async function main() {
         };
         const existingTest = allTests.find((test) => test.id === id);
         if (existingTest) {
-            existingTest.diff = diff;
-        } else {
-            allTests.push(test);
-        }
-    }
-    for await (const path of globby.stream(
-        `test/visual/screenshots-actual/updates/**/*.png`
-    )) {
-        const pathParts = path.split('/');
-        const name = pathParts[pathParts.length - 1];
-        const actual = cleanURL(path);
-        const id = cleanID(path, 'screenshots-actual/updates');
-        const test = {
-            id,
-            name,
-            actual,
-        };
-        const existingTest = allTests.find((test) => test.id === id);
-        if (existingTest) {
-            existingTest.actual = actual;
+            // When a VRT passes on the second try, it will still have created a diff from the first pass.
+            // Confirm if the actual and baseline images are actually different before including the diff here.
+            const actual = PNG.sync.read(
+                fs.readFileSync(existingTest.actualPath)
+            );
+            const baseline = PNG.sync.read(
+                fs.readFileSync(existingTest.baselinePath)
+            );
+            const { width, height } = actual;
+            const result = new PNG({ width, height });
+            const numpixels = pixelmatch(
+                actual.data,
+                baseline.data,
+                result.data,
+                width,
+                height,
+                { threshold: 0 }
+            );
+            if (numpixels > 0) {
+                existingTest.diff = diff;
+            }
+            delete existingTest.actualPath;
+            delete existingTest.baselinePath;
         } else {
             allTests.push(test);
         }
@@ -102,7 +133,16 @@ async function main() {
     if (!fs.existsSync('test/visual/review')) {
         fs.mkdirSync('test/visual/review');
     }
-    fs.writeFileSync('test/visual/src/tests.json', JSON.stringify(tests));
+    fs.writeFileSync(
+        'test/visual/src/data.json',
+        JSON.stringify({
+            meta: {
+                commit,
+                theme,
+            },
+            tests,
+        })
+    );
 }
 
 main();
