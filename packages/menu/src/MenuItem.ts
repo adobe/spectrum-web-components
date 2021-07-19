@@ -155,8 +155,9 @@ export class MenuItem extends ActionButton {
         this.dispatchEvent(removedEvent);
     }
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async _getUpdateComplete(): Promise<boolean> {
+        const complete = (await super._getUpdateComplete()) as boolean;
+        return complete;
     }
 
     public async triggerUpdate(): Promise<void> {

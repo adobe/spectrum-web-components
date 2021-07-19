@@ -41,6 +41,11 @@ interface Properties {
     size: 's' | 'm' | 'l' | 'xl';
 }
 
+const testReady = (root: HTMLElement): boolean => {
+    const delayedReady = root.querySelector('delayed-ready');
+    return !!delayedReady && !!delayedReady.children.length;
+};
+
 export const elements = ({ color, size }: Properties): TemplateResult => {
     const content = import('./icon-manifest.js').then(
         (iconManifest) => html`
@@ -73,6 +78,8 @@ export const elements = ({ color, size }: Properties): TemplateResult => {
         </delayed-ready>
     `;
 };
+
+elements.swcVRTTestReady = testReady;
 
 export const Icons = ({ color, size }: Properties): TemplateResult => {
     const content = import('../').then((icons) => {
@@ -123,3 +130,5 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
         </delayed-ready>
     `;
 };
+
+Icons.swcVRTTestReady = testReady;

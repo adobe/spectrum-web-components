@@ -18,8 +18,12 @@ import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/Sto
 import { TemplateResult } from '@spectrum-web-components/base';
 import { render } from 'lit-html';
 
-const wrap = () => html`
-    <sp-story-decorator reduce-motion screenshot></sp-story-decorator>
+const wrap = (testReady?: () => boolean) => html`
+    <sp-story-decorator
+        reduce-motion
+        screenshot
+        .testReady=${testReady}
+    ></sp-story-decorator>
 `;
 
 type StoriesType = {
@@ -64,7 +68,9 @@ export const test = (
                     }
                     storyResult = decoratedStory as TemplateResult;
                 }
-                const test = await fixture<StoryDecorator>(wrap());
+                const test = await fixture<StoryDecorator>(
+                    wrap(tests[story].swcVRTTestReady)
+                );
                 await elementUpdated(test);
                 render(storyResult, test);
                 await waitUntil(

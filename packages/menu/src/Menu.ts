@@ -79,8 +79,7 @@ export class Menu extends SpectrumElement {
         if (this.cachedChildItems !== undefined) {
             return this.cachedChildItems;
         } else {
-            this.updateCachedMenuItems();
-            return this.cachedChildItems || [];
+            return this.updateCachedMenuItems();
         }
     }
 
@@ -136,11 +135,8 @@ export class Menu extends SpectrumElement {
         const observer = new MutationObserver((mutationList) => {
             for (const mutation of mutationList) {
                 if (mutation.attributeName === 'selects') {
-                    for (const child of this.childItems) {
-                        child.menuItem.triggerUpdate();
-                    }
-                    this.cachedResolvedSelects = undefined;
                     this.clearParentSelectsObservers();
+                    this.selectsChanged();
                     return;
                 }
             }
@@ -168,11 +164,8 @@ export class Menu extends SpectrumElement {
             }
             // Search all parents in the same tree until a role is resolved
             // or there are no more parents.
-            while (parent != null && !role) {
-                if (
-                    parent instanceof Menu ||
-                    parent.localName == 'sp-menu-group'
-                ) {
+            while (parent != null && selects === 'none') {
+                if (parent instanceof Menu) {
                     this.addParentSelectsObserver(parent);
                     const parentSelects = parent.getAttribute('selects');
                     if (!!parentSelects && parentSelects !== 'inheirt') {
@@ -504,7 +497,7 @@ export class Menu extends SpectrumElement {
                 selectedItems.push(menuItem);
             }
             if (i !== index) {
-                item.focused = false;
+                childItem.menuItem.focused = false;
             }
         });
         this.selectedItemsMap = selectedItemsMap;
@@ -516,11 +509,10 @@ export class Menu extends SpectrumElement {
     }
 
     // debounce update this.menuItems so they're in DOM order
-    private updateCachedMenuItems(): void {
+    private updateCachedMenuItems(): MenuChildItem[] {
         this.cachedChildItems = [];
 
-        const slotElements =
-            this.menuSlot.assignedElements({ flatten: true }) || [];
+        const slotElements = this.menuSlot.assignedElements({ flatten: true });
         for (const slotElement of slotElements) {
             const childMenuItems: MenuItem[] =
                 slotElement instanceof MenuItem
@@ -535,6 +527,8 @@ export class Menu extends SpectrumElement {
                 }
             }
         }
+
+        return this.cachedChildItems;
     }
 
     private _willUpdateItems = false;
@@ -542,6 +536,7 @@ export class Menu extends SpectrumElement {
     private handleItemsChanged(): void {
         this.cachedChildItems = undefined;
         if (!this._willUpdateItems) {
+            /* c8 ignore next 3 */
             let resolve = (): void => {
                 return;
             };
@@ -627,17 +622,10 @@ export class Menu extends SpectrumElement {
         this.childItemsUpdated = Promise.all(updates);
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('selects') && this._notFirstUpdated) {
-            this.cachedResolvedSelects = undefined;
-            const updates: Promise<unknown>[] = [
-                new Promise((res) => requestAnimationFrame(() => res(true))),
-            ];
-            for (const childItem of this.childItems) {
-                updates.push(childItem.menuItem.triggerUpdate());
-            }
-            this.childItemsUpdated = Promise.all(updates);
+            this.selectsChanged();
         }
         if (changes.has('label')) {
             if (this.label) {
@@ -647,6 +635,17 @@ export class Menu extends SpectrumElement {
             }
         }
         this._notFirstUpdated = true;
+    }
+
+    protected selectsChanged(): void {
+        this.cachedResolvedSelects = undefined;
+        const updates: Promise<unknown>[] = [
+            new Promise((res) => requestAnimationFrame(() => res(true))),
+        ];
+        for (const childItem of this.childItems) {
+            updates.push(childItem.menuItem.triggerUpdate());
+        }
+        this.childItemsUpdated = Promise.all(updates);
     }
 
     public connectedCallback(): void {
@@ -660,9 +659,10 @@ export class Menu extends SpectrumElement {
     protected childItemsUpdated!: Promise<unknown[]>;
     protected cacheUpdated = Promise.resolve();
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async _getUpdateComplete(): Promise<boolean> {
+        const complete = (await super._getUpdateComplete()) as boolean;
         await this.childItemsUpdated;
         await this.cacheUpdated;
+        return complete;
     }
 }

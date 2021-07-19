@@ -14,6 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-picker.js';
 import { Picker } from '../';
+import { MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
@@ -303,6 +304,10 @@ export const Open = (args: StoryArgs): TemplateResult => {
 Open.args = {
     open: true,
 };
+Open.swcVRTTestReady = (root: HTMLElement) => {
+    const picker = root.querySelector('sp-picker');
+    return !!picker && picker.open;
+};
 
 export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
@@ -355,8 +360,8 @@ export const readonly = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+const initialState = 'lb1-mo';
 export const custom = (args: StoryArgs): TemplateResult => {
-    const initialState = 'lb1-mo';
     return html`
         <sp-field-label for="picker-state">
             What state do you live in?
@@ -396,4 +401,10 @@ export const custom = (args: StoryArgs): TemplateResult => {
 
 custom.args = {
     open: true,
+};
+
+custom.swcVRTTestReady = (root: HTMLElement) => {
+    const picker = root.querySelector('sp-picker');
+    const item = document.getElementById(initialState) as MenuItem;
+    return !!picker && picker.open && !!item && item.selected;
 };

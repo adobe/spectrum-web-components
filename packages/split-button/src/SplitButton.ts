@@ -23,6 +23,7 @@ import {
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/button/sp-button.js';
 import { ButtonVariants } from '@spectrum-web-components/button';
 import { PickerBase } from '@spectrum-web-components/picker';
@@ -89,7 +90,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
         const target =
             this.type === 'more'
                 ? this.menuItems[0]
-                : this.menuItems.find((el) => el.selected) || this.menuItems[0];
+                : this.selectedItem || this.menuItems[0];
         if (target) {
             target.click();
         }
@@ -107,6 +108,23 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 </div>
             `,
         ];
+    }
+
+    protected get renderPopover(): TemplateResult {
+        return html`
+            <sp-popover id="popover" @sp-overlay-closed=${this.onOverlayClosed}>
+                <sp-menu
+                    id="menu"
+                    role="${this.listRole}"
+                    @change=${this.handleChange}
+                ></sp-menu>
+            </sp-popover>
+        `;
+    }
+
+    protected update(changes: PropertyValues<this>): void {
+        this.selects = undefined;
+        super.update(changes);
     }
 
     protected render(): TemplateResult {
@@ -175,12 +193,11 @@ export class SplitButton extends SizedMixin(PickerBase) {
             if (this.type === 'more') {
                 this.menuItems[0].hidden = true;
                 this.menuItems.forEach((el) => (el.selected = false));
-                this.menuItems[0].selected = true;
                 this.selectedItem = this.menuItems[0];
             } else {
                 this.selectedItem = this.selectedItem || this.menuItems[0];
-                this.selectedItem.selected = true;
             }
+            this.value = this.selectedItem.value;
             return;
         }
         await this.updateComplete;

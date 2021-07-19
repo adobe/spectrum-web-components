@@ -44,7 +44,7 @@ export default {
     nodeResolve: true,
     concurrency: 4,
     concurrentBrowsers: 1,
-    testsFinishTimeout: 10000,
+    testsFinishTimeout: 20000,
     coverageConfig: {
         report: true,
         reportDir: 'coverage',
@@ -67,7 +67,7 @@ export default {
     },
     testFramework: {
         config: {
-            timeout: 10000,
+            timeout: 20000,
         },
     },
     groups: [

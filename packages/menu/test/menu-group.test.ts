@@ -20,6 +20,7 @@ import {
     html,
     expect,
     waitUntil,
+    oneEvent,
 } from '@open-wc/testing';
 
 const managedItems = (menu: Menu | MenuGroup): MenuChildItem[] => {
@@ -53,6 +54,32 @@ describe('Menu group', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('manages [slot="header"] content', async () => {
+        const el = await fixture<MenuGroup>(
+            html`
+                <sp-menu-group></sp-menu-group>
+            `
+        );
+        await elementUpdated(el);
+        const slot = el.shadowRoot.querySelector(
+            '[name="header"'
+        ) as HTMLSlotElement;
+        const header = document.createElement('span');
+        header.textContent = 'Header';
+        header.slot = 'header';
+        expect(header.id).to.equal('');
+        let slotchanged = oneEvent(slot, 'slotchange');
+        el.append(header);
+        await slotchanged;
+        expect(header.id).to.equal(
+            ((el as unknown) as { headerId: string }).headerId
+        );
+
+        slotchanged = oneEvent(slot, 'slotchange');
+        header.remove();
+        await slotchanged;
+        expect(header.id).to.equal('');
     });
     it('handles selects for nested menu groups', async () => {
         const el = await fixture<Menu>(

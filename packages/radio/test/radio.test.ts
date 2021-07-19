@@ -53,7 +53,7 @@ describe('Radio', () => {
         expect(textNode.textContent).to.equal('Option 1');
     });
 
-    xit('loads accessibly', async () => {
+    it('loads accessibly', async () => {
         await expect(testDiv).to.be.accessible();
     });
 

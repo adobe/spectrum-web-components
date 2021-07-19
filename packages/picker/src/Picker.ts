@@ -183,7 +183,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         event.stopPropagation();
         const target = event.target as Menu;
         const [selected] = target.selectedItems;
-        this.setValueFromItem(selected);
+        this.setValueFromItem(selected, event);
     }
 
     protected onKeydown = (event: KeyboardEvent): void => {
@@ -194,7 +194,10 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.toggle(true);
     };
 
-    public async setValueFromItem(item: MenuItem): Promise<void> {
+    public async setValueFromItem(
+        item: MenuItem,
+        menuChangeEvent?: Event
+    ): Promise<void> {
         const oldSelectedItem = this.selectedItem;
         const oldValue = this.value;
         this.selectedItem = item;
@@ -207,6 +210,9 @@ export class PickerBase extends SizedMixin(Focusable) {
             })
         );
         if (!applyDefault) {
+            if (menuChangeEvent) {
+                menuChangeEvent.preventDefault();
+            }
             this.selectedItem = oldSelectedItem;
             this.value = oldValue;
             this.open = true;
@@ -274,12 +280,20 @@ export class PickerBase extends SizedMixin(Focusable) {
 
         this.sizePopover(this.popover);
         const { popover } = this;
+        this.addEventListener(
+            'sp-opened',
+            () => {
+                this.manageSelection();
+                this.optionsMenu.updateComplete.then(() => {
+                    this.menuStateResolver();
+                });
+            },
+            { once: true }
+        );
         this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
             placement: this.placement,
             receivesFocus: 'auto',
         });
-        this.manageSelection();
-        this.menuStateResolver();
     }
 
     protected sizePopover(popover: HTMLElement): void {
@@ -467,9 +481,10 @@ export class PickerBase extends SizedMixin(Focusable) {
     private menuStatePromise = Promise.resolve();
     private menuStateResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async _getUpdateComplete(): Promise<boolean> {
+        const complete = (await super._getUpdateComplete()) as boolean;
         await this.menuStatePromise;
+        return complete;
     }
 
     public connectedCallback(): void {

@@ -298,9 +298,9 @@ describe('Picker', () => {
         el.focus();
         await elementUpdated(el);
         const opened = oneEvent(el, 'sp-opened');
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowLeft' });
+        await sendKeys({ press: 'ArrowDown' });
         await opened;
 
         expect(el.open).to.be.true;
@@ -558,7 +558,7 @@ describe('Picker', () => {
         ) as MenuItem;
         const button = el.button as HTMLButtonElement;
 
-        const opened = oneEvent(el, 'sp-opened');
+        let opened = oneEvent(el, 'sp-opened');
         button.click();
         await opened;
 
@@ -573,11 +573,12 @@ describe('Picker', () => {
         });
 
         const closed = oneEvent(el, 'sp-closed');
+        opened = oneEvent(el, 'sp-opened');
         secondItem.click();
         await closed;
-        await waitUntil(() => el.open, 'reopens picker');
-        expect(secondItem.selected, 'selection prevented').to.be.false;
+        await opened;
         expect(preventChangeSpy.calledOnce);
+        expect(secondItem.selected, 'selection prevented').to.be.false;
     });
 
     it('can throw focus after `change`', async () => {
@@ -983,7 +984,6 @@ describe('Picker', () => {
         el.open = true;
 
         await elementUpdated(el);
-        await oneEvent(el, 'sp-opened');
 
         expect(openedSpy.calledOnce).to.be.true;
         expect(closedSpy.calledOnce).to.be.false;

@@ -392,9 +392,10 @@ export class Tabs extends Focusable {
         return;
     };
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async _getUpdateComplete(): Promise<boolean> {
+        const complete = (await super._getUpdateComplete()) as boolean;
         await this.tabChangePromise;
+        return complete;
     }
 
     public connectedCallback(): void {

@@ -88,15 +88,20 @@ async function main() {
             );
             const { width, height } = actual;
             const result = new PNG({ width, height });
-            const numpixels = pixelmatch(
-                actual.data,
-                baseline.data,
-                result.data,
-                width,
-                height,
-                { threshold: 0 }
-            );
-            if (numpixels > 0) {
+            try {
+                const numpixels = pixelmatch(
+                    actual.data,
+                    baseline.data,
+                    result.data,
+                    width,
+                    height,
+                    { threshold: 0 }
+                );
+                if (numpixels > 0) {
+                    existingTest.diff = diff;
+                }
+            } catch (error) {
+                // If the above errors, it will likely be because the screenshot are of different sizes.
                 existingTest.diff = diff;
             }
             delete existingTest.actualPath;

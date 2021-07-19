@@ -68,8 +68,11 @@ export class MenuGroup extends Menu {
                 this.headerElement.removeAttribute('id');
             }
             if (headerElement) {
-                headerElement.id = this.headerId;
-                this.setAttribute('aria-labelledby', this.headerId);
+                const headerId = headerElement.id || this.headerId;
+                if (!headerElement.id) {
+                    headerElement.id = headerId;
+                }
+                this.setAttribute('aria-labelledby', headerId);
             } else {
                 this.removeAttribute('aria-labelledby');
             }
