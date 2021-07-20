@@ -4735,31 +4735,7 @@
     picomatch "^2.2.2"
     ws "^7.4.0"
 
-"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.3":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.8.tgz#63035c28b051ec5f18742814a85736b9a7d78ba5"
-  integrity sha512-Qbo2ZVUopmjEP8ZDc8v0N/nTW9LbmycuC+uoTwp62PfHfqSN9RgXGzuGMmp5sBPRXi/E1oi1GQ+lMoDWXLjKYA==
-  dependencies:
-    "@types/koa" "^2.11.6"
-    "@types/ws" "^7.4.0"
-    "@web/parse5-utils" "^1.2.0"
-    chokidar "^3.4.3"
-    clone "^2.1.2"
-    es-module-lexer "^0.4.0"
-    get-stream "^6.0.0"
-    is-stream "^2.0.0"
-    isbinaryfile "^4.0.6"
-    koa "^2.13.0"
-    koa-etag "^4.0.0"
-    koa-send "^5.0.1"
-    koa-static "^5.0.0"
-    lru-cache "^6.0.0"
-    mime-types "^2.1.27"
-    parse5 "^6.0.1"
-    picomatch "^2.2.2"
-    ws "^7.4.2"
-
-"@web/dev-server-core@^0.3.12":
+"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.12", "@web/dev-server-core@^0.3.3":
   version "0.3.12"
   resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.12.tgz#99b8ed1a3b6a797dd52e08b3e8d5e499e5c017b2"
   integrity sha512-PI7neqHvsgsE+GJnJNSjMGeWHSo8MgO99CAzVm6UtFeAjShmMGWp6WQTDJPzvsE4jnYhIg8EPwz2cqDIGnkU6A==
@@ -4790,21 +4766,10 @@
   dependencies:
     "@web/dev-server-core" "^0.3.0"
 
-"@web/dev-server-rollup@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.3.tgz#784235a58ce4585bc353a26aba82b3d4466bbb1f"
-  integrity sha512-3v+PG9xC+Q07NOVTqqYuab/XqDQfWXltVzOI6HstBD0RWP7u7Bk4G0BwSjD3RNdIzyrTW//zCwyCN7UkHNhIBA==
-  dependencies:
-    "@web/dev-server-core" "^0.3.3"
-    chalk "^4.1.0"
-    parse5 "^6.0.1"
-    rollup "^2.35.1"
-    whatwg-url "^8.4.0"
-
-"@web/dev-server-rollup@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.4.tgz#348f273cee6e4f393dccc1973c570a96e56577cf"
-  integrity sha512-QFaqHpJXri1TuN1yN0N670bxF5noC1RtIHPhoM5Sp6YX7v3610Z/fq465V7fNaeHnTNN7dIUmNkK9vqLIrsYTg==
+"@web/dev-server-rollup@^0.3.3", "@web/dev-server-rollup@^0.3.4":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.5.tgz#cb824298e384e6c1d8105c4ffffd42fdacacf60f"
+  integrity sha512-eDLy3Da3qXqfPxOB7qZvR5NscXCZ63NyxoyPR0R/ukPs7ThvkAfwrtnKXckQo4vh5+FMytZXhyDcqPgeGDlGlg==
   dependencies:
     "@web/dev-server-core" "^0.3.3"
     chalk "^4.1.0"
