@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.9...@spectrum-web-components/menu@0.8.10) (2021-07-22)
+
+### Bug Fixes
+
+-   style clean up ([49e1537](https://github.com/adobe/spectrum-web-components/commit/49e15377f3a839d0ed5dc2504dd71396aa156eb5))
+
 ## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.8...@spectrum-web-components/menu@0.8.9) (2021-07-01)
 
 ### Bug Fixes

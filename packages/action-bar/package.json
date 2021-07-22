@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-bar",
-    "version": "0.2.11",
+    "version": "0.2.12",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.4",
-        "@spectrum-web-components/popover": "^0.9.11",
+        "@spectrum-web-components/base": "^0.4.5",
+        "@spectrum-web-components/popover": "^0.9.12",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

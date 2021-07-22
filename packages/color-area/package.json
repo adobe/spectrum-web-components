@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-area",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "publishConfig": {
         "access": "public"
     },
@@ -45,8 +45,8 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@spectrum-web-components/base": "^0.4.4",
-        "@spectrum-web-components/color-handle": "^0.1.6",
+        "@spectrum-web-components/base": "^0.4.5",
+        "@spectrum-web-components/color-handle": "^0.1.7",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

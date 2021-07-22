@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.12...@spectrum-web-components/story-decorator@0.3.13) (2021-07-22)
+
+### Bug Fixes
+
+-   **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/adobe/spectrum-web-components/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
+
 ## [0.3.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.11...@spectrum-web-components/story-decorator@0.3.12) (2021-07-01)
 
 ### Bug Fixes

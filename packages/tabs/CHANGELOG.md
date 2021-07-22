@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.4...@spectrum-web-components/tabs@0.6.5) (2021-07-22)
+
+### Bug Fixes
+
+-   **tabs:** ensure tabs has layout ([7aba515](https://github.com/adobe/spectrum-web-components/commit/7aba51561965342ea3e18404621659aa32c2ed8f))
+-   **tabs:** manage disabled state on tabs and tab elements ([58def1f](https://github.com/adobe/spectrum-web-components/commit/58def1fd7a724cc078459c56f39c19ebe2005f97))
+
 ## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.3...@spectrum-web-components/tabs@0.6.4) (2021-07-01)
 
 ### Bug Fixes

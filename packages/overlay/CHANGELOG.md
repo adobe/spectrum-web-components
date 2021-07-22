@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.9...@spectrum-web-components/overlay@0.11.10) (2021-07-22)
+
+### Bug Fixes
+
+-   **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/adobe/spectrum-web-components/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
+-   delete the used cleanup method ([942ef0f](https://github.com/adobe/spectrum-web-components/commit/942ef0fdc6e7c89e4f554e032c7b9fb760ca47a0))
+
 ## [0.11.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.8...@spectrum-web-components/overlay@0.11.9) (2021-07-01)
 
 ### Bug Fixes
