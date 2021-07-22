@@ -17,6 +17,10 @@ governing permissions and limitations under the License.
     inset: 0;
 }
 
+::slotted([slot='value']) {
+    align-self: start;
+}
+
 :host([dir='ltr']) ::slotted([slot='value']) {
     margin-left: var(--spectrum-listitem-icon-gap);
 }
