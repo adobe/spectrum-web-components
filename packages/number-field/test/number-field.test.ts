@@ -669,25 +669,10 @@ describe('NumberField', () => {
     });
     describe('manages `value` with `formatOptions`', () => {
         it('manages decimals', async () => {
-            let thrownError!: Error;
-            try {
-                const el = await getElFrom(decimals({ value: 1.333333 }));
-                expect(el.value).to.equal(1.33);
-                expect(el.formattedValue).to.equal('+1.33');
-                expect(el.valueAsString).to.equal('1.33');
-            } catch (error) {
-                /**
-                 * Polyfilled browsers (Safari) do not support the "signDisplay" options.
-                 * If they get it, update this test.
-                 */
-                thrownError = error;
-            }
-            if (
-                /AppleWebKit/.test(window.navigator.userAgent) &&
-                !/Chrome/.test(window.navigator.userAgent)
-            ) {
-                expect(thrownError).to.not.be.undefined;
-            }
+            const el = await getElFrom(decimals({ value: 1.333333 }));
+            expect(el.value).to.equal(1.33);
+            expect(el.formattedValue).to.equal('+1.33');
+            expect(el.valueAsString).to.equal('1.33');
         });
         it('manages precents', async () => {
             const el = await getElFrom(percents({ value: 0.45 }));
@@ -723,25 +708,10 @@ describe('NumberField', () => {
             expect(el.value).to.equal(234.21);
         });
         it('manages units', async () => {
-            let thrownError!: Error;
-            try {
-                const el = await getElFrom(units({ value: 17 }));
-                expect(el.formattedValue).to.equal('17 inches');
-                expect(el.valueAsString).to.equal('17');
-                expect(el.value).to.equal(17);
-            } catch (error) {
-                /**
-                 * Polyfilled browsers (Safari) do not support "inch".
-                 * If they get it, update this test.
-                 */
-                thrownError = error;
-            }
-            if (
-                /AppleWebKit/.test(window.navigator.userAgent) &&
-                !/Chrome/.test(window.navigator.userAgent)
-            ) {
-                expect(thrownError).to.not.be.undefined;
-            }
+            const el = await getElFrom(units({ value: 17 }));
+            expect(el.formattedValue).to.equal('17 inches');
+            expect(el.valueAsString).to.equal('17');
+            expect(el.value).to.equal(17);
         });
     });
     describe('max', () => {
