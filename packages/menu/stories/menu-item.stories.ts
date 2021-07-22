@@ -41,18 +41,24 @@ export const noWrap = (): TemplateResult => {
 
 export const valueSlot = (): TemplateResult => {
     return html`
+        <style>
+            kbd {
+                font-family: var(--spectrum-alias-body-text-font-family);
+                white-space: nowrap;
+            }
+        </style>
         <sp-menu style="width: 150px;" selectable>
             <sp-menu-item>
                 Save
-                <kbd slot="value">⌘S</kbd>
+                <kbd slot="value">⌘​S</kbd>
             </sp-menu-item>
             <sp-menu-item selected>
                 Save As...
-                <kbd slot="value">⇧⌘S</kbd>
+                <kbd slot="value">⇧​⌘​S</kbd>
             </sp-menu-item>
             <sp-menu-item disabled>
                 Save All
-                <kbd slot="value">⌥⌘S</kbd>
+                <kbd slot="value">⌥​⌘​S</kbd>
             </sp-menu-item>
         </sp-menu>
     `;
