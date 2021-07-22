@@ -247,10 +247,34 @@ export class ColorArea extends SpectrumElement {
                     break;
             }
         });
-        if (deltaX) {
+        if (deltaX != 0) {
             this.inputX.focus();
-        } else if (deltaY) {
+            this.inputX.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            // this.inputX.dispatchEvent(
+            //     new Event('change', {
+            //         bubbles: true,
+            //         composed: true,
+            //     })
+            // );
+        } else if (deltaY != 0) {
             this.inputY.focus();
+            this.inputY.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            // this.inputY.dispatchEvent(
+            //     new Event('change', {
+            //         bubbles: true,
+            //         composed: true,
+            //     })
+            // );
         }
         this.x = Math.min(1, Math.max(this.x + deltaX, 0));
         this.y = Math.min(1, Math.max(this.y + deltaY, 0));
@@ -286,6 +310,16 @@ export class ColorArea extends SpectrumElement {
 
         this[name as 'x' | 'y'] = valueAsNumber;
         this._color = new TinyColor({ h: this.hue, s: this.x, v: 1 - this.y });
+    }
+
+    private handleChange(): void {
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
     }
 
     private boundingClientRect!: DOMRect;
@@ -421,6 +455,7 @@ export class ColorArea extends SpectrumElement {
                 step=${this.step}
                 .value=${String(this.x)}
                 @input=${this.handleInput}
+                @change=${this.handleChange}
                 @keydown=${preventDefault}
             />
             <input
@@ -433,6 +468,7 @@ export class ColorArea extends SpectrumElement {
                 step=${this.step}
                 .value=${String(this.y)}
                 @input=${this.handleInput}
+                @change=${this.handleChange}
                 @keydown=${preventDefault}
             />
         `;
