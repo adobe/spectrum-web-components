@@ -167,7 +167,10 @@ describe('ColorArea', () => {
     it('accepts "Arrow*" keypresses with alteration', async () => {
         const el = await fixture<ColorArea>(
             html`
-                <sp-color-area color="hsla(100, 50%, 50%, 1)"></sp-color-area>
+                <sp-color-area
+                    color="hsla(100, 50%, 50%, 1)"
+                    style="--spectrum-global-dimension-size-2400:192px"
+                ></sp-color-area>
             `
         );
 
@@ -180,36 +183,40 @@ describe('ColorArea', () => {
         el.dispatchEvent(shiftEvent);
         el.dispatchEvent(arrowUpEvent);
         el.dispatchEvent(arrowUpKeyupEvent);
+        // This ensures that all the keystrokes are processed seperately
+        await elementUpdated(el);
         el.dispatchEvent(arrowUpEvent);
         el.dispatchEvent(arrowUpKeyupEvent);
 
         await elementUpdated(el);
 
         expect(el.x).to.equal(0.6666666666666666);
-        expect(el.y).to.equal(0.2);
+        expect(el.y).to.equal(0.15000000000000002);
 
         el.dispatchEvent(arrowRightEvent);
         el.dispatchEvent(arrowRightKeyupEvent);
+        await elementUpdated(el);
         el.dispatchEvent(arrowRightEvent);
         el.dispatchEvent(arrowRightKeyupEvent);
-
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.7000000000000001);
-        expect(el.y).to.equal(0.2);
+        expect(el.x).to.equal(0.75);
+        expect(el.y).to.equal(0.15000000000000002);
 
         el.dispatchEvent(arrowDownEvent);
         el.dispatchEvent(arrowDownKeyupEvent);
+        await elementUpdated(el);
         el.dispatchEvent(arrowDownEvent);
         el.dispatchEvent(arrowDownKeyupEvent);
 
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.7000000000000001);
+        expect(el.x).to.equal(0.75);
         expect(el.y).to.equal(0.25);
 
         el.dispatchEvent(arrowLeftEvent);
         el.dispatchEvent(arrowLeftKeyupEvent);
+        await elementUpdated(el);
         el.dispatchEvent(arrowLeftEvent);
         el.dispatchEvent(arrowLeftKeyupEvent);
         el.dispatchEvent(shiftKeyupEvent);
