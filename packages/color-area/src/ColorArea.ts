@@ -247,7 +247,7 @@ export class ColorArea extends SpectrumElement {
                     break;
             }
         });
-        if (deltaX != 0) {
+        if (deltaX != 0 || deltaY != 0) {
             this.inputX.focus();
             this.inputX.dispatchEvent(
                 new Event('input', {
@@ -255,13 +255,6 @@ export class ColorArea extends SpectrumElement {
                     composed: true,
                 })
             );
-            // this.inputX.dispatchEvent(
-            //     new Event('change', {
-            //         bubbles: true,
-            //         composed: true,
-            //     })
-            // );
-        } else if (deltaY != 0) {
             this.inputY.focus();
             this.inputY.dispatchEvent(
                 new Event('input', {
@@ -269,12 +262,6 @@ export class ColorArea extends SpectrumElement {
                     composed: true,
                 })
             );
-            // this.inputY.dispatchEvent(
-            //     new Event('change', {
-            //         bubbles: true,
-            //         composed: true,
-            //     })
-            // );
         }
         this.x = Math.min(1, Math.max(this.x + deltaX, 0));
         this.y = Math.min(1, Math.max(this.y + deltaY, 0));
