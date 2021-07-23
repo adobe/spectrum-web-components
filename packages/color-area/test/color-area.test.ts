@@ -119,13 +119,13 @@ describe('ColorArea', () => {
         await sendKeys({
             press: 'ArrowUp',
         });
+        await elementUpdated(el);
         await sendKeys({
             press: 'ArrowUp',
         });
-
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.6666666666666666);
+        expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.22999999999999998);
 
         await sendKeys({
@@ -138,7 +138,7 @@ describe('ColorArea', () => {
         await elementUpdated(el);
 
         expect(el.x).to.equal(0.6900000000000001);
-        expect(el.y).to.equal(0.22999999999999998);
+        expect(el.y).to.equal(0.23);
 
         await sendKeys({
             press: 'ArrowDown',
@@ -149,7 +149,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.6900000000000001);
+        expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.25);
 
         await sendKeys({
@@ -167,10 +167,7 @@ describe('ColorArea', () => {
     it('accepts "Arrow*" keypresses with alteration', async () => {
         const el = await fixture<ColorArea>(
             html`
-                <sp-color-area
-                    color="hsla(100, 50%, 50%, 1)"
-                    style="--spectrum-global-dimension-size-2400:192px"
-                ></sp-color-area>
+                <sp-color-area color="hsla(100, 50%, 50%, 1)"></sp-color-area>
             `
         );
 
@@ -190,7 +187,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.6666666666666666);
+        expect(el.x).to.equal(0.65);
         expect(el.y).to.equal(0.15000000000000002);
 
         el.dispatchEvent(arrowRightEvent);
@@ -201,7 +198,7 @@ describe('ColorArea', () => {
         await elementUpdated(el);
 
         expect(el.x).to.equal(0.75);
-        expect(el.y).to.equal(0.15000000000000002);
+        expect(el.y).to.equal(0.15);
 
         el.dispatchEvent(arrowDownEvent);
         el.dispatchEvent(arrowDownKeyupEvent);
@@ -377,7 +374,7 @@ describe('ColorArea', () => {
         el.inputY.dispatchEvent(
             new Event('change', {
                 bubbles: true,
-                composed: false,
+                composed: false, // native change events do not compose themselves by default
             })
         );
 
@@ -406,8 +403,38 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(inputSpy.callCount).to.equal(2);
+        expect(inputSpy.callCount).to.equal(4);
         expect(changeSpy.callCount).to.equal(2);
+
+        el.inputY.focus();
+
+        await sendKeys({ press: 'ArrowUp' });
+        await sendKeys({ press: 'ArrowUp' });
+
+        await elementUpdated(el);
+
+        expect(inputSpy.callCount).to.equal(8);
+        expect(changeSpy.callCount).to.equal(4);
+
+        el.inputY.focus();
+
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowDown' });
+
+        await elementUpdated(el);
+
+        expect(inputSpy.callCount).to.equal(12);
+        expect(changeSpy.callCount).to.equal(6);
+
+        el.inputX.focus();
+
+        await sendKeys({ press: 'ArrowLeft' });
+        await sendKeys({ press: 'ArrowLeft' });
+
+        await elementUpdated(el);
+
+        expect(inputSpy.callCount).to.equal(16);
+        expect(changeSpy.callCount).to.equal(8);
     });
     it('retains `hue` value when s = 0 in HSL string format', async () => {
         const el = await fixture<ColorArea>(
