@@ -42,6 +42,8 @@ export const test = (
     Object.keys(tests).map((story) => {
         if (story !== 'default') {
             it(story, async () => {
+                const test = await fixture<StoryDecorator>(wrap());
+                await elementUpdated(test);
                 const testsDefault = (tests as any).default;
                 const args = {
                     ...(testsDefault.args || {}),
@@ -64,8 +66,6 @@ export const test = (
                     }
                     storyResult = decoratedStory as TemplateResult;
                 }
-                const test = await fixture<StoryDecorator>(wrap());
-                await elementUpdated(test);
                 render(storyResult, test);
                 await waitUntil(
                     () => test.ready,
