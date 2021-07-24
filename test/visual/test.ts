@@ -78,21 +78,22 @@ export const test = (
                         `${color} - ${scale} - ${dir} - ${name} - ${story}`
                     );
                 } catch (error) {
+                    test.remove();
                     /**
                      * _Sometimes_ the browser will fail on weird renderings of rounded edges.
                      * This retry allows it another change to render the test from scratch before
                      * actually failing on this story.
                      **/
-                    const test = await fixture<StoryDecorator>(wrap());
-                    await elementUpdated(test);
-                    render(storyResult, test);
+                    const retest = await fixture<StoryDecorator>(wrap());
+                    await elementUpdated(retest);
+                    render(storyResult, retest);
                     await waitUntil(
-                        () => test.ready,
+                        () => retest.ready,
                         'Wait for decorator to become ready...',
                         { timeout: 15000 }
                     );
                     await visualDiff(
-                        test,
+                        retest,
                         `${color} - ${scale} - ${dir} - ${name} - ${story}`
                     );
                 }
