@@ -125,7 +125,7 @@ describe('ColorArea', () => {
         });
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.67);
+        expect(el.x).to.equal(0.6666666666666666);
         expect(el.y).to.equal(0.22999999999999998);
 
         await sendKeys({
@@ -137,8 +137,8 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.6900000000000001);
-        expect(el.y).to.equal(0.23);
+        expect(el.x).to.equal(0.6866666666666666);
+        expect(el.y).to.equal(0.22999999999999998);
 
         await sendKeys({
             press: 'ArrowDown',
@@ -149,7 +149,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.69);
+        expect(el.x).to.equal(0.6866666666666666);
         expect(el.y).to.equal(0.25);
 
         await sendKeys({
@@ -161,7 +161,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.67);
+        expect(el.x).to.equal(0.6666666666666666);
         expect(el.y).to.equal(0.25);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
@@ -187,7 +187,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.65);
+        expect(el.x).to.equal(0.6666666666666666);
         expect(el.y).to.equal(0.15000000000000002);
 
         el.dispatchEvent(arrowRightEvent);
@@ -197,8 +197,8 @@ describe('ColorArea', () => {
         el.dispatchEvent(arrowRightKeyupEvent);
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.75);
-        expect(el.y).to.equal(0.15);
+        expect(el.x).to.equal(0.7666666666666667);
+        expect(el.y).to.equal(0.15000000000000002);
 
         el.dispatchEvent(arrowDownEvent);
         el.dispatchEvent(arrowDownKeyupEvent);
@@ -208,7 +208,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.75);
+        expect(el.x).to.equal(0.7666666666666667);
         expect(el.y).to.equal(0.25);
 
         el.dispatchEvent(arrowLeftEvent);
@@ -220,7 +220,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.x).to.equal(0.6499999999999999);
+        expect(el.x).to.equal(0.6666666666666666);
         expect(el.y).to.equal(0.25);
     });
     it('accepts pointer events', async () => {
@@ -403,7 +403,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(inputSpy.callCount).to.equal(4);
+        expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
 
         el.inputY.focus();
@@ -413,7 +413,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(inputSpy.callCount).to.equal(8);
+        expect(inputSpy.callCount).to.equal(4);
         expect(changeSpy.callCount).to.equal(4);
 
         el.inputY.focus();
@@ -423,7 +423,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(inputSpy.callCount).to.equal(12);
+        expect(inputSpy.callCount).to.equal(6);
         expect(changeSpy.callCount).to.equal(6);
 
         el.inputX.focus();
@@ -433,7 +433,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(inputSpy.callCount).to.equal(16);
+        expect(inputSpy.callCount).to.equal(8);
         expect(changeSpy.callCount).to.equal(8);
     });
     it('retains `hue` value when s = 0 in HSL string format', async () => {

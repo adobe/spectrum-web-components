@@ -211,6 +211,7 @@ export class ColorArea extends SpectrumElement {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { key, code } = event;
+        event.preventDefault();
         if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
             this.altKeys.add(key);
             this.altered = this.altKeys.size;
@@ -247,37 +248,35 @@ export class ColorArea extends SpectrumElement {
                     break;
             }
         });
-        if (deltaX != 0 || deltaY != 0) {
+        if (deltaX != 0) {
             this.inputX.focus();
-            this.inputX.dispatchEvent(
-                new Event('input', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
+        } else if (deltaY != 0) {
             this.inputY.focus();
-            this.inputY.dispatchEvent(
-                new Event('input', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
         }
+
         this.x = Math.min(1, Math.max(this.x + deltaX, 0));
         this.y = Math.min(1, Math.max(this.y + deltaY, 0));
 
         this._previousColor = this._color.clone();
         this._color = new TinyColor({ h: this.hue, s: this.x, v: 1 - this.y });
 
-        const applyDefault = this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                composed: true,
-                cancelable: true,
-            })
-        );
-        if (!applyDefault) {
-            this._color = this._previousColor;
+        if (deltaX != 0 || deltaY != 0) {
+            this.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            const applyDefault = this.dispatchEvent(
+                new Event('change', {
+                    bubbles: true,
+                    composed: true,
+                    cancelable: true,
+                })
+            );
+            if (!applyDefault) {
+                this._color = this._previousColor;
+            }
         }
     }
 
