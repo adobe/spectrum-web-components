@@ -289,18 +289,18 @@ describe('Picker', () => {
 
         await elementUpdated(el);
 
-        expect(firstItem.focused, 'not visually focused').to.be.false;
+        expect(firstItem.focused, 'should not visually focused').to.be.false;
 
         el.focus();
         await elementUpdated(el);
         const opened = oneEvent(el, 'sp-opened');
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowLeft' });
+        await sendKeys({ press: 'ArrowDown' });
         await opened;
 
         expect(el.open).to.be.true;
-        expect(firstItem.focused, 'not visually focused').to.be.true;
+        expect(firstItem.focused, 'should be visually focused').to.be.true;
 
         const closed = oneEvent(el, 'sp-closed');
         await sendKeys({
@@ -454,17 +454,19 @@ describe('Picker', () => {
         const secondItem = el.querySelector(
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
-        const button = el.button as HTMLButtonElement;
 
-        button.click();
+        const opened = oneEvent(el, 'sp-opened');
+        el.button.click();
+        await opened;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
         expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
 
+        const closed = oneEvent(el, 'sp-closed');
         secondItem.click();
-        await elementUpdated(el);
+        await closed;
 
         expect(el.open).to.be.false;
         expect(el.selectedItem?.itemText).to.equal('Select Inverse');
@@ -480,15 +482,18 @@ describe('Picker', () => {
         ) as MenuItem;
         const button = el.button as HTMLButtonElement;
 
+        const opened = oneEvent(el, 'sp-opened');
         button.click();
+        await opened;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
         expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
 
+        const closed = oneEvent(el, 'sp-closed');
         secondItem.click();
-        await elementUpdated(el);
+        await closed;
 
         expect(el.open).to.be.false;
         expect(el.selectedItem?.itemText).to.equal('Select Inverse');
@@ -507,29 +512,35 @@ describe('Picker', () => {
         ) as MenuItem;
         const button = el.button as HTMLButtonElement;
 
+        const opened = oneEvent(el, 'sp-opened');
         button.click();
+        await opened;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
         expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
 
+        const closed = oneEvent(el, 'sp-closed');
         secondItem.click();
-        await elementUpdated(el);
+        await closed;
 
         expect(el.open).to.be.false;
         expect(el.selectedItem?.itemText).to.equal('Select Inverse');
         expect(el.value).to.equal('option-2');
 
+        const opened2 = oneEvent(el, 'sp-opened');
         button.click();
+        await opened2;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
         expect(el.selectedItem?.itemText).to.equal('Select Inverse');
         expect(el.value).to.equal('option-2');
 
+        const closed2 = oneEvent(el, 'sp-closed');
         firstItem.click();
-        await elementUpdated(el);
+        await closed2;
 
         expect(el.open).to.be.false;
         expect(el.selectedItem?.itemText).to.equal('Deselect');
@@ -546,7 +557,9 @@ describe('Picker', () => {
         ) as MenuItem;
         const button = el.button as HTMLButtonElement;
 
+        let opened = oneEvent(el, 'sp-opened');
         button.click();
+        await opened;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
@@ -559,11 +572,14 @@ describe('Picker', () => {
             preventChangeSpy();
         });
 
+        const closed = oneEvent(el, 'sp-closed');
+        opened = oneEvent(el, 'sp-opened');
         secondItem.click();
+        await closed;
+        await opened;
         await elementUpdated(el);
-        await waitUntil(() => el.open, 'reopens picker');
-        expect(secondItem.selected, 'selection prevented').to.be.false;
         expect(preventChangeSpy.calledOnce);
+        expect(secondItem.selected, 'selection prevented').to.be.false;
     });
 
     it('can throw focus after `change`', async () => {
@@ -578,7 +594,9 @@ describe('Picker', () => {
         ) as MenuItem;
         const button = el.button as HTMLButtonElement;
 
+        const opened = oneEvent(el, 'sp-opened');
         button.click();
+        await opened;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
@@ -590,7 +608,9 @@ describe('Picker', () => {
             input.focus();
         });
 
+        const closed = oneEvent(el, 'sp-closed');
         secondItem.click();
+        await closed;
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
@@ -657,14 +677,18 @@ describe('Picker', () => {
 
         expect(el.open, 'inially closed').to.be.false;
 
+        const opened = oneEvent(el, 'sp-opened');
         button.dispatchEvent(arrowDownEvent);
+        await opened;
         await elementUpdated(el);
 
         expect(el.open, 'open by ArrowDown').to.be.true;
         expect(el.selectedItem?.itemText).to.be.undefined;
         expect(el.value).to.equal('');
 
+        const closed = oneEvent(el, 'sp-closed');
         firstItem.click();
+        await closed;
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
@@ -737,10 +761,17 @@ describe('Picker', () => {
         await elementUpdated(el);
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
+        const opened = oneEvent(el, 'sp-opened');
         el.open = true;
+        await opened;
         await elementUpdated(el);
-        await waitUntil(() => isMenuActiveElement(), 'first item focused');
-        expect(firstItem.focused).to.be.true;
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowUp' });
+
+        await waitUntil(
+            () => firstItem.focused,
+            'The first items should have become focused visually.'
+        );
 
         el.blur();
         await elementUpdated(el);
@@ -751,6 +782,9 @@ describe('Picker', () => {
         await waitUntil(() => isMenuActiveElement(), 'first item refocused');
         expect(el.open).to.be.true;
         expect(isMenuActiveElement()).to.be.true;
+        // Force :focus-visible heuristic
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowUp' });
         expect(firstItem.focused).to.be.true;
     });
     it('allows tabing to close', async () => {
@@ -778,6 +812,7 @@ describe('Picker', () => {
         expect(document.activeElement === menu, 'focuses something else').to.be
             .false;
     });
+    // TODO: Create a synthetic tab stop to allow this to work locally in Safari...
     it('opens its menu inline of the tab order', async () => {
         const el = await pickerFixture();
         const input = document.createElement('input');
@@ -857,6 +892,9 @@ describe('Picker', () => {
         await waitUntil(() => isMenuActiveElement(), 'menu focused');
 
         expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
+        // Force :focus-visible heuristic
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowUp' });
         expect(secondItem.focused, 'secondItem "focused"').to.be.true;
     });
     it('resets value when item not available', async () => {
@@ -945,10 +983,10 @@ describe('Picker', () => {
         );
 
         await elementUpdated(el);
+        const opened = oneEvent(el, 'sp-opened');
         el.open = true;
-
+        await opened;
         await elementUpdated(el);
-        await oneEvent(el, 'sp-opened');
 
         expect(openedSpy.calledOnce).to.be.true;
         expect(closedSpy.calledOnce).to.be.false;
@@ -957,10 +995,10 @@ describe('Picker', () => {
             .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
         expect(openedEvent.detail.interaction).to.equal('inline');
 
+        const closed = oneEvent(el, 'sp-closed');
         el.open = false;
+        await closed;
         await elementUpdated(el);
-
-        await waitUntil(() => closedSpy.calledOnce, 'closed event received');
 
         expect(closedSpy.calledOnce).to.be.true;
 
@@ -1004,14 +1042,12 @@ describe('Picker', () => {
         el.open = true;
 
         await elementUpdated(el);
-        await nextFrame();
+        await waitUntil(() => isMenuActiveElement(), 'first item focused');
         const getParentOffset = (el: HTMLElement): number => {
             const parentScroll = (el.parentElement as HTMLElement).scrollTop;
             const parentOffset = el.offsetTop - parentScroll;
             return parentOffset;
         };
-        expect(lastItem.focused, 'last focused').to.be.true;
-        expect(firstItem.focused, 'first not focused').to.be.false;
         expect(getParentOffset(lastItem)).to.be.lessThan(40);
         expect(getParentOffset(firstItem)).to.be.lessThan(-1);
 
@@ -1019,8 +1055,6 @@ describe('Picker', () => {
         lastItem.dispatchEvent(arrowDownEvent);
         await elementUpdated(el);
         await nextFrame();
-        expect(lastItem.focused, 'last not focused').to.be.false;
-        expect(firstItem.focused, 'first focused').to.be.true;
         expect(getParentOffset(lastItem)).to.be.greaterThan(40);
         expect(getParentOffset(firstItem)).to.be.greaterThan(-1);
     });
