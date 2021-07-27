@@ -11,9 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/split-button/sp-split-button.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-splitbutton open></sp-splitbutton>
+    <sp-split-button open>
+        <sp-menu-item>Action 1</sp-menu-item>
+        <sp-menu-item>Action 2</sp-menu-item>
+        <sp-menu-item>Action 3</sp-menu-item>
+    </sp-split-button>
 `);
