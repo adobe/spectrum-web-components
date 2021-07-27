@@ -364,7 +364,6 @@ describe('Splitbutton', () => {
         opened = oneEvent(el, 'sp-opened');
         trigger.click();
         await opened;
-
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
@@ -372,7 +371,6 @@ describe('Splitbutton', () => {
         closed = oneEvent(el, 'sp-closed');
         item2.click();
         await closed;
-
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
