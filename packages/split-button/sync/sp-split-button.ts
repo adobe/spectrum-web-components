@@ -10,5 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import './index.js';
-import '../sp-picker.js';
+import '@spectrum-web-components/picker/sync/index.js';
+import '../sp-split-button.js';

@@ -24,7 +24,9 @@
         "./src/*": "./src/*",
         "./package.json": "./package.json",
         "./sp-action-menu": "./sp-action-menu.js",
-        "./sp-action-menu.js": "./sp-action-menu.js"
+        "./sp-action-menu.js": "./sp-action-menu.js",
+        "./sync/sp-action-menu": "./sync/sp-action-menu.js",
+        "./sync/sp-action-menu.js": "./sync/sp-action-menu.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
@@ -56,6 +58,7 @@
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js"
+        "./sp-*.js",
+        "./sync/sp-*.js"
     ]
 }

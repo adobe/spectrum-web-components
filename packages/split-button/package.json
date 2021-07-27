@@ -24,7 +24,9 @@
         "./src/*": "./src/*",
         "./package.json": "./package.json",
         "./sp-split-button": "./sp-split-button.js",
-        "./sp-split-button.js": "./sp-split-button.js"
+        "./sp-split-button.js": "./sp-split-button.js",
+        "./sync/sp-split-button": "./sync/sp-split-button.js",
+        "./sync/sp-split-button.js": "./sync/sp-split-button.js"
     },
     "scripts": {
         "test": "karma start --coverage"
@@ -59,6 +61,7 @@
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js"
+        "./sp-*.js",
+        "./sync/sp-*.js"
     ]
 }
