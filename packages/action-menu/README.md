@@ -18,6 +18,12 @@ Import the side effectful registration of `<sp-action-menu>` via:
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 ```
 
+The default of `<sp-action-menu>` will load dependencies in `@spectrum-web-components/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-action-menu>` as follows:
+
+```
+import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
+```
+
 When looking to leverage the `ActionMenu` base class as a type and/or for extension purposes, do so via:
 
 ```

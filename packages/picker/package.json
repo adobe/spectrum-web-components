@@ -25,6 +25,8 @@
         "./package.json": "./package.json",
         "./sp-picker": "./sp-picker.js",
         "./sp-picker.js": "./sp-picker.js",
+        "./sync": "./sync/index.js",
+        "./sync/index.js": "./sync/index.js",
         "./sync/sp-picker": "./sync/sp-picker.js",
         "./sync/sp-picker.js": "./sync/sp-picker.js"
     },
@@ -64,6 +66,7 @@
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
+        "./sync/index.js",
         "./sync/sp-*.js"
     ]
 }

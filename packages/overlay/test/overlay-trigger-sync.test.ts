@@ -22,7 +22,7 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 
-import '../overlay-trigger.js';
+import '../sync/overlay-trigger.js';
 import {
     OverlayTrigger,
     ActiveOverlay,
