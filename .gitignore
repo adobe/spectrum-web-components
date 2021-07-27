@@ -26,7 +26,7 @@ documentation/dist
 test/**/*.js
 test/**/*.js.map
 test/**/*.d.ts
-test/visual/src/tests.json
+test/visual/src/data.json
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
 packages/**/*.js
