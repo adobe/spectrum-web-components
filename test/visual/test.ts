@@ -70,6 +70,16 @@ export const test = (
                         ${tests[story](args)}
                     `;
                 let storyResult = decoratedStory();
+                if (tests[story].decorators && tests[story].decorators.length) {
+                    let decoratorCount = tests[story].decorators.length;
+                    while (decoratorCount) {
+                        decoratorCount -= 1;
+                        decoratedStory = tests[story].decorators[
+                            decoratorCount
+                        ](decoratedStory);
+                    }
+                    storyResult = decoratedStory as TemplateResult;
+                }
                 if (testsDefault.decorators && testsDefault.decorators.length) {
                     let decoratorCount = testsDefault.decorators.length;
                     while (decoratorCount) {
