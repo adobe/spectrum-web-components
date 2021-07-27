@@ -12,32 +12,36 @@ governing permissions and limitations under the License.
 import '../sp-menu-group.js';
 import '../sp-menu.js';
 import '../sp-menu-item.js';
-import { Menu, MenuItem, MenuGroup, MenuChildItem } from '../';
+import '../sp-menu-divider.js';
+import { Menu, MenuItem, MenuGroup } from '../';
 import {
     fixture,
     elementUpdated,
     html,
     expect,
     waitUntil,
+    oneEvent,
 } from '@open-wc/testing';
 
-const managedItems = (menu: Menu | MenuGroup): MenuChildItem[] => {
-    return menu.childItems.filter((item: MenuChildItem) => item.managed);
+const managedItems = (menu: Menu | MenuGroup): MenuItem[] => {
+    return menu.childItems.filter(
+        (item: MenuItem) => item.menuData.selectionRoot === menu
+    );
 };
 
 describe('Menu group', () => {
     it('renders', async () => {
         const el = await fixture<Menu>(
             html`
-                <sp-menu selects="none">
-                    <sp-menu-group>
+                <sp-menu selects="single">
+                    <sp-menu-group selects="inherit">
                         <span slot="header">Section Heading</span>
                         <sp-menu-item>Action 1</sp-menu-item>
                         <sp-menu-item>Action 2</sp-menu-item>
                         <sp-menu-item>Action 3</sp-menu-item>
                     </sp-menu-group>
                     <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-group>
+                    <sp-menu-group selects="inherit">
                         <span slot="header">Section Heading</span>
                         <sp-menu-item>Save</sp-menu-item>
                         <sp-menu-item disabled>Download</sp-menu-item>
@@ -46,13 +50,38 @@ describe('Menu group', () => {
             `
         );
 
-        await waitUntil(
-            () => managedItems(el).length === 5,
-            'expected menu group to manage 5 children'
-        );
+        await waitUntil(() => {
+            return managedItems(el).length === 5;
+        }, `expected menu group to manage 5 children, received ${managedItems(el).length} of ${el.childItems.length}`);
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('manages [slot="header"] content', async () => {
+        const el = await fixture<MenuGroup>(
+            html`
+                <sp-menu-group></sp-menu-group>
+            `
+        );
+        await elementUpdated(el);
+        const slot = el.shadowRoot.querySelector(
+            '[name="header"'
+        ) as HTMLSlotElement;
+        const header = document.createElement('span');
+        header.textContent = 'Header';
+        header.slot = 'header';
+        expect(header.id).to.equal('');
+        let slotchanged = oneEvent(slot, 'slotchange');
+        el.append(header);
+        await slotchanged;
+        expect(header.id).to.equal(
+            ((el as unknown) as { headerId: string }).headerId
+        );
+
+        slotchanged = oneEvent(slot, 'slotchange');
+        header.remove();
+        await slotchanged;
+        expect(header.id).to.equal('');
     });
     it('handles selects for nested menu groups', async () => {
         const el = await fixture<Menu>(
@@ -63,7 +92,7 @@ describe('Menu group', () => {
                     <sp-menu-group id="mg-multi" selects="multiple">
                         <sp-menu-item selected>Multi1</sp-menu-item>
                         <sp-menu-item>Multi2</sp-menu-item>
-                        <sp-menu-group id="mg-sub-inherit">
+                        <sp-menu-group id="mg-sub-inherit" selects="inherit">
                             <sp-menu-item>SubInherit1</sp-menu-item>
                             <sp-menu-item>SubInherit2</sp-menu-item>
                         </sp-menu-group>
@@ -72,11 +101,11 @@ describe('Menu group', () => {
                         <sp-menu-item selected>Single1</sp-menu-item>
                         <sp-menu-item>Single2</sp-menu-item>
                     </sp-menu-group>
-                    <sp-menu-group id="mg-none" selects="none">
+                    <sp-menu-group id="mg-none">
                         <sp-menu-item>Inherit1</sp-menu-item>
                         <sp-menu-item>Inherit2</sp-menu-item>
                     </sp-menu-group>
-                    <sp-menu-group id="mg-inherit">
+                    <sp-menu-group id="mg-inherit" selects="inherit">
                         <sp-menu-item>Inherit1</sp-menu-item>
                         <sp-menu-item>Inherit2</sp-menu-item>
                     </sp-menu-group>
@@ -115,7 +144,9 @@ describe('Menu group', () => {
         ) as MenuItem;
         await waitUntil(
             () => managedItems(multiGroup).length === 4,
-            'selects="#mg-multi should manage 4 items (2 are inherited)'
+            `selects="#mg-multi should manage 4 items (2 are inherited), received ${
+                managedItems(multiGroup).length
+            }`
         );
 
         const singleGroup = el.querySelector(
@@ -144,7 +175,9 @@ describe('Menu group', () => {
         ) as MenuItem;
         await waitUntil(
             () => managedItems(noneGroup).length === 2,
-            'selects="#mg-none should manage 4 items (2 are inherited)'
+            `selects="#mg-none" should manage 2 items, received ${
+                managedItems(noneGroup).length
+            }`
         );
 
         const inheritGroup = el.querySelector(
@@ -171,7 +204,7 @@ describe('Menu group', () => {
         await elementUpdated(firstItem);
         expect(singleItem1.selected).to.be.true;
         expect(firstItem.selected).to.be.true;
-        expect(secondItem.selected).to.be.false;
+        expect(secondItem.selected, 'second item not selected').to.be.false;
         expect(el.value).to.equal('First');
         expect(el.selectedItems.length).to.equal(1);
 
@@ -182,7 +215,7 @@ describe('Menu group', () => {
         await elementUpdated(el);
         await elementUpdated(firstItem);
         await elementUpdated(secondItem);
-        expect(firstItem.selected).to.be.false;
+        expect(firstItem.selected, 'first item not selected').to.be.false;
         expect(secondItem.selected).to.be.true;
         expect(firstItem.getAttribute('aria-checked')).to.equal('false');
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
@@ -193,7 +226,8 @@ describe('Menu group', () => {
         await elementUpdated(el);
         await elementUpdated(inheritItem1);
         await elementUpdated(secondItem);
-        expect(secondItem.selected).to.be.false;
+        expect(secondItem.selected, 'second item not selected again').to.be
+            .false;
         expect(inheritItem1.selected).to.be.true;
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
         expect(inheritItem1.getAttribute('aria-checked')).to.equal('true');
@@ -201,18 +235,18 @@ describe('Menu group', () => {
         expect(el.selectedItems.length).to.equal(1);
 
         noneItem2.click();
-        await elementUpdated(el);
+        await elementUpdated(noneGroup);
         await elementUpdated(noneItem2);
         expect(inheritItem1.selected).to.be.true;
-        expect(noneItem2.selected).to.be.false;
+        expect(noneItem2.selected, 'none item not selected').to.be.false;
         expect(el.value).to.equal('Inherit1');
         expect(el.selectedItems.length).to.equal(1);
 
         singleItem2.click();
-        await elementUpdated(el);
+        await elementUpdated(singleGroup);
         await elementUpdated(singleItem1);
         await elementUpdated(singleItem2);
-        expect(singleItem1.selected).to.be.false;
+        expect(singleItem1.selected, 'first item not selected').to.be.false;
         expect(singleItem2.selected).to.be.true;
         expect(inheritItem1.selected).to.be.true;
         expect(singleItem1.getAttribute('aria-checked')).to.equal('false');
@@ -240,10 +274,10 @@ describe('Menu group', () => {
                 <sp-menu selects="multiple" value-separator="--">
                     <sp-menu-item selected>First</sp-menu-item>
                     <sp-menu-item>Second</sp-menu-item>
-                    <sp-menu-group id="mg-inherit">
+                    <sp-menu-group id="mg-inherit" selects="inherit">
                         <sp-menu-item>Inherit1</sp-menu-item>
                         <sp-menu-item>Inherit2</sp-menu-item>
-                        <sp-menu-group id="mg-sub-inherit">
+                        <sp-menu-group id="mg-sub-inherit" selects="inherit">
                             <sp-menu-item>SubInherit1</sp-menu-item>
                             <sp-menu-item selected>SubInherit2</sp-menu-item>
                         </sp-menu-group>
@@ -254,7 +288,9 @@ describe('Menu group', () => {
 
         await waitUntil(
             () => managedItems(el).length == 6,
-            'expected outer menu to manage 6 items'
+            `expected outer menu to manage 6 items, manages ${
+                managedItems(el).length
+            }`
         );
         await waitUntil(
             () => el.selectedItems.length == 2,
@@ -292,27 +328,27 @@ describe('Menu group', () => {
         );
         expect(el.value).to.equal('First--SubInherit2');
         expect(el.selectedItems.length).to.equal(2);
-
         inheritGroup.setAttribute('selects', 'single');
 
         await elementUpdated(inheritGroup);
+        await elementUpdated(el);
 
-        await waitUntil(
-            () => managedItems(inheritGroup).length === 4,
-            'expected new single sub-group to manage 4 items'
-        );
+        await waitUntil(() => {
+            return managedItems(inheritGroup).length === 4;
+        }, `expected new single sub-group to manage 4 items, received ${managedItems(inheritGroup).length} because "selects === ${inheritGroup.selects}`);
 
         await waitUntil(
             () => managedItems(el).length === 2,
-            'expected outer menu to manage 2 items and no longer inherit'
+            `expected outer menu to manage 2 items with none inherited, received ${
+                managedItems(el).length
+            }`
         );
-
+        expect(inheritGroup.value).to.equal('SubInherit2');
+        expect(inheritGroup.selectedItems.length).to.equal(1);
+        expect(el.value).to.equal('First');
         expect(inheritItem1.getAttribute('role')).to.equal('menuitemradio');
         expect(inheritItem2.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem1.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem2.getAttribute('role')).to.equal('menuitemradio');
-        expect(el.value).to.equal('First');
-        //expect(inheritGroup.value).to.equal('SubInherit2')
-        expect(inheritGroup.selectedItems.length).to.equal(1);
     });
 });

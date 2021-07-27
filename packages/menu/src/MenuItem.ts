@@ -23,6 +23,67 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 
 import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import { Menu } from './Menu.js';
+
+export class MenuItemRemovedEvent extends Event {
+    constructor() {
+        super('sp-menu-item-removed', {
+            bubbles: true,
+            composed: true,
+        });
+    }
+    get item(): MenuItem {
+        if (!this._item) {
+            this._item = this.composedPath()[0] as MenuItem;
+        }
+        return this._item;
+    }
+    _item?: MenuItem;
+    reset(): void {
+        this._item = undefined;
+    }
+}
+
+export class MenuItemAddedOrUpdatedEvent extends Event {
+    constructor() {
+        super('sp-menu-item-added', {
+            bubbles: true,
+            composed: true,
+        });
+    }
+    set focusRoot(root: Menu) {
+        this.item.menuData.focusRoot = this.item.menuData.focusRoot || root;
+    }
+    set selectionRoot(root: Menu) {
+        this.item.menuData.selectionRoot =
+            this.item.menuData.selectionRoot || root;
+    }
+    get item(): MenuItem {
+        if (!this._item) {
+            this._item = this.composedPath()[0] as MenuItem;
+        }
+        return this._item;
+    }
+    _item?: MenuItem;
+    set currentAncestorWithSelects(ancestor: Menu | undefined) {
+        this._currentAncestorWithSelects = ancestor;
+    }
+    get currentAncestorWithSelects(): Menu | undefined {
+        return this._currentAncestorWithSelects;
+    }
+    _currentAncestorWithSelects?: Menu;
+    reset(item: MenuItem): void {
+        this._item = undefined;
+        this._currentAncestorWithSelects = undefined;
+        item.menuData = {
+            focusRoot: undefined,
+            selectionRoot: undefined,
+        };
+    }
+}
+
+const addOrUpdateEvent = new MenuItemAddedOrUpdatedEvent();
+const removeEvent = new MenuItemRemovedEvent();
 
 /**
  * Spectrum Menu Item Component
@@ -104,24 +165,6 @@ export class MenuItem extends ActionButton {
         }
     }
 
-    public async connectedCallback(): Promise<void> {
-        super.connectedCallback();
-        // Slot updates happens after the connected callback,
-        // so we need to wait a frame before announcing ourselves
-        // or the right menu might not pick this up. E.g. without this
-        // the underlying menu in sp-menu-group won't see this.
-        await new Promise((ready) => requestAnimationFrame(ready));
-        const addedEvent = new CustomEvent('sp-menu-item-added', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                item: this,
-                owned: false,
-            },
-        });
-        this.dispatchEvent(addedEvent);
-    }
-
     updateAriaSelected(): void {
         const role = this.getAttribute('role');
         if (role === 'option') {
@@ -146,41 +189,37 @@ export class MenuItem extends ActionButton {
         }
     }
 
+    public connectedCallback(): void {
+        super.connectedCallback();
+        addOrUpdateEvent.reset(this);
+        this.dispatchEvent(addOrUpdateEvent);
+    }
+
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        const removedEvent = new CustomEvent('sp-menu-item-removed', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                item: this,
-            },
-        });
-        this.dispatchEvent(removedEvent);
+        removeEvent.reset();
+        this.dispatchEvent(removeEvent);
     }
 
     public async triggerUpdate(): Promise<void> {
         await new Promise((ready) => requestAnimationFrame(ready));
-        const updatedEvent = new CustomEvent('sp-menu-item-update', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                item: this,
-                owned: false,
-            },
-        });
-        this.dispatchEvent(updatedEvent);
+        addOrUpdateEvent.reset(this);
+        this.dispatchEvent(addOrUpdateEvent);
     }
-}
 
-export interface MenuItemUpdateEvent {
-    item: MenuItem;
-    owned: boolean;
+    public menuData: {
+        focusRoot?: Menu;
+        selectionRoot?: Menu;
+    } = {
+        focusRoot: undefined,
+        selectionRoot: undefined,
+    };
 }
 
 declare global {
     interface GlobalEventHandlersEventMap {
-        'sp-menu-item-added': CustomEvent<MenuItemUpdateEvent>;
-        'sp-menu-item-update': CustomEvent<MenuItemUpdateEvent>;
-        'sp-menu-item-removed': CustomEvent<MenuItemUpdateEvent>;
+        'sp-menu-item-added': MenuItemAddedOrUpdatedEvent;
+        'sp-menu-item-update': MenuItemAddedOrUpdatedEvent;
+        'sp-menu-item-removed': MenuItemRemovedEvent;
     }
 }

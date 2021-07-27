@@ -16,7 +16,10 @@ import {
     PropertyValues,
     html,
     ifDefined,
+    property,
 } from '@spectrum-web-components/base';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
@@ -32,6 +35,9 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public static get styles(): CSSResultArray {
         return [actionMenuStyles];
     }
+
+    @property({ type: String })
+    public selects: undefined | 'single' | 'multiple' = undefined;
 
     protected listRole: 'listbox' | 'menu' = 'menu';
     protected itemRole = 'menuitem';
@@ -69,6 +75,19 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
             >
                 ${this.buttonContent}
             </sp-action-button>
+        `;
+    }
+
+    protected get renderPopover(): TemplateResult {
+        return html`
+            <sp-popover id="popover" @sp-overlay-closed=${this.onOverlayClosed}>
+                <sp-menu
+                    id="menu"
+                    role="${this.listRole}"
+                    @change=${this.handleChange}
+                    .selects=${this.selects}
+                ></sp-menu>
+            </sp-popover>
         `;
     }
 
