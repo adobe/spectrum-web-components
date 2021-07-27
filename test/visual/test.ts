@@ -10,16 +10,27 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, fixture, html, waitUntil } from '@open-wc/testing';
+import {
+    elementUpdated,
+    fixture,
+    html,
+    nextFrame,
+    waitUntil,
+} from '@open-wc/testing';
 import { visualDiff } from '@web/test-runner-visual-regression';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
 import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { render } from 'lit-html';
+import { sendKeys } from '@web/test-runner-commands';
 
 const wrap = () => html`
-    <sp-story-decorator reduce-motion screenshot></sp-story-decorator>
+    <sp-story-decorator
+        reduce-motion
+        screenshot
+        tabindex="-1"
+    ></sp-story-decorator>
 `;
 
 type StoriesType = {
@@ -44,6 +55,9 @@ export const test = (
             it(story, async () => {
                 const test = await fixture<StoryDecorator>(wrap());
                 await elementUpdated(test);
+                test.focus();
+                await sendKeys({ press: 'ArrowUp' });
+                await sendKeys({ press: 'ArrowDown' });
                 const testsDefault = (tests as any).default;
                 const args = {
                     ...(testsDefault.args || {}),
@@ -72,6 +86,7 @@ export const test = (
                     'Wait for decorator to become ready...',
                     { timeout: 15000 }
                 );
+                await nextFrame();
                 try {
                     await visualDiff(
                         test,
