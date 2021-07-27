@@ -1,6 +1,6 @@
 ## Overview
 
-An `<sp-menu-group>` will gather a collection of `<sp-menu-item>` elements into a group as part of the content delivered in an `<sp-menu>` element.
+An `<sp-menu-group>` will gather a collection of `<sp-menu-item>` elements into a group as part of the content delivered in an `<sp-menu>` element. Supplying content to the `header` slot will allow it label the group both visually and for screen readers. Like `<sp-menu>`, an `<sp-menu-group>` element can maintain a selection as outlined by the value or absence of its `selects` attribute.
 
 ### Usage
 
@@ -30,21 +30,44 @@ An `<sp-menu-group>` can be used to organize `<sp-menu-item>`s in an `<sp-memu>`
 
 <!-- prettier-ignore -->
 ```html
+<p>
+    Your favorite park in New York is: <span id="group-1-value"></span>
+    <br><br>
+    Your favorite park in San Fransisco is: <span id="group-2-value"></span>
+</p>
 <sp-popover open style="position: relative">
-    <sp-menu>
-        <sp-menu-group>
+    <sp-menu
+        label="What are your favorite parks?"
+        style="width: 200px"
+        onchange="this.parentElement
+                    .previousElementSibling
+                    .querySelector(`#${arguments[0].target.id}-value`)
+                    .textContent = arguments[0].target.value">
+        <sp-menu-group
+            id="group-1"
+            selects="single"
+        >
             <span slot="header">New York</span>
             <sp-menu-item>
                 Central Park
             </sp-menu-item>
             <sp-menu-item>
+                Flushing Meadows Corona Park
+            </sp-menu-item>
+            <sp-menu-item>
                 Prospect Park
             </sp-menu-item>
         </sp-menu-group>
-        <sp-menu-group>
+        <sp-menu-group
+            id="group-2"
+            selects="single"
+        >
             <span slot="header">San Fransisco</span>
             <sp-menu-item>
                 Golden Gate Park
+            </sp-menu-item>
+            <sp-menu-item>
+                John McLaren Park
             </sp-menu-item>
             <sp-menu-item>
                 Lake Merced Park
