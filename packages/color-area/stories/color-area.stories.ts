@@ -101,35 +101,80 @@ export const sized = (): TemplateResult => {
 };
 
 export const canvas = (): TemplateResult => {
-    requestAnimationFrame(() => {
-        const canvas = document.querySelector(
-            'canvas[slot="gradient"]'
-        ) as HTMLCanvasElement;
-
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        const context = canvas.getContext('2d');
-        if (context) {
-            context.rect(0, 0, canvas.width, canvas.height);
-
-            const gradB = context.createLinearGradient(0, 0, 0, canvas.height);
-            gradB.addColorStop(0, 'white');
-            gradB.addColorStop(1, 'black');
-            const gradC = context.createLinearGradient(0, 0, canvas.width, 0);
-            gradC.addColorStop(0, 'hsla(0,100%,50%,0)');
-            gradC.addColorStop(1, 'hsla(0,100%,50%,1)');
-
-            context.fillStyle = gradB;
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.fillStyle = gradC;
-            context.globalCompositeOperation = 'multiply';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.globalCompositeOperation = 'source-over';
-        }
-    });
     return html`
         <sp-color-area>
             <canvas slot="gradient"></canvas>
         </sp-color-area>
     `;
 };
+
+class CanvasWriter extends HTMLElement {
+    writeToCanvas(): void {
+        const { previousElementSibling } = this;
+        if (previousElementSibling) {
+            const canvas = previousElementSibling.querySelector(
+                'canvas[slot="gradient"]'
+            ) as HTMLCanvasElement;
+
+            if (canvas) {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                const context = canvas.getContext('2d');
+                if (context) {
+                    context.rect(0, 0, canvas.width, canvas.height);
+
+                    const gradB = context.createLinearGradient(
+                        0,
+                        0,
+                        0,
+                        canvas.height
+                    );
+                    gradB.addColorStop(0, 'white');
+                    gradB.addColorStop(1, 'black');
+                    const gradC = context.createLinearGradient(
+                        0,
+                        0,
+                        canvas.width,
+                        0
+                    );
+                    gradC.addColorStop(0, 'hsla(0,100%,50%,0)');
+                    gradC.addColorStop(1, 'hsla(0,100%,50%,1)');
+
+                    context.fillStyle = gradB;
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+                    context.fillStyle = gradC;
+                    context.globalCompositeOperation = 'multiply';
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+                    context.globalCompositeOperation = 'source-over';
+                }
+            }
+        }
+    }
+
+    constructor() {
+        super();
+        this.writeStatePromise = new Promise((res) => {
+            requestAnimationFrame(() => {
+                this.writeToCanvas();
+                res(true);
+            });
+        });
+    }
+
+    private writeStatePromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.writeStatePromise;
+    }
+}
+
+customElements.define('area-canvas-writer', CanvasWriter);
+
+canvas.decorators = [
+    (story: () => TemplateResult): TemplateResult => {
+        return html`
+            ${story()}
+            <area-canvas-writer></area-canvas-writer>
+        `;
+    },
+];
