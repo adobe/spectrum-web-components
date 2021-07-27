@@ -38,42 +38,77 @@ export const wheelDisabled = (): TemplateResult => {
 };
 
 export const canvas = (): TemplateResult => {
-    requestAnimationFrame(() => {
-        const canvas = document.querySelector(
-            'canvas[slot="gradient"]'
-        ) as HTMLCanvasElement;
-
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        const context = canvas.getContext('2d');
-        if (context) {
-            context.rect(0, 0, canvas.width, canvas.height);
-
-            const width = canvas.width;
-            const height = canvas.height;
-            const centerX = width / 2;
-            const centerY = height / 2;
-            const ringSize = 57;
-
-            for (let i = 0; i < 360; i += Math.PI / 8) {
-                const rad = (i * (2 * Math.PI)) / 360;
-                context.strokeStyle = `hsla(${i}, 100%, 50%, 1.0)`;
-                context.beginPath();
-                context.moveTo(
-                    centerX + ringSize * Math.cos(rad),
-                    centerY + ringSize * Math.sin(rad)
-                );
-                context.lineTo(
-                    centerX + centerX * Math.cos(rad),
-                    centerY + centerY * Math.sin(rad)
-                );
-                context.stroke();
-            }
-        }
-    });
     return html`
         <sp-color-wheel>
             <canvas slot="gradient"></canvas>
         </sp-color-wheel>
     `;
 };
+
+class CanvasWriter extends HTMLElement {
+    writeToCanvas(): void {
+        const { previousElementSibling } = this;
+        if (previousElementSibling) {
+            const canvas = previousElementSibling.querySelector(
+                'canvas[slot="gradient"]'
+            ) as HTMLCanvasElement;
+
+            if (canvas) {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                const context = canvas.getContext('2d');
+                if (context) {
+                    context.rect(0, 0, canvas.width, canvas.height);
+
+                    const width = canvas.width;
+                    const height = canvas.height;
+                    const centerX = width / 2;
+                    const centerY = height / 2;
+                    const ringSize = 57;
+
+                    for (let i = 0; i < 360; i += Math.PI / 8) {
+                        const rad = (i * (2 * Math.PI)) / 360;
+                        context.strokeStyle = `hsla(${i}, 100%, 50%, 1.0)`;
+                        context.beginPath();
+                        context.moveTo(
+                            centerX + ringSize * Math.cos(rad),
+                            centerY + ringSize * Math.sin(rad)
+                        );
+                        context.lineTo(
+                            centerX + centerX * Math.cos(rad),
+                            centerY + centerY * Math.sin(rad)
+                        );
+                        context.stroke();
+                    }
+                }
+            }
+        }
+    }
+
+    constructor() {
+        super();
+        this.writeStatePromise = new Promise((res) => {
+            requestAnimationFrame(() => {
+                this.writeToCanvas();
+                res(true);
+            });
+        });
+    }
+
+    private writeStatePromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.writeStatePromise;
+    }
+}
+
+customElements.define('wheel-canvas-writer', CanvasWriter);
+
+canvas.decorators = [
+    (story: () => TemplateResult): TemplateResult => {
+        return html`
+            ${story()}
+            <wheel-canvas-writer></wheel-canvas-writer>
+        `;
+    },
+];
