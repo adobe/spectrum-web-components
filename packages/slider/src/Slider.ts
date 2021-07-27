@@ -283,8 +283,9 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         return styles;
     }
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async _getUpdateComplete(): Promise<boolean> {
+        const complete = (await super._getUpdateComplete()) as boolean;
         await this.handleController.handleUpdatesComplete();
+        return complete;
     }
 }
