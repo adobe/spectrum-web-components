@@ -181,6 +181,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 this.selectedItem = this.selectedItem || this.menuItems[0];
                 this.selectedItem.selected = true;
             }
+            this.value = this.selectedItem.value;
             return;
         }
         await this.updateComplete;
