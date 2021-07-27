@@ -15,6 +15,7 @@ import {
     elementUpdated,
     waitUntil,
     html,
+    oneEvent,
 } from '@open-wc/testing';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -25,7 +26,6 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import { OverlayTrigger } from '..';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { waitForPredicate } from '../../../test/testing-helpers';
 import { spy } from 'sinon';
 
 describe('Overlay Trigger - Longpress', () => {
@@ -69,35 +69,44 @@ describe('Overlay Trigger - Longpress', () => {
         expect(content.open).to.be.false;
 
         trigger.focus();
+        let open = oneEvent(el, 'sp-opened');
         await sendKeys({
             press: 'Space',
         });
-        await waitForPredicate(
-            () => !(content.parentElement instanceof OverlayTrigger)
-        );
-        await waitUntil(() => content.open, 'opens for `Space`');
-        document.body.click();
+        await open;
+        expect(content.open, 'opens for `Space`').to.be.true;
 
-        await waitUntil(() => !content.open, 'closes for `Space`');
-        await elementUpdated(el);
+        let closed = oneEvent(el, 'sp-closed');
+        document.body.click();
+        await closed;
+
+        expect(!content.open, 'closes for `Space`').to.be.true;
 
         trigger.focus();
-        await sendKeys({
+        open = oneEvent(el, 'sp-opened');
+        sendKeys({
             press: 'Alt+ArrowDown',
         });
-        await waitUntil(() => content.open, 'opens for `Alt+ArrowDown`');
+        await open;
+        expect(content.open, 'opens for `Alt+ArrowDown`').to.be.true;
+        closed = oneEvent(el, 'sp-closed');
         await sendKeys({
             press: 'Escape',
         });
-        await waitUntil(() => !content.open, 'closes for `Alt+ArrowDown`');
+        await closed;
+        expect(!content.open, 'closes for `Alt+ArrowDown`').to.be.true;
         await elementUpdated(el);
 
+        open = oneEvent(el, 'sp-opened');
         trigger.dispatchEvent(new Event('pointerdown'));
-        await waitUntil(() => content.open, 'opens for `pointerdown`');
+        await open;
+        expect(content.open, 'opens for `pointerdown`').to.be.true;
+        closed = oneEvent(el, 'sp-closed');
         await sendKeys({
             press: 'Escape',
         });
-        await waitUntil(() => !content.open, 'closes for `pointerdown`');
+        await closed;
+        expect(!content.open, 'closes for `pointerdown`').to.be.true;
     });
     it('displays `longpress` declaratively', async () => {
         const openedSpy = spy();
@@ -125,13 +134,10 @@ describe('Overlay Trigger - Longpress', () => {
             { timeout: 2000 }
         );
 
+        const closed = oneEvent(el, 'sp-closed');
         el.removeAttribute('open');
-        await elementUpdated(el);
+        await closed;
 
-        await waitUntil(
-            () => closedSpy.calledOnce,
-            'longpress content returned',
-            { timeout: 2000 }
-        );
+        expect(closedSpy.calledOnce, 'longpress content returned').to.be.true;
     });
 });
