@@ -12,6 +12,12 @@ governing permissions and limitations under the License.
 
 @import './spectrum-menu-sectionHeading.css';
 
+:host {
+    margin: 0;
+    display: inline;
+    overflow: visible;
+}
+
 /**
  * The following corrects for positioning of the header when changing the
  * direction of the content while https://github.com/adobe/spectrum-css/issues/794

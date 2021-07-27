@@ -67,12 +67,24 @@ interface StoryArgs {
     disabled?: boolean;
     open?: boolean;
     customIcon?: string | TemplateResult;
+    selects?: 'single';
+    selected?: boolean;
 }
 
 const Template = (args: StoryArgs = {}): TemplateResult =>
     ActionMenuMarkup(args);
 
 export const Default = (args: StoryArgs = {}): TemplateResult => Template(args);
+
+export const selects = (args: StoryArgs = {}): TemplateResult =>
+    Template({
+        ...args,
+        selects: 'single',
+        selected: true,
+    });
+selects.args = {
+    open: true,
+};
 
 export const iconOnly = (args: StoryArgs = {}): TemplateResult =>
     Template(args);

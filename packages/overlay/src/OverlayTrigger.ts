@@ -179,6 +179,30 @@ export class OverlayTrigger extends LitElement {
         }
     }
 
+    private async openOverlay(
+        target: HTMLElement,
+        interaction: TriggerInteractions,
+        content: HTMLElement,
+        options: OverlayOptions
+    ): Promise<() => void> {
+        this.openStatePromise = new Promise(
+            (res) => (this.openStateResolver = res)
+        );
+        this.addEventListener(
+            'sp-opened',
+            () => {
+                this.openStateResolver();
+            },
+            { once: true }
+        );
+        return OverlayTrigger.openOverlay(
+            target,
+            interaction,
+            content,
+            options
+        );
+    }
+
     public static openOverlay = async (
         target: HTMLElement,
         interaction: TriggerInteractions,
@@ -248,7 +272,7 @@ export class OverlayTrigger extends LitElement {
         }
         const { targetContent, clickContent } = this;
         this.prepareToFocusOverlayContent(clickContent);
-        this.closeClickOverlay = await OverlayTrigger.openOverlay(
+        this.closeClickOverlay = await this.openOverlay(
             targetContent,
             this.type ? this.type : 'click',
             clickContent,
@@ -266,7 +290,7 @@ export class OverlayTrigger extends LitElement {
         this.prepareToFocusOverlayContent(longpressContent);
         const notImmediatelyClosable =
             this._longpressEvent?.detail?.source !== 'keyboard';
-        this.closeLongpressOverlay = await OverlayTrigger.openOverlay(
+        this.closeLongpressOverlay = await this.openOverlay(
             targetContent,
             this.type ? this.type : 'longpress',
             longpressContent,
@@ -298,7 +322,7 @@ export class OverlayTrigger extends LitElement {
             this.abortOverlay = res;
         });
         const { targetContent, hoverContent } = this;
-        this.closeHoverOverlay = await OverlayTrigger.openOverlay(
+        this.closeHoverOverlay = await this.openOverlay(
             targetContent,
             'hover',
             hoverContent,
@@ -350,6 +374,15 @@ export class OverlayTrigger extends LitElement {
         const slot = event.target as HTMLSlotElement;
         const nodes = slot.assignedNodes({ flatten: true });
         return nodes.find((node) => node instanceof HTMLElement) as HTMLElement;
+    }
+
+    private openStatePromise = Promise.resolve();
+    private openStateResolver!: () => void;
+
+    protected async _getUpdateComplete(): Promise<boolean> {
+        const complete = (await super._getUpdateComplete()) as boolean;
+        await this.openStatePromise;
+        return complete;
     }
 
     public disconnectedCallback(): void {
