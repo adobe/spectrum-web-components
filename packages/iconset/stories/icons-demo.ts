@@ -42,16 +42,19 @@ export class DelayedReady extends SpectrumElement {
         );
     }
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async _getUpdateComplete(): Promise<boolean> {
+        const complete = (await super._getUpdateComplete()) as boolean;
         await this._delayedReady;
+        return complete;
     }
 
     public handleSlotchange({
         target,
     }: Event & { target: HTMLSlotElement }): void {
         if (target.assignedElements({ flatten: true }).length) {
-            this._resolveDelayedReady();
+            requestAnimationFrame(() => {
+                this._resolveDelayedReady();
+            });
         }
     }
 }
