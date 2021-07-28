@@ -22,6 +22,7 @@ governing permissions and limitations under the License.
 
 :host([grows]) #sizer {
     box-sizing: border-box;
+    overflow-wrap: break-word;
     border: var(
             --spectrum-textfield-border-size,
             var(--spectrum-alias-border-size-thin)

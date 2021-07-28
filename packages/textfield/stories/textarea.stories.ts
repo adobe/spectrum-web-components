@@ -83,6 +83,19 @@ export const grows = (): TemplateResult => html`
     ></sp-textfield>
 `;
 
+export const growsWithLargeWords = (): TemplateResult => html`
+    <sp-field-label for="story">
+        Enter your life story with very long words...
+    </sp-field-label>
+    <sp-textfield
+        multiline
+        id="story"
+        value="Sed utperspiciatisundeomnisistenatuserrorsitvoluptatemaccusantiumdoloremquelaudantium,totamemaperiam, eaque ipsa quae ab illo inventore veritatis etquasiarchitectobeataevitaedictasuntexplicabo. Nemo enimipsamvoluptatemquiavoluptassitaspernaturautoditautfugitsedquiaconsequunturmagnidoloreseosquirationevoluptatemsequinesciunt."
+        grows
+        placeholder="Enter your life story"
+    ></sp-textfield>
+`;
+
 export const readonly = (): TemplateResult => html`
     <sp-textfield
         multiline
