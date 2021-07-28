@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+const slugify = require('@sindresorhus/slugify');
+
+const buildPreviewURLComment = (ref) => {
+    const branch = ref.replace('refs/heads/', '');
+    const branchSlug = slugify(branch);
+    const comment = `# Branch Preview URLs
+
+- [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
+- [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)
+
+When a visual regression test fails (or has previously failed while working on this branch), its results will be avaialable at the associated URL below:
+
+- [Lightest | Medium | LTR](https://${branchSlug}-lightest-medium-ltr--spectrum-web-components.netlify.app/review/)
+- [Lightest | Medium | RTL](https://${branchSlug}-lightest-medium-rtl--spectrum-web-components.netlify.app/review/)
+- [Lightest | Large | LTR](https://${branchSlug}-lightest-large-ltr--spectrum-web-components.netlify.app/review/)
+- [Lightest | Large | RTL](https://${branchSlug}-lightest-large-rtl--spectrum-web-components.netlify.app/review/)
+- [Light | Medium | LTR](https://${branchSlug}-light-medium-ltr--spectrum-web-components.netlify.app/review/)
+- [Light | Medium | RTL](https://${branchSlug}-light-medium-rtl--spectrum-web-components.netlify.app/review/)
+- [Light | Medium | LTR](https://${branchSlug}-light-medium-ltr--spectrum-web-components.netlify.app/review/)
+- [Light | Medium | RTL](https://${branchSlug}-light-medium-rtl--spectrum-web-components.netlify.app/review/)
+- [Darkest | Medium | LTR](https://${branchSlug}-darkest-medium-ltr--spectrum-web-components.netlify.app/review/)
+- [Darkest | Medium | RTL](https://${branchSlug}-darkest-medium-rtl--spectrum-web-components.netlify.app/review/)
+- [Darkest | Large | LTR](https://${branchSlug}-darkest-large-ltr--spectrum-web-components.netlify.app/review/)
+- [Darkest | Large | RTL](https://${branchSlug}-darkest-large-rtl--spectrum-web-components.netlify.app/review/)
+- [Dark | Medium | LTR](https://${branchSlug}-dark-medium-ltr--spectrum-web-components.netlify.app/review/)
+- [Dark | Medium | RTL](https://${branchSlug}-dark-medium-rtl--spectrum-web-components.netlify.app/review/)
+- [Dark | Large | LTR](https://${branchSlug}-dark-large-ltr--spectrum-web-components.netlify.app/review/)
+- [Dark | Large | RTL](https://${branchSlug}-dark-large-rtl--spectrum-web-components.netlify.app/review/)`;
+    return comment;
+};
+
+console.log(buildPreviewURLComment('current/branch'));
+
+module.exports = {
+    buildPreviewURLComment,
+}
