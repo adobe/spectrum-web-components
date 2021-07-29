@@ -30,6 +30,9 @@ import actionMenuStyles from './action-menu.css.js';
  * @element sp-action-menu
  * @slot icon - The icon to use for action button
  * @slot label - The label to use on for the action button
+ * @attr selects - By default `sp-action-menu` does not manage a selection. If
+ *   you'd like for a selection to be held by the `sp-menu` that it presents in
+ *   its overlay, use `selects="single" to activate this functionality.
  */
 export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public static get styles(): CSSResultArray {
