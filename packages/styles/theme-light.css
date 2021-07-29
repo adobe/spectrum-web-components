@@ -14,7 +14,25 @@ governing permissions and limitations under the License.
 :host,
 :root {
     --spectrum-global-color-status: Verified;
-    --spectrum-global-color-version: 5.1;
+    --spectrum-global-color-version: 5.1.0;
+    --spectrum-global-color-opacity-100: 1;
+    --spectrum-global-color-opacity-90: 0.9;
+    --spectrum-global-color-opacity-80: 0.8;
+    --spectrum-global-color-opacity-60: 0.6;
+    --spectrum-global-color-opacity-50: 0.5;
+    --spectrum-global-color-opacity-42: 0.42;
+    --spectrum-global-color-opacity-40: 0.4;
+    --spectrum-global-color-opacity-30: 0.3;
+    --spectrum-global-color-opacity-25: 0.25;
+    --spectrum-global-color-opacity-20: 0.2;
+    --spectrum-global-color-opacity-15: 0.15;
+    --spectrum-global-color-opacity-10: 0.1;
+    --spectrum-global-color-opacity-8: 0.08;
+    --spectrum-global-color-opacity-7: 0.07;
+    --spectrum-global-color-opacity-6: 0.06;
+    --spectrum-global-color-opacity-5: 0.05;
+    --spectrum-global-color-opacity-4: 0.04;
+    --spectrum-global-color-opacity-0: 0;
     --spectrum-global-color-celery-400: #44b556;
     --spectrum-global-color-celery-500: #3da74e;
     --spectrum-global-color-celery-600: #379947;
@@ -87,7 +105,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.15);
     --spectrum-alias-background-color-hover-overlay: rgba(44, 44, 44, 0.04);
     --spectrum-alias-highlight-hover: rgba(44, 44, 44, 0.06);
-    --spectrum-alias-highlight-active: rgba(44, 44, 44, 0.1);
+    --spectrum-alias-highlight-down: rgba(44, 44, 44, 0.1);
     --spectrum-alias-highlight-selected: rgba(20, 115, 230, 0.1);
     --spectrum-alias-highlight-selected-hover: rgba(20, 115, 230, 0.2);
     --spectrum-alias-text-highlight-color: rgba(20, 115, 230, 0.2);
@@ -95,6 +113,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-border-color-selected: var(
         --spectrum-global-color-blue-500
     );
+    --spectrum-alias-border-color-translucent: rgba(44, 44, 44, 0.1);
     --spectrum-alias-radial-reaction-color-default: rgba(75, 75, 75, 0.6);
     --spectrum-alias-pasteboard-background-color: var(
         --spectrum-global-color-gray-300
@@ -105,39 +124,159 @@ governing permissions and limitations under the License.
     --spectrum-alias-appframe-separator-color: var(
         --spectrum-global-color-gray-300
     );
-    --spectrum-colorarea-border-color: rgba(44, 44, 44, 0.1);
-    --spectrum-colorarea-border-color-hover: rgba(44, 44, 44, 0.1);
-    --spectrum-colorarea-border-color-down: rgba(44, 44, 44, 0.1);
-    --spectrum-colorarea-border-color-key-focus: rgba(44, 44, 44, 0.1);
-    --spectrum-colorslider-border-color: rgba(44, 44, 44, 0.1);
-    --spectrum-colorslider-border-color-hover: rgba(44, 44, 44, 0.1);
-    --spectrum-colorslider-border-color-down: rgba(44, 44, 44, 0.1);
-    --spectrum-colorslider-border-color-key-focus: rgba(44, 44, 44, 0.1);
-    --spectrum-colorslider-vertical-border-color: rgba(44, 44, 44, 0.1);
-    --spectrum-colorslider-vertical-border-color-hover: rgba(44, 44, 44, 0.1);
-    --spectrum-colorslider-vertical-border-color-down: rgba(44, 44, 44, 0.1);
-    --spectrum-colorslider-vertical-border-color-key-focus: rgba(
-        44,
-        44,
-        44,
-        0.1
+    --spectrum-slider-s-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
     );
-    --spectrum-colorwheel-border-color: rgba(44, 44, 44, 0.1);
-    --spectrum-colorwheel-border-color-hover: rgba(44, 44, 44, 0.1);
-    --spectrum-colorwheel-border-color-down: rgba(44, 44, 44, 0.1);
-    --spectrum-colorwheel-border-color-key-focus: rgba(44, 44, 44, 0.1);
-    --spectrum-miller-column-item-background-color-selected: rgba(
-        20,
-        115,
-        230,
-        0.1
+    --spectrum-slider-s-ramp-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
     );
-    --spectrum-miller-column-item-background-color-selected-hover: rgba(
-        20,
-        115,
-        230,
-        0.2
+    --spectrum-slider-s-range-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
     );
+    --spectrum-slider-s-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-s-ramp-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-s-range-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-s-editable-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-s-ramp-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-s-range-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-s-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-s-ramp-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-s-range-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-m-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-m-ramp-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-m-range-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-m-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-m-ramp-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-m-range-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-m-editable-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-m-ramp-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-m-range-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-m-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-m-ramp-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-m-range-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-l-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-l-ramp-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-l-range-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-l-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-l-ramp-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-l-range-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-l-editable-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-l-ramp-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-l-range-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-l-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-l-ramp-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-l-range-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-xl-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-xl-ramp-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-xl-range-tick-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-xl-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-xl-ramp-tick-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-xl-range-tick-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-xl-editable-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-xl-ramp-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-xl-range-editable-radial-reaction-color: rgba(
+        75,
+        75,
+        75,
+        0.6
+    );
+    --spectrum-slider-xl-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-xl-ramp-radial-reaction-color: rgba(75, 75, 75, 0.6);
+    --spectrum-slider-xl-range-radial-reaction-color: rgba(75, 75, 75, 0.6);
     --spectrum-well-background-color: rgba(75, 75, 75, 0.02);
     --spectrum-well-border-color: rgba(44, 44, 44, 0.05);
 }

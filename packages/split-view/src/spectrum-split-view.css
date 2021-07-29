@@ -258,8 +258,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 ::slotted(*) {
     /* .spectrum-SplitView-pane */
     background-color: var(
-        --spectrum-panel-background-color,
-        var(--spectrum-global-color-gray-100)
+        --spectrum-panel-s-background-color,
+        var(--spectrum-alias-toolbar-background-color)
     );
 }
 #splitter {

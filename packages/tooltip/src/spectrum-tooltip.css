@@ -13,7 +13,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Tooltip */
     --spectrum-overlay-animation-distance: var(
-        --spectrum-picker-m-popover-offset-y,
+        --spectrum-picker-m-texticon-popover-offset-y,
         var(--spectrum-global-dimension-size-75)
     );
     visibility: hidden;
@@ -54,9 +54,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host {
     /* .spectrum-Tooltip */
-    --spectrum-tooltip-target-offset: 3px;
-    --spectrum-tooltip-tip-width: var(
-        --spectrum-tooltip-tip-height,
+    --spectrum-tooltip-neutral-target-offset: 3px;
+    --spectrum-tooltip-neutral-tip-width: var(
+        --spectrum-tooltip-neutral-tip-height,
         var(--spectrum-global-dimension-size-50)
     );
     position: relative;
@@ -69,35 +69,35 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     vertical-align: top;
     width: auto;
     padding: var(
-            --spectrum-tooltip-padding-top,
+            --spectrum-tooltip-neutral-padding-top,
             var(--spectrum-global-dimension-size-50)
         )
         var(
-            --spectrum-tooltip-padding-x,
+            --spectrum-tooltip-neutral-padding-x,
             var(--spectrum-global-dimension-size-125)
         );
     border-radius: var(
-        --spectrum-tooltip-border-radius,
+        --spectrum-tooltip-neutral-border-radius,
         var(--spectrum-global-dimension-size-50)
     );
     min-height: var(
-        --spectrum-tooltip-min-height,
+        --spectrum-tooltip-neutral-min-height,
         var(--spectrum-global-dimension-size-300)
     );
     max-width: var(
-        --spectrum-tooltip-max-width,
+        --spectrum-tooltip-neutral-max-width,
         var(--spectrum-global-dimension-size-2000)
     );
     font-size: var(
-        --spectrum-tooltip-text-size,
+        --spectrum-tooltip-neutral-text-size,
         var(--spectrum-global-dimension-font-size-75)
     );
     font-weight: var(
-        --spectrum-tooltip-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
+        --spectrum-tooltip-neutral-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
     );
     line-height: var(
-        --spectrum-tooltip-text-line-height,
+        --spectrum-tooltip-neutral-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
     word-break: break-word;
@@ -116,22 +116,22 @@ p {
     height: 0;
     width: 0;
     border-top-width: var(
-        --spectrum-tooltip-tip-width,
+        --spectrum-tooltip-neutral-tip-width,
         var(--spectrum-global-dimension-size-100)
     );
     border-top-style: solid;
     border-left: var(
-            --spectrum-tooltip-tip-width,
+            --spectrum-tooltip-neutral-tip-width,
             var(--spectrum-global-dimension-size-100)
         )
         solid transparent;
     border-right: var(
-            --spectrum-tooltip-tip-width,
+            --spectrum-tooltip-neutral-tip-width,
             var(--spectrum-global-dimension-size-100)
         )
         solid transparent;
     border-bottom: var(
-            --spectrum-tooltip-tip-width,
+            --spectrum-tooltip-neutral-tip-width,
             var(--spectrum-global-dimension-size-100)
         )
         solid transparent;
@@ -142,12 +142,12 @@ p {
    * .spectrum-Tooltip--right .spectrum-Tooltip-tip */
     top: 50%;
     margin-top: calc(
-        -1 * var(--spectrum-tooltip-tip-width, var(--spectrum-global-dimension-size-100))
+        -1 * var(--spectrum-tooltip-neutral-tip-width, var(--spectrum-global-dimension-size-100))
     );
 }
 :host([placement*='right']) {
     /* .spectrum-Tooltip--right */
-    margin-left: var(--spectrum-tooltip-target-offset);
+    margin-left: var(--spectrum-tooltip-neutral-target-offset);
 }
 :host([placement*='right']) #tip {
     /* .spectrum-Tooltip--right .spectrum-Tooltip-tip */
@@ -156,7 +156,7 @@ p {
 }
 :host([placement*='left']) {
     /* .spectrum-Tooltip--left */
-    margin-right: var(--spectrum-tooltip-target-offset);
+    margin-right: var(--spectrum-tooltip-neutral-target-offset);
 }
 :host([placement*='left']) #tip {
     /* .spectrum-Tooltip--left .spectrum-Tooltip-tip */
@@ -165,7 +165,7 @@ p {
 }
 :host([placement*='top']) {
     /* .spectrum-Tooltip--top */
-    margin-bottom: var(--spectrum-tooltip-target-offset);
+    margin-bottom: var(--spectrum-tooltip-neutral-target-offset);
 }
 :host([placement*='top']) #tip {
     /* .spectrum-Tooltip--top .spectrum-Tooltip-tip */
@@ -173,7 +173,7 @@ p {
 }
 :host([placement*='bottom']) {
     /* .spectrum-Tooltip--bottom */
-    margin-top: var(--spectrum-tooltip-target-offset);
+    margin-top: var(--spectrum-tooltip-neutral-target-offset);
 }
 :host([placement*='bottom']) #tip {
     /* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip */
@@ -186,18 +186,18 @@ p {
    * .spectrum-Tooltip--top .spectrum-Tooltip-tip */
     left: 50%;
     margin-left: calc(
-        -1 * var(--spectrum-tooltip-tip-width, var(--spectrum-global-dimension-size-100))
+        -1 * var(--spectrum-tooltip-neutral-tip-width, var(--spectrum-global-dimension-size-100))
     );
 }
 :host([dir='ltr']) ::slotted([slot='icon']) {
     /* [dir=ltr] .spectrum-Tooltip-typeIcon */
     margin-left: calc(
         var(
-                --spectrum-tooltip-icon-margin-x,
+                --spectrum-tooltip-neutral-icon-margin-x,
                 var(--spectrum-global-dimension-size-100)
             ) -
             var(
-                --spectrum-tooltip-padding-x,
+                --spectrum-tooltip-neutral-padding-x,
                 var(--spectrum-global-dimension-size-125)
             )
     );
@@ -206,11 +206,11 @@ p {
     /* [dir=rtl] .spectrum-Tooltip-typeIcon */
     margin-right: calc(
         var(
-                --spectrum-tooltip-icon-margin-x,
+                --spectrum-tooltip-neutral-icon-margin-x,
                 var(--spectrum-global-dimension-size-100)
             ) -
             var(
-                --spectrum-tooltip-padding-x,
+                --spectrum-tooltip-neutral-padding-x,
                 var(--spectrum-global-dimension-size-125)
             )
     );
@@ -218,25 +218,25 @@ p {
 :host([dir='ltr']) ::slotted([slot='icon']) {
     /* [dir=ltr] .spectrum-Tooltip-typeIcon */
     margin-right: var(
-        --spectrum-tooltip-icon-margin-x,
+        --spectrum-tooltip-neutral-icon-margin-x,
         var(--spectrum-global-dimension-size-100)
     );
 }
 :host([dir='rtl']) ::slotted([slot='icon']) {
     /* [dir=rtl] .spectrum-Tooltip-typeIcon */
     margin-left: var(
-        --spectrum-tooltip-icon-margin-x,
+        --spectrum-tooltip-neutral-icon-margin-x,
         var(--spectrum-global-dimension-size-100)
     );
 }
 ::slotted([slot='icon']) {
     /* .spectrum-Tooltip-typeIcon */
     width: var(
-        --spectrum-tooltip-icon-size,
+        --spectrum-tooltip-neutral-icon-size,
         var(--spectrum-global-dimension-size-175)
     );
     height: var(
-        --spectrum-tooltip-icon-size,
+        --spectrum-tooltip-neutral-icon-size,
         var(--spectrum-global-dimension-size-175)
     );
     align-self: flex-start;
@@ -246,26 +246,26 @@ p {
 #label {
     /* .spectrum-Tooltip-label */
     line-height: var(
-        --spectrum-tooltip-text-line-height,
+        --spectrum-tooltip-neutral-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
 }
 :host {
     /* .spectrum-Tooltip */
     background-color: var(
-        --spectrum-tooltip-background-color,
-        var(--spectrum-global-color-static-gray-700)
+        --spectrum-tooltip-neutral-background-color,
+        var(--spectrum-semantic-neutral-background-color-default)
     );
     color: var(
-        --spectrum-tooltip-text-color,
+        --spectrum-tooltip-neutral-text-color,
         var(--spectrum-global-color-static-white)
     );
 }
 #tip {
     /* .spectrum-Tooltip-tip */
     border-top-color: var(
-        --spectrum-tooltip-background-color,
-        var(--spectrum-global-color-static-gray-700)
+        --spectrum-tooltip-neutral-background-color,
+        var(--spectrum-semantic-neutral-background-color-default)
     );
 }
 .spectrum-Tooltip--error,
@@ -274,7 +274,7 @@ p {
    * .spectrum-Tooltip--negative */
     background-color: var(
         --spectrum-tooltip-negative-background-color,
-        var(--spectrum-global-color-static-red-700)
+        var(--spectrum-semantic-negative-background-color)
     );
 }
 .spectrum-Tooltip--error #tip,
@@ -283,7 +283,7 @@ p {
    * .spectrum-Tooltip--negative .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-negative-background-color,
-        var(--spectrum-global-color-static-red-700)
+        var(--spectrum-semantic-negative-background-color)
     );
 }
 .spectrum-Tooltip--help,
@@ -292,7 +292,7 @@ p {
    * .spectrum-Tooltip--info */
     background-color: var(
         --spectrum-tooltip-info-background-color,
-        var(--spectrum-global-color-static-blue-700)
+        var(--spectrum-semantic-informative-background-color)
     );
 }
 .spectrum-Tooltip--help #tip,
@@ -301,7 +301,7 @@ p {
    * .spectrum-Tooltip--info .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-info-background-color,
-        var(--spectrum-global-color-static-blue-700)
+        var(--spectrum-semantic-informative-background-color)
     );
 }
 :host([variant='positive']),
@@ -310,7 +310,7 @@ p {
    * .spectrum-Tooltip--success */
     background-color: var(
         --spectrum-tooltip-positive-background-color,
-        var(--spectrum-global-color-static-green-700)
+        var(--spectrum-semantic-positive-background-color)
     );
 }
 :host([variant='positive']) #tip,
@@ -319,6 +319,6 @@ p {
    * .spectrum-Tooltip--success .spectrum-Tooltip-tip */
     border-top-color: var(
         --spectrum-tooltip-positive-background-color,
-        var(--spectrum-global-color-static-green-700)
+        var(--spectrum-semantic-positive-background-color)
     );
 }

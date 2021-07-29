@@ -17,9 +17,13 @@ import {
     CSSResultArray,
     TemplateResult,
     ifDefined,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 
 import avatarStyles from './avatar.css.js';
+
+export type AvatarSize = 50 | 75 | 100 | 200 | 300 | 400 | 500 | 600 | 700;
+const validSizes = [50, 75, 100, 200, 300, 400, 500, 600, 700];
 
 /**
  * Avatar component
@@ -35,9 +39,40 @@ export class Avatar extends SpectrumElement {
     @property()
     public src = '';
 
+    @property({ type: Number, reflect: true })
+    public get size(): AvatarSize {
+        return this._size || 100;
+    }
+
+    public set size(value: AvatarSize) {
+        const defaultSize = 100;
+        const size = value;
+        const validSize = (validSizes.includes(size)
+            ? size
+            : defaultSize) as AvatarSize;
+        if (validSize) {
+            this.setAttribute('size', `${validSize}`);
+        }
+        if (this._size === validSize) {
+            return;
+        }
+        const oldSize = this._size;
+        this._size = validSize;
+        this.requestUpdate('size', oldSize);
+    }
+
+    private _size: AvatarSize | null = 100;
+
     protected render(): TemplateResult {
         return html`
             <img alt=${ifDefined(this.label || undefined)} src=${this.src} />
         `;
+    }
+
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
+        if (!this.hasAttribute('size')) {
+            this.setAttribute('size', `${this.size}`);
+        }
     }
 }

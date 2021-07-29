@@ -23,33 +23,33 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Detail strong */
     font-weight: var(
         --spectrum-detail-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
 }
-.spectrum-Detail .spectrum-Detail-emphasis,
+.spectrum-Detail .spectrum-Detail-emphasized,
 .spectrum-Detail em {
-    /* .spectrum-Detail .spectrum-Detail-emphasis,
+    /* .spectrum-Detail .spectrum-Detail-emphasized,
    * .spectrum-Detail em */
     font-style: var(
-        --spectrum-detail-m-emphasis-text-font-style,
+        --spectrum-detail-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
 .spectrum-Detail--light {
     /* .spectrum-Detail--light */
     font-style: var(
-        --spectrum-detail-light-m-text-font-style,
+        --spectrum-detail-m-light-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     font-weight: var(
-        --spectrum-detail-light-m-text-font-weight,
+        --spectrum-detail-m-light-text-font-weight,
         var(--spectrum-alias-detail-text-font-weight-light)
     );
 }
 .spectrum-Detail--serif {
     /* .spectrum-Detail--serif */
     font-family: var(
-        --spectrum-body-serif-m-text-font-family,
+        --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
 }
@@ -61,11 +61,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-detail-xl-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-xl-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-xl-text-font-style,
@@ -82,27 +82,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Detail--sizeXL em {
     /* .spectrum-Detail--sizeXL em */
     font-size: var(
-        --spectrum-detail-xl-emphasis-text-size,
+        --spectrum-detail-xl-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-200)
     );
     font-weight: var(
-        --spectrum-detail-xl-emphasis-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        --spectrum-detail-xl-emphasized-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
-        --spectrum-detail-xl-emphasis-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --spectrum-detail-xl-emphasized-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-xl-emphasis-text-font-style,
+        --spectrum-detail-xl-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
     letter-spacing: var(
-        --spectrum-detail-xl-emphasis-text-letter-spacing,
+        --spectrum-detail-xl-emphasized-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
-        --spectrum-detail-xl-emphasis-text-transform,
+        --spectrum-detail-xl-emphasized-text-transform,
         uppercase
     );
     margin-top: 0;
@@ -116,11 +116,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-detail-xl-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-xl-strong-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-xl-strong-text-font-style,
@@ -142,11 +142,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-detail-l-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-l-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-l-text-font-style,
@@ -163,26 +163,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Detail--sizeL em {
     /* .spectrum-Detail--sizeL em */
     font-size: var(
-        --spectrum-detail-l-emphasis-text-size,
+        --spectrum-detail-l-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
-        --spectrum-detail-l-emphasis-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        --spectrum-detail-l-emphasized-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
-        --spectrum-detail-l-emphasis-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --spectrum-detail-l-emphasized-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-l-emphasis-text-font-style,
+        --spectrum-detail-l-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
     letter-spacing: var(
-        --spectrum-detail-l-emphasis-text-letter-spacing,
+        --spectrum-detail-l-emphasized-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
-    text-transform: var(--spectrum-detail-l-emphasis-text-transform, uppercase);
+    text-transform: var(
+        --spectrum-detail-l-emphasized-text-transform,
+        uppercase
+    );
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -194,11 +197,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-detail-l-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-l-strong-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-l-strong-text-font-style,
@@ -220,11 +223,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-detail-m-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-m-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-m-text-font-style,
@@ -241,26 +244,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Detail--sizeM em {
     /* .spectrum-Detail--sizeM em */
     font-size: var(
-        --spectrum-detail-m-emphasis-text-size,
+        --spectrum-detail-m-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-75)
     );
     font-weight: var(
-        --spectrum-detail-m-emphasis-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        --spectrum-detail-m-emphasized-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
-        --spectrum-detail-m-emphasis-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --spectrum-detail-m-emphasized-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-m-emphasis-text-font-style,
+        --spectrum-detail-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
     letter-spacing: var(
-        --spectrum-detail-m-emphasis-text-letter-spacing,
+        --spectrum-detail-m-emphasized-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
-    text-transform: var(--spectrum-detail-m-emphasis-text-transform, uppercase);
+    text-transform: var(
+        --spectrum-detail-m-emphasized-text-transform,
+        uppercase
+    );
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -272,11 +278,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-detail-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-m-strong-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-m-strong-text-font-style,
@@ -298,11 +304,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-detail-s-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-s-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-s-text-font-style,
@@ -319,26 +325,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Detail--sizeS em {
     /* .spectrum-Detail--sizeS em */
     font-size: var(
-        --spectrum-detail-s-emphasis-text-size,
+        --spectrum-detail-s-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-50)
     );
     font-weight: var(
-        --spectrum-detail-s-emphasis-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        --spectrum-detail-s-emphasized-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
-        --spectrum-detail-s-emphasis-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --spectrum-detail-s-emphasized-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-s-emphasis-text-font-style,
+        --spectrum-detail-s-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
     letter-spacing: var(
-        --spectrum-detail-s-emphasis-text-letter-spacing,
+        --spectrum-detail-s-emphasized-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
-    text-transform: var(--spectrum-detail-s-emphasis-text-transform, uppercase);
+    text-transform: var(
+        --spectrum-detail-s-emphasized-text-transform,
+        uppercase
+    );
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -350,11 +359,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-weight: var(
         --spectrum-detail-s-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-s-strong-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-s-strong-text-font-style,

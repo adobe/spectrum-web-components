@@ -50,7 +50,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/progressbar": "^1.0.3"
+        "@spectrum-css/progressbar": "beta"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

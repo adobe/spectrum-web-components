@@ -53,7 +53,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/button": "^3.0.3"
+        "@spectrum-css/button": "beta"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

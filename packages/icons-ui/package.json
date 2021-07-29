@@ -50,7 +50,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/icon": "^3.0.3",
+        "@spectrum-css/icon": "beta",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
         "fs": "^0.0.1-security",

@@ -59,7 +59,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     align-items: stretch;
     border-radius: var(
         --spectrum-toast-neutral-border-radius,
-        var(--spectrum-global-dimension-static-size-50)
+        var(--spectrum-alias-border-radius-regular)
     );
     padding-top: var(
         --spectrum-toast-neutral-padding-y,
@@ -71,11 +71,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     font-size: var(
         --spectrum-toast-neutral-text-size,
-        var(--spectrum-alias-font-size-default)
+        var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
         --spectrum-toast-neutral-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
+        var(--spectrum-alias-body-text-font-weight)
     );
     -webkit-font-smoothing: antialiased;
 }
@@ -150,11 +150,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-bottom: var(--spectrum-toast-content-padding-bottom);
     font-size: var(
         --spectrum-toast-info-text-size,
-        var(--spectrum-alias-font-size-default)
+        var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
         --spectrum-toast-info-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
+        var(--spectrum-alias-body-text-font-weight)
     );
     line-height: var(
         --spectrum-toast-info-text-line-height,
@@ -274,35 +274,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Toast-buttons */
     border-right-color: hsla(0, 0%, 100%, 0.2);
 }
-:host([variant='warning']) {
-    /* .spectrum-Toast--warning */
-    background-color: var(
-        --spectrum-toast-warning-background-color,
-        var(--spectrum-global-color-static-orange-700)
-    );
-    color: var(
-        --spectrum-toast-warning-background-color,
-        var(--spectrum-global-color-static-orange-700)
-    );
-}
-:host([variant='warning']) .closeButton:focus-visible:not(:active) {
-    /* .spectrum-Toast--warning .spectrum-Toast-closeButton.focus-ring:not(:active) */
-    color: var(
-        --spectrum-toast-warning-background-color,
-        var(--spectrum-global-color-static-orange-700)
-    );
-}
 :host([variant='error']),
 :host([variant='negative']) {
     /* .spectrum-Toast--error,
    * .spectrum-Toast--negative */
     background-color: var(
         --spectrum-toast-negative-background-color,
-        var(--spectrum-semantic-negative-color-background)
+        var(--spectrum-semantic-negative-background-color)
     );
     color: var(
         --spectrum-toast-negative-background-color,
-        var(--spectrum-semantic-negative-color-background)
+        var(--spectrum-semantic-negative-background-color)
     );
 }
 :host([variant='error']) .closeButton:focus-visible:not(:active),
@@ -311,25 +293,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Toast--negative .spectrum-Toast-closeButton.focus-ring:not(:active) */
     color: var(
         --spectrum-toast-negative-background-color,
-        var(--spectrum-semantic-negative-color-background)
+        var(--spectrum-semantic-negative-background-color)
     );
 }
 :host([variant='info']) {
     /* .spectrum-Toast--info */
     background-color: var(
         --spectrum-toast-info-background-color,
-        var(--spectrum-semantic-informative-color-background)
+        var(--spectrum-semantic-informative-background-color)
     );
     color: var(
         --spectrum-toast-info-background-color,
-        var(--spectrum-semantic-informative-color-background)
+        var(--spectrum-semantic-informative-background-color)
     );
 }
 :host([variant='info']) .closeButton:focus-visible:not(:active) {
     /* .spectrum-Toast--info .spectrum-Toast-closeButton.focus-ring:not(:active) */
     color: var(
         --spectrum-toast-info-background-color,
-        var(--spectrum-semantic-informative-color-background)
+        var(--spectrum-semantic-informative-background-color)
     );
 }
 :host([variant='positive']),
@@ -338,11 +320,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Toast--success */
     background-color: var(
         --spectrum-toast-positive-background-color,
-        var(--spectrum-semantic-positive-color-background)
+        var(--spectrum-semantic-positive-background-color)
     );
     color: var(
         --spectrum-toast-positive-background-color,
-        var(--spectrum-semantic-positive-color-background)
+        var(--spectrum-semantic-positive-background-color)
     );
 }
 :host([variant='positive']) .closeButton:focus-visible:not(:active),
@@ -351,6 +333,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Toast--success .spectrum-Toast-closeButton.focus-ring:not(:active) */
     color: var(
         --spectrum-toast-positive-background-color,
-        var(--spectrum-semantic-positive-color-background)
+        var(--spectrum-semantic-positive-background-color)
     );
 }

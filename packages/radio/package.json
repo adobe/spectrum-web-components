@@ -52,7 +52,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/radio": "^3.0.3"
+        "@spectrum-css/radio": "beta"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

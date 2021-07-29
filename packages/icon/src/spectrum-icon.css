@@ -23,12 +23,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-UIIcon:not(:root) */
     overflow: hidden;
 }
-@media (forced-colors: active) {
-    :host,
-    .spectrum-UIIcon {
-        forced-color-adjust: auto;
-    }
-}
 :host {
     /* .spectrum-Icon */
     --spectrum-icon-size-s: var(

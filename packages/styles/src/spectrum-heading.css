@@ -229,12 +229,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-heading-text-font-weight-regular)
     );
 }
-.spectrum-Heading .spectrum-Heading-emphasis,
+.spectrum-Heading .spectrum-Heading-emphasized,
 .spectrum-Heading em {
-    /* .spectrum-Heading .spectrum-Heading-emphasis,
+    /* .spectrum-Heading .spectrum-Heading-emphasized,
    * .spectrum-Heading em */
     font-style: var(
-        --spectrum-heading-m-emphasis-text-font-style,
+        --spectrum-heading-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
@@ -244,29 +244,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Heading strong */
     font-weight: var(
         --spectrum-heading-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-heading-text-font-weight-regular-strong)
     );
 }
 .spectrum-Heading--serif {
     /* .spectrum-Heading--serif */
     font-family: var(
-        --spectrum-body-serif-m-text-font-family,
+        --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
 }
 .spectrum-Heading--heavy {
     /* .spectrum-Heading--heavy */
     font-weight: var(
-        --spectrum-heading-heavy-m-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        --spectrum-heading-m-heavy-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-heavy)
     );
 }
-.spectrum-Heading--heavy .spectrum-Heading-emphasis,
+.spectrum-Heading--heavy .spectrum-Heading-emphasized,
 .spectrum-Heading--heavy em {
-    /* .spectrum-Heading--heavy .spectrum-Heading-emphasis,
+    /* .spectrum-Heading--heavy .spectrum-Heading-emphasized,
    * .spectrum-Heading--heavy em */
     font-style: var(
-        --spectrum-heading-heavy-m-emphasis-text-font-style,
+        --spectrum-heading-m-heavy-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
@@ -275,23 +275,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Heading--heavy .spectrum-Heading-strong,
    * .spectrum-Heading--heavy strong */
     font-weight: var(
-        --spectrum-heading-heavy-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        --spectrum-heading-m-heavy-strong-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-heavy-strong)
     );
 }
 .spectrum-Heading--light {
     /* .spectrum-Heading--light */
     font-weight: var(
-        --spectrum-heading-light-m-emphasis-text-font-weight,
-        var(--spectrum-global-font-weight-light)
+        --spectrum-heading-m-light-emphasized-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-light)
     );
 }
-.spectrum-Heading--light .spectrum-Heading-emphasis,
+.spectrum-Heading--light .spectrum-Heading-emphasized,
 .spectrum-Heading--light em {
-    /* .spectrum-Heading--light .spectrum-Heading-emphasis,
+    /* .spectrum-Heading--light .spectrum-Heading-emphasized,
    * .spectrum-Heading--light em */
     font-style: var(
-        --spectrum-heading-light-m-emphasis-text-font-style,
+        --spectrum-heading-m-light-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
@@ -300,8 +300,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Heading--light .spectrum-Heading-strong,
    * .spectrum-Heading--light strong */
     font-weight: var(
-        --spectrum-heading-light-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-bold)
+        --spectrum-heading-m-light-strong-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-light-strong)
     );
 }
 .spectrum-Heading--sizeXXXL {
@@ -363,56 +363,56 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Heading-sizeXXXL--light {
     /* .spectrum-Heading-sizeXXXL--light */
     color: var(
-        --spectrum-heading-light-xxxl-text-color,
+        --spectrum-heading-xxxl-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXXL--light {
     /* .spectrum-Heading-sizeXXL--light */
     color: var(
-        --spectrum-heading-light-xxl-text-color,
+        --spectrum-heading-xxl-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXL--light {
     /* .spectrum-Heading-sizeXL--light */
     color: var(
-        --spectrum-heading-light-xl-text-color,
+        --spectrum-heading-xl-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeL--light {
     /* .spectrum-Heading-sizeL--light */
     color: var(
-        --spectrum-heading-light-l-text-color,
+        --spectrum-heading-l-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXXXL--heavy {
     /* .spectrum-Heading-sizeXXXL--heavy */
     color: var(
-        --spectrum-heading-heavy-xxxl-text-color,
+        --spectrum-heading-xxxl-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXXL--heavy {
     /* .spectrum-Heading-sizeXXL--heavy */
     color: var(
-        --spectrum-heading-heavy-xxl-text-color,
+        --spectrum-heading-xxl-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXL--heavy {
     /* .spectrum-Heading-sizeXL--heavy */
     color: var(
-        --spectrum-heading-heavy-xl-text-color,
+        --spectrum-heading-xl-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeL--heavy {
     /* .spectrum-Heading-sizeL--heavy */
     color: var(
-        --spectrum-heading-heavy-l-text-color,
+        --spectrum-heading-l-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }

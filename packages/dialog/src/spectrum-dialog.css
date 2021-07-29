@@ -175,7 +175,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(
                 --spectrum-dialog-confirm-divider-margin-bottom,
                 var(--spectrum-global-dimension-static-size-200)
-            ) + var(--spectrum-dialog-confirm-divider-height)
+            ) +
+            var(
+                --spectrum-dialog-confirm-divider-height,
+                var(--spectrum-global-dimension-size-25)
+            )
     );
 }
 .content {
@@ -405,6 +409,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Dialog--error .spectrum-Dialog-typeIcon */
     color: var(
         --spectrum-dialog-error-icon-color,
-        var(--spectrum-semantic-negative-color-icon)
+        var(--spectrum-semantic-negative-icon-color)
     );
 }

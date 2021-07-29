@@ -272,6 +272,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-SideNav-itemLink.focus-ring:before */
     border-color: var(
         --spectrum-sidenav-item-border-color-key-focus,
-        var(--spectrum-alias-border-color-focus)
+        var(--spectrum-alias-border-color-key-focus)
     );
 }

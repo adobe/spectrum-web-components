@@ -107,7 +107,7 @@
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.2",
         "@sindresorhus/slugify": "^1.1.2",
-        "@spectrum-css/table": "^3.0.3",
+        "@spectrum-css/table": "^3.0.3-alpha.2",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",
         "@types/command-line-usage": "^5.0.1",

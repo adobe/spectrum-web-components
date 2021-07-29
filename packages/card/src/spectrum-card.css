@@ -10,25 +10,230 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([size='s']) {
+    /* .spectrum-Card--sizeS */
+    --spectrum-card-quiet-body-header-margin-top: var(
+        --spectrum-card-s-quiet-body-header-margin-top,
+        var(--spectrum-global-dimension-size-175)
+    );
+    --spectrum-card-quiet-body-header-height: var(
+        --spectrum-card-s-quiet-body-header-height,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-card-quiet-preview-padding: var(
+        --spectrum-card-s-quiet-preview-padding,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-card-quiet-min-width: var(
+        --spectrum-card-s-quiet-min-width,
+        var(--spectrum-global-dimension-size-1200)
+    );
+    --spectrum-card-quiet-min-height: var(
+        --spectrum-card-s-quiet-min-height,
+        var(--spectrum-global-dimension-size-900)
+    );
+    --spectrum-card-quiet-border-radius: var(
+        --spectrum-card-s-quiet-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-card-quiet-border-size: var(
+        --spectrum-card-s-quiet-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-card-body-header-height: var(
+        --spectrum-card-s-body-header-height,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-card-body-content-min-height: var(
+        --spectrum-card-s-body-content-min-height,
+        var(--spectrum-global-dimension-size-175)
+    );
+    --spectrum-card-body-content-margin-top: var(
+        --spectrum-card-s-body-content-margin-top,
+        var(--spectrum-global-dimension-size-75)
+    );
+    --spectrum-card-body-padding-top: var(
+        --spectrum-card-s-body-padding-top,
+        var(--spectrum-global-dimension-size-250)
+    );
+    --spectrum-card-body-padding-bottom: var(
+        --spectrum-card-s-body-padding-bottom,
+        var(--spectrum-global-dimension-size-250)
+    );
+    --spectrum-card-body-padding-left: var(
+        --spectrum-card-s-body-padding-left,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-card-body-padding-right: var(
+        --spectrum-card-s-body-padding-right,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-card-coverphoto-height: var(
+        --spectrum-card-s-coverphoto-height,
+        var(--spectrum-global-dimension-size-1700)
+    );
+    --spectrum-card-coverphoto-border-bottom-size: var(
+        --spectrum-card-s-coverphoto-border-bottom-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-card-checkbox-margin: var(
+        --spectrum-card-s-checkbox-margin,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-card-title-padding-right: var(
+        --spectrum-card-s-title-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-card-subtitle-text-size: var(
+        --spectrum-card-s-subtitle-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    --spectrum-card-subtitle-padding-right: var(
+        --spectrum-card-s-subtitle-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-card-actions-margin: var(
+        --spectrum-card-s-actions-margin,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-card-footer-padding-top: var(
+        --spectrum-card-s-footer-padding-top,
+        var(--spectrum-global-dimension-size-175)
+    );
+    --spectrum-card-footer-border-top-size: var(
+        --spectrum-card-s-footer-border-top-size,
+        var(--spectrum-global-dimension-size-10)
+    );
+    --spectrum-card-min-width: var(
+        --spectrum-card-s-min-width,
+        var(--spectrum-global-dimension-size-1250)
+    );
+    --spectrum-card-border-radius: var(
+        --spectrum-card-s-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-card-border-size: var(
+        --spectrum-card-s-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+}
+:host([size='m']) {
+    /* .spectrum-Card--sizeM */
+    --spectrum-card-quiet-body-header-margin-top: var(
+        --spectrum-card-m-quiet-body-header-margin-top,
+        var(--spectrum-global-dimension-size-175)
+    );
+    --spectrum-card-quiet-body-header-height: var(
+        --spectrum-card-m-quiet-body-header-height,
+        var(--spectrum-global-dimension-size-225)
+    );
+    --spectrum-card-quiet-preview-padding: var(
+        --spectrum-card-m-quiet-preview-padding,
+        var(--spectrum-global-dimension-size-250)
+    );
+    --spectrum-card-quiet-min-width: var(
+        --spectrum-card-m-quiet-min-width,
+        var(--spectrum-global-dimension-size-2500)
+    );
+    --spectrum-card-quiet-min-height: var(
+        --spectrum-card-m-quiet-min-height,
+        var(--spectrum-global-dimension-size-1700)
+    );
+    --spectrum-card-quiet-border-radius: var(
+        --spectrum-card-m-quiet-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-card-quiet-border-size: var(
+        --spectrum-card-m-quiet-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-card-body-header-height: var(
+        --spectrum-card-m-body-header-height,
+        var(--spectrum-global-dimension-size-225)
+    );
+    --spectrum-card-body-content-min-height: var(
+        --spectrum-card-m-body-content-min-height,
+        var(--spectrum-global-dimension-size-175)
+    );
+    --spectrum-card-body-content-margin-top: var(
+        --spectrum-card-m-body-content-margin-top,
+        var(--spectrum-global-dimension-size-75)
+    );
+    --spectrum-card-body-padding-top: var(
+        --spectrum-card-m-body-padding-top,
+        var(--spectrum-global-dimension-size-250)
+    );
+    --spectrum-card-body-padding-bottom: var(
+        --spectrum-card-m-body-padding-bottom,
+        var(--spectrum-global-dimension-size-250)
+    );
+    --spectrum-card-body-padding-left: var(
+        --spectrum-card-m-body-padding-left,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-card-body-padding-right: var(
+        --spectrum-card-m-body-padding-right,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-card-coverphoto-height: var(
+        --spectrum-card-m-coverphoto-height,
+        var(--spectrum-global-dimension-size-1700)
+    );
+    --spectrum-card-coverphoto-border-bottom-size: var(
+        --spectrum-card-m-coverphoto-border-bottom-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-card-checkbox-margin: var(
+        --spectrum-card-m-checkbox-margin,
+        var(--spectrum-global-dimension-size-200)
+    );
+    --spectrum-card-title-padding-right: var(
+        --spectrum-card-m-title-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-card-subtitle-text-size: var(
+        --spectrum-card-m-subtitle-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    --spectrum-card-subtitle-padding-right: var(
+        --spectrum-card-m-subtitle-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-card-actions-margin: var(
+        --spectrum-card-m-actions-margin,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-card-footer-padding-top: var(
+        --spectrum-card-m-footer-padding-top,
+        var(--spectrum-global-dimension-size-175)
+    );
+    --spectrum-card-footer-border-top-size: var(
+        --spectrum-card-m-footer-border-top-size,
+        var(--spectrum-global-dimension-size-10)
+    );
+    --spectrum-card-min-width: var(
+        --spectrum-card-m-min-width,
+        var(--spectrum-global-dimension-size-2500)
+    );
+    --spectrum-card-border-radius: var(
+        --spectrum-card-m-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-card-border-size: var(
+        --spectrum-card-m-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+}
 :host {
     /* .spectrum-Card */
     position: relative;
     display: inline-flex;
     flex-direction: column;
     box-sizing: border-box;
-    min-width: var(
-        --spectrum-card-min-width,
-        var(--spectrum-global-dimension-size-3000)
-    );
-    border: var(
-            --spectrum-card-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        solid transparent;
-    border-radius: var(
-        --spectrum-card-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
+    min-width: var(--spectrum-card-min-width);
+    width: var(--spectrum-card-min-width);
+    border: var(--spectrum-card-border-size) solid transparent;
+    border-radius: var(--spectrum-card-border-radius);
     text-decoration: none;
 }
 :host(:focus) {
@@ -57,25 +262,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .actions {
     /* [dir=ltr] .spectrum-Card-actions */
-    right: var(
-        --spectrum-card-actions-margin,
-        var(--spectrum-global-dimension-size-125)
-    );
+    right: var(--spectrum-card-actions-margin);
 }
 :host([dir='rtl']) .actions {
     /* [dir=rtl] .spectrum-Card-actions */
-    left: var(
-        --spectrum-card-actions-margin,
-        var(--spectrum-global-dimension-size-125)
-    );
+    left: var(--spectrum-card-actions-margin);
 }
 .actions {
     /* .spectrum-Card-actions */
     position: absolute;
-    top: var(
-        --spectrum-card-actions-margin,
-        var(--spectrum-global-dimension-size-125)
-    );
+    top: var(--spectrum-card-actions-margin);
     height: var(
         --spectrum-quickactions-height,
         var(--spectrum-global-dimension-size-500)
@@ -84,25 +280,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .quickActions {
     /* [dir=ltr] .spectrum-Card-quickActions */
-    left: var(
-        --spectrum-card-checkbox-margin,
-        var(--spectrum-global-dimension-size-200)
-    );
+    left: var(--spectrum-card-checkbox-margin);
 }
 :host([dir='rtl']) .quickActions {
     /* [dir=rtl] .spectrum-Card-quickActions */
-    right: var(
-        --spectrum-card-checkbox-margin,
-        var(--spectrum-global-dimension-size-200)
-    );
+    right: var(--spectrum-card-checkbox-margin);
 }
 .quickActions {
     /* .spectrum-Card-quickActions */
     position: absolute;
-    top: var(
-        --spectrum-card-checkbox-margin,
-        var(--spectrum-global-dimension-size-200)
-    );
+    top: var(--spectrum-card-checkbox-margin);
     width: var(
         --spectrum-quickactions-height,
         var(--spectrum-global-dimension-size-500)
@@ -121,31 +308,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #cover-photo {
     /* .spectrum-Card-coverPhoto */
-    height: var(
-        --spectrum-card-coverphoto-height,
-        var(--spectrum-global-dimension-size-1700)
-    );
+    height: var(--spectrum-card-coverphoto-height);
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: var(
-            --spectrum-card-coverphoto-border-bottom-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        solid transparent;
-    border-top-left-radius: calc(
-        var(
-                --spectrum-card-border-radius,
-                var(--spectrum-alias-border-radius-regular)
-            ) - 1px
-    );
-    border-top-right-radius: calc(
-        var(
-                --spectrum-card-border-radius,
-                var(--spectrum-alias-border-radius-regular)
-            ) - 1px
-    );
+    border-bottom: var(--spectrum-card-coverphoto-border-bottom-size) solid
+        transparent;
+    border-top-left-radius: calc(var(--spectrum-card-border-radius) - 1px);
+    border-top-right-radius: calc(var(--spectrum-card-border-radius) - 1px);
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     background-size: cover;
@@ -153,106 +324,57 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .body {
     /* [dir=ltr] .spectrum-Card-body */
-    padding-right: var(
-        --spectrum-card-body-padding-right,
-        var(--spectrum-global-dimension-size-300)
-    );
+    padding-right: var(--spectrum-card-body-padding-right);
 }
 :host([dir='rtl']) .body {
     /* [dir=rtl] .spectrum-Card-body */
-    padding-left: var(
-        --spectrum-card-body-padding-right,
-        var(--spectrum-global-dimension-size-300)
-    );
+    padding-left: var(--spectrum-card-body-padding-right);
 }
 :host([dir='ltr']) .body {
     /* [dir=ltr] .spectrum-Card-body */
-    padding-left: var(
-        --spectrum-card-body-padding-left,
-        var(--spectrum-global-dimension-size-300)
-    );
+    padding-left: var(--spectrum-card-body-padding-left);
 }
 :host([dir='rtl']) .body {
     /* [dir=rtl] .spectrum-Card-body */
-    padding-right: var(
-        --spectrum-card-body-padding-left,
-        var(--spectrum-global-dimension-size-300)
-    );
+    padding-right: var(--spectrum-card-body-padding-left);
 }
 .body {
     /* .spectrum-Card-body */
-    padding-top: var(
-        --spectrum-card-body-padding-top,
-        var(--spectrum-global-dimension-size-250)
-    );
-    padding-bottom: var(
-        --spectrum-card-body-padding-bottom,
-        var(--spectrum-global-dimension-size-250)
-    );
+    padding-top: var(--spectrum-card-body-padding-top);
+    padding-bottom: var(--spectrum-card-body-padding-bottom);
 }
 .body:last-child {
     /* .spectrum-Card-body:last-child */
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-bottom-right-radius: var(
-        --spectrum-card-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    border-bottom-left-radius: var(
-        --spectrum-card-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
+    border-bottom-right-radius: var(--spectrum-card-border-radius);
+    border-bottom-left-radius: var(--spectrum-card-border-radius);
 }
 #preview {
     /* .spectrum-Card-preview */
     overflow: hidden;
-    border-top-left-radius: calc(
-        var(
-                --spectrum-card-border-radius,
-                var(--spectrum-alias-border-radius-regular)
-            ) - 1px
-    );
-    border-top-right-radius: calc(
-        var(
-                --spectrum-card-border-radius,
-                var(--spectrum-alias-border-radius-regular)
-            ) - 1px
-    );
+    border-top-left-radius: calc(var(--spectrum-card-border-radius) - 1px);
+    border-top-right-radius: calc(var(--spectrum-card-border-radius) - 1px);
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
 .header {
     /* .spectrum-Card-header */
-    height: var(
-        --spectrum-card-body-header-height,
-        var(--spectrum-global-dimension-size-225)
-    );
+    height: var(--spectrum-card-body-header-height);
 }
 .content {
     /* .spectrum-Card-content */
     display: flex;
-    height: var(
-        --spectrum-card-body-content-height,
-        var(--spectrum-global-dimension-size-175)
-    );
-    margin-top: var(
-        --spectrum-card-body-content-margin-top,
-        var(--spectrum-global-dimension-size-75)
-    );
+    height: var(--spectrum-card-body-content-min-height);
+    margin-top: var(--spectrum-card-body-content-margin-top);
 }
 :host([dir='ltr']) .title {
     /* [dir=ltr] .spectrum-Card-title */
-    padding-right: var(
-        --spectrum-card-title-padding-right,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-right: var(--spectrum-card-title-padding-right);
 }
 :host([dir='rtl']) .title {
     /* [dir=rtl] .spectrum-Card-title */
-    padding-left: var(
-        --spectrum-card-title-padding-right,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-left: var(--spectrum-card-title-padding-right);
 }
 .title {
     /* .spectrum-Card-title */
@@ -262,38 +384,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .subtitle {
     /* [dir=ltr] .spectrum-Card-subtitle */
-    padding-right: var(
-        --spectrum-card-subtitle-padding-right,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-right: var(--spectrum-card-subtitle-padding-right);
 }
 :host([dir='rtl']) .subtitle {
     /* [dir=rtl] .spectrum-Card-subtitle */
-    padding-left: var(
-        --spectrum-card-subtitle-padding-right,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-left: var(--spectrum-card-subtitle-padding-right);
 }
 ::slotted([slot='description']) {
     /* .spectrum-Card-description */
-    font-size: var(
-        --spectrum-card-subtitle-text-size,
-        var(--spectrum-global-dimension-font-size-50)
-    );
+    font-size: var(--spectrum-card-subtitle-text-size);
 }
 :host([dir='ltr']) .subtitle + ::slotted([slot='description']):before {
     /* [dir=ltr] .spectrum-Card-subtitle+.spectrum-Card-description:before */
-    padding-right: var(
-        --spectrum-card-subtitle-padding-right,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-right: var(--spectrum-card-subtitle-padding-right);
 }
 :host([dir='rtl']) .subtitle + ::slotted([slot='description']):before {
     /* [dir=rtl] .spectrum-Card-subtitle+.spectrum-Card-description:before */
-    padding-left: var(
-        --spectrum-card-subtitle-padding-right,
-        var(--spectrum-global-dimension-size-100)
-    );
+    padding-left: var(--spectrum-card-subtitle-padding-right);
 }
 .subtitle + ::slotted([slot='description']):before {
     /* .spectrum-Card-subtitle+.spectrum-Card-description:before */
@@ -301,47 +408,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) ::slotted([slot='footer']) {
     /* [dir=ltr] .spectrum-Card-footer */
-    margin-right: var(
-        --spectrum-card-body-padding-right,
-        var(--spectrum-global-dimension-size-300)
-    );
+    margin-right: var(--spectrum-card-body-padding-right);
 }
 :host([dir='rtl']) ::slotted([slot='footer']) {
     /* [dir=rtl] .spectrum-Card-footer */
-    margin-left: var(
-        --spectrum-card-body-padding-right,
-        var(--spectrum-global-dimension-size-300)
-    );
+    margin-left: var(--spectrum-card-body-padding-right);
 }
 :host([dir='ltr']) ::slotted([slot='footer']) {
     /* [dir=ltr] .spectrum-Card-footer */
-    margin-left: var(
-        --spectrum-card-body-padding-left,
-        var(--spectrum-global-dimension-size-300)
-    );
+    margin-left: var(--spectrum-card-body-padding-left);
 }
 :host([dir='rtl']) ::slotted([slot='footer']) {
     /* [dir=rtl] .spectrum-Card-footer */
-    margin-right: var(
-        --spectrum-card-body-padding-left,
-        var(--spectrum-global-dimension-size-300)
-    );
+    margin-right: var(--spectrum-card-body-padding-left);
 }
 ::slotted([slot='footer']) {
     /* .spectrum-Card-footer */
-    padding-top: var(
-        --spectrum-card-footer-padding-top,
-        var(--spectrum-global-dimension-size-175)
-    );
-    padding-bottom: var(
-        --spectrum-card-body-padding-bottom,
-        var(--spectrum-global-dimension-size-250)
-    );
-    border-top: var(
-            --spectrum-card-footer-border-top-size,
-            var(--spectrum-global-dimension-size-10)
-        )
-        solid;
+    padding-top: var(--spectrum-card-footer-padding-top);
+    padding-bottom: var(--spectrum-card-body-padding-bottom);
+    border-top: var(--spectrum-card-footer-border-top-size) solid;
 }
 .header {
     /* .spectrum-Card-header */
@@ -357,21 +442,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([variant='quiet']) #preview {
     /* .spectrum-Card--quiet .spectrum-Card-preview */
-    min-height: var(
-        --spectrum-card-quiet-min-size,
-        var(--spectrum-global-dimension-size-1700)
-    );
+    min-height: var(--spectrum-card-quiet-min-height);
 }
 :host([variant='gallery']),
 :host([variant='quiet']) {
     /* .spectrum-Card--gallery,
    * .spectrum-Card--quiet */
-    width: 100%;
+    width: var(--spectrum-card-quiet-min-width);
     height: 100%;
-    min-width: var(
-        --spectrum-card-quiet-min-size,
-        var(--spectrum-global-dimension-size-1700)
-    );
+    min-width: var(--spectrum-card-quiet-min-width);
     border-width: 0;
     border-radius: 0;
     overflow: visible;
@@ -382,16 +461,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--quiet .spectrum-Card-preview */
     width: 100%;
     flex: 1;
-    padding: var(
-        --spectrum-card-quiet-preview-padding,
-        var(--spectrum-global-dimension-size-250)
-    );
+    padding: var(--spectrum-card-quiet-preview-padding);
     margin: 0 auto;
     box-sizing: border-box;
-    border-radius: var(
-        --spectrum-card-quiet-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
+    border-radius: var(--spectrum-card-quiet-border-radius);
     position: relative;
     transition: background-color
         var(--spectrum-global-animation-duration-100, 0.13s);
@@ -420,11 +493,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     height: 100%;
     box-sizing: border-box;
     border-radius: inherit;
-    border: var(
-            --spectrum-card-quiet-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        solid transparent;
+    border: var(--spectrum-card-quiet-border-size) solid transparent;
 }
 :host([variant='gallery'][drop-target]) #preview,
 :host([variant='quiet'][drop-target]) #preview {
@@ -436,14 +505,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='quiet']) .header {
     /* .spectrum-Card--gallery .spectrum-Card-header,
    * .spectrum-Card--quiet .spectrum-Card-header */
-    height: var(
-        --spectrum-card-quiet-body-header-height,
-        var(--spectrum-global-dimension-size-225)
-    );
-    margin-top: var(
-        --spectrum-card-quiet-body-header-margin-top,
-        var(--spectrum-global-dimension-size-175)
-    );
+    height: var(--spectrum-card-quiet-body-header-height);
+    margin-top: var(--spectrum-card-quiet-body-header-margin-top);
 }
 :host([variant='gallery']) .body,
 :host([variant='quiet']) .body {
@@ -451,80 +514,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--quiet .spectrum-Card-body */
     padding: 0;
 }
-:host([small]) {
-    /* .spectrum-Card--small */
-    min-width: var(
-        --spectrum-card-quiet-small-min-size,
-        var(--spectrum-global-dimension-size-900)
-    );
-}
-:host([dir='ltr'][small]) .quickActions {
-    /* [dir=ltr] .spectrum-Card--small .spectrum-Card-quickActions */
-    left: var(
-        --spectrum-card-quiet-small-checkbox-margin,
-        var(--spectrum-global-dimension-size-125)
-    );
-}
-:host([dir='rtl'][small]) .quickActions {
-    /* [dir=rtl] .spectrum-Card--small .spectrum-Card-quickActions */
-    right: var(
-        --spectrum-card-quiet-small-checkbox-margin,
-        var(--spectrum-global-dimension-size-125)
-    );
-}
-:host([small]) .quickActions {
-    /* .spectrum-Card--small .spectrum-Card-quickActions */
-    top: var(
-        --spectrum-card-quiet-small-checkbox-margin,
-        var(--spectrum-global-dimension-size-125)
-    );
-}
-:host([small]) #preview {
-    /* .spectrum-Card--small .spectrum-Card-preview */
-    padding: var(
-        --spectrum-card-quiet-small-preview-padding,
-        var(--spectrum-global-dimension-size-150)
-    );
-    min-height: var(
-        --spectrum-card-quiet-small-min-size,
-        var(--spectrum-global-dimension-size-900)
-    );
-}
-:host([small]) .header {
-    /* .spectrum-Card--small .spectrum-Card-header */
-    margin-top: var(
-        --spectrum-card-quiet-small-body-margin-top,
-        var(--spectrum-global-dimension-size-100)
-    );
-    height: var(
-        --spectrum-card-quiet-small-body-header-height,
-        var(--spectrum-global-dimension-size-150)
-    );
-}
-:host([small]) .title {
-    /* .spectrum-Card--small .spectrum-Card-title */
-    font-size: var(
-        --spectrum-card-quiet-small-title-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
-}
 :host([horizontal]) {
     /* .spectrum-Card--horizontal */
     flex-direction: row;
 }
 :host([dir='ltr'][horizontal]) #preview {
     /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
-    border-top-left-radius: var(
-        --spectrum-card-quiet-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
+    border-top-left-radius: var(--spectrum-card-quiet-border-radius);
 }
 :host([dir='rtl'][horizontal]) #preview {
     /* [dir=rtl] .spectrum-Card--horizontal .spectrum-Card-preview */
-    border-top-right-radius: var(
-        --spectrum-card-quiet-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
+    border-top-right-radius: var(--spectrum-card-quiet-border-radius);
 }
 :host([dir='ltr'][horizontal]) #preview {
     /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
@@ -536,17 +536,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][horizontal]) #preview {
     /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
-    border-bottom-left-radius: var(
-        --spectrum-card-quiet-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
+    border-bottom-left-radius: var(--spectrum-card-quiet-border-radius);
 }
 :host([dir='rtl'][horizontal]) #preview {
     /* [dir=rtl] .spectrum-Card--horizontal .spectrum-Card-preview */
-    border-bottom-right-radius: var(
-        --spectrum-card-quiet-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
+    border-bottom-right-radius: var(--spectrum-card-quiet-border-radius);
 }
 :host([dir='ltr'][horizontal]) #preview {
     /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
@@ -558,19 +552,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][horizontal]) #preview {
     /* [dir=ltr] .spectrum-Card--horizontal .spectrum-Card-preview */
-    border-right: var(
-            --spectrum-card-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        solid transparent;
+    border-right: var(--spectrum-card-border-size) solid transparent;
 }
 :host([dir='rtl'][horizontal]) #preview {
     /* [dir=rtl] .spectrum-Card--horizontal .spectrum-Card-preview */
-    border-left: var(
-            --spectrum-card-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        solid transparent;
+    border-left: var(--spectrum-card-border-size) solid transparent;
 }
 :host([horizontal]) #preview {
     /* .spectrum-Card--horizontal .spectrum-Card-preview */
@@ -619,18 +605,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Card */
     border-color: var(
-        --spectrum-card-border-color,
+        --spectrum-card-m-border-color,
         var(--spectrum-global-color-gray-200)
     );
     background-color: var(
-        --spectrum-card-background-color,
+        --spectrum-card-m-background-color,
         var(--spectrum-global-color-gray-50)
     );
 }
 :host(:hover) {
     /* .spectrum-Card:hover */
     border-color: var(
-        --spectrum-card-border-color-hover,
+        --spectrum-card-m-border-color-hover,
         var(--spectrum-global-color-gray-400)
     );
 }
@@ -641,13 +627,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card.is-drop-target,
    * .spectrum-Card.is-selected */
     border-color: var(
-        --spectrum-card-border-color-key-focus,
-        var(--spectrum-alias-border-color-focus)
+        --spectrum-card-m-border-color-key-focus,
+        var(--spectrum-alias-border-color-key-focus)
     );
     box-shadow: 0 0 0 1px
         var(
-            --spectrum-card-border-color-key-focus,
-            var(--spectrum-alias-border-color-focus)
+            --spectrum-card-m-border-color-key-focus,
+            var(--spectrum-alias-border-color-key-focus)
         );
 }
 :host([drop-target]) {
@@ -659,25 +645,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card-description,
    * .spectrum-Card .spectrum-Card-subtitle */
     color: var(
-        --spectrum-card-description-text-color,
+        --spectrum-card-m-description-text-color,
         var(--spectrum-global-color-gray-700)
     );
 }
 #cover-photo {
     /* .spectrum-Card-coverPhoto */
     background-color: var(
-        --spectrum-card-coverphoto-background-color,
+        --spectrum-card-m-coverphoto-background-color,
         var(--spectrum-global-color-gray-200)
     );
     border-bottom-color: var(
-        --spectrum-card-coverphoto-border-color,
+        --spectrum-card-m-coverphoto-border-color,
         var(--spectrum-global-color-gray-200)
     );
 }
 ::slotted([slot='footer']) {
     /* .spectrum-Card-footer */
     border-color: var(
-        --spectrum-card-border-color,
+        --spectrum-card-m-border-color,
         var(--spectrum-global-color-gray-200)
     );
 }
@@ -693,7 +679,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card--gallery .spectrum-Card-preview,
    * .spectrum-Card--quiet .spectrum-Card-preview */
     background-color: var(
-        --spectrum-card-quiet-preview-background-color,
+        --spectrum-card-m-quiet-preview-background-color,
         var(--spectrum-global-color-gray-200)
     );
 }
@@ -708,7 +694,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card--gallery:hover .spectrum-Card-preview,
    * .spectrum-Card--quiet:hover .spectrum-Card-preview */
     background-color: var(
-        --spectrum-card-quiet-preview-background-color-hover,
+        --spectrum-card-m-quiet-preview-background-color-hover,
         var(--spectrum-global-color-gray-300)
     );
 }
@@ -732,7 +718,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--quiet.focus-ring .spectrum-Card-preview,
    * .spectrum-Card--quiet.is-selected .spectrum-Card-preview */
     background-color: var(
-        --spectrum-card-quiet-preview-background-color,
+        --spectrum-card-m-quiet-preview-background-color,
         var(--spectrum-global-color-gray-200)
     );
 }
@@ -745,12 +731,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--quiet.focus-ring .spectrum-Card-preview:before,
    * .spectrum-Card--quiet.is-selected .spectrum-Card-preview:before */
     border-color: var(
-        --spectrum-card-quiet-border-color-selected,
+        --spectrum-card-m-quiet-border-color-selected,
         var(--spectrum-global-color-blue-500)
     );
     box-shadow: 0 0 0 1px
         var(
-            --spectrum-card-quiet-border-color-selected,
+            --spectrum-card-m-quiet-border-color-selected,
             var(--spectrum-global-color-blue-500)
         );
 }
@@ -773,12 +759,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card--gallery.is-drop-target .spectrum-Card-preview:before,
    * .spectrum-Card--quiet.is-drop-target .spectrum-Card-preview:before */
     border-color: var(
-        --spectrum-card-quiet-border-color-selected,
+        --spectrum-card-m-quiet-border-color-selected,
         var(--spectrum-global-color-blue-500)
     );
     box-shadow: 0 0 0 1px
         var(
-            --spectrum-card-quiet-border-color-selected,
+            --spectrum-card-m-quiet-border-color-selected,
             var(--spectrum-global-color-blue-500)
         );
 }
@@ -801,7 +787,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--quiet.is-drop-target .spectrum-Asset-fileOutline,
    * .spectrum-Card--quiet.is-drop-target .spectrum-Asset-folderOutline */
     fill: var(
-        --spectrum-card-quiet-border-color-selected,
+        --spectrum-card-m-quiet-border-color-selected,
         var(--spectrum-global-color-blue-500)
     );
 }
@@ -810,7 +796,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card--gallery .spectrum-Card-title,
    * .spectrum-Card--quiet .spectrum-Card-title */
     color: var(
-        --spectrum-card-quiet-title-text-color,
+        --spectrum-card-m-quiet-title-text-color,
         var(--spectrum-global-color-gray-800)
     );
 }
@@ -819,25 +805,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Card--gallery .spectrum-Card-subtitle,
    * .spectrum-Card--quiet .spectrum-Card-subtitle */
     color: var(
-        --spectrum-card-quiet-subtitle-text-color,
+        --spectrum-card-m-quiet-subtitle-text-color,
         var(--spectrum-global-color-gray-700)
     );
 }
 :host([horizontal]:hover) #preview {
     /* .spectrum-Card--horizontal:hover .spectrum-Card-preview */
     border-color: var(
-        --spectrum-card-border-color-hover,
+        --spectrum-card-m-border-color-hover,
         var(--spectrum-global-color-gray-400)
     );
 }
 :host([horizontal]) #preview {
     /* .spectrum-Card--horizontal .spectrum-Card-preview */
     background-color: var(
-        --spectrum-card-quiet-preview-background-color,
+        --spectrum-card-m-quiet-preview-background-color,
         var(--spectrum-global-color-gray-200)
     );
     border-color: var(
-        --spectrum-card-border-color,
+        --spectrum-card-m-border-color,
         var(--spectrum-global-color-gray-200)
     );
 }

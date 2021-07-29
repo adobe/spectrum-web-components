@@ -12,13 +12,25 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Radio */
+    --spectrum-radio-circle-dot-size: var(
+        --spectrum-radio-m-circle-dot-size,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    --spectrum-radio-circle-diameter: var(
+        --spectrum-radio-m-circle-diameter,
+        var(--spectrum-global-dimension-size-175)
+    );
     --spectrum-radio-circle-border-size: var(
         --spectrum-radio-m-circle-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-radio-circle-dot-size: var(
-        --spectrum-radio-m-circle-dot-size,
-        var(--spectrum-global-dimension-static-size-50)
+    --spectrum-radio-text-size: var(
+        --spectrum-radio-m-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-radio-text-gap: var(
+        --spectrum-radio-m-text-gap,
+        var(--spectrum-global-dimension-size-125)
     );
     --spectrum-radio-text-font-style: var(
         --spectrum-radio-m-text-font-style,
@@ -32,21 +44,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-radio-m-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
-    --spectrum-radio-text-size: var(
-        --spectrum-radio-m-text-size,
-        var(--spectrum-alias-item-text-size-m)
-    );
     --spectrum-radio-height: var(
         --spectrum-radio-m-height,
-        var(--spectrum-alias-item-height-m)
-    );
-    --spectrum-radio-circle-diameter: var(
-        --spectrum-radio-m-circle-diameter,
-        var(--spectrum-alias-item-control-2-size-m)
-    );
-    --spectrum-radio-text-gap: var(
-        --spectrum-radio-m-text-gap,
-        var(--spectrum-alias-item-control-gap-m)
+        var(--spectrum-global-dimension-size-400)
     );
     --spectrum-radio-radius: calc(var(--spectrum-radio-circle-diameter) / 2);
     --spectrum-radio-border-width-checked: calc(
@@ -196,7 +196,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Radio */
     --spectrum-radio-m-emphasized-circle-border-color-selected-key-focus: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected-hover,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-semantic-cta-background-color-hover)
     );
 }
 :host([checked]) #input + #button:before {
@@ -208,11 +208,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #label {
     /* .spectrum-Radio-label */
-    color: var(--spectrum-radio-m-text-color, var(--spectrum-alias-text-color));
+    color: var(
+        --spectrum-radio-m-text-color,
+        var(--spectrum-global-color-gray-800)
+    );
 }
 #button:before {
     /* .spectrum-Radio-button:before */
-    forced-color-adjust: none;
     background-color: var(
         --spectrum-radio-m-circle-background-color,
         var(--spectrum-global-color-gray-75)
@@ -241,7 +243,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Radio:hover .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-text-color-hover,
-        var(--spectrum-alias-text-color-hover)
+        var(--spectrum-global-color-gray-900)
     );
 }
 :host(:active) #button:before {
@@ -262,28 +264,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Radio:active .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-text-color-down,
-        var(--spectrum-alias-text-color-down)
+        var(--spectrum-global-color-gray-900)
     );
 }
 :host([emphasized][checked]) #input + #button:before {
     /* .spectrum-Radio--emphasized .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected,
-        var(--spectrum-global-color-blue-500)
+        var(--spectrum-semantic-cta-background-color-default)
     );
 }
 :host([emphasized][checked]:hover) #input + #button:before {
     /* .spectrum-Radio--emphasized:hover .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected-hover,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-semantic-cta-background-color-hover)
     );
 }
 :host([emphasized][checked]:active) #input + #button:before {
     /* .spectrum-Radio--emphasized:active .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected-down,
-        var(--spectrum-global-color-blue-700)
+        var(--spectrum-semantic-cta-background-color-down)
     );
 }
 :host([emphasized][invalid]:hover) #input + #button:before,
@@ -301,7 +303,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Radio.is-invalid:hover .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-emphasized-text-color-error-hover,
-        var(--spectrum-global-color-red-700)
+        var(--spectrum-semantic-negative-text-color-small-hover)
     );
 }
 :host([emphasized][invalid]:active) #input + #button:before,
@@ -309,7 +311,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Radio--emphasized.is-invalid:active .spectrum-Radio-input+.spectrum-Radio-button:before,
    * .spectrum-Radio.is-invalid:active .spectrum-Radio-input+.spectrum-Radio-button:before */
     border-color: var(
-        --spectrum-radio-m-emphasized-text-color-error-hover,
+        --spectrum-radio-m-emphasized-circle-border-color-error-down,
         var(--spectrum-global-color-red-700)
     );
 }
@@ -319,7 +321,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Radio.is-invalid:active .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-emphasized-text-color-error-down,
-        var(--spectrum-global-color-red-700)
+        var(--spectrum-semantic-negative-text-color-small-down)
     );
 }
 :host([emphasized][invalid]) #button:before,
@@ -341,7 +343,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Radio.is-invalid .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-emphasized-text-color-error,
-        var(--spectrum-global-color-red-600)
+        var(--spectrum-semantic-negative-text-color-small)
     );
 }
 :host([checked][disabled]) #input + #button:before,
@@ -359,7 +361,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Radio .spectrum-Radio-input:disabled~.spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-emphasized-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
+        var(--spectrum-global-color-gray-500)
     );
 }
 :host([emphasized]:focus-visible) #input + #button:before,
@@ -383,10 +385,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
    * .spectrum-Radio .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
    * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
-    forced-color-adjust: none;
     box-shadow: 0 0 0
         var(
-            --spectrum-radio-m-focus-ring-size-key-focus,
+            --spectrum-radio-m-focus-ring-size,
             var(--spectrum-alias-focus-ring-size)
         )
         var(
@@ -404,39 +405,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected-key-focus,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-semantic-cta-background-color-key-focus)
     );
-}
-@media (forced-colors: active) {
-    :host {
-        --spectrum-radio-m-circle-background-color: ButtonFace;
-        --spectrum-radio-m-circle-border-color-down: Highlight;
-        --spectrum-radio-m-circle-border-color-hover: Highlight;
-        --spectrum-radio-m-circle-border-color-key-focus: Highlight;
-        --spectrum-radio-m-circle-border-color-selected-down: Highlight;
-        --spectrum-radio-m-circle-border-color-selected-hover: Highlight;
-        --spectrum-radio-m-circle-border-color-selected: Highlight;
-        --spectrum-radio-m-circle-border-color: ButtonText;
-        --spectrum-radio-m-emphasized-circle-border-color-disabled: GrayText;
-        --spectrum-radio-m-emphasized-circle-border-color-error-hover: Highlight;
-        --spectrum-radio-m-emphasized-circle-border-color-error: ButtonText;
-        --spectrum-radio-m-emphasized-circle-border-color-selected-down: Highlight;
-        --spectrum-radio-m-emphasized-circle-border-color-selected-hover: Highlight;
-        --spectrum-radio-m-emphasized-circle-border-color-selected-key-focus: Highlight;
-        --spectrum-radio-m-emphasized-circle-border-color-selected: Highlight;
-        --spectrum-radio-m-emphasized-text-color-disabled: GrayText;
-        --spectrum-radio-m-emphasized-text-color-error-down: CanvasText;
-        --spectrum-radio-m-emphasized-text-color-error-hover: CanvasText;
-        --spectrum-radio-m-emphasized-text-color-error: CanvasText;
-        --spectrum-radio-m-focus-ring-color-key-focus: CanvasText;
-        --spectrum-radio-m-text-color-down: CanvasText;
-        --spectrum-radio-m-text-color-hover: CanvasText;
-        --spectrum-radio-m-text-color: CanvasText;
-    }
-    :host([invalid][checked]) #input + #button:before {
-        border-color: var(
-            --spectrum-radio-m-circle-border-color-selected,
-            var(--spectrum-global-color-gray-700)
-        );
-    }
 }

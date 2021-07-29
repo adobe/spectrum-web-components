@@ -25,33 +25,13 @@ governing permissions and limitations under the License.
 .spectrum:lang(ar) {
     font-family: var(
         --spectrum-alias-font-family-ar,
-        myriad-arabic,
-        adobe-clean,
-        'Source Sans Pro',
-        -apple-system,
-        BlinkMacSystemFont,
-        'Segoe UI',
-        Roboto,
-        Ubuntu,
-        'Trebuchet MS',
-        'Lucida Grande',
-        sans-serif
+        var(--spectrum-global-font-family-base)
     );
 }
 .spectrum:lang(he) {
     font-family: var(
         --spectrum-alias-font-family-he,
-        myriad-hebrew,
-        adobe-clean,
-        'Source Sans Pro',
-        -apple-system,
-        BlinkMacSystemFont,
-        'Segoe UI',
-        Roboto,
-        Ubuntu,
-        'Trebuchet MS',
-        'Lucida Grande',
-        sans-serif
+        var(--spectrum-global-font-family-base)
     );
 }
 .spectrum:lang(zh-Hans) {
@@ -319,10 +299,10 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-heading-text-font-weight-regular)
     );
 }
-.spectrum-Heading .spectrum-Heading-emphasis,
+.spectrum-Heading .spectrum-Heading-emphasized,
 .spectrum-Heading em {
     font-style: var(
-        --spectrum-heading-m-emphasis-text-font-style,
+        --spectrum-heading-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
@@ -330,53 +310,53 @@ governing permissions and limitations under the License.
 .spectrum-Heading strong {
     font-weight: var(
         --spectrum-heading-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-heading-text-font-weight-regular-strong)
     );
 }
 .spectrum-Heading--serif {
     font-family: var(
-        --spectrum-body-serif-m-text-font-family,
+        --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
 }
 .spectrum-Heading--heavy {
     font-weight: var(
-        --spectrum-heading-heavy-m-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        --spectrum-heading-m-heavy-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-heavy)
     );
 }
-.spectrum-Heading--heavy .spectrum-Heading-emphasis,
+.spectrum-Heading--heavy .spectrum-Heading-emphasized,
 .spectrum-Heading--heavy em {
     font-style: var(
-        --spectrum-heading-heavy-m-emphasis-text-font-style,
+        --spectrum-heading-m-heavy-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
 .spectrum-Heading--heavy .spectrum-Heading-strong,
 .spectrum-Heading--heavy strong {
     font-weight: var(
-        --spectrum-heading-heavy-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        --spectrum-heading-m-heavy-strong-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-heavy-strong)
     );
 }
 .spectrum-Heading--light {
     font-weight: var(
-        --spectrum-heading-light-m-emphasis-text-font-weight,
-        var(--spectrum-global-font-weight-light)
+        --spectrum-heading-m-light-emphasized-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-light)
     );
 }
-.spectrum-Heading--light .spectrum-Heading-emphasis,
+.spectrum-Heading--light .spectrum-Heading-emphasized,
 .spectrum-Heading--light em {
     font-style: var(
-        --spectrum-heading-light-m-emphasis-text-font-style,
+        --spectrum-heading-m-light-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
 .spectrum-Heading--light .spectrum-Heading-strong,
 .spectrum-Heading--light strong {
     font-weight: var(
-        --spectrum-heading-light-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-bold)
+        --spectrum-heading-m-light-strong-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-light-strong)
     );
 }
 .spectrum-Body--sizeXXXL {
@@ -507,7 +487,7 @@ governing permissions and limitations under the License.
 .spectrum-Body--sizeS {
     font-size: var(
         --spectrum-body-s-text-size,
-        var(--spectrum-alias-font-size-default)
+        var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
         --spectrum-body-s-text-font-weight,
@@ -567,16 +547,16 @@ governing permissions and limitations under the License.
         var(--spectrum-global-font-weight-bold)
     );
 }
-.spectrum-Body .spectrum-Body-emphasis,
+.spectrum-Body .spectrum-Body-emphasized,
 .spectrum-Body em {
     font-style: var(
-        --spectrum-body-m-emphasis-text-font-style,
+        --spectrum-body-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
 .spectrum-Body--serif {
     font-family: var(
-        --spectrum-body-serif-m-text-font-family,
+        --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
 }
@@ -590,29 +570,29 @@ governing permissions and limitations under the License.
 .spectrum-Detail strong {
     font-weight: var(
         --spectrum-detail-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
 }
-.spectrum-Detail .spectrum-Detail-emphasis,
+.spectrum-Detail .spectrum-Detail-emphasized,
 .spectrum-Detail em {
     font-style: var(
-        --spectrum-detail-m-emphasis-text-font-style,
+        --spectrum-detail-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
 .spectrum-Detail--light {
     font-style: var(
-        --spectrum-detail-light-m-text-font-style,
+        --spectrum-detail-m-light-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     font-weight: var(
-        --spectrum-detail-light-m-text-font-weight,
+        --spectrum-detail-m-light-text-font-weight,
         var(--spectrum-alias-detail-text-font-weight-light)
     );
 }
 .spectrum-Detail--serif {
     font-family: var(
-        --spectrum-body-serif-m-text-font-family,
+        --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
 }
@@ -623,11 +603,11 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-xl-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-xl-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-xl-text-font-style,
@@ -643,27 +623,27 @@ governing permissions and limitations under the License.
 }
 .spectrum-Detail--sizeXL em {
     font-size: var(
-        --spectrum-detail-xl-emphasis-text-size,
+        --spectrum-detail-xl-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-200)
     );
     font-weight: var(
-        --spectrum-detail-xl-emphasis-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        --spectrum-detail-xl-emphasized-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
-        --spectrum-detail-xl-emphasis-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --spectrum-detail-xl-emphasized-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-xl-emphasis-text-font-style,
+        --spectrum-detail-xl-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
     letter-spacing: var(
-        --spectrum-detail-xl-emphasis-text-letter-spacing,
+        --spectrum-detail-xl-emphasized-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
-        --spectrum-detail-xl-emphasis-text-transform,
+        --spectrum-detail-xl-emphasized-text-transform,
         uppercase
     );
     margin-top: 0;
@@ -676,11 +656,11 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-xl-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-xl-strong-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-xl-strong-text-font-style,
@@ -701,11 +681,11 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-l-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-l-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-l-text-font-style,
@@ -721,26 +701,29 @@ governing permissions and limitations under the License.
 }
 .spectrum-Detail--sizeL em {
     font-size: var(
-        --spectrum-detail-l-emphasis-text-size,
+        --spectrum-detail-l-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
-        --spectrum-detail-l-emphasis-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        --spectrum-detail-l-emphasized-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
-        --spectrum-detail-l-emphasis-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --spectrum-detail-l-emphasized-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-l-emphasis-text-font-style,
+        --spectrum-detail-l-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
     letter-spacing: var(
-        --spectrum-detail-l-emphasis-text-letter-spacing,
+        --spectrum-detail-l-emphasized-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
-    text-transform: var(--spectrum-detail-l-emphasis-text-transform, uppercase);
+    text-transform: var(
+        --spectrum-detail-l-emphasized-text-transform,
+        uppercase
+    );
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -751,11 +734,11 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-l-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-l-strong-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-l-strong-text-font-style,
@@ -776,11 +759,11 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-m-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-m-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-m-text-font-style,
@@ -796,26 +779,29 @@ governing permissions and limitations under the License.
 }
 .spectrum-Detail--sizeM em {
     font-size: var(
-        --spectrum-detail-m-emphasis-text-size,
+        --spectrum-detail-m-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-75)
     );
     font-weight: var(
-        --spectrum-detail-m-emphasis-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        --spectrum-detail-m-emphasized-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
-        --spectrum-detail-m-emphasis-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --spectrum-detail-m-emphasized-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-m-emphasis-text-font-style,
+        --spectrum-detail-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
     letter-spacing: var(
-        --spectrum-detail-m-emphasis-text-letter-spacing,
+        --spectrum-detail-m-emphasized-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
-    text-transform: var(--spectrum-detail-m-emphasis-text-transform, uppercase);
+    text-transform: var(
+        --spectrum-detail-m-emphasized-text-transform,
+        uppercase
+    );
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -826,11 +812,11 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-m-strong-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-m-strong-text-font-style,
@@ -851,11 +837,11 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-s-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-s-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-s-text-font-style,
@@ -871,26 +857,29 @@ governing permissions and limitations under the License.
 }
 .spectrum-Detail--sizeS em {
     font-size: var(
-        --spectrum-detail-s-emphasis-text-size,
+        --spectrum-detail-s-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-50)
     );
     font-weight: var(
-        --spectrum-detail-s-emphasis-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        --spectrum-detail-s-emphasized-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
-        --spectrum-detail-s-emphasis-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --spectrum-detail-s-emphasized-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-s-emphasis-text-font-style,
+        --spectrum-detail-s-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
     letter-spacing: var(
-        --spectrum-detail-s-emphasis-text-letter-spacing,
+        --spectrum-detail-s-emphasized-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
     );
-    text-transform: var(--spectrum-detail-s-emphasis-text-transform, uppercase);
+    text-transform: var(
+        --spectrum-detail-s-emphasized-text-transform,
+        uppercase
+    );
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -901,11 +890,11 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-s-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-detail-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-s-strong-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        var(--spectrum-alias-heading-text-line-height)
     );
     font-style: var(
         --spectrum-detail-s-strong-text-font-style,
@@ -932,16 +921,16 @@ governing permissions and limitations under the License.
         var(--spectrum-global-font-weight-bold)
     );
 }
-.spectrum-Code .spectrum-Code-emphasis,
+.spectrum-Code .spectrum-Code-emphasized,
 .spectrum-Code em {
     font-style: var(
-        --spectrum-code-m-emphasis-text-font-style,
+        --spectrum-code-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
 .spectrum-Code--serif {
     font-family: var(
-        --spectrum-body-serif-m-text-font-family,
+        --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
 }
@@ -956,7 +945,7 @@ governing permissions and limitations under the License.
     );
     line-height: var(
         --spectrum-code-xl-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-xl-text-font-style,
@@ -984,7 +973,7 @@ governing permissions and limitations under the License.
     );
     line-height: var(
         --spectrum-code-l-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-l-text-font-style,
@@ -1012,7 +1001,7 @@ governing permissions and limitations under the License.
     );
     line-height: var(
         --spectrum-code-m-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-m-text-font-style,
@@ -1032,7 +1021,7 @@ governing permissions and limitations under the License.
 .spectrum-Code--sizeS {
     font-size: var(
         --spectrum-code-s-text-size,
-        var(--spectrum-alias-font-size-default)
+        var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
         --spectrum-code-s-text-font-weight,
@@ -1040,7 +1029,7 @@ governing permissions and limitations under the License.
     );
     line-height: var(
         --spectrum-code-s-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-s-text-font-style,
@@ -1068,7 +1057,7 @@ governing permissions and limitations under the License.
     );
     line-height: var(
         --spectrum-code-xs-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-xs-text-font-style,
@@ -1092,7 +1081,7 @@ governing permissions and limitations under the License.
     );
     margin-bottom: var(
         --spectrum-heading-xxxl-margin-bottom,
-        var(--spectrum-global-dimension-size-130)
+        var(--spectrum-global-dimension-size-125)
     );
 }
 .spectrum-Typography .spectrum-Heading--sizeXXL {
@@ -1102,7 +1091,7 @@ governing permissions and limitations under the License.
     );
     margin-bottom: var(
         --spectrum-heading-xxl-margin-bottom,
-        var(--spectrum-global-dimension-size-125)
+        var(--spectrum-global-dimension-size-115)
     );
 }
 .spectrum-Typography .spectrum-Heading--sizeXL {
@@ -1112,7 +1101,7 @@ governing permissions and limitations under the License.
     );
     margin-bottom: var(
         --spectrum-heading-xl-margin-bottom,
-        var(--spectrum-global-dimension-size-115)
+        var(--spectrum-global-dimension-size-100)
     );
 }
 .spectrum-Typography .spectrum-Heading--sizeL {
@@ -1219,7 +1208,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Heading--sizeXXXL {
     font-size: var(
         --spectrum-heading-han-xxxl-text-size,
-        var(--spectrum-alias-heading-xxxl-text-size)
+        var(--spectrum-alias-heading-han-xxxl-text-size)
     );
     font-weight: var(
         --spectrum-heading-han-xxxl-text-font-weight,
@@ -1354,7 +1343,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Heading--sizeS {
     font-size: var(
         --spectrum-heading-han-s-text-size,
-        var(--spectrum-alias-heading-s-text-size)
+        var(--spectrum-alias-heading-han-s-text-size)
     );
     font-weight: var(
         --spectrum-heading-han-s-text-font-weight,
@@ -1381,7 +1370,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Heading--sizeXS {
     font-size: var(
         --spectrum-heading-han-xs-text-size,
-        var(--spectrum-alias-heading-xs-text-size)
+        var(--spectrum-alias-heading-han-xs-text-size)
     );
     font-weight: var(
         --spectrum-heading-han-xs-text-font-weight,
@@ -1408,7 +1397,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Heading--sizeXXS {
     font-size: var(
         --spectrum-heading-han-xxs-text-size,
-        var(--spectrum-alias-heading-xxs-text-size)
+        var(--spectrum-alias-heading-han-xxs-text-size)
     );
     font-weight: var(
         --spectrum-heading-han-xxs-text-font-weight,
@@ -1438,19 +1427,15 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-han-heading-text-font-weight-regular)
     );
 }
-.spectrum:lang(ja) .spectrum-Heading--heavy .spectrum-Heading--emphasis,
+.spectrum:lang(ja) .spectrum-Heading--heavy .spectrum-Heading--emphasized,
 .spectrum:lang(ja) .spectrum-Heading--heavy em,
-.spectrum:lang(ko) .spectrum-Heading--heavy .spectrum-Heading--emphasis,
+.spectrum:lang(ko) .spectrum-Heading--heavy .spectrum-Heading--emphasized,
 .spectrum:lang(ko) .spectrum-Heading--heavy em,
-.spectrum:lang(zh) .spectrum-Heading--heavy .spectrum-Heading--emphasis,
+.spectrum:lang(zh) .spectrum-Heading--heavy .spectrum-Heading--emphasized,
 .spectrum:lang(zh) .spectrum-Heading--heavy em {
-    font-style: var(
-        --spectrum-heading-han-heavy-m-emphasis-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
+    font-style: var(--spectrum-heading-han-heavy-m-emphasized-text-font-style);
     font-weight: var(
-        --spectrum-heading-han-heavy-m-emphasis-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-heavy-emphasis)
+        --spectrum-heading-han-heavy-m-emphasized-text-font-weight
     );
 }
 .spectrum:lang(ja) .spectrum-Heading--heavy .spectrum-Heading--strong,
@@ -1460,12 +1445,12 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Heading--heavy .spectrum-Heading--strong,
 .spectrum:lang(zh) .spectrum-Heading--heavy strong {
     font-style: var(
-        --spectrum-heading-heavy-m-strong-text-font-style,
+        --spectrum-heading-m-heavy-strong-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     font-weight: var(
-        --spectrum-heading-heavy-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        --spectrum-heading-m-heavy-strong-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-heavy-strong)
     );
 }
 .spectrum:lang(ja) .spectrum-Heading--light,
@@ -1476,18 +1461,18 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-han-heading-text-font-weight-regular)
     );
 }
-.spectrum:lang(ja) .spectrum-Heading--light .spectrum-Heading--emphasis,
+.spectrum:lang(ja) .spectrum-Heading--light .spectrum-Heading--emphasized,
 .spectrum:lang(ja) .spectrum-Heading--light em,
-.spectrum:lang(ko) .spectrum-Heading--light .spectrum-Heading--emphasis,
+.spectrum:lang(ko) .spectrum-Heading--light .spectrum-Heading--emphasized,
 .spectrum:lang(ko) .spectrum-Heading--light em,
-.spectrum:lang(zh) .spectrum-Heading--light .spectrum-Heading--emphasis,
+.spectrum:lang(zh) .spectrum-Heading--light .spectrum-Heading--emphasized,
 .spectrum:lang(zh) .spectrum-Heading--light em {
     font-style: var(
-        --spectrum-heading-han-light-m-emphasis-text-font-style,
+        --spectrum-heading-han-m-light-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     font-weight: var(
-        --spectrum-heading-han-light-m-emphasis-text-font-weight,
+        --spectrum-heading-han-m-light-emphasized-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-light-emphasis)
     );
 }
@@ -1498,12 +1483,12 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Heading--light .spectrum-Heading--strong,
 .spectrum:lang(zh) .spectrum-Heading--light strong {
     font-style: var(
-        --spectrum-heading-han-light-m-strong-text-font-style,
+        --spectrum-heading-han-m-light-strong-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     font-weight: var(
-        --spectrum-heading-han-light-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-bold)
+        --spectrum-heading-han-m-light-strong-text-font-weight,
+        var(--spectrum-alias-han-heading-text-font-weight-light-strong)
     );
 }
 .spectrum:lang(ja) .spectrum-Body--sizeXXXL,
@@ -1646,7 +1631,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Body--sizeS {
     font-size: var(
         --spectrum-body-han-s-text-size,
-        var(--spectrum-alias-font-size-default)
+        var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
         --spectrum-body-han-s-text-font-weight,
@@ -1704,7 +1689,7 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-han-xl-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-han-heading-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-han-xl-text-line-height,
@@ -1716,7 +1701,7 @@ governing permissions and limitations under the License.
     );
     letter-spacing: var(
         --spectrum-detail-han-xl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(--spectrum-detail-han-xl-text-transform, uppercase);
     margin-top: 0;
@@ -1726,27 +1711,27 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Detail--sizeXL em,
 .spectrum:lang(zh) .spectrum-Detail--sizeXL em {
     font-size: var(
-        --spectrum-detail-han-xl-emphasis-text-size,
+        --spectrum-detail-han-xl-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-200)
     );
     font-weight: var(
-        --spectrum-detail-han-xl-emphasis-text-font-weight,
+        --spectrum-detail-han-xl-emphasized-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-regular-emphasis)
     );
     line-height: var(
-        --spectrum-detail-han-xl-emphasis-text-line-height,
+        --spectrum-detail-han-xl-emphasized-text-line-height,
         var(--spectrum-alias-han-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-han-xl-emphasis-text-font-style,
+        --spectrum-detail-han-xl-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     letter-spacing: var(
-        --spectrum-detail-han-xl-emphasis-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        --spectrum-detail-han-xl-emphasized-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
-        --spectrum-detail-han-xl-emphasis-text-transform,
+        --spectrum-detail-han-xl-emphasized-text-transform,
         uppercase
     );
     margin-top: 0;
@@ -1761,7 +1746,7 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-han-xl-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-han-heading-text-font-weight-regular-strong)
     );
     line-height: var(
         --spectrum-detail-han-xl-strong-text-line-height,
@@ -1773,7 +1758,7 @@ governing permissions and limitations under the License.
     );
     letter-spacing: var(
         --spectrum-detail-han-xl-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
         --spectrum-detail-han-xl-strong-text-transform,
@@ -1791,7 +1776,7 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-han-l-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-han-heading-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-han-l-text-line-height,
@@ -1803,7 +1788,7 @@ governing permissions and limitations under the License.
     );
     letter-spacing: var(
         --spectrum-detail-han-l-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(--spectrum-detail-han-l-text-transform, uppercase);
     margin-top: 0;
@@ -1813,27 +1798,27 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Detail--sizeL em,
 .spectrum:lang(zh) .spectrum-Detail--sizeL em {
     font-size: var(
-        --spectrum-detail-han-l-emphasis-text-size,
+        --spectrum-detail-han-l-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
-        --spectrum-detail-han-l-emphasis-text-font-weight,
+        --spectrum-detail-han-l-emphasized-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-regular-emphasis)
     );
     line-height: var(
-        --spectrum-detail-han-l-emphasis-text-line-height,
+        --spectrum-detail-han-l-emphasized-text-line-height,
         var(--spectrum-alias-han-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-han-l-emphasis-text-font-style,
+        --spectrum-detail-han-l-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     letter-spacing: var(
-        --spectrum-detail-han-l-emphasis-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        --spectrum-detail-han-l-emphasized-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
-        --spectrum-detail-han-l-emphasis-text-transform,
+        --spectrum-detail-han-l-emphasized-text-transform,
         uppercase
     );
     margin-top: 0;
@@ -1848,7 +1833,7 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-han-l-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-han-heading-text-font-weight-regular-strong)
     );
     line-height: var(
         --spectrum-detail-han-l-strong-text-line-height,
@@ -1860,7 +1845,7 @@ governing permissions and limitations under the License.
     );
     letter-spacing: var(
         --spectrum-detail-han-l-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
         --spectrum-detail-han-l-strong-text-transform,
@@ -1878,7 +1863,7 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-han-m-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-han-heading-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-han-m-text-line-height,
@@ -1890,7 +1875,7 @@ governing permissions and limitations under the License.
     );
     letter-spacing: var(
         --spectrum-detail-han-m-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(--spectrum-detail-han-m-text-transform, uppercase);
     margin-top: 0;
@@ -1900,27 +1885,27 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Detail--sizeM em,
 .spectrum:lang(zh) .spectrum-Detail--sizeM em {
     font-size: var(
-        --spectrum-detail-han-m-emphasis-text-size,
+        --spectrum-detail-han-m-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-75)
     );
     font-weight: var(
-        --spectrum-detail-han-m-emphasis-text-font-weight,
+        --spectrum-detail-han-m-emphasized-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-regular-emphasis)
     );
     line-height: var(
-        --spectrum-detail-han-m-emphasis-text-line-height,
+        --spectrum-detail-han-m-emphasized-text-line-height,
         var(--spectrum-alias-han-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-han-m-emphasis-text-font-style,
+        --spectrum-detail-han-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     letter-spacing: var(
-        --spectrum-detail-han-m-emphasis-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        --spectrum-detail-han-m-emphasized-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
-        --spectrum-detail-han-m-emphasis-text-transform,
+        --spectrum-detail-han-m-emphasized-text-transform,
         uppercase
     );
     margin-top: 0;
@@ -1935,7 +1920,7 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-han-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-han-heading-text-font-weight-regular-strong)
     );
     line-height: var(
         --spectrum-detail-han-m-strong-text-line-height,
@@ -1947,7 +1932,7 @@ governing permissions and limitations under the License.
     );
     letter-spacing: var(
         --spectrum-detail-han-m-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
         --spectrum-detail-han-m-strong-text-transform,
@@ -1965,7 +1950,7 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-han-s-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-han-heading-text-font-weight-regular)
     );
     line-height: var(
         --spectrum-detail-han-s-text-line-height,
@@ -1977,7 +1962,7 @@ governing permissions and limitations under the License.
     );
     letter-spacing: var(
         --spectrum-detail-han-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(--spectrum-detail-han-s-text-transform, uppercase);
     margin-top: 0;
@@ -1987,27 +1972,27 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Detail--sizeS em,
 .spectrum:lang(zh) .spectrum-Detail--sizeS em {
     font-size: var(
-        --spectrum-detail-han-s-emphasis-text-size,
+        --spectrum-detail-han-s-emphasized-text-size,
         var(--spectrum-global-dimension-font-size-50)
     );
     font-weight: var(
-        --spectrum-detail-han-s-emphasis-text-font-weight,
+        --spectrum-detail-han-s-emphasized-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-regular-emphasis)
     );
     line-height: var(
-        --spectrum-detail-han-s-emphasis-text-line-height,
+        --spectrum-detail-han-s-emphasized-text-line-height,
         var(--spectrum-alias-han-heading-text-line-height)
     );
     font-style: var(
-        --spectrum-detail-han-s-emphasis-text-font-style,
+        --spectrum-detail-han-s-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     letter-spacing: var(
-        --spectrum-detail-han-s-emphasis-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        --spectrum-detail-han-s-emphasized-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
-        --spectrum-detail-han-s-emphasis-text-transform,
+        --spectrum-detail-han-s-emphasized-text-transform,
         uppercase
     );
     margin-top: 0;
@@ -2022,7 +2007,7 @@ governing permissions and limitations under the License.
     );
     font-weight: var(
         --spectrum-detail-han-s-strong-text-font-weight,
-        var(--spectrum-global-font-weight-black)
+        var(--spectrum-alias-han-heading-text-font-weight-regular-strong)
     );
     line-height: var(
         --spectrum-detail-han-s-strong-text-line-height,
@@ -2034,7 +2019,7 @@ governing permissions and limitations under the License.
     );
     letter-spacing: var(
         --spectrum-detail-han-s-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
+        var(--spectrum-global-font-letter-spacing-medium)
     );
     text-transform: var(
         --spectrum-detail-han-s-strong-text-transform,
@@ -2048,21 +2033,21 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Detail--light {
     font-weight: var(
         --spectrum-detail-han-m-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight)
+        var(--spectrum-alias-han-heading-text-font-weight-regular)
     );
 }
-.spectrum:lang(ja) .spectrum-Detail--light .spectrum-Detail--emphasis,
+.spectrum:lang(ja) .spectrum-Detail--light .spectrum-Detail--emphasized,
 .spectrum:lang(ja) .spectrum-Detail--light em,
-.spectrum:lang(ko) .spectrum-Detail--light .spectrum-Detail--emphasis,
+.spectrum:lang(ko) .spectrum-Detail--light .spectrum-Detail--emphasized,
 .spectrum:lang(ko) .spectrum-Detail--light em,
-.spectrum:lang(zh) .spectrum-Detail--light .spectrum-Detail--emphasis,
+.spectrum:lang(zh) .spectrum-Detail--light .spectrum-Detail--emphasized,
 .spectrum:lang(zh) .spectrum-Detail--light em {
     font-style: var(
-        --spectrum-detail-han-light-m-emphasis-text-font-style,
+        --spectrum-detail-han-m-light-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     font-weight: var(
-        --spectrum-detail-han-light-m-emphasis-text-font-weight,
+        --spectrum-detail-han-m-light-emphasized-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-light-emphasis)
     );
 }
@@ -2073,12 +2058,12 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Detail--light .spectrum-Detail--strong,
 .spectrum:lang(zh) .spectrum-Detail--light strong {
     font-style: var(
-        --spectrum-detail-han-light-m-strong-text-font-style,
+        --spectrum-detail-han-m-light-strong-text-font-style,
         var(--spectrum-global-font-style-regular)
     );
     font-weight: var(
-        --spectrum-detail-han-light-m-strong-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
+        --spectrum-detail-han-m-light-strong-text-font-weight,
+        var(--spectrum-alias-han-heading-text-font-weight-light-strong)
     );
 }
 .spectrum:lang(ja) .spectrum-Code--sizeXL,
@@ -2176,7 +2161,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(zh) .spectrum-Code--sizeS {
     font-size: var(
         --spectrum-code-han-s-text-size,
-        var(--spectrum-alias-font-size-default)
+        var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
         --spectrum-code-han-s-text-font-weight,
@@ -2281,49 +2266,49 @@ governing permissions and limitations under the License.
 }
 .spectrum-Heading-sizeXXXL--light {
     color: var(
-        --spectrum-heading-light-xxxl-text-color,
+        --spectrum-heading-xxxl-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXXL--light {
     color: var(
-        --spectrum-heading-light-xxl-text-color,
+        --spectrum-heading-xxl-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXL--light {
     color: var(
-        --spectrum-heading-light-xl-text-color,
+        --spectrum-heading-xl-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeL--light {
     color: var(
-        --spectrum-heading-light-l-text-color,
+        --spectrum-heading-l-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXXXL--heavy {
     color: var(
-        --spectrum-heading-heavy-xxxl-text-color,
+        --spectrum-heading-xxxl-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXXL--heavy {
     color: var(
-        --spectrum-heading-heavy-xxl-text-color,
+        --spectrum-heading-xxl-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeXL--heavy {
     color: var(
-        --spectrum-heading-heavy-xl-text-color,
+        --spectrum-heading-xl-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
 .spectrum-Heading-sizeL--heavy {
     color: var(
-        --spectrum-heading-heavy-l-text-color,
+        --spectrum-heading-l-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
@@ -2541,7 +2526,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Heading-sizeXXXL--light,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXXL--light {
     color: var(
-        --spectrum-heading-light-xxxl-text-color,
+        --spectrum-heading-xxxl-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
@@ -2549,7 +2534,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Heading-sizeXXL--light,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXL--light {
     color: var(
-        --spectrum-heading-light-xxl-text-color,
+        --spectrum-heading-xxl-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
@@ -2557,7 +2542,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Heading-sizeXL--light,
 .spectrum:lang(zh) .spectrum-Heading-sizeXL--light {
     color: var(
-        --spectrum-heading-light-xl-text-color,
+        --spectrum-heading-xl-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
@@ -2565,7 +2550,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Heading-sizeL--light,
 .spectrum:lang(zh) .spectrum-Heading-sizeL--light {
     color: var(
-        --spectrum-heading-light-l-text-color,
+        --spectrum-heading-l-light-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
@@ -2573,7 +2558,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Heading-sizeXXXL--heavy,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXXL--heavy {
     color: var(
-        --spectrum-heading-heavy-xxxl-text-color,
+        --spectrum-heading-xxxl-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
@@ -2581,7 +2566,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Heading-sizeXXL--heavy,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXL--heavy {
     color: var(
-        --spectrum-heading-heavy-xxl-text-color,
+        --spectrum-heading-xxl-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
@@ -2589,7 +2574,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Heading-sizeXL--heavy,
 .spectrum:lang(zh) .spectrum-Heading-sizeXL--heavy {
     color: var(
-        --spectrum-heading-heavy-xl-text-color,
+        --spectrum-heading-xl-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }
@@ -2597,7 +2582,7 @@ governing permissions and limitations under the License.
 .spectrum:lang(ko) .spectrum-Heading-sizeL--heavy,
 .spectrum:lang(zh) .spectrum-Heading-sizeL--heavy {
     color: var(
-        --spectrum-heading-heavy-l-text-color,
+        --spectrum-heading-l-heavy-text-color,
         var(--spectrum-alias-heading-text-color)
     );
 }

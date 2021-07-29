@@ -88,6 +88,29 @@ const config = {
                     name: 'horizontal',
                     selector: '.spectrum-Card--horizontal',
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Card--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Card--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Card--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-Card--sizeXL',
+                        },
+                    ],
+                },
             ],
             ids: [
                 {

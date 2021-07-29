@@ -68,7 +68,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     stroke: var(
         --spectrum-colorloupe-outer-border-color,
-        rgba(50, 50, 50, 0.1)
+        var(--spectrum-alias-border-color-translucent)
     );
 }
 @media (forced-colors: active) {

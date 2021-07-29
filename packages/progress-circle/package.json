@@ -48,7 +48,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/progresscircle": "^1.0.2"
+        "@spectrum-css/progresscircle": "beta"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

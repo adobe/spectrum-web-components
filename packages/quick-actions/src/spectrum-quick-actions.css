@@ -13,7 +13,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-QuickActions */
     --spectrum-overlay-animation-distance: var(
-        --spectrum-picker-m-popover-offset-y,
+        --spectrum-picker-m-texticon-popover-offset-y,
         var(--spectrum-global-dimension-size-75)
     );
     visibility: hidden;

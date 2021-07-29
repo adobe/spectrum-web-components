@@ -143,8 +143,7 @@ export class MenuItem extends ActionButton {
         if (this.selected) {
             content.push(html`
                 <sp-icon-checkmark100
-                    id="selected"
-                    class="spectrum-UIIcon-Checkmark100 icon"
+                    class="spectrum-UIIcon-Checkmark100 icon checkmark"
                 ></sp-icon-checkmark100>
             `);
         }

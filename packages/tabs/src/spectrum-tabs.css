@@ -15,69 +15,53 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-tabs-focus-ring-border-radius: var(
         --spectrum-tabs-m-focus-ring-border-radius
     );
-    --spectrum-tabs-compact-item-height: var(
-        --spectrum-tabs-m-compact-item-height,
-        var(--spectrum-alias-item-height-m)
-    );
-    --spectrum-tabs-compact-vertical-item-height: var(
-        --spectrum-tabs-m-compact-vertical-item-height,
+    --spectrum-tabs-item-height: var(
+        --spectrum-tabs-m-item-height,
         var(--spectrum-global-dimension-size-400)
     );
-    --spectrum-tabs-compact-vertical-item-gap: var(
-        --spectrum-tabs-m-compact-vertical-item-gap,
-        var(--spectrum-global-dimension-size-50)
+    --spectrum-tabs-item-gap: var(
+        --spectrum-tabs-m-item-gap,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-tabs-text-size: var(
+        --spectrum-tabs-m-text-size,
+        var(--spectrum-global-dimension-font-size-100)
     );
     --spectrum-tabs-text-font-weight: var(
         --spectrum-tabs-m-text-font-weight,
         var(--spectrum-alias-body-text-font-weight)
     );
-    --spectrum-tabs-rule-border-radius: var(
-        --spectrum-tabs-m-rule-border-radius,
+    --spectrum-tabs-icon-gap: var(
+        --spectrum-tabs-m-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-tabs-divider-border-radius: var(
+        --spectrum-tabs-m-divider-border-radius,
         var(--spectrum-global-dimension-static-size-10)
     );
-    --spectrum-tabs-rule-size: var(
-        --spectrum-tabs-m-rule-size,
+    --spectrum-tabs-divider-size: var(
+        --spectrum-tabs-m-divider-size,
         var(--spectrum-alias-border-size-thick)
     );
     --spectrum-tabs-focus-ring-size: var(
         --spectrum-tabs-m-focus-ring-size,
         var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-tabs-text-size: var(
-        --spectrum-tabs-m-text-size,
-        var(--spectrum-alias-item-text-size-m)
+    --spectrum-tabs-focus-ring-height: var(
+        --spectrum-tabs-m-focus-ring-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-tabs-focus-ring-padding-x: var(
+        --spectrum-tabs-m-focus-ring-padding-x,
+        var(--spectrum-global-dimension-size-150)
     );
     --spectrum-tabs-height: var(
         --spectrum-tabs-m-height,
         var(--spectrum-global-dimension-size-600)
     );
-    --spectrum-tabs-item-height: var(
-        --spectrum-tabs-m-item-height,
-        var(--spectrum-alias-item-height-m)
-    );
-    --spectrum-tabs-icon-gap: var(
-        --spectrum-tabs-m-icon-gap,
-        var(--spectrum-alias-item-workflow-icon-gap-m)
-    );
-    --spectrum-tabs-focus-ring-height: var(
-        --spectrum-tabs-m-focus-ring-height,
-        var(--spectrum-alias-item-height-m)
-    );
-    --spectrum-tabs-focus-ring-padding-x: var(
-        --spectrum-tabs-m-focus-ring-padding-x,
-        var(--spectrum-alias-item-padding-m)
-    );
-    --spectrum-tabs-item-gap: var(
-        --spectrum-tabs-m-item-gap,
-        var(--spectrum-global-dimension-size-300)
-    );
     --spectrum-tabs-selection-indicator-animation-duration: var(
         --spectrum-tabs-m-selection-indicator-animation-duration,
         var(--spectrum-global-animation-duration-100)
-    );
-    --spectrum-tabs-vertical-rule-size: var(
-        --spectrum-tabs-m-vertical-rule-size,
-        var(--spectrum-alias-border-size-thick)
     );
     --spectrum-tabs-vertical-item-height: var(
         --spectrum-tabs-m-vertical-item-height,
@@ -91,16 +75,32 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tabs-m-vertical-item-margin-left,
         var(--spectrum-global-dimension-size-150)
     );
-    --spectrum-tabs-quiet-compact-height: var(
-        --spectrum-tabs-quiet-m-compact-height,
-        var(--spectrum-alias-item-height-m)
+    --spectrum-tabs-vertical-divider-size: var(
+        --spectrum-tabs-m-vertical-divider-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+    --spectrum-tabs-compact-quiet-height: var(
+        --spectrum-tabs-m-compact-quiet-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-tabs-compact-item-height: var(
+        --spectrum-tabs-m-compact-item-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-tabs-compact-vertical-item-height: var(
+        --spectrum-tabs-m-compact-vertical-item-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-tabs-compact-vertical-item-gap: var(
+        --spectrum-tabs-m-compact-vertical-item-gap,
+        var(--spectrum-global-dimension-size-50)
     );
     --spectrum-tabs-item-height: calc(
-        var(--spectrum-tabs-height) - var(--spectrum-tabs-rule-size)
+        var(--spectrum-tabs-height) - var(--spectrum-tabs-divider-size)
     );
     --spectrum-tabs-compact-item-height: calc(
-        var(--spectrum-tabs-quiet-compact-height) -
-            var(--spectrum-tabs-rule-size)
+        var(--spectrum-tabs-compact-quiet-height) -
+            var(--spectrum-tabs-divider-size)
     );
     --spectrum-tabs-text-size: var(
         --spectrum-alias-font-size-default,
@@ -150,7 +150,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transition: transform
         var(--spectrum-tabs-selection-indicator-animation-duration) ease-in-out;
     transform-origin: top left;
-    border-radius: var(--spectrum-tabs-rule-border-radius);
+    border-radius: var(--spectrum-tabs-divider-border-radius);
 }
 :host([compact]) ::slotted(*) {
     /* .spectrum-Tabs--compact .spectrum-Tabs-item */
@@ -164,7 +164,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([direction='horizontal']) #list {
     /* .spectrum-Tabs--horizontal */
     align-items: center;
-    border-bottom: var(--spectrum-tabs-rule-size) solid;
+    border-bottom: var(--spectrum-tabs-divider-size) solid;
 }
 :host([direction='horizontal']) ::slotted(*) {
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
@@ -184,8 +184,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs--horizontal .spectrum-Tabs-selectionIndicator */
     position: absolute;
     bottom: 0;
-    height: var(--spectrum-tabs-rule-size);
-    bottom: calc(-1 * var(--spectrum-tabs-rule-size));
+    height: var(--spectrum-tabs-divider-size);
+    bottom: calc(-1 * var(--spectrum-tabs-divider-size));
 }
 :host([direction='horizontal'][compact]) #list {
     /* .spectrum-Tabs--horizontal.spectrum-Tabs--compact */
@@ -199,11 +199,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][direction='vertical']) #list {
     /* [dir=ltr] .spectrum-Tabs--vertical */
-    border-left: var(--spectrum-tabs-vertical-rule-size) solid;
+    border-left: var(--spectrum-tabs-vertical-divider-size) solid;
 }
 :host([dir='rtl'][direction='vertical']) #list {
     /* [dir=rtl] .spectrum-Tabs--vertical */
-    border-right: var(--spectrum-tabs-vertical-rule-size) solid;
+    border-right: var(--spectrum-tabs-vertical-divider-size) solid;
 }
 :host([direction='vertical']) #list {
     /* .spectrum-Tabs--vertical */
@@ -270,35 +270,35 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][direction='vertical']) #selectionIndicator {
     /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
-    left: calc(-1 * var(--spectrum-tabs-vertical-rule-size));
+    left: calc(-1 * var(--spectrum-tabs-vertical-divider-size));
 }
 :host([dir='rtl'][direction='vertical']) #selectionIndicator {
     /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
-    right: calc(-1 * var(--spectrum-tabs-vertical-rule-size));
+    right: calc(-1 * var(--spectrum-tabs-vertical-divider-size));
 }
 :host([direction='vertical']) #selectionIndicator {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     position: absolute;
-    width: var(--spectrum-tabs-vertical-rule-size);
+    width: var(--spectrum-tabs-vertical-divider-size);
 }
 #list {
     /* .spectrum-Tabs */
     border-bottom-color: var(
-        --spectrum-tabs-m-rule-color,
+        --spectrum-tabs-m-divider-color,
         var(--spectrum-alias-border-color-light)
     );
 }
 :host([dir='ltr'][direction='vertical']) #list {
     /* [dir=ltr] .spectrum-Tabs--vertical */
     border-left-color: var(
-        --spectrum-tabs-m-vertical-rule-color,
+        --spectrum-tabs-m-vertical-divider-color,
         var(--spectrum-alias-border-color-light)
     );
 }
 :host([dir='rtl'][direction='vertical']) #list {
     /* [dir=rtl] .spectrum-Tabs--vertical */
     border-right-color: var(
-        --spectrum-tabs-m-vertical-rule-color,
+        --spectrum-tabs-m-vertical-divider-color,
         var(--spectrum-alias-border-color-light)
     );
 }
@@ -312,14 +312,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([quiet]) #list {
     /* .spectrum-Tabs--quiet */
     border-bottom-color: var(
-        --spectrum-tabs-quiet-m-rule-color,
+        --spectrum-tabs-m-quiet-divider-color,
         var(--spectrum-alias-border-color-transparent)
     );
 }
 :host([quiet]) #selectionIndicator {
     /* .spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator */
     background-color: var(
-        --spectrum-tabs-quiet-m-selection-indicator-color,
+        --spectrum-tabs-m-quiet-selection-indicator-color,
         var(--spectrum-global-color-gray-900)
     );
 }
@@ -328,7 +328,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--compact,
    * [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
     border-left-color: var(
-        --spectrum-tabs-quiet-m-vertical-rule-color,
+        --spectrum-tabs-m-vertical-quiet-divider-color,
         var(--spectrum-alias-border-color-transparent)
     );
 }
@@ -337,7 +337,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-Tabs--vertical.spectrum-Tabs--compact,
    * [dir=rtl] .spectrum-Tabs--vertical.spectrum-Tabs--quiet */
     border-right-color: var(
-        --spectrum-tabs-quiet-m-vertical-rule-color,
+        --spectrum-tabs-m-vertical-quiet-divider-color,
         var(--spectrum-alias-border-color-transparent)
     );
 }
@@ -346,7 +346,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-selectionIndicator,
    * .spectrum-Tabs--vertical.spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator */
     background-color: var(
-        --spectrum-tabs-quiet-m-selection-indicator-color,
+        --spectrum-tabs-m-quiet-selection-indicator-color,
         var(--spectrum-global-color-gray-900)
     );
 }

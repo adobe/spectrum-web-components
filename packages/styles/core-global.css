@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 /* stylelint-disable */
 :host,
 :root {
+    --spectrum-global-animation-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-global-animation-duration-0: 0ms;
     --spectrum-global-animation-duration-100: 130ms;
     --spectrum-global-animation-duration-200: 160ms;
@@ -29,9 +30,9 @@ governing permissions and limitations under the License.
     --spectrum-global-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
     --spectrum-global-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
     --spectrum-global-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
-    --spectrum-global-animation-linear: cubic-bezier(0, 0, 1, 1);
+    --spectrum-global-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-global-color-status: Verified;
-    --spectrum-global-color-version: 5.1;
+    --spectrum-global-color-version: 5.1.0;
     --spectrum-global-color-static-black: #000;
     --spectrum-global-color-static-white: #fff;
     --spectrum-global-color-static-blue: #1473e6;
@@ -119,54 +120,64 @@ governing permissions and limitations under the License.
     --spectrum-global-color-static-seafoam-600: #16878c;
     --spectrum-global-color-static-seafoam-700: #0f797d;
     --spectrum-global-color-static-seafoam-800: #096c6f;
-    --spectrum-global-color-opacity-100: 1;
-    --spectrum-global-color-opacity-90: 0.9;
-    --spectrum-global-color-opacity-80: 0.8;
-    --spectrum-global-color-opacity-60: 0.6;
-    --spectrum-global-color-opacity-50: 0.5;
-    --spectrum-global-color-opacity-42: 0.42;
-    --spectrum-global-color-opacity-40: 0.4;
-    --spectrum-global-color-opacity-30: 0.3;
-    --spectrum-global-color-opacity-25: 0.25;
-    --spectrum-global-color-opacity-20: 0.2;
-    --spectrum-global-color-opacity-15: 0.15;
-    --spectrum-global-color-opacity-10: 0.1;
-    --spectrum-global-color-opacity-8: 0.08;
-    --spectrum-global-color-opacity-7: 0.07;
-    --spectrum-global-color-opacity-6: 0.06;
-    --spectrum-global-color-opacity-5: 0.05;
-    --spectrum-global-color-opacity-4: 0.04;
-    --spectrum-semantic-negative-color-background: var(
+    --spectrum-global-color-sequential-cerulean: #e9fff1, #c8f1e4, #a5e3d7,
+        #82d5ca, #68c5c1, #54b4ba, #3fa2b2, #2991ac, #2280a2, #1f6d98, #1d5c8d,
+        #1a4b83, #1a3979, #1a266f, #191264, #180057;
+    --spectrum-global-color-sequential-forest: #ffffdf, #e2f6ba, #c4eb95,
+        #a4e16d, #8dd366, #77c460, #5fb65a, #48a754, #36984f, #2c894d, #237a4a,
+        #196b47, #105c45, #094d41, #033f3e, #00313a;
+    --spectrum-global-color-sequential-rose: #fff4dd, #ffddd7, #ffc5d2, #feaecb,
+        #fa96c4, #f57ebd, #ef64b5, #e846ad, #d238a1, #bb2e96, #a3248c, #8a1b83,
+        #71167c, #560f74, #370b6e, #000968;
+    --spectrum-global-color-diverging-orange-yellow-seafoam: #580000, #79260b,
+        #9c4511, #bd651a, #dd8629, #f5ad52, #fed693, #ffffe0, #bbe4d1, #76c7be,
+        #3ea8a6, #208288, #076769, #00494b, #002c2d;
+    --spectrum-global-color-diverging-red-yellow-blue: #4a001e, #751232, #a52747,
+        #c65154, #e47961, #f0a882, #fad4ac, #ffffe0, #bce2cf, #89c0c4, #579eb9,
+        #397aa8, #1c5796, #163771, #10194d;
+    --spectrum-global-color-diverging-red-blue: #4a001e, #731331, #9f2945,
+        #cc415a, #e06e85, #ed9ab0, #f8c3d9, #faf0ff, #c6d0f2, #92b2de, #5d94cb,
+        #2f74b3, #265191, #163670, #0b194c;
+    --spectrum-semantic-negative-background-color: var(
         --spectrum-global-color-static-red-700
     );
     --spectrum-semantic-negative-color-default: var(
         --spectrum-global-color-red-500
     );
-    --spectrum-semantic-negative-color-state-hover: var(
+    --spectrum-semantic-negative-color-hover: var(
         --spectrum-global-color-red-600
     );
     --spectrum-semantic-negative-color-dark: var(
         --spectrum-global-color-red-600
     );
-    --spectrum-semantic-negative-color-border: var(
+    --spectrum-semantic-negative-border-color: var(
         --spectrum-global-color-red-400
     );
-    --spectrum-semantic-negative-color-icon: var(
+    --spectrum-semantic-negative-icon-color: var(
         --spectrum-global-color-red-600
     );
-    --spectrum-semantic-negative-color-status: var(
+    --spectrum-semantic-negative-status-color: var(
         --spectrum-global-color-red-400
     );
-    --spectrum-semantic-negative-color-text-large: var(
+    --spectrum-semantic-negative-text-color-large: var(
         --spectrum-global-color-red-500
     );
-    --spectrum-semantic-negative-color-text-small: var(
+    --spectrum-semantic-negative-text-color-small: var(
         --spectrum-global-color-red-600
     );
-    --spectrum-semantic-negative-color-state-down: var(
+    --spectrum-semantic-negative-text-color-small-hover: var(
         --spectrum-global-color-red-700
     );
-    --spectrum-semantic-negative-color-state-focus: var(
+    --spectrum-semantic-negative-text-color-small-down: var(
+        --spectrum-global-color-red-700
+    );
+    --spectrum-semantic-negative-text-color-small-key-focus: var(
+        --spectrum-global-color-red-600
+    );
+    --spectrum-semantic-negative-color-down: var(
+        --spectrum-global-color-red-700
+    );
+    --spectrum-semantic-negative-color-key-focus: var(
         --spectrum-global-color-red-400
     );
     --spectrum-semantic-negative-background-color-default: var(
@@ -181,7 +192,7 @@ governing permissions and limitations under the License.
     --spectrum-semantic-negative-background-color-key-focus: var(
         --spectrum-global-color-static-red-700
     );
-    --spectrum-semantic-notice-color-background: var(
+    --spectrum-semantic-notice-background-color: var(
         --spectrum-global-color-static-orange-700
     );
     --spectrum-semantic-notice-color-default: var(
@@ -190,25 +201,25 @@ governing permissions and limitations under the License.
     --spectrum-semantic-notice-color-dark: var(
         --spectrum-global-color-orange-600
     );
-    --spectrum-semantic-notice-color-border: var(
+    --spectrum-semantic-notice-border-color: var(
         --spectrum-global-color-orange-400
     );
-    --spectrum-semantic-notice-color-icon: var(
+    --spectrum-semantic-notice-icon-color: var(
         --spectrum-global-color-orange-600
     );
-    --spectrum-semantic-notice-color-status: var(
+    --spectrum-semantic-notice-status-color: var(
         --spectrum-global-color-orange-400
     );
-    --spectrum-semantic-notice-color-text-large: var(
+    --spectrum-semantic-notice-text-color-large: var(
         --spectrum-global-color-orange-500
     );
-    --spectrum-semantic-notice-color-text-small: var(
+    --spectrum-semantic-notice-text-color-small: var(
         --spectrum-global-color-orange-600
     );
-    --spectrum-semantic-notice-color-state-down: var(
+    --spectrum-semantic-notice-color-down: var(
         --spectrum-global-color-orange-700
     );
-    --spectrum-semantic-notice-color-state-focus: var(
+    --spectrum-semantic-notice-color-key-focus: var(
         --spectrum-global-color-orange-400
     );
     --spectrum-semantic-notice-background-color-default: var(
@@ -223,7 +234,7 @@ governing permissions and limitations under the License.
     --spectrum-semantic-notice-background-color-key-focus: var(
         --spectrum-global-color-static-orange-700
     );
-    --spectrum-semantic-positive-color-background: var(
+    --spectrum-semantic-positive-background-color: var(
         --spectrum-global-color-static-green-700
     );
     --spectrum-semantic-positive-color-default: var(
@@ -232,25 +243,25 @@ governing permissions and limitations under the License.
     --spectrum-semantic-positive-color-dark: var(
         --spectrum-global-color-green-600
     );
-    --spectrum-semantic-positive-color-border: var(
+    --spectrum-semantic-positive-border-color: var(
         --spectrum-global-color-green-400
     );
-    --spectrum-semantic-positive-color-icon: var(
+    --spectrum-semantic-positive-icon-color: var(
         --spectrum-global-color-green-600
     );
-    --spectrum-semantic-positive-color-status: var(
+    --spectrum-semantic-positive-status-color: var(
         --spectrum-global-color-green-400
     );
-    --spectrum-semantic-positive-color-text-large: var(
+    --spectrum-semantic-positive-text-color-large: var(
         --spectrum-global-color-green-500
     );
-    --spectrum-semantic-positive-color-text-small: var(
+    --spectrum-semantic-positive-text-color-small: var(
         --spectrum-global-color-green-600
     );
-    --spectrum-semantic-positive-color-state-down: var(
+    --spectrum-semantic-positive-color-down: var(
         --spectrum-global-color-green-700
     );
-    --spectrum-semantic-positive-color-state-focus: var(
+    --spectrum-semantic-positive-color-key-focus: var(
         --spectrum-global-color-green-400
     );
     --spectrum-semantic-positive-background-color-default: var(
@@ -265,7 +276,7 @@ governing permissions and limitations under the License.
     --spectrum-semantic-positive-background-color-key-focus: var(
         --spectrum-global-color-static-green-700
     );
-    --spectrum-semantic-informative-color-background: var(
+    --spectrum-semantic-informative-background-color: var(
         --spectrum-global-color-static-blue-700
     );
     --spectrum-semantic-informative-color-default: var(
@@ -274,25 +285,25 @@ governing permissions and limitations under the License.
     --spectrum-semantic-informative-color-dark: var(
         --spectrum-global-color-blue-600
     );
-    --spectrum-semantic-informative-color-border: var(
+    --spectrum-semantic-informative-border-color: var(
         --spectrum-global-color-blue-400
     );
-    --spectrum-semantic-informative-color-icon: var(
+    --spectrum-semantic-informative-icon-color: var(
         --spectrum-global-color-blue-600
     );
-    --spectrum-semantic-informative-color-status: var(
+    --spectrum-semantic-informative-status-color: var(
         --spectrum-global-color-blue-400
     );
-    --spectrum-semantic-informative-color-text-large: var(
+    --spectrum-semantic-informative-text-color-large: var(
         --spectrum-global-color-blue-500
     );
-    --spectrum-semantic-informative-color-text-small: var(
+    --spectrum-semantic-informative-text-color-small: var(
         --spectrum-global-color-blue-600
     );
-    --spectrum-semantic-informative-color-state-down: var(
+    --spectrum-semantic-informative-color-down: var(
         --spectrum-global-color-blue-700
     );
-    --spectrum-semantic-informative-color-state-focus: var(
+    --spectrum-semantic-informative-color-key-focus: var(
         --spectrum-global-color-blue-400
     );
     --spectrum-semantic-informative-background-color-default: var(
@@ -307,16 +318,16 @@ governing permissions and limitations under the License.
     --spectrum-semantic-informative-background-color-key-focus: var(
         --spectrum-global-color-static-blue-700
     );
-    --spectrum-semantic-cta-color-background-default: var(
+    --spectrum-semantic-cta-background-color-default: var(
         --spectrum-global-color-static-blue-600
     );
-    --spectrum-semantic-cta-color-background-hover: var(
+    --spectrum-semantic-cta-background-color-hover: var(
         --spectrum-global-color-static-blue-700
     );
-    --spectrum-semantic-cta-color-background-down: var(
+    --spectrum-semantic-cta-background-color-down: var(
         --spectrum-global-color-static-blue-800
     );
-    --spectrum-semantic-cta-color-background-key-focus: var(
+    --spectrum-semantic-cta-background-color-key-focus: var(
         --spectrum-global-color-static-blue-600
     );
     --spectrum-semantic-neutral-background-color-default: var(
@@ -347,6 +358,17 @@ governing permissions and limitations under the License.
     --spectrum-semantic-presence-color-8: var(
         --spectrum-global-color-static-fuchsia-600
     );
+    --spectrum-global-dimension-static-percent-50: 50%;
+    --spectrum-global-dimension-static-percent-70: 70%;
+    --spectrum-global-dimension-static-percent-100: 100%;
+    --spectrum-global-dimension-static-breakpoint-xsmall: 304px;
+    --spectrum-global-dimension-static-breakpoint-small: 768px;
+    --spectrum-global-dimension-static-breakpoint-medium: 1280px;
+    --spectrum-global-dimension-static-breakpoint-large: 1768px;
+    --spectrum-global-dimension-static-breakpoint-xlarge: 2160px;
+    --spectrum-global-dimension-static-grid-columns: 12;
+    --spectrum-global-dimension-static-grid-fluid-width: 100%;
+    --spectrum-global-dimension-static-grid-fixed-max-width: 1280px;
     --spectrum-global-dimension-static-size-0: 0px;
     --spectrum-global-dimension-static-size-10: 1px;
     --spectrum-global-dimension-static-size-25: 2px;
@@ -405,16 +427,6 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-static-font-size-800: 32px;
     --spectrum-global-dimension-static-font-size-900: 36px;
     --spectrum-global-dimension-static-font-size-1000: 40px;
-    --spectrum-global-dimension-static-percent-50: 50%;
-    --spectrum-global-dimension-static-percent-100: 100%;
-    --spectrum-global-dimension-static-breakpoint-xsmall: 304px;
-    --spectrum-global-dimension-static-breakpoint-small: 768px;
-    --spectrum-global-dimension-static-breakpoint-medium: 1280px;
-    --spectrum-global-dimension-static-breakpoint-large: 1768px;
-    --spectrum-global-dimension-static-breakpoint-xlarge: 2160px;
-    --spectrum-global-dimension-static-grid-columns: 12;
-    --spectrum-global-dimension-static-grid-fluid-width: 100%;
-    --spectrum-global-dimension-static-grid-fixed-max-width: 1280px;
     --spectrum-global-font-family-base: adobe-clean, 'Source Sans Pro',
         -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
@@ -439,8 +451,679 @@ governing permissions and limitations under the License.
     --spectrum-global-font-line-height-large: 1.7;
     --spectrum-global-font-line-height-medium: 1.5;
     --spectrum-global-font-line-height-small: 1.3;
+    --spectrum-global-font-multiplier-0: 0em;
     --spectrum-global-font-multiplier-25: 0.25em;
     --spectrum-global-font-multiplier-75: 0.75em;
+    --spectrum-global-font-font-family-ar: myriad-arabic, adobe-clean,
+        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-global-font-font-family-he: myriad-hebrew, adobe-clean,
+        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-global-font-font-family-zh: adobe-clean-han-traditional,
+        source-han-traditional, 'MingLiu', 'Heiti TC Light', 'sans-serif';
+    --spectrum-global-font-font-family-zhhans: adobe-clean-han-simplified-c,
+        source-han-simplified-c, 'SimSun', 'Heiti SC Light', 'sans-serif';
+    --spectrum-global-font-font-family-ko: adobe-clean-han-korean,
+        source-han-korean, 'Malgun Gothic', 'Apple Gothic', 'sans-serif';
+    --spectrum-global-font-font-family-ja: adobe-clean-han-japanese,
+        source-han-japanese, 'Yu Gothic', '\\30E1 \\30A4 \\30EA \\30AA',
+        '\\30D2 \\30E9 \\30AE \\30CE \\89D2 \\30B4  Pro W3',
+        'Hiragino Kaku Gothic Pro W3', 'Osaka',
+        '\\FF2D \\FF33 \\FF30 \\30B4 \\30B7 \\30C3 \\30AF', 'MS PGothic',
+        'sans-serif';
+    --spectrum-global-font-font-family-condensed: adobe-clean-han-traditional,
+        source-han-traditional, 'MingLiu', 'Heiti TC Light', adobe-clean,
+        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-alias-loupe-entry-animation-duration: var(
+        --spectrum-global-animation-duration-300
+    );
+    --spectrum-alias-loupe-exit-animation-duration: var(
+        --spectrum-global-animation-duration-300
+    );
+    --spectrum-alias-heading-text-line-height: var(
+        --spectrum-global-font-line-height-small
+    );
+    --spectrum-alias-heading-text-font-weight-regular: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-heading-text-font-weight-regular-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-heading-text-font-weight-light: var(
+        --spectrum-global-font-weight-light
+    );
+    --spectrum-alias-heading-text-font-weight-light-strong: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-heading-text-font-weight-heavy: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-heading-text-font-weight-heavy-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-heading-text-font-weight-quiet: var(
+        --spectrum-global-font-weight-light
+    );
+    --spectrum-alias-heading-text-font-weight-quiet-strong: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-heading-text-font-weight-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-heading-text-font-weight-strong-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-heading-margin-bottom: var(
+        --spectrum-global-font-multiplier-25
+    );
+    --spectrum-alias-subheading-text-font-weight: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-subheading-text-font-weight-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-body-text-font-family: var(
+        --spectrum-global-font-family-base
+    );
+    --spectrum-alias-body-text-line-height: var(
+        --spectrum-global-font-line-height-medium
+    );
+    --spectrum-alias-body-text-font-weight: var(
+        --spectrum-global-font-weight-regular
+    );
+    --spectrum-alias-body-text-font-weight-strong: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-body-margin-bottom: var(
+        --spectrum-global-font-multiplier-75
+    );
+    --spectrum-alias-detail-text-font-weight: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-detail-text-font-weight-regular: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-detail-text-font-weight-light: var(
+        --spectrum-global-font-weight-regular
+    );
+    --spectrum-alias-detail-text-font-weight-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-article-heading-text-font-weight: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-article-heading-text-font-weight-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-article-heading-text-font-weight-quiet: var(
+        --spectrum-global-font-weight-regular
+    );
+    --spectrum-alias-article-heading-text-font-weight-quiet-strong: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-article-body-text-font-weight: var(
+        --spectrum-global-font-weight-regular
+    );
+    --spectrum-alias-article-body-text-font-weight-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-article-subheading-text-font-weight: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-article-subheading-text-font-weight-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-article-detail-text-font-weight: var(
+        --spectrum-global-font-weight-regular
+    );
+    --spectrum-alias-article-detail-text-font-weight-strong: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-code-text-font-family: var(
+        --spectrum-global-font-family-code
+    );
+    --spectrum-alias-code-text-font-weight-regular: var(
+        --spectrum-global-font-weight-regular
+    );
+    --spectrum-alias-code-text-font-weight-strong: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-code-text-line-height: var(
+        --spectrum-global-font-line-height-medium
+    );
+    --spectrum-alias-code-margin-bottom: var(
+        --spectrum-global-font-multiplier-0
+    );
+    --spectrum-alias-font-family-ar: var(--spectrum-global-font-family-base);
+    --spectrum-alias-font-family-he: var(--spectrum-global-font-family-base);
+    --spectrum-alias-font-family-zh: adobe-clean-han-traditional,
+        source-han-traditional, 'MingLiu', 'Heiti TC Light', 'sans-serif';
+    --spectrum-alias-font-family-zhhans: adobe-clean-han-simplified-c,
+        source-han-simplified-c, 'SimSun', 'Heiti SC Light', 'sans-serif';
+    --spectrum-alias-font-family-ko: adobe-clean-han-korean, source-han-korean,
+        'Malgun Gothic', 'Apple Gothic', 'sans-serif';
+    --spectrum-alias-font-family-ja: adobe-clean-han-japanese,
+        source-han-japanese, 'Yu Gothic', '\\30E1 \\30A4 \\30EA \\30AA',
+        '\\30D2 \\30E9 \\30AE \\30CE \\89D2 \\30B4  Pro W3',
+        'Hiragino Kaku Gothic Pro W3', 'Osaka',
+        '\\FF2D \\FF33 \\FF30 \\30B4 \\30B7 \\30C3 \\30AF', 'MS PGothic',
+        'sans-serif';
+    --spectrum-alias-font-family-condensed: var(
+        --spectrum-global-font-family-base
+    );
+    --spectrum-alias-button-text-line-height: var(
+        --spectrum-global-font-line-height-small
+    );
+    --spectrum-alias-component-text-line-height: var(
+        --spectrum-global-font-line-height-small
+    );
+    --spectrum-alias-han-component-text-line-height: var(
+        --spectrum-global-font-line-height-medium
+    );
+    --spectrum-alias-serif-text-font-family: var(
+        --spectrum-global-font-family-serif
+    );
+    --spectrum-alias-han-heading-text-line-height: var(
+        --spectrum-global-font-line-height-medium
+    );
+    --spectrum-alias-han-heading-text-font-weight-regular: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-han-heading-text-font-weight-regular-emphasis: var(
+        --spectrum-global-font-weight-extra-bold
+    );
+    --spectrum-alias-han-heading-text-font-weight-regular-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-han-heading-text-font-weight-quiet-strong: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-han-heading-text-font-weight-light: var(
+        --spectrum-global-font-weight-light
+    );
+    --spectrum-alias-han-heading-text-font-weight-light-emphasis: var(
+        --spectrum-global-font-weight-regular
+    );
+    --spectrum-alias-han-heading-text-font-weight-light-strong: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-han-heading-text-font-weight-heavy: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-han-heading-text-font-weight-heavy-emphasis: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-han-heading-text-font-weight-heavy-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-han-body-text-line-height: var(
+        --spectrum-global-font-line-height-large
+    );
+    --spectrum-alias-han-body-text-font-weight-regular: var(
+        --spectrum-global-font-weight-regular
+    );
+    --spectrum-alias-han-body-text-font-weight-emphasis: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-han-body-text-font-weight-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-han-subheading-text-font-weight-regular: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-han-subheading-text-font-weight-emphasis: var(
+        --spectrum-global-font-weight-extra-bold
+    );
+    --spectrum-alias-han-subheading-text-font-weight-strong: var(
+        --spectrum-global-font-weight-black
+    );
+    --spectrum-alias-han-detail-text-font-weight: var(
+        --spectrum-global-font-weight-regular
+    );
+    --spectrum-alias-han-detail-text-font-weight-emphasis: var(
+        --spectrum-global-font-weight-bold
+    );
+    --spectrum-alias-han-detail-text-font-weight-strong: var(
+        --spectrum-global-font-weight-black
+    );
+}
+:host,
+:root {
+    --spectrum-alias-item-height-s: var(--spectrum-global-dimension-size-300);
+    --spectrum-alias-item-height-m: var(--spectrum-global-dimension-size-400);
+    --spectrum-alias-item-height-l: var(--spectrum-global-dimension-size-500);
+    --spectrum-alias-item-height-xl: var(--spectrum-global-dimension-size-600);
+    --spectrum-alias-item-rounded-border-radius-s: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-rounded-border-radius-m: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-item-rounded-border-radius-l: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-item-rounded-border-radius-xl: var(
+        --spectrum-global-dimension-size-300
+    );
+    --spectrum-alias-item-text-size-s: var(
+        --spectrum-global-dimension-font-size-75
+    );
+    --spectrum-alias-item-text-size-m: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-alias-item-text-size-l: var(
+        --spectrum-global-dimension-font-size-200
+    );
+    --spectrum-alias-item-text-size-xl: var(
+        --spectrum-global-dimension-font-size-300
+    );
+    --spectrum-alias-item-text-padding-top-s: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-alias-item-text-padding-top-m: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-item-text-padding-top-xl: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-text-padding-bottom-m: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-text-padding-bottom-l: var(
+        --spectrum-global-dimension-size-130
+    );
+    --spectrum-alias-item-text-padding-bottom-xl: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-alias-item-icon-padding-top-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-item-icon-padding-top-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-icon-padding-top-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-icon-padding-top-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-icon-padding-bottom-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-item-icon-padding-bottom-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-icon-padding-bottom-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-icon-padding-bottom-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-padding-s: var(--spectrum-global-dimension-size-115);
+    --spectrum-alias-item-padding-m: var(--spectrum-global-dimension-size-150);
+    --spectrum-alias-item-padding-l: var(--spectrum-global-dimension-size-185);
+    --spectrum-alias-item-padding-xl: var(--spectrum-global-dimension-size-225);
+    --spectrum-alias-item-rounded-padding-s: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-rounded-padding-m: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-item-rounded-padding-l: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-item-rounded-padding-xl: var(
+        --spectrum-global-dimension-size-300
+    );
+    --spectrum-alias-item-icononly-padding-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-item-icononly-padding-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-icononly-padding-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-icononly-padding-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-control-gap-s: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-control-gap-m: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-control-gap-l: var(
+        --spectrum-global-dimension-size-130
+    );
+    --spectrum-alias-item-control-gap-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-workflow-icon-gap-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-workflow-icon-gap-m: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-item-workflow-icon-gap-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-workflow-icon-gap-xl: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-mark-gap-s: var(--spectrum-global-dimension-size-85);
+    --spectrum-alias-item-mark-gap-m: var(--spectrum-global-dimension-size-100);
+    --spectrum-alias-item-mark-gap-l: var(--spectrum-global-dimension-size-115);
+    --spectrum-alias-item-mark-gap-xl: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-ui-icon-gap-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-ui-icon-gap-m: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-item-ui-icon-gap-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-ui-icon-gap-xl: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-clearbutton-gap-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-item-clearbutton-gap-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-clearbutton-gap-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-clearbutton-gap-xl: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-workflow-padding-left-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-workflow-padding-left-l: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-workflow-padding-left-xl: var(
+        --spectrum-global-dimension-size-185
+    );
+    --spectrum-alias-item-rounded-workflow-padding-left-s: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-rounded-workflow-padding-left-l: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-item-mark-padding-top-s: var(
+        --spectrum-global-dimension-size-40
+    );
+    --spectrum-alias-item-mark-padding-top-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-mark-padding-top-xl: var(
+        --spectrum-global-dimension-size-130
+    );
+    --spectrum-alias-item-mark-padding-bottom-s: var(
+        --spectrum-global-dimension-size-40
+    );
+    --spectrum-alias-item-mark-padding-bottom-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-mark-padding-bottom-xl: var(
+        --spectrum-global-dimension-size-130
+    );
+    --spectrum-alias-item-mark-padding-left-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-mark-padding-left-l: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-item-mark-padding-left-xl: var(
+        --spectrum-global-dimension-size-185
+    );
+    --spectrum-alias-item-control-1-size-s: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-alias-item-control-1-size-m: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-item-control-2-size-m: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-alias-item-control-2-size-l: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-item-control-2-size-xl: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-item-control-2-size-xxl: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-item-control-2-border-radius-s: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-item-control-2-border-radius-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-control-2-border-radius-l: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-item-control-2-border-radius-xl: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-control-2-border-radius-xxl: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-control-2-padding-s: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-item-control-2-padding-m: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-control-2-padding-l: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-control-2-padding-xl: var(
+        --spectrum-global-dimension-size-185
+    );
+    --spectrum-alias-item-control-3-height-m: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-alias-item-control-3-height-l: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-item-control-3-height-xl: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-item-control-3-border-radius-s: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-item-control-3-border-radius-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-item-control-3-border-radius-l: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-item-control-3-border-radius-xl: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-control-3-padding-s: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-item-control-3-padding-m: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-control-3-padding-l: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-control-3-padding-xl: var(
+        --spectrum-global-dimension-size-185
+    );
+    --spectrum-alias-item-mark-size-s: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-item-mark-size-l: var(
+        --spectrum-global-dimension-size-275
+    );
+    --spectrum-alias-item-mark-size-xl: var(
+        --spectrum-global-dimension-size-325
+    );
+    --spectrum-alias-heading-xxxl-text-size: var(
+        --spectrum-global-dimension-font-size-1300
+    );
+    --spectrum-alias-heading-xxl-text-size: var(
+        --spectrum-global-dimension-font-size-1100
+    );
+    --spectrum-alias-heading-xl-text-size: var(
+        --spectrum-global-dimension-font-size-900
+    );
+    --spectrum-alias-heading-l-text-size: var(
+        --spectrum-global-dimension-font-size-700
+    );
+    --spectrum-alias-heading-m-text-size: var(
+        --spectrum-global-dimension-font-size-500
+    );
+    --spectrum-alias-heading-s-text-size: var(
+        --spectrum-global-dimension-font-size-300
+    );
+    --spectrum-alias-heading-xs-text-size: var(
+        --spectrum-global-dimension-font-size-200
+    );
+    --spectrum-alias-heading-xxs-text-size: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-alias-heading-xxxl-margin-top: var(
+        --spectrum-global-dimension-font-size-1200
+    );
+    --spectrum-alias-heading-xxl-margin-top: var(
+        --spectrum-global-dimension-font-size-900
+    );
+    --spectrum-alias-heading-xl-margin-top: var(
+        --spectrum-global-dimension-font-size-800
+    );
+    --spectrum-alias-heading-l-margin-top: var(
+        --spectrum-global-dimension-font-size-600
+    );
+    --spectrum-alias-heading-m-margin-top: var(
+        --spectrum-global-dimension-font-size-400
+    );
+    --spectrum-alias-heading-s-margin-top: var(
+        --spectrum-global-dimension-font-size-200
+    );
+    --spectrum-alias-heading-xs-margin-top: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-alias-heading-xxs-margin-top: var(
+        --spectrum-global-dimension-font-size-75
+    );
+    --spectrum-alias-heading-han-xxxl-text-size: var(
+        --spectrum-global-dimension-font-size-1300
+    );
+    --spectrum-alias-heading-han-xxl-text-size: var(
+        --spectrum-global-dimension-font-size-900
+    );
+    --spectrum-alias-heading-han-xl-text-size: var(
+        --spectrum-global-dimension-font-size-800
+    );
+    --spectrum-alias-heading-han-l-text-size: var(
+        --spectrum-global-dimension-font-size-600
+    );
+    --spectrum-alias-heading-han-m-text-size: var(
+        --spectrum-global-dimension-font-size-400
+    );
+    --spectrum-alias-heading-han-s-text-size: var(
+        --spectrum-global-dimension-font-size-300
+    );
+    --spectrum-alias-heading-han-xs-text-size: var(
+        --spectrum-global-dimension-font-size-200
+    );
+    --spectrum-alias-heading-han-xxs-text-size: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-alias-heading-han-xxxl-margin-top: var(
+        --spectrum-global-dimension-font-size-1200
+    );
+    --spectrum-alias-heading-han-xxl-margin-top: var(
+        --spectrum-global-dimension-font-size-800
+    );
+    --spectrum-alias-heading-han-xl-margin-top: var(
+        --spectrum-global-dimension-font-size-700
+    );
+    --spectrum-alias-heading-han-l-margin-top: var(
+        --spectrum-global-dimension-font-size-500
+    );
+    --spectrum-alias-heading-han-m-margin-top: var(
+        --spectrum-global-dimension-font-size-300
+    );
+    --spectrum-alias-heading-han-s-margin-top: var(
+        --spectrum-global-dimension-font-size-200
+    );
+    --spectrum-alias-heading-han-xs-margin-top: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-alias-heading-han-xxs-margin-top: var(
+        --spectrum-global-dimension-font-size-75
+    );
+    --spectrum-alias-component-border-radius: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-component-border-radius-quiet: var(
+        --spectrum-global-dimension-static-size-0
+    );
+    --spectrum-alias-input-border-size: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-alias-control-two-size-m: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-alias-control-two-size-l: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-control-two-size-xl: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-control-two-size-xxl: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-control-two-border-radius-s: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-control-two-border-radius-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-control-two-border-radius-l: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-control-two-border-radius-xl: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-control-two-border-radius-xxl: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-control-three-height-m: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-alias-control-three-height-l: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-control-three-height-xl: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-percent-50: 50%;
+    --spectrum-alias-percent-70: 70%;
+    --spectrum-alias-percent-100: 100%;
+    --spectrum-alias-breakpoint-xsmall: 304px;
+    --spectrum-alias-breakpoint-small: 768px;
+    --spectrum-alias-breakpoint-medium: 1280px;
+    --spectrum-alias-breakpoint-large: 1768px;
+    --spectrum-alias-breakpoint-xlarge: 2160px;
+    --spectrum-alias-grid-columns: 12;
+    --spectrum-alias-grid-fluid-width: 100%;
+    --spectrum-alias-grid-fixed-max-width: 1280px;
     --spectrum-alias-border-size-thin: var(
         --spectrum-global-dimension-static-size-10
     );
@@ -516,214 +1199,18 @@ governing permissions and limitations under the License.
     --spectrum-alias-radial-reaction-size-default: var(
         --spectrum-global-dimension-static-size-550
     );
-    --spectrum-alias-font-family-ar: myriad-arabic, adobe-clean,
-        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-alias-font-family-he: myriad-hebrew, adobe-clean,
-        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-alias-font-family-zh: adobe-clean-han-traditional,
-        source-han-traditional, 'MingLiu', 'Heiti TC Light', 'sans-serif';
-    --spectrum-alias-font-family-zhhans: adobe-clean-han-simplified-c,
-        source-han-simplified-c, 'SimSun', 'Heiti SC Light', 'sans-serif';
-    --spectrum-alias-font-family-ko: adobe-clean-han-korean, source-han-korean,
-        'Malgun Gothic', 'Apple Gothic', 'sans-serif';
-    --spectrum-alias-font-family-ja: adobe-clean-han-japanese,
-        source-han-japanese, 'Yu Gothic', '\\30E1 \\30A4 \\30EA \\30AA',
-        '\\30D2 \\30E9 \\30AE \\30CE \\89D2 \\30B4  Pro W3',
-        'Hiragino Kaku Gothic Pro W3', 'Osaka',
-        '\\FF2D \\FF33 \\FF30 \\30B4 \\30B7 \\30C3 \\30AF', 'MS PGothic',
-        'sans-serif';
-    --spectrum-alias-font-family-condensed: adobe-clean-han-traditional,
-        source-han-traditional, 'MingLiu', 'Heiti TC Light', adobe-clean,
-        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-alias-body-text-font-family: var(
-        --spectrum-global-font-family-base
-    );
-    --spectrum-alias-body-text-line-height: var(
-        --spectrum-global-font-line-height-medium
-    );
-    --spectrum-alias-body-text-font-weight: var(
-        --spectrum-global-font-weight-regular
-    );
-    --spectrum-alias-body-text-font-weight-strong: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-button-text-line-height: var(
-        --spectrum-global-font-line-height-small
-    );
-    --spectrum-alias-component-text-line-height: var(
-        --spectrum-global-font-line-height-small
-    );
-    --spectrum-alias-han-component-text-line-height: var(
-        --spectrum-global-font-line-height-medium
-    );
-    --spectrum-alias-heading-text-line-height: var(
-        --spectrum-global-font-line-height-small
-    );
-    --spectrum-alias-heading-text-font-weight-regular: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-heading-text-font-weight-regular-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-heading-text-font-weight-quiet: var(
-        --spectrum-global-font-weight-light
-    );
-    --spectrum-alias-heading-text-font-weight-quiet-strong: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-heading-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-heading-text-font-weight-strong-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-subheading-text-font-weight: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-subheading-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-detail-text-font-weight: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-detail-text-font-weight-light: var(
-        --spectrum-global-font-weight-regular
-    );
-    --spectrum-alias-detail-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-serif-text-font-family: var(
-        --spectrum-global-font-family-serif
-    );
-    --spectrum-alias-article-body-text-font-weight: var(
-        --spectrum-global-font-weight-regular
-    );
-    --spectrum-alias-article-body-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-article-heading-text-font-weight: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-article-heading-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-article-heading-text-font-weight-quiet: var(
-        --spectrum-global-font-weight-regular
-    );
-    --spectrum-alias-article-heading-text-font-weight-quiet-strong: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-article-subheading-text-font-weight: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-article-subheading-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-article-detail-text-font-weight: var(
-        --spectrum-global-font-weight-regular
-    );
-    --spectrum-alias-article-detail-text-font-weight-strong: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-code-text-font-family: var(
-        --spectrum-global-font-family-code
-    );
-    --spectrum-alias-han-heading-text-line-height: var(
-        --spectrum-global-font-line-height-medium
-    );
-    --spectrum-alias-han-heading-text-font-weight-regular: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-han-heading-text-font-weight-regular-emphasis: var(
-        --spectrum-global-font-weight-extra-bold
-    );
-    --spectrum-alias-han-heading-text-font-weight-regular-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-han-heading-text-font-weight-quiet-strong: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-han-heading-text-font-weight-light: var(
-        --spectrum-global-font-weight-light
-    );
-    --spectrum-alias-han-heading-text-font-weight-light-emphasis: var(
-        --spectrum-global-font-weight-regular
-    );
-    --spectrum-alias-han-heading-text-font-weight-light-strong: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-han-heading-text-font-weight-heavy: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-han-heading-text-font-weight-heavy-emphasis: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-han-heading-text-font-weight-heavy-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-han-body-text-line-height: var(
-        --spectrum-global-font-line-height-large
-    );
-    --spectrum-alias-han-body-text-font-weight-regular: var(
-        --spectrum-global-font-weight-regular
-    );
-    --spectrum-alias-han-body-text-font-weight-emphasis: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-han-body-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-han-subheading-text-font-weight-regular: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-han-subheading-text-font-weight-emphasis: var(
-        --spectrum-global-font-weight-extra-bold
-    );
-    --spectrum-alias-han-subheading-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-han-detail-text-font-weight: var(
-        --spectrum-global-font-weight-regular
-    );
-    --spectrum-alias-han-detail-text-font-weight-emphasis: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-han-detail-text-font-weight-strong: var(
-        --spectrum-global-font-weight-black
-    );
-    --spectrum-alias-code-text-font-weight-regular: var(
-        --spectrum-global-font-weight-regular
-    );
-    --spectrum-alias-code-text-font-weight-strong: var(
-        --spectrum-global-font-weight-bold
-    );
-    --spectrum-alias-code-text-line-height: var(
-        --spectrum-global-font-line-height-medium
-    );
-    --spectrum-alias-heading-margin-bottom: var(
-        --spectrum-global-font-multiplier-25
-    );
-    --spectrum-alias-body-margin-bottom: var(
-        --spectrum-global-font-multiplier-75
-    );
     --spectrum-alias-focus-ring-gap: var(
         --spectrum-global-dimension-static-size-25
     );
     --spectrum-alias-focus-ring-size: var(
         --spectrum-global-dimension-static-size-25
     );
-    --spectrum-alias-loupe-entry-animation-duration: var(
-        --spectrum-global-animation-duration-300
+    --spectrum-alias-focus-ring-gap-small: var(
+        --spectrum-global-dimension-static-size-0
     );
-    --spectrum-alias-loupe-exit-animation-duration: var(
-        --spectrum-global-animation-duration-300
+    --spectrum-alias-focus-ring-size-small: var(
+        --spectrum-global-dimension-static-size-10
     );
-}
-:host,
-:root {
     --spectrum-alias-dropshadow-blur: var(--spectrum-global-dimension-size-50);
     --spectrum-alias-dropshadow-offset-y: var(
         --spectrum-global-dimension-size-10
@@ -760,182 +1247,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-single-line-width: var(
         --spectrum-global-dimension-size-2400
-    );
-    --spectrum-alias-item-height-s: var(--spectrum-global-dimension-size-300);
-    --spectrum-alias-item-height-m: var(--spectrum-global-dimension-size-400);
-    --spectrum-alias-item-height-l: var(--spectrum-global-dimension-size-500);
-    --spectrum-alias-item-height-xl: var(--spectrum-global-dimension-size-600);
-    --spectrum-alias-item-rounded-border-radius-s: var(
-        --spectrum-global-dimension-size-150
-    );
-    --spectrum-alias-item-rounded-border-radius-m: var(
-        --spectrum-global-dimension-size-200
-    );
-    --spectrum-alias-item-rounded-border-radius-l: var(
-        --spectrum-global-dimension-size-250
-    );
-    --spectrum-alias-item-rounded-border-radius-xl: var(
-        --spectrum-global-dimension-size-300
-    );
-    --spectrum-alias-item-text-size-s: var(
-        --spectrum-global-dimension-font-size-75
-    );
-    --spectrum-alias-item-text-size-m: var(
-        --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-alias-item-text-size-l: var(
-        --spectrum-global-dimension-font-size-200
-    );
-    --spectrum-alias-item-text-size-xl: var(
-        --spectrum-global-dimension-font-size-300
-    );
-    --spectrum-alias-item-text-padding-top-s: var(
-        --spectrum-global-dimension-static-size-50
-    );
-    --spectrum-alias-item-text-padding-top-m: var(
-        --spectrum-global-dimension-size-75
-    );
-    --spectrum-alias-item-text-padding-top-xl: var(
-        --spectrum-global-dimension-size-150
-    );
-    --spectrum-alias-item-text-padding-bottom-m: var(
-        --spectrum-global-dimension-size-115
-    );
-    --spectrum-alias-item-text-padding-bottom-l: var(
-        --spectrum-global-dimension-size-130
-    );
-    --spectrum-alias-item-text-padding-bottom-xl: var(
-        --spectrum-global-dimension-size-175
-    );
-    --spectrum-alias-item-icon-padding-top-s: var(
-        --spectrum-global-dimension-size-50
-    );
-    --spectrum-alias-item-icon-padding-top-m: var(
-        --spectrum-global-dimension-size-85
-    );
-    --spectrum-alias-item-icon-padding-top-l: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-item-icon-padding-top-xl: var(
-        --spectrum-global-dimension-size-160
-    );
-    --spectrum-alias-item-icon-padding-bottom-s: var(
-        --spectrum-global-dimension-size-50
-    );
-    --spectrum-alias-item-icon-padding-bottom-m: var(
-        --spectrum-global-dimension-size-85
-    );
-    --spectrum-alias-item-icon-padding-bottom-l: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-item-icon-padding-bottom-xl: var(
-        --spectrum-global-dimension-size-160
-    );
-    --spectrum-alias-item-mark-padding-top-s: var(
-        --spectrum-global-dimension-size-40
-    );
-    --spectrum-alias-item-mark-padding-top-l: var(
-        --spectrum-global-dimension-size-115
-    );
-    --spectrum-alias-item-mark-padding-top-xl: var(
-        --spectrum-global-dimension-size-130
-    );
-    --spectrum-alias-item-mark-padding-bottom-s: var(
-        --spectrum-global-dimension-size-40
-    );
-    --spectrum-alias-item-mark-padding-bottom-l: var(
-        --spectrum-global-dimension-size-115
-    );
-    --spectrum-alias-item-mark-padding-bottom-xl: var(
-        --spectrum-global-dimension-size-130
-    );
-    --spectrum-alias-item-padding-s: var(--spectrum-global-dimension-size-115);
-    --spectrum-alias-item-padding-m: var(--spectrum-global-dimension-size-150);
-    --spectrum-alias-item-padding-l: var(--spectrum-global-dimension-size-185);
-    --spectrum-alias-item-padding-xl: var(--spectrum-global-dimension-size-225);
-    --spectrum-alias-item-rounded-padding-s: var(
-        --spectrum-global-dimension-size-150
-    );
-    --spectrum-alias-item-rounded-padding-m: var(
-        --spectrum-global-dimension-size-200
-    );
-    --spectrum-alias-item-rounded-padding-l: var(
-        --spectrum-global-dimension-size-250
-    );
-    --spectrum-alias-item-rounded-padding-xl: var(
-        --spectrum-global-dimension-size-300
-    );
-    --spectrum-alias-item-icononly-padding-s: var(
-        --spectrum-global-dimension-size-50
-    );
-    --spectrum-alias-item-icononly-padding-m: var(
-        --spectrum-global-dimension-size-85
-    );
-    --spectrum-alias-item-icononly-padding-l: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-item-icononly-padding-xl: var(
-        --spectrum-global-dimension-size-160
-    );
-    --spectrum-alias-item-workflow-padding-left-s: var(
-        --spectrum-global-dimension-size-85
-    );
-    --spectrum-alias-item-workflow-padding-left-l: var(
-        --spectrum-global-dimension-size-160
-    );
-    --spectrum-alias-item-workflow-padding-left-xl: var(
-        --spectrum-global-dimension-size-185
-    );
-    --spectrum-alias-item-rounded-workflow-padding-left-s: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-item-rounded-workflow-padding-left-l: var(
-        --spectrum-global-dimension-size-225
-    );
-    --spectrum-alias-item-mark-padding-left-s: var(
-        --spectrum-global-dimension-size-85
-    );
-    --spectrum-alias-item-mark-padding-left-l: var(
-        --spectrum-global-dimension-size-160
-    );
-    --spectrum-alias-item-mark-padding-left-xl: var(
-        --spectrum-global-dimension-size-185
-    );
-    --spectrum-alias-item-control-1-size-s: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-alias-item-control-1-size-m: var(
-        --spectrum-global-dimension-size-100
-    );
-    --spectrum-alias-item-control-2-size-m: var(
-        --spectrum-global-dimension-size-175
-    );
-    --spectrum-alias-item-control-2-size-l: var(
-        --spectrum-global-dimension-size-200
-    );
-    --spectrum-alias-item-control-2-size-xl: var(
-        --spectrum-global-dimension-size-225
-    );
-    --spectrum-alias-item-control-2-size-xxl: var(
-        --spectrum-global-dimension-size-250
-    );
-    --spectrum-alias-item-control-3-height-m: var(
-        --spectrum-global-dimension-size-175
-    );
-    --spectrum-alias-item-control-3-height-l: var(
-        --spectrum-global-dimension-size-200
-    );
-    --spectrum-alias-item-control-3-height-xl: var(
-        --spectrum-global-dimension-size-225
-    );
-    --spectrum-alias-item-mark-size-s: var(
-        --spectrum-global-dimension-size-225
-    );
-    --spectrum-alias-item-mark-size-l: var(
-        --spectrum-global-dimension-size-275
-    );
-    --spectrum-alias-item-mark-size-xl: var(
-        --spectrum-global-dimension-size-325
     );
     --spectrum-alias-workflow-icon-size-s: var(
         --spectrum-global-dimension-size-200
@@ -979,138 +1290,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-ui-icon-asterisk-size-100: var(
         --spectrum-global-dimension-size-100
     );
-    --spectrum-alias-item-control-gap-s: var(
-        --spectrum-global-dimension-size-115
-    );
-    --spectrum-alias-item-control-gap-m: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-item-control-gap-l: var(
-        --spectrum-global-dimension-size-130
-    );
-    --spectrum-alias-item-control-gap-xl: var(
-        --spectrum-global-dimension-size-160
-    );
-    --spectrum-alias-item-workflow-icon-gap-s: var(
-        --spectrum-global-dimension-size-85
-    );
-    --spectrum-alias-item-workflow-icon-gap-m: var(
-        --spectrum-global-dimension-size-100
-    );
-    --spectrum-alias-item-workflow-icon-gap-l: var(
-        --spectrum-global-dimension-size-115
-    );
-    --spectrum-alias-item-workflow-icon-gap-xl: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-item-mark-gap-s: var(--spectrum-global-dimension-size-85);
-    --spectrum-alias-item-mark-gap-m: var(--spectrum-global-dimension-size-100);
-    --spectrum-alias-item-mark-gap-l: var(--spectrum-global-dimension-size-115);
-    --spectrum-alias-item-mark-gap-xl: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-item-ui-icon-gap-s: var(
-        --spectrum-global-dimension-size-85
-    );
-    --spectrum-alias-item-ui-icon-gap-m: var(
-        --spectrum-global-dimension-size-100
-    );
-    --spectrum-alias-item-ui-icon-gap-l: var(
-        --spectrum-global-dimension-size-115
-    );
-    --spectrum-alias-item-ui-icon-gap-xl: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-item-clearbutton-gap-s: var(
-        --spectrum-global-dimension-size-50
-    );
-    --spectrum-alias-item-clearbutton-gap-m: var(
-        --spectrum-global-dimension-size-85
-    );
-    --spectrum-alias-item-clearbutton-gap-l: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-alias-item-clearbutton-gap-xl: var(
-        --spectrum-global-dimension-size-150
-    );
-    --spectrum-alias-heading-xxxl-text-size: var(
-        --spectrum-global-dimension-font-size-1300
-    );
-    --spectrum-alias-heading-han-xxxl-text-size: var(
-        --spectrum-global-dimension-font-size-1300
-    );
-    --spectrum-alias-heading-han-xxxl-margin-top: var(
-        --spectrum-global-dimension-font-size-1200
-    );
-    --spectrum-alias-heading-xxxl-margin-top: var(
-        --spectrum-global-dimension-font-size-1200
-    );
-    --spectrum-alias-heading-xxl-text-size: var(
-        --spectrum-global-dimension-font-size-1100
-    );
-    --spectrum-alias-heading-xxl-margin-top: var(
-        --spectrum-global-dimension-font-size-900
-    );
-    --spectrum-alias-heading-han-xxl-text-size: var(
-        --spectrum-global-dimension-font-size-900
-    );
-    --spectrum-alias-heading-han-xxl-margin-top: var(
-        --spectrum-global-dimension-font-size-800
-    );
-    --spectrum-alias-heading-xl-text-size: var(
-        --spectrum-global-dimension-font-size-900
-    );
-    --spectrum-alias-heading-xl-margin-top: var(
-        --spectrum-global-dimension-font-size-800
-    );
-    --spectrum-alias-heading-han-xl-text-size: var(
-        --spectrum-global-dimension-font-size-800
-    );
-    --spectrum-alias-heading-han-xl-margin-top: var(
-        --spectrum-global-dimension-font-size-700
-    );
-    --spectrum-alias-heading-l-text-size: var(
-        --spectrum-global-dimension-font-size-700
-    );
-    --spectrum-alias-heading-l-margin-top: var(
-        --spectrum-global-dimension-font-size-600
-    );
-    --spectrum-alias-heading-han-l-text-size: var(
-        --spectrum-global-dimension-font-size-600
-    );
-    --spectrum-alias-heading-han-l-margin-top: var(
-        --spectrum-global-dimension-font-size-500
-    );
-    --spectrum-alias-heading-m-text-size: var(
-        --spectrum-global-dimension-font-size-500
-    );
-    --spectrum-alias-heading-m-margin-top: var(
-        --spectrum-global-dimension-font-size-400
-    );
-    --spectrum-alias-heading-han-m-text-size: var(
-        --spectrum-global-dimension-font-size-400
-    );
-    --spectrum-alias-heading-han-m-margin-top: var(
-        --spectrum-global-dimension-font-size-300
-    );
-    --spectrum-alias-heading-s-text-size: var(
-        --spectrum-global-dimension-font-size-300
-    );
-    --spectrum-alias-heading-s-margin-top: var(
-        --spectrum-global-dimension-font-size-200
-    );
-    --spectrum-alias-heading-xs-text-size: var(
-        --spectrum-global-dimension-font-size-200
-    );
-    --spectrum-alias-heading-xs-margin-top: var(
-        --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-alias-heading-xxs-text-size: var(
-        --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-alias-heading-xxs-margin-top: var(
-        --spectrum-global-dimension-font-size-75
-    );
     --spectrum-alias-avatar-size-50: var(--spectrum-global-dimension-size-200);
     --spectrum-alias-avatar-size-75: var(--spectrum-global-dimension-size-225);
     --spectrum-alias-avatar-size-200: var(--spectrum-global-dimension-size-275);
@@ -1120,6 +1299,563 @@ governing permissions and limitations under the License.
 }
 :host,
 :root {
+    --spectrum-alias-colorhandle-outer-border-color: rgba(0, 0, 0, 0.42);
+    --spectrum-alias-component-text-color-disabled: var(
+        --spectrum-global-color-gray-500
+    );
+    --spectrum-alias-component-text-color-default: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-component-text-color-hover: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-component-text-color-down: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-component-text-color-key-focus: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-component-text-color-mouse-focus: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-component-text-color: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-component-text-color-selected-default: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-component-text-color-selected-hover: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-component-text-color-selected-down: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-component-text-color-selected-key-focus: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-component-text-color-selected-mouse-focus: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-component-text-color-selected: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-component-text-color-emphasized-selected-default: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-text-color-emphasized-selected-hover: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-text-color-emphasized-selected-down: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-text-color-emphasized-selected-key-focus: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-text-color-emphasized-selected-mouse-focus: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-text-color-emphasized-selected: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-text-color-error-default: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-component-text-color-error-hover: var(
+        --spectrum-semantic-negative-text-color-small-hover
+    );
+    --spectrum-alias-component-text-color-error-down: var(
+        --spectrum-semantic-negative-text-color-small-down
+    );
+    --spectrum-alias-component-text-color-error-key-focus: var(
+        --spectrum-semantic-negative-text-color-small-key-focus
+    );
+    --spectrum-alias-component-text-color-error-mouse-focus: var(
+        --spectrum-semantic-negative-text-color-small-key-focus
+    );
+    --spectrum-alias-component-text-color-error: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-component-icon-color-disabled: var(
+        --spectrum-alias-icon-color-disabled
+    );
+    --spectrum-alias-component-icon-color-default: var(
+        --spectrum-alias-icon-color
+    );
+    --spectrum-alias-component-icon-color-hover: var(
+        --spectrum-alias-icon-color-hover
+    );
+    --spectrum-alias-component-icon-color-down: var(
+        --spectrum-alias-icon-color-down
+    );
+    --spectrum-alias-component-icon-color-key-focus: var(
+        --spectrum-alias-icon-color-hover
+    );
+    --spectrum-alias-component-icon-color-mouse-focus: var(
+        --spectrum-alias-icon-color-down
+    );
+    --spectrum-alias-component-icon-color: var(--spectrum-alias-icon-color);
+    --spectrum-alias-component-icon-color-selected: var(
+        --spectrum-alias-icon-color-selected-neutral-subdued
+    );
+    --spectrum-alias-component-icon-color-emphasized-selected-default: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-icon-color-emphasized-selected-hover: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-icon-color-emphasized-selected-down: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-icon-color-emphasized-selected-key-focus: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-icon-color-emphasized-selected: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-component-background-color-disabled: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-quiet-disabled: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-component-background-color-default: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-alias-component-background-color-hover: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-component-background-color-down: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-key-focus: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-component-background-color: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-alias-component-background-color-selected-default: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-selected-hover: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-selected-down: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-selected-key-focus: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-selected: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-quiet-default: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-component-background-color-quiet-hover: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-component-background-color-quiet-down: var(
+        --spectrum-global-color-gray-300
+    );
+    --spectrum-alias-component-background-color-quiet-key-focus: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-component-background-color-quiet: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-component-background-color-quiet-selected-default: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-quiet-selected-hover: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-quiet-selected-down: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-quiet-selected-key-focus: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-quiet-selected: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-background-color-emphasized-selected-default: var(
+        --spectrum-semantic-cta-background-color-default
+    );
+    --spectrum-alias-component-background-color-emphasized-selected-hover: var(
+        --spectrum-semantic-cta-background-color-hover
+    );
+    --spectrum-alias-component-background-color-emphasized-selected-down: var(
+        --spectrum-semantic-cta-background-color-down
+    );
+    --spectrum-alias-component-background-color-emphasized-selected-key-focus: var(
+        --spectrum-semantic-cta-background-color-key-focus
+    );
+    --spectrum-alias-component-background-color-emphasized-selected: var(
+        --spectrum-semantic-cta-background-color-default
+    );
+    --spectrum-alias-component-border-color-disabled: var(
+        --spectrum-alias-border-color-disabled
+    );
+    --spectrum-alias-component-border-color-quiet-disabled: var(
+        --spectrum-alias-border-color-transparent
+    );
+    --spectrum-alias-component-border-color-default: var(
+        --spectrum-alias-border-color
+    );
+    --spectrum-alias-component-border-color-hover: var(
+        --spectrum-alias-border-color-hover
+    );
+    --spectrum-alias-component-border-color-down: var(
+        --spectrum-alias-border-color-down
+    );
+    --spectrum-alias-component-border-color-key-focus: var(
+        --spectrum-alias-border-color-key-focus
+    );
+    --spectrum-alias-component-border-color: var(--spectrum-alias-border-color);
+    --spectrum-alias-component-border-color-selected-default: var(
+        --spectrum-alias-border-color
+    );
+    --spectrum-alias-component-border-color-selected-hover: var(
+        --spectrum-alias-border-color-hover
+    );
+    --spectrum-alias-component-border-color-selected-down: var(
+        --spectrum-alias-border-color-down
+    );
+    --spectrum-alias-component-border-color-selected-key-focus: var(
+        --spectrum-alias-border-color-key-focus
+    );
+    --spectrum-alias-component-border-color-selected: var(
+        --spectrum-alias-border-color
+    );
+    --spectrum-alias-component-border-color-quiet-default: var(
+        --spectrum-alias-border-color-transparent
+    );
+    --spectrum-alias-component-border-color-quiet-hover: var(
+        --spectrum-alias-border-color-transparent
+    );
+    --spectrum-alias-component-border-color-quiet-down: var(
+        --spectrum-alias-border-color-transparent
+    );
+    --spectrum-alias-component-border-color-quiet-key-focus: var(
+        --spectrum-alias-border-color-key-focus
+    );
+    --spectrum-alias-component-border-color-quiet: var(
+        --spectrum-alias-border-color-transparent
+    );
+    --spectrum-alias-component-border-color-quiet-selected-default: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-border-color-quiet-selected-hover: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-border-color-quiet-selected-down: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-border-color-quiet-selected-key-focus: var(
+        --spectrum-alias-border-color-key-focus
+    );
+    --spectrum-alias-component-border-color-quiet-selected: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-component-border-color-emphasized-selected-default: var(
+        --spectrum-semantic-cta-background-color-default
+    );
+    --spectrum-alias-component-border-color-emphasized-selected-hover: var(
+        --spectrum-semantic-cta-background-color-hover
+    );
+    --spectrum-alias-component-border-color-emphasized-selected-down: var(
+        --spectrum-semantic-cta-background-color-down
+    );
+    --spectrum-alias-component-border-color-emphasized-selected-key-focus: var(
+        --spectrum-semantic-cta-background-color-key-focus
+    );
+    --spectrum-alias-component-border-color-emphasized-selected: var(
+        --spectrum-semantic-cta-background-color-default
+    );
+    --spectrum-alias-toggle-background-color-default: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-toggle-background-color-hover: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-toggle-background-color-down: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-toggle-background-color-key-focus: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-toggle-background-color: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-toggle-background-color-emphasized-selected-default: var(
+        --spectrum-semantic-cta-background-color-default
+    );
+    --spectrum-alias-toggle-background-color-emphasized-selected-hover: var(
+        --spectrum-semantic-cta-background-color-hover
+    );
+    --spectrum-alias-toggle-background-color-emphasized-selected-down: var(
+        --spectrum-semantic-cta-background-color-down
+    );
+    --spectrum-alias-toggle-background-color-emphasized-selected-key-focus: var(
+        --spectrum-semantic-cta-background-color-key-focus
+    );
+    --spectrum-alias-toggle-background-color-emphasized-selected: var(
+        --spectrum-semantic-cta-background-color-default
+    );
+    --spectrum-alias-toggle-border-color-default: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-toggle-border-color-hover: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-toggle-border-color-down: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-toggle-border-color-key-focus: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-toggle-border-color: var(--spectrum-global-color-gray-700);
+    --spectrum-alias-toggle-icon-color-selected: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-alias-toggle-icon-color-emphasized-selected: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-alias-button-primary-background-color-default: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-button-primary-background-color-hover: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-primary-background-color-down: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-button-primary-background-color-key-focus: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-primary-background-color: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-button-primary-border-color-default: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-primary-border-color-hover: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-primary-border-color-down: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-button-primary-border-color-key-focus: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-primary-border-color: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-primary-text-color-default: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-primary-text-color-hover: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-primary-text-color-down: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-primary-text-color-key-focus: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-primary-text-color: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-primary-icon-color-default: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-primary-icon-color-hover: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-primary-icon-color-down: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-primary-icon-color-key-focus: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-primary-icon-color: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-secondary-background-color-default: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-button-secondary-background-color-hover: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-secondary-background-color-down: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-secondary-background-color-key-focus: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-secondary-background-color: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-button-secondary-border-color-default: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-secondary-border-color-hover: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-secondary-border-color-down: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-alias-button-secondary-border-color-key-focus: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-secondary-border-color: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-secondary-text-color-default: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-secondary-text-color-hover: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-secondary-text-color-down: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-secondary-text-color-key-focus: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-secondary-text-color: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-secondary-icon-color-default: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-secondary-icon-color-hover: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-secondary-icon-color-down: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-secondary-icon-color-key-focus: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-secondary-icon-color: var(
+        --spectrum-global-color-gray-700
+    );
+    --spectrum-alias-button-negative-background-color-default: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-button-negative-background-color-hover: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-button-negative-background-color-down: var(
+        --spectrum-global-color-red-700
+    );
+    --spectrum-alias-button-negative-background-color-key-focus: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-button-negative-background-color: var(
+        --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-button-negative-border-color-default: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-button-negative-border-color-hover: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-button-negative-border-color-down: var(
+        --spectrum-global-color-red-700
+    );
+    --spectrum-alias-button-negative-border-color-key-focus: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-button-negative-border-color: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-button-negative-text-color-default: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-button-negative-text-color-hover: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-negative-text-color-down: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-negative-text-color-key-focus: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-negative-text-color: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-button-negative-icon-color-default: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-button-negative-icon-color-hover: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-negative-icon-color-down: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-negative-icon-color-key-focus: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-button-negative-icon-color: var(
+        --spectrum-semantic-negative-text-color-small
+    );
+    --spectrum-alias-input-border-color-disabled: var(
+        --spectrum-alias-border-color-transparent
+    );
+    --spectrum-alias-input-border-color-quiet-disabled: var(
+        --spectrum-alias-border-color-mid
+    );
+    --spectrum-alias-input-border-color-default: var(
+        --spectrum-alias-border-color
+    );
+    --spectrum-alias-input-border-color-hover: var(
+        --spectrum-alias-border-color-hover
+    );
+    --spectrum-alias-input-border-color-down: var(
+        --spectrum-alias-border-color-mouse-focus
+    );
+    --spectrum-alias-input-border-color-mouse-focus: var(
+        --spectrum-alias-border-color-mouse-focus
+    );
+    --spectrum-alias-input-border-color-key-focus: var(
+        --spectrum-alias-border-color-key-focus
+    );
+    --spectrum-alias-input-border-color: var(--spectrum-alias-border-color);
+    --spectrum-alias-input-border-color-invalid-default: var(
+        --spectrum-semantic-negative-color-default
+    );
+    --spectrum-alias-input-border-color-invalid-hover: var(
+        --spectrum-semantic-negative-color-hover
+    );
+    --spectrum-alias-input-border-color-invalid-down: var(
+        --spectrum-semantic-negative-color-down
+    );
+    --spectrum-alias-input-border-color-invalid-mouse-focus: var(
+        --spectrum-semantic-negative-color-hover
+    );
+    --spectrum-alias-input-border-color-invalid-key-focus: var(
+        --spectrum-alias-border-color-key-focus
+    );
+    --spectrum-alias-input-border-color-invalid: var(
+        --spectrum-semantic-negative-color-default
+    );
+    --spectrum-alias-background-color-yellow-default: var(
+        --spectrum-global-color-static-yellow-600
+    );
+    --spectrum-alias-background-color-yellow-hover: var(
+        --spectrum-global-color-static-yellow-700
+    );
+    --spectrum-alias-background-color-yellow-key-focus: var(
+        --spectrum-global-color-static-yellow-700
+    );
+    --spectrum-alias-background-color-yellow-down: var(
+        --spectrum-global-color-static-yellow-800
+    );
+    --spectrum-alias-background-color-yellow: var(
+        --spectrum-global-color-static-yellow-600
+    );
     --spectrum-alias-background-color-default: var(
         --spectrum-global-color-gray-100
     );
@@ -1127,11 +1863,29 @@ governing permissions and limitations under the License.
         --spectrum-global-color-gray-200
     );
     --spectrum-alias-background-color-transparent: transparent;
-    --spectrum-alias-background-color-over-background-down: hsla(
+    --spectrum-alias-background-color-overbackground-down: hsla(
         0,
         0%,
         100%,
         0.2
+    );
+    --spectrum-alias-background-color-quiet-overbackground-hover: hsla(
+        0,
+        0%,
+        100%,
+        0.1
+    );
+    --spectrum-alias-background-color-quiet-overbackground-down: hsla(
+        0,
+        0%,
+        100%,
+        0.2
+    );
+    --spectrum-alias-background-color-overbackground-disabled: hsla(
+        0,
+        0%,
+        100%,
+        0.1
     );
     --spectrum-alias-background-color-quickactions-overlay: rgba(0, 0, 0, 0.2);
     --spectrum-alias-placeholder-text-color: var(
@@ -1162,10 +1916,11 @@ governing permissions and limitations under the License.
     --spectrum-alias-text-color-selected-neutral: var(
         --spectrum-global-color-gray-900
     );
-    --spectrum-alias-text-color-over-background: var(
+    --spectrum-alias-text-color-overbackground: var(
         --spectrum-global-color-static-white
     );
-    --spectrum-alias-text-color-over-background-disabled: hsla(
+    --spectrum-alias-text-color-overbackground-disabled: hsla(0, 0%, 100%, 0.2);
+    --spectrum-alias-text-color-quiet-overbackground-disabled: hsla(
         0,
         0%,
         100%,
@@ -1175,7 +1930,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-border-color: var(--spectrum-global-color-gray-400);
     --spectrum-alias-border-color-hover: var(--spectrum-global-color-gray-500);
     --spectrum-alias-border-color-down: var(--spectrum-global-color-gray-500);
-    --spectrum-alias-border-color-focus: var(--spectrum-global-color-blue-400);
+    --spectrum-alias-border-color-key-focus: var(
+        --spectrum-global-color-blue-400
+    );
     --spectrum-alias-border-color-mouse-focus: var(
         --spectrum-global-color-blue-500
     );
@@ -1202,27 +1959,36 @@ governing permissions and limitations under the License.
     --spectrum-alias-border-color-translucent-darker: rgba(0, 0, 0, 0.1);
     --spectrum-alias-focus-color: var(--spectrum-global-color-blue-400);
     --spectrum-alias-focus-ring-color: var(--spectrum-alias-focus-color);
-    --spectrum-alias-track-color-default: var(--spectrum-global-color-gray-300);
+    --spectrum-alias-track-color-default: var(--spectrum-global-color-gray-400);
+    --spectrum-alias-track-fill-color-overbackground: var(
+        --spectrum-global-color-static-white
+    );
     --spectrum-alias-track-color-disabled: var(
         --spectrum-global-color-gray-300
     );
-    --spectrum-alias-track-color-over-background: hsla(0, 0%, 100%, 0.2);
+    --spectrum-alias-track-color-overbackground: hsla(0, 0%, 100%, 0.2);
     --spectrum-alias-icon-color: var(--spectrum-global-color-gray-700);
-    --spectrum-alias-icon-color-over-background: var(
+    --spectrum-alias-icon-color-overbackground: var(
         --spectrum-global-color-static-white
     );
     --spectrum-alias-icon-color-hover: var(--spectrum-global-color-gray-900);
     --spectrum-alias-icon-color-down: var(--spectrum-global-color-gray-900);
-    --spectrum-alias-icon-color-focus: var(--spectrum-global-color-gray-900);
+    --spectrum-alias-icon-color-key-focus: var(
+        --spectrum-global-color-gray-900
+    );
     --spectrum-alias-icon-color-disabled: var(--spectrum-global-color-gray-400);
-    --spectrum-alias-icon-color-over-background-disabled: hsla(
+    --spectrum-alias-icon-color-overbackground-disabled: hsla(0, 0%, 100%, 0.2);
+    --spectrum-alias-icon-color-quiet-overbackground-disabled: hsla(
         0,
         0%,
         100%,
-        0.2
+        0.15
     );
     --spectrum-alias-icon-color-selected-neutral: var(
         --spectrum-global-color-gray-900
+    );
+    --spectrum-alias-icon-color-selected-neutral-subdued: var(
+        --spectrum-global-color-gray-800
     );
     --spectrum-alias-icon-color-selected: var(--spectrum-global-color-blue-500);
     --spectrum-alias-icon-color-selected-hover: var(
@@ -1240,11 +2006,10 @@ governing permissions and limitations under the License.
     --spectrum-alias-toolbar-background-color: var(
         --spectrum-global-color-gray-100
     );
-    --spectrum-alias-colorhandle-outer-border-color: rgba(0, 0, 0, 0.42);
     --spectrum-alias-code-highlight-color-default: var(
         --spectrum-global-color-gray-800
     );
-    --spectrum-alias-code-highlight-color-background: var(
+    --spectrum-alias-code-highlight-background-color: var(
         --spectrum-global-color-gray-75
     );
     --spectrum-alias-code-highlight-color-keyword: var(

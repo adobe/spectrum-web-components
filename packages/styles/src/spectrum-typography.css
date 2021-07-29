@@ -18,7 +18,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     margin-bottom: var(
         --spectrum-heading-xxxl-margin-bottom,
-        var(--spectrum-global-dimension-size-130)
+        var(--spectrum-global-dimension-size-125)
     );
 }
 .spectrum-Typography .spectrum-Heading--sizeXXL {
@@ -29,7 +29,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     margin-bottom: var(
         --spectrum-heading-xxl-margin-bottom,
-        var(--spectrum-global-dimension-size-125)
+        var(--spectrum-global-dimension-size-115)
     );
 }
 .spectrum-Typography .spectrum-Heading--sizeXL {
@@ -40,7 +40,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     margin-bottom: var(
         --spectrum-heading-xl-margin-bottom,
-        var(--spectrum-global-dimension-size-115)
+        var(--spectrum-global-dimension-size-100)
     );
 }
 .spectrum-Typography .spectrum-Heading--sizeL {

@@ -192,13 +192,13 @@ Gallery cards can contain a heading, a subheading, an image preview, a descripti
 </div>
 ```
 
-### Small
+### Size "Small"
 
-The `small` attriibute can be applied to a standard card:
+The `size="s"` attribute can be applied to a standard card:
 
 ```html demo
 <div style="width: 208px; height: 264px">
-    <sp-card small heading="Card Heading" subheading="JPG Photo">
+    <sp-card size="s" heading="Card Heading" subheading="JPG Photo">
         <img
             slot="cover-photo"
             alt="Demo Image"
@@ -215,7 +215,7 @@ A `horizontal` card:
 <div
     style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color));"
 >
-    <sp-card small horizontal heading="Card Heading" subheading="JPG Photo">
+    <sp-card size="s" horizontal heading="Card Heading" subheading="JPG Photo">
         <sp-icon slot="preview" style="width: 36px; height: 36px;">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -241,7 +241,7 @@ Or a `quiet` card:
     style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color)); width: 110px;"
 >
     <sp-card
-        small
+        size="s"
         heading="Card Heading"
         subheading="JPG Photo"
         variant="quiet"

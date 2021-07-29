@@ -203,8 +203,8 @@ export const customizedClickContent = (
 ): TemplateResult => html`
     <style>
         active-overlay::part(theme) {
-            --styled-div-background-color: var(--spectrum-semantic-cta-color-background-default);
-            --spectrum-button-cta-m-background-color: rebeccapurple;
+            --styled-div-background-color: var(--spectrum-semantic-cta-background-color-default);
+            --spectrum-button-m-cta-texticon-background-color: rebeccapurple;
         }
     </style>
     </style>

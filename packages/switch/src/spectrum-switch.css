@@ -12,40 +12,41 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Switch */
-    --spectrum-switch-handle-border-radius: var(
-        --spectrum-switch-m-handle-border-radius
+    --spectrum-switch-handle-size: var(
+        --spectrum-switch-m-handle-size,
+        var(--spectrum-global-dimension-size-175)
     );
     --spectrum-switch-handle-border-size: var(
         --spectrum-switch-m-handle-border-size,
         var(--spectrum-alias-border-size-thick)
     );
+    --spectrum-switch-handle-border-radius: var(
+        --spectrum-switch-m-handle-border-radius,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-switch-text-gap: var(
+        --spectrum-switch-m-text-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-switch-text-size: var(
+        --spectrum-switch-m-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-switch-track-height: var(
+        --spectrum-switch-m-track-height,
+        var(--spectrum-alias-control-three-height-m)
+    );
+    --spectrum-switch-track-width: var(
+        --spectrum-switch-m-track-width,
+        var(--spectrum-alias-control-three-width-m)
+    );
     --spectrum-switch-cursor-hit-x: var(
         --spectrum-switch-m-cursor-hit-x,
         var(--spectrum-global-dimension-size-100)
     );
-    --spectrum-switch-text-size: var(
-        --spectrum-switch-m-text-size,
-        var(--spectrum-alias-item-text-size-m)
-    );
     --spectrum-switch-height: var(
         --spectrum-switch-m-height,
-        var(--spectrum-alias-item-height-m)
-    );
-    --spectrum-switch-track-height: var(
-        --spectrum-switch-m-track-height,
-        var(--spectrum-alias-item-control-3-height-m)
-    );
-    --spectrum-switch-track-width: var(
-        --spectrum-switch-m-track-width,
-        var(--spectrum-alias-item-control-3-width-m)
-    );
-    --spectrum-switch-handle-size: var(
-        --spectrum-switch-m-handle-size,
-        var(--spectrum-alias-item-control-2-size-m)
-    );
-    --spectrum-switch-text-gap: var(
-        --spectrum-switch-m-text-gap,
-        var(--spectrum-alias-item-control-gap-m)
+        var(--spectrum-global-dimension-size-400)
     );
     --spectrum-switch-label-margin-top: var(
         --spectrum-global-dimension-size-65
@@ -255,7 +256,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Switch-input~.spectrum-Switch-label */
     color: var(
         --spectrum-switch-m-text-color,
-        var(--spectrum-alias-text-color)
+        var(--spectrum-global-color-gray-800)
     );
 }
 :host([checked]) #input + #switch {
@@ -284,7 +285,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Switch:hover .spectrum-Switch-input~.spectrum-Switch-label */
     color: var(
         --spectrum-switch-m-text-color-hover,
-        var(--spectrum-alias-text-color-hover)
+        var(--spectrum-global-color-gray-900)
     );
 }
 :host(:hover[checked]) #input:enabled + #switch {
@@ -312,7 +313,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Switch:active .spectrum-Switch-input~.spectrum-Switch-label */
     color: var(
         --spectrum-switch-m-text-color-down,
-        var(--spectrum-alias-text-color-down)
+        var(--spectrum-global-color-gray-900)
     );
 }
 :host(:active[checked]) #input:enabled + #switch {
@@ -347,7 +348,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Switch .spectrum-Switch-input:disabled~.spectrum-Switch-label */
     color: var(
         --spectrum-switch-m-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
+        var(--spectrum-global-color-gray-500)
     );
 }
 :host([disabled][checked][dir]) #input + #switch {
@@ -368,49 +369,49 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Switch .spectrum-Switch-input:disabled:checked~.spectrum-Switch-label */
     color: var(
         --spectrum-switch-m-text-color-selected-disabled,
-        var(--spectrum-alias-text-color-disabled)
+        var(--spectrum-global-color-gray-500)
     );
 }
 :host([emphasized][checked]) #input + #switch {
     /* .spectrum-Switch--emphasized .spectrum-Switch-input:checked+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-m-emphasized-track-color-selected,
-        var(--spectrum-global-color-blue-500)
+        var(--spectrum-semantic-cta-background-color-default)
     );
 }
 :host([emphasized][checked]) #input + #switch:before {
     /* .spectrum-Switch--emphasized .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-m-emphasized-handle-border-color-selected,
-        var(--spectrum-global-color-blue-500)
+        var(--spectrum-semantic-cta-background-color-default)
     );
 }
 :host([emphasized][checked]:hover) #input:enabled + #switch {
     /* .spectrum-Switch--emphasized:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-m-emphasized-track-color-selected-hover,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-semantic-cta-background-color-hover)
     );
 }
 :host([emphasized][checked]:hover) #input:enabled + #switch:before {
     /* .spectrum-Switch--emphasized:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-m-emphasized-handle-border-color-selected-hover,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-semantic-cta-background-color-hover)
     );
 }
 :host([emphasized]:active[checked]) #input:enabled + #switch {
     /* .spectrum-Switch.spectrum-Switch--emphasized:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-m-emphasized-track-color-selected-down,
-        var(--spectrum-global-color-blue-700)
+        var(--spectrum-semantic-cta-background-color-down)
     );
 }
 :host([emphasized]:active[checked]) #input:enabled + #switch:before {
     /* .spectrum-Switch.spectrum-Switch--emphasized:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-m-emphasized-handle-border-color-selected-down,
-        var(--spectrum-global-color-blue-700)
+        var(--spectrum-semantic-cta-background-color-down)
     );
 }
 #input:focus-visible + #switch:after,
@@ -419,7 +420,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
     box-shadow: 0 0 0
         var(
-            --spectrum-switch-m-focus-ring-size-key-focus,
+            --spectrum-switch-m-focus-ring-size,
             var(--spectrum-alias-focus-ring-size)
         )
         var(
@@ -460,7 +461,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
     background-color: var(
         --spectrum-switch-m-emphasized-track-color-selected-key-focus,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-semantic-cta-background-color-key-focus)
     );
 }
 :host([emphasized][checked]) #input:focus-visible + #switch:before,
@@ -469,6 +470,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-m-emphasized-handle-border-color-selected-key-focus,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-semantic-cta-background-color-key-focus)
     );
 }

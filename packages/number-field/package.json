@@ -54,7 +54,7 @@
     },
     "devDependencies": {
         "@formatjs/intl-numberformat": "^7.1.4",
-        "@spectrum-css/stepper": "^3.0.3"
+        "@spectrum-css/stepper": "beta"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

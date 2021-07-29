@@ -14,13 +14,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Search */
     --spectrum-search-quiet-button-offset: calc(
         var(
-                --spectrum-actionbutton-m-min-width,
+                --spectrum-actionbutton-m-texticon-min-width,
                 var(--spectrum-global-dimension-size-400)
-            ) / 2 -
-            var(
-                --spectrum-icon-cross-small-width,
-                var(--spectrum-global-dimension-size-100)
-            ) / 2
+            ) / 2 - var(--spectrum-alias-ui-icon-cross-size-100) / 2
     );
     display: inline-block;
     position: relative;
@@ -56,7 +52,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .icon {
     /* .spectrum-Search-icon */
     color: var(
-        --spectrum-textfield-m-icon-color,
+        --spectrum-textfield-m-texticon-icon-color,
         var(--spectrum-alias-icon-color)
     );
 }
@@ -64,7 +60,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Search-input:hover~.spectrum-Search-icon */
     color: var(
         --spectrum-search-m-icon-color-hover,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-icon-color-hover)
     );
 }
 #input:active ~ .icon {
@@ -78,13 +74,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Search-input.focus-ring~.spectrum-Search-icon */
     color: var(
         --spectrum-search-m-icon-color-key-focus,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-icon-color-hover)
     );
 }
 #input:disabled ~ .icon {
     /* .spectrum-Search-input:disabled~.spectrum-Search-icon */
     color: var(
-        --spectrum-textfield-m-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
+        --spectrum-textfield-m-texticon-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
     );
 }

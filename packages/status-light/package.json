@@ -48,7 +48,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/statuslight": "^3.0.2"
+        "@spectrum-css/statuslight": "beta"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

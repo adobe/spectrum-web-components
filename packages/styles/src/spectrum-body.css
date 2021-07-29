@@ -144,7 +144,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Body--sizeS */
     font-size: var(
         --spectrum-body-s-text-size,
-        var(--spectrum-alias-font-size-default)
+        var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
         --spectrum-body-s-text-font-weight,
@@ -208,19 +208,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-font-weight-bold)
     );
 }
-.spectrum-Body .spectrum-Body-emphasis,
+.spectrum-Body .spectrum-Body-emphasized,
 .spectrum-Body em {
-    /* .spectrum-Body .spectrum-Body-emphasis,
+    /* .spectrum-Body .spectrum-Body-emphasized,
    * .spectrum-Body em */
     font-style: var(
-        --spectrum-body-m-emphasis-text-font-style,
+        --spectrum-body-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
 .spectrum-Body--serif {
     /* .spectrum-Body--serif */
     font-family: var(
-        --spectrum-body-serif-m-text-font-family,
+        --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
 }

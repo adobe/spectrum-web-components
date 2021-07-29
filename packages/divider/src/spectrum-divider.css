@@ -16,6 +16,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-divider-s-height,
         var(--spectrum-global-dimension-size-10)
     );
+    --spectrum-divider-vertical-height: var(
+        --spectrum-divider-s-vertical-height,
+        var(--spectrum-global-dimension-size-10)
+    );
     --spectrum-divider-vertical-width: var(
         --spectrum-divider-s-vertical-width,
         var(--spectrum-global-dimension-size-10)
@@ -27,6 +31,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-divider-m-height,
         var(--spectrum-global-dimension-size-25)
     );
+    --spectrum-divider-vertical-height: var(
+        --spectrum-divider-m-vertical-height,
+        var(--spectrum-global-dimension-size-25)
+    );
     --spectrum-divider-vertical-width: var(
         --spectrum-divider-m-vertical-width,
         var(--spectrum-global-dimension-size-25)
@@ -36,6 +44,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Divider--sizeL */
     --spectrum-divider-height: var(
         --spectrum-divider-l-height,
+        var(--spectrum-global-dimension-size-50)
+    );
+    --spectrum-divider-vertical-height: var(
+        --spectrum-divider-l-vertical-height,
         var(--spectrum-global-dimension-size-50)
     );
     --spectrum-divider-vertical-width: var(

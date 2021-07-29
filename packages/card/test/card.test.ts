@@ -82,7 +82,11 @@ describe('card', () => {
                         slot="preview"
                     />
                     <div slot="footer">Footer</div>
-                    <sp-action-menu slot="actions" placement="bottom-end">
+                    <sp-action-menu
+                        slot="actions"
+                        placement="bottom-end"
+                        label="More Actions"
+                    >
                         <sp-menu>
                             <sp-menu-item>Deselect</sp-menu-item>
                             <sp-menu-item>Select Inverse</sp-menu-item>

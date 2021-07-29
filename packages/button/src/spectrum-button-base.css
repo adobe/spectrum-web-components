@@ -14,7 +14,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Button,
    * .spectrum-ClearButton,
    * .spectrum-LogicButton */
-    --spectrum-button-line-height: 1.3;
     position: relative;
     display: inline-flex;
     box-sizing: border-box;
@@ -39,7 +38,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-alias-body-text-font-family,
         var(--spectrum-global-font-family-base)
     );
-    line-height: var(--spectrum-button-line-height);
+    line-height: var(
+        --spectrum-alias-component-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
     user-select: none;
     -webkit-user-select: none;
     cursor: pointer;
@@ -71,7 +73,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ClearButton:after,
    * .spectrum-LogicButton:after */
     border-radius: calc(
-        var(--spectrum-button-primary-border-radius) +
+        var(--spectrum-button-primary-texticon-border-radius) +
             var(
                 --spectrum-alias-focus-ring-gap,
                 var(--spectrum-global-dimension-static-size-25)

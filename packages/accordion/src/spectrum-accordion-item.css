@@ -75,15 +75,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-225)
             ) +
             var(
-                --spectrum-accordion-icon-width,
-                var(--spectrum-global-dimension-size-75)
+                --spectrum-accordion-icon-height,
+                var(--spectrum-global-dimension-size-125)
             ) +
             var(
                 --spectrum-accordion-icon-gap,
                 var(--spectrum-global-dimension-size-100)
             ) +
             var(
-                --spectrum-accordion-item-border-left-size-key-focus,
+                --spectrum-accordion-item-border-left-size,
                 var(--spectrum-alias-border-size-thick)
             )
     );
@@ -96,15 +96,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-dimension-size-225)
             ) +
             var(
-                --spectrum-accordion-icon-width,
-                var(--spectrum-global-dimension-size-75)
+                --spectrum-accordion-icon-height,
+                var(--spectrum-global-dimension-size-125)
             ) +
             var(
                 --spectrum-accordion-icon-gap,
                 var(--spectrum-global-dimension-size-100)
             ) +
             var(
-                --spectrum-accordion-item-border-left-size-key-focus,
+                --spectrum-accordion-item-border-left-size,
                 var(--spectrum-alias-border-size-thick)
             )
     );
@@ -152,9 +152,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-accordion-item-title-text-size,
         var(--spectrum-global-dimension-font-size-50)
     );
-    line-height: var(--spectrum-accordion-item-line-height);
+    line-height: var(
+        --spectrum-accordion-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
     text-transform: uppercase;
-    letter-spacing: var(--spectrum-accordion-item-title-tracking-actual);
+    letter-spacing: calc(
+        var(
+                --spectrum-accordion-item-title-tracking,
+                var(--spectrum-global-font-letter-spacing-medium)
+            ) / 100
+    );
     text-overflow: ellipsis;
     cursor: pointer;
     font-weight: 500;
@@ -188,7 +196,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         -1 * var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin))
     );
     width: var(
-        --spectrum-accordion-item-border-left-size-key-focus,
+        --spectrum-accordion-item-border-left-size,
         var(--spectrum-alias-border-size-thick)
     );
 }
@@ -271,7 +279,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     );
     background-color: var(
-        --spectrum-accordion-background-color-hover,
+        --spectrum-accordion-item-background-color-hover,
         var(--spectrum-global-color-gray-200)
     );
 }
@@ -279,14 +287,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Accordion-itemHeader:hover+.spectrum-Accordion-itemIndicator */
     color: var(
         --spectrum-accordion-icon-color-hover,
-        var(--spectrum-global-color-gray-800)
+        var(--spectrum-alias-icon-color-hover)
     );
 }
 #header:focus-visible:after {
     /* .spectrum-Accordion-itemHeader.focus-ring:after */
     background-color: var(
         --spectrum-accordion-item-border-left-color-key-focus,
-        var(--spectrum-alias-border-color-focus)
+        var(--spectrum-alias-border-color-key-focus)
     );
 }
 :host([open]) #header:hover {
@@ -309,6 +317,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader+.spectrum-Accordion-itemIndicator */
     color: var(
         --spectrum-accordion-icon-color-disabled,
-        var(--spectrum-global-color-gray-400)
+        var(--spectrum-alias-icon-color-disabled)
     );
 }

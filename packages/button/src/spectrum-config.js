@@ -61,10 +61,7 @@ const config = {
                         '.spectrum-Button--cta',
                         '.spectrum-Button--primary',
                         '.spectrum-Button--secondary',
-                        {
-                            name: 'negative',
-                            selector: '.spectrum-Button--warning',
-                        },
+                        '.spectrum-Button--negative',
                         '.spectrum-Button--overBackground',
                         '.spectrum-Button--secondary',
                     ],

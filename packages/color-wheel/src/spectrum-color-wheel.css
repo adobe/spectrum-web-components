@@ -16,7 +16,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-colorwheel-width: calc(
         var(--spectrum-global-dimension-size-125) * 16
     );
-    --spectrum-colorwheel-height: var(--spectrum-colorwheel-width);
+    --spectrum-colorwheel-height: var(
+        --spectrum-colorwheel-width,
+        var(--spectrum-global-dimension-size-2400)
+    );
 }
 :host([focused]) .handle {
     /* .spectrum-ColorWheel.is-focused .spectrum-ColorWheel-handle */
@@ -55,8 +58,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ColorWheel */
     position: relative;
     display: block;
-    width: var(--spectrum-colorwheel-width);
-    height: var(--spectrum-colorwheel-height);
+    width: var(
+        --spectrum-colorwheel-width,
+        var(--spectrum-global-dimension-size-2400)
+    );
+    height: var(
+        --spectrum-colorwheel-height,
+        var(--spectrum-global-dimension-size-2400)
+    );
     border-radius: var(--spectrum-colorwheel-border-radius);
     -webkit-user-select: none;
     user-select: none;
@@ -78,8 +87,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ColorWheel-gradient */
     position: relative;
     z-index: 0;
-    width: var(--spectrum-colorwheel-width);
-    height: var(--spectrum-colorwheel-height);
+    width: var(
+        --spectrum-colorwheel-width,
+        var(--spectrum-global-dimension-size-2400)
+    );
+    height: var(
+        --spectrum-colorwheel-height,
+        var(--spectrum-global-dimension-size-2400)
+    );
     border-radius: 100%;
     box-sizing: border-box;
     border-width: var(
@@ -110,7 +125,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host {
     /* .spectrum-ColorWheel */
-    --spectrum-colorwheel-border-color: var(--spectrum-colorarea-border-color);
+    --spectrum-colorwheel-border-color: var(
+        --spectrum-colorarea-border-color,
+        var(--spectrum-alias-border-color-translucent)
+    );
 }
 :host([disabled]) .innerCircle,
 :host([disabled]) .outerCircle {
@@ -118,14 +136,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ColorWheel.is-disabled .spectrum-ColorWheel-outerCircle */
     stroke: var(
         --spectrum-colorwheel-border-color-disabled,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-track-color-disabled)
     );
 }
 :host([disabled]) .outerCircle {
     /* .spectrum-ColorWheel.is-disabled .spectrum-ColorWheel-outerCircle */
     fill: var(
         --spectrum-colorwheel-fill-color-disabled,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-track-color-disabled)
     );
 }
 :host([disabled]) .segment {
@@ -134,13 +152,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 ::slotted([slot='gradient']) {
     /* .spectrum-ColorWheel-gradient */
-    border-color: var(--spectrum-colorwheel-border-color);
+    border-color: var(
+        --spectrum-colorwheel-border-color,
+        var(--spectrum-alias-border-color-translucent)
+    );
 }
 .innerCircle,
 .outerCircle {
     /* .spectrum-ColorWheel-innerCircle,
    * .spectrum-ColorWheel-outerCircle */
-    stroke: var(--spectrum-colorwheel-border-color);
+    stroke: var(
+        --spectrum-colorwheel-border-color,
+        var(--spectrum-alias-border-color-translucent)
+    );
 }
 @media (forced-colors: active) {
     :host {

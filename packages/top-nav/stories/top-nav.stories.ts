@@ -14,6 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-top-nav.js';
 import '../sp-top-nav-item.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';

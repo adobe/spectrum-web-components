@@ -13,43 +13,34 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([size='s']) {
     /* .spectrum-Link--sizeS */
     --spectrum-link-primary-text-size: var(
-        --spectrum-link-primary-s-text-size,
-        var(--spectrum-alias-item-text-size-s)
+        --spectrum-link-s-primary-text-size,
+        var(--spectrum-global-dimension-font-size-75)
     );
 }
 :host([size='m']) {
     /* .spectrum-Link--sizeM */
     --spectrum-link-primary-text-size: var(
-        --spectrum-link-primary-m-text-size,
-        var(--spectrum-alias-item-text-size-m)
+        --spectrum-link-m-primary-text-size,
+        var(--spectrum-global-dimension-font-size-100)
     );
 }
 :host([size='l']) {
     /* .spectrum-Link--sizeL */
     --spectrum-link-primary-text-size: var(
-        --spectrum-link-primary-l-text-size,
-        var(--spectrum-alias-item-text-size-l)
+        --spectrum-link-l-primary-text-size,
+        var(--spectrum-global-dimension-font-size-200)
     );
 }
 :host([size='xl']) {
     /* .spectrum-Link--sizeXL */
     --spectrum-link-primary-text-size: var(
-        --spectrum-link-primary-xl-text-size,
-        var(--spectrum-alias-item-text-size-xl)
+        --spectrum-link-xl-primary-text-size,
+        var(--spectrum-global-dimension-font-size-300)
     );
-}
-:host([size='l']),
-:host([size='m']),
-:host([size='s']),
-:host([size='xl']) {
-    /* .spectrum-Link--sizeL,
-   * .spectrum-Link--sizeM,
-   * .spectrum-Link--sizeS,
-   * .spectrum-Link--sizeXL */
-    font-size: var(--spectrum-link-primary-text-size);
 }
 a {
     /* .spectrum-Link */
+    font-size: var(--spectrum-link-primary-text-size);
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
     text-decoration: underline;
@@ -77,21 +68,21 @@ a:focus-visible {
 a {
     /* .spectrum-Link */
     color: var(
-        --spectrum-link-primary-m-text-color,
+        --spectrum-link-m-primary-text-color,
         var(--spectrum-global-color-blue-600)
     );
 }
 a:hover {
     /* .spectrum-Link:hover */
     color: var(
-        --spectrum-link-primary-m-text-color-hover,
+        --spectrum-link-m-primary-text-color-hover,
         var(--spectrum-global-color-blue-600)
     );
 }
 a:active {
     /* .spectrum-Link:active */
     color: var(
-        --spectrum-link-primary-m-text-color-down,
+        --spectrum-link-m-primary-text-color-down,
         var(--spectrum-global-color-blue-700)
     );
 }
@@ -100,7 +91,7 @@ a:active {
 a:focus-visible {
     /* .spectrum-Link.focus-ring */
     color: var(
-        --spectrum-link-primary-m-text-color-key-focus,
+        --spectrum-link-m-primary-text-color-key-focus,
         var(--spectrum-alias-text-color-key-focus)
     );
 }
@@ -123,54 +114,28 @@ a:focus-visible {
 :host([over-background]) a {
     /* .spectrum-Link--overBackground */
     color: var(
-        --spectrum-link-over-background-m-text-color,
-        var(--spectrum-alias-text-color-over-background)
+        --spectrum-link-m-primary-overbackground-text-color,
+        var(--spectrum-alias-text-color-overbackground)
     );
 }
 :host([over-background]) a:hover {
     /* .spectrum-Link--overBackground:hover */
     color: var(
-        --spectrum-link-over-background-m-text-color-hover,
-        var(--spectrum-alias-text-color-over-background)
+        --spectrum-link-m-primary-overbackground-text-color-hover,
+        var(--spectrum-alias-text-color-overbackground)
     );
 }
 :host([over-background]) a:active {
     /* .spectrum-Link--overBackground:active */
     color: var(
-        --spectrum-link-over-background-m-text-color-down,
-        var(--spectrum-alias-text-color-over-background)
+        --spectrum-link-m-primary-overbackground-text-color-down,
+        var(--spectrum-alias-text-color-overbackground)
     );
 }
 :host([over-background]) a:focus {
     /* .spectrum-Link--overBackground:focus */
     color: var(
-        --spectrum-link-over-background-m-text-color-key-focus,
-        var(--spectrum-alias-text-color-over-background)
+        --spectrum-link-m-primary-overbackground-text-color-key-focus,
+        var(--spectrum-alias-text-color-overbackground)
     );
-}
-@media (forced-colors: active) {
-    .spectrum-Link--secondary {
-    }
-    .spectrum-Link--secondary:hover {
-    }
-    .spectrum-Link--secondary:active {
-    }
-    .spectrum-Link--secondary:focus {
-    }
-}
-.spectrum-Link--secondary {
-    /* .spectrum-Link--secondary */
-    color: linktext;
-}
-.spectrum-Link--secondary:hover {
-    /* .spectrum-Link--secondary:hover */
-    color: linktext;
-}
-.spectrum-Link--secondary:active {
-    /* .spectrum-Link--secondary:active */
-    color: linktext;
-}
-.spectrum-Link--secondary:focus {
-    /* .spectrum-Link--secondary:focus */
-    color: linktext;
 }

@@ -24,6 +24,48 @@ const config = {
                     selector: '.is-disabled',
                     name: 'disabled',
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    values: [
+                        {
+                            name: '50',
+                            selector: '.spectrum-Avatar--size50',
+                        },
+                        {
+                            name: '75',
+                            selector: '.spectrum-Avatar--size75',
+                        },
+                        {
+                            name: '100',
+                            selector: '.spectrum-Avatar--size100',
+                        },
+                        {
+                            name: '200',
+                            selector: '.spectrum-Avatar--size200',
+                        },
+                        {
+                            name: '300',
+                            selector: '.spectrum-Avatar--size300',
+                        },
+                        {
+                            name: '400',
+                            selector: '.spectrum-Avatar--size400',
+                        },
+                        {
+                            name: '500',
+                            selector: '.spectrum-Avatar--size500',
+                        },
+                        {
+                            name: '600',
+                            selector: '.spectrum-Avatar--size600',
+                        },
+                        {
+                            name: '700',
+                            selector: '.spectrum-Avatar--size700',
+                        },
+                    ],
+                },
             ],
         },
     ],

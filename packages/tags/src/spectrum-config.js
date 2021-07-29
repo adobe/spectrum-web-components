@@ -11,19 +11,12 @@ governing permissions and limitations under the License.
 */
 
 const config = {
-    spectrum: 'tags',
+    spectrum: 'tag',
     components: [
-        {
-            name: 'tags',
-            host: {
-                selector: '.spectrum-Tags',
-            },
-            exclude: [/\.spectrum-Tags-item/],
-        },
         {
             name: 'tag',
             host: {
-                selector: '.spectrum-Tags-item',
+                selector: '.spectrum-Tag',
             },
             attributes: [
                 {
@@ -42,14 +35,27 @@ const config = {
                     name: 'selected',
                 },
                 {
-                    selector: '.spectrum-Tags-item--deletable',
+                    selector: '.spectrum-Tag--removable',
                     type: 'boolean',
                     name: 'deletable',
                 },
                 {
-                    selector: '.spectrum-Tags-item--removable',
-                    type: 'boolean',
-                    name: 'removable',
+                    type: 'enum',
+                    name: 'size',
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Tag--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Tag--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Tag--sizeL',
+                        },
+                    ],
                 },
             ],
             classes: [

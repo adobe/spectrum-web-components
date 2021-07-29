@@ -109,7 +109,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     --spectrum-thumbnail-border-color: var(--spectrum-alias-dropshadow-color);
     --spectrum-thumbnail-border-color-focus: var(
-        --spectrum-alias-border-color-focus,
+        --spectrum-alias-border-color-key-focus,
         var(--spectrum-global-color-blue-400)
     );
     --spectrum-thumbnail-border-color-selected: var(

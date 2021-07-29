@@ -48,7 +48,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/splitview": "^3.0.2"
+        "@spectrum-css/splitview": "beta"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

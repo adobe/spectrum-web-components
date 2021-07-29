@@ -71,7 +71,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     height: var(--spectrum-tabs-focus-ring-height);
     margin-top: calc(
         var(--spectrum-tabs-focus-ring-height) / -2 +
-            var(--spectrum-tabs-rule-size) / 2
+            var(--spectrum-tabs-divider-size) / 2
     );
     border: var(--spectrum-tabs-focus-ring-size) solid transparent;
     border-radius: var(--spectrum-tabs-focus-ring-border-radius);
@@ -140,14 +140,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Tabs-item.focus-ring:before */
     border-color: var(
         --spectrum-tabs-m-focus-ring-color,
-        var(--spectrum-alias-border-color-focus)
+        var(--spectrum-alias-border-color-key-focus)
     );
 }
 :host(:focus-visible) ::slotted([slot='icon']) {
     /* .spectrum-Tabs-item.focus-ring .spectrum-Icon */
     color: var(
         --spectrum-tabs-m-icon-color-key-focus,
-        var(--spectrum-alias-icon-color-focus)
+        var(--spectrum-alias-icon-color-key-focus)
     );
 }
 :host([disabled]) {

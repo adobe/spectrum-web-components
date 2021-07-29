@@ -26,19 +26,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-font-weight-bold)
     );
 }
-.spectrum-Code .spectrum-Code-emphasis,
+.spectrum-Code .spectrum-Code-emphasized,
 .spectrum-Code em {
-    /* .spectrum-Code .spectrum-Code-emphasis,
+    /* .spectrum-Code .spectrum-Code-emphasized,
    * .spectrum-Code em */
     font-style: var(
-        --spectrum-code-m-emphasis-text-font-style,
+        --spectrum-code-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
     );
 }
 .spectrum-Code--serif {
     /* .spectrum-Code--serif */
     font-family: var(
-        --spectrum-body-serif-m-text-font-family,
+        --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     );
 }
@@ -54,7 +54,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     line-height: var(
         --spectrum-code-xl-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-xl-text-font-style,
@@ -83,7 +83,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     line-height: var(
         --spectrum-code-l-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-l-text-font-style,
@@ -112,7 +112,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     line-height: var(
         --spectrum-code-m-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-m-text-font-style,
@@ -133,7 +133,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Code--sizeS */
     font-size: var(
         --spectrum-code-s-text-size,
-        var(--spectrum-alias-font-size-default)
+        var(--spectrum-global-dimension-font-size-100)
     );
     font-weight: var(
         --spectrum-code-s-text-font-weight,
@@ -141,7 +141,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     line-height: var(
         --spectrum-code-s-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-s-text-font-style,
@@ -170,7 +170,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     line-height: var(
         --spectrum-code-xs-text-line-height,
-        var(--spectrum-alias-code-text-line-height)
+        var(--spectrum-alias-body-text-line-height)
     );
     font-style: var(
         --spectrum-code-xs-text-font-style,

@@ -123,28 +123,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr'][compact]:not([quiet])) ::slotted(*:first-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     border-top-left-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='rtl'][compact]:not([quiet])) ::slotted(*:first-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     border-top-right-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='ltr'][compact]:not([quiet])) ::slotted(*:first-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     border-bottom-left-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='rtl'][compact]:not([quiet])) ::slotted(*:first-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     border-bottom-right-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
@@ -152,7 +152,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     margin-right: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -161,7 +161,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     margin-left: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -169,28 +169,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr'][compact]:not([quiet])) ::slotted(*:last-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     border-top-right-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='rtl'][compact]:not([quiet])) ::slotted(*:last-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     border-top-left-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='ltr'][compact]:not([quiet])) ::slotted(*:last-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     border-bottom-right-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='rtl'][compact]:not([quiet])) ::slotted(*:last-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     border-bottom-left-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
@@ -198,7 +198,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     margin-left: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -207,7 +207,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     margin-right: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -236,7 +236,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
     margin-left: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -245,7 +245,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
     margin-right: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -254,7 +254,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
     margin-right: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -263,7 +263,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
     margin-left: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -276,13 +276,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
     margin-top: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
     margin-bottom: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -290,28 +290,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr'][compact][vertical]:not([quiet])) ::slotted(*:first-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
     border-top-left-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='rtl'][compact][vertical]:not([quiet])) ::slotted(*:first-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
     border-top-right-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='ltr'][compact][vertical]:not([quiet])) ::slotted(*:first-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
     border-top-right-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='rtl'][compact][vertical]:not([quiet])) ::slotted(*:first-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
     border-top-left-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
@@ -320,7 +320,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: 0;
     margin-bottom: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );
@@ -328,28 +328,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr'][compact][vertical]:not([quiet])) ::slotted(*:last-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
     border-bottom-left-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='rtl'][compact][vertical]:not([quiet])) ::slotted(*:last-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
     border-bottom-right-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='ltr'][compact][vertical]:not([quiet])) ::slotted(*:last-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
     border-bottom-right-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
 :host([dir='rtl'][compact][vertical]:not([quiet])) ::slotted(*:last-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
     border-bottom-left-radius: var(
-        --spectrum-actionbutton-m-border-radius,
+        --spectrum-actionbutton-m-texticon-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
 }
@@ -358,7 +358,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-radius: 0;
     margin-top: calc(
         -1 * var(
-                --spectrum-actionbutton-m-border-size,
+                --spectrum-actionbutton-m-texticon-border-size,
                 var(--spectrum-alias-border-size-thin)
             ) / 2
     );

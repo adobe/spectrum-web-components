@@ -103,7 +103,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     animation-delay: calc(
         var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
             var(
-                --spectrum-coachmark-animation-inticator-ring-center-delay-multiple,
+                --spectrum-coachmark-animation-indicator-ring-center-delay-multiple,
                 -0.66
             )
     );
@@ -113,7 +113,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     animation-delay: calc(
         var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
             var(
-                --spectrum-coachmark-animation-inticator-ring-outer-delay-multiple,
+                --spectrum-coachmark-animation-indicator-ring-outer-delay-multiple,
                 -1
             )
     );
@@ -176,7 +176,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     animation-delay: calc(
         var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
             var(
-                --spectrum-coachmark-animation-inticator-ring-inner-delay-multiple,
+                --spectrum-coachmark-animation-indicator-ring-inner-delay-multiple,
                 -0.5
             )
     );
@@ -239,7 +239,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     animation-delay: calc(
         var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
             var(
-                --spectrum-coachmark-quiet-animation-inticator-ring-inner-delay-multiple,
+                --spectrum-coachmark-quiet-animation-indicator-ring-inner-delay-multiple,
                 -0.33
             )
     );

@@ -18,6 +18,7 @@ import {
     TemplateResult,
     PropertyValues,
     ifDefined,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import '@spectrum-web-components/asset/sp-asset.js';
@@ -42,9 +43,14 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot footer - Footer text
  */
-export class Card extends ObserveSlotPresence(
-    FocusVisiblePolyfillMixin(SpectrumElement),
-    ['[slot="cover-photo"]', '[slot="preview"]']
+export class Card extends SizedMixin(
+    ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
+        '[slot="cover-photo"]',
+        '[slot="preview"]',
+    ]),
+    {
+        validSizes: ['s', 'm'],
+    }
 ) {
     public static get styles(): CSSResultArray {
         return [headingStyles, detailStyles, cardStyles];
@@ -64,9 +70,6 @@ export class Card extends ObserveSlotPresence(
 
     @property({ type: Boolean, reflect: true })
     public horizontal = false;
-
-    @property({ type: Boolean, reflect: true })
-    public small = false;
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
@@ -152,9 +155,7 @@ export class Card extends ObserveSlotPresence(
     protected get renderHeading(): TemplateResult {
         return html`
             <div class="title spectrum-Heading spectrum-Heading--sizeXS">
-                <slot name="heading">
-                    ${this.heading}
-                </slot>
+                <slot name="heading">${this.heading}</slot>
             </div>
         `;
     }
@@ -195,9 +196,7 @@ export class Card extends ObserveSlotPresence(
     private get renderSubtitleAndDescription(): TemplateResult {
         return html`
             <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
-                <slot name="subheading">
-                    ${this.subheading}
-                </slot>
+                <slot name="subheading">${this.subheading}</slot>
             </div>
             <slot name="description"></slot>
         `;
@@ -217,7 +216,7 @@ export class Card extends ObserveSlotPresence(
                       </sp-quick-actions>
                   `
                 : html``}
-            ${this.variant === 'quiet' && this.small
+            ${this.variant === 'quiet' && this.size === 's'
                 ? html`
                       <sp-quick-actions class="spectrum-QuickActions actions">
                           <slot name="actions"></slot>
@@ -231,7 +230,7 @@ export class Card extends ObserveSlotPresence(
                     ${this.variant === 'gallery'
                         ? this.renderSubtitleAndDescription
                         : html``}
-                    ${this.variant !== 'quiet' || !this.small
+                    ${this.variant !== 'quiet' || this.size !== 's'
                         ? html`
                               <div class="actionButton">
                                   <slot name="actions"></slot>

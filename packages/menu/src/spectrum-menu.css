@@ -13,65 +13,72 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     /* .spectrum-Menu */
     --spectrum-menu-margin-x: var(--spectrum-global-dimension-size-40);
-    --spectrum-listitem-heading-text-size: var(
+    --spectrum-listitem-texticon-heading-text-size: var(
         --spectrum-global-dimension-font-size-50
     );
-    --spectrum-listitem-heading-text-font-weight: 400;
-    --spectrum-listitem-heading-text-transform: uppercase;
-    --spectrum-listitem-heading-letter-spacing: 0.06em;
-    --spectrum-listitem-heading-margin: var(--spectrum-global-dimension-size-75)
+    --spectrum-listitem-texticon-heading-text-font-weight: 400;
+    --spectrum-listitem-texticon-heading-text-transform: uppercase;
+    --spectrum-listitem-texticon-heading-letter-spacing: 0.06em;
+    --spectrum-listitem-texticon-heading-margin: var(
+            --spectrum-global-dimension-size-75
+        )
         0 0 0;
-    --spectrum-listitem-heading-padding: 0
+    --spectrum-listitem-texticon-heading-padding: 0
         var(--spectrum-global-dimension-size-450) 0
         var(--spectrum-global-dimension-size-150);
-    --spectrum-listitem-padding-y: var(--spectrum-global-dimension-size-85);
-    --spectrum-listitem-icon-margin-top: var(
-        --spectrum-global-dimension-size-50
+    --spectrum-listitem-texticon-padding-y: var(
+        --spectrum-global-dimension-size-85
     );
-    --spectrum-listitem-label-line-height: 1.3;
-    --spectrum-listitem-heading-line-height: var(
+    --spectrum-listitem-texticon-label-line-height: 1.3;
+    --spectrum-listitem-texticon-heading-line-height: var(
         --spectrum-alias-body-text-line-height,
         var(--spectrum-global-font-line-height-medium)
     );
-    --spectrum-listitem-divider-size: var(
-        --spectrum-listitem-m-divider-size,
-        var(--spectrum-alias-border-size-thick)
+    --spectrum-listitem-texticon-padding-left: var(
+        --spectrum-listitem-m-texticon-padding-left
     );
-    --spectrum-listitem-divider-padding: var(
-        --spectrum-listitem-m-divider-padding,
-        3px
+    --spectrum-listitem-textthumbnail-padding-left: var(
+        --spectrum-listitem-m-textthumbnail-padding-left
     );
-    --spectrum-listitem-focus-indicator-size: var(
-        --spectrum-listitem-m-focus-indicator-size,
-        var(--spectrum-alias-border-size-thick)
+    --spectrum-listitem-texticon-text-size: var(
+        --spectrum-listitem-m-texticon-text-size,
+        var(--spectrum-global-dimension-font-size-100)
     );
-    --spectrum-listitem-text-font-weight: var(
-        --spectrum-listitem-m-text-font-weight,
+    --spectrum-listitem-texticon-text-font-weight: var(
+        --spectrum-listitem-m-texticon-text-font-weight,
         var(--spectrum-alias-body-text-font-weight)
     );
-    --spectrum-listitem-text-size: var(
-        --spectrum-listitem-m-text-size,
-        var(--spectrum-alias-item-text-size-m)
+    --spectrum-listitem-texticon-icon-gap: var(
+        --spectrum-listitem-m-texticon-icon-gap,
+        var(--spectrum-global-dimension-size-100)
     );
-    --spectrum-listitem-height: var(
-        --spectrum-listitem-m-height,
-        var(--spectrum-alias-item-height-m)
+    --spectrum-listitem-texticon-divider-size: var(
+        --spectrum-listitem-m-texticon-divider-size,
+        var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-listitem-icon-gap: var(
-        --spectrum-listitem-m-icon-gap,
-        var(--spectrum-alias-item-workflow-icon-gap-m)
+    --spectrum-listitem-texticon-divider-padding: var(
+        --spectrum-listitem-m-texticon-divider-padding,
+        var(--spectrum-global-dimension-static-size-40)
     );
-    --spectrum-listitem-padding-left: var(
-        --spectrum-listitem-m-padding-left,
-        var(--spectrum-alias-item-workflow-padding-left-m)
+    --spectrum-listitem-texticon-ui-icon-margin-top: var(
+        --spectrum-listitem-m-texticon-ui-icon-margin-top,
+        var(--spectrum-global-dimension-size-125)
     );
-    --spectrum-listitem-padding-right: var(
-        --spectrum-listitem-m-padding-right,
-        var(--spectrum-alias-item-padding-m)
+    --spectrum-listitem-texticon-ui-icon-width: var(
+        --spectrum-listitem-m-texticon-ui-icon-width,
+        var(--spectrum-alias-ui-icon-checkmark-size-100)
     );
-    --spectrum-listitem-thumbnail-padding-left: var(
-        --spectrum-listitem-m-thumbnail-padding-left,
-        var(--spectrum-alias-item-padding-m)
+    --spectrum-listitem-texticon-padding-right: var(
+        --spectrum-listitem-m-texticon-padding-right,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-listitem-texticon-focus-indicator-size: var(
+        --spectrum-listitem-m-texticon-focus-indicator-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+    --spectrum-listitem-texticon-height: var(
+        --spectrum-listitem-m-texticon-height,
+        var(--spectrum-global-dimension-size-400)
     );
     display: inline-block;
     box-sizing: border-box;
@@ -91,16 +98,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][selects]) ::slotted(sp-menu-item) {
     /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
-    padding-right: var(--spectrum-listitem-selectable-padding-right);
+    padding-right: var(--spectrum-listitem-texticon-selectable-padding-right);
 }
 :host([dir='rtl'][selects]) ::slotted(sp-menu-item) {
     /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
-    padding-left: var(--spectrum-listitem-selectable-padding-right);
+    padding-left: var(--spectrum-listitem-texticon-selectable-padding-right);
 }
 :host([dir='ltr'][selects]) ::slotted(sp-menu-item[selected]) {
     /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-right: calc(
-        var(--spectrum-listitem-padding-right) -
+        var(--spectrum-listitem-texticon-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
@@ -110,7 +117,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl'][selects]) ::slotted(sp-menu-item[selected]) {
     /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-left: calc(
-        var(--spectrum-listitem-padding-right) -
+        var(--spectrum-listitem-texticon-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
@@ -129,7 +136,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     /* .spectrum-Menu,
    * .spectrum-Menu-item */
     background-color: var(
-        --spectrum-listitem-m-background-color,
+        --spectrum-listitem-m-texticon-background-color,
         var(--spectrum-alias-background-color-transparent)
     );
 }
