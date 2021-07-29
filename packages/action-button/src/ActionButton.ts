@@ -41,7 +41,7 @@ export type LongpressEvent = {
 type ActionButtonSize = Exclude<ElementSize, 'xxl'>;
 
 /**
- * @element sp-card
+ * @element sp-action-button
  *
  * @fires change - Announces a change in the `selected` property of an action button
  * @fires longpress - Synthesizes a "longpress" interaction that signifies a
