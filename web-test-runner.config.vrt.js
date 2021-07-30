@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import standard from './web-test-runner.config.ci.js';
 
-standard.concurrency = 2;
+standard.concurrency = 4;
 standard.testsFinishTimeout = 200000;
 standard.testFramework.config.timeout = 100000;
 
