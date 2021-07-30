@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultGroup,
     CSSResult,
     supportsAdoptingStyleSheets,
 } from '@spectrum-web-components/base';
@@ -42,7 +43,7 @@ declare global {
 
 type FragmentType = 'color' | 'scale' | 'core' | 'app';
 type SettableFragmentTypes = 'color' | 'scale';
-type FragmentMap = Map<string, { name: string; styles: CSSResult }>;
+type FragmentMap = Map<string, { name: string; styles: CSSResultGroup }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
 export type Color = 'light' | 'lightest' | 'dark' | 'darkest';
 export type Scale = 'medium' | 'large';
@@ -173,7 +174,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             ): void => {
                 const currentStyles = kindFragments.get(name);
                 if (currentStyles && (!kind || this.hasAttribute(kind))) {
-                    acc.push(currentStyles.styles);
+                    acc.push(currentStyles.styles as CSSResult);
                 }
             };
             if (kind === 'app' || kind === 'core') {
@@ -326,7 +327,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             for (const [kind, fragments] of Theme.themeFragmentsByKind) {
                 for (const [name, { styles }] of fragments) {
                     if (name === 'default') continue;
-                    let cssText = styles.cssText;
+                    let cssText = (styles as CSSResult).cssText;
                     if (!Theme.defaultFragments.has(name as FragmentName)) {
                         cssText = cssText.replace(
                             ':host',
@@ -344,7 +345,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else if (supportsAdoptingStyleSheets) {
             const styleSheets: CSSStyleSheet[] = [];
             for (const style of styles) {
-                styleSheets.push(style.styleSheet as CSSStyleSheet);
+                styleSheets.push(
+                    (style as CSSResult).styleSheet as CSSStyleSheet
+                );
             }
             this.shadowRoot.adoptedStyleSheets = styleSheets;
         } else {
@@ -352,7 +355,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             styleNodes.forEach((element) => element.remove());
             styles.forEach((s) => {
                 const style = document.createElement('style');
-                style.textContent = s.cssText;
+                style.textContent = (s as CSSResult).cssText;
                 this.shadowRoot.appendChild(style);
             });
         }
@@ -361,7 +364,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     static registerThemeFragment(
         name: FragmentName,
         kind: FragmentType,
-        styles: CSSResult
+        styles: CSSResultGroup
     ): void {
         const fragmentMap = Theme.themeFragmentsByKind.get(kind) || new Map();
         if (fragmentMap.size === 0) {

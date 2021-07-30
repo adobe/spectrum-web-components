@@ -95,13 +95,6 @@ export class Card extends LikeAnchor(
         return this.getSlotContentPresence('[slot="preview"]');
     }
 
-    public constructor() {
-        super();
-        this.addEventListener('focusin', this.handleFocusin);
-        this.shadowRoot.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
-    }
-
     public click(): void {
         this.likeAnchor?.click();
     }
@@ -315,5 +308,8 @@ export class Card extends LikeAnchor(
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('pointerdown', this.handlePointerdown);
+        this.addEventListener('focusin', this.handleFocusin);
+        this.shadowRoot.addEventListener('focusin', this.handleFocusin);
+        this.addEventListener('focusout', this.handleFocusout);
     }
 }

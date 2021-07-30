@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '../sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -116,6 +116,7 @@ interface Properties {
     quiet?: boolean;
     vertical?: boolean;
     selects?: 'none' | 'single' | 'multiple';
+    [prop: string]: any;
 }
 
 const template = (args: Properties): TemplateResult => {

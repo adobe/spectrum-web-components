@@ -120,7 +120,7 @@ export class Tabs extends SizedMixin(Focusable) {
             if (typeof tab.updateComplete !== 'undefined') {
                 return tab.updateComplete;
             }
-            return Promise.resolve();
+            return Promise.resolve(true);
         });
         Promise.all(tabUpdateCompletes).then(() => super.manageAutoFocus());
     }
@@ -397,8 +397,8 @@ export class Tabs extends SizedMixin(Focusable) {
         return;
     };
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.tabChangePromise;
         return complete;
     }

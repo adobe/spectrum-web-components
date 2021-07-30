@@ -175,7 +175,11 @@ describe('SplitView', () => {
     it('resizes when pointer moves and resizable is enabled [ltr]', async () => {
         let pointerId = -1;
         const splitTotalWidth = 400;
-        const el = await fixture<SplitView>(
+        const el = await fixture<
+            SplitView & {
+                splitterPos: number;
+            }
+        >(
             html`
                 <sp-split-view
                     resizable
@@ -196,8 +200,8 @@ describe('SplitView', () => {
         ) as HTMLDivElement;
         splitter.setPointerCapture = (id: number) => (pointerId = id);
         splitter.releasePointerCapture = (id: number) => (pointerId = id);
-        let pos = el.splitterPos || 0;
-        expect(el.splitterPos || 0).to.equal(200);
+        let pos = el.splitterPos;
+        expect(el.splitterPos).to.equal(200);
 
         splitter.dispatchEvent(
             new PointerEvent('pointerdown', { pointerId: 1 })
@@ -206,47 +210,53 @@ describe('SplitView', () => {
         expect(pointerId).to.equal(1);
 
         pos -= 10;
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: pos,
             })
         );
         await elementUpdated(el);
-        expect(Math.round(el.splitterPos || 0)).to.equal(
+        expect(Math.round(el.splitterPos)).to.equal(
             pos - el.getBoundingClientRect().left
         );
 
         // don't collapse to start
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: 0,
             })
         );
         await elementUpdated(el);
-        expect(el.splitterPos || 0).to.equal(el.primaryMin);
+        expect(el.splitterPos).to.equal(el.primaryMin);
         expect(getComputedStyle(splitter).cursor).to.equal('e-resize');
 
         // don't collapse to end
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: splitTotalWidth,
             })
         );
         await elementUpdated(el);
-        expect(el.splitterPos || 0).to.equal(splitTotalWidth - el.secondaryMin);
+        expect(el.splitterPos, '350 first time').to.equal(
+            splitTotalWidth - el.secondaryMin
+        );
         expect(getComputedStyle(splitter).cursor).to.equal('w-resize');
 
         splitter.dispatchEvent(new PointerEvent('pointerup'));
         await elementUpdated(el);
         // don't change anything when triggering mouseevent with right button click
-        splitter.dispatchEvent(new MouseEvent('pointerdown', { button: 2 }));
+        splitter.dispatchEvent(
+            new MouseEvent('pointerdown', { button: 2, cancelable: true })
+        );
         await elementUpdated(el);
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: 0,
             })
         );
-        expect(el.splitterPos || 0).to.equal(splitTotalWidth - el.secondaryMin);
+        expect(el.splitterPos, '350 second time, because right click').to.equal(
+            splitTotalWidth - el.secondaryMin
+        );
     });
 
     it('resizes when pointer moves and resizable is enabled [rtl]', async () => {
@@ -283,7 +293,7 @@ describe('SplitView', () => {
         expect(pointerId).to.equal(1);
 
         pos = el.getBoundingClientRect().right - 100;
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: pos,
             })
@@ -293,7 +303,7 @@ describe('SplitView', () => {
             el.getBoundingClientRect().right - pos
         );
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: 0,
             })
@@ -302,7 +312,7 @@ describe('SplitView', () => {
         expect(el.splitterPos || 0).to.equal(splitTotalWidth - el.secondaryMin);
         expect(getComputedStyle(splitter).cursor).to.equal('e-resize');
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: el.getBoundingClientRect().right,
             })
@@ -339,7 +349,7 @@ describe('SplitView', () => {
         await elementUpdated(el);
         expect(pointerId).to.equal(1);
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: -10,
             })
@@ -384,7 +394,7 @@ describe('SplitView', () => {
         await elementUpdated(el);
         expect(pointerId).to.equal(1);
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: splitTotalWidth + 10,
             })
@@ -427,7 +437,7 @@ describe('SplitView', () => {
         await elementUpdated(el);
         expect(pointerId).to.equal(1);
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientY: 0,
             })
@@ -473,7 +483,7 @@ describe('SplitView', () => {
         await elementUpdated(el);
         expect(pointerId).to.equal(1);
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientY: splitTotalHeight + 10,
             })
@@ -519,7 +529,7 @@ describe('SplitView', () => {
         await elementUpdated(el);
         expect(pointerId).to.equal(1);
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: 40,
             })
@@ -529,7 +539,7 @@ describe('SplitView', () => {
         expect(splitter.classList.contains('is-collapsed-start')).to.be.false;
         expect(getComputedStyle(splitter).cursor).to.equal('ew-resize');
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: -10,
             })
@@ -540,7 +550,7 @@ describe('SplitView', () => {
         expect(splitter.classList.contains('is-collapsed-start')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('e-resize');
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: el.getBoundingClientRect().right - 10,
             })
@@ -550,7 +560,7 @@ describe('SplitView', () => {
         expect(splitter.classList.contains('is-collapsed-end')).to.be.false;
         expect(getComputedStyle(splitter).cursor).to.equal('ew-resize');
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: el.getBoundingClientRect().right,
             })
@@ -595,7 +605,7 @@ describe('SplitView', () => {
         await elementUpdated(el);
         expect(pointerId).to.equal(1);
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientY: 40,
             })
@@ -605,7 +615,7 @@ describe('SplitView', () => {
         expect(splitter.classList.contains('is-collapsed-start')).to.be.false;
         expect(getComputedStyle(splitter).cursor).to.equal('ns-resize');
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientY: -10,
             })
@@ -616,7 +626,7 @@ describe('SplitView', () => {
         expect(splitter.classList.contains('is-collapsed-start')).to.be.true;
         expect(getComputedStyle(splitter).cursor).to.equal('s-resize');
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientY: splitTotalHeight - 40,
             })
@@ -626,7 +636,7 @@ describe('SplitView', () => {
         expect(splitter.classList.contains('is-collapsed-end')).to.be.false;
         expect(getComputedStyle(splitter).cursor).to.equal('ns-resize');
 
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientY: splitTotalHeight + 50,
             })
@@ -962,7 +972,7 @@ describe('SplitView', () => {
         expect(pointerId).to.equal(1);
 
         pos -= 10;
-        el.dispatchEvent(
+        splitter.dispatchEvent(
             new PointerEvent('pointermove', {
                 clientX: pos,
             })

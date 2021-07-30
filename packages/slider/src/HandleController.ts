@@ -427,20 +427,23 @@ export class HandleController implements Controller {
                 class=${classMap(classes)}
                 name=${model.name}
                 style=${styleMap(style)}
-                @manage=${streamingListener(
-                    {
-                        type: 'pointerdown',
-                        fn: (event) => this.handlePointerdown(event, model),
-                    },
-                    {
-                        type: 'pointermove',
-                        fn: (event) => this.handlePointermove(event, model),
-                    },
-                    {
-                        type: ['pointerup', 'pointercancel'],
-                        fn: (event) => this.handlePointerup(event, model),
-                    }
-                )}
+                ${streamingListener({
+                    start: [
+                        'pointerdown',
+                        (event: PointerEvent) =>
+                            this.handlePointerdown(event, model),
+                    ],
+                    streamInside: [
+                        'pointermove',
+                        (event: PointerEvent) =>
+                            this.handlePointermove(event, model),
+                    ],
+                    end: [
+                        ['pointerup', 'pointercancel'],
+                        (event: PointerEvent) =>
+                            this.handlePointerup(event, model),
+                    ],
+                })}
                 role="presentation"
             >
                 <input

@@ -23,7 +23,7 @@ import {
 } from '../../../test/testing-helpers.js';
 
 import '../sp-color-wheel.js';
-import { ColorWheel } from '..';
+import { ColorWheel } from '../';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';

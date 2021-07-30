@@ -16,7 +16,7 @@ import {
     CSSResultArray,
     property,
     customElement,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import logoStyles from './adobe-logo.css';
 
 @customElement('docs-spectrum-logo')
