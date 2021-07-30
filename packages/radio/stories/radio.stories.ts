@@ -13,7 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-radio.js';
 import '../sp-radio-group.js';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     component: 'sp-radio',
@@ -80,11 +80,12 @@ interface StoryArgs {
     emphasized?: boolean;
     invalid?: boolean;
     readonly?: boolean;
+    [prop: string]: any;
 }
 
 function renderRadio(args: StoryArgs): TemplateResult {
     return html`
-        <sp-radio ...=${spreadProps(args)}>Radio</sp-radio>
+        <sp-radio ${spreadProps(args)}>Radio</sp-radio>
     `;
 }
 export const Default = (args: StoryArgs): TemplateResult => renderRadio(args);
@@ -107,7 +108,7 @@ Emphasized.args = {
 
 export const Autofocus = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-radio autofocus ...=${spreadProps(args)}>Radio</sp-radio>
+        <sp-radio autofocus ${spreadProps(args)}>Radio</sp-radio>
     `;
 };
 
@@ -123,7 +124,7 @@ Disabled.args = {
 
 export const labelBelow = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-radio label-below ...=${spreadProps(args)}>Radio</sp-radio>
+        <sp-radio label-below ${spreadProps(args)}>Radio</sp-radio>
     `;
 };
 labelBelow.story = {

@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 import '../sp-tabs.js';
 import '../sp-tab.js';
 import { Tabs, Tab } from '../';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { html } from 'lit/static-html.js';
 
 describe('Tab', () => {
     it('loads default tab accessibly', async () => {

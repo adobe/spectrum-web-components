@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, property, UpdatingElement } from 'lit-element';
+import { LitElement, ReactiveElement } from 'lit';
+import { property } from 'lit/decorators.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -55,7 +56,7 @@ const canManageContentDirection = (el: ContentDirectionManager): boolean =>
     typeof el.startManagingContentDirection !== 'undefined' ||
     el.tagName === 'SP-THEME';
 
-export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
+export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
     class SlotTextObservingElement extends constructor {

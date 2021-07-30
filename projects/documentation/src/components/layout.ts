@@ -40,26 +40,6 @@ import { copyText } from './copy-to-clipboard.js';
 import layoutStyles from './layout.css';
 import { nothing } from 'lit-html';
 
-type RequestIdleCallbackHandle = any;
-
-type RequestIdleCallbackOptions = {
-    timeout: number;
-};
-type RequestIdleCallbackDeadline = {
-    readonly didTimeout: boolean;
-    timeRemaining: () => number;
-};
-
-declare global {
-    interface Window {
-        requestIdleCallback: (
-            callback: (deadline: RequestIdleCallbackDeadline) => void,
-            opts?: RequestIdleCallbackOptions
-        ) => RequestIdleCallbackHandle;
-        cancelIdleCallback: (handle: RequestIdleCallbackHandle) => void;
-    }
-}
-
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
 const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';

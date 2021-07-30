@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import {
     elementUpdated,
     fixture,
-    html,
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
@@ -21,8 +20,8 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
 import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
-import { TemplateResult } from '@spectrum-web-components/base';
-import { render } from 'lit-html';
+import { TemplateResult, html } from '@spectrum-web-components/base';
+import { render } from 'lit';
 import { sendKeys } from '@web/test-runner-commands';
 
 const wrap = () => html`

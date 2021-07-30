@@ -9,8 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { html, TemplateResult, ifDefined } from '@spectrum-web-components/base';
 
 import '../sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
