@@ -9,12 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult, html } from '@spectrum-web-components/base';
 
 import '../sp-slider.js';
 import '../sp-slider-handle.js';
 import { Slider, SliderHandle, variants } from '../';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     component: 'sp-slider',
@@ -70,6 +70,7 @@ export interface StoryArgs {
     labelVisibility?: string;
     onInput?: (val: string) => void;
     onChange?: (val: string) => void;
+    [prop: string]: any;
 }
 
 const handleEvent =

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spreadProps } from '../../../test/lit-helpers.js';
 import '@spectrum-web-components/action-group';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
@@ -31,6 +31,7 @@ interface Properties {
     holdAffordance?: boolean;
     icon?: TemplateResult;
     label?: string;
+    [prop: string]: any;
 }
 
 function renderButton(args: Properties): TemplateResult {
@@ -91,7 +92,7 @@ toggles.args = {
 
 export const wIconButton = (args: Properties): TemplateResult => {
     return html`
-        <sp-action-button ...=${spreadProps(args)}>
+        <sp-action-button ${spreadProps(args)}>
             <sp-icon-edit slot="icon"></sp-icon-edit>
             This is an action button
         </sp-action-button>
@@ -104,7 +105,7 @@ wIconButton.story = {
 
 export const iconOnlyButton = (args: Properties): TemplateResult => {
     return html`
-        <sp-action-button label="Edit" ...=${spreadProps(args)}>
+        <sp-action-button label="Edit" ${spreadProps(args)}>
             <sp-icon-edit slot="icon"></sp-icon-edit>
         </sp-action-button>
     `;

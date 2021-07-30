@@ -643,8 +643,8 @@ export class Menu extends SpectrumElement {
     protected childItemsUpdated!: Promise<unknown[]>;
     protected cacheUpdated = Promise.resolve();
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.childItemsUpdated;
         await this.cacheUpdated;
         return complete;

@@ -18,7 +18,7 @@ import {
     CSSResultArray,
     property,
     query,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import { toHtmlTemplateString } from '../utils/templates.js';
 import Styles from './code-example.css';
 import StylesLight from './code-example-light.css';

@@ -20,7 +20,7 @@ import {
     nothing,
     ifDefined,
     live,
-    internalProperty,
+    state,
 } from '@spectrum-web-components/base';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -59,7 +59,7 @@ export class TextfieldBase extends Focusable {
     @property({ attribute: 'type', reflect: true })
     private _type: TextfieldType = 'text';
 
-    @internalProperty()
+    @state()
     get type(): TextfieldType {
         return textfieldTypes.find((t) => t === this._type) ?? 'text';
     }
