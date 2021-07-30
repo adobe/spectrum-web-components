@@ -15,8 +15,7 @@ import {
     css,
     property,
     TemplateResult,
-    CSSResult,
-    CSSResultArray,
+    CSSResultGroup,
     query,
 } from '@spectrum-web-components/base';
 
@@ -34,7 +33,7 @@ import { Picker } from '@spectrum-web-components/picker';
 const MAX_DEPTH = 7;
 
 class OverlayTargetIcon extends LitElement {
-    static get styles(): CSSResult {
+    static get styles(): CSSResultGroup {
         return css`
             :host {
                 position: absolute;
@@ -77,7 +76,7 @@ class OverlayDrag extends LitElement {
 
     private targetElement: HTMLElement | undefined | null;
 
-    static get styles(): CSSResult {
+    static get styles(): CSSResultGroup {
         return css`
             :host {
                 display: block;
@@ -195,7 +194,7 @@ class RecursivePopover extends LitElement {
 
     public shadowRoot!: ShadowRoot;
 
-    public static get styles(): CSSResultArray {
+    public static get styles(): CSSResultGroup {
         return [
             css`
                 :host {

@@ -10,139 +10,156 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { EventPart, directive, Part } from 'lit-html';
+import { nothing, Part, ElementPart } from 'lit';
+import { directive, AsyncDirective } from 'lit/async-directive.js';
+import type { DirectiveResult } from 'lit/directive.js';
 
-type StreamingEvent = {
-    type: string | string[];
-    fn: (event: any) => void;
+type ListenerConfig = [string | string[], (event?: any) => void];
+type ListenerConfigGroup = {
+    start: ListenerConfig;
+    end: ListenerConfig;
+    streamInside?: ListenerConfig;
+    streamOutside?: ListenerConfig;
 };
 
-type StreamingListener = {
-    start: StreamingEvent;
-    stream: StreamingEvent;
-    end: StreamingEvent;
-    removeEventListeners: () => void;
-};
+/* c8 ignore next 6 */
+const defaultListener: ListenerConfig = [
+    '',
+    (): void => {
+        return;
+    },
+];
 
-const previousValues = new WeakMap<Part, StreamingListener>();
+class StreamingListenerDirective extends AsyncDirective {
+    host!: EventTarget | Record<string, unknown> | Element;
+    element!: Element;
 
-const stateMap = new WeakMap<Part, boolean>();
+    start: ListenerConfig = defaultListener;
+    streamInside: ListenerConfig = defaultListener;
+    end: ListenerConfig = defaultListener;
+    streamOutside: ListenerConfig = defaultListener;
 
-const addListener = (
-    el: Element,
-    type: string | string[],
-    fn: EventListenerOrEventListenerObject
-): void => {
-    if (Array.isArray(type)) {
-        type.map((eventName) => {
-            el.addEventListener(eventName, fn);
-        });
-    } else {
-        el.addEventListener(type, fn);
+    state: 'off' | 'on' = 'off';
+
+    /* c8 ignore next 4 */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    render(_configGroup: ListenerConfigGroup): typeof nothing {
+        return nothing;
     }
-};
 
-const removeListener = (
-    el: Element,
-    type: string | string[],
-    fn: EventListenerOrEventListenerObject
-): void => {
-    if (Array.isArray(type)) {
-        type.map((eventName) => {
-            el.removeEventListener(eventName, fn);
-        });
-    } else {
-        el.removeEventListener(type, fn);
-    }
-};
-
-const addEventListeners = (
-    part: EventPart,
-    start: StreamingEvent,
-    stream: StreamingEvent,
-    end: StreamingEvent
-): (() => void) => {
-    const { element, eventContext } = part;
-    const isStreaming = stateMap.get(part);
-    let handledStream = false;
-
-    const handleStream = (event: any): void => {
-        if (!handledStream) {
-            handledStream = true;
-            stream.fn.call(eventContext || element, event);
-            requestAnimationFrame(() => {
-                handledStream = false;
-            });
+    update(
+        part: Part,
+        [
+            {
+                start,
+                end,
+                streamInside = defaultListener,
+                streamOutside = defaultListener,
+            },
+        ]: Parameters<this['render']>
+    ): void {
+        if (this.element !== (part as ElementPart).element) {
+            this.element = (part as ElementPart).element;
+            this.removeListeners();
         }
-    };
+        this.host =
+            (part.options?.host as Record<string, unknown>) || this.element;
+        this.start = start;
+        this.end = end;
+        this.streamInside = streamInside;
+        this.streamOutside = streamOutside;
+        this.addListeners();
+    }
 
-    const handleEnd = (event: any): void => {
-        addListener(element, start.type, handleStart);
-        removeListener(element, stream.type, handleStream);
-        removeListener(element, end.type, handleEnd);
-        stateMap.set(part, false);
-        end.fn.call(eventContext || element, event);
-    };
+    addListeners(state?: 'on' | 'off'): void {
+        this.state = state || this.state;
+        if (this.state === 'off') {
+            this.addListener(this.streamOutside[0], this.handleBetween);
+            this.addListener(this.start[0], this.handleStart);
+        } else if (this.state === 'on') {
+            this.addListener(this.streamInside[0], this.handleStream);
+            this.addListener(this.end[0], this.handleEnd);
+        }
+    }
 
-    const handleStart = (event: any): void => {
-        start.fn.call(eventContext || element, event);
+    callHandler(
+        value: (event: Event) => void | EventListenerObject,
+        event: Event
+    ): void {
+        if (typeof value === 'function') {
+            (value as (event: Event) => void).call(this.host, event);
+        } else {
+            (value as EventListenerObject).handleEvent(event);
+        }
+    }
+
+    handleStart = (event: Event): void => {
+        this.callHandler(this.start[1], event);
         if (event.defaultPrevented) {
             return;
         }
-        removeListener(element, start.type, handleStart);
-        addListener(element, stream.type, handleStream);
-        addListener(element, end.type, handleEnd);
-        stateMap.set(part, true);
+        this.removeListeners();
+        this.addListeners('on');
     };
 
-    if (!isStreaming) {
-        addListener(element, start.type, handleStart);
-    } else {
-        addListener(element, stream.type, handleStream);
-        addListener(element, end.type, handleEnd);
+    handleStream = (event: Event): void => {
+        this.callHandler(this.streamInside[1], event);
+    };
+
+    handleEnd = (event: Event): void => {
+        this.callHandler(this.end[1], event);
+        this.removeListeners();
+        this.addListeners('off');
+    };
+
+    handleBetween = (event: Event): void => {
+        this.callHandler(this.streamOutside[1], event);
+    };
+
+    addListener(type: string | string[], fn: (event: Event) => void): void {
+        if (Array.isArray(type)) {
+            type.map((eventName) => {
+                this.element.addEventListener(eventName, fn);
+            });
+        } else {
+            this.element.addEventListener(type, fn);
+        }
     }
 
-    return () => {
-        removeListener(element, start.type, handleStart);
-        removeListener(element, stream.type, handleStream);
-        removeListener(element, end.type, handleEnd);
-    };
-};
+    removeListener(type: string | string[], fn: (event: Event) => void): void {
+        if (Array.isArray(type)) {
+            type.map((eventName) => {
+                this.element.removeEventListener(eventName, fn);
+            });
+        } else {
+            this.element.removeEventListener(type, fn);
+        }
+    }
+
+    removeListeners(): void {
+        this.removeListener(this.start[0], this.handleStart);
+        this.removeListener(this.streamInside[0], this.handleStream);
+        this.removeListener(this.end[0], this.handleEnd);
+        this.removeListener(this.streamOutside[0], this.handleBetween);
+    }
+
+    disconnected(): void {
+        this.removeListeners();
+    }
+
+    reconnected(): void {
+        this.addListeners();
+    }
+}
+
+export const streamingListener: (
+    _configGroup: ListenerConfigGroup
+) => DirectiveResult<typeof StreamingListenerDirective> = directive(
+    StreamingListenerDirective
+);
 
 /**
- * For AttributeParts, sets the attribute if the value is defined and removes
- * the attribute if the value is undefined.
- *
- * For other part types, this directive is a no-op.
+ * The type of the class that powers this directive. Necessary for naming the
+ * directive's return type.
  */
-export const streamingListener = directive(
-    (start: StreamingEvent, stream: StreamingEvent, end: StreamingEvent) => (
-        part: Part
-    ) => {
-        if (!(part instanceof EventPart)) {
-            return;
-        }
-        if (previousValues.has(part)) {
-            const previous = previousValues.get(part) as StreamingListener;
-            if (
-                start.type === previous.start.type &&
-                stream.type === previous.stream.type &&
-                end.type === previous.end.type &&
-                start.fn === previous.start.fn &&
-                stream.fn === previous.stream.fn &&
-                end.fn === previous.end.fn
-            ) {
-                return;
-            }
-            previous.removeEventListeners();
-        } else {
-            stateMap.set(part, false);
-        }
-        previousValues.set(part, {
-            start,
-            stream,
-            end,
-            removeEventListeners: addEventListeners(part, start, stream, end),
-        });
-    }
-);
+export type { StreamingListenerDirective };

@@ -371,8 +371,8 @@ export class OverlayTrigger extends LitElement {
     private openStatePromise = Promise.resolve();
     private openStateResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.openStatePromise;
         return complete;
     }

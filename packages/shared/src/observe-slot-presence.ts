@@ -8,7 +8,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { UpdatingElement } from '@spectrum-web-components/base';
+import { ReactiveElement } from '@spectrum-web-components/base';
 
 const slotElementObserver = Symbol('slotElementObserver');
 const startObserving = Symbol('startObserving');
@@ -26,14 +26,15 @@ export interface SlotPresenceObservingInterface {
     managePresenceObservedSlot(): void;
 }
 
-export function ObserveSlotPresence<T extends Constructor<UpdatingElement>>(
+export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
     constructor: T,
     lightDomSelector: string | string[]
 ): T & Constructor<SlotPresenceObservingInterface> {
     const lightDomSelectors = Array.isArray(lightDomSelector)
         ? lightDomSelector
         : [lightDomSelector];
-    class SlotPresenceObservingElement extends constructor
+    class SlotPresenceObservingElement
+        extends constructor
         implements SlotPresenceObservingInterface {
         private [slotElementObserver]!: MutationObserver;
 

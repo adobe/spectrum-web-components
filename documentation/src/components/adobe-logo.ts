@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, html, CSSResultArray, property } from 'lit-element';
+import {
+    LitElement,
+    html,
+    CSSResultArray,
+    property,
+} from '@spectrum-web-components/base';
 import logoStyles from './adobe-logo.css';
 
 class SpectrumLogo extends LitElement {

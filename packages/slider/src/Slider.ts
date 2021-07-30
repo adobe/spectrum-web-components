@@ -388,8 +388,8 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
 
     private _numberFieldInput: Promise<unknown> = Promise.resolve();
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         if (this.editable) {
             await this._numberFieldInput;
             await this.numberField.updateComplete;

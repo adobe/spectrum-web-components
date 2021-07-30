@@ -9,7 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { UpdatingElement, property, PropertyValues } from 'lit-element';
+import { ReactiveElement, PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,7 +24,7 @@ export interface SizedElementInterface {
     size: ElementSize;
 }
 
-export function SizedMixin<T extends Constructor<UpdatingElement>>(
+export function SizedMixin<T extends Constructor<ReactiveElement>>(
     constructor: T,
     {
         validSizes = ['s', 'm', 'l', 'xl'],

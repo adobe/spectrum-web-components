@@ -18,7 +18,7 @@ import {
     CSSResultArray,
     property,
     query,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import * as Prism from 'prismjs';
 import { toHtmlTemplateString } from '../utils/templates.js';
 import Styles from './code-example.css';

@@ -9,7 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, CSSResultArray, TemplateResult } from 'lit-element';
+import {
+    html,
+    CSSResultArray,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import '@spectrum-web-components/bundle/elements.js';
 // work around while `top-nav` isn't "officially" in the bundle
 import '@spectrum-web-components/top-nav/sp-top-nav.js';

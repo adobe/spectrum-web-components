@@ -170,7 +170,7 @@ export class LayoutElement extends SpectrumElement {
         this.requestUpdate();
     }
 
-    renderContent() {
+    public renderContent(): TemplateResult {
         return html`
             <div></div>
         `;

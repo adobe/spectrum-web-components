@@ -119,8 +119,8 @@ export class Icon extends IconBase {
         return { iconset: iconsetName, icon: iconName };
     }
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.updateIconPromise;
         return complete;
     }

@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { toHtmlTemplateString } from '../src/utils/templates.js';
-import { TemplateResult } from 'lit-element';
+import { TemplateResult } from 'lit';
 
 const componentDocs = require.context(
     '../../packages',
