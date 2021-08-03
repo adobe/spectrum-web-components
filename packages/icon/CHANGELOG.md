@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.9.8...@spectrum-web-components/icon@0.9.9) (2021-08-03)
+
+### Bug Fixes
+
+-   allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/adobe/spectrum-web-components/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+
 ## [0.9.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.9.7...@spectrum-web-components/icon@0.9.8) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/icon

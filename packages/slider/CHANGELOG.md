@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.3...@spectrum-web-components/slider@0.10.4) (2021-08-03)
+
+### Bug Fixes
+
+-   resolve "updateComplete" with a boolean like LitElement ([2ebcd44](https://github.com/adobe/spectrum-web-components/commit/2ebcd449185a2a26b8ca60441793048a76bb3ed7))
+
 ## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.2...@spectrum-web-components/slider@0.10.3) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

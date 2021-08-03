@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.11...@spectrum-web-components/textfield@0.8.12) (2021-08-03)
+
+### Bug Fixes
+
+-   **textfield:** break very long words within the Textarea's sizer element ([2f95ac0](https://github.com/adobe/spectrum-web-components/commit/2f95ac04a3ad3c200172cd3c364c9014c7d6dfde))
+
 ## [0.8.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.10...@spectrum-web-components/textfield@0.8.11) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield

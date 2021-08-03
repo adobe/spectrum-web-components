@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.11...@spectrum-web-components/theme@0.8.12) (2021-08-03)
+
+### Bug Fixes
+
+-   resolve "updateComplete" with a boolean like LitElement ([2ebcd44](https://github.com/adobe/spectrum-web-components/commit/2ebcd449185a2a26b8ca60441793048a76bb3ed7))
+
 ## [0.8.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.10...@spectrum-web-components/theme@0.8.11) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/theme

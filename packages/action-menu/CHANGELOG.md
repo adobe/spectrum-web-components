@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.10.4...@spectrum-web-components/action-menu@0.11.0) (2021-08-03)
+
+### Bug Fixes
+
+-   expand sync offering for elements with overlay content ([0195843](https://github.com/adobe/spectrum-web-components/commit/0195843e9efac5760a78fa302d91139c84ea5747))
+
+### Features
+
+-   **action-menu:** remove menu selection by default ([54d636f](https://github.com/adobe/spectrum-web-components/commit/54d636f0206e8fa7dd67a465de643e6dd9fc29cf))
+
 ## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.10.3...@spectrum-web-components/action-menu@0.10.4) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

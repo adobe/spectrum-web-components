@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.10...@spectrum-web-components/menu@0.9.0) (2021-08-03)
+
+### Bug Fixes
+
+-   add value/selection checks to the tests and fix up the value logic ([933106f](https://github.com/adobe/spectrum-web-components/commit/933106f88dfa99f22fc1046c1395eb53f051b5c4))
+-   **split-button:** hide "selected" item from menu ([322a966](https://github.com/adobe/spectrum-web-components/commit/322a96655855f42b390ba2c94d0b017bf93aebd9))
+
+### Features
+
+-   add selects attribute to menu ([bdf2578](https://github.com/adobe/spectrum-web-components/commit/bdf25780e56c7b92368904dce2a02f2594c364a2))
+
 ## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.9...@spectrum-web-components/menu@0.8.10) (2021-07-22)
 
 ### Bug Fixes

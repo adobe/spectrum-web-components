@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.5.4...@spectrum-web-components/split-button@0.5.5) (2021-08-03)
+
+### Bug Fixes
+
+-   expand sync offering for elements with overlay content ([0195843](https://github.com/adobe/spectrum-web-components/commit/0195843e9efac5760a78fa302d91139c84ea5747))
+-   **split-button:** hide "selected" item from menu ([322a966](https://github.com/adobe/spectrum-web-components/commit/322a96655855f42b390ba2c94d0b017bf93aebd9))
+
 ## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.5.3...@spectrum-web-components/split-button@0.5.4) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/split-button
