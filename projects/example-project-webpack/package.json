@@ -24,7 +24,7 @@
         "clean-webpack-plugin": "^3.0.0",
         "copy-webpack-plugin": "^5.1.1",
         "css-loader": "^5.2.1",
-        "cssnano": "^4.1.7",
+        "cssnano": "^5.0.7",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
         "http-server": "^0.12.0",
         "postcss-import": "^14.0.1",
