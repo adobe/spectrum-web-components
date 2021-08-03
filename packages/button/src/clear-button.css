@@ -11,3 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-clear-button.css';
+
+.icon {
+    padding-top: 2px;
+}

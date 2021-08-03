@@ -19,27 +19,14 @@ import {
 } from '@spectrum-web-components/base';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import {
-    ObserveSlotText,
-    ObserveSlotPresence,
-} from '@spectrum-web-components/shared';
+import { ObserveSlotText } from '@spectrum-web-components/shared';
 
-export class ButtonBase extends LikeAnchor(
-    ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
-) {
-    protected get hasIcon(): boolean {
-        return this.slotContentIsPresent;
-    }
-
+export class ButtonBase extends LikeAnchor(ObserveSlotText(Focusable)) {
     @property({ type: Boolean, reflect: true })
     public active = false;
 
     @property({ type: String })
     public type: 'button' | 'submit' | 'reset' = 'button';
-
-    protected get hasLabel(): boolean {
-        return this.slotHasContent;
-    }
 
     @query('.anchor')
     private anchorElement!: HTMLButtonElement;
@@ -48,22 +35,19 @@ export class ButtonBase extends LikeAnchor(
         return this;
     }
 
+    protected get hasLabel(): boolean {
+        return this.slotHasContent;
+    }
+
     protected get buttonContent(): TemplateResult[] {
         const content = [
             html`
-                <div id="label" ?hidden=${!this.hasLabel}>
-                    <slot
-                        id="slot"
-                        @slotchange=${this.manageTextObservedSlot}
-                    ></slot>
-                </div>
+                <slot name="icon" ?icon-only=${!this.hasLabel}></slot>
+            `,
+            html`
+                <slot id="slot"></slot>
             `,
         ];
-        if (this.hasIcon) {
-            content.unshift(html`
-                <slot name="icon" ?icon-only=${!this.hasLabel}></slot>
-            `);
-        }
         return content;
     }
 

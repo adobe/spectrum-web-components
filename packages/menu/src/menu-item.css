@@ -15,6 +15,12 @@ governing permissions and limitations under the License.
 @import './spectrum-menu-item.css';
 @import './spectrum-itemLabel.css';
 
+:host {
+    grid-template-columns: fit-content(100%) fit-content(100%) 1fr min-content min-content;
+    grid-template-areas: 'icon label . value check';
+    display: grid;
+}
+
 :host([hidden]) {
     display: none;
 }
@@ -24,16 +30,27 @@ governing permissions and limitations under the License.
     inset: 0;
 }
 
+::slotted([slot='icon']) {
+    grid-area: icon;
+}
+
+.checkmark {
+    grid-area: check;
+}
+
 ::slotted([slot='value']) {
     align-self: start;
+    grid-area: value;
 }
 
-:host([dir='ltr']) ::slotted([slot='value']) {
-    margin-left: var(--spectrum-listitem-icon-gap);
+:host([dir='ltr']) ::slotted([slot='value']),
+:host([dir='rtl']) ::slotted([slot='icon']) {
+    margin-left: var(--spectrum-listitem-texticon-icon-gap);
 }
 
-:host([dir='rtl']) ::slotted([slot='value']) {
-    margin-right: var(--spectrum-listitem-icon-gap);
+:host([dir='rtl']) ::slotted([slot='value']),
+:host([dir='ltr']) ::slotted([slot='icon']) {
+    margin-right: var(--spectrum-listitem-texticon-icon-gap);
 }
 
 :host([dir='ltr']) [icon-only]::slotted(:last-of-type) {

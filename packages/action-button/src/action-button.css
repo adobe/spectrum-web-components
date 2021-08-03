@@ -13,8 +13,10 @@ governing permissions and limitations under the License.
 @import './spectrum-action-button.css';
 
 :host {
-    display: inline-flex;
-    flex-direction: row;
+    display: inline-grid;
+    gap: var(--spectrum-actionbutton-texticon-icon-gap);
+    grid-template-columns: repeat(auto-fit, minmax(0, auto));
+    grid-template-rows: 100%;
 }
 
 :host([disabled]) {
@@ -40,6 +42,7 @@ governing permissions and limitations under the License.
 }
 
 #label {
+    padding: 0 !important;
     flex-grow: var(--spectrum-actionbutton-label-flex-grow);
     text-align: var(--spectrum-actionbutton-label-text-align);
 }
@@ -101,5 +104,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-ui-icon-tshirt-size-width: var(
         --spectrum-alias-ui-icon-cornertriangle-size-300
+    );
+    --spectrum-actionbutton-textonly-min-width: var(
+        --spectrum-actionbutton-xl-textonly-min-width,
+        var(--spectrum-global-dimension-size-500)
     );
 }

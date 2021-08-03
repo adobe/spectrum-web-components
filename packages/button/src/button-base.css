@@ -13,8 +13,12 @@ governing permissions and limitations under the License.
 @import './spectrum-button-base.css';
 
 :host {
-    display: inline-flex;
+    display: inline-grid;
+    gap: var(--spectrum-button-primary-texticon-icon-gap);
+    grid-template-columns: repeat(auto-fit, minmax(0, auto));
+    grid-template-rows: 100%;
     vertical-align: top;
+    padding-bottom: 2px !important;
 }
 
 :host([dir]) {
@@ -35,8 +39,16 @@ governing permissions and limitations under the License.
     inset: 0;
 }
 
+#label {
+    padding: 0 !important;
+}
+
 :host:after {
     pointer-events: none;
+}
+
+::slotted([slot='icon']) {
+    padding-top: 2px !important;
 }
 
 slot[name='icon']::slotted(svg),

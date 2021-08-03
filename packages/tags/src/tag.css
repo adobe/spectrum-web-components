@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 @import './spectrum-tag.css';
 
+.clear-button {
+    padding-top: 2px;
+}
+
 :host([invalid]) .clear-button {
     --spectrum-clearbutton-medium-icon-color: var(
         --spectrum-tag-icon-color-error-key-focus,

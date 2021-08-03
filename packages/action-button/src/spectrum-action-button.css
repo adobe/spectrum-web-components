@@ -390,7 +390,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     --spectrum-actionbutton-textonly-min-width: var(
         --spectrum-actionbutton-xl-textonly-min-width,
-        var(--spectrum-global-dimension-size-400)
+        var(--spectrum-global-dimension-size-500)
     );
     --spectrum-actionbutton-textonly-height: var(
         --spectrum-actionbutton-xl-textonly-height,
