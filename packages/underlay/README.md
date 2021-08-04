@@ -22,3 +22,13 @@ When looking to leverage the `Underlay` base class as a type and/or for extensio
 ```
 import { Underlay } from '@spectrum-web-components/underlay';
 ```
+
+## Example
+
+```html
+<sp-underlay open></sp-underlay>
+<div class="overlay">
+    <h1>Hello, I'm an overlay!</h1>
+    <p>Enjoy your day...</p>
+</div>
+```
