@@ -115,12 +115,29 @@ for a multi-handle slider, you can format the combined value label for all
 handles by passing a formatting function to the `getAriaValueText` property
 on the parent `sp-slider`.
 
-You can suppress the value label altogether using the `hide-value-label`
-attribute.
+### Label Visibility
+
+Be default an `<sp-slider>` element has both a "text" label and a "value" label. Either or both of these can be surpressed visually as needed by your application UI. This delivery is controlled by the `label-visibility` attribute (or `labelVisibility` property) which accepts `text`, `value`, or `none` as values.
+
+Use `label-visibility="text"` to supress the "value" label:
 
 ```html
-<sp-slider label="No value label" hide-value-label></sp-slider>
+<sp-slider label="No visible value label" label-visibility="text"></sp-slider>
 ```
+
+Use `label-visibility="value"` to supress the "text" label:
+
+```html
+<sp-slider label="No visible text label" label-visibility="value"></sp-slider>
+```
+
+Use `label-visibility="none"` to supress the "text" label:
+
+```html
+<sp-slider label="No visible labels" label-visibility="none"></sp-slider>
+```
+
+In each case outlined above the content for both labels will be made available to screen readers, so be sure to manage the content delivered to visitors in that context.
 
 ## Events
 
