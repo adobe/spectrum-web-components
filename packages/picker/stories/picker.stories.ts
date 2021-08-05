@@ -180,6 +180,41 @@ export const icons = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+export const iconsNone = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-quiet">
+            Choose an action type...
+        </sp-field-label>
+        <sp-picker
+            ...=${spreadProps(args)}
+            id="picker-quiet"
+            @change="${(event: Event): void => {
+                const picker = event.target as Picker;
+                console.log(`Change: ${picker.value}`);
+            }}"
+            label="Pick an action"
+            value="1"
+            icons="none"
+        >
+            <sp-menu-item value="1">
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+                Edit
+            </sp-menu-item>
+            <sp-menu-item value="2">
+                <sp-icon-copy slot="icon"></sp-icon-copy>
+                Copy
+            </sp-menu-item>
+            <sp-menu-item value="3">
+                <sp-icon-delete slot="icon"></sp-icon-delete>
+                Delete
+            </sp-menu-item>
+        </sp-picker>
+    `;
+};
+iconsNone.args = {
+    open: true,
+};
+
 export const iconValue = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-quiet">
@@ -193,7 +228,7 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
                 console.log(`Change: ${picker.value}`);
             }}"
             label="Pick an action"
-            icons-only
+            icons="only"
             style="--spectrum-picker-width: 100px"
             value="2"
         >
@@ -226,7 +261,6 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
                 console.log(`Change: ${picker.value}`);
             }}"
             label="Pick an action"
-            icons-only
             style="--spectrum-picker-width: 100px"
             value="3"
         >

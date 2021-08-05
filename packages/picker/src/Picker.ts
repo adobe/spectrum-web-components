@@ -84,8 +84,8 @@ export class PickerBase extends SizedMixin(Focusable) {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    @property({ type: Boolean, reflect: true, attribute: 'icons-only' })
-    public iconsOnly = false;
+    @property({ type: String, reflect: true })
+    public icons?: 'only' | 'none';
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
@@ -324,12 +324,14 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     protected get buttonContent(): TemplateResult[] {
         const labelClasses = {
-            'visually-hidden': this.iconsOnly && !!this.value,
+            'visually-hidden': this.icons === 'only' && !!this.value,
             placeholder: !this.value,
         };
         return [
             html`
-                <span id="icon">${this.selectedItemContent.icon}</span>
+                <span id="icon" ?hidden=${this.icons === 'none'}>
+                    ${this.selectedItemContent.icon}
+                </span>
                 <span id="label" class=${classMap(labelClasses)}>
                     ${this.renderLabelContent(this.selectedItemContent.content)}
                 </span>
