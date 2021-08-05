@@ -25,10 +25,46 @@ import { Underlay } from '@spectrum-web-components/underlay';
 
 ## Example
 
+When leveraging an `<sp-underlay>` in conjunction with overlay content, place it as a sibling prior to your overlay content.
+
 ```html
-<sp-underlay open></sp-underlay>
-<div class="overlay">
-    <h1>Hello, I'm an overlay!</h1>
+<style>
+    sp-underlay:not([open]) + sp-dialog {
+        display: none;
+    }
+    sp-underlay + sp-dialog {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        background: var(
+            --spectrum-dialog-confirm-background-color,
+            var(--spectrum-alias-background-color-default)
+        );
+    }
+</style>
+
+<sp-button
+    onclick="
+        console.log(this.nextElementSibling);
+        this.nextElementSibling.open = true;
+    "
+>
+    Open dialog with underlay element
+</sp-button>
+
+<sp-underlay></sp-underlay>
+<sp-dialog size="small">
+    <h1 slot="heading">Hello, I'm an overlay!</h1>
     <p>Enjoy your day...</p>
-</div>
+    <sp-button
+        slot="button"
+        onclick="
+            this.parentElement.previousElementSibling.open = false;
+        "
+    >
+        Close
+    </sp-button>
+</sp-dialog>
 ```
