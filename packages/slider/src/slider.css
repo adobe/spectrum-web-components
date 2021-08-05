@@ -143,3 +143,11 @@ governing permissions and limitations under the License.
     white-space: nowrap;
     width: 1px;
 }
+
+:host([label-visibility='value'][dir='ltr']) #value {
+    margin-left: auto;
+}
+
+:host([label-visibility='value'][dir='rtl']) #value {
+    margin-right: auto;
+}
