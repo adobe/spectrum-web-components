@@ -28,7 +28,7 @@ export class Underlay extends SpectrumElement {
         return [styles];
     }
 
-    @property({ type: Boolean })
+    @property({ type: Boolean, reflect: true })
     public open = false;
 
     protected render(): TemplateResult {
