@@ -277,5 +277,5 @@ measureFixtureCreation(
             )}
         </sp-picker>
     `,
-    { numRenders: 10 }
+    { numRenders: 20 }
 );

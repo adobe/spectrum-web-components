@@ -224,7 +224,7 @@ slot[name='icon'] + #label,
         var(--spectrum-alias-icon-color-selected)
     );
 }
-.is-active,
+:host([active]),
 :host(:active) {
     /* .spectrum-Menu-item .is-active,
    * .spectrum-Menu-item:active */

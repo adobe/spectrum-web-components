@@ -16,10 +16,12 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
+    query,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import { ActionButton } from '@spectrum-web-components/action-button';
+import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
@@ -92,7 +94,7 @@ const removeEvent = new MenuItemRemovedEvent();
  * @fires sp-menu-item-added - announces the item has been added so a parent menu can take ownerships
  * @fires sp-menu-item-removed - announces when removed from the DOM so the parent menu can remove ownership and update selected state
  */
-export class MenuItem extends ActionButton {
+export class MenuItem extends LikeAnchor(Focusable) {
     public static get styles(): CSSResultArray {
         return [menuItemStyles, checkmarkStyles];
     }
@@ -100,7 +102,39 @@ export class MenuItem extends ActionButton {
     static instanceCount = 0;
 
     @property({ type: Boolean, reflect: true })
+    public active = false;
+
+    @property({ type: Boolean, reflect: true })
     public focused = false;
+
+    @property({ type: Boolean, reflect: true })
+    public selected = false;
+
+    @property({ type: String })
+    public get value(): string {
+        return this._value || this.itemText;
+    }
+
+    public set value(value: string) {
+        if (value === this._value) {
+            return;
+        }
+        this._value = value || '';
+        if (this._value) {
+            this.setAttribute('value', this._value);
+        } else {
+            this.removeAttribute('value');
+        }
+    }
+
+    private _value = '';
+
+    /**
+     * @private
+     */
+    public get itemText(): string {
+        return (this.textContent || /* c8 ignore next */ '').trim();
+    }
 
     @property({
         type: Boolean,
@@ -111,6 +145,13 @@ export class MenuItem extends ActionButton {
         },
     })
     public noWrap = false;
+
+    @query('.anchor')
+    private anchorElement!: HTMLAnchorElement;
+
+    public get focusElement(): HTMLElement {
+        return this;
+    }
 
     public get itemChildren(): { icon: Element[]; content: Node[] } {
         const iconSlot = this.shadowRoot.querySelector(
@@ -133,33 +174,86 @@ export class MenuItem extends ActionButton {
         return { icon, content };
     }
 
-    protected get buttonContent(): TemplateResult[] {
-        const content = super.buttonContent;
-        content.push(
-            html`
-                <slot name="value"></slot>
-            `
-        );
-        if (this.selected) {
-            content.push(html`
-                <sp-icon-checkmark100
-                    id="selected"
-                    class="spectrum-UIIcon-Checkmark100 icon"
-                ></sp-icon-checkmark100>
-            `);
-        }
-        return content;
+    constructor() {
+        super();
+        this.proxyFocus = this.proxyFocus.bind(this);
+
+        this.addEventListener('click', this.handleClickCapture, {
+            capture: true,
+        });
     }
 
-    protected renderButton(): TemplateResult {
+    public click(): void {
+        if (this.disabled) {
+            return;
+        }
+
+        if (this.shouldProxyClick()) {
+            return;
+        }
+
+        super.click();
+    }
+
+    private handleClickCapture(event: Event): void | boolean {
+        if (this.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+            return false;
+        }
+    }
+
+    private proxyFocus(): void {
+        this.focus();
+    }
+
+    private shouldProxyClick(): boolean {
+        let handled = false;
+        if (this.anchorElement) {
+            this.anchorElement.click();
+            handled = true;
+        }
+        return handled;
+    }
+
+    protected render(): TemplateResult {
         return html`
-            ${this.buttonContent}
+            <slot name="icon"></slot>
+            <div id="label">
+                <slot id="slot"></slot>
+            </div>
+            <slot name="value"></slot>
+            ${this.selected
+                ? html`
+                      <sp-icon-checkmark100
+                          id="selected"
+                          class="spectrum-UIIcon-Checkmark100 icon"
+                      ></sp-icon-checkmark100>
+                  `
+                : html``}
+            ${this.href && this.href.length > 0
+                ? super.renderAnchor({
+                      id: 'button',
+                      ariaHidden: true,
+                      className: 'button anchor hidden',
+                  })
+                : html``}
         `;
     }
 
+    private handleRemoveActive(): void {
+        this.active = false;
+    }
+
+    private handlePointerdown(): void {
+        this.active = true;
+    }
+
     protected firstUpdated(changes: PropertyValues): void {
-        this.setAttribute('tabindex', '-1');
         super.firstUpdated(changes);
+        this.setAttribute('tabindex', '-1');
+        this.addEventListener('pointerdown', this.handlePointerdown);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${MenuItem.instanceCount++}`;
         }
@@ -182,8 +276,27 @@ export class MenuItem extends ActionButton {
         this.updateAriaSelected();
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected updated(changes: PropertyValues<this>): void {
         super.updated(changes);
+        if (changes.has('label')) {
+            this.setAttribute('aria-label', this.label || '');
+        }
+        if (changes.has('active')) {
+            if (this.active) {
+                this.addEventListener('pointerup', this.handleRemoveActive);
+                this.addEventListener('pointerleave', this.handleRemoveActive);
+            } else {
+                this.removeEventListener('pointerup', this.handleRemoveActive);
+                this.removeEventListener(
+                    'pointerleave',
+                    this.handleRemoveActive
+                );
+            }
+        }
+        if (this.anchorElement) {
+            this.anchorElement.addEventListener('focus', this.proxyFocus);
+            this.anchorElement.tabIndex = -1;
+        }
         if (changes.has('selected')) {
             this.updateAriaSelected();
         }
