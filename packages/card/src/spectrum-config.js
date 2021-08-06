@@ -79,9 +79,14 @@ const config = {
                     selector: '.is-drop-target',
                 },
                 {
-                    type: 'boolean',
-                    name: 'small',
-                    selector: '.spectrum-Card--small',
+                    type: 'enum',
+                    name: 'size',
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Card--small',
+                        },
+                    ],
                 },
                 {
                     type: 'boolean',

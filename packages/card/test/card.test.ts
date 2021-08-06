@@ -70,7 +70,7 @@ describe('card', () => {
         const el = await fixture<Card>(
             html`
                 <sp-card
-                    small
+                    size="s"
                     heading="Card Heading"
                     subheading="JPG"
                     variant="quiet"
