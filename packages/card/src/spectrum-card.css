@@ -451,35 +451,35 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--quiet .spectrum-Card-body */
     padding: 0;
 }
-:host([small]) {
+:host([size='s']) {
     /* .spectrum-Card--small */
     min-width: var(
         --spectrum-card-quiet-small-min-size,
         var(--spectrum-global-dimension-size-900)
     );
 }
-:host([dir='ltr'][small]) .quickActions {
+:host([dir='ltr'][size='s']) .quickActions {
     /* [dir=ltr] .spectrum-Card--small .spectrum-Card-quickActions */
     left: var(
         --spectrum-card-quiet-small-checkbox-margin,
         var(--spectrum-global-dimension-size-125)
     );
 }
-:host([dir='rtl'][small]) .quickActions {
+:host([dir='rtl'][size='s']) .quickActions {
     /* [dir=rtl] .spectrum-Card--small .spectrum-Card-quickActions */
     right: var(
         --spectrum-card-quiet-small-checkbox-margin,
         var(--spectrum-global-dimension-size-125)
     );
 }
-:host([small]) .quickActions {
+:host([size='s']) .quickActions {
     /* .spectrum-Card--small .spectrum-Card-quickActions */
     top: var(
         --spectrum-card-quiet-small-checkbox-margin,
         var(--spectrum-global-dimension-size-125)
     );
 }
-:host([small]) #preview {
+:host([size='s']) #preview {
     /* .spectrum-Card--small .spectrum-Card-preview */
     padding: var(
         --spectrum-card-quiet-small-preview-padding,
@@ -490,7 +490,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-900)
     );
 }
-:host([small]) .header {
+:host([size='s']) .header {
     /* .spectrum-Card--small .spectrum-Card-header */
     margin-top: var(
         --spectrum-card-quiet-small-body-margin-top,
@@ -501,7 +501,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-150)
     );
 }
-:host([small]) .title {
+:host([size='s']) .title {
     /* .spectrum-Card--small .spectrum-Card-title */
     font-size: var(
         --spectrum-card-quiet-small-title-text-size,
