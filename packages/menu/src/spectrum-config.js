@@ -80,6 +80,11 @@ const config = {
                 },
                 {
                     type: 'boolean',
+                    selector: '.is-active',
+                    name: 'active',
+                },
+                {
+                    type: 'boolean',
                     selector: '.is-focused',
                     name: 'focused',
                 },

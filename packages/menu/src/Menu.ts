@@ -262,6 +262,9 @@ export class Menu extends SpectrumElement {
             }
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
+        if (target?.href && target.href.length) {
+            return;
+        }
         if (target?.menuData.selectionRoot === this) {
             event.preventDefault();
             this.selectOrToggleItem(target);

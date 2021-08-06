@@ -218,9 +218,13 @@ describe('ActionGroup', () => {
         const el = await fixture<ActionGroup>(
             html`
                 <sp-action-group label="Selects Single Group" selects="single">
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button selected>Second</sp-action-button>
-                    <sp-action-button class="third">Third</sp-action-button>
+                    <sp-action-button value="first">First</sp-action-button>
+                    <sp-action-button value="second" selected>
+                        Second
+                    </sp-action-button>
+                    <sp-action-button value="third" class="third">
+                        Third
+                    </sp-action-button>
                 </sp-action-group>
             `
         );
@@ -228,7 +232,7 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
         expect(el.selected.length === 1);
-        expect(el.selected.includes('Second'));
+        expect(el.selected.includes('second'));
 
         thirdElement.click();
 
@@ -237,7 +241,7 @@ describe('ActionGroup', () => {
         expect(thirdElement.selected, 'third child selected');
 
         await waitUntil(
-            () => el.selected.length === 1 && el.selected.includes('Third'),
+            () => el.selected.length === 1 && el.selected.includes('third'),
             'Updates value of `selected`'
         );
     });

@@ -78,7 +78,6 @@ export const href = (): TemplateResult => {
         <sp-menu style="width: 150px;">
             <sp-menu-item
                 href="https://opensource.adobe.com/spectrum-web-components"
-                target="_blank"
             >
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit the Documentation Site
