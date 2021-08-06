@@ -24,61 +24,72 @@ When looking to leverage the `Dialog` base class as a type and/or for extension 
 import { Dialog } from '@spectrum-web-components/dialog';
 ```
 
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html demo
+<sp-dialog size="s">
+    <h2 slot="heading">Disclaimer</h2>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
+    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
+    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
+    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
+    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
+    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
+    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
+    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
+    dignissim cras lobortis.
+</sp-dialog>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html demo
+<sp-dialog size="m">
+    <h2 slot="heading">Disclaimer</h2>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
+    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
+    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
+    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
+    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
+    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
+    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
+    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
+    dignissim cras lobortis.
+</sp-dialog>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html demo
+<sp-dialog size="l">
+    <h2 slot="heading">Disclaimer</h2>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
+    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
+    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
+    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
+    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
+    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
+    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
+    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
+    dignissim cras lobortis.
+</sp-dialog>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
 ## Variants
-
-### Small
-
-```html
-<sp-dialog size="small">
-    <h2 slot="heading">Disclaimer</h2>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
-    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
-    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
-    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
-    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
-    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
-    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
-    dignissim cras lobortis.
-</sp-dialog>
-```
-
-### Medium
-
-```html
-<sp-dialog size="medium">
-    <h2 slot="heading">Disclaimer</h2>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
-    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
-    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
-    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
-    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
-    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
-    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
-    dignissim cras lobortis.
-</sp-dialog>
-```
-
-### Large
-
-```html
-<sp-dialog size="large">
-    <h2 slot="heading">Disclaimer</h2>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-    augue neque gravida. Libero volutpat sed ornare arcu. Quisque egestas diam
-    in arcu cursus euismod quis viverra. Posuere ac ut consequat semper viverra
-    nam libero justo laoreet. Enim ut tellus elementum sagittis vitae et leo
-    duis ut. Neque laoreet suspendisse interdum consectetur libero id faucibus
-    nisl. Diam volutpat commodo sed egestas egestas. Dolor magna eget est lorem
-    ipsum dolor. Vitae suscipit tellus mauris a diam maecenas sed. Turpis in eu
-    mi bibendum neque egestas congue. Rhoncus est pellentesque elit ullamcorper
-    dignissim cras lobortis.
-</sp-dialog>
-```
 
 ### Dismissable
 
@@ -87,7 +98,7 @@ When supplied with the `dissmissable` attribute an `<sp-dialog>` element will su
 Note: the `dissmissable` attribute will not be followed when `mode="fullscreen"` or `mode="fullscreenTakeover"` are applies in accordance with the Spectrum specification.
 
 ```html
-<sp-dialog size="medium" dismissable>
+<sp-dialog size="m" dismissable>
     <h2 slot="heading">Disclaimer</h2>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
@@ -105,7 +116,7 @@ Note: the `dissmissable` attribute will not be followed when `mode="fullscreen"`
 ### No Divider
 
 ```html
-<sp-dialog size="medium" dismissable no-divider>
+<sp-dialog size="m" dismissable no-divider>
     <h2 slot="heading">Disclaimer</h2>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris

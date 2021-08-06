@@ -34,7 +34,7 @@ export const wrapperLabeledHero = (): TemplateResult => {
             dismissable
             headline="Wrapped Dialog w/ Hero Image"
             @close=${action('close')}
-            size="small"
+            size="s"
         >
             Content of the dialog
         </sp-dialog-wrapper>
@@ -62,7 +62,7 @@ export const wrapperDismissable = ({
             dismissable
             headline="Wrapped Dialog w/ Hero Image"
             @close=${announceAction('close')}
-            size="small"
+            size="s"
         >
             Content of the dialog
         </sp-dialog-wrapper>
@@ -90,7 +90,7 @@ export const wrapperDismissableUnderlay = (): TemplateResult => {
             headline="Wrapped Dialog w/ Hero Image"
             underlay
             @close=${action('close')}
-            size="small"
+            size="s"
         >
             Content of the dialog
         </sp-dialog-wrapper>
@@ -105,7 +105,7 @@ export const longContent = (): TemplateResult => {
                 headline="Dialog title"
                 dismissable
                 underlay
-                size="small"
+                size="s"
             >
                 <p>
                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
@@ -225,7 +225,7 @@ export const wrapperDismissableUnderlayError = (): TemplateResult => {
                 headline="Wrapped Dialog w/ Hero Image"
                 underlay
                 @close=${action('close')}
-                size="small"
+                size="s"
             >
                 Content of the dialog
             </sp-dialog-wrapper>
@@ -244,7 +244,7 @@ export const wrapperButtons = ({
     return html`
         <sp-dialog-wrapper
             open
-            size="large"
+            size="l"
             headline="Wrapped Dialog w/ Buttons"
             confirm-label="Keep Both"
             secondary-label="Replace"
@@ -264,7 +264,7 @@ export const wrapperButtonsUnderlay = (): TemplateResult => {
         <sp-dialog-wrapper
             open
             underlay
-            size="large"
+            size="l"
             headline="Wrapped Dialog w/ Buttons"
             confirm-label="Keep Both"
             secondary-label="Replace"

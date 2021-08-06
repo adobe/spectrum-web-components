@@ -73,7 +73,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public mode?: 'fullscreen' | 'fullscreenTakeover';
 
     @property({ type: String, reflect: true })
-    public size?: 'small' | 'medium' | 'large' | 'alert';
+    public size?: 's' | 'm' | 'l';
 
     @property({ attribute: 'secondary-label' })
     public secondaryLabel = '';

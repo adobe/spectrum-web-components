@@ -60,15 +60,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     max-height: inherit;
     outline: none;
 }
-:host([size='small']) {
+:host([size='s']) {
     /* .spectrum-Dialog--small */
     width: var(--spectrum-dialog-confirm-small-width);
 }
-:host([size='medium']) {
+:host([size='m']) {
     /* .spectrum-Dialog--medium */
     width: var(--spectrum-dialog-confirm-medium-width);
 }
-:host([size='large']) {
+:host([size='l']) {
     /* .spectrum-Dialog--large */
     width: var(--spectrum-dialog-confirm-large-width);
 }

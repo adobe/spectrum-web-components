@@ -83,7 +83,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     public mode?: 'fullscreen' | 'fullscreenTakeover';
 
     @property({ type: String, reflect: true })
-    public size?: 'small' | 'medium' | 'large' | 'alert';
+    public size?: 's' | 'm' | 'l';
 
     public focus(): void {
         if (this.shadowRoot) {
