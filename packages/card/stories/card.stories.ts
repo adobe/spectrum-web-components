@@ -43,7 +43,7 @@ export default {
             name: 'size',
             type: { name: 'string', required: false },
             table: {
-                type: { summary: '"s"' },
+                type: { summary: '"s" | undefined' },
                 defaultValue: { summary: undefined },
             },
             control: { type: 'text' },
@@ -51,7 +51,7 @@ export default {
     },
 };
 
-interface StoryArgs {
+export interface StoryArgs {
     horizontal?: boolean;
     size?: 's';
 }
