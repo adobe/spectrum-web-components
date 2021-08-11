@@ -213,9 +213,29 @@ export class ColorWheel extends Focusable {
             case 'ArrowRight':
                 delta = this.step * (this.isLTR ? 1 : -1);
                 break;
+            default:
+                return;
         }
+        event.preventDefault();
         this.value = (360 + this.value + delta) % 360;
+        this._previousColor = this._color.clone();
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
+        this.dispatchEvent(
+            new Event('input', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        const applyDefault = this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+        if (!applyDefault) {
+            this._color = this._previousColor;
+        }
     }
 
     private handleKeyup(event: KeyboardEvent): void {

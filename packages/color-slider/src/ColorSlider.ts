@@ -204,7 +204,6 @@ export class ColorSlider extends Focusable {
     }
 
     private handleKeydown(event: KeyboardEvent): void {
-        event.preventDefault();
         const { key } = event;
         if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
             this.altKeys.add(key);
@@ -224,7 +223,10 @@ export class ColorSlider extends Focusable {
             case 'ArrowRight':
                 delta = this.step * (this.isLTR ? 1 : -1);
                 break;
+            default:
+                return;
         }
+        event.preventDefault();
 
         this.sliderHandlePosition = Math.min(
             100,

@@ -32,8 +32,6 @@ import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';
 
-const preventDefault = (event: KeyboardEvent): void => event.preventDefault();
-
 /**
  * @element sp-color-area
  */
@@ -171,6 +169,9 @@ export class ColorArea extends SpectrumElement {
         isString: false,
     };
 
+    @property({ attribute: false })
+    private activeAxis = 'x';
+
     @property({ type: Number })
     public x = 1;
 
@@ -211,15 +212,15 @@ export class ColorArea extends SpectrumElement {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { key, code } = event;
-        event.preventDefault();
         if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
             this.altKeys.add(key);
             this.altered = this.altKeys.size;
         }
         if (code.search('Arrow') === 0) {
             this.activeKeys.add(code);
+            event.preventDefault();
+            this.handleKeypress();
         }
-        this.handleKeypress();
     }
 
     private handleKeypress(): void {
@@ -228,19 +229,15 @@ export class ColorArea extends SpectrumElement {
         this.activeKeys.forEach((code) => {
             switch (code) {
                 case 'ArrowUp':
-                case 'Up':
                     deltaY = this.step * -1;
                     break;
                 case 'ArrowDown':
-                case 'Down':
                     deltaY = this.step * 1;
                     break;
                 case 'ArrowLeft':
-                case 'Left':
                     deltaX = this.step * -1;
                     break;
                 case 'ArrowRight':
-                case 'Right':
                     deltaX = this.step * 1;
                     break;
                 /* c8 ignore next 2 */
@@ -249,8 +246,10 @@ export class ColorArea extends SpectrumElement {
             }
         });
         if (deltaX != 0) {
+            this.activeAxis = 'x';
             this.inputX.focus();
         } else if (deltaY != 0) {
+            this.activeAxis = 'y';
             this.inputY.focus();
         }
 
@@ -281,6 +280,7 @@ export class ColorArea extends SpectrumElement {
     }
 
     private handleKeyup(event: KeyboardEvent): void {
+        event.preventDefault();
         const { key, code } = event;
         if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
             this.altKeys.delete(key);
@@ -439,10 +439,10 @@ export class ColorArea extends SpectrumElement {
                 min="0"
                 max="1"
                 step=${this.step}
+                tabindex=${this.activeAxis === 'x' ? 0 : -1}
                 .value=${String(this.x)}
                 @input=${this.handleInput}
                 @change=${this.handleChange}
-                @keydown=${preventDefault}
             />
             <input
                 type="range"
@@ -452,10 +452,10 @@ export class ColorArea extends SpectrumElement {
                 min="0"
                 max="1"
                 step=${this.step}
+                tabindex=${this.activeAxis === 'y' ? 0 : -1}
                 .value=${String(this.y)}
                 @input=${this.handleInput}
                 @change=${this.handleChange}
-                @keydown=${preventDefault}
             />
         `;
     }
