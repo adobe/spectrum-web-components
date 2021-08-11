@@ -42,6 +42,65 @@ describe('ColorWheel', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('manages a single tab stop', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <input type="text" id="test-input-1" />
+                    <sp-color-wheel></sp-color-wheel>
+                    <input type="text" id="test-input-2" />
+                </div>
+            `
+        );
+        const el = test.querySelector('sp-color-wheel') as ColorWheel;
+        const input1 = test.querySelector(
+            'input:nth-of-type(1)'
+        ) as HTMLInputElement;
+        const input2 = test.querySelector(
+            'input:nth-of-type(2)'
+        ) as HTMLInputElement;
+
+        await elementUpdated(el);
+
+        input1.focus();
+
+        expect(document.activeElement).to.equal(input1);
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement).to.equal(el);
+
+        let value = el.value;
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        expect(el.value).to.not.equal(value);
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement).to.equal(input2);
+
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement).to.equal(el);
+
+        value = el.value;
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        expect(el.value).to.not.equal(value);
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement).to.equal(input1);
+    });
     it('manages [focused]', async () => {
         const el = await fixture<ColorWheel>(
             html`
