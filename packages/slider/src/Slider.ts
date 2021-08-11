@@ -88,8 +88,8 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         return this.getAriaValueText(this.handleController.formattedValues);
     }
 
-    @property({ type: Boolean, reflect: true, attribute: 'hide-value-label' })
-    public hideValueLabel = false;
+    @property({ type: String, reflect: true, attribute: 'label-visibility' })
+    public labelVisibility?: 'text' | 'value' | 'none';
 
     @property({ type: Number, reflect: true })
     public min = 0;
@@ -142,9 +142,16 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     }
 
     private renderLabel(): TemplateResult {
+        const textLabelVisible =
+            this.labelVisibility === 'none' || this.labelVisibility === 'value';
+        const valueLabelVisible =
+            this.labelVisibility === 'none' || this.labelVisibility === 'text';
         return html`
             <div id="labelContainer">
                 <label
+                    class=${classMap({
+                        'visually-hidden': textLabelVisible,
+                    })}
                     id="label"
                     for=${this.handleController.activeHandleInputId}
                 >
@@ -153,7 +160,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                 </label>
                 <output
                     class=${classMap({
-                        'visually-hidden': this.hideValueLabel,
+                        'visually-hidden': valueLabelVisible,
                     })}
                     id="value"
                     aria-live="off"

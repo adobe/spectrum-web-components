@@ -50,16 +50,29 @@ export default {
                 type: 'number',
             },
         },
+        labelVisibility: {
+            name: 'Label Visibility',
+            description: 'The labels visibily available in the UI',
+            table: {
+                type: { summary: '"text" | "value" | "none" | undefined' },
+                defaultValue: { summary: undefined },
+            },
+            control: {
+                type: 'text',
+            },
+        },
     },
     args: {
         variant: undefined,
         tickStep: 0.1,
+        labelVisibility: undefined,
     },
 };
 
 interface StoryArgs {
     variant?: string;
     tickStep?: number;
+    labelVisibility?: string;
 }
 
 export const Default = (args: StoryArgs): TemplateResult => {
@@ -85,6 +98,90 @@ export const Default = (args: StoryArgs): TemplateResult => {
             </sp-slider>
         </div>
     `;
+};
+
+export const noVisibleTextLabel = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as Slider;
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Opacity
+            </sp-slider>
+        </div>
+    `;
+};
+noVisibleTextLabel.args = {
+    labelVisibility: 'value',
+};
+
+export const noVisibleValueLabel = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as Slider;
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Opacity
+            </sp-slider>
+        </div>
+    `;
+};
+noVisibleValueLabel.args = {
+    labelVisibility: 'text',
+};
+
+export const noVisibleLabels = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as Slider;
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{ style: 'percent' }}
+                ...=${spreadProps(args)}
+            >
+                Opacity
+            </sp-slider>
+        </div>
+    `;
+};
+noVisibleLabels.args = {
+    labelVisibility: 'none',
 };
 
 export const Gradient = (args: StoryArgs): TemplateResult => {
