@@ -42,6 +42,64 @@ describe('ColorArea', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('manages a single tab stop', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <input type="text" />
+                    <sp-color-area color="hsl(100, 50%, 50%)"></sp-color-area>
+                    <input type="text" />
+                </div>
+            `
+        );
+        const el = test.querySelector('sp-color-area') as ColorArea;
+        const input1 = test.querySelector(
+            'input:nth-of-type(1)'
+        ) as HTMLInputElement;
+        const input2 = test.querySelector(
+            'input:nth-of-type(2)'
+        ) as HTMLInputElement;
+
+        await elementUpdated(el);
+
+        input1.focus();
+
+        expect(document.activeElement).to.equal(input1);
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement).to.equal(el);
+
+        let value = el.value;
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        expect(el.value).to.not.equal(value);
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement).to.equal(input2);
+
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement).to.equal(el);
+
+        value = el.value;
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        expect(el.value).to.not.equal(value);
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement).to.equal(input1);
+    });
     it('accepts "color" values as hsl', async () => {
         const el = await fixture<ColorArea>(
             html`
