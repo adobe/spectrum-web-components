@@ -107,7 +107,7 @@ const buildTable = (result) => {
 ## ${packageName} [_permalink_](#user-content-${packageName})
 | Version | Bytes | Avg Time | vs remote | vs branch |
 |---|---|---|---|---|
-| remote | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
+| npm latest | ${prettyBytes(remote.bytesSent)} | ${formatConfidenceInterval(
         remote.mean,
         milli
     )} | - | ${remoteDifferencesString} |
