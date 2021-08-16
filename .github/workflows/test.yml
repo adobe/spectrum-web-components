@@ -38,7 +38,7 @@ jobs:
                         repo: context.repo.repo,
                         issue_number: context.issue.number,
                       }).then(({data}) => {
-                        const priorComment = data.find(comment => comment.body.startsWith('# Branch Preview URLs'));
+                        const priorComment = data.find(comment => comment.body.startsWith('# Branch Preview'));
                         if (priorComment) {
                           github.issues.updateComment({
                             owner: context.repo.owner,
