@@ -16,6 +16,7 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
+    PropertyValues,
 } from '@spectrum-web-components/base';
 
 import sidenavItemStyles from './sidenav-item.css.js';
@@ -29,11 +30,18 @@ export class SideNavHeading extends SpectrumElement {
         return [sidenavItemStyles, sidenavHeadingStyles];
     }
 
+    protected update(changes: PropertyValues): void {
+        if (!this.hasAttribute('slot')) {
+            this.slot = 'descendant';
+        }
+        super.update(changes);
+    }
+
     protected render(): TemplateResult {
         return html`
             <h2 id="heading">${this.label}</h2>
             <div id="list" aria-labelledby="heading">
-                <slot></slot>
+                <slot name="descendant"></slot>
             </div>
         `;
     }

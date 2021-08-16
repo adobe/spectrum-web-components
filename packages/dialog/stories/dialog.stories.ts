@@ -23,7 +23,7 @@ export default {
 
 export const small = (): TemplateResult => {
     return html`
-        <sp-dialog size="small">
+        <sp-dialog size="s">
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
@@ -42,7 +42,7 @@ export const small = (): TemplateResult => {
 
 export const medium = (): TemplateResult => {
     return html`
-        <sp-dialog size="medium">
+        <sp-dialog size="m">
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
@@ -61,7 +61,7 @@ export const medium = (): TemplateResult => {
 
 export const large = (): TemplateResult => {
     return html`
-        <sp-dialog size="large">
+        <sp-dialog size="l">
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
@@ -80,7 +80,7 @@ export const large = (): TemplateResult => {
 
 export const dismissable = (): TemplateResult => {
     return html`
-        <sp-dialog size="medium" dismissable>
+        <sp-dialog size="m" dismissable>
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
@@ -99,7 +99,7 @@ export const dismissable = (): TemplateResult => {
 
 export const noDivider = (): TemplateResult => {
     return html`
-        <sp-dialog size="medium" dismissable no-divider>
+        <sp-dialog size="m" dismissable no-divider>
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
@@ -118,7 +118,7 @@ export const noDivider = (): TemplateResult => {
 
 export const hero = (): TemplateResult => {
     return html`
-        <sp-dialog size="medium" dismissable no-divider>
+        <sp-dialog size="m" dismissable no-divider>
             <div slot="hero" style="background-image: url(${landscape})"></div>
             <h2 slot="heading">Disclaimer</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

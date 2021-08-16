@@ -43,10 +43,18 @@ const config = {
                     type: 'enum',
                     name: 'size',
                     values: [
-                        '.spectrum-Dialog--small',
-                        '.spectrum-Dialog--medium',
-                        '.spectrum-Dialog--large',
-                        '.spectrum-Dialog--alert',
+                        {
+                            name: 's',
+                            selector: '.spectrum-Dialog--small',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Dialog--medium',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Dialog--large',
+                        },
                     ],
                 },
                 {

@@ -41,40 +41,33 @@ import {
 
 ```html
 <sp-sidenav defaultValue="Docs">
-    <sp-sidenav-item
-        value="Docs"
-        label="Docs"
-        href="/components/SideNav"
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Guides"
-        label="Guides"
-        href="/guides/getting_started"
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Community"
-        label="Community"
-        href="/community"
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Storybook"
-        label="Storybook"
-        href="/storybook"
-        target="_blank"
-    ></sp-sidenav-item>
+    <sp-sidenav-item value="Docs" href="/components/SideNav">
+        Docs
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Guides" href="/guides/getting_started">
+        Guides
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Community" href="/community">
+        Community
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Storybook" href="/storybook" target="_blank">
+        Storybook
+    </sp-sidenav-item>
     <sp-sidenav-item
         value="Releases"
-        label="Releases"
         href="http://git.corp.adobe.com/React/react-spectrum/releases"
         target="_blank"
         disabled
-    ></sp-sidenav-item>
+    >
+        Releases
+    </sp-sidenav-item>
     <sp-sidenav-item
         value="GitHub"
-        label="GitHub"
         href="http://git.corp.adobe.com/React/react-spectrum"
         target="_blank"
-    ></sp-sidenav-item>
+    >
+        GitHub
+    </sp-sidenav-item>
 </sp-sidenav>
 ```
 

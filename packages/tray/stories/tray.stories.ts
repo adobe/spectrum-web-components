@@ -47,7 +47,7 @@ type StoryArgs = {
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-tray ?open=${args.open}>
-            <sp-dialog size="small">
+            <sp-dialog size="s">
                 <h2 slot="heading">New Messages</h2>
                 You have 5 new messages.
             </sp-dialog>

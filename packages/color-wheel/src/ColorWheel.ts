@@ -23,7 +23,6 @@ import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import styles from './color-wheel.css.js';
-import { wheel } from './wheel-svg.js';
 import {
     ColorHandle,
     ColorValue,
@@ -354,9 +353,13 @@ export class ColorWheel extends Focusable {
     }
 
     protected render(): TemplateResult {
-        const { width = 0 } = this.boundingClientRect || {};
+        const { width: diameter = 160 } = this.boundingClientRect || {};
 
-        const radius = width / 2;
+        const radius = diameter / 2;
+        const trackWidth = 24;
+        const innerRadius = radius - trackWidth;
+        const innerDiameter = innerRadius * 2;
+        const clipPath = `path(evenodd, "M ${radius} ${radius} m -${radius} 0 a ${radius} ${radius} 0 1 0 ${diameter} 0 a ${radius} ${radius} 0 1 0 -${diameter} 0 M ${radius} ${radius} m -${innerRadius} 0 a ${innerRadius} ${innerRadius} 0 1 0 ${innerDiameter} 0 a ${innerRadius} ${innerRadius} 0 1 0 -${innerDiameter} 0")`;
         const handleLocationStyles = `transform: translate(${
             (radius - 12.5) * Math.cos((this.value * Math.PI) / 180)
         }px, ${(radius - 12.5) * Math.sin((this.value * Math.PI) / 180)}px);`;
@@ -365,7 +368,7 @@ export class ColorWheel extends Focusable {
                 name="gradient"
                 @pointerdown=${this.handleGradientPointerdown}
             >
-                ${wheel(radius)}
+                <div class="wheel" style="clip-path: ${clipPath}"></div>
             </slot>
 
             <sp-color-handle

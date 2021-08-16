@@ -18,7 +18,11 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
-import { Default, smallHorizontal } from '../stories/card.stories.js';
+import {
+    Default,
+    smallHorizontal,
+    StoryArgs,
+} from '../stories/card.stories.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import { spy } from 'sinon';
 import { spaceEvent } from '../../../test/testing-helpers.js';
@@ -70,7 +74,7 @@ describe('card', () => {
         const el = await fixture<Card>(
             html`
                 <sp-card
-                    small
+                    size="s"
                     heading="Card Heading"
                     subheading="JPG"
                     variant="quiet"
@@ -125,7 +129,9 @@ describe('card', () => {
         await expect(el).to.be.accessible();
     });
     it('loads - [horizontal]', async () => {
-        const el = await fixture<Card>(smallHorizontal(smallHorizontal.args));
+        const el = await fixture<Card>(
+            smallHorizontal(smallHorizontal.args as StoryArgs)
+        );
 
         await elementUpdated(el);
 
