@@ -16,12 +16,12 @@ const slugify = require('@sindresorhus/slugify');
 const buildPreviewURLComment = (ref) => {
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
-    const comment = `# Branch Preview URLs
+    const comment = `# Branch Preview
 
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
 - [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)
 
-When a visual regression test fails (or has previously failed while working on this branch), its results will be avaialable at the associated URL below:
+When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
 
 - [Lightest | Medium | LTR](https://${branchSlug}-lightest-medium-ltr--spectrum-web-components.netlify.app/review/)
 - [Lightest | Medium | RTL](https://${branchSlug}-lightest-medium-rtl--spectrum-web-components.netlify.app/review/)
@@ -46,4 +46,4 @@ console.log(buildPreviewURLComment('current/branch'));
 
 module.exports = {
     buildPreviewURLComment,
-}
+};
