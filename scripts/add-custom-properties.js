@@ -15,7 +15,7 @@ governing permissions and limitations under the License.
 import path from 'path';
 import fs from 'fs';
 import yargs from 'yargs';
-import globby from 'globby';
+import { globbyStream } from 'globby';
 import { hideBin } from 'yargs/helpers';
 import { fileURLToPath } from 'url';
 
@@ -30,7 +30,7 @@ async function main() {
         let customElementJsonString = fs.readFileSync(inputCEJPath, 'utf8');
         const customElementJson = JSON.parse(customElementJsonString);
         const customVarsMap = new Map();
-        for await (const path of globby.stream(
+        for await (const path of globbyStream(
             `${projectDir}/packages/*/src/spectrum-vars.json`
         )) {
             const componentName = path.split('packages/')[1].split('/src')[0];

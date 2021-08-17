@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 
 import path from 'path';
 import fs from 'fs';
-import globby from 'globby';
+import { globbyStream } from 'globby';
 import postcss from 'postcss';
 import cssProcessing from '../scripts/css-processing.cjs';
 import { fileURLToPath } from 'url';
@@ -38,7 +38,7 @@ export const processCSS = async (cssPath) => {
 };
 
 const buildCSS = async () => {
-    for await (const cssPath of globby.stream(`./packages/*/src/*.css`)) {
+    for await (const cssPath of globbyStream(`./packages/*/src/*.css`)) {
         processCSS(cssPath);
     }
 };

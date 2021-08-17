@@ -11,13 +11,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const globby = require('globby');
+const globbySync = require('globby').globbySync;
 const fs = require('fs');
 const prettyBytes = require('pretty-bytes');
 
 const getTachometerResults = () => {
     const results = [];
-    for (const result of globby.sync(`./tach-results.*.json`)) {
+    for (const result of globbySync(`./tach-results.*.json`)) {
         const file = fs.readFileSync(result, 'utf8');
         const json = JSON.parse(file);
         results.push(json.benchmarks);

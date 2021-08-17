@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import fs from 'fs';
-import globby from 'globby';
+import { globbyStream } from 'globby';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
 import yargs from 'yargs';
@@ -28,7 +28,7 @@ function cleanID(url, type) {
 
 async function main() {
     const allTests = [];
-    for await (const path of globby.stream(
+    for await (const path of globbyStream(
         `test/visual/screenshots-baseline/**/*.png`
     )) {
         const pathParts = path.split('/');
@@ -43,7 +43,7 @@ async function main() {
         };
         allTests.push(test);
     }
-    for await (const path of globby.stream(
+    for await (const path of globbyStream(
         `test/visual/screenshots-actual/updates/**/*.png`
     )) {
         const pathParts = path.split('/');
@@ -64,7 +64,7 @@ async function main() {
             allTests.push(test);
         }
     }
-    for await (const path of globby.stream(
+    for await (const path of globbyStream(
         `test/visual/screenshots-actual/diff/**/*.png`
     )) {
         const pathParts = path.split('/');

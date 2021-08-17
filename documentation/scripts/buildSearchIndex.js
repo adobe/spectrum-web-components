@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import lunr from 'lunr';
-import globby from 'globby';
+import { globbyStream } from 'globby';
 import path from 'path';
 import fs from 'fs-extra';
 import { fileURLToPath } from 'url';
@@ -37,7 +37,7 @@ async function main() {
     const documents = [];
 
     // Components
-    for await (const path of globby.stream(`${projectDir}/packages/**/*.md`)) {
+    for await (const path of globbyStream(`${projectDir}/packages/**/*.md`)) {
         let componentName = /([^/]+)\/([a-zA-Z-]+)\.md$/.exec(path)[1];
         const fileName = /([a-zA-Z-]+)\.md$/.exec(path)[0];
         if (fileName === 'CHANGELOG.md') {
@@ -56,7 +56,7 @@ async function main() {
     }
 
     // Guides
-    for await (const path of globby.stream(
+    for await (const path of globbyStream(
         `${projectDir}/documentation/guides/*.md`
     )) {
         const guideName = /\/([^/]+).md$/.exec(path)[1];
