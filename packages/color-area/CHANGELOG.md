@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.9...@spectrum-web-components/color-area@0.1.10) (2021-08-17)
+
+### Bug Fixes
+
+-   key interaction handling no longer prevents "tab" presses ([b542ce8](https://github.com/adobe/spectrum-web-components/commit/b542ce8f98a8a26badfa856f2e09ebda16dbcbb1))
+
 ## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.8...@spectrum-web-components/color-area@0.1.9) (2021-08-03)
 
 **Note:** Version bump only for package @spectrum-web-components/color-area

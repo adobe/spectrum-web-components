@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.5...@spectrum-web-components/number-field@0.1.6) (2021-08-17)
+
+### Bug Fixes
+
+-   add "editable" option to "sp-slider" ([e86d7fa](https://github.com/adobe/spectrum-web-components/commit/e86d7fa84491b41a39dbab9c8d85eec42df320cd))
+
 ## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.4...@spectrum-web-components/number-field@0.1.5) (2021-08-03)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field

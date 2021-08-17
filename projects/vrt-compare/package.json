@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/vrt-compare",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "publishConfig": {
         "access": "public"
     },
@@ -44,7 +44,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-bar": "^0.2.13",
+        "@spectrum-web-components/action-bar": "^0.2.14",
         "@spectrum-web-components/action-button": "^0.5.5",
         "@spectrum-web-components/action-group": "^0.4.13",
         "@spectrum-web-components/base": "^0.4.5",

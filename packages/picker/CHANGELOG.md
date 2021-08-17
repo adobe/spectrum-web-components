@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.6.0...@spectrum-web-components/picker@0.7.0) (2021-08-17)
+
+### Features
+
+-   **picker:** update "icons-only" to "icons=only" to support more variations ([de16a62](https://github.com/adobe/spectrum-web-components/commit/de16a628f6ec7cfcbe405c71414bef6ed72b1726))
+
+### Performance Improvements
+
+-   reorganize inheritance and composition in Menu Items ([d96ccb6](https://github.com/adobe/spectrum-web-components/commit/d96ccb621833277444d69535126c3669343c2eaf))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.5.4...@spectrum-web-components/picker@0.6.0) (2021-08-03)
 
 ### Bug Fixes

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.8.13...@spectrum-web-components/card@0.8.14) (2021-08-17)
+
+### Bug Fixes
+
+-   **card:** normalize sizing technique to align with future t-shirt size usage ([6f05b3b](https://github.com/adobe/spectrum-web-components/commit/6f05b3b7c88633b17cd44224af184c37c3d9c8bf))
+-   **dialog:** normalize sizing technique to align with future t-shirt size usage ([da33797](https://github.com/adobe/spectrum-web-components/commit/da33797e724d0943a6abf059c96641a220182e5f))
+
 ## [0.8.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.8.12...@spectrum-web-components/card@0.8.13) (2021-08-03)
 
 **Note:** Version bump only for package @spectrum-web-components/card

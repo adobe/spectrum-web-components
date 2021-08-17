@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.0...@spectrum-web-components/menu@0.9.1) (2021-08-17)
+
+### Performance Improvements
+
+-   reorganize inheritance and composition in Menu Items ([d96ccb6](https://github.com/adobe/spectrum-web-components/commit/d96ccb621833277444d69535126c3669343c2eaf))
+
 # [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.10...@spectrum-web-components/menu@0.9.0) (2021-08-03)
 
 ### Bug Fixes

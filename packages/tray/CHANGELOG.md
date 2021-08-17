@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.0.4...@spectrum-web-components/tray@0.0.5) (2021-08-17)
+
+### Bug Fixes
+
+-   **dialog:** normalize sizing technique to align with future t-shirt size usage ([da33797](https://github.com/adobe/spectrum-web-components/commit/da33797e724d0943a6abf059c96641a220182e5f))
+
 ## [0.0.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.0.3...@spectrum-web-components/tray@0.0.4) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/tray
