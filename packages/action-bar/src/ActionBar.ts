@@ -68,7 +68,7 @@ export class ActionBar extends SpectrumElement {
 
     public render(): TemplateResult {
         return html`
-            <sp-popover open id="popover">
+            <sp-popover ?open=${this.open} id="popover">
                 <slot></slot>
             </sp-popover>
         `;
