@@ -17,15 +17,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     transform: scale(1); /* .spectrum-Menu-checkmark */
 }
 :host([dir='ltr']) .checkmark {
-    margin-left: var(
-        --spectrum-listitem-icon-gap
+    padding-left: var(
+        --spectrum-listitem-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-Menu-checkmark,
    * [dir=ltr] 
 .spectrum-Menu-chevron */
 }
 :host([dir='rtl']) .checkmark {
-    margin-right: var(
-        --spectrum-listitem-icon-gap
+    padding-right: var(
+        --spectrum-listitem-texticon-icon-gap
     ); /* [dir=rtl] .spectrum-Menu-checkmark,
    * [dir=rtl] 
 .spectrum-Menu-chevron */
@@ -33,5 +33,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .checkmark {
     flex-grow: 0; /* .spectrum-Menu-checkmark,
    * .spectrum-Menu-chevron */
-    margin-top: var(--spectrum-listitem-icon-margin-top);
+    margin-top: calc(
+        var(--spectrum-listitem-texticon-ui-icon-margin-top) -
+            var(--spectrum-listitem-texticon-padding-y) + 1px
+    );
 }

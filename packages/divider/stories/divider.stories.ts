@@ -65,7 +65,11 @@ export const verticalSmall = (): TemplateResult => {
             <sp-action-button quiet>
                 <sp-icon-align-left slot="icon"></sp-icon-align-left>
             </sp-action-button>
-            <sp-divider vertical size="s"></sp-divider>
+            <sp-divider
+                vertical
+                size="s"
+                style="height: auto; align-self: stretch;"
+            ></sp-divider>
             <sp-action-button quiet>
                 <sp-icon-align-right slot="icon"></sp-icon-align-right>
             </sp-action-button>
@@ -81,7 +85,11 @@ export const verticalMedium = (): TemplateResult => {
             <sp-action-button quiet>
                 <sp-icon-align-left slot="icon"></sp-icon-align-left>
             </sp-action-button>
-            <sp-divider size="m" vertical></sp-divider>
+            <sp-divider
+                size="m"
+                vertical
+                style="height: auto; align-self: stretch;"
+            ></sp-divider>
             <sp-action-button quiet>
                 <sp-icon-align-right slot="icon"></sp-icon-align-right>
             </sp-action-button>
@@ -97,7 +105,11 @@ export const verticalLarge = (): TemplateResult => {
             <sp-action-button quiet>
                 <sp-icon-align-left slot="icon"></sp-icon-align-left>
             </sp-action-button>
-            <sp-divider size="l" vertical></sp-divider>
+            <sp-divider
+                size="l"
+                vertical
+                style="height: auto; align-self: stretch;"
+            ></sp-divider>
             <sp-action-button quiet>
                 <sp-icon-align-right slot="icon"></sp-icon-align-right>
             </sp-action-button>

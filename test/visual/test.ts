@@ -63,20 +63,20 @@ export const test = (
                     ...(testsDefault.args || {}),
                     ...(tests[story].args || {}),
                 };
-                let decoratedStory:
-                    | (() => TemplateResult)
-                    | TemplateResult = () =>
-                    html`
-                        ${tests[story](args)}
-                    `;
+                let decoratedStory: (() => TemplateResult) | TemplateResult =
+                    () =>
+                        html`
+                            ${tests[story](args)}
+                        `;
                 let storyResult = decoratedStory();
                 if (tests[story].decorators && tests[story].decorators.length) {
                     let decoratorCount = tests[story].decorators.length;
                     while (decoratorCount) {
                         decoratorCount -= 1;
-                        decoratedStory = tests[story].decorators[
-                            decoratorCount
-                        ](decoratedStory);
+                        decoratedStory =
+                            tests[story].decorators[decoratorCount](
+                                decoratedStory
+                            );
                     }
                     storyResult = decoratedStory as TemplateResult;
                 }
@@ -84,9 +84,10 @@ export const test = (
                     let decoratorCount = testsDefault.decorators.length;
                     while (decoratorCount) {
                         decoratorCount -= 1;
-                        decoratedStory = testsDefault.decorators[
-                            decoratorCount
-                        ](decoratedStory);
+                        decoratedStory =
+                            testsDefault.decorators[decoratorCount](
+                                decoratedStory
+                            );
                     }
                     storyResult = decoratedStory as TemplateResult;
                 }
@@ -115,7 +116,7 @@ export const test = (
                     await waitUntil(
                         () => retest.ready,
                         'Wait for decorator to become ready...',
-                        { timeout: 15000 }
+                        { timeout: 20000 }
                     );
                     await visualDiff(
                         retest,

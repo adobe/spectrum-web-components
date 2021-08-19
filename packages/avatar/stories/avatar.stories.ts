@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from 'lit-html';
 
 import '../sp-avatar.js';
+import { AvatarSize } from '..';
 import { avatar } from './images';
 
 export default {
@@ -30,14 +31,33 @@ export default {
 interface StoryArgs {
     label?: string;
     src?: string;
+    size?: AvatarSize;
 }
 
 const Template = ({
     label = 'Place Dog',
     src = avatar,
+    size = 100,
 }: StoryArgs = {}): TemplateResult => {
     return html`
-        <sp-avatar label=${label} src=${src}></sp-avatar>
+        <sp-avatar label=${label} src=${src} size=${size}></sp-avatar>
     `;
 };
-export const Default = (args: StoryArgs = {}): TemplateResult => Template(args);
+export const size50 = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, size: 50 });
+export const size75 = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, size: 75 });
+export const size100 = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, size: 100 });
+export const size200 = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, size: 200 });
+export const size300 = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, size: 300 });
+export const size400 = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, size: 400 });
+export const size500 = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, size: 500 });
+export const size600 = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, size: 600 });
+export const size700 = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, size: 700 });

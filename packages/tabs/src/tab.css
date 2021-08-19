@@ -58,6 +58,10 @@ governing permissions and limitations under the License.
     flex-shrink: 0;
 }
 
+:host(:not([vertical])) ::slotted([slot='icon']) {
+    height: 100%;
+}
+
 :host([dir][vertical]) slot[name='icon'] + #itemLabel {
     font-size: var(
         --spectrum-tabs-text-size,

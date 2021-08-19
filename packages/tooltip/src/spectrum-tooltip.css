@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-overlay-animation-distance: var(
-        --spectrum-picker-m-popover-offset-y,
+        --spectrum-picker-m-texticon-popover-offset-y,
         var(--spectrum-global-dimension-size-75)
     ); /* .spectrum-Tooltip */
     opacity: 0;
@@ -51,9 +51,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Tooltip--left.is-open */
 }
 :host {
-    --spectrum-tooltip-target-offset: 3px; /* .spectrum-Tooltip */
-    --spectrum-tooltip-tip-width: var(
-        --spectrum-tooltip-tip-height,
+    --spectrum-tooltip-neutral-target-offset: 3px; /* .spectrum-Tooltip */
+    --spectrum-tooltip-neutral-tip-width: var(
+        --spectrum-tooltip-neutral-tip-height,
         var(--spectrum-global-dimension-size-50)
     );
 }
@@ -61,39 +61,39 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -webkit-font-smoothing: antialiased;
     align-items: center;
     border-radius: var(
-        --spectrum-tooltip-border-radius,
+        --spectrum-tooltip-neutral-border-radius,
         var(--spectrum-global-dimension-size-50)
     );
     box-sizing: border-box;
     display: inline-flex;
     flex-direction: row;
     font-size: var(
-        --spectrum-tooltip-text-size,
+        --spectrum-tooltip-neutral-text-size,
         var(--spectrum-global-dimension-font-size-75)
     );
     font-weight: var(
-        --spectrum-tooltip-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
+        --spectrum-tooltip-neutral-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
     );
     left: 0;
     line-height: var(
-        --spectrum-tooltip-text-line-height,
+        --spectrum-tooltip-neutral-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
     max-width: var(
-        --spectrum-tooltip-max-width,
+        --spectrum-tooltip-neutral-max-width,
         var(--spectrum-global-dimension-size-2000)
     );
     min-height: var(
-        --spectrum-tooltip-min-height,
+        --spectrum-tooltip-neutral-min-height,
         var(--spectrum-global-dimension-size-300)
     );
     padding: var(
-            --spectrum-tooltip-padding-top,
+            --spectrum-tooltip-neutral-padding-top,
             var(--spectrum-global-dimension-size-50)
         )
         var(
-            --spectrum-tooltip-padding-x,
+            --spectrum-tooltip-neutral-padding-x,
             var(--spectrum-global-dimension-size-125)
         );
     position: relative; /* .spectrum-Tooltip */
@@ -112,23 +112,23 @@ p {
 }
 #tip {
     border-bottom: var(
-            --spectrum-tooltip-tip-width,
+            --spectrum-tooltip-neutral-tip-width,
             var(--spectrum-global-dimension-size-100)
         )
         solid transparent;
     border-left: var(
-            --spectrum-tooltip-tip-width,
+            --spectrum-tooltip-neutral-tip-width,
             var(--spectrum-global-dimension-size-100)
         )
         solid transparent;
     border-right: var(
-            --spectrum-tooltip-tip-width,
+            --spectrum-tooltip-neutral-tip-width,
             var(--spectrum-global-dimension-size-100)
         )
         solid transparent;
     border-top-style: solid;
     border-top-width: var(
-        --spectrum-tooltip-tip-width,
+        --spectrum-tooltip-neutral-tip-width,
         var(--spectrum-global-dimension-size-100)
     );
     height: 0;
@@ -138,14 +138,14 @@ p {
 :host([placement*='left']) #tip,
 :host([placement*='right']) #tip {
     margin-top: calc(
-        -1 * var(--spectrum-tooltip-tip-width, var(--spectrum-global-dimension-size-100))
+        -1 * var(--spectrum-tooltip-neutral-tip-width, var(--spectrum-global-dimension-size-100))
     );
     top: 50%; /* .spectrum-Tooltip--right .spectrum-Tooltip-tip,
    * .spectrum-Tooltip--left .spectrum-Tooltip-tip */
 }
 :host([placement*='right']) {
     margin-left: var(
-        --spectrum-tooltip-target-offset
+        --spectrum-tooltip-neutral-target-offset
     ); /* .spectrum-Tooltip--right */
 }
 :host([placement*='right']) #tip {
@@ -154,7 +154,7 @@ p {
 }
 :host([placement*='left']) {
     margin-right: var(
-        --spectrum-tooltip-target-offset
+        --spectrum-tooltip-neutral-target-offset
     ); /* .spectrum-Tooltip--left */
 }
 :host([placement*='left']) #tip {
@@ -163,7 +163,7 @@ p {
 }
 :host([placement*='top']) {
     margin-bottom: var(
-        --spectrum-tooltip-target-offset
+        --spectrum-tooltip-neutral-target-offset
     ); /* .spectrum-Tooltip--top */
 }
 :host([placement*='top']) #tip {
@@ -171,7 +171,7 @@ p {
 }
 :host([placement*='bottom']) {
     margin-top: var(
-        --spectrum-tooltip-target-offset
+        --spectrum-tooltip-neutral-target-offset
     ); /* .spectrum-Tooltip--bottom */
 }
 :host([placement*='bottom']) #tip {
@@ -183,17 +183,17 @@ p {
     left: 50%; /* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip,
    * .spectrum-Tooltip--top .spectrum-Tooltip-tip */
     margin-left: calc(
-        -1 * var(--spectrum-tooltip-tip-width, var(--spectrum-global-dimension-size-100))
+        -1 * var(--spectrum-tooltip-neutral-tip-width, var(--spectrum-global-dimension-size-100))
     );
 }
 :host([dir='ltr']) ::slotted([slot='icon']) {
     margin-left: calc(
         var(
-                --spectrum-tooltip-icon-margin-x,
+                --spectrum-tooltip-neutral-icon-margin-x,
                 var(--spectrum-global-dimension-size-100)
             ) -
             var(
-                --spectrum-tooltip-padding-x,
+                --spectrum-tooltip-neutral-padding-x,
                 var(--spectrum-global-dimension-size-125)
             )
     ); /* [dir=ltr] .spectrum-Tooltip-typeIcon */
@@ -201,24 +201,24 @@ p {
 :host([dir='rtl']) ::slotted([slot='icon']) {
     margin-right: calc(
         var(
-                --spectrum-tooltip-icon-margin-x,
+                --spectrum-tooltip-neutral-icon-margin-x,
                 var(--spectrum-global-dimension-size-100)
             ) -
             var(
-                --spectrum-tooltip-padding-x,
+                --spectrum-tooltip-neutral-padding-x,
                 var(--spectrum-global-dimension-size-125)
             )
     ); /* [dir=rtl] .spectrum-Tooltip-typeIcon */
 }
 :host([dir='ltr']) ::slotted([slot='icon']) {
     margin-right: var(
-        --spectrum-tooltip-icon-margin-x,
+        --spectrum-tooltip-neutral-icon-margin-x,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=ltr] .spectrum-Tooltip-typeIcon */
 }
 :host([dir='rtl']) ::slotted([slot='icon']) {
     margin-left: var(
-        --spectrum-tooltip-icon-margin-x,
+        --spectrum-tooltip-neutral-icon-margin-x,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=rtl] .spectrum-Tooltip-typeIcon */
 }
@@ -226,42 +226,42 @@ p {
     align-self: flex-start;
     flex-shrink: 0;
     height: var(
-        --spectrum-tooltip-icon-size,
+        --spectrum-tooltip-neutral-icon-size,
         var(--spectrum-global-dimension-size-175)
     );
     margin-top: 1px;
     width: var(
-        --spectrum-tooltip-icon-size,
+        --spectrum-tooltip-neutral-icon-size,
         var(--spectrum-global-dimension-size-175)
     ); /* .spectrum-Tooltip-typeIcon */
 }
 #label {
     line-height: var(
-        --spectrum-tooltip-text-line-height,
+        --spectrum-tooltip-neutral-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     ); /* .spectrum-Tooltip-label */
 }
 :host {
     background-color: var(
-        --spectrum-tooltip-background-color,
-        var(--spectrum-global-color-static-gray-700)
+        --spectrum-tooltip-neutral-background-color,
+        var(--spectrum-semantic-neutral-background-color-default)
     ); /* .spectrum-Tooltip */
     color: var(
-        --spectrum-tooltip-text-color,
+        --spectrum-tooltip-neutral-text-color,
         var(--spectrum-global-color-static-white)
     );
 }
 #tip {
     border-top-color: var(
-        --spectrum-tooltip-background-color,
-        var(--spectrum-global-color-static-gray-700)
+        --spectrum-tooltip-neutral-background-color,
+        var(--spectrum-semantic-neutral-background-color-default)
     ); /* .spectrum-Tooltip-tip */
 }
 .spectrum-Tooltip--error,
 :host([variant='negative']) {
     background-color: var(
         --spectrum-tooltip-negative-background-color,
-        var(--spectrum-global-color-static-red-700)
+        var(--spectrum-semantic-negative-background-color)
     ); /* .spectrum-Tooltip--negative,
    * .spectrum-Tooltip--error */
 }
@@ -269,7 +269,7 @@ p {
 :host([variant='negative']) #tip {
     border-top-color: var(
         --spectrum-tooltip-negative-background-color,
-        var(--spectrum-global-color-static-red-700)
+        var(--spectrum-semantic-negative-background-color)
     ); /* .spectrum-Tooltip--negative .spectrum-Tooltip-tip,
    * .spectrum-Tooltip--error .spectrum-Tooltip-tip */
 }
@@ -277,7 +277,7 @@ p {
 :host([variant='info']) {
     background-color: var(
         --spectrum-tooltip-info-background-color,
-        var(--spectrum-global-color-static-blue-700)
+        var(--spectrum-semantic-informative-background-color)
     ); /* .spectrum-Tooltip--info,
    * .spectrum-Tooltip--help */
 }
@@ -285,7 +285,7 @@ p {
 :host([variant='info']) #tip {
     border-top-color: var(
         --spectrum-tooltip-info-background-color,
-        var(--spectrum-global-color-static-blue-700)
+        var(--spectrum-semantic-informative-background-color)
     ); /* .spectrum-Tooltip--info .spectrum-Tooltip-tip,
    * .spectrum-Tooltip--help .spectrum-Tooltip-tip */
 }
@@ -293,7 +293,7 @@ p {
 :host([variant='positive']) {
     background-color: var(
         --spectrum-tooltip-positive-background-color,
-        var(--spectrum-global-color-static-green-700)
+        var(--spectrum-semantic-positive-background-color)
     ); /* .spectrum-Tooltip--positive,
    * .spectrum-Tooltip--success */
 }
@@ -301,7 +301,7 @@ p {
 :host([variant='positive']) #tip {
     border-top-color: var(
         --spectrum-tooltip-positive-background-color,
-        var(--spectrum-global-color-static-green-700)
+        var(--spectrum-semantic-positive-background-color)
     ); /* .spectrum-Tooltip--positive .spectrum-Tooltip-tip,
    * .spectrum-Tooltip--success .spectrum-Tooltip-tip */
 }

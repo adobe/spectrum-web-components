@@ -13,12 +13,9 @@ governing permissions and limitations under the License.
 @import './spectrum-avatar.css';
 
 :host {
-    display: block;
     overflow: hidden;
 }
 
 img {
-    width: 100%;
-    height: auto;
     vertical-align: top;
 }

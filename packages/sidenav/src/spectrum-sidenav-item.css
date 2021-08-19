@@ -166,7 +166,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) .spectrum-SideNav--multiLevel #list #itemLink {
     padding-left: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation,
+                --spectrum-sidenav-multilevel-item-margin-left,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
@@ -178,7 +178,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) .spectrum-SideNav--multiLevel #list #itemLink {
     padding-right: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation,
+                --spectrum-sidenav-multilevel-item-margin-left,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
@@ -190,7 +190,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) .spectrum-SideNav--multiLevel #list #list #itemLink {
     padding-left: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation,
+                --spectrum-sidenav-multilevel-item-margin-left,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
@@ -202,7 +202,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) .spectrum-SideNav--multiLevel #list #list #itemLink {
     padding-right: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation,
+                --spectrum-sidenav-multilevel-item-margin-left,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
@@ -288,12 +288,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #itemLink.focus-visible:before {
     border-color: var(
         --spectrum-sidenav-item-border-color-key-focus,
-        var(--spectrum-alias-border-color-focus)
+        var(--spectrum-alias-border-color-key-focus)
     ); /* .spectrum-SideNav-itemLink.focus-ring:before */
 }
 #itemLink:focus-visible:before {
     border-color: var(
         --spectrum-sidenav-item-border-color-key-focus,
-        var(--spectrum-alias-border-color-focus)
+        var(--spectrum-alias-border-color-key-focus)
     ); /* .spectrum-SideNav-itemLink.focus-ring:before */
 }

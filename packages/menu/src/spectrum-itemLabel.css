@@ -14,11 +14,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex: 1 1 auto; /* .spectrum-Menu-itemLabel */
     -webkit-hyphens: auto;
     hyphens: auto;
-    line-height: var(--spectrum-listitem-label-line-height);
+    line-height: var(--spectrum-listitem-texticon-label-line-height);
     overflow-wrap: break-word;
     width: calc(
-        100% - var(--spectrum-icon-checkmark-medium-width) -
-            var(--spectrum-listitem-icon-gap)
+        100% - var(--spectrum-listitem-texticon-ui-icon-width) -
+            var(--spectrum-listitem-texticon-icon-gap)
     );
 }
 .spectrum-Menu-itemLabel--wrapping {

@@ -16,9 +16,11 @@ governing permissions and limitations under the License.
  * Begin workaround for SplitButton not natively supporting t-shirt sizes.
  */
 sp-button {
-    --spectrum-button-primary-m-border-radius: calc(
-        var(--spectrum-button-padding-y) +
-            var(--spectrum-icon-tshirt-size-height) / 2 +
+    --spectrum-button-m-primary-texticon-border-radius: calc(
+        (
+                var(--spectrum-button-primary-texticon-text-size) *
+                    var(--spectrum-button-primary-texticon-text-line-height)
+            ) + var(--spectrum-icon-tshirt-size-height) / 2 +
             var(--spectrum-alias-border-size-thick)
     );
 }

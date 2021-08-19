@@ -19,6 +19,7 @@ import {
     PropertyValues,
     ifDefined,
     query,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
@@ -45,11 +46,16 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @slot footer - Footer text
  */
 export class Card extends LikeAnchor(
-    ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
-        '[slot="cover-photo"]',
-        '[slot="preview"]',
-    ])
-) {
+    SizedMixin(
+        ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
+            '[slot="cover-photo"]',
+            '[slot="preview"]',
+        ]),
+        {
+            validSizes: ['s', 'm'],
+        }
+    )
+ ) {
     public static get styles(): CSSResultArray {
         return [headingStyles, detailStyles, cardStyles];
     }
@@ -71,9 +77,6 @@ export class Card extends LikeAnchor(
 
     @query('#like-anchor')
     private likeAnchor?: HTMLAnchorElement;
-
-    @property({ type: String, reflect: true })
-    public size?: 's';
 
     @property({ type: Boolean, reflect: true })
     public focused = false;

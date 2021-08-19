@@ -11,9 +11,6 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-button-line-height: 1.3; /* .spectrum-LogicButton,
-   * .spectrum-ClearButton,
-   * .spectrum-Button */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     align-items: center;
@@ -26,10 +23,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-font-family-base)
     );
     justify-content: center;
-    line-height: var(--spectrum-button-line-height);
+    line-height: var(
+        --spectrum-alias-component-text-line-height,
+        var(--spectrum-global-font-line-height-small)
+    );
     margin: 0;
     overflow: visible;
-    position: relative;
+    position: relative; /* .spectrum-LogicButton,
+   * .spectrum-ClearButton,
+   * .spectrum-Button */
     text-decoration: none;
     text-transform: none;
     transition: background var(--spectrum-global-animation-duration-100, 0.13s)
@@ -67,7 +69,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host:after {
     border-radius: calc(
-        var(--spectrum-button-primary-border-radius) +
+        var(--spectrum-button-primary-texticon-border-radius) +
             var(
                 --spectrum-alias-focus-ring-gap,
                 var(--spectrum-global-dimension-static-size-25)
@@ -121,237 +123,267 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     display: none; /* .spectrum-Button-label:empty */
 }
 :host([size='s']) {
-    --spectrum-button-primary-focus-ring-size-key-focus: var(
-        --spectrum-button-primary-s-focus-ring-size-key-focus,
-        var(--spectrum-alias-focus-ring-size)
+    --spectrum-button-primary-textonly-text-padding-bottom: var(
+        --spectrum-button-s-primary-textonly-text-padding-bottom
     ); /* .spectrum-Button--sizeS */
-    --spectrum-button-primary-text-font-weight: var(
-        --spectrum-button-primary-s-text-font-weight,
+    --spectrum-button-primary-texticon-text-size: var(
+        --spectrum-button-s-primary-texticon-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-button-primary-texticon-text-font-weight: var(
+        --spectrum-button-s-primary-texticon-text-font-weight,
         var(--spectrum-global-font-weight-bold)
     );
-    --spectrum-button-primary-text-line-height: var(
-        --spectrum-button-primary-s-text-line-height,
+    --spectrum-button-primary-texticon-text-line-height: var(
+        --spectrum-button-s-primary-texticon-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
-    --spectrum-button-primary-border-size: var(
-        --spectrum-button-primary-s-border-size,
+    --spectrum-button-primary-texticon-icon-gap: var(
+        --spectrum-button-s-primary-texticon-icon-gap,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-button-primary-texticon-focus-ring-size: var(
+        --spectrum-button-s-primary-texticon-focus-ring-size,
+        var(--spectrum-alias-focus-ring-size)
+    );
+    --spectrum-button-primary-texticon-border-size: var(
+        --spectrum-button-s-primary-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-button-primary-text-size: var(
-        --spectrum-button-primary-s-text-size,
-        var(--spectrum-alias-item-text-size-s)
+    --spectrum-button-primary-texticon-border-radius: var(
+        --spectrum-button-s-primary-texticon-border-radius,
+        var(--spectrum-global-dimension-size-150)
     );
-    --spectrum-button-primary-icon-gap: var(
-        --spectrum-button-primary-s-icon-gap,
-        var(--spectrum-alias-item-workflow-icon-gap-s)
+    --spectrum-button-primary-texticon-padding-left: var(
+        --spectrum-button-s-primary-texticon-padding-left,
+        var(--spectrum-global-dimension-size-125)
     );
-    --spectrum-button-primary-height: var(
-        --spectrum-button-primary-s-height,
-        var(--spectrum-alias-item-height-s)
+    --spectrum-button-primary-textonly-border-size: var(
+        --spectrum-button-s-primary-textonly-border-size,
+        var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-button-primary-padding-left: var(
-        --spectrum-button-primary-s-padding-left,
-        var(--spectrum-alias-item-rounded-workflow-padding-left-s)
-    );
-    --spectrum-button-primary-border-radius: var(
-        --spectrum-button-primary-s-border-radius,
-        var(--spectrum-alias-item-rounded-border-radius-s)
-    );
-    --spectrum-button-primary-min-width: var(
-        --spectrum-button-primary-s-min-width,
+    --spectrum-button-primary-textonly-min-width: var(
+        --spectrum-button-s-primary-textonly-min-width,
         var(--spectrum-global-dimension-size-675)
     );
-    --spectrum-button-primary-textonly-padding-left: var(
-        --spectrum-button-primary-s-textonly-padding-left,
-        var(--spectrum-alias-item-rounded-padding-s)
-    );
     --spectrum-button-primary-textonly-padding-right: var(
-        --spectrum-button-primary-s-textonly-padding-right,
-        var(--spectrum-alias-item-rounded-padding-s)
+        --spectrum-button-s-primary-textonly-padding-right,
+        var(--spectrum-global-dimension-size-150)
     );
-    --spectrum-button-primary-text-padding-top: calc(
+    --spectrum-button-primary-textonly-padding-left: var(
+        --spectrum-button-s-primary-textonly-padding-left,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-button-primary-textonly-height: var(
+        --spectrum-button-s-primary-textonly-height,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-button-primary-textonly-text-padding-top: calc(
         var(
-                --spectrum-button-primary-s-text-padding-top,
-                var(--spectrum-alias-item-text-padding-top-s)
-            ) - 3px
+                --spectrum-button-s-primary-textonly-text-padding-top,
+                var(--spectrum-global-dimension-static-size-50)
+            ) - 1px
     );
 }
 :host([size='m']) {
-    --spectrum-button-primary-min-width: var(
-        --spectrum-button-primary-m-min-width
+    --spectrum-button-primary-texticon-padding-left: var(
+        --spectrum-button-m-primary-texticon-padding-left
     ); /* .spectrum-Button--sizeM */
-    --spectrum-button-primary-focus-ring-size-key-focus: var(
-        --spectrum-button-primary-m-focus-ring-size-key-focus,
-        var(--spectrum-alias-focus-ring-size)
+    --spectrum-button-primary-texticon-text-size: var(
+        --spectrum-button-m-primary-texticon-text-size,
+        var(--spectrum-global-dimension-font-size-100)
     );
-    --spectrum-button-primary-text-font-weight: var(
-        --spectrum-button-primary-m-text-font-weight,
+    --spectrum-button-primary-texticon-text-font-weight: var(
+        --spectrum-button-m-primary-texticon-text-font-weight,
         var(--spectrum-global-font-weight-bold)
     );
-    --spectrum-button-primary-text-line-height: var(
-        --spectrum-button-primary-m-text-line-height,
+    --spectrum-button-primary-texticon-text-line-height: var(
+        --spectrum-button-m-primary-texticon-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
-    --spectrum-button-primary-border-size: var(
-        --spectrum-button-primary-m-border-size,
+    --spectrum-button-primary-texticon-icon-gap: var(
+        --spectrum-button-m-primary-texticon-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-button-primary-texticon-focus-ring-size: var(
+        --spectrum-button-m-primary-texticon-focus-ring-size,
+        var(--spectrum-alias-focus-ring-size)
+    );
+    --spectrum-button-primary-texticon-border-size: var(
+        --spectrum-button-m-primary-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-button-primary-text-size: var(
-        --spectrum-button-primary-m-text-size,
-        var(--spectrum-alias-item-text-size-m)
+    --spectrum-button-primary-texticon-border-radius: var(
+        --spectrum-button-m-primary-texticon-border-radius,
+        var(--spectrum-global-dimension-size-200)
     );
-    --spectrum-button-primary-text-padding-top: var(
-        --spectrum-button-primary-m-text-padding-top,
-        var(--spectrum-alias-item-text-padding-top-m)
+    --spectrum-button-primary-textonly-text-padding-top: var(
+        --spectrum-button-m-primary-textonly-text-padding-top,
+        var(--spectrum-global-dimension-size-75)
     );
-    --spectrum-button-primary-height: var(
-        --spectrum-button-primary-m-height,
-        var(--spectrum-alias-item-height-m)
+    --spectrum-button-primary-textonly-border-size: var(
+        --spectrum-button-m-primary-textonly-border-size,
+        var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-button-primary-icon-gap: var(
-        --spectrum-button-primary-m-icon-gap,
-        var(--spectrum-alias-item-workflow-icon-gap-m)
-    );
-    --spectrum-button-primary-padding-left: var(
-        --spectrum-button-primary-m-padding-left,
-        var(--spectrum-alias-item-rounded-workflow-padding-left-m)
-    );
-    --spectrum-button-primary-border-radius: var(
-        --spectrum-button-primary-m-border-radius,
-        var(--spectrum-alias-item-rounded-border-radius-m)
-    );
-    --spectrum-button-primary-textonly-padding-left: var(
-        --spectrum-button-primary-m-textonly-padding-left,
-        var(--spectrum-alias-item-rounded-padding-m)
+    --spectrum-button-primary-textonly-min-width: var(
+        --spectrum-button-m-primary-textonly-min-width,
+        var(--spectrum-global-dimension-size-900)
     );
     --spectrum-button-primary-textonly-padding-right: var(
-        --spectrum-button-primary-m-textonly-padding-right,
-        var(--spectrum-alias-item-rounded-padding-m)
+        --spectrum-button-m-primary-textonly-padding-right,
+        var(--spectrum-global-dimension-size-200)
+    );
+    --spectrum-button-primary-textonly-padding-left: var(
+        --spectrum-button-m-primary-textonly-padding-left,
+        var(--spectrum-global-dimension-size-200)
+    );
+    --spectrum-button-primary-textonly-height: var(
+        --spectrum-button-m-primary-textonly-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-button-primary-textonly-text-padding-bottom: calc(
+        var(
+                --spectrum-button-m-primary-textonly-text-padding-bottom,
+                var(--spectrum-global-dimension-size-115)
+            ) - 1px
     );
 }
 :host([size='l']) {
-    --spectrum-button-primary-focus-ring-size-key-focus: var(
-        --spectrum-button-primary-l-focus-ring-size-key-focus,
-        var(--spectrum-alias-focus-ring-size)
+    --spectrum-button-primary-textonly-text-padding-top: var(
+        --spectrum-button-l-primary-textonly-text-padding-top
     ); /* .spectrum-Button--sizeL */
-    --spectrum-button-primary-text-font-weight: var(
-        --spectrum-button-primary-l-text-font-weight,
+    --spectrum-button-primary-texticon-text-size: var(
+        --spectrum-button-l-primary-texticon-text-size,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    --spectrum-button-primary-texticon-text-font-weight: var(
+        --spectrum-button-l-primary-texticon-text-font-weight,
         var(--spectrum-global-font-weight-bold)
     );
-    --spectrum-button-primary-text-line-height: var(
-        --spectrum-button-primary-l-text-line-height,
+    --spectrum-button-primary-texticon-text-line-height: var(
+        --spectrum-button-l-primary-texticon-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
-    --spectrum-button-primary-border-size: var(
-        --spectrum-button-primary-l-border-size,
+    --spectrum-button-primary-texticon-icon-gap: var(
+        --spectrum-button-l-primary-texticon-icon-gap,
+        var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-button-primary-texticon-focus-ring-size: var(
+        --spectrum-button-l-primary-texticon-focus-ring-size,
+        var(--spectrum-alias-focus-ring-size)
+    );
+    --spectrum-button-primary-texticon-border-size: var(
+        --spectrum-button-l-primary-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-button-primary-text-size: var(
-        --spectrum-button-primary-l-text-size,
-        var(--spectrum-alias-item-text-size-l)
+    --spectrum-button-primary-texticon-border-radius: var(
+        --spectrum-button-l-primary-texticon-border-radius,
+        var(--spectrum-global-dimension-size-250)
     );
-    --spectrum-button-primary-text-padding-top: var(
-        --spectrum-button-primary-l-text-padding-top,
-        var(--spectrum-alias-item-text-padding-top-l)
+    --spectrum-button-primary-texticon-padding-left: var(
+        --spectrum-button-l-primary-texticon-padding-left,
+        var(--spectrum-global-dimension-size-225)
     );
-    --spectrum-button-primary-icon-gap: var(
-        --spectrum-button-primary-l-icon-gap,
-        var(--spectrum-alias-item-workflow-icon-gap-l)
+    --spectrum-button-primary-textonly-text-padding-bottom: var(
+        --spectrum-button-l-primary-textonly-text-padding-bottom,
+        var(--spectrum-global-dimension-size-130)
     );
-    --spectrum-button-primary-height: var(
-        --spectrum-button-primary-l-height,
-        var(--spectrum-alias-item-height-l)
+    --spectrum-button-primary-textonly-border-size: var(
+        --spectrum-button-l-primary-textonly-border-size,
+        var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-button-primary-padding-left: var(
-        --spectrum-button-primary-l-padding-left,
-        var(--spectrum-alias-item-rounded-workflow-padding-left-l)
-    );
-    --spectrum-button-primary-border-radius: var(
-        --spectrum-button-primary-l-border-radius,
-        var(--spectrum-alias-item-rounded-border-radius-l)
-    );
-    --spectrum-button-primary-min-width: var(
-        --spectrum-button-primary-l-min-width,
+    --spectrum-button-primary-textonly-min-width: var(
+        --spectrum-button-l-primary-textonly-min-width,
         var(--spectrum-global-dimension-size-1125)
     );
-    --spectrum-button-primary-textonly-padding-left: var(
-        --spectrum-button-primary-l-textonly-padding-left,
-        var(--spectrum-alias-item-rounded-padding-l)
-    );
     --spectrum-button-primary-textonly-padding-right: var(
-        --spectrum-button-primary-l-textonly-padding-right,
-        var(--spectrum-alias-item-rounded-padding-l)
+        --spectrum-button-l-primary-textonly-padding-right,
+        var(--spectrum-global-dimension-size-250)
+    );
+    --spectrum-button-primary-textonly-padding-left: var(
+        --spectrum-button-l-primary-textonly-padding-left,
+        var(--spectrum-global-dimension-size-250)
+    );
+    --spectrum-button-primary-textonly-height: var(
+        --spectrum-button-l-primary-textonly-height,
+        var(--spectrum-global-dimension-size-500)
     );
 }
 :host([size='xl']) {
-    --spectrum-button-primary-focus-ring-size-key-focus: var(
-        --spectrum-button-primary-xl-focus-ring-size-key-focus,
-        var(--spectrum-alias-focus-ring-size)
+    --spectrum-button-primary-texticon-padding-left: var(
+        --spectrum-button-xl-primary-texticon-padding-left
     ); /* .spectrum-Button--sizeXL */
-    --spectrum-button-primary-text-font-weight: var(
-        --spectrum-button-primary-xl-text-font-weight,
+    --spectrum-button-primary-texticon-text-size: var(
+        --spectrum-button-xl-primary-texticon-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    --spectrum-button-primary-texticon-text-font-weight: var(
+        --spectrum-button-xl-primary-texticon-text-font-weight,
         var(--spectrum-global-font-weight-bold)
     );
-    --spectrum-button-primary-text-line-height: var(
-        --spectrum-button-primary-xl-text-line-height,
+    --spectrum-button-primary-texticon-text-line-height: var(
+        --spectrum-button-xl-primary-texticon-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
-    --spectrum-button-primary-border-size: var(
-        --spectrum-button-primary-xl-border-size,
+    --spectrum-button-primary-texticon-icon-gap: var(
+        --spectrum-button-xl-primary-texticon-icon-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-button-primary-texticon-focus-ring-size: var(
+        --spectrum-button-xl-primary-texticon-focus-ring-size,
+        var(--spectrum-alias-focus-ring-size)
+    );
+    --spectrum-button-primary-texticon-border-size: var(
+        --spectrum-button-xl-primary-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-button-primary-icon-gap: var(
-        --spectrum-button-primary-xl-icon-gap,
-        var(--spectrum-alias-item-workflow-icon-gap-l)
+    --spectrum-button-primary-texticon-border-radius: var(
+        --spectrum-button-xl-primary-texticon-border-radius,
+        var(--spectrum-global-dimension-size-300)
     );
-    --spectrum-button-primary-text-size: var(
-        --spectrum-button-primary-xl-text-size,
-        var(--spectrum-alias-item-text-size-xl)
+    --spectrum-button-primary-textonly-text-padding-top: var(
+        --spectrum-button-xl-primary-textonly-text-padding-top,
+        var(--spectrum-global-dimension-size-150)
     );
-    --spectrum-button-primary-text-padding-top: var(
-        --spectrum-button-primary-xl-text-padding-top,
-        var(--spectrum-alias-item-text-padding-top-xl)
+    --spectrum-button-primary-textonly-border-size: var(
+        --spectrum-button-xl-primary-textonly-border-size,
+        var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-button-primary-height: var(
-        --spectrum-button-primary-xl-height,
-        var(--spectrum-alias-item-height-xl)
-    );
-    --spectrum-button-primary-padding-left: var(
-        --spectrum-button-primary-xl-padding-left,
-        var(--spectrum-alias-item-rounded-workflow-padding-left-xl)
-    );
-    --spectrum-button-primary-border-radius: var(
-        --spectrum-button-primary-xl-border-radius,
-        var(--spectrum-alias-item-rounded-border-radius-xl)
-    );
-    --spectrum-button-primary-min-width: var(
-        --spectrum-button-primary-xl-min-width,
+    --spectrum-button-primary-textonly-min-width: var(
+        --spectrum-button-xl-primary-textonly-min-width,
         var(--spectrum-global-dimension-size-1250)
     );
-    --spectrum-button-primary-textonly-padding-left: var(
-        --spectrum-button-primary-xl-textonly-padding-left,
-        var(--spectrum-alias-item-rounded-padding-xl)
-    );
     --spectrum-button-primary-textonly-padding-right: var(
-        --spectrum-button-primary-xl-textonly-padding-right,
-        var(--spectrum-alias-item-rounded-padding-xl)
+        --spectrum-button-xl-primary-textonly-padding-right,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-button-primary-textonly-padding-left: var(
+        --spectrum-button-xl-primary-textonly-padding-left,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-button-primary-textonly-height: var(
+        --spectrum-button-xl-primary-textonly-height,
+        var(--spectrum-global-dimension-size-600)
+    );
+    --spectrum-button-primary-textonly-text-padding-bottom: calc(
+        var(
+                --spectrum-button-xl-primary-textonly-text-padding-bottom,
+                var(--spectrum-global-dimension-size-175)
+            ) - 1px
     );
 }
 :host {
     --spectrum-button-primary-padding-left-adjusted: calc(
-        var(--spectrum-button-primary-padding-left) -
-            var(--spectrum-button-primary-border-size)
+        var(--spectrum-button-primary-texticon-padding-left) -
+            var(--spectrum-button-primary-texticon-border-size)
     ); /* .spectrum-Button */
     --spectrum-button-primary-textonly-padding-left-adjusted: calc(
         var(--spectrum-button-primary-textonly-padding-left) -
-            var(--spectrum-button-primary-border-size)
+            var(--spectrum-button-primary-texticon-border-size)
     );
     --spectrum-button-primary-textonly-padding-right-adjusted: calc(
         var(--spectrum-button-primary-textonly-padding-right) -
-            var(--spectrum-button-primary-border-size)
-    );
-    --spectrum-button-padding-y: calc(
-        var(--spectrum-button-primary-text-padding-top) - 1px
+            var(--spectrum-button-primary-texticon-border-size)
     );
 }
 :host([dir='ltr']) {
@@ -371,18 +403,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* [dir=rtl] .spectrum-Button */
 }
 :host {
-    border-radius: var(--spectrum-button-primary-border-radius);
+    border-radius: var(--spectrum-button-primary-texticon-border-radius);
     border-style: solid;
     border-width: var(
-        --spectrum-button-primary-border-size
+        --spectrum-button-primary-texticon-border-size
     ); /* .spectrum-Button */
-    font-size: var(--spectrum-button-primary-text-size);
-    font-weight: var(--spectrum-button-primary-text-font-weight);
+    font-size: var(--spectrum-button-primary-texticon-text-size);
+    font-weight: var(--spectrum-button-primary-texticon-text-font-weight);
     height: auto;
-    min-height: var(--spectrum-button-primary-height);
-    min-width: var(--spectrum-button-primary-min-width);
-    padding-bottom: calc(var(--spectrum-button-padding-y) + 1px);
-    padding-top: calc(var(--spectrum-button-padding-y) - 1px);
+    min-height: var(--spectrum-button-primary-textonly-height);
+    min-width: var(--spectrum-button-primary-textonly-min-width);
+    padding-bottom: 0;
+    padding-top: 0;
 }
 :host(:hover),
 :host([active]) {
@@ -403,12 +435,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) slot[name='icon'] + #label {
     padding-left: var(
-        --spectrum-button-primary-icon-gap
+        --spectrum-button-primary-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-Button .spectrum-Icon+.spectrum-Button-label */
 }
 :host([dir='rtl']) slot[name='icon'] + #label {
     padding-right: var(
-        --spectrum-button-primary-icon-gap
+        --spectrum-button-primary-texticon-icon-gap
     ); /* [dir=rtl] .spectrum-Button .spectrum-Icon+.spectrum-Button-label */
 }
 :host([dir='ltr']) slot[name='icon'] + #label {
@@ -419,14 +451,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #label {
     line-height: var(
-        --spectrum-button-primary-text-line-height
+        --spectrum-button-primary-texticon-text-line-height
     ); /* .spectrum-Button-label */
+    padding-bottom: calc(
+        var(--spectrum-button-primary-textonly-text-padding-bottom) -
+            var(--spectrum-button-primary-textonly-border-size)
+    );
+    padding-top: calc(
+        var(--spectrum-button-primary-textonly-text-padding-top) -
+            var(--spectrum-button-primary-textonly-border-size)
+    );
 }
 :host(.focus-visible):after,
 :host([focused]):after {
-    box-shadow: 0 0 0 var(--spectrum-button-primary-focus-ring-size-key-focus)
+    box-shadow: 0 0 0 var(--spectrum-button-primary-texticon-focus-ring-size)
         var(
-            --spectrum-button-primary-m-focus-ring-color-key-focus,
+            --spectrum-button-m-primary-texticon-focus-ring-color-key-focus,
             var(--spectrum-alias-focus-ring-color)
         ); /* .spectrum-LogicButton.focus-ring:after,
    * .spectrum-LogicButton.is-focused:after,
@@ -435,9 +475,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host(:focus-visible):after,
 :host([focused]):after {
-    box-shadow: 0 0 0 var(--spectrum-button-primary-focus-ring-size-key-focus)
+    box-shadow: 0 0 0 var(--spectrum-button-primary-texticon-focus-ring-size)
         var(
-            --spectrum-button-primary-m-focus-ring-color-key-focus,
+            --spectrum-button-m-primary-texticon-focus-ring-color-key-focus,
             var(--spectrum-alias-focus-ring-color)
         ); /* .spectrum-LogicButton.focus-ring:after,
    * .spectrum-LogicButton.is-focused:after,
@@ -446,391 +486,391 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([variant='cta']) {
     background-color: var(
-        --spectrum-button-cta-m-background-color,
-        var(--spectrum-semantic-cta-color-background-default)
+        --spectrum-button-m-cta-texticon-background-color,
+        var(--spectrum-semantic-cta-background-color-default)
     ); /* .spectrum-Button--cta */
     border-color: var(
-        --spectrum-button-cta-m-border-color,
-        var(--spectrum-semantic-cta-color-background-default)
+        --spectrum-button-m-cta-texticon-border-color,
+        var(--spectrum-semantic-cta-background-color-default)
     );
     color: var(
-        --spectrum-button-cta-m-text-color,
+        --spectrum-button-m-cta-texticon-text-color,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='cta']:hover) {
     background-color: var(
-        --spectrum-button-cta-m-background-color-hover,
-        var(--spectrum-semantic-cta-color-background-hover)
+        --spectrum-button-m-cta-texticon-background-color-hover,
+        var(--spectrum-semantic-cta-background-color-hover)
     ); /* .spectrum-Button--cta:hover */
     border-color: var(
-        --spectrum-button-cta-m-border-color-hover,
-        var(--spectrum-semantic-cta-color-background-hover)
+        --spectrum-button-m-cta-texticon-border-color-hover,
+        var(--spectrum-semantic-cta-background-color-hover)
     );
     color: var(
-        --spectrum-button-cta-m-text-color-hover,
+        --spectrum-button-m-cta-texticon-text-color-hover,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='cta'].focus-visible) {
     background-color: var(
-        --spectrum-button-cta-m-background-color-key-focus,
-        var(--spectrum-semantic-cta-color-background-hover)
+        --spectrum-button-m-cta-texticon-background-color-key-focus,
+        var(--spectrum-semantic-cta-background-color-hover)
     ); /* .spectrum-Button--cta.focus-ring */
     border-color: var(
-        --spectrum-button-cta-m-border-color-key-focus,
-        var(--spectrum-semantic-cta-color-background-hover)
+        --spectrum-button-m-cta-texticon-border-color-key-focus,
+        var(--spectrum-semantic-cta-background-color-hover)
     );
     color: var(
-        --spectrum-button-cta-m-text-color-key-focus,
+        --spectrum-button-m-cta-texticon-text-color-key-focus,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='cta']:focus-visible) {
     background-color: var(
-        --spectrum-button-cta-m-background-color-key-focus,
-        var(--spectrum-semantic-cta-color-background-hover)
+        --spectrum-button-m-cta-texticon-background-color-key-focus,
+        var(--spectrum-semantic-cta-background-color-hover)
     ); /* .spectrum-Button--cta.focus-ring */
     border-color: var(
-        --spectrum-button-cta-m-border-color-key-focus,
-        var(--spectrum-semantic-cta-color-background-hover)
+        --spectrum-button-m-cta-texticon-border-color-key-focus,
+        var(--spectrum-semantic-cta-background-color-hover)
     );
     color: var(
-        --spectrum-button-cta-m-text-color-key-focus,
+        --spectrum-button-m-cta-texticon-text-color-key-focus,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='cta'][active]) {
     background-color: var(
-        --spectrum-button-cta-m-background-color-down,
-        var(--spectrum-semantic-cta-color-background-down)
+        --spectrum-button-m-cta-texticon-background-color-down,
+        var(--spectrum-semantic-cta-background-color-down)
     ); /* .spectrum-Button--cta:active */
     border-color: var(
-        --spectrum-button-cta-m-border-color-down,
-        var(--spectrum-semantic-cta-color-background-down)
+        --spectrum-button-m-cta-texticon-border-color-down,
+        var(--spectrum-semantic-cta-background-color-down)
     );
     color: var(
-        --spectrum-button-cta-m-text-color-down,
+        --spectrum-button-m-cta-texticon-text-color-down,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='cta']:disabled),
 :host([variant='cta'][disabled]) {
     background-color: var(
-        --spectrum-button-cta-m-background-color-disabled,
+        --spectrum-button-m-cta-texticon-background-color-disabled,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button--cta:disabled,
    * .spectrum-Button--cta.is-disabled */
     border-color: var(
-        --spectrum-button-cta-m-border-color-disabled,
+        --spectrum-button-m-cta-texticon-border-color-disabled,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-cta-m-text-color-disabled,
+        --spectrum-button-m-cta-texticon-text-color-disabled,
         var(--spectrum-global-color-gray-500)
     );
 }
 :host([variant='primary']) {
     background-color: var(
-        --spectrum-button-primary-m-background-color,
-        var(--spectrum-alias-background-color-transparent)
+        --spectrum-button-m-primary-texticon-background-color,
+        var(--spectrum-alias-button-primary-background-color-default)
     ); /* .spectrum-Button--primary */
     border-color: var(
-        --spectrum-button-primary-m-border-color,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-primary-texticon-border-color,
+        var(--spectrum-alias-button-primary-border-color-default)
     );
     color: var(
-        --spectrum-button-primary-m-text-color,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-primary-texticon-text-color,
+        var(--spectrum-alias-button-primary-text-color-default)
     );
 }
 :host([variant='primary']:hover) {
     background-color: var(
-        --spectrum-button-primary-m-background-color-hover,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-primary-texticon-background-color-hover,
+        var(--spectrum-alias-button-primary-background-color-hover)
     ); /* .spectrum-Button--primary:hover */
     border-color: var(
-        --spectrum-button-primary-m-border-color-hover,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-primary-texticon-border-color-hover,
+        var(--spectrum-alias-button-primary-border-color-hover)
     );
     color: var(
-        --spectrum-button-primary-m-text-color-hover,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-primary-texticon-text-color-hover,
+        var(--spectrum-alias-button-primary-text-color-hover)
     );
 }
 :host([variant='primary'].focus-visible) {
     background-color: var(
-        --spectrum-button-primary-m-background-color-key-focus,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-primary-texticon-background-color-key-focus,
+        var(--spectrum-alias-button-primary-background-color-key-focus)
     ); /* .spectrum-Button--primary.focus-ring */
     border-color: var(
-        --spectrum-button-primary-m-border-color-key-focus,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-primary-texticon-border-color-key-focus,
+        var(--spectrum-alias-button-primary-border-color-key-focus)
     );
     color: var(
-        --spectrum-button-primary-m-text-color-key-focus,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-primary-texticon-text-color-key-focus,
+        var(--spectrum-alias-button-primary-text-color-key-focus)
     );
 }
 :host([variant='primary']:focus-visible) {
     background-color: var(
-        --spectrum-button-primary-m-background-color-key-focus,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-primary-texticon-background-color-key-focus,
+        var(--spectrum-alias-button-primary-background-color-key-focus)
     ); /* .spectrum-Button--primary.focus-ring */
     border-color: var(
-        --spectrum-button-primary-m-border-color-key-focus,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-primary-texticon-border-color-key-focus,
+        var(--spectrum-alias-button-primary-border-color-key-focus)
     );
     color: var(
-        --spectrum-button-primary-m-text-color-key-focus,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-primary-texticon-text-color-key-focus,
+        var(--spectrum-alias-button-primary-text-color-key-focus)
     );
 }
 :host([variant='primary'][active]) {
     background-color: var(
-        --spectrum-button-primary-m-background-color-down,
-        var(--spectrum-global-color-gray-900)
+        --spectrum-button-m-primary-texticon-background-color-down,
+        var(--spectrum-alias-button-primary-background-color-down)
     ); /* .spectrum-Button--primary:active */
     border-color: var(
-        --spectrum-button-primary-m-border-color-down,
-        var(--spectrum-global-color-gray-900)
+        --spectrum-button-m-primary-texticon-border-color-down,
+        var(--spectrum-alias-button-primary-border-color-down)
     );
     color: var(
-        --spectrum-button-primary-m-text-color-down,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-primary-texticon-text-color-down,
+        var(--spectrum-alias-button-primary-text-color-down)
     );
 }
 :host([variant='primary']:disabled),
 :host([variant='primary'][disabled]) {
     background-color: var(
-        --spectrum-button-primary-m-background-color-disabled,
+        --spectrum-button-m-primary-texticon-background-color-disabled,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button--primary:disabled,
    * .spectrum-Button--primary.is-disabled */
     border-color: var(
-        --spectrum-button-primary-m-border-color-disabled,
+        --spectrum-button-m-primary-texticon-border-color-disabled,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-primary-m-text-color-disabled,
+        --spectrum-button-m-primary-texticon-text-color-disabled,
         var(--spectrum-global-color-gray-500)
     );
 }
 :host([variant='secondary']) {
     background-color: var(
-        --spectrum-button-secondary-m-background-color,
-        var(--spectrum-alias-background-color-transparent)
+        --spectrum-button-m-secondary-texticon-background-color,
+        var(--spectrum-alias-button-secondary-background-color-default)
     ); /* .spectrum-Button--secondary */
     border-color: var(
-        --spectrum-button-secondary-m-border-color,
-        var(--spectrum-global-color-gray-700)
+        --spectrum-button-m-secondary-texticon-border-color,
+        var(--spectrum-alias-button-secondary-border-color-default)
     );
     color: var(
-        --spectrum-button-secondary-m-text-color,
-        var(--spectrum-global-color-gray-700)
+        --spectrum-button-m-secondary-texticon-text-color,
+        var(--spectrum-alias-button-secondary-text-color-default)
     );
 }
 :host([variant='secondary']:hover) {
     background-color: var(
-        --spectrum-button-secondary-m-background-color-hover,
-        var(--spectrum-global-color-gray-700)
+        --spectrum-button-m-secondary-texticon-background-color-hover,
+        var(--spectrum-alias-button-secondary-background-color-hover)
     ); /* .spectrum-Button--secondary:hover */
     border-color: var(
-        --spectrum-button-secondary-m-border-color-hover,
-        var(--spectrum-global-color-gray-700)
+        --spectrum-button-m-secondary-texticon-border-color-hover,
+        var(--spectrum-alias-button-secondary-border-color-hover)
     );
     color: var(
-        --spectrum-button-secondary-m-text-color-hover,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-secondary-texticon-text-color-hover,
+        var(--spectrum-alias-button-secondary-text-color-hover)
     );
 }
 :host([variant='secondary'].focus-visible) {
     background-color: var(
-        --spectrum-button-secondary-m-background-color-key-focus,
-        var(--spectrum-global-color-gray-700)
+        --spectrum-button-m-secondary-texticon-background-color-key-focus,
+        var(--spectrum-alias-button-secondary-background-color-key-focus)
     ); /* .spectrum-Button--secondary.focus-ring */
     border-color: var(
-        --spectrum-button-secondary-m-border-color-key-focus,
-        var(--spectrum-global-color-gray-700)
+        --spectrum-button-m-secondary-texticon-border-color-key-focus,
+        var(--spectrum-alias-button-secondary-border-color-key-focus)
     );
     color: var(
-        --spectrum-button-secondary-m-text-color-key-focus,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-secondary-texticon-text-color-key-focus,
+        var(--spectrum-alias-button-secondary-text-color-key-focus)
     );
 }
 :host([variant='secondary']:focus-visible) {
     background-color: var(
-        --spectrum-button-secondary-m-background-color-key-focus,
-        var(--spectrum-global-color-gray-700)
+        --spectrum-button-m-secondary-texticon-background-color-key-focus,
+        var(--spectrum-alias-button-secondary-background-color-key-focus)
     ); /* .spectrum-Button--secondary.focus-ring */
     border-color: var(
-        --spectrum-button-secondary-m-border-color-key-focus,
-        var(--spectrum-global-color-gray-700)
+        --spectrum-button-m-secondary-texticon-border-color-key-focus,
+        var(--spectrum-alias-button-secondary-border-color-key-focus)
     );
     color: var(
-        --spectrum-button-secondary-m-text-color-key-focus,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-secondary-texticon-text-color-key-focus,
+        var(--spectrum-alias-button-secondary-text-color-key-focus)
     );
 }
 :host([variant='secondary'][active]) {
     background-color: var(
-        --spectrum-button-secondary-m-background-color-down,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-secondary-texticon-background-color-down,
+        var(--spectrum-alias-button-secondary-background-color-down)
     ); /* .spectrum-Button--secondary:active */
     border-color: var(
-        --spectrum-button-secondary-m-border-color-down,
-        var(--spectrum-global-color-gray-800)
+        --spectrum-button-m-secondary-texticon-border-color-down,
+        var(--spectrum-alias-button-secondary-border-color-down)
     );
     color: var(
-        --spectrum-button-secondary-m-text-color-down,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-secondary-texticon-text-color-down,
+        var(--spectrum-alias-button-secondary-text-color-down)
     );
 }
 :host([variant='secondary']:disabled),
 :host([variant='secondary'][disabled]) {
     background-color: var(
-        --spectrum-button-secondary-m-background-color-disabled,
+        --spectrum-button-m-secondary-texticon-background-color-disabled,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button--secondary:disabled,
    * .spectrum-Button--secondary.is-disabled */
     border-color: var(
-        --spectrum-button-secondary-m-border-color-disabled,
+        --spectrum-button-m-secondary-texticon-border-color-disabled,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-secondary-m-text-color-disabled,
+        --spectrum-button-m-secondary-texticon-text-color-disabled,
         var(--spectrum-global-color-gray-500)
     );
 }
 :host([variant='negative']) {
     background-color: var(
-        --spectrum-button-warning-m-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    ); /* .spectrum-Button--warning */
+        --spectrum-button-m-negative-texticon-background-color,
+        var(--spectrum-alias-button-negative-background-color-default)
+    ); /* .spectrum-Button--negative */
     border-color: var(
-        --spectrum-button-warning-m-border-color,
-        var(--spectrum-semantic-negative-color-text-small)
+        --spectrum-button-m-negative-texticon-border-color,
+        var(--spectrum-alias-button-negative-border-color-default)
     );
     color: var(
-        --spectrum-button-warning-m-text-color,
-        var(--spectrum-semantic-negative-color-text-small)
+        --spectrum-button-m-negative-texticon-text-color,
+        var(--spectrum-alias-button-negative-text-color-default)
     );
 }
 :host([variant='negative']:hover) {
     background-color: var(
-        --spectrum-button-warning-m-background-color-hover,
-        var(--spectrum-semantic-negative-color-text-small)
-    ); /* .spectrum-Button--warning:hover */
+        --spectrum-button-m-negative-texticon-background-color-hover,
+        var(--spectrum-alias-button-negative-background-color-hover)
+    ); /* .spectrum-Button--negative:hover */
     border-color: var(
-        --spectrum-button-warning-m-border-color-hover,
-        var(--spectrum-semantic-negative-color-text-small)
+        --spectrum-button-m-negative-texticon-border-color-hover,
+        var(--spectrum-alias-button-negative-border-color-hover)
     );
     color: var(
-        --spectrum-button-warning-m-text-color-hover,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-negative-texticon-text-color-hover,
+        var(--spectrum-alias-button-negative-text-color-hover)
     );
 }
 :host([variant='negative'].focus-visible) {
     background-color: var(
-        --spectrum-button-warning-m-background-color-key-focus,
-        var(--spectrum-semantic-negative-color-text-small)
-    ); /* .spectrum-Button--warning.focus-ring */
+        --spectrum-button-m-negative-texticon-background-color-key-focus,
+        var(--spectrum-alias-button-negative-background-color-key-focus)
+    ); /* .spectrum-Button--negative.focus-ring */
     border-color: var(
-        --spectrum-button-warning-m-border-color-key-focus,
-        var(--spectrum-semantic-negative-color-text-small)
+        --spectrum-button-m-negative-texticon-border-color-key-focus,
+        var(--spectrum-alias-button-negative-border-color-key-focus)
     );
     color: var(
-        --spectrum-button-warning-m-text-color-key-focus,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-negative-texticon-text-color-key-focus,
+        var(--spectrum-alias-button-negative-text-color-key-focus)
     );
 }
 :host([variant='negative']:focus-visible) {
     background-color: var(
-        --spectrum-button-warning-m-background-color-key-focus,
-        var(--spectrum-semantic-negative-color-text-small)
-    ); /* .spectrum-Button--warning.focus-ring */
+        --spectrum-button-m-negative-texticon-background-color-key-focus,
+        var(--spectrum-alias-button-negative-background-color-key-focus)
+    ); /* .spectrum-Button--negative.focus-ring */
     border-color: var(
-        --spectrum-button-warning-m-border-color-key-focus,
-        var(--spectrum-semantic-negative-color-text-small)
+        --spectrum-button-m-negative-texticon-border-color-key-focus,
+        var(--spectrum-alias-button-negative-border-color-key-focus)
     );
     color: var(
-        --spectrum-button-warning-m-text-color-key-focus,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-negative-texticon-text-color-key-focus,
+        var(--spectrum-alias-button-negative-text-color-key-focus)
     );
 }
 :host([variant='negative'][active]) {
     background-color: var(
-        --spectrum-button-warning-m-background-color-down,
-        var(--spectrum-global-color-red-700)
-    ); /* .spectrum-Button--warning:active */
+        --spectrum-button-m-negative-texticon-background-color-down,
+        var(--spectrum-alias-button-negative-background-color-down)
+    ); /* .spectrum-Button--negative:active */
     border-color: var(
-        --spectrum-button-warning-m-border-color-down,
-        var(--spectrum-global-color-red-700)
+        --spectrum-button-m-negative-texticon-border-color-down,
+        var(--spectrum-alias-button-negative-border-color-down)
     );
     color: var(
-        --spectrum-button-warning-m-text-color-down,
-        var(--spectrum-global-color-gray-50)
+        --spectrum-button-m-negative-texticon-text-color-down,
+        var(--spectrum-alias-button-negative-text-color-down)
     );
 }
 :host([variant='negative']:disabled),
 :host([variant='negative'][disabled]) {
     background-color: var(
-        --spectrum-button-warning-m-background-color-disabled,
+        --spectrum-button-m-negative-texticon-background-color-disabled,
         var(--spectrum-global-color-gray-200)
-    ); /* .spectrum-Button--warning:disabled,
-   * .spectrum-Button--warning.is-disabled */
+    ); /* .spectrum-Button--negative:disabled,
+   * .spectrum-Button--negative.is-disabled */
     border-color: var(
-        --spectrum-button-warning-m-border-color-disabled,
+        --spectrum-button-m-negative-texticon-border-color-disabled,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-warning-m-text-color-disabled,
+        --spectrum-button-m-negative-texticon-text-color-disabled,
         var(--spectrum-global-color-gray-500)
     );
 }
 :host([variant='overBackground']) {
     background-color: var(
-        --spectrum-button-over-background-m-background-color,
+        --spectrum-button-m-primary-overbackground-texticon-background-color,
         var(--spectrum-alias-background-color-transparent)
     ); /* .spectrum-Button--overBackground */
     border-color: var(
-        --spectrum-button-over-background-m-border-color,
+        --spectrum-button-m-primary-overbackground-texticon-border-color,
         var(--spectrum-global-color-static-white)
     );
     color: var(
-        --spectrum-button-over-background-m-text-color,
+        --spectrum-button-m-primary-overbackground-texticon-text-color,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='overBackground']:hover) {
     background-color: var(
-        --spectrum-button-over-background-m-background-color-hover,
+        --spectrum-button-m-primary-overbackground-texticon-background-color-hover,
         var(--spectrum-global-color-static-white)
     ); /* .spectrum-Button--overBackground:hover */
     border-color: var(
-        --spectrum-button-over-background-m-border-color-hover,
+        --spectrum-button-m-primary-overbackground-texticon-border-color-hover,
         var(--spectrum-global-color-static-white)
     );
     color: inherit;
 }
 :host([variant='overBackground'].focus-visible) {
     background-color: var(
-        --spectrum-button-over-background-m-background-color-hover,
+        --spectrum-button-m-primary-overbackground-texticon-background-color-hover,
         var(--spectrum-global-color-static-white)
     ); /* .spectrum-Button--overBackground.focus-ring */
     border-color: var(
-        --spectrum-button-over-background-m-border-color-hover,
+        --spectrum-button-m-primary-overbackground-texticon-border-color-hover,
         var(--spectrum-global-color-static-white)
     );
     color: inherit;
 }
 :host([variant='overBackground']:focus-visible) {
     background-color: var(
-        --spectrum-button-over-background-m-background-color-hover,
+        --spectrum-button-m-primary-overbackground-texticon-background-color-hover,
         var(--spectrum-global-color-static-white)
     ); /* .spectrum-Button--overBackground.focus-ring */
     border-color: var(
-        --spectrum-button-over-background-m-border-color-hover,
+        --spectrum-button-m-primary-overbackground-texticon-border-color-hover,
         var(--spectrum-global-color-static-white)
     );
     color: inherit;
@@ -842,7 +882,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-dimension-static-size-25)
         )
         var(
-            --spectrum-button-over-background-m-border-color-key-focus,
+            --spectrum-button-m-primary-overbackground-texticon-border-color-key-focus,
             var(--spectrum-global-color-static-white)
         ); /* .spectrum-Button--overBackground.focus-ring:after */
 }
@@ -853,17 +893,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-dimension-static-size-25)
         )
         var(
-            --spectrum-button-over-background-m-border-color-key-focus,
+            --spectrum-button-m-primary-overbackground-texticon-border-color-key-focus,
             var(--spectrum-global-color-static-white)
         ); /* .spectrum-Button--overBackground.focus-ring:after */
 }
 :host([variant='overBackground'][active]) {
     background-color: var(
-        --spectrum-button-over-background-m-background-color-down,
+        --spectrum-button-m-primary-overbackground-texticon-background-color-down,
         var(--spectrum-global-color-static-white)
     ); /* .spectrum-Button--overBackground:active */
     border-color: var(
-        --spectrum-button-over-background-m-border-color-down,
+        --spectrum-button-m-primary-overbackground-texticon-border-color-down,
         var(--spectrum-global-color-static-white)
     );
     color: inherit;
@@ -871,78 +911,78 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='overBackground']:disabled),
 :host([variant='overBackground'][disabled]) {
     background-color: var(
-        --spectrum-button-over-background-m-background-color-disabled,
-        rgba(255, 255, 255, 0.1)
+        --spectrum-button-m-primary-overbackground-texticon-background-color-disabled,
+        var(--spectrum-alias-background-color-overbackground-disabled)
     ); /* .spectrum-Button--overBackground:disabled,
    * .spectrum-Button--overBackground.is-disabled */
     border-color: var(
-        --spectrum-button-over-background-m-border-color-disabled,
+        --spectrum-button-m-primary-overbackground-texticon-border-color-disabled,
         var(--spectrum-alias-border-color-transparent)
     );
     color: var(
-        --spectrum-button-over-background-m-text-color-disabled,
-        rgba(255, 255, 255, 0.35)
+        --spectrum-button-m-primary-overbackground-texticon-text-color-disabled,
+        var(--spectrum-alias-text-color-overbackground-disabled)
     );
 }
 :host([variant='overBackground'][quiet]) {
     background-color: var(
-        --spectrum-button-quiet-over-background-m-background-color,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-background-color,
         var(--spectrum-alias-background-color-transparent)
     ); /* .spectrum-Button--overBackground.spectrum-Button--quiet,
    * .spectrum-ClearButton--overBackground */
     border-color: var(
-        --spectrum-button-quiet-over-background-m-border-color,
-        var(--spectrum-alias-border-color-transparent)
+        --spectrum-button-m-primary-quiet-overbackground-texticon-border-color,
+        var(--spectrum-alias-background-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-over-background-m-text-color,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-text-color,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='overBackground'][quiet]:hover) {
     background-color: var(
-        --spectrum-button-quiet-over-background-m-background-color-hover,
-        rgba(255, 255, 255, 0.1)
+        --spectrum-button-m-primary-quiet-overbackground-texticon-background-color-hover,
+        var(--spectrum-alias-background-color-quiet-overbackground-hover)
     ); /* .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
    * .spectrum-ClearButton--overBackground:hover */
     border-color: var(
-        --spectrum-button-quiet-over-background-m-border-color-hover,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-border-color-hover,
         var(--spectrum-alias-border-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-over-background-m-text-color-hover,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-text-color-hover,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='overBackground'][quiet].focus-visible) {
     background-color: var(
-        --spectrum-button-quiet-over-background-m-background-color-hover,
-        rgba(255, 255, 255, 0.1)
+        --spectrum-button-m-primary-quiet-overbackground-texticon-background-color-hover,
+        var(--spectrum-alias-background-color-quiet-overbackground-hover)
     ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-ClearButton--overBackground.focus-ring */
     border-color: var(
-        --spectrum-button-quiet-over-background-m-border-color-hover,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-border-color-hover,
         var(--spectrum-alias-border-color-transparent)
     );
     box-shadow: none;
     color: var(
-        --spectrum-button-quiet-over-background-m-text-color-hover,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-text-color-hover,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='overBackground'][quiet]:focus-visible) {
     background-color: var(
-        --spectrum-button-quiet-over-background-m-background-color-hover,
-        rgba(255, 255, 255, 0.1)
+        --spectrum-button-m-primary-quiet-overbackground-texticon-background-color-hover,
+        var(--spectrum-alias-background-color-quiet-overbackground-hover)
     ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-ClearButton--overBackground.focus-ring */
     border-color: var(
-        --spectrum-button-quiet-over-background-m-border-color-hover,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-border-color-hover,
         var(--spectrum-alias-border-color-transparent)
     );
     box-shadow: none;
     color: var(
-        --spectrum-button-quiet-over-background-m-text-color-hover,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-text-color-hover,
         var(--spectrum-global-color-static-white)
     );
 }
@@ -953,7 +993,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-dimension-static-size-25)
         )
         var(
-            --spectrum-button-over-background-m-border-color-key-focus,
+            --spectrum-button-m-primary-overbackground-texticon-border-color-key-focus,
             var(--spectrum-global-color-static-white)
         ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring:after,
    * .spectrum-ClearButton--overBackground.focus-ring:after */
@@ -965,430 +1005,303 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-dimension-static-size-25)
         )
         var(
-            --spectrum-button-over-background-m-border-color-key-focus,
+            --spectrum-button-m-primary-overbackground-texticon-border-color-key-focus,
             var(--spectrum-global-color-static-white)
         ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring:after,
    * .spectrum-ClearButton--overBackground.focus-ring:after */
 }
 :host([variant='overBackground'][quiet][active]) {
     background-color: var(
-        --spectrum-button-quiet-over-background-m-background-color-down,
-        rgba(255, 255, 255, 0.2)
+        --spectrum-button-m-primary-quiet-overbackground-texticon-background-color-down,
+        var(--spectrum-alias-background-color-quiet-overbackground-down)
     ); /* .spectrum-Button--overBackground.spectrum-Button--quiet:active,
    * .spectrum-ClearButton--overBackground:active */
     border-color: var(
-        --spectrum-button-quiet-over-background-m-border-color-down,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-border-color-down,
         var(--spectrum-alias-border-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-over-background-m-text-color-down,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-text-color-down,
         var(--spectrum-global-color-static-white)
     );
 }
 :host([variant='overBackground'][quiet]:disabled),
 :host([variant='overBackground'][quiet][disabled]) {
     background-color: var(
-        --spectrum-button-quiet-over-background-m-background-color-disabled,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
     ); /* .spectrum-Button--overBackground.spectrum-Button--quiet:disabled,
    * .spectrum-Button--overBackground.spectrum-Button--quiet.is-disabled,
    * .spectrum-ClearButton--overBackground:disabled,
    * .spectrum-ClearButton--overBackground.is-disabled */
     border-color: var(
-        --spectrum-button-quiet-over-background-m-border-color-disabled,
+        --spectrum-button-m-primary-quiet-overbackground-texticon-border-color-disabled,
         var(--spectrum-alias-border-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-over-background-m-text-color-disabled,
-        rgba(255, 255, 255, 0.15)
+        --spectrum-button-m-primary-quiet-overbackground-texticon-text-color-disabled,
+        var(--spectrum-alias-text-color-quiet-overbackground-disabled)
     );
 }
 :host([variant='primary'][quiet]) {
     background-color: var(
-        --spectrum-button-quiet-primary-m-background-color,
+        --spectrum-button-m-primary-quiet-texticon-background-color,
         var(--spectrum-alias-background-color-transparent)
     ); /* .spectrum-Button--primary.spectrum-Button--quiet */
     border-color: var(
-        --spectrum-button-quiet-primary-m-border-color,
-        var(--spectrum-alias-border-color-transparent)
+        --spectrum-button-m-primary-quiet-texticon-border-color,
+        var(--spectrum-alias-background-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-primary-m-text-color,
+        --spectrum-button-m-primary-quiet-texticon-text-color,
         var(--spectrum-global-color-gray-800)
     );
 }
 :host([variant='primary'][quiet]:hover) {
     background-color: var(
-        --spectrum-button-quiet-primary-m-background-color-hover,
+        --spectrum-button-m-primary-quiet-texticon-background-color-hover,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button--primary.spectrum-Button--quiet:hover */
     border-color: var(
-        --spectrum-button-quiet-primary-m-border-color-hover,
+        --spectrum-button-m-primary-quiet-texticon-border-color-hover,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-quiet-primary-m-text-color-hover,
+        --spectrum-button-m-primary-quiet-texticon-text-color-hover,
         var(--spectrum-global-color-gray-900)
     );
 }
 :host([variant='primary'][quiet].focus-visible) {
     background-color: var(
-        --spectrum-button-quiet-primary-m-background-color-key-focus,
+        --spectrum-button-m-primary-quiet-texticon-background-color-key-focus,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button--primary.spectrum-Button--quiet.focus-ring */
     border-color: var(
-        --spectrum-button-quiet-primary-m-border-color-key-focus,
+        --spectrum-button-m-primary-quiet-texticon-border-color-key-focus,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-quiet-primary-m-text-color-key-focus,
+        --spectrum-button-m-primary-quiet-texticon-text-color-key-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
 :host([variant='primary'][quiet]:focus-visible) {
     background-color: var(
-        --spectrum-button-quiet-primary-m-background-color-key-focus,
+        --spectrum-button-m-primary-quiet-texticon-background-color-key-focus,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button--primary.spectrum-Button--quiet.focus-ring */
     border-color: var(
-        --spectrum-button-quiet-primary-m-border-color-key-focus,
+        --spectrum-button-m-primary-quiet-texticon-border-color-key-focus,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-quiet-primary-m-text-color-key-focus,
+        --spectrum-button-m-primary-quiet-texticon-text-color-key-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
 :host([variant='primary'][quiet][active]) {
     background-color: var(
-        --spectrum-button-quiet-primary-m-background-color-down,
+        --spectrum-button-m-primary-quiet-texticon-background-color-down,
         var(--spectrum-global-color-gray-300)
     ); /* .spectrum-Button--primary.spectrum-Button--quiet:active */
     border-color: var(
-        --spectrum-button-quiet-primary-m-border-color-down,
+        --spectrum-button-m-primary-quiet-texticon-border-color-down,
         var(--spectrum-global-color-gray-300)
     );
     color: var(
-        --spectrum-button-quiet-primary-m-text-color-down,
+        --spectrum-button-m-primary-quiet-texticon-text-color-down,
         var(--spectrum-global-color-gray-900)
     );
 }
 :host([variant='primary'][quiet]:disabled),
 :host([variant='primary'][quiet][disabled]) {
     background-color: var(
-        --spectrum-button-quiet-primary-m-background-color-disabled,
+        --spectrum-button-m-primary-quiet-texticon-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
     ); /* .spectrum-Button--primary.spectrum-Button--quiet:disabled,
    * .spectrum-Button--primary.spectrum-Button--quiet.is-disabled */
     border-color: var(
-        --spectrum-button-quiet-primary-m-border-color-disabled,
+        --spectrum-button-m-primary-quiet-texticon-border-color-disabled,
         var(--spectrum-alias-border-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-primary-m-text-color-disabled,
+        --spectrum-button-m-primary-quiet-texticon-text-color-disabled,
         var(--spectrum-global-color-gray-500)
     );
 }
 :host([variant='secondary'][quiet]) {
     background-color: var(
-        --spectrum-button-quiet-secondary-m-background-color,
+        --spectrum-button-m-secondary-quiet-texticon-background-color,
         var(--spectrum-alias-background-color-transparent)
     ); /* .spectrum-Button--secondary.spectrum-Button--quiet */
     border-color: var(
-        --spectrum-button-quiet-secondary-m-border-color,
-        var(--spectrum-alias-border-color-transparent)
+        --spectrum-button-m-secondary-quiet-texticon-border-color,
+        var(--spectrum-alias-background-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-secondary-m-text-color,
+        --spectrum-button-m-secondary-quiet-texticon-text-color,
         var(--spectrum-global-color-gray-700)
     );
 }
 :host([variant='secondary'][quiet]:hover) {
     background-color: var(
-        --spectrum-button-quiet-secondary-m-background-color-hover,
+        --spectrum-button-m-secondary-quiet-texticon-background-color-hover,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button--secondary.spectrum-Button--quiet:hover */
     border-color: var(
-        --spectrum-button-quiet-secondary-m-border-color-hover,
+        --spectrum-button-m-secondary-quiet-texticon-border-color-hover,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-quiet-secondary-m-text-color-hover,
+        --spectrum-button-m-secondary-quiet-texticon-text-color-hover,
         var(--spectrum-global-color-gray-800)
     );
 }
 :host([variant='secondary'][quiet].focus-visible) {
     background-color: var(
-        --spectrum-button-quiet-secondary-m-background-color-key-focus,
+        --spectrum-button-m-secondary-quiet-texticon-background-color-key-focus,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button--secondary.spectrum-Button--quiet.focus-ring */
     border-color: var(
-        --spectrum-button-quiet-secondary-m-border-color-key-focus,
+        --spectrum-button-m-secondary-quiet-texticon-border-color-key-focus,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-quiet-secondary-m-text-color-key-focus,
+        --spectrum-button-m-secondary-quiet-texticon-text-color-key-focus,
         var(--spectrum-global-color-gray-800)
     );
 }
 :host([variant='secondary'][quiet]:focus-visible) {
     background-color: var(
-        --spectrum-button-quiet-secondary-m-background-color-key-focus,
+        --spectrum-button-m-secondary-quiet-texticon-background-color-key-focus,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button--secondary.spectrum-Button--quiet.focus-ring */
     border-color: var(
-        --spectrum-button-quiet-secondary-m-border-color-key-focus,
+        --spectrum-button-m-secondary-quiet-texticon-border-color-key-focus,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-quiet-secondary-m-text-color-key-focus,
+        --spectrum-button-m-secondary-quiet-texticon-text-color-key-focus,
         var(--spectrum-global-color-gray-800)
     );
 }
 :host([variant='secondary'][quiet][active]) {
     background-color: var(
-        --spectrum-button-quiet-secondary-m-background-color-down,
+        --spectrum-button-m-secondary-quiet-texticon-background-color-down,
         var(--spectrum-global-color-gray-300)
     ); /* .spectrum-Button--secondary.spectrum-Button--quiet:active */
     border-color: var(
-        --spectrum-button-quiet-secondary-m-border-color-down,
+        --spectrum-button-m-secondary-quiet-texticon-border-color-down,
         var(--spectrum-global-color-gray-300)
     );
     color: var(
-        --spectrum-button-quiet-secondary-m-text-color-down,
+        --spectrum-button-m-secondary-quiet-texticon-text-color-down,
         var(--spectrum-global-color-gray-800)
     );
 }
 :host([variant='secondary'][quiet]:disabled),
 :host([variant='secondary'][quiet][disabled]) {
     background-color: var(
-        --spectrum-button-quiet-secondary-m-background-color-disabled,
+        --spectrum-button-m-secondary-quiet-texticon-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
     ); /* .spectrum-Button--secondary.spectrum-Button--quiet:disabled,
    * .spectrum-Button--secondary.spectrum-Button--quiet.is-disabled */
     border-color: var(
-        --spectrum-button-quiet-secondary-m-border-color-disabled,
+        --spectrum-button-m-secondary-quiet-texticon-border-color-disabled,
         var(--spectrum-alias-border-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-secondary-m-text-color-disabled,
+        --spectrum-button-m-secondary-quiet-texticon-text-color-disabled,
         var(--spectrum-global-color-gray-500)
     );
 }
 :host([variant='negative'][quiet]) {
     background-color: var(
-        --spectrum-button-quiet-warning-m-background-color,
+        --spectrum-button-m-negative-quiet-texticon-background-color,
         var(--spectrum-alias-background-color-transparent)
-    ); /* .spectrum-Button--warning.spectrum-Button--quiet */
+    ); /* .spectrum-Button--negative.spectrum-Button--quiet */
     border-color: var(
-        --spectrum-button-quiet-warning-m-border-color,
-        var(--spectrum-alias-border-color-transparent)
+        --spectrum-button-m-negative-quiet-texticon-border-color,
+        var(--spectrum-alias-background-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-warning-m-text-color,
-        var(--spectrum-semantic-negative-color-text-small)
+        --spectrum-button-m-negative-quiet-texticon-text-color,
+        var(--spectrum-semantic-negative-text-color-small)
     );
 }
 :host([variant='negative'][quiet]:hover) {
     background-color: var(
-        --spectrum-button-quiet-warning-m-background-color-hover,
+        --spectrum-button-m-negative-quiet-texticon-background-color-hover,
         var(--spectrum-global-color-gray-200)
-    ); /* .spectrum-Button--warning.spectrum-Button--quiet:hover */
+    ); /* .spectrum-Button--negative.spectrum-Button--quiet:hover */
     border-color: var(
-        --spectrum-button-quiet-warning-m-border-color-hover,
+        --spectrum-button-m-negative-quiet-texticon-border-color-hover,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-quiet-warning-m-text-color-hover,
+        --spectrum-button-m-negative-quiet-texticon-text-color-hover,
         var(--spectrum-global-color-red-700)
     );
 }
 :host([variant='negative'][quiet].focus-visible) {
     background-color: var(
-        --spectrum-button-quiet-warning-m-background-color-key-focus,
+        --spectrum-button-m-negative-quiet-texticon-background-color-key-focus,
         var(--spectrum-global-color-gray-200)
-    ); /* .spectrum-Button--warning.spectrum-Button--quiet.focus-ring */
+    ); /* .spectrum-Button--negative.spectrum-Button--quiet.focus-ring */
     border-color: var(
-        --spectrum-button-quiet-warning-m-border-color-key-focus,
+        --spectrum-button-m-negative-quiet-texticon-border-color-key-focus,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-quiet-warning-m-text-color-key-focus,
+        --spectrum-button-m-negative-quiet-texticon-text-color-key-focus,
         var(--spectrum-global-color-red-700)
     );
 }
 :host([variant='negative'][quiet]:focus-visible) {
     background-color: var(
-        --spectrum-button-quiet-warning-m-background-color-key-focus,
+        --spectrum-button-m-negative-quiet-texticon-background-color-key-focus,
         var(--spectrum-global-color-gray-200)
-    ); /* .spectrum-Button--warning.spectrum-Button--quiet.focus-ring */
+    ); /* .spectrum-Button--negative.spectrum-Button--quiet.focus-ring */
     border-color: var(
-        --spectrum-button-quiet-warning-m-border-color-key-focus,
+        --spectrum-button-m-negative-quiet-texticon-border-color-key-focus,
         var(--spectrum-global-color-gray-200)
     );
     color: var(
-        --spectrum-button-quiet-warning-m-text-color-key-focus,
+        --spectrum-button-m-negative-quiet-texticon-text-color-key-focus,
         var(--spectrum-global-color-red-700)
     );
 }
 :host([variant='negative'][quiet][active]) {
     background-color: var(
-        --spectrum-button-quiet-warning-m-background-color-down,
+        --spectrum-button-m-negative-quiet-texticon-background-color-down,
         var(--spectrum-global-color-gray-300)
-    ); /* .spectrum-Button--warning.spectrum-Button--quiet:active */
+    ); /* .spectrum-Button--negative.spectrum-Button--quiet:active */
     border-color: var(
-        --spectrum-button-quiet-warning-m-border-color-down,
+        --spectrum-button-m-negative-quiet-texticon-border-color-down,
         var(--spectrum-global-color-gray-300)
     );
     color: var(
-        --spectrum-button-quiet-warning-m-text-color-down,
+        --spectrum-button-m-negative-quiet-texticon-text-color-down,
         var(--spectrum-global-color-red-700)
     );
 }
 :host([variant='negative'][quiet]:disabled),
 :host([variant='negative'][quiet][disabled]) {
     background-color: var(
-        --spectrum-button-quiet-warning-m-background-color-disabled,
+        --spectrum-button-m-negative-quiet-texticon-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
-    ); /* .spectrum-Button--warning.spectrum-Button--quiet:disabled,
-   * .spectrum-Button--warning.spectrum-Button--quiet.is-disabled */
+    ); /* .spectrum-Button--negative.spectrum-Button--quiet:disabled,
+   * .spectrum-Button--negative.spectrum-Button--quiet.is-disabled */
     border-color: var(
-        --spectrum-button-quiet-warning-m-border-color-disabled,
+        --spectrum-button-m-negative-quiet-texticon-border-color-disabled,
         var(--spectrum-alias-border-color-transparent)
     );
     color: var(
-        --spectrum-button-quiet-warning-m-text-color-disabled,
+        --spectrum-button-m-negative-quiet-texticon-text-color-disabled,
         var(--spectrum-global-color-gray-500)
     );
 }
 @media (forced-colors: active) {
-    :host {
-        --spectrum-button-cta-m-background-color: ButtonText;
-        --spectrum-button-cta-m-background-color-disabled: ButtonFace;
-        --spectrum-button-cta-m-background-color-down: Highlight;
-        --spectrum-button-cta-m-background-color-hover: Highlight;
-        --spectrum-button-cta-m-background-color-key-focus: Highlight;
-        --spectrum-button-cta-m-border-color-disabled: GrayText;
-        --spectrum-button-cta-m-border-color-down: Highlight;
-        --spectrum-button-cta-m-border-color-hover: Highlight;
-        --spectrum-button-cta-m-border-color-key-focus: Highlight;
-        --spectrum-button-cta-m-border-color: ButtonText;
-        --spectrum-button-cta-m-text-color-disabled: GrayText;
-        --spectrum-button-cta-m-text-color-down: ButtonFace;
-        --spectrum-button-cta-m-text-color-hover: ButtonFace;
-        --spectrum-button-cta-m-text-color-key-focus: ButtonFace;
-        --spectrum-button-cta-m-text-color: ButtonFace;
-        --spectrum-button-over-background-m-background-color: ButtonFace;
-        --spectrum-button-over-background-m-background-color-disabled: ButtonFace;
-        --spectrum-button-over-background-m-background-color-down: ButtonFace;
-        --spectrum-button-over-background-m-background-color-hover: ButtonFace;
-        --spectrum-button-over-background-m-border-color-disabled: GrayText;
-        --spectrum-button-over-background-m-border-color-down: Highlight;
-        --spectrum-button-over-background-m-border-color-hover: Highlight;
-        --spectrum-button-over-background-m-border-color-key-focus: ButtonText;
-        --spectrum-button-over-background-m-border-color: ButtonText;
-        --spectrum-button-over-background-m-text-color-disabled: GrayText;
-        --spectrum-button-over-background-m-text-color: ButtonText;
-        --spectrum-button-quiet-over-background-m-background-color-disabled: ButtonFace;
-        --spectrum-button-quiet-over-background-m-background-color-down: ButtonFace;
-        --spectrum-button-quiet-over-background-m-background-color-hover: ButtonFace;
-        --spectrum-button-quiet-over-background-m-border-color-disabled: ButtonFace;
-        --spectrum-button-quiet-over-background-m-border-color-down: Highlight;
-        --spectrum-button-quiet-over-background-m-border-color-hover: Highlight;
-        --spectrum-button-quiet-over-background-m-border-color: ButtonFace;
-        --spectrum-button-quiet-over-background-m-text-color-disabled: GrayText;
-        --spectrum-button-quiet-over-background-m-text-color-down: ButtonText;
-        --spectrum-button-quiet-over-background-m-text-color-hover: ButtonText;
-        --spectrum-button-quiet-over-background-m-text-color: ButtonText;
-        --spectrum-button-primary-m-background-color: ButtonFace;
-        --spectrum-button-primary-m-background-color-disabled: ButtonFace;
-        --spectrum-button-primary-m-background-color-down: ButtonFace;
-        --spectrum-button-primary-m-background-color-hover: ButtonFace;
-        --spectrum-button-primary-m-background-color-key-focus: ButtonFace;
-        --spectrum-button-primary-m-border-color-disabled: GrayText;
-        --spectrum-button-primary-m-border-color-down: Highlight;
-        --spectrum-button-primary-m-border-color-hover: Highlight;
-        --spectrum-button-primary-m-border-color-key-focus: Highlight;
-        --spectrum-button-primary-m-border-color: ButtonText;
-        --spectrum-button-primary-m-text-color-disabled: GrayText;
-        --spectrum-button-primary-m-text-color-down: ButtonText;
-        --spectrum-button-primary-m-text-color-hover: ButtonText;
-        --spectrum-button-primary-m-text-color-key-focus: ButtonText;
-        --spectrum-button-primary-m-text-color: ButtonText;
-        --spectrum-button-quiet-primary-m-background-color-disabled: ButtonFace;
-        --spectrum-button-quiet-primary-m-background-color-down: ButtonFace;
-        --spectrum-button-quiet-primary-m-background-color-hover: ButtonFace;
-        --spectrum-button-quiet-primary-m-background-color-key-focus: ButtonFace;
-        --spectrum-button-quiet-primary-m-border-color-disabled: ButtonFace;
-        --spectrum-button-quiet-primary-m-border-color-down: Highlight;
-        --spectrum-button-quiet-primary-m-border-color-hover: Highlight;
-        --spectrum-button-quiet-primary-m-border-color-key-focus: Highlight;
-        --spectrum-button-quiet-primary-m-border-color: ButtonFace;
-        --spectrum-button-quiet-primary-m-text-color-disabled: GrayText;
-        --spectrum-button-quiet-primary-m-text-color-down: ButtonText;
-        --spectrum-button-quiet-primary-m-text-color-hover: ButtonText;
-        --spectrum-button-quiet-primary-m-text-color-key-focus: ButtonText;
-        --spectrum-button-quiet-primary-m-text-color: ButtonText;
-        --spectrum-button-secondary-m-background-color: ButtonFace;
-        --spectrum-button-secondary-m-background-color-down: ButtonFace;
-        --spectrum-button-secondary-m-background-color-hover: ButtonFace;
-        --spectrum-button-secondary-m-background-color-key-focus: ButtonFace;
-        --spectrum-button-secondary-m-border-color-disabled: GrayText;
-        --spectrum-button-secondary-m-border-color-down: Highlight;
-        --spectrum-button-secondary-m-border-color-hover: Highlight;
-        --spectrum-button-secondary-m-border-color-key-focus: Highlight;
-        --spectrum-button-secondary-m-border-color: ButtonText;
-        --spectrum-button-secondary-m-text-color-disabled: GrayText;
-        --spectrum-button-secondary-m-text-color-down: ButtonText;
-        --spectrum-button-secondary-m-text-color-hover: ButtonText;
-        --spectrum-button-secondary-m-text-color-key-focus: ButtonText;
-        --spectrum-button-secondary-m-text-color: ButtonText;
-        --spectrum-button-quiet-secondary-m-background-color-disabled: ButtonFace;
-        --spectrum-button-quiet-secondary-m-background-color-down: ButtonFace;
-        --spectrum-button-quiet-secondary-m-background-color-hover: ButtonFace;
-        --spectrum-button-quiet-secondary-m-background-color-key-focus: ButtonFace;
-        --spectrum-button-quiet-secondary-m-border-color-disabled: ButtonFace;
-        --spectrum-button-quiet-secondary-m-border-color-down: Highlight;
-        --spectrum-button-quiet-secondary-m-border-color-hover: Highlight;
-        --spectrum-button-quiet-secondary-m-border-color-key-focus: Highlight;
-        --spectrum-button-quiet-secondary-m-border-color: ButtonFace;
-        --spectrum-button-quiet-secondary-m-text-color-disabled: GrayText;
-        --spectrum-button-quiet-secondary-m-text-color-down: ButtonText;
-        --spectrum-button-quiet-secondary-m-text-color-hover: ButtonText;
-        --spectrum-button-quiet-secondary-m-text-color-key-focus: ButtonText;
-        --spectrum-button-quiet-secondary-m-text-color: ButtonText;
-        --spectrum-button-warning-m-background-color: ButtonFace;
-        --spectrum-button-warning-m-background-color-down: ButtonFace;
-        --spectrum-button-warning-m-background-color-hover: ButtonFace;
-        --spectrum-button-warning-m-background-color-key-focus: ButtonFace;
-        --spectrum-button-warning-m-border-color-disabled: GrayText;
-        --spectrum-button-warning-m-border-color-down: Highlight;
-        --spectrum-button-warning-m-border-color-hover: Highlight;
-        --spectrum-button-warning-m-border-color-key-focus: Highlight;
-        --spectrum-button-warning-m-border-color: ButtonText;
-        --spectrum-button-warning-m-text-color-disabled: GrayText;
-        --spectrum-button-warning-m-text-color-down: ButtonText;
-        --spectrum-button-warning-m-text-color-hover: ButtonText;
-        --spectrum-button-warning-m-text-color-key-focus: ButtonText;
-        --spectrum-button-warning-m-text-color: ButtonText;
-        --spectrum-button-quiet-warning-m-background-color-disabled: ButtonFace;
-        --spectrum-button-quiet-warning-m-background-color-down: ButtonFace;
-        --spectrum-button-quiet-warning-m-background-color-hover: ButtonFace;
-        --spectrum-button-quiet-warning-m-background-color-key-focus: ButtonFace;
-        --spectrum-button-quiet-warning-m-border-color-disabled: ButtonFace;
-        --spectrum-button-quiet-warning-m-border-color-down: Highlight;
-        --spectrum-button-quiet-warning-m-border-color-hover: Highlight;
-        --spectrum-button-quiet-warning-m-border-color-key-focus: Highlight;
-        --spectrum-button-quiet-warning-m-border-color: ButtonFace;
-        --spectrum-button-quiet-warning-m-text-color-disabled: GrayText;
-        --spectrum-button-quiet-warning-m-text-color-down: ButtonText;
-        --spectrum-button-quiet-warning-m-text-color-hover: ButtonText;
-        --spectrum-button-quiet-warning-m-text-color-key-focus: ButtonText;
-        --spectrum-button-quiet-warning-m-text-color: ButtonText;
-        --spectrum-button-secondary-m-background-color-disabled: ButtonFace;
-        --spectrum-button-warning-m-background-color-disabled: ButtonFace;
-        --spectrum-button-primary-m-focus-ring-color-key-focus: ButtonText;
-    }
     :host {
         forced-color-adjust: none;
     }

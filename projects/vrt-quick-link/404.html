@@ -235,23 +235,8 @@
     let destScale = 'medium';
     let destColor = 'light';
     let destDir = 'ltr';
-    let branch = '';
-    const scales = ['medium', 'large'];
-    const colors = ['lightest', 'light', 'dark', 'darkest'];
-    const directions = ['ltr', 'rtl'];
     const { pathname } = window.location;
-    const parts = pathname.split('/');
-    parts.forEach((part) => {
-        if (scales.find((scale) => scale === part)) {
-            destScale = part;
-        } else if (colors.find((color) => color === part)) {
-            destColor = part;
-        } else if (directions.find((direction) => direction === part)) {
-            destDir = part;
-        } else if (part && !branch) {
-            branch = part;
-        }
-    });
+    const branch = pathname.slice(1);
     const hash = MD5(`${branch}-${destColor}-${destScale}-${destDir}`);
     const destination = `https://${hash}--spectrum-web-components.netlify.app/review`;
     window.location = destination;

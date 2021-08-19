@@ -62,13 +62,13 @@ const config = {
                 },
                 {
                     type: 'boolean',
-                    selector: '.is-warning',
-                    name: 'warning',
+                    selector: '.is-notice',
+                    name: 'notice',
                 },
                 {
                     type: 'boolean',
-                    selector: '.is-critical',
-                    name: 'critical',
+                    selector: '.is-negative',
+                    name: 'negative',
                 },
                 {
                     type: 'enum',

@@ -118,7 +118,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     .spectrum-SideNav-itemLink {
     padding-left: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation,
+                --spectrum-sidenav-multilevel-item-margin-left,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
@@ -133,7 +133,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     .spectrum-SideNav-itemLink {
     padding-right: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation,
+                --spectrum-sidenav-multilevel-item-margin-left,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
@@ -149,7 +149,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     .spectrum-SideNav-itemLink {
     padding-left: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation,
+                --spectrum-sidenav-multilevel-item-margin-left,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(
@@ -165,7 +165,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     .spectrum-SideNav-itemLink {
     padding-right: calc(
         var(
-                --spectrum-sidenav-multilevel-item-indentation,
+                --spectrum-sidenav-multilevel-item-margin-left,
                 var(--spectrum-global-dimension-size-150)
             ) +
             var(

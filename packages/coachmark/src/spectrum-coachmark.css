@@ -98,7 +98,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     animation-delay: calc(
         var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
             var(
-                --spectrum-coachmark-animation-inticator-ring-center-delay-multiple,
+                --spectrum-coachmark-animation-indicator-ring-center-delay-multiple,
                 -0.66
             )
     ); /* .spectrum-CoachMarkIndicator-ring:nth-child(2) */
@@ -107,7 +107,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     animation-delay: calc(
         var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
             var(
-                --spectrum-coachmark-animation-inticator-ring-outer-delay-multiple,
+                --spectrum-coachmark-animation-indicator-ring-outer-delay-multiple,
                 -1
             )
     ); /* .spectrum-CoachMarkIndicator-ring:nth-child(3) */
@@ -165,7 +165,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     animation-delay: calc(
         var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
             var(
-                --spectrum-coachmark-animation-inticator-ring-inner-delay-multiple,
+                --spectrum-coachmark-animation-indicator-ring-inner-delay-multiple,
                 -0.5
             )
     ); /* .spectrum-CoachMarkIndicator-ring:nth-child(1) */
@@ -223,7 +223,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     animation-delay: calc(
         var(--spectrum-coachmark-animation-indicator-ring-duration, 3s) *
             var(
-                --spectrum-coachmark-quiet-animation-inticator-ring-inner-delay-multiple,
+                --spectrum-coachmark-quiet-animation-indicator-ring-inner-delay-multiple,
                 -0.33
             )
     ); /* .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring:nth-child(1) */

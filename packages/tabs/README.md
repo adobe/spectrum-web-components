@@ -30,10 +30,14 @@ import {
 } from '@spectrum-web-components/tabs';
 ```
 
-## Example
+## Sizes
 
-```html
-<sp-tabs selected="1">
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html demo
+<sp-tabs selected="1" size="s">
     <sp-tab label="Tab 1" value="1"></sp-tab>
     <sp-tab label="Tab 2" value="2"></sp-tab>
     <sp-tab label="Tab 3" value="3"></sp-tab>
@@ -44,6 +48,60 @@ import {
     <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
 </sp-tabs>
 ```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html demo
+<sp-tabs selected="1" size="m">
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html demo
+<sp-tabs selected="1" size="l">
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html demo
+<sp-tabs selected="1" size="xl">
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Disabled
 

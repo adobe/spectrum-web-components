@@ -23,11 +23,25 @@ export default {
     component: 'sp-tabs',
     title: 'Tabs',
     argTypes: {
-        verticalTabs: { control: 'boolean' },
+        direction: {
+            name: 'direction',
+            type: { name: 'string', required: false },
+            description: 'The direction of the Tabs element',
+            table: {
+                type: {
+                    summary: '"vertical" | "vertical-right" | "horizontal"',
+                },
+                defaultValue: { summary: 'horizontal' },
+            },
+            control: {
+                type: 'text',
+            },
+        },
         verticalTab: { control: 'boolean' },
         auto: { control: 'boolean' },
     },
     args: {
+        direction: 'horizontal',
         type: false,
         verticalTab: false,
         auto: false,
@@ -35,6 +49,7 @@ export default {
 };
 
 interface Properties {
+    direction?: 'vertical' | 'vertical-right' | 'horizontal';
     verticalTabs?: boolean;
     verticalTab?: boolean;
     auto?: boolean;
@@ -81,7 +96,12 @@ export const Default = (args: Properties): TemplateResult => {
                     height 0s ease var(--spectrum-global-animation-duration-300);
             }
         </style>
-        <sp-tabs selected="1" ?auto=${args.auto} label="Demo Tabs">
+        <sp-tabs
+            selected="1"
+            ?auto=${args.auto}
+            label="Demo Tabs"
+            direction=${args.direction}
+        >
             <sp-tab value="2">Tab 2</sp-tab>
             <sp-tab value="3">Tab 3</sp-tab>
             <sp-tab value="4">Tab 4</sp-tab>
@@ -93,7 +113,13 @@ export const Default = (args: Properties): TemplateResult => {
 
 export const Autofocus = (args: Properties): TemplateResult => {
     return html`
-        <sp-tabs selected="1" autofocus ?auto=${args.auto} label="Demo Tabs">
+        <sp-tabs
+            selected="1"
+            autofocus
+            ?auto=${args.auto}
+            label="Demo Tabs"
+            direction=${args.direction}
+        >
             <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2"></sp-tab>
             <sp-tab label="Tab 3" value="3"></sp-tab>
@@ -105,7 +131,13 @@ export const Autofocus = (args: Properties): TemplateResult => {
 
 export const disabledTabs = (args: Properties): TemplateResult => {
     return html`
-        <sp-tabs selected="1" disabled ?auto=${args.auto} label="Disabled Tabs">
+        <sp-tabs
+            selected="1"
+            disabled
+            ?auto=${args.auto}
+            label="Disabled Tabs"
+            direction=${args.direction}
+        >
             <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2"></sp-tab>
             <sp-tab label="Tab 3" value="3"></sp-tab>
@@ -117,7 +149,12 @@ export const disabledTabs = (args: Properties): TemplateResult => {
 
 export const disabledTab = (args: Properties): TemplateResult => {
     return html`
-        <sp-tabs selected="1" ?auto=${args.auto} label="Disabled Tab">
+        <sp-tabs
+            selected="1"
+            ?auto=${args.auto}
+            label="Disabled Tab"
+            direction=${args.direction}
+        >
             <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2" disabled></sp-tab>
             <sp-tab label="Tab 3" value="3" disabled></sp-tab>
@@ -131,7 +168,7 @@ export const Vertical = (args: Properties): TemplateResult => {
     return html`
         <sp-tabs
             selected="1"
-            direction="vertical"
+            direction=${args.direction}
             ?auto=${args.auto}
             label="Demo Tabs"
         >
@@ -142,6 +179,9 @@ export const Vertical = (args: Properties): TemplateResult => {
             ${panels()}
         </sp-tabs>
     `;
+};
+Vertical.args = {
+    direction: 'vertical',
 };
 
 export const VerticalSized = (args: Properties): TemplateResult => {
@@ -154,7 +194,7 @@ export const VerticalSized = (args: Properties): TemplateResult => {
         </style>
         <sp-tabs
             selected="1"
-            direction="vertical"
+            direction=${args.direction}
             ?auto=${args.auto}
             label="Demo Tabs"
         >
@@ -165,6 +205,9 @@ export const VerticalSized = (args: Properties): TemplateResult => {
             ${panels()}
         </sp-tabs>
     `;
+};
+VerticalSized.args = {
+    direction: 'vertical',
 };
 
 export const VerticalRight = (args: Properties): TemplateResult => {
@@ -177,7 +220,7 @@ export const VerticalRight = (args: Properties): TemplateResult => {
         </style>
         <sp-tabs
             selected="1"
-            direction="vertical-right"
+            direction=${args.direction}
             ?auto=${args.auto}
             label="Demo Tabs"
         >
@@ -189,18 +232,17 @@ export const VerticalRight = (args: Properties): TemplateResult => {
         </sp-tabs>
     `;
 };
+VerticalRight.args = {
+    direction: 'vertical-right',
+};
 
 export const Icons = ({
-    verticalTabs,
+    direction,
     verticalTab,
     auto,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tabs
-            selected="1"
-            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
-            ?auto=${auto}
-        >
+        <sp-tabs selected="1" direction=${direction} ?auto=${auto}>
             <sp-tab label="Tab 1" value="1" ?vertical=${verticalTab}>
                 <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
             </sp-tab>
@@ -219,16 +261,12 @@ export const Icons = ({
 };
 
 export const IconsWithSlottedLabel = ({
-    verticalTabs,
+    direction,
     verticalTab,
     auto,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tabs
-            selected="1"
-            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
-            ?auto=${auto}
-        >
+        <sp-tabs selected="1" direction=${direction} ?auto=${auto}>
             <sp-tab value="1" ?vertical=${verticalTab}>
                 Tab 1
                 <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
@@ -251,16 +289,12 @@ export const IconsWithSlottedLabel = ({
 };
 
 export const IconsOnly = ({
-    verticalTabs,
+    direction,
     verticalTab,
     auto,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tabs
-            selected="1"
-            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
-            ?auto=${auto}
-        >
+        <sp-tabs selected="1" direction=${direction} ?auto=${auto}>
             <sp-tab aria-label="Tab 1" value="1" ?vertical=${verticalTab}>
                 <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
             </sp-tab>
@@ -282,7 +316,7 @@ export const iconsIi = (args: Properties): TemplateResult => {
     return html`
         <sp-tabs
             selected="1"
-            direction="vertical"
+            direction=${args.direction}
             ?auto=${args.auto}
             label="Demo Tabs"
         >
@@ -302,7 +336,9 @@ export const iconsIi = (args: Properties): TemplateResult => {
         </sp-tabs>
     `;
 };
-
+iconsIi.args = {
+    direction: 'vertical',
+};
 iconsIi.story = {
     name: 'Icons II',
 };
@@ -311,7 +347,7 @@ export const iconsIii = (args: Properties): TemplateResult => {
     return html`
         <sp-tabs
             selected="1"
-            direction="vertical"
+            direction=${args.direction}
             ?auto=${args.auto}
             label="Demo Tabs"
         >
@@ -331,19 +367,16 @@ export const iconsIii = (args: Properties): TemplateResult => {
         </sp-tabs>
     `;
 };
-
+iconsIii.args = {
+    direction: 'vertical',
+};
 iconsIii.story = {
     name: 'Icons III',
 };
 
-export const Quiet = ({ verticalTabs, auto }: Properties): TemplateResult => {
+export const Quiet = ({ direction, auto }: Properties): TemplateResult => {
     return html`
-        <sp-tabs
-            selected="1"
-            quiet
-            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
-            ?auto=${auto}
-        >
+        <sp-tabs selected="1" quiet direction=${direction} ?auto=${auto}>
             <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2"></sp-tab>
             <sp-tab label="Tab 3" value="3"></sp-tab>
@@ -353,14 +386,9 @@ export const Quiet = ({ verticalTabs, auto }: Properties): TemplateResult => {
     `;
 };
 
-export const Compact = ({ verticalTabs, auto }: Properties): TemplateResult => {
+export const Compact = ({ direction, auto }: Properties): TemplateResult => {
     return html`
-        <sp-tabs
-            selected="1"
-            compact
-            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
-            ?auto=${auto}
-        >
+        <sp-tabs selected="1" compact direction=${direction} ?auto=${auto}>
             <sp-tab label="Tab 1" value="1"></sp-tab>
             <sp-tab label="Tab 2" value="2"></sp-tab>
             <sp-tab label="Tab 3" value="3"></sp-tab>
@@ -371,7 +399,7 @@ export const Compact = ({ verticalTabs, auto }: Properties): TemplateResult => {
 };
 
 export const quietCompact = ({
-    verticalTabs,
+    direction,
     auto,
 }: Properties): TemplateResult => {
     return html`
@@ -379,7 +407,7 @@ export const quietCompact = ({
             selected="1"
             quiet
             compact
-            direction="${verticalTabs ? 'vertical' : 'horizontal'}"
+            direction=${direction}
             ?auto=${auto}
         >
             <sp-tab label="Tab 1" value="1"></sp-tab>
