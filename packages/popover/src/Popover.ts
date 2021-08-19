@@ -25,10 +25,11 @@ import {
 import popoverStyles from './popover.css.js';
 
 /**
+ * @element sp-popover
+ *
  * @attr {Boolean} open - The open state of the popover
  * @attr {Boolean} dialog - Adds some padding to the popover
  */
-
 export class Popover extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [popoverStyles];

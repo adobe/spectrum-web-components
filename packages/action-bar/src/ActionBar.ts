@@ -22,6 +22,7 @@ export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
  * @element sp-action-bar
+ * @slot - Content to display with the Action Bar
  */
 export class ActionBar extends SpectrumElement {
     public static get styles(): CSSResultArray {

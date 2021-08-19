@@ -22,7 +22,7 @@ import {
 import avatarStyles from './avatar.css.js';
 
 /**
- * Avatar component
+ * @element sp-avatar
  */
 export class Avatar extends SpectrumElement {
     public static get styles(): CSSResultArray {

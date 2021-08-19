@@ -21,7 +21,7 @@ import {
 import bannerStyles from './banner.css.js';
 
 /**
- * Banner component
+ * @element sp-banner
  *
  * @attr type - Determines the style, can be "info", "warning", or "error". Default is "info"
  * @attr corner - Determines if banner sets position at upper right corner or not.

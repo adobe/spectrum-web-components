@@ -26,7 +26,6 @@ export type ButtonVariants =
     | 'negative';
 
 /**
- * A Spectrum button control.
  * @element sp-button
  */
 export class Button extends SizedMixin(StyledButton) {

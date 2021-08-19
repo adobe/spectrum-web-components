@@ -25,6 +25,8 @@ import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';
 import topNavItemStyles from './top-nav-item.css.js';
 
 /**
+ * @element sp-top-nav-item
+ *
  * @slot icon - The icon that appears on the left of the label
  */
 

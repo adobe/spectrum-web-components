@@ -263,6 +263,9 @@ export class TextfieldBase extends Focusable {
     }
 }
 
+/**
+ * @element sp-textfield
+ */
 export class Textfield extends TextfieldBase {
     @property({ type: String })
     public set value(value: string) {

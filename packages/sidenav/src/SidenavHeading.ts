@@ -22,6 +22,9 @@ import {
 import sidenavItemStyles from './sidenav-item.css.js';
 import sidenavHeadingStyles from './sidenav-heading.css.js';
 
+/**
+ * @element sp-sidenav-heading
+ */
 export class SideNavHeading extends SpectrumElement {
     @property({ reflect: true })
     public label = '';

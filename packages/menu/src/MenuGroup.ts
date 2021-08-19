@@ -22,7 +22,6 @@ import '../sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
 /**
- * Spectrum Menu Group Component
  * @element sp-menu-group
  *
  * @slot header - headline of the menu group

@@ -32,7 +32,6 @@ import overlayTriggerStyles from './overlay-trigger.css.js';
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 
 /**
- * A overlay trigger component for displaying overlays relative to other content.
  * @element overlay-trigger
  *
  * @slot trigger - The content that will trigger the various overlays

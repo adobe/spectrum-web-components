@@ -67,6 +67,9 @@ const MaxConverter = {
     },
 };
 
+/**
+ * @element sp-slider-handle
+ */
 export class SliderHandle extends Focusable {
     public handleController?: Controller;
 

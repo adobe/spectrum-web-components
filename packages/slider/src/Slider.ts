@@ -32,6 +32,9 @@ import { SliderHandle } from './SliderHandle.js';
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 
+/**
+ * @element sp-slider
+ */
 export class Slider extends ObserveSlotText(SliderHandle, '') {
     public static get styles(): CSSResultArray {
         return [sliderStyles];

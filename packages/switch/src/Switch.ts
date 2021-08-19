@@ -21,6 +21,9 @@ import { CheckboxBase } from '@spectrum-web-components/checkbox/src/CheckboxBase
 import switchStyles from './switch.css.js';
 import legacyStyles from './switch-legacy.css.js';
 
+/**
+ * @element sp-switch
+ */
 export class Switch extends CheckboxBase {
     public static get styles(): CSSResultArray {
         /* c8 ignore next 4 */

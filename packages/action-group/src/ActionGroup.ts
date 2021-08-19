@@ -26,6 +26,7 @@ const EMPTY_SELECTION: string[] = [];
 
 /**
  * @element sp-action-group
+ * @slot - the sp-action-button elements that make up the group
  */
 export class ActionGroup extends SpectrumElement {
     public static get styles(): CSSResultArray {

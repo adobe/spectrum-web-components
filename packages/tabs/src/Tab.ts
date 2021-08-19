@@ -27,9 +27,10 @@ import {
 import tabItemStyles from './tab.css.js';
 
 /**
+ * @element sp-tab
+ *
  * @slot icon - The icon that appears on the left of the label
  */
-
 export class Tab extends FocusVisiblePolyfillMixin(
     ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), '')
 ) {

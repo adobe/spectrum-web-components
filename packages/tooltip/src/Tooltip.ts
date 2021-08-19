@@ -26,6 +26,8 @@ import {
 import tooltipStyles from './tooltip.css.js';
 
 /**
+ * @element sp-tooltip
+ *
  * @slot icon - The icon that appears on the left of the label
  * @slot - The label
  */

@@ -23,9 +23,9 @@ import { FieldGroup } from '@spectrum-web-components/field-group';
 import { Radio } from './Radio.js';
 
 /**
- * Radio group component
- * @slot - The `sp-radio` elements to display/manage in the group.
+ * @element sp-radio-group
  *
+ * @slot - The `sp-radio` elements to display/manage in the group.
  */
 export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ type: String })

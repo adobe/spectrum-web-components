@@ -64,6 +64,9 @@ export interface ProvideLang {
     callback: (lang: string) => void;
 }
 
+/**
+ * @element sp-theme
+ */
 export class Theme extends HTMLElement implements ThemeKindProvider {
     private static themeFragmentsByKind: ThemeFragmentMap = new Map();
     private static defaultFragments: Set<FragmentName> = new Set(['core']);

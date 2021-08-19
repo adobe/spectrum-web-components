@@ -88,6 +88,9 @@ const dashIcon = {
 
 type CheckboxSize = Exclude<ElementSize, 'xxl'>;
 
+/**
+ * @element sp-checkbox
+ */
 export class Checkbox extends SizedMixin(CheckboxBase) {
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
