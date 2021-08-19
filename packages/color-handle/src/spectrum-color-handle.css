@@ -186,17 +186,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-shadow: 0 0 0
         var(
             --spectrum-colorhandle-outer-border-size,
-            var(--spectrum-global-dimension-static-size-10)
+            var(--spectrum-alias-border-size-thin)
         )
-        var(
-            --spectrum-colorhandle-outer-border-color,
-            var(--spectrum-alias-colorhandle-outer-border-color)
-        );
+        var(--spectrum-colorhandle-outer-border-color, rgba(0, 0, 0, 0.42));
 }
 :host([disabled]) {
     background: var(
         --spectrum-colorhandle-fill-color-disabled,
-        var(--spectrum-global-color-gray-300)
+        var(--spectrum-alias-track-color-disabled)
     );
     border-color: var(
         --spectrum-colorhandle-inner-border-color-disabled,
@@ -211,12 +208,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-shadow: inset 0 0 0
         var(
             --spectrum-colorhandle-outer-border-size,
-            var(--spectrum-global-dimension-static-size-10)
+            var(--spectrum-alias-border-size-thin)
         )
-        var(
-            --spectrum-colorhandle-outer-border-color,
-            var(--spectrum-alias-colorhandle-outer-border-color)
-        ); /* .spectrum-ColorHandle-color */
+        var(--spectrum-colorhandle-outer-border-color, rgba(0, 0, 0, 0.42)); /* .spectrum-ColorHandle-color */
 }
 @media (forced-colors: active) {
     :host {

@@ -11,10 +11,11 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) {
-    border-left: var(--spectrum-listitem-focus-indicator-size) solid transparent; /* [dir=ltr] .spectrum-Menu-item */
+    border-left: var(--spectrum-listitem-texticon-focus-indicator-size) solid
+        transparent; /* [dir=ltr] .spectrum-Menu-item */
 }
 :host([dir='rtl']) {
-    border-right: var(--spectrum-listitem-focus-indicator-size) solid
+    border-right: var(--spectrum-listitem-texticon-focus-indicator-size) solid
         transparent; /* [dir=rtl] .spectrum-Menu-item */
 }
 :host {
@@ -22,14 +23,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-sizing: border-box;
     cursor: pointer; /* .spectrum-Menu-item */
     display: flex;
-    font-size: var(--spectrum-listitem-text-size);
+    font-size: var(--spectrum-listitem-texticon-text-size);
     font-style: normal;
-    font-weight: var(--spectrum-listitem-text-font-weight);
+    font-weight: var(--spectrum-listitem-texticon-text-font-weight);
     margin: 0;
-    min-height: var(--spectrum-listitem-height);
-    padding: var(--spectrum-listitem-padding-y)
-        var(--spectrum-listitem-padding-right)
-        var(--spectrum-listitem-padding-y) var(--spectrum-listitem-padding-left);
+    min-height: var(--spectrum-listitem-texticon-height);
+    padding: var(--spectrum-listitem-texticon-padding-y)
+        var(--spectrum-listitem-texticon-padding-right)
+        var(--spectrum-listitem-texticon-padding-y)
+        var(--spectrum-listitem-texticon-padding-left);
     position: relative;
     text-decoration: none;
 }
@@ -38,7 +40,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][selected]) {
     padding-right: calc(
-        var(--spectrum-listitem-padding-right) -
+        var(--spectrum-listitem-texticon-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
@@ -47,7 +49,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl'][selected]) {
     padding-left: calc(
-        var(--spectrum-listitem-padding-right) -
+        var(--spectrum-listitem-texticon-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
@@ -66,7 +68,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) .icon + #label,
 :host([dir='ltr']) slot[name='icon'] + #label {
     margin-left: var(
-        --spectrum-listitem-icon-gap
+        --spectrum-listitem-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=ltr] 
   .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
@@ -74,7 +76,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) .icon + #label,
 :host([dir='rtl']) slot[name='icon'] + #label {
     margin-right: var(
-        --spectrum-listitem-icon-gap
+        --spectrum-listitem-texticon-icon-gap
     ); /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=rtl] 
   .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
@@ -82,9 +84,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .icon + #label,
 slot[name='icon'] + #label {
     width: calc(
-        100% - var(--spectrum-icon-checkmark-medium-width) -
-            var(--spectrum-listitem-icon-gap) -
-            var(--spectrum-listitem-thumbnail-padding-left) -
+        100% - var(--spectrum-listitem-texticon-ui-icon-width) -
+            var(--spectrum-listitem-texticon-icon-gap) -
+            var(--spectrum-listitem-textthumbnail-padding-left) -
             var(
                 --spectrum-alias-workflow-icon-size-m,
                 var(--spectrum-global-dimension-size-225)
@@ -96,11 +98,11 @@ slot[name='icon'] + #label {
     flex: 1 1 auto; /* .spectrum-Menu-itemLabel */
     -webkit-hyphens: auto;
     hyphens: auto;
-    line-height: var(--spectrum-listitem-label-line-height);
+    line-height: var(--spectrum-listitem-texticon-label-line-height);
     overflow-wrap: break-word;
     width: calc(
-        100% - var(--spectrum-icon-checkmark-medium-width) -
-            var(--spectrum-listitem-icon-gap)
+        100% - var(--spectrum-listitem-texticon-ui-icon-width) -
+            var(--spectrum-listitem-texticon-icon-gap)
     );
 }
 :host([no-wrap]) #label {
@@ -110,16 +112,16 @@ slot[name='icon'] + #label {
 }
 :host([dir='ltr']) .checkmark,
 :host([dir='ltr']) .chevron {
-    margin-left: var(
-        --spectrum-listitem-icon-gap
+    padding-left: var(
+        --spectrum-listitem-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-Menu-checkmark,
    * [dir=ltr] 
 .spectrum-Menu-chevron */
 }
 :host([dir='rtl']) .checkmark,
 :host([dir='rtl']) .chevron {
-    margin-right: var(
-        --spectrum-listitem-icon-gap
+    padding-right: var(
+        --spectrum-listitem-texticon-icon-gap
     ); /* [dir=rtl] .spectrum-Menu-checkmark,
    * [dir=rtl] 
 .spectrum-Menu-chevron */
@@ -129,19 +131,19 @@ slot[name='icon'] + #label {
 }
 :host {
     background-color: var(
-        --spectrum-listitem-m-background-color,
+        --spectrum-listitem-m-texticon-background-color,
         var(--spectrum-alias-background-color-transparent)
     ); /* .spectrum-Menu-item */
     color: var(
-        --spectrum-listitem-m-text-color,
-        var(--spectrum-alias-text-color)
+        --spectrum-listitem-m-texticon-text-color,
+        var(--spectrum-alias-component-text-color-default)
     );
 }
 :host([dir='ltr'][focused]),
 :host([dir='ltr'].focus-visible) {
     border-left-color: var(
-        --spectrum-listitem-m-focus-indicator-color,
-        var(--spectrum-alias-border-color-focus)
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
     ); /* [dir=ltr] .spectrum-Menu-item.focus-ring,
    * [dir=ltr] 
   .spectrum-Menu-item.is-focused */
@@ -149,8 +151,8 @@ slot[name='icon'] + #label {
 :host([dir='ltr'][focused]),
 :host([dir='ltr']:focus-visible) {
     border-left-color: var(
-        --spectrum-listitem-m-focus-indicator-color,
-        var(--spectrum-alias-border-color-focus)
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
     ); /* [dir=ltr] .spectrum-Menu-item.focus-ring,
    * [dir=ltr] 
   .spectrum-Menu-item.is-focused */
@@ -158,8 +160,8 @@ slot[name='icon'] + #label {
 :host([dir='rtl'][focused]),
 :host([dir='rtl'].focus-visible) {
     border-right-color: var(
-        --spectrum-listitem-m-focus-indicator-color,
-        var(--spectrum-alias-border-color-focus)
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
     ); /* [dir=rtl] .spectrum-Menu-item.focus-ring,
    * [dir=rtl] 
   .spectrum-Menu-item.is-focused */
@@ -167,8 +169,8 @@ slot[name='icon'] + #label {
 :host([dir='rtl'][focused]),
 :host([dir='rtl']:focus-visible) {
     border-right-color: var(
-        --spectrum-listitem-m-focus-indicator-color,
-        var(--spectrum-alias-border-color-focus)
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
     ); /* [dir=rtl] .spectrum-Menu-item.focus-ring,
    * [dir=rtl] 
   .spectrum-Menu-item.is-focused */
@@ -176,25 +178,25 @@ slot[name='icon'] + #label {
 :host(.focus-visible),
 :host([focused]) {
     background-color: var(
-        --spectrum-listitem-m-background-color-key-focus,
+        --spectrum-listitem-m-texticon-background-color-key-focus,
         var(--spectrum-alias-background-color-hover-overlay)
     ); /* .spectrum-Menu-item.focus-ring,
    * .spectrum-Menu-item.is-focused */
     color: var(
-        --spectrum-listitem-m-text-color-key-focus,
-        var(--spectrum-alias-text-color)
+        --spectrum-listitem-m-texticon-text-color-key-focus,
+        var(--spectrum-alias-component-text-color-key-focus)
     );
 }
 :host(:focus-visible),
 :host([focused]) {
     background-color: var(
-        --spectrum-listitem-m-background-color-key-focus,
+        --spectrum-listitem-m-texticon-background-color-key-focus,
         var(--spectrum-alias-background-color-hover-overlay)
     ); /* .spectrum-Menu-item.focus-ring,
    * .spectrum-Menu-item.is-focused */
     color: var(
-        --spectrum-listitem-m-text-color-key-focus,
-        var(--spectrum-alias-text-color)
+        --spectrum-listitem-m-texticon-text-color-key-focus,
+        var(--spectrum-alias-component-text-color-key-focus)
     );
 }
 :host(.is-highlighted),
@@ -202,46 +204,46 @@ slot[name='icon'] + #label {
 :host(:focus),
 :host(:hover) {
     background-color: var(
-        --spectrum-listitem-m-background-color-hover,
+        --spectrum-listitem-m-texticon-background-color-hover,
         var(--spectrum-alias-background-color-hover-overlay)
     ); /* .spectrum-Menu-item:hover,
    * .spectrum-Menu-item:focus,
    * .spectrum-Menu-item.is-highlighted,
    * .spectrum-Menu-item.is-open */
     color: var(
-        --spectrum-listitem-m-text-color-hover,
-        var(--spectrum-alias-text-color)
+        --spectrum-listitem-m-texticon-text-color-hover,
+        var(--spectrum-alias-component-text-color-hover)
     );
 }
 :host([selected]) {
     color: var(
-        --spectrum-listitem-m-text-color-selected,
-        var(--spectrum-alias-text-color)
+        --spectrum-listitem-m-texticon-text-color-selected,
+        var(--spectrum-alias-component-text-color-default)
     ); /* .spectrum-Menu-item.is-selected */
 }
 :host([selected]) .checkmark {
     color: var(
-        --spectrum-listitem-m-icon-color-selected,
+        --spectrum-listitem-m-texticon-ui-icon-color-selected,
         var(--spectrum-alias-icon-color-selected)
     ); /* .spectrum-Menu-item.is-selected .spectrum-Menu-checkmark */
 }
 :host(:active),
 :host([active]) {
     background-color: var(
-        --spectrum-listitem-m-background-color-down,
+        --spectrum-listitem-m-texticon-background-color-down,
         var(--spectrum-alias-background-color-hover-overlay)
     ); /* .spectrum-Menu-item .is-active,
    * .spectrum-Menu-item:active */
 }
 :host([disabled]) {
     background-color: var(
-        --spectrum-listitem-m-background-color-disabled,
+        --spectrum-listitem-m-texticon-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
     ); /* .spectrum-Menu-item.is-disabled */
     background-image: none;
     color: var(
-        --spectrum-listitem-m-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
+        --spectrum-listitem-m-texticon-text-color-disabled,
+        var(--spectrum-alias-component-text-color-disabled)
     );
     cursor: default;
 }

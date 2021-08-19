@@ -41,10 +41,10 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     public overBackground = false;
 
     @property({ type: Boolean, reflect: true })
-    public warning = false;
+    public notice = false;
 
     @property({ type: Boolean, reflect: true })
-    public critical = false;
+    public negative = false;
 
     @property({ type: Boolean, reflect: true })
     public positive = false;

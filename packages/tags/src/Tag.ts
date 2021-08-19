@@ -17,6 +17,7 @@ import {
     TemplateResult,
     property,
     PropertyValues,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-clear-button.js';
@@ -30,7 +31,9 @@ import styles from './tag.css.js';
  * @slot avatar - an avatar element to display within the Tag
  * @slot icon - an icon element to display within the Tag
  */
-export class Tag extends SpectrumElement {
+export class Tag extends SizedMixin(SpectrumElement, {
+    validSizes: ['s', 'm', 'l'],
+}) {
     public static get styles(): CSSResultArray {
         return [styles];
     }

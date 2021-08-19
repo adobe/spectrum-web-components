@@ -88,7 +88,11 @@ describe('card', () => {
                         slot="preview"
                     />
                     <div slot="footer">Footer</div>
-                    <sp-action-menu slot="actions" placement="bottom-end">
+                    <sp-action-menu
+                        slot="actions"
+                        placement="bottom-end"
+                        label="More Actions"
+                    >
                         <sp-menu>
                             <sp-menu-item>Deselect</sp-menu-item>
                             <sp-menu-item>Select Inverse</sp-menu-item>
@@ -186,11 +190,17 @@ describe('card', () => {
         const el = await fixture<Card>(href({}));
         el.setAttribute(
             'style',
-            'width: 200px; display: inline-flex; --spectrum-card-coverphoto-height: 136px; --spectrum-actionbutton-height: 32px; --spectrum-icon-tshirt-size-height: 32px; --spectrum-icon-tshirt-size-width: 32px;'
+            [
+                'width: 200px;',
+                'display: inline-flex;',
+                '--spectrum-card-coverphoto-height: 136px;',
+                '--spectrum-actionbutton-height: 32px;',
+                '--spectrum-icon-tshirt-size-height: 18px;',
+                '--spectrum-icon-tshirt-size-width: 18px;',
+            ].join('')
         );
 
         await elementUpdated(el);
-
         el.addEventListener('click', (event: Event) => {
             event.preventDefault();
             const path = event.composedPath();

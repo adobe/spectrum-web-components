@@ -24,11 +24,118 @@ When looking to leverage the `Avatar` base class as a type and/or for extension 
 import { Avatar } from '@spectrum-web-components/avatar';
 ```
 
-## Example
+## Sizes
 
-```html
-<sp-avatar label="Dog the User" src="https://place.dog/500/500"></sp-avatar>
+<sp-tabs selected="100" auto label="Size Attribute Options">
+<sp-tab value="50">50</sp-tab>
+<sp-tab-panel value="50">
+
+```html demo
+<sp-avatar
+    size="50"
+    label="Dog the User"
+    src="https://place.dog/500/500"
+></sp-avatar>
 ```
+
+</sp-tab-panel>
+<sp-tab value="75">75</sp-tab>
+<sp-tab-panel value="75">
+
+```html demo
+<sp-avatar
+    size="75"
+    label="Dog the User"
+    src="https://place.dog/500/500"
+></sp-avatar>
+```
+
+</sp-tab-panel>
+<sp-tab value="100">100</sp-tab>
+<sp-tab-panel value="100">
+
+```html demo
+<sp-avatar
+    size="100"
+    label="Dog the User"
+    src="https://place.dog/500/500"
+></sp-avatar>
+```
+
+</sp-tab-panel>
+<sp-tab value="200">200</sp-tab>
+<sp-tab-panel value="200">
+
+```html demo
+<sp-avatar
+    size="200"
+    label="Dog the User"
+    src="https://place.dog/500/500"
+></sp-avatar>
+```
+
+</sp-tab-panel>
+<sp-tab value="300">300</sp-tab>
+<sp-tab-panel value="300">
+
+```html demo
+<sp-avatar
+    size="300"
+    label="Dog the User"
+    src="https://place.dog/500/500"
+></sp-avatar>
+```
+
+</sp-tab-panel>
+<sp-tab value="400">400</sp-tab>
+<sp-tab-panel value="400">
+
+```html demo
+<sp-avatar
+    size="400"
+    label="Dog the User"
+    src="https://place.dog/500/500"
+></sp-avatar>
+```
+
+</sp-tab-panel>
+<sp-tab value="500">500</sp-tab>
+<sp-tab-panel value="500">
+
+```html demo
+<sp-avatar
+    size="500"
+    label="Dog the User"
+    src="https://place.dog/500/500"
+></sp-avatar>
+```
+
+</sp-tab-panel>
+<sp-tab value="600">600</sp-tab>
+<sp-tab-panel value="600">
+
+```html demo
+<sp-avatar
+    size="600"
+    label="Dog the User"
+    src="https://place.dog/500/500"
+></sp-avatar>
+```
+
+</sp-tab-panel>
+<sp-tab value="700">700</sp-tab>
+<sp-tab-panel value="700">
+
+```html demo
+<sp-avatar
+    size="700"
+    label="Dog the User"
+    src="https://place.dog/500/500"
+></sp-avatar>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ## Accessibility
 

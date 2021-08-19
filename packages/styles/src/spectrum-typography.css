@@ -13,7 +13,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Typography .spectrum-Heading--sizeXXXL {
     margin-bottom: var(
         --spectrum-heading-xxxl-margin-bottom,
-        var(--spectrum-global-dimension-size-130)
+        var(--spectrum-global-dimension-size-125)
     );
     margin-top: var(
         --spectrum-heading-xxxl-margin-top,
@@ -23,7 +23,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Typography .spectrum-Heading--sizeXXL {
     margin-bottom: var(
         --spectrum-heading-xxl-margin-bottom,
-        var(--spectrum-global-dimension-size-125)
+        var(--spectrum-global-dimension-size-115)
     );
     margin-top: var(
         --spectrum-heading-xxl-margin-top,
@@ -33,7 +33,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Typography .spectrum-Heading--sizeXL {
     margin-bottom: var(
         --spectrum-heading-xl-margin-bottom,
-        var(--spectrum-global-dimension-size-115)
+        var(--spectrum-global-dimension-size-100)
     );
     margin-top: var(
         --spectrum-heading-xl-margin-top,

@@ -13,13 +13,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .header {
     color: var(--spectrum-listheading-text-color);
     display: block; /* .spectrum-Menu-sectionHeading */
-    font-size: var(--spectrum-listitem-heading-text-size);
-    font-weight: var(--spectrum-listitem-heading-text-font-weight);
+    font-size: var(--spectrum-listitem-texticon-heading-text-size);
+    font-weight: var(--spectrum-listitem-texticon-heading-text-font-weight);
     letter-spacing: var(
-        --spectrum-listitem-heading-letter-spacing
+        --spectrum-listitem-texticon-heading-letter-spacing
     ); /* .spectrum-Menu-sectionHeading */
-    line-height: var(--spectrum-listitem-heading-line-height);
-    margin: var(--spectrum-listitem-heading-margin);
-    padding: var(--spectrum-listitem-heading-padding);
-    text-transform: var(--spectrum-listitem-heading-text-transform);
+    line-height: var(--spectrum-listitem-texticon-heading-line-height);
+    margin: var(--spectrum-listitem-texticon-heading-margin);
+    padding: var(--spectrum-listitem-texticon-heading-padding);
+    text-transform: var(--spectrum-listitem-texticon-heading-text-transform);
 }

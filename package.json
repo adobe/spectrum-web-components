@@ -101,7 +101,7 @@
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.0.5",
         "@sindresorhus/slugify": "^1.1.2",
-        "@spectrum-css/table": "^3.0.3",
+        "@spectrum-css/table": "^4.0.0",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",
         "@types/command-line-usage": "^5.0.1",
@@ -200,7 +200,7 @@
         "rollup": "2.56.2",
         "rollup-plugin-workbox": "6.1.1"
     },
-    "customElements": ".storybook/custom-elements.json",
+    "customElements": "projects/documentation/custom-elements.json",
     "workspaces": [
         "packages/*",
         "projects/*"

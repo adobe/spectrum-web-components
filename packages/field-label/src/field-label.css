@@ -11,3 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-field-label.css';
+
+:host([side-aligned='start']) .requiredIcon {
+    margin-top: 0;
+}

@@ -13,13 +13,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-search-quiet-button-offset: calc(
         var(
-                --spectrum-actionbutton-m-min-width,
+                --spectrum-actionbutton-m-texticon-min-width,
                 var(--spectrum-global-dimension-size-400)
-            ) / 2 -
-            var(
-                --spectrum-icon-cross-small-width,
-                var(--spectrum-global-dimension-size-100)
-            ) / 2
+            ) / 2 - var(--spectrum-alias-ui-icon-cross-size-100) / 2
     ); /* .spectrum-Search */
 }
 :host {
@@ -52,37 +48,37 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 .icon {
     color: var(
-        --spectrum-textfield-m-icon-color,
-        var(--spectrum-alias-icon-color)
+        --spectrum-textfield-m-texticon-icon-color,
+        var(--spectrum-alias-component-icon-color-default)
     ); /* .spectrum-Search-icon */
 }
 #input:hover ~ .icon {
     color: var(
         --spectrum-search-m-icon-color-hover,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-component-icon-color-hover)
     ); /* .spectrum-Search-input:hover~.spectrum-Search-icon */
 }
 #input:active ~ .icon {
     color: var(
         --spectrum-search-m-icon-color-down,
-        var(--spectrum-alias-icon-color-down)
+        var(--spectrum-alias-component-icon-color-down)
     ); /* .spectrum-Search-input:active~.spectrum-Search-icon */
 }
 #input.focus-visible ~ .icon {
     color: var(
         --spectrum-search-m-icon-color-key-focus,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-component-icon-color-key-focus)
     ); /* .spectrum-Search-input.focus-ring~.spectrum-Search-icon */
 }
 #input:focus-visible ~ .icon {
     color: var(
         --spectrum-search-m-icon-color-key-focus,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-component-icon-color-key-focus)
     ); /* .spectrum-Search-input.focus-ring~.spectrum-Search-icon */
 }
 #input:disabled ~ .icon {
     color: var(
-        --spectrum-textfield-m-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
+        --spectrum-textfield-m-texticon-text-color-disabled,
+        var(--spectrum-alias-component-text-color-disabled)
     ); /* .spectrum-Search-input:disabled~.spectrum-Search-icon */
 }

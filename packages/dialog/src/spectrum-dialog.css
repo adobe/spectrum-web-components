@@ -169,7 +169,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(
                 --spectrum-dialog-confirm-divider-margin-bottom,
                 var(--spectrum-global-dimension-static-size-200)
-            ) + var(--spectrum-dialog-confirm-divider-height)
+            ) +
+            var(
+                --spectrum-dialog-confirm-divider-height,
+                var(--spectrum-global-dimension-size-25)
+            )
     ); /* .spectrum-Dialog--noDivider .spectrum-Dialog-heading */
 }
 .content {
@@ -372,11 +376,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     ); /* .spectrum-Dialog-heading */
 }
-.content {
+.content,
+.footer {
     color: var(
         --spectrum-dialog-confirm-description-text-color,
         var(--spectrum-global-color-gray-800)
-    ); /* .spectrum-Dialog-content */
+    ); /* .spectrum-Dialog-footer */
 }
 .type-icon {
     color: var(
@@ -387,6 +392,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([error]) .type-icon {
     color: var(
         --spectrum-dialog-error-icon-color,
-        var(--spectrum-semantic-negative-color-icon)
+        var(--spectrum-semantic-negative-icon-color)
     ); /* .spectrum-Dialog--error .spectrum-Dialog-typeIcon */
 }

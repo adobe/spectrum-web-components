@@ -17,21 +17,55 @@ import '../sp-progress-circle.js';
 export default {
     title: 'Progress Circle',
     component: 'sp-progress-circle',
+    argTypes: {
+        indeterminate: {
+            name: 'indeterminate',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the progress is indeterminate.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+    },
 };
 
-export const Default = (): TemplateResult => {
+interface StoryArgs {
+    indeterminate?: boolean;
+}
+
+export const Default = ({ indeterminate }: StoryArgs = {}): TemplateResult => {
     return html`
         <div
             style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
         >
-            <sp-progress-circle progress="27" size="small"></sp-progress-circle>
-            <sp-progress-circle progress="27"></sp-progress-circle>
-            <sp-progress-circle progress="27" size="large"></sp-progress-circle>
+            <sp-progress-circle
+                progress="27"
+                size="s"
+                ?indeterminate=${indeterminate}
+            ></sp-progress-circle>
+            <sp-progress-circle
+                progress="27"
+                ?indeterminate=${indeterminate}
+            ></sp-progress-circle>
+            <sp-progress-circle
+                progress="27"
+                size="l"
+                ?indeterminate=${indeterminate}
+            ></sp-progress-circle>
         </div>
     `;
 };
+Default.args = {
+    indeterminate: false,
+};
 
-export const overBackground = (): TemplateResult => {
+export const overBackground = ({
+    indeterminate,
+}: StoryArgs = {}): TemplateResult => {
     return html`
         <div
             style="width: 250px; height: 150px; background-color: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: space-around;"
@@ -39,19 +73,25 @@ export const overBackground = (): TemplateResult => {
             <sp-progress-circle
                 progress="53"
                 over-background
-                size="small"
+                size="s"
+                ?indeterminate=${indeterminate}
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="53"
                 over-background
+                ?indeterminate=${indeterminate}
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="53"
                 over-background
-                size="large"
+                size="l"
+                ?indeterminate=${indeterminate}
             ></sp-progress-circle>
         </div>
     `;
+};
+overBackground.args = {
+    indeterminate: false,
 };
 
 overBackground.story = {

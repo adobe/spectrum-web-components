@@ -14,6 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-top-nav.js';
 import '../sp-top-nav-item.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -99,14 +100,14 @@ export const Modes = (): TemplateResult => {
             <span style="margin-inline-start: auto; font-size: 1.1em;">
                 document_name.pdf
             </span>
-            <sp-action-group style="margin-inline-start: auto;">
-                <sp-action-button quiet label="Search">
+            <sp-action-group style="margin-inline-start: auto;" quiet>
+                <sp-action-button label="Search">
                     <sp-icon-search slot="icon"></sp-icon-search>
                 </sp-action-button>
-                <sp-action-button quiet label="Download">
+                <sp-action-button label="Download">
                     <sp-icon-download slot="icon"></sp-icon-download>
                 </sp-action-button>
-                <sp-action-button quiet label="Link">
+                <sp-action-button label="Link">
                     <sp-icon-link slot="icon"></sp-icon-link>
                 </sp-action-button>
                 <sp-action-menu label="User">

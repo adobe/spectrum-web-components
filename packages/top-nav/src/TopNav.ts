@@ -19,6 +19,7 @@ import {
     PropertyValues,
     SpectrumElement,
     ifDefined,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 import { TopNavItem } from './TopNavItem.js';
 
@@ -42,7 +43,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  * @attr {Boolean} compact - The collection of tabs take up less space
  */
 
-export class TopNav extends SpectrumElement {
+export class TopNav extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [tabStyles];
     }
@@ -193,14 +194,16 @@ export class TopNav extends SpectrumElement {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    addEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.addEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        addEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -210,14 +213,16 @@ export class TopNav extends SpectrumElement {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    removeEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.removeEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        removeEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

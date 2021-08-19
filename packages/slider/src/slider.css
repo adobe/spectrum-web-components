@@ -200,3 +200,8 @@ sp-field-label {
 :host([label-visibility='value'][dir='rtl']) #value {
     margin-right: auto;
 }
+
+:host([label-visibility='none']) #labelContainer {
+    padding: 0;
+    margin: 0;
+}

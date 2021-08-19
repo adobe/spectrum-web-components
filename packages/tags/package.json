@@ -52,7 +52,8 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/tags": "^3.0.3"
+        "@spectrum-css/tag": "^3.0.0",
+        "@spectrum-css/taggroup": "^3.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

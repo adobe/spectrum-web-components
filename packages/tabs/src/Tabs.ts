@@ -17,6 +17,7 @@ import {
     TemplateResult,
     PropertyValues,
     ifDefined,
+    SizedMixin,
 } from '@spectrum-web-components/base';
 import { Tab } from './Tab.js';
 import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
@@ -48,7 +49,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  * @attr {Boolean} quiet - The tabs border is a lot smaller
  * @attr {Boolean} compact - The collection of tabs take up less space
  */
-export class Tabs extends Focusable {
+export class Tabs extends SizedMixin(Focusable) {
     public static get styles(): CSSResultArray {
         return [tabStyles];
     }

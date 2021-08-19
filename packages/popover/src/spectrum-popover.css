@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-overlay-animation-distance: var(
-        --spectrum-picker-m-popover-offset-y,
+        --spectrum-picker-m-texticon-popover-offset-y,
         var(--spectrum-global-dimension-size-75)
     ); /* .spectrum-Popover */
     opacity: 0;
