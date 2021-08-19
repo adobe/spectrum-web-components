@@ -90,6 +90,7 @@ type CheckboxSize = Exclude<ElementSize, 'xxl'>;
 
 /**
  * @element sp-checkbox
+ * @slot - content to display as the label for the Checkbox
  */
 export class Checkbox extends SizedMixin(CheckboxBase) {
     @property({ type: Boolean, reflect: true })

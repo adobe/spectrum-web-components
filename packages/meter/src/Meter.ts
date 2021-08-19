@@ -26,6 +26,8 @@ import styles from './meter.css.js';
 
 /**
  * @element sp-meter
+ *
+ * @slot - text labeling the Meter
  */
 export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     public static get styles(): CSSResultArray {

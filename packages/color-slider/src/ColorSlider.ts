@@ -32,6 +32,7 @@ import { TinyColor } from '@ctrl/tinycolor';
 
 /**
  * @element sp-color-slider
+ * @slot gradient - a custom gradient visually outlining the available color values
  */
 export class ColorSlider extends Focusable {
     public static get styles(): CSSResultArray {

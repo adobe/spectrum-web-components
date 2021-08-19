@@ -22,6 +22,7 @@ import styles from './field-group.css.js';
 
 /**
  * @element sp-field-group
+ * @slot - the form controls that make up the group
  */
 export class FieldGroup extends SpectrumElement {
     public static get styles(): CSSResultArray {

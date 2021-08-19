@@ -29,6 +29,7 @@ import tabItemStyles from './tab.css.js';
 /**
  * @element sp-tab
  *
+ * @slot - text label of the Tab
  * @slot icon - The icon that appears on the left of the label
  */
 export class Tab extends FocusVisiblePolyfillMixin(

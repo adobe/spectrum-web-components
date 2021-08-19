@@ -43,6 +43,8 @@ type ActionButtonSize = Exclude<ElementSize, 'xxl'>;
 /**
  * @element sp-action-button
  *
+ * @slot - text label of the Action Button
+ * @slot icon - The icon to use for Action Button
  * @fires change - Announces a change in the `selected` property of an action button
  * @fires longpress - Synthesizes a "longpress" interaction that signifies a
  * `pointerdown` event that is >=300ms or a keyboard event wher code is `Space` or code is `ArrowDown`

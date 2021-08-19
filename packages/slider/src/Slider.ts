@@ -34,6 +34,8 @@ export const variants = ['filled', 'ramp', 'range', 'tick'];
 
 /**
  * @element sp-slider
+ *
+ * @slot - text label for the Slider
  */
 export class Slider extends ObserveSlotText(SliderHandle, '') {
     public static get styles(): CSSResultArray {

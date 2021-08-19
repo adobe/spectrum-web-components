@@ -27,7 +27,7 @@ import topNavItemStyles from './top-nav-item.css.js';
 /**
  * @element sp-top-nav-item
  *
- * @slot icon - The icon that appears on the left of the label
+ * @slot - text label of the Top Nav Item
  */
 
 export class TopNavItem extends LikeAnchor(Focusable) {

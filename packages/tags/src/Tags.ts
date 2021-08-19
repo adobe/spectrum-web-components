@@ -25,6 +25,8 @@ import styles from './tags.css.js';
 
 /**
  * @element sp-tags
+ *
+ * @slot - Tag elements to manage as a group
  */
 export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {

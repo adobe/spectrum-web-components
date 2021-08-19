@@ -34,6 +34,7 @@ import styles from './color-area.css.js';
 
 /**
  * @element sp-color-area
+ * @slot gradient - a custom gradient visually outlining the available color values
  */
 export class ColorArea extends SpectrumElement {
     public static get styles(): CSSResultArray {

@@ -41,6 +41,8 @@ const chevronClass = {
 
 /**
  * @element sp-split-button
+ *
+ * @slot - menu items to be listed in the Button
  **/
 type SplitButtonSize = Exclude<ElementSize, 'xxl'>;
 export class SplitButton extends SizedMixin(PickerBase) {

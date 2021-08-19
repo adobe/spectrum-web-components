@@ -24,6 +24,8 @@ import sidenavHeadingStyles from './sidenav-heading.css.js';
 
 /**
  * @element sp-sidenav-heading
+ *
+ * @slot - the Sidenav Items to display in association with the heading
  */
 export class SideNavHeading extends SpectrumElement {
     @property({ reflect: true })

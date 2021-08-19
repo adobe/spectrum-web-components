@@ -27,6 +27,9 @@ export type ButtonVariants =
 
 /**
  * @element sp-button
+ *
+ * @slot - text label of the Button
+ * @slot icon - The icon to use for Button
  */
 export class Button extends SizedMixin(StyledButton) {
     public static get styles(): CSSResultArray {

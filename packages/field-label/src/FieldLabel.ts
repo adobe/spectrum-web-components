@@ -30,6 +30,8 @@ type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
 
 /**
  * @element sp-field-label
+ *
+ * @slot - text content of the label
  */
 export class FieldLabel extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {

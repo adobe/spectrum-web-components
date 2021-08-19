@@ -24,6 +24,10 @@ import {
     ObserveSlotPresence,
 } from '@spectrum-web-components/shared';
 
+/**
+ * @slot - text content to be displayed in the Button element
+ * @slot icon - icon element(s) to display at the start of the button
+ */
 export class ButtonBase extends LikeAnchor(
     ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
 ) {
