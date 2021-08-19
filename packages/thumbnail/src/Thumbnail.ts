@@ -23,6 +23,8 @@ import styles from './thumbnail.css.js';
 
 /**
  * @element sp-thumbnail
+ *
+ * @slot - image element to present in the Thumbnail
  */
 export class Thumbnail extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l', 'xl', 'xxl'],

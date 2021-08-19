@@ -28,8 +28,8 @@ import tooltipStyles from './tooltip.css.js';
 /**
  * @element sp-tooltip
  *
- * @slot icon - The icon that appears on the left of the label
- * @slot - The label
+ * @slot icon - the icon element appearing at the start of the label
+ * @slot - the text label of the Tooltip
  */
 
 export class Tooltip extends SpectrumElement {

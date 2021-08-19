@@ -115,6 +115,8 @@ const stateTransition = (
 
 /**
  * @element active-overlay
+ *
+ * @slot - content to display in the overlay
  */
 export class ActiveOverlay extends SpectrumElement {
     public overlayContent!: HTMLElement;

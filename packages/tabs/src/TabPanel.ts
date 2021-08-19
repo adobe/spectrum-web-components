@@ -22,6 +22,8 @@ import panelStyles from './tab-panel.css.js';
 
 /**
  * @element sp-tab-panel
+ *
+ * @slot - content of the Tab Panel
  */
 export class TabPanel extends SpectrumElement {
     static styles = [panelStyles];

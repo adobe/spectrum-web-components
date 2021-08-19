@@ -30,6 +30,7 @@ export interface SidenavSelectDetail {
 /**
  * @element sp-sidenav
  *
+ * @slot - the Sidenav Items to display
  * @fires change - Announces a change in the `value` property of the navigation element.
  * This change can be "canceled" via `event.preventDefault()`.
  */

@@ -66,6 +66,8 @@ export interface ProvideLang {
 
 /**
  * @element sp-theme
+ *
+ * @slot - Content on which to apply the CSS Custom Properties defined by the current theme configuration
  */
 export class Theme extends HTMLElement implements ThemeKindProvider {
     private static themeFragmentsByKind: ThemeFragmentMap = new Map();

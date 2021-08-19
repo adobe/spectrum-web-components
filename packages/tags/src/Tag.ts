@@ -25,6 +25,10 @@ import styles from './tag.css.js';
 
 /**
  * @element sp-tag
+ *
+ * @slot - text content for labeling the tag
+ * @slot avatar - an avatar element to display within the Tag
+ * @slot icon - an icon element to display within the Tag
  */
 export class Tag extends SpectrumElement {
     public static get styles(): CSSResultArray {

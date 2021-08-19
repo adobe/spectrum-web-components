@@ -23,6 +23,8 @@ import legacyStyles from './switch-legacy.css.js';
 
 /**
  * @element sp-switch
+ *
+ * @slot - text label of the Switch
  */
 export class Switch extends CheckboxBase {
     public static get styles(): CSSResultArray {

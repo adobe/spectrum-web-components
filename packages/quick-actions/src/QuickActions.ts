@@ -22,6 +22,8 @@ import styles from './quick-actions.css.js';
 
 /**
  * @element sp-quick-actions
+ *
+ * @slot - Action Buttons to displayed for quick use
  */
 export class QuickActions extends SpectrumElement {
     public static get styles(): CSSResultArray {

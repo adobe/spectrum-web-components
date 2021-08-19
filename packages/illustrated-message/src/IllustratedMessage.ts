@@ -26,6 +26,8 @@ import bodyStyles from '@spectrum-web-components/styles/body.js';
  * @element sp-illustrated-message
  *
  * @slot - The SVG that represents the illustration
+ * @slot heading - Headline for the message
+ * @slot description - Description text for the illustration
  */
 export class IllustratedMessage extends SpectrumElement {
     public static readonly is = 'sp-illustrated-message';

@@ -45,6 +45,7 @@ export type ToastVariants =
  * @element sp-toast
  *
  * @slot - The toast content
+ * @slot action - button element surfacing an action in the Toast
  */
 
 export class Toast extends SpectrumElement {

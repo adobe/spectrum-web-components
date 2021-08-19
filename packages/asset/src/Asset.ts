@@ -58,6 +58,7 @@ const folder = (label: string): TemplateResult => html`
 
 /**
  * @element sp-asset
+ * @slot - content to be displayed in the asset when an acceptable value for `file` is not present
  */
 export class Asset extends SpectrumElement {
     public static get styles(): CSSResultArray {

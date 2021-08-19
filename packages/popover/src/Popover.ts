@@ -27,6 +27,7 @@ import popoverStyles from './popover.css.js';
 /**
  * @element sp-popover
  *
+ * @slot - content to display within the Popover
  * @attr {Boolean} open - The open state of the popover
  * @attr {Boolean} dialog - Adds some padding to the popover
  */
