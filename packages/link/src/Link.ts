@@ -22,7 +22,7 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import linkStyles from './link.css.js';
 
 /**
- * Spectrum Link Component
+ * @element sp-link
  *
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not

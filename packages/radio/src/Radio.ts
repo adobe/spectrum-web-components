@@ -24,7 +24,7 @@ import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/f
 import radioStyles from './radio.css.js';
 
 /**
- * Spectrum Radio Button Component
+ * @element sp-radio
  *
  * @attr label-below - Moves the label below the radio button
  * @attr invalid - Uses the invalid style

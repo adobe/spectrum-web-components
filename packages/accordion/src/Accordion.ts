@@ -26,6 +26,7 @@ import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 
 /**
  * @element sp-accordion
+ * @slot - The sp-accordion-item children to display.
  */
 export class Accordion extends Focusable {
     public static get styles(): CSSResultArray {

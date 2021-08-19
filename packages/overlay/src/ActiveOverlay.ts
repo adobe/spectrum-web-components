@@ -113,6 +113,9 @@ const stateTransition = (
     return stateMachine.states[state].on[event] || state;
 };
 
+/**
+ * @element active-overlay
+ */
 export class ActiveOverlay extends SpectrumElement {
     public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;

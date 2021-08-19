@@ -36,6 +36,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
 /**
  * @element sp-top-nav
+ *
  * @slot - Child tab elements
  * @attr {Boolean} quiet - The tabs border is a lot smaller
  * @attr {Boolean} compact - The collection of tabs take up less space

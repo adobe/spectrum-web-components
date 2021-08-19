@@ -24,7 +24,7 @@ import '@spectrum-web-components/button/sp-clear-button.js';
 import styles from './tag.css.js';
 
 /**
- * @element sp-tags
+ * @element sp-tag
  */
 export class Tag extends SpectrumElement {
     public static get styles(): CSSResultArray {

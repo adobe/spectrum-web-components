@@ -25,6 +25,9 @@ import { SidenavSelectDetail, SideNav } from './Sidenav.js';
 
 import sidenavItemStyles from './sidenav-item.css.js';
 
+/**
+ * @element sp-sidenav-item
+ */
 export class SideNavItem extends LikeAnchor(Focusable) {
     public static get styles(): CSSResultArray {
         return [sidenavItemStyles];

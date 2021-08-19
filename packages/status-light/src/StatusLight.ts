@@ -22,7 +22,6 @@ import {
 import statusLightStyles from './status-light.css.js';
 
 /**
- * A Spectrum status light control.
  * @element sp-status-light
  */
 export class StatusLight extends SizedMixin(SpectrumElement) {

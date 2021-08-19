@@ -28,6 +28,9 @@ import searchStyles from './search.css.js';
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
+/**
+ * @element sp-search
+ */
 export class Search extends Textfield {
     public static get styles(): CSSResultArray {
         return [...super.styles, searchStyles];

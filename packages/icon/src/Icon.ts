@@ -22,6 +22,9 @@ import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-re
 
 import { IconBase } from './IconBase.js';
 
+/**
+ * @element sp-icon
+ */
 export class Icon extends IconBase {
     @property()
     public src?: string;

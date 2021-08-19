@@ -42,6 +42,8 @@ export type ToastVariants =
     | '';
 
 /**
+ * @element sp-toast
+ *
  * @slot - The toast content
  */
 

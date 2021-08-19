@@ -88,8 +88,8 @@ const addOrUpdateEvent = new MenuItemAddedOrUpdatedEvent();
 const removeEvent = new MenuItemRemovedEvent();
 
 /**
- * Spectrum Menu Item Component
  * @element sp-menu-item
+ *
  * @slot value - content placed at the end of the Menu Item like values, keyboard shortcuts, etc.
  * @fires sp-menu-item-added - announces the item has been added so a parent menu can take ownerships
  * @fires sp-menu-item-removed - announces when removed from the DOM so the parent menu can remove ownership and update selected state

@@ -16,6 +16,9 @@ import { IconsetSVG } from '@spectrum-web-components/iconset/src/iconset-svg.js'
 
 import iconsSVG from './icons-large.svg.js';
 
+/**
+ * @element sp-icons-large
+ */
 export class IconsLarge extends IconsetSVG {
     public constructor() {
         super();

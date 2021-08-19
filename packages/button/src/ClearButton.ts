@@ -21,6 +21,9 @@ import buttonStyles from './clear-button.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross75.js';
 import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
 
+/**
+ * @element sp-clear-button
+ */
 export class ClearButton extends StyledButton {
     public static get styles(): CSSResultArray {
         return [...super.styles, buttonStyles, crossMediumStyles];

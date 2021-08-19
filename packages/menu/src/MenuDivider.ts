@@ -15,9 +15,7 @@ import { CSSResultArray, SpectrumElement } from '@spectrum-web-components/base';
 import menuDividerStyles from './menu-divider.css.js';
 
 /**
- * Spectrum Menu Divider Component
  * @element sp-menu-divider
- *
  */
 export class MenuDivider extends SpectrumElement {
     public static get styles(): CSSResultArray {
