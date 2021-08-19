@@ -1,0 +1,43 @@
+diff --git a/node_modules/@custom-elements-manifest/analyzer/index.js b/node_modules/@custom-elements-manifest/analyzer/index.js
+index 284205b..beea4b4 100755
+--- a/node_modules/@custom-elements-manifest/analyzer/index.js
++++ b/node_modules/@custom-elements-manifest/analyzer/index.js
+@@ -27,8 +27,11 @@ import {
+   
+   if (mainOptions.command === 'analyze') {
+ 
+-    const cliConfig = getCliConfig(argv)
+-    const userConfig = await getUserConfig();
++    const {
++      config: configPath,
++      ...cliConfig
++    } = getCliConfig(argv);
++    const userConfig = await getUserConfig(configPath);
+ 
+     /**
+      * Merged config options
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/utils/cli.js b/node_modules/@custom-elements-manifest/analyzer/src/utils/cli.js
+index e1bbaee..03a19b3 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/src/utils/cli.js
++++ b/node_modules/@custom-elements-manifest/analyzer/src/utils/cli.js
+@@ -31,10 +31,10 @@ export function mergeGlobsAndExcludes(defaults, userConfig, cliConfig) {
+   return merged;
+ }
+ 
+-export async function getUserConfig() {
++export async function getUserConfig(configPath) {
+   let userConfig = {};
+   try {
+-    userConfig = await readConfig('custom-elements-manifest.config');
++    userConfig = await readConfig('custom-elements-manifest.config', configPath);
+   } catch (error) {
+     if (error instanceof ConfigLoaderError) {
+       console.error(error.message);
+@@ -59,6 +59,7 @@ export const DEFAULTS = {
+ 
+ export function getCliConfig(argv) {
+   const optionDefinitions = [
++    { name: 'config', type: String},
+     { name: 'globs', type: String, multiple: true },
+     { name: 'exclude', type: String, multiple: true },
+     { name: 'outdir', type: String },
