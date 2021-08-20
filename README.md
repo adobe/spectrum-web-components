@@ -45,7 +45,7 @@ For additional information, please see the [generating components documentation]
 
 # Storybook
 
-Testing & reviewing changes can be done using the Storybook instance. Running `yarn storybook` will compile Storybook and spin up a local instance, triggering a browser to open at completion. From there you can make changes to your code and the browser will automatically refresh.
+Testing & reviewing changes can be done using the Storybook instance. Running `yarn storybook` will spin up a local instance of Storybook, triggering the browser to open at completion. From there you can make changes to your code and the browser will automatically refresh.
 
 You can run [Storybook](https://storybook.js.org) through the command:
 
