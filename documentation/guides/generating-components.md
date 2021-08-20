@@ -4,10 +4,12 @@ The fastest way to get started with creating a new component is to generate it f
 
 ```bash
 $ yarn new-package
-? component name please _
+
+? SWC package name (i.e. color-area)
+? Spectrum CSS package name (i.e. colorarea)
 ```
 
-In response to the prompt above, the component name should be the kebab case version of the Spectrum CSS pattern that you are looking to add to the repo. That is, the `SpectrumPattern` that you want to create should be represented as `spectrum-pattern` in your response. From here, the command generates a new package for your pattern with the following file structure in the `/packages` directory:
+In response to the prompt above, the package name should be the kebab case version of the Spectrum CSS pattern that you are looking to add to the repo. That is, the `SpectrumPattern` that you want to create should be represented as `spectrum-pattern` in your response. From here, the command generates a new package for your pattern with the following file structure in the `/packages` directory:
 
 ```
 > spectrum-pattern
