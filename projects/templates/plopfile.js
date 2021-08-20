@@ -68,7 +68,7 @@ module.exports = function (plop) {
                 // Remove the package prefix if provided and strip out any dashes or spaces in the result
                 filter: (response) => {
                     return response
-                        .replace(/^\@spectrum-css/, '')
+                        .replace(/^\@spectrum-css\//, '')
                         .replace(/[-|\s]/g, '');
                 },
             },
