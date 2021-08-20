@@ -31,7 +31,16 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
-/* Continue work around... */
+/**
+ * Work around https://github.com/adobe/spectrum-css/issues/1195
+ */
+#input {
+    opacity: 0;
+}
+
+/* End work around for https://github.com/adobe/spectrum-css/issues/1195 */
+
+/* Continue work around for https://github.com/adobe/spectrum-css/issues/1089 */
 
 :host([dir='ltr'][checked]) #input + #switch:before {
     /* [dir=ltr] .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
@@ -53,4 +62,4 @@ governing permissions and limitations under the License.
     );
 }
 
-/* End work around. */
+/* End work around for https://github.com/adobe/spectrum-css/issues/1089 */

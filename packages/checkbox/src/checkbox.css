@@ -28,3 +28,12 @@ governing permissions and limitations under the License.
 :host(:empty) label {
     display: none;
 }
+
+/**
+ * Work around https://github.com/adobe/spectrum-css/issues/1195
+ */
+#input {
+    opacity: 0;
+}
+
+/* End work around for https://github.com/adobe/spectrum-css/issues/1195 */
