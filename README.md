@@ -31,7 +31,7 @@ Creating a new component from the command line can be done by running the follow
 $ yarn new-package
 ```
 
-This will scaffold your component's required architecture by prompting you for 2 data points - the desired name for your component and the name of the Spectrum CSS asset you will be extending.
+This will scaffold your component's required architecture by prompting you for 2 data points - the desired name for your package and the name of the Spectrum CSS asset from which you will be building.
 
 ? **SWC package name (i.e. color-area)**
 
@@ -79,7 +79,7 @@ There are several commands that can be useful in specific scenarios:
 -   `yarn spectrum-vars` to ensure that theme files are up-to-date.
 -   `yarn process-icons` to make sure that the most recent icons are included.
 -   `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
--   `yarn build` to make sure the most recent code base is represented in each package's `lib` folders. This happens automatically when the storybook command is run.
+-   `yarn build` to make sure the available JS has been built from the current TS source.
 
 ## Linting
 
@@ -91,7 +91,7 @@ There are downstream issues that can arise from multiple packages in this mono-r
 
 ## Testing
 
-### Unit Tests
+### Unit tests
 
 Unit tests are run with [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/) in Playwright using the Chai, Mocha and Sinon helper libraries. These tests can be executed with:
 
@@ -103,7 +103,7 @@ During development you may wish to use `yarn test:watch` to automatically build 
 
 ### Screenshot testing
 
-Note: visual regression is done automatically on pull requests via CircleCI; unless you are making larger changes, it's okay to make use of that directly as opposed to doing visual regression local to your machine.
+Note: visual regression is done automatically on pull requests via CircleCI; however, the following outlines how you can run these tests local to your machine.
 
 Visual regressions are tracked via screenshot testing powered by [`@web/test-runner-visual-regression`](https://github.com/modernweb-dev/web/tree/master/packages/test-runner-visual-regression). Due to the font metrics not being identical, it is difficult to rely on screenshot-based testing across operating systems. Because of this, the library manages its golden image cache internal to CircleCI, rather than as a part of the git repository. Neither the `screenshots-baseline` nor `screenshots-actual` directory should be added to git. When working with visual regression tests locally to manage changes you are making, be sure to create a baseline locally before you begin development (alternatively, you can pull down the main branch to generate the baselines for your in-progress work).
 
@@ -120,7 +120,7 @@ yarn test:visual vrt-light-medium-ltr # repeat the same as above for a clean com
 
 #### Screenshot coverage
 
-Visual regression testing is done against screens derived from the exports of the `*.stories.js` files in each package. Any stories added to these files will be added to the next run of the regression testing. As you add packages or story files to existing packages, they will automatically be added to the visual regression suite and will requiring updating the cache key (outlined below).
+Visual regression testing is done against screens derived from the exports of the `*.stories.js` files in each package. As you add packages or story files to existing packages, they will automatically be added to the visual regression suite and will require updating the cache key (outlined below).
 
 #### Keeping CI assets updated
 
