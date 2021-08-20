@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 const { execSync } = require('child_process');
+const { kebabCase } = require('lodash');
 
 module.exports = function (plop) {
     // name of custom element tag
@@ -51,12 +52,25 @@ module.exports = function (plop) {
             {
                 type: 'input',
                 name: 'name',
-                message: 'SWC package name please',
+                message: 'SWC package name (i.e. color-area)',
+                validate: (answer) => {
+                    if (answer.length < 1) {
+                        return "It's a fact universally acknowledged that naming is hard; but it must have a name. You can always change it later.";
+                    } else return true;
+                },
+                // Convert the input into kebab case if not provided as such and strip swc- prefixing if present
+                filter: (response) => kebabCase(response.replace(/^sp-/, '')),
             },
             {
                 type: 'input',
                 name: 'spectrum',
-                message: 'Spectrum CSS package name please',
+                message: 'Spectrum CSS package name (i.e. colorarea)',
+                // Remove the package prefix if provided and strip out any dashes or spaces in the result
+                filter: (response) => {
+                    return response
+                        .replace(/^\@spectrum-css/, '')
+                        .replace(/[-|\s]/g, '');
+                },
             },
         ],
         actions: [
