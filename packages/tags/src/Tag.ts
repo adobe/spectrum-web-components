@@ -20,7 +20,7 @@ import {
     SizedMixin,
 } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/button/sp-clear-button.js';
+import { ClearButton } from '@spectrum-web-components/button';
 
 import styles from './tag.css.js';
 
@@ -37,6 +37,10 @@ export class Tag extends SizedMixin(SpectrumElement, {
     public static get styles(): CSSResultArray {
         return [styles];
     }
+
+    public static elementDefinitions = {
+        'sp-clear-button': ClearButton,
+    };
 
     @property({ type: Boolean, reflect: true })
     public deletable = false;

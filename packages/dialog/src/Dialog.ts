@@ -21,12 +21,12 @@ import {
     PropertyValues,
 } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/button-group/sp-button-group.js';
+import { Divider } from '@spectrum-web-components/divider';
+import { ActionButton } from '@spectrum-web-components/action-button';
+import { ButtonGroup } from '@spectrum-web-components/button-group';
 import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import { IconCross500 } from '@spectrum-web-components/icons-ui/src/elements/IconCross500.js';
+import { IconAlert } from '@spectrum-web-components/icons-workflow/src/elements/IconAlert.js';
 import {
     ObserveSlotPresence,
     FocusVisiblePolyfillMixin,
@@ -55,6 +55,14 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     public static get styles(): CSSResultArray {
         return [styles, crossStyles];
     }
+
+    public static elementDefinitions = {
+        'sp-divider': Divider,
+        'sp-action-button': ActionButton,
+        'sp-button-group': ButtonGroup,
+        'sp-icon-cross500': IconCross500,
+        'sp-icon-alert': IconAlert,
+    };
 
     @query('.content')
     private contentElement!: HTMLDivElement;

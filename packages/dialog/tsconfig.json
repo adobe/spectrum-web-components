@@ -8,6 +8,8 @@
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
         { "path": "../action-button" },
+        { "path": "../button-group" },
+        { "path": "../divider" },
         { "path": "../icons-ui" },
         { "path": "../icons-workflow" },
         { "path": "../shared" },

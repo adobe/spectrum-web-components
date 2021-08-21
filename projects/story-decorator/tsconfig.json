@@ -4,5 +4,6 @@
         "composite": true,
         "rootDir": "./"
     },
-    "include": ["*.ts", "src/*.ts"]
+    "include": ["*.ts", "src/*.ts"],
+    "references": [{ "path": "../../packages/picker" }]
 }

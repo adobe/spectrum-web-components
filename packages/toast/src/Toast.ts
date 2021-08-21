@@ -18,10 +18,10 @@ import {
     property,
     PropertyValues,
 } from '@spectrum-web-components/base';
-import '@spectrum-web-components/button/sp-clear-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
+import { ClearButton } from '@spectrum-web-components/button';
+import { IconAlert } from '@spectrum-web-components/icons-workflow/src/elements/IconAlert.js';
+import { IconInfo } from '@spectrum-web-components/icons-workflow/src/elements/IconInfo.js';
+import { IconCheckmarkCircle } from '@spectrum-web-components/icons-workflow/src/elements/IconCheckmarkCircle.js';
 
 import toastStyles from './toast.css.js';
 
@@ -52,6 +52,13 @@ export class Toast extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [toastStyles];
     }
+
+    public static elementDefinitions = {
+        'sp-clear-button': ClearButton,
+        'sp-icon-alert': IconAlert,
+        'sp-icon-info': IconInfo,
+        'sp-icon-checkmark-circle': IconCheckmarkCircle,
+    };
 
     @property({ type: Boolean, reflect: true })
     public open = false;

@@ -22,8 +22,8 @@ import { ProvideLang } from '@spectrum-web-components/theme';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import { IconChevron75 } from '@spectrum-web-components/icons-ui/src/elements/IconChevron75.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import styles from './number-field.css.js';
@@ -60,6 +60,12 @@ export class NumberField extends TextfieldBase {
     public static get styles(): CSSResultArray {
         return [...super.styles, styles, chevronStyles];
     }
+
+    public static elementDefinitions = {
+        ...TextfieldBase.elementDefinitions,
+        'sp-icon-chevron75': IconChevron75,
+        'sp-action-button': ActionButton,
+    };
 
     @query('.buttons')
     private buttons!: HTMLDivElement;

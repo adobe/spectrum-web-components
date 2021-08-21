@@ -19,7 +19,7 @@ import {
     query,
 } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
+import { IconCheckmark100 } from '@spectrum-web-components/icons-ui/src/elements/IconCheckmark100.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
@@ -95,6 +95,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
     public static get styles(): CSSResultArray {
         return [menuItemStyles, checkmarkStyles];
     }
+
+    public static elementDefinitions = {
+        'sp-icon-checkmark100': IconCheckmark100,
+    };
 
     static instanceCount = 0;
 

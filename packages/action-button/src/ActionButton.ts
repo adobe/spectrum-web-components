@@ -22,7 +22,7 @@ import {
 import { ButtonBase } from '@spectrum-web-components/button';
 import buttonStyles from './action-button.css.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
+import { IconCornerTriangle300 } from '@spectrum-web-components/icons-ui/src/elements/IconCornerTriangle300.js';
 
 const holdAffordanceClass = {
     s: 'spectrum-UIIcon-CornerTriangle75',
@@ -54,6 +54,10 @@ export class ActionButton extends SizedMixin(ButtonBase) {
     public static get styles(): CSSResultArray {
         return [buttonStyles, cornerTriangleStyles];
     }
+
+    public static elementDefinitions = {
+        'sp-icon-corner-triangle300': IconCornerTriangle300,
+    };
 
     @property({ type: Boolean, reflect: true })
     public emphasized = false;

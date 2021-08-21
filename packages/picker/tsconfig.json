@@ -10,7 +10,6 @@
         { "path": "../base" },
         { "path": "../menu" },
         { "path": "../button" },
-        { "path": "../icon" },
         { "path": "../icons-ui" },
         { "path": "../icons-workflow" },
         { "path": "../popover" }

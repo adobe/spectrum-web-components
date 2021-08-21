@@ -21,8 +21,8 @@ import {
     PropertyValues,
 } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/underlay/sp-underlay.js';
-import '@spectrum-web-components/button/sp-button.js';
+import { Underlay } from '@spectrum-web-components/underlay';
+import { Button } from '@spectrum-web-components/button';
 
 import '../sp-dialog.js';
 import styles from '@spectrum-web-components/modal/src/modal.css.js';
@@ -43,6 +43,12 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [styles];
     }
+
+    public static elementDefinitions = {
+        'sp-button': Button,
+        'sp-dialog': Dialog,
+        'sp-underlay': Underlay,
+    };
 
     @property({ type: Boolean, reflect: true })
     public error = false;

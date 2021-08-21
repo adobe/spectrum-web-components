@@ -215,12 +215,20 @@ export const px = (args: StoryArgs = {}): TemplateResult => {
 };
 
 class NumberFieldDefined extends HTMLElement {
-    constructor() {
-        super();
+    public connectedCallback(): void {
         this.numberFieldLoaderPromise = new Promise((res) => {
-            customElements.whenDefined('sp-number-field').then(() => {
-                res(true);
-            });
+            (
+                this.previousElementSibling?.querySelector('sp-slider')
+                    ?.constructor as unknown as {
+                    registry: {
+                        whenDefined: (name: string) => Promise<void>;
+                    };
+                }
+            ).registry
+                .whenDefined('sp-number-field')
+                .then(() => {
+                    res(true);
+                });
         });
     }
 
@@ -244,6 +252,7 @@ export const editable = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
+                label="Angle"
                 editable
                 max="360"
                 min="0"
@@ -257,9 +266,7 @@ export const editable = (args: StoryArgs = {}): TemplateResult => {
                     unitDisplay: 'narrow',
                 }}
                 ...=${spreadProps(args)}
-            >
-                Angle
-            </sp-slider>
+            ></sp-slider>
         </div>
     `;
 };

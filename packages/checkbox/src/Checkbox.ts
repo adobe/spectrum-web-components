@@ -20,17 +20,17 @@ import {
     ElementSize,
 } from '@spectrum-web-components/base';
 import { CheckboxBase } from './CheckboxBase.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
 import checkboxStyles from './checkbox.css.js';
 import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
+import { IconCheckmark75 } from '@spectrum-web-components/icons-ui/src/elements/IconCheckmark75.js';
+import { IconCheckmark100 } from '@spectrum-web-components/icons-ui/src/elements/IconCheckmark100.js';
+import { IconCheckmark200 } from '@spectrum-web-components/icons-ui/src/elements/IconCheckmark200.js';
+import { IconCheckmark300 } from '@spectrum-web-components/icons-ui/src/elements/IconCheckmark300.js';
+import { IconDash75 } from '@spectrum-web-components/icons-ui/src/elements/IconDash75.js';
+import { IconDash100 } from '@spectrum-web-components/icons-ui/src/elements/IconDash100.js';
+import { IconDash200 } from '@spectrum-web-components/icons-ui/src/elements/IconDash200.js';
+import { IconDash300 } from '@spectrum-web-components/icons-ui/src/elements/IconDash300.js';
 
 const checkmarkIcon = {
     s: html`
@@ -93,6 +93,17 @@ type CheckboxSize = Exclude<ElementSize, 'xxl'>;
  * @slot - content to display as the label for the Checkbox
  */
 export class Checkbox extends SizedMixin(CheckboxBase) {
+    public static elementDefinitions = {
+        'sp-icon-checkmark75': IconCheckmark75,
+        'sp-icon-checkmark100': IconCheckmark100,
+        'sp-icon-checkmark200': IconCheckmark200,
+        'sp-icon-checkmark300': IconCheckmark300,
+        'sp-icon-dash75': IconDash75,
+        'sp-icon-dash100': IconDash100,
+        'sp-icon-dash200': IconDash200,
+        'sp-icon-dash300': IconDash300,
+    };
+
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
 

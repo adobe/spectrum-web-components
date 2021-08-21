@@ -2586,6 +2586,14 @@
     "@open-wc/scoped-elements" "^2.0.0-next.3"
     lit "^2.0.0-rc.2"
 
+"@lit-labs/scoped-registry-mixin@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@lit-labs/scoped-registry-mixin/-/scoped-registry-mixin-1.0.0.tgz#00d640105618fcbc6fd654f2956b5faa44452124"
+  integrity sha512-hSk4fnkpbLmLsFLgIetJxmZVAjnn0u/82D6NUzi9cbHddUlTbjeLcQed0ABaT7n2C3w6RDacel3XM2Ib3nTegQ==
+  dependencies:
+    "@lit/reactive-element" "^1.0.0"
+    lit "^2.0.0"
+
 "@lit/reactive-element@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.0.0.tgz#7b6e6a85709cda0370c47e425ac2f3b553696a4b"
@@ -5266,10 +5274,10 @@
     source-map "^0.7.3"
     uuid "^8.3.2"
 
-"@web/test-runner-core@^0.10.21":
-  version "0.10.21"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.21.tgz#fe8a01f3595330940189ff4b9d32514ede55d184"
-  integrity sha512-Dh1TJITyil4w22DXwCmYEyp4BBzRFxRqiUbJ/iPziT1E5heAx/pZPug1oFs83LKUc/crOcDhObz6u4ynGWz9wQ==
+"@web/test-runner-core@^0.10.22":
+  version "0.10.22"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.22.tgz#34bb67d12a79b01dc79c816f3d76f3419ef50eaf"
+  integrity sha512-0jzJIl/PTZa6PCG/noHAFZT2DTcp+OYGmYOnZ2wcHAO3KwtJKnBVSuxgdOzFdmfvoO7TYAXo5AH+MvTZXMWsZw==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/babel__code-frame" "^7.0.2"
@@ -5318,10 +5326,10 @@
     array-flat-polyfill "^1.0.1"
     xml "^1.0.1"
 
-"@web/test-runner-mocha@^0.7.4":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-mocha/-/test-runner-mocha-0.7.4.tgz#a386db80b166cf264ebe16a44fc97cb2696d645c"
-  integrity sha512-EvAz6eCyBpVyXUq/bTSYpSwcSd/jH8XY+vAwS/xprWNo2WFY0LW0FcwcuWdq4LckDxTZVXaGb1dj3lDfEsOeVw==
+"@web/test-runner-mocha@^0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-mocha/-/test-runner-mocha-0.7.5.tgz#696f8cb7f5118a72bd7ac5778367ae3bd3fb92cd"
+  integrity sha512-12/OBq6efPCAvJpcz3XJs2OO5nHe7GtBibZ8Il1a0QtsGpRmuJ4/m1EF0Fj9f6KHg7JdpGo18A37oE+5hXjHwg==
   dependencies:
     "@types/mocha" "^8.2.0"
     "@web/test-runner-core" "^0.10.20"
@@ -5349,18 +5357,18 @@
     pixelmatch "^5.2.1"
     pngjs "^6.0.0"
 
-"@web/test-runner@^0.13.18":
-  version "0.13.18"
-  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.13.18.tgz#126d61e44e670e4f7b71addc8bfa86dd857f5aad"
-  integrity sha512-VeKs5RG3PbGc466Ylr0kk1S8vtXQ71Ll7g+t3bkScqlAAUo17qRpetQQjhUWQdU4uAQfteL92GLyfCc06VeYpA==
+"@web/test-runner@^0.13.20":
+  version "0.13.20"
+  resolved "https://registry.yarnpkg.com/@web/test-runner/-/test-runner-0.13.20.tgz#363872e770431ae8ad09191c63be69eb1e04720f"
+  integrity sha512-f5Q5KLFU+UQ6SnyghGwXGEfB61dyTE7cla3eAc8d3uPOlHs7u+6gHEuCayQPNIV+cqdHL9DWgVEwGWInyBB2kA==
   dependencies:
     "@web/browser-logs" "^0.2.2"
     "@web/config-loader" "^0.1.3"
     "@web/dev-server" "^0.1.24"
     "@web/test-runner-chrome" "^0.10.3"
     "@web/test-runner-commands" "^0.5.10"
-    "@web/test-runner-core" "^0.10.21"
-    "@web/test-runner-mocha" "^0.7.4"
+    "@web/test-runner-core" "^0.10.22"
+    "@web/test-runner-mocha" "^0.7.5"
     camelcase "^6.2.0"
     command-line-args "^5.1.1"
     command-line-usage "^6.1.1"

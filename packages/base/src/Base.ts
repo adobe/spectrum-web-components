@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { LitElement, ReactiveElement } from 'lit';
+import '@webcomponents/scoped-custom-element-registry/scoped-custom-element-registry.min.js';
+import { ScopedRegistryHost } from '@lit-labs/scoped-registry-mixin';
 import { property } from 'lit/decorators.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
@@ -59,7 +61,7 @@ const canManageContentDirection = (el: ContentDirectionManager): boolean =>
 export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
-    class SlotTextObservingElement extends constructor {
+    class SpectrumElementBase extends constructor {
         /**
          * @private
          */
@@ -134,7 +136,9 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             }
         }
     }
-    return SlotTextObservingElement;
+    return SpectrumElementBase;
 }
 
-export class SpectrumElement extends SpectrumMixin(LitElement) {}
+export class SpectrumElement extends SpectrumMixin(
+    ScopedRegistryHost(LitElement)
+) {}

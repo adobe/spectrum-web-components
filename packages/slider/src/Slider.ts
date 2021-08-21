@@ -25,7 +25,7 @@ import {
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { StyleInfo } from 'lit-html/directives/style-map';
-import '@spectrum-web-components/field-label/sp-field-label.js';
+import { FieldLabel } from '@spectrum-web-components/field-label';
 import type { NumberField } from '@spectrum-web-components/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
 import { SliderHandle } from './SliderHandle.js';
@@ -42,6 +42,10 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         return [sliderStyles];
     }
 
+    public static elementDefinitions = {
+        'sp-field-label': FieldLabel,
+    };
+
     public handleController: HandleController = new HandleController(this);
 
     /**
@@ -56,10 +60,19 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         if (editable === this.editable) return;
         const oldValue = this.editable;
         this._editable = this.handleController.size < 2 ? editable : false;
-        if (this.editable) {
-            this._numberFieldInput = import(
-                '@spectrum-web-components/number-field/sp-number-field.js'
-            );
+        if (this.editable && !Slider._registeredNumberField) {
+            Slider._registeredNumberField = true;
+            import('@spectrum-web-components/number-field').then((exports) => {
+                ((this.constructor as unknown) as {
+                    registry: {
+                        define: (
+                            name: string,
+                            klazz: typeof HTMLElement
+                        ) => void;
+                    };
+                }).registry.define('sp-number-field', exports.NumberField);
+                Slider._registerNumberFieldResolver(true);
+            });
         }
         if (oldValue !== this.editable) {
             this.requestUpdate('editable', oldValue);
@@ -386,15 +399,21 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         return styles;
     }
 
-    private _numberFieldInput: Promise<unknown> = Promise.resolve();
+    static _registerNumberFieldPromise: Promise<unknown>;
+    static _registerNumberFieldResolver: (value: unknown) => void;
+    static _registeredNumberField = false;
 
     protected async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         if (this.editable) {
-            await this._numberFieldInput;
+            await Slider._registerNumberFieldPromise;
             await this.numberField.updateComplete;
         }
         await this.handleController.handleUpdatesComplete();
         return complete;
     }
 }
+
+Slider._registerNumberFieldPromise = new Promise((res) => {
+    Slider._registerNumberFieldResolver = res;
+});

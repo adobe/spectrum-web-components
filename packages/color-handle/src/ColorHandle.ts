@@ -19,7 +19,7 @@ import {
     PropertyValues,
 } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+import { ColorLoupe } from '@spectrum-web-components/color-loupe';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import styles from './color-handle.css.js';
 
@@ -45,6 +45,10 @@ export class ColorHandle extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles];
     }
+
+    public static elementDefinitions = {
+        'sp-color-loupe': ColorLoupe,
+    };
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;

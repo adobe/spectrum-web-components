@@ -24,8 +24,8 @@ import {
 } from '@spectrum-web-components/base';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import { IconCheckmark100 } from '@spectrum-web-components/icons-ui/src/elements/IconCheckmark100.js';
+import { IconAlert } from '@spectrum-web-components/icons-workflow/src/elements/IconAlert.js';
 
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
@@ -37,6 +37,11 @@ export class TextfieldBase extends Focusable {
     public static get styles(): CSSResultArray {
         return [textfieldStyles, checkmarkStyles];
     }
+
+    public static elementDefinitions = {
+        'sp-icon-checkmark100': IconCheckmark100,
+        'sp-icon-alert': IconAlert,
+    };
 
     @property({ attribute: 'allowed-keys' })
     allowedKeys = '';

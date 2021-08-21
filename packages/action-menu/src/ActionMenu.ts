@@ -18,12 +18,12 @@ import {
     ifDefined,
     property,
 } from '@spectrum-web-components/base';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/popover/sp-popover.js';
+import { Menu } from '@spectrum-web-components/menu';
+import { Popover } from '@spectrum-web-components/popover';
 import { PickerBase } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+import { IconMore } from '@spectrum-web-components/icons-workflow/src/elements/IconMore.js';
 import actionMenuStyles from './action-menu.css.js';
 
 /**
@@ -40,6 +40,14 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public static get styles(): CSSResultArray {
         return [actionMenuStyles];
     }
+
+    public static elementDefinitions = {
+        ...PickerBase.elementDefinitions,
+        'sp-menu': Menu,
+        'sp-popover': Popover,
+        'sp-action-button': ActionButton,
+        'sp-icon-more': IconMore,
+    };
 
     @property({ type: String })
     public selects: undefined | 'single' = undefined;

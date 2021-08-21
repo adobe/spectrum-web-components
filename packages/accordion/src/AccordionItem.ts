@@ -18,7 +18,7 @@ import {
     PropertyValues,
 } from '@spectrum-web-components/base';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+import { IconChevron100 } from '@spectrum-web-components/icons-ui/src/elements/IconChevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './accordion-item.css.js';
@@ -31,6 +31,10 @@ export class AccordionItem extends Focusable {
     public static get styles(): CSSResultArray {
         return [styles, chevronIconStyles];
     }
+
+    public static elementDefinitions = {
+        'sp-icon-chevron100': IconChevron100,
+    };
 
     @property({ type: Boolean, reflect: true })
     public open = false;

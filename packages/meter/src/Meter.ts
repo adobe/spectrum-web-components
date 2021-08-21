@@ -21,7 +21,7 @@ import {
 } from '@spectrum-web-components/base';
 
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
+import { FieldLabel } from '@spectrum-web-components/field-label';
 import styles from './meter.css.js';
 
 /**
@@ -33,6 +33,10 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     public static get styles(): CSSResultArray {
         return [styles];
     }
+
+    public static elementDefinitions = {
+        'sp-field-label': FieldLabel,
+    };
 
     @property({ type: Number })
     public progress = 0;

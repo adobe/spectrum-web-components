@@ -28,11 +28,9 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/menu/sp-menu.js';
+import { IconChevron100 } from '@spectrum-web-components/icons-ui/src/elements/IconChevron100.js';
+import { IconAlert } from '@spectrum-web-components/icons-workflow/src/elements/IconAlert.js';
 import { MenuItem, Menu } from '@spectrum-web-components/menu';
-import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import {
     Placement,
@@ -60,6 +58,13 @@ type PickerSize = Exclude<ElementSize, 'xxl'>;
  * @fires sp-closed - Announces that the overlay has been closed
  */
 export class PickerBase extends SizedMixin(Focusable) {
+    public static elementDefinitions = {
+        'sp-icon-chevron100': IconChevron100,
+        'sp-popover': Popover,
+        'sp-menu': Menu,
+        'sp-icon-alert': IconAlert,
+    };
+
     /**
      * @private
      */

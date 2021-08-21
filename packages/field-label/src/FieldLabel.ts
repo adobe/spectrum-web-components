@@ -21,7 +21,7 @@ import {
     query,
 } from '@spectrum-web-components/base';
 import type { Focusable } from '@spectrum-web-components/shared';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
+import { IconAsterisk100 } from '@spectrum-web-components/icons-ui/src/elements/IconAsterisk100.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
 
 import styles from './field-label.css.js';
@@ -37,6 +37,10 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [styles, asteriskIconStyles];
     }
+
+    public static elementDefinitions = {
+        'sp-icon-asterisk100': IconAsterisk100,
+    };
 
     /**
      * @private
@@ -87,7 +91,25 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
             return;
         }
         if (target.localName.search('-') > 0) {
-            await customElements.whenDefined(target.localName);
+            const root = this.getRootNode() as ShadowRoot;
+            type ConstructorWithRegistry = {
+                registry: {
+                    whenDefined: (name: string) => Promise<void>;
+                };
+            };
+            let registry: {
+                whenDefined?: (name: string) => Promise<void>;
+            } = {};
+            if (root.host) {
+                const constructorWithRegistry = root.host
+                    .constructor as unknown as ConstructorWithRegistry;
+                registry = constructorWithRegistry.registry;
+            }
+            if (registry?.whenDefined) {
+                await registry.whenDefined(target.localName);
+            } else {
+                await customElements.whenDefined(target.localName);
+            }
         }
         if (typeof target.updateComplete !== 'undefined') {
             await target.updateComplete;

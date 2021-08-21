@@ -20,7 +20,7 @@ import {
     SizedMixin,
 } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/field-label/sp-field-label.js';
+import { FieldLabel } from '@spectrum-web-components/field-label';
 import styles from './progress-bar.css.js';
 
 /**
@@ -30,6 +30,10 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [styles];
     }
+
+    public static elementDefinitions = {
+        'sp-field-label': FieldLabel,
+    };
 
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;

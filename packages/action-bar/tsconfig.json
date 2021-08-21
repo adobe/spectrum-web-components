@@ -6,5 +6,5 @@
     },
     "include": ["*.ts", "src/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../base" }]
+    "references": [{ "path": "../base" }, { "path": "../popover" }]
 }

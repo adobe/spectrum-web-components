@@ -22,13 +22,13 @@ import {
     ElementSize,
 } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/button/sp-button.js';
+import { Popover } from '@spectrum-web-components/popover';
+import { Menu } from '@spectrum-web-components/menu';
+import { Button } from '@spectrum-web-components/button';
 import { ButtonVariants } from '@spectrum-web-components/button';
 import { PickerBase } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+import { IconChevron100 } from '@spectrum-web-components/icons-ui/src/elements/IconChevron100.js';
+import { IconMore } from '@spectrum-web-components/icons-workflow/src/elements/IconMore.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import styles from './split-button.css.js';
 
@@ -49,6 +49,15 @@ export class SplitButton extends SizedMixin(PickerBase) {
     public static get styles(): CSSResultArray {
         return [styles, chevronStyles];
     }
+
+    public static elementDefinitions = {
+        ...PickerBase.elementDefinitions,
+        'sp-popover': Popover,
+        'sp-menu': Menu,
+        'sp-button': Button,
+        'sp-icon-chevron100': IconChevron100,
+        'sp-icon-more': IconMore,
+    };
 
     @property({ type: Boolean, reflect: true })
     public left = false;

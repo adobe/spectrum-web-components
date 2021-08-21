@@ -28,7 +28,6 @@ import {
     extractHueAndSaturationRegExp,
     replaceHueRegExp,
 } from '@spectrum-web-components/color-handle';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';
@@ -41,6 +40,10 @@ export class ColorArea extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles];
     }
+
+    public static elementDefinitions = {
+        'sp-color-handle': ColorHandle,
+    };
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;

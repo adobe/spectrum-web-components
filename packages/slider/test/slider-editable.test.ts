@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import '../sp-slider.js';
 import { Slider } from '../';
 import { editable, hideStepper, StoryArgs } from '../stories/slider.stories.js';
-import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { fixture, elementUpdated, expect, nextFrame } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
@@ -31,6 +31,10 @@ describe('Slider - editable', () => {
         const el = await sliderFromFixture(editable);
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
 
         await expect(el).to.be.accessible();
     });

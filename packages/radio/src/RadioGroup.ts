@@ -217,9 +217,9 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
         this.selected = checkedRadioValue || this.selected;
         // Validate the selected value is actual a radio option
         if (this.selected && this.selected !== checkedRadioValue) {
-            const selectedRadio = this.querySelector(
-                `sp-radio[value="${this.selected}"]`
-            ) as Radio;
+            const selectedRadio = this.buttons.find(
+                (button) => button.value === this.selected
+            );
             if (!selectedRadio) {
                 this.selected = '';
             } else {

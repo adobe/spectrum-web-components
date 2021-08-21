@@ -18,7 +18,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base';
-import '@spectrum-web-components/underlay/sp-underlay.js';
+import { Underlay } from '@spectrum-web-components/underlay';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
@@ -33,6 +33,10 @@ export class Tray extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [modalStyles, styles];
     }
+
+    public static elementDefinitions = {
+        'sp-underlay': Underlay,
+    };
 
     @property({ type: Boolean, reflect: true })
     public open = false;

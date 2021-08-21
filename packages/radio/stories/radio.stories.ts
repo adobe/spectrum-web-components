@@ -132,19 +132,19 @@ labelBelow.story = {
 };
 
 const values = {
-    first: 1,
-    second: 2,
-    third: 3,
-    fourth: 4,
+    first: '1',
+    second: '2',
+    third: '3',
+    fourth: '4',
 };
 
 export const groupExample = (): TemplateResult => {
     return html`
         <sp-radio-group vertical selected="1" name="group-example">
-            <sp-radio value=${values.first}>Option 1</sp-radio>
-            <sp-radio value=${values.second}>Option 2</sp-radio>
-            <sp-radio value=${values.third}>Option 3</sp-radio>
-            <sp-radio value=${values.fourth}>Option 4</sp-radio>
+            <sp-radio .value=${values.first}>Option 1</sp-radio>
+            <sp-radio .value=${values.second}>Option 2</sp-radio>
+            <sp-radio .value=${values.third}>Option 3</sp-radio>
+            <sp-radio .value=${values.fourth}>Option 4</sp-radio>
         </sp-radio-group>
     `;
 };

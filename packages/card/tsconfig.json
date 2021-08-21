@@ -8,7 +8,9 @@
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
         { "path": "../base" },
+        { "path": "../checkbox" },
         { "path": "../icons-workflow" },
+        { "path": "../quick-actions" },
         { "path": "../shared" },
         { "path": "../styles" }
     ]

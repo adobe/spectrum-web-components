@@ -143,7 +143,7 @@ export class HandleController implements Controller {
         const { input } = this.getActiveHandleElements();
         if (
             this.host.editable &&
-            !(input as InputWithModel).model.handle.dragging
+            !(input as InputWithModel)?.model.handle.dragging
         ) {
             return this.host.numberField;
         }
@@ -218,9 +218,8 @@ export class HandleController implements Controller {
         if (!this.handleRefMap) {
             this.handleRefMap = new WeakMap();
 
-            const inputNodes = this.host.shadowRoot.querySelectorAll(
-                '.handle > input'
-            );
+            const inputNodes =
+                this.host.shadowRoot.querySelectorAll('.handle > input');
             for (const inputNode of inputNodes) {
                 const input = inputNode as HTMLInputElement;
                 const handle = input.parentElement as HTMLElement;

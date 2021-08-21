@@ -21,8 +21,8 @@ import {
 } from '@spectrum-web-components/base';
 
 import { Textfield } from '@spectrum-web-components/textfield';
-import '@spectrum-web-components/button/sp-clear-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import { ClearButton } from '@spectrum-web-components/button';
+import { IconMagnify } from '@spectrum-web-components/icons-workflow/src/elements/IconMagnify.js';
 
 import searchStyles from './search.css.js';
 
@@ -35,6 +35,12 @@ export class Search extends Textfield {
     public static get styles(): CSSResultArray {
         return [...super.styles, searchStyles];
     }
+
+    public static elementDefinitions = {
+        ...Textfield.elementDefinitions,
+        'sp-clear-button': ClearButton,
+        'sp-icon-magnify': IconMagnify,
+    };
 
     @property()
     public action = '';

@@ -116,7 +116,7 @@
         "@web/dev-server-storybook": "^0.3.8",
         "@web/rollup-plugin-copy": "^0.3.0",
         "@web/rollup-plugin-html": "^1.10.1",
-        "@web/test-runner": "^0.13.18",
+        "@web/test-runner": "^0.13.20",
         "@web/test-runner-commands": "^0.5.13",
         "@web/test-runner-junit-reporter": "^0.4.7",
         "@web/test-runner-playwright": "^0.8.8",

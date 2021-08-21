@@ -22,7 +22,6 @@ import {
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import styles from './color-wheel.css.js';
 import {
     ColorHandle,
@@ -40,6 +39,10 @@ export class ColorWheel extends Focusable {
     public static get styles(): CSSResultArray {
         return [styles];
     }
+
+    public static elementDefinitions = {
+        'sp-color-handle': ColorHandle,
+    };
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
