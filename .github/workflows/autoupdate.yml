@@ -1,34 +1,25 @@
 # This workflow updates all open PRs if their base branch is pushed to
 # https://github.com/cirrus-actions/rebase
-name: Auto-rebase open PRs
+name: Rebase PRs when commented
 on:
-    # This will trigger on all pushes to all branches
-    # push: {}
-
-    # Triggers if commits are pushed to certain branches, great for testing
-    pull_request:
-        types: [synchronize]
-        branches:
-            - chore-add-autoupdate-action
+    issue_comment:
+        types: [created]
 jobs:
-    autoupdate:
-        name: Auto-rebase open PRs
+    rebase:
+        name: Rebase PRs when commented
+        if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
         runs-on: ubuntu-latest
         steps:
-            # - name: Checkout the latest code
-            #   uses: actions/checkout@v2
-            #   with:
-            #       token: ${{ secrets.GITHUB_TOKEN }}
-            #       fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
-            - name: Get PR number
-              run: echo "PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
-            - name: Test PR value
-              run: echo ${{ GITHUB_EVENT_PATH }}
-            # - name: Automatic rebase
-            #   uses: cirrus-actions/rebase@1.4
-            #   env:
-            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            #       PR_NUMBER: ${{ env.PR_NUMBER }}
+            - name: Checkout the latest code
+              uses: actions/checkout@v2
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+            - name: Automatic rebase
+              uses: cirrus-actions/rebase@1.4
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  PR_NUMBER: ${{ env.PR_NUMBER }}
 
             # TODO: This tool is better but doesn't yet support rebasing; coming soon
             # https://github.com/chinthakagodawita/autoupdate
