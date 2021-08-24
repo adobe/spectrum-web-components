@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.6...@spectrum-web-components/sidenav@0.10.7) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
 ## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.5...@spectrum-web-components/sidenav@0.10.6) (2021-08-17)
 
 ### Bug Fixes

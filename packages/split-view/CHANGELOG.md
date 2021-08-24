@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.8...@spectrum-web-components/split-view@0.2.9) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
 ## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.7...@spectrum-web-components/split-view@0.2.8) (2021-07-22)
 
 ### Bug Fixes

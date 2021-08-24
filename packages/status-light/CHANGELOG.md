@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.8.1...@spectrum-web-components/status-light@0.8.2) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
 ## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.8.0...@spectrum-web-components/status-light@0.8.1) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/status-light

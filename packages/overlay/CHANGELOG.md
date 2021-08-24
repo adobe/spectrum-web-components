@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.12...@spectrum-web-components/overlay@0.11.13) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
 ## [0.11.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.11...@spectrum-web-components/overlay@0.11.12) (2021-08-17)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icon",
-    "version": "0.9.9",
+    "version": "0.9.10",
     "publishConfig": {
         "access": "public"
     },

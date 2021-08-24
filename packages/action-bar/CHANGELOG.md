@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-bar@0.2.14...@spectrum-web-components/action-bar@0.2.15) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   propogate open to child sp-popover ([ae97677](https://github.com/adobe/spectrum-web-components/commit/ae97677d0db26f4ae68fa47fc561e58490adaf9b))
+
 ## [0.2.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-bar@0.2.13...@spectrum-web-components/action-bar@0.2.14) (2021-08-17)
 
 **Note:** Version bump only for package @spectrum-web-components/action-bar

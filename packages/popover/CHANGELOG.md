@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.14...@spectrum-web-components/popover@0.9.15) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
 ## [0.9.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.13...@spectrum-web-components/popover@0.9.14) (2021-08-17)
 
 **Note:** Version bump only for package @spectrum-web-components/popover

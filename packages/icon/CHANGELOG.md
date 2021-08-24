@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.9.9...@spectrum-web-components/icon@0.9.10) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
 ## [0.9.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.9.8...@spectrum-web-components/icon@0.9.9) (2021-08-03)
 
 ### Bug Fixes

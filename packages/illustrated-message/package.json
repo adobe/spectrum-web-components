@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/illustrated-message",
-    "version": "0.6.10",
+    "version": "0.6.11",
     "publishConfig": {
         "access": "public"
     },

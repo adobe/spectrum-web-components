@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/field-label",
-    "version": "0.5.5",
+    "version": "0.5.6",
     "publishConfig": {
         "access": "public"
     },
@@ -45,8 +45,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/icon": "^0.9.9",
-        "@spectrum-web-components/icons-ui": "^0.6.9",
+        "@spectrum-web-components/icon": "^0.9.10",
+        "@spectrum-web-components/icons-ui": "^0.6.10",
         "@spectrum-web-components/shared": "^0.12.7",
         "tslib": "^2.0.0"
     },
