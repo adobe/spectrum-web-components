@@ -1,0 +1,37 @@
+# This workflow updates all open PRs if their base branch is pushed to
+# https://github.com/cirrus-actions/rebase
+name: Auto-rebase open PRs
+on:
+    # This will trigger on all pushes to all branches
+    # push: {}
+    # Triggers if commits are pushed to certain branches, e.g.:
+    push:
+        branches:
+            - chore-add-autoupdate-action
+jobs:
+    autoupdate:
+        name: Auto-rebase open PRs
+        if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout the latest code
+              uses: actions/checkout@v2
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+            - name: Automatic rebase
+              uses: cirrus-actions/rebase@1.4
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            # TODO: This tool is better but doesn't yet support rebasing; coming soon
+            # https://github.com/chinthakagodawita/autoupdate
+            # - uses: chinthakagodawita/autoupdate-action@v0.1.4
+            #   env:
+            #     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+            #     MERGE_MSG: "chore: branch was auto-updated with the latest"
+            #     MERGE_CONFLICT_ACTION: ignore
+            #     # enable for testing
+            #     DRY_RUN: true
+            #     # Only monitor PRs that are not currently in the draft state
+            #     PR_READY_STATE: ready_for_review
