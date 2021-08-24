@@ -4,7 +4,8 @@ name: Auto-rebase open PRs
 on:
     # This will trigger on all pushes to all branches
     # push: {}
-    # Triggers if commits are pushed to certain branches, e.g.:
+
+    # Triggers if commits are pushed to certain branches, great for testing
     push:
         branches:
             - chore-add-autoupdate-action
