@@ -6,7 +6,8 @@ on:
     # push: {}
 
     # Triggers if commits are pushed to certain branches, great for testing
-    push:
+    pull_request:
+        types: [synchronize]
         branches:
             - chore-add-autoupdate-action
 jobs:
@@ -22,7 +23,7 @@ jobs:
             - name: Get PR number
               run: echo "PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
             - name: Test PR value
-              run: echo ${{ env.PR_NUMBER }}
+              run: echo ${{ GITHUB_EVENT_PATH }}
             # - name: Automatic rebase
             #   uses: cirrus-actions/rebase@1.4
             #   env:
