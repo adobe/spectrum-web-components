@@ -19,7 +19,6 @@ jobs:
               uses: cirrus-actions/rebase@1.4
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  PR_NUMBER: ${{ env.PR_NUMBER }}
 
             # TODO: This tool is better but doesn't yet support rebasing; coming soon
             # https://github.com/chinthakagodawita/autoupdate
