@@ -28,7 +28,8 @@ jobs:
             - name: Install dependencies
               run: yarn --frozen-lockfile
 
-            - uses: actions/github-script@v4
+            - name: Post Previews
+              uses: actions/github-script@v4
               with:
                   script: |
                       const buildPreviewURLComment = require('./tasks/build-preview-urls-comment.cjs').buildPreviewURLComment;
@@ -59,7 +60,8 @@ jobs:
             - name: Tachometer the changed packages
               run: yarn test:changed
 
-            - uses: actions/github-script@v4
+            - name: Post Performance
+              uses: actions/github-script@v4
               with:
                   script: |
                       const buildTachometerComment = require('./tasks/build-tachometer-comment.cjs').buildTachometerComment;
@@ -69,7 +71,7 @@ jobs:
                         repo: context.repo.repo,
                         issue_number: context.issue.number,
                       }).then(({data}) => {
-                        const priorComment = data.find(comment => comment.body.startsWith('# Tachometer results for changed packages'));
+                        const priorComment = data.find(comment => comment.body.startsWith('# Tachometer results'));
                         if (priorComment) {
                           github.issues.updateComment({
                             owner: context.repo.owner,
