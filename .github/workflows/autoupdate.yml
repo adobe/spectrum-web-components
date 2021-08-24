@@ -12,7 +12,6 @@ on:
 jobs:
     autoupdate:
         name: Auto-rebase open PRs
-        if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
         runs-on: ubuntu-latest
         steps:
             - name: Checkout the latest code
