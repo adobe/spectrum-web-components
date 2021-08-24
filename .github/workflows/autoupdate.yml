@@ -20,7 +20,7 @@ jobs:
                   token: ${{ secrets.GITHUB_TOKEN }}
                   fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
             - name: Get PR number
-              run: echo "PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
+              run: echo "$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")" >> $PR_NUMBER
             - name: Automatic rebase
               uses: cirrus-actions/rebase@1.4
               env:
