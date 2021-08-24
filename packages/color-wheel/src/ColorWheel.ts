@@ -17,6 +17,7 @@ import {
     property,
     query,
     PropertyValues,
+    ifDefined,
 } from '@spectrum-web-components/base';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
@@ -184,8 +185,6 @@ export class ColorWheel extends Focusable {
 
     private _altered = 0;
 
-    private altKeys = new Set();
-
     @query('input')
     public input!: HTMLInputElement;
 
@@ -195,10 +194,10 @@ export class ColorWheel extends Focusable {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { key } = event;
-        if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
-            this.altKeys.add(key);
-            this.altered = this.altKeys.size;
-        }
+        this.focused = true;
+        this.altered = [event.shiftKey, event.ctrlKey, event.altKey].filter(
+            (key) => !!key
+        ).length;
         let delta = 0;
         switch (key) {
             case 'ArrowUp':
@@ -238,15 +237,6 @@ export class ColorWheel extends Focusable {
         }
     }
 
-    private handleKeyup(event: KeyboardEvent): void {
-        event.preventDefault();
-        const { key } = event;
-        if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
-            this.altKeys.delete(key);
-            this.altered = this.altKeys.size;
-        }
-    }
-
     private handleInput(event: Event & { target: HTMLInputElement }): void {
         const { valueAsNumber } = event.target;
 
@@ -254,7 +244,8 @@ export class ColorWheel extends Focusable {
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
     }
 
-    private handleChange(): void {
+    private handleChange(event: Event & { target: HTMLInputElement }): void {
+        this.handleInput(event);
         this.dispatchEvent(
             new Event('change', {
                 bubbles: true,
@@ -263,26 +254,58 @@ export class ColorWheel extends Focusable {
         );
     }
 
+    public focus(focusOptions: FocusOptions = {}): void {
+        super.focus(focusOptions);
+        this.forwardFocus();
+    }
+
+    private forwardFocus(): void {
+        const activeElement = (this.getRootNode() as Document)
+            .activeElement as HTMLElement;
+        if (activeElement) {
+            let shouldFocus = false;
+            try {
+                // Browsers without support for the `:focus-visible`
+                // selector will throw on the following test (Safari, older things).
+                // Some won't throw, but will be focusing item rather than the menu and
+                // will rely on the polyfill to know whether focus is "visible" or not.
+                shouldFocus =
+                    activeElement.matches(':focus-visible') ||
+                    activeElement.matches('.focus-visible');
+            } catch (error) {
+                shouldFocus = activeElement.matches('.focus-visible');
+            }
+            this.focused = shouldFocus;
+        }
+        this.input.focus();
+    }
+
     private handleFocusin(): void {
         this.focused = true;
     }
 
     private handleFocusout(): void {
+        if (this._pointerDown) {
+            return;
+        }
+        this.altered = 0;
         this.focused = false;
     }
 
     private boundingClientRect!: DOMRect;
+    private _pointerDown = false;
 
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
             return;
         }
+        this._pointerDown = true;
         this._previousColor = this._color.clone();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
         if (event.pointerType === 'mouse') {
-            this.handleFocusin();
+            this.focused = true;
         }
     }
 
@@ -300,7 +323,7 @@ export class ColorWheel extends Focusable {
     }
 
     private handlePointerup(event: PointerEvent): void {
-        // Retain focus on input element after mouse up to enable keyboard interactions
+        this._pointerDown = false;
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
 
         const applyDefault = this.dispatchEvent(
@@ -313,9 +336,10 @@ export class ColorWheel extends Focusable {
         if (!applyDefault) {
             this._color = this._previousColor;
         }
+        // Retain focus on input element after mouse up to enable keyboard interactions
         this.focus();
         if (event.pointerType === 'mouse') {
-            this.handleFocusout();
+            this.focused = false;
         }
     }
 
@@ -373,7 +397,9 @@ export class ColorWheel extends Focusable {
             </slot>
 
             <sp-color-handle
-                tabindex="-1"
+                tabindex=${ifDefined(this.focused ? undefined : '0')}
+                @focus=${this.forwardFocus}
+                ?focused=${this.focused}
                 class="handle"
                 color="hsl(${this.value}, 100%, 50%)"
                 ?disabled=${this.disabled}
@@ -399,7 +425,6 @@ export class ColorWheel extends Focusable {
                 @input=${this.handleInput}
                 @change=${this.handleChange}
                 @keydown=${this.handleKeydown}
-                @keyup=${this.handleKeyup}
             />
         `;
     }

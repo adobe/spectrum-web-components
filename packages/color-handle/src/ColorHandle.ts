@@ -50,6 +50,9 @@ export class ColorHandle extends SpectrumElement {
     public disabled = false;
 
     @property({ type: Boolean, reflect: true })
+    public focused = false;
+
+    @property({ type: Boolean, reflect: true })
     public open = false;
 
     @property({ type: String })
