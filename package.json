@@ -209,7 +209,7 @@
         "stylelint-config-prettier": "^8.0.2",
         "stylelint-config-standard": "^22.0.0",
         "tachometer": "^0.5.8",
-        "ts-loader": "^8.0.0",
+        "ts-loader": "^9.2.1",
         "typescript": "^4.3.2",
         "walker": "^1.0.7",
         "webpack": "^4.41.6",
