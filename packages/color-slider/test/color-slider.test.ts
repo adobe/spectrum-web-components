@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 import {
-    shiftEvent,
     arrowUpEvent,
     arrowDownEvent,
     arrowLeftEvent,
@@ -21,7 +20,6 @@ import {
     arrowDownKeyupEvent,
     arrowLeftKeyupEvent,
     arrowRightKeyupEvent,
-    shiftKeyupEvent,
 } from '../../../test/testing-helpers.js';
 
 import '../sp-color-slider.js';
@@ -292,44 +290,54 @@ describe('ColorSlider', () => {
         );
 
         await elementUpdated(el);
-
+        el.focus();
         expect(el.sliderHandlePosition).to.equal(0);
 
-        const input = el.focusElement;
-
-        input.dispatchEvent(shiftEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
+        await sendKeys({
+            down: 'Shift',
+        });
+        await sendKeys({
+            press: 'ArrowUp',
+        });
+        await sendKeys({
+            press: 'ArrowUp',
+        });
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(20);
 
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        await sendKeys({
+            press: 'ArrowRight',
+        });
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(40);
 
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await sendKeys({
+            press: 'ArrowDown',
+        });
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(20);
 
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(shiftKeyupEvent);
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        await sendKeys({
+            up: 'Shift',
+        });
 
         await elementUpdated(el);
 

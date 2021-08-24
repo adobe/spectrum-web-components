@@ -41,10 +41,10 @@ export const Default = (): TemplateResult => {
                 const next = target.nextElementSibling as HTMLElement;
                 next.textContent = target.color as string;
                 next.style.color = target.color as string;
-                console.log('input');
+                console.log('input', target.value);
             }}
-            @change=${() => {
-                console.log('change');
+            @change=${({ target }: Event & { target: ColorArea }) => {
+                console.log('change', target.value);
             }}
         ></sp-color-area>
         <div style="color: #ff0000" aria-live="off">#ff0000</div>
