@@ -126,8 +126,8 @@ const buildTachometerComment = () => {
         ? tables.join(`
     
 `)
-        : 'No packages changes by this PR...';
-    const comment = `# Tachometer results for changed packages
+        : 'Currently, no packages are changed by this PR...';
+    const comment = `# Tachometer results
 ${body}`;
     return comment;
 };

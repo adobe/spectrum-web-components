@@ -14,48 +14,52 @@ governing permissions and limitations under the License.
 
 import { execSync } from 'child_process';
 
+// Duplicated from `tasks/build-preview-urls-comments.cjs` because GitHub Actions and CJS. 🤦
 const getChangedPackages = () => {
     let command;
     try {
         command = execSync(
-            'yarn lerna ls --since origin/main --json --loglevel silent'
+            'yarn --silent lerna ls --since origin/main --json --loglevel silent'
         );
     } catch (error) {
         console.log(error.message);
         console.log(error.stdout.toString());
         return [];
     }
-    const json = command
-        .toString()
-        .split('✨')[0]
-        .trim()
-        .split('silent')[1]
-        .trim();
-    const packageList = JSON.parse(json).reduce((acc, item) => {
-        const name = item.name.replace('@spectrum-web-components/', '');
-        if (
-            // There are no benchmarks available in this directory.
-            item.location.search('projects') === -1 &&
-            // The icons-* tests are particular and long, exclude in CI.
-            !name.startsWith('icons-')
-        ) {
-            acc.push(name);
-        }
-        return acc;
-    }, []);
+    let packageList;
+    try {
+        packageList = JSON.parse(command.toString()).reduce((acc, item) => {
+            const name = item.name.replace('@spectrum-web-components/', '');
+            if (
+                // There are no benchmarks available in this directory.
+                item.location.search('projects') === -1 &&
+                // The icons-* tests are particular and long, exclude in CI.
+                !name.startsWith('icons-')
+            ) {
+                acc.push(name);
+            }
+            return acc;
+        }, []);
+    } catch (error) {
+        packageList = [];
+    }
     return packageList;
 };
 
 const testChangedPackages = () => {
     const packages = getChangedPackages();
-    console.log(
-        `Running tachometer on the following packages: ${packages.join(', ')}`
-    );
     if (packages.length) {
+        console.log(
+            `Running tachometer on the following packages: ${packages.join(
+                ', '
+            )}`
+        );
         execSync('yarn build:tests');
         execSync(`yarn test:bench -j -p ${packages.join(' ')}`, {
             stdio: 'inherit',
         });
+    } else {
+        console.log('There are no packages with changes to test against.');
     }
 };
 

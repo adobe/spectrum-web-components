@@ -12,14 +12,46 @@ governing permissions and limitations under the License.
 */
 
 const slugify = require('@sindresorhus/slugify');
+const execSync = require('child_process').execSync;
+
+// Duplicated from `tasks/test-changes.js` because GitHub Actions and CJS. 🤦
+const getChangedPackages = () => {
+    let command;
+    try {
+        command = execSync(
+            'yarn --silent lerna ls --since origin/main --json --loglevel silent'
+        );
+    } catch (error) {
+        console.log(error.message);
+        console.log(error.stdout.toString());
+        return [];
+    }
+    let packageList;
+    packageList = JSON.parse(command.toString()).reduce((acc, item) => {
+        const name = item.name.replace('@spectrum-web-components/', '');
+        if (
+            // There are no benchmarks available in this directory.
+            item.location.search('projects') === -1 &&
+            // The icons-* tests are particular and long, exclude in CI.
+            !name.startsWith('icons-')
+        ) {
+            acc.push(name);
+        }
+        return acc;
+    }, []);
+    return packageList;
+};
 
 const buildPreviewURLComment = (ref) => {
+    const packages = getChangedPackages();
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
-    const comment = `# Branch Preview
+    let comment = `# Branch Preview
 
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
-- [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)
+- [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)`;
+    if (packages.length > 0) {
+        comment += `
 
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
 
@@ -39,6 +71,8 @@ When a visual regression test fails (or has previously failed while working on t
 - [Dark | Medium | RTL](https://${branchSlug}-dark-medium-rtl--spectrum-web-components.netlify.app/review/)
 - [Dark | Large | LTR](https://${branchSlug}-dark-large-ltr--spectrum-web-components.netlify.app/review/)
 - [Dark | Large | RTL](https://${branchSlug}-dark-large-rtl--spectrum-web-components.netlify.app/review/)`;
+    }
+
     return comment;
 };
 
