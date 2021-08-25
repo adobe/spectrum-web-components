@@ -6,7 +6,8 @@ labels: [bug, triage]
 body:
     - type: markdown
       attributes:
-          value: Thanks for taking the time to fill out this bug report!
+          value: |
+              Thanks for taking the time to fill out this bug report!
     - type: checkboxes
       id: terms
       attributes:
@@ -34,12 +35,6 @@ body:
       validations:
           required: true
     - type: textarea
-      id: actual-behavior
-      attributes:
-          label: Actual behavior
-      validations:
-          required: true
-    - type: textarea
       id: screenshot
       attributes:
           label: Screenshots
@@ -58,7 +53,7 @@ body:
       id: reproduce
       attributes:
           label: How can we reproduce this issue?
-          placeholder: |
+          value: |
               1. Go to '...'
               2. Click on '....'
               3. Scroll to '....'
