@@ -1,0 +1,39 @@
+name: Feature request
+description: Describe the feature you would like added
+title: '[Feat]: '
+labels: [enhancement, triage]
+# assignees:
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this feature request. Please be sure to review the [issue queue](https://github.com/adobe/spectrum-web-components/issues) first to prevent duplication.
+    - type: checkboxes
+      id: terms
+      attributes:
+          label: Code of conduct
+          description: By submitting this issue, you agree to follow our [code of conduct](https://github.com/adobe/spectrum-web-components/blob/main/CODE_OF_CONDUCT.md#adobe-code-of-conduct).
+          options:
+              - label: I agree to follow this project's code of conduct.
+                required: true
+    - type: input
+      id: components
+      attributes:
+          label: Impacted component(s)
+          description: Please list the component(s) impacted by this issue.
+      validations:
+          required: true
+    - type: textarea
+      id: description
+      attributes:
+          label: Description of the requested feature
+          description: A brief description of the feature you would like added.
+    - type: textarea
+      id: screenshot
+      attributes:
+          label: Mockups or screenshots
+          description: You can attach images by clicking this area to highlight it and then dragging files in.
+    - type: textarea
+      id: code
+      attributes:
+          label: Implementation notes or ideas
