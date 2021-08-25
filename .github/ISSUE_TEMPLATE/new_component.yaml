@@ -1,0 +1,51 @@
+name: New component
+description: Outline the requirements for a new component
+title: '[NEW]: '
+labels: [missing components, triage]
+# assignees:
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this component request. Please be sure to review the [issue queue](https://github.com/adobe/spectrum-web-components/issues) first to prevent duplication.
+    - type: checkboxes
+      id: terms
+      attributes:
+          label: Code of conduct
+          description: By submitting this issue, you agree to follow our [code of conduct](https://github.com/adobe/spectrum-web-components/blob/main/CODE_OF_CONDUCT.md#adobe-code-of-conduct).
+          options:
+              - label: I agree to follow this project's code of conduct.
+                required: true
+    - type: input
+      id: component-name
+      attributes:
+          label: Name of component
+      validations:
+          required: true
+    - type: input
+      id: spectrum
+      attributes:
+          label: Link to the Spectrum assets
+    - type: textarea
+      id: specs
+      attributes:
+          label: Design specification
+          description: Snapshots and link to mock-ups for this component. Should cover contexts and states with guidelines for spacing, typography, and structure. Breakpoint details for desktop, tablet, and mobile or general guidance for responsive changes.
+    - type: textarea
+      id: interaction
+      attributes:
+          label: Interaction
+          description: General guidance for how a user should interact with this component.
+    - type: textarea
+      id: a11y
+      attributes:
+          label: Accessibility
+          description: Guidance for keyboard navigation and screen-reader engagement.  [Best practice documentation](https://usability.yale.edu/web-accessibility/articles) from Yale University.
+    - type: textarea
+      id: api
+      attributes:
+          label: API requirements
+    - type: textarea
+      id: other
+      attributes:
+          label: Other requirements
