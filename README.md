@@ -172,22 +172,10 @@ There is extended documentation on adding a new component to the library in the 
 
 For a list of component waiting to be implemented, visit our [`missing components`](https://github.com/adobe/spectrum-web-components/labels/missing%20components) tag.
 
-## Development within Adobe
-
-Due to the internal `@adobe` npm registry served by Artifactory, when developing this module internally it is necessary to provide an `.npmrc` local to this project which forces the use of the public `@adobe` scope on public npm. Therefore if you are an Adobe employee working on this project add the following to a `.npmrc` file in this folder:
-
-```
-@adobe:registry=https://registry.npmjs.org/
-registry=https://registry.npmjs.org/
-```
-
-This will ensure that when installing dependencies you do not accidentally pull from the internal repositories.
-
 ## IDE Notes
 
 The build process compiles `.css` files using PostCSS and wraps them in the `lit-html` `css` template tag and writes out a `.css.ts` file for easy import into TypeScript files. This file should not be edited, and is ignored by `.gitignore`, but you may also wish to hide the files in your IDE.
 
 # Contributing
 
-We'd be very grateful if you contributed to the project! Check out our
-[contribution guidelines](CONTRIBUTING.md) for more information.
+We'd be very grateful if you contributed to the project! Check out our [contribution guidelines](CONTRIBUTING.md) for more information.
