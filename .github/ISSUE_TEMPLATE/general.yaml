@@ -1,0 +1,21 @@
+name: General
+description: Create a general issue to improve the project
+labels: [triage]
+# assignees:
+body:
+    - type: markdown
+      attributes:
+          value: Thanks for taking the time to fill out this issue!
+    - type: checkboxes
+      id: terms
+      attributes:
+          label: Code of conduct
+          description: By submitting this issue, you agree to follow our [code of conduct](https://github.com/adobe/spectrum-web-components/blob/main/CODE_OF_CONDUCT.md#adobe-code-of-conduct).
+          options:
+              - label: I agree to follow this project's code of conduct.
+                required: true
+    - type: textarea
+      id: issue-details
+      attributes:
+          label: Description of issue
+          description: Please tell us about the issue. You can attach images or files by clicking this area to highlight it and then dragging files in.
