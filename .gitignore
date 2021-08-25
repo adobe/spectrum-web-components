@@ -21,35 +21,32 @@ lib
 
 # build artifacts
 custom-elements.json
+
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
 packages/**/*.js
-!packages/**/*/spectrum-config.js
 packages/**/spectrum-vars.json
 packages/**/*.js.map
+packages/**/*.d.ts
+packages/**/*.test-vrt.ts
+!packages/**/*/spectrum-config.js
+!packages/*/test/global.d.ts
+!packages/*/global.d.ts
+!packages/*/local.d.ts
+
 projects/**/*.js
 projects/**/*.js.map
 projects/**/*.d.ts
 !projects/*/global.d.ts
 
 # typescript assets
-packages/**/*.d.ts
-!packages/*/global.d.ts
-!packages/*/local.d.ts
-packages/*/*/*.d.ts
 !test/global.d.ts
-!packages/*/test/global.d.ts
-packages/**/*.test-vrt.ts
 *.tsbuildinfo
 
-# ts + css assets
-src/**/*.css.ts
+# built css assets
 packages/**/*.css.ts
+projects/**/*.css.ts
 styles/**/*.css.ts
-
-# build logs
-spectrum-web-components.build.log
-spectrum-web-components.build.error.log
 
 # test assets
 TESTS.xml
