@@ -19,7 +19,7 @@ documentation/dist
 coverage
 lib
 
-# compiled / pulled-down assets
+# build artifacts
 custom-elements.json
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
@@ -27,6 +27,10 @@ packages/**/*.js
 !packages/**/*/spectrum-config.js
 packages/**/spectrum-vars.json
 packages/**/*.js.map
+projects/**/*.js
+projects/**/*.js.map
+projects/**/*.d.ts
+!projects/*/global.d.ts
 
 # typescript assets
 packages/**/*.d.ts
@@ -42,12 +46,6 @@ packages/**/*.test-vrt.ts
 src/**/*.css.ts
 packages/**/*.css.ts
 styles/**/*.css.ts
-
-# compiled assets
-projects/**/*.js
-projects/**/*.js.map
-projects/**/*.d.ts
-!projects/*/global.d.ts
 
 # build logs
 spectrum-web-components.build.log
