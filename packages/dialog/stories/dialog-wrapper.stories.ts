@@ -25,10 +25,12 @@ export default {
     component: 'sp-dialog-wrapper',
 };
 
-export const wrapperLabeledHero = (): TemplateResult => {
+export const wrapperLabeledHero = (...args: unknown[]): TemplateResult => {
+    const context = (args[1] || {}) as { viewMode?: string };
+    const open = context.viewMode === 'docs' ? false : true;
     return html`
         <sp-dialog-wrapper
-            open
+            ?open=${open}
             hero=${landscape}
             hero-label="Hero Image Alt Text"
             dismissable
@@ -47,9 +49,11 @@ export const wrapperLabeledHero = (): TemplateResult => {
     `;
 };
 
-export const wrapperDismissable = ({
-    actionTracking = true,
-} = {}): TemplateResult => {
+export const wrapperDismissable = (
+    { actionTracking = true } = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
+    const open = context.viewMode === 'docs' ? false : true;
     const announceAction = actionTracking
         ? action
         : () => {
@@ -57,7 +61,7 @@ export const wrapperDismissable = ({
           };
     return html`
         <sp-dialog-wrapper
-            open
+            ?open=${open}
             hero=${landscape}
             dismissable
             headline="Wrapped Dialog w/ Hero Image"
@@ -75,7 +79,11 @@ export const wrapperDismissable = ({
     `;
 };
 
-export const wrapperDismissableUnderlay = (): TemplateResult => {
+export const wrapperDismissableUnderlay = (
+    ...args: unknown[]
+): TemplateResult => {
+    const context = (args[1] || {}) as { viewMode?: string };
+    const open = context.viewMode === 'docs' ? false : true;
     return html`
         <sp-button
             onClick="this.nextElementSibling.open = !this.nextElementSibling.open"
@@ -84,7 +92,7 @@ export const wrapperDismissableUnderlay = (): TemplateResult => {
             Toggle Dialog
         </sp-button>
         <sp-dialog-wrapper
-            open
+            ?open=${open}
             hero=${landscape}
             dismissable
             headline="Wrapped Dialog w/ Hero Image"
@@ -97,9 +105,11 @@ export const wrapperDismissableUnderlay = (): TemplateResult => {
     `;
 };
 
-export const longContent = (): TemplateResult => {
+export const longContent = (...args: unknown[]): TemplateResult => {
+    const context = (args[1] || {}) as { viewMode?: string };
+    const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-        <overlay-trigger type="modal" placement="none" open="click">
+        <overlay-trigger type="modal" placement="none" .open=${open}>
             <sp-dialog-wrapper
                 slot="click-content"
                 headline="Dialog title"
@@ -208,7 +218,11 @@ export const longContent = (): TemplateResult => {
     `;
 };
 
-export const wrapperDismissableUnderlayError = (): TemplateResult => {
+export const wrapperDismissableUnderlayError = (
+    ...args: unknown[]
+): TemplateResult => {
+    const context = (args[1] || {}) as { viewMode?: string };
+    const open = context.viewMode === 'docs' ? false : true;
     return html`
         <div>
             <sp-button
@@ -218,7 +232,7 @@ export const wrapperDismissableUnderlayError = (): TemplateResult => {
                 Toggle Dialog
             </sp-button>
             <sp-dialog-wrapper
-                open
+                ?open=${open}
                 hero=${landscape}
                 dismissable
                 error
@@ -233,9 +247,11 @@ export const wrapperDismissableUnderlayError = (): TemplateResult => {
     `;
 };
 
-export const wrapperButtons = ({
-    actionTracking = true,
-} = {}): TemplateResult => {
+export const wrapperButtons = (
+    { actionTracking = true } = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
+    const open = context.viewMode === 'docs' ? false : true;
     const announceAction = actionTracking
         ? action
         : () => {
@@ -243,7 +259,7 @@ export const wrapperButtons = ({
           };
     return html`
         <sp-dialog-wrapper
-            open
+            ?open=${open}
             size="l"
             headline="Wrapped Dialog w/ Buttons"
             confirm-label="Keep Both"
@@ -259,10 +275,12 @@ export const wrapperButtons = ({
     `;
 };
 
-export const wrapperButtonsUnderlay = (): TemplateResult => {
+export const wrapperButtonsUnderlay = (...args: unknown[]): TemplateResult => {
+    const context = (args[1] || {}) as { viewMode?: string };
+    const open = context.viewMode === 'docs' ? false : true;
     return html`
         <sp-dialog-wrapper
-            open
+            ?open=${open}
             underlay
             size="l"
             headline="Wrapped Dialog w/ Buttons"
@@ -279,10 +297,12 @@ export const wrapperButtonsUnderlay = (): TemplateResult => {
     `;
 };
 
-export const wrapperFullscreen = (): TemplateResult => {
+export const wrapperFullscreen = (...args: unknown[]): TemplateResult => {
+    const context = (args[1] || {}) as { viewMode?: string };
+    const open = context.viewMode === 'docs' ? false : true;
     return html`
         <sp-dialog-wrapper
-            open
+            ?open=${open}
             headline="Wrapped Dialog - Fullscreen"
             mode="fullscreen"
             confirm-label="Keep Both"

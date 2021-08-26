@@ -18,6 +18,7 @@ import {
     TemplateResult,
     ifDefined,
     nothing,
+    queryAsync,
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -28,7 +29,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { Switch } from '@spectrum-web-components/switch';
-import { Scale, Color } from '@spectrum-web-components/theme';
+import { Scale, Color, Theme } from '@spectrum-web-components/theme';
 import { ActiveOverlay } from '@spectrum-web-components/overlay';
 import './types.js';
 
@@ -174,7 +175,18 @@ export class StoryDecorator extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public screenshot = false;
 
+    @queryAsync('sp-theme')
+    private theme!: Theme;
+
     public ready = false;
+
+    public async startManagingContentDirection(el: HTMLElement): Promise<void> {
+        (await this.theme).startManagingContentDirection(el);
+    }
+
+    public async stopManagingContentDirection(el: HTMLElement): Promise<void> {
+        (await this.theme).stopManagingContentDirection(el);
+    }
 
     private updateTheme({ target }: Event & { target: Picker | Switch }): void {
         const { id } = target;
