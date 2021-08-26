@@ -29,7 +29,9 @@ import {
 
 describe('Dialog Wrapper', () => {
     it('loads wrapped dialog accessibly', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissable());
+        const el = await fixture<DialogWrapper>(
+            wrapperDismissable({ actionTracking: false }, {})
+        );
 
         await elementUpdated(el);
 
@@ -80,7 +82,7 @@ describe('Dialog Wrapper', () => {
     });
     it('dismisses', async () => {
         const el = await fixture<DialogWrapper>(
-            wrapperDismissable({ actionTracking: false })
+            wrapperDismissable({ actionTracking: false }, {})
         );
 
         await elementUpdated(el);
@@ -98,7 +100,9 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
     });
     it('manages entry focus - dismissable', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissable());
+        const el = await fixture<DialogWrapper>(
+            wrapperDismissable({ actionTracking: false }, {})
+        );
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -124,7 +128,9 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
     });
     it('manages entry focus - buttons', async () => {
-        const el = await fixture<DialogWrapper>(wrapperButtons());
+        const el = await fixture<DialogWrapper>(
+            wrapperButtons({ actionTracking: false }, {})
+        );
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -149,7 +155,7 @@ describe('Dialog Wrapper', () => {
         const handleCancel = (): void => cancelSpy();
         const handleSecondary = (): void => secondarySpy();
         const el = await fixture<DialogWrapper>(
-            wrapperButtons({ actionTracking: false })
+            wrapperButtons({ actionTracking: false }, {})
         );
         el.addEventListener('confirm', handleConfirm);
         el.addEventListener('cancel', handleCancel);

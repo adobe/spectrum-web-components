@@ -52,7 +52,6 @@ styles/**/*.css.ts
 TESTS.xml
 test-results.xml
 test/benchmark/cli.cjs
-test/visual/test.js
 test/visual/review/
 test/visual/screenshots-baseline/
 test/visual/screenshots-actual/
@@ -62,6 +61,7 @@ test/**/*.js
 test/**/*.js.map
 test/**/*.d.ts
 !test/visual/**/*.js
+test/visual/test.js
 
 # npm assets
 node_modules
