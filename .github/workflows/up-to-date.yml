@@ -1,0 +1,36 @@
+name: Banch up-to-date with target
+
+on:
+    pull_request:
+        types: [opened, synchronize, edited, reopened]
+
+jobs:
+    compare:
+        name: Confirm that the branch is up-to-date with its target
+
+        # We can't currently run benchmarks on PRs from forked repos, because the
+        # tachometer action reports results by posting a comment, and we can't post
+        # comments without a github token.
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+
+            - name: Setup Node 14
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '14'
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: yarn --frozen-lockfile --ignore-scripts
+
+            - name: Find if target has been merged
+              run: |
+                  git checkout $GITHUB_BASE_REF
+                  git checkout $GITHUB_HEAD_REF
+                  merged=$(git branch --merged)
+                  yarn is-merged --branch $GITHUB_BASE_REF --merged "$merged"

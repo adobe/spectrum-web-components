@@ -40,6 +40,7 @@
         "icons": "node ./scripts/process-icons.js && pretty-quick --pattern \"packages/**/*.svg.ts\"",
         "icons:ui": "lerna run --scope @spectrum-web-components/icons-ui build",
         "icons:workflow": "lerna run --scope @spectrum-web-components/icons-workflow build",
+        "is-merged": "node ./scripts/is-merged.js",
         "lerna-publish": "lerna publish --message \"chore: release new versions\"",
         "lint": "run-p lint:js lint:docs lint:ts lint:css lint:packagejson",
         "lint:css": "stylelint \"packages/**/*.css\"",
