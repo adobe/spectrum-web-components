@@ -75,11 +75,15 @@ export class OverlayStack {
                 top: 0;
                 left: 0;
                 position: fixed;
+                pointer-events: none;
+            }
+            [name="open"]::slotted(*) {
+                pointer-events: all;
             }
             #holder[hidden] {
                 display: none !important;
             }
-            #actual[tabindex="-1"] {
+            #actual[tabindex="-1"] ::slotted(*) {
                 pointer-events: none;  /* just in case? */
             }
             </style>
@@ -103,6 +107,11 @@ export class OverlayStack {
             return;
         }
         this.tabTrapper.tabIndex = -1;
+        this.tabTrapper.addEventListener(
+            'contextmenu',
+            this.forwardContextmenuEvent,
+            true
+        );
         this.tabTrapper.setAttribute('aria-hidden', 'true');
         this.overlayHolder.hidden = false;
         requestAnimationFrame(() => {
@@ -124,9 +133,28 @@ export class OverlayStack {
             return;
         }
         this.tabTrapper.removeAttribute('tabindex');
+        this.tabTrapper.removeEventListener(
+            'contextmenu',
+            this.forwardContextmenuEvent,
+            true
+        );
         this.tabTrapper.removeAttribute('aria-hidden');
         this.overlayHolder.hidden = true;
     }
+
+    private forwardContextmenuEvent = async (
+        event: MouseEvent
+    ): Promise<void> => {
+        const topOverlay = this.overlays[this.overlays.length - 1];
+        if (topOverlay.interaction !== 'modal') {
+            return;
+        }
+        event.stopPropagation();
+        event.preventDefault();
+        await this.closeTopOverlay();
+        const target = document.elementFromPoint(event.clientX, event.clientY);
+        target?.dispatchEvent(new MouseEvent('contextmenu', event));
+    };
 
     private get document(): Document {
         return this.root.ownerDocument /* c8 ignore next */ || document;

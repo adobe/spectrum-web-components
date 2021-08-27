@@ -14,7 +14,7 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
-import { Overlay, Placement } from '../';
+import { ActiveOverlay, Overlay, Placement } from '../';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers.js';
 import {
@@ -25,7 +25,8 @@ import {
     waitUntil,
     oneEvent,
 } from '@open-wc/testing';
-import { sendKeys } from '@web/test-runner-commands';
+import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
+import { virtualElement } from '../stories/overlay.stories';
 
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
@@ -516,5 +517,69 @@ describe('Overlays', () => {
         expect(activeOverlay).to.be.null;
 
         content.remove();
+    });
+});
+describe('Overlay - contextmenu', () => {
+    it('closes "modal" overlays on `contextmenu` and passes that to the underlying page', async () => {
+        await fixture<HTMLDivElement>(html`
+            ${virtualElement({
+                ...virtualElement.args,
+                offset: 6,
+            })}
+        `);
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        let opened = oneEvent(document, 'sp-opened');
+        // Right click to over "context menu" overlay.
+        executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [width / 2, height / 2],
+                },
+                {
+                    type: 'click',
+                    options: {
+                        button: 'right',
+                    },
+                    position: [width / 2, height / 2],
+                },
+            ],
+        });
+        await opened;
+        const firstOverlay = document.querySelector(
+            'active-overlay'
+        ) as ActiveOverlay;
+        expect(firstOverlay, 'first overlay').to.not.be.null;
+        expect(firstOverlay.isConnected).to.be.true;
+        const closed = oneEvent(document, 'sp-closed');
+        opened = oneEvent(document, 'sp-opened');
+        // Right click to out of the "context menu" overlay to both close
+        // the first overlay and have the event passed to the surfacing page
+        // in order to open a subsequent "context menu" overlay.
+        executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [width / 4, height / 4],
+                },
+                {
+                    type: 'click',
+                    options: {
+                        button: 'right',
+                    },
+                    position: [width / 4, height / 4],
+                },
+            ],
+        });
+        await closed;
+        await opened;
+        const secondOverlay = document.querySelector(
+            'active-overlay'
+        ) as ActiveOverlay;
+        expect(secondOverlay, 'second overlay').to.not.be.null;
+        expect(secondOverlay).to.not.equal(firstOverlay);
+        expect(firstOverlay.isConnected).to.be.false;
+        expect(secondOverlay.isConnected).to.be.true;
     });
 });
