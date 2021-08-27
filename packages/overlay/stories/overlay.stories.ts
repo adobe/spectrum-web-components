@@ -40,7 +40,9 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '../../../projects/story-decorator/src/types.js';
 
-import './overlay-story-components';
+import './overlay-story-components.js';
+import { render } from 'lit-html';
+import { Popover } from '@spectrum-web-components/popover';
 
 const storyStyles = html`
     <style>
@@ -268,7 +270,7 @@ export const modalLoose = (): TemplateResult => {
         <overlay-trigger type="modal" placement="none">
             <sp-button slot="trigger">Open</sp-button>
             <sp-dialog
-                size="small"
+                size="s"
                 dismissable
                 slot="click-content"
                 @closed=${(event: Event & { target: DialogWrapper }) =>
@@ -663,29 +665,7 @@ export const superComplexModal = (): TemplateResult => {
 };
 
 export const virtualElement = (args: Properties): TemplateResult => {
-    const pointerenter = async (event: PointerEvent): Promise<void> => {
-        event.preventDefault();
-        const trigger = event.target as HTMLElement;
-        const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
-        openOverlay(
-            trigger,
-            'modal',
-            trigger.nextElementSibling as HTMLElement,
-            {
-                placement: args.placement,
-                receivesFocus: 'auto',
-                virtualTrigger,
-            }
-        );
-    };
-    return html`
-        <style>
-            .app-root {
-                position: absolute;
-                inset: 0;
-            }
-        </style>
-        <div class="app-root" @contextmenu=${pointerenter}></div>
+    const contextMenuTemplate = (): TemplateResult => html`
         <sp-popover
             style="max-width: 33vw;"
             @click=${(event: Event) =>
@@ -704,10 +684,32 @@ export const virtualElement = (args: Properties): TemplateResult => {
             </sp-menu>
         </sp-popover>
     `;
+    const pointerenter = async (event: PointerEvent): Promise<void> => {
+        event.preventDefault();
+        const trigger = event.target as HTMLElement;
+        const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
+        const fragment = document.createDocumentFragment();
+        render(contextMenuTemplate(), fragment);
+        const popover = fragment.querySelector('sp-popover') as Popover;
+        openOverlay(trigger, 'modal', popover, {
+            placement: args.placement,
+            receivesFocus: 'auto',
+            virtualTrigger,
+        });
+    };
+    return html`
+        <style>
+            .app-root {
+                position: absolute;
+                inset: 0;
+            }
+        </style>
+        <div class="app-root" @contextmenu=${pointerenter}></div>
+    `;
 };
 
 virtualElement.args = {
-    placement: 'right-end',
+    placement: 'right-end' as Placement,
 };
 
 export const detachedElement = (): TemplateResult => {
