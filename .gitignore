@@ -7,7 +7,6 @@ yarn-error.log
 .firefox
 .tsbuildinfo
 .rush
-.devcontainer
 tach-results.*
 
 # documentation
