@@ -137,9 +137,11 @@ class ComponentElement extends RouteComponent {
 
     public get apiDocs(): CustomElement | undefined {
         let prefixedEl: CustomElement | undefined;
-        ((docs as unknown) as {
-            declarations: CustomElement[];
-        }[]).find((jsModule) => {
+        (
+            docs as unknown as {
+                declarations: CustomElement[];
+            }[]
+        ).find((jsModule) => {
             prefixedEl = jsModule.declarations.find((jsDeclarations) => {
                 return (
                     jsDeclarations.tagName === `sp-${this.componentName}` ||
@@ -291,7 +293,7 @@ class ComponentElement extends RouteComponent {
                       'Events',
                       tag.events.filter(
                           (tag) =>
-                              ((tag as unknown) as { privacy: string })
+                              (tag as unknown as { privacy: string })
                                   .privacy !== 'private'
                       ),
                       ['Name', 'Description'],
