@@ -192,7 +192,7 @@ describe('Picker, sync', () => {
 
         await elementUpdated(el);
         type NamedNode = { name: string };
-        let snapshot = ((await a11ySnapshot({})) as unknown) as NamedNode & {
+        let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
             children: NamedNode[];
         };
 
@@ -206,7 +206,7 @@ describe('Picker, sync', () => {
 
         el.value = 'option-2';
         await elementUpdated(el);
-        snapshot = ((await a11ySnapshot({})) as unknown) as NamedNode & {
+        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
             children: NamedNode[];
         };
 
@@ -227,7 +227,7 @@ describe('Picker, sync', () => {
 
         await elementUpdated(el);
         type NamedNode = { name: string };
-        let snapshot = ((await a11ySnapshot({})) as unknown) as NamedNode & {
+        let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
             children: NamedNode[];
         };
 
@@ -241,7 +241,7 @@ describe('Picker, sync', () => {
 
         el.value = '2';
         await elementUpdated(el);
-        snapshot = ((await a11ySnapshot({})) as unknown) as NamedNode & {
+        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
             children: NamedNode[];
         };
 
@@ -252,6 +252,24 @@ describe('Picker, sync', () => {
             ),
             '`name` is the label text plus the selected item text'
         ).to.not.be.null;
+    });
+
+    it('manages `aria-activedescendant`', async () => {
+        const el = await pickerFixture();
+        await elementUpdated(el);
+        const firstItem = el.querySelector('sp-menu-item:nth-child(1)');
+        const secondItem = el.querySelector('sp-menu-item:nth-child(2)');
+        const opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+        expect(el.optionsMenu.getAttribute('aria-activedescendant')).to.equal(
+            firstItem?.id
+        );
+        await sendKeys({ press: 'ArrowDown' });
+        await elementUpdated(el);
+        expect(el.optionsMenu.getAttribute('aria-activedescendant')).to.equal(
+            secondItem?.id
+        );
     });
 
     it('loads accessibly w/ slotted label', async () => {
