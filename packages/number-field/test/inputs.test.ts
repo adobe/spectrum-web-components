@@ -29,8 +29,7 @@ describe('NumberField - inputs', () => {
             await import('@formatjs/intl-numberformat/polyfill.js');
         }
         if (
-            ((Intl.NumberFormat as unknown) as { polyfilled: boolean })
-                .polyfilled
+            (Intl.NumberFormat as unknown as { polyfilled: boolean }).polyfilled
         ) {
             await import('@formatjs/intl-numberformat/locale-data/en.js');
             await import('@formatjs/intl-numberformat/locale-data/es.js');
@@ -139,7 +138,7 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('+54');
         });
-        it('prevent "%" when when not percents', async () => {
+        it('prevents "%" when when not percents', async () => {
             const el = await getElFrom(html`
                 ${Default()}
             `);
@@ -151,8 +150,11 @@ describe('NumberField - inputs', () => {
             });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('63');
+            el.blur();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('63');
         });
-        it('allows "%" when percents', async () => {
+        it('allows "%" when percents, and keeps "%" on blur', async () => {
             const el = await getElFrom(html`
                 ${percents()}
             `);
@@ -164,8 +166,11 @@ describe('NumberField - inputs', () => {
             });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('63%');
+            el.blur();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('63%');
         });
-        it('prevents "Backspace" on curreny value text', async () => {
+        it('prevents "Backspace" on curreny value text, and keeps currency value text of blur', async () => {
             const el = await getElFrom(html`
                 ${currency({ value: 234.21 })}
             `);
@@ -173,15 +178,23 @@ describe('NumberField - inputs', () => {
             expect(el.formattedValue).to.equal('EUR 234.21');
 
             el.focus();
-            ((el as unknown) as {
-                inputElement: HTMLInputElement;
-            }).inputElement.setSelectionRange(2, 2);
+            (
+                el as unknown as {
+                    inputElement: HTMLInputElement;
+                }
+            ).inputElement.setSelectionRange(2, 2);
             await sendKeys({
                 press: 'Backspace',
             });
             await elementUpdated(el);
             expect(
-                ((el as unknown) as { inputElement: HTMLInputElement })
+                (el as unknown as { inputElement: HTMLInputElement })
+                    .inputElement.value
+            ).to.equal('EUR 234.21');
+            el.blur();
+            await elementUpdated(el);
+            expect(
+                (el as unknown as { inputElement: HTMLInputElement })
                     .inputElement.value
             ).to.equal('EUR 234.21');
         });

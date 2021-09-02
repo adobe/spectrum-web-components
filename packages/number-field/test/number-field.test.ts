@@ -19,6 +19,7 @@ import {
     decimals,
     Default,
     percents,
+    pixels,
     units,
 } from '../stories/number-field.stories.js';
 import '../sp-number-field.js';
@@ -41,8 +42,7 @@ describe('NumberField', () => {
             await import('@formatjs/intl-numberformat/polyfill.js');
         }
         if (
-            ((Intl.NumberFormat as unknown) as { polyfilled: boolean })
-                .polyfilled
+            (Intl.NumberFormat as unknown as { polyfilled: boolean }).polyfilled
         ) {
             await import('@formatjs/intl-numberformat/locale-data/en.js');
             await import('@formatjs/intl-numberformat/locale-data/fr.js');
@@ -411,14 +411,18 @@ describe('NumberField', () => {
                 clientX: stepUpRect.x + 1,
                 clientY: stepUpRect.y + 1,
             };
-            ((el as unknown) as {
-                buttons: HTMLDivElement;
-            }).buttons.setPointerCapture = () => {
+            (
+                el as unknown as {
+                    buttons: HTMLDivElement;
+                }
+            ).buttons.setPointerCapture = () => {
                 return;
             };
-            ((el as unknown) as {
-                buttons: HTMLDivElement;
-            }).buttons.releasePointerCapture = () => {
+            (
+                el as unknown as {
+                    buttons: HTMLDivElement;
+                }
+            ).buttons.releasePointerCapture = () => {
                 return;
             };
             let input = oneEvent(el, 'input');
@@ -652,6 +656,12 @@ describe('NumberField', () => {
         it('manages units', async () => {
             const el = await getElFrom(units({ value: 17 }));
             expect(el.formattedValue).to.equal('17 inches');
+            expect(el.valueAsString).to.equal('17');
+            expect(el.value).to.equal(17);
+        });
+        it('manages units not supported by the browser', async () => {
+            const el = await getElFrom(pixels({ value: 17 }));
+            expect(el.formattedValue).to.equal('17px');
             expect(el.valueAsString).to.equal('17');
             expect(el.value).to.equal(17);
         });

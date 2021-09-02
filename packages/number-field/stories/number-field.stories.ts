@@ -24,7 +24,7 @@ export default {
         readonly: false,
         quiet: false,
         value: undefined,
-        placeholder: '100',
+        placeholder: '',
         min: undefined,
         max: undefined,
         step: undefined,
@@ -125,7 +125,6 @@ export default {
             description: 'Placeholder to apply to the control.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '100' },
             },
             control: {
                 type: 'text',
@@ -181,6 +180,10 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+Default.args = {
+    value: 100,
+};
+
 export const decimals = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="decimals">
@@ -199,6 +202,10 @@ export const decimals = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+decimals.args = {
+    value: 19.274,
+};
+
 export const percents = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="percents">Enter a percentage</sp-field-label>
@@ -212,6 +219,10 @@ export const percents = (args: StoryArgs = {}): TemplateResult => {
             }}
         ></sp-number-field>
     `;
+};
+
+percents.args = {
+    value: 0.372,
 };
 
 export const currency = (args: StoryArgs = {}): TemplateResult => {
@@ -230,6 +241,10 @@ export const currency = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+currency.args = {
+    value: 23.19,
+};
+
 export const units = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="units">Enter a lengths in inches</sp-field-label>
@@ -244,6 +259,29 @@ export const units = (args: StoryArgs): TemplateResult => {
             }}
         ></sp-number-field>
     `;
+};
+
+units.args = {
+    value: 24,
+};
+
+export const pixels = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="units">Enter a lengths in pixels</sp-field-label>
+        <sp-number-field
+            id="units"
+            style="width: 200px"
+            .formatOptions=${{
+                style: 'unit',
+                unit: 'px',
+            }}
+            ...=${spreadProps(args)}
+        ></sp-number-field>
+    `;
+};
+
+pixels.args = {
+    value: 800,
 };
 
 export const minMax = (args: StoryArgs): TemplateResult => html`
@@ -276,12 +314,13 @@ export const hideStepper = (args: StoryArgs): TemplateResult => {
 };
 hideStepper.args = {
     hideStepper: true,
+    value: 67,
 };
 
 export const disabled = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="disabled">
-            Enter a number without the stepper UI
+            This Number Field is disabled
         </sp-field-label>
         <sp-number-field
             id="disabled"
@@ -291,6 +330,7 @@ export const disabled = (args: StoryArgs): TemplateResult => {
 };
 disabled.args = {
     disabled: true,
+    value: 892,
 };
 
 export const readOnly = (args: StoryArgs): TemplateResult => {
@@ -306,4 +346,5 @@ export const readOnly = (args: StoryArgs): TemplateResult => {
 };
 readOnly.args = {
     readonly: true,
+    value: '15',
 };

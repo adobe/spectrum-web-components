@@ -66,6 +66,8 @@ export class NumberField extends TextfieldBase {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    _forcedUnit = '';
+
     /**
      * An `<sp-number-field>` element will process its numeric value with
      * `new Intl.NumberFormat(this.resolvedLanguage, this.formatOptions).format(this.valueAsNumber)`
@@ -140,7 +142,10 @@ export class NumberField extends TextfieldBase {
 
     public get formattedValue(): string {
         if (isNaN(this.value)) return '';
-        return this.numberFormatter.format(this.value);
+        return (
+            this.numberFormatter.format(this.value) +
+            (this.focused ? '' : this._forcedUnit)
+        );
     }
 
     private convertValueToNumber(value: string): number {
@@ -198,9 +203,9 @@ export class NumberField extends TextfieldBase {
     private startChange(event: PointerEvent): void {
         this.changeCount = 0;
         this.doChange(event);
-        this.safty = (setTimeout(() => {
+        this.safty = setTimeout(() => {
             this.doNextChange(event);
-        }, 400) as unknown) as number;
+        }, 400) as unknown as number;
     }
 
     private doChange(event: PointerEvent): void {
@@ -367,28 +372,78 @@ export class NumberField extends TextfieldBase {
     }
 
     protected get numberFormatter(): NumberFormatter {
-        if (!this._numberFormatter) {
-            this._numberFormatter = new NumberFormatter(
+        if (!this._numberFormatter || !this._numberFormatterFocused) {
+            const {
+                style,
+                unit,
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                unitDisplay,
+                ...formatOptionsNoUnit
+            } = this.formatOptions;
+            if (style !== 'unit') {
+                (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
+            }
+            this._numberFormatterFocused = new NumberFormatter(
                 this.resolvedLanguage,
-                this.formatOptions
+                formatOptionsNoUnit
             );
+            try {
+                this._numberFormatter = new NumberFormatter(
+                    this.resolvedLanguage,
+                    this.formatOptions
+                );
+                this._forcedUnit = '';
+                this._numberFormatter.format(1);
+            } catch (error) {
+                if (style === 'unit') {
+                    this._forcedUnit = unit as string;
+                }
+                this._numberFormatter = this._numberFormatterFocused;
+            }
         }
-        return this._numberFormatter;
+        return this.focused
+            ? this._numberFormatterFocused
+            : this._numberFormatter;
     }
 
     private _numberFormatter?: NumberFormatter;
+    private _numberFormatterFocused?: NumberFormatter;
 
     protected get numberParser(): NumberParser {
-        if (!this._numberParser) {
-            this._numberParser = new NumberParser(
+        if (!this._numberParser || !this._numberParserFocused) {
+            const {
+                style,
+                unit,
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                unitDisplay,
+                ...formatOptionsNoUnit
+            } = this.formatOptions;
+            if (style !== 'unit') {
+                (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
+            }
+            this._numberParserFocused = new NumberParser(
                 this.resolvedLanguage,
-                this.formatOptions
+                formatOptionsNoUnit
             );
+            try {
+                this._numberParser = new NumberParser(
+                    this.resolvedLanguage,
+                    this.formatOptions
+                );
+                this._forcedUnit = '';
+                this._numberParser.parse('0');
+            } catch (error) {
+                if (style === 'unit') {
+                    this._forcedUnit = unit as string;
+                }
+                this._numberParser = this._numberParserFocused;
+            }
         }
-        return this._numberParser;
+        return this.focused ? this._numberParserFocused : this._numberParser;
     }
 
     private _numberParser?: NumberParser;
+    private _numberParserFocused?: NumberParser;
 
     protected render(): TemplateResult {
         this.autocomplete = 'off';
@@ -477,7 +532,9 @@ export class NumberField extends TextfieldBase {
             changes.has('min') ||
             changes.has('min')
         ) {
-            const value = this.numberParser.parse(this.inputElement.value);
+            const value = this.numberParser.parse(
+                this.inputElement.value.replace(this._forcedUnit, '')
+            );
             this.value = this.validateInput(value);
         }
         if (changes.has('min') || changes.has('formatOptions')) {
