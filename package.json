@@ -226,7 +226,7 @@
         "cssnano/**/postcss-calc": "7.0.0",
         "playwright": "1.13.0"
     },
-    "customElements": ".storybook/custom-elements.json",
+    "customElements": "documentation/custom-elements.json",
     "workspaces": [
         "packages/*",
         "projects/*"

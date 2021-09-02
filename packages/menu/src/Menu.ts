@@ -38,6 +38,13 @@ export interface MenuChildItem {
 type SelectsType = 'none' | 'ignore' | 'inherit' | 'multiple' | 'single';
 type RoleType = 'group' | 'menu' | 'listbox' | 'none';
 
+function elementIsOrContains(
+    el: Node,
+    isOrContains: Node | undefined | null
+): boolean {
+    return !!isOrContains && (el === isOrContains || el.contains(isOrContains));
+}
+
 /**
  * Spectrum Menu Component
  * @element sp-menu
@@ -154,6 +161,10 @@ export class Menu extends SpectrumElement {
     private onFocusableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent
     ): void {
+        if (event.item.menuData.focusRoot) {
+            // Only have one tab stop per Menu tree
+            this.tabIndex = -1;
+        }
         event.focusRoot = this;
         this.addChildItem(event.item);
 
@@ -226,7 +237,7 @@ export class Menu extends SpectrumElement {
 
         this.addEventListener('sp-menu-item-removed', this.removeChildItem);
         this.addEventListener('click', this.onClick);
-        this.addEventListener('focusin', this.startListeningToKeyboard);
+        this.addEventListener('focusin', this.handleFocusin);
     }
 
     public focus({ preventScroll }: FocusOptions = {}): void {
@@ -276,8 +287,13 @@ export class Menu extends SpectrumElement {
         this.prepareToCleanUp();
     }
 
-    public startListeningToKeyboard(): void {
+    public handleFocusin(event: FocusEvent): void {
+        const isOrContainsRelatedTarget = elementIsOrContains(
+            this,
+            event.relatedTarget as Node
+        );
         if (
+            isOrContainsRelatedTarget ||
             this.childItems.some(
                 (childItem) => childItem.menuData.focusRoot !== this
             )
@@ -290,7 +306,7 @@ export class Menu extends SpectrumElement {
         const selectionRoot =
             this.childItems[this.focusedItemIndex]?.menuData.selectionRoot ||
             this;
-        if (activeElement !== selectionRoot) {
+        if (activeElement !== selectionRoot || !isOrContainsRelatedTarget) {
             selectionRoot.focus({ preventScroll: true });
             if (activeElement && this.focusedItemIndex === 0) {
                 const offset = this.childItems.findIndex(
@@ -301,11 +317,19 @@ export class Menu extends SpectrumElement {
                 }
             }
         }
+        this.startListeningToKeyboard();
+    }
+
+    public startListeningToKeyboard(): void {
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('focusout', this.handleFocusout);
     }
 
     public handleFocusout(event: FocusEvent): void {
+        if (elementIsOrContains(this, event.relatedTarget as Node)) {
+            (event.composedPath()[0] as MenuItem).focused = false;
+            return;
+        }
         this.stopListeningToKeyboard();
         if (
             event.target === this &&
@@ -318,10 +342,12 @@ export class Menu extends SpectrumElement {
                 focusedItem.focused = false;
             }
         }
+        this.removeAttribute('aria-activedescendant');
     }
 
     public stopListeningToKeyboard(): void {
         this.removeEventListener('keydown', this.handleKeydown);
+        this.removeEventListener('focusout', this.handleFocusout);
     }
 
     public async selectOrToggleItem(targetItem: MenuItem): Promise<void> {
@@ -330,6 +356,9 @@ export class Menu extends SpectrumElement {
         const oldSelected = this.selected.slice();
         const oldSelectedItems = this.selectedItems.slice();
         const oldValue = this.value;
+        this.childItems[this.focusedItemIndex].focused = false;
+        this.focusedItemIndex = this.childItems.indexOf(targetItem);
+        this.forwardFocusVisibleToItem(targetItem);
 
         if (resolvedSelects === 'multiple') {
             if (this.selectedItemsMap.has(targetItem)) {
@@ -456,34 +485,41 @@ export class Menu extends SpectrumElement {
     }
 
     public updateSelectedItemIndex(): void {
-        let index = this.childItems.length - 1;
-        let item = this.childItems[index];
-        while (index && item && !item.selected) {
-            index -= 1;
-            item = this.childItems[index];
-        }
-        index = Math.max(index, 0);
+        let firstOrFirstSelectedIndex = 0;
         const selectedItemsMap = new Map<MenuItem, boolean>();
         const selected: string[] = [];
         const selectedItems: MenuItem[] = [];
-        this.childItems.forEach((childItem, i) => {
-            if (childItem.menuData.selectionRoot !== this) return;
-
-            if (childItem.selected) {
-                selectedItemsMap.set(childItem, true);
-                selected.push(childItem.value);
-                selectedItems.push(childItem);
+        let itemIndex = this.childItems.length;
+        while (itemIndex) {
+            itemIndex -= 1;
+            const childItem = this.childItems[itemIndex];
+            if (childItem.menuData.selectionRoot === this) {
+                if (childItem.selected) {
+                    firstOrFirstSelectedIndex = itemIndex;
+                    selectedItemsMap.set(childItem, true);
+                    selected.unshift(childItem.value);
+                    selectedItems.unshift(childItem);
+                }
+                // Remove "focused" from non-"selected" items ONLY
+                // Preserve "focused" on index===0 when no selection
+                if (itemIndex !== firstOrFirstSelectedIndex) {
+                    childItem.focused = false;
+                }
             }
-            if (i !== index) {
-                childItem.focused = false;
+        }
+        selectedItems.map((item, i) => {
+            // When there is more than one "selected" item,
+            // ensure only the first one can be "focused"
+            if (i > 0) {
+                item.focused = false;
             }
         });
         this.selectedItemsMap = selectedItemsMap;
         this.selected = selected;
         this.selectedItems = selectedItems;
         this.value = this.selected.join(this.valueSeparator);
-        this.focusedItemIndex = index;
-        this.focusInItemIndex = index;
+        this.focusedItemIndex = firstOrFirstSelectedIndex;
+        this.focusInItemIndex = firstOrFirstSelectedIndex;
     }
 
     private _willUpdateItems = false;
@@ -524,12 +560,12 @@ export class Menu extends SpectrumElement {
     }
 
     private forwardFocusVisibleToItem(item: MenuItem): void {
-        const activeElement = (this.getRootNode() as Document).activeElement as
-            | MenuItem
-            | Menu;
         if (item.menuData.focusRoot !== this) {
             return;
         }
+        const activeElement = (this.getRootNode() as Document).activeElement as
+            | MenuItem
+            | Menu;
         let shouldFocus = false;
         try {
             // Browsers without support for the `:focus-visible`
@@ -543,6 +579,7 @@ export class Menu extends SpectrumElement {
             shouldFocus = activeElement.matches('.focus-visible');
         }
         item.focused = shouldFocus;
+        this.setAttribute('aria-activedescendant', item.id);
         if (
             item.menuData.selectionRoot &&
             item.menuData.selectionRoot !== this
@@ -561,11 +598,13 @@ export class Menu extends SpectrumElement {
 
     protected firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
-        const role = this.getAttribute('role');
-        if (role === 'group') {
-            this.tabIndex = -1;
-        } else if (role !== 'none') {
-            this.tabIndex = 0;
+        if (!this.hasAttribute('tabindex')) {
+            const role = this.getAttribute('role');
+            if (role === 'group') {
+                this.tabIndex = -1;
+            } else if (role !== 'none') {
+                this.tabIndex = 0;
+            }
         }
         const updates: Promise<unknown>[] = [
             new Promise((res) => requestAnimationFrame(() => res(true))),
