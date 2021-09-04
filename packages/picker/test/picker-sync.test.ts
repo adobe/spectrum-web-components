@@ -830,38 +830,90 @@ describe('Picker, sync', () => {
         expect(document.activeElement === menu, 'focuses something else').to.be
             .false;
     });
-    // TODO: Create a synthetic tab stop to allow this to work locally in Safari...
     it('opens its menu inline of the tab order', async () => {
+        const surroundingInput = (): HTMLInputElement => {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.tabIndex = 0;
+            return input;
+        };
         const el = await pickerFixture();
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.tabIndex = 0;
+        const input1 = surroundingInput();
+        const input2 = surroundingInput();
 
-        document.body.append(input);
+        document.body.prepend(input1);
+        document.body.append(input2);
 
-        await elementUpdated(el);
+        // start at input1
+        input1.focus();
+        await nextFrame();
 
-        el.focus();
-        await elementUpdated(el);
-
+        // tab to the picker
+        let focused = oneEvent(el, 'focus');
         await sendKeys({ press: 'Tab' });
-        expect(el.open, 'closes').to.be.false;
-        expect(document.activeElement, 'focuses input 1').to.equal(input);
-        await sendKeys({ press: 'Shift+Tab' });
+        await focused;
 
-        const opened = oneEvent(el, 'sp-opened');
-        sendKeys({ press: 'ArrowDown' });
+        expect(el.focused, 'focused').to.be.true;
+        expect(el.open, 'closed').to.be.false;
+
+        // tab through the picker to input2
+        let blurred = oneEvent(el, 'blur');
+        await sendKeys({ press: 'Tab' });
+        await blurred;
+
+        expect(document.activeElement, 'focuses input 2').to.equal(input2);
+
+        // shift+tab back to the picker
+        focused = oneEvent(el, 'focus');
+        await sendKeys({ press: 'Shift+Tab' });
+        await focused;
+
+        // press down to open the picker
+        let opened = oneEvent(el, 'sp-opened');
+        await sendKeys({ press: 'ArrowDown' });
         await opened;
 
+        expect(el.open, 'closed').to.be.true;
         await waitUntil(() => isMenuActiveElement(), 'first item focused');
 
-        const closed = oneEvent(el, 'sp-closed');
-        sendKeys({ press: 'Tab' });
+        // tab to close the picker and move to input2
+        let closed = oneEvent(el, 'sp-closed');
+        await sendKeys({ press: 'Tab' });
         await closed;
 
         expect(el.open, 'closes').to.be.false;
-        expect(document.activeElement, 'focuses input 2').to.equal(input);
-        input.remove();
+        expect(document.activeElement, 'focuses input 2').to.equal(input2);
+
+        // shift + tab back to the picker
+        focused = oneEvent(el, 'focus');
+        await sendKeys({ press: 'Shift+Tab' });
+        await focused;
+
+        // press up to open the picker
+        opened = oneEvent(el, 'sp-opened');
+        await sendKeys({ press: 'ArrowUp' });
+        await opened;
+
+        expect(el.open, 'opened').to.be.true;
+        await waitUntil(() => isMenuActiveElement(), 'first item focused');
+
+        // shift + tab to move to the picker button
+        focused = oneEvent(el, 'focus');
+        await sendKeys({ press: 'Shift+Tab' });
+        await focused;
+
+        // shift + tab again to move back to input1
+        closed = oneEvent(el, 'sp-closed');
+        blurred = oneEvent(el, 'blur');
+        await sendKeys({ press: 'Shift+Tab' });
+        await blurred;
+
+        expect(el.focused, 'blurs picker').to.be.false;
+        expect(document.activeElement, 'focuses input 1').to.equal(input1);
+
+        // wait for the menu to close
+        await closed;
+        expect(el.open, 'closed').to.be.false;
     });
     it('displays selected item text by default', async () => {
         const focusSelectedSpy = spy();

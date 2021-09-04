@@ -160,6 +160,12 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.toggle();
     }
 
+    public onHelperFocus(): void {
+        // set focused to true here instead of onButtonFocus so clicks don't flash a focus outline
+        this.focused = true;
+        this.button.focus();
+    }
+
     public onButtonFocus(): void {
         (this.target as HTMLButtonElement).addEventListener(
             'keydown',
@@ -348,8 +354,15 @@ export class PickerBase extends SizedMixin(Focusable) {
         ];
     }
 
+    // a helper to throw focus to the button is needed because Safari
+    // won't include buttons in the tab order even with tabindex="0"
     protected get renderButton(): TemplateResult {
         return html`
+            <span
+                id="focus-helper"
+                tabindex="${this.focused ? '-1' : '0'}"
+                @focus=${this.onHelperFocus}
+            ></span>
             <button
                 aria-haspopup="true"
                 aria-expanded=${this.open ? 'true' : 'false'}
@@ -360,6 +373,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 @click=${this.onButtonClick}
                 @focus=${this.onButtonFocus}
                 ?disabled=${this.disabled}
+                tabindex="-1"
             >
                 ${this.buttonContent}
             </button>
