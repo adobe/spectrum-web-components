@@ -14,12 +14,30 @@ import '../sp-slider.js';
 import '../sp-slider-handle.js';
 import { Slider, SliderHandle } from '../';
 import { tick } from '../stories/slider.stories.js';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    html,
+    expect,
+    oneEvent,
+    nextFrame,
+} from '@open-wc/testing';
 import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
-import { spy } from 'sinon';
 import { ProvideLang } from '@spectrum-web-components/theme';
 
 describe('Slider', () => {
+    // At least one browser (Webkit) maintains shared global state for the mouse,
+    // such that `send-mouse` type: 'down' without subsequently sending 'up'
+    // can prevent a subsequent test from sending 'down' correctly.
+    afterEach(async () => {
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'up',
+                },
+            ],
+        });
+    });
     it('loads', async () => {
         const el = await fixture<Slider>(
             html`
@@ -451,14 +469,11 @@ describe('Slider', () => {
         expect(el.dragging, 'is dragging').to.be.false;
     });
     it('accepts pointermove events - [step=0]', async () => {
-        let pointerId = -1;
-        const inputSpy = spy();
         const el = await fixture<Slider>(
             html`
                 <sp-slider
                     step="0"
                     max="20"
-                    @input=${() => inputSpy()}
                     style="width: 500px; float: left;"
                 >
                     Step = 0
@@ -466,26 +481,15 @@ describe('Slider', () => {
             `
         );
 
-        await elementUpdated(el);
-
         expect(el.value).to.equal(10);
-        expect(inputSpy.callCount).to.equal(0);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
-        handle.setPointerCapture = (id: number) => (pointerId = id);
-        handle.releasePointerCapture = (id: number) => (pointerId = id);
-        handle.dispatchEvent(
-            new PointerEvent('pointerdown', {
-                button: 0,
-                pointerId: 1,
-                cancelable: true,
-            })
-        );
         const handleBoundingRect = handle.getBoundingClientRect();
         const position = [
             handleBoundingRect.x + handleBoundingRect.width / 2,
             handleBoundingRect.y + handleBoundingRect.height / 2,
         ];
+
         await executeServerCommand('send-mouse', {
             steps: [
                 {
@@ -498,37 +502,25 @@ describe('Slider', () => {
             ],
         });
 
-        await elementUpdated(el);
+        await nextFrame();
 
         expect(el.dragging, 'dragging').to.be.true;
         expect(el.highlight, 'with no highlight').to.be.false;
-        expect(pointerId, 'pointer id').to.equal(1);
 
-        handle.dispatchEvent(
-            new PointerEvent('pointermove', {
-                clientX: 200,
-                cancelable: true,
-            })
-        );
+        let inputEvent = oneEvent(el, 'input');
         await executeServerCommand('send-mouse', {
             steps: [
                 {
                     type: 'move',
-                    position: [200, position[1]],
+                    position: [200, handleBoundingRect.y + handleBoundingRect.height + 100],
                 },
             ],
         });
-        await elementUpdated(el);
+        await inputEvent;
 
         expect(el.value).to.equal(8);
-        expect(inputSpy.callCount, 'call count').to.equal(2);
 
-        handle.dispatchEvent(
-            new PointerEvent('pointermove', {
-                clientX: 125,
-                cancelable: true,
-            })
-        );
+        inputEvent = oneEvent(el, 'input');
         await executeServerCommand('send-mouse', {
             steps: [
                 {
@@ -537,10 +529,9 @@ describe('Slider', () => {
                 },
             ],
         });
-        await elementUpdated(el);
+        await inputEvent;
 
         expect(el.value).to.equal(5);
-        expect(inputSpy.callCount).to.equal(3);
     });
     it('will not pointermove unless `pointerdown`', async () => {
         const el = await fixture<Slider>(
@@ -562,7 +553,7 @@ describe('Slider', () => {
                 cancelable: true,
             })
         );
-        await elementUpdated(el);
+        await nextFrame();
 
         expect(el.value).to.equal(10);
     });
@@ -785,9 +776,11 @@ describe('Slider', () => {
         );
 
         await elementUpdated(el);
-        ((el as unknown) as {
-            getAriaValueText: boolean;
-        }).getAriaValueText = false;
+        (
+            el as unknown as {
+                getAriaValueText: boolean;
+            }
+        ).getAriaValueText = false;
 
         const input = el.focusElement as HTMLInputElement;
         await elementUpdated(el);

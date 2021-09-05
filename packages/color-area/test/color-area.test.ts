@@ -10,7 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    expect,
+    html,
+    oneEvent,
+    nextFrame,
+} from '@open-wc/testing';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 
 import '../sp-color-area.js';
@@ -156,58 +163,65 @@ describe('ColorArea', () => {
             `
         );
 
-        await elementUpdated(el);
-
         expect(el.hue, 'hue').to.equal(100);
         expect(el.x, 'x').to.equal(0.67);
         expect(el.y, 'y').to.equal(0.25);
 
         el.inputX.focus();
+        await nextFrame();
 
+        let changeEvent = oneEvent(el, 'change');
         await sendKeys({
             press: 'ArrowUp',
         });
-        await elementUpdated(el);
+        await changeEvent;
+        changeEvent = oneEvent(el, 'change');
         await sendKeys({
             press: 'ArrowUp',
         });
-        await elementUpdated(el);
+        await changeEvent;
 
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.23);
 
+        changeEvent = oneEvent(el, 'change');
         await sendKeys({
             press: 'ArrowRight',
         });
+        await changeEvent;
+        changeEvent = oneEvent(el, 'change');
         await sendKeys({
             press: 'ArrowRight',
         });
-
-        await elementUpdated(el);
+        await changeEvent;
 
         expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.23);
 
+        changeEvent = oneEvent(el, 'change');
         await sendKeys({
             press: 'ArrowDown',
         });
+        await changeEvent;
+        changeEvent = oneEvent(el, 'change');
         await sendKeys({
             press: 'ArrowDown',
         });
-
-        await elementUpdated(el);
+        await changeEvent;
 
         expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.25);
 
+        changeEvent = oneEvent(el, 'change');
         await sendKeys({
             press: 'ArrowLeft',
         });
+        await changeEvent;
+        changeEvent = oneEvent(el, 'change');
         await sendKeys({
             press: 'ArrowLeft',
         });
-
-        await elementUpdated(el);
+        await changeEvent;
 
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.25);
