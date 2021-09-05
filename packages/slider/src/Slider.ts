@@ -118,7 +118,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         return valueArray.join(', ');
     };
 
-    private get ariaValueText(): string {
+    public get ariaValueText(): string {
         if (!this.getAriaValueText) {
             return `${this.value}`;
         }
