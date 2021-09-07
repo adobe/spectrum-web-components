@@ -164,8 +164,9 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     public blur(): void {
-        if (this.focusElement !== this) {
-            this.focusElement.blur();
+        const focusElement = this.focusElement || this;
+        if (focusElement !== this) {
+            focusElement.blur();
         } else {
             HTMLElement.prototype.blur.apply(this);
         }
@@ -176,8 +177,9 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             return;
         }
 
-        if (this.focusElement !== this) {
-            this.focusElement.click();
+        const focusElement = this.focusElement || this;
+        if (focusElement !== this) {
+            focusElement.click();
         } else {
             HTMLElement.prototype.click.apply(this);
         }

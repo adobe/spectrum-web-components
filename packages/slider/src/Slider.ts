@@ -183,6 +183,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                           step=${this.step}
                           value=${this.value}
                           ?hide-stepper=${this.hideStepper}
+                          ?disabled=${this.disabled}
                           @input=${this.handleNumberInput}
                           @change=${this.handleNumberChange}
                       ></sp-number-field>
