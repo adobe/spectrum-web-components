@@ -17,11 +17,13 @@ import { Slider, SliderHandle, HandleValues, variants } from '../';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { spreadProps } from '@open-wc/lit-helpers';
 
-const action = (msg1: string) => (msg2: string | HandleValues): void => {
-    const message =
-        typeof msg2 === 'string' ? msg2 : JSON.stringify(msg2, null, 2);
-    console.log(msg1, message);
-};
+const action =
+    (msg1: string) =>
+    (msg2: string | HandleValues): void => {
+        const message =
+            typeof msg2 === 'string' ? msg2 : JSON.stringify(msg2, null, 2);
+        console.log(msg1, message);
+    };
 
 export default {
     component: 'sp-slider',
@@ -203,6 +205,13 @@ class NumberFieldDefined extends HTMLElement {
 
 customElements.define('number-field-defined', NumberFieldDefined);
 
+const editableDecorator = (story: () => TemplateResult): TemplateResult => {
+    return html`
+        ${story()}
+        <number-field-defined></number-field-defined>
+    `;
+};
+
 export const editable = (args: StoryArgs): TemplateResult => {
     const handleEvent = (event: Event): void => {
         const target = event.target as Slider;
@@ -233,14 +242,40 @@ export const editable = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-editable.decorators = [
-    (story: () => TemplateResult): TemplateResult => {
-        return html`
-            ${story()}
-            <number-field-defined></number-field-defined>
-        `;
-    },
-];
+editable.decorators = [editableDecorator];
+
+export const editableDisabled = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as Slider;
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                disabled
+                max="360"
+                min="0"
+                value="90"
+                step="1"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{
+                    style: 'unit',
+                    unit: 'degree',
+                    unitDisplay: 'narrow',
+                }}
+                ...=${spreadProps(args)}
+            >
+                Angle
+            </sp-slider>
+        </div>
+    `;
+};
+
+editable.decorators = [editableDecorator];
 
 export const editableCustom = (args: StoryArgs): TemplateResult => {
     const handleEvent = (event: Event): void => {
@@ -270,14 +305,7 @@ export const editableCustom = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-editableCustom.decorators = [
-    (story: () => TemplateResult): TemplateResult => {
-        return html`
-            ${story()}
-            <number-field-defined></number-field-defined>
-        `;
-    },
-];
+editableCustom.decorators = [editableDecorator];
 
 export const hideStepper = (args: StoryArgs): TemplateResult => {
     const handleEvent = (event: Event): void => {
@@ -306,14 +334,7 @@ export const hideStepper = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-hideStepper.decorators = [
-    (story: () => TemplateResult): TemplateResult => {
-        return html`
-            ${story()}
-            <number-field-defined></number-field-defined>
-        `;
-    },
-];
+hideStepper.decorators = [editableDecorator];
 
 export const Gradient = (args: StoryArgs): TemplateResult => {
     const handleEvent = (event: Event): void => {
