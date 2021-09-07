@@ -3945,9 +3945,9 @@
     "@types/qs" "*"
 
 "@types/command-line-args@^5.0.0":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@types/command-line-args/-/command-line-args-5.0.1.tgz#8c283123bd9411168fa3cbdb6f5799c07d4af0b0"
-  integrity sha512-+pAMlf+fHYWFDf4OvzEXPsVKLIahB66drrWXPxMe9IapFxjF5Ir+kFAR9qctKxZW4weuFL5ydm3V5yCGnJieew==
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@types/command-line-args/-/command-line-args-5.2.0.tgz#adbb77980a1cc376bb208e3f4142e907410430f6"
+  integrity sha512-UuKzKpJJ/Ief6ufIaIzr3A/0XnluX7RvFgwkV89Yzvm77wCh1kFaFmqN8XEnGcN62EuHdedQjEMb8mYxFLGPyA==
 
 "@types/command-line-usage@^5.0.1":
   version "5.0.2"
