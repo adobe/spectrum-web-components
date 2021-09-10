@@ -153,6 +153,25 @@ for a multi-handle slider, you can format the combined value label for all
 handles by passing a formatting function to the `getAriaValueText` property
 on the parent `sp-slider`.
 
+### Units not included in `Intl.NumberFormatOptions`
+
+While `Intl.NumberFormatOptions` does support a [wide range of units](https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier), it is possible to encounter units (e.g. the graphics units of `pixel`, `pixels`, `points`, etc.) that are not supported therein. When this occurs, an `<sp-slider>` element will attempt to polyfill support for this unit. See the following example delivering `{ style: "unit", unit: "px" }` below:
+
+```html
+<sp-slider
+    style="width: 200px"
+    value="500"
+    format-options='{
+        "style": "unit",
+        "unit": "px"
+    }'
+>
+    Document width in pixels
+</sp-slider>
+```
+
+Note: the polyfilling done here is very simplistic and is triggered by supplying options that would otherwise cause the `Intl.NumberFormat()` call to throw an error. Once the unsupporting unit of `px` causes the construction of the object to throw, a back up formatter/parser pair will be created without the supplied unit data. When the `style` is set to `unit`, the `unit` value of will be adopted as the _static_ unit display. This means that neither pluralization or translation will be handled within the `<sp-number-field>` element itself. If pluralization or translation is important to the delivered interface, please be sure to handle passing those strings into to element via the `formatOptions` property reactively to the value of the element or locale of that page in question.
+
 ### Label Visibility
 
 Be default an `<sp-slider>` element has both a "text" label and a "value" label. Either or both of these can be surpressed visually as needed by your application UI. This delivery is controlled by the `label-visibility` attribute (or `labelVisibility` property) which accepts `text`, `value`, or `none` as values.

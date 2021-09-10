@@ -186,6 +186,34 @@ noVisibleLabels.args = {
     labelVisibility: 'none',
 };
 
+export const px = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as Slider;
+        if (target.value != null) {
+            action(event.type)(target.value.toString());
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                max="360"
+                min="0"
+                value="90"
+                step="1"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{
+                    style: 'unit',
+                    unit: 'px',
+                }}
+                ...=${spreadProps(args)}
+            >
+                Angle
+            </sp-slider>
+        </div>
+    `;
+};
+
 class NumberFieldDefined extends HTMLElement {
     constructor() {
         super();
@@ -469,6 +497,87 @@ export const TwoHandles = (args: StoryArgs): TemplateResult => {
 TwoHandles.args = {
     variant: 'range',
     tickStep: 10,
+};
+
+export const TwoHandlesPt = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as SliderHandle;
+        if (target.value != null) {
+            if (typeof target.value === 'object') {
+                action(event.type)(target.value);
+            } else {
+                action(event.type)(`${target.name}: ${target.value}`);
+            }
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                value="5"
+                step="1"
+                min="0"
+                max="255"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{
+                    style: 'unit',
+                    unit: 'pt',
+                }}
+                ...=${spreadProps(args)}
+            >
+                Output Levels
+                <sp-slider-handle
+                    slot="handle"
+                    name="min"
+                    value="5"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    name="max"
+                    value="250"
+                ></sp-slider-handle>
+            </sp-slider>
+        </div>
+    `;
+};
+TwoHandlesPt.args = {
+    variant: 'range',
+    tickStep: 10,
+};
+
+export const ThreeHandlesPc = (args: StoryArgs): TemplateResult => {
+    const handleEvent = (event: Event): void => {
+        const target = event.target as SliderHandle;
+        if (target.value != null) {
+            if (typeof target.value === 'object') {
+                action(event.type)(target.value);
+            } else {
+                action(event.type)(`${target.name}: ${target.value}`);
+            }
+        }
+    };
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                value="5"
+                step="1"
+                min="0"
+                max="255"
+                @input=${handleEvent}
+                @change=${handleEvent}
+                .formatOptions=${{
+                    style: 'unit',
+                    unit: 'pc',
+                }}
+                ...=${spreadProps(args)}
+            >
+                Output Levels
+                <sp-slider-handle slot="handle" value="5"></sp-slider-handle>
+                <sp-slider-handle slot="handle" value="133"></sp-slider-handle>
+                <sp-slider-handle slot="handle" value="250"></sp-slider-handle>
+            </sp-slider>
+        </div>
+    `;
 };
 
 export const ThreeHandlesOrdered = (args: StoryArgs): TemplateResult => {

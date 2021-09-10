@@ -82,6 +82,8 @@ export class SliderHandle extends Focusable {
         return this.handleController?.inputForHandle(this) ?? this;
     }
 
+    _forcedUnit = '';
+
     @property({ type: Number })
     value = 10;
 
@@ -161,12 +163,33 @@ export class SliderHandle extends Focusable {
             !this._numberFormatCache ||
             this.resolvedLanguage !== this._numberFormatCache.language
         ) {
-            this._numberFormatCache = {
-                language: this.resolvedLanguage,
-                numberFormat: new NumberFormatter(
+            let numberFormatter: NumberFormatter;
+            try {
+                numberFormatter = new NumberFormatter(
                     this.resolvedLanguage,
                     this.formatOptions
-                ),
+                );
+                this._forcedUnit = '';
+                // numberFormatter.format(1);
+            } catch (error) {
+                const {
+                    style,
+                    unit,
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    unitDisplay,
+                    ...formatOptionsNoUnit
+                } = this.formatOptions || {};
+                if (style === 'unit') {
+                    this._forcedUnit = unit as string;
+                }
+                numberFormatter = new NumberFormatter(
+                    this.resolvedLanguage,
+                    formatOptionsNoUnit
+                );
+            }
+            this._numberFormatCache = {
+                language: this.resolvedLanguage,
+                numberFormat: numberFormatter,
             };
         }
         /* c8 ignore next */
