@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.13...@spectrum-web-components/overlay@0.11.14) (2021-09-13)
+
+### Bug Fixes
+
+-   close modal overlays with contextmenu events and pass those to the underlying page ([9e83f3c](https://github.com/adobe/spectrum-web-components/commit/9e83f3c0d2398323ebe941ba253d7a0dc0f40ba6))
+
 ## [0.11.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.12...@spectrum-web-components/overlay@0.11.13) (2021-08-24)
 
 ### Bug Fixes

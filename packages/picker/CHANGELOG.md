@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.1...@spectrum-web-components/picker@0.7.2) (2021-09-13)
+
+### Bug Fixes
+
+-   give Picker a focus helper to enable tab navigation in Safari ([e796525](https://github.com/adobe/spectrum-web-components/commit/e7965251651b42e28bfbcaf752f2ab9b19700835))
+-   simplify focus application in Menu ([6140169](https://github.com/adobe/spectrum-web-components/commit/61401699b36298b6f11cc80703aff664cbb867a7))
+
 ## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.0...@spectrum-web-components/picker@0.7.1) (2021-08-24)
 
 **Note:** Version bump only for package @spectrum-web-components/picker

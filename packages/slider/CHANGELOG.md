@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.6...@spectrum-web-components/slider@0.10.7) (2021-09-13)
+
+### Bug Fixes
+
+-   **slider:** support non-supported units in "Intl.numberFormat" ([ac32355](https://github.com/adobe/spectrum-web-components/commit/ac32355f3d6459937b025d2fce9f006b0226622e))
+-   ensure lazily loaded focusElements do not crash ([64f2a54](https://github.com/adobe/spectrum-web-components/commit/64f2a54a5a6934306e97433e8102da6fe38b2660))
+-   flappy Slider/Color Area tests ([c769c87](https://github.com/adobe/spectrum-web-components/commit/c769c8750a66139588191a8289abf13df7012c46))
+
 ## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.5...@spectrum-web-components/slider@0.10.6) (2021-08-24)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.7...@spectrum-web-components/shared@0.12.8) (2021-09-13)
+
+### Bug Fixes
+
+-   ensure lazily loaded focusElements do not crash ([64f2a54](https://github.com/adobe/spectrum-web-components/commit/64f2a54a5a6934306e97433e8102da6fe38b2660))
+
 ## [0.12.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.6...@spectrum-web-components/shared@0.12.7) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/shared

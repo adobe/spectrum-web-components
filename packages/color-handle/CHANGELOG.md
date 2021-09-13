@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.1.7...@spectrum-web-components/color-handle@0.1.8) (2021-09-13)
+
+### Bug Fixes
+
+-   manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
+-   prevent focus outline ([af2b077](https://github.com/adobe/spectrum-web-components/commit/af2b07704ae01409649be3ee1b45c15463cd9baf))
+
 ## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.1.6...@spectrum-web-components/color-handle@0.1.7) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/color-handle

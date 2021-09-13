@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.2...@spectrum-web-components/menu@0.9.3) (2021-09-13)
+
+### Bug Fixes
+
+-   simplify focus application in Menu ([6140169](https://github.com/adobe/spectrum-web-components/commit/61401699b36298b6f11cc80703aff664cbb867a7))
+
 ## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.1...@spectrum-web-components/menu@0.9.2) (2021-08-24)
 
 ### Bug Fixes

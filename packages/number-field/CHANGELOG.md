@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.7...@spectrum-web-components/number-field@0.1.8) (2021-09-13)
+
+### Bug Fixes
+
+-   **number-field:** support non-supported units in "Intl.numberFormat" ([d846c0b](https://github.com/adobe/spectrum-web-components/commit/d846c0bc75c538b008d6a7f50dc9aecc06a9b606))
+-   add input validation to Number Field ([b1dd5ea](https://github.com/adobe/spectrum-web-components/commit/b1dd5ea79b079e7ff9a3f850c8589f4295878941))
+
 ## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.6...@spectrum-web-components/number-field@0.1.7) (2021-08-24)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field
