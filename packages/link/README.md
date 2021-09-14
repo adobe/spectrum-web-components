@@ -115,7 +115,7 @@ All links can have a quiet style, which means they don’t have an underline. Th
     <p style="color: rgb(240, 240, 240);">
         This is a
         <sp-link over-background quiet href="#">quiet link</sp-link>
-        is over a background.
+        over a background.
     </p>
 </div>
 ```
