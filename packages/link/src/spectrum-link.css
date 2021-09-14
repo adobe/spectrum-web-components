@@ -58,8 +58,6 @@ a {
     outline: none;
     cursor: pointer;
 }
-:host([quiet]) a:focus-visible,
-:host([over-background]) a:focus-visible,
 a:focus-visible {
     /* .spectrum-Link.focus-ring */
     text-decoration: underline;
@@ -95,8 +93,6 @@ a:active {
         var(--spectrum-global-color-blue-700)
     );
 }
-:host([quiet]) a:focus-visible,
-:host([over-background]) a:focus-visible,
 a:focus-visible {
     /* .spectrum-Link.focus-ring */
     color: var(
@@ -104,19 +100,19 @@ a:focus-visible {
         var(--spectrum-alias-text-color-key-focus)
     );
 }
-.spectrum-Link--secondary {
+:host([variant='secondary']) a {
     /* .spectrum-Link--secondary */
     color: inherit;
 }
-.spectrum-Link--secondary:hover {
+:host([variant='secondary']) a:hover {
     /* .spectrum-Link--secondary:hover */
     color: inherit;
 }
-.spectrum-Link--secondary:active {
+:host([variant='secondary']) a:active {
     /* .spectrum-Link--secondary:active */
     color: inherit;
 }
-.spectrum-Link--secondary:focus {
+:host([variant='secondary']) a:focus {
     /* .spectrum-Link--secondary:focus */
     color: inherit;
 }
@@ -149,28 +145,16 @@ a:focus-visible {
     );
 }
 @media (forced-colors: active) {
-    .spectrum-Link--secondary {
+    :host([variant='secondary']) a {
+        color: linktext;
     }
-    .spectrum-Link--secondary:hover {
+    :host([variant='secondary']) a:hover {
+        color: linktext;
     }
-    .spectrum-Link--secondary:active {
+    :host([variant='secondary']) a:active {
+        color: linktext;
     }
-    .spectrum-Link--secondary:focus {
+    :host([variant='secondary']) a:focus {
+        color: linktext;
     }
-}
-.spectrum-Link--secondary {
-    /* .spectrum-Link--secondary */
-    color: linktext;
-}
-.spectrum-Link--secondary:hover {
-    /* .spectrum-Link--secondary:hover */
-    color: linktext;
-}
-.spectrum-Link--secondary:active {
-    /* .spectrum-Link--secondary:active */
-    color: linktext;
-}
-.spectrum-Link--secondary:focus {
-    /* .spectrum-Link--secondary:focus */
-    color: linktext;
 }

@@ -10,8 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { mangleSpecificity } from './spectrum-config-utils.js';
-
 const config = {
     spectrum: 'link',
     components: [
@@ -30,6 +28,13 @@ const config = {
                     type: 'boolean',
                     name: 'over-background',
                     selector: '.spectrum-Link--overBackground',
+                },
+                {
+                    type: 'enum',
+                    name: 'variant',
+                    values: [
+                        '.spectrum-Link--secondary',
+                    ],
                 },
                 {
                     type: 'enum',
@@ -56,7 +61,6 @@ const config = {
                 },
             ],
             exclude: [/\.is-disabled/, /\.spectrum-Link--subtle/],
-            selectorTransforms: [mangleSpecificity],
         },
     ],
 };
