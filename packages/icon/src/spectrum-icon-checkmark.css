@@ -17,42 +17,50 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     }
 }
 .spectrum-UIIcon-Checkmark50 {
-    /* .spectrum-UIIcon-Checkmark50 */
-    width: var(--spectrum-alias-ui-icon-checkmark-size-50);
     height: var(--spectrum-alias-ui-icon-checkmark-size-50);
+    width: var(
+        --spectrum-alias-ui-icon-checkmark-size-50
+    ); /* .spectrum-UIIcon-Checkmark50 */
 }
 .spectrum-UIIcon-Checkmark75 {
-    /* .spectrum-UIIcon-Checkmark75 */
-    width: var(--spectrum-alias-ui-icon-checkmark-size-75);
     height: var(--spectrum-alias-ui-icon-checkmark-size-75);
+    width: var(
+        --spectrum-alias-ui-icon-checkmark-size-75
+    ); /* .spectrum-UIIcon-Checkmark75 */
 }
 .spectrum-UIIcon-Checkmark100 {
-    /* .spectrum-UIIcon-Checkmark100 */
-    width: var(--spectrum-alias-ui-icon-checkmark-size-100);
     height: var(--spectrum-alias-ui-icon-checkmark-size-100);
+    width: var(
+        --spectrum-alias-ui-icon-checkmark-size-100
+    ); /* .spectrum-UIIcon-Checkmark100 */
 }
 .spectrum-UIIcon-Checkmark200 {
-    /* .spectrum-UIIcon-Checkmark200 */
-    width: var(--spectrum-alias-ui-icon-checkmark-size-200);
     height: var(--spectrum-alias-ui-icon-checkmark-size-200);
+    width: var(
+        --spectrum-alias-ui-icon-checkmark-size-200
+    ); /* .spectrum-UIIcon-Checkmark200 */
 }
 .spectrum-UIIcon-Checkmark300 {
-    /* .spectrum-UIIcon-Checkmark300 */
-    width: var(--spectrum-alias-ui-icon-checkmark-size-300);
     height: var(--spectrum-alias-ui-icon-checkmark-size-300);
+    width: var(
+        --spectrum-alias-ui-icon-checkmark-size-300
+    ); /* .spectrum-UIIcon-Checkmark300 */
 }
 .spectrum-UIIcon-Checkmark400 {
-    /* .spectrum-UIIcon-Checkmark400 */
-    width: var(--spectrum-alias-ui-icon-checkmark-size-400);
     height: var(--spectrum-alias-ui-icon-checkmark-size-400);
+    width: var(
+        --spectrum-alias-ui-icon-checkmark-size-400
+    ); /* .spectrum-UIIcon-Checkmark400 */
 }
 .spectrum-UIIcon-Checkmark500 {
-    /* .spectrum-UIIcon-Checkmark500 */
-    width: var(--spectrum-alias-ui-icon-checkmark-size-500);
     height: var(--spectrum-alias-ui-icon-checkmark-size-500);
+    width: var(
+        --spectrum-alias-ui-icon-checkmark-size-500
+    ); /* .spectrum-UIIcon-Checkmark500 */
 }
 .spectrum-UIIcon-Checkmark600 {
-    /* .spectrum-UIIcon-Checkmark600 */
-    width: var(--spectrum-alias-ui-icon-checkmark-size-600);
     height: var(--spectrum-alias-ui-icon-checkmark-size-600);
+    width: var(
+        --spectrum-alias-ui-icon-checkmark-size-600
+    ); /* .spectrum-UIIcon-Checkmark600 */
 }

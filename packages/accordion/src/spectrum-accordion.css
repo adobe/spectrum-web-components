@@ -11,13 +11,12 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Accordion */
     --spectrum-accordion-item-title-tracking-actual: calc(
         var(
                 --spectrum-accordion-item-title-tracking,
                 var(--spectrum-global-font-letter-spacing-medium)
             ) / 100
-    );
+    ); /* .spectrum-Accordion */
     --spectrum-accordion-item-title-padding-y: var(
         --spectrum-global-dimension-size-150
     );
@@ -27,8 +26,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         130ms
     );
     --spectrum-accordion-icon-width: var(--spectrum-global-dimension-size-125);
-    display: block;
+}
+:host {
+    display: block; /* .spectrum-Accordion */
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }

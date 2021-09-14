@@ -85,9 +85,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-background-color-modal-overlay: rgba(0, 0, 0, 0.6);
     --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.8);
-    --spectrum-alias-background-color-hover-overlay: hsla(0, 0%, 93.7%, 0.08);
-    --spectrum-alias-highlight-hover: hsla(0, 0%, 93.7%, 0.08);
-    --spectrum-alias-highlight-active: hsla(0, 0%, 93.7%, 0.15);
+    --spectrum-alias-background-color-hover-overlay: rgba(239, 239, 239, 0.08);
+    --spectrum-alias-highlight-hover: rgba(239, 239, 239, 0.08);
+    --spectrum-alias-highlight-active: rgba(239, 239, 239, 0.15);
     --spectrum-alias-highlight-selected: rgba(38, 128, 235, 0.2);
     --spectrum-alias-highlight-selected-hover: rgba(38, 128, 235, 0.3);
     --spectrum-alias-text-highlight-color: rgba(38, 128, 235, 0.3);
@@ -95,7 +95,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-border-color-selected: var(
         --spectrum-global-color-blue-600
     );
-    --spectrum-alias-radial-reaction-color-default: hsla(0, 0%, 78.4%, 0.6);
+    --spectrum-alias-radial-reaction-color-default: rgba(200, 200, 200, 0.6);
     --spectrum-alias-pasteboard-background-color: var(
         --spectrum-global-color-gray-50
     );
@@ -105,27 +105,32 @@ governing permissions and limitations under the License.
     --spectrum-alias-appframe-separator-color: var(
         --spectrum-global-color-gray-50
     );
-    --spectrum-colorarea-border-color: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorarea-border-color-hover: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorarea-border-color-down: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorarea-border-color-key-focus: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorslider-border-color: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorslider-border-color-hover: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorslider-border-color-down: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorslider-border-color-key-focus: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorslider-vertical-border-color: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorslider-vertical-border-color-hover: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorslider-vertical-border-color-down: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorslider-vertical-border-color-key-focus: hsla(
-        0,
-        0%,
-        93.7%,
+    --spectrum-colorarea-border-color: rgba(239, 239, 239, 0.1);
+    --spectrum-colorarea-border-color-hover: rgba(239, 239, 239, 0.1);
+    --spectrum-colorarea-border-color-down: rgba(239, 239, 239, 0.1);
+    --spectrum-colorarea-border-color-key-focus: rgba(239, 239, 239, 0.1);
+    --spectrum-colorslider-border-color: rgba(239, 239, 239, 0.1);
+    --spectrum-colorslider-border-color-hover: rgba(239, 239, 239, 0.1);
+    --spectrum-colorslider-border-color-down: rgba(239, 239, 239, 0.1);
+    --spectrum-colorslider-border-color-key-focus: rgba(239, 239, 239, 0.1);
+    --spectrum-colorslider-vertical-border-color: rgba(239, 239, 239, 0.1);
+    --spectrum-colorslider-vertical-border-color-hover: rgba(
+        239,
+        239,
+        239,
         0.1
     );
-    --spectrum-colorwheel-border-color: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorwheel-border-color-hover: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorwheel-border-color-down: hsla(0, 0%, 93.7%, 0.1);
-    --spectrum-colorwheel-border-color-key-focus: hsla(0, 0%, 93.7%, 0.1);
+    --spectrum-colorslider-vertical-border-color-down: rgba(239, 239, 239, 0.1);
+    --spectrum-colorslider-vertical-border-color-key-focus: rgba(
+        239,
+        239,
+        239,
+        0.1
+    );
+    --spectrum-colorwheel-border-color: rgba(239, 239, 239, 0.1);
+    --spectrum-colorwheel-border-color-hover: rgba(239, 239, 239, 0.1);
+    --spectrum-colorwheel-border-color-down: rgba(239, 239, 239, 0.1);
+    --spectrum-colorwheel-border-color-key-focus: rgba(239, 239, 239, 0.1);
     --spectrum-miller-column-item-background-color-selected: rgba(
         38,
         128,
@@ -138,7 +143,7 @@ governing permissions and limitations under the License.
         235,
         0.2
     );
-    --spectrum-well-background-color: hsla(0, 0%, 78.4%, 0.02);
-    --spectrum-well-border-color: hsla(0, 0%, 93.7%, 0.05);
+    --spectrum-well-background-color: rgba(200, 200, 200, 0.02);
+    --spectrum-well-border-color: rgba(239, 239, 239, 0.05);
 }
 /* stylelint-enable */

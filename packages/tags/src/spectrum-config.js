@@ -76,6 +76,18 @@ const config = {
                     name: 'icon',
                 },
             ],
+            complexSelectors: [
+                {
+                    replacement: ' > .spectrum-Avatar',
+                    selector:
+                        /\s+\.spectrum-Tags-item\s?\>\s?\.spectrum-Avatar/,
+                },
+                {
+                    replacement: " > slot[name='avatar'] ~ .label",
+                    selector:
+                        /\s+\>\s?\.spectrum-Avatar\s?\~\s?\.spectrum-Tags-itemLabel/,
+                },
+            ],
             exclude: [
                 /\.spectrum-Tags /,
                 /\.spectrum-ClearButton \.spectrum-Icon/,

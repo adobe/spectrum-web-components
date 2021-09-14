@@ -50,7 +50,7 @@ const config = {
                 {
                     replacement: '::slotted(:not(:first-child))',
                     selector:
-                        '.spectrum-ActionGroup-item+.spectrum-ActionGroup-item',
+                        '.spectrum-ActionGroup-item + .spectrum-ActionGroup-item',
                 },
                 {
                     replacement: '::slotted([selected])',

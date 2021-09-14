@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Menu */
-    --spectrum-menu-margin-x: var(--spectrum-global-dimension-size-40);
+    --spectrum-menu-margin-x: var(
+        --spectrum-global-dimension-size-40
+    ); /* .spectrum-Menu */
     --spectrum-listitem-heading-text-size: var(
         --spectrum-global-dimension-font-size-50
     );
@@ -33,10 +34,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-alias-body-text-line-height,
         var(--spectrum-global-font-line-height-medium)
     );
+}
+:host {
     --spectrum-listitem-divider-size: var(
         --spectrum-listitem-m-divider-size,
         var(--spectrum-alias-border-size-thick)
-    );
+    ); /* .spectrum-Menu */
     --spectrum-listitem-divider-padding: var(
         --spectrum-listitem-m-divider-padding,
         3px
@@ -73,63 +76,63 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-listitem-m-thumbnail-padding-left,
         var(--spectrum-alias-item-padding-m)
     );
-    display: inline-block;
+}
+:host {
     box-sizing: border-box;
-    margin-top: var(
-        --spectrum-popover-padding-y,
-        var(--spectrum-global-dimension-size-50)
-    );
+    display: inline-block; /* .spectrum-Menu */
+    list-style-type: none;
     margin-bottom: var(
         --spectrum-popover-padding-y,
         var(--spectrum-global-dimension-size-50)
     );
     margin-left: 0;
     margin-right: 0;
-    padding: 0;
-    list-style-type: none;
+    margin-top: var(
+        --spectrum-popover-padding-y,
+        var(--spectrum-global-dimension-size-50)
+    );
     overflow: auto;
+    padding: 0;
 }
 :host([dir='ltr'][selects]) ::slotted(sp-menu-item) {
-    /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
-    padding-right: var(--spectrum-listitem-selectable-padding-right);
+    padding-right: var(
+        --spectrum-listitem-selectable-padding-right
+    ); /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
 }
 :host([dir='rtl'][selects]) ::slotted(sp-menu-item) {
-    /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
-    padding-left: var(--spectrum-listitem-selectable-padding-right);
+    padding-left: var(
+        --spectrum-listitem-selectable-padding-right
+    ); /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
 }
 :host([dir='ltr'][selects]) ::slotted(sp-menu-item[selected]) {
-    /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-right: calc(
         var(--spectrum-listitem-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
             )
-    );
+    ); /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
 }
 :host([dir='rtl'][selects]) ::slotted(sp-menu-item[selected]) {
-    /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
     padding-left: calc(
         var(--spectrum-listitem-padding-right) -
             var(
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
             )
-    );
+    ); /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
 }
 ::slotted(sp-menu) {
-    /* .spectrum-Menu .spectrum-Menu */
-    display: block;
+    display: block; /* .spectrum-Menu .spectrum-Menu */
 }
 :host {
-    /* .spectrum-Menu */
-    --spectrum-listheading-text-color: var(--spectrum-global-color-gray-700);
+    --spectrum-listheading-text-color: var(
+        --spectrum-global-color-gray-700
+    ); /* .spectrum-Menu */
 }
 :host {
-    /* .spectrum-Menu,
-   * .spectrum-Menu-item */
     background-color: var(
         --spectrum-listitem-m-background-color,
         var(--spectrum-alias-background-color-transparent)
-    );
+    ); /* .spectrum-Menu */
 }

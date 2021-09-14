@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 /* stylelint-disable */
 :host,
 :root {
-    --spectrum-global-animation-duration-0: 0ms;
+    --spectrum-global-animation-duration-0: 0ms; /* spectrum-animationGlobals.css */
     --spectrum-global-animation-duration-100: 130ms;
     --spectrum-global-animation-duration-200: 160ms;
     --spectrum-global-animation-duration-300: 190ms;
@@ -30,6 +30,8 @@ governing permissions and limitations under the License.
     --spectrum-global-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
     --spectrum-global-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
     --spectrum-global-animation-linear: cubic-bezier(0, 0, 1, 1);
+
+    /* spectrum-colorGlobals.css */
     --spectrum-global-color-status: Verified;
     --spectrum-global-color-version: 5.1;
     --spectrum-global-color-static-black: #000;
@@ -136,6 +138,8 @@ governing permissions and limitations under the License.
     --spectrum-global-color-opacity-6: 0.06;
     --spectrum-global-color-opacity-5: 0.05;
     --spectrum-global-color-opacity-4: 0.04;
+
+    /* spectrum-colorSemantics.css */
     --spectrum-semantic-negative-color-background: var(
         --spectrum-global-color-static-red-700
     );
@@ -347,6 +351,8 @@ governing permissions and limitations under the License.
     --spectrum-semantic-presence-color-8: var(
         --spectrum-global-color-static-fuchsia-600
     );
+
+    /* spectrum-dimensionGlobals.css */
     --spectrum-global-dimension-static-size-0: 0px;
     --spectrum-global-dimension-static-size-10: 1px;
     --spectrum-global-dimension-static-size-25: 2px;
@@ -415,6 +421,8 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-static-grid-columns: 12;
     --spectrum-global-dimension-static-grid-fluid-width: 100%;
     --spectrum-global-dimension-static-grid-fixed-max-width: 1280px;
+
+    /* spectrum-fontGlobals.css */
     --spectrum-global-font-family-base: adobe-clean, 'Source Sans Pro',
         -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
@@ -441,6 +449,8 @@ governing permissions and limitations under the License.
     --spectrum-global-font-line-height-small: 1.3;
     --spectrum-global-font-multiplier-25: 0.25em;
     --spectrum-global-font-multiplier-75: 0.75em;
+
+    /* spectrum-staticAliases.css */
     --spectrum-alias-border-size-thin: var(
         --spectrum-global-dimension-static-size-10
     );
@@ -724,6 +734,7 @@ governing permissions and limitations under the License.
 }
 :host,
 :root {
+    /* spectrum-dimensionAliases.css */
     --spectrum-alias-dropshadow-blur: var(--spectrum-global-dimension-size-50);
     --spectrum-alias-dropshadow-offset-y: var(
         --spectrum-global-dimension-size-10
@@ -1120,6 +1131,7 @@ governing permissions and limitations under the License.
 }
 :host,
 :root {
+    /* spectrum-colorAliases.css */
     --spectrum-alias-background-color-default: var(
         --spectrum-global-color-gray-100
     );
@@ -1127,10 +1139,10 @@ governing permissions and limitations under the License.
         --spectrum-global-color-gray-200
     );
     --spectrum-alias-background-color-transparent: transparent;
-    --spectrum-alias-background-color-over-background-down: hsla(
-        0,
-        0%,
-        100%,
+    --spectrum-alias-background-color-over-background-down: rgba(
+        255,
+        255,
+        255,
         0.2
     );
     --spectrum-alias-background-color-quickactions-overlay: rgba(0, 0, 0, 0.2);
@@ -1165,10 +1177,10 @@ governing permissions and limitations under the License.
     --spectrum-alias-text-color-over-background: var(
         --spectrum-global-color-static-white
     );
-    --spectrum-alias-text-color-over-background-disabled: hsla(
-        0,
-        0%,
-        100%,
+    --spectrum-alias-text-color-over-background-disabled: rgba(
+        255,
+        255,
+        255,
         0.2
     );
     --spectrum-alias-heading-text-color: var(--spectrum-global-color-gray-900);
@@ -1206,7 +1218,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-track-color-disabled: var(
         --spectrum-global-color-gray-300
     );
-    --spectrum-alias-track-color-over-background: hsla(0, 0%, 100%, 0.2);
+    --spectrum-alias-track-color-over-background: rgba(255, 255, 255, 0.2);
     --spectrum-alias-icon-color: var(--spectrum-global-color-gray-700);
     --spectrum-alias-icon-color-over-background: var(
         --spectrum-global-color-static-white
@@ -1215,10 +1227,10 @@ governing permissions and limitations under the License.
     --spectrum-alias-icon-color-down: var(--spectrum-global-color-gray-900);
     --spectrum-alias-icon-color-focus: var(--spectrum-global-color-gray-900);
     --spectrum-alias-icon-color-disabled: var(--spectrum-global-color-gray-400);
-    --spectrum-alias-icon-color-over-background-disabled: hsla(
-        0,
-        0%,
-        100%,
+    --spectrum-alias-icon-color-over-background-disabled: rgba(
+        255,
+        255,
+        255,
         0.2
     );
     --spectrum-alias-icon-color-selected-neutral: var(

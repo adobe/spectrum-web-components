@@ -11,43 +11,45 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-IllustratedMessage */
-    --spectrum-illustrated-message-description-max-width: 500px;
+    --spectrum-illustrated-message-description-max-width: 500px; /* .spectrum-IllustratedMessage */
     --spectrum-illustrated-message-heading-max-width: 500px;
     --spectrum-illustrated-message-illustration-margin-bottom: 24px;
     --spectrum-illustrated-message-heading-margin: 0;
     --spectrum-illustrated-message-description-margin: 4px 0 0 0;
-    height: 100%;
+}
+:host {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    height: 100%; /* .spectrum-IllustratedMessage */
     justify-content: center;
     text-align: center;
 }
 #illustration {
-    /* .spectrum-IllustratedMessage-illustration */
     margin-bottom: var(
         --spectrum-illustrated-message-illustration-margin-bottom
-    );
+    ); /* .spectrum-IllustratedMessage-illustration */
 }
 #heading {
-    /* .spectrum-IllustratedMessage-heading */
-    max-width: var(--spectrum-illustrated-message-heading-max-width);
     margin: var(--spectrum-illustrated-message-heading-margin);
+    max-width: var(
+        --spectrum-illustrated-message-heading-max-width
+    ); /* .spectrum-IllustratedMessage-heading */
 }
 #description {
-    /* .spectrum-IllustratedMessage-description */
-    max-width: var(--spectrum-illustrated-message-description-max-width);
-    margin: var(--spectrum-illustrated-message-description-margin);
     font-style: italic;
+    margin: var(--spectrum-illustrated-message-description-margin);
+    max-width: var(
+        --spectrum-illustrated-message-description-max-width
+    ); /* .spectrum-IllustratedMessage-description */
 }
 :host([cta]) #description {
-    /* .spectrum-IllustratedMessage--cta .spectrum-IllustratedMessage-description */
-    font-style: normal;
+    font-style: normal; /* .spectrum-IllustratedMessage--cta .spectrum-IllustratedMessage-description */
 }
 #illustration {
-    /* .spectrum-IllustratedMessage-illustration */
-    color: var(--spectrum-global-color-gray-500);
     fill: currentColor;
     stroke: currentColor;
+    color: var(
+        --spectrum-global-color-gray-500
+    ); /* .spectrum-IllustratedMessage-illustration */
 }

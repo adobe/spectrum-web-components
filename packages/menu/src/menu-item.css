@@ -10,7 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+@import './spectrum-checkmark.css';
+@import './spectrum-chevron.css';
 @import './spectrum-menu-item.css';
+@import './spectrum-itemLabel.css';
 
 :host([hidden]) {
     display: none;

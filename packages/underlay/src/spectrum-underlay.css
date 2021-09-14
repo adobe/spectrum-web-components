@@ -11,26 +11,23 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Underlay */
-    visibility: hidden;
     opacity: 0;
+    pointer-events: none;
     transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
         visibility 0ms linear
             var(--spectrum-global-animation-duration-100, 0.13s);
-    pointer-events: none;
+    visibility: hidden; /* .spectrum-Underlay */
 }
 :host([open]) {
-    /* .spectrum-Underlay.is-open */
-    visibility: visible;
     opacity: 1;
-    transition-delay: 0ms;
     pointer-events: auto;
+    transition-delay: 0ms;
+    visibility: visible; /* .spectrum-Underlay.is-open */
 }
 :host {
-    /* .spectrum-Underlay */
-    --spectrum-dialog-confirm-background-entry-animation-delay: 0ms;
+    --spectrum-dialog-confirm-background-entry-animation-delay: 0ms; /* .spectrum-Underlay */
     --spectrum-dialog-confirm-background-exit-animation-ease: cubic-bezier(
         0.5,
         0,
@@ -43,13 +40,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         0.4,
         1
     );
-    position: fixed;
-    top: 0;
-    right: 0;
+}
+:host {
     bottom: 0;
     left: 0;
-    z-index: 1;
     overflow: hidden;
+    position: fixed; /* .spectrum-Underlay */
+    right: 0;
+    top: 0;
     transition: opacity
             var(
                 --spectrum-dialog-confirm-background-exit-animation-duration,
@@ -74,9 +72,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                         var(--spectrum-global-animation-duration-300)
                     )
             );
+    z-index: 1;
 }
 :host([open]) {
-    /* .spectrum-Underlay.is-open */
     transition: opacity
         var(
             --spectrum-dialog-confirm-background-entry-animation-duration,
@@ -86,12 +84,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-dialog-confirm-background-entry-animation-ease,
             var(--spectrum-global-animation-linear)
         )
-        var(--spectrum-dialog-confirm-background-entry-animation-delay, 0ms);
+        var(--spectrum-dialog-confirm-background-entry-animation-delay, 0ms); /* .spectrum-Underlay.is-open */
 }
 :host {
-    /* .spectrum-Underlay */
     background: var(
         --spectrum-dialog-confirm-overlay-background-color,
         var(--spectrum-alias-background-color-modal-overlay)
-    );
+    ); /* .spectrum-Underlay */
 }

@@ -11,8 +11,7 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-ColorSlider */
-    --spectrum-colorslider-handle-hitarea-border-radius: 0%;
+    --spectrum-colorslider-handle-hitarea-border-radius: 0%; /* .spectrum-ColorSlider */
     --spectrum-colorslider-handle-hitarea-width: var(
         --spectrum-global-dimension-size-300
     );
@@ -21,13 +20,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([focused]) .handle {
-    /* .spectrum-ColorSlider.is-focused .spectrum-ColorSlider-handle */
-    width: calc(
-        var(
-                --spectrum-colorhandle-size,
-                var(--spectrum-global-dimension-size-200)
-            ) * 2
-    );
     height: calc(
         var(
                 --spectrum-colorhandle-size,
@@ -40,152 +32,149 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-top: calc(
         -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
     );
+    width: calc(
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * 2
+    ); /* .spectrum-ColorSlider.is-focused .spectrum-ColorSlider-handle */
 }
 .slider {
-    /* .spectrum-ColorSlider-slider */
-    opacity: 0.0001;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    opacity: 0.0001; /* .spectrum-ColorSlider-slider */
+    pointer-events: none;
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
     z-index: 0;
-    margin: 0;
-    pointer-events: none;
 }
 :host {
-    /* .spectrum-ColorSlider */
-    position: relative;
+    cursor: default;
     display: block;
-    width: var(
-        --spectrum-colorslider-default-length,
-        var(--spectrum-global-dimension-size-2400)
-    );
     height: var(
         --spectrum-colorslider-height,
         var(--spectrum-global-dimension-size-300)
     );
+    position: relative; /* .spectrum-ColorSlider */
     -webkit-user-select: none;
     user-select: none;
-    cursor: default;
+    width: var(
+        --spectrum-colorslider-default-length,
+        var(--spectrum-global-dimension-size-2400)
+    );
 }
 :host([focused]) {
-    /* .spectrum-ColorSlider.is-focused */
-    z-index: 2;
+    z-index: 2; /* .spectrum-ColorSlider.is-focused */
 }
 :host([disabled]) {
-    /* .spectrum-ColorSlider.is-disabled */
-    pointer-events: none;
+    pointer-events: none; /* .spectrum-ColorSlider.is-disabled */
 }
 :host([vertical]) {
-    /* .spectrum-ColorSlider--vertical */
-    display: inline-block;
-    width: var(
-        --spectrum-colorslider-vertical-width,
-        var(--spectrum-global-dimension-size-300)
-    );
+    display: inline-block; /* .spectrum-ColorSlider--vertical */
     height: var(
         --spectrum-colorslider-vertical-default-length,
         var(--spectrum-global-dimension-size-2400)
     );
+    width: var(
+        --spectrum-colorslider-vertical-width,
+        var(--spectrum-global-dimension-size-300)
+    );
 }
 :host([vertical]) .handle {
-    /* .spectrum-ColorSlider--vertical .spectrum-ColorSlider-handle */
-    left: 50%;
+    left: 50%; /* .spectrum-ColorSlider--vertical .spectrum-ColorSlider-handle */
     top: 0;
 }
 .handle {
-    /* .spectrum-ColorSlider-handle */
-    left: 0;
+    left: 0; /* .spectrum-ColorSlider-handle */
     top: 50%;
 }
 .handle:after {
-    /* .spectrum-ColorSlider-handle:after */
-    border-radius: var(--spectrum-colorslider-handle-hitarea-border-radius);
-    width: var(--spectrum-colorslider-handle-hitarea-width);
+    border-radius: var(
+        --spectrum-colorslider-handle-hitarea-border-radius
+    ); /* .spectrum-ColorSlider-handle:after */
     height: var(--spectrum-colorslider-handle-hitarea-height);
+    width: var(--spectrum-colorslider-handle-hitarea-width);
 }
 .checkerboard {
-    /* .spectrum-ColorSlider-checkerboard */
-    background-size: var(--spectrum-global-dimension-static-size-200, 16px)
-        var(--spectrum-global-dimension-static-size-200, 16px);
     background-position: 0 0,
         0 var(--spectrum-global-dimension-static-size-100, 8px),
         var(--spectrum-global-dimension-static-size-100, 8px)
             calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)),
         calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)) 0;
+    background-size: var(--spectrum-global-dimension-static-size-200, 16px)
+        var(--spectrum-global-dimension-static-size-200, 16px); /* .spectrum-ColorSlider-checkerboard */
 }
 .checkerboard:before {
-    /* .spectrum-ColorSlider-checkerboard:before */
-    content: '';
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
     border-radius: var(
         --spectrum-colorslider-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
+    bottom: 0;
+    content: ''; /* .spectrum-ColorSlider-checkerboard:before */
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
 }
 .checkerboard,
 .gradient {
-    /* .spectrum-ColorSlider-checkerboard,
-   * .spectrum-ColorSlider-gradient */
-    width: 100%;
-    height: 100%;
     border-radius: var(
         --spectrum-colorslider-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
+    height: 100%;
+    width: 100%; /* .spectrum-ColorSlider-gradient,
+   * .spectrum-ColorSlider-checkerboard */
 }
 :host {
-    /* .spectrum-ColorSlider */
-    --spectrum-colorslider-border-color: var(--spectrum-colorarea-border-color);
+    --spectrum-colorslider-border-color: var(
+        --spectrum-colorarea-border-color
+    ); /* .spectrum-ColorSlider */
 }
 .checkerboard {
-    /* .spectrum-ColorSlider-checkerboard */
-    background-color: var(--spectrum-global-color-static-white, #fff);
+    background-color: var(
+        --spectrum-global-color-static-white,
+        #fff
+    ); /* .spectrum-ColorSlider-checkerboard */
     background-image: linear-gradient(
             -45deg,
             transparent 75.5%,
-            var(--spectrum-global-color-static-gray-500, #bcbcbc) 0
+            var(--spectrum-global-color-static-gray-500, #bcbcbc) 75.5%
         ),
         linear-gradient(
             45deg,
             transparent 75.5%,
-            var(--spectrum-global-color-static-gray-500, #bcbcbc) 0
+            var(--spectrum-global-color-static-gray-500, #bcbcbc) 75.5%
         ),
         linear-gradient(
             -45deg,
             var(--spectrum-global-color-static-gray-500, #bcbcbc) 25.5%,
-            transparent 0
+            transparent 25.5%
         ),
         linear-gradient(
             45deg,
             var(--spectrum-global-color-static-gray-500, #bcbcbc) 25.5%,
-            transparent 0
+            transparent 25.5%
         );
 }
 .checkerboard:before {
-    /* .spectrum-ColorSlider-checkerboard:before */
     box-shadow: inset 0 0 0
         var(
             --spectrum-colorslider-border-size,
             var(--spectrum-alias-border-size-thin)
         )
-        var(--spectrum-colorslider-border-color);
+        var(--spectrum-colorslider-border-color); /* .spectrum-ColorSlider-checkerboard:before */
 }
 :host([disabled]) .checkerboard {
-    /* .spectrum-ColorSlider.is-disabled .spectrum-ColorSlider-checkerboard */
     background: var(
         --spectrum-colorslider-fill-color-disabled,
         var(--spectrum-global-color-gray-300)
-    );
+    ); /* .spectrum-ColorSlider.is-disabled .spectrum-ColorSlider-checkerboard */
 }
 :host([disabled]) .checkerboard:before {
-    /* .spectrum-ColorSlider.is-disabled .spectrum-ColorSlider-checkerboard:before */
     box-shadow: 0 0 0
         var(
             --spectrum-colorslider-border-size,
@@ -194,16 +183,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(
             --spectrum-colorslider-border-color-disabled,
             var(--spectrum-global-color-gray-300)
-        );
+        ); /* .spectrum-ColorSlider.is-disabled .spectrum-ColorSlider-checkerboard:before */
 }
 :host([disabled]) .gradient {
-    /* .spectrum-ColorSlider.is-disabled .spectrum-ColorSlider-gradient */
-    display: none;
+    display: none; /* .spectrum-ColorSlider.is-disabled .spectrum-ColorSlider-gradient */
 }
 @media (forced-colors: active) {
     :host {
         --spectrum-colorslider-border-color-disabled: GrayText;
         --spectrum-colorslider-fill-color-disabled: Canvas;
+    }
+    :host {
         forced-color-adjust: none;
     }
 }

@@ -11,34 +11,47 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #list {
-    /* .spectrum-SideNav */
-    --spectrum-sidenav-item-padding-y: var(--spectrum-global-dimension-size-65);
+    --spectrum-sidenav-item-padding-y: var(
+        --spectrum-global-dimension-size-65
+    ); /* .spectrum-SideNav */ /* .spectrum-SideNav */
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 :host {
-    /* .spectrum-SideNav-item */
-    list-style-type: none;
-    margin-top: var(
-        --spectrum-sidenav-item-gap,
-        var(--spectrum-global-dimension-size-50)
-    );
+    list-style-type: none; /* .spectrum-SideNav-item */
     margin-bottom: var(
         --spectrum-sidenav-item-gap,
         var(--spectrum-global-dimension-size-50)
     );
     margin-left: 0;
     margin-right: 0;
+    margin-top: var(
+        --spectrum-sidenav-item-gap,
+        var(--spectrum-global-dimension-size-50)
+    );
 }
 #itemLink {
-    /* .spectrum-SideNav-itemLink */
-    position: relative;
-    display: inline-flex;
     align-items: center;
-    justify-content: left;
+    border-radius: var(
+        --spectrum-sidenav-item-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
     box-sizing: border-box;
-    width: 100%;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: var(
+        --spectrum-sidenav-item-text-size,
+        var(--spectrum-alias-font-size-default)
+    );
+    font-style: normal;
+    font-weight: var(
+        --spectrum-sidenav-item-text-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    justify-content: left;
     min-height: var(
         --spectrum-sidenav-item-height,
         var(--spectrum-alias-single-line-height)
@@ -48,59 +61,30 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-sidenav-item-padding-x,
             var(--spectrum-global-dimension-size-150)
         );
-    border-radius: var(
-        --spectrum-sidenav-item-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    font-size: var(
-        --spectrum-sidenav-item-text-size,
-        var(--spectrum-alias-font-size-default)
-    );
-    font-weight: var(
-        --spectrum-sidenav-item-text-font-weight,
-        var(--spectrum-global-font-weight-regular)
-    );
-    font-style: normal;
+    position: relative; /* .spectrum-SideNav-itemLink */
     text-decoration: none;
-    word-break: break-word;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-    cursor: pointer;
     transition: background-color
             var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
         color var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
+    width: 100%;
+    word-break: break-word;
 }
 #itemLink:focus {
-    /* .spectrum-SideNav-itemLink:focus */
-    outline: none;
+    outline: none; /* .spectrum-SideNav-itemLink:focus */
 }
 :host([dir='ltr']) #itemLink:focus-visible:before {
-    /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-    left: 0;
+    left: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
 }
 :host([dir='rtl']) #itemLink:focus-visible:before {
-    /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-    right: 0;
+    right: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
 }
 :host([dir='ltr']) #itemLink:focus-visible:before {
-    /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-    right: 0;
+    right: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
 }
 :host([dir='rtl']) #itemLink:focus-visible:before {
-    /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-    left: 0;
+    left: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
 }
 #itemLink:focus-visible:before {
-    /* .spectrum-SideNav-itemLink.focus-ring:before */
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    border-top: var(
-            --spectrum-tabs-m-focus-ring-size,
-            var(--spectrum-alias-border-size-thick)
-        )
-        solid transparent;
     border-bottom: var(
             --spectrum-tabs-m-focus-ring-size,
             var(--spectrum-alias-border-size-thick)
@@ -110,43 +94,44 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-sidenav-item-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
+    border-top: var(
+            --spectrum-tabs-m-focus-ring-size,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid transparent;
+    bottom: 0;
+    content: ''; /* .spectrum-SideNav-itemLink.focus-ring:before */
+    position: absolute;
+    top: 0;
 }
 :host([dir='ltr']) #itemLink ::slotted([slot='icon']) {
-    /* [dir=ltr] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
     margin-right: var(
         --spectrum-sidenav-icon-gap,
         var(--spectrum-global-dimension-size-100)
-    );
+    ); /* [dir=ltr] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
 :host([dir='rtl']) #itemLink ::slotted([slot='icon']) {
-    /* [dir=rtl] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
     margin-left: var(
         --spectrum-sidenav-icon-gap,
         var(--spectrum-global-dimension-size-100)
-    );
+    ); /* [dir=rtl] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
 #itemLink ::slotted([slot='icon']) {
-    /* .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
-    flex-shrink: 0;
+    flex-shrink: 0; /* .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
 :host([dir='ltr']) .spectrum-SideNav-heading {
-    /* [dir=ltr] .spectrum-SideNav-heading */
-    margin-right: 0;
+    margin-right: 0; /* [dir=ltr] .spectrum-SideNav-heading */
 }
 :host([dir='rtl']) .spectrum-SideNav-heading {
-    /* [dir=rtl] .spectrum-SideNav-heading */
-    margin-left: 0;
+    margin-left: 0; /* [dir=rtl] .spectrum-SideNav-heading */
 }
 :host([dir='ltr']) .spectrum-SideNav-heading {
-    /* [dir=ltr] .spectrum-SideNav-heading */
-    margin-left: 0;
+    margin-left: 0; /* [dir=ltr] .spectrum-SideNav-heading */
 }
 :host([dir='rtl']) .spectrum-SideNav-heading {
-    /* [dir=rtl] .spectrum-SideNav-heading */
-    margin-right: 0;
+    margin-right: 0; /* [dir=rtl] .spectrum-SideNav-heading */
 }
 :host([dir='ltr']) .spectrum-SideNav--multiLevel #list #itemLink {
-    /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
     padding-left: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation,
@@ -156,10 +141,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-sidenav-item-padding-x,
                 var(--spectrum-global-dimension-size-150)
             )
-    );
+    ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
 :host([dir='rtl']) .spectrum-SideNav--multiLevel #list #itemLink {
-    /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
     padding-right: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation,
@@ -169,10 +153,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-sidenav-item-padding-x,
                 var(--spectrum-global-dimension-size-150)
             )
-    );
+    ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
 :host([dir='ltr']) .spectrum-SideNav--multiLevel #list #list #itemLink {
-    /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
     padding-left: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation,
@@ -182,10 +165,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-sidenav-item-padding-x,
                 var(--spectrum-global-dimension-size-150)
             )
-    );
+    ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
 :host([dir='rtl']) .spectrum-SideNav--multiLevel #list #list #itemLink {
-    /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
     padding-right: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation,
@@ -195,32 +177,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-sidenav-item-padding-x,
                 var(--spectrum-global-dimension-size-150)
             )
-    );
+    ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
 :host([selected]) > #itemLink {
-    /* .spectrum-SideNav-item.is-selected>.spectrum-SideNav-itemLink */
-    color: var(
-        --spectrum-sidenav-item-text-color-selected,
-        var(--spectrum-alias-text-color-hover)
-    );
     background-color: var(
         --spectrum-sidenav-item-background-color-selected,
         var(--spectrum-alias-highlight-hover)
     );
+    color: var(
+        --spectrum-sidenav-item-text-color-selected,
+        var(--spectrum-alias-text-color-hover)
+    ); /* .spectrum-SideNav-item.is-selected>.spectrum-SideNav-itemLink */
 }
 .is-active > #itemLink {
-    /* .spectrum-SideNav-item .is-active>.spectrum-SideNav-itemLink */
     background-color: var(
         --spectrum-sidenav-item-background-color-down,
         var(--spectrum-alias-highlight-hover)
-    );
+    ); /* .spectrum-SideNav-item .is-active>.spectrum-SideNav-itemLink */
 }
 :host([disabled]) #itemLink {
-    /* .spectrum-SideNav-item.is-disabled .spectrum-SideNav-itemLink */
     background-color: var(
         --spectrum-sidenav-item-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
-    );
+    ); /* .spectrum-SideNav-item.is-disabled .spectrum-SideNav-itemLink */
     color: var(
         --spectrum-sidenav-item-text-color-disabled,
         var(--spectrum-alias-text-color-disabled)
@@ -229,49 +208,44 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     pointer-events: none;
 }
 #itemLink {
-    /* .spectrum-SideNav-itemLink */
     background-color: var(
         --spectrum-sidenav-item-background-color,
         var(--spectrum-alias-background-color-transparent)
-    );
+    ); /* .spectrum-SideNav-itemLink */
     color: var(
         --spectrum-sidenav-item-text-color,
         var(--spectrum-alias-text-color)
     );
 }
 #itemLink:hover {
-    /* .spectrum-SideNav-itemLink:hover */
     background-color: var(
         --spectrum-sidenav-item-background-color-hover,
         var(--spectrum-alias-highlight-hover)
-    );
+    ); /* .spectrum-SideNav-itemLink:hover */
     color: var(
         --spectrum-sidenav-item-text-color-hover,
         var(--spectrum-alias-text-color-hover)
     );
 }
 #itemLink:active {
-    /* .spectrum-SideNav-itemLink:active */
     background-color: var(
         --spectrum-sidenav-item-background-color-down,
         var(--spectrum-alias-highlight-hover)
-    );
+    ); /* .spectrum-SideNav-itemLink:active */
 }
 #itemLink:focus-visible {
-    /* .spectrum-SideNav-itemLink.focus-ring */
     background-color: var(
         --spectrum-sidenav-item-background-color-key-focus,
         var(--spectrum-alias-highlight-hover)
-    );
+    ); /* .spectrum-SideNav-itemLink.focus-ring */
     color: var(
         --spectrum-sidenav-item-text-color-key-focus,
         var(--spectrum-alias-text-color-hover)
     );
 }
 #itemLink:focus-visible:before {
-    /* .spectrum-SideNav-itemLink.focus-ring:before */
     border-color: var(
         --spectrum-sidenav-item-border-color-key-focus,
         var(--spectrum-alias-border-color-focus)
-    );
+    ); /* .spectrum-SideNav-itemLink.focus-ring:before */
 }

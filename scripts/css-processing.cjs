@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 const stripIndent = require('common-tags').stripIndents;
 
-const postCSSPlugins = (resourcePath) => {
+const postCSSPlugins = (resourcePath, toTS) => {
     const postCSSImportConfig = {};
     if (resourcePath) {
         postCSSImportConfig['root'] = resourcePath;
@@ -37,6 +37,7 @@ const postCSSPlugins = (resourcePath) => {
                 'default',
                 {
                     svgo: false,
+                    discardComments: !!toTS,
                 },
             ],
         }),

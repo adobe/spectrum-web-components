@@ -35,7 +35,7 @@ const config = {
                 {
                     replacement: '::slotted(*:not(:first-of-type))',
                     selector:
-                        '.spectrum-ButtonGroup-item+.spectrum-ButtonGroup-item',
+                        '.spectrum-ButtonGroup-item + .spectrum-ButtonGroup-item',
                 },
             ],
             exclude: [/\.spectrum-ActionButton-label/],

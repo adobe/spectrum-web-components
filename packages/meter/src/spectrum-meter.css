@@ -11,10 +11,9 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([size='s']) {
-    /* .spectrum-ProgressBar--sizeS */
     --spectrum-progressbar-border-radius: var(
         --spectrum-progressbar-s-border-radius
-    );
+    ); /* .spectrum-ProgressBar--sizeS */
     --spectrum-progressbar-label-gap-y: var(
         --spectrum-progressbar-s-label-gap-y,
         var(--spectrum-global-dimension-size-50)
@@ -41,10 +40,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([size='m']) {
-    /* .spectrum-ProgressBar--sizeM */
     --spectrum-progressbar-border-radius: var(
         --spectrum-progressbar-m-border-radius
-    );
+    ); /* .spectrum-ProgressBar--sizeM */
     --spectrum-progressbar-label-gap-y: var(
         --spectrum-progressbar-m-label-gap-y,
         var(--spectrum-global-dimension-size-50)
@@ -71,11 +69,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([size='l']) {
-    /* .spectrum-ProgressBar--sizeL */
     --spectrum-progressbar-label-gap-y: var(
         --spectrum-progressbar-l-label-gap-y,
         var(--spectrum-global-dimension-size-50)
-    );
+    ); /* .spectrum-ProgressBar--sizeL */
     --spectrum-progressbar-height: var(
         --spectrum-progressbar-l-height,
         var(--spectrum-global-dimension-size-100)
@@ -102,10 +99,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host([size='xl']) {
-    /* .spectrum-ProgressBar--sizeXL */
     --spectrum-progressbar-border-radius: var(
         --spectrum-progressbar-xl-border-radius
-    );
+    ); /* .spectrum-ProgressBar--sizeXL */
     --spectrum-progressbar-label-gap-y: var(
         --spectrum-progressbar-xl-label-gap-y,
         var(--spectrum-global-dimension-size-50)
@@ -132,127 +128,126 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host {
-    /* .spectrum-ProgressBar */
-    position: relative;
+    align-items: center;
     display: inline-flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    align-items: center;
-    width: var(--spectrum-progressbar-width);
+    position: relative; /* .spectrum-ProgressBar */
     vertical-align: top;
+    width: var(--spectrum-progressbar-width);
 }
 .track {
-    /* .spectrum-ProgressBar-track */
-    overflow: hidden;
-    width: 100%;
-    height: var(--spectrum-progressbar-height);
     border-radius: var(--spectrum-progressbar-border-radius);
+    overflow: hidden; /* .spectrum-ProgressBar-track */
+    width: 100%;
     z-index: 1;
 }
-.fill {
-    /* .spectrum-ProgressBar-fill */
-    border: none;
+.fill,
+.track {
     height: var(--spectrum-progressbar-height);
+}
+.fill {
+    border: none; /* .spectrum-ProgressBar-fill */
     transition: width 1s;
 }
 :host([dir='ltr']) .label,
 :host([dir='ltr']) .percentage {
-    /* [dir=ltr] .spectrum-ProgressBar-label,
-   * [dir=ltr] .spectrum-ProgressBar-percentage */
-    text-align: left;
+    text-align: left; /* [dir=ltr] .spectrum-ProgressBar-label,
+   * [dir=ltr] 
+.spectrum-ProgressBar-percentage */
 }
 :host([dir='rtl']) .label,
 :host([dir='rtl']) .percentage {
-    /* [dir=rtl] .spectrum-ProgressBar-label,
-   * [dir=rtl] .spectrum-ProgressBar-percentage */
-    text-align: right;
+    text-align: right; /* [dir=rtl] .spectrum-ProgressBar-label,
+   * [dir=rtl] 
+.spectrum-ProgressBar-percentage */
 }
 .label,
 .percentage {
-    /* .spectrum-ProgressBar-label,
+    margin-bottom: var(
+        --spectrum-progressbar-label-gap-y
+    ); /* .spectrum-ProgressBar-label,
    * .spectrum-ProgressBar-percentage */
-    margin-bottom: var(--spectrum-progressbar-label-gap-y);
 }
 .label {
-    /* .spectrum-ProgressBar-label */
-    flex: 1 1 0%;
+    flex: 1 1 0%; /* .spectrum-ProgressBar-label */
 }
 :host([dir='ltr']) .percentage {
-    /* [dir=ltr] .spectrum-ProgressBar-percentage */
-    margin-left: var(--spectrum-fieldlabel-side-padding-right);
+    margin-left: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=ltr] .spectrum-ProgressBar-percentage */
 }
 :host([dir='rtl']) .percentage {
-    /* [dir=rtl] .spectrum-ProgressBar-percentage */
-    margin-right: var(--spectrum-fieldlabel-side-padding-right);
+    margin-right: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=rtl] .spectrum-ProgressBar-percentage */
 }
 .percentage {
-    /* .spectrum-ProgressBar-percentage */
-    align-self: flex-start;
+    align-self: flex-start; /* .spectrum-ProgressBar-percentage */
 }
 :host([side-label]) {
-    /* .spectrum-ProgressBar--sideLabel */
-    display: inline-flex;
+    display: inline-flex; /* .spectrum-ProgressBar--sideLabel */
     flex-flow: row;
     justify-content: space-between;
     width: auto;
 }
 :host([side-label]) .track {
-    /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-track */
-    min-width: var(--spectrum-progressbar-width);
     flex: 1 1 var(--spectrum-progressbar-width);
+    min-width: var(
+        --spectrum-progressbar-width
+    ); /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-track */
 }
 :host([dir='ltr'][side-label]) .label {
-    /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
-    margin-right: var(--spectrum-fieldlabel-side-padding-right);
+    margin-right: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
 }
 :host([dir='rtl'][side-label]) .label {
-    /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
-    margin-left: var(--spectrum-fieldlabel-side-padding-right);
+    margin-left: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
 }
 :host([side-label]) .label {
-    /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
-    flex-grow: 0;
+    flex-grow: 0; /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-label */
     margin-bottom: 0;
 }
 :host([dir='ltr'][side-label]) .percentage {
-    /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
-    text-align: right;
+    text-align: right; /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
 }
 :host([dir='rtl'][side-label]) .percentage {
-    /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
-    text-align: left;
+    text-align: left; /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
 }
 :host([dir='ltr'][side-label]) .percentage {
-    /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
-    margin-left: var(--spectrum-fieldlabel-side-padding-right);
+    margin-left: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=ltr] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
 }
 :host([dir='rtl'][side-label]) .percentage {
-    /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
-    margin-right: var(--spectrum-fieldlabel-side-padding-right);
+    margin-right: var(
+        --spectrum-fieldlabel-side-padding-right
+    ); /* [dir=rtl] .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
 }
 :host([side-label]) .percentage {
-    /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
-    order: 3;
     margin-bottom: 0;
+    order: 3; /* .spectrum-ProgressBar--sideLabel .spectrum-ProgressBar-percentage */
 }
 :host([indeterminate]) .fill {
-    /* .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
-    width: var(--spectrum-progressbar-indeterminate-fill-width);
-    position: relative;
     animation-timing-function: var(
         --spectrum-progressbar-indeterminate-animation-ease
     );
+    position: relative;
+    width: var(
+        --spectrum-progressbar-indeterminate-fill-width
+    ); /* .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
     will-change: transform;
 }
 :host([dir='ltr'][indeterminate]) .fill {
-    /* [dir=ltr] .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
     animation: indeterminate-loop-ltr
-        var(--spectrum-progressbar-indeterminate-duration) infinite;
+        var(--spectrum-progressbar-indeterminate-duration) infinite; /* [dir=ltr] .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
 }
 :host([dir='rtl'][indeterminate]) .fill {
-    /* [dir=rtl] .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
     animation: indeterminate-loop-rtl
-        var(--spectrum-progressbar-indeterminate-duration) infinite;
+        var(--spectrum-progressbar-indeterminate-duration) infinite; /* [dir=rtl] .spectrum-ProgressBar--indeterminate .spectrum-ProgressBar-fill */
 }
 @keyframes indeterminate-loop-ltr {
     0% {
@@ -273,69 +268,60 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     }
 }
 .fill {
-    /* .spectrum-ProgressBar .spectrum-ProgressBar-fill */
     background: var(
         --spectrum-progressbar-m-track-fill-color,
         var(--spectrum-global-color-blue-500)
-    );
+    ); /* .spectrum-ProgressBar .spectrum-ProgressBar-fill */
 }
 .track {
-    /* .spectrum-ProgressBar .spectrum-ProgressBar-track */
     background-color: var(
         --spectrum-progressbar-m-track-color,
         var(--spectrum-alias-track-color-default)
-    );
+    ); /* .spectrum-ProgressBar .spectrum-ProgressBar-track */
 }
 :host([over-background]) .fill {
-    /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-fill */
     background: var(
         --spectrum-progressbar-m-over-background-track-fill-color,
         var(--spectrum-global-color-static-white)
-    );
+    ); /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-fill */
 }
 :host([over-background]) .label,
 :host([over-background]) .percentage {
-    /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-label,
-   * .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-percentage */
     color: var(
         --spectrum-progressbar-m-over-background-track-fill-color,
         var(--spectrum-global-color-static-white)
-    );
+    ); /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-label,
+   * .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-percentage */
 }
 :host([over-background]) .track {
-    /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-track */
     background-color: var(
         --spectrum-progressbar-m-over-background-track-color,
         var(--spectrum-alias-track-color-over-background)
-    );
+    ); /* .spectrum-ProgressBar.spectrum-ProgressBar--overBackground .spectrum-ProgressBar-track */
 }
 :host([positive]) .fill {
-    /* .spectrum-ProgressBar.is-positive .spectrum-ProgressBar-fill */
     background: var(
         --spectrum-meter-positive-m-track-fill-color,
         var(--spectrum-semantic-positive-color-status)
-    );
+    ); /* .spectrum-ProgressBar.is-positive .spectrum-ProgressBar-fill */
 }
 :host(.is-notice) .fill {
-    /* .spectrum-ProgressBar.is-notice .spectrum-ProgressBar-fill */
     background: var(
         --spectrum-meter-notice-m-track-fill-color,
         var(--spectrum-semantic-notice-color-status)
-    );
+    ); /* .spectrum-ProgressBar.is-notice .spectrum-ProgressBar-fill */
 }
 :host(.is-negative) .fill {
-    /* .spectrum-ProgressBar.is-negative .spectrum-ProgressBar-fill */
     background: var(
         --spectrum-meter-negative-m-track-fill-color,
         var(--spectrum-semantic-negative-color-status)
-    );
+    ); /* .spectrum-ProgressBar.is-negative .spectrum-ProgressBar-fill */
 }
 .label,
 .percentage {
-    /* .spectrum-ProgressBar-label,
-   * .spectrum-ProgressBar-percentage */
     color: var(
         --spectrum-fieldlabel-m-text-color,
         var(--spectrum-alias-label-text-color)
-    );
+    ); /* .spectrum-ProgressBar-label,
+   * .spectrum-ProgressBar-percentage */
 }

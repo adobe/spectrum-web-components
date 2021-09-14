@@ -76,7 +76,7 @@ export default function (
                             options: {
                                 ident: 'postcss',
                                 plugins: (loader) =>
-                                    postCSSPlugins(loader.resourcePath),
+                                    postCSSPlugins(loader.resourcePath, true),
                             },
                         },
                     ],

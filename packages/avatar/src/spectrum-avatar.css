@@ -11,23 +11,26 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Avatar */
-    width: var(
-        --spectrum-avatar-size-50-width,
-        var(--spectrum-alias-avatar-size-50)
-    );
+    -webkit-user-drag: none;
+    border-radius: var(--spectrum-avatar-size-50-border-radius, 50%);
+    border-style: none;
     height: var(
         --spectrum-avatar-size-50-height,
         var(--spectrum-alias-avatar-size-50)
     );
-    border-radius: var(--spectrum-avatar-size-50-border-radius, 50%);
-    border-style: none;
-    -webkit-user-drag: none;
     -webkit-user-select: none;
     user-select: none;
-    opacity: var(--spectrum-avatar-size-100-opacity, 1);
+    width: var(
+        --spectrum-avatar-size-50-width,
+        var(--spectrum-alias-avatar-size-50)
+    ); /* .spectrum-Avatar */
+}
+:host {
+    opacity: var(--spectrum-avatar-size-100-opacity, 1); /* .spectrum-Avatar */
 }
 :host([disabled]) {
-    /* .spectrum-Avatar.is-disabled */
-    opacity: var(--spectrum-avatar-size-100-opacity-disabled, 0.3);
+    opacity: var(
+        --spectrum-avatar-size-100-opacity-disabled,
+        0.3
+    ); /* .spectrum-Avatar.is-disabled */
 }

@@ -17,10 +17,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     }
 }
 .spectrum-UIIcon-SingleGripper100 {
-    /* .spectrum-UIIcon-SingleGripper100 */
-    width: var(--spectrum-alias-ui-icon-singlegripper-size-100-height);
     height: var(
         --spectrum-alias-ui-icon-singlegripper-size-100-width,
         var(--spectrum-global-dimension-size-300)
     );
+    width: var(
+        --spectrum-alias-ui-icon-singlegripper-size-100-height
+    ); /* .spectrum-UIIcon-SingleGripper100 */
 }
