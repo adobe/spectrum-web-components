@@ -85,9 +85,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-background-color-modal-overlay: rgba(0, 0, 0, 0.5);
     --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.5);
-    --spectrum-alias-background-color-hover-overlay: hsla(0, 0%, 100%, 0.06);
-    --spectrum-alias-highlight-hover: hsla(0, 0%, 100%, 0.07);
-    --spectrum-alias-highlight-active: hsla(0, 0%, 100%, 0.1);
+    --spectrum-alias-background-color-hover-overlay: rgba(255, 255, 255, 0.06);
+    --spectrum-alias-highlight-hover: rgba(255, 255, 255, 0.07);
+    --spectrum-alias-highlight-active: rgba(255, 255, 255, 0.1);
     --spectrum-alias-highlight-selected: rgba(55, 142, 240, 0.15);
     --spectrum-alias-highlight-selected-hover: rgba(55, 142, 240, 0.25);
     --spectrum-alias-text-highlight-color: rgba(55, 142, 240, 0.25);
@@ -95,7 +95,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-border-color-selected: var(
         --spectrum-global-color-blue-600
     );
-    --spectrum-alias-radial-reaction-color-default: hsla(0, 0%, 89%, 0.6);
+    --spectrum-alias-radial-reaction-color-default: rgba(227, 227, 227, 0.6);
     --spectrum-alias-pasteboard-background-color: var(
         --spectrum-global-color-gray-50
     );
@@ -117,28 +117,33 @@ governing permissions and limitations under the License.
         240,
         0.2
     );
-    --spectrum-well-background-color: hsla(0, 0%, 89%, 0.02);
-    --spectrum-colorarea-border-color: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorarea-border-color-hover: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorarea-border-color-down: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorarea-border-color-key-focus: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorslider-border-color: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorslider-border-color-hover: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorslider-border-color-down: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorslider-border-color-key-focus: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorslider-vertical-border-color: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorslider-vertical-border-color-hover: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorslider-vertical-border-color-down: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorslider-vertical-border-color-key-focus: hsla(
-        0,
-        0%,
-        100%,
+    --spectrum-well-background-color: rgba(227, 227, 227, 0.02);
+    --spectrum-colorarea-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color-hover: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorarea-border-color-key-focus: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color-hover: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-border-color-key-focus: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-vertical-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-vertical-border-color-hover: rgba(
+        255,
+        255,
+        255,
         0.1
     );
-    --spectrum-colorwheel-border-color: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorwheel-border-color-hover: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorwheel-border-color-down: hsla(0, 0%, 100%, 0.1);
-    --spectrum-colorwheel-border-color-key-focus: hsla(0, 0%, 100%, 0.1);
-    --spectrum-well-border-color: hsla(0, 0%, 100%, 0.05);
+    --spectrum-colorslider-vertical-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorslider-vertical-border-color-key-focus: rgba(
+        255,
+        255,
+        255,
+        0.1
+    );
+    --spectrum-colorwheel-border-color: rgba(255, 255, 255, 0.1);
+    --spectrum-colorwheel-border-color-hover: rgba(255, 255, 255, 0.1);
+    --spectrum-colorwheel-border-color-down: rgba(255, 255, 255, 0.1);
+    --spectrum-colorwheel-border-color-key-focus: rgba(255, 255, 255, 0.1);
+    --spectrum-well-border-color: rgba(255, 255, 255, 0.05);
 }
 /* stylelint-enable */

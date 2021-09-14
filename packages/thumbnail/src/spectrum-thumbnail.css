@@ -11,94 +11,86 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Thumbnail */
     --spectrum-thumbnail-border-radius: var(
         --spectrum-alias-border-radius-small,
         var(--spectrum-global-dimension-size-25)
-    );
+    ); /* .spectrum-Thumbnail */
     --spectrum-thumbnail-size-S: var(--spectrum-global-dimension-size-300);
     --spectrum-thumbnail-size-M: var(--spectrum-global-dimension-size-400);
     --spectrum-thumbnail-size-L: var(--spectrum-global-dimension-size-500);
     --spectrum-thumbnail-size-XL: var(--spectrum-global-dimension-size-600);
     --spectrum-thumbnail-size-XXL: var(--spectrum-global-dimension-size-700);
-    position: relative;
-    margin: 0;
-    padding: 0;
-    display: flex;
+}
+:host {
     align-items: center;
-    justify-content: center;
-    width: var(--spectrum-thumbnail-size-M);
-    height: var(--spectrum-thumbnail-size-M);
-    border-radius: var(--spectrum-thumbnail-border-radius);
-    vertical-align: top;
-    overflow: hidden;
-    background-size: var(--spectrum-global-dimension-static-size-200, 16px)
-        var(--spectrum-global-dimension-static-size-200, 16px);
     background-position: 0 0,
         0 var(--spectrum-global-dimension-static-size-100, 8px),
         var(--spectrum-global-dimension-static-size-100, 8px)
             calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)),
         calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)) 0;
+    background-size: var(--spectrum-global-dimension-static-size-200, 16px)
+        var(--spectrum-global-dimension-static-size-200, 16px);
+    border-radius: var(--spectrum-thumbnail-border-radius);
+    display: flex;
+    height: var(--spectrum-thumbnail-size-M);
+    justify-content: center;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: relative; /* .spectrum-Thumbnail */
+    vertical-align: top;
+    width: var(--spectrum-thumbnail-size-M);
 }
 :host:before {
-    /* .spectrum-Thumbnail:before */
-    content: '';
-    z-index: 2;
+    border-radius: var(--spectrum-thumbnail-border-radius);
+    content: ''; /* .spectrum-Thumbnail:before */
+    height: 100%;
     position: absolute;
     width: 100%;
-    height: 100%;
-    border-radius: var(--spectrum-thumbnail-border-radius);
+    z-index: 2;
 }
 :host([size='s']) {
-    /* .spectrum-Thumbnail--S */
-    width: var(--spectrum-thumbnail-size-S);
     height: var(--spectrum-thumbnail-size-S);
+    width: var(--spectrum-thumbnail-size-S); /* .spectrum-Thumbnail--S */
 }
 :host([size='m']) {
-    /* .spectrum-Thumbnail--M */
-    width: var(--spectrum-thumbnail-size-M);
     height: var(--spectrum-thumbnail-size-M);
+    width: var(--spectrum-thumbnail-size-M); /* .spectrum-Thumbnail--M */
 }
 :host([size='l']) {
-    /* .spectrum-Thumbnail--L */
-    width: var(--spectrum-thumbnail-size-L);
     height: var(--spectrum-thumbnail-size-L);
+    width: var(--spectrum-thumbnail-size-L); /* .spectrum-Thumbnail--L */
 }
 :host([size='xl']) {
-    /* .spectrum-Thumbnail--XL */
-    width: var(--spectrum-thumbnail-size-XL);
     height: var(--spectrum-thumbnail-size-XL);
+    width: var(--spectrum-thumbnail-size-XL); /* .spectrum-Thumbnail--XL */
 }
 :host([size='xxl']) {
-    /* .spectrum-Thumbnail--XXL */
-    width: var(--spectrum-thumbnail-size-XXL);
     height: var(--spectrum-thumbnail-size-XXL);
+    width: var(--spectrum-thumbnail-size-XXL); /* .spectrum-Thumbnail--XXL */
 }
 ::slotted(*) {
-    /* .spectrum-Thumbnail-image */
-    max-height: 100%;
+    max-height: 100%; /* .spectrum-Thumbnail-image */
     max-width: 100%;
     z-index: 1;
 }
 .background {
-    /* .spectrum-Thumbnail-background */
-    position: absolute;
-    z-index: 0;
-    left: 0;
-    top: 0;
-    right: 0;
+    background-position: 50%;
+    background-size: cover;
     bottom: 0;
     height: 100%;
+    left: 0;
+    position: absolute; /* .spectrum-Thumbnail-background */
+    right: 0;
+    top: 0;
     width: 100%;
-    background-size: cover;
-    background-position: 50%;
+    z-index: 0;
 }
 :host {
-    /* .spectrum-Thumbnail */
     --spectrum-thumbnail-border-size: var(
         --spectrum-alias-border-size-thin,
         var(--spectrum-global-dimension-static-size-10)
-    );
+    ); /* .spectrum-Thumbnail */
     --spectrum-thumbnail-border-size-selected: var(
         --spectrum-alias-border-size-thick,
         var(--spectrum-global-dimension-static-size-25)
@@ -115,56 +107,56 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-thumbnail-border-color-selected: var(
         --spectrum-global-color-blue-500
     );
-    background-color: var(--spectrum-global-color-static-white, #fff);
+}
+:host {
+    background-color: var(
+        --spectrum-global-color-static-white,
+        #fff
+    ); /* .spectrum-Thumbnail */
     background-image: linear-gradient(
             -45deg,
             transparent 75.5%,
-            var(--spectrum-global-color-static-gray-500, #bcbcbc) 0
+            var(--spectrum-global-color-static-gray-500, #bcbcbc) 75.5%
         ),
         linear-gradient(
             45deg,
             transparent 75.5%,
-            var(--spectrum-global-color-static-gray-500, #bcbcbc) 0
+            var(--spectrum-global-color-static-gray-500, #bcbcbc) 75.5%
         ),
         linear-gradient(
             -45deg,
             var(--spectrum-global-color-static-gray-500, #bcbcbc) 25.5%,
-            transparent 0
+            transparent 25.5%
         ),
         linear-gradient(
             45deg,
             var(--spectrum-global-color-static-gray-500, #bcbcbc) 25.5%,
-            transparent 0
+            transparent 25.5%
         );
 }
 :host:before {
-    /* .spectrum-Thumbnail:before */
     box-shadow: inset 0 0 0 var(--spectrum-thumbnail-border-size)
-        var(--spectrum-thumbnail-border-color);
+        var(--spectrum-thumbnail-border-color); /* .spectrum-Thumbnail:before */
 }
 :host([selected]) {
-    /* .spectrum-Thumbnail.is-selected */
     box-shadow: 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected) / 2)
-        var(--spectrum-thumbnail-border-color-selected);
+        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-selected */
 }
 :host([selected]):before {
-    /* .spectrum-Thumbnail.is-selected:before */
     box-shadow: inset 0 0 0
         calc(var(--spectrum-thumbnail-border-size-selected) / 2)
-        var(--spectrum-thumbnail-border-color-selected);
+        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-selected:before */
 }
 :host(:focus-visible),
 :host([focused]) {
-    /* .spectrum-Thumbnail.focus-ring,
-   * .spectrum-Thumbnail.is-focused */
     box-shadow: 0 0 0 calc(var(--spectrum-thumbnail-border-size-focus) / 2)
-        var(--spectrum-thumbnail-border-color-focus);
+        var(--spectrum-thumbnail-border-color-focus); /* .spectrum-Thumbnail.is-focused,
+   * .spectrum-Thumbnail.focus-ring */
 }
 :host(:focus-visible):before,
 :host([focused]):before {
-    /* .spectrum-Thumbnail.focus-ring:before,
-   * .spectrum-Thumbnail.is-focused:before */
     box-shadow: inset 0 0 0
         calc(var(--spectrum-thumbnail-border-size-selected) / 2)
-        var(--spectrum-thumbnail-border-color-selected);
+        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-focused:before,
+   * .spectrum-Thumbnail.focus-ring:before */
 }

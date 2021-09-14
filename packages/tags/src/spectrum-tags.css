@@ -11,11 +11,10 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Tags */
     --spectrum-tag-border-size: var(
         --spectrum-tag-s-border-size,
         var(--spectrum-alias-border-size-thin)
-    );
+    ); /* .spectrum-Tags */
     --spectrum-tag-icon-gap: var(
         --spectrum-tag-s-icon-gap,
         var(--spectrum-alias-item-workflow-icon-gap-s)
@@ -39,8 +38,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-tag-avatar-padding-x: var(--spectrum-tag-icon-gap);
     --spectrum-taggroup-tag-gap-x: var(--spectrum-global-dimension-size-100);
     --spectrum-taggroup-tag-gap-y: var(--spectrum-global-dimension-size-100);
-    display: inline-block;
+}
+:host {
+    display: inline-block; /* .spectrum-Tags */
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
 }

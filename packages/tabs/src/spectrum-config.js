@@ -52,7 +52,7 @@ const config = {
                 {
                     replacement: '::slotted(:not([slot]):not(:first-child))',
                     selector:
-                        '.spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator)',
+                        /\.spectrum-Tabs-item\s?\+\s?\*:not\(.spectrum-Tabs-selectionIndicator\)/,
                 },
             ],
             exclude: [

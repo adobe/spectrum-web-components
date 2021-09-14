@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-ColorLoupe */
     --spectrum-colorloupe-width-adjusted: calc(
         var(
                 --spectrum-colorloupe-width,
@@ -21,7 +20,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-colorhandle-inner-border-size,
                 var(--spectrum-global-dimension-static-size-25)
             ) * 2
-    );
+    ); /* .spectrum-ColorLoupe */
     --spectrum-colorloupe-height-adjusted: calc(
         var(
                 --spectrum-colorloupe-height,
@@ -40,28 +39,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-dimension-static-size-100,
         8px
     );
-    width: var(--spectrum-colorloupe-width-adjusted);
+}
+:host {
+    bottom: calc(50% + var(--spectrum-colorloupe-offset));
     height: var(--spectrum-colorloupe-height-adjusted);
+    left: calc(50% - var(--spectrum-colorloupe-width-adjusted) / 2);
+    opacity: 0;
+    pointer-events: none;
     position: absolute;
     transform: translateY(var(--spectrum-colorloupe-animation-distance));
-    opacity: 0;
     transform-origin: bottom center;
-    bottom: calc(50% + var(--spectrum-colorloupe-offset));
-    left: calc(50% - var(--spectrum-colorloupe-width-adjusted) / 2);
     transition: transform 0.1s ease-in-out, opacity 125ms ease-in-out;
-    pointer-events: none;
+    width: var(--spectrum-colorloupe-width-adjusted); /* .spectrum-ColorLoupe */
 }
 :host([open]) {
-    /* .spectrum-ColorLoupe.is-open */
-    transform: translate(0);
     opacity: 1;
+    transform: translate(0); /* .spectrum-ColorLoupe.is-open */
 }
 .outer {
-    /* .spectrum-ColorLoupe-outer */
     stroke-width: var(
         --spectrum-colorloupe-outer-border-size,
         var(--spectrum-global-dimension-static-size-10)
-    );
+    ); /* .spectrum-ColorLoupe-outer */ /* .spectrum-ColorLoupe-outer */
     fill: var(
         --spectrum-colorloupe-inner-border-color,
         var(--spectrum-global-color-static-white)

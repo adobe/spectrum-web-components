@@ -31,16 +31,12 @@ governing permissions and limitations under the License.
     left: 0;
     width: 0;
     height: 0;
-    border: solid
-        var(
-            --spectrum-tooltip-tip-height,
-            var(--spectrum-global-dimension-size-50)
-        )
-        transparent;
-    border-top-color: var(
-        --spectrum-tooltip-background-color,
-        var(--spectrum-global-color-static-gray-700)
+    border-style: solid;
+    border-width: var(
+        --spectrum-tooltip-tip-height,
+        var(--spectrum-global-dimension-size-50)
     );
+    border-color: transparent;
 }
 
 /* orient the tip */
@@ -62,6 +58,13 @@ governing permissions and limitations under the License.
 }
 
 /* color the tip the correct variant color on either a vertical or horizontal axis */
+
+:host([placement]) #tip:after {
+    border-top-color: var(
+        --spectrum-tooltip-background-color,
+        var(--spectrum-global-color-static-gray-700)
+    );
+}
 
 :host([variant='negative']) #tip:after {
     border-top-color: var(

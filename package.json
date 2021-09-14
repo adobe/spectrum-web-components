@@ -142,7 +142,7 @@
         "chromedriver": "^93.0.1",
         "common-tags": "^1.8.0",
         "css-loader": "^5.2.0",
-        "cssnano": "^4.1.10",
+        "cssnano": "^5.0.8",
         "custom-elements-manifest": "^1.0.0",
         "debounce": "^1.2.1",
         "deepmerge": "^4.0.0",
@@ -226,7 +226,7 @@
         "cssnano/**/postcss-calc": "7.0.0",
         "playwright": "1.13.0"
     },
-    "customElements": "documentation/custom-elements.json",
+    "customElements": ".storybook/custom-elements.json",
     "workspaces": [
         "packages/*",
         "projects/*"

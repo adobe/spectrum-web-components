@@ -26,7 +26,7 @@ const header = fs.readFileSync(path.join(configPath, 'license.js'), 'utf8');
 export const processCSS = async (cssPath) => {
     let wrappedCSS = header;
     const originCSS = fs.readFileSync(cssPath, 'utf8');
-    const processedCSS = await postcss(postCSSPlugins(cssPath))
+    const processedCSS = await postcss(postCSSPlugins(cssPath, true))
         .process(originCSS, {
             from: cssPath,
         })

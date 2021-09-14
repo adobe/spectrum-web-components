@@ -11,30 +11,27 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Icon,
-   * .spectrum-UIIcon */
-    display: inline-block;
-    color: inherit;
     fill: currentColor;
+    color: inherit;
+    display: inline-block; /* .spectrum-Icon,
+   * .spectrum-UIIcon */
     pointer-events: none;
 }
 :host(:not(:root)) {
-    /* .spectrum-Icon:not(:root),
+    overflow: hidden; /* .spectrum-Icon:not(:root),
    * .spectrum-UIIcon:not(:root) */
-    overflow: hidden;
 }
 @media (forced-colors: active) {
-    :host,
-    .spectrum-UIIcon {
+    .spectrum-UIIcon,
+    :host {
         forced-color-adjust: auto;
     }
 }
 :host {
-    /* .spectrum-Icon */
     --spectrum-icon-size-s: var(
         --spectrum-alias-workflow-icon-size-s,
         var(--spectrum-global-dimension-size-200)
-    );
+    ); /* .spectrum-Icon */
     --spectrum-icon-size-m: var(
         --spectrum-alias-workflow-icon-size-m,
         var(--spectrum-global-dimension-size-225)
@@ -47,37 +44,42 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-icon-size-xxl: var(--spectrum-global-dimension-size-400);
 }
 :host([size='s']) {
-    /* .spectrum-Icon--sizeS,
+    height: var(
+        --spectrum-icon-size-s
+    ); /* .spectrum-Icon--sizeS,
    * .spectrum-Icon--sizeS img,
    * .spectrum-Icon--sizeS svg */
-    height: var(--spectrum-icon-size-s);
     width: var(--spectrum-icon-size-s);
 }
 :host([size='m']) {
-    /* .spectrum-Icon--sizeM,
+    height: var(
+        --spectrum-icon-size-m
+    ); /* .spectrum-Icon--sizeM,
    * .spectrum-Icon--sizeM img,
    * .spectrum-Icon--sizeM svg */
-    height: var(--spectrum-icon-size-m);
     width: var(--spectrum-icon-size-m);
 }
 :host([size='l']) {
-    /* .spectrum-Icon--sizeL,
+    height: var(
+        --spectrum-icon-size-l
+    ); /* .spectrum-Icon--sizeL,
    * .spectrum-Icon--sizeL img,
    * .spectrum-Icon--sizeL svg */
-    height: var(--spectrum-icon-size-l);
     width: var(--spectrum-icon-size-l);
 }
 :host([size='xl']) {
-    /* .spectrum-Icon--sizeXL,
+    height: var(
+        --spectrum-icon-size-xl
+    ); /* .spectrum-Icon--sizeXL,
    * .spectrum-Icon--sizeXL img,
    * .spectrum-Icon--sizeXL svg */
-    height: var(--spectrum-icon-size-xl);
     width: var(--spectrum-icon-size-xl);
 }
 :host([size='xxl']) {
-    /* .spectrum-Icon--sizeXXL,
+    height: var(
+        --spectrum-icon-size-xxl
+    ); /* .spectrum-Icon--sizeXXL,
    * .spectrum-Icon--sizeXXL img,
    * .spectrum-Icon--sizeXXL svg */
-    height: var(--spectrum-icon-size-xxl);
     width: var(--spectrum-icon-size-xxl);
 }

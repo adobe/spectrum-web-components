@@ -10,16 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@media (forced-colors: active) {
-    .spectrum-Icon,
-    .spectrum-UIIcon {
-        forced-color-adjust: auto;
-    }
+#label {
+    flex: 1 1 auto; /* .spectrum-Menu-itemLabel */
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    line-height: var(--spectrum-listitem-label-line-height);
+    overflow-wrap: break-word;
+    width: calc(
+        100% - var(--spectrum-icon-checkmark-medium-width) -
+            var(--spectrum-listitem-icon-gap)
+    );
 }
-.spectrum-UIIcon-TripleGripper100 {
-    height: var(--spectrum-alias-ui-icon-triplegripper-size-100-width);
-    width: var(
-        --spectrum-alias-ui-icon-triplegripper-size-100-height,
-        var(--spectrum-global-dimension-size-100)
-    ); /* .spectrum-UIIcon-TripleGripper100 */
+.spectrum-Menu-itemLabel--wrapping {
+    overflow: hidden;
+    text-overflow: ellipsis; /* .spectrum-Menu-itemLabel--wrapping */
+    white-space: nowrap;
 }

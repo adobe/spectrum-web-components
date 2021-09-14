@@ -11,17 +11,15 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .header {
-    /* .spectrum-Menu-sectionHeading */
-    display: block;
-    margin: var(--spectrum-listitem-heading-margin);
-    padding: var(--spectrum-listitem-heading-padding);
+    color: var(--spectrum-listheading-text-color);
+    display: block; /* .spectrum-Menu-sectionHeading */
     font-size: var(--spectrum-listitem-heading-text-size);
     font-weight: var(--spectrum-listitem-heading-text-font-weight);
+    letter-spacing: var(
+        --spectrum-listitem-heading-letter-spacing
+    ); /* .spectrum-Menu-sectionHeading */
     line-height: var(--spectrum-listitem-heading-line-height);
+    margin: var(--spectrum-listitem-heading-margin);
+    padding: var(--spectrum-listitem-heading-padding);
     text-transform: var(--spectrum-listitem-heading-text-transform);
-    letter-spacing: var(--spectrum-listitem-heading-letter-spacing);
-}
-.header {
-    /* .spectrum-Menu-sectionHeading */
-    color: var(--spectrum-listheading-text-color);
 }

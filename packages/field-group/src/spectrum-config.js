@@ -34,7 +34,7 @@ const config = {
                 {
                     replacement: '::slotted(:not(:last-child))',
                     selector:
-                        '.spectrum-FieldGroup-item+.spectrum-FieldGroup-item',
+                        '.spectrum-FieldGroup-item + .spectrum-FieldGroup-item',
                 },
             ],
         },
