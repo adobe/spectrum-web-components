@@ -4960,9 +4960,9 @@
     playwright "^1.14.0"
 
 "@web/test-runner-visual-regression@^0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-visual-regression/-/test-runner-visual-regression-0.6.2.tgz#4224ef2fc8f1d1127989ab48155585c88df2fb03"
-  integrity sha512-NCSaeg/UYrkKdgJ4VJ7Ebm/cELOCPkLGCSpRh2/MWSqzcLL19SUjEUjWAl6k6kWxthRv00DBDgYyJn/r7ExBFw==
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-visual-regression/-/test-runner-visual-regression-0.6.3.tgz#edeea9dbc6625a950fcd2b38ec2e43eacf56bd0d"
+  integrity sha512-jw7WjELVmwtI0XLNV7veVct7S6z6YpHQCCIMQQMwt721a3IqjMmmRgEdYJpaNkEd1CeiGpF2W9sC4f77YUGBLw==
   dependencies:
     "@types/mkdirp" "^1.0.1"
     "@types/pixelmatch" "^5.2.2"
