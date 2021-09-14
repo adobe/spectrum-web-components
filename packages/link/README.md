@@ -30,40 +30,36 @@ import { Link } from '@spectrum-web-components/link';
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
+<!-- prettier-ignore -->
 ```html
-This is an
-<sp-link size="s" href="#">example link</sp-link>
-.
+This is an <sp-link size="s" href="#">example link</sp-link>.
 ```
 
 </sp-tab-panel>
 <sp-tab value="m">Medium</sp-tab>
 <sp-tab-panel value="m">
 
+<!-- prettier-ignore -->
 ```html
-This is an
-<sp-link size="m" href="#">example link</sp-link>
-.
+This is an <sp-link size="m" href="#">example link</sp-link>.
 ```
 
 </sp-tab-panel>
 <sp-tab value="l">Large</sp-tab>
 <sp-tab-panel value="l">
 
+<!-- prettier-ignore -->
 ```html
-This is an
-<sp-link size="l" href="#">example link</sp-link>
-.
+This is an <sp-link size="l" href="#">example link</sp-link>.
 ```
 
 </sp-tab-panel>
 <sp-tab value="xl">Extra Large</sp-tab>
 <sp-tab-panel value="xl">
-
+ 
+<!-- prettier-ignore -->
 ```html
-This is an
-<sp-link size="xl" href="#">example link</sp-link>
-.
+This is an <sp-link size="xl" href="#">example link</sp-link>.
 ```
 
 </sp-tab-panel>
@@ -73,20 +69,20 @@ This is an
 
 ### Standard links
 
-Standard links can follow any of the character styles defined in Spectrum. Therefore, they can be displayed in various font sizes and weights. Standard links appear blue, in order to stand out from the rest of the text and be recognized as interactive.
+Standard links are blue and should be used to call attention to the link or for when the blue color won’t feel too overwhelming in the experience.
 
 <!-- prettier-ignore -->
 ```html
 This is a <sp-link href="#">standard link</sp-link>.
 ```
 
-### Quiet links
+### Secondary links
 
-Quiet links appear with an underline and use the default text color. The subdued appearance is optimal for use in content lower in your application’s hierarchy such as links in a footer.
+The secondary variant is the same color as the paragraph text inline of which it appears. Its subdued appearance is optimal for when the primary variant is too overwhelming, such as in blocks of text with several references linked throughout.
 
 <!-- prettier-ignore -->
 ```html
-This is a <sp-link quiet href="#">quiet link</sp-link>.
+This is a <sp-link href="#" variant="secondary">secondary link</sp-link>.
 ```
 
 ### Links over backgrounds
@@ -100,6 +96,25 @@ When a link needs to be placed on top of a colored background or a visual, use t
     <p style="color: rgb(240, 240, 240);">
         This
         <sp-link over-background href="#">link</sp-link>
+        is over a background.
+    </p>
+</div>
+```
+
+### Quiet links
+
+All links can have a quiet style, which means they don’t have an underline. This style should only be used when the placement and context of the link is explicit enough that a visible underline isn’t necessary. Quiet links are less accessible, so they should not be used for links that are essential to the experience. These are commonly used in website footers, where there are several lists of links that are shortcuts to other pages.
+
+<!-- prettier-ignore -->
+```html
+<p>This is a <sp-link quiet href="#">quiet standard link</sp-link>.</p>
+<p>This is a <sp-link quiet variant="secondary" href="#">quiet secondary link</sp-link>.</p>
+<div
+    style="background-color: #0f797d; padding: 15px 20px; display: inline-block;"
+>
+    <p style="color: rgb(240, 240, 240);">
+        This is a
+        <sp-link over-background quiet href="#">quiet link</sp-link>
         is over a background.
     </p>
 </div>

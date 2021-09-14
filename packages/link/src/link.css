@@ -19,3 +19,10 @@ governing permissions and limitations under the License.
 :host(:focus) {
     outline: none;
 }
+
+:host([href]) a:focus-visible {
+    /* .spectrum-Link.focus-ring */
+    text-decoration: underline;
+    -webkit-text-decoration-style: double;
+    text-decoration-style: double;
+}

@@ -32,6 +32,20 @@ export const Quiet = (): TemplateResult => {
     `;
 };
 
+export const secondary = (): TemplateResult => {
+    // prettier-ignore
+    return html`
+        This is a <sp-link variant="secondary" href="#">link</sp-link> in a sentence.
+    `;
+};
+
+export const secondaryQuiet = (): TemplateResult => {
+    // prettier-ignore
+    return html`
+        This is a <sp-link variant="secondary" quiet href="#">quiet link</sp-link> in a sentence.
+    `;
+};
+
 export const overBackground = (): TemplateResult => {
     return html`
         <div
@@ -40,6 +54,20 @@ export const overBackground = (): TemplateResult => {
             <p style="color: rgb(240, 240, 240);">
                 This
                 <sp-link over-background href="#">link</sp-link>
+                has a background.
+            </p>
+        </div>
+    `;
+};
+
+export const overBackgroundQuiet = (): TemplateResult => {
+    return html`
+        <div
+            style="background-color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block;"
+        >
+            <p style="color: rgb(240, 240, 240);">
+                This
+                <sp-link over-background quiet href="#">link</sp-link>
                 has a background.
             </p>
         </div>

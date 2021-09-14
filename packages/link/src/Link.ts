@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     TemplateResult,
     query,
+    property,
     SizedMixin,
 } from '@spectrum-web-components/base';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
@@ -36,6 +37,9 @@ export class Link extends SizedMixin(LikeAnchor(Focusable), {
 
     @query('#anchor')
     anchorElement!: HTMLAnchorElement;
+
+    @property({ type: String, reflect: true })
+    public variant: 'secondary' | undefined;
 
     public get focusElement(): HTMLElement {
         return this.anchorElement;
