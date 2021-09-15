@@ -664,8 +664,32 @@ export const superComplexModal = (): TemplateResult => {
     `;
 };
 
+class StartEndContextmenu extends HTMLElement {
+    shadowRoot!: ShadowRoot;
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: flex;
+                    align-items: stretch;
+                }
+                div {
+                    width: 50%;
+                    height: 100%;
+                }
+            </style>
+            <div id="start"></div>
+            <div id="end"></div>
+        `;
+    }
+}
+
+customElements.define('start-end-contextmenu', StartEndContextmenu);
+
 export const virtualElement = (args: Properties): TemplateResult => {
-    const contextMenuTemplate = (): TemplateResult => html`
+    const contextMenuTemplate = (kind = ''): TemplateResult => html`
         <sp-popover
             style="max-width: 33vw;"
             @click=${(event: Event) =>
@@ -674,22 +698,27 @@ export const virtualElement = (args: Properties): TemplateResult => {
                 )}
         >
             <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-item>Select and mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>Save selection</sp-menu-item>
-                <sp-menu-item disabled>Make work path</sp-menu-item>
+                <sp-menu-group>
+                    <span slot="header">Menu source: ${kind}</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save selection</sp-menu-item>
+                    <sp-menu-item disabled>Make work path</sp-menu-item>
+                </sp-menu-group>
             </sp-menu>
         </sp-popover>
     `;
     const pointerenter = async (event: PointerEvent): Promise<void> => {
         event.preventDefault();
+        const source = event.composedPath()[0] as HTMLDivElement;
+        const { id } = source;
         const trigger = event.target as HTMLElement;
         const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
         const fragment = document.createDocumentFragment();
-        render(contextMenuTemplate(), fragment);
+        render(contextMenuTemplate(id), fragment);
         const popover = fragment.querySelector('sp-popover') as Popover;
         openOverlay(trigger, 'modal', popover, {
             placement: args.placement,
@@ -704,7 +733,10 @@ export const virtualElement = (args: Properties): TemplateResult => {
                 inset: 0;
             }
         </style>
-        <div class="app-root" @contextmenu=${pointerenter}></div>
+        <start-end-contextmenu
+            class="app-root"
+            @contextmenu=${pointerenter}
+        ></start-end-contextmenu>
     `;
 };
 

@@ -535,14 +535,14 @@ describe('Overlay - contextmenu', () => {
             steps: [
                 {
                     type: 'move',
-                    position: [width / 2, height / 2],
+                    position: [width / 2 + 50, height / 2],
                 },
                 {
                     type: 'click',
                     options: {
                         button: 'right',
                     },
-                    position: [width / 2, height / 2],
+                    position: [width / 2 + 50, height / 2],
                 },
             ],
         });
@@ -550,8 +550,12 @@ describe('Overlay - contextmenu', () => {
         const firstOverlay = document.querySelector(
             'active-overlay'
         ) as ActiveOverlay;
+        const firstHeadline = firstOverlay.querySelector(
+            '[slot="header"]'
+        ) as HTMLSpanElement;
         expect(firstOverlay, 'first overlay').to.not.be.null;
         expect(firstOverlay.isConnected).to.be.true;
+        expect(firstHeadline.textContent).to.equal('Menu source: end');
         const closed = oneEvent(document, 'sp-closed');
         opened = oneEvent(document, 'sp-opened');
         // Right click to out of the "context menu" overlay to both close
@@ -577,9 +581,13 @@ describe('Overlay - contextmenu', () => {
         const secondOverlay = document.querySelector(
             'active-overlay'
         ) as ActiveOverlay;
+        const secondHeadline = secondOverlay.querySelector(
+            '[slot="header"]'
+        ) as HTMLSpanElement;
         expect(secondOverlay, 'second overlay').to.not.be.null;
         expect(secondOverlay).to.not.equal(firstOverlay);
         expect(firstOverlay.isConnected).to.be.false;
         expect(secondOverlay.isConnected).to.be.true;
+        expect(secondHeadline.textContent).to.equal('Menu source: start');
     });
 });

@@ -152,7 +152,18 @@ export class OverlayStack {
         event.stopPropagation();
         event.preventDefault();
         await this.closeTopOverlay();
-        const target = document.elementFromPoint(event.clientX, event.clientY);
+        let target = document.elementFromPoint(event.clientX, event.clientY);
+        while (target?.shadowRoot) {
+            const innerTarget = (
+                target.shadowRoot as unknown as {
+                    elementFromPoint: (x: number, y: number) => Element | null;
+                }
+            ).elementFromPoint(event.clientX, event.clientY);
+            if (!innerTarget || innerTarget === target) {
+                break;
+            }
+            target = innerTarget;
+        }
         target?.dispatchEvent(new MouseEvent('contextmenu', event));
     };
 
@@ -213,7 +224,8 @@ export class OverlayStack {
             this.startTabTrapping();
         }
 
-        const contentWithLifecycle = (details.content as unknown) as ManagedOverlayContent;
+        const contentWithLifecycle =
+            details.content as unknown as ManagedOverlayContent;
         if (contentWithLifecycle.overlayWillOpenCallback) {
             const { trigger } = details;
             contentWithLifecycle.overlayWillOpenCallback({ trigger });
@@ -340,7 +352,8 @@ export class OverlayStack {
             }
 
             event.stopPropagation();
-            const triggerWithLifecycle = (activeOverlay.trigger as unknown) as ManagedOverlayContent;
+            const triggerWithLifecycle =
+                activeOverlay.trigger as unknown as ManagedOverlayContent;
             if (typeof triggerWithLifecycle.open !== 'undefined') {
                 triggerWithLifecycle.open = false;
             }
@@ -394,7 +407,8 @@ export class OverlayStack {
     ): Promise<void> {
         if (overlay) {
             await overlay.hide(animated);
-            const contentWithLifecycle = (overlay.overlayContent as unknown) as ManagedOverlayContent;
+            const contentWithLifecycle =
+                overlay.overlayContent as unknown as ManagedOverlayContent;
             if (typeof contentWithLifecycle.open !== 'undefined') {
                 contentWithLifecycle.open = false;
             }
@@ -427,10 +441,12 @@ export class OverlayStack {
                         overlay.interaction === 'inline') &&
                         !overlay.tabbingAway)
                 ) {
-                    const overlayRoot = overlay.overlayContent.getRootNode() as ShadowRoot;
+                    const overlayRoot =
+                        overlay.overlayContent.getRootNode() as ShadowRoot;
                     const overlayContentActiveElement =
                         overlayRoot.activeElement;
-                    const triggerRoot = overlay.trigger.getRootNode() as ShadowRoot;
+                    const triggerRoot =
+                        overlay.trigger.getRootNode() as ShadowRoot;
                     const triggerActiveElement = triggerRoot.activeElement;
                     if (
                         overlay.overlayContent.contains(
