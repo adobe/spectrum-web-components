@@ -1,7 +1,12 @@
 ## Description
 
 Some advanced slider uses require more than one handle. One example of this is the
-range slider above. `sp-slider` supports an arbitrary number of handles via the `<sp-slider-handle>` sub-component, although it would be very rare to ever require more than two handles.
+range slider above. `<sp-slider>` supports multiple handles via the `<sp-slider-handle>` sub-component, although it would be very rare to ever require more than two handles.
+
+### Single Handles
+
+`<sp-slider-handle>` is unnecessary for single-handle sliders. Always slot two or more `<sp-slider-handle>` components together.
+To customize the properties of a single-handle slider (`normalization`, `value`, etc), set them on the `<sp-slider>` element directly.
 
 ### Usage
 
