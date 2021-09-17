@@ -20,6 +20,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { reparentChildren } from '@spectrum-web-components/shared';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
 import styles from './active-overlay.css.js';
 import {
@@ -187,9 +188,7 @@ export class ActiveOverlay extends SpectrumElement {
     public dataPopperPlacement?: Placement;
 
     public focus(): void {
-        const firstFocusable = this.querySelector(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-        ) as HTMLElement;
+        const firstFocusable = firstFocusableIn(this);
         if (firstFocusable) {
             firstFocusable.focus();
             /* c8 ignore next 3 */

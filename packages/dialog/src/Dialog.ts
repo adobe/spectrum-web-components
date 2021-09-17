@@ -31,6 +31,7 @@ import {
     ObserveSlotPresence,
     FocusVisiblePolyfillMixin,
 } from '@spectrum-web-components/shared';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 import styles from './dialog.css.js';
 
@@ -87,9 +88,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
 
     public focus(): void {
         if (this.shadowRoot) {
-            const firstFocusable = this.shadowRoot.querySelector(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-            ) as SpectrumElement;
+            const firstFocusable = firstFocusableIn(this.shadowRoot);
             if (firstFocusable) {
                 if (firstFocusable.updateComplete) {
                     firstFocusable.updateComplete.then(() =>
