@@ -10,11 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './first-focusable-in.js';
-export * from './focus-visible.js';
-export * from './focusable.js';
-export * from './get-active-element.js';
-export * from './like-anchor.js';
-export * from './observe-slot-presence.js';
-export * from './observe-slot-text.js';
-export * from './reparent-children.js';
+import type { SpectrumElement } from '@spectrum-web-components/base';
+
+const firstFocusableSelector =
+    'button:not([tabindex="-1"]), [href]:not([tabindex="-1"]), input:not([tabindex="-1"]), select:not([tabindex="-1"]), textarea:not([tabindex="-1"]), [tabindex]:not([tabindex="-1"]), [focusable]:not([tabindex="-1"])';
+
+export const firstFocusableIn = (
+    root: HTMLElement | ShadowRoot
+): SpectrumElement | null => {
+    const firstFocusable = root.querySelector(
+        firstFocusableSelector
+    ) as SpectrumElement;
+    return firstFocusable;
+};

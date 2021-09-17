@@ -28,6 +28,7 @@ import '../sp-dialog.js';
 import styles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 /**
  * @element sp-dialog-wrapper
@@ -93,9 +94,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     public focus(): void {
         if (this.shadowRoot) {
-            const firstFocusable = this.shadowRoot.querySelector(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-            ) as SpectrumElement;
+            const firstFocusable = firstFocusableIn(this.shadowRoot);
             if (firstFocusable) {
                 if (firstFocusable.updateComplete) {
                     firstFocusable.updateComplete.then(() =>

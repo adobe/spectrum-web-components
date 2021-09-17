@@ -19,6 +19,7 @@ import {
     query,
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/underlay/sp-underlay.js';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import styles from './tray.css.js';
@@ -40,9 +41,7 @@ export class Tray extends SpectrumElement {
     private tray!: HTMLDivElement;
 
     public focus(): void {
-        const firstFocusable = this.querySelector(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-        ) as HTMLElement;
+        const firstFocusable = firstFocusableIn(this);
         if (firstFocusable) {
             firstFocusable.focus();
         } else if (this.children.length === 1) {
