@@ -835,6 +835,65 @@ export const detachedElement = (): TemplateResult => {
     `;
 };
 
+class DefinedOverlayReady extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    constructor() {
+        super();
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+            this.setup();
+        });
+    }
+
+    async setup(): Promise<void> {
+        await nextFrame();
+
+        const overlay = document.querySelector(
+            `overlay-trigger`
+        ) as OverlayTrigger;
+        const button = document.querySelector(
+            `[slot="trigger"]`
+        ) as HTMLButtonElement;
+        overlay.addEventListener('sp-opened', this.handleTriggerOpened);
+        button.click();
+    }
+
+    handleTriggerOpened = async (): Promise<void> => {
+        await nextFrame();
+
+        const popover = document.querySelector('popover-content');
+        if (!popover) {
+            return;
+        }
+        popover.addEventListener('sp-opened', this.handlePopoverOpen);
+        popover.button.click();
+    };
+
+    handlePopoverOpen = async (): Promise<void> => {
+        await nextFrame();
+
+        this.ready(true);
+    };
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
+}
+
+customElements.define('defined-overlay-ready', DefinedOverlayReady);
+
+const definedOverlayDecorator = (
+    story: () => TemplateResult
+): TemplateResult => {
+    return html`
+        ${story()}
+        <defined-overlay-ready></defined-overlay-ready>
+    `;
+};
+
 export const definedOverlayElement = (): TemplateResult => {
     return html`
         <overlay-trigger placement="bottom" type="modal">
@@ -845,3 +904,5 @@ export const definedOverlayElement = (): TemplateResult => {
         </overlay-trigger>
     `;
 };
+
+definedOverlayElement.decorators = [definedOverlayDecorator];

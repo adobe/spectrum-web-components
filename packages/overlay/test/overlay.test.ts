@@ -561,7 +561,7 @@ describe('Overlay - type="modal"', () => {
         expect(firstOverlay, 'first overlay').to.not.be.null;
         expect(firstOverlay.isConnected).to.be.true;
         expect(firstHeadline.textContent).to.equal('Menu source: end');
-        const closed = oneEvent(document, 'sp-closed');
+        let closed = oneEvent(document, 'sp-closed');
         opened = oneEvent(document, 'sp-opened');
         // Right click to out of the "context menu" overlay to both close
         // the first overlay and have the event passed to the surfacing page
@@ -594,6 +594,21 @@ describe('Overlay - type="modal"', () => {
         expect(firstOverlay.isConnected).to.be.false;
         expect(secondOverlay.isConnected).to.be.true;
         expect(secondHeadline.textContent).to.equal('Menu source: start');
+        closed = oneEvent(document, 'sp-closed');
+        executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [width / 8, height / 8],
+                },
+                {
+                    type: 'click',
+                    position: [width / 8, height / 8],
+                },
+            ],
+        });
+        await closed;
+        await nextFrame();
     });
     it('opens children in the modal stack through shadow roots', async () => {
         const el = await fixture<OverlayTrigger>(definedOverlayElement());
@@ -607,14 +622,14 @@ describe('Overlay - type="modal"', () => {
             'popover-content'
         ) as PopoverContent;
         open = oneEvent(content, 'sp-opened');
-        content.picker.click();
+        content.button.click();
         await open;
         const activeOverlays = document.querySelectorAll('active-overlay');
         activeOverlays.forEach((overlay) => {
             expect(overlay.slot).to.equal('open');
         });
         let close = oneEvent(content, 'sp-closed');
-        content.picker.open = false;
+        content.trigger.removeAttribute('open');
         await close;
         close = oneEvent(el, 'sp-closed');
         el.removeAttribute('open');

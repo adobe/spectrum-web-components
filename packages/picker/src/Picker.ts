@@ -425,19 +425,34 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
+    protected get dismissHelper(): TemplateResult {
+        return html`
+            <div class="visually-hidden">
+                <button
+                    tabindex="-1"
+                    arial-label="Dismiss"
+                    @click=${this.close}
+                ></button>
+            </div>
+        `;
+    }
+
     protected get renderPopover(): TemplateResult {
         return html`
             <sp-popover
                 id="popover"
+                role="dialog"
                 @sp-overlay-closed=${this.onOverlayClosed}
                 .overlayCloseCallback=${this.overlayCloseCallback}
             >
+                ${this.dismissHelper}
                 <sp-menu
                     id="menu"
                     role="${this.listRole}"
                     selects="single"
                     @change=${this.handleChange}
                 ></sp-menu>
+                ${this.dismissHelper}
             </sp-popover>
         `;
     }
