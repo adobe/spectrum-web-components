@@ -14,7 +14,7 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
-import { ActiveOverlay, Overlay, Placement } from '../';
+import { ActiveOverlay, Overlay, OverlayTrigger, Placement } from '../';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers.js';
 import {
@@ -24,6 +24,7 @@ import {
     elementUpdated,
     waitUntil,
     oneEvent,
+    nextFrame,
 } from '@open-wc/testing';
 import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
 import { virtualElement } from '../stories/overlay.stories';
@@ -589,5 +590,85 @@ describe('Overlay - contextmenu', () => {
         expect(firstOverlay.isConnected).to.be.false;
         expect(secondOverlay.isConnected).to.be.true;
         expect(secondHeadline.textContent).to.equal('Menu source: start');
+    });
+});
+describe('Overlay - timing', () => {
+    it('manages multiple modals in a row without preventing them from closing', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <overlay-trigger>
+                    <sp-button slot="trigger">Trigger 1</sp-button>
+                    <sp-popover slot="hover-content">
+                        <p>Hover contentent for "Trigger 1".</p>
+                    </sp-popover>
+                </overlay-trigger>
+                <overlay-trigger>
+                    <sp-button slot="trigger">Trigger 2</sp-button>
+                    <sp-popover slot="hover-content">
+                        <p>Hover contentent for "Trigger 2".</p>
+                    </sp-popover>
+                    <sp-popover slot="click-content">
+                        <p>Click contentent for "Trigger 2".</p>
+                    </sp-popover>
+                </overlay-trigger>
+            </div>
+        `);
+
+        const overlayTrigger1 = test.querySelector(
+            'overlay-trigger:first-child'
+        ) as OverlayTrigger;
+        const overlayTrigger2 = test.querySelector(
+            'overlay-trigger:last-child'
+        ) as OverlayTrigger;
+        const trigger1 = overlayTrigger1.querySelector(
+            '[slot="trigger"]'
+        ) as HTMLButtonElement;
+        const trigger2 = overlayTrigger2.querySelector(
+            '[slot="trigger"]'
+        ) as HTMLButtonElement;
+
+        trigger1.dispatchEvent(
+            new MouseEvent('mouseenter', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await nextFrame();
+        trigger1.dispatchEvent(
+            new MouseEvent('mouseleave', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        trigger2.dispatchEvent(
+            new MouseEvent('mouseenter', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await nextFrame();
+        const opened = oneEvent(trigger2, 'sp-opened');
+        trigger2.dispatchEvent(
+            new MouseEvent('click', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await opened;
+
+        expect(overlayTrigger1.hasAttribute('open')).to.be.false;
+        expect(overlayTrigger2.hasAttribute('open')).to.be.true;
+        expect(overlayTrigger2.getAttribute('open')).to.equal('click');
+
+        const closed = oneEvent(overlayTrigger2, 'sp-closed');
+        document.body.dispatchEvent(
+            new MouseEvent('click', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await closed;
+        expect(overlayTrigger1.hasAttribute('open')).to.be.false;
+        expect(overlayTrigger2.hasAttribute('open')).to.be.false;
     });
 });

@@ -43,6 +43,7 @@ export class OverlayStack {
     private trappingInited = false;
     private tabTrapper!: HTMLElement;
     private overlayHolder!: HTMLElement;
+    private _eventsAreBound = false;
 
     private initTabTrapping(): void {
         /* c8 ignore next 4 */
@@ -187,21 +188,12 @@ export class OverlayStack {
     }
 
     private addEventListeners(): void {
+        if (this._eventsAreBound) return;
+        this._eventsAreBound = true;
         this.document.addEventListener('click', this.handleMouseCapture, true);
         this.document.addEventListener('click', this.handleMouse);
         this.document.addEventListener('keyup', this.handleKeyUp);
         window.addEventListener('resize', this.handleResize);
-    }
-
-    private removeEventListeners(): void {
-        this.document.removeEventListener(
-            'click',
-            this.handleMouseCapture,
-            true
-        );
-        this.document.removeEventListener('click', this.handleMouse);
-        this.document.removeEventListener('keyup', this.handleKeyUp);
-        window.removeEventListener('resize', this.handleResize);
     }
 
     private isClickOverlayActiveForTrigger(trigger: HTMLElement): boolean {
@@ -211,9 +203,7 @@ export class OverlayStack {
     }
 
     public async openOverlay(details: OverlayOpenDetail): Promise<boolean> {
-        if (!this.overlays.length) {
-            this.addEventListeners();
-        }
+        this.addEventListeners();
         if (this.findOverlayForContent(details.content)) {
             return false;
         }
@@ -477,10 +467,6 @@ export class OverlayStack {
                     },
                 })
             );
-
-            if (!this.overlays.length) {
-                this.removeEventListeners();
-            }
         }
     }
 
