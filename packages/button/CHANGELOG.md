@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.7...@spectrum-web-components/button@0.14.8) (2021-09-20)
+
+### Bug Fixes
+
+-   ensure "click" on "NumpadEnter" key press ([450fa01](https://github.com/adobe/spectrum-web-components/commit/450fa019d44f447a349707d77635f95bbc9f1049))
+
 ## [0.14.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.6...@spectrum-web-components/button@0.14.7) (2021-09-13)
 
 **Note:** Version bump only for package @spectrum-web-components/button

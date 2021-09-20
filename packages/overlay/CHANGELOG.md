@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.14...@spectrum-web-components/overlay@0.11.15) (2021-09-20)
+
+### Bug Fixes
+
+-   allow contextmenu event passing to pierce shadow roots ([05b69e9](https://github.com/adobe/spectrum-web-components/commit/05b69e90a56676c44e4757a6c2e19e6fe333b145))
+-   correct add/remove timing of overlay events ([474ec6e](https://github.com/adobe/spectrum-web-components/commit/474ec6e85840dc1efee8b134cc6e6163f228920f))
+
 ## [0.11.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.13...@spectrum-web-components/overlay@0.11.14) (2021-09-13)
 
 ### Bug Fixes

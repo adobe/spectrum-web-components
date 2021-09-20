@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.7.8...@spectrum-web-components/dropzone@0.7.9) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/dropzone
+
 ## [0.7.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.7.7...@spectrum-web-components/dropzone@0.7.8) (2021-08-24)
 
 ### Bug Fixes

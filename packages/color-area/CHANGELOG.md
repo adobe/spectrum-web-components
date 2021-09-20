@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.12...@spectrum-web-components/color-area@0.2.0) (2021-09-20)
+
+### Features
+
+-   **color-area:** separate X and Y aria labels to improve accessibility ([e8d9768](https://github.com/adobe/spectrum-web-components/commit/e8d9768f702991f76b0b3c109edb1eef17fe3cae))
+
 ## [0.1.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.11...@spectrum-web-components/color-area@0.1.12) (2021-09-13)
 
 ### Bug Fixes
