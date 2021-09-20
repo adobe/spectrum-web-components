@@ -63,7 +63,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        expect(!((el as unknown) as { hasIcon: boolean }).hasIcon);
+        expect(!(el as unknown as { hasIcon: boolean }).hasIcon);
         await expect(el).to.be.accessible();
     });
     it('loads default only icon', async () => {
@@ -112,7 +112,7 @@ describe('Button', () => {
 
         await elementUpdated(el);
 
-        const labelTestableEl = (el as unknown) as TestableButtonType;
+        const labelTestableEl = el as unknown as TestableButtonType;
 
         expect(labelTestableEl.hasLabel, 'starts with label').to.be.true;
 
@@ -309,6 +309,20 @@ describe('Button', () => {
                 bubbles: true,
                 composed: true,
                 cancelable: true,
+                code: 'NumpadEnter',
+                key: 'NumpadEnter',
+            })
+        );
+
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(1);
+        clickSpy.resetHistory();
+
+        el.dispatchEvent(
+            new KeyboardEvent('keypress', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
                 code: 'Space',
                 key: 'Space',
             })
@@ -451,9 +465,11 @@ describe('Button', () => {
         );
 
         await elementUpdated(el);
-        ((el as unknown) as {
-            anchorElement: HTMLAnchorElement;
-        }).anchorElement.addEventListener('click', (event: Event): void => {
+        (
+            el as unknown as {
+                anchorElement: HTMLAnchorElement;
+            }
+        ).anchorElement.addEventListener('click', (event: Event): void => {
             event.preventDefault();
             event.stopPropagation();
             clickSpy();
