@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -22,10 +22,11 @@ const buildPackage = (paths, options) => {
         } else if (options.clean) {
             execSync(`yarn ${args.join(' ')} --clean`);
         }
-        execSync(`yarn ${args.join(' ')}`);
+        
+       return execSync(`yarn ${args.join(' ')}`);
     } catch (error) {
         if (error.stdout) {
-            console.log(error.stdout.toString('utf8'));
+            return new Error(error.stdout.toString('utf8'));
         }
     }
 };
@@ -36,7 +37,7 @@ export const buildPackages = async (options) => {
         paths.push(config);
     }
     paths.push('.storybook/tsconfig.json');
-    buildPackage(paths, options);
+    return buildPackage(paths, options);
 };
 
-buildPackages();
+// buildPackages();

@@ -1,3 +1,4 @@
 packages/**/*.d.ts
 packages/*/lib/**/*
 packages/*/node_modules/**/*
+projects/**/.estlintrc.js
