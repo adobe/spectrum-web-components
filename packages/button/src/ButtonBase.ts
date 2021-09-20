@@ -163,6 +163,7 @@ export class ButtonBase extends LikeAnchor(
         const { code } = event;
         switch (code) {
             case 'Enter':
+            case 'NumpadEnter':
                 this.click();
                 break;
             default:
