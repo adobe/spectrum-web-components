@@ -87,7 +87,7 @@ export class HandleController implements Controller {
             return input;
         }
         /* c8 ignore next 2 */
-        throw new Error(`No input for handle "${handle.name}"`);
+        throw new Error(`No input for handle "${handle.handleName}"`);
     }
 
     public requestUpdate(): void {
@@ -178,7 +178,7 @@ export class HandleController implements Controller {
         handles.forEach((handle, index) => {
             /* c8 ignore next */
             if (!handle.handleName?.length) {
-                handle.name = `handle${index + 1}`;
+                handle.handleName = `handle${index + 1}`;
             }
             this.handles.set(handle.handleName, handle);
             this.handleOrder.push(handle.handleName);
