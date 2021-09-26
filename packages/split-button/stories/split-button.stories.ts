@@ -10,30 +10,38 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-import { html } from 'lit-html';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
-const action = (msg: string) => (): void => console.log(msg);
-
 export default {
     title: 'Split Button',
     component: 'sp-split-button',
+    argTypes: {
+        onFirstItem: { action: 'click: "Option 1"' },
+        onSecondItem: { action: 'click: "Option Extended"' },
+        onThirdItem: { action: 'click: "Short"' },
+    },
+};
+
+type StoryArgs = {
+    onFirstItem?: () => void;
+    onSecondItem?: () => void;
+    onThirdItem?: () => void;
 };
 
 const menu = ({
-    firstItemHandler = action('click "Option 1"'),
-    secondItemHandler = action('click "Option Extended"'),
-    thirdItemHandler = action('click "Short"'),
-}): TemplateResult => html`
-    <sp-menu-item @click=${firstItemHandler}>Option 1</sp-menu-item>
-    <sp-menu-item @click=${secondItemHandler}>Option Extended</sp-menu-item>
-    <sp-menu-item @click=${thirdItemHandler}>Short</sp-menu-item>
+    onFirstItem,
+    onSecondItem,
+    onThirdItem,
+}: StoryArgs): TemplateResult => html`
+    <sp-menu-item @click=${onFirstItem}>Option 1</sp-menu-item>
+    <sp-menu-item @click=${onSecondItem}>Option Extended</sp-menu-item>
+    <sp-menu-item @click=${onThirdItem}>Short</sp-menu-item>
 `;
 
-export const cta = (options = {}): TemplateResult => {
+export const cta = (options: StoryArgs = {}): TemplateResult => {
     return html`
         <div>
             <sp-split-button>${menu(options)}</sp-split-button>
@@ -46,7 +54,7 @@ cta.story = {
     name: 'Field, variant: CTA',
 };
 
-export const ctaOpen = (options = {}): TemplateResult => {
+export const ctaOpen = (options: StoryArgs = {}): TemplateResult => {
     return html`
         <div>
             <sp-split-button open>${menu(options)}</sp-split-button>
@@ -58,7 +66,7 @@ ctaOpen.story = {
     name: 'Field, Open, variant: CTA',
 };
 
-export const primary = (options = {}): TemplateResult => {
+export const primary = (options: StoryArgs = {}): TemplateResult => {
     return html`
         <div>
             <sp-split-button variant="primary">
@@ -75,7 +83,7 @@ primary.story = {
     name: 'Field, variant: Primary',
 };
 
-export const secondary = (options = {}): TemplateResult => {
+export const secondary = (options: StoryArgs = {}): TemplateResult => {
     return html`
         <div>
             <sp-split-button variant="secondary">
@@ -92,7 +100,7 @@ secondary.story = {
     name: 'Field, variant: Secondary',
 };
 
-export const moreCta = (options = {}): TemplateResult => {
+export const moreCta = (options: StoryArgs = {}): TemplateResult => {
     return html`
         <div>
             <sp-split-button type="more">${menu(options)}</sp-split-button>
@@ -105,7 +113,7 @@ moreCta.story = {
     name: 'More, variant: CTA',
 };
 
-export const moreCtaOpen = (options = {}): TemplateResult => {
+export const moreCtaOpen = (options: StoryArgs = {}): TemplateResult => {
     return html`
         <div>
             <sp-split-button type="more" open>${menu(options)}</sp-split-button>
@@ -117,7 +125,7 @@ moreCtaOpen.story = {
     name: 'More, Open, variant: CTA',
 };
 
-export const morePrimary = (options = {}): TemplateResult => {
+export const morePrimary = (options: StoryArgs = {}): TemplateResult => {
     return html`
         <div>
             <sp-split-button type="more" variant="primary">
@@ -134,7 +142,7 @@ morePrimary.story = {
     name: 'More, variant: Primary',
 };
 
-export const moreSecondary = (options = {}): TemplateResult => {
+export const moreSecondary = (options: StoryArgs = {}): TemplateResult => {
     return html`
         <div>
             <sp-split-button type="more" variant="secondary">

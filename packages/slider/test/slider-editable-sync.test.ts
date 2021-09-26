@@ -12,16 +12,16 @@ governing permissions and limitations under the License.
 
 import '../sync/sp-slider.js';
 import { Slider } from '../';
-import { editable, hideStepper, StoryArgs } from '../stories/slider.stories.js';
+import { editable, hideStepper } from '../stories/slider.stories.js';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 async function sliderFromFixture(
-    sliderFixture: (args: StoryArgs) => TemplateResult
+    sliderFixture: () => TemplateResult
 ): Promise<Slider> {
-    const el = await fixture<Slider>(sliderFixture({}));
+    const el = await fixture<Slider>(sliderFixture());
     const slider = el.querySelector('sp-slider') as Slider;
     return slider;
 }

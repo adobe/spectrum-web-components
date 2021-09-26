@@ -9,26 +9,19 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html } from 'lit-html';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-slider.js';
 import '../sp-slider-handle.js';
-import { Slider, SliderHandle, HandleValues, variants } from '../';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { Slider, SliderHandle, variants } from '../';
 import { spreadProps } from '@open-wc/lit-helpers';
-
-const action =
-    (msg1: string) =>
-    (msg2: string | HandleValues): void => {
-        const message =
-            typeof msg2 === 'string' ? msg2 : JSON.stringify(msg2, null, 2);
-        console.log(msg1, message);
-    };
 
 export default {
     component: 'sp-slider',
     title: 'Slider',
     argTypes: {
+        onInput: { action: 'input' },
+        onChange: { action: 'change' },
         variant: {
             name: 'Variant',
             description: 'Determines the style of slider.',
@@ -75,15 +68,45 @@ export interface StoryArgs {
     variant?: string;
     tickStep?: number;
     labelVisibility?: string;
+    onInput?: (val: string) => void;
+    onChange?: (val: string) => void;
 }
 
-export const Default = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
+const handleEvent =
+    ({ onInput, onChange }: StoryArgs) =>
+    (event: Event): void => {
+        const { value } = event.target as Slider;
+        if (onInput && event.type === 'input') {
+            onInput(value.toString());
+        } else if (onChange && event.type === 'change') {
+            onChange(value.toString());
         }
     };
+
+const handleHandleEvent =
+    ({ onInput, onChange }: StoryArgs) =>
+    (event: Event): void => {
+        const target = event.target as SliderHandle;
+        if (target.value != null) {
+            if (typeof target.value === 'object') {
+                const value = JSON.stringify(target.value, null, 2);
+                if (onInput && event.type === 'input') {
+                    onInput(value);
+                } else if (onChange && event.type === 'change') {
+                    onChange(value);
+                }
+            } else {
+                const value = `${target.name}: ${target.value}`;
+                if (onInput && event.type === 'input') {
+                    onInput(value);
+                } else if (onChange && event.type === 'change') {
+                    onChange(value);
+                }
+            }
+        }
+    };
+
+export const Default = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -91,8 +114,8 @@ export const Default = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value=".5"
                 step="0.01"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
                 ...=${spreadProps(args)}
             >
@@ -102,13 +125,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const noVisibleTextLabel = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
-        }
-    };
+export const noVisibleTextLabel = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -116,8 +133,8 @@ export const noVisibleTextLabel = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value=".5"
                 step="0.01"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
                 ...=${spreadProps(args)}
             >
@@ -130,13 +147,7 @@ noVisibleTextLabel.args = {
     labelVisibility: 'value',
 };
 
-export const noVisibleValueLabel = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
-        }
-    };
+export const noVisibleValueLabel = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -144,8 +155,8 @@ export const noVisibleValueLabel = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value=".5"
                 step="0.01"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
                 ...=${spreadProps(args)}
             >
@@ -158,13 +169,7 @@ noVisibleValueLabel.args = {
     labelVisibility: 'text',
 };
 
-export const noVisibleLabels = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
-        }
-    };
+export const noVisibleLabels = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -172,8 +177,8 @@ export const noVisibleLabels = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value=".5"
                 step="0.01"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
                 ...=${spreadProps(args)}
             >
@@ -186,13 +191,7 @@ noVisibleLabels.args = {
     labelVisibility: 'none',
 };
 
-export const px = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
-        }
-    };
+export const px = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -200,8 +199,8 @@ export const px = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value="90"
                 step="1"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 .formatOptions=${{
                     style: 'unit',
                     unit: 'px',
@@ -240,13 +239,7 @@ const editableDecorator = (story: () => TemplateResult): TemplateResult => {
     `;
 };
 
-export const editable = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
-        }
-    };
+export const editable = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -255,8 +248,8 @@ export const editable = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value="90"
                 step="1"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 .formatOptions=${{
                     style: 'unit',
                     unit: 'degree',
@@ -272,13 +265,7 @@ export const editable = (args: StoryArgs): TemplateResult => {
 
 editable.decorators = [editableDecorator];
 
-export const editableDisabled = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
-        }
-    };
+export const editableDisabled = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -288,8 +275,8 @@ export const editableDisabled = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value="90"
                 step="1"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 .formatOptions=${{
                     style: 'unit',
                     unit: 'degree',
@@ -305,13 +292,7 @@ export const editableDisabled = (args: StoryArgs): TemplateResult => {
 
 editable.decorators = [editableDecorator];
 
-export const editableCustom = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
-        }
-    };
+export const editableCustom = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div
             style="width: 500px; margin: 12px 20px; --spectrum-slider-editable-number-field-width: 150px;"
@@ -322,8 +303,8 @@ export const editableCustom = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value="12.75"
                 step="0.25"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'unit', unit: 'hour' }}
                 ...=${spreadProps(args)}
             >
@@ -335,13 +316,7 @@ export const editableCustom = (args: StoryArgs): TemplateResult => {
 
 editableCustom.decorators = [editableDecorator];
 
-export const hideStepper = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
-        }
-    };
+export const hideStepper = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -351,8 +326,8 @@ export const hideStepper = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value=".5"
                 step="0.01"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
                 ...=${spreadProps(args)}
             >
@@ -364,13 +339,7 @@ export const hideStepper = (args: StoryArgs): TemplateResult => {
 
 hideStepper.decorators = [editableDecorator];
 
-export const Gradient = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as Slider;
-        if (target.value != null) {
-            action(event.type)(target.value.toString());
-        }
-    };
+export const Gradient = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div
             style="
@@ -386,8 +355,8 @@ export const Gradient = (args: StoryArgs): TemplateResult => {
                 min="0"
                 value="50"
                 id="opacity-slider"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 ...=${spreadProps(args)}
             ></sp-slider>
         </div>
@@ -397,7 +366,7 @@ Gradient.args = {
     variant: undefined,
 };
 
-export const tick = (args: StoryArgs): TemplateResult => {
+export const tick = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-slider
             label="Slider Label"
@@ -413,7 +382,7 @@ tick.args = {
     tickStep: 5,
 };
 
-export const Disabled = (args: StoryArgs): TemplateResult => {
+export const Disabled = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -429,25 +398,15 @@ export const Disabled = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const ExplicitHandle = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as SliderHandle;
-        if (target.value != null) {
-            if (typeof target.value === 'object') {
-                action(event.type)(target.value);
-            } else {
-                action(event.type)(`${target.name}: ${target.value}`);
-            }
-        }
-    };
+export const ExplicitHandle = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
                 step="0.5"
                 min="0"
                 max="20"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleHandleEvent(args)}
+                @change=${handleHandleEvent(args)}
                 ...=${spreadProps(args)}
             >
                 Intensity
@@ -457,17 +416,7 @@ export const ExplicitHandle = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const TwoHandles = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as SliderHandle;
-        if (target.value != null) {
-            if (typeof target.value === 'object') {
-                action(event.type)(target.value);
-            } else {
-                action(event.type)(`${target.name}: ${target.value}`);
-            }
-        }
-    };
+export const TwoHandles = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -475,8 +424,8 @@ export const TwoHandles = (args: StoryArgs): TemplateResult => {
                 step="1"
                 min="0"
                 max="255"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleHandleEvent(args)}
+                @change=${handleHandleEvent(args)}
                 ...=${spreadProps(args)}
             >
                 Output Levels
@@ -499,17 +448,7 @@ TwoHandles.args = {
     tickStep: 10,
 };
 
-export const TwoHandlesPt = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as SliderHandle;
-        if (target.value != null) {
-            if (typeof target.value === 'object') {
-                action(event.type)(target.value);
-            } else {
-                action(event.type)(`${target.name}: ${target.value}`);
-            }
-        }
-    };
+export const TwoHandlesPt = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -517,8 +456,8 @@ export const TwoHandlesPt = (args: StoryArgs): TemplateResult => {
                 step="1"
                 min="0"
                 max="255"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleHandleEvent(args)}
+                @change=${handleHandleEvent(args)}
                 .formatOptions=${{
                     style: 'unit',
                     unit: 'pt',
@@ -545,17 +484,7 @@ TwoHandlesPt.args = {
     tickStep: 10,
 };
 
-export const ThreeHandlesPc = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as SliderHandle;
-        if (target.value != null) {
-            if (typeof target.value === 'object') {
-                action(event.type)(target.value);
-            } else {
-                action(event.type)(`${target.name}: ${target.value}`);
-            }
-        }
-    };
+export const ThreeHandlesPc = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -563,8 +492,8 @@ export const ThreeHandlesPc = (args: StoryArgs): TemplateResult => {
                 step="1"
                 min="0"
                 max="255"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleHandleEvent(args)}
+                @change=${handleHandleEvent(args)}
                 .formatOptions=${{
                     style: 'unit',
                     unit: 'pc',
@@ -580,25 +509,15 @@ export const ThreeHandlesPc = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const ThreeHandlesOrdered = (args: StoryArgs): TemplateResult => {
-    const handleEvent = (event: Event): void => {
-        const target = event.target as SliderHandle;
-        if (target.value != null) {
-            if (typeof target.value === 'object') {
-                action(event.type)(target.value);
-            } else {
-                action(event.type)(`${target.name}: ${target.value}`);
-            }
-        }
-    };
+export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
                 step="1"
                 min="0"
                 max="255"
-                @input=${handleEvent}
-                @change=${handleEvent}
+                @input=${handleHandleEvent(args)}
+                @change=${handleHandleEvent(args)}
                 ...=${spreadProps(args)}
             >
                 Output Levels
@@ -656,23 +575,35 @@ ThreeHandlesOrdered.args = {
 // One iteresting thing to note is that the normalization function
 // can also be used to enforce clamping.
 //
-export const ThreeHandlesComplex = (args: StoryArgs): TemplateResult => {
+export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
     const values: { [key: string]: number } = {
         black: 50,
         gray: 4.98,
         white: 225,
     };
-    const handleEvent = (event: Event): void => {
-        const target = event.target as SliderHandle;
-        if (target.value != null) {
-            if (typeof target.value === 'object') {
-                action(event.type)(target.value);
-            } else {
-                action(event.type)(`${target.name}: ${target.value}`);
+    const handleEvent =
+        ({ onInput, onChange }: StoryArgs) =>
+        (event: Event): void => {
+            const target = event.target as SliderHandle;
+            if (target.value != null) {
+                if (typeof target.value === 'object') {
+                    const value = JSON.stringify(target.value, null, 2);
+                    if (onInput && event.type === 'input') {
+                        onInput(value);
+                    } else if (onChange && event.type === 'change') {
+                        onChange(value);
+                    }
+                } else {
+                    const value = `${target.name}: ${target.value}`;
+                    if (onInput && event.type === 'input') {
+                        onInput(value);
+                    } else if (onChange && event.type === 'change') {
+                        onChange(value);
+                    }
+                }
+                values[target.name] = target.value;
             }
-            values[target.name] = target.value;
-        }
-    };
+        };
     const grayNormalization = {
         toNormalized(value: number) {
             const normalizedBlack = values.black / 255;
@@ -772,7 +703,7 @@ ThreeHandlesOrdered.args = {
     tickStep: 10,
 };
 
-export const focusTabDemo = (args: StoryArgs): TemplateResult => {
+export const focusTabDemo = (args: StoryArgs = {}): TemplateResult => {
     const value = 50;
     const min = 0;
     const max = 100;

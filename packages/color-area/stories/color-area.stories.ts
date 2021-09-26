@@ -21,6 +21,8 @@ export default {
     title: 'Color/Area',
     component: 'sp-color-area',
     argTypes: {
+        onInput: { action: 'input' },
+        onChange: { action: 'change' },
         color: {
             name: 'color',
             type: { name: 'ColorValue', required: 'true' },
@@ -34,17 +36,22 @@ export default {
     },
 };
 
-export const Default = (): TemplateResult => {
+type StoryArgs = {
+    onInput: (val: string) => void;
+    onChange: (val: string) => void;
+};
+
+export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
     return html`
         <sp-color-area
             @input=${({ target }: Event & { target: ColorArea }) => {
                 const next = target.nextElementSibling as HTMLElement;
                 next.textContent = target.color as string;
                 next.style.color = target.color as string;
-                console.log('input', target.value);
+                onInput(target.value as string);
             }}
             @change=${({ target }: Event & { target: ColorArea }) => {
-                console.log('change', target.value);
+                onChange(target.value as string);
             }}
         ></sp-color-area>
         <div style="color: #ff0000" aria-live="off">#ff0000</div>

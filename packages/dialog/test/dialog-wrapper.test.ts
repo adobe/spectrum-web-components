@@ -29,9 +29,7 @@ import {
 
 describe('Dialog Wrapper', () => {
     it('loads wrapped dialog accessibly', async () => {
-        const el = await fixture<DialogWrapper>(
-            wrapperDismissable({ actionTracking: false }, {})
-        );
+        const el = await fixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
 
@@ -81,9 +79,7 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.true;
     });
     it('dismisses', async () => {
-        const el = await fixture<DialogWrapper>(
-            wrapperDismissable({ actionTracking: false }, {})
-        );
+        const el = await fixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -100,9 +96,7 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
     });
     it('manages entry focus - dismissable', async () => {
-        const el = await fixture<DialogWrapper>(
-            wrapperDismissable({ actionTracking: false }, {})
-        );
+        const el = await fixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -128,9 +122,7 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
     });
     it('manages entry focus - buttons', async () => {
-        const el = await fixture<DialogWrapper>(
-            wrapperButtons({ actionTracking: false }, {})
-        );
+        const el = await fixture<DialogWrapper>(wrapperButtons());
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -154,9 +146,7 @@ describe('Dialog Wrapper', () => {
         const handleConfirm = (): void => confirmSpy();
         const handleCancel = (): void => cancelSpy();
         const handleSecondary = (): void => secondarySpy();
-        const el = await fixture<DialogWrapper>(
-            wrapperButtons({ actionTracking: false }, {})
-        );
+        const el = await fixture<DialogWrapper>(wrapperButtons());
         el.addEventListener('confirm', handleConfirm);
         el.addEventListener('cancel', handleCancel);
         el.addEventListener('secondary', handleSecondary);

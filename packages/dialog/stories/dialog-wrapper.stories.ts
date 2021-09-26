@@ -18,15 +18,52 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '../sp-dialog-wrapper.js';
 import { landscape } from './images.js';
 
-const action = (msg1: string) => (msg2: string | number): void =>
-    console.log(msg1, msg2);
 export default {
     title: 'Dialog Wrapped',
     component: 'sp-dialog-wrapper',
+    argTypes: {
+        onClose: { action: 'close' },
+        onConfirm: { action: 'confirm' },
+        onSecondary: { action: 'secondary' },
+        onCancel: { action: 'cancel' },
+    },
 };
 
-export const wrapperLabeledHero = (...args: unknown[]): TemplateResult => {
-    const context = (args[1] || {}) as { viewMode?: string };
+type StoryArgs = {
+    onClose?: (event: Event) => void;
+    onConfirm?: (event: Event) => void;
+    onSecondary?: (event: Event) => void;
+    onCancel?: (event: Event) => void;
+};
+
+const handleClose =
+    ({ onClose }: StoryArgs) =>
+    (event: Event) => {
+        if (onClose) onClose(event);
+    };
+
+const handleConfirm =
+    ({ onConfirm }: StoryArgs) =>
+    (event: Event) => {
+        if (onConfirm) onConfirm(event);
+    };
+
+const handleSecondary =
+    ({ onSecondary }: StoryArgs) =>
+    (event: Event) => {
+        if (onSecondary) onSecondary(event);
+    };
+
+const handleCancel =
+    ({ onCancel }: StoryArgs) =>
+    (event: Event) => {
+        if (onCancel) onCancel(event);
+    };
+
+export const wrapperLabeledHero = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
     return html`
         <sp-dialog-wrapper
@@ -35,7 +72,7 @@ export const wrapperLabeledHero = (...args: unknown[]): TemplateResult => {
             hero-label="Hero Image Alt Text"
             dismissable
             headline="Wrapped Dialog w/ Hero Image"
-            @close=${action('close')}
+            @close=${handleClose(args)}
             size="s"
         >
             Content of the dialog
@@ -50,22 +87,17 @@ export const wrapperLabeledHero = (...args: unknown[]): TemplateResult => {
 };
 
 export const wrapperDismissable = (
-    { actionTracking = true } = {},
+    args: StoryArgs = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
-    const announceAction = actionTracking
-        ? action
-        : () => {
-              return;
-          };
     return html`
         <sp-dialog-wrapper
             ?open=${open}
             hero=${landscape}
             dismissable
             headline="Wrapped Dialog w/ Hero Image"
-            @close=${announceAction('close')}
+            @close=${handleClose(args)}
             size="s"
         >
             Content of the dialog
@@ -80,9 +112,9 @@ export const wrapperDismissable = (
 };
 
 export const wrapperDismissableUnderlay = (
-    ...args: unknown[]
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
 ): TemplateResult => {
-    const context = (args[1] || {}) as { viewMode?: string };
     const open = context.viewMode === 'docs' ? false : true;
     return html`
         <sp-button
@@ -97,7 +129,7 @@ export const wrapperDismissableUnderlay = (
             dismissable
             headline="Wrapped Dialog w/ Hero Image"
             underlay
-            @close=${action('close')}
+            @close=${handleClose(args)}
             size="s"
         >
             Content of the dialog
@@ -105,11 +137,18 @@ export const wrapperDismissableUnderlay = (
     `;
 };
 
-export const longContent = (...args: unknown[]): TemplateResult => {
-    const context = (args[1] || {}) as { viewMode?: string };
+export const longContent = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
     return html`
-        <overlay-trigger type="modal" placement="none" .open=${open}>
+        <overlay-trigger
+            type="modal"
+            placement="none"
+            @close=${handleClose(args)}
+            .open=${open}
+        >
             <sp-dialog-wrapper
                 slot="click-content"
                 headline="Dialog title"
@@ -219,9 +258,9 @@ export const longContent = (...args: unknown[]): TemplateResult => {
 };
 
 export const wrapperDismissableUnderlayError = (
-    ...args: unknown[]
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
 ): TemplateResult => {
-    const context = (args[1] || {}) as { viewMode?: string };
     const open = context.viewMode === 'docs' ? false : true;
     return html`
         <div>
@@ -238,7 +277,7 @@ export const wrapperDismissableUnderlayError = (
                 error
                 headline="Wrapped Dialog w/ Hero Image"
                 underlay
-                @close=${action('close')}
+                @close=${handleClose(args)}
                 size="s"
             >
                 Content of the dialog
@@ -248,15 +287,10 @@ export const wrapperDismissableUnderlayError = (
 };
 
 export const wrapperButtons = (
-    { actionTracking = true } = {},
+    args: StoryArgs = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
-    const announceAction = actionTracking
-        ? action
-        : () => {
-              return;
-          };
     return html`
         <sp-dialog-wrapper
             ?open=${open}
@@ -266,17 +300,20 @@ export const wrapperButtons = (
             secondary-label="Replace"
             cancel-label="Cancel"
             footer="Content for footer"
-            @confirm=${announceAction('confirm')}
-            @secondary=${announceAction('secondary')}
-            @cancel=${announceAction('cancel')}
+            @close=${handleClose(args)}
+            @confirm=${handleConfirm(args)}
+            @secondary=${handleSecondary(args)}
+            @cancel=${handleCancel(args)}
         >
             Content of the dialog
         </sp-dialog-wrapper>
     `;
 };
 
-export const wrapperButtonsUnderlay = (...args: unknown[]): TemplateResult => {
-    const context = (args[1] || {}) as { viewMode?: string };
+export const wrapperButtonsUnderlay = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
     return html`
         <sp-dialog-wrapper
@@ -288,17 +325,20 @@ export const wrapperButtonsUnderlay = (...args: unknown[]): TemplateResult => {
             secondary-label="Replace"
             cancel-label="Cancel"
             footer="Content for footer"
-            @confirm=${action('confirm')}
-            @secondary=${action('secondary')}
-            @cancel=${action('cancel')}
+            @close=${handleClose(args)}
+            @confirm=${handleConfirm(args)}
+            @secondary=${handleSecondary(args)}
+            @cancel=${handleCancel(args)}
         >
             Content of the dialog
         </sp-dialog-wrapper>
     `;
 };
 
-export const wrapperFullscreen = (...args: unknown[]): TemplateResult => {
-    const context = (args[1] || {}) as { viewMode?: string };
+export const wrapperFullscreen = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
     return html`
         <sp-dialog-wrapper
@@ -308,9 +348,10 @@ export const wrapperFullscreen = (...args: unknown[]): TemplateResult => {
             confirm-label="Keep Both"
             secondary-label="Replace"
             cancel-label="Cancel"
-            @confirm=${action('confirm')}
-            @secondary=${action('secondary')}
-            @cancel=${action('cancel')}
+            @close=${handleClose(args)}
+            @confirm=${handleConfirm(args)}
+            @secondary=${handleSecondary(args)}
+            @cancel=${handleCancel(args)}
         >
             Content of the dialog
         </sp-dialog-wrapper>

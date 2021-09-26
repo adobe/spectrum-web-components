@@ -222,7 +222,7 @@
         "yargs": "^17.0.1"
     },
     "resolutions": {
-        "@web/storybook-prebuilt": "0.1.26-alpha.1",
+        "@web/storybook-prebuilt": "0.1.27-alpha.0",
         "cssnano/**/postcss-calc": "7.0.0",
         "playwright": "1.13.0"
     },
