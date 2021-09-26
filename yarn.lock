@@ -4809,10 +4809,10 @@
   dependencies:
     "@web/polyfills-loader" "^1.1.0"
 
-"@web/storybook-prebuilt@0.1.26-alpha.1", "@web/storybook-prebuilt@^0.1.24-alpha.1":
-  version "0.1.26-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web/storybook-prebuilt/-/storybook-prebuilt-0.1.26-alpha.1.tgz#58f5d14b806c7c5179e012a566113ab018d3aef8"
-  integrity sha512-N/UVggJc9QniUVqm5nfwj0tgp/vMao95VXrBmwIhp14jl3E7lWPsNmPNBZtC0PU6+I5Td/PMjfR65E80mfG3OA==
+"@web/storybook-prebuilt@0.1.27-alpha.0", "@web/storybook-prebuilt@^0.1.24-alpha.1":
+  version "0.1.27-alpha.0"
+  resolved "https://registry.yarnpkg.com/@web/storybook-prebuilt/-/storybook-prebuilt-0.1.27-alpha.0.tgz#e524850f8308ef41ab72ed1d98feb1013309412b"
+  integrity sha512-4SQBDWAOh4x4vgMBb0hE4g8h1otGzIghAZc5D13duSEY6K0VeJrB09b273MQbq1mQFta48p47NwKSt0nOZTfqQ==
 
 "@web/test-runner-chrome@^0.10.2", "@web/test-runner-chrome@^0.10.3":
   version "0.10.3"

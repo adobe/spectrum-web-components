@@ -20,9 +20,22 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 export default {
     title: 'Picker/Sizes',
     component: 'sp-picker',
+    argTypes: {
+        onChange: { action: 'change' },
+    },
 };
 
-const picker = ({ size }: { size: 's' | 'm' | 'l' | 'xl' }): TemplateResult => {
+type StoryArgs = {
+    onChange: (val: string) => void;
+};
+
+const picker = ({
+    onChange,
+    size,
+}: {
+    onChange: (val: string) => void;
+    size: 's' | 'm' | 'l' | 'xl';
+}): TemplateResult => {
     return html`
         <sp-field-label for="picker-${size}" size=${size}>
             Where do you live?
@@ -32,7 +45,7 @@ const picker = ({ size }: { size: 's' | 'm' | 'l' | 'xl' }): TemplateResult => {
             size=${size}
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
+                onChange(picker.value);
             }}"
             label="Select a Country with a very long label, too long, in fact"
         >
@@ -47,10 +60,14 @@ const picker = ({ size }: { size: 's' | 'm' | 'l' | 'xl' }): TemplateResult => {
     `;
 };
 
-export const s = (): TemplateResult => picker({ size: 's' });
+export const s = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, size: 's' });
 
-export const m = (): TemplateResult => picker({ size: 'm' });
+export const m = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, size: 'm' });
 
-export const l = (): TemplateResult => picker({ size: 'l' });
+export const l = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, size: 'l' });
 
-export const XL = (): TemplateResult => picker({ size: 'xl' });
+export const XL = (args: StoryArgs): TemplateResult =>
+    picker({ ...args, size: 'xl' });

@@ -9,23 +9,27 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html } from 'lit-html';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-sidenav.js';
 import '../sp-sidenav-item.js';
 import '../sp-sidenav-heading.js';
-import { TemplateResult } from '@spectrum-web-components/base';
 
-const action = (msg1: string) => (msg2: string | number): void =>
-    console.log(msg1, msg2);
 export default {
     component: 'sp-sidenav',
     title: 'Sidenav',
+    argTypes: {
+        onChange: { action: 'change' },
+    },
 };
 
-export const Default = (): TemplateResult => {
+export const Default = ({
+    onChange,
+}: {
+    onChange: () => void;
+}): TemplateResult => {
     return html`
-        <sp-sidenav @change=${action('select')} value="Section 2">
+        <sp-sidenav @change=${onChange} value="Section 2">
             <sp-sidenav-item
                 value="Section 1"
                 label="Section 1"
@@ -49,13 +53,13 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const Multilevel = (): TemplateResult => {
+export const Multilevel = ({
+    onChange,
+}: {
+    onChange: () => void;
+}): TemplateResult => {
     return html`
-        <sp-sidenav
-            variant="multilevel"
-            value="2.3.1"
-            @change=${action('select')}
-        >
+        <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
             <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
             <sp-sidenav-item value="baz" label="baz" expanded>
                 <sp-sidenav-item value="2.1" label="2.1"></sp-sidenav-item>
@@ -130,9 +134,13 @@ export const manageTabIndex = (): TemplateResult => {
     `;
 };
 
-export const Hrefs = (): TemplateResult => {
+export const Hrefs = ({
+    onChange,
+}: {
+    onChange: () => void;
+}): TemplateResult => {
     return html`
-        <sp-sidenav @change=${action('select')} value="current">
+        <sp-sidenav @change=${onChange} value="current">
             <sp-sidenav-heading label="GITHUB">
                 <sp-sidenav-item
                     href=${window.location.href}

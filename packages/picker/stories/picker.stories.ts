@@ -33,6 +33,7 @@ export default {
         quiet: false,
     },
     argTypes: {
+        onChange: { action: 'change' },
         disabled: {
             name: 'disabled',
             type: { name: 'boolean', required: false },
@@ -87,17 +88,22 @@ interface StoryArgs {
     open?: boolean;
     quiet?: boolean;
     showText?: boolean;
+    onChange?: (val: string) => void;
 }
+
+const handleChange =
+    ({ onChange }: StoryArgs) =>
+    (event: Event): void => {
+        const picker = event.target as Picker;
+        if (onChange) onChange(picker.value);
+    };
 
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-1">Where do you live?</sp-field-label>
         <sp-picker
             id="picker-1"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             label="Select a Country with a very long label, too long, in fact"
             ...=${spreadProps(args)}
         >
@@ -125,10 +131,7 @@ export const quiet = (args: StoryArgs): TemplateResult => {
         <sp-picker
             ...=${spreadProps(args)}
             id="picker-quiet"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             label="Pick an item"
         >
             <sp-menu-item value="1">Item 1</sp-menu-item>
@@ -157,10 +160,7 @@ export const icons = (args: StoryArgs): TemplateResult => {
         <sp-picker
             ...=${spreadProps(args)}
             id="picker-quiet"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             label="Pick an action"
             value="1"
         >
@@ -188,10 +188,7 @@ export const iconsNone = (args: StoryArgs): TemplateResult => {
         <sp-picker
             ...=${spreadProps(args)}
             id="picker-quiet"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             label="Pick an action"
             value="1"
             icons="none"
@@ -223,10 +220,7 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
         <sp-picker
             ...=${spreadProps(args)}
             id="picker-quiet"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             label="Pick an action"
             icons="only"
             style="--spectrum-picker-width: 100px"
@@ -256,10 +250,7 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
         <sp-picker
             ...=${spreadProps(args)}
             id="picker-quiet"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             label="Pick an action"
             style="--spectrum-picker-width: 100px"
             value="3"
@@ -297,10 +288,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 id="picker-open"
                 label="Open picker"
                 ...=${spreadProps(args)}
-                @change="${(event: Event): void => {
-                    const picker = event.target as Picker;
-                    console.log(`Change: ${picker.value}`);
-                }}"
+                @change=${handleChange(args)}
             >
                 <span slot="label">
                     Select a Country with a very long label, too long, in fact
@@ -321,10 +309,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
             <sp-picker
                 id="picker-closed"
                 label="Picker that displays below the options"
-                @change="${(event: Event): void => {
-                    const picker = event.target as Picker;
-                    console.log(`Change: ${picker.value}`);
-                }}"
+                @change=${handleChange(args)}
             >
                 <span slot="label">
                     Other menu that goes behind the open one
@@ -343,10 +328,7 @@ export const initialValue = (args: StoryArgs): TemplateResult => {
         <sp-field-label for="picker-initial">Where do you live?</sp-field-label>
         <sp-picker
             id="picker-initial"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             value="item-2"
             ...=${spreadProps(args)}
         >
@@ -367,10 +349,7 @@ export const initialValue = (args: StoryArgs): TemplateResult => {
 export const readonly = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-picker
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             readonly
             value="item-2"
             ...=${spreadProps(args)}
@@ -397,10 +376,7 @@ export const custom = (args: StoryArgs): TemplateResult => {
         </sp-field-label>
         <sp-picker
             style="width: 400px;"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             id="picker-state"
             label="Pick a state"
             ...=${spreadProps(args)}
