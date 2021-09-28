@@ -4661,58 +4661,10 @@
     picomatch "^2.2.2"
     ws "^7.4.0"
 
-"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.12", "@web/dev-server-core@^0.3.3":
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.12.tgz#99b8ed1a3b6a797dd52e08b3e8d5e499e5c017b2"
-  integrity sha512-PI7neqHvsgsE+GJnJNSjMGeWHSo8MgO99CAzVm6UtFeAjShmMGWp6WQTDJPzvsE4jnYhIg8EPwz2cqDIGnkU6A==
-  dependencies:
-    "@types/koa" "^2.11.6"
-    "@types/ws" "^7.4.0"
-    "@web/parse5-utils" "^1.2.0"
-    chokidar "^3.4.3"
-    clone "^2.1.2"
-    es-module-lexer "^0.4.0"
-    get-stream "^6.0.0"
-    is-stream "^2.0.0"
-    isbinaryfile "^4.0.6"
-    koa "^2.13.0"
-    koa-etag "^4.0.0"
-    koa-send "^5.0.1"
-    koa-static "^5.0.0"
-    lru-cache "^6.0.0"
-    mime-types "^2.1.27"
-    parse5 "^6.0.1"
-    picomatch "^2.2.2"
-    ws "^7.4.2"
-
-"@web/dev-server-core@^0.3.13":
-  version "0.3.14"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.14.tgz#3ccaa2d883f5e8a70d5f995227aa35294cbb76fc"
-  integrity sha512-QHWGbkLI7qZVkELd6a7R4llRF9zydwbZagAeiJRvOIIiDhG5Uu9DfAWAQL+RSCb2hqBlEnaVAK4keNffKol4rQ==
-  dependencies:
-    "@types/koa" "^2.11.6"
-    "@types/ws" "^7.4.0"
-    "@web/parse5-utils" "^1.2.0"
-    chokidar "^3.4.3"
-    clone "^2.1.2"
-    es-module-lexer "^0.7.1"
-    get-stream "^6.0.0"
-    is-stream "^2.0.0"
-    isbinaryfile "^4.0.6"
-    koa "^2.13.0"
-    koa-etag "^4.0.0"
-    koa-send "^5.0.1"
-    koa-static "^5.0.0"
-    lru-cache "^6.0.0"
-    mime-types "^2.1.27"
-    parse5 "^6.0.1"
-    picomatch "^2.2.2"
-    ws "^7.4.2"
-
-"@web/dev-server-core@^0.3.15":
-  version "0.3.15"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.15.tgz#4491dec190c256c4acc94a9cfe5fb2c1c5325e15"
-  integrity sha512-zDdCzz9iNJt/4+CkDDYB55TtnmxibnaBOAlPxfsBqiW5Rw+ex3KoNDP9PJqk53OJlHUn4HCd3rHXIE1cotiztQ==
+"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.12", "@web/dev-server-core@^0.3.13", "@web/dev-server-core@^0.3.16":
+  version "0.3.16"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.16.tgz#7404383d05031f462a29f578dc35948d0af35344"
+  integrity sha512-nj6liCErIGtpuZYPf6QaxGQ9nlaHd8Cf/NBcRhogskvjOVFkF3FS9xpjRw3WidkmOQnk+D0ZGCeXjtTibgy5CA==
   dependencies:
     "@types/koa" "^2.11.6"
     "@types/ws" "^7.4.0"
@@ -4740,24 +4692,13 @@
   dependencies:
     "@web/dev-server-core" "^0.3.0"
 
-"@web/dev-server-rollup@^0.3.5":
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.5.tgz#cb824298e384e6c1d8105c4ffffd42fdacacf60f"
-  integrity sha512-eDLy3Da3qXqfPxOB7qZvR5NscXCZ63NyxoyPR0R/ukPs7ThvkAfwrtnKXckQo4vh5+FMytZXhyDcqPgeGDlGlg==
+"@web/dev-server-rollup@^0.3.10", "@web/dev-server-rollup@^0.3.9":
+  version "0.3.10"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.10.tgz#e18348666047c237b290a2cb58623a8e9981f13f"
+  integrity sha512-TWRMP+dIw94+C8ycrqbqBQirR7XNsGsY5O0ZLaS8YQMFs/a7XcGeUq6yq8KARO22gQ9c1Nu9nrRQLp4pVieBQA==
   dependencies:
-    "@web/dev-server-core" "^0.3.3"
-    chalk "^4.1.0"
-    parse5 "^6.0.1"
-    rollup "^2.35.1"
-    whatwg-url "^8.4.0"
-
-"@web/dev-server-rollup@^0.3.9":
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.9.tgz#4dec68b24949a216a33d4aba9589a70dbc9a42a8"
-  integrity sha512-8NOV8GxcDXk9u+hsVYllGiMhcORYMFK+LtLT4HIg3+emW64j0MynttowBoOFpgwv7YOuVQ6lWe1kmJxiI+TRdg==
-  dependencies:
-    "@web/dev-server-core" "^0.3.3"
-    chalk "^4.1.0"
+    "@web/dev-server-core" "^0.3.16"
+    nanocolors "^0.2.1"
     parse5 "^6.0.1"
     rollup "^2.56.2"
     whatwg-url "^9.0.0"
@@ -4788,45 +4729,24 @@
     rollup-plugin-terser "^7.0.2"
     storybook-addon-markdown-docs "^1.0.2-next.0"
 
-"@web/dev-server@0.1.18":
-  version "0.1.18"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.18.tgz#874b11d908927c8e0cd8e7c20cf0d8273a79fdb5"
-  integrity sha512-mMXI9IgowYmRXlKfvDCAPDvfjtuqpo74GmbDbd1ZF5IIHanvCF4d1xBPxc+w403bnbwj2cqjWc8wed+zp8JSoQ==
+"@web/dev-server@0.1.24", "@web/dev-server@^0.1.20", "@web/dev-server@^0.1.22":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.24.tgz#e5be11eccd4809ffc065d11f4a6bcf40bf631b43"
+  integrity sha512-2Erea/FywKMH7ANaj8fVqrA6hKXHI0SYWXuf9OvCCSb4t+nwrNlAZGbeL8FXJGgJqD0M6+8g7xAZveeTLYGU9w==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@rollup/plugin-node-resolve" "^11.0.1"
     "@types/command-line-args" "^5.0.0"
     "@web/config-loader" "^0.1.3"
-    "@web/dev-server-core" "^0.3.12"
-    "@web/dev-server-rollup" "^0.3.5"
+    "@web/dev-server-core" "^0.3.16"
+    "@web/dev-server-rollup" "^0.3.10"
     camelcase "^6.2.0"
-    chalk "^4.1.0"
     command-line-args "^5.1.1"
     command-line-usage "^6.1.1"
     debounce "^1.2.0"
     deepmerge "^4.2.2"
     ip "^1.1.5"
-    open "^8.0.2"
-    portfinder "^1.0.28"
-
-"@web/dev-server@^0.1.20", "@web/dev-server@^0.1.22":
-  version "0.1.23"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.23.tgz#a9f721806e9928bb713ab7da1bd9ff88b49ae78a"
-  integrity sha512-IW/Bdcp19ROFO/LsrgXdMKFCmwfq1FD5H3Xk9Ggvf6QjhzLdmLqNcyzriX/3wEHARfHM5ddQpy9yeoXhhdCjDw==
-  dependencies:
-    "@babel/code-frame" "^7.12.11"
-    "@rollup/plugin-node-resolve" "^11.0.1"
-    "@types/command-line-args" "^5.0.0"
-    "@web/config-loader" "^0.1.3"
-    "@web/dev-server-core" "^0.3.15"
-    "@web/dev-server-rollup" "^0.3.9"
-    camelcase "^6.2.0"
-    chalk "^4.1.0"
-    command-line-args "^5.1.1"
-    command-line-usage "^6.1.1"
-    debounce "^1.2.0"
-    deepmerge "^4.2.2"
-    ip "^1.1.5"
+    nanocolors "^0.2.1"
     open "^8.0.2"
     portfinder "^1.0.28"
 
@@ -9884,16 +9804,6 @@ es-module-lexer@^0.3.13, es-module-lexer@^0.3.26:
   version "0.3.26"
   resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.3.26.tgz#7b507044e97d5b03b01d4392c74ffeb9c177a83b"
   integrity sha512-Va0Q/xqtrss45hWzP8CZJwzGSZJjDM5/MJRE3IXXnUCcVLElR9BRaE9F62BopysASyc4nM3uwhSW7FFB9nlWAA==
-
-es-module-lexer@^0.4.0:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.4.1.tgz#dda8c6a14d8f340a24e34331e0fab0cb50438e0e"
-  integrity sha512-ooYciCUtfw6/d2w56UVeqHPcoCFAiJdz5XOkYpv/Txl1HMUozpXjz/2RIQgqwKdXNDPSF1W7mJCFse3G+HDyAA==
-
-es-module-lexer@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.7.1.tgz#c2c8e0f46f2df06274cdaf0dd3f3b33e0a0b267d"
-  integrity sha512-MgtWFl5No+4S3TmhDmCz2ObFGm6lEpTnzbQi+Dd+pw4mlTIZTmM2iAs5gRlmx5zS9luzobCSBSI90JM/1/JgOw==
 
 es-module-lexer@^0.9.0:
   version "0.9.0"
@@ -15720,6 +15630,11 @@ nan@^2.12.1:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
 
+nanocolors@^0.2.1:
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/nanocolors/-/nanocolors-0.2.12.tgz#4d05932e70116078673ea4cc6699a1c56cc77777"
+  integrity sha512-SFNdALvzW+rVlzqexid6epYdt8H9Zol7xDoQarioEFcFN0JHo4CYNztAxmtfgGTVRCmFlEOqqhBpoFGKqSAMug==
+
 nanoid@^3.1.22, nanoid@^3.1.23:
   version "3.1.23"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.23.tgz#f744086ce7c2bc47ee0a8472574d5c78e4183a81"
@@ -20090,7 +20005,7 @@ rollup@^1.31.1:
     "@types/node" "*"
     acorn "^7.1.0"
 
-rollup@^2.23.1, rollup@^2.3.4, rollup@^2.35.1, rollup@^2.56.2, rollup@^2.7.2:
+rollup@^2.23.1, rollup@^2.3.4, rollup@^2.56.2, rollup@^2.7.2:
   version "2.57.0"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.57.0.tgz#c1694475eb22e1022477c0f4635fd0ac80713173"
   integrity sha512-bKQIh1rWKofRee6mv8SrF2HdP6pea5QkwBZSMImJysFj39gQuiV8MEPBjXOCpzk3wSYp63M2v2wkWBmFC8O/rg==
