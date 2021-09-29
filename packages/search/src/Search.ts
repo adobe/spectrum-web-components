@@ -37,7 +37,7 @@ export class Search extends Textfield {
     }
 
     @property()
-    public action?: string;
+    public action = '';
 
     @property()
     public label = 'Search';
@@ -94,7 +94,7 @@ export class Search extends Textfield {
     protected render(): TemplateResult {
         return html`
             <form
-                action=${ifDefined(this.action)}
+                action=${this.action}
                 id="form"
                 method=${ifDefined(this.method)}
                 @submit=${this.handleSubmit}
@@ -118,6 +118,11 @@ export class Search extends Textfield {
                     : html``}
             </form>
         `;
+    }
+
+    public firstUpdated(changedProperties: PropertyValues): void {
+        super.firstUpdated(changedProperties);
+        this.inputElement.setAttribute('type', 'search');
     }
 
     public updated(changedProperties: PropertyValues): void {
