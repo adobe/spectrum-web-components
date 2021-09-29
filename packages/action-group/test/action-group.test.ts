@@ -20,8 +20,10 @@ import {
 
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import { TemplateResult } from '@spectrum-web-components/icons-ui/src/custom-tag';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { LitElement } from 'lit-element';
 import { ActionGroup } from '..';
 import {
     arrowDownEvent,
@@ -63,6 +65,56 @@ describe('ActionGroup', () => {
         expect(el.getAttribute('aria-label')).to.equal('Default Group');
         expect(el.hasAttribute('role')).to.be.false;
         expect(el.children[0].getAttribute('role')).to.equal('button');
+    });
+    it('applies `quiet` attribute to its children', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group quiet>
+                    <sp-action-button id="first">First</sp-action-button>
+                    <sp-action-button id="second">Second</sp-action-button>
+                </sp-action-group>
+            `
+        ); 
+        const firstButton = el.querySelector('#first') as ActionButton;
+        const secondButton = el.querySelector('#second') as ActionButton;
+
+        await elementUpdated(el);
+        
+        expect(firstButton.getAttribute('quiet') === '').to.be.true;
+        expect(firstButton.quiet).to.be.true;
+        expect(secondButton.getAttribute('quiet') === '').to.be.true;
+        expect(secondButton.quiet).to.be.true;
+    });
+    it.only('applies `quiet` attribute to its slotted children', async () => {
+        class ActionGroupTestEl extends LitElement {
+            protected render(): TemplateResult {
+                return html`
+                    <sp-action-group quiet>
+                        <slot name="first"></slot>
+                        <slot name="second"></slot>
+                    </sp-action-group>
+                `;
+            }
+        }
+        customElements.define('action-group-test-el', ActionGroupTestEl);
+        
+        const el = await fixture<ActionGroup>(
+            html`
+                <action-group-test-el>
+                    <sp-action-button slot="first" id="first">First</sp-action-button>
+                    <sp-action-button slot="second" id="second">Second</sp-action-button>
+                </action-group-test-el>
+            `
+        ); 
+        const firstButton = el.querySelector('#first') as ActionButton;
+        const secondButton = el.querySelector('#second') as ActionButton;
+
+        await elementUpdated(el);
+        
+        expect(firstButton.getAttribute('quiet') === '').to.be.true;
+        expect(firstButton.quiet).to.be.true;
+        expect(secondButton.getAttribute('quiet') === '').to.be.true;
+        expect(secondButton.quiet).to.be.true;
     });
     it('loads [selects="single"] action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(

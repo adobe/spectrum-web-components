@@ -370,10 +370,10 @@ export class ActionGroup extends SpectrumElement {
                 const buttons = [
                     ...this.querySelectorAll(this._buttonSelector),
                 ] as ActionButton[];
-                buttons.filter((button) => {
-                    const buttonParent = button.parentElement;
-                    return !buttonParent?.closest(this._buttonSelector);
-                });
+                // buttons.filter((button) => {
+                //     const buttonParent = button.parentElement;
+                //     return !buttonParent?.closest(this._buttonSelector);
+                // });
                 this.buttons = buttons;
                 this.manageChildren();
                 this.manageSelects();
