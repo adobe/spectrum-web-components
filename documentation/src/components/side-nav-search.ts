@@ -149,6 +149,15 @@ class SearchComponent extends LitElement {
         }
     }
 
+    handleSubmit(event: Event): void {
+        event.preventDefault();
+        if (this.results.length < 0 || !this.searchResultsPopover) return;
+        const popoverMenu = this.searchResultsPopover.querySelector(
+            'sp-menu'
+        ) as Menu;
+        popoverMenu.focus();
+    }
+
     render(): TemplateResult {
         return html`
             <div id="search-container">
@@ -157,6 +166,7 @@ class SearchComponent extends LitElement {
                         @input=${this.handleSearchInput}
                         @change=${this.handleSearchInput}
                         @keydown=${this.handleKeydown}
+                        @submit=${this.handleSubmit}
                         autocomplete="off"
                     ></sp-search>
                 </div>
