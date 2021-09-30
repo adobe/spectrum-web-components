@@ -19,6 +19,7 @@ import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/link/sp-link.js';
 
 export default {
     component: 'sp-card',
@@ -54,6 +55,7 @@ export default {
 export interface StoryArgs {
     horizontal?: boolean;
     size?: 's';
+    onClick?: ((event: Event) => void) | undefined;
 }
 
 export const Default = (args: StoryArgs): TemplateResult => {
@@ -70,6 +72,45 @@ export const Default = (args: StoryArgs): TemplateResult => {
     `;
 };
 Default.args = {};
+
+export const href = (args: StoryArgs): TemplateResult => {
+    const { onClick } = args;
+    return html`
+        <sp-card
+            heading="Card Heading"
+            subheading="JPG"
+            .size=${args.size}
+            toggles
+            ?horizontal=${args.horizontal}
+            href="https://opensource.adobe.com/spectrum-web-components"
+            @click=${(event: Event) => {
+                const composedTarget = event.composedPath()[0] as HTMLElement;
+                if (composedTarget.id !== 'like-anchor') return;
+                event.stopPropagation();
+                event.preventDefault();
+                onClick && onClick(event);
+            }}
+        >
+            <div slot="footer">
+                Footer with a
+                <sp-link href="https://google.com">link to Google</sp-link>
+            </div>
+            <sp-action-menu slot="actions" placement="bottom-end">
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-action-menu>
+            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+        </sp-card>
+    `;
+};
+href.argTypes = {
+    onClick: { action: 'link click' },
+};
 
 export const actions = (args: StoryArgs): TemplateResult => {
     return html`
@@ -254,6 +295,28 @@ export const smallHorizontal = (args: StoryArgs): TemplateResult => {
     `;
 };
 smallHorizontal.args = {
+    horizontal: true,
+    size: 's',
+};
+
+export const smallHorizontalWithHREF = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-card
+            .size=${args.size}
+            ?horizontal=${args.horizontal}
+            heading="Card Heading"
+            subheading="JPG"
+            href="https://opensource.adobe.com/spectrum-web-components"
+            target="_blank"
+        >
+            <sp-icon-file-txt
+                slot="preview"
+                style="width: 36px; height: 36px;"
+            ></sp-icon-file-txt>
+        </sp-card>
+    `;
+};
+smallHorizontalWithHREF.args = {
     horizontal: true,
     size: 's',
 };

@@ -49,7 +49,7 @@ import { Card } from '@spectrum-web-components/card';
 
 ## Heading
 
-By default, the heading for an `sp-card` is applied via the `heading` attribute, which is restricted to string content only. When HTML content is desired, a slot named `heading` available for applying the heading.
+By default, the heading for an `<sp-card>` is applied via the `heading` attribute, which is restricted to string content only. When HTML content is desired, a slot named `heading` available for applying the heading.
 
 ```html demo
 <sp-card
@@ -59,6 +59,22 @@ By default, the heading for an `sp-card` is applied via the `heading` attribute,
     <h1 slot="heading">Card Heading</h1>
     <img alt="" slot="cover-photo" src="https://picsum.photos/200/300" />
     <div slot="footer">Footer</div>
+</sp-card>
+```
+
+## Linking
+
+An `<sp-card>` can be provided with an `href` attribute in order for it to act as one large anchor element. When leveraging the `href` attribute, the `download`, `target` and `rel` attributes come into play to customize the linking behavior of the element. Use them as follows:
+
+<!-- prettier-ignore -->
+```html
+<sp-card
+    heading="Card Title"
+    subheading="JPG"
+    href="https://opensource.adobe.com/spectrum-web-components"
+    target="_blank"
+>
+    <img slot="cover-photo" src="https://picsum.photos/200/300" alt="Demo Image" />
 </sp-card>
 ```
 
