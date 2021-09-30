@@ -74,18 +74,18 @@ describe('ActionGroup', () => {
                     <sp-action-button id="second">Second</sp-action-button>
                 </sp-action-group>
             `
-        ); 
+        );
         const firstButton = el.querySelector('#first') as ActionButton;
         const secondButton = el.querySelector('#second') as ActionButton;
 
         await elementUpdated(el);
-        
+
         expect(firstButton.getAttribute('quiet') === '').to.be.true;
         expect(firstButton.quiet).to.be.true;
         expect(secondButton.getAttribute('quiet') === '').to.be.true;
         expect(secondButton.quiet).to.be.true;
     });
-    it.only('applies `quiet` attribute to its slotted children', async () => {
+    it('applies `quiet` attribute to its slotted children', async () => {
         class ActionGroupTestEl extends LitElement {
             protected render(): TemplateResult {
                 return html`
@@ -97,24 +97,63 @@ describe('ActionGroup', () => {
             }
         }
         customElements.define('action-group-test-el', ActionGroupTestEl);
-        
+
         const el = await fixture<ActionGroup>(
             html`
                 <action-group-test-el>
-                    <sp-action-button slot="first" id="first">First</sp-action-button>
-                    <sp-action-button slot="second" id="second">Second</sp-action-button>
+                    <sp-action-button slot="first" id="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button slot="second" id="second">
+                        Second
+                    </sp-action-button>
                 </action-group-test-el>
             `
-        ); 
+        );
         const firstButton = el.querySelector('#first') as ActionButton;
         const secondButton = el.querySelector('#second') as ActionButton;
 
         await elementUpdated(el);
-        
+
         expect(firstButton.getAttribute('quiet') === '').to.be.true;
         expect(firstButton.quiet).to.be.true;
         expect(secondButton.getAttribute('quiet') === '').to.be.true;
         expect(secondButton.quiet).to.be.true;
+    });
+    it('applies `emphasized` attribute to its slotted children', async () => {
+        class EmphasizedActionGroup extends LitElement {
+            protected render(): TemplateResult {
+                return html`
+                    <sp-action-group emphasized>
+                        <slot name="first"></slot>
+                        <slot name="second"></slot>
+                    </sp-action-group>
+                `;
+            }
+        }
+        customElements.define('emphasized-action-group', EmphasizedActionGroup);
+
+        const el = await fixture<ActionGroup>(
+            html`
+                <emphasized-action-group>
+                    <sp-action-button slot="first" id="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button slot="second" id="second">
+                        Second
+                    </sp-action-button>
+                </emphasized-action-group>
+            `
+        );
+        const firstButton = el.querySelector('#first') as ActionButton;
+        const secondButton = el.querySelector('#second') as ActionButton;
+
+        await elementUpdated(el);
+
+        expect(firstButton.getAttribute('emphasized') === '').to.be.true;
+        expect(firstButton.emphasized).to.be.true;
+        expect(secondButton.getAttribute('emphasized') === '').to.be.true;
+        expect(secondButton.emphasized).to.be.true;
     });
     it('loads [selects="single"] action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(

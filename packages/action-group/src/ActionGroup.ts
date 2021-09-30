@@ -322,7 +322,7 @@ export class ActionGroup extends SpectrumElement {
 
     protected render(): TemplateResult {
         return html`
-            <slot role="presentation"></slot>
+            <slot role="presentation" @slotchange=${this.findButtons}></slot>
         `;
     }
 
@@ -363,23 +363,31 @@ export class ActionGroup extends SpectrumElement {
         });
     }
 
+    private findButtons = (): void => {
+        const slot = this.shadowRoot.querySelector('slot');
+        if (!slot) return;
+        const assignedElements = slot.assignedElements({ flatten: true });
+        const buttons = assignedElements.reduce((acc: any[], el) => {
+            if (el.matches(this._buttonSelector)) {
+                acc.push(el);
+            } else {
+                const buttonDescendents = Array.from(
+                    el.querySelectorAll(`:scope > ${this._buttonSelector}`)
+                );
+                acc.push(...buttonDescendents);
+            }
+            return acc;
+        }, []);
+        this.buttons = buttons;
+        this.manageChildren();
+        this.manageSelects();
+    };
+
     public connectedCallback(): void {
         super.connectedCallback();
         if (!this.observer) {
-            const findButtons = (): void => {
-                const buttons = [
-                    ...this.querySelectorAll(this._buttonSelector),
-                ] as ActionButton[];
-                // buttons.filter((button) => {
-                //     const buttonParent = button.parentElement;
-                //     return !buttonParent?.closest(this._buttonSelector);
-                // });
-                this.buttons = buttons;
-                this.manageChildren();
-                this.manageSelects();
-            };
-            this.observer = new MutationObserver(findButtons);
-            findButtons();
+            this.observer = new MutationObserver(this.findButtons);
+            this.findButtons();
         }
         this.observer.observe(this, { childList: true, subtree: true });
     }
