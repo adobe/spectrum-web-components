@@ -20,12 +20,14 @@ import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 import {
     Default,
+    href,
     smallHorizontal,
     StoryArgs,
 } from '../stories/card.stories.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import { spy } from 'sinon';
 import { spaceEvent } from '../../../test/testing-helpers.js';
+import { executeServerCommand } from '@web/test-runner-commands';
 
 describe('card', () => {
     it('loads', async () => {
@@ -136,6 +138,110 @@ describe('card', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('[href] is clickable', async () => {
+        const clickSpy = spy();
+        const el = await fixture<Card>(href({}));
+
+        await elementUpdated(el);
+
+        el.addEventListener('click', (event: Event) => {
+            const composedTarget = event.composedPath()[0] as HTMLElement;
+            if (composedTarget.id !== 'like-anchor') return;
+            clickSpy();
+        });
+
+        el.click();
+
+        expect(clickSpy.callCount).to.equal(1);
+
+        (el.shadowRoot.querySelector('#like-anchor') as HTMLElement).click();
+
+        expect(clickSpy.callCount).to.equal(2);
+
+        const img = el.querySelector('img') as HTMLImageElement;
+        const boundingRect = img.getBoundingClientRect();
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        boundingRect.x + boundingRect.width / 2,
+                        boundingRect.y + boundingRect.height / 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        expect(clickSpy.callCount).to.equal(3);
+    });
+    it('links in [href] do not pass their click', async () => {
+        const clickSpy = spy();
+        const el = await fixture<Card>(href({}));
+        el.setAttribute(
+            'style',
+            'width: 200px; --spectrum-actionbutton-height: 32px'
+        );
+
+        await elementUpdated(el);
+
+        el.addEventListener('click', (event: Event) => {
+            const composedTarget = event.composedPath()[0] as HTMLElement;
+            event.preventDefault();
+            if (composedTarget.id !== 'like-anchor') return;
+            clickSpy();
+        });
+
+        el.click();
+
+        expect(clickSpy.callCount).to.equal(1);
+
+        const footer = el.querySelector('[slot="footer"]') as HTMLElement;
+        let boundingRect = footer.getBoundingClientRect();
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [boundingRect.x, boundingRect.y],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        expect(clickSpy.callCount).to.equal(2);
+
+        const link = el.querySelector('sp-link') as HTMLElement;
+        boundingRect = link.getBoundingClientRect();
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        boundingRect.x + boundingRect.width / 2,
+                        boundingRect.y + boundingRect.height / 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        expect(clickSpy.callCount).to.equal(2);
     });
     it('converts `Space` to `click` event', async () => {
         const clickSpy = spy();

@@ -18,11 +18,13 @@ import {
     TemplateResult,
     PropertyValues,
     ifDefined,
+    query,
 } from '@spectrum-web-components/base';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
+import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 
-import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
@@ -42,9 +44,11 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot footer - Footer text
  */
-export class Card extends ObserveSlotPresence(
-    FocusVisiblePolyfillMixin(SpectrumElement),
-    ['[slot="cover-photo"]', '[slot="preview"]']
+export class Card extends LikeAnchor(
+    ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
+        '[slot="cover-photo"]',
+        '[slot="preview"]',
+    ])
 ) {
     public static get styles(): CSSResultArray {
         return [headingStyles, detailStyles, cardStyles];
@@ -64,6 +68,9 @@ export class Card extends ObserveSlotPresence(
 
     @property({ type: Boolean, reflect: true })
     public horizontal = false;
+
+    @query('#like-anchor')
+    private likeAnchor?: HTMLAnchorElement;
 
     @property({ type: String, reflect: true })
     public size?: 's';
@@ -92,6 +99,10 @@ export class Card extends ObserveSlotPresence(
         this.addEventListener('focusout', this.handleFocusout);
     }
 
+    public click(): void {
+        this.likeAnchor?.click();
+    }
+
     private handleFocusin = (event: Event): void => {
         this.focused = true;
         const target = event.composedPath()[0];
@@ -112,8 +123,17 @@ export class Card extends ObserveSlotPresence(
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
-        if (code === 'Space') {
-            this.toggleSelected();
+        switch (code) {
+            case 'Space':
+                this.toggleSelected();
+                if (this.toggles) {
+                    break;
+                }
+            case 'Enter':
+            case 'NumpadEnter':
+                if (this.href) {
+                    this.likeAnchor?.click();
+                }
         }
     }
 
@@ -149,9 +169,35 @@ export class Card extends ObserveSlotPresence(
         }
     }
 
+    private stopPropagationOnHref(event: Event): void {
+        if (this.href) {
+            event.stopPropagation();
+        }
+    }
+
+    private handlePointerdown(event: Event): void {
+        const path = event.composedPath();
+        const hasAnchor = path.some(
+            (el) => (el as HTMLElement).localName === 'a'
+        );
+        if (hasAnchor) return;
+        const start = +new Date();
+        const handleEnd = (): void => {
+            const end = +new Date();
+            if (end - start < 200) {
+                this.likeAnchor?.click();
+            }
+            this.removeEventListener('pointerup', handleEnd);
+        };
+        this.addEventListener('pointerup', handleEnd);
+    }
+
     protected get renderHeading(): TemplateResult {
         return html`
-            <div class="title spectrum-Heading spectrum-Heading--sizeXS">
+            <div
+                class="title spectrum-Heading spectrum-Heading--sizeXS"
+                id="heading"
+            >
                 <slot name="heading">${this.heading}</slot>
             </div>
         `;
@@ -201,26 +247,6 @@ export class Card extends ObserveSlotPresence(
 
     protected render(): TemplateResult {
         return html`
-            ${this.toggles
-                ? html`
-                      <sp-quick-actions class="quickActions">
-                          <sp-checkbox
-                              tabindex="-1"
-                              class="checkbox"
-                              @change=${this.handleSelectedChange}
-                              ?checked=${this.selected}
-                          ></sp-checkbox>
-                      </sp-quick-actions>
-                  `
-                : html``}
-            ${this.variant === 'quiet' && this.size === 's'
-                ? html`
-                      <sp-quick-actions class="spectrum-QuickActions actions">
-                          <slot name="actions"></slot>
-                      </sp-quick-actions>
-                  `
-                : html``}
-            ${this.renderImage()}
             <div class="body">
                 <div class="header">
                     ${this.renderHeading}
@@ -229,7 +255,10 @@ export class Card extends ObserveSlotPresence(
                         : html``}
                     ${this.variant !== 'quiet' || this.size !== 's'
                         ? html`
-                              <div class="actionButton">
+                              <div
+                                  class="actionButton"
+                                  @pointerdown=${this.stopPropagationOnHref}
+                              >
                                   <slot name="actions"></slot>
                               </div>
                           `
@@ -243,9 +272,40 @@ export class Card extends ObserveSlotPresence(
                       `
                     : html``}
             </div>
+            ${this.href
+                ? this.renderAnchor({
+                      id: 'like-anchor',
+                      labelledby: 'heading',
+                  })
+                : html``}
             ${this.variant === 'standard'
                 ? html`
                       <slot name="footer"></slot>
+                  `
+                : html``}
+            ${this.renderImage()}
+            ${this.toggles
+                ? html`
+                      <sp-quick-actions
+                          class="quickActions"
+                          @pointerdown=${this.stopPropagationOnHref}
+                      >
+                          <sp-checkbox
+                              class="checkbox"
+                              @change=${this.handleSelectedChange}
+                              ?checked=${this.selected}
+                          ></sp-checkbox>
+                      </sp-quick-actions>
+                  `
+                : html``}
+            ${this.variant === 'quiet' && this.size === 's'
+                ? html`
+                      <sp-quick-actions
+                          class="spectrum-QuickActions actions"
+                          @pointerdown=${this.stopPropagationOnHref}
+                      >
+                          <slot name="actions"></slot>
+                      </sp-quick-actions>
                   `
                 : html``}
         `;
@@ -253,7 +313,6 @@ export class Card extends ObserveSlotPresence(
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        this.setAttribute('role', 'figure');
-        this.tabIndex = 0;
+        this.addEventListener('pointerdown', this.handlePointerdown);
     }
 }
