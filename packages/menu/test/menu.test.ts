@@ -370,14 +370,14 @@ describe('Menu', () => {
 
         el.focus();
 
-        expect(document.activeElement === el);
-        expect(selectedItem.focused);
+        expect(document.activeElement).to.equal(el);
+        expect(selectedItem.focused).to.be.true;
 
         selectedItem.remove();
         await elementUpdated(el);
 
-        expect(document.activeElement === el);
-        expect(firstItem.focused);
+        expect(document.activeElement).to.equal(el);
+        expect(firstItem.focused).to.be.true;
     });
     it('handles single selection', async () => {
         const el = await fixture<Menu>(
