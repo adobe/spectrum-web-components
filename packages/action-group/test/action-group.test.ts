@@ -204,13 +204,13 @@ describe('ActionGroup', () => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
-        expect(el.selected.length === 0);
+        expect(el.selected.length).to.equal(0);
 
         thirdElement.click();
 
         await elementUpdated(el);
 
-        expect(el.selected.length === 0);
+        expect(el.selected.length).to.equal(0);
     });
     it('selects via `click` while [selects="single"]', async () => {
         const el = await fixture<ActionGroup>(
@@ -229,14 +229,14 @@ describe('ActionGroup', () => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
-        expect(el.selected.length === 1);
+        expect(el.selected.length).to.equal(1);
         expect(el.selected.includes('second'));
 
         thirdElement.click();
 
         await elementUpdated(el);
 
-        expect(thirdElement.selected, 'third child selected');
+        expect(thirdElement.selected, 'third child selected').to.be.true;
 
         await waitUntil(
             () => el.selected.length === 1 && el.selected.includes('third'),
@@ -263,7 +263,7 @@ describe('ActionGroup', () => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
-        expect(el.selected.length === 1);
+        expect(el.selected.length).to.equal(1);
         expect(el.selected.includes('First'));
 
         firstElement.click();
@@ -272,8 +272,8 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(secondElement.selected, 'second child selected');
-        expect(thirdElement.selected, 'third child selected');
+        expect(secondElement.selected, 'second child selected').to.be.true;
+        expect(thirdElement.selected, 'third child selected').to.be.true;
 
         await waitUntil(
             () =>
@@ -327,7 +327,7 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(!thirdElement.selected, 'third child not selected');
+        expect(thirdElement.selected, 'third child not selected').to.be.false;
         expect(el.selected.length).to.equal(0);
     });
     const acceptKeyboardInput = async (el: ActionGroup): Promise<void> => {
@@ -447,7 +447,7 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(thirdElement.selected, 'third child selected');
+        expect(thirdElement.selected, 'third child selected').to.be.true;
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Third');
 

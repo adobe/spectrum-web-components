@@ -190,7 +190,7 @@ describe('Button', () => {
         await elementUpdated(el);
         el.click();
         await elementUpdated(el);
-        expect(clickSpy.calledOnce);
+        expect(clickSpy.calledOnce).to.be.true;
 
         clickSpy.resetHistory();
         el.disabled = true;
@@ -209,7 +209,7 @@ describe('Button', () => {
         el.disabled = false;
         el.click();
         await elementUpdated(el);
-        expect(clickSpy.calledOnce);
+        expect(clickSpy.calledOnce).to.be.true;
     });
     it('manages `aria-disabled`', async () => {
         const el = await fixture<Button>(

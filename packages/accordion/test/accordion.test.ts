@@ -188,18 +188,18 @@ describe('Accordion', () => {
 
         firstButton.click();
         await elementUpdated(el);
-        expect(firstItem.open);
-        expect(!secondItem.open);
+        expect(firstItem.open).to.be.true;
+        expect(secondItem.open).to.be.false;
 
         secondButton.click();
         await elementUpdated(el);
-        expect(!firstItem.open);
-        expect(secondItem.open);
+        expect(firstItem.open).to.be.false;
+        expect(secondItem.open).to.be.true;
 
         secondButton.click();
         await elementUpdated(el);
-        expect(!firstItem.open);
-        expect(!secondItem.open);
+        expect(firstItem.open).to.be.false;
+        expect(secondItem.open).to.be.false;
     });
 
     it('ensures that the correct item is open and that items can be closed when [allow-multiple]', async () => {

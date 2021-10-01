@@ -287,7 +287,7 @@ describe('Picker, sync', () => {
         el.invalid = true;
         await elementUpdated(el);
 
-        expect(el.invalid);
+        expect(el.invalid).to.be.true;
         await expect(el).to.be.accessible();
     });
     it('renders selection accessibly', async () => {
@@ -596,7 +596,7 @@ describe('Picker, sync', () => {
         await closed;
         await opened;
         await elementUpdated(el);
-        expect(preventChangeSpy.calledOnce);
+        expect(preventChangeSpy.calledOnce).to.be.true;
         expect(secondItem.selected, 'selection prevented').to.be.false;
     });
 

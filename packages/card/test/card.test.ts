@@ -217,7 +217,7 @@ describe('card', () => {
         await elementUpdated(el);
         expect(el.focused, 'still not focused, again 2').to.be.false;
         // change event is prevented
-        expect(el.selected, 'still selected, again 3');
+        expect(el.selected, 'still selected, again 3').to.be.true;
     });
 
     it('announces when `[toggles]`', async () => {
@@ -233,7 +233,7 @@ describe('card', () => {
         checkbox.click();
         await elementUpdated(el);
 
-        expect(el.selected, 'selected');
+        expect(el.selected, 'selected').to.be.true;
         expect(changeSpy.callCount).to.equal(1);
         checkbox.click();
         await elementUpdated(el);
