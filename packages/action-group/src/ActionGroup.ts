@@ -81,6 +81,21 @@ export class ActionGroup extends SpectrumElement {
     }
     private _selected: string[] = EMPTY_SELECTION;
 
+    public focus(options?: FocusOptions): void {
+        if (!this.buttons.length) {
+            return;
+        }
+        const firstButtonNonDisabled = this.buttons.find((button) => {
+            if (this.selected) {
+                return button.selected;
+            }
+            return !button.disabled;
+        });
+        if (firstButtonNonDisabled) {
+            firstButtonNonDisabled.focus(options);
+        }
+    }
+
     private handleClick(event: Event): void {
         const target = event.target as ActionButton;
         if (typeof target.value === 'undefined') {
@@ -191,9 +206,9 @@ export class ActionGroup extends SpectrumElement {
             case 'PageDown':
             default:
                 const tagsSiblings = [
-                    ...(this.getRootNode() as Document).querySelectorAll<ActionGroup>(
-                        'sp-action-group'
-                    ),
+                    ...(
+                        this.getRootNode() as Document
+                    ).querySelectorAll<ActionGroup>('sp-action-group'),
                 ];
                 if (tagsSiblings.length < 2) {
                     return;
