@@ -126,14 +126,14 @@ describe('Splitbutton', () => {
         el1.focus();
         await elementUpdated(el1);
 
-        expect(document.activeElement === el1);
-        expect(el1.shadowRoot.activeElement === el1FocusElement);
+        expect(document.activeElement).to.equal(el1);
+        expect(el1.shadowRoot.activeElement).to.equal(el1FocusElement);
 
         el2.focus();
         await elementUpdated(el2);
 
-        expect(document.activeElement === el2);
-        expect(el1.shadowRoot.activeElement === el2FocusElement);
+        expect(document.activeElement).to.equal(el2);
+        expect(el2.shadowRoot.activeElement).to.equal(el2FocusElement);
     });
     it('[type="field"] manages `selectedItem`', async () => {
         const test = await fixture<HTMLDivElement>(
