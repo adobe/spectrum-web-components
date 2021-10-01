@@ -108,15 +108,15 @@ describe('ColorWheel', () => {
 
         await elementUpdated(el);
 
-        el.focusElement.dispatchEvent(new FocusEvent('focus'));
+        el.dispatchEvent(new FocusEvent('focusin'));
         await elementUpdated(el);
 
-        expect(el.focused);
+        expect(el.focused).to.be.true;
 
-        el.focusElement.dispatchEvent(new FocusEvent('blur'));
+        el.dispatchEvent(new FocusEvent('focusout'));
         await elementUpdated(el);
 
-        expect(!el.focused);
+        expect(el.focused).to.be.false;
     });
     it('dispatches input and change events in response to "Arrow*" keypresses', async () => {
         const inputSpy = spy();
@@ -356,7 +356,7 @@ describe('ColorWheel', () => {
 
         await elementUpdated(el);
 
-        const { handle } = (el as unknown) as { handle: HTMLElement };
+        const { handle } = el as unknown as { handle: HTMLElement };
 
         handle.setPointerCapture = () => {
             return;
