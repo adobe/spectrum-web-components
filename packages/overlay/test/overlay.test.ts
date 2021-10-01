@@ -394,18 +394,18 @@ describe('Overlays', () => {
     it('closes an inline overlay when tabbing past the content', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div>
-                <button class="trigger">Trigger</button>
+                <sp-button class="trigger">Trigger</sp-button>
                 <div class="content">
                     <input />
                 </div>
-                <a href="#">After</a>
+                <input value="After" id="after" />
             </div>
         `);
 
         const trigger = el.querySelector('.trigger') as HTMLElement;
         const content = el.querySelector('.content') as HTMLElement;
         const input = el.querySelector('input') as HTMLInputElement;
-        const after = el.querySelector('a') as HTMLAnchorElement;
+        const after = el.querySelector('#after') as HTMLAnchorElement;
 
         openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
 
@@ -414,36 +414,36 @@ describe('Overlays', () => {
             press: 'Tab',
         });
 
-        expect(document.activeElement === input);
+        expect(document.activeElement).to.equal(input);
         expect(input.closest('active-overlay') !== null);
 
         await sendKeys({
             press: 'Shift+Tab',
         });
 
-        expect(document.activeElement === trigger);
+        expect(document.activeElement).to.equal(trigger);
 
         await sendKeys({
             press: 'Tab',
         });
 
-        expect(document.activeElement === input);
+        expect(document.activeElement).to.equal(input);
 
         await sendKeys({
             press: 'Tab',
         });
 
-        expect(document.activeElement === after);
+        expect(document.activeElement).to.equal(after);
         await waitUntil(
-            () => document.querySelector('active-element') === null
+            () => document.querySelector('active-overlay') === null
         );
     });
 
     it('closes an inline overlay when tabbing before the trigger', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div>
-                <a href="#">Before</a>
-                <button class="trigger">Trigger</button>
+                <input value="Before" id="before" />
+                <sp-button class="trigger">Trigger</sp-button>
                 <div class="content">
                     <label>
                         Content in an inline overlay.
@@ -455,8 +455,8 @@ describe('Overlays', () => {
 
         const trigger = el.querySelector('.trigger') as HTMLElement;
         const content = el.querySelector('.content') as HTMLElement;
-        const input = el.querySelector('input') as HTMLInputElement;
-        const before = el.querySelector('a') as HTMLAnchorElement;
+        const input = el.querySelector('.content input') as HTMLInputElement;
+        const before = el.querySelector('#before') as HTMLAnchorElement;
 
         openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
 
@@ -465,22 +465,22 @@ describe('Overlays', () => {
             press: 'Tab',
         });
 
-        expect(document.activeElement === input);
+        expect(document.activeElement).to.equal(input);
         expect(input.closest('active-overlay') !== null);
 
         await sendKeys({
             press: 'Shift+Tab',
         });
 
-        expect(document.activeElement === trigger);
+        expect(document.activeElement).to.equal(trigger);
 
         await sendKeys({
             press: 'Shift+Tab',
         });
 
-        expect(document.activeElement === before);
+        expect(document.activeElement).to.equal(before);
         await waitUntil(
-            () => document.querySelector('active-element') === null
+            () => document.querySelector('active-overlay') === null
         );
     });
 
