@@ -116,20 +116,27 @@ export class Accordion extends Focusable {
         nextItem.focus();
     }
 
-    private onToggle(event: Event): void {
+    private async onToggle(event: Event): Promise<void> {
+        // Let the event pass through the DOM so that it can be
+        // prevented from the outside if a user so desires.
+        await 0;
+        if (this.allowMultiple || event.defaultPrevented) {
+            // No toggling when `allowMultiple` or the user prevents it.
+            return;
+        }
         const target = event.target as AccordionItem;
         const items = [...this.items] as AccordionItem[];
         /* c8 ignore next 3 */
         if (items && !items.length) {
+            // no toggling when there aren't items.
             return;
         }
-        if (!this.allowMultiple && !event.defaultPrevented) {
-            items.forEach((item) => {
-                if (item.open && item !== target) {
-                    item.open = false;
-                }
-            });
-        }
+        items.forEach((item) => {
+            if (item !== target) {
+                // Close all the items that didn't dispatch the event.
+                item.open = false;
+            }
+        });
     }
 
     protected render(): TemplateResult {

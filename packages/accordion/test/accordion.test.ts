@@ -133,8 +133,8 @@ describe('Accordion', () => {
 
         firstButton.click();
         await elementUpdated(el);
-        expect(firstItem.open);
-        expect(!secondItem.open);
+        expect(firstItem.open).to.be.true;
+        expect(secondItem.open).to.be.false;
 
         el.addEventListener('sp-accordion-item-toggle', (event: Event) =>
             event.preventDefault()
@@ -142,8 +142,8 @@ describe('Accordion', () => {
 
         secondButton.click();
         await elementUpdated(el);
-        expect(firstItem.open);
-        expect(!secondItem.open);
+        expect(firstItem.open).to.be.true;
+        expect(secondItem.open).to.be.false;
     });
     it('allows more than one open item when `[allow-multiple]`', async () => {
         const el = await fixture<Accordion>(Default());
