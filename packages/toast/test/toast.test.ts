@@ -66,7 +66,7 @@ describe('Toast', () => {
         await elementUpdated(el);
         expect(el.open).to.be.false;
 
-        ((el as unknown) as TestableToast)._timeout = 100;
+        (el as unknown as TestableToast)._timeout = 100;
         el.open = true;
         await elementUpdated(el);
 
@@ -83,7 +83,7 @@ describe('Toast', () => {
         await elementUpdated(el);
         expect(el.open).to.be.false;
 
-        const testableEl = (el as unknown) as TestableToast;
+        const testableEl = el as unknown as TestableToast;
         testableEl._timeout = 100;
         el.open = true;
         await elementUpdated(el);
@@ -120,7 +120,7 @@ describe('Toast', () => {
 
         await elementUpdated(el);
 
-        const testableEl = (el as unknown) as TestableToast;
+        const testableEl = el as unknown as TestableToast;
         expect(el.open, 'not open to start').to.be.false;
 
         el.open = true;
@@ -249,17 +249,17 @@ describe('Toast', () => {
         );
 
         await elementUpdated(el);
-        expect(el.open);
+        expect(el.open).to.be.true;
 
         el.open = false;
 
         await elementUpdated(el);
-        expect(!el.open);
+        expect(el.open).to.be.false;
 
         el.open = true;
 
         await elementUpdated(el);
-        expect(el.open);
+        expect(el.open).to.be.true;
         expect(closeSpy.callCount).to.equal(1);
     });
 });
