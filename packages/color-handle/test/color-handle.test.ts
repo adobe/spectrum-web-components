@@ -56,41 +56,45 @@ describe('ColorHandle', () => {
         el.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,
+                pointerType: 'touch',
             })
         );
 
         await elementUpdated(el);
 
-        expect(el.open);
+        expect(el.open).to.be.true;
+
+        el.dispatchEvent(
+            new PointerEvent('pointerup', {
+                pointerId: 1,
+                pointerType: 'touch',
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
 
         el.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,
+                pointerType: 'touch',
             })
         );
 
         await elementUpdated(el);
 
-        expect(!el.open);
-
-        el.dispatchEvent(
-            new PointerEvent('pointerdown', {
-                pointerId: 1,
-            })
-        );
-
-        await elementUpdated(el);
-
-        expect(el.open);
+        expect(el.open).to.be.true;
 
         el.dispatchEvent(
             new PointerEvent('pointercancel', {
                 pointerId: 1,
+                pointerType: 'touch',
             })
         );
 
         await elementUpdated(el);
 
-        expect(!el.open);
+        expect(el.open).to.be.false;
     });
 });
