@@ -29,11 +29,9 @@ import {
     arrowRightEvent,
     arrowUpEvent,
     endEvent,
-    enterEvent,
     homeEvent,
-    pageDownEvent,
-    pageUpEvent,
 } from '../../../test/testing-helpers';
+import { sendKeys } from '@web/test-runner-commands';
 import '../sp-action-group.js';
 
 describe('ActionGroup', () => {
@@ -336,58 +334,52 @@ describe('ActionGroup', () => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('Second'));
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('Second');
 
         thirdElement.click();
 
         await elementUpdated(el);
 
-        expect(thirdElement.selected, 'third child selected');
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('Third'));
+        expect(thirdElement.selected, 'third child selected').to.be.true;
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('Third');
 
         el.dispatchEvent(arrowRightEvent);
-        let activeElement = document.activeElement as ActionButton;
-        activeElement.dispatchEvent(enterEvent);
+        await sendKeys({ press: 'Enter' });
 
         await elementUpdated(el);
 
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('First'));
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('First');
 
         el.dispatchEvent(arrowLeftEvent);
         el.dispatchEvent(arrowUpEvent);
-        activeElement = document.activeElement as ActionButton;
-        activeElement.dispatchEvent(enterEvent);
+        await sendKeys({ press: 'Enter' });
 
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('Second'));
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('Second');
 
         el.dispatchEvent(endEvent);
-        activeElement = document.activeElement as ActionButton;
-        activeElement.dispatchEvent(enterEvent);
+        await sendKeys({ press: 'Enter' });
 
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('Third'));
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('Third');
 
-        activeElement.dispatchEvent(pageUpEvent);
-        activeElement = document.activeElement as ActionButton;
-        expect(activeElement === thirdElement);
+        await sendKeys({ press: 'PageUp' });
+        await sendKeys({ press: 'Enter' });
 
         el.dispatchEvent(homeEvent);
-        activeElement = document.activeElement as ActionButton;
-        activeElement.dispatchEvent(enterEvent);
+        await sendKeys({ press: 'Enter' });
 
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('First'));
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('First');
 
         el.dispatchEvent(arrowDownEvent);
-        activeElement = document.activeElement as ActionButton;
-        activeElement.dispatchEvent(enterEvent);
+        await sendKeys({ press: 'Enter' });
 
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('Second'));
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('Second');
     };
     it('accepts keybord input', async () => {
         const el = await fixture<ActionGroup>(
@@ -449,35 +441,31 @@ describe('ActionGroup', () => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('Second'));
+        expect(el.selected.length).to.equal(0);
 
         thirdElement.click();
 
         await elementUpdated(el);
 
         expect(thirdElement.selected, 'third child selected');
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('Third'));
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('Third');
 
         el.dispatchEvent(arrowRightEvent);
-        let activeElement = document.activeElement as ActionButton;
-        activeElement.dispatchEvent(enterEvent);
+        await sendKeys({ press: 'Enter' });
 
         await elementUpdated(el);
 
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('First'));
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('First');
 
-        el.dispatchEvent(arrowLeftEvent);
         el.dispatchEvent(arrowUpEvent);
-        activeElement = document.activeElement as ActionButton;
-        activeElement.dispatchEvent(enterEvent);
+        await sendKeys({ press: 'Enter' });
 
-        expect(el.selected.length === 1);
-        expect(el.selected.includes('Third'));
+        expect(el.selected.length).to.equal(1);
+        expect(el.selected[0]).to.equal('Third');
     });
-    it('accepts "PageUp" and "PageUp"', async () => {
+    it('accepts "PageUp" and "PageDown"', async () => {
         const el = await fixture<ActionGroup>(
             html`
                 <div>
@@ -485,9 +473,9 @@ describe('ActionGroup', () => {
                         label="Selects Single Group"
                         selects="single"
                     >
-                        <sp-action-button>First</sp-action-button>
+                        <sp-action-button>First A</sp-action-button>
                         <sp-action-button class="first">
-                            Second
+                            Second A
                         </sp-action-button>
                         <sp-action-button>Third</sp-action-button>
                     </sp-action-group>
@@ -495,9 +483,9 @@ describe('ActionGroup', () => {
                         label="Selects Single Group"
                         selects="multiple"
                     >
-                        <sp-action-button>First</sp-action-button>
+                        <sp-action-button>First B</sp-action-button>
                         <sp-action-button selected class="second">
-                            Second
+                            Second B
                         </sp-action-button>
                         <sp-action-button>Third</sp-action-button>
                     </sp-action-group>
@@ -513,26 +501,20 @@ describe('ActionGroup', () => {
 
         firstElement.click();
 
+        await sendKeys({ press: 'PageDown' });
         let activeElement = document.activeElement as ActionButton;
-        activeElement.dispatchEvent(pageDownEvent);
+        expect(activeElement).equal(secondElement);
 
+        await sendKeys({ press: 'PageUp' });
         activeElement = document.activeElement as ActionButton;
-        expect(activeElement === secondElement);
+        expect(activeElement).to.equal(firstElement);
 
-        activeElement.dispatchEvent(pageUpEvent);
-
+        await sendKeys({ press: 'PageUp' });
         activeElement = document.activeElement as ActionButton;
-        expect(activeElement === firstElement);
+        expect(activeElement).to.equal(secondElement);
 
+        await sendKeys({ press: 'PageDown' });
         activeElement = document.activeElement as ActionButton;
-        activeElement.dispatchEvent(pageDownEvent);
-
-        activeElement = document.activeElement as ActionButton;
-        expect(activeElement === firstElement);
-
-        activeElement.dispatchEvent(pageUpEvent);
-
-        activeElement = document.activeElement as ActionButton;
-        expect(activeElement === secondElement);
+        expect(activeElement).to.equal(firstElement);
     });
 });
