@@ -35,14 +35,12 @@ export class MenuItemRemovedEvent extends Event {
         });
     }
     get item(): MenuItem {
-        if (!this._item) {
-            this._item = this.composedPath()[0] as MenuItem;
-        }
         return this._item;
     }
-    _item?: MenuItem;
-    reset(): void {
-        this._item = undefined;
+    _item!: MenuItem;
+    focused = false;
+    reset(item: MenuItem): void {
+        this._item = item;
     }
 }
 
@@ -61,12 +59,9 @@ export class MenuItemAddedOrUpdatedEvent extends Event {
             this.item.menuData.selectionRoot || root;
     }
     get item(): MenuItem {
-        if (!this._item) {
-            this._item = this.composedPath()[0] as MenuItem;
-        }
         return this._item;
     }
-    _item?: MenuItem;
+    _item!: MenuItem;
     set currentAncestorWithSelects(ancestor: Menu | undefined) {
         this._currentAncestorWithSelects = ancestor;
     }
@@ -75,7 +70,7 @@ export class MenuItemAddedOrUpdatedEvent extends Event {
     }
     _currentAncestorWithSelects?: Menu;
     reset(item: MenuItem): void {
-        this._item = undefined;
+        this._item = item;
         this._currentAncestorWithSelects = undefined;
         item.menuData = {
             focusRoot: undefined,
@@ -308,12 +303,15 @@ export class MenuItem extends LikeAnchor(Focusable) {
         super.connectedCallback();
         addOrUpdateEvent.reset(this);
         this.dispatchEvent(addOrUpdateEvent);
+        this._parentElement = this.parentElement as HTMLElement;
     }
 
+    _parentElement!: HTMLElement;
+
     public disconnectedCallback(): void {
+        removeEvent.reset(this);
+        this._parentElement?.dispatchEvent(removeEvent);
         super.disconnectedCallback();
-        removeEvent.reset();
-        this.dispatchEvent(removeEvent);
     }
 
     public async triggerUpdate(): Promise<void> {

@@ -215,9 +215,14 @@ export class Menu extends SpectrumElement {
         this.handleItemsChanged();
     }
 
-    private removeChildItem(event: MenuItemRemovedEvent): void {
+    private async removeChildItem(event: MenuItemRemovedEvent): Promise<void> {
         this.childItemSet.delete(event.item);
         this.cachedChildItems = undefined;
+        if (event.item.focused) {
+            this.handleItemsChanged();
+            await this.updateComplete;
+            this.focus();
+        }
     }
 
     public constructor() {
