@@ -1,0 +1,67 @@
+{
+    "name": "@spectrum-web-components/combobox",
+    "version": "0.0.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/combobox"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/combobox",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js",
+        "./src/*": "./src/*.js",
+        "./custom-elements.json": "./custom-elements.json",
+        "./package.json": "./package.json",
+        "./sp-combobox": "./sp-combobox.js",
+        "./sp-combobox.js": "./sp-combobox.js",
+        "./sp-combobox-item": "./sp-combobox-item.js",
+        "./sp-combobox-item.js": "./sp-combobox-item.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "*.js.map",
+        "/src/",
+        "custom-elements.json"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/action-button": "^0.10.14",
+        "@spectrum-web-components/base": "^0.7.4",
+        "@spectrum-web-components/icon": "^0.12.9",
+        "@spectrum-web-components/icons-ui": "^0.9.10",
+        "@spectrum-web-components/menu": "^0.16.15",
+        "@spectrum-web-components/overlay": "^0.19.3",
+        "@spectrum-web-components/picker-button": "^0.1.9",
+        "@spectrum-web-components/popover": "^0.12.15",
+        "@spectrum-web-components/textfield": "^0.13.13"
+    },
+    "devDependencies": {
+        "@spectrum-css/inputgroup": "^6.0.0"
+    },
+    "types": "./src/index.d.ts",
+    "sideEffects": [
+        "./sp-*.js",
+        "./sp-*.ts"
+    ]
+}

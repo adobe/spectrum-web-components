@@ -1,0 +1,195 @@
+/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-combobox-quiet-fieldbutton-border-radius: 0;
+    --spectrum-inputgroup-generic-padding: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-datepicker-range-input-width-first: calc(
+        var(--spectrum-global-dimension-size-1600) -
+            var(--spectrum-inputgroup-generic-padding) * 2
+    );
+    --spectrum-datepicker-input-width-base: calc(
+        var(--spectrum-datepicker-range-input-width-first) +
+            var(
+                --spectrum-textfield-m-texticon-icon-size,
+                var(--spectrum-global-dimension-size-225)
+            )
+    );
+    --spectrum-datepicker-input-width: calc(
+        var(--spectrum-datepicker-input-width-base) +
+            var(
+                --spectrum-alias-infieldbutton-full-height-m,
+                var(--spectrum-global-dimension-size-400)
+            )
+    );
+    --spectrum-datepicker-range-input-width-quiet-first: calc(
+        var(--spectrum-global-dimension-size-900) +
+            var(--spectrum-global-dimension-size-200)
+    );
+    --spectrum-datepicker-input-width-quiet: calc(
+        var(--spectrum-datepicker-range-input-width-quiet-first) +
+            var(
+                --spectrum-textfield-m-texticon-icon-size,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-alias-infieldbutton-full-height-m,
+                var(--spectrum-global-dimension-size-400)
+            )
+    );
+    --spectrum-datepicker-datetime-input-width-first: calc(
+        var(--spectrum-datepicker-input-width-base) +
+            var(--spectrum-global-dimension-size-450)
+    );
+    --spectrum-datepicker-datetime-input-width: calc(
+        var(--spectrum-datepicker-datetime-input-width-first) +
+            var(
+                --spectrum-textfield-m-texticon-icon-size,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-alias-infieldbutton-full-height-m,
+                var(--spectrum-global-dimension-size-400)
+            )
+    );
+    --spectrum-datepicker-datetime-quiet-input-width-first: calc(
+        var(--spectrum-datepicker-input-width-base) +
+            var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-datepicker-datetime-quiet-input-width: calc(
+        var(--spectrum-datepicker-datetime-quiet-input-width-first) +
+            var(
+                --spectrum-textfield-m-texticon-icon-size,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-alias-infieldbutton-full-height-m,
+                var(--spectrum-global-dimension-size-400)
+            )
+    );
+    --spectrum-datepicker-range-dash-margin-left: calc(
+        var(--spectrum-global-dimension-static-font-size-100, 14px) * -0.5
+    );
+    --spectrum-datepicker-range-dash-padding-top: 0;
+    --spectrum-datepicker-range-dash-line-height: calc(
+        var(
+                --spectrum-textfield-m-texticon-height,
+                var(--spectrum-global-dimension-size-400)
+            ) - var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-textfield-icon-inline-end-override: calc(
+        var(
+                --spectrum-alias-infieldbutton-full-height-m,
+                var(--spectrum-global-dimension-size-400)
+            ) + var(--spectrum-global-dimension-size-100)
+    );
+}
+:host {
+    border-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    );
+    display: inline-flex;
+    flex-flow: row;
+    min-width: var(
+        --spectrum-alias-single-line-width,
+        var(--spectrum-global-dimension-size-2400)
+    );
+    position: relative;
+}
+:host([dir='ltr']) .button {
+    right: 0;
+}
+:host([dir='rtl']) .button {
+    left: 0;
+}
+.button {
+    position: absolute;
+}
+:host([dir='ltr']) #input {
+    padding-right: var(
+        --spectrum-alias-infieldbutton-full-height-m,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+:host([dir='rtl']) #input {
+    padding-left: var(
+        --spectrum-alias-infieldbutton-full-height-m,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+#input {
+    flex: 1;
+}
+:host([quiet]) {
+    --spectrum-textfield-icon-inline-end-override: var(
+        --spectrum-alias-infieldbutton-full-height-m,
+        var(--spectrum-global-dimension-size-400)
+    );
+    border-radius: var(--spectrum-combobox-quiet-fieldbutton-border-radius);
+}
+:host([dir='ltr'][quiet]) .button {
+    right: calc(
+        var(
+                --spectrum-alias-combobox-quiet-button-offset-x,
+                var(--spectrum-global-dimension-size-100)
+            ) * -1
+    );
+}
+:host([dir='rtl'][quiet]) .button {
+    left: calc(
+        var(
+                --spectrum-alias-combobox-quiet-button-offset-x,
+                var(--spectrum-global-dimension-size-100)
+            ) * -1
+    );
+}
+:host([quiet]) .button {
+    width: auto;
+}
+:host([quiet]) .button,
+:host([quiet]) .button.is-selected,
+:host([quiet]) .button:active,
+:host([quiet]) .button:focus,
+:host([quiet]) .button:hover,
+:host([quiet][invalid]) .button {
+    border-color: var(
+        --spectrum-textfield-m-quiet-texticon-border-color,
+        var(--spectrum-alias-input-border-color-default)
+    );
+}
+:host([quiet]) .button:disabled,
+:host([quiet]) .button:disabled:hover {
+    border-color: var(
+        --spectrum-textfield-m-quiet-texticon-border-color-disabled,
+        var(--spectrum-alias-input-border-color-quiet-disabled)
+    );
+}
+:host([quiet]:not([focused]):not([keyboard-focused]):not([disabled]):hover)
+    #input,
+:host([quiet]:not([focused]):not([keyboard-focused]):not([disabled]):hover)
+    .button {
+    border-color: var(
+        --spectrum-textfield-m-quiet-texticon-border-color-hover,
+        var(--spectrum-alias-input-border-color-hover)
+    );
+}
+:host([quiet][invalid]) #input,
+:host([quiet][invalid]) .button {
+    border-color: var(
+        --spectrum-textfield-m-quiet-texticon-border-color-invalid,
+        var(--spectrum-alias-input-border-color-invalid-default)
+    );
+}

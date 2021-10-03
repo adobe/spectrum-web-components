@@ -1,0 +1,130 @@
+/* stylelint-disable */ /* 
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([dir='ltr']) .spectrum-InputGroup .spectrum-InputGroup-button {
+    /* [dir=ltr] .spectrum-InputGroup .spectrum-InputGroup-button */
+    border-top-left-radius: var(
+        --spectrum-combobox-fieldbutton-border-top-left-radius,
+        0
+    );
+}
+:host([dir='rtl']) .spectrum-InputGroup .spectrum-InputGroup-button {
+    /* [dir=rtl] .spectrum-InputGroup .spectrum-InputGroup-button */
+    border-top-right-radius: var(
+        --spectrum-combobox-fieldbutton-border-top-left-radius,
+        0
+    );
+}
+:host([dir='ltr']) .spectrum-InputGroup .spectrum-InputGroup-button {
+    /* [dir=ltr] .spectrum-InputGroup .spectrum-InputGroup-button */
+    border-bottom-left-radius: var(
+        --spectrum-combobox-fieldbutton-border-bottom-left-radius,
+        0
+    );
+}
+:host([dir='rtl']) .spectrum-InputGroup .spectrum-InputGroup-button {
+    /* [dir=rtl] .spectrum-InputGroup .spectrum-InputGroup-button */
+    border-bottom-right-radius: var(
+        --spectrum-combobox-fieldbutton-border-bottom-left-radius,
+        0
+    );
+}
+:host([dir='ltr']) #input {
+    /* [dir=ltr] .spectrum-InputGroup-input */
+    border-top-right-radius: var(
+        --spectrum-combobox-textfield-border-top-right-radius,
+        0
+    );
+}
+:host([dir='rtl']) #input {
+    /* [dir=rtl] .spectrum-InputGroup-input */
+    border-top-left-radius: var(
+        --spectrum-combobox-textfield-border-top-right-radius,
+        0
+    );
+}
+:host([dir='ltr']) #input {
+    /* [dir=ltr] .spectrum-InputGroup-input */
+    border-bottom-right-radius: var(
+        --spectrum-combobox-textfield-border-bottom-right-radius,
+        0
+    );
+}
+:host([dir='rtl']) #input {
+    /* [dir=rtl] .spectrum-InputGroup-input */
+    border-bottom-left-radius: var(
+        --spectrum-combobox-textfield-border-bottom-right-radius,
+        0
+    );
+}
+:host([dir='ltr']) #input {
+    /* [dir=ltr] .spectrum-InputGroup-input */
+    border-right-width: var(--spectrum-combobox-field-border-width-right);
+}
+:host([dir='rtl']) #input {
+    /* [dir=rtl] .spectrum-InputGroup-input */
+    border-left-width: var(--spectrum-combobox-field-border-width-right);
+}
+#input {
+    /* .spectrum-InputGroup-input */
+    flex: 1;
+}
+:host([dir='ltr']) .spectrum-InputGroup--quiet .spectrum-InputGroup-button {
+    /* [dir=ltr] .spectrum-InputGroup--quiet .spectrum-InputGroup-button */
+    padding-left: var(--spectrum-combobox-quiet-button-offset);
+}
+:host([dir='rtl']) .spectrum-InputGroup--quiet .spectrum-InputGroup-button {
+    /* [dir=rtl] .spectrum-InputGroup--quiet .spectrum-InputGroup-button */
+    padding-right: var(--spectrum-combobox-quiet-button-offset);
+}
+:host([dir='ltr']) .spectrum-InputGroup--quiet .spectrum-InputGroup-button {
+    /* [dir=ltr] .spectrum-InputGroup--quiet .spectrum-InputGroup-button */
+    padding-right: var(--spectrum-combobox-quiet-fieldbutton-padding-right);
+}
+:host([dir='rtl']) .spectrum-InputGroup--quiet .spectrum-InputGroup-button {
+    /* [dir=rtl] .spectrum-InputGroup--quiet .spectrum-InputGroup-button */
+    padding-left: var(--spectrum-combobox-quiet-fieldbutton-padding-right);
+}
+:host([dir='ltr']) .spectrum-InputGroup--quiet .spectrum-InputGroup-button {
+    /* [dir=ltr] .spectrum-InputGroup--quiet .spectrum-InputGroup-button */
+    border-left: 0;
+}
+:host([dir='ltr']) .spectrum-InputGroup--quiet .spectrum-InputGroup-button,
+:host([dir='rtl']) .spectrum-InputGroup--quiet .spectrum-InputGroup-button {
+    /* [dir=ltr] .spectrum-InputGroup--quiet .spectrum-InputGroup-button,
+   * [dir=rtl] .spectrum-InputGroup--quiet .spectrum-InputGroup-button */
+    border-right: 0;
+}
+:host([dir='rtl']) .spectrum-InputGroup--quiet .spectrum-InputGroup-button {
+    /* [dir=rtl] .spectrum-InputGroup--quiet .spectrum-InputGroup-button */
+    border-left: 0;
+}
+:host([dir='ltr'])
+    .spectrum-InputGroup--quiet
+    .spectrum-InputGroup-button:after {
+    /* [dir=ltr] .spectrum-InputGroup--quiet .spectrum-InputGroup-button:after */
+    right: calc(var(--spectrum-combobox-quiet-button-offset) * -1);
+}
+:host([dir='rtl'])
+    .spectrum-InputGroup--quiet
+    .spectrum-InputGroup-button:after {
+    /* [dir=rtl] .spectrum-InputGroup--quiet .spectrum-InputGroup-button:after */
+    left: calc(var(--spectrum-combobox-quiet-button-offset) * -1);
+}
+:host([dir='ltr']) .spectrum-InputGroup--quiet .spectrum-InputGroup-icon {
+    /* [dir=ltr] .spectrum-InputGroup--quiet .spectrum-InputGroup-icon */
+    right: 0;
+}
+:host([dir='rtl']) .spectrum-InputGroup--quiet .spectrum-InputGroup-icon {
+    /* [dir=rtl] .spectrum-InputGroup--quiet .spectrum-InputGroup-icon */
+    left: 0;
+}

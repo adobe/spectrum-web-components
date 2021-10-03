@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     a11ySnapshotPlugin,
     sendKeysPlugin,
+    setViewportPlugin,
 } from '@web/test-runner-commands/plugins';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
@@ -52,6 +53,7 @@ export default {
                 }
             },
         },
+        setViewportPlugin(),
     ],
     mimeTypes: {
         '**/*.json': 'js',
