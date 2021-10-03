@@ -6842,6 +6842,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-3.0.45.tgz#0aa422026efbb3b120a1a93387e5c8c4c6e305ed"
   integrity sha512-TK2qf9SpBapNsHAR3lF6mfCGNADaU882t6OeFDgEOSpIGWuGw0wgRo876locPF6y8VDB1Kma4IHlyojWUzbHxA==
 
+"@spectrum-css/combobox@^2.0.46":
+  version "2.0.46"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.0.46.tgz#22864122d07820e6d86c67ce37c04a2028d99ba4"
+  integrity sha512-OkPct7gGkLU1PvJ/FPSOZ0XUVQktC9WooVD/5GyaS3e3uVnaDqJJgndo29PZUjQK8rq11MItn0f06P+2BWlhRg==
+
 "@spectrum-css/commons@^8.0.0":
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-8.0.0.tgz#c9e9eeaf87b17fee32a99674e9a126cf3af64d34"
@@ -6922,10 +6927,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-7.0.8.tgz#1b0e078a59e882d2ef6df53c0a50453e2890b499"
   integrity sha512-u4T2HRHYgUFrMQQmRyH5yr3bDzRFsHN+FIaOW4k8yXDkyITTpq1LSc/W187ngqS+7xD+EhwmggrRIeEvyqqnmA==
 
-"@spectrum-css/pickerbutton@^4.0.12":
-  version "4.0.12"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-4.0.12.tgz#4c1ccc9f9d9a02b59ad693257a5685a30c50ed19"
-  integrity sha512-p2bbFZ7Dao4543Q9vkWTeO0+1NSSn3WBrXB5yGFwQ+W2UJ4PU9aOft1l7W+0iKY1JnBTI5CPEyaNOYxD/D2cCA==
+"@spectrum-css/pickerbutton@^4.0.17":
+  version "4.0.21"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-4.0.21.tgz#ef12353ef0062516f340ee18c38ca81d41173c66"
+  integrity sha512-IJXLYoAvh7P9HTpQKuSqDawfwg0O9r8VsMh7grK3bovlLBsHgqWOekA58zKGuXRlyv7BeOl2aUNnPh8NZ3diYQ==
 
 "@spectrum-css/popover@^6.0.74":
   version "6.0.77"
@@ -7068,7 +7073,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.40.0"
+  version "0.40.1"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.5.0"
