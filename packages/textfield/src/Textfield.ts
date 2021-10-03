@@ -205,7 +205,7 @@ export class TextfieldBase extends ManageHelpText(
         this.focused = !this.readonly && true;
     }
 
-    protected onBlur(): void {
+    protected onBlur(_event: FocusEvent): void {
         this.focused = !this.readonly && false;
     }
 
