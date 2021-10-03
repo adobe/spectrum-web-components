@@ -6743,6 +6743,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-3.1.0.tgz#c765fa896eaad6e446e859f045df43c0586d31af"
   integrity sha512-vPSy6FiCc5oMQ9QDjSgXUwATZfgCog97zaB+w1M/urBwKNsXWXeZe4p+jENVC5g0TKq6uZwYaLFrDP2ot5yIdw==
 
+"@spectrum-css/combobox@^2.0.46":
+  version "2.0.46"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/combobox/-/combobox-2.0.46.tgz#22864122d07820e6d86c67ce37c04a2028d99ba4"
+  integrity sha512-OkPct7gGkLU1PvJ/FPSOZ0XUVQktC9WooVD/5GyaS3e3uVnaDqJJgndo29PZUjQK8rq11MItn0f06P+2BWlhRg==
+
 "@spectrum-css/commons@^9.0.2":
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-9.0.2.tgz#a1b79d7080388da0f90b2b89244776623cc73e7a"
