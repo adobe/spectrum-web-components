@@ -36,6 +36,30 @@ import {
 import { sendKeys } from '@web/test-runner-commands';
 import '../sp-action-group.js';
 
+class QuietActionGroup extends LitElement {
+    protected render(): TemplateResult {
+        return html`
+            <sp-action-group quiet>
+                <slot name="first"></slot>
+                <slot name="second"></slot>
+            </sp-action-group>
+        `;
+    }
+}
+customElements.define('quiet-action-group', QuietActionGroup);
+
+class EmphasizedActionGroup extends LitElement {
+    protected render(): TemplateResult {
+        return html`
+            <sp-action-group emphasized>
+                <slot name="first"></slot>
+                <slot name="second"></slot>
+            </sp-action-group>
+        `;
+    }
+}
+customElements.define('emphasized-action-group', EmphasizedActionGroup);
+
 describe('ActionGroup', () => {
     it('loads empty action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(
@@ -86,28 +110,16 @@ describe('ActionGroup', () => {
         expect(secondButton.quiet).to.be.true;
     });
     it('applies `quiet` attribute to its slotted children', async () => {
-        class ActionGroupTestEl extends LitElement {
-            protected render(): TemplateResult {
-                return html`
-                    <sp-action-group quiet>
-                        <slot name="first"></slot>
-                        <slot name="second"></slot>
-                    </sp-action-group>
-                `;
-            }
-        }
-        customElements.define('action-group-test-el', ActionGroupTestEl);
-
         const el = await fixture<ActionGroup>(
             html`
-                <action-group-test-el>
+                <quiet-action-group>
                     <sp-action-button slot="first" id="first">
                         First
                     </sp-action-button>
                     <sp-action-button slot="second" id="second">
                         Second
                     </sp-action-button>
-                </action-group-test-el>
+                </quiet-action-group>
             `
         );
         const firstButton = el.querySelector('#first') as ActionButton;
@@ -121,18 +133,6 @@ describe('ActionGroup', () => {
         expect(secondButton.quiet).to.be.true;
     });
     it('applies `emphasized` attribute to its slotted children', async () => {
-        class EmphasizedActionGroup extends LitElement {
-            protected render(): TemplateResult {
-                return html`
-                    <sp-action-group emphasized>
-                        <slot name="first"></slot>
-                        <slot name="second"></slot>
-                    </sp-action-group>
-                `;
-            }
-        }
-        customElements.define('emphasized-action-group', EmphasizedActionGroup);
-
         const el = await fixture<ActionGroup>(
             html`
                 <emphasized-action-group>
@@ -142,6 +142,60 @@ describe('ActionGroup', () => {
                     <sp-action-button slot="second" id="second">
                         Second
                     </sp-action-button>
+                </emphasized-action-group>
+            `
+        );
+        const firstButton = el.querySelector('#first') as ActionButton;
+        const secondButton = el.querySelector('#second') as ActionButton;
+
+        await elementUpdated(el);
+
+        expect(firstButton.getAttribute('emphasized') === '').to.be.true;
+        expect(firstButton.emphasized).to.be.true;
+        expect(secondButton.getAttribute('emphasized') === '').to.be.true;
+        expect(secondButton.emphasized).to.be.true;
+    });
+    it('applies `quiet` attribute to slotted children with overlays', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <quiet-action-group>
+                    <overlay-trigger slot="first">
+                        <sp-action-button slot="trigger" id="first">
+                            First
+                        </sp-action-button>
+                    </overlay-trigger>
+                    <overlay-trigger slot="second">
+                        <sp-action-button slot="trigger" id="second">
+                            Second
+                        </sp-action-button>
+                    </overlay-trigger>
+                </quiet-action-group>
+            `
+        );
+        const firstButton = el.querySelector('#first') as ActionButton;
+        const secondButton = el.querySelector('#second') as ActionButton;
+
+        await elementUpdated(el);
+
+        expect(firstButton.getAttribute('quiet') === '').to.be.true;
+        expect(firstButton.quiet).to.be.true;
+        expect(secondButton.getAttribute('quiet') === '').to.be.true;
+        expect(secondButton.quiet).to.be.true;
+    });
+    it('applies `emphasized` attribute to slotted children with overlays', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <emphasized-action-group>
+                    <overlay-trigger slot="first">
+                        <sp-action-button slot="trigger" id="first">
+                            First
+                        </sp-action-button>
+                    </overlay-trigger>
+                    <overlay-trigger slot="second">
+                        <sp-action-button slot="trigger" id="second">
+                            Second
+                        </sp-action-button>
+                    </overlay-trigger>
                 </emphasized-action-group>
             `
         );
