@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import '../sp-textfield.js';
 import { Textfield } from '../';
 import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
-import { sendKeys } from '@web/test-runner-commands';
+import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
 
 describe('Textfield', () => {
     it('loads default textfield accessibly', async () => {
@@ -102,6 +102,89 @@ describe('Textfield', () => {
             ? el.shadowRoot.querySelector('textarea')
             : null;
         expect(input).to.not.be.null;
+    });
+    it('resizes by default', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    multiline
+                    label="No resize control"
+                    placeholder="No resize control"
+                ></sp-textfield>
+            `
+        );
+        const startBounds = el.getBoundingClientRect();
+
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        startBounds.right - 2,
+                        startBounds.bottom - 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'move',
+                    position: [
+                        startBounds.right + 50,
+                        startBounds.bottom + 50,
+                    ],
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        const endBounds = el.getBoundingClientRect();
+        expect(endBounds.width).to.be.greaterThan(startBounds.width);
+        expect(endBounds.height).to.be.greaterThan(startBounds.height);
+    });
+    it('accepts resize styling', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    multiline
+                    style="resize: none;"
+                    label="No resize control"
+                    placeholder="No resize control"
+                ></sp-textfield>
+            `
+        );
+        const startBounds = el.getBoundingClientRect();
+
+        await executeServerCommand('send-mouse', {
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        startBounds.right - 2,
+                        startBounds.bottom - 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'move',
+                    position: [
+                        startBounds.right + 50,
+                        startBounds.bottom + 50,
+                    ],
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        const endBounds = el.getBoundingClientRect();
+        expect(endBounds.width).equals(startBounds.width);
+        expect(endBounds.height).equals(startBounds.height);
     });
     it('grows', async () => {
         const el = await litFixture<Textfield>(
