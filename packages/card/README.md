@@ -49,7 +49,7 @@ import { Card } from '@spectrum-web-components/card';
 
 ## Heading
 
-By default, the heading for an `<sp-card>` is applied via the `heading` attribute, which is restricted to string content only. When HTML content is desired, a slot named `heading` available for applying the heading.
+By default, the heading for an `<sp-card>` is applied via the `heading` attribute, which is restricted to string content only. For HTML content, use the `heading` slot instead.
 
 ```html demo
 <sp-card
@@ -64,7 +64,7 @@ By default, the heading for an `<sp-card>` is applied via the `heading` attribut
 
 ## Linking
 
-An `<sp-card>` can be provided with an `href` attribute in order for it to act as one large anchor element. When leveraging the `href` attribute, the `download`, `target` and `rel` attributes come into play to customize the linking behavior of the element. Use them as follows:
+An `<sp-card>` can be provided with an `href` attribute in order for it to act as one large anchor element. When leveraging the `href` attribute, the `download`, `target` and `rel` attributes customize the card's linking behavior. Use them as follows:
 
 <!-- prettier-ignore -->
 ```html

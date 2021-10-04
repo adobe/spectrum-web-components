@@ -131,9 +131,7 @@ export class Card extends LikeAnchor(
                 }
             case 'Enter':
             case 'NumpadEnter':
-                if (this.href) {
-                    this.likeAnchor?.click();
-                }
+                this.click();
         }
     }
 
@@ -185,7 +183,7 @@ export class Card extends LikeAnchor(
         const handleEnd = (): void => {
             const end = +new Date();
             if (end - start < 200) {
-                this.likeAnchor?.click();
+                this.click();
             }
             this.removeEventListener('pointerup', handleEnd);
         };
