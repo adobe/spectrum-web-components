@@ -12,6 +12,14 @@ governing permissions and limitations under the License.
 
 @import './spectrum-textfield.css';
 
+:host([multiline]) {
+    resize: both;
+}
+
+textarea {
+    resize: inherit;
+}
+
 :host([grows]) .input {
     position: absolute;
     top: 0;

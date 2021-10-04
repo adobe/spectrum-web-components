@@ -105,3 +105,26 @@ export const readonly = (): TemplateResult => html`
         placeholder="Enter your life story"
     ></sp-textfield>
 `;
+
+export const resizeControls = (): TemplateResult => html`
+    <sp-textfield
+        multiline
+        style="resize: none;"
+        label="No resize control"
+        placeholder="No resize control"
+    ></sp-textfield>
+
+    <sp-textfield
+        multiline
+        style="resize: vertical;"
+        label="Vertical resize control"
+        placeholder="Vertical resize control"
+    ></sp-textfield>
+
+    <sp-textfield
+        multiline
+        style="resize: horizontal;"
+        label="Horizontal resize control"
+        placeholder="Horizontal resize control"
+    ></sp-textfield>
+`;
