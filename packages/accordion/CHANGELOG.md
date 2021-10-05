@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.16...@spectrum-web-components/accordion@0.4.17) (2021-10-05)
+
+### Bug Fixes
+
+-   **accordion:** ensure item toggle events can be prevented from the outside ([30dbfc8](https://github.com/adobe/spectrum-web-components/commit/30dbfc8435c298e8f68083553ddc0fca1309fdf8))
+
 ## [0.4.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.15...@spectrum-web-components/accordion@0.4.16) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/accordion

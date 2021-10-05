@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.4...@spectrum-web-components/menu@0.9.5) (2021-10-05)
+
+### Bug Fixes
+
+-   **menu:** cache item parent element to correct disconnecting event dispatch ([f375510](https://github.com/adobe/spectrum-web-components/commit/f3755109ebf64623ba4884871ad8f6eb3b02bc33))
+
 ## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.3...@spectrum-web-components/menu@0.9.4) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/menu

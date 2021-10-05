@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-group",
-    "version": "0.4.16",
+    "version": "0.4.17",
     "publishConfig": {
         "access": "public"
     },

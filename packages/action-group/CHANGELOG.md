@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.16...@spectrum-web-components/action-group@0.4.17) (2021-10-05)
+
+### Bug Fixes
+
+-   **action-group:** add custom focus() method and use sendKeys for correct "Enter" key testing ([638aa35](https://github.com/adobe/spectrum-web-components/commit/638aa3551f359951d926e2b7c9773aafab1402f0))
+
 ## [0.4.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.15...@spectrum-web-components/action-group@0.4.16) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group

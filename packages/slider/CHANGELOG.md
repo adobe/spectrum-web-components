@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.8...@spectrum-web-components/slider@0.10.9) (2021-10-05)
+
+### Bug Fixes
+
+-   **slider:** make implicit dependency on sp-slider-handle explicit ([cb8d84b](https://github.com/adobe/spectrum-web-components/commit/cb8d84b55beb968fcb92198854321d66ce01cbf4))
+
 ## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.7...@spectrum-web-components/slider@0.10.8) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

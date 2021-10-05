@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/accordion",
-    "version": "0.4.16",
+    "version": "0.4.17",
     "publishConfig": {
         "access": "public"
     },
