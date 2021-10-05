@@ -20,6 +20,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-dimension-size-300
     );
 }
+:host(.focus-visible),
+:host([focus]) {
+    height: calc(
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * 2
+    );
+    margin-left: calc(
+        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+    );
+    margin-top: calc(
+        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+    );
+    width: calc(
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * 2
+    ); /* .spectrum-ColorHandle.is-focused,
+   * .spectrum-ColorHandle.focus-ring */
+}
 :host(:focus-visible),
 :host([focus]) {
     height: calc(

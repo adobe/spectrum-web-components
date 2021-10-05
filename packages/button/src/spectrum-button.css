@@ -92,6 +92,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ease-out,
         margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
 }
+:host(.focus-visible):after {
+    margin: calc(
+        var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * -2
+    ); /* .spectrum-LogicButton.focus-ring:after,
+   * .spectrum-ClearButton.focus-ring:after,
+   * .spectrum-Button.focus-ring:after */
+}
 :host(:focus-visible):after {
     margin: calc(
         var(
@@ -412,6 +422,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-button-primary-text-line-height
     ); /* .spectrum-Button-label */
 }
+:host(.focus-visible):after,
+:host([focused]):after {
+    box-shadow: 0 0 0 var(--spectrum-button-primary-focus-ring-size-key-focus)
+        var(
+            --spectrum-button-primary-m-focus-ring-color-key-focus,
+            var(--spectrum-alias-focus-ring-color)
+        ); /* .spectrum-LogicButton.focus-ring:after,
+   * .spectrum-LogicButton.is-focused:after,
+   * .spectrum-Button.focus-ring:after,
+   * .spectrum-Button.is-focused:after */
+}
 :host(:focus-visible):after,
 :host([focused]):after {
     box-shadow: 0 0 0 var(--spectrum-button-primary-focus-ring-size-key-focus)
@@ -448,6 +469,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     color: var(
         --spectrum-button-cta-m-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+}
+:host([variant='cta'].focus-visible) {
+    background-color: var(
+        --spectrum-button-cta-m-background-color-key-focus,
+        var(--spectrum-semantic-cta-color-background-hover)
+    ); /* .spectrum-Button--cta.focus-ring */
+    border-color: var(
+        --spectrum-button-cta-m-border-color-key-focus,
+        var(--spectrum-semantic-cta-color-background-hover)
+    );
+    color: var(
+        --spectrum-button-cta-m-text-color-key-focus,
         var(--spectrum-global-color-static-white)
     );
 }
@@ -523,6 +558,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-50)
     );
 }
+:host([variant='primary'].focus-visible) {
+    background-color: var(
+        --spectrum-button-primary-m-background-color-key-focus,
+        var(--spectrum-global-color-gray-800)
+    ); /* .spectrum-Button--primary.focus-ring */
+    border-color: var(
+        --spectrum-button-primary-m-border-color-key-focus,
+        var(--spectrum-global-color-gray-800)
+    );
+    color: var(
+        --spectrum-button-primary-m-text-color-key-focus,
+        var(--spectrum-global-color-gray-50)
+    );
+}
 :host([variant='primary']:focus-visible) {
     background-color: var(
         --spectrum-button-primary-m-background-color-key-focus,
@@ -592,6 +641,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     color: var(
         --spectrum-button-secondary-m-text-color-hover,
+        var(--spectrum-global-color-gray-50)
+    );
+}
+:host([variant='secondary'].focus-visible) {
+    background-color: var(
+        --spectrum-button-secondary-m-background-color-key-focus,
+        var(--spectrum-global-color-gray-700)
+    ); /* .spectrum-Button--secondary.focus-ring */
+    border-color: var(
+        --spectrum-button-secondary-m-border-color-key-focus,
+        var(--spectrum-global-color-gray-700)
+    );
+    color: var(
+        --spectrum-button-secondary-m-text-color-key-focus,
         var(--spectrum-global-color-gray-50)
     );
 }
@@ -667,6 +730,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-50)
     );
 }
+:host([variant='negative'].focus-visible) {
+    background-color: var(
+        --spectrum-button-warning-m-background-color-key-focus,
+        var(--spectrum-semantic-negative-color-text-small)
+    ); /* .spectrum-Button--warning.focus-ring */
+    border-color: var(
+        --spectrum-button-warning-m-border-color-key-focus,
+        var(--spectrum-semantic-negative-color-text-small)
+    );
+    color: var(
+        --spectrum-button-warning-m-text-color-key-focus,
+        var(--spectrum-global-color-gray-50)
+    );
+}
 :host([variant='negative']:focus-visible) {
     background-color: var(
         --spectrum-button-warning-m-background-color-key-focus,
@@ -736,6 +813,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     color: inherit;
 }
+:host([variant='overBackground'].focus-visible) {
+    background-color: var(
+        --spectrum-button-over-background-m-background-color-hover,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Button--overBackground.focus-ring */
+    border-color: var(
+        --spectrum-button-over-background-m-border-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    color: inherit;
+}
 :host([variant='overBackground']:focus-visible) {
     background-color: var(
         --spectrum-button-over-background-m-background-color-hover,
@@ -746,6 +834,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
     color: inherit;
+}
+:host([variant='overBackground'].focus-visible):after {
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-button-over-background-m-border-color-key-focus,
+            var(--spectrum-global-color-static-white)
+        ); /* .spectrum-Button--overBackground.focus-ring:after */
 }
 :host([variant='overBackground']:focus-visible):after {
     box-shadow: 0 0 0
@@ -815,6 +914,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
+:host([variant='overBackground'][quiet].focus-visible) {
+    background-color: var(
+        --spectrum-button-quiet-over-background-m-background-color-hover,
+        rgba(255, 255, 255, 0.1)
+    ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
+   * .spectrum-ClearButton--overBackground.focus-ring */
+    border-color: var(
+        --spectrum-button-quiet-over-background-m-border-color-hover,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    box-shadow: none;
+    color: var(
+        --spectrum-button-quiet-over-background-m-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+}
 :host([variant='overBackground'][quiet]:focus-visible) {
     background-color: var(
         --spectrum-button-quiet-over-background-m-background-color-hover,
@@ -830,6 +945,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-button-quiet-over-background-m-text-color-hover,
         var(--spectrum-global-color-static-white)
     );
+}
+:host([variant='overBackground'][quiet].focus-visible):after {
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-button-over-background-m-border-color-key-focus,
+            var(--spectrum-global-color-static-white)
+        ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring:after,
+   * .spectrum-ClearButton--overBackground.focus-ring:after */
 }
 :host([variant='overBackground'][quiet]:focus-visible):after {
     box-shadow: 0 0 0
@@ -901,6 +1028,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     color: var(
         --spectrum-button-quiet-primary-m-text-color-hover,
+        var(--spectrum-global-color-gray-900)
+    );
+}
+:host([variant='primary'][quiet].focus-visible) {
+    background-color: var(
+        --spectrum-button-quiet-primary-m-background-color-key-focus,
+        var(--spectrum-global-color-gray-200)
+    ); /* .spectrum-Button--primary.spectrum-Button--quiet.focus-ring */
+    border-color: var(
+        --spectrum-button-quiet-primary-m-border-color-key-focus,
+        var(--spectrum-global-color-gray-200)
+    );
+    color: var(
+        --spectrum-button-quiet-primary-m-text-color-key-focus,
         var(--spectrum-global-color-gray-900)
     );
 }
@@ -976,6 +1117,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     );
 }
+:host([variant='secondary'][quiet].focus-visible) {
+    background-color: var(
+        --spectrum-button-quiet-secondary-m-background-color-key-focus,
+        var(--spectrum-global-color-gray-200)
+    ); /* .spectrum-Button--secondary.spectrum-Button--quiet.focus-ring */
+    border-color: var(
+        --spectrum-button-quiet-secondary-m-border-color-key-focus,
+        var(--spectrum-global-color-gray-200)
+    );
+    color: var(
+        --spectrum-button-quiet-secondary-m-text-color-key-focus,
+        var(--spectrum-global-color-gray-800)
+    );
+}
 :host([variant='secondary'][quiet]:focus-visible) {
     background-color: var(
         --spectrum-button-quiet-secondary-m-background-color-key-focus,
@@ -1045,6 +1200,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     color: var(
         --spectrum-button-quiet-warning-m-text-color-hover,
+        var(--spectrum-global-color-red-700)
+    );
+}
+:host([variant='negative'][quiet].focus-visible) {
+    background-color: var(
+        --spectrum-button-quiet-warning-m-background-color-key-focus,
+        var(--spectrum-global-color-gray-200)
+    ); /* .spectrum-Button--warning.spectrum-Button--quiet.focus-ring */
+    border-color: var(
+        --spectrum-button-quiet-warning-m-border-color-key-focus,
+        var(--spectrum-global-color-gray-200)
+    );
+    color: var(
+        --spectrum-button-quiet-warning-m-text-color-key-focus,
         var(--spectrum-global-color-red-700)
     );
 }

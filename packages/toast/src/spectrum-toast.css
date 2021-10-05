@@ -269,6 +269,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-orange-700)
     );
 }
+:host([variant='warning']) .closeButton.focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-warning-background-color,
+        var(--spectrum-global-color-static-orange-700)
+    ); /* .spectrum-Toast--warning .spectrum-Toast-closeButton.focus-ring:not(:active) */
+}
 :host([variant='warning']) .closeButton:focus-visible:not(:active) {
     color: var(
         --spectrum-toast-warning-background-color,
@@ -286,6 +292,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-toast-negative-background-color,
         var(--spectrum-semantic-negative-color-background)
     );
+}
+:host([variant='error']) .closeButton.focus-visible:not(:active),
+:host([variant='negative']) .closeButton.focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-negative-background-color,
+        var(--spectrum-semantic-negative-color-background)
+    ); /* .spectrum-Toast--negative .spectrum-Toast-closeButton.focus-ring:not(:active),
+   * .spectrum-Toast--error .spectrum-Toast-closeButton.focus-ring:not(:active) */
 }
 :host([variant='error']) .closeButton:focus-visible:not(:active),
 :host([variant='negative']) .closeButton:focus-visible:not(:active) {
@@ -305,6 +319,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-semantic-informative-color-background)
     );
 }
+:host([variant='info']) .closeButton.focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-info-background-color,
+        var(--spectrum-semantic-informative-color-background)
+    ); /* .spectrum-Toast--info .spectrum-Toast-closeButton.focus-ring:not(:active) */
+}
 :host([variant='info']) .closeButton:focus-visible:not(:active) {
     color: var(
         --spectrum-toast-info-background-color,
@@ -322,6 +342,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-toast-positive-background-color,
         var(--spectrum-semantic-positive-color-background)
     );
+}
+:host([variant='positive']) .closeButton.focus-visible:not(:active),
+:host([variant='success']) .closeButton.focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-positive-background-color,
+        var(--spectrum-semantic-positive-color-background)
+    ); /* .spectrum-Toast--positive .spectrum-Toast-closeButton.focus-ring:not(:active),
+   * .spectrum-Toast--success .spectrum-Toast-closeButton.focus-ring:not(:active) */
 }
 :host([variant='positive']) .closeButton:focus-visible:not(:active),
 :host([variant='success']) .closeButton:focus-visible:not(:active) {

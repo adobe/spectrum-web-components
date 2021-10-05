@@ -72,17 +72,49 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #itemLink:focus {
     outline: none; /* .spectrum-SideNav-itemLink:focus */
 }
+:host([dir='ltr']) #itemLink.focus-visible:before {
+    left: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
+}
 :host([dir='ltr']) #itemLink:focus-visible:before {
     left: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
+}
+:host([dir='rtl']) #itemLink.focus-visible:before {
+    right: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
 }
 :host([dir='rtl']) #itemLink:focus-visible:before {
     right: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
 }
+:host([dir='ltr']) #itemLink.focus-visible:before {
+    right: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
+}
 :host([dir='ltr']) #itemLink:focus-visible:before {
     right: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
 }
+:host([dir='rtl']) #itemLink.focus-visible:before {
+    left: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
+}
 :host([dir='rtl']) #itemLink:focus-visible:before {
     left: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
+}
+#itemLink.focus-visible:before {
+    border-bottom: var(
+            --spectrum-tabs-m-focus-ring-size,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid transparent;
+    border-radius: var(
+        --spectrum-sidenav-item-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    border-top: var(
+            --spectrum-tabs-m-focus-ring-size,
+            var(--spectrum-alias-border-size-thick)
+        )
+        solid transparent;
+    bottom: 0;
+    content: ''; /* .spectrum-SideNav-itemLink.focus-ring:before */
+    position: absolute;
+    top: 0;
 }
 #itemLink:focus-visible:before {
     border-bottom: var(
@@ -233,6 +265,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-highlight-hover)
     ); /* .spectrum-SideNav-itemLink:active */
 }
+#itemLink.focus-visible {
+    background-color: var(
+        --spectrum-sidenav-item-background-color-key-focus,
+        var(--spectrum-alias-highlight-hover)
+    ); /* .spectrum-SideNav-itemLink.focus-ring */
+    color: var(
+        --spectrum-sidenav-item-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
 #itemLink:focus-visible {
     background-color: var(
         --spectrum-sidenav-item-background-color-key-focus,
@@ -242,6 +284,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-sidenav-item-text-color-key-focus,
         var(--spectrum-alias-text-color-hover)
     );
+}
+#itemLink.focus-visible:before {
+    border-color: var(
+        --spectrum-sidenav-item-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    ); /* .spectrum-SideNav-itemLink.focus-ring:before */
 }
 #itemLink:focus-visible:before {
     border-color: var(

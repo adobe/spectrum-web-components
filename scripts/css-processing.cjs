@@ -23,8 +23,8 @@ const postCSSPlugins = (resourcePath, toTS) => {
             browsers: [
                 'last 2 Chrome versions',
                 'last 2 Firefox versions',
-                'last 4 Safari versions',
-                'last 4 iOS versions',
+                'last 2 Safari versions',
+                'last 2 iOS versions',
             ],
             stage: 2,
             features: {

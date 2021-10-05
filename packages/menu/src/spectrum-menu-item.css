@@ -137,6 +137,15 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color)
     );
 }
+:host([dir='ltr'].focus-visible),
+:host([dir='ltr'][focused]) {
+    border-left-color: var(
+        --spectrum-listitem-m-focus-indicator-color,
+        var(--spectrum-alias-border-color-focus)
+    ); /* [dir=ltr] .spectrum-Menu-item.focus-ring,
+   * [dir=ltr] 
+  .spectrum-Menu-item.is-focused */
+}
 :host([dir='ltr']:focus-visible),
 :host([dir='ltr'][focused]) {
     border-left-color: var(
@@ -144,6 +153,15 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-border-color-focus)
     ); /* [dir=ltr] .spectrum-Menu-item.focus-ring,
    * [dir=ltr] 
+  .spectrum-Menu-item.is-focused */
+}
+:host([dir='rtl'].focus-visible),
+:host([dir='rtl'][focused]) {
+    border-right-color: var(
+        --spectrum-listitem-m-focus-indicator-color,
+        var(--spectrum-alias-border-color-focus)
+    ); /* [dir=rtl] .spectrum-Menu-item.focus-ring,
+   * [dir=rtl] 
   .spectrum-Menu-item.is-focused */
 }
 :host([dir='rtl']:focus-visible),
@@ -154,6 +172,18 @@ slot[name='icon'] + #label {
     ); /* [dir=rtl] .spectrum-Menu-item.focus-ring,
    * [dir=rtl] 
   .spectrum-Menu-item.is-focused */
+}
+:host(.focus-visible),
+:host([focused]) {
+    background-color: var(
+        --spectrum-listitem-m-background-color-key-focus,
+        var(--spectrum-alias-background-color-hover-overlay)
+    ); /* .spectrum-Menu-item.focus-ring,
+   * .spectrum-Menu-item.is-focused */
+    color: var(
+        --spectrum-listitem-m-text-color-key-focus,
+        var(--spectrum-alias-text-color)
+    );
 }
 :host(:focus-visible),
 :host([focused]) {

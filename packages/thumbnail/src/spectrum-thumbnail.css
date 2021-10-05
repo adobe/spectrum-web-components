@@ -147,11 +147,24 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         calc(var(--spectrum-thumbnail-border-size-selected) / 2)
         var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-selected:before */
 }
+:host(.focus-visible),
+:host([focused]) {
+    box-shadow: 0 0 0 calc(var(--spectrum-thumbnail-border-size-focus) / 2)
+        var(--spectrum-thumbnail-border-color-focus); /* .spectrum-Thumbnail.is-focused,
+   * .spectrum-Thumbnail.focus-ring */
+}
 :host(:focus-visible),
 :host([focused]) {
     box-shadow: 0 0 0 calc(var(--spectrum-thumbnail-border-size-focus) / 2)
         var(--spectrum-thumbnail-border-color-focus); /* .spectrum-Thumbnail.is-focused,
    * .spectrum-Thumbnail.focus-ring */
+}
+:host(.focus-visible):before,
+:host([focused]):before {
+    box-shadow: inset 0 0 0
+        calc(var(--spectrum-thumbnail-border-size-selected) / 2)
+        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-focused:before,
+   * .spectrum-Thumbnail.focus-ring:before */
 }
 :host(:focus-visible):before,
 :host([focused]):before {

@@ -47,6 +47,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         1
     ); /* .spectrum-Checkbox-input:checked+.spectrum-Checkbox-box .spectrum-Checkbox-checkmark */
 }
+#input.focus-visible + #box:after {
+    margin: calc(
+        var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * -1
+    ); /* .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:after */
+}
 #input:focus-visible + #box:after {
     margin: calc(
         var(
@@ -501,11 +509,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     forced-color-adjust: none; /* .spectrum-Checkbox .spectrum-Checkbox-input:disabled~.spectrum-Checkbox-label,
    * .spectrum-Checkbox .spectrum-Checkbox-input:checked:disabled~.spectrum-Checkbox-label */
 }
+#input.focus-visible + #box:before {
+    border-color: var(
+        --spectrum-checkbox-m-box-border-color-key-focus,
+        var(--spectrum-global-color-gray-700)
+    ); /* .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:before */
+}
 #input:focus-visible + #box:before {
     border-color: var(
         --spectrum-checkbox-m-box-border-color-key-focus,
         var(--spectrum-global-color-gray-700)
     ); /* .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:before */
+}
+#input.focus-visible + #box:after {
+    box-shadow: 0 0 0
+        var(
+            --spectrum-checkbox-m-focus-ring-size-key-focus,
+            var(--spectrum-alias-focus-ring-size)
+        )
+        var(
+            --spectrum-checkbox-m-focus-ring-color-key-focus,
+            var(--spectrum-alias-focus-ring-color)
+        );
+    forced-color-adjust: none; /* .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:after */
 }
 #input:focus-visible + #box:after {
     box-shadow: 0 0 0
@@ -519,6 +545,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         );
     forced-color-adjust: none; /* .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:after */
 }
+#input:checked.focus-visible + #box:before,
+:host([indeterminate]) #input.focus-visible + #box:before {
+    border-color: var(
+        --spectrum-checkbox-m-box-border-color-selected-key-focus,
+        var(--spectrum-global-color-gray-800)
+    ); /* .spectrum-Checkbox.is-indeterminate .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:before,
+   * .spectrum-Checkbox-input:checked.focus-ring+.spectrum-Checkbox-box:before */
+}
 #input:checked:focus-visible + #box:before,
 :host([indeterminate]) #input:focus-visible + #box:before {
     border-color: var(
@@ -527,11 +561,31 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Checkbox.is-indeterminate .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:before,
    * .spectrum-Checkbox-input:checked.focus-ring+.spectrum-Checkbox-box:before */
 }
+#input.focus-visible ~ #label {
+    color: var(
+        --spectrum-checkbox-m-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    ); /* .spectrum-Checkbox-input.focus-ring~.spectrum-Checkbox-label */
+}
 #input:focus-visible ~ #label {
     color: var(
         --spectrum-checkbox-m-text-color-key-focus,
         var(--spectrum-alias-text-color-hover)
     ); /* .spectrum-Checkbox-input.focus-ring~.spectrum-Checkbox-label */
+}
+:host([emphasized]) #input:checked + #box:before,
+:host([emphasized][indeterminate]) #box:before,
+:host([emphasized][indeterminate]) #input.focus-visible + #box:before {
+    border-color: var(
+        --spectrum-checkbox-m-emphasized-box-border-color-selected,
+        var(--spectrum-global-color-blue-500)
+    ); /* .spectrum-Checkbox--emphasized
+  .spectrum-Checkbox-input:checked
+ +.spectrum-Checkbox-box:before,
+   * .spectrum-Checkbox--emphasized.is-indeterminate .spectrum-Checkbox-box:before,
+   * .spectrum-Checkbox--emphasized.is-indeterminate
+  .spectrum-Checkbox-input.focus-ring
+ +.spectrum-Checkbox-box:before */
 }
 :host([emphasized]) #input:checked + #box:before,
 :host([emphasized][indeterminate]) #box:before,
@@ -577,6 +631,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-red-600)
     ); /* .spectrum-Checkbox.is-invalid .spectrum-Checkbox-label */
 }
+:host([invalid]) #input.focus-visible + #box:before,
+:host([invalid][indeterminate]) #input.focus-visible + #box:before {
+    border-color: var(
+        --spectrum-checkbox-m-box-border-color-error-hover,
+        var(--spectrum-global-color-red-600)
+    ); /* .spectrum-Checkbox.is-invalid.is-indeterminate .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:before,
+   * .spectrum-Checkbox.is-invalid .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:before */
+}
 :host([invalid]) #input:focus-visible + #box:before,
 :host([invalid][indeterminate]) #input:focus-visible + #box:before {
     border-color: var(
@@ -584,6 +646,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-red-600)
     ); /* .spectrum-Checkbox.is-invalid.is-indeterminate .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:before,
    * .spectrum-Checkbox.is-invalid .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:before */
+}
+:host([invalid]) #input.focus-visible ~ #label,
+:host([invalid][indeterminate]) #input.focus-visible ~ #label {
+    color: var(
+        --spectrum-checkbox-m-text-color-error-hover,
+        var(--spectrum-global-color-red-700)
+    ); /* .spectrum-Checkbox.is-invalid.is-indeterminate .spectrum-Checkbox-input.focus-ring~.spectrum-Checkbox-label,
+   * .spectrum-Checkbox.is-invalid .spectrum-Checkbox-input.focus-ring~.spectrum-Checkbox-label */
 }
 :host([invalid]) #input:focus-visible ~ #label,
 :host([invalid][indeterminate]) #input:focus-visible ~ #label {

@@ -33,6 +33,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border-style: dashed;
     outline: 0; /* .spectrum-Dropzone:focus */
 }
+:host(:focus.focus-visible) {
+    border-style: solid; /* .spectrum-Dropzone:focus.focus-ring */
+}
 :host(:focus:focus-visible) {
     border-style: solid; /* .spectrum-Dropzone:focus.focus-ring */
 }
@@ -69,11 +72,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         #bcbcbc
     ); /* .spectrum-Dropzone:focus .spectrum-IllustratedMessage-illustration */
 }
+:host(:focus.focus-visible) {
+    border-color: var(
+        --spectrum-dropzone-border-color-selected-hover,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-Dropzone:focus.focus-ring */
+}
 :host(:focus:focus-visible) {
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
     ); /* .spectrum-Dropzone:focus.focus-ring */
+}
+:host(:focus[dragged].focus-visible) ::slotted(*) {
+    color: var(
+        --spectrum-global-color-blue-400
+    ); /* .spectrum-Dropzone:focus.is-dragged.focus-ring .spectrum-IllustratedMessage-illustration */
 }
 :host(:focus[dragged]:focus-visible) ::slotted(*) {
     color: var(

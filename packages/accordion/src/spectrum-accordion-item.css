@@ -262,6 +262,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-800)
     ); /* .spectrum-Accordion-itemHeader:hover+.spectrum-Accordion-itemIndicator */
 }
+#header.focus-visible:after {
+    background-color: var(
+        --spectrum-accordion-item-border-left-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    ); /* .spectrum-Accordion-itemHeader.focus-ring:after */
+}
 #header:focus-visible:after {
     background-color: var(
         --spectrum-accordion-item-border-left-color-key-focus,
@@ -270,6 +276,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([open]) #header:hover {
     background-color: transparent; /* .spectrum-Accordion-item.is-open .spectrum-Accordion-itemHeader:hover */
+}
+:host([disabled]) #header,
+:host([disabled]) #header.focus-visible,
+:host([disabled]) #header:hover {
+    background-color: transparent;
+    color: var(
+        --spectrum-accordion-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    ); /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader,
+   * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader:hover,
+   * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader.focus-ring */
 }
 :host([disabled]) #header,
 :host([disabled]) #header:focus-visible,

@@ -546,6 +546,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-hover)
     ); /* .spectrum-ActionButton:hover .spectrum-ActionButton-hold */
 }
+:host(.focus-visible) {
+    background-color: var(
+        --spectrum-actionbutton-m-background-color-key-focus,
+        var(--spectrum-global-color-gray-50)
+    ); /* .spectrum-ActionButton.focus-ring */
+    border-color: var(
+        --spectrum-actionbutton-m-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-actionbutton-m-quiet-border-size-key-focus,
+            var(--spectrum-alias-border-size-thick)
+        )
+        var(
+            --spectrum-actionbutton-m-border-color-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
+    color: var(
+        --spectrum-actionbutton-m-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
 :host(:focus-visible) {
     background-color: var(
         --spectrum-actionbutton-m-background-color-key-focus,
@@ -569,17 +592,35 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
+:host(.focus-visible[active]) {
+    border-color: var(
+        --spectrum-actionbutton-m-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    ); /* .spectrum-ActionButton.focus-ring:active */
+}
 :host(:focus-visible[active]) {
     border-color: var(
         --spectrum-actionbutton-m-border-color-key-focus,
         var(--spectrum-alias-border-color-focus)
     ); /* .spectrum-ActionButton.focus-ring:active */
 }
+:host(.focus-visible) ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-actionbutton-m-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-focus)
+    ); /* .spectrum-ActionButton.focus-ring .spectrum-Icon */
+}
 :host(:focus-visible) ::slotted([slot='icon']) {
     color: var(
         --spectrum-actionbutton-m-icon-color-key-focus,
         var(--spectrum-alias-icon-color-focus)
     ); /* .spectrum-ActionButton.focus-ring .spectrum-Icon */
+}
+:host(.focus-visible) #hold-affordance {
+    color: var(
+        --spectrum-actionbutton-m-hold-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-hover)
+    ); /* .spectrum-ActionButton.focus-ring .spectrum-ActionButton-hold */
 }
 :host(:focus-visible) #hold-affordance {
     color: var(
@@ -659,6 +700,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color)
     ); /* .spectrum-ActionButton.is-selected .spectrum-Icon */
 }
+:host([selected].focus-visible) {
+    background-color: var(
+        --spectrum-actionbutton-m-background-color-selected-key-focus,
+        var(--spectrum-global-color-gray-200)
+    ); /* .spectrum-ActionButton.is-selected.focus-ring */
+    border-color: var(
+        --spectrum-actionbutton-m-border-color-selected-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    );
+    color: var(
+        --spectrum-actionbutton-m-text-color-selected-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
 :host([selected]:focus-visible) {
     background-color: var(
         --spectrum-actionbutton-m-background-color-selected-key-focus,
@@ -673,11 +728,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
+:host([selected].focus-visible[active]) {
+    border-color: var(
+        --spectrum-actionbutton-m-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    ); /* .spectrum-ActionButton.is-selected.focus-ring:active */
+}
 :host([selected]:focus-visible[active]) {
     border-color: var(
         --spectrum-actionbutton-m-border-color-key-focus,
         var(--spectrum-alias-border-color-focus)
     ); /* .spectrum-ActionButton.is-selected.focus-ring:active */
+}
+:host([selected].focus-visible) ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-actionbutton-m-icon-color-selected-key-focus,
+        var(--spectrum-alias-icon-color-hover)
+    ); /* .spectrum-ActionButton.is-selected.focus-ring .spectrum-Icon */
 }
 :host([selected]:focus-visible) ::slotted([slot='icon']) {
     color: var(
@@ -814,6 +881,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-hover)
     ); /* .spectrum-ActionButton--emphasized:hover .spectrum-ActionButton-hold */
 }
+:host([emphasized].focus-visible) {
+    background-color: var(
+        --spectrum-actionbutton-m-emphasized-background-color-key-focus,
+        var(--spectrum-global-color-gray-50)
+    ); /* .spectrum-ActionButton--emphasized.focus-ring */
+    border-color: var(
+        --spectrum-actionbutton-m-emphasized-border-color-key-focus,
+        var(--spectrum-alias-border-color-hover)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-actionbutton-m-quiet-border-size-key-focus,
+            var(--spectrum-alias-border-size-thick)
+        )
+        var(
+            --spectrum-actionbutton-m-border-color-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
+    color: var(
+        --spectrum-actionbutton-m-emphasized-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
 :host([emphasized]:focus-visible) {
     background-color: var(
         --spectrum-actionbutton-m-emphasized-background-color-key-focus,
@@ -837,11 +927,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
+:host([emphasized].focus-visible) ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-actionbutton-m-emphasized-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-focus)
+    ); /* .spectrum-ActionButton--emphasized.focus-ring .spectrum-Icon */
+}
 :host([emphasized]:focus-visible) ::slotted([slot='icon']) {
     color: var(
         --spectrum-actionbutton-m-emphasized-icon-color-key-focus,
         var(--spectrum-alias-icon-color-focus)
     ); /* .spectrum-ActionButton--emphasized.focus-ring .spectrum-Icon */
+}
+:host([emphasized].focus-visible) #hold-affordance {
+    color: var(
+        --spectrum-actionbutton-m-emphasized-hold-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-hover)
+    ); /* .spectrum-ActionButton--emphasized.focus-ring .spectrum-ActionButton-hold */
 }
 :host([emphasized]:focus-visible) #hold-affordance {
     color: var(
@@ -926,6 +1028,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected .spectrum-Icon,
    * .spectrum-ActionButton--emphasized.is-selected .spectrum-Icon */
 }
+:host([emphasized][quiet][selected].focus-visible),
+:host([emphasized][selected].focus-visible) {
+    background-color: var(
+        --spectrum-actionbutton-m-emphasized-background-color-selected-key-focus,
+        var(--spectrum-semantic-cta-color-background-key-focus)
+    ); /* .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.focus-ring,
+   * .spectrum-ActionButton--emphasized.is-selected.focus-ring */
+    border-color: var(
+        --spectrum-actionbutton-m-emphasized-border-color-selected-key-focus,
+        var(--spectrum-semantic-cta-color-background-key-focus)
+    );
+    color: var(
+        --spectrum-actionbutton-m-emphasized-text-color-selected-key-focus,
+        var(--spectrum-global-color-static-white)
+    );
+}
 :host([emphasized][quiet][selected]:focus-visible),
 :host([emphasized][selected]:focus-visible) {
     background-color: var(
@@ -941,6 +1059,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-actionbutton-m-emphasized-text-color-selected-key-focus,
         var(--spectrum-global-color-static-white)
     );
+}
+:host([emphasized][quiet][selected].focus-visible) ::slotted([slot='icon']),
+:host([emphasized][selected].focus-visible) ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-actionbutton-m-emphasized-icon-color-selected-key-focus,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-ActionButton--emphasized.spectrum-ActionButton--quiet.is-selected.focus-ring .spectrum-Icon,
+   * .spectrum-ActionButton--emphasized.is-selected.focus-ring .spectrum-Icon */
 }
 :host([emphasized][quiet][selected]:focus-visible) ::slotted([slot='icon']),
 :host([emphasized][selected]:focus-visible) ::slotted([slot='icon']) {
@@ -1058,6 +1184,29 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
+:host([quiet].focus-visible) {
+    background-color: var(
+        --spectrum-actionbutton-m-quiet-background-color-key-focus,
+        var(--spectrum-alias-background-color-transparent)
+    ); /* .spectrum-ActionButton--quiet.focus-ring */
+    border-color: var(
+        --spectrum-actionbutton-m-quiet-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-actionbutton-m-quiet-border-size-key-focus,
+            var(--spectrum-alias-border-size-thick)
+        )
+        var(
+            --spectrum-actionbutton-m-quiet-border-color-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
+    color: var(
+        --spectrum-actionbutton-m-quiet-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
 :host([quiet]:focus-visible) {
     background-color: var(
         --spectrum-actionbutton-m-quiet-background-color-key-focus,
@@ -1123,6 +1272,20 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     color: var(
         --spectrum-actionbutton-m-quiet-text-color-selected,
         var(--spectrum-alias-text-color)
+    );
+}
+:host([quiet][selected].focus-visible) {
+    background-color: var(
+        --spectrum-actionbutton-m-quiet-background-color-selected-key-focus,
+        var(--spectrum-global-color-gray-200)
+    ); /* .spectrum-ActionButton--quiet.is-selected.focus-ring */
+    border-color: var(
+        --spectrum-actionbutton-m-quiet-border-color-selected-key-focus,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    color: var(
+        --spectrum-actionbutton-m-quiet-text-color-selected-key-focus,
+        var(--spectrum-alias-text-color-hover)
     );
 }
 :host([quiet][selected]:focus-visible) {

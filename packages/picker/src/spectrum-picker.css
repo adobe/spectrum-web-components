@@ -367,6 +367,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     min-width: 0;
     width: auto; /* .spectrum-Picker--quiet */
 }
+:host([quiet]) #button:disabled.focus-visible,
+:host([quiet][disabled]) #button.focus-visible {
+    box-shadow: none; /* .spectrum-Picker--quiet:disabled.focus-ring,
+   * .spectrum-Picker--quiet.is-disabled.focus-ring */
+}
 :host([quiet]) #button:disabled:focus-visible,
 :host([quiet][disabled]) #button:focus-visible {
     box-shadow: none; /* .spectrum-Picker--quiet:disabled.focus-ring,
@@ -510,6 +515,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Picker:active.is-placeholder .spectrum-Picker-label,
    * .spectrum-Picker.is-open.is-placeholder .spectrum-Picker-label */
 }
+#button.focus-visible,
+:host([focused]) #button {
+    background-color: var(
+        --spectrum-picker-m-background-color-key-focus,
+        var(--spectrum-global-color-gray-50)
+    ); /* .spectrum-Picker.focus-ring,
+   * .spectrum-Picker.is-focused */
+    border-color: var(
+        --spectrum-picker-m-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    );
+    box-shadow: 0 0 0 var(--spectrum-picker-border-size-increase-focus)
+        var(
+            --spectrum-picker-m-border-color-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
+    color: var(
+        --spectrum-picker-m-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    );
+}
 #button:focus-visible,
 :host([focused]) #button {
     background-color: var(
@@ -530,6 +556,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-m-text-color-key-focus,
         var(--spectrum-alias-text-color-hover)
     );
+}
+#button.focus-visible.placeholder,
+:host([focused]) #button.placeholder {
+    color: var(
+        --spectrum-picker-m-placeholder-text-color-key-focus,
+        var(--spectrum-alias-placeholder-text-color-hover)
+    ); /* .spectrum-Picker.focus-ring.is-placeholder,
+   * .spectrum-Picker.is-focused.is-placeholder */
 }
 #button:focus-visible.placeholder,
 :host([focused]) #button.placeholder {
@@ -564,6 +598,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-red-600)
     ); /* .spectrum-Picker.is-invalid:active,
    * .spectrum-Picker.is-invalid.is-open */
+}
+:host([invalid]) #button.focus-visible,
+:host([invalid][focused]) #button {
+    border-color: var(
+        --spectrum-picker-m-border-color-error-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    ); /* .spectrum-Picker.is-invalid.focus-ring,
+   * .spectrum-Picker.is-invalid.is-focused */
+    box-shadow: 0 0 0 var(--spectrum-picker-border-size-increase-focus)
+        var(
+            --spectrum-picker-m-border-color-error-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
 }
 :host([invalid]) #button:focus-visible,
 :host([invalid][focused]) #button {
@@ -662,6 +709,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
+:host([quiet]) #button.focus-visible,
+:host([quiet][focused]) #button {
+    background-color: var(
+        --spectrum-picker-quiet-m-background-color-key-focus,
+        var(--spectrum-alias-background-color-transparent)
+    ); /* .spectrum-Picker--quiet.focus-ring,
+   * .spectrum-Picker--quiet.is-focused */
+    box-shadow: 0 2px 0 0
+        var(
+            --spectrum-picker-m-border-color-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
+}
 :host([quiet]) #button:focus-visible,
 :host([quiet][focused]) #button {
     background-color: var(
@@ -675,6 +735,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-alias-border-color-focus)
         );
 }
+:host([quiet]) #button.focus-visible.placeholder,
+:host([quiet][focused]) #button.placeholder {
+    color: var(
+        --spectrum-picker-quiet-m-placeholder-text-color-key-focus,
+        var(--spectrum-alias-placeholder-text-color-hover)
+    ); /* .spectrum-Picker--quiet.focus-ring.is-placeholder,
+   * .spectrum-Picker--quiet.is-focused.is-placeholder */
+}
 :host([quiet]) #button:focus-visible.placeholder,
 :host([quiet][focused]) #button.placeholder {
     color: var(
@@ -682,6 +750,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-placeholder-text-color-hover)
     ); /* .spectrum-Picker--quiet.focus-ring.is-placeholder,
    * .spectrum-Picker--quiet.is-focused.is-placeholder */
+}
+:host([quiet]) #button.focus-visible .picker,
+:host([quiet][focused]) #button .picker {
+    color: var(
+        --spectrum-picker-m-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-focus)
+    ); /* .spectrum-Picker--quiet.focus-ring .spectrum-Picker-menuIcon,
+   * .spectrum-Picker--quiet.is-focused .spectrum-Picker-menuIcon */
 }
 :host([quiet]) #button:focus-visible .picker,
 :host([quiet][focused]) #button .picker {
@@ -703,6 +779,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-color-transparent)
     );
 }
+:host([quiet]) #button:active.focus-visible,
+:host([quiet][focused]) #button:active,
+:host([quiet][open]) #button.focus-visible,
+:host([quiet][open][focused]) #button {
+    background-color: var(
+        --spectrum-picker-quiet-m-background-color-key-focus,
+        var(--spectrum-alias-background-color-transparent)
+    ); /* .spectrum-Picker--quiet:active.focus-ring,
+   * .spectrum-Picker--quiet:active.is-focused,
+   * .spectrum-Picker--quiet.is-open.focus-ring,
+   * .spectrum-Picker--quiet.is-open.is-focused */
+    box-shadow: 0 2px 0 0
+        var(
+            --spectrum-picker-m-border-color-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
+}
 :host([quiet]) #button:active:focus-visible,
 :host([quiet][focused]) #button:active,
 :host([quiet][open]) #button:focus-visible,
@@ -719,6 +812,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-picker-m-border-color-key-focus,
             var(--spectrum-alias-border-color-focus)
         );
+}
+:host([quiet][invalid]) #button.focus-visible,
+:host([quiet][invalid][focused]) #button {
+    box-shadow: 0 2px 0 0
+        var(
+            --spectrum-picker-m-border-color-error-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        ); /* .spectrum-Picker--quiet.is-invalid.focus-ring,
+   * .spectrum-Picker--quiet.is-invalid.is-focused */
 }
 :host([quiet][invalid]) #button:focus-visible,
 :host([quiet][invalid][focused]) #button {

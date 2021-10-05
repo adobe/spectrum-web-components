@@ -213,6 +213,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([compact]:not([quiet])) ::slotted(:hover) {
     z-index: 2; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:hover */
 }
+:host([compact]:not([quiet])) ::slotted(.focus-visible) {
+    z-index: 3; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item.focus-ring */
+}
 :host([compact]:not([quiet])) ::slotted(:focus-visible) {
     z-index: 3; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item.focus-ring */
 }
