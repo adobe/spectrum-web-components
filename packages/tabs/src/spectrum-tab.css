@@ -125,17 +125,35 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-900)
     ); /* .spectrum-Tabs-item.is-selected .spectrum-Icon */
 }
+:host(.focus-visible) {
+    color: var(
+        --spectrum-tabs-m-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    ); /* .spectrum-Tabs-item.focus-ring */
+}
 :host(:focus-visible) {
     color: var(
         --spectrum-tabs-m-text-color-key-focus,
         var(--spectrum-alias-text-color-hover)
     ); /* .spectrum-Tabs-item.focus-ring */
 }
+:host(.focus-visible):before {
+    border-color: var(
+        --spectrum-tabs-m-focus-ring-color,
+        var(--spectrum-alias-border-color-focus)
+    ); /* .spectrum-Tabs-item.focus-ring:before */
+}
 :host(:focus-visible):before {
     border-color: var(
         --spectrum-tabs-m-focus-ring-color,
         var(--spectrum-alias-border-color-focus)
     ); /* .spectrum-Tabs-item.focus-ring:before */
+}
+:host(.focus-visible) ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-tabs-m-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-focus)
+    ); /* .spectrum-Tabs-item.focus-ring .spectrum-Icon */
 }
 :host(:focus-visible) ::slotted([slot='icon']) {
     color: var(

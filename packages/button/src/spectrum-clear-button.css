@@ -88,6 +88,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ease-out,
         margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
 }
+:host(.focus-visible):after {
+    margin: calc(
+        var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * -2
+    ); /* .spectrum-LogicButton.focus-ring:after,
+   * .spectrum-ClearButton.focus-ring:after,
+   * .spectrum-Button.focus-ring:after */
+}
 :host(:focus-visible):after {
     margin: calc(
         var(
@@ -128,6 +138,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-down)
     );
 }
+:host(.focus-visible) {
+    background-color: var(
+        --spectrum-clearbutton-medium-background-color-key-focus,
+        var(--spectrum-alias-background-color-transparent)
+    ); /* .spectrum-ClearButton.focus-ring */
+    color: var(
+        --spectrum-clearbutton-medium-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-focus)
+    );
+}
 :host(:focus-visible) {
     background-color: var(
         --spectrum-clearbutton-medium-background-color-key-focus,
@@ -166,6 +186,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host > .icon {
     margin: 0 auto; /* .spectrum-ClearButton>.spectrum-Icon */
+}
+:host([variant='overBackground'].focus-visible):after {
+    margin: calc(
+        var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * -1
+    ); /* .spectrum-ClearButton--overBackground.focus-ring:after */
 }
 :host([variant='overBackground']:focus-visible):after {
     margin: calc(
@@ -220,6 +248,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
+:host([variant='overBackground'].focus-visible) {
+    background-color: var(
+        --spectrum-button-quiet-over-background-m-background-color-hover,
+        rgba(255, 255, 255, 0.1)
+    ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
+   * .spectrum-ClearButton--overBackground.focus-ring */
+    border-color: var(
+        --spectrum-button-quiet-over-background-m-border-color-hover,
+        var(--spectrum-alias-border-color-transparent)
+    );
+    box-shadow: none;
+    color: var(
+        --spectrum-button-quiet-over-background-m-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+}
 :host([variant='overBackground']:focus-visible) {
     background-color: var(
         --spectrum-button-quiet-over-background-m-background-color-hover,
@@ -235,6 +279,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-button-quiet-over-background-m-text-color-hover,
         var(--spectrum-global-color-static-white)
     );
+}
+:host([variant='overBackground'].focus-visible):after {
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-button-over-background-m-border-color-key-focus,
+            var(--spectrum-global-color-static-white)
+        ); /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring:after,
+   * .spectrum-ClearButton--overBackground.focus-ring:after */
 }
 :host([variant='overBackground']:focus-visible):after {
     box-shadow: 0 0 0

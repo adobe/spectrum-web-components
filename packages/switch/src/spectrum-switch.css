@@ -102,6 +102,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: default; /* .spectrum-Switch-input:disabled,
    * .spectrum-Switch-input[disabled] */
 }
+#input.focus-visible + #switch:after {
+    margin: calc(
+        var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * -1
+    ); /* .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
+}
 #input:focus-visible + #switch:after {
     margin: calc(
         var(
@@ -368,6 +376,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-700)
     ); /* .spectrum-Switch.spectrum-Switch--emphasized:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
 }
+#input.focus-visible + #switch:after,
+:host(:hover) #input.focus-visible + #switch:after {
+    box-shadow: 0 0 0
+        var(
+            --spectrum-switch-m-focus-ring-size-key-focus,
+            var(--spectrum-alias-focus-ring-size)
+        )
+        var(
+            --spectrum-switch-m-focus-ring-color-key-focus,
+            var(--spectrum-alias-focus-ring-color)
+        ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
+}
 #input:focus-visible + #switch:after,
 :host(:hover) #input:focus-visible + #switch:after {
     box-shadow: 0 0 0
@@ -381,6 +402,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
 }
+#input.focus-visible + #switch:before,
+:host(:hover) #input.focus-visible + #switch:before {
+    border-color: var(
+        --spectrum-switch-m-handle-border-color-key-focus,
+        var(--spectrum-global-color-gray-700)
+    ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before */
+}
 #input:focus-visible + #switch:before,
 :host(:hover) #input:focus-visible + #switch:before {
     border-color: var(
@@ -388,6 +417,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before */
+}
+:host(:hover[checked]) #input.focus-visible + #switch,
+:host([checked]) #input.focus-visible + #switch {
+    background-color: var(
+        --spectrum-switch-m-track-color-selected-key-focus,
+        var(--spectrum-global-color-gray-800)
+    ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
 }
 :host(:hover[checked]) #input:focus-visible + #switch,
 :host([checked]) #input:focus-visible + #switch {
@@ -397,6 +434,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
 }
+:host(:hover[checked]) #input.focus-visible + #switch:before,
+:host([checked]) #input.focus-visible + #switch:before {
+    border-color: var(
+        --spectrum-switch-m-handle-border-color-selected-key-focus,
+        var(--spectrum-global-color-gray-800)
+    ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
+}
 :host(:hover[checked]) #input:focus-visible + #switch:before,
 :host([checked]) #input:focus-visible + #switch:before {
     border-color: var(
@@ -405,6 +450,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
 }
+:host([emphasized][checked]) #input.focus-visible + #switch,
+:host([emphasized][checked]:hover) #input.focus-visible + #switch {
+    background-color: var(
+        --spectrum-switch-m-emphasized-track-color-selected-key-focus,
+        var(--spectrum-global-color-blue-600)
+    ); /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
+   * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
+}
 :host([emphasized][checked]) #input:focus-visible + #switch,
 :host([emphasized][checked]:hover) #input:focus-visible + #switch {
     background-color: var(
@@ -412,6 +465,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-blue-600)
     ); /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
    * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
+}
+:host([emphasized][checked]) #input.focus-visible + #switch:before,
+:host([emphasized][checked]:hover) #input.focus-visible + #switch:before {
+    border-color: var(
+        --spectrum-switch-m-emphasized-handle-border-color-selected-key-focus,
+        var(--spectrum-global-color-blue-600)
+    ); /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
+   * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
 }
 :host([emphasized][checked]) #input:focus-visible + #switch:before,
 :host([emphasized][checked]:hover) #input:focus-visible + #switch:before {

@@ -563,6 +563,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-400)
     ); /* .spectrum-Card:hover */
 }
+:host(.focus-visible),
+:host([selected]) {
+    border-color: var(
+        --spectrum-card-border-color-key-focus,
+        var(--spectrum-alias-border-color-focus)
+    ); /* .spectrum-Card.is-selected,
+   * .spectrum-Card.focus-ring */
+    box-shadow: 0 0 0 1px
+        var(
+            --spectrum-card-border-color-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
+}
 :host(:focus-visible),
 :host([selected]) {
     border-color: var(
@@ -643,6 +656,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Card--quiet:hover .spectrum-Card-preview,
    * .spectrum-Card--gallery:hover .spectrum-Card-preview */
 }
+:host([variant='gallery'].focus-visible),
+:host([variant='gallery'][selected]),
+:host([variant='quiet'].focus-visible),
+:host([variant='quiet'][selected]) {
+    border-color: transparent; /* .spectrum-Card--quiet.is-selected,
+   * .spectrum-Card--quiet.focus-ring,
+   * .spectrum-Card--gallery.is-selected,
+   * .spectrum-Card--gallery.focus-ring */
+    box-shadow: none;
+}
 :host([variant='gallery']:focus-visible),
 :host([variant='gallery'][selected]),
 :host([variant='quiet']:focus-visible),
@@ -652,6 +675,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--gallery.is-selected,
    * .spectrum-Card--gallery.focus-ring */
     box-shadow: none;
+}
+:host([variant='gallery'].focus-visible) #preview,
+:host([variant='gallery'][selected]) #preview,
+:host([variant='quiet'].focus-visible) #preview,
+:host([variant='quiet'][selected]) #preview {
+    background-color: var(
+        --spectrum-card-quiet-preview-background-color,
+        var(--spectrum-global-color-gray-200)
+    ); /* .spectrum-Card--quiet.is-selected .spectrum-Card-preview,
+   * .spectrum-Card--quiet.focus-ring .spectrum-Card-preview,
+   * .spectrum-Card--gallery.is-selected .spectrum-Card-preview,
+   * .spectrum-Card--gallery.focus-ring .spectrum-Card-preview */
 }
 :host([variant='gallery']:focus-visible) #preview,
 :host([variant='gallery'][selected]) #preview,
@@ -664,6 +699,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Card--quiet.focus-ring .spectrum-Card-preview,
    * .spectrum-Card--gallery.is-selected .spectrum-Card-preview,
    * .spectrum-Card--gallery.focus-ring .spectrum-Card-preview */
+}
+:host([variant='gallery'].focus-visible) #preview:before,
+:host([variant='gallery'][selected]) #preview:before,
+:host([variant='quiet'].focus-visible) #preview:before,
+:host([variant='quiet'][selected]) #preview:before {
+    border-color: var(
+        --spectrum-card-quiet-border-color-selected,
+        var(--spectrum-global-color-blue-500)
+    ); /* .spectrum-Card--quiet.is-selected .spectrum-Card-preview:before,
+   * .spectrum-Card--quiet.focus-ring .spectrum-Card-preview:before,
+   * .spectrum-Card--gallery.is-selected .spectrum-Card-preview:before,
+   * .spectrum-Card--gallery.focus-ring .spectrum-Card-preview:before */
+    box-shadow: 0 0 0 1px
+        var(
+            --spectrum-card-quiet-border-color-selected,
+            var(--spectrum-global-color-blue-500)
+        );
 }
 :host([variant='gallery']:focus-visible) #preview:before,
 :host([variant='gallery'][selected]) #preview:before,

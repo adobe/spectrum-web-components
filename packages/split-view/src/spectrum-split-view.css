@@ -320,11 +320,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([resizable]) #splitter:focus {
     outline: none; /* .spectrum-SplitView-splitter.is-draggable:focus */
 }
+:host([resizable]) #splitter.focus-visible {
+    background-color: var(
+        --spectrum-alias-focus-color,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring */
+}
 :host([resizable]) #splitter:focus-visible {
     background-color: var(
         --spectrum-alias-focus-color,
         var(--spectrum-global-color-blue-400)
     ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring */
+}
+:host([resizable]) #splitter.focus-visible #gripper {
+    border-color: var(
+        --spectrum-alias-focus-color,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper */
+    box-shadow: 0 0 0 1px
+        var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
 }
 :host([resizable]) #splitter:focus-visible #gripper {
     border-color: var(
@@ -333,6 +347,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper */
     box-shadow: 0 0 0 1px
         var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
+}
+:host([resizable]) #splitter.focus-visible #gripper:before {
+    background-color: var(
+        --spectrum-alias-focus-color,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper:before */
 }
 :host([resizable]) #splitter:focus-visible #gripper:before {
     background-color: var(

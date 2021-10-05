@@ -90,6 +90,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-radio-border-width-checked
     ); /* .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
+:host(.focus-visible) #input + #button:after {
+    margin: calc(
+        var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * -1
+    ); /* .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
+}
 :host(:focus-visible) #input + #button:after {
     margin: calc(
         var(
@@ -340,6 +348,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Radio .spectrum-Radio-input:disabled~.spectrum-Radio-label,
    * .spectrum-Radio .spectrum-Radio-input:checked:disabled~.spectrum-Radio-label */
 }
+:host(.focus-visible) #input + #button:before,
+:host(:hover.focus-visible) #input + #button:before,
+:host([emphasized].focus-visible) #input + #button:before,
+:host([emphasized]:hover.focus-visible) #input + #button:before {
+    border-color: var(
+        --spectrum-radio-m-circle-border-color-key-focus,
+        var(--spectrum-global-color-gray-700)
+    ); /* .spectrum-Radio .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
+   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before */
+}
 :host(:focus-visible) #input + #button:before,
 :host(:hover:focus-visible) #input + #button:before,
 :host([emphasized]:focus-visible) #input + #button:before,
@@ -351,6 +371,24 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
    * .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
    * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before */
+}
+:host(.focus-visible) #input + #button:after,
+:host(:hover.focus-visible) #input + #button:after,
+:host([emphasized].focus-visible) #input + #button:after,
+:host([emphasized]:hover.focus-visible) #input + #button:after {
+    box-shadow: 0 0 0
+        var(
+            --spectrum-radio-m-focus-ring-size-key-focus,
+            var(--spectrum-alias-focus-ring-size)
+        )
+        var(
+            --spectrum-radio-m-focus-ring-color-key-focus,
+            var(--spectrum-alias-focus-ring-color)
+        );
+    forced-color-adjust: none; /* .spectrum-Radio .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
+   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
+   * .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
+   * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
 }
 :host(:focus-visible) #input + #button:after,
 :host(:hover:focus-visible) #input + #button:after,
@@ -369,6 +407,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
    * .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
    * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
+}
+:host(.focus-visible[checked]) #input + #button:before,
+:host(:hover.focus-visible[checked]) #input + #button:before,
+:host([emphasized][checked].focus-visible) #input + #button:before,
+:host([emphasized][checked]:hover.focus-visible) #input + #button:before {
+    border-color: var(
+        --spectrum-radio-m-emphasized-circle-border-color-selected-key-focus,
+        var(--spectrum-global-color-blue-600)
+    ); /* .spectrum-Radio .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
+   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before */
 }
 :host(:focus-visible[checked]) #input + #button:before,
 :host(:hover:focus-visible[checked]) #input + #button:before,

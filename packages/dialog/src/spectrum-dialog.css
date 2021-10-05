@@ -57,7 +57,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-static-size-3600)
     );
     outline: none;
-    width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
 }

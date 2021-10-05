@@ -68,6 +68,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-down)
     ); /* .spectrum-Search-input:active~.spectrum-Search-icon */
 }
+#input.focus-visible ~ .icon {
+    color: var(
+        --spectrum-search-m-icon-color-key-focus,
+        var(--spectrum-global-color-gray-900)
+    ); /* .spectrum-Search-input.focus-ring~.spectrum-Search-icon */
+}
 #input:focus-visible ~ .icon {
     color: var(
         --spectrum-search-m-icon-color-key-focus,

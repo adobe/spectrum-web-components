@@ -50,9 +50,16 @@ a {
     background-color: transparent; /* .spectrum-Link */
     cursor: pointer;
     outline: none;
-    text-decoration: underline;
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-in-out;
+}
+a,
+a.focus-visible {
+    text-decoration: underline;
+}
+a.focus-visible {
+    -webkit-text-decoration-style: double; /* .spectrum-Link.focus-ring */
+    text-decoration-style: double;
 }
 a:focus-visible {
     text-decoration: underline; /* .spectrum-Link.focus-ring */
@@ -82,6 +89,12 @@ a:active {
         --spectrum-link-primary-m-text-color-down,
         var(--spectrum-global-color-blue-700)
     ); /* .spectrum-Link:active */
+}
+a.focus-visible {
+    color: var(
+        --spectrum-link-primary-m-text-color-key-focus,
+        var(--spectrum-alias-text-color-key-focus)
+    ); /* .spectrum-Link.focus-ring */
 }
 a:focus-visible {
     color: var(

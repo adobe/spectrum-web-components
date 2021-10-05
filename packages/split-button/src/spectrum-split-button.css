@@ -270,6 +270,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-size-thick)
     ); /* [dir=rtl] .spectrum-SplitButton-trigger.spectrum-Button--cta */
 }
+.trigger.focus-visible {
+    box-shadow: none; /* .spectrum-SplitButton-trigger.focus-ring */
+}
 .trigger:focus-visible {
     box-shadow: none; /* .spectrum-SplitButton-trigger.focus-ring */
 }
