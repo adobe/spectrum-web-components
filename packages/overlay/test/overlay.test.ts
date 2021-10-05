@@ -27,7 +27,11 @@ import {
     nextFrame,
 } from '@open-wc/testing';
 import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
-import { virtualElement } from '../stories/overlay.stories';
+import {
+    virtualElement,
+    definedOverlayElement,
+} from '../stories/overlay.stories';
+import { PopoverContent } from '../stories/overlay-story-components.js';
 
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
@@ -520,8 +524,8 @@ describe('Overlays', () => {
         content.remove();
     });
 });
-describe('Overlay - contextmenu', () => {
-    it('closes "modal" overlays on `contextmenu` and passes that to the underlying page', async () => {
+describe('Overlay - type="modal"', () => {
+    it('closes on `contextmenu` and passes that to the underlying page', async () => {
         await fixture<HTMLDivElement>(html`
             ${virtualElement({
                 ...virtualElement.args,
@@ -590,6 +594,31 @@ describe('Overlay - contextmenu', () => {
         expect(firstOverlay.isConnected).to.be.false;
         expect(secondOverlay.isConnected).to.be.true;
         expect(secondHeadline.textContent).to.equal('Menu source: start');
+    });
+    it('opens children in the modal stack through shadow roots', async () => {
+        const el = await fixture<OverlayTrigger>(definedOverlayElement());
+        const trigger = el.querySelector(
+            '[slot="trigger"]'
+        ) as HTMLButtonElement;
+        let open = oneEvent(el, 'sp-opened');
+        trigger.click();
+        await open;
+        const content = document.querySelector(
+            'popover-content'
+        ) as PopoverContent;
+        open = oneEvent(content, 'sp-opened');
+        content.picker.click();
+        await open;
+        const activeOverlays = document.querySelectorAll('active-overlay');
+        activeOverlays.forEach((overlay) => {
+            expect(overlay.slot).to.equal('open');
+        });
+        let close = oneEvent(content, 'sp-closed');
+        content.picker.open = false;
+        await close;
+        close = oneEvent(el, 'sp-closed');
+        el.removeAttribute('open');
+        await close;
     });
 });
 describe('Overlay - timing', () => {

@@ -28,6 +28,7 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { Picker } from '@spectrum-web-components/picker';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;
@@ -304,3 +305,74 @@ class RecursivePopover extends LitElement {
     }
 }
 customElements.define('recursive-popover', RecursivePopover);
+
+export class PopoverContent extends LitElement {
+    @query('sp-picker')
+    public picker!: Picker;
+
+    render(): TemplateResult {
+        return html`
+            <sp-field-label for="picker1">Test</sp-field-label>
+
+            <sp-picker id="picker1" focusable .label=${'test'}>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+            </sp-picker>
+
+            <sp-field-label for="picker2">Test2</sp-field-label>
+
+            <sp-picker id="picker2" focusable .label=${'test'}>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+            </sp-picker>
+
+            <sp-field-label for="picker3">Test 3</sp-field-label>
+
+            <sp-picker id="picker3" focusable .label=${'test'}>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+                <sp-menu-item value=${'timeSinceLastSynced'}>
+                    ${'test'}
+                </sp-menu-item>
+            </sp-picker>
+        `;
+    }
+}
+
+customElements.define('popover-content', PopoverContent);
