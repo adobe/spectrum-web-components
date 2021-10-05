@@ -113,6 +113,18 @@ const stateTransition = (
     return stateMachine.states[state].on[event] || state;
 };
 
+const parentOverlayOf = (el: Element): ActiveOverlay | null => {
+    const closestOverlay = el.closest('active-overlay');
+    if (closestOverlay) {
+        return closestOverlay;
+    }
+    const rootNode = el.getRootNode() as ShadowRoot;
+    if (rootNode.host) {
+        return parentOverlayOf(rootNode.host);
+    }
+    return null;
+};
+
 /**
  * @element active-overlay
  *
@@ -216,7 +228,7 @@ export class ActiveOverlay extends SpectrumElement {
 
     public feature(): void {
         this.tabIndex = -1;
-        const parentOverlay = this.trigger.closest('active-overlay');
+        const parentOverlay = parentOverlayOf(this.trigger);
         const parentIsModal = parentOverlay && parentOverlay.slot === 'open';
         // If an overlay it triggered from within a "modal" overlay, it needs to continue
         // to act like one to get treated correctly in regards to tab trapping.
@@ -237,7 +249,7 @@ export class ActiveOverlay extends SpectrumElement {
             this.removeAttribute('slot');
             // Obscure upto and including the next modal root.
             if (this.interaction !== 'modal') {
-                const parentOverlay = this.trigger.closest('active-overlay');
+                const parentOverlay = parentOverlayOf(this.trigger);
                 this._modalRoot = parentOverlay?.obscure(
                     nextOverlayInteraction
                 );

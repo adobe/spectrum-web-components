@@ -792,3 +792,14 @@ export const detachedElement = (): TemplateResult => {
         </sp-action-button>
     `;
 };
+
+export const definedOverlayElement = (): TemplateResult => {
+    return html`
+        <overlay-trigger placement="bottom" type="modal">
+            <sp-button variant="primary" slot="trigger">Open popover</sp-button>
+            <sp-popover slot="click-content" direction="bottom" dialog>
+                <popover-content></popover-content>
+            </sp-popover>
+        </overlay-trigger>
+    `;
+};
