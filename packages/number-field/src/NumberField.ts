@@ -51,6 +51,7 @@ function isAndroid(): boolean {
 }
 
 export const FRAMES_PER_CHANGE = 5;
+export const indeterminatePlaceholder = '-';
 
 /**
  * @element sp-number-field
@@ -84,6 +85,9 @@ export class NumberField extends TextfieldBase {
      */
     @property({ type: Boolean, reflect: true, attribute: 'hide-stepper' })
     public hideStepper = false;
+
+    @property({ type: Boolean, reflect: true })
+    public indeterminate = false;
 
     @property({ type: Boolean, reflect: true, attribute: 'keyboard-focused' })
     public keyboardFocused = false;
@@ -124,6 +128,12 @@ export class NumberField extends TextfieldBase {
 
     public get value(): number {
         return this._value;
+    }
+
+    private get inputValue(): string {
+        return this.indeterminate
+            ? this.formattedValue
+            : this.inputElement.value;
     }
 
     public _value = NaN;
@@ -248,6 +258,7 @@ export class NumberField extends TextfieldBase {
         this.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
         );
+        this.indeterminate = false;
         this.focus();
     }
 
@@ -290,7 +301,7 @@ export class NumberField extends TextfieldBase {
 
     protected onFocus(): void {
         super.onFocus();
-        this._trackingValue = this.inputElement.value;
+        this._trackingValue = this.inputValue;
         this.keyboardFocused = true;
         this.addEventListener('wheel', this.onScroll);
     }
@@ -311,17 +322,42 @@ export class NumberField extends TextfieldBase {
         this.keyboardFocused = false;
     }
 
+    private wasIndeterminate = false;
+    private indeterminateValue?: number;
+
     protected onChange(): void {
-        const value = this.convertValueToNumber(this.inputElement.value);
+        const value = this.convertValueToNumber(this.inputValue);
+        if (this.wasIndeterminate) {
+            this.wasIndeterminate = false;
+            this.indeterminateValue = undefined;
+            if (isNaN(value)) {
+                this.indeterminate = true;
+                return;
+            }
+        }
         this.value = value;
         super.onChange();
     }
 
     protected onInput(): void {
+        if (this.indeterminate) {
+            this.wasIndeterminate = true;
+            this.indeterminateValue = this.value;
+            this.inputElement.value = this.inputElement.value.replace(
+                indeterminatePlaceholder,
+                ''
+            );
+        }
         const { value, selectionStart } = this.inputElement;
         if (this.numberParser.isValidPartialNumber(value)) {
             const valueAsNumber = this.convertValueToNumber(value);
-            this._value = this.validateInput(valueAsNumber);
+            if (!value && this.indeterminateValue) {
+                this.indeterminate = true;
+                this._value = this.indeterminateValue;
+            } else {
+                this.indeterminate = false;
+                this._value = this.validateInput(valueAsNumber);
+            }
             this._trackingValue = value;
             return;
         }
@@ -330,7 +366,9 @@ export class NumberField extends TextfieldBase {
         const nextSelectStart =
             (selectionStart || currentLength) -
             (currentLength - previousLength);
-        this.inputElement.value = this._trackingValue;
+        this.inputElement.value = this.indeterminate
+            ? indeterminatePlaceholder
+            : this._trackingValue;
         this.inputElement.setSelectionRange(nextSelectStart, nextSelectStart);
     }
 
@@ -363,7 +401,8 @@ export class NumberField extends TextfieldBase {
     }
 
     protected get displayValue(): string {
-        return this.formattedValue;
+        const indeterminateValue = this.focused ? '' : indeterminatePlaceholder;
+        return this.indeterminate ? indeterminateValue : this.formattedValue;
     }
 
     protected clearNumberFormatterCache(): void {
@@ -533,7 +572,7 @@ export class NumberField extends TextfieldBase {
             changes.has('min')
         ) {
             const value = this.numberParser.parse(
-                this.inputElement.value.replace(this._forcedUnit, '')
+                this.inputValue.replace(this._forcedUnit, '')
             );
             this.value = this.validateInput(value);
         }

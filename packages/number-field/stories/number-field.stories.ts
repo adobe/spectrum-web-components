@@ -43,6 +43,19 @@ export default {
                 type: 'boolean',
             },
         },
+        indeterminate: {
+            name: 'indeterminate',
+            type: { name: 'boolean', required: false },
+            description:
+                'Whether the value of the Number Field can be determined for display.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
         readonly: {
             name: 'readonly',
             type: { name: 'boolean', required: false },
@@ -159,6 +172,7 @@ export default {
 
 interface StoryArgs {
     disabled?: boolean;
+    indeterminate?: boolean;
     invalid?: boolean;
     value?: number;
     placeholder?: string;
@@ -182,6 +196,22 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
 
 Default.args = {
     value: 100,
+};
+
+export const indeterminate = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <sp-field-label for="default">Enter a number</sp-field-label>
+        <sp-number-field
+            id="default"
+            ...=${spreadProps(args)}
+            style="width: 150px"
+        ></sp-number-field>
+    `;
+};
+
+indeterminate.args = {
+    value: 100,
+    indeterminate: true,
 };
 
 export const decimals = (args: StoryArgs): TemplateResult => {
