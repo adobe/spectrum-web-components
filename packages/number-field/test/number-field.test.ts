@@ -18,12 +18,13 @@ import {
     currency,
     decimals,
     Default,
+    indeterminate,
     percents,
     pixels,
     units,
 } from '../stories/number-field.stories.js';
 import '../sp-number-field.js';
-import { FRAMES_PER_CHANGE, NumberField } from '..';
+import { FRAMES_PER_CHANGE, indeterminatePlaceholder, NumberField } from '..';
 import {
     executeServerCommand,
     sendKeys,
@@ -928,6 +929,151 @@ describe('NumberField', () => {
             expect(el.formattedValue).to.equal('7');
             expect(el.valueAsString).to.equal('7');
             expect(el.value).to.equal(7);
+        });
+    });
+    describe('indeterminate', () => {
+        let el: NumberField;
+        beforeEach(async () => {
+            el = await getElFrom(indeterminate(indeterminate.args));
+            expect(el.formattedValue).to.equal('100');
+            expect(el.valueAsString).to.equal('100');
+            expect(el.value).to.equal(100);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal(indeterminatePlaceholder);
+        });
+        it('remove "-" on focus', async () => {
+            el.focus();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('100');
+            expect(el.valueAsString).to.equal('100');
+            expect(el.value).to.equal(100);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('');
+            el.blur();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('100');
+            expect(el.valueAsString).to.equal('100');
+            expect(el.value).to.equal(100);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal(indeterminatePlaceholder);
+        });
+        it('return to "-" after suplied value is removed', async () => {
+            el.focus();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('100');
+            expect(el.valueAsString).to.equal('100');
+            expect(el.value).to.equal(100);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('');
+            await sendKeys({ type: '50' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('50');
+            expect(el.valueAsString).to.equal('50');
+            expect(el.value).to.equal(50);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('50');
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: 'Backspace' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('100');
+            expect(el.valueAsString).to.equal('100');
+            expect(el.value).to.equal(100);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('');
+            el.blur();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('100');
+            expect(el.valueAsString).to.equal('100');
+            expect(el.value).to.equal(100);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal(indeterminatePlaceholder);
+        });
+        it('starts from `value` on "ArrowUp" keypresses', async () => {
+            el.focus();
+            await elementUpdated(el);
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('101');
+            expect(el.valueAsString).to.equal('101');
+            expect(el.value).to.equal(101);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('101');
+            el.blur();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('101');
+            expect(el.valueAsString).to.equal('101');
+            expect(el.value).to.equal(101);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('101');
+        });
+        it('starts from `value` on click `.stepUp`', async () => {
+            el.focus();
+            await elementUpdated(el);
+            await clickBySelector(el, '.stepUp');
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('101');
+            expect(el.valueAsString).to.equal('101');
+            expect(el.value).to.equal(101);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('101');
+            el.blur();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('101');
+            expect(el.valueAsString).to.equal('101');
+            expect(el.value).to.equal(101);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('101');
+        });
+        it('starts from `value` on "ArrowDown" keypresses', async () => {
+            el.focus();
+            await elementUpdated(el);
+            await sendKeys({ press: 'ArrowDown' });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('99');
+            expect(el.valueAsString).to.equal('99');
+            expect(el.value).to.equal(99);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('99');
+            el.blur();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('99');
+            expect(el.valueAsString).to.equal('99');
+            expect(el.value).to.equal(99);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('99');
+        });
+        it('starts from `value` on click `.stepDown`', async () => {
+            el.focus();
+            await elementUpdated(el);
+            await clickBySelector(el, '.stepDown');
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('99');
+            expect(el.valueAsString).to.equal('99');
+            expect(el.value).to.equal(99);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('99');
+            el.blur();
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('99');
+            expect(el.valueAsString).to.equal('99');
+            expect(el.value).to.equal(99);
+            expect(
+                (el as unknown as { displayValue: string }).displayValue
+            ).to.equal('99');
         });
     });
     it('removes the stepper UI with [hide-stepper]', async () => {
