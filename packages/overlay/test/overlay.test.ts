@@ -697,6 +697,10 @@ describe('Overlay - timing', () => {
             })
         );
         await closed;
+
+        // sometimes safari needs to wait a few frames for the open attribute to update
+        for (let i = 0; i < 3; i++) await nextFrame();
+
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
         expect(overlayTrigger2.hasAttribute('open')).to.be.false;
     });

@@ -19,5 +19,5 @@ export const openOverlay = async (
     options: OverlayOptions
 ): Promise<() => void> => {
     const { Overlay } = await import('./overlay.js');
-    return await Overlay.open(target, interaction, content, options);
+    return Overlay.open(target, interaction, content, options);
 };
