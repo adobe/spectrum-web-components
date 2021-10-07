@@ -20,10 +20,9 @@ import {
 
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import { TemplateResult } from '@spectrum-web-components/icons-ui/src/custom-tag';
+import { TemplateResult, LitElement } from '@spectrum-web-components/base';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { LitElement } from 'lit-element';
 import { ActionGroup } from '..';
 import {
     arrowDownEvent,
@@ -104,9 +103,9 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(firstButton.getAttribute('quiet') === '').to.be.true;
+        expect(firstButton.hasAttribute('quiet')).to.be.true;
         expect(firstButton.quiet).to.be.true;
-        expect(secondButton.getAttribute('quiet') === '').to.be.true;
+        expect(secondButton.hasAttribute('quiet')).to.be.true;
         expect(secondButton.quiet).to.be.true;
     });
     it('applies `quiet` attribute to its slotted children', async () => {
@@ -127,9 +126,9 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(firstButton.getAttribute('quiet') === '').to.be.true;
+        expect(firstButton.hasAttribute('quiet')).to.be.true;
         expect(firstButton.quiet).to.be.true;
-        expect(secondButton.getAttribute('quiet') === '').to.be.true;
+        expect(secondButton.hasAttribute('quiet')).to.be.true;
         expect(secondButton.quiet).to.be.true;
     });
     it('applies `emphasized` attribute to its slotted children', async () => {
@@ -150,9 +149,9 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(firstButton.getAttribute('emphasized') === '').to.be.true;
+        expect(firstButton.hasAttribute('emphasized')).to.be.true;
         expect(firstButton.emphasized).to.be.true;
-        expect(secondButton.getAttribute('emphasized') === '').to.be.true;
+        expect(secondButton.hasAttribute('emphasized')).to.be.true;
         expect(secondButton.emphasized).to.be.true;
     });
     it('applies `quiet` attribute to slotted children with overlays', async () => {
@@ -177,9 +176,9 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(firstButton.getAttribute('quiet') === '').to.be.true;
+        expect(firstButton.hasAttribute('quiet')).to.be.true;
         expect(firstButton.quiet).to.be.true;
-        expect(secondButton.getAttribute('quiet') === '').to.be.true;
+        expect(secondButton.hasAttribute('quiet')).to.be.true;
         expect(secondButton.quiet).to.be.true;
     });
     it('applies `emphasized` attribute to slotted children with overlays', async () => {
@@ -204,9 +203,9 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(firstButton.getAttribute('emphasized') === '').to.be.true;
+        expect(firstButton.hasAttribute('emphasized')).to.be.true;
         expect(firstButton.emphasized).to.be.true;
-        expect(secondButton.getAttribute('emphasized') === '').to.be.true;
+        expect(secondButton.hasAttribute('emphasized')).to.be.true;
         expect(secondButton.emphasized).to.be.true;
     });
     it('loads [selects="single"] action-group accessibly', async () => {
