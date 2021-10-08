@@ -18,6 +18,7 @@ import {
     PropertyValues,
     property,
     SizedMixin,
+    query,
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -30,6 +31,9 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [styles];
     }
+
+    @query('.fill')
+    fill!: HTMLDivElement;
 
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
@@ -45,6 +49,16 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
 
     @property({ type: Number })
     public progress = 0;
+
+    private queueIndeterminate = (): void => {
+        this.fill.classList.add('no-animation');
+        requestAnimationFrame(() => {
+            this.fill.classList.add('start');
+            requestAnimationFrame(() => {
+                this.fill.classList.remove('no-animation', 'start');
+            });
+        });
+    };
 
     protected render(): TemplateResult {
         return html`
@@ -87,9 +101,18 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
             if (this.indeterminate) {
                 this.removeAttribute('aria-valuemin');
                 this.removeAttribute('aria-valuemax');
+                this.fill.addEventListener(
+                    'transitionend',
+                    this.queueIndeterminate
+                );
+                this.queueIndeterminate();
             } else {
                 this.setAttribute('aria-valuemin', '0');
                 this.setAttribute('aria-valuemax', '100');
+                this.fill.removeEventListener(
+                    'transitionend',
+                    this.queueIndeterminate
+                );
             }
         }
         if (!this.indeterminate && changes.has('progress')) {

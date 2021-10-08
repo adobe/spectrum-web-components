@@ -20,3 +20,34 @@ governing permissions and limitations under the License.
 :host([dir='rtl']) .fill {
     transform-origin: right;
 }
+
+:host([indeterminate]) .fill {
+    transition: transform var(--spectrum-progressbar-indeterminate-duration)
+        var(--spectrum-progressbar-indeterminate-animation-ease, ease);
+}
+
+:host([dir='ltr'][indeterminate]) .fill {
+    animation: initial;
+    transform: translate(var(--spectrum-progressbar-width)) !important;
+}
+
+:host([dir='ltr'][indeterminate]) .fill.start {
+    transform: translate(
+        calc(-1 * var(--spectrum-progressbar-indeterminate-fill-width))
+    ) !important;
+}
+
+:host([dir='rtl'][indeterminate]) .fill {
+    animation: initial;
+    transform: translate(
+        calc(-1 * var(--spectrum-progressbar-width))
+    ) !important;
+}
+
+:host([dir='rtl'][indeterminate]) .fill.start {
+    transform: translate(var(--spectrum-progressbar-width)) !important;
+}
+
+.fill.no-animation {
+    transition: none !important;
+}
