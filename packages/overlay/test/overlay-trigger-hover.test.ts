@@ -127,4 +127,40 @@ describe('Overlay Trigger - Hover', () => {
 
         expect(el.open).to.equal('longpress');
     });
+    it('closes `hover` overlay when [type="modal"]', async () => {
+        const el = await fixture<OverlayTrigger>(
+            (() => html`
+                <overlay-trigger placement="right-start" type="modal">
+                    <sp-action-button slot="trigger">
+                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    </sp-action-button>
+                    <sp-popover slot="hover-content" tip></sp-popover>
+                </overlay-trigger>
+            `)()
+        );
+        await elementUpdated(el);
+
+        expect(el.open).to.be.undefined;
+
+        const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
+        trigger.dispatchEvent(
+            new Event('mouseenter', {
+                bubbles: true,
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.open).to.equal('hover');
+
+        trigger.dispatchEvent(
+            new Event('mouseleave', {
+                bubbles: true,
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.open).to.be.null;
+    });
 });

@@ -77,8 +77,9 @@ export class OverlayTrigger extends LitElement {
 
     private handleClose(event?: CustomEvent<OverlayOpenCloseDetail>): void {
         if (
-            event?.detail.interaction !== this.open &&
-            event?.detail.interaction !== this.type
+            event &&
+            event.detail.interaction !== this.open &&
+            event.detail.interaction !== this.type
         ) {
             return;
         }
