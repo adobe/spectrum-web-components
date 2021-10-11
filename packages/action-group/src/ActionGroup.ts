@@ -322,7 +322,7 @@ export class ActionGroup extends SpectrumElement {
 
     protected render(): TemplateResult {
         return html`
-            <slot role="presentation" @slotchange=${this.findButtons}></slot>
+            <slot role="presentation" @slotchange=${this.manageButtons}></slot>
         `;
     }
 
@@ -363,7 +363,7 @@ export class ActionGroup extends SpectrumElement {
         });
     }
 
-    private findButtons = (): void => {
+    private manageButtons = (): void => {
         const slot = this.shadowRoot.querySelector('slot');
         if (!slot) return;
         const assignedElements = slot.assignedElements({ flatten: true });
@@ -386,8 +386,8 @@ export class ActionGroup extends SpectrumElement {
     public connectedCallback(): void {
         super.connectedCallback();
         if (!this.observer) {
-            this.observer = new MutationObserver(this.findButtons);
-            this.findButtons();
+            this.observer = new MutationObserver(this.manageButtons);
+            this.manageButtons();
         }
         this.observer.observe(this, { childList: true, subtree: true });
     }
