@@ -3602,9 +3602,9 @@
   integrity sha512-CjLeaMs+cjUXojCCRtbj0YkD2BoZW16kjj2o5omkEpUTjA34IJ8xJ1a+CCtDILWekhXvN0MBN4sbumcnwcnx8w==
 
 "@spectrum-css/tooltip@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-3.0.3.tgz#26b8ca3b3d30e29630244d85eb4fc11d0c841281"
-  integrity sha512-ztRF7WW1FzyNavXBRc+80z67UoOrY9wl3cMYsVD3MpDnyxdzP8cjza1pCcolKBaFqRTcQKkxKw3GWtGICRKR5A==
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-3.0.4.tgz#19daba377ab6e82de673da9a66cf6bf6d15f2bf3"
+  integrity sha512-JXkR5XqB6ALgaR2Xsb265U2WRTxL7lpDhM/1zA53oxVjnnxjmOlKMEyP7ulbApdWpaPU5JUzp3rHT9UG3eQPOQ==
 
 "@spectrum-css/tray@^1.0.3":
   version "1.0.3"
