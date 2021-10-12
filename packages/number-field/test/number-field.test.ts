@@ -1083,18 +1083,47 @@ describe('NumberField', () => {
         expect(stepUp).to.be.null;
         expect(stepDown).to.be.null;
     });
-    it('presents as `readonly`', async () => {
-        const el = await getElFrom(Default({ readonly: true, value: 1337 }));
-        expect(el.formattedValue).to.equal('1,337');
-        expect(el.valueAsString).to.equal('1337');
-        expect(el.value).to.equal(1337);
-        el.focus();
-        await sendKeys({ type: '12345' });
-        await elementUpdated(el);
-        await sendKeys({ press: 'Enter' });
-        await elementUpdated(el);
-        expect(el.formattedValue).to.equal('1,337');
-        expect(el.valueAsString).to.equal('1337');
-        expect(el.value).to.equal(1337);
+    describe('Readonly', () => {
+        let el: NumberField;
+        beforeEach(async () => {
+            el = await getElFrom(Default({ readonly: true, value: 1337 }));
+            expect(el.formattedValue).to.equal('1,337');
+            expect(el.valueAsString).to.equal('1337');
+            expect(el.value).to.equal(1337);
+            el.focus();
+            await elementUpdated(el);
+        });
+        afterEach(async () => {
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('1,337');
+            expect(el.valueAsString).to.equal('1337');
+            expect(el.value).to.equal(1337);
+        });
+        it('presents as `readonly`', async () => {
+            await sendKeys({ type: '12345' });
+            await elementUpdated(el);
+            await sendKeys({ press: 'Enter' });
+        });
+        it('prevents increment via keyboard', async () => {
+            await sendKeys({ press: 'ArrowUp' });
+        });
+        it('prevents decrement via keyboard', async () => {
+            await sendKeys({ press: 'ArrowDown' });
+        });
+        it('prevents increment via scroll', async () => {
+            el.dispatchEvent(new WheelEvent('wheel', { deltaY: 1 }));
+        });
+        it('prevents decrement via scroll', async () => {
+            el.dispatchEvent(new WheelEvent('wheel', { deltaY: -1 }));
+        });
+        it('prevents increment via scroll', async () => {
+            el.dispatchEvent(new WheelEvent('wheel', { deltaY: 1 }));
+        });
+        it('prevents increment via stepper button', async () => {
+            await clickBySelector(el, '.stepUp');
+        });
+        it('prevents decrement via stepper button', async () => {
+            await clickBySelector(el, '.stepDown');
+        });
     });
 });
