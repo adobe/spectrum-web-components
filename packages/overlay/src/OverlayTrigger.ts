@@ -29,12 +29,7 @@ import {
 import { openOverlay } from './loader.js';
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
-export type OverlayContentTypes =
-    | 'click'
-    | 'hover'
-    | 'longpress'
-    | null
-    | undefined;
+export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 
 type closeOverlay =
     | 'closeClickOverlay'
@@ -161,18 +156,13 @@ export class OverlayTrigger extends LitElement {
     }
 
     private manageOpen(): void {
-        const handlers: { [k: string]: () => void } = {
+        const openHandlers: Record<OverlayContentTypes | 'none', () => void> = {
             click: () => this.onTriggerClick(),
             hover: () => this.onTriggerMouseEnter(),
             longpress: () => this.onTriggerLongpress(),
+            none: () => this.closeAllOverlays(),
         };
-        const handler = handlers[this.open || ''];
-
-        if (!handler) {
-            this.closeAllOverlays();
-            return;
-        }
-        handler();
+        openHandlers[this.open ?? 'none']();
     }
 
     private async openOverlay(
