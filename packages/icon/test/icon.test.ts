@@ -108,4 +108,25 @@ describe('Icon', () => {
         }
         el.remove();
     });
+
+    it('does not add multiple SVGs when removed and re-added to DOM', async () => {
+        const el = await fixture<Icon>(
+            html`
+                <sp-icon name="ui:Chevron200"></sp-icon>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+
+        const parent = el.parentNode as HTMLElement;
+        parent.removeChild(el);
+        parent.appendChild(el);
+
+        // wait for updates
+        await el.updateComplete;
+
+        const count = el.shadowRoot.querySelectorAll('svg').length;
+        expect(count).to.equal(1);
+    });
 });
