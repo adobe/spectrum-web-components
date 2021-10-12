@@ -3592,9 +3592,9 @@
   integrity sha512-nkFgAb0cP4jUodkUBErMNfyF78jJLtgL1Mrr9/rvGpGobo10IAbb8zZY4CkZ64o8XmMy/85+wZTKcx+KHatqpg==
 
 "@spectrum-css/thumbnail@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-1.0.2.tgz#58488f9b474bead2551c98473097b632c23beebf"
-  integrity sha512-XDhzQL8WxYM6lEVzt3Rsq3+jMu6KKkNiCkJXQd36sqzG69GhR5Hl6svZcZRln5crXtza346vIVlapOWjsnx79A==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-1.0.3.tgz#78c99197926d003e7f8d01c32cd27d07b7bf7fb8"
+  integrity sha512-YJedaxg/MX2CDiok9gbAvzfpuQdHNCyXoamhy7ICQdiYR8zQ0ZNcyW2qTzNCnYOdf4tdhsypT2vWFYaW0FmyEA==
 
 "@spectrum-css/toast@^3.0.3":
   version "3.0.3"
