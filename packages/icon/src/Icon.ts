@@ -85,6 +85,9 @@ export class Icon extends IconBase {
     }
 
     private async updateIcon(): Promise<void> {
+        if (this.updateIconPromise) {
+            await this.updateIconPromise;
+        }
         if (!this.name) {
             return Promise.resolve();
         }
