@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.17...@spectrum-web-components/action-group@0.4.18) (2021-10-12)
+
+### Bug Fixes
+
+-   **action-group:** allow quiet and emphasized attributes to be passed to slotted action buttons ([aadfddb](https://github.com/adobe/spectrum-web-components/commit/aadfddb8e92136e78c577fb70e0f9c2c1ee176b9))
+
 ## [0.4.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.16...@spectrum-web-components/action-group@0.4.17) (2021-10-05)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.8...@spectrum-web-components/shared@0.12.9) (2021-10-12)
+
+### Bug Fixes
+
+-   add likeAnchor API to Card element ([5c338fb](https://github.com/adobe/spectrum-web-components/commit/5c338fbfc73d9d20c8f771e11114064cadeeb732))
+
 ## [0.12.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.7...@spectrum-web-components/shared@0.12.8) (2021-09-13)
 
 ### Bug Fixes

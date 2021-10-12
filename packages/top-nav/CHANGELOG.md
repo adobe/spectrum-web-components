@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.9...@spectrum-web-components/top-nav@0.3.10) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
 ## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.8...@spectrum-web-components/top-nav@0.3.9) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/top-nav

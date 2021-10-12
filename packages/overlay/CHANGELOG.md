@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.15...@spectrum-web-components/overlay@0.11.16) (2021-10-12)
+
+### Bug Fixes
+
+-   **overlay:** allow [type="modal"] hover overlays to be closed ([5a6802b](https://github.com/adobe/spectrum-web-components/commit/5a6802bc06869cd255bdbfcc460f836c247f01fb))
+-   **overlay:** resolve async races with closeOverlays and manageOpen ([ff3738e](https://github.com/adobe/spectrum-web-components/commit/ff3738ea7afc12f258a7745777034ee70d6bf601))
+-   **overlay:** traverse up through shadow roots when determining parent overlay ([27f232c](https://github.com/adobe/spectrum-web-components/commit/27f232c28d30288b75187b80744b2581d6017b77))
+
 ## [0.11.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.14...@spectrum-web-components/overlay@0.11.15) (2021-09-20)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.9...@spectrum-web-components/number-field@0.1.10) (2021-10-12)
+
+### Bug Fixes
+
+-   **number-field:** add an "indeterminate" state ([8bde8a1](https://github.com/adobe/spectrum-web-components/commit/8bde8a1ce54e4966736da6676424db8080c81861))
+
 ## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.8...@spectrum-web-components/number-field@0.1.9) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field

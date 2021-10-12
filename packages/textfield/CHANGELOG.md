@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.15...@spectrum-web-components/textfield@0.8.16) (2021-10-12)
+
+### Bug Fixes
+
+-   **textfield:** respect resize styling ([04993c3](https://github.com/adobe/spectrum-web-components/commit/04993c380d485b0e9b02fd6ad196e5caaf29e0a2))
+
 ## [0.8.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.14...@spectrum-web-components/textfield@0.8.15) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield

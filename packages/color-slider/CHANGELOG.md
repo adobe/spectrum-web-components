@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.1.12...@spectrum-web-components/color-slider@0.1.13) (2021-10-12)
+
+### Bug Fixes
+
+-   **color-slider:** use correct focus events in test ([b974c12](https://github.com/adobe/spectrum-web-components/commit/b974c129c1860eafe920028b20401616f77eca4c))
+
 ## [0.1.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.1.11...@spectrum-web-components/color-slider@0.1.12) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/color-slider

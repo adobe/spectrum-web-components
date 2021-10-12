@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-bar@0.2.17...@spectrum-web-components/action-bar@0.2.18) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/action-bar
+
 ## [0.2.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-bar@0.2.16...@spectrum-web-components/action-bar@0.2.17) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/action-bar
