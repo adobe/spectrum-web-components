@@ -1116,9 +1116,6 @@ describe('NumberField', () => {
         it('prevents decrement via scroll', async () => {
             el.dispatchEvent(new WheelEvent('wheel', { deltaY: -1 }));
         });
-        it('prevents increment via scroll', async () => {
-            el.dispatchEvent(new WheelEvent('wheel', { deltaY: 1 }));
-        });
         it('prevents increment via stepper button', async () => {
             await clickBySelector(el, '.stepUp');
         });

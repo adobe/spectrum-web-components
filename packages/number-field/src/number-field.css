@@ -21,6 +21,10 @@ sp-field-button {
     font-variant-numeric: tabular-nums;
 }
 
+:host([readonly]) .buttons {
+    pointer-events: none;
+}
+
 :host([hide-stepper]) .input {
     border-radius: var(
         --spectrum-alias-border-radius-regular,
