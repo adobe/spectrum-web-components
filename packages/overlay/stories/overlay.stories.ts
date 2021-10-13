@@ -556,21 +556,61 @@ export const longpress = (): TemplateResult => {
     `;
 };
 
-export const complexModal = (): TemplateResult => {
-    requestAnimationFrame(() => {
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
+class ComplexModalReady extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    constructor() {
+        super();
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+            this.setup();
+        });
+    }
+
+    async setup(): Promise<void> {
+        await nextFrame();
+
         const overlay = document.querySelector(
             `overlay-trigger`
         ) as OverlayTrigger;
-        const trigger = (overlay.shadowRoot as ShadowRoot).querySelector(
-            '#trigger'
-        ) as HTMLElement;
-        trigger.addEventListener('sp-opened', () => {
-            requestAnimationFrame(() => {
-                const picker = document.querySelector('#test-picker') as Picker;
-                picker.open = true;
-            });
-        });
-    });
+        overlay.addEventListener('sp-opened', this.handleTriggerOpened);
+    }
+
+    handleTriggerOpened = async (): Promise<void> => {
+        await nextFrame();
+
+        const picker = document.querySelector('#test-picker') as Picker;
+        picker.addEventListener('sp-opened', this.handlePickerOpen);
+        picker.open = true;
+    };
+
+    handlePickerOpen = async (): Promise<void> => {
+        await nextFrame();
+
+        this.ready(true);
+    };
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
+}
+
+customElements.define('complex-modal-ready', ComplexModalReady);
+
+const complexModalDecorator = (story: () => TemplateResult): TemplateResult => {
+    return html`
+        ${story()}
+        <complex-modal-ready></complex-modal-ready>
+    `;
+};
+
+export const complexModal = (): TemplateResult => {
     return html`
         <style>
             body {
@@ -626,6 +666,8 @@ export const complexModal = (): TemplateResult => {
         </overlay-trigger>
     `;
 };
+
+complexModal.decorators = [complexModalDecorator];
 
 export const superComplexModal = (): TemplateResult => {
     return html`
