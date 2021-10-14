@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.8.18...@spectrum-web-components/card@0.9.0) (2021-10-14)
+
+### Features
+
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+
 ## [0.8.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.8.17...@spectrum-web-components/card@0.8.18) (2021-10-12)
 
 ### Bug Fixes

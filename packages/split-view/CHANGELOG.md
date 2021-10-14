@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.11...@spectrum-web-components/split-view@0.3.0) (2021-10-14)
+
+### Features
+
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+
 ## [0.2.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.10...@spectrum-web-components/split-view@0.2.11) (2021-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/split-view

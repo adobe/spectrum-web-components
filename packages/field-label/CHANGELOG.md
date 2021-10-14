@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.5.9...@spectrum-web-components/field-label@0.5.10) (2021-10-14)
+
+**Note:** Version bump only for package @spectrum-web-components/field-label
+
 ## [0.5.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.5.8...@spectrum-web-components/field-label@0.5.9) (2021-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/field-label

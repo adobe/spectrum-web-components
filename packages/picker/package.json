@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/picker",
-    "version": "0.7.5",
+    "version": "0.8.0",
     "publishConfig": {
         "access": "public"
     },
@@ -48,15 +48,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/button": "^0.14.9",
-        "@spectrum-web-components/icon": "^0.9.11",
-        "@spectrum-web-components/icons-ui": "^0.6.11",
-        "@spectrum-web-components/icons-workflow": "^0.6.11",
-        "@spectrum-web-components/menu": "^0.9.6",
-        "@spectrum-web-components/overlay": "^0.11.16",
-        "@spectrum-web-components/popover": "^0.9.18",
-        "@spectrum-web-components/shared": "^0.12.9",
+        "@spectrum-web-components/base": "^0.5.0",
+        "@spectrum-web-components/button": "^0.15.0",
+        "@spectrum-web-components/icon": "^0.10.0",
+        "@spectrum-web-components/icons-ui": "^0.7.0",
+        "@spectrum-web-components/icons-workflow": "^0.7.0",
+        "@spectrum-web-components/menu": "^0.10.0",
+        "@spectrum-web-components/overlay": "^0.12.0",
+        "@spectrum-web-components/popover": "^0.9.19",
+        "@spectrum-web-components/shared": "^0.13.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

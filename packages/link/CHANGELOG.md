@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.8...@spectrum-web-components/link@0.9.9) (2021-10-14)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
 ## [0.9.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.7...@spectrum-web-components/link@0.9.8) (2021-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/link

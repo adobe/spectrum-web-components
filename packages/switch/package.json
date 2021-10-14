@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/switch",
-    "version": "0.7.16",
+    "version": "0.7.17",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/checkbox": "^0.10.9",
+        "@spectrum-web-components/base": "^0.5.0",
+        "@spectrum-web-components/checkbox": "^0.10.10",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
