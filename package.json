@@ -1,10 +1,6 @@
 {
-    "name": "@adobe/spectrum-web-components",
+    "name": "@saiye/future-ui",
     "version": "0.0.9",
-    "private": true,
-    "publishConfig": {
-        "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-crisp-release-local/"
-    },
     "description": "",
     "type": "module",
     "engines": {
