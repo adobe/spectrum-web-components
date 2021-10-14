@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.20](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.8.18...@spectrum-web-components/search@0.8.20) (2021-10-14)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
 ## [0.8.19](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.8.18...@spectrum-web-components/search@0.8.19) (2021-10-14)
 
 **Note:** Version bump only for package @spectrum-web-components/search

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/dialog",
-    "version": "0.6.19",
+    "version": "0.6.20",
     "publishConfig": {
         "access": "public"
     },
@@ -46,17 +46,17 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.6.0",
-        "@spectrum-web-components/base": "^0.5.0",
-        "@spectrum-web-components/button": "^0.15.0",
-        "@spectrum-web-components/button-group": "^0.6.11",
-        "@spectrum-web-components/divider": "^0.2.9",
-        "@spectrum-web-components/icon": "^0.10.0",
-        "@spectrum-web-components/icons-ui": "^0.7.0",
-        "@spectrum-web-components/icons-workflow": "^0.7.0",
-        "@spectrum-web-components/modal": "^0.3.9",
-        "@spectrum-web-components/shared": "^0.13.0",
-        "@spectrum-web-components/underlay": "^0.6.10",
+        "@spectrum-web-components/action-button": "^0.7.0",
+        "@spectrum-web-components/base": "^0.6.0",
+        "@spectrum-web-components/button": "^0.16.0",
+        "@spectrum-web-components/button-group": "^0.6.12",
+        "@spectrum-web-components/divider": "^0.2.10",
+        "@spectrum-web-components/icon": "^0.11.0",
+        "@spectrum-web-components/icons-ui": "^0.8.0",
+        "@spectrum-web-components/icons-workflow": "^0.8.0",
+        "@spectrum-web-components/modal": "^0.3.10",
+        "@spectrum-web-components/shared": "^0.14.0",
+        "@spectrum-web-components/underlay": "^0.6.11",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
